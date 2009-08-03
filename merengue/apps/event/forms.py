@@ -12,13 +12,9 @@ from django.utils.translation import ugettext_lazy as _
 from cmsutils.templatetags.datefilters import get_date_format
 
 from base.forms import QuickSearchForm, AdvancedSearchForm
-from certificate.forms import UniqueCertificateSearchTerm
+from base.searchterms import BindableSearchTerm
 from searchform.registry import search_form_registry
 from searchform.terms import TextSearchTerm, FreeTextSearchTerm, DateSearchTerm, ObjectsSearchTerm
-
-from places.terms import (CityQuickSearchTerm, CitySearchTerm,
-                          ProvinceQuickSearchTerm, ProvinceSearchTerm,
-                          TouristZoneSearchTerm, BindableSearchTerm)
 from event.models import CategoryGroup, Category, Event
 
 
@@ -102,30 +98,11 @@ class EventToDateQuickSearchTerm(EventDateSearchTerm):
     searchlet_type = "singledate"
 
 
-class CertificateEventSearchTerm(UniqueCertificateSearchTerm):
-    class_name = 'event'
-
-
 COMMON_FIELDS = [
         ('name',
             FreeTextSearchTerm(_(u'Name'),
                             _(u'Name'),
                             _(u'which name'))),
-
-        ('location__cities__name',
-            FreeTextSearchTerm(_(u'City'),
-                            _(u'City'),
-                            _(u'which city'))),
-
-        ('location__cities',
-            CityQuickSearchTerm(_(u'City'),
-                                _(u'City'),
-                                _(u'which city'))),
-
-        ('location__cities__province',
-            ProvinceQuickSearchTerm(_(u'Province'),
-                                    _(u'Province'),
-                                    _(u'which province'))),
 
         ('cached_max_end__gte',
         EventDateInRange(_(u'From'),
@@ -260,30 +237,10 @@ class EventAdvancedSearchForm(BaseEventSearchForm, AdvancedSearchForm):
                                 _(u'Name'),
                                 _(u'which name'))),
 
-            ('location__cities',
-             CitySearchTerm(_(u'City'),
-                            _(u'City'),
-                            _(u'which city'))),
-
-            ('location__cities__province',
-             ProvinceSearchTerm(_(u'Province'),
-                                _(u'Province'),
-                                _(u'which province'))),
-
-            ('location__cities__touristzone',
-             TouristZoneSearchTerm(_(u'The tourist Zone'),
-                                   _(u'Tourist Zone'),
-                                   _(u'which tourist zone'))),
-
             ('categories__groups',
              EventTypeSearchTerm(_(u'Event type'),
                                       _(u'Type'),
                                       _(u'which type'))),
-
-            ('certificates',
-                CertificateEventSearchTerm(_(u'Quality mark'),
-                                           _(u'Quality mark'),
-                                           _(u'which quality mark'))),
 
             ('cached_min_start',
              EventDateSearchTerm(_(u'From'),
