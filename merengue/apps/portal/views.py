@@ -153,7 +153,7 @@ def logout(request, template_name='registration/logged_out.html'):
     redirect_to = _get_redirect_to(new_get_data)
 
     if redirect_to:
-        for (re_from, target) in settings.LOGOUT_URLS_REVENT_REDIRECT:
+        for (re_from, target) in settings.LOGOUT_PROTECTED_URL_REDIRECTS:
             if re.match(re_from, redirect_to):
                 redirect_to = target
                 break

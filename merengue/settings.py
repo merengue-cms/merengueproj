@@ -219,6 +219,10 @@ SEARCHBAR_MIN_RESULTS = 5
 BATCHADMIN_MEDIA_PREFIX= ''
 BATCHADMIN_JQUERY_JS= 'js/jquery-1.2.6.min.js'
 
+LOGOUT_PROTECTED_URL_REDIRECTS = (
+    #(r'^/regularexpresion/(.*)$', '/redirect_url'),
+)
+
 CACHE_BACKEND = 'dummy:///'
 CACHE_MIDDLEWARE_SECONDS = 3600*24
 CACHE_MIDDLEWARE_KEY_PREFIX = 'merengue'
