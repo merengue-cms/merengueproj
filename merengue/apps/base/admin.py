@@ -707,16 +707,6 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
             # user automatically get owner of this object
             obj.owners.add(request.user)
 
-        if self.needs_spa(form) and not self.has_habcenter(obj):
-            self.create_spa(obj)
-        elif not self.needs_spa(form) and self.has_habcenter(obj):
-            self.destroy_spa(obj)
-
-        if self.needs_conventionrooms(form) and not self.has_conventionrooms(obj):
-            self.create_conventionrooms(obj)
-        elif not self.needs_conventionrooms(form) and self.has_conventionrooms(obj):
-            self.destroy_conventionrooms(obj)
-
     def formfield_for_dbfield(self, db_field, **kwargs):
         field = super(BaseContentAdmin, self).formfield_for_dbfield(db_field, **kwargs)
         db_fieldname = transmeta_aware_fieldname(db_field)

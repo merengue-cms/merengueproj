@@ -1,6 +1,5 @@
 from django import template
 from django.contrib import admin
-from django.contrib.admin.options import IncorrectLookupParameters
 from django.contrib.admin.util import unquote
 from django.core.exceptions import PermissionDenied
 from django.forms import DateField
@@ -50,8 +49,7 @@ class EventAdmin(BaseContentAdmin):
     ordering = ('name', )
     search_fields = ('name', )
     exclude = ('expire_date', )
-    list_display = ('name', 'google_minimap', 'cached_min_start', 'cached_max_end', 'status')
-    superuser_list_filter = ('categories', 'frequency', 'is_autolocated', 'status', 'user_modification_date', 'last_editor', )
+    list_display = ('name', 'google_minimap', 'cached_min_start', 'cached_max_end', 'status', 'user_modification_date', 'last_editor')
     list_filter = ('categories', 'frequency', 'status', 'user_modification_date', )
     change_list_template = ""
 
@@ -76,56 +74,6 @@ class EventAdmin(BaseContentAdmin):
             return HttpResponseRedirect('../%s/admin/event/occurrence/' % obj.id)
         else:
             return super(EventAdmin, self).response_add(request, obj)
-
-    def queryset(self, request):
-        from django.db.models import Q
-        qs = super(EventAdmin, self).queryset(request)
-        province = request.GET.get('province', None)
-        if province:
-            get = request.GET.copy()
-            qs = qs.filter(Q(location__cities__province=province)|\
-                           Q(occurrence_event__location__cities__province=province))
-            get.pop('province')
-            request.PROVINCE = province
-            request.GET=get
-        return qs
-
-    def changelist_view(self, request, extra_context=None):
-        from django.contrib.admin.views.main import ChangeList, ERROR_FLAG
-        from places.models import Province
-        if request.user.is_superuser:
-            filters = self.superuser_list_filter
-        else:
-            filters = self.list_filter
-        try:
-            cl = ChangeList(request, self.model, self.list_display, self.list_display_links, filters,
-                self.date_hierarchy, self.search_fields, self.list_select_related, self.list_per_page, self)
-        except IncorrectLookupParameters:
-            if ERROR_FLAG in request.GET.keys():
-                return render_to_response('admin/invalid_setup.html', {'title': _('Database error')})
-            return HttpResponseRedirect(request.path + '?' + ERROR_FLAG + '=1')
-
-        province = getattr(request, 'PROVINCE', None)
-        cl.has_filters=True
-        provinces=[{'name': _('All'), 'url': cl.get_query_string(remove='province')}]
-        for i in Province.objects.order_by('name').values('id', 'name').distinct():
-            provinces.append({'name': i['name'],
-                                'url': cl.get_query_string(new_params={'province': i['id']})})
-        context = {
-            'cl': cl,
-            'provinces': provinces,
-        }
-        context.update(extra_context or {})
-        if province:
-            cl.params.update({'province': province})
-            try:
-                context.update({'selected_province': Province.objects.get(id=province).name})
-            except Province.DoesNotExist:
-                pass
-        else:
-            context.update({'selected_province': _('All')})
-
-        return super(EventAdmin, self).changelist_view(request, context)
 
 
 class OccurrenceContactInfoAdminInline(ReverseAdminInline):

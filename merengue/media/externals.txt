@@ -1,0 +1,11 @@
+#
+# Create this file: svn propget svn:externals . > externals.txt
+# Apply this file:  svn propset svn:externals -F externals.txt .
+#
+
+cmsutils https://svnpub.yaco.es/cmsutils/branches/change_media_directory/media/cmsutils
+inplaceeditform https://svnpub.yaco.es/djangoapps/inplaceeditform/branches/transmeta/inplaceeditform/media/inplaceeditform
+searchform https://svnpub.yaco.es/djangoapps/searchform/trunk/searchform/media
+tinyimages https://svnpub.yaco.es/djangoapps/tinyimages/trunk/tinyimages/media/
+rating https://svnpub.yaco.es/djangoapps/rating/trunk/rating/media
+inlinetrans http://django-inlinetrans.googlecode.com/svn/trunk/inlinetrans/media
