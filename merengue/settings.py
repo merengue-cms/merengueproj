@@ -130,11 +130,9 @@ INSTALLED_APPS = (
     'django_extensions',
     'debug_toolbar',
     'template_utils',
-    'dmigrations',
+    'batchadmin',
     'cmsutils',
     'transmeta',
-    'batchadmin',
-    'jossoauth',
     'rosetta',
     'tagging',
     'sorl.thumbnail',
@@ -144,7 +142,6 @@ INSTALLED_APPS = (
     'base',
     'portal',
     'inplaceeditform',
-    'inplaceeditchunks',
     'searchform',
     'inlinetrans',
     'section',
@@ -154,125 +151,12 @@ INSTALLED_APPS = (
     'internallinks',
     'threadedcomments',
     'captcha',
-    'profiles',
-    'forums',
+    #'profiles',
+    #'forums',
 )
 
 SECTION_MAP = {
-    'alojamientos': {
-        'class_names': ('accommodation', ),
-        'app_name': 'accommodation',
-        'published': True,
-    },
-    'certificados': {
-        'class_names': tuple(),
-        'app_name': 'certificate',
-        'published': False,
-    },
-    'como-llegar': {
-        'class_names': ('trainstation', 'airport', 'seaport', 'busstation', 'carrental', 'company'),
-        'app_name': 'directions',
-        'published': False,
-    },
-    'destinos': {
-        'class_names': tuple(),
-        'app_name': 'places',
-        'published': True,
-    },
-    'espacios-naturales': {
-        'class_names': ('naturearea', 'trail'),
-        'app_name': 'naturearea',
-        'published': True,
-    },
-    'eventos': {
-        'class_names': ('event', ),
-        'app_name': 'event',
-        'published': True,
-    },
-    'flamenco': {
-        'class_names': ('artist', 'flamencoplace', 'history'),
-        'app_name': 'flamenco',
-        'published': True,
-    },
-    'gastronomia': {
-        'class_names': ('restaurant', ),
-        'app_name': 'restaurant',
-        'published': True,
-    },
-    'golf': {
-        'class_names': ('course', ),
-        'app_name': 'golf',
-        'published': True,
-    },
-    'ocio-y-diversion': {
-        'class_names': ('nightplace', 'park', 'shop'),
-        'app_name': 'leisure',
-        'published': True,
-    },
-    'ofertas': {
-        'class_names': ('deal', ),
-        'app_name': 'deal',
-        'published': False,
-    },
-    'playas': {
-        'class_names': ('beach', ),
-        'app_name': 'beach',
-        'published': True,
-    },
-    'reuniones-y-congresos': {
-        'class_names': ('conventioncenter',
-                        'conventionroom',
-                        'conventioncompany',
-                        'conventionboureau',
-                        'baseconvention', ),
-        'app_name': 'convention',
-        'published': False,
-    },
-    'salud-y-belleza': {
-        'class_names': ('habcenter', 'habtype', 'treatment', 'watertype' ),
-        'app_name': 'healthandbeauty',
-        'published': False,
-    },
-    'contacta-con-nosotros': {
-        'class_names': ('touristinformation', ),
-        'app_name': 'touristservice',
-        'published': True,
-    },
-    'turismo-cultural': {
-        'class_names': ('visit', ),
-        'app_name': 'visit',
-        'published': True,
-    },
-    'turismo-y-deporte': {
-        'class_names': ('sportfacility', 'sport', 'marina', 'sportcategory'),
-        'app_name': 'sport',
-        'published': True,
-    },
-    'historias-de-andalucia': {
-        'class_names': ('story', ),
-        'app_name': 'story',
-        'published': False,
-    },
-    'concurso-de-fotografia': {
-        'class_names': ('contestant', 'contest', 'contestantcategory'),
-        'app_name': 'photocontests',
-        'published': False,
-    },
-    'cuaderno-de-viaje': {
-        'class_names': tuple(),
-        'app_name': 'travelbook',
-        'published': True,
-    },
-    'rutas': {
-        'class_names': ('route', 'routetype', 'routesubtype', 'itinerary'),
-        'app_name': 'route',
-        'published': False,
-    },
 }
-
-LOGOUT_URLS_REVENT_REDIRECT = (
-    (r'^/cuaderno-de-viaje/(.*)$', '/'),
-)
 
 # inverse mapping from SECTION_MAP, used for convenience
 APP_SECTION_MAP = {}
@@ -280,88 +164,11 @@ for key, section in SECTION_MAP.items():
     for model_name in section['class_names']:
         APP_SECTION_MAP[model_name] = key
 
-CLASS_NAMES_FOR_CAROUSEL = (
-    'beach',
-    'accommodation',
-    'park',
-    #'naturearea',
-    'visit',
-    'restaurant',
-    'nightplace',
-    'shop',
-    'sportfacility',
-    'marina',
-)
-
-CLASS_NAMES_FOR_PLACES = SortedDict((
-    ('accommodation', ['accommodation']),
-    ('beach', ['beach']),
-    ('course', ['course']),
-    ('event', ['event']),
-    ('nightplace', ['nightplace']),
-    ('park', ['park']),
-    ('restaurant', ['restaurant']),
-    ('shop', ['shop']),
-    ('touristinformation', ['touristinformation']),
-    ('visit', ['visit']),
-    ('baseconvention', ['baseconvention', 'conventioncenter', 'conventioncompany', 'conventionroom', 'conventionboureau']),
-    ('sport', ['sportfacility', 'marina']),
-    ('flamenco', {'resource_model': 'base.basecontent',
-                  'class_names': ['flamencoplace', 'shop', 'nightplace'],
-                  'extra_or_filters': {'shop__shop_type__slug': 'flamenco', 'nightplace__nightplace_types__slug': 'tablao-flamenco',
-                                       'class_name': 'flamencoplace'}}),
-))
-
-FEATURE_ALLOWED_TYPE =[('golf', 'course'),
-                      ('beach', 'beach'),
-                      ('restaurant', 'restaurant'),
-                      ('shopping', 'shop'),
-                      ('touristservice', 'touristinformation'),
-                      ('naturearea', 'pointofinterest'),
-                      ('naturearea', 'naturearea'),
-                      ('leisure', 'nightplace'),
-                      ('leisure', 'park'),
-                      ('visit', 'visit'),
-                      ('accommodation', 'accommodation'),
-                      ('event', 'event'),
-                      ('story', 'story'),
-                      ('convention', 'conventioncenter'),
-                      ('convention', 'conventionroom'),
-                      ('convention', 'conventioncompany'),
-                      ('convention', 'conventionboureau'),
-                      ('sport', 'sportfacility'),
-                      ('healthandbeauty', 'habcenter'),
-                      ('directions', 'carrental'),
-                      ('directions', 'airport'),
-                      ('directions', 'seaport'),
-                      ('directions', 'trainstation'),
-                      ('directions', 'busstation'),
-                      ('flamenco', 'artist'),
-                      ('flamenco', 'flamencoplace'),
-                      ('deal', 'deal'),
-                      ('photocontests', 'contestant'),
-                      ('route', 'route')]
-
 TEST_RUNNER = 'portal.test.run_tests'
 TEST_DB_CREATION_SUFFIX = 'WITH TEMPLATE template_postgis'
 
 FIXTURE_DIRS = (
-    path.join(BASEDIR, 'fixtures', 'auth'),
-    path.join(BASEDIR, 'fixtures', 'sites'),
-    path.join(BASEDIR, 'fixtures', 'places'),
-    path.join(BASEDIR, 'fixtures', 'multimedia'),
     path.join(BASEDIR, 'fixtures', 'base'),
-    path.join(BASEDIR, 'fixtures', 'inplaceeditchunks'),
-    path.join(BASEDIR, 'fixtures', 'touristservice'),
-    path.join(BASEDIR, 'fixtures', 'golf'),
-    path.join(BASEDIR, 'fixtures', 'beach'),
-    path.join(BASEDIR, 'fixtures', 'restaurant'),
-    path.join(BASEDIR, 'fixtures', 'certificate'),
-    path.join(BASEDIR, 'fixtures', 'naturearea'),
-    path.join(BASEDIR, 'fixtures', 'leisure'),
-    path.join(BASEDIR, 'fixtures', 'shopping'),
-    path.join(BASEDIR, 'fixtures', 'visit'),
-    path.join(BASEDIR, 'fixtures', 'accommodation'),
 )
 
 FIXTURES_EXCLUDES = (
@@ -369,11 +176,9 @@ FIXTURES_EXCLUDES = (
 )
 
 DOCUMENT_STATUS_LIST = (
-    (1, ugettext('Borrador')),
-    (2, ugettext('Publicado')),
+    (1, ugettext('Draft')),
+    (2, ugettext('Published')),
 )
-
-PHOTOCONTEST_STATUS_LIST = DOCUMENT_STATUS_LIST
 
 STATUS_LIST = (
     ('draft', ugettext('Borrador')),
@@ -394,25 +199,10 @@ DEFAULT_LATITUDE = 36.851362
 DEFAULT_LONGITUDE = -5.753321
 
 FILTRABLE_MODELS = (
-    'golf.course',
-    'beach.beach',
-    'restaurant.restaurant',
-    'shopping.shop',
-    'touristservice.touristinformation',
-    # naturearea is unactived until naturearea section was published
-    #'naturearea.naturearea.withbounds',
-    'leisure.nightplace',
-    'leisure.park',
-    'visit.visit',
-    'accommodation.accommodation',
-    'event.event',
-    'convention.baseconvention',
-    'sport.sportfacility',
 )
 
 # Pagination options
 PAGE_VARIABLE = 'page'
-PAGINATION_DEFAULT_WINDOW = 3
 
 LIMIT_URL_SPIDER_TEST = 20
 
@@ -433,50 +223,33 @@ CACHE_MIDDLEWARE_SECONDS = 3600*24
 CACHE_MIDDLEWARE_KEY_PREFIX = 'andaluciaorg'
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
-PLONE_LANGUAGE_COOKIE_NAME = 'I18N_LANGUAGE'
-
 # It also can be JaroWinkler
 SEARCH_ALGORITHM = 'LevenshteinDistance'
 PROPERTIES_JAROWINKLER = {'accuracy': 0.75, 'weight': 0.05}
 PROPERTIES_LEVENTEIN = {'accuracy_letter': 3}
 
-DMIGRATIONS_DIR = path.join(BASEDIR, 'migrations')
-
 SVNDIR = path.join(BASEDIR, 'apps')
 
-PRODUCTION_DB_URL = "https://andalucia:andalucia06@trac.yaco.es/tur-andalucia/attachment/wiki/BasesDeDatos/backup_09073058.sql.bz2?format=raw"
+PRODUCTION_DB_URL = ""
+PRODUCTION_DB_UPDATE_PASSWORDS = (('admin', 'admin'), )
 
-PRODUCTION_DB_UPDATE_PASSWORDS = (('admin', 'andalucia06'), )
-
-#Rosetta
-
+# For rosetta
 ENABLE_TRANSLATION_SUGGESTIONS = False
 
-DEFAULT_FROM_EMAIL = 'no-reply@andalucia.org'
-DEALS_BCC_EMAIL = 'contenidos@andalucia.org'
-SUGGESTION_BOX_EMAIL = 'contenidos@andalucia.org'
+DEFAULT_FROM_EMAIL = 'no-reply@yaco.es'
+SUGGESTION_BOX_EMAIL = 'info@yaco.es'
 
-CONTACT_SUGGESTIONBOX_PREFIX = 'BUZON DE SUGERENCIAS'
-
-FAVOURITE_SETTINGS = {
-                    'INDEX': 'travelbook.views.travelbook_index',
-                    'VIEW': 'travelbook.views.travelbook_view',
-                    'NEW_FAVOURITE_LABEL': 'Name of new travel book',
-                    'FAVOURITE_LABEL': 'Travel book',
-                    'PREVIEW_DELETE_TEMPLATE': 'travelbook/travel_delete_preview.html',
-                    'FORM_DELETE_TEMPLATE': 'travelbook/travel_index.html',
-                   }
-
+CONTACT_SUGGESTIONBOX_PREFIX = 'SUGGESTION BOX'
 
 CAPTCHA_SETTINGS = {
-                    'NUMBER_SWAP': {
-                                    'O': '0',
-                                    'Z': '2',
-                                    'S': '5',
-                                    'B': '8',
-                    },
-                    'CASE_SENSITIVE': False,
-                }
+    'NUMBER_SWAP': {
+                    'O': '0',
+                    'Z': '2',
+                    'S': '5',
+                    'B': '8',
+    },
+    'CASE_SENSITIVE': False,
+}
 
 # Allow overwriting any configuration in optional settings_local.py
 # (it can be used to set up your own database, debug and cache options, contact mails...)
