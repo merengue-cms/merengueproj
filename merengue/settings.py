@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-# Django settings for andaluciaorg project.
+# Django settings for merengue project.
 
 from os import path
 
@@ -111,7 +111,7 @@ DEBUG_TOOLBAR_PANELS = (
     #'debug_toolbar.panels.logger.LoggingPanel',
 )
 
-ROOT_URLCONF = 'andaluciaorg.urls'
+ROOT_URLCONF = 'merengue.urls'
 
 TEMPLATE_DIRS = (
     path.join(BASEDIR, 'templates'),
@@ -220,7 +220,7 @@ BATCHADMIN_JQUERY_JS= 'js/jquery-1.2.6.min.js'
 
 CACHE_BACKEND = 'dummy:///'
 CACHE_MIDDLEWARE_SECONDS = 3600*24
-CACHE_MIDDLEWARE_KEY_PREFIX = 'andaluciaorg'
+CACHE_MIDDLEWARE_KEY_PREFIX = 'merengue'
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
 # It also can be JaroWinkler
