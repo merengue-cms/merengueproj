@@ -69,8 +69,6 @@ urlpatterns += patterns('',
 
     # base urls
     (r'^base/', include('base.urls')),
-    url(r'^infraestructuras/(?P<feature_slug>.+)/$',
-        'base.views.feature_listing', name='feature_listing'),
 
     (r'^ajax/autocomplete/tags/(?P<app_name>.*)/(?P<model>.*)/$',
      'portal.views.ajax_autocomplete_tags'),
