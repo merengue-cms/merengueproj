@@ -1,0 +1,186 @@
+{% load i18n %}
+{% if is_staff %}
+<script language="javascript">
+(function ($) {
+    $(document).ready(function () {
+        rosetta_actions_html = '\
+            <div class="rosetta_container">\
+                <span class="show_rosetta_bar">||</span>\
+                <span class="rosetta_actions">\
+                    <span class="rosetta_action hightlight_trans">{% trans "See Tranlated items" %}</span>\
+                    <span class="rosetta_action hightlight_notrans">{% trans "See not translated items" %}</span>\
+                    <span class="rosetta_action restart_server">{% trans "Apply changes" %}</span>\
+                </span>\
+            </div>';
+        $("body").prepend(rosetta_actions_html);
+        var some_changes = false;
+        var send_translation = function (){
+            var msgid = $(this).attr('rel');
+            var untranslated = false;
+            var old_msgstr = $(this).html() ;
+            var msgstr = prompt('{% trans "Give a new translation for " %} "' + msgid + '" to {{ language }}', old_msgstr);
+            if (msgstr == null){
+                return false;
+            }
+            if (msgstr == ""){
+                answer = confirm("{% trans "You're sending a empty translation ¿Are you sure? " %}");
+                var msgstr = "";
+            }
+            else {
+                answer = true;
+            }
+            if(answer){
+                var item = $(this);
+                $.ajax({
+                    data: "msgid=" + msgid + "&msgstr=" + msgstr,
+                    url: "{% url rosetta.views.set_new_translation %}",
+                    type: "POST",
+                    async: true,
+                    success: function(response){
+                        item.html(msgstr || msgid);
+                        some_changes = true;
+                        active_restart()
+                    },
+                    error: function(response){
+                        alert("{% trans "Can't send translation" %}");
+                    }
+                });
+            }
+            return false;
+        }
+        var active_translation = false;
+
+        var active_translations = function () {
+            if ($("span.rosetta_actions span.active").length && !active_translation) {
+                active_translation = true;
+                $("a > span.translatable").each(function(){
+                    $(this).parent().click(function () {
+                        return false;
+                    });
+                });
+                $("span.translatable").click(send_translation);
+            }
+        }
+
+        var disable_translations = function () {
+            if ($("span.rosetta_actions span.active").length == 0 && active_translation) {
+                active_translation = false;
+                $("span.translatable").unbind("click", send_translation);
+                $("a > span.translatable").each(function(){
+                    $(this).parent().unbind('click');
+                });
+            }
+        }
+
+        $("span.hightlight_trans").click(function(){
+            $("span.translatable").toggleClass("rosetta_highlight");
+            $(this).toggleClass("active");
+            if ($(this).hasClass("active")) {
+                active_translations();
+            }
+            else {
+                disable_translations();
+            }
+        });
+
+        $("span.show_rosetta_bar").click(function(){
+            $(this).toggleClass("active");
+            if ($(this).hasClass("active")){
+                $("span.rosetta_actions").css({ display: "inline" });
+            }
+            else{
+                $("span.rosetta_actions").css({ display: "none" });
+                disable_translations();
+            }
+        });
+
+        $("span.hightlight_notrans").click(function(){
+            $(this).toggleClass("active");
+            if ($(this).hasClass("active")) {
+                active_translations();
+            }
+            else {
+                disable_translations();
+            }
+            $("span.untranslated").toggleClass("rosetta_untranslated");
+        });
+
+        active_restart = function () {
+            $("span.restart_server").css({display: 'inline'});
+            $("span.restart_server").click(function(){
+                if (some_changes){
+                    $("span.restart_server").html("{% trans "Applying Changes" %}");
+                    $(this).toggleClass("active");
+                    $.ajax({
+                            data: "",
+                            url: "{% url rosetta.views.do_restart %}",
+                            type: "POST",
+                            async: true,
+                            success: function(response){
+                                some_changes = false;
+                                $("span.restart_server").html("{% trans "Reloading" %}");
+                                setTimeout(function(){
+                                   document.location = document.location;
+                                   $("span.restart_server").html("{% trans "Apply Changes" %}");
+                                   $("span.restart_server").toggleClass("active");
+                                }, 5000);
+                            },
+                            error: function(response){
+                                alert("{% trans "Can't restart server" %}");
+                            }
+                    });
+                }
+            });
+        }
+
+    });
+})(jQuery);
+</script>
+
+
+<style type="text/css">
+div.rosetta_container {
+    display: inline;
+    height: 16px;
+    border: #DDDDDD solid 1px;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    z-index : 1000;
+    float: right;
+    background-color: #EDEDED;
+    font-family: sans-serif;
+    font-size: 11px;
+}
+
+span.show_rosetta_bar {
+    cursor: pointer;
+    padding: 1px 3px 2px 3px;
+}
+
+span.rosetta_action {
+    padding: 0 5px 0 5px;
+    cursor: pointer;
+}
+
+span.rosetta_actions, 
+span.restart_server {
+    display: none;
+}
+
+div.rosetta_container .active{
+    background-color: #bfbfbf;
+}
+
+
+span.rosetta_untranslated {
+    background-color: #ffc0cb !important;
+
+}
+
+span.rosetta_highlight {
+    background-color: #90ee90;
+}
+
+</style>
+{% endif %}

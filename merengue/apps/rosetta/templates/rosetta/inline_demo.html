@@ -1,0 +1,50 @@
+{% load i18n rosetta_tags %}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><title>Rosetta - Inline Translations Demo</title>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <script src="/media/js/jquery-1.2.6.min.js"></script>
+</head>
+
+<style type="text/css">
+body {
+    font-family:Verdana,sans-serif;
+    font-size:12px;
+    font-size-adjust:none;
+    font-style:normal;
+    font-variant:normal;
+    font-weight:normal;
+    line-height:1.4em;
+}
+
+.example-item {
+    margin-bottom: 50px;
+}
+</style>
+
+
+{% rosetta_media_inline %}
+<body>
+<div class="example-item">
+    <h1>Example: in H2 (click on Province)</h1>
+    <h2>Rosetta trans:  {% rosetta_trans "Province" %}</h2>
+    <h2>i18n trans: {% trans "Province" %}</h2>
+</div> 
+<div class="example-item">
+    <h1>Example: in div contain  (click on Add)</h1>
+    <div>Rosetta trans: {% rosetta_trans "Add" %}</div>
+    <div>i18n trans: {% trans "Add" %}</div>
+</div>
+<div class="example-item">
+    <h1>Example: msgid don't exists  (click on New word)</h1>
+    <div>Rosetta trans: {% rosetta_trans "New word" %}</div>
+    <div>i18n trans: {% trans "Add" %}</div>
+</div>
+<div class="example-item">
+    <h1>Example: in link (click on Province)</h1>
+    <a href="/">Rosetta trans: {% rosetta_trans "Province" %}</a>
+    <br />
+    <a href="/">i18n trans: {% trans "Province" %}</a>
+</div>
+
+</body>

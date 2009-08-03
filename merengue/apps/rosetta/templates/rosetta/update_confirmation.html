@@ -1,0 +1,62 @@
+{% extends "rosetta/base.html" %}
+{% load rosetta_originaltags i18n %}
+{% block header %}
+    {{block.super}}
+    <div id="rosetta-tools" style="float: right; font-size: 11px; padding-right: 10px;">
+        <p>
+            <span><a href="{% url rosetta-restart-server %}">{% trans "Restart web server" %}</a> /
+            <a href="{% url rosetta-pick-file %}">{% trans "Pick another file" %}</a> / 
+            <a href="{% url rosetta-download-file %}">{% trans "Download this catalog" %}</a> /
+            <a href="{% url rosetta-update-file %}">{% trans "Update a file" %}</a>
+            </span>
+        </p>
+    </div>
+{% endblock %}
+
+{% block breadcumbs %}
+    <a href="{% url rosetta-pick-file %}">{% trans "Home" %}</a> &rsaquo; 
+    {% blocktrans with rosetta_i18n_pofile.percent_translated|floatformat:2 as percent_translated  %} Update file {% endblocktrans %}
+{% endblock %}
+
+{% block main %}
+    <h1> {% trans "Are you sure you want to update this file?" %} </h1>
+    <p><a href="{% url rosetta-language-selection lang, lang_index %}">{{ po_dest_file }}</a></p>
+    <h2>{% trans "Check that this path is similar to this one: "%}</h2>
+    <p>{{ posible_path }}</p>
+
+
+    {% if not changes_entries and not news_entries %}
+        <h3>{% trans "No changes"%}</h3>
+    {% else %}
+        <h3>{% trans "Your action wil have these consequences:"%}</h3>
+        <ul>
+            {% if changes_entries %}
+            <li> {% trans "News messages created" %}
+            <ul>
+                {% for entry in changes_entries %}
+                    <li> {{ entry.entry.msgid }}: '{{ entry.entry.msgstr }}' </li>
+                {% endfor %}
+            </ul>
+            </li>
+            {% endif %}
+            {% if news_entries %}
+            <li> {% trans "Old messages updated" %}
+            <ul>
+                {% for entry in news_entries %}
+                    <li> {{ entry.entry.msgid }}: from '{{ entry.entry_destination }}' to '{{ entry.entry.msgstr }}' </li>
+                {% endfor %}
+            </ul>
+            </li>
+            {% endif %}
+        </ul>
+    {% endif %}
+
+
+    <form action="." method="POST" enctype="multipart/form-data">
+            {{ form.as_django_admin }}
+        <div class="submit-row">
+            <input type="submit" name="_save" class="default" value="{% trans "Confirmation" %}"/>
+        </div>
+    </form>
+
+{% endblock %}
