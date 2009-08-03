@@ -1,0 +1,8 @@
+{% load i18n %}
+
+<div class="actions">
+    <button type="button" class="all" name="select_all" title="Select all {{ cl.opts.verbose_name_plural }}">&#x2713; {% trans "Select all" %}</button>
+    <button type="button" class="all" name="deselect_all" title="Deselect all {{ cl.opts.verbose_name_plural }}">&#x2718; {% trans "Deselect all" %}</button>
+    {% for field in batchadmin_action_form %}<label>{{ field.label }} {{ field }}</label>{% endfor %}
+    <input type="submit" title="Perform the selected action" name="index-{{ batchadmin_index|default:0 }}" value="{% trans "Go" %}" />
+</div>
