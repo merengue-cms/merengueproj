@@ -46,7 +46,7 @@ class EventCategoryGroupAdmin(BaseAdmin):
 
 
 class EventAdmin(BaseContentAdmin):
-    ordering = ('name', )
+    ordering = ('name_es', )
     search_fields = ('name', )
     exclude = ('expire_date', )
     list_display = ('name', 'google_minimap', 'cached_min_start', 'cached_max_end', 'status', 'user_modification_date', 'last_editor')

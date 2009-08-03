@@ -106,8 +106,8 @@ class Base(models.Model):
 
     class Meta:
         abstract = True
-        translate = ('description', 'plain_description', )
-        ordering = ('name', )
+        translate = ('name', 'description', 'plain_description', )
+        ordering = ('name_es', )
 
     def save(self, *args, **kwargs):
         for lang in settings.LANGUAGES:
@@ -269,7 +269,7 @@ class BaseContent(LocatableContent):
             ("can_change_main_image", "Can edit main image field"),
             ("can_change_map_icon", "Can edit map icon field"),
         )
-        ordering = ('name', )
+        ordering = ('name_es', )
 
     @classmethod
     def get_menu_name(cls):

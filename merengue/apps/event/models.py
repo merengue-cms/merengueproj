@@ -52,7 +52,6 @@ class Event(BaseContent):
     """ Andalucia event """
     __metaclass__ = TransMeta
 
-    title = models.CharField(verbose_name=_('title'), max_length=200)
     publish_date = models.DateTimeField(blank=True, null=True, db_index=True, editable=False)
     expire_date = models.DateTimeField(blank=True, null=True, db_index=True)
     cached_min_start = models.DateTimeField(_('Start date'), null=True, editable=False, db_index=True)
@@ -84,12 +83,15 @@ class Event(BaseContent):
         return self.cached_max_end
     end = property(_end)
 
+    def _title(self):
+        return self.name
+    title = property(_title)
+
     objects = EventManager()
 
     class Meta:
         verbose_name = _('event')
         verbose_name_plural = _('events')
-        translate = ('title', )
 
     @permalink
     def public_link(self):
@@ -97,13 +99,6 @@ class Event(BaseContent):
 
     def __unicode__(self):
         return self.title or self.name or u''
-
-    def save(self, **kwargs):
-        if self.title_es:
-            self.name = self.title_es
-        elif self.name:
-            self.title_es = self.name
-        super(Event, self).save(**kwargs)
 
     def get_locations(self):
         """ Get visible locations for maps """
