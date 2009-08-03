@@ -106,20 +106,6 @@
 {% block extrabody %}
 {% endblock %}
 {% block statisticsnippet %}
-{% if not debug %}
-<!-- START Nielsen//NetRatings SiteCensus V5.3 -->
-<!-- COPYRIGHT 2007 Nielsen//NetRatings -->
-<script type="text/javascript">
-        var _rsCI="es-turandaluz";
-        var _rsCG="{{ LANGUAGE_CODE }}";
-        var _rsDN="//secure-uk.imrworldwide.com/";
-</script>
-<script type="text/javascript" src="//secure-uk.imrworldwide.com/v53.js"></script>
-<noscript>
-        <div><img src="//secure-uk.imrworldwide.com/cgi-bin/m?ci=es-turandaluz&amp;cg=0&amp;cc=1" alt=""/></div>
-</noscript>
-{% endif %}
-<!-- END Nielsen//NetRatings SiteCensus V5.3 -->
 {% endblock statisticsnippet %}
 
 {% if debug %}
