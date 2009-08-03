@@ -140,6 +140,7 @@ INSTALLED_APPS = (
     'multimedia',
     'places',
     'base',
+    'event',
     'portal',
     'inplaceeditform',
     'searchform',
