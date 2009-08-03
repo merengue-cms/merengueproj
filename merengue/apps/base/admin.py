@@ -44,15 +44,27 @@ from base.utils import geolocate_object_base, copy_request
 from base.widgets import CustomTinyMCE, OpenLayersWidgetLatitudeLongitude, OpenLayersInlineLatitudeLongitude
 from multimedia.models import Photo, Video, PanoramicView, Image3D, BaseMultimedia
 
-from places.models import Location, BaseDestination, BaseCity
+from places.models import Location
 
 from section.models import Document, BaseSection
 
-from deal.models import Bidder
 from transmeta import get_real_fieldname_in_each_language
 
 
 GMAP = GoogleMap(key=settings.GOOGLE_MAPS_API_KEY)
+
+
+def get_subclasses_registry_in_admin(cls, list_cls=None, admin_site=None):
+    if not cls.__subclasses__():
+        list_cls = list_cls or []
+        model_admin = admin_site and admin_site._registry.get(cls, None) or None
+        list_cls.append((cls, model_admin, ))
+    else:
+        for subcls in cls.__subclasses__():
+            if admin_site and cls in admin_site._registry.keys():
+                list_cls.append((cls, admin_site._registry[cls], ))
+            list_cls = get_subclasses_registry_in_admin(subcls, list_cls, admin_site)
+    return list_cls
 
 
 class UserCreationFormCust(UserCreationForm):
@@ -850,15 +862,6 @@ class BaseContentRelatedItemsRelatedModelAdmin(BaseContentRelatedModelAdmin):
                      'related_manager_name': 'related_items',
                      'selected': 'contents',
                     },
-        'cities': {'model': BaseCity,
-                   'opts': BaseCity._meta,
-                   'ordering': ('name', ),
-                   'list_display': ('batchadmin_checkbox', 'name', 'is_related', 'city_code', 'province',
-                                    'get_touristzones_text', 'status', 'last_editor'),
-                   'list_filter': ('province', 'status', 'last_editor'),
-                   'related_manager_name': 'related_cities',
-                   'selected': 'cities',
-                  },
         'sections': {'model': BaseSection,
                      'opts': BaseSection._meta,
                      'ordering': ('name_es', ),
@@ -1466,7 +1469,7 @@ class LogEntryRelatedContentModelAdmin(admin.ModelAdmin):
                 request_copy = copy_request(request, ['status'])
                 if content:
                     objects_ids = []
-                    list_models = [BaseMultimedia, BaseDestination]
+                    list_models = [BaseMultimedia]
                     list_models.extend(Base.__subclasses__())
                     content = ContentType.objects.get(id=content)
                     for basemodel in list_models:
@@ -1847,17 +1850,10 @@ class BaseContentOwnedAdmin(BaseAdmin):
         return False
 
 
-class UserBidderInlines(admin.StackedInline):
-    model = Bidder
-    extra = 1
-    max_num = 1
-
-
 class UserAdmin(BaseAdmin, UserAdminOriginal):
 
     form = UserChangeFormCust
     add_form = UserCreationFormCust
-    inlines = [UserBidderInlines]
     list_display = UserAdminOriginal.list_display + ('is_active', )
     list_filter = UserAdminOriginal.list_filter + ('is_active', )
 

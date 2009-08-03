@@ -20,7 +20,6 @@ from cmsutils.cache import get_path_cache_key
 
 from base.models import BaseContent
 from multimedia.models import BaseMultimedia
-from places.models import BaseDestination
 from tagging.models import Tag
 
 from section.models import Section, AppSection, BaseSection
@@ -109,16 +108,6 @@ def _content_status(status='pending', bool=True):
         contents[key] = {'content': basemultimedia_pending, 'url': url, 'verbose_name': BaseMultimedia._meta.verbose_name}
     elif basemultimedia_pending and bool:
         return True
-
-    subclasses_basedestination = _get_subclasses(BaseDestination)
-    for model in subclasses_basedestination:
-        basedestination_pending = model.objects.filter(status=status)
-        if not bool:
-            key = "%s %s" %(model._meta.app_label, model._meta.module_name)
-            url = "/admin/pending_destination/%s/" % ('/').join(key.split())
-            contents[key] = {'content': basedestination_pending, 'url': url, 'verbose_name': model._meta.verbose_name}
-        elif basedestination_pending and False:
-            return True
 
     if not bool:
         return contents

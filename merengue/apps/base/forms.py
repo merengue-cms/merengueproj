@@ -13,13 +13,7 @@ from django.utils.translation import get_language
 from django.utils.translation import ugettext_lazy as _
 
 from base.models import BaseContent
-from base.searchterms import FeatureSearchTerm, HandicapedSearchTerm
-from certificate.forms import CertificateQuickSearchTerm
 from cmsutils.adminfilters import QueryStringManager
-from places.terms import CityQuickSearchTerm, ProvinceQuickSearchTerm
-from places.terms import CitySearchTerm, ProvinceSearchTerm, TouristZoneSearchTerm
-from places.terms import CertificateResourceSearchTerm, ContentClassSearchTerm
-from places.models import City
 from searchform.forms import SearchForm
 from searchform.registry import search_form_registry
 from searchform.terms import FreeTextSearchTerm, TextSearchTerm
@@ -190,37 +184,6 @@ class TransTextSearchTerm(TextSearchTerm):
         return super(TransTextSearchTerm, self).bind(self._field_name_with_language(field_name))
 
 
-def add_villages_to_city(filters):
-    """Add the villages of a city when the filter includes that city.
-
-    Example: if the filters includes this:
-
-       location__cities__exact=23
-
-    the new filter is
-
-       location__cities__in=[23, 45, 31]
-
-    Where 45 and 31 are villages which city is 23
-
-    Note: this function MODIFIES (like all filters processors)
-    the filters argument.
-    """
-    new_filters = filters
-    if 'location__cities__exact' in filters:
-        city_id = int(filters['location__cities__exact'])
-        try:
-            city = City.objects.get(id=city_id)
-            villages = [v.id for v in city.villages.all()]
-            new_filters = filters
-            new_filters['location__cities__in'] = [city_id] + villages
-            del new_filters['location__cities__exact']
-        except City.DoesNotExist:
-            pass # it was already a village
-
-    return new_filters
-
-
 class BaseSearchForm(SearchForm):
 
     extra_scripts = ('%sjs/searchlets.js' % settings.MEDIA_URL, )
@@ -242,19 +205,6 @@ class BaseSearchForm(SearchForm):
     def title(cls):
         return cls.content_name().capitalize()
 
-    def __init__(self, *args, **kwargs):
-        super(BaseSearchForm, self).__init__(*args, **kwargs)
-        if 'features' in self.fields:
-            self.fields['features'].filters = {'basecontent__class_name': self.content_name()}
-        if 'handicapped_services' in self.fields:
-            self.fields['handicapped_services'].filters = {'basecontent__class_name': self.content_name()}
-
-        # Ver #1912. Cuando los contenidos esten bien rellenados esto sera redundante
-        if 'certificates' in self.fields:
-            if len(self.fields['certificates'] .options) == 0:
-                del self.fields['certificates']
-
-
     # Search Interface
     results_template = 'base/search_results_view.html'
     base_results_template = 'section/base_section.html'
@@ -265,11 +215,6 @@ class BaseSearchForm(SearchForm):
 
     def get_results_queryset(self, request):
         return self.results_model.objects.published()
-
-    def get_filter_processors(self):
-        # add villages to the cities filter so we include
-        # the village's resources when searching its city
-        return [add_villages_to_city]
 
     def get_select_related_fields(self):
         # prefetch the location since we draw a mini google map for each hit
@@ -315,12 +260,6 @@ class BaseSearchForm(SearchForm):
 
         return results
 
-    @property
-    def results_class_name(self):
-        """Used when filtering the cities using the province select"""
-        if self.results_model:
-            return self.results_model._meta.module_name
-
     def render_search_results_map(self, request):
         results = self.search_results(request)
         #import ipdb; ipdb.set_trace()
@@ -350,16 +289,6 @@ class AdvancedSearchForm(BaseSearchForm):
     use_tabs = True
 
 
-services_advanced_fields = (
-    ('features', FeatureSearchTerm(_(u'Feature'),
-                                   _(u'Feature'),
-                                   _(u'which feature'))),
-    ('handicapped_services', HandicapedSearchTerm(_(u'Handicapped services'),
-                                                  _(u'Handicapped services'),
-                                                  _(u'which handicapped services'))),
-    )
-
-
 class BaseBaseContentSearchForm(object):
 
     results_model = BaseContent
@@ -377,33 +306,8 @@ class BaseContentQuickSearchForm(BaseBaseContentSearchForm, QuickSearchForm):
              FreeTextSearchTerm(_(u'Name'),
                                 _(u'Name'),
                                 _(u'which name'))),
-
-            ('location__cities__name',
-             FreeTextSearchTerm(_(u'City'),
-                                _(u'City'),
-                                _(u'which city zone'))),
-
-            ('location__cities',
-             CityQuickSearchTerm(_(u'City'),
-                                 _(u'City'),
-                                 _(u'which city'))),
-
-            ('location__cities__province',
-             ProvinceQuickSearchTerm(_(u'Province'),
-                                     _(u'Province'),
-                                     _(u'which province'))),
-
-            ('certificates',
-             CertificateQuickSearchTerm(_(u'Quality mark'),
-                                        _(u'Quality mark'),
-                                        _(u'which quality mark'))),
-
-            ('class_name',
-             ContentClassSearchTerm(_(u'Type'),
-                                    _(u'Type'),
-                                    _(u'which type'))),
-
-            ))
+            )
+    )
 
     def __init__(self, *args, **kwargs):
         super(BaseContentQuickSearchForm, self).__init__(*args, **kwargs)
@@ -421,34 +325,8 @@ class BaseContentAdvancedSearchForm(BaseBaseContentSearchForm, AdvancedSearchFor
              TextSearchTerm(_(u'Name'),
                             _(u'Name'),
                             _(u'which name'))),
-
-            ('location__cities',
-             CitySearchTerm(_(u'The city'),
-                            _(u'City'),
-                            _(u'which city'))),
-
-            ('location__cities__province',
-             ProvinceSearchTerm(_(u'Province'),
-                                _(u'Province'),
-                                _(u'which province'))),
-
-            ('location__cities__touristzone',
-             TouristZoneSearchTerm(_(u'The tourist zone'),
-                                   _(u'Tourist zone'),
-                                   _(u'which tourist zone'))),
-
-            ('class_name',
-             ContentClassSearchTerm(_(u'The type'),
-                                    _(u'Type'),
-                                    _(u'which type'))),
-
-            ('certificates',
-             CertificateResourceSearchTerm(_(u'Quality mark'),
-                                           _(u'Quality mark'),
-                                           _(u'which quality mark'))),
-
-
-            ) + services_advanced_fields)
+        )
+    )
 
     def __init__(self, *args, **kwargs):
         super(BaseContentAdvancedSearchForm, self).__init__(*args, **kwargs)

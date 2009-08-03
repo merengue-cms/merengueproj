@@ -1,17 +1,10 @@
-from django import template
 from django.conf import settings
 from django.contrib import admin
-from django.contrib.admin.util import unquote
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import PermissionDenied
 from django.forms.models import save_instance
 from django.forms.util import ValidationError
 from django.forms.widgets import HiddenInput
-from django.http import Http404, HttpResponseRedirect
-from django.shortcuts import render_to_response
-from django.utils.encoding import force_unicode
-from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
@@ -25,8 +18,6 @@ from multimedia.models import Photo
 from section.models import (Menu, Section, AppSection, Carousel,
                             BaseLink, AbsoluteLink, DocumentLink, Document)
 from section.widgets import ModifiedRelatedFieldWidgetWrapper, SearchFormOptionsWidget
-from section.forms import SyncFromPloneForm
-from section.sync import sync_from_plone, SyncException
 
 
 DRAFT = 1
@@ -113,50 +104,6 @@ class BaseSectionRelatedCustomStyleModelAdmin(BaseContentRelatedModelAdmin):
         return super(BaseSectionRelatedCustomStyleModelAdmin, self).response_add(request, obj, post_url_continue)
 
 
-class DocumentSyncFromPloneProvider(object):
-
-    def sync_from_plone_view(self, request, object_id, sync_template='admin/section/document/sync_from_plone.html'):
-        opts = self.model._meta
-
-        try:
-            obj = self.model._default_manager.get(pk=unquote(object_id))
-        except self.model.DoesNotExist:
-            obj = None
-
-        if not self.has_change_permission(request, obj):
-            raise PermissionDenied
-
-        if obj is None:
-            raise Http404('%s object with primary key %r does not exist.' % (force_unicode(opts.verbose_name), escape(object_id)))
-
-        if request.method == 'POST':
-            form = SyncFromPloneForm(request.POST)
-            if form.is_valid():
-                try:
-                    sync_from_plone(request, obj, form.cleaned_data)
-                    obj.save()
-                    msg = _('The document "%s" was synced successfully. You may edit it below.') % force_unicode(obj)
-                    self.message_user(request, msg)
-                    return HttpResponseRedirect('../')
-                except SyncException, se:
-                    form.invalidate(se)
-        else:
-            form = SyncFromPloneForm()
-        basecontent = getattr(self.admin_site, 'basecontent', None)
-        return render_to_response(sync_template,
-                                  {'original': obj,
-                                   'form': form,
-                                   'app_label': opts.app_label,
-                                   'opts': opts,
-                                   'basecontent': basecontent,
-                                   'basecontent_opts': basecontent and basecontent._meta,
-                                   'inside_basecontent': True,
-                                   'sync_view': True,
-                                   'change': True,
-                                  },
-                                  context_instance=template.RequestContext(request))
-
-
 class DocumentWorkflowBatchActionProvider(object):
 
     def set_as_draft(self, request, changelist):
@@ -224,7 +171,7 @@ class BaseDocumentModelAdmin(object):
             pass
 
 
-class BaseSectionRelatedDocumentModelAdmin(BaseContentRelatedModelAdmin, DocumentSyncFromPloneProvider, DocumentWorkflowBatchActionProvider, BaseDocumentModelAdmin):
+class BaseSectionRelatedDocumentModelAdmin(BaseContentRelatedModelAdmin, DocumentWorkflowBatchActionProvider, BaseDocumentModelAdmin):
     selected = 'documents'
     change_list_template = "admin/section/document/change_list.html"
     list_display = ('name', 'slug', 'status', )
@@ -302,9 +249,6 @@ class BaseSectionRelatedDocumentModelAdmin(BaseContentRelatedModelAdmin, Documen
     def __call__(self, request, url):
         self.selected = 'main_menu'
         self.selected_menu = self.admin_site.basecontent.main_menu
-        if url and url.endswith('sync'):
-            url = url[:url.find('/sync')]
-            return self.sync_from_plone_view(request, unquote(url))
         return super(BaseSectionRelatedDocumentModelAdmin, self).__call__(request, url)
 
 
@@ -630,8 +574,7 @@ class CarouselRelatedRemovePhotoModelAdmin(CarouselRelatedPhotoModelAdmin, Workf
         return Photo.objects.filter(carousel=self.admin_site.basecontent)
 
 
-class DocumentAdmin(BaseAdmin, DocumentSyncFromPloneProvider, DocumentWorkflowBatchActionProvider, BaseDocumentModelAdmin):
-    sync_view = 'admin/section/document/sync_from_plone.html'
+class DocumentAdmin(BaseAdmin, DocumentWorkflowBatchActionProvider, BaseDocumentModelAdmin):
     change_form_template = 'admin/section/document/change_form.html'
 
     list_display = ('name', 'slug', 'status', )
@@ -653,12 +596,6 @@ class DocumentAdmin(BaseAdmin, DocumentSyncFromPloneProvider, DocumentWorkflowBa
             formfield.required = True
 
         return formfield
-
-    def __call__(self, request, url):
-        if url and url.endswith('sync'):
-            url = url[:url.find('/sync')]
-            return self.sync_from_plone_view(request, unquote(url), self.sync_view)
-        return super(DocumentAdmin, self).__call__(request, url)
 
 
 class NoSectionDocumentAdmin(DocumentAdmin):

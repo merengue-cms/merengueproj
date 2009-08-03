@@ -1,4 +1,3 @@
-import datetime
 import hashlib
 import os
 
@@ -15,7 +14,7 @@ from cmsutils.tag_utils import parse_args_kwargs_and_as_var, \
                                RenderWithArgsAndKwargsNode
 
 from base.models import BaseContent, LocatableContent
-from places.models import BaseLocation, BaseCity, TouristZone, Province
+from places.models import BaseLocation
 
 import copy
 
@@ -54,19 +53,6 @@ def get_bounds(content, content_pois, content_areas):
             # if we have just one point expand the borders
             # to avoid to much zoom
             content = content_pois[0]
-            if isinstance(content, BaseContent) and \
-               content.get_class_name() == 'naturearea':
-                # if we have just one naturearea expand much more the area
-                return (points[0].x - 0.05, points[0].y - 0.05,
-                        points[0].x + 0.05, points[0].y + 0.05)
-            elif isinstance(content, BaseCity):
-                # if we have just one city or village expand not so much more
-                # the area
-                return (points[0].x - 0.01, points[0].y - 0.01,
-                        points[0].x + 0.01, points[0].y + 0.01)
-            else:
-                return (points[0].x - 0.002, points[0].y - 0.002,
-                        points[0].x + 0.002, points[0].y + 0.002)
         elif areas:
             ap = MultiPolygon(areas)
             return ap.extent
@@ -333,61 +319,6 @@ class ProximityFilter(template.Node):
         return output
 
 
-class RelatedFilter(template.Node):
-
-    def __init__(self, content_var, content_types):
-        self.content_var = content_var
-        self.content_types = content_types
-
-    def get_related_content_types(self, content):
-        if self.content_types:
-            return self.content_types
-        # Si el usuario no ha indicado que content_types tiene que mostrar
-        # el filtro, mostraremos aquellos para los que existan objetos
-        # localizados en content si content es un destino. Si content no
-        # es un destino el filtro no tiene sentido (no mostramos nada)
-        if not self.content_types:
-            if isinstance(content, BaseCity):
-                filter = {'location__cities': content}
-            elif isinstance(content, Province):
-                filter = {'location__cities__province': content}
-            elif isinstance(content, TouristZone):
-                filter = {'location__cities__in': content.cities.published()}
-            else:
-                filter = {}
-        if not filter:
-            return []
-        else:
-            filter.update({'location__main_location__isnull': False})
-        extra_exclude={'event__cached_max_end__lt': datetime.datetime.now()}
-        all_class_names = list(reduce(lambda a, b: set.union(set(a), set(b)),
-                                  settings.CLASS_NAMES_FOR_PLACES.values()))
-        available_class_names = [c['class_name'] for c in BaseContent.objects.filter(
-            class_name__in=all_class_names).exclude(**extra_exclude).\
-                                                       distinct('class_name').\
-                                                       values('class_name')]
-        result=[]
-        for model in BaseContent.__subclasses__():
-            class_name = model._meta.module_name
-            if class_name in available_class_names:
-                result.append(ContentType.objects.get_for_model(model))
-        result.sort(_sort_content_types)
-        return result
-
-    def render(self, context):
-        content = context.get(self.content_var, self.content_var)
-        extra_context = copy.copy(context)
-        extra_context['content_types'] = self.get_related_content_types(
-                                                                    content)
-        extra_context['content'] = content
-        extra_context['type'] = ContentType.objects.get_for_model(content)
-        extra_context['filter_title'] = _('What do you want to find?')
-
-        tpl = template.loader.get_template('base/map_filters.html')
-        output = tpl.render(extra_context)
-        return output
-
-
 def google_map_proximity_filter(parser, token):
     try:
         tag_name, args = token.contents.split(None, 1)
@@ -398,25 +329,6 @@ def google_map_proximity_filter(parser, token):
     content_types = _get_content_types(args)
     return ProximityFilter(content_types)
 register.tag('google_map_proximity_filter', google_map_proximity_filter)
-
-
-def google_map_related_filter(parser, token):
-    try:
-        tag_name, args = token.contents.split(None, 1)
-    except ValueError:
-        raise template.TemplateSyntaxError,\
-              "%r tag requires arguments" % token.contents.split()[0]
-    try:
-        content_var, args = args.split(None, 1)
-    except ValueError:
-        content_var = args
-        args = ''
-    if not args:
-        content_types = []
-    else:
-        content_types = _get_content_types(args.split())
-    return RelatedFilter(content_var, content_types)
-register.tag('google_map_related_filter', google_map_related_filter)
 
 
 def localized(objects):
