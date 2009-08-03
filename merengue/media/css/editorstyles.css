@@ -1,0 +1,13 @@
+/* styles seen in TinyMCE */
+
+.image-left {
+    float: left;
+    clear: both;
+    margin: 0.5em 25px 0.5em 0;
+}
+
+.image-right {
+    float: right;
+    clear: both;
+    margin: 0.5em 0 0.5em 25px;
+}

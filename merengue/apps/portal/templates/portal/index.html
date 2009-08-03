@@ -1,0 +1,12 @@
+{% extends "base/base.html" %}
+{% load inlinetrans %}
+{% block content %}
+<h1>{% inline_trans "Section list" %}</h1>
+<ul class="sectionlist">
+    {% for section in sections %}
+        <li class="status{{ section.main_document.status }}">
+          <a href="{{ section.get_absolute_url }}">{{ section.name }}</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

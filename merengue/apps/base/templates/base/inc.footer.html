@@ -1,0 +1,18 @@
+{% load i18n inlinetrans %}
+<div id="footer-left">
+  <a href="#" target="_blank">
+    <img title="{% trans "Merengue powered" %}"
+         alt="{% trans "Merengue powered" %}"
+         src="{{ MEDIA_URL }}img/merenguelogo.gif" />
+    </a>
+  </div>
+  <div id="footer-middle">
+    <p>
+      <a href="#" id="powered-by">{% inline_trans "Merengue powered" %}</a>
+      <br/>
+      <a href="#" id="general-conditions">{% inline_trans "General conditions" %}</a>
+    </p>
+  </div>
+  <div id="footer-right">
+  </div>
+</div>

@@ -1,0 +1,158 @@
+{% load i18n inlinetrans breadcrumbs messagebox svn %}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    {% if LANGUAGE_CODE %}
+    <meta http-equiv="content-language" content="{{ LANGUAGE_CODE }}">
+    {% endif %}
+    <link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon.ico" type="image/gif" />
+    <title>{% block pagetitle %}{% endblock %} - {% block sitetitle %}Merengue powered site{% endblock %}</title>
+
+    {% include "base/inc.cssstyles.html" %}
+    {% block extrastyle %}{% endblock %}
+
+    {% include "base/inc.jsfiles.html" %}
+    {% inlinetrans_media %}
+
+    {% block extrascripts %}{% endblock %}
+
+    {% block extrahead %}{% endblock %}
+
+    {% block customstyle %}{% endblock %}
+    {% if request.testing %}
+      <script type="text/javascript">
+        if (typeof TinyMCE_Engine != 'undefined') {
+          TinyMCE_Engine.prototype.init=function(settings) { this.settings=settings; return;};
+        }
+      </script>
+    {% endif %}
+</head>
+
+<!--[if lt IE 7 ]>
+<body dir="ltr" class="ie ie6"><![endif]--> <!--[if IE 7 ]>
+<body dir="ltr" class="ie ie7"><![endif]--> <!--[if IE 8 ]>
+ <body dir="ltr" class="ie ie8"><![endif]--> <!--[if !IE]>
+--> <body dir="ltr" {% block extrabodytag %}{% endblock %}><!--<![endif]-->
+
+{% current_svn_rev %}
+
+<div id="container" class="{% block bodycolorclass %}blue{% endblock %} {% block bodyextraclasses %}{% endblock %}">
+{% if not request.HIDE_DECORATIONS %}
+  <div id="header">
+    <div id="headerlogo">
+      {% block headerlogo %}
+        {% include "base/inc.headerlogo.html" %}
+      {% endblock %}
+    </div>
+
+    <div id="headerlinks">
+      {% block headerlinks %}
+        {% include "base/inc.headerlinks.html" %}
+      {% endblock %}
+    </div>
+
+  </div>
+
+  {% block breadcrumbsbox %}
+      <div id="breadcrumbs">
+        <a href="/">{% inline_trans "andalucia.org" %}</a>
+        {% block breadcrumbs %}{% endblock %}
+      </div>
+  {% endblock %}
+
+{% endif %}
+  <div id="content-zone">
+
+{% if not request.HIDE_MENU %}
+    <div id="left-sidebar">
+      {% block sidebar %}
+        {% include "base/inc.leftsidebar.html" %}
+      {% endblock %}
+    </div>
+{% endif %}
+
+    <div id="content" class="{% block contentclass %}withsidebar{% endblock %}">
+      <div id="messagebox">
+        {% messagebox %}
+      </div>
+      {% block content %}
+      {% endblock %}
+    </div>
+
+{% if not request.HIDE_MENU %}
+    <div id="right-sidebar">
+      {% block rightsidebar %}
+        {% include "base/inc.rightsidebar.html" %}
+      {% endblock %}
+    </div>
+{% endif %}
+
+  </div>
+{% if not request.HIDE_DECORATIONS %}
+
+  <div class="visualClear"></div>
+
+
+  <div id="footer">
+  {% block footer %}
+    {% include "base/inc.footer.html" %}
+  {% endblock %}
+  </div>
+
+{% endif %}
+</div>
+
+{% block extrabody %}
+{% endblock %}
+{% block statisticsnippet %}
+{% if not debug %}
+<!-- START Nielsen//NetRatings SiteCensus V5.3 -->
+<!-- COPYRIGHT 2007 Nielsen//NetRatings -->
+<script type="text/javascript">
+        var _rsCI="es-turandaluz";
+        var _rsCG="{{ LANGUAGE_CODE }}";
+        var _rsDN="//secure-uk.imrworldwide.com/";
+</script>
+<script type="text/javascript" src="//secure-uk.imrworldwide.com/v53.js"></script>
+<noscript>
+        <div><img src="//secure-uk.imrworldwide.com/cgi-bin/m?ci=es-turandaluz&amp;cg=0&amp;cc=1" alt=""/></div>
+</noscript>
+{% endif %}
+<!-- END Nielsen//NetRatings SiteCensus V5.3 -->
+{% endblock statisticsnippet %}
+
+{% if debug %}
+<div id="debug">
+  <h2>Queries</h2>
+  <p>
+    {{ sql_queries|length }} Quer{{ sql_queries|pluralize:"y,ies" }}
+    {% ifnotequal sql_queries|length 0 %}
+    (<span style="cursor: pointer;" onclick="var s=document.getElementById('debugQueryTable').style;s.display=s.display=='none'?'':'none';this.innerHTML=this
+.innerHTML=='Show'?'Hide':'Show';">Show</span>)
+    {% endifnotequal %}
+  </p>
+  <table id="debugQueryTable" style="display: none;">
+    <col width="1"></col>
+    <col></col>
+    <col width="1"></col>
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">SQL</th>
+      <th scope="col">Time</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for query in sql_queries %}<tr class="{% cycle odd,even %}">
+      <td>{{ forloop.counter }}</td>
+      <td>{{ query.sql|escape }}</td>
+      <td>{{ query.time }}</td>
+    </tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<link href="{{ MEDIA_URL }}css/style.css" rel="stylesheet" type="text/css" />
+<!--[if IE]>
+  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/iefixes.css" />
+<![endif]-->
+<script src="{{ MEDIA_URL }}js/jquery-1.2.6.min.js"></script>
+<script type="text/javascript">
+    jQuery.noConflict();
+</script>
+<script type="text/javascript">
+    (function($) {
+    $(document).ready(function () {
+        // Menu selector
+        var selected_menu = "{% block menuselected %}{{ selected_menu }}{% endblock %}";
+        if (selected_menu != null && selected_menu != "") {
+            selected_menu = selected_menu.split(" ");
+            if (selected_menu.length >= 1) {
+                var menu = selected_menu[0];
+                $("#sidebar ul.menu li[id=" + menu + "]").addClass("selectedMenu");
+                $("#sidebar ul.menu li[id=" + menu + "] > a").addClass("selected");
+            }
+            if (selected_menu.length >= 2) {
+                var submenu = selected_menu[1];
+                // strange way to select this menu because a jquery bug
+                $("#sidebar ul.submenu li[id=" + submenu + "]").addClass("selectedSubmenu");
+                $("#sidebar ul.submenu li[id=" + submenu + "] > a").addClass("selected");
+            }
+        }
+
+        // Google Maps unload
+        if (typeof google != "undefined" && typeof google.maps != "undefined") {
+            $(window).unload(function () {
+                google.maps.Unload();
+            });
+        }
+
+    });
+    })(jQuery);
+</script>
+

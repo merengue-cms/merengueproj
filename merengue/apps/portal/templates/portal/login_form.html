@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load i18n inlinetrans %}
+
+{% block bodycolorclass %}{% endblock %}
+
+{% block content %}
+<script type="text/javascript">
+//<![CDATA[
+(function($j) {
+    $j(document).ready( function () {
+        $j("#username").focus();
+    });
+})(jQuery);
+//]]>
+</script>
+<h2>{% inline_trans "Registered Users" %}</h2>
+
+<div class="pcontainer loginForm">
+
+  <form method="post"
+  {% if JOSSO_AVAILABLE %}
+    action="{{ JOSSO_LOGIN_PATH }}">
+    <input type="hidden" name="josso_cmd" value="login">
+    <input type="hidden" name="josso_on_error" value="{{ JOSSO_ON_ERROR }}">
+    <input type="hidden" name="josso_back_to" value="{{ JOSSO_BACK_TO }}">
+
+  {% else %}
+    action="">
+  {% endif %}
+      <div class="field">
+        <label for="username">{% inline_trans "Username or Email" %}</label>
+        <div class="help">{% trans "Case sensitive, make sure caps lock is not enabled." %}</div>
+              <input type="text" size="15" tabindex="0" id="username"
+              {% if JOSSO_AVAILABLE %}
+                name="josso_username"
+              {% else %}
+                name="username"
+              {% endif %}
+              value="" id="username" />
+      </div>
+
+      <div class="field">
+              <label for="password">{% inline_trans "Password" %}</label>
+              <div class="help">
+                  {% trans "Case sensitive, make sure caps lock is not enabled." %}
+              </div>
+              <input type="password" size="15"
+              {% if JOSSO_AVAILABLE %}
+                name="josso_password"
+              {% else %}
+                name="password"
+              {% endif %}
+              id="{% trans "Password" %}" />
+      </div>
+      <p class="submitpar">
+        <input class="button" type="submit" name="submit" value="{% trans "Login" %}" />
+      </p>
+
+      <p>{% inline_trans "Please log out or exit your browser when you're done." %}</p>
+      <p>{% inline_trans "If you have forgotten you access details," %} 
+        <a href="#">{% inline_trans "here" %}</a> {% inline_trans "for help" %}</p>
+  </form>
+</div>
+{% endblock %}

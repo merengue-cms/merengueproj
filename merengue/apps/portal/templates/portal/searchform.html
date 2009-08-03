@@ -1,0 +1,24 @@
+{% load i18n inlinetrans %}
+
+<div class="smart-search-form">
+  <h2 class="search-options">{% inline_trans "Search options" %}</h2>
+  <h4 class="title">{{ title }}
+    <span class="query">{{ query|safe }}</span>
+    <input class="search-action" name="__search_action" type="submit" value="{% trans "Search" %}"/>
+  </h4>
+
+  <div class="search-sections-container">
+  <h2 class="search-filters">{% inline_trans "Search filters" %}</h2>
+    <ul class="search-sections">
+    {% for field in fields %}
+      <li><button class="search-section" searchlet="{{ field.field_name }}">{{ field.menuitem_label }}</button></li>
+    {% endfor %}
+    </ul>
+
+    <div class="search-sections">
+    {% for field in fields %}
+      {{ field.render_searchlet_block|safe }}
+    {% endfor %}
+    </div>
+  </div>
+</div>

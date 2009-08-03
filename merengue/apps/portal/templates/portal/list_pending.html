@@ -1,0 +1,30 @@
+{% extends 'admin/index.html' %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Pending contents" %}
+{% endblock %}
+{% block content %}
+<h1>{% trans "Pending contents" %}</h1>
+<div id="content-main">
+<ul>
+    {% for key, content in contents.items %}
+        {% if content.content %}
+            {% ifequal key 'base basecontent' %}
+                <li> <h2><a href="{{ content.url }}{{ query }}"> {{ content.verbose_name }}</a></h2></li>
+            {% endifequal %}
+
+            {% ifequal key 'multimedia basemultimedia' %}
+                <li><h2><a href="{{ content.url }}{{ query }}"> {{ content.verbose_name }}</a></h2></li>
+            {% endifequal %}
+
+            {% ifnotequal key 'base basecontent' %}
+                {% ifnotequal key 'multimedia basemultimedia' %}
+                        <li><h2><a href="{{ content.url }}{{ query }}"> {{ content.verbose_name }}</a></h2></li>
+                {% endifnotequal %}
+            {% endifnotequal %}
+        {% endif %}
+    {% endfor %}
+</ul>
+</div>
+{% endblock %}

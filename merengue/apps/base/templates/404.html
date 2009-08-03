@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n inlinetrans %}
+
+{% block pagetitle %}{% trans "Page not found" %}{% endblock %}
+
+
+{% block sidebar %}
+    <h2 class="menutitle">{% inline_trans "Menu" %}</h2>
+{% endblock %}
+
+{% block content %}
+<h1 class="fancy home">{% trans "Page not found" %}</h1>
+<div id="error" class="error-container">
+    <img src="{{ MEDIA_URL }}img/error.jpg">
+    <div class="error-message">
+        <p>
+        {% trans "404 Error - The Page you are looking for is no longer available at this URL." %}
+        </p>
+        <p>
+        {% trans "Probably you found a bad link or mistyped the URL. We recommend you to" %}
+        {% trans 'return to <a href="/">home</a>' %}
+        </p>
+    </div>
+    <img src="{{ MEDIA_URL }}img/andalucia.gif">
+</div>
+
+
+
+{% endblock %}

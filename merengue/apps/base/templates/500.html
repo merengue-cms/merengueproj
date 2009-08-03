@@ -1,0 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+{% load i18n %}
+<html><title>Web Oficial de Turismo de Andalucía</title>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="/media/img/favicon.ico" type="image/gif" />
+
+    
+    <link href="/media/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="/media/css/colors.css" rel="stylesheet" type="text/css" />
+    
+    <!--[if IE]>
+        <link rel="stylesheet" type="text/css" href="/media/css/iefixes.css" />
+    <![endif]-->
+
+    <title>{% trans "Server Error" %}</title>
+
+</head>
+<!--[if lt IE 7 ]>
+<body dir="ltr" class="ie ie6"><![endif]--> <!--[if IE 7 ]>
+<body dir="ltr" class="ie ie7"><![endif]--> <!--[if IE 8 ]>
+ <body dir="ltr" class="ie ie8"><![endif]--> <!--[if !IE]>
+--> <body dir="ltr" ><!--<![endif]-->
+
+
+<div id="container" class="blue ">
+  <div id="header">
+    <div id="headerlinks">
+<ul>
+  <li>
+    <a href="http://www.andalucia.org/">
+     INICIO<img src="/media/img/inicio.gif" alt="INICIO" title="INICIO" />
+    </a>
+  </li>
+  <li>
+   <ul id="global-languageselector">
+   
+    <li class="currentLangItem">
+
+    <form id="languages-es" class="languageform" action="/i18n/setlang/" method="post">
+        <input type="hidden" value="es" name="language"/>
+        <input type="image" height="11" width="14" src="/media/img/flag-es.gif" alt="Cambiar de idioma"/>
+    </form>
+    </li>
+   
+    <li >
+    <form id="languages-en" class="languageform" action="/i18n/setlang/" method="post">
+        <input type="hidden" value="en" name="language"/>
+        <input type="image" height="11" width="14" src="/media/img/flag-en.gif" alt="Cambiar de idioma"/>
+
+    </form>
+    </li>
+   
+    <li >
+    <form id="languages-fr" class="languageform" action="/i18n/setlang/" method="post">
+        <input type="hidden" value="fr" name="language"/>
+        <input type="image" height="11" width="14" src="/media/img/flag-fr.gif" alt="Cambiar de idioma"/>
+    </form>
+    </li>
+   
+    <li >
+
+    <form id="languages-de" class="languageform" action="/i18n/setlang/" method="post">
+        <input type="hidden" value="de" name="language"/>
+        <input type="image" height="11" width="14" src="/media/img/flag-de.gif" alt="Cambiar de idioma"/>
+    </form>
+    </li>
+   
+    <li >
+    <form id="languages-zh" class="languageform" action="/i18n/setlang/" method="post">
+        <input type="hidden" value="zh" name="language"/>
+        <input type="image" height="11" width="14" src="/media/img/flag-zh.gif" alt="Cambiar de idioma"/>
+
+    </form>
+    </li>
+   
+    <li >
+    <form id="languages-ja" class="languageform" action="/i18n/setlang/" method="post">
+        <input type="hidden" value="ja" name="language"/>
+        <input type="image" height="11" width="14" src="/media/img/flag-ja.gif" alt="Cambiar de idioma"/>
+    </form>
+    </li>
+   
+   </ul>
+
+  </li>
+  <li id="siteaction-login">
+    <a href="/cuentas/entrar/"
+      accesskey="" title="Iniciar sesión">Iniciar sesión</a>
+</ul>
+
+    </div>
+    <div id="headerlogo">
+
+        <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0" width="968" height="290" id="flash_cabecera" align="middle">
+
+    <param name="movie" value="http://www-org.andalucia.org/cms/iconos/top/flash_cabecera2.swf?idioma=spa&amp;desde=1&amp;hasta=5&amp;seccion=0&amp;ruta_xml=/cms/menu.xml" />
+    <embed quality="high" bgcolor="#ffffff"
+       width="968" height="290"
+       name="flash_cabecera" align="middle"
+       type="application/x-shockwave-flash"
+       pluginspage="http://www.macromedia.com/go/getflashplayer"
+       src="http://www-org.andalucia.org/cms/iconos/top/flash_cabecera2.swf?idioma=spa&amp;desde=1&amp;hasta=5&amp;seccion=0&amp;ruta_xml=/cms/menu.xml" />
+</object>
+
+    </div>
+  </div>
+
+      <div id="breadcrumbs">
+        <a href="/">andalucia.org</a>
+      </div>
+  <div id="content-zone">
+    <div id="right-sidebar">
+    </div>
+    <div id="sidebar">
+    <h2 class="menutitle">Menú</h2>
+    </div>
+    <div id="content" class="withsidebar">
+      <div id="messagebox">
+      </div>
+        <h1 class="fancy home">{% trans "Server Error" %}</h1>
+        <div id="error" class="error-container">
+            <img src="/media/img/error.jpg">
+            <div class="error-message">
+                <p>
+                {% trans "500 Error - The server encountered an internal error or misconfiguration and was unable to complete your request." %}
+                </p>
+                <p>
+                {% trans "We recommend you to" %}
+                {% trans 'return to <a href="/">home</a>' %}
+            </div>
+            <img src="/media/img/andalucia.gif">
+        </div>
+
+    </div>
+  </div>
+
+
+  <div class="visualClear"></div>
+
+
+
+<div id="footer">
+
+  <div class="footer_left">
+
+    <a href="http://www.juntadeandalucia.es/turismocomercioydeporte/" target="_blank">
+      <img title="Junta de Andalucía"
+             alt="Junta de Andalucía"
+             src="/media/img/logo-junta.gif" />
+    </a>
+  </div>
+  <div class="footer_middle">
+    <p>
+        <a target="_blank" href="http://www.turismoandaluz.org">Turismo Andaluz S.A.</a>
+        C/ Compañía, 40 - 29008 Málaga<br/>
+
+        Teléfono 951 29 93 00
+        <br/>
+        <a href="http://www.andalucia.org/cms/condiciones-generales" class="conditions">Condiciones generales</a>
+    </p>
+  </div>
+  <div class="footer_right">
+    <div class="union">Unión Europea</div>
+    <div class="feder">FEDER</div>
+
+  </div>
+  <div class="visualClear"/>
+  
+</div>
+
+</div>
+
+
+
+
+<!-- START Nielsen//NetRatings SiteCensus V5.3 -->
+<!-- COPYRIGHT 2007 Nielsen//NetRatings -->
+<script type="text/javascript">
+        var _rsCI="es-turandaluz";
+        var _rsCG="0";
+        var _rsDN="//secure-uk.imrworldwide.com/";
+</script>
+<script type="text/javascript" src="//secure-uk.imrworldwide.com/v53.js"></script>
+<noscript>
+        <div><img src="//secure-uk.imrworldwide.com/cgi-bin/m?ci=es-turandaluz&amp;cg=0&amp;cc=1" alt=""/></div>
+</noscript>
+<!-- END Nielsen//NetRatings SiteCensus V5.3 -->
+
+
+
+</body>
+</html>
+
