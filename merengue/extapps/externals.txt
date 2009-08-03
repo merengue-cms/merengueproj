@@ -1,0 +1,21 @@
+#
+# Create this file: svn propget svn:externals . > externals.txt
+# Apply this file:  svn propset svn:externals -F externals.txt .
+#
+
+threadedcomments http://django-threadedcomments.googlecode.com/svn/trunk/threadedcomments
+
+
+#freezen repositories
+# 
+# tagging http://django-tagging.googlecode.com/svn/trunk/tagging/
+# django_extensions http://django-command-extensions.googlecode.com/svn/trunk/django_extensions/
+# transdb http://transdb.googlecode.com/svn/trunk/transdb
+# pagination http://django-pagination.googlecode.com/svn/trunk/pagination
+# template_utils http://django-template-utils.googlecode.com/svn/trunk/template_utils
+# sorl http://sorl-thumbnail.googlecode.com/svn/trunk/sorl
+# mptt http://django-mptt.googlecode.com/svn/trunk/mptt
+
+# this will be again in externals when this issue was fixed:
+# http://code.google.com/p/django-stdimage/issues/detail?id=28
+#stdimage http://django-stdimage.googlecode.com/svn/trunk
