@@ -146,15 +146,14 @@ INSTALLED_APPS = (
     'inplaceeditform',
     'searchform',
     'inlinetrans',
-    'section',
     'mptt',
     'tinyimages',
     'rating',
     'internallinks',
     'threadedcomments',
     'captcha',
-    #'profiles',
-    #'forums',
+    # that are plugins... will be removed from here when plugins registry was implemented
+    'plugins.news',
 )
 
 TEST_RUNNER = 'merengue.test.run_tests'

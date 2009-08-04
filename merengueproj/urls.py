@@ -82,14 +82,13 @@ urlpatterns += patterns('',
     (r'^internal-links/', include('internallinks.urls')),
     (r'^threadedcomments/', include('threadedcomments.urls')),
     url(r'^invalidate/$', 'merengue.views.portal.invalidate_cache', name='invalidate_cache'),
+    # i18n applications
+    url(r'^rosetta/', include('rosetta.urls')),
+    url(r'^inlinetrans/', include('inlinetrans.urls')),
 )
 
-if 'rosetta' in settings.INSTALLED_APPS:
-    urlpatterns += patterns('',
-        url(r'^rosetta/', include('rosetta.urls')),
-    )
 
-if 'inlinetrans' in settings.INSTALLED_APPS:
-    urlpatterns += patterns('',
-        url(r'^inlinetrans/', include('inlinetrans.urls')),
-    )
+# this are simulating plugins activation. This will be removed when ticket #17 was complete.
+urlpatterns += patterns('',
+    url(r'^news/', include('plugins.news.urls')),
+)
