@@ -1,12 +1,13 @@
 # don't touch this "import *" is necesary for urlresolvers works
 from django.conf.urls.defaults import *
 from django.conf import settings
-from django.contrib import admin
 
 from searchform.registry import search_form_registry
 from admin import (setup_basecontents_admin,
                    setup_sections_admin, setup_multimedia_admin, setup_user_admin,
                    setup_extra_admin)
+
+from merengue import admin
 
 admin.autodiscover()
 app_admin_sites = setup_basecontents_admin() + setup_sections_admin() + \
