@@ -1,0 +1,17 @@
+{% load i18n %}
+{% if inside_basecontent %} 
+    <li><a href="{{ basecontent.get_admin_absolute_url }}">{{ basecontent_opts.verbose_name|capfirst }} {{ basecontent }}</a></li>
+    <li{% if not sync_view %} class="selected"{% endif %}>
+      <a href="{{ basecontent.get_admin_absolute_url }}admin/section/document/">{% trans "Documents" %}</a>
+    </li>
+    {% if change %}
+    {% if original.get_absolute_url %}
+    <li><a href="{% url base.views.public_link opts.app_label opts.module_name original.id %}" class="viewsitelink">{% trans "View on site" %}</a></li>
+    {% endif%}
+    <li{% if sync_view %} class="selected"{% endif %}><a href="sync/">{% trans "Sync from plone" %}</a>
+    {% endif %}
+    <li><a href="{{ basecontent.get_admin_absolute_url }}admin/section/menu/">{% trans "Main menu" %}</a></li>
+    <li><a href="{{ basecontent.get_admin_absolute_url }}admin/section/menu/secondary/">{% trans "Secondary menu" %}</a></li>
+    <li><a href="{{ basecontent.get_admin_absolute_url }}admin/section/menu/interest/">{% trans "Interest menu" %}</a></li>
+    {% if not basecontent.appsection %}<li><a href="{{ basecontent.get_admin_absolute_url }}admin/section/customstyle/">{% trans "Custom style" %}</a></li>{% endif %}
+{% endif %}

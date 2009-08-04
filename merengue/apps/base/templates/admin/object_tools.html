@@ -1,0 +1,118 @@
+{% load i18n content_tags %}
+  {% if inside_basecontent %}
+    <li{% ifequal selected "view"%} class="selected"{% endifequal %}><a href="{{ basecontent.get_admin_absolute_url }}">{{ basecontent_opts.verbose_name|capfirst }} {{ basecontent }}</a></li>
+
+    {% ifequal basecontent_opts.module_name 'event' %}
+      <li><a href="{{ basecontent.get_admin_absolute_url }}admin/event/occurrence/">{% trans "Occurrences" %}</a></li>
+    {% endifequal %}
+
+    {% if is_destination %}
+      {% if basedestination.get_absolute_url %}<li><a href="/admin/r/{{ basedestination_type_id }}/{{ basedestination.pk }}/" class="viewsitelink">{% trans "View on site" %}</a></li>{% endif%}
+    {% else %}
+      {% if basecontent.get_absolute_url %}<li><a href="/admin/r/{{ basecontent_type_id }}/{{ basecontent.id }}/" class="viewsitelink">{% trans "View on site" %}</a></li>{% endif%}
+    {% endif %}
+
+    {% ifequal basecontent.class_name "naturearea" %}
+      <li{% ifequal selected "viewpoints"%} class="selected"{% endifequal %}><a href="{{ basecontent.get_admin_absolute_url }}admin/naturearea/viewpoint/">{% trans "Points of Interest" %}</a></li>
+      <li{% ifequal selected "trail"%} class="selected"{% endifequal %}><a href="{{ basecontent.get_admin_absolute_url }}admin/naturearea/trail/">{% trans "Trails" %}</a></li>
+    {% endifequal %}
+
+    {% ifequal basecontent.class_name "route" %}
+      <li{% ifequal selected "itinerary"%} class="selected"{% endifequal %}><a href="{{ basecontent.get_admin_absolute_url }}admin/route/itinerary/">{% trans "Itineraries" %}</a></li>
+    {% endifequal %}
+
+    {% if is_destination %}
+      <li{% ifequal selected "bodies" %} class="selected"{% endifequal %}><a href="{{ basedestination.get_admin_absolute_url }}bodies/">{% trans "Contextual texts" %}</a></li>
+    {% endif %}
+    {% if not is_destination %}
+    {% if not no_location %}
+    {% if basecontent.location and basecontent.location_id %}
+      <li{% ifequal selected "location"%} class="selected"{% endifequal %}><a href="{{ basecontent.get_admin_absolute_url }}admin/places/location/{{ basecontent.location.id }}/">{% trans "Location" %}</a></li>
+    {% else %}
+      <li{% ifequal selected "location"%} class="selected"{% endifequal %}><a href="{{ basecontent.get_admin_absolute_url }}admin/places/location/add/">{% trans "Location" %}</a></li>
+    {% endif %}
+    {% endif %}
+
+    {% if not no_contact %}
+    {% if basecontent.contact_info %}
+      <li{% ifequal selected "contact"%} class="selected"{% endifequal %}><a href="{{ basecontent.get_admin_absolute_url }}admin/base/contactinfo/{{ basecontent.contact_info.id }}/">{% trans "Contact Info" %}</a></li>
+    {% else %}
+      <li{% ifequal selected "contact"%} class="selected"{% endifequal %}><a href="{{ basecontent.get_admin_absolute_url }}admin/base/contactinfo/add/">{% trans "ContactInfo" %}</a></li>
+    {% endif %}
+    {% endif %}
+    {% endif %}
+
+    <li{% ifequal selected "photos"%} class="selected"{% endifequal %}><a href="{{ basecontent.get_admin_absolute_url }}admin/multimedia/photo/">{% trans "Photos" %}</a></li>
+    <li{% ifequal selected "videos"%} class="selected"{% endifequal %}><a href="{{ basecontent.get_admin_absolute_url }}admin/multimedia/video/">{% trans "Videos" %}</a></li>
+     <li{% ifequal selected "panoramics"%} class="selected"{% endifequal %}><a href="{{ basecontent.get_admin_absolute_url }}admin/multimedia/panoramicview/">{% trans "Panoramic Views" %}</a></li>
+     <li{% ifequal selected "3ds"%} class="selected"{% endifequal %}><a href="{{ basecontent.get_admin_absolute_url }}admin/multimedia/image3d/">{% trans "Images 3d" %}</a></li>
+      {% if basecontent.related_habcenter.all %}
+     <li{% ifequal selected "habcenter"%} class="selected"{% endifequal %}><a href="{{ basecontent.get_admin_absolute_url }}admin/healthandbeauty/habcenter/{{ basecontent.related_habcenter.all.0.id }}/">{% trans "HABCenter" %}</a></li>
+      {% endif %}
+      {% ifhasfeature basecontent "salones-de-reuniones" %}
+     <li{% ifequal selected "rooms"%} class="selected"{% endifequal %}><a href="{{ basecontent.get_admin_absolute_url }}admin/convention/conventionroom/">{% trans "Rooms" %}</a></li>
+      {% endifhasfeature %}
+
+     {% if basecontent_related_multimedia %}
+     <li><a href="reorder/">{% blocktrans with cl.opts.verbose_name_plural as name %}Reorder {{ name }}{% endblocktrans %}</a></li>
+     {% endif %}
+  {% else %}
+    {% if original.basecontent_ptr or is_destination %}
+      <li class="selected"><a href=".">{{ opts.verbose_name|capfirst }} {{ original }}</a></li>
+      {% if original.get_absolute_url %}<li><a href="{% url base.views.public_link opts.app_label opts.module_name object_id %}" class="viewsitelink">{% trans "View on site" %}</a></li>{% endif%}
+      {% ifequal original.class_name "naturearea" %}
+        <li><a href="admin/naturearea/viewpoint/">{% trans "Points of Interest" %}</a></li>
+        <li><a href="admin/naturearea/trail/">{% trans "Trails" %}</a></li>
+      {% endifequal %}
+
+      {% ifequal original.class_name "route" %}
+        <li><a href="admin/route/itinerary/">{% trans "Itineraries" %}</a></li>
+      {% endifequal %}
+
+      {% if original.location and original.location_id %}
+        <li><a href="admin/places/location/{{ original.location.id }}/">{% trans "Location" %}</a></li>
+      {% else %}
+        <li><a href="admin/places/location/add/">{% trans "Location" %}</a></li>
+      {% endif %}
+
+      {% if original.contact_info %}
+        <li><a href="admin/base/contactinfo/{{ original.contact_info.id }}/">{% trans "Contact Info" %}</a></li>
+      {% else %}
+        <li><a href="admin/base/contactinfo/add/">{% trans "Contact Info" %}</a></li>
+      {% endif %}
+
+      <li><a href="admin/base/basecontent/">{% trans "Related items" %}</a></li>
+      <li><a href="admin/multimedia/photo/">{% trans "Photos" %}</a></li>
+      <li><a href="admin/multimedia/video/">{% trans "Videos" %}</a></li>
+      <li><a href="admin/multimedia/panoramicview/">{% trans "Panoramic Views" %}</a></li>
+      <li><a href="admin/multimedia/image3d/">{% trans "Images 3d" %}</a></li>
+      {% if original.related_habcenter.all %}
+      <li><a href="admin/healthandbeauty/habcenter/{{ original.related_habcenter.all.0.id }}/">{% trans "HABCenter" %}</a></li>
+      {% endif %}
+      {% ifhasfeature original "salones-de-reuniones" %}
+      <li><a href="admin/convention/conventionroom/">{% trans "Rooms" %}</a></li>
+      {% endifhasfeature %}
+    {% endif %}
+  {% endif %}
+
+{% if is_carousel %}
+      <li><a href="admin_add/multimedia/photo/">{% trans "Associate Photos" %}</a></li>
+      <li><a href="admin_remove/multimedia/photo/">{% trans "View Photos" %}</a></li>
+{% endif %}
+
+{% if is_basetransport %}
+      <li><a href="admin_add/directions/companyrelation/">{% trans "View Companies" %}</a></li>
+{% endif %}
+
+{% if is_multimedia %}
+      <li><a href="admin_add/base/basecontent/">{% trans "Associate contents" %}</a></li>
+      <li><a href="admin_remove/base/basecontent/">{% trans "View contents" %}</a></li>
+{% endif %}
+
+{% if is_user_change_view %}
+      <li><a href="admin/admin/logentry/">{% trans "historical" %}</a></li>
+{% endif %}
+
+{% if is_contest %}
+      <li><a href="admin/photocontests/contestant/">{% trans "Contestant" %}</a></li>
+{% endif %}

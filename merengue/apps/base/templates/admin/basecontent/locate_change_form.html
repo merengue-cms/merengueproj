@@ -1,0 +1,52 @@
+{% extends "admin/change_form.html" %}
+{% load i18n map_tags %}
+
+{% block after_related_objects %}
+  {% if content_location %}
+  <div class="inline-group">
+    <h2>{% trans "Content location" %}</h2>
+    <div class="inline-related">
+      <h3>{{ content_location }}</h3>
+    </div>
+    <div class="form-row">
+      <label>
+        {% trans "You have placed this content at" %} 
+        <a href="{{ original.get_admin_absolute_url }}">{{ content_location }}</a>
+      </label>
+    </div>
+    <div class="form-row">
+     {% with content_location.location.main_location as location %}
+     <table>
+      <tr>
+      {% if location %}<td><img src="http://maps.google.com/staticmap?center={{ location.y }},{{ location.x }}&zoom=13&size=250x150&maptype=roadmap
+&markers={{ location.y }},{{ location.x }},blue&key={{ GOOGLE_MAPS_API_KEY }}" /></td>{% endif %}
+      <td>
+        <dl>
+          <dt><a href="content_locate/">{% trans "Place this content in another place" %}</a></dt>
+          <dd>{% trans "You can place this content at the location of another portal content." %}</dd>
+          <dt><a href="content_unplace/">{% trans "Unplace this content" %}</a></dt>
+          <dd>{% trans "You can unplace this content. Later you will be able to place the content at the location of another portal content." %}</dd>
+        </dl>
+      </td></tr>
+     </table>
+     {% endwith %}
+    </div>
+  </div>
+  {% else %}
+    <div class="inline-group">
+      <h2>{% trans "Select content location" %}</h2>
+      <div class="form-row">
+      {% if change %}
+        <label>{% trans "You can place this content at the location of another portal content." %}</label>
+        <a href="content_locate/">Select content</a>
+      {% else %}
+        <label>{% trans "If you want to place this content at the location of another portal content you must save it first." %}</label>
+        <input type="submit" value="{% trans 'Save and select content' %}" name="_content_locate" />
+      {% endif %}
+      </div>
+    </div>
+  {% endif %}
+
+  {{ block.super }}
+
+{% endblock %}

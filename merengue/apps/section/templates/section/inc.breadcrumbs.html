@@ -1,0 +1,9 @@
+{% for link, label in breadcrumbs %}
+  {% if forloop.first %}<span class="breadcrumbSeparator">→</span>{% endif %}
+  {% if not forloop.last %}
+    <a href="{{ link }}">{{ label }}</a> 
+    <span class="breadcrumbSeparator">→</span>
+  {% else %}
+    {{ label }}
+  {% endif %}
+{% endfor %}

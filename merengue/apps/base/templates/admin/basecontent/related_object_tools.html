@@ -1,0 +1,37 @@
+{% load i18n %}
+
+  <ul class="object-tools">
+    <li><a href="{{ basecontent.get_admin_absolute_url }}">{{ basecontent_opts.verbose_name|capfirst }} {{ basecontent }}</a></li>
+    {% if basecontent.location and basecontent.location_id %}
+      <li><a href="{{ basecontent.get_admin_absolute_url }}admin/places/location/{{ basecontent.location.id }}/">{% trans "Location" %}</a></li>
+    {% else %}
+      <li><a href="{{ basecontent.get_admin_absolute_url }}admin/places/location/add/">{% trans "Location" %}</a></li>
+    {% endif %}
+    {% if basecontent.contact_info %}
+      <li><a href="{{ basecontent.get_admin_absolute_url }}admin/base/contactinfo/{{ basecontent.contact_info.id }}/">{% trans "Contact Info" %}</a></li>
+    {% else %}
+      <li><a href="{{ basecontent.get_admin_absolute_url }}admin/base/contactinfo/add/">{% trans "Contact Info" %}</a></li>
+    {% endif %}
+    <li class="selected">
+      <span class="selected-with-subtools">
+        <a href="{{ basecontent.get_admin_absolute_url }}admin/base/basecontent/contents/">{% trans "Related items" %}</a></li>
+      </span>
+    </li>
+    <li><a href="{{ basecontent.get_admin_absolute_url }}admin/multimedia/photo/">{% trans "Photos" %}</a></li>
+    <li><a href="{{ basecontent.get_admin_absolute_url }}admin/multimedia/video/">{% trans "Videos" %}</a></li>
+    <li><a href="{{ basecontent.get_admin_absolute_url }}admin/multimedia/panoramicview/">{% trans "Panoramic Views" %}</a></li>
+    <li><a href="{{ basecontent.get_admin_absolute_url }}admin/multimedia/image3d/">{% trans "Images 3d" %}</a></li>
+  </ul>
+<div class="object-subtools object-subtools-bigger">
+  <ul>
+      <li{% ifequal selected "contents" %} class="selected"{% endifequal %}>
+        <a href="{{ basecontent.get_admin_absolute_url }}admin/base/basecontent/contents/">{% trans "Contents" %}</a>
+      </li>
+      <li{% ifequal selected "cities" %} class="selected"{% endifequal %}>
+        <a href="{{ basecontent.get_admin_absolute_url }}admin/base/basecontent/cities/">{% trans "Cities" %}</a>
+      </li>
+      <li{% ifequal selected "sections" %} class="selected"{% endifequal %}>
+        <a href="{{ basecontent.get_admin_absolute_url }}admin/base/basecontent/sections/">{% trans "Sections" %}</a>
+      </li>
+  </ul>
+</div>

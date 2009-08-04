@@ -1,0 +1,14 @@
+{% load mptt_tags smart_if %}
+{% if menu_tree %}
+    {% for menu in menu_tree %}
+        {% if menu.new_level %}
+            <ul class="{{ class_ul }}">
+        {% endif %}
+        <li id="{{ menu.slug }}">
+            <a href="{{ menu.url }}">{{ menu.name }}</a>
+        </li>
+        {% for close in  menu.end_level %}
+            </ul>
+        {% endfor %}        
+    {% endfor %}
+{% endif %}

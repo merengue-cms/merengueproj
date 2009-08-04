@@ -1,0 +1,23 @@
+{% extends "batchadmin/change_list.html" %}
+{% load adminmedia admin_list i18n %}
+
+{% block filters %}
+{% if cl.has_filters %}
+<div id="changelist-filter">
+<h2>{% trans 'Filter' %}</h2>
+
+  <h3>{% trans "By status" %}</h3>
+  <ul>{{selected_class_name}}
+    {% for status_type in status_types %}
+      <li{% ifequal status_type.name status_selected %} class="selected"{% endifequal %}>
+        <a href="{{ status_type.url }}">{% trans status_type.name %}</a>
+      </li>
+    {% endfor %}
+  </ul>
+
+{% for spec in cl.filter_specs %}
+   {% admin_list_filter cl spec %}
+{% endfor %}
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "section/base_section.html" %}
+{% load inlinetrans content_tags event_tags %}
+
+{% block beforestyles %}
+  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}jscalendar/skins/aqua/theme.css" />
+{% endblock %}
+
+{% block contenttitle %}
+  {% inline_trans "Agenda" %}
+{% endblock %}
+
+{% block contentdocument %}
+  {% highlight_events section %}
+  {{ block.super }}
+{% endblock %}
+
+{% block contentactions %}{% content_admin_link section %}{% endblock %}
+
+{% block breadcrumbs %}
+  {{ block.super }}
+    <span class="breadcrumbSeparator">→</span>
+   {% inline_trans "agenda" %}
+{% endblock %}
+
+{% block menuselected %}agenda{% endblock %}

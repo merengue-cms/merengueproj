@@ -1,0 +1,25 @@
+{% extends "base/search_results_view.html" %}
+
+{% load inlinetrans %}
+
+{% block extrastyle %}
+  {{ block.super}}
+  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}jscalendar/skins/aqua/theme.css" />
+{% endblock %}
+
+{% block breadcrumbs %}
+  <span class="breadcrumbSeparator">→</span>
+  <a href="../../">{{ section.name }}</a>
+  <span class="breadcrumbSeparator">→</span>
+  <a href="../">{% inline_trans "agenda" %}</a>
+  <span class="breadcrumbSeparator">→</span>
+  {% inline_trans "results" %}
+{% endblock %}
+
+{% block search_results_object_list %}
+  {% if object_list %}
+    {% with object_list as result_list %}
+    {% include "event/search_results.html" %}
+    {% endwith %}
+  {% endif %}
+{% endblock %}

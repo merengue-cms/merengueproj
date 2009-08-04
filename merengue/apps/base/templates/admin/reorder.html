@@ -1,0 +1,84 @@
+{% extends "admin/change_form.html" %}
+{% load i18n thumbnail %}
+
+{% block extrahead %}
+{{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/reorder.css" />
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui-core-draggable-droppable-sortable.min.js"></script>
+
+  <script type="text/javascript">
+  // <![CDATA[
+  (function ($) {
+
+  $(document).ready(function () {
+
+      $(".multimedias_content").sortable({
+        update: function (ev, ui) {
+            ui.item.addClass("multimedia-moved");
+        }
+      });
+
+      $("#content-main form").submit(function () {
+          var form = this;
+          $(".multimedias").each(function () {
+
+              var pages = $(".multimedia", this);
+              var ids = $.map(pages, function (element, i) {
+                return $(element).attr("id").replace("multimedia-", "");
+              }).join(",");
+
+              var hidden = '<input type="hidden" name="multimedias" ';
+              hidden += 'value="' + ids  + '" />';
+              $(form).append(hidden);
+
+          });
+
+
+      });
+
+
+  });
+
+  })(jQuery);
+  // ]]>
+  </script>
+{% endblock %}
+
+{% block content %}
+
+{% block object-tools %}
+<ul class="object-tools">
+    {% include "admin/object_tools.html" %}
+</ul>
+{% endblock %}
+
+
+<div id="content-main">
+
+<form action="." method="post">
+<div class="submit-row">
+  <input class="default" type="submit" name="_save" value="{% trans "Save" %}"/>
+  <input type="submit" name="_continue" value="{% trans "Save and continue editing" %}"/>
+</div>
+</form>
+
+
+<div class="multimedias">
+  <h3>{{ cl.opts.verbose_name_plural }}</h3>
+  <div class="multimedias_content">
+  {% for mr in multimediarelations %}
+    <div class="multimedia" id="multimedia-{{ mr.id }}">
+    {% if mr.get_image %}
+      <img src="{% thumbnail mr.get_image 100x100 crop %}" alt="image" />
+    {% else %}
+      <img src="{{ MEDIA_URL }}img/image_not_available_{{ LANGUAGE_CODE }}.jpg" alt="image" />
+    {% endif %}
+    </div>
+  {% endfor %}
+  </div>
+</div>
+
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+<div class="search_form_filter_options_container">
+{% for filter in filters %}
+  <div class="search_form_filter_container">
+  <label for="id_{{ widget_name }}_{{ filter.name }}">
+    {{ filter.label }}
+  </label>
+  <select multiple="multiple" name="{{ widget_name }}_{{ filter.name }}" id="id_{{ widget_name }}_{{ filter.name }}">
+    {% for option in filter.options %}
+      <option value="{{ option.value }}"{% if option.selected %} selected="selected"{% endif %}>{{ option.name }}</option>
+    {% endfor %}
+  </select>
+  </div>
+{% endfor %}
+</div>

@@ -1,0 +1,29 @@
+{% extends "admin/change_form.html" %}
+{% block extrahead %}{{ block.super }}
+<script>
+(function ($) {
+    $(document).ready(function () {
+
+        $("#id_image").change(function (){
+              if($("#id_name").val()==null || $("#id_name").val()==""){
+                    var name_image = $("#id_image").val().split("/");
+                    name_image = name_image[name_image.length-1];
+                    $("#id_name").val(name_image);
+            }
+        });
+    });
+})(jQuery);
+</script>
+
+{{ media }}
+{% endblock %}
+
+{% block breadcrumbs %}
+  {% if inside_carousel_section %}
+    {% with "1" as inside_basecontent %}
+      {{ block.super }}
+    {% endwith %}
+  {% else %}
+    {{ block.super }}
+  {% endif %}
+{% endblock %}

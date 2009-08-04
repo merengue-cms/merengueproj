@@ -1,0 +1,23 @@
+{% load i18n %}
+
+{% if not is_popup %}
+<div class="breadcrumbs">
+    <a href="/admin">{% trans "Home" %}</a> &rsaquo;
+    <a href="/admin/{{ basecontent_opts.app_label }}/">{% trans basecontent_opts.app_label.title %}</a> &rsaquo;
+    <a href="/admin/{{ basecontent_opts.app_label }}/{{ basecontent_opts.module_name }}/"> {{ basecontent_opts.verbose_name_plural|capfirst }}</a> &rsaquo;
+    {% if basecontent %}
+      <a href="/admin/{{ basecontent_opts.app_label }}/{{ basecontent_opts.module_name }}/{{ basecontent.id}}"> {{ basecontent.name|capfirst }}</a> &rsaquo;
+    {% endif %}
+    {% if cl %}
+        {{ cl.opts.verbose_name_plural|capfirst }}
+    {% else %}
+        {% if not is_foreign_model %}
+        <a href="../">{{ opts.verbose_name_plural|capfirst }}</a> &rsaquo;
+        {% endif %}
+        {% if add %}{% trans "Add" %} {{ opts.verbose_name }}{% else %}{{ original|truncatewords:"18" }}{% endif %}
+    {% endif %}
+    {% if reorder %}
+      {% trans "Reorder" %}
+    {% endif %}
+  </div>
+{% endif %}

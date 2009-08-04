@@ -1,0 +1,119 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_modify adminmedia customize_admin_modify %}
+
+{% block extrahead %}{{ block.super }}
+{{ media }}
+{% if not coming_from_buildbot %} 
+<script type="text/javascript" src="{{ MEDIA_URL}}js/osmgeoadmin.latitude.longitude.js"></script>
+{% endif %}
+<script type="text/javascript" src="/jsi18n/"></script>
+
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/admin.css" />
+
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% admin_media_prefix %}css/forms.css" />{% endblock %}
+
+{% block coltype %}{% if ordered_objects %}colMS{% else %}colM{% endif %}{% endblock %}
+
+{% block bodyclass %}{{ opts.app_label }}-{{ opts.object_name.lower }} change-form{% endblock %}
+
+{% block breadcrumbs %}{% if not is_popup %}
+<div class="breadcrumbs">
+    {% if inside_basecontent %}
+        {% include "admin/breadcrumbs.html" %}
+    {% else %}
+     <a href="/admin">{% trans "Home" %}</a> &rsaquo;
+     <a href="/admin/{{ app_label }}">{% trans app_label.title %}</a> &rsaquo;
+     {% if has_change_permission %}<a href="/admin/{{ app_label }}/{{opts.module_name}}">{{ opts.verbose_name_plural|capfirst }}</a>{% else %}{{ opts.verbose_name_plural|capfirst }}{% endif %} &rsaquo;
+
+     {% if not current_body_field %}
+      {% if add %}{% trans "Add" %} {{ opts.verbose_name }}{% else %}{{ original }}{% endif %}
+     {% else %}
+      {% if add %}{% trans "Add" %} {{ opts.verbose_name }}{% else %}<a href="{{ original.get_admin_absolute_url }}">{{ original }}</a>&rsaquo;{% endif %}
+      <a href="{{ original.get_admin_absolute_url }}bodies/">{% trans "Contextual texts" %}</a> &rsaquo;
+      {{ current_body_field|capfirst }}
+      {% endif %}
+    {% endif %}
+</div>
+{% endif %}{% endblock %}
+
+{% block content %}<div id="content-main">
+{% block object-tools %}
+{% if not is_popup %}
+  <ul class="object-tools">
+  {% if inside_basecontent %}
+    {% include "admin/object_tools.html" %}
+  {% else %}
+    <li{% ifequal selected "view" %} class="selected"{% endifequal %}><a href="{{ original.get_admin_absolute_url }}">{{ opts.verbose_name|capfirst }} {{ original }}</a></li>
+    {% if change %}
+    {% if is_destination %}
+      {% if basedestination.get_absolute_url %}<li><a href="/admin/r/{{ basedestination_type_id }}/{{ basedestination.pk }}/" class="viewsitelink">{% trans "View on site" %}</a></li>{% endif%}
+    {% else %}
+      {% if has_absolute_url %}<li><a href="/admin/r/{{ content_type_id }}/{{ object_id }}/" class="viewsitelink">{% trans "View on site" %}</a></li>{% endif%}
+      {% endif %}
+    {% endif %}
+
+    {% if has_bodies %}
+    <li{% ifequal selected "bodies" %} class="selected"{% endifequal %}><span {% ifequal selected "bodies" %} class="selected-with-subtools"{% endifequal %}><a href="{{ original.get_admin_absolute_url }}bodies/">{% trans "Contextual texts" %}</a></span></li>
+    {% endif %}
+
+    {% if has_media %}
+    <li><a href="{% ifnotequal selected "view" %}../../{% endifnotequal %}admin/multimedia/photo/">{% trans "Photos" %}</a></li>
+    <li><a href="{% ifnotequal selected "view" %}../../{% endifnotequal %}admin/multimedia/video/">{% trans "Videos" %}</a></li>
+    <li><a href="{% ifnotequal selected "view" %}../../{% endifnotequal %}admin/multimedia/panoramicview/">{% trans "Panoramic Views" %}</a></li>
+    <li><a href="{% ifnotequal selected "view" %}../../{% endifnotequal %}admin/multimedia/image3d/">{% trans "Images 3d" %}</a></li>
+    {% endif %}
+
+    {% ifnotequal selected "bodies" %}{% if not is_popup %}{% if change %}
+    <li><a href="history/" class="historylink">{% trans "History" %}</a></li>
+    {% endif %}{% endif %}{% endifnotequal %}
+    </ul>
+    {% ifequal selected "bodies" %}
+    <div class="object-subtools">
+    <ul>
+    {% for field in body_fields %}
+      <li{% ifequal current_body_field field.name %} class="selected"{% endifequal %}><a href="{{ original.get_admin_absolute_url }}bodies/{{ field.name }}/">{{ field.title|capfirst }}</a></li>
+    {% endfor %}
+    </ul>
+    </div>
+    {% endifequal %}
+  {% endif %}
+  </ul>
+{% endif %}
+{% endblock %}
+<form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">{% block form_top %}{% endblock %}
+<div>
+{% if is_popup %}<input type="hidden" name="_popup" value="1" />{% endif %}
+{% if save_on_top %}{% submit_row %}{% endif %}
+{% if errors %}
+    <p class="errornote">
+    {% blocktrans count errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
+    </p>
+    <ul class="errorlist">{% for error in adminform.form.non_field_errors %}<li>{{ error }}</li>{% endfor %}</ul>
+{% endif %}
+
+{% for fieldset in adminform %}
+  {% include "admin/includes/fieldset.html" %}
+{% endfor %}
+
+{% block after_field_sets %}{% endblock %}
+
+{% for inline_admin_formset in inline_admin_formsets %}
+    {% include inline_admin_formset.opts.template %}
+{% endfor %}
+
+{% block after_related_objects %}{% endblock %}
+
+{% customize_submit_row %}
+
+{% if add %}
+   <script type="text/javascript">document.getElementById("{{ adminform.first_field.auto_id }}").focus();</script>
+{% endif %}
+
+{# JavaScript for prepopulated fields #}
+{% prepopulated_fields_js %}
+
+</div>
+</form></div>
+{% endblock %}

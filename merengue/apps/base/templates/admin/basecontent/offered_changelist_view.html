@@ -1,0 +1,22 @@
+{% extends "admin/basecontent/change_list.html" %}
+
+{% load i18n admin_list %}
+
+{% block filters %}
+<div id="changelist-filter">
+  <h2>{% trans 'Filter' %}</h2>
+
+  <h3>{% trans "By current offered status" %}</h3>
+  <ul>
+    <li{% ifequal filter_selected "any" %} class="selected"{% endifequal %}><a href="{{ parent }}{{ cl.get_query_string }}">{% trans "Any" %}</a></li>
+    <li{% ifequal filter_selected "offered" %} class="selected"{% endifequal %}><a href="{{ parent }}offered/{{ cl.get_query_string }}">{% trans "Is offered" %}</a></li>
+    <li{% ifequal filter_selected "not_offered" %} class="selected"{% endifequal %}><a href="{{ parent }}not_offered/{{ cl.get_query_string }}">{% trans "Is not offered" %}</a></li>
+  </ul>
+
+  {% if cl.has_filters %}
+    {% for spec in cl.filter_specs %}
+      {% admin_list_filter cl spec %}
+    {% endfor %}
+  {% endif %}
+</div>
+{% endblock filters %}

@@ -1,0 +1,44 @@
+{% extends "batchadmin/confirm_action.html" %}
+{% load i18n %}
+
+{% block extrahead %}
+   {{ form.media }}
+{% endblock extrahead %}
+
+{% block content %}
+{% if perms_lacking %}
+    <ul>
+    {% for obj in perms_lacking %}
+        <li>{{ obj }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <form action="" method="post">
+    <fieldset class="module">
+    <div class="form-row">
+    {% for selected_object in selected_objects %}
+    <ul>{{ selected_object|unordered_list }}</ul>
+    {% endfor %}
+    {% if no_can_selected_objects %}
+        <h2>{{ no_can_selected_objects_message }}</h2>
+        <ul>
+        {% for obj in no_can_selected_objects %}
+            <li>{{ obj }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    </div>
+
+    <div class="form-row">
+    {{ form }}
+    </div>
+    </fieldset>
+    <div>
+    <input type="hidden" name="post" value="yes" />
+    <input type="hidden" name="action" value="{{ action_submit }}" />
+
+    <input type="submit" value="{% trans "Yes, I'm sure" %}" />
+    </div>
+    </form>
+{% endif %}
+{% endblock %}

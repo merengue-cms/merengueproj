@@ -1,0 +1,10 @@
+{% extends template_base %}
+{% load batch_list pending_tags %}
+
+{% block result_list %}
+<form id="batch-action-form" method="post" action="">
+    {% if batchadmin_on_top or not cl.paginator.count %}{% actions %}{% endif %}
+    {% result_list_pending cl %}
+    {% if batchadmin_on_bottom and cl.paginator.count %}{% actions %}{% endif %}
+</form>
+{% endblock %}

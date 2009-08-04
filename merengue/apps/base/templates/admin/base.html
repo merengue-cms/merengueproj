@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE }}" xml:lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+<title>{% block title %}{% endblock %}</title>
+<![if gte IE 6]><!-- Block all styles from IE5 and lower -->
+<link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% load adminmedia %}{% admin_media_prefix %}css/base.css{% endblock %}" />
+{% block extrastyle %}{% endblock %}
+<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="{% block stylesheet_ie %}{% load adminmedia %}{% admin_media_prefix %}css/ie.css{% endblock %}" /><![endif]-->
+{% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% admin_media_prefix %}css/rtl.css{% endblock %}" />{% endif %}
+<![endif]>
+
+{% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+<script src="{{ MEDIA_URL }}js/jquery-1.2.6.min.js"></script>
+<script type="text/javascript">
+  (function($) {
+    $(document).ready(function () {
+        // Google Maps unload
+        if (typeof google != "undefined" && typeof google.maps != "undefined") {
+            $(window).unload(function () {
+                google.maps.Unload();
+            });
+        }
+    });
+  })(jQuery);
+</script>
+{% block extrahead %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/admin.css" />
+{% endblock %}
+
+{% if request.testing %}
+<script type="text/javascript">
+    if (typeof TinyMCE_Engine != 'undefined') {
+        TinyMCE_Engine.prototype.init=function(settings) { this.settings=settings; return;};
+    }
+</script>
+{% endif %}
+</head>
+{% load i18n rosetta_tags %}
+
+<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}">
+
+<!-- Container -->
+<div id="container">
+
+    {% if not is_popup %}
+    <!-- Header -->
+    <div id="header">
+        <div id="branding">
+        {% block branding %}{% endblock %}
+        </div>
+        {% if user.is_authenticated and user.is_staff %}
+        <div id="user-tools">{% trans 'Welcome,' %} <strong>{% firstof user.first_name user.username %}</strong>. 
+            <ul id="global-languageselector">
+                {% for lang in LANGUAGES %}
+                    <li {% ifequal lang.0 LANGUAGE_CODE %}class="currentLangItem"{% endifequal %}>
+                    <form id="languages-{{ lang.0 }}" class="languageform" action="/i18n/setlang/" method="post">
+                        <input type="hidden" value="{{ lang.0 }}" name="language"/>
+                        <input type="image" height="11" width="14" src="/media/img/flag-{{ lang.0 }}.gif" alt="{% trans 'Change language' %}"/>
+                    </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% block userlinks %}
+          {% if_can_access_rosetta %}<a href="{% url rosetta-home %}">Rosetta</a> / {% endif_can_access_rosetta %}{% url django-admindocs-docroot as docsroot %}{% if docsroot %}<a href="{{ docsroot }}">{% trans 'Documentation' %}</a> / {% endif %}<a href="{{ root_path }}password_change/">{% trans 'Change password' %}</a> / {% if admin_extra %}<a href="/admin/">{% trans "Admin site" %}</a> /{% else %} <a href="{% url portal.views.list_pending %}">{% trans 'Pending contents' %}</a> /{% endif %} <a href="{{ root_path }}logout/">{% trans 'Log out' %}</a>{% endblock %}</div>
+        {% endif %}
+        {% block nav-global %}{% endblock %}
+    </div>
+    <!-- END Header -->
+    {% block breadcrumbs %}<div class="breadcrumbs"><a href="/">{% trans 'Home' %}</a>{% if title %} &rsaquo; {{ title }}{% endif %}</div>{% endblock %}
+    {% endif %}
+
+        {% if messages %}
+        <ul class="messagelist">{% for message in messages %}<li>{{ message|safe }}</li>{% endfor %}</ul>
+        {% endif %}
+
+    <!-- Content -->
+    <div id="content" class="{% block coltype %}colM{% endblock %}">
+        {% block pretitle %}{% endblock %}
+        {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
+        {% block content %}
+        {% block object-tools %}{% endblock %}
+        {{ content }}
+        {% endblock %}
+        {% block sidebar %}{% endblock %}
+        <br class="clear" />
+    </div>
+    <!-- END Content -->
+
+    {% block footer %}<div id="footer"></div>{% endblock %}
+</div>
+<!-- END Container -->
+
+</body>
+</html>

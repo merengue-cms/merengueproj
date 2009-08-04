@@ -1,0 +1,189 @@
+/* ----- ----- */
+{% if customstyle.color_1 %}
+/* Color 1: {{ customstyle.color_1 }}
+{% endif %}
+{% if customstyle.color_2 %}
+   Color 2: {{ customstyle.color_2 }}
+{% endif %}
+{% if customstyle.color_3 %}
+   Color 3: {{ customstyle.color_3 }}
+{% endif %}
+{% if customstyle.menu_link_color %}
+   Menu-link text color: {{ customstyle.menu_link_color }} */
+{% endif %}
+{% if customstyle.color_1 %}
+.twoColumns .linkEdit a,
+.searchResultsItem .linkEdit a,
+.andaluciaContentInfo .linkEdit a {
+    color: {{ customstyle.color_1 }};
+}
+
+div.contextual-menu ul.general,
+div.smart-search-form h2.search-options {
+    border-bottom-color: {{ customstyle.color_1 }};
+}
+
+div.searchResultsItemDescription {
+    border-top-color: {{ customstyle.color_1 }};
+}
+
+.simpleImgGallery2, .places div.content_action,
+div.content_action,
+div.selectedSearch,
+div.quickSearch form,
+div.advancedSearch form,
+div.advancedSearch .searchlet,
+div.advancedSearch ul#search-sections li.selected a {
+    border-color: {{ customstyle.color_1 }} !important;
+}
+
+.searchTabs li.quickSearch {
+    border-left: 1px solid {{ customstyle.color_1 }};
+}
+
+div#content h2,
+div#content .pagination {
+    background-color: {{ customstyle.color_1 }};
+}
+
+.module { border:1px solid {{ customstyle.color_1}} !important; }
+
+.module h2,
+.module caption { background: {{ customstyle.color_1}} url(../img/admin/default-bg.gif) top left repeat-x !important; }
+
+.datetime span { color:{{ customstyle.color_1}} !important; }
+
+.calendar th { border-bottom:1px solid {{ customstyle.color_1}} !important; }
+
+.calendar td { border-top:1px solid {{ customstyle.color_1}} !important; }
+
+.calendar-shortcuts { border-top:1px solid {{ customstyle.color_1}} !important; color:{{ customstyle.color_1}} !important; }
+
+.calendar-cancel { border-top:1px solid {{ customstyle.color_1}} !important; }
+{% endif %}
+
+{% if customstyle.menu_link_color %}
+.color,
+b,
+strong,
+div#content h4,
+.twoColumns a,
+div#sidebar a,
+p.generalData,
+.document-body a,
+div#content-zone p a,
+div.searchResults h3 a,
+input.select-all-action,
+.searchResultsItemInfo a,
+div.pagination span.current,
+div#sidebar ul.submenu li a {
+    color: {{ customstyle.menu_link_color }};
+}
+
+div#content h4 {
+    border-color: {{ customstyle.menu_link_color }};
+}
+
+.calendar th { color:{{ customstyle.menu_link_color }} !important; }
+
+.calendar td a:hover,
+.timelist a:hover { background: {{ customstyle.menu_link_color }} !important; }
+
+.calendar-cancel a { color:{{ customstyle.menu_link_color }} !important; }
+{% endif %}
+
+{% if customstyle.color_2 %}
+.border-color,
+.searchTabs li,
+div.smart-search-form ul.search-sections li.selected a {
+    border-bottom: 1px solid {{ customstyle.color_2 }};
+}
+
+form,
+div#sidebar,
+.background-color,
+div#sidebar ul.menu,
+div.advancedSearch form,
+div.smart-search-form ul.search-sections li.selected a {
+    background-color: {{ customstyle.color_2 }};
+}
+
+.calendar th { background: {{ customstyle.color_2 }} url(../img/admin/nav-bg.gif) 0 50% repeat-x !important; }
+
+.calendar-cancel { background:{{ customstyle.color_2 }} url(../img/admin/nav-bg.gif) 0 50% repeat-x !important; }
+
+.calendarbox .calendarnav-next-month,
+.calendarbox .calendarnav-previous-month,
+.calendarbox .calendarnav-previous,
+.calendarbox .calendarnav-next {
+   background: {{ customstyle.color_2 }} url(/admin_media/img/admin/default-bg.gif) repeat-x left bottom !important;
+}
+{% endif %}
+
+{% if customstyle.color_3 %}
+.linkEdit a {
+    color: {{ customstyle.color_3 }};
+}
+
+div.searchResultsItem {
+    border: 1px solid {{ customstyle.color_3 }};
+}
+
+body div#content-zone {
+    background-color: {{ customstyle.color_3 }};
+}
+
+div.selectedSearch,
+div.advancedSearch .searchlet,
+div.advancedSearch ul#search-sections li.selected a {
+    background-color: {{ customstyle.color_3 }};
+}
+
+.module { background: {{ customstyle.color_3 }} !important; }
+
+.calendarbox, .clockbox { background:{{ customstyle.color_3 }} !important; }
+
+.calendar-shortcuts { background:{{ customstyle.color_3 }} !important; }
+{% endif %}
+
+{% if customstyle.menu_head_background %}
+h2.menutitle {
+    background: url({{ customstyle.menu_head_background.url }}) no-repeat top right;
+}
+{% endif %}
+
+{% if customstyle.content_head_background %}
+div#content h1 {
+    background: url({{ customstyle.content_head_background.url }}) no-repeat top left;
+}
+{% endif %}
+
+{% if customstyle.search_results_item_background %}
+.places div.searchResultsItem {
+    background: url({{ customstyle.search_results_item_background.url }}) repeat-x bottom left;
+}
+{% endif %}
+
+{% if customstyle.searcher_tab_image %}
+.searchTabs li.quickSearch {
+    background: url({{ customstyle.searcher_tab_image.url }}) no-repeat right -56px;
+}
+{% endif %}
+
+{% if customstyle.searcher_last_tab_image %}
+.searchTabs li.advancedSearch {
+    background: url({{ customstyle.searcher_last_tab_image.url }}) no-repeat right bottom;
+}
+{% endif %}
+
+{% if customstyle.searcher_right_arrow %}
+.add-remove-buttons input.add {
+    background-image: url({{ customstyle.searcher_right_arrow.url }});
+}
+{% endif %}
+
+{% if customstyle.searcher_left_arrow %}
+.add-remove-buttons input.delete {
+    background-image: url({{ customstyle.searcher_left_arrow.url }});
+}
+{% endif %}

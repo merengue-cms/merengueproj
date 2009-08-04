@@ -1,0 +1,22 @@
+{% load i18n  %}
+
+<div id="googlemap-{{ index }}" class="mini-googlemap" style="display:none">
+    <span class="latitude">{{ content.main_location.x }}</span>
+    <span class="longitude">{{ content.main_location.y }}</span>
+    <span class="icon"> {% if content.location.main_location %}
+                            {{ content.get_icon }}
+                        {% else %}
+                            {{ MEDIA_URL }}img/city_map_icon.png
+                        {% endif %}
+    </span>
+    <span class="zoom">{{ zoom }}</span>
+    <span class="index">{{ index }}</span>
+</div>
+<span >
+    {% if content.is_autolocated %}
+        {% trans "Autolocalizated"%}
+    {% else %}
+        {% trans "Localizated"%}
+    {% endif %}
+    (<a class="fadeingooglemap" >{% trans "View map" %}</a>)
+</span>

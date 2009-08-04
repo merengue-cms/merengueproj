@@ -1,0 +1,20 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block content %}
+<h1>{% trans "Unplace" %} {{ content }}</h1>
+{% if content_location %}
+    <form action="" method="post">
+<p>
+{% trans "Currently the content is placed at" %} {{ content_location }}
+</p>
+<p>
+{% trans "Are you sure you want to unplace it?" %}
+</p>
+    <input type="submit" value="{% trans "Yes, I'm sure" %}" />
+    </div>
+    </form>
+{% else %}
+{% trans "The content is placed at NO content. You CAN NOT unplace it" %} 
+{% endif %}
+{% endblock %}

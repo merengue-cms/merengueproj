@@ -1,0 +1,33 @@
+{% extends "batchadmin/change_list.html" %}
+{% load adminmedia admin_list i18n %}
+
+{% block filters %}
+{% if cl.has_filters %}
+<div id="changelist-filter">
+<h2>{% trans 'Filter' %}</h2>
+
+  <h3>{% trans "By content class name" %}</h3>
+  <ul>
+    {% for class_name in class_names %}
+      <li{% ifequal class_name.name selected_class_name %}class="selected"{% endifequal %}>
+        <a href="{{ class_name.url }}">{% trans class_name.name %}</a>
+      </li>
+    {% endfor %}
+  </ul>
+
+{% for spec in cl.filter_specs %}
+   {% admin_list_filter cl spec %}
+{% endfor %}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+  {% if inside_carousel_section %}
+    {% with "1" as inside_basecontent %}
+      {{ block.super }}
+    {% endwith %}
+  {% else %}
+    {{ block.super }}
+  {% endif %}
+{% endblock %}

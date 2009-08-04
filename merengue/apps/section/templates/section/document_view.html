@@ -1,0 +1,24 @@
+{% extends "section/base_section.html" %}
+
+{% load inlinetrans content_tags %}
+
+{% block breadcrumbs %}
+    {% with document.get_breadcrumbs as breadcrumbs %}
+        {% include "section/inc.breadcrumbs.html" %}
+    {% endwith %}
+
+{% endblock %}
+
+{% block contenttitle %}
+  {% cutrender %}{{ document.name }}{% endcutrender %}
+{% endblock %}
+
+{% block contentactions %}
+  {% if document %}
+    {% content_admin_link document %}
+  {% else %}
+    {% if section %}
+      {% content_admin_link section %}
+    {% endif %}
+  {% endif %}
+{% endblock %}

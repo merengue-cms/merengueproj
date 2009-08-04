@@ -55,10 +55,7 @@
   </div>
 
   {% block breadcrumbsbox %}
-      <div id="breadcrumbs">
-        <a href="/">{% inline_trans "andalucia.org" %}</a>
-        {% block breadcrumbs %}{% endblock %}
-      </div>
+     {% include "base/inc.breadcrumbs.html" %}
   {% endblock %}
 
 {% endif %}
