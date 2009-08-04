@@ -558,6 +558,7 @@ class NoSectionDocumentAdmin(DocumentAdmin):
         self.post_save_model(request, obj, form, change)
 
 
-admin.site.register(Section, SectionAdmin)
-admin.site.register(AppSection, AppSectionAdmin)
-admin.site.register(Carousel, CarouselAdmin)
+def register(site):
+    site.register(Section, SectionAdmin)
+    site.register(AppSection, AppSectionAdmin)
+    site.register(Carousel, CarouselAdmin)

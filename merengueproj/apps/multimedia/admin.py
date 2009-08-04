@@ -1,4 +1,3 @@
-from django.contrib import admin
 from django.contrib.admin.options import IncorrectLookupParameters
 from django.forms.util import ErrorList
 from django.http import HttpResponseRedirect
@@ -68,10 +67,9 @@ class BaseMultimediaRelatedRemoveContentModelAdmin(BaseMultimediaRelatedBaseCont
 
 class BaseMultimediaAdmin(BaseAdmin, WorkflowBatchActionProvider):
     batch_actions = BaseAdmin.batch_actions + ['set_as_draft', 'set_as_pending',
-                                               'set_as_published', 'set_as_pasive']
+                                               'set_as_published', ]
     batch_actions_perms = {'set_as_draft': 'base.can_draft',
                            'set_as_pending': 'base.can_pending',
-                           'set_as_pasive': 'base.can_pasive',
                            'set_as_published': 'base.can_published',
                           }
     date_hierarchy = 'creation_date'
@@ -228,8 +226,9 @@ class AudioAdmin(BaseMultimediaAdmin):
     list_display = ('__str__', 'status', 'last_editor')
 
 
-admin.site.register(Photo, PhotoAdmin)
-admin.site.register(Video, VideoAdmin)
-admin.site.register(PanoramicView, PanoramicViewAdmin)
-admin.site.register(Image3D, Image3DAdmin)
-admin.site.register(Audio, AudioAdmin)
+def register(site):
+    site.register(Photo, PhotoAdmin)
+    site.register(Video, VideoAdmin)
+    site.register(PanoramicView, PanoramicViewAdmin)
+    site.register(Image3D, Image3DAdmin)
+    site.register(Audio, AudioAdmin)

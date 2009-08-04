@@ -10,6 +10,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib import admin
 from django.contrib.admin.models import LogEntry
 from django.contrib.auth.admin import UserAdmin as UserAdminOriginal
+from django.contrib.auth.admin import GroupAdmin
 from django.contrib.auth.models import Group, User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.admin.views.main import ChangeList, ERROR_FLAG
@@ -484,6 +485,11 @@ class BaseAdmin(BatchModelAdmin):
         ], context, context_instance=template.RequestContext(request))
 
 
+class BaseCategoryAdmin(BaseAdmin):
+    ordering = ('name_es', )
+    search_fields = ('name_es', )
+
+
 class WorkflowBatchActionProvider(object):
 
     def set_as_draft(self, request, changelist):
@@ -555,10 +561,6 @@ class StatusControlProvider(object):
             options=options.union([o for o in all_options if o[0] == 'pending'])
         if user.has_perm('base.can_published'):
             options=options.union([o for o in all_options if o[0] == 'published'])
-        if user.has_perm('base.can_pasive'):
-            options=options.union([o for o in all_options if o[0] == 'pasive'])
-        if user.has_perm('base.can_deleted_in_plone'):
-            options=options.union([o for o in all_options if o[0] == 'deleted_in_plone'])
         return options
 
 
@@ -580,7 +582,6 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
     batch_actions_perms = {'set_as_draft': 'base.can_draft',
                            'set_as_pending': 'base.can_pending',
                            'set_as_published': 'base.can_published',
-                           'set_as_pasive': 'base.can_pasive',
                            'assign_owners': 'PermisoFicticioQueSoloCumplenLosSuperUsuarios',
                           }
     autocomplete_fields = {'tags': {'url': '/ajax/autocomplete/tags/base/basecontent/',
@@ -1006,10 +1007,9 @@ class BaseContentRelatedItemsRelatedModelAdmin(BaseContentRelatedModelAdmin):
 class BaseContentRelatedMultimediaModelAdmin(BaseContentRelatedModelAdmin, WorkflowBatchActionProvider):
     batch_actions = BaseAdmin.batch_actions + ['set_as_featured', 'set_as_not_featured',
                                                'set_as_draft', 'set_as_pending',
-                                               'set_as_published', 'set_as_pasive']
+                                               'set_as_published', ]
     batch_actions_perms = {'set_as_draft': 'base.can_draft',
                            'set_as_pending': 'base.can_pending',
-                           'set_as_pasive': 'base.can_pasive',
                            'set_as_published': 'base.can_published',
                           }
     autocomplete_fields = {'tags': {'url': '/ajax/autocomplete/tags/multimedia/basemultimedia/',
@@ -1288,7 +1288,6 @@ class InlineLocationModelAdmin(LocationModelAdminMixin):
 class BaseContentRelatedLocationModelAdmin(LocationModelAdminMixin, BaseContentRelatedModelAdmin, OSMGeoAdminLatitudeLongitude):
     selected = 'location'
     is_foreign_model = True
-    filter_horizontal = ('cities', )
     extra_js = [GMAP.api_url + GMAP.key]
     map_width = 500
     map_height = 300
@@ -1858,11 +1857,12 @@ class UserAdmin(BaseAdmin, UserAdminOriginal):
             return super(UserAdmin, self).__call__(request, url)
 
 
-## register admin models
-admin.site.unregister(User)
-admin.site.register(User, UserAdmin)
-#admin.site.register(BaseContent, BaseContentAdmin)
-admin.site.register(ContactInfo, ContactInfoAdmin)
+def register(site):
+    ## register admin models
+    site.register(User, UserAdmin)
+    site.register(Group, GroupAdmin)
+    #admin.site.register(BaseContent, BaseContentAdmin)
+    site.register(ContactInfo, ContactInfoAdmin)
 
 
 def setup_basecontent_admin(basecontent_admin_site):
