@@ -79,7 +79,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.i18n',
     'django.core.context_processors.media',
     'django.core.context_processors.request',
-    'portal.context_processors.all_context',
+    'merengue.context_processors.all_context',
     'section.context_processors.section',
 )
 
@@ -90,10 +90,10 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'pagination.middleware.PaginationMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'portal.middleware.RemoveRandomAjaxParameter',
+    'merengue.middleware.RemoveRandomAjaxParameter',
     'section.middleware.SectionMiddleware',
     'section.middleware.DebugSectionMiddleware',
-    'portal.middleware.SimplifiedLayoutMiddleware',
+    'merengue.middleware.SimplifiedLayoutMiddleware',
     'cmsutils.middleware.AutomatizedTestingMiddleware',
     #'django.middleware.gzip.GZipMiddleware',
     #'debug_toolbar.middleware.DebugToolbarMiddleware',
@@ -142,7 +142,7 @@ INSTALLED_APPS = (
     'base',
     'section',
     'event',
-    'portal',
+    'merengue',
     'inplaceeditform',
     'searchform',
     'inlinetrans',
@@ -157,16 +157,7 @@ INSTALLED_APPS = (
     #'forums',
 )
 
-SECTION_MAP = {
-}
-
-# inverse mapping from SECTION_MAP, used for convenience
-APP_SECTION_MAP = {}
-for key, section in SECTION_MAP.items():
-    for model_name in section['class_names']:
-        APP_SECTION_MAP[model_name] = key
-
-TEST_RUNNER = 'portal.test.run_tests'
+TEST_RUNNER = 'merengue.test.run_tests'
 TEST_DB_CREATION_SUFFIX = 'WITH TEMPLATE template_postgis'
 
 FIXTURE_DIRS = (
