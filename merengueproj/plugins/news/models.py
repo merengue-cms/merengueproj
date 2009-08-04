@@ -17,7 +17,7 @@ class NewsCategory(BaseCategory):
 class NewsItem(BaseContent):
     __metaclass__ = TransMeta
 
-    publish_date = models.DateTimeField(blank=True, null=True, db_index=True, editable=False)
+    publish_date = models.DateTimeField(blank=True, null=True, db_index=True)
     expire_date = models.DateTimeField(blank=True, null=True, db_index=True)
     categories = models.ManyToManyField(NewsCategory,
                                         verbose_name=_('category'),

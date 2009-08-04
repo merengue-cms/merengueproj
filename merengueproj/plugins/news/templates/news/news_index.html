@@ -1,0 +1,13 @@
+{% extends "base/base.html" %}
+
+{% load i18n inlinetrans %}
+
+{% block pagetitle %}{% trans "News index" %}{% endblock %}
+
+{% block content %}
+<ul class="newsList">
+  {% for n in news_list %}
+  <li>{{ n.name }}</li>
+  {% endfor %}
+<ul>
+{% endblock %}
