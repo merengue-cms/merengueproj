@@ -87,9 +87,7 @@ class BaseCategory(models.Model):
 class Base(models.Model):
     __metaclass__ = TransMeta
     name = models.CharField(verbose_name=_('name'), max_length=200, db_index=True)
-    slug = AutoSlugField(verbose_name=_('slug'), autofromfield='name',
-                         max_length=200, db_index=True, editable=False,
-                         force_on_edit=True)
+    slug = models.SlugField(verbose_name=_('slug'), max_length=200, db_index=True)
     plain_description = models.TextField(verbose_name=_('description'),
                                          null=True, blank=True, editable=False)
     description = models.TextField(verbose_name=_('description'),

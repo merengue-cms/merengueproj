@@ -15,10 +15,10 @@ import mptt
 from cmsutils.adminfilters import QueryStringManager
 from cmsutils.db.fields import ColorField
 
-from base.models import BaseContent
-from multimedia.models import Photo, BaseMultimedia, Video
+from base.managers import WorkflowManager
+from base.models import Base, BaseContent
+from multimedia.models import Photo, Video
 from searchform.registry import search_form_registry
-from section.managers import WorkflowManagerDocument
 from stdimage import StdImageField
 from transmeta import TransMeta
 
@@ -196,21 +196,9 @@ class DocumentLink(BaseLink):
         return self.document.is_published()
 
 
-class BaseSection(models.Model, RealInstanceMixin):
+class BaseSection(Base, RealInstanceMixin):
 
     __metaclass__ = TransMeta
-
-    name = models.CharField(
-        verbose_name=_('name'),
-        max_length=200,
-    )
-
-    slug = models.SlugField(
-        verbose_name=_('slug'),
-        max_length=200,
-        blank=False,
-        null=False,
-    )
 
     main_menu = models.OneToOneField(
         Menu,
@@ -263,13 +251,6 @@ class BaseSection(models.Model, RealInstanceMixin):
         editable=False,
     )
 
-    main_image = models.ImageField(
-        verbose_name=_('main image'),
-        upload_to='sections',
-        null=False,
-        blank=True,
-    )
-
     main_document = models.ForeignKey(
         'Document',
         null = True,
@@ -291,9 +272,10 @@ class BaseSection(models.Model, RealInstanceMixin):
         verbose_name=_('custom style'),
     )
 
+    objects = WorkflowManager()
+
     class Meta:
         abstract = False
-        translate = ('name', )
 
     def __unicode__(self):
         return unicode(self.name)
@@ -301,10 +283,6 @@ class BaseSection(models.Model, RealInstanceMixin):
     @property
     def app_name(self):
         return self.real_instance.app_name
-
-    @property
-    def status(self):
-        return self.real_instance.status
 
     @property
     def check_attributes(self):
@@ -343,16 +321,11 @@ def sections_permalink(func):
 
 
 class Section(BaseSection):
+    objects = WorkflowManager()
 
     @property
     def app_name(self):
         return ''
-
-    @property
-    def status(self):
-        if self.main_document:
-            return self.main_document.status
-        return super(Section, self).status
 
     @sections_permalink
     def get_absolute_url(self):
@@ -364,14 +337,6 @@ class AppSection(BaseSection):
     @sections_permalink
     def get_absolute_url(self):
         return ('%s_index' % self.app_name, None, tuple())
-
-    @property
-    def status(self):
-        assert self.slug is not None
-        if self.slug in settings.SECTION_MAP:
-            if settings.SECTION_MAP[self.slug]['published']:
-                return 2
-        return 1
 
     @property
     def app_name(self):
@@ -426,19 +391,9 @@ class Carousel(models.Model):
         return unicode(self.name)
 
 
-class Document(models.Model):
+class Document(Base):
 
     __metaclass__ = TransMeta
-
-    name = models.CharField(
-        verbose_name=_('name'),
-        max_length=200,
-        )
-
-    slug = models.SlugField(
-        verbose_name=_('slug'),
-        max_length=200,
-        )
 
     body = models.TextField(
         verbose_name=_('body'),
@@ -500,23 +455,17 @@ class Document(models.Model):
         null=True,
         )
 
-    status = models.IntegerField(_('Publication status'),
-        choices=settings.DOCUMENT_STATUS_LIST,
-        default=1,
-        help_text=_('Enter the current status'),
-        )
-
     permanent = models.BooleanField(verbose_name=_('permanent'),
                                     help_text=_('make this document not erasable and its slug ummutable'),
                                     editable=False,
                                     default=False)
 
-    objects = WorkflowManagerDocument()
+    objects = WorkflowManager()
 
     class Meta:
         verbose_name = _('document')
         verbose_name_plural = _('documents')
-        translate = ('name', 'body', 'photo_description', )
+        translate = ('body', 'photo_description', )
 
     def __unicode__(self):
         return unicode(self.name)
@@ -616,9 +565,6 @@ class Document(models.Model):
                             option_list.append(soption)
                     return option_list
         return []
-
-    def is_published(self):
-        return self.status==2
 
     def get_cache_key(self):
         """ returns a cache key that identifies this document with search form

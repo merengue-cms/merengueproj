@@ -12,16 +12,11 @@ from django.utils.translation import ugettext
 from base.models import BaseContent
 from base.admin import (BaseAdmin, BaseContentRelatedModelAdmin,
                         WorkflowBatchActionProvider)
-from batchadmin.util import get_changelist, model_ngettext
-from batchadmin.forms import CHECKBOX_NAME
+from batchadmin.util import get_changelist
 from multimedia.models import Photo
 from section.models import (Menu, Section, AppSection, Carousel,
                             BaseLink, AbsoluteLink, DocumentLink, Document)
 from section.widgets import ModifiedRelatedFieldWidgetWrapper, SearchFormOptionsWidget
-
-
-DRAFT = 1
-PUBLISHED = 2
 
 
 class MenuAdmin(BaseAdmin):
@@ -61,7 +56,6 @@ class DocumentLinkAdmin(BaseAdmin):
 
 class SectionAdmin(BaseSectionAdmin):
     list_display = ('name', 'slug')
-    prepopulated_fields = {'slug': ('name_es', )}
 
 
 class BaseSectionRelatedCustomStyleModelAdmin(BaseContentRelatedModelAdmin):
@@ -104,49 +98,6 @@ class BaseSectionRelatedCustomStyleModelAdmin(BaseContentRelatedModelAdmin):
         return super(BaseSectionRelatedCustomStyleModelAdmin, self).response_add(request, obj, post_url_continue)
 
 
-class DocumentWorkflowBatchActionProvider(object):
-
-    def set_as_draft(self, request, changelist):
-        objects_id = request.POST.getlist('selected')
-        state = DRAFT
-        if objects_id:
-            if request.POST.get('post'):
-                changelist = get_changelist(request, self.model, self)
-                return self.change_state(request, changelist, state)
-            extra_context = {'title': _('Are you sure you want set as draft?'),
-                             'action_submit': 'set_as_draft'}
-            return self.confirm_action(request, objects_id, extra_context)
-    set_as_draft.short_description = _("Set as draft")
-
-    def set_as_published(self, request, changelist):
-        objects_id = request.POST.getlist('selected')
-        state = PUBLISHED
-        if objects_id:
-            if request.POST.get('post'):
-                changelist = get_changelist(request, self.model, self)
-                return self.change_state(request, changelist, state)
-            extra_context = {'title': _('Are you sure you want set as published?'),
-                             'action_submit': 'set_as_published'}
-            return self.confirm_action(request, objects_id, extra_context)
-    set_as_published.short_description = _("Set as published")
-
-    def change_state(self, request, changelist, state):
-        if self.has_change_permission(request):
-            selected = request.POST.getlist(CHECKBOX_NAME)
-            objects = changelist.get_query_set().filter(pk__in=selected)
-            n = objects.count()
-            obj_log = ugettext("Changed as %s" % state)
-            msg = "State changed successfully to these %d %s." % (n, model_ngettext(self.opts, n))
-            if n:
-                for obj in objects:
-                    obj.status = state
-                    obj.save()
-                    object_repr = unicode(obj)
-                    self.log_change(request, obj, obj_log)
-                self.message_user(request, msg)
-    change_state.short_description = "Change state of selected %(verbose_name_plural)s"
-
-
 class ReadOnlySlugWidget(HiddenInput):
 
     def render(self, name, value, attrs=None):
@@ -171,7 +122,7 @@ class BaseDocumentModelAdmin(object):
             pass
 
 
-class BaseSectionRelatedDocumentModelAdmin(BaseContentRelatedModelAdmin, DocumentWorkflowBatchActionProvider, BaseDocumentModelAdmin):
+class BaseSectionRelatedDocumentModelAdmin(BaseContentRelatedModelAdmin, WorkflowBatchActionProvider, BaseDocumentModelAdmin):
     selected = 'documents'
     change_list_template = "admin/section/document/change_list.html"
     list_display = ('name', 'slug', 'status', )
@@ -197,17 +148,6 @@ class BaseSectionRelatedDocumentModelAdmin(BaseContentRelatedModelAdmin, Documen
 
     def has_change_permission_to_any(self, request):
         return super(BaseSectionRelatedDocumentModelAdmin, self).has_change_permission(request, None)
-
-    def _get_status_options(self, user, obj):
-        options = set()
-        all_options = set(settings.DOCUMENT_STATUS_LIST)
-
-        # Remember that superuser has all the perms
-        if user.has_perm('base.can_draft'):
-            options=options.union([o for o in all_options if o[0] == DRAFT])
-        if user.has_perm('base.can_published'):
-            options=options.union([o for o in all_options if o[0] == PUBLISHED])
-        return options
 
     def has_delete_permission(self, request, obj=None):
         if obj:
@@ -574,7 +514,7 @@ class CarouselRelatedRemovePhotoModelAdmin(CarouselRelatedPhotoModelAdmin, Workf
         return Photo.objects.filter(carousel=self.admin_site.basecontent)
 
 
-class DocumentAdmin(BaseAdmin, DocumentWorkflowBatchActionProvider, BaseDocumentModelAdmin):
+class DocumentAdmin(BaseAdmin, WorkflowBatchActionProvider, BaseDocumentModelAdmin):
     change_form_template = 'admin/section/document/change_form.html'
 
     list_display = ('name', 'slug', 'status', )

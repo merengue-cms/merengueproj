@@ -2,7 +2,7 @@ from django.conf import settings
 from django.core.cache import cache
 from django.http import Http404
 
-from section.models import AppSection
+from section.models import BaseSection
 from section.views import section_dispatcher
 
 
@@ -13,12 +13,17 @@ class SectionMiddleware(object):
         section = None
         if request.path:
             first_path_element = request.path.split('/')[1]
-            if first_path_element in settings.SECTION_MAP:
+            slugs_cache_key = 'published_section_slugs'
+            published_slugs = cache.get(slugs_cache_key)
+            if published_slugs is None:
+                published_slugs = [v[0] for v in BaseSection.objects.published().values_list('slug')]
+                cache.set(slugs_cache_key, published_slugs)
+            if first_path_element in published_slugs:
                 try:
                     cache_key = 'app_section_%s' % first_path_element
                     section = cache.get(cache_key)
                     if section is None:
-                        section = AppSection.objects.get(slug=first_path_element)
+                        section = BaseSection.objects.get(slug=first_path_element)
                         cache.set(cache_key, section)
                 except:
                     # we put an blank except because some times in WSGI in a heavy loaded environments

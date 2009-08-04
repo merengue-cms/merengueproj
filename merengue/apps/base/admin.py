@@ -486,18 +486,6 @@ class BaseAdmin(BatchModelAdmin):
 
 class WorkflowBatchActionProvider(object):
 
-    def set_as_pasive(self, request, changelist):
-        objects_id = request.POST.getlist('selected')
-        state = 'pasive'
-        if objects_id:
-            if request.POST.get('post'):
-                changelist = get_changelist(request, self.model, self)
-                return self.change_state(request, changelist, state)
-            extra_context = {'title': _('Are you sure you want set as pasive register?'),
-                             'action_submit': 'set_as_pasive'}
-            return self.confirm_action(request, objects_id, extra_context)
-    set_as_pasive.short_description = _("Set as pasive register")
-
     def set_as_draft(self, request, changelist):
         objects_id = request.POST.getlist('selected')
         state = 'draft'
@@ -583,6 +571,7 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
     filter_horizontal = ('owners', )
     edit_related = ()
     html_fields = ('description', )
+    prepopulated_fields = {'slug': ('name_es', )}
 
     batch_actions = BaseAdmin.batch_actions + ['set_as_draft',
                                                'set_as_pending',
@@ -1771,7 +1760,6 @@ LogEntry.img_is_deletion = img_is_deletion
 
 
 class BaseContentOwnedAdmin(BaseAdmin):
-
     change_list_template = 'admin/auth/user/owned_contents.html'
     batch_actions = ['unassign_ownership']
     search_fields = ('name', )
@@ -1841,7 +1829,6 @@ class BaseContentOwnedAdmin(BaseAdmin):
 
 
 class UserAdmin(BaseAdmin, UserAdminOriginal):
-
     form = UserChangeFormCust
     add_form = UserCreationFormCust
     list_display = UserAdminOriginal.list_display + ('is_active', )
