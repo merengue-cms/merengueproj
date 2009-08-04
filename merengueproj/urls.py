@@ -33,7 +33,7 @@ for model, app_admin_site, prefix in app_admin_sites_extra:
 search_form_registry.autodiscover()
 
 urlpatterns = patterns('',
-    (r'^admin/pending_[\w]+/$', 'portal.views.list_pending_redirect'),
+    (r'^admin/pending_[\w]+/$', 'merengue.views.list_pending_redirect'),
 )
 
 urlpatterns += patterns('', *app_admin_patterns)
@@ -43,7 +43,7 @@ js_info_dict = {
 }
 
 urlpatterns += patterns('',
-    (r'^admin/contenidos/pendientes/$', 'portal.views.list_pending'),
+    (r'^admin/contenidos/pendientes/$', 'merengue.views.list_pending'),
     (r'^admin/r/(?P<content_type_id>\d+)/(?P<object_id>.+)/$',
      'cmsutils.views.generic.redirect_to_object'),
     (r'^admin/(.*)', admin.site.root),
@@ -51,27 +51,27 @@ urlpatterns += patterns('',
     # for 'admin'
     url(r'^admin/$', lambda request: '', name="admin_index"),
 
-    url(r'^searchform/jsi18n/$', 'portal.views.searchform_jsi18n', name='searchform_jsi18n'),
+    url(r'^searchform/jsi18n/$', 'merengue.views.searchform_jsi18n', name='searchform_jsi18n'),
 
     (r'^media/(.*)$', 'django.views.static.serve',
         {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
     (r'^cms/(.*)$', 'django.views.static.serve',
         {'document_root': settings.MEDIA_ROOT + '/cms'}),
-    (r'^i18n/setlang/$', 'portal.views.set_language'),
+    (r'^i18n/setlang/$', 'merengue.views.set_language'),
     (r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict),
     (r'^inplaceeditform/', include('inplaceeditform.urls')),
-    (r'^$', 'portal.views.index'),
+    (r'^$', 'merengue.views.index'),
 
     # login and logout
-    url(r'^cuentas/entrar/$', 'portal.views.try_login', name='login_form'),
-    url(r'^cuentas/salir/$', 'portal.views.logout', name='logout'),
-    url(r'^mapa-web/$', 'portal.views.site_map', name='site_map'),
+    url(r'^cuentas/entrar/$', 'merengue.views.try_login', name='login_form'),
+    url(r'^cuentas/salir/$', 'merengue.views.logout', name='logout'),
+    url(r'^mapa-web/$', 'merengue.views.site_map', name='site_map'),
 
     # base urls
     (r'^base/', include('base.urls')),
 
     (r'^ajax/autocomplete/tags/(?P<app_name>.*)/(?P<model>.*)/$',
-     'portal.views.ajax_autocomplete_tags'),
+     'merengue.views.ajax_autocomplete_tags'),
     (r'^multimedia/', include('multimedia.urls')),
     # section
     (r'^secciones/', include('section.urls')),
@@ -80,7 +80,7 @@ urlpatterns += patterns('',
     # other URLs
     (r'^internal-links/', include('internallinks.urls')),
     (r'^threadedcomments/', include('threadedcomments.urls')),
-    url(r'^invalidate/$', 'portal.views.invalidate_cache', name='invalidate_cache'),
+    url(r'^invalidate/$', 'merengue.views.invalidate_cache', name='invalidate_cache'),
 )
 
 if 'rosetta' in settings.INSTALLED_APPS:
