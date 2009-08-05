@@ -68,6 +68,7 @@ SECRET_KEY = 'v$*k)ri8i*yv@yb2w!c)t#aj$o=na8u#855#wsve4!iw%u__hy'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
+    'themes.loader.load_template_source', # for enabling theme support in Merengue
     'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
 #     'django.template.loaders.eggs.load_template_source',
@@ -80,6 +81,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.request',
     'merengue.context_processors.all_context',
+    'themes.context_processors.media',
     'section.context_processors.section',
 )
 
@@ -141,6 +143,7 @@ INSTALLED_APPS = (
     'places',
     'base',
     'section',
+    'themes',
     'event',
     'merengue',
     'inplaceeditform',
