@@ -2,6 +2,7 @@ import BeautifulSoup
 import datetime
 import re
 
+from django import forms
 from django.conf import settings
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper, AdminDateWidget
 from django.contrib.gis.admin.widgets import OpenLayersWidget
@@ -15,6 +16,23 @@ from django.utils.translation import get_language
 from django.utils.translation import ugettext as _
 
 from cmsutils.forms.widgets import TinyMCE, TINYMCE_JS
+
+
+class ReadOnlyWidget(forms.Widget):
+
+    def __init__(self, original_value, display_value):
+        self.original_value = original_value
+        self.display_value = display_value
+
+        super(ReadOnlyWidget, self).__init__()
+
+    def render(self, name, value, attrs=None):
+        if self.display_value is not None:
+            return unicode(self.display_value)
+        return unicode(self.original_value)
+
+    def value_from_datadict(self, data, files, name):
+        return self.original_value
 
 
 class CustomTinyMCE(TinyMCE):

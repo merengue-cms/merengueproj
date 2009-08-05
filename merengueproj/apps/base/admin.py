@@ -16,6 +16,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.admin.views.main import ChangeList, ERROR_FLAG
 from django.contrib.admin.options import IncorrectLookupParameters
 from django.contrib.admin.util import quote, unquote, flatten_fieldsets, _nest_help
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.gis import admin as geoadmin
 from django.contrib.gis.db import models as geomodels
 from django.contrib.gis.maps.google import GoogleMap
@@ -37,12 +38,12 @@ from batchadmin.admin import BatchModelAdmin
 from batchadmin.forms import CHECKBOX_NAME
 from batchadmin.util import model_ngettext, get_changelist
 
-from base.forms import AdminBaseContentOwnersForm
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
+from base.forms import AdminBaseContentOwnersForm
 from base.models import Base, BaseContent, ContactInfo, MultimediaRelation
 from base.utils import geolocate_object_base, copy_request
-from base.widgets import CustomTinyMCE, OpenLayersWidgetLatitudeLongitude, OpenLayersInlineLatitudeLongitude
+from base.widgets import (CustomTinyMCE, OpenLayersWidgetLatitudeLongitude,
+                          OpenLayersInlineLatitudeLongitude, ReadOnlyWidget)
 from multimedia.models import Photo, Video, PanoramicView, Image3D, BaseMultimedia
 
 from places.models import Location
@@ -190,9 +191,27 @@ class BaseAdmin(BatchModelAdmin):
     html_fields = ()
     autocomplete_fields = {}
     edit_related = ()
+    readonly_fields = ()
     list_per_page = 50
     batch_actions = ['delete_confirm']
     exclude = ('main_image', )
+
+    def get_form(self, request, obj=None):
+        form = super(BaseAdmin, self).get_form(request, obj)
+
+        if hasattr(self, 'readonly_fields'):
+            for field_name in self.readonly_fields:
+                if field_name in form.base_fields:
+
+                    if hasattr(obj, 'get_%s_display' % field_name):
+                        display_value = getattr(obj, 'get_%s_display' % field_name)()
+                    else:
+                        display_value = None
+
+                    form.base_fields[field_name].widget = ReadOnlyWidget(getattr(obj, field_name, ''), display_value)
+                    form.base_fields[field_name].required = False
+
+        return form
 
     def formfield_for_dbfield(self, db_field, **kwargs):
         field = super(BaseAdmin, self).formfield_for_dbfield(db_field, **kwargs)
