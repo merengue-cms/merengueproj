@@ -2,31 +2,37 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    {% if LANGUAGE_CODE %}
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  {% if LANGUAGE_CODE %}
     <meta http-equiv="content-language" content="{{ LANGUAGE_CODE }}">
-    {% endif %}
-    <link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon.ico" type="image/gif" />
-    <title>{% block pagetitle %}{% endblock %} - {% block sitetitle %}Merengue powered site{% endblock %}</title>
+  {% endif %}
+  <link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon.ico" type="image/gif" />
+  <title>{% block pagetitle %}{% endblock %} - {% block sitetitle %}Merengue powered site{% endblock %}</title>
 
-    {% include "base/inc.cssstyles.html" %}
-    {% block extrastyle %}{% endblock %}
+  {% block cssstyles %}
+    {% include "inc.cssstyles.html" %}
+    {% block extrastyles %}{% endblock %}
+  {% endblock %}
 
-    {% include "base/inc.jsfiles.html" %}
-    {% inlinetrans_media %}
+  {% block jsscripts %}
+    {% include "inc.jsfiles.html" %}
+  {% endblock %}
 
-    {% block extrascripts %}{% endblock %}
+  {% inlinetrans_media %}
 
-    {% block extrahead %}{% endblock %}
+  {% block extrascripts %}{% endblock %}
 
-    {% block customstyle %}{% endblock %}
-    {% if request.testing %}
-      <script type="text/javascript">
-        if (typeof TinyMCE_Engine != 'undefined') {
-          TinyMCE_Engine.prototype.init=function(settings) { this.settings=settings; return;};
-        }
-      </script>
-    {% endif %}
+  {% block extrahead %}{% endblock %}
+
+  {% block customstyle %}{% endblock %}
+
+  {% if request.testing %}
+    <script type="text/javascript">
+      if (typeof TinyMCE_Engine != 'undefined') {
+        TinyMCE_Engine.prototype.init=function(settings) { this.settings=settings; return;};
+      }
+    </script>
+  {% endif %}
 </head>
 
 <!--[if lt IE 7 ]>
@@ -35,75 +41,73 @@
  <body dir="ltr" class="ie ie8"><![endif]--> <!--[if !IE]>
 --> <body dir="ltr" {% block extrabodytag %}{% endblock %}><!--<![endif]-->
 
+<div id="container" class="{% block bodyextraclasses %}{% endblock %}">
 {% current_svn_rev %}
 
-<div id="container" class="{% block bodycolorclass %}blue{% endblock %} {% block bodyextraclasses %}{% endblock %}">
 {% if not request.HIDE_DECORATIONS %}
+  {% block headerwrapper %}
   <div id="header">
     <div id="headerlogo">
       {% block headerlogo %}
-        {% include "base/inc.headerlogo.html" %}
+        {% include "inc.headerlogo.html" %}
       {% endblock %}
     </div>
 
     <div id="headerlinks">
       {% block headerlinks %}
-        {% include "base/inc.headerlinks.html" %}
+        {% include "inc.headerlinks.html" %}
       {% endblock %}
     </div>
-
   </div>
+  {% endblock headerwrapper %}
 
   {% block breadcrumbsbox %}
-     {% include "base/inc.breadcrumbs.html" %}
+    {% include "inc.breadcrumbs.html" %}
   {% endblock %}
-
 {% endif %}
-  <div id="content-zone">
+  <div id="contentwrapper">
+  {% block contentwrapper %}
 
-{% if not request.HIDE_MENU %}
+  {% if not request.HIDE_MENU %}
     <div id="left-sidebar">
       {% block sidebar %}
-        {% include "base/inc.leftsidebar.html" %}
+        {% include "inc.leftsidebar.html" %}
       {% endblock %}
     </div>
-{% endif %}
+  {% endif %}
 
-    <div id="content" class="{% block contentclass %}withsidebar{% endblock %}">
-      <div id="messagebox">
-        {% messagebox %}
-      </div>
-      {% block content %}
-      {% endblock %}
+  <div id="content" class="{% block contentclass %}withsidebar{% endblock %}">
+    <div id="messagebox">
+      {% messagebox %}
     </div>
+    {% block content %}
+    {% endblock %}
+  </div>
 
-{% if not request.HIDE_MENU %}
+  {% if not request.HIDE_MENU %}
     <div id="right-sidebar">
       {% block rightsidebar %}
-        {% include "base/inc.rightsidebar.html" %}
+        {% include "inc.rightsidebar.html" %}
       {% endblock %}
     </div>
-{% endif %}
+  {% endif %}
 
   </div>
-{% if not request.HIDE_DECORATIONS %}
+  {% if not request.HIDE_DECORATIONS %}
+    <div class="visualClear"></div>
 
-  <div class="visualClear"></div>
 
-
-  <div id="footer">
-  {% block footer %}
-    {% include "base/inc.footer.html" %}
-  {% endblock %}
-  </div>
-
-{% endif %}
+    <div id="footer">
+    {% block footer %}
+      {% include "inc.footer.html" %}
+    {% endblock %}
+    </div>
+  {% endif %}
+  {% endblock contentwrapper %}
 </div>
 
 {% block extrabody %}
 {% endblock %}
-{% block statisticsnippet %}
-{% endblock statisticsnippet %}
 
 {% if debug %}
 <div id="debug">
