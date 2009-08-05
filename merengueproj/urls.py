@@ -2,7 +2,6 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
 
-
 from searchform.registry import search_form_registry
 from admin import (setup_basecontents_admin,
                    setup_sections_admin, setup_multimedia_admin, setup_user_admin,
