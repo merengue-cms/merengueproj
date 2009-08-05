@@ -17,3 +17,9 @@ def get_theme_dirs(template_dirs=None):
     for themes_root in get_theme_root_dirs():
         for theme_dir in os.listdir(themes_root):
             yield theme_dir, safe_join(themes_root, theme_dir)
+
+
+def get_theme_path(directory_name=None):
+    for theme_dir, theme_path in get_theme_dirs():
+        if directory_name == theme_dir:
+            return theme_path
