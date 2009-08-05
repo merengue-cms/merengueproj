@@ -3,7 +3,6 @@
 
 from os import path
 
-
 ugettext = lambda s: s # dummy ugettext function, as said on django docs
 
 BASEDIR = path.dirname(path.abspath(__file__))
