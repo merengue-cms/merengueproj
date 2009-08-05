@@ -187,6 +187,16 @@ def transmeta_aware_fieldname(db_field):
     return getattr(db_field, 'original_fieldname', db_field.name) # original_fieldname is set by transmeta
 
 
+def set_field_read_only(field, field_name, obj):
+    """ utility function for convert a widget field into a read only widget """
+    if hasattr(obj, 'get_%s_display' % field_name):
+        display_value = getattr(obj, 'get_%s_display' % field_name)()
+    else:
+        display_value = None
+    field.widget = ReadOnlyWidget(getattr(obj, field_name, ''), display_value)
+    field.required = False
+
+
 class BaseAdmin(BatchModelAdmin):
     html_fields = ()
     autocomplete_fields = {}
@@ -198,19 +208,11 @@ class BaseAdmin(BatchModelAdmin):
 
     def get_form(self, request, obj=None):
         form = super(BaseAdmin, self).get_form(request, obj)
-
         if hasattr(self, 'readonly_fields'):
             for field_name in self.readonly_fields:
                 if field_name in form.base_fields:
-
-                    if hasattr(obj, 'get_%s_display' % field_name):
-                        display_value = getattr(obj, 'get_%s_display' % field_name)()
-                    else:
-                        display_value = None
-
-                    form.base_fields[field_name].widget = ReadOnlyWidget(getattr(obj, field_name, ''), display_value)
-                    form.base_fields[field_name].required = False
-
+                    field = form.base_fields[field_name]
+                    set_field_read_only(field, field_name, obj)
         return form
 
     def formfield_for_dbfield(self, db_field, **kwargs):
