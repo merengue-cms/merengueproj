@@ -155,6 +155,7 @@ INSTALLED_APPS = (
     'internallinks',
     'threadedcomments',
     'captcha',
+    'south',
     # that are plugins... will be removed from here when plugins registry was implemented
     'plugins.news',
 )
