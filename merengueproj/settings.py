@@ -119,6 +119,8 @@ TEMPLATE_DIRS = (
     path.join(BASEDIR, 'templates'),
 )
 
+PLUGINS_DIR = 'plugins'
+
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/cuentas/entrar/'
 
@@ -143,6 +145,7 @@ INSTALLED_APPS = (
     'places',
     'base',
     'section',
+    'pluginregistry',
     'themes',
     'event',
     'merengue',
@@ -155,9 +158,6 @@ INSTALLED_APPS = (
     'internallinks',
     'threadedcomments',
     'captcha',
-    'south',
-    # that are plugins... will be removed from here when plugins registry was implemented
-    'plugins.news',
 )
 
 TEST_RUNNER = 'merengue.test.run_tests'
