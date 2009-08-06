@@ -2,8 +2,8 @@ from django.db import models
 
 
 class PluginManager(models.Manager):
-    """ Theme manager """
+    """ Plugin manager """
 
-    def active(self):
-        """ Retrieves active theme for site """
-        return super(PluginManager, self).get_query_set().get(active=True)
+    def actives(self):
+        """ Retrieves active plugins for site """
+        return super(PluginManager, self).get_query_set().filter(active=True)
