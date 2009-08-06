@@ -1,3 +1,11 @@
+from datetime import datetime
+
+# plugin data
+NAME = 'News'
+DESCRIPTION = 'News plugin'
+VERSION = '0.0.1a'
+TIMESTAMP = datetime.now()
+
 # media subdir for this plugin
 MEDIA_DIR = 'news'
 
