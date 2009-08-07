@@ -15,3 +15,9 @@ def register(site):
     """ Merengue admin registration callback """
     site.register(NewsCategory, NewsCategoryAdmin)
     site.register(NewsItem, NewsItemAdmin)
+
+
+def unregister(site):
+    """ Merengue admin unregistration callback """
+    site.unregister(NewsCategory)
+    site.unregister(NewsItem)

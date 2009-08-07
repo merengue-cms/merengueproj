@@ -1,13 +1,14 @@
-from django.conf import settings
-from django.core.management.color import color_style
-from django.core.management.sql import sql_all
 from django.db import models
 from django.db.models import signals
 from django.db.models.loading import load_app
+from django.contrib.admin.sites import AlreadyRegistered, NotRegistered
 from django.utils.translation import ugettext_lazy as _
 
-from pluginregistry import get_plugins_dir
+from pluginregistry import (are_installed_models, install_models,
+                            get_plugins_dir, update_installed_apps)
 from pluginregistry.managers import PluginManager
+
+from merengue.admin import register_app, unregister_app
 
 
 class Plugin(models.Model):
@@ -24,18 +25,26 @@ class Plugin(models.Model):
         return self.name
 
 
-def update_installed_apps(sender, instance, **kwargs):
+def install_plugin(sender, instance, **kwargs):
+    plugins_dir = get_plugins_dir()
+    app_name = '%s.%s' % (plugins_dir, instance.directory_name)
     if instance.installed:
-        plugins_dir = get_plugins_dir()
-        app_name = instance.directory_name
-        app_to_load = '%s.%s' % (plugins_dir, app_name)
-        settings.INSTALLED_APPS = tuple(
-            list(settings.INSTALLED_APPS) + [app_to_load],
-        )
-        app_mod = load_app(app_to_load)
-        style = color_style()
-        print " ".join(sql_all(app_mod, style))
+        app_mod = load_app(app_name)
+        update_installed_apps(app_name)
+        if not are_installed_models(app_mod):
+            install_models(app_mod)
+            # Force instance saving after connection closes.
+            instance.save()
         if instance.active:
-            pass
+            try:
+                register_app(app_name)
+            except AlreadyRegistered:
+                pass
+        else:
+            try:
+                unregister_app(app_name)
+            except NotRegistered:
+                pass
 
-signals.post_save.connect(update_installed_apps, sender=Plugin)
+
+signals.post_save.connect(install_plugin, sender=Plugin)

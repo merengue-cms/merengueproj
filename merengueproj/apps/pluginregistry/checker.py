@@ -11,7 +11,7 @@ def check_plugins():
     # all process will be in a unique transaction, we don't want to get self committed
     sid = transaction.savepoint()
     try:
-        # now look for all themes in filesystem and enable them
+        # now look for all plugins in filesystem and enable them
         for plugin_dir in os.listdir(get_plugins_dir()):
             plugin_config = get_plugin_config(plugin_dir)
             if plugin_config:

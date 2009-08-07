@@ -7,6 +7,10 @@ from base.models import BaseContent, BaseCategory
 from plugins.news.managers import NewsItemManager
 
 
+class Cosa(models.Model):
+    nol = models.AutoField(primary_key=True)
+
+
 class NewsCategory(BaseCategory):
 
     class Meta:
