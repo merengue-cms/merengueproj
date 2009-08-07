@@ -158,6 +158,7 @@ INSTALLED_APPS = (
     'internallinks',
     'threadedcomments',
     'captcha',
+    'south',
 )
 
 TEST_RUNNER = 'merengue.test.run_tests'
