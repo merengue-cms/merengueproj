@@ -1,9 +1,12 @@
+from django.contrib.admin.sites import AlreadyRegistered, NotRegistered
 from django.core.management.color import no_style
 from django.core.management.sql import sql_all
 from django.db import connection, transaction
 from django.db.models import get_models
 from django.conf import settings
 from django.utils.importlib import import_module
+
+from merengue.admin import register_app, unregister_app
 
 
 def get_plugins_dir():
@@ -46,10 +49,37 @@ def install_models(app_mod):
     transaction.commit_unless_managed()
 
 
-def update_installed_apps(app_name):
-    if isinstance(settings.INSTALLED_APPS, list):
-        settings.INSTALLED_APPS.append(app_name)
-    else:
-        settings.INSTALLED_APPS = tuple(
-            list(settings.INSTALLED_APPS) + [app_name],
-        )
+def add_to_installed_apps(app_name):
+    if not app_name in settings.INSTALLED_APPS:
+        if isinstance(settings.INSTALLED_APPS, list):
+            settings.INSTALLED_APPS.append(app_name)
+        else:
+            settings.INSTALLED_APPS = tuple(
+                list(settings.INSTALLED_APPS) + [app_name],
+            )
+
+
+def remove_from_installed_apps(app_name):
+    if app_name in settings.INSTALLED_APPS:
+        if isinstance(settings.INSTALLED_APPS, list):
+            settings.INSTALLED_APPS.remove(app_name)
+        else:
+            settings.INSTALLED_APPS = list(settings.INSTALLED_APPS)
+            settings.INSTALLED_APPS.remove(app_name)
+            settings.INSTALLED_APPS = tuple(settings.INSTALLED_APPS)
+
+
+def enable_plugin(app_name):
+    add_to_installed_apps(app_name)
+    try:
+        register_app(app_name)
+    except AlreadyRegistered:
+        pass
+
+
+def disable_plugin(app_name):
+    remove_from_installed_apps(app_name)
+    try:
+        unregister_app(app_name)
+    except NotRegistered:
+        pass

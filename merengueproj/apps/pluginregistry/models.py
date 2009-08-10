@@ -1,14 +1,12 @@
 from django.db import models
 from django.db.models import signals
 from django.db.models.loading import load_app
-from django.contrib.admin.sites import AlreadyRegistered, NotRegistered
 from django.utils.translation import ugettext_lazy as _
 
 from pluginregistry import (are_installed_models, install_models,
-                            get_plugins_dir, update_installed_apps)
+                            get_plugin_module_name, add_to_installed_apps,
+                            enable_plugin, disable_plugin)
 from pluginregistry.managers import PluginManager
-
-from merengue.admin import register_app, unregister_app
 
 
 class Plugin(models.Model):
@@ -26,25 +24,18 @@ class Plugin(models.Model):
 
 
 def install_plugin(sender, instance, **kwargs):
-    plugins_dir = get_plugins_dir()
-    app_name = '%s.%s' % (plugins_dir, instance.directory_name)
+    app_name = get_plugin_module_name(instance.directory_name)
     if instance.installed:
         app_mod = load_app(app_name)
-        update_installed_apps(app_name)
+        # Needed update installed apps in order to get SQL command from plugin
+        add_to_installed_apps(app_name)
         if not are_installed_models(app_mod):
             install_models(app_mod)
             # Force instance saving after connection closes.
             instance.save()
         if instance.active:
-            try:
-                register_app(app_name)
-            except AlreadyRegistered:
-                pass
+            enable_plugin(app_name)
         else:
-            try:
-                unregister_app(app_name)
-            except NotRegistered:
-                pass
-
+            disable_plugin(app_name)
 
 signals.post_save.connect(install_plugin, sender=Plugin)
