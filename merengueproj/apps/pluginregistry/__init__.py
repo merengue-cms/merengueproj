@@ -1,9 +1,13 @@
+import os
+import sys
+
+from django.conf import settings
 from django.contrib.admin.sites import AlreadyRegistered, NotRegistered
+from django.core.exceptions import ImproperlyConfigured
 from django.core.management.color import no_style
 from django.core.management.sql import sql_all
 from django.db import connection, transaction
 from django.db.models import get_models
-from django.conf import settings
 from django.utils.importlib import import_module
 
 from merengue.admin import register_app, unregister_app
@@ -83,3 +87,39 @@ def disable_plugin(app_name):
         unregister_app(app_name)
     except NotRegistered:
         pass
+
+
+def reload_app_directories_template_loader():
+    from django.template import loader
+    template_loader_app_directories = 'django.template.loaders.' \
+                                      'app_directories.load_template_source'
+    if not loader.template_source_loaders:
+        return
+    for func in loader.template_source_loaders:
+        module = func.__module__
+        attr = func.__name__
+        template_loader_name = "%s.%s" % (module, attr)
+        if template_loader_app_directories == template_loader_name:
+            try:
+                mod = import_module(module)
+            except ImportError, e:
+                msg = 'Error importing template source loader %s: "%s"' \
+                      % (module, e)
+                raise (ImproperlyConfigured, msg)
+            sys_fs_encoding = sys.getfilesystemencoding()
+            sys_default_encoding = sys.getdefaultencoding()
+            fs_encoding = sys_fs_encoding or sys_default_encoding
+            app_template_dirs = []
+            for app in settings.INSTALLED_APPS:
+                try:
+                    mod = import_module(app)
+                except ImportError, e:
+                    msg = 'ImportError %s: %s' % (app, e.args[0])
+                    raise (ImproperlyConfigured, msg)
+                template_dir = os.path.join(os.path.dirname(mod.__file__),
+                                            'templates')
+                if os.path.isdir(template_dir):
+                    app_template_dirs.append(template_dir.decode(fs_encoding))
+            app_template_dirs = tuple(app_template_dirs)
+            from django.template.loaders import app_directories
+            app_directories.app_template_dirs = app_template_dirs

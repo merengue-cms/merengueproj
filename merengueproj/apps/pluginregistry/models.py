@@ -5,7 +5,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from pluginregistry import (are_installed_models, install_models,
                             get_plugin_module_name, add_to_installed_apps,
-                            enable_plugin, disable_plugin)
+                            enable_plugin, disable_plugin,
+                            reload_app_directories_template_loader)
 from pluginregistry.managers import PluginManager
 
 
@@ -37,5 +38,8 @@ def install_plugin(sender, instance, **kwargs):
             enable_plugin(app_name)
         else:
             disable_plugin(app_name)
+        # app_directories template loader loads app_template_dirs in
+        # compile time, so we have to load it again.
+        reload_app_directories_template_loader()
 
 signals.post_save.connect(install_plugin, sender=Plugin)
