@@ -220,7 +220,7 @@ LOGOUT_PROTECTED_URL_REDIRECTS = (
     #(r'^/regularexpresion/(.*)$', '/redirect_url'),
 )
 
-CACHE_BACKEND = 'dummy:///'
+CACHE_BACKEND = 'locmem:///'
 CACHE_MIDDLEWARE_SECONDS = 3600*24
 CACHE_MIDDLEWARE_KEY_PREFIX = 'merengue'
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True

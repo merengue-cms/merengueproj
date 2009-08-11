@@ -31,7 +31,7 @@ for model, app_admin_site, prefix in app_admin_sites_extra:
         (r'^%s/(?P<url>.*)' % prefix, app_admin_site.root))
 
 # do autodiscovering of all search forms
-search_form_registry.autodiscover()
+# search_form_registry.autodiscover()
 
 urlpatterns = patterns('',
     (r'^admin/pending_[\w]+/$', 'merengue.views.portal.list_pending_redirect'),
@@ -85,10 +85,4 @@ urlpatterns += patterns('',
     # i18n applications
     url(r'^rosetta/', include('rosetta.urls')),
     url(r'^inlinetrans/', include('inlinetrans.urls')),
-)
-
-
-# this are simulating plugins activation. This will be removed when ticket #17 was complete.
-urlpatterns += patterns('',
-    url(r'^news/', include('plugins.news.urls')),
 )

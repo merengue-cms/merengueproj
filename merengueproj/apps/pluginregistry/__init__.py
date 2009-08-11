@@ -2,6 +2,7 @@ import os
 import sys
 
 from django.conf import settings
+from django.conf.urls.defaults import include, url
 from django.contrib.admin.sites import AlreadyRegistered, NotRegistered
 from django.core.exceptions import ImproperlyConfigured
 from django.core.management.color import no_style
@@ -23,9 +24,12 @@ def get_plugin_module_name(plugin_dir):
     return '%s.%s' % (get_plugins_dir(), plugin_dir)
 
 
-def get_plugin_config(plugin_dir):
+def get_plugin_config(plugin_dir, prepend_plugins_dir=True):
     try:
-        plugin_modname = '%s.config' % get_plugin_module_name(plugin_dir)
+        if prepend_plugins_dir:
+            plugin_modname = '%s.config' % get_plugin_module_name(plugin_dir)
+        else:
+            plugin_modname = '%s.config' % plugin_dir
         return import_module(plugin_modname)
     except (ImportError, TypeError, ValueError):
         if plugin_dir == 'news':
@@ -33,60 +37,88 @@ def get_plugin_config(plugin_dir):
         return None
 
 
-def are_installed_models(app_mod):
+def are_installed_models(plugin_mod):
     installed = True
-    app_models = get_models(app_mod)
+    plugin_models = get_models(plugin_mod)
     try:
-        [m.objects.all().count() for m in app_models]
+        [m.objects.all().count() for m in plugin_models]
     except:
         connection.close()
         installed = False
     return installed
 
 
-def install_models(app_mod):
+def install_models(plugin_mod):
     style = no_style()
     cursor = connection.cursor()
-    sql_commands = sql_all(app_mod, style)
+    sql_commands = sql_all(plugin_mod, style)
     for sql_command in sql_commands:
         cursor.execute(sql_command)
     transaction.commit_unless_managed()
 
 
-def add_to_installed_apps(app_name):
-    if not app_name in settings.INSTALLED_APPS:
+def add_to_installed_apps(plugin_name):
+    if not plugin_name in settings.INSTALLED_APPS:
         if isinstance(settings.INSTALLED_APPS, list):
-            settings.INSTALLED_APPS.append(app_name)
+            settings.INSTALLED_APPS.append(plugin_name)
         else:
             settings.INSTALLED_APPS = tuple(
-                list(settings.INSTALLED_APPS) + [app_name],
+                list(settings.INSTALLED_APPS) + [plugin_name],
             )
 
 
-def remove_from_installed_apps(app_name):
-    if app_name in settings.INSTALLED_APPS:
+def remove_from_installed_apps(plugin_name):
+    if plugin_name in settings.INSTALLED_APPS:
         if isinstance(settings.INSTALLED_APPS, list):
-            settings.INSTALLED_APPS.remove(app_name)
+            settings.INSTALLED_APPS.remove(plugin_name)
         else:
             settings.INSTALLED_APPS = list(settings.INSTALLED_APPS)
-            settings.INSTALLED_APPS.remove(app_name)
+            settings.INSTALLED_APPS.remove(plugin_name)
             settings.INSTALLED_APPS = tuple(settings.INSTALLED_APPS)
 
 
-def enable_plugin(app_name):
-    add_to_installed_apps(app_name)
+def find_plugin_url(plugin_name):
+    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    plugin_url_re = r'^%s/' % plugin_config.URL_PREFIX
+    plugin_url_name = "%s.urls" % plugin_name
     try:
-        register_app(app_name)
-    except AlreadyRegistered:
-        pass
+        import_module(plugin_url_name)
+    except ImportError:
+        return (-1, None)
+    plugin_url = url(plugin_url_re, include(plugin_url_name), name=plugin_name)
+    proj_urls = import_module(settings.ROOT_URLCONF)
+    urlconf_names = [
+        getattr(p, 'urlconf_name', None) for p in proj_urls.urlpatterns]
+    index = -1
+    if plugin_url_name in urlconf_names:
+        index = urlconf_names.index(plugin_url_name)
+    return (index, plugin_url)
 
 
-def disable_plugin(app_name):
-    remove_from_installed_apps(app_name)
-    try:
-        unregister_app(app_name)
-    except NotRegistered:
-        pass
+def enable_plugin(plugin_name, register=True):
+    add_to_installed_apps(plugin_name)
+    if register:
+        try:
+            register_app(plugin_name)
+        except AlreadyRegistered:
+            pass
+    index, plugin_url = find_plugin_url(plugin_name)
+    if plugin_url and index < 0:
+        proj_urls = import_module(settings.ROOT_URLCONF)
+        proj_urls.urlpatterns += (plugin_url, )
+
+
+def disable_plugin(plugin_name, unregister=True):
+    remove_from_installed_apps(plugin_name)
+    if unregister:
+        try:
+            unregister_app(plugin_name)
+        except NotRegistered:
+            pass
+    index, plugin_url = find_plugin_url(plugin_name)
+    if index > 0:
+        proj_urls = import_module(settings.ROOT_URLCONF)
+        del proj_urls.urlpatterns[index]
 
 
 def reload_app_directories_template_loader():
