@@ -1,5 +1,5 @@
 from registry.models import RegisteredItem
-
+from registry.params import ConfigList
 
 # ---- Exception definitions ----
 
@@ -23,7 +23,7 @@ class RegistryItem(object):
     """ Base class for all registered objects """
 
     name = None # to be overriden in subclasses
-    model = RegisteredItem # to be overriden in subclasses
+    model = None # to be overriden in subclasses
     config_params = [] # configuration parameters, to be overriden
 
     @classmethod
@@ -40,11 +40,11 @@ class RegistryItem(object):
 
     @classmethod
     def get_config(cls):
-        registered_item = cls.model.objects.get(
-            name=cls.name,
+        registered_item = RegisteredItem.objects.get(
             class_name=cls.get_class_name(),
+            module=cls.get_module(),
         )
-        return registered_item.config
+        return ConfigList(cls.config_params, registered_item.config)
 
 
 """

@@ -1,0 +1,20 @@
+{% load i18n %}
+{% for config in config_params %}
+{% if config.choices %}
+  <select {% ifequal config.get_type "List" %}multiple="multiple"{% endifequal %}>
+  {% for choice in config.choices %}
+     <option value="{{ choice.1 }}"{% ifequal choice.1 value %}selected="selected"{% endifequal %}>{{ choice.2 }}</option>
+  {% endfor %}
+  </select>
+{% else %}
+  {% ifequal config.get_type "Single" %}
+    <input type="text" name="config_params" value="{{ config.value }}">
+  {% endifequal %}
+  {% ifequal config.get_type "List" %}
+     por hacer
+  {% endifequal %}
+  {% ifequal config.get_type "Text" %}
+     <textarea name="config_params">{{ config.value }}</textarea>
+  {% endifequal %}
+{% endif %}
+{% endfor %}

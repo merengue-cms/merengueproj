@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.importlib import import_module
 
 from registry.dbfields import ConfigField
 
@@ -20,3 +21,7 @@ class RegisteredItem(models.Model):
             if param.has_default():
                 self.config['value'] = param.default
         self.save()
+
+    def get_registry_item_class(self):
+        module = import_module(self.module)
+        return getattr(module, self.class_name)

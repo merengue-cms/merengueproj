@@ -28,3 +28,13 @@ class List(Param):
 
 class Text(Param):
     pass
+
+
+class ConfigList(list):
+
+    def __init__(self, config_params, config_values):
+        super(ConfigList, self).__init__()
+        for param in config_params:
+            if param.name in config_values:
+                param.value = config_values[param.name]
+            self.append(param)
