@@ -142,6 +142,7 @@ INSTALLED_APPS = (
     'tagging',
     'sorl.thumbnail',
     'pagination',
+    'registry',
     'multimedia',
     'places',
     'base',

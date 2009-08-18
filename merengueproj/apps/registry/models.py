@@ -12,8 +12,8 @@ class RegisteredItem(models.Model):
     def __unicode__(self):
         return self.class_name
 
-    def set_default_config(self, item):
-        for param in item.config_params:
+    def set_default_config(self, item_class):
+        for param in item_class.config_params:
             self.config[param.name] = {
                 'module': param.get_type(),
             }

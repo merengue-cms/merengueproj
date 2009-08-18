@@ -46,15 +46,16 @@ class RegistryItem(object):
         )
         return registered_item.config
 
+
 """
 Example use::
 
 class Action(RegistryItem):
     model = RegisteredAction
 
-    def get_category(self):
+    @classmethod
+    def get_category(cls):
         return 'action'
-
 
 class PDFExport(Action):
     name = "pdfexport"

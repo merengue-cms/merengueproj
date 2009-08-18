@@ -1,11 +1,12 @@
 from base.admin import BaseAdmin
-from registry.models import RegistedItem
+from registry.models import RegisteredItem
 
 
-class RegistedItemAdmin(BaseAdmin):
-    readonly_fields = ('class_name', 'module', )
-    list_display = ('class_name', 'module', )
+class RegisteredItemAdmin(BaseAdmin):
+    readonly_fields = ('class_name', 'module', 'category', )
+    list_display = ('class_name', 'module', 'category', )
+    list_filter = ('category', )
 
 
 def register(site):
-    site.register(RegistedItem, RegistedItemAdmin)
+    site.register(RegisteredItem, RegisteredItemAdmin)
