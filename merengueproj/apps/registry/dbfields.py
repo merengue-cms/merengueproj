@@ -1,5 +1,5 @@
-from django.db import models
+from cmsutils.db.fields import JSONField
 
 
-class ConfigField(models.TextField):
+class ConfigField(JSONField):
     pass
