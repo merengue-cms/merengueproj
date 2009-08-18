@@ -62,7 +62,7 @@
                 {% endfor %}
             </ul>
         {% block userlinks %}
-          {% if_can_access_rosetta %}<a href="{% url rosetta-home %}">Rosetta</a> / {% endif_can_access_rosetta %}{% url django-admindocs-docroot as docsroot %}{% if docsroot %}<a href="{{ docsroot }}">{% trans 'Documentation' %}</a> / {% endif %}<a href="{{ root_path }}password_change/">{% trans 'Change password' %}</a> / {% if admin_extra %}<a href="/admin/">{% trans "Admin site" %}</a> /{% else %} <a href="{% url portal.views.list_pending %}">{% trans 'Pending contents' %}</a> /{% endif %} <a href="{{ root_path }}logout/">{% trans 'Log out' %}</a>{% endblock %}</div>
+          {% if_can_access_rosetta %}<a href="{% url rosetta-home %}">Rosetta</a> / {% endif_can_access_rosetta %}{% url django-admindocs-docroot as docsroot %}{% if docsroot %}<a href="{{ docsroot }}">{% trans 'Documentation' %}</a> / {% endif %}<a href="{{ root_path }}password_change/">{% trans 'Change password' %}</a> / <a href="{{ root_path }}logout/">{% trans 'Log out' %}</a>{% endblock %}</div>
         {% endif %}
         {% block nav-global %}{% endblock %}
     </div>
