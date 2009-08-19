@@ -1,16 +1,15 @@
-# plugin data
-NAME = 'News'
-DESCRIPTION = 'News plugin'
-VERSION = '0.0.1a'
+from pluginregistry import Plugin
 
-# media subdir for this plugin
-MEDIA_DIR = 'news'
-
-# all plugins URLs will be below "news/" prefix
-URL_PREFIX = 'news'
+from plugins.news.actions import PDFExport
 
 
-def activate_plugin(registry, plugin):
-    """ activate plugin """
-    registry.activate_plugin(plugin)
-    # more stuff ...
+class PluginConfig(Plugin):
+    name = 'News'
+    description = 'News plugin'
+    version = '0.0.1a'
+    url_prefix = 'news'
+    media_dir = 'news'
+
+    @classmethod
+    def get_actions(cls):
+        return [PDFExport]

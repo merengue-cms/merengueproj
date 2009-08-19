@@ -5,6 +5,15 @@ from registry.items import (RegistrableItem, RegistryError,
 from registry.models import RegisteredItem
 
 
+def is_registered(item_class):
+    try:
+        RegisteredItem.objects.get_by_item(item_class)
+    except RegisteredItem.DoesNotExist:
+        return False
+    else:
+        return True
+
+
 def register(item_class):
     """ register a item in the registry """
     # all process will be in a unique transaction, we don't want to get self committed

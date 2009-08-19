@@ -8,9 +8,10 @@ from pluginregistry.utils import (add_to_installed_apps, are_installed_models,
                                   install_models, get_plugin_module_name,
                                   reload_app_directories_template_loader)
 from pluginregistry.managers import PluginManager
+from registry.models import RegisteredItem
 
 
-class Plugin(models.Model):
+class RegisteredPlugin(RegisteredItem):
     name = models.CharField(_('name'), max_length=100)
     description = models.TextField(_('description'))
     version = models.CharField(_('version'), max_length=25)
@@ -42,4 +43,4 @@ def install_plugin(sender, instance, **kwargs):
         # compile time, so we have to load it again.
         reload_app_directories_template_loader()
 
-signals.post_save.connect(install_plugin, sender=Plugin)
+signals.post_save.connect(install_plugin, sender=RegisteredPlugin)

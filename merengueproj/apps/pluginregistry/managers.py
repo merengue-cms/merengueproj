@@ -1,7 +1,7 @@
-from django.db import models
+from registry.models import RegisteredItemManager
 
 
-class PluginManager(models.Manager):
+class PluginManager(RegisteredItemManager):
     """ Plugin manager """
 
     def active(self):

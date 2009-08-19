@@ -35,10 +35,8 @@ def get_plugin_config(plugin_dir, prepend_plugins_dir=True):
             plugin_modname = '%s.config' % get_plugin_module_name(plugin_dir)
         else:
             plugin_modname = '%s.config' % plugin_dir
-        return import_module(plugin_modname)
+        return getattr(import_module(plugin_modname), 'PluginConfig')
     except (ImportError, TypeError, ValueError):
-        if plugin_dir == 'news':
-            raise
         return None
 
 
@@ -84,7 +82,7 @@ def remove_from_installed_apps(plugin_name):
 
 def find_plugin_url(plugin_name):
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
-    plugin_url_re = r'^%s/' % plugin_config.URL_PREFIX
+    plugin_url_re = r'^%s/' % plugin_config.url_prefix
     plugin_url_name = "%s.urls" % plugin_name
     try:
         import_module(plugin_url_name)
@@ -137,18 +135,18 @@ def unregister_plugin_urls(plugin_name):
 
 
 def register_plugin_actions(plugin_name):
-    actions = get_plugin_actions(plugin_name)
+    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
     try:
-        for action in actions:
+        for action in plugin_config.get_actions():
             action_register(action)
     except AlreadyRegisteredItem:
         pass
 
 
 def unregister_plugin_actions(plugin_name):
-    actions = get_plugin_actions(plugin_name)
+    plugin_config = get_plugin_config(plugin_name)
     try:
-        for action in actions:
+        for action in plugin_config.get_actions():
             action_unregister(action)
     except NotRegisteredItem:
         pass

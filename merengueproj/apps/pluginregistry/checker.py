@@ -3,7 +3,8 @@ import os
 from django.db import transaction
 
 from pluginregistry.utils import get_plugin_config, get_plugins_dir
-from pluginregistry.models import Plugin
+from pluginregistry.models import RegisteredPlugin
+from registry import register, is_registered
 
 
 def check_plugins():
@@ -17,11 +18,13 @@ def check_plugins():
         for plugin_dir in os.listdir(get_plugins_dir()):
             plugin_config = get_plugin_config(plugin_dir)
             if plugin_config:
-                params = {'directory_name': plugin_dir}
-                plugin, created = Plugin.objects.get_or_create(**params)
-                plugin.name = getattr(plugin_config, 'NAME', plugin_dir)
-                plugin.description = getattr(plugin_config, 'DESCRIPTION', '')
-                plugin.version = getattr(plugin_config, 'VERSION', '')
+                if not is_registered(plugin_config):
+                    register(plugin_config)
+                plugin = RegisteredPlugin.objects.get_by_item(plugin_config)
+                plugin.name = getattr(plugin_config, 'name', plugin_dir)
+                plugin.directory_name = plugin_dir
+                plugin.description = getattr(plugin_config, 'description', '')
+                plugin.version = getattr(plugin_config, 'version', '')
                 plugin.save()
     except:
         transaction.savepoint_rollback(sid)
