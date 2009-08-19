@@ -12,7 +12,7 @@ class RegisteredItemAdmin(BaseAdmin):
 
         if 'config' in form.base_fields.keys():
             config_field = form.base_fields['config']
-            config_field.widget.config = obj.get_registry_item_class().get_config()
+            config_field.widget.add_config_widgets(obj.get_registry_item_class().get_config())
         return form
 
 
