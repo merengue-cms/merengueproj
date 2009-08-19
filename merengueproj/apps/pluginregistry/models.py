@@ -3,10 +3,10 @@ from django.db.models import signals
 from django.db.models.loading import load_app
 from django.utils.translation import ugettext_lazy as _
 
-from pluginregistry import (are_installed_models, install_models,
-                            get_plugin_module_name, add_to_installed_apps,
-                            enable_plugin, disable_plugin,
-                            reload_app_directories_template_loader)
+from pluginregistry.utils import (add_to_installed_apps, are_installed_models,
+                                  disable_plugin, enable_plugin,
+                                  install_models, get_plugin_module_name,
+                                  reload_app_directories_template_loader)
 from pluginregistry.managers import PluginManager
 
 

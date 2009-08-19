@@ -1,6 +1,6 @@
 from django.core.cache import cache
 
-from pluginregistry import enable_plugin, get_plugin_module_name
+from pluginregistry.utils import enable_plugin, get_plugin_module_name
 from pluginregistry.models import Plugin
 
 
