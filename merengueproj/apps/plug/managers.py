@@ -1,4 +1,4 @@
-from registry.models import RegisteredItemManager
+from registry.managers import RegisteredItemManager
 
 
 class PluginManager(RegisteredItemManager):

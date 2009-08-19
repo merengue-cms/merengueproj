@@ -2,16 +2,7 @@ from django.db import models
 from django.utils.importlib import import_module
 
 from registry.dbfields import ConfigField
-
-
-class RegisteredItemManager(models.Manager):
-
-    def get_by_item(self, item_class):
-        """ obtain registered item passing by param a RegistrableItem """
-        return self.get_query_set().get(
-            module=item_class.get_module(),
-            class_name=item_class.get_class_name(),
-        )
+from registry.managers import RegisteredItemManager
 
 
 class RegisteredItem(models.Model):
