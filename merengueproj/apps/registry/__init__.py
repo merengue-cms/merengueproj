@@ -34,6 +34,6 @@ def register(item_class):
 def unregister(item_class):
     try:
         registered_item = RegisteredItem.objects.get_by_item(item_class)
-    except item_class.model.DoesNotExist:
+    except RegisteredItem.DoesNotExist:
         raise NotRegistered('item class "%s" is not registered' % item_class)
     registered_item.delete()
