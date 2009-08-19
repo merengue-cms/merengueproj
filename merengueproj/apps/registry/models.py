@@ -14,12 +14,11 @@ class RegisteredItem(models.Model):
         return self.class_name
 
     def set_default_config(self, item_class):
+        if not self.config:
+            self.config = {}
         for param in item_class.config_params:
-            self.config[param.name] = {
-                'module': param.get_type(),
-            }
             if param.has_default():
-                self.config['value'] = param.default
+                self.config[param.name] = param.default
         self.save()
 
     def get_registry_item_class(self):
