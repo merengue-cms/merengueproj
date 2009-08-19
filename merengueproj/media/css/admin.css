@@ -145,7 +145,7 @@ a.ajax_geolocation{
     width:40em;
 }
 
-.view_on_map{
+.view_on_map {
     margin-left: 1em;
 }
 
@@ -257,4 +257,24 @@ a.internalLinkUrl {
     background: url(../js/tiny_mce_internal_links/images/internal_link.gif) no-repeat top left;
     width: 20px;
     height: 20px;
+}
+
+div.config_params_debug_container,
+div.config_params_container {
+    float: left;
+    margin-right: 1em;
+    margin-left: 1em;
+}
+
+div.config_params_debug_container {
+    border-left: 1px solid gray;
+    padding-left: 2em;
+}
+
+div.config_params_debug_container label,
+div.config_params_container label {
+    display: block;
+    float: none;
+    margin-bottom: 0.5em;
+    width: auto;
 }
