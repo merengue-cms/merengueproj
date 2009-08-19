@@ -149,6 +149,7 @@ INSTALLED_APPS = (
     'section',
     'pluginregistry',
     'themes',
+    'action',
     'event',
     'merengue',
     'inplaceeditform',
