@@ -11,7 +11,12 @@ from django.db import connection, transaction
 from django.db.models import get_models
 from django.utils.importlib import import_module
 
+from action.actions import BaseAction
 from merengue.admin import register_app, unregister_app
+from registry import (register as action_register,
+                      unregister as action_unregister)
+from registry.items import (NotRegistered as NotRegisteredItem,
+                            AlreadyRegistered as AlreadyRegisteredItem)
 
 
 def get_plugins_dir():
@@ -102,10 +107,8 @@ def enable_plugin(plugin_name, register=True):
             register_app(plugin_name)
         except AlreadyRegistered:
             pass
-    index, plugin_url = find_plugin_url(plugin_name)
-    if plugin_url and index < 0:
-        proj_urls = import_module(settings.ROOT_URLCONF)
-        proj_urls.urlpatterns += (plugin_url, )
+        register_plugin_actions(plugin_name)
+    register_plugin_urls(plugin_name)
 
 
 def disable_plugin(plugin_name, unregister=True):
@@ -115,10 +118,56 @@ def disable_plugin(plugin_name, unregister=True):
             unregister_app(plugin_name)
         except NotRegistered:
             pass
+        # unregister_plugin_actions(plugin_name)
+    unregister_plugin_urls(plugin_name)
+
+
+def register_plugin_urls(plugin_name):
+    index, plugin_url = find_plugin_url(plugin_name)
+    if plugin_url and index < 0:
+        proj_urls = import_module(settings.ROOT_URLCONF)
+        proj_urls.urlpatterns += (plugin_url, )
+
+
+def unregister_plugin_urls(plugin_name):
     index, plugin_url = find_plugin_url(plugin_name)
     if index > 0:
         proj_urls = import_module(settings.ROOT_URLCONF)
         del proj_urls.urlpatterns[index]
+
+
+def register_plugin_actions(plugin_name):
+    actions = get_plugin_actions(plugin_name)
+    try:
+        for action in actions:
+            action_register(action)
+    except AlreadyRegisteredItem:
+        pass
+
+
+def unregister_plugin_actions(plugin_name):
+    actions = get_plugin_actions(plugin_name)
+    try:
+        for action in actions:
+            action_unregister(action)
+    except NotRegisteredItem:
+        pass
+
+
+def get_plugin_actions(plugin_name):
+    plugin_actions_name = "%s.actions" % plugin_name
+    actions_mod = None
+    actions = []
+    try:
+        actions_mod = import_module(plugin_actions_name)
+    except ImportError:
+        return actions
+    for item in actions_mod.__dict__:
+        action = actions_mod.__dict__[item]
+        if (BaseAction in getattr(action, 'mro', lambda: ())() and
+            action.__module__ == plugin_actions_name):
+            actions.append(action)
+    return actions
 
 
 def reload_app_directories_template_loader():
