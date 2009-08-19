@@ -1,5 +1,5 @@
 from registry.models import RegisteredItem
-from registry.params import ConfigList
+from registry.params import ConfigDict
 
 # ---- Exception definitions ----
 
@@ -44,7 +44,7 @@ class RegistrableItem(object):
             class_name=cls.get_class_name(),
             module=cls.get_module(),
         )
-        return ConfigList(cls.config_params, registered_item.config)
+        return ConfigDict(cls.config_params, registered_item.config)
 
 
 """
@@ -60,7 +60,8 @@ class Action(RegistrableItem):
 class PDFExport(Action):
     name = "pdfexport"
 
+    config_params = params.Single(name='pdfbin', default='/usr/bin/html2pdf')
 
 >>> from plugins.pdfexport.actions import PDFExport
->>> PDFExport.get_config('pdfbin')
+>>> PDFExport.get_config()['pdfbin']
 """

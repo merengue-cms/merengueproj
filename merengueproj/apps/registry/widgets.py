@@ -38,12 +38,12 @@ class ConfigWidget(widgets.MultiWidget):
 
     def add_config_widgets(self, config):
         self.config = config
-        for param in self.config:
+        for param in self.config.values():
             self.widgets.append(ParamWidget(param))
 
     def decompress(self, value):
         if value:
-            return [param for param in self.config]
+            return [param for param in self.config.values()]
         # if all None we returns n-Nones
         return [None]*len(self.widgets)
 

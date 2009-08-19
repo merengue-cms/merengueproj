@@ -2,6 +2,7 @@ from django.db import transaction
 
 from registry.items import (RegistrableItem, RegistryError,
                             NotRegistered, AlreadyRegistered)
+from registry.models import RegisteredItem
 
 
 def register(item_class):
@@ -32,7 +33,7 @@ def register(item_class):
 
 def unregister(item_class):
     try:
-        registered_item = item_class.model.objects.get(name=item_class.name)
-    except item_class.models.DoesNotExist:
+        registered_item = RegisteredItem.objects.get_by_item(item_class)
+    except item_class.model.DoesNotExist:
         raise NotRegistered('item class "%s" is not registered' % item_class)
     registered_item.delete()
