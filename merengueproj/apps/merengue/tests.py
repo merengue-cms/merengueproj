@@ -7,7 +7,6 @@ from random import randrange
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.core.management import call_command
 from django.db import connection
 from django.db.models import get_model
 
@@ -36,7 +35,7 @@ class BaseDatabaseTestCase(TestCase):
 
     def setUp(self):
         if not BaseDatabaseTestCase.db_loaded:
-            call_command('load_production_db', interactive=False)
+            #call_command('load_production_db', interactive=False)
             user, created = User.objects.get_or_create(username='spider')
             if created:
                 user.set_password("spider")
