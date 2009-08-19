@@ -10,5 +10,4 @@ tagging http://django-tagging.googlecode.com/svn/trunk/tagging/
 django_extensions http://django-command-extensions.googlecode.com/svn/trunk/django_extensions/
 pagination http://django-pagination.googlecode.com/svn/trunk/pagination
 template_utils http://django-template-utils.googlecode.com/svn/trunk/template_utils
-sorl http://sorl-thumbnail.googlecode.com/svn/trunk/sorl
 mptt http://django-mptt.googlecode.com/svn/trunk/mptt
