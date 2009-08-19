@@ -1,4 +1,4 @@
-from pluginregistry.models import RegisteredPlugin
+from plug.models import RegisteredPlugin
 from registry.items import RegistrableItem
 
 

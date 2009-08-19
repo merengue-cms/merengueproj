@@ -2,8 +2,8 @@ import os
 
 from django.db import transaction
 
-from pluginregistry.utils import get_plugin_config, get_plugins_dir
-from pluginregistry.models import RegisteredPlugin
+from plug.utils import get_plugin_config, get_plugins_dir
+from plug.models import RegisteredPlugin
 from registry import register, is_registered
 
 

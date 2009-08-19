@@ -20,6 +20,7 @@ def register(item_class):
     transaction.commit_unless_managed()
     transaction.enter_transaction_management()
     transaction.managed(True)
+    sid = transaction.savepoint()
     try:
         if not issubclass(item_class, RegistrableItem):
             raise RegistryError('item class "%s" to be registered is not a RegistrableItem subclass' % item_class)
@@ -33,10 +34,10 @@ def register(item_class):
         registered_item.category = item_class.get_category()
         registered_item.set_default_config(item_class)
     except:
-        transaction.rollback()
+        transaction.savepoint_rollback(sid)
         raise
     else:
-        transaction.commit()
+        transaction.savepoint_commit(sid)
     transaction.managed(False)
 
 

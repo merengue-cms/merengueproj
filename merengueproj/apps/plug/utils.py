@@ -116,7 +116,7 @@ def disable_plugin(plugin_name, unregister=True):
             unregister_app(plugin_name)
         except NotRegistered:
             pass
-        # unregister_plugin_actions(plugin_name)
+        unregister_plugin_actions(plugin_name)
     unregister_plugin_urls(plugin_name)
 
 
@@ -144,7 +144,7 @@ def register_plugin_actions(plugin_name):
 
 
 def unregister_plugin_actions(plugin_name):
-    plugin_config = get_plugin_config(plugin_name)
+    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
     try:
         for action in plugin_config.get_actions():
             action_unregister(action)

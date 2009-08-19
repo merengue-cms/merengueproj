@@ -1,4 +1,4 @@
-from pluginregistry import Plugin
+from plug import Plugin
 
 from plugins.news.actions import PDFExport
 

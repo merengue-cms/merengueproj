@@ -97,7 +97,7 @@ MIDDLEWARE_CLASSES = (
     'section.middleware.DebugSectionMiddleware',
     'merengue.middleware.SimplifiedLayoutMiddleware',
     'cmsutils.middleware.AutomatizedTestingMiddleware',
-    'pluginregistry.middleware.ActivePluginsMiddleware',
+    'plug.middleware.ActivePluginsMiddleware',
     #'django.middleware.gzip.GZipMiddleware',
     #'debug_toolbar.middleware.DebugToolbarMiddleware',
     'cmsutils.middleware.I18NFetchFromCacheMiddleware', # this has to be last
@@ -147,7 +147,7 @@ INSTALLED_APPS = (
     'places',
     'base',
     'section',
-    'pluginregistry',
+    'plug',
     'themes',
     'action',
     'event',

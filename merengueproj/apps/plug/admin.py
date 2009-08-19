@@ -1,6 +1,6 @@
 from base.admin import set_field_read_only
-from pluginregistry.checker import check_plugins
-from pluginregistry.models import RegisteredPlugin
+from plug.checker import check_plugins
+from plug.models import RegisteredPlugin
 from registry.admin import RegisteredItemAdmin
 
 
