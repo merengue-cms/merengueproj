@@ -19,7 +19,7 @@ class RegistryError(Exception):
 # ---- Base classes ----
 
 
-class RegistryItem(object):
+class RegistrableItem(object):
     """ Base class for all registered objects """
 
     name = None # to be overriden in subclasses
@@ -50,7 +50,7 @@ class RegistryItem(object):
 """
 Example use::
 
-class Action(RegistryItem):
+class Action(RegistrableItem):
     model = RegisteredAction
 
     @classmethod

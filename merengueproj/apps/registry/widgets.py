@@ -2,6 +2,7 @@ from django.forms import widgets
 from django.forms.util import flatatt
 from django.template.loader import render_to_string
 from django.utils import simplejson as json
+from django.utils.html import linebreaks
 from django.utils.safestring import mark_safe
 
 
@@ -56,5 +57,6 @@ class ConfigWidget(widgets.MultiWidget):
     def render(self, name, value, attrs=None):
         """ rendering function. note: value will be a config param instance """
         widgets_render = super(ConfigWidget, self).render(name, value, attrs)
+        json_value = linebreaks(json.dumps(value, indent=2))
         return mark_safe(widgets_render + \
-                         u'<div><label>JSON Debug:</label><pre>%s</pre></div>' % value)
+            u'<div style="clear: both;"><label>JSON Debug:</label><pre>%s</pre></div>' % json_value)

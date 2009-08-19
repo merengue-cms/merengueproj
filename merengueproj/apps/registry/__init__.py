@@ -1,6 +1,6 @@
 from django.db import transaction
 
-from registry.items import (RegistryItem, RegistryError,
+from registry.items import (RegistrableItem, RegistryError,
                             NotRegistered, AlreadyRegistered)
 
 
@@ -11,8 +11,8 @@ def register(item_class):
     transaction.enter_transaction_management()
     transaction.managed(True)
     try:
-        if not issubclass(item_class, RegistryItem):
-            raise RegistryError('item class "%s" to be registered is not a RegistryItem subclass' % item_class)
+        if not issubclass(item_class, RegistrableItem):
+            raise RegistryError('item class "%s" to be registered is not a RegistrableItem subclass' % item_class)
 
         registered_item, created = item_class.model.objects.get_or_create(
             class_name=item_class.get_class_name(),
