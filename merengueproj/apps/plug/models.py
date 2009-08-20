@@ -4,9 +4,9 @@ from django.db.models.loading import load_app
 from django.utils.translation import ugettext_lazy as _
 
 from plug.utils import (add_to_installed_apps, are_installed_models,
-                                  disable_plugin, enable_plugin,
-                                  install_models, get_plugin_module_name,
-                                  reload_app_directories_template_loader)
+                       disable_plugin, enable_plugin,
+                       install_models, get_plugin_module_name,
+                       reload_app_directories_template_loader)
 from plug.managers import PluginManager
 from registry.models import RegisteredItem
 

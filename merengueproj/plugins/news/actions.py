@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.utils.translation import ugettext_lazy as _
 
 from action.actions import ContentAction
@@ -5,8 +6,8 @@ from registry import params
 
 
 class PDFExport(ContentAction):
-    # note: this config params are only for debugging purposes. remove it
-    # after was useful
+    name = 'pdfexport'
+    verbose_name = _('Export to PDF')
     config_params = [
         params.Single(name='username', label=_('username'), default='pepe'),
         params.Single(name='bestfriend', label=_('bestfriend'),
@@ -23,3 +24,7 @@ class PDFExport(ContentAction):
                                ('autumn', _('Autumn')),
                                ('winter', _('Winter'))]),
     ]
+
+    @classmethod
+    def get_response(cls, request):
+        return HttpResponse("PDF from %s" % request.get_full_path())

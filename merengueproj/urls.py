@@ -63,6 +63,9 @@ urlpatterns += patterns('',
     (r'^inplaceeditform/', include('inplaceeditform.urls')),
     (r'^$', 'merengue.views.portal.index'),
 
+    # actions
+    (r'^actions/', include('action.urls')),
+
     # login and logout
     url(r'^cuentas/entrar/$', 'merengue.views.portal.try_login', name='login_form'),
     url(r'^cuentas/salir/$', 'merengue.views.portal.logout', name='logout'),

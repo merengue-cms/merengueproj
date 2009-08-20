@@ -46,6 +46,9 @@ class RegistrableItem(object):
         )
         return ConfigDict(cls.config_params, registered_item.config)
 
+    @classmethod
+    def get_extended_attrs(cls):
+        return {}
 
 """
 Example use::
