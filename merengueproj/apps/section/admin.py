@@ -131,11 +131,11 @@ class BaseSectionRelatedDocumentModelAdmin(BaseContentRelatedModelAdmin, Workflo
     prepopulated_fields = {'slug': ('name_es', )}
     filter_horizontal = ('videos', )
 
-    batch_actions = BaseAdmin.batch_actions + ['set_as_draft',
-                                               'set_as_published']
-    batch_actions_perms = {'set_as_draft': 'base.can_draft',
-                           'set_as_published': 'base.can_published',
-                          }
+    # batch_actions = BaseAdmin.batch_actions + ['set_as_draft',
+    #                                            'set_as_published']
+    # batch_actions_perms = {'set_as_draft': 'base.can_draft',
+    #                        'set_as_published': 'base.can_published',
+    #                       }
 
     def queryset(self, request):
         return self.admin_site.basecontent.document_set.all()
@@ -296,7 +296,7 @@ class BaseSectionRelatedMenuModelAdmin(BaseContentRelatedModelAdmin):
     list_display_links = ('name', )
     prepopulated_fields = {'slug': ('name_es', )}
     ordering=('lft', )
-    batch_actions = []
+    # batch_actions = []
     actions_on_top = False
     actions_on_bottom = False
     inlines = [AbsoluteLinkInline, DocumentLinkInline]
@@ -394,7 +394,7 @@ class BaseSectionRelatedMenuModelAdmin(BaseContentRelatedModelAdmin):
 class AppSectionAdmin(BaseSectionAdmin):
     list_display = ('name', 'slug', 'app_name')
     prepopulated_fields = {'slug': ('name_es', )}
-    batch_actions = []
+    # batch_actions = []
     actions_on_top = False
     actions_on_bottom = False
 
@@ -466,7 +466,7 @@ class CarouselRelatedPhotoModelAdmin(BaseContentRelatedModelAdmin):
 
 
 class CarouselRelatedAddPhotoModelAdmin(CarouselRelatedPhotoModelAdmin):
-    batch_actions = ['select_photo']
+    # batch_actions = ['select_photo']
 
     def select_photo(self, request, changelist):
         objects_id = request.POST.getlist('selected')
@@ -487,12 +487,12 @@ class CarouselRelatedAddPhotoModelAdmin(CarouselRelatedPhotoModelAdmin):
 
 
 class CarouselRelatedRemovePhotoModelAdmin(CarouselRelatedPhotoModelAdmin, WorkflowBatchActionProvider):
-    batch_actions = ['deselect_photo', 'set_as_draft', 'set_as_pending', 'set_as_published']
-    batch_actions_perms = {
-        'set_as_draft': 'base.can_draft',
-        'set_as_pending': 'base.can_pending',
-        'set_as_published': 'base.can_published',
-    }
+    # batch_actions = ['deselect_photo', 'set_as_draft', 'set_as_pending', 'set_as_published']
+    # batch_actions_perms = {
+    #     'set_as_draft': 'base.can_draft',
+    #     'set_as_pending': 'base.can_pending',
+    #     'set_as_published': 'base.can_published',
+    # }
 
     def deselect_photo(self, request, changelist):
         objects_id = request.POST.getlist('selected')
@@ -522,7 +522,7 @@ class DocumentAdmin(BaseAdmin, WorkflowBatchActionProvider, BaseDocumentModelAdm
     html_fields = ('body', )
     filter_horizontal=('videos', )
     prepopulated_fields = {'slug': ('name_es', )}
-    batch_actions = BaseAdmin.batch_actions + ['set_as_published', 'set_as_draft']
+    # batch_actions = BaseAdmin.batch_actions + ['set_as_published', 'set_as_draft']
 
     def formfield_for_dbfield(self, db_field, **kwargs):
         if db_field.name == 'search_form':

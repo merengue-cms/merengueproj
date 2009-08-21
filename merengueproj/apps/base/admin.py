@@ -34,7 +34,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from cmsutils.forms.widgets import AJAXAutocompletionWidget
 
-from batchadmin.admin import BatchModelAdmin
 from batchadmin.forms import CHECKBOX_NAME
 from batchadmin.util import model_ngettext, get_changelist
 
@@ -197,13 +196,12 @@ def set_field_read_only(field, field_name, obj):
     field.required = False
 
 
-class BaseAdmin(BatchModelAdmin):
+class BaseAdmin(admin.ModelAdmin):
     html_fields = ()
     autocomplete_fields = {}
     edit_related = ()
     readonly_fields = ()
     list_per_page = 50
-    batch_actions = ['delete_confirm']
     exclude = ('main_image', )
 
     def get_form(self, request, obj=None):
@@ -505,6 +503,47 @@ class BaseAdmin(BatchModelAdmin):
             "admin/delete_confirmation.html",
         ], context, context_instance=template.RequestContext(request))
 
+    def confirm_action(self, request, queryset=None, extra_context=None,
+                       confirm_template="admin/confirm_action.html"):
+        """A generic confirm view for admin actions, taken from
+        django-batchadmin"""
+
+        if not queryset:
+            queryset = self.model._default_manager.none()
+
+        opts = self.model._meta
+        app_label = opts.app_label
+        selected_objects = []
+        context = {}
+        checkbox = u'''<input class="batch-select" type="checkbox" name="%(name)s"
+                    value="%(object_id)s" checked="true"/>%(model_name)s: %(object_name)s'''
+        checkbox_data = {'name': admin.ACTION_CHECKBOX_NAME,
+                         'model_name': escape(force_unicode(capfirst(opts.verbose_name))),
+                        }
+        for i, obj in enumerate(queryset):
+            if not self.has_change_permission(request, obj):
+                raise PermissionDenied
+            checkbox_data['object_name'] = escape(obj)
+            checkbox_data['object_id'] = obj.id
+            selected_objects.append([mark_safe(checkbox % checkbox_data), []])
+            perms_needed = set()
+            context = {
+                "title": _("Are you sure?"),
+                "object_name": force_unicode(opts.verbose_name),
+                "object": obj,
+                "selected_objects": selected_objects,
+                "perms_lacking": perms_needed,
+                "opts": opts,
+                "root_path": self.admin_site.root_path,
+                "app_label": app_label,
+                "objects_id": queryset,
+            }
+            context.update(extra_context or {})
+
+        return render_to_response(confirm_template,
+                                  context,
+                                  context_instance=template.RequestContext(request))
+
 
 class BaseCategoryAdmin(BaseAdmin):
     ordering = ('name_es', )
@@ -513,57 +552,41 @@ class BaseCategoryAdmin(BaseAdmin):
 
 class WorkflowBatchActionProvider(object):
 
-    def set_as_draft(self, request, changelist):
-        objects_id = request.POST.getlist('selected')
-        state = 'draft'
-        if objects_id:
-            if request.POST.get('post'):
-                changelist = get_changelist(request, self.model, self)
-                return self.change_state(request, changelist, state)
-            extra_context = {'title': _('Are you sure you want set as draft?'),
-                             'action_submit': 'set_as_draft'}
-            return self.confirm_action(request, objects_id, extra_context)
+    def set_as_draft(self, request, queryset):
+        return self.change_state(request, queryset, 'draft',
+                                 ugettext(u'Are you sure you want to set this items as draft?'))
     set_as_draft.short_description = _("Set as draft")
 
-    def set_as_pending(self, request, changelist):
-        objects_id = request.POST.getlist('selected')
-        state = 'pending'
-        if objects_id:
-            if request.POST.get('post'):
-                changelist = get_changelist(request, self.model, self)
-                return self.change_state(request, changelist, state)
-            extra_context = {'title': _('Are you sure you want set as pending?'),
-                             'action_submit': 'set_as_pending'}
-            return self.confirm_action(request, objects_id, extra_context)
+    def set_as_pending(self, request, queryset):
+        return self.change_state(request, queryset, 'pending',
+                                 ugettext(u'Are you sure you want to set this items as pending?'))
     set_as_pending.short_description = _("Set as pending")
 
-    def set_as_published(self, request, changelist):
-        objects_id = request.POST.getlist('selected')
-        state = 'published'
-        if objects_id:
-            if request.POST.get('post'):
-                changelist = get_changelist(request, self.model, self)
-                return self.change_state(request, changelist, state)
-            extra_context = {'title': _('Are you sure you want set as published?'),
-                             'action_submit': 'set_as_published'}
-            return self.confirm_action(request, objects_id, extra_context)
+    def set_as_published(self, request, queryset):
+        return self.change_state(request, queryset, 'published',
+                                 ugettext(u'Are you sure you want to set this items as published?'))
     set_as_published.short_description = _("Set as published")
 
-    def change_state(self, request, changelist, state):
-        if self.has_change_permission(request):
-            selected = request.POST.getlist(CHECKBOX_NAME)
-            objects = changelist.get_query_set().filter(pk__in=selected)
-            n = objects.count()
-            obj_log = ugettext("Changed as %s" % state)
-            msg = "Successfully set as %s %d %s." % (state, n, model_ngettext(self.opts, n))
-            if n:
-                for obj in objects:
-                    obj.status = state
-                    obj.save()
-                    object_repr = unicode(obj)
-                    self.log_change(request, obj, obj_log)
-                self.message_user(request, msg)
-    change_state.short_description = "Change state of selected %(verbose_name_plural)s"
+    def change_state(self, request, queryset, state, confirm_msg):
+        selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
+        if selected:
+            if request.POST.get('post', False):
+                if self.has_change_permission(request):
+                    updated = queryset.update(status=state)
+                    obj_log = ugettext("Changed to %s") % state
+                    msg_data = {'number': updated,
+                                'model_name': model_ngettext(self.opts, updated),
+                                'state': state,
+                               }
+                    msg = ugettext(u"Successfully set %(number)d %(model_name)s as %(state)s.") % msg_data
+                    for obj in queryset:
+                        self.log_change(request, obj, obj_log)
+                    self.message_user(request, msg)
+            else:
+                extra_context = {'title': confirm_msg,
+                                 'action_submit': 'set_as_%s' % state}
+                return self.confirm_action(request, queryset, extra_context)
+    change_state.short_description = _(u"Change state of selected %(verbose_name_plural)s")
 
 
 class StatusControlProvider(object):
@@ -591,53 +614,48 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
     search_fields = ('name', )
     date_hierarchy = 'creation_date'
     list_filter = ('is_autolocated', 'status', 'user_modification_date', 'last_editor', )
+    actions = ['set_as_draft', 'set_as_pending', 'set_as_published', 'assign_owners']
     filter_horizontal = ('owners', )
     edit_related = ()
     html_fields = ('description', )
     prepopulated_fields = {'slug': ('name_es', )}
 
-    batch_actions = BaseAdmin.batch_actions + ['set_as_draft',
-                                               'set_as_pending',
-                                               'set_as_published',
-                                               'assign_owners']
-    batch_actions_perms = {'set_as_draft': 'base.can_draft',
-                           'set_as_pending': 'base.can_pending',
-                           'set_as_published': 'base.can_published',
-                           'assign_owners': 'PermisoFicticioQueSoloCumplenLosSuperUsuarios',
-                          }
+    # batch_actions_perms = {'set_as_draft': 'base.can_draft',
+    #                        'set_as_pending': 'base.can_pending',
+    #                        'set_as_published': 'base.can_published',
+    #                        'assign_owners': 'PermisoFicticioQueSoloCumplenLosSuperUsuarios',
+    #                       }
     autocomplete_fields = {'tags': {'url': '/ajax/autocomplete/tags/base/basecontent/',
                                     'multiple': True,
                                     'multipleSeparator': " ",
                                     'size': 100}, }
 
-    def add_owners(self, request, changelist, owners):
+    def add_owners(self, request, queryset, owners):
         if self.has_change_permission(request):
-            selected = request.POST.getlist(CHECKBOX_NAME)
-            objects = changelist.get_query_set().filter(pk__in=selected)
-            n = objects.count()
+            selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
+            n = queryset.count()
             obj_log = ugettext("Assigned owners")
             msg = "Successfully set owners for %d %s." % (n, model_ngettext(self.opts, n))
             if n:
                 owner_list = User.objects.filter(id__in=owners)
-                for obj in objects:
+                for obj in queryset:
                     for owner in owner_list:
                         obj.owners.add(owner)
                     self.log_change(request, obj, obj_log)
                 self.message_user(request, msg)
 
-    def assign_owners(self, request, changelist):
-        objects_id = request.POST.getlist('selected')
-        if objects_id:
-            if request.POST.get('post'):
-                changelist = get_changelist(request, self.model, self)
+    def assign_owners(self, request, queryset):
+        selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
+        if selected:
+            if request.POST.get('post', False):
                 owners = request.POST.getlist('owners')
-                return self.add_owners(request, changelist, owners)
+                return self.add_owners(request, queryset, owners)
             form = AdminBaseContentOwnersForm()
-            extra_context = {'title': _('Are you sure you want to asign owners to this contents?'),
+            extra_context = {'title': _('Are you sure you want to assign these owners to these contents?'),
                              'action_submit': 'assign_owners',
                              'form': form,
                             }
-            return self.confirm_action(request, objects_id, extra_context,
+            return self.confirm_action(request, queryset, extra_context,
                                        confirm_template='admin/basecontent/assign_owners.html')
     assign_owners.short_description = _("Assign owners")
 
@@ -736,7 +754,7 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
         set_objects_id = set(objects_id)
         objects_id = list(set_objects_id.difference(set_no_can_selected_objects_ids))
         if objects_id or no_can_selected_objects:
-            if request.POST.get('post'):
+            if request.POST.get('post', False):
                 changelist = get_changelist(request, self.model, self)
                 objects_base_content = changelist.model.objects.filter(id__in=objects_id)
                 for object_base_content in objects_base_content:
@@ -846,7 +864,7 @@ class BaseContentRelatedModelAdmin(BaseAdmin, StatusControlProvider):
 
 
 class BaseContentRelatedItemsRelatedModelAdmin(BaseContentRelatedModelAdmin):
-    batch_actions = ['set_as_related', 'set_as_not_related']
+#    batch_actions = ['set_as_related', 'set_as_not_related']
     search_fields = ('name', )
     selected = 'related_items'
     list_display = ('name', )
@@ -857,8 +875,8 @@ class BaseContentRelatedItemsRelatedModelAdmin(BaseContentRelatedModelAdmin):
         'contents': {'model': BaseContent,
                      'opts': BaseContent._meta,
                      'ordering': ('name', ),
-                     'list_display': ('batchadmin_checkbox', 'name', 'is_related', 'class_name',
-                                      'get_cities_text', 'get_provinces_text', 'google_minimap', 'status'),
+                     'list_display': ('name', 'is_related', 'class_name', 'get_cities_text',
+                                      'get_provinces_text', 'google_minimap', 'status'),
                      'list_filter': ('class_name', 'status'),
                      'related_manager_name': 'related_items',
                      'selected': 'contents',
@@ -866,7 +884,7 @@ class BaseContentRelatedItemsRelatedModelAdmin(BaseContentRelatedModelAdmin):
         'sections': {'model': BaseSection,
                      'opts': BaseSection._meta,
                      'ordering': ('name_es', ),
-                     'list_display': ('batchadmin_checkbox', 'name', 'is_related', 'slug', ),
+                     'list_display': ('name', 'is_related', 'slug', ),
                      'list_filter': (),
                      'related_manager_name': 'basesection_set',
                      'selected': 'sections',
@@ -880,46 +898,38 @@ class BaseContentRelatedItemsRelatedModelAdmin(BaseContentRelatedModelAdmin):
         return obj in self.related_manager.all()
     is_related.boolean = True
 
-    def set_as_related(self, request, changelist):
-        objects_id = request.POST.getlist('selected')
-        if objects_id:
-            if request.POST.get('post'):
-                changelist = get_changelist(request, self.model, self)
-                return self.related_selected(request, changelist, True)
-            extra_context = {'title': _('Are you sure you want to set as related?'),
-                             'action_submit': 'set_as_related'}
-            return self.confirm_action(request, objects_id, extra_context)
+    def set_as_related(self, request, queryset):
+        return self.related_selected(request, queryset, True,
+                                     _('Are you sure you want to set as related?'))
     set_as_related.short_description = _("Set as related")
 
-    def set_as_not_related(self, request, changelist):
-        objects_id = request.POST.getlist('selected')
-        if objects_id:
-            if request.POST.get('post'):
-                changelist = get_changelist(request, self.model, self)
-                return self.related_selected(request, changelist, False)
-            extra_context = {'title': _('Are you sure you want to set as not related?'),
-                             'action_submit': 'set_as_not_related'}
-            return self.confirm_action(request, objects_id, extra_context)
+    def set_as_not_related(self, request, queryset):
+        return self.related_selected(request, queryset, False,
+                                     _('Are you sure you want to set as not related?'))
     set_as_not_related.short_description = _("Set as not related")
 
-    def related_selected(self, request, changelist, related):
-        if self.has_change_permission(request):
-            selected = request.POST.getlist(CHECKBOX_NAME)
-            objects = changelist.get_query_set().filter(pk__in=selected)
-            n = objects.count()
-            if related:
-                obj_log = ugettext("Changed as related")
-                msg = "Successfully set as related %d %s." % (n, model_ngettext(self.opts, n))
-            else:
-                obj_log = ugettext("Changed as not related")
-                msg = "Successfully set as not related %d %s." % (n, model_ngettext(self.opts, n))
-            if n:
-                for obj in objects:
+    def related_selected(self, request, queryset, related, confirm_msg):
+        selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
+        if selected:
+            if request.POST.get('post', False):
+                if self.has_change_permission(request):
+                    for obj in queryset:
+                        if related:
+                            self.related_manager.add(obj)
+                            self.log_change(request, obj, ugettext("Changed as related"))
+                        else:
+                            self.related_manager.remove(obj)
+                            self.log_change(request, obj, ugettext("Changed as not related"))
+                    n = queryset.count()
                     if related:
-                        self.related_manager.add(obj)
+                        msg = "Successfully set %d %s as related." % (n, model_ngettext(self.opts, n))
                     else:
-                        self.related_manager.remove(obj)
-                self.message_user(request, msg)
+                        msg = "Successfully set %d %s as not related." % (n, model_ngettext(self.opts, n))
+                    self.message_user(request, msg)
+            else:
+                extra_context = {'title': confirm_msg,
+                                 'action_submit': 'set_as_%s' % related and 'related' or 'not_related'}
+                return self.confirm_action(request, queryset, extra_context)
     related_selected.short_description = "Related selected %(verbose_name_plural)s"
 
     def change_view(self, request, object_id, extra_context=None):
@@ -1026,13 +1036,13 @@ class BaseContentRelatedItemsRelatedModelAdmin(BaseContentRelatedModelAdmin):
 
 
 class BaseContentRelatedMultimediaModelAdmin(BaseContentRelatedModelAdmin, WorkflowBatchActionProvider):
-    batch_actions = BaseAdmin.batch_actions + ['set_as_featured', 'set_as_not_featured',
-                                               'set_as_draft', 'set_as_pending',
-                                               'set_as_published', ]
-    batch_actions_perms = {'set_as_draft': 'base.can_draft',
-                           'set_as_pending': 'base.can_pending',
-                           'set_as_published': 'base.can_published',
-                          }
+    # batch_actions = BaseAdmin.batch_actions + ['set_as_featured', 'set_as_not_featured',
+    #                                            'set_as_draft', 'set_as_pending',
+    #                                            'set_as_published', ]
+    # batch_actions_perms = {'set_as_draft': 'base.can_draft',
+    #                        'set_as_pending': 'base.can_pending',
+    #                        'set_as_published': 'base.can_published',
+    #                       }
     autocomplete_fields = {'tags': {'url': '/ajax/autocomplete/tags/multimedia/basemultimedia/',
                                     'multiple': True,
                                     'multipleSeparator': " ",
@@ -1118,7 +1128,7 @@ class BaseContentRelatedMultimediaModelAdmin(BaseContentRelatedModelAdmin, Workf
     def set_as_featured(self, request, changelist):
         objects_id = request.POST.getlist('selected')
         if objects_id:
-            if request.POST.get('post'):
+            if request.POST.get('post', False):
                 changelist = get_changelist(request, self.model, self)
                 return self.featured_selected(request, changelist, True)
             extra_context = {'title': _('Are you sure you want to set as featured?'),
@@ -1129,7 +1139,7 @@ class BaseContentRelatedMultimediaModelAdmin(BaseContentRelatedModelAdmin, Workf
     def set_as_not_featured(self, request, changelist):
         objects_id = request.POST.getlist('selected')
         if objects_id:
-            if request.POST.get('post'):
+            if request.POST.get('post', False):
                 changelist = get_changelist(request, self.model, self)
                 return self.featured_selected(request, changelist, False)
             extra_context = {'title': _('Are you sure you want to set as not featured?'),
@@ -1531,7 +1541,7 @@ class BaseContentLocateAdmin(BaseContentAdmin):
                     'get_provinces_text', 'google_minimap', 'status', 'user_modification_date')
     list_filter = BaseContentAdmin.list_filter + ('class_name', )
     search_fields = ('name', )
-    batch_actions = ['place_at', ]
+#    batch_actions = ['place_at', ]
     change_list_template = 'admin/basecontent/locate_change_list.html'
 
     def __init__(self, placed_object_attr, *args, **kwargs):
@@ -1781,7 +1791,7 @@ LogEntry.img_is_deletion = img_is_deletion
 
 class BaseContentOwnedAdmin(BaseAdmin):
     change_list_template = 'admin/auth/user/owned_contents.html'
-    batch_actions = ['unassign_ownership']
+#    batch_actions = ['unassign_ownership']
     search_fields = ('name', )
     list_display = ('name', 'class_name', 'get_cities_text', 'get_provinces_text', 'google_minimap', 'status')
     list_filter = ('class_name', 'status')
@@ -1833,7 +1843,7 @@ class BaseContentOwnedAdmin(BaseAdmin):
     def unassign_ownership(self, request, changelist, redirect_to=None):
         objects_id = request.POST.getlist('selected')
         if objects_id:
-            if request.POST.get('post'):
+            if request.POST.get('post', False):
                 changelist = get_changelist(request, self.model, self)
                 return self.del_ownership(request, changelist, redirect_to)
             extra_context = {'title': _('Are you sure you want unassign ownerhsip of this objects?'),

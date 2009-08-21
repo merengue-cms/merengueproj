@@ -1,3 +1,4 @@
+from django.contrib import admin
 from django.contrib.admin.options import IncorrectLookupParameters
 from django.forms.util import ErrorList
 from django.http import HttpResponseRedirect
@@ -6,10 +7,11 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 from django.contrib.auth.models import Group
 
+from batchadmin.util import model_ngettext
+
 from base.admin import BaseContentAdmin, BaseAdmin, VideoChecker,\
                        WorkflowBatchActionProvider, BaseContentRelatedModelAdmin
 from base.models import BaseContent, MultimediaRelation
-from batchadmin.util import get_changelist
 from multimedia.models import Photo, Video, PanoramicView, Image3D, Audio
 
 
@@ -19,59 +21,64 @@ class BaseMultimediaRelatedBaseContentModelAdmin(BaseContentAdmin, BaseContentRe
 
 
 class BaseMultimediaRelatedAddContentModelAdmin(BaseMultimediaRelatedBaseContentModelAdmin):
-
-    batch_actions = ['associate_contents']
+    actions = ['associate_contents']
 
     def queryset(self, request):
         multimedia = self.admin_site.basecontent
         return BaseContent.objects.exclude(multimediarelation__multimedia=multimedia)
 
-    def associate_contents(self, request, changelist):
-        objects_id = request.POST.getlist('selected')
-        if objects_id:
+    def associate_contents(self, request, queryset):
+        selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
+        if selected:
             if request.POST.get('post'):
-                changelist = get_changelist(request, self.model, self)
-                multimedia = self.admin_site.basecontent
-                basecontents = BaseContent.objects.filter(id__in=objects_id)
-                for basecontent in basecontents:
-                    mr = MultimediaRelation(content=basecontent, multimedia=multimedia)
-                    mr.save(update_order=True)
-                return self.change_state(request, changelist, state='published')
-            extra_context = {'title': _('Are you sure you want associate this contents?'),
+                if self.has_change_permission(request):
+                    multimedia = self.admin_site.basecontent
+                    for basecontent in queryset:
+                        mr = MultimediaRelation(content=basecontent, multimedia=multimedia)
+                        mr.save(update_order=True)
+                    updated = queryset.update(status='published')
+                    obj_log = _(u"Changed to %s") % u'published'
+                    for obj in queryset:
+                        self.log_change(request, obj, obj_log)
+                    msg_data = {'number': updated,
+                                'model_name': model_ngettext(self.opts, updated),
+                                'state': 'published', }
+                    msg = _(u"Successfully set %(number)d %(model_name)s as %(state)s.") % msg_data
+                    self.message_user(request, msg)
+
+                return self.change_state(request, queryset, state='published')
+            extra_context = {'title': _(u'Are you sure you want to associate these contents?'),
                              'action_submit': 'associate_contents'}
-            return self.confirm_action(request, objects_id, extra_context)
-    associate_contents.short_description = _("Associate contents")
+            return self.confirm_action(request, queryset, extra_context)
+    associate_contents.short_description = _(u"Associate contents")
 
 
 class BaseMultimediaRelatedRemoveContentModelAdmin(BaseMultimediaRelatedBaseContentModelAdmin):
-    batch_actions = ['disassociate_contents']
+    actions = ['disassociate_contents']
 
     def queryset(self, request):
         return self.admin_site.basecontent.basecontent_set.all()
 
-    def disassociate_contents(self, request, changelist):
-        objects_id = request.POST.getlist('selected')
-        if objects_id:
+    def disassociate_contents(self, request, queryset):
+        selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
+        if selected:
             if request.POST.get('post'):
-                changelist = get_changelist(request, self.model, self)
                 multimedia = self.admin_site.basecontent
-                basecontents = BaseContent.objects.filter(id__in=objects_id)
-                for basecontent in basecontents:
+                for basecontent in queryset:
                     MultimediaRelation.objects.get(content=basecontent, multimedia=multimedia).delete()
-                return self.change_state(request, changelist, state='published')
+                return self.change_state(request, queryset, state='published')
             extra_context = {'title': _('Are you sure you want disassociate this contents?'),
                              'action_submit': 'disassociate_contents'}
-            return self.confirm_action(request, objects_id, extra_context)
+            return self.confirm_action(request, queryset, extra_context)
     disassociate_contents.short_description = _("Disassociate contents")
 
 
 class BaseMultimediaAdmin(BaseAdmin, WorkflowBatchActionProvider):
-    batch_actions = BaseAdmin.batch_actions + ['set_as_draft', 'set_as_pending',
-                                               'set_as_published', ]
-    batch_actions_perms = {'set_as_draft': 'base.can_draft',
-                           'set_as_pending': 'base.can_pending',
-                           'set_as_published': 'base.can_published',
-                          }
+    actions = BaseAdmin.actions + ['set_as_draft', 'set_as_pending', 'set_as_published']
+    # batch_actions_perms = {'set_as_draft': 'base.can_draft',
+    #                        'set_as_pending': 'base.can_pending',
+    #                        'set_as_published': 'base.can_published',
+    #                       }
     date_hierarchy = 'creation_date'
     list_filter = ('status', 'last_editor')
     list_display = ('__str__', 'status', 'last_editor')
