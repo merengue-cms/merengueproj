@@ -1,13 +1,17 @@
 {% extends "base.html" %}
 
-{% load i18n inlinetrans actions %}
+{% load i18n inlinetrans action_tags %}
 
 {% block pagetitle %}{% trans "News index" %}{% endblock %}
+
+{% block extrabreadcrumbs %}
+  <span class="breadcrumbSeparator">→</span><a href="{% url news_index %}" title="{% trans "News" %}">{% inline_trans "News" %}</a>
+{% endblock %}
 
 {% block content %}
 <ul class="newsList">
   {% for n in news_list %}
-  <li>{{ n.name }}</li>
+  <li><a href="{{ n.get_absolute_url }}">{{ n.name }}</a></li>
   {% endfor %}
 <ul>
 

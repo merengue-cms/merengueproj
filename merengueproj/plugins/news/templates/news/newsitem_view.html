@@ -1,0 +1,10 @@
+{% extends "content_view.html" %}
+
+{% load i18n inlinetrans action_tags %}
+
+{% block pagetitle %}{{ content }}{% endblock %}
+
+{% block beforecontentbreadcrumbs %}
+  <span class="breadcrumbSeparator">→</span><a href="{% url news_index %}" title="{% trans "News" %}">{% inline_trans "News" %}</a>
+{% endblock %}
+
