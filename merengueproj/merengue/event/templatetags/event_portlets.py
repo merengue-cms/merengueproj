@@ -1,7 +1,7 @@
 from django import template
 
 from merengue.base.models import BaseContent
-from event.models import Event
+from merengue.event.models import Event
 from merengue.places.models import BaseCity, Province, TouristZone
 
 register = template.Library()

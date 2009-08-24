@@ -2,8 +2,8 @@ from django.conf import settings
 from django.core.cache import cache
 from django.http import Http404
 
-from section.models import BaseSection
-from section.views import section_dispatcher
+from merengue.section.models import BaseSection
+from merengue.section.views import section_dispatcher
 
 
 class SectionMiddleware(object):

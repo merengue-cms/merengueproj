@@ -3,7 +3,7 @@ from django.views.generic import list_detail
 
 from merengue.base.models import BaseContent
 from cmsutils.adminfilters import QueryStringManager
-from internallinks.forms import BaseContentSearchForm
+from merengue.internallinks.forms import BaseContentSearchForm
 
 
 def internal_links_search(request):

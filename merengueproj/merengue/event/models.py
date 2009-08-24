@@ -13,7 +13,7 @@ from merengue.base.models import BaseContent, BaseCategory, ContactInfo
 from merengue.section.models import BaseSection
 from merengue.places.models import Location
 
-from event.managers import EventManager, OccurrenceManager
+from merengue.event.managers import EventManager, OccurrenceManager
 
 
 FREQS = (("YEARLY", _("Yearly")),

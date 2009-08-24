@@ -4,19 +4,19 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 
-from base.admin import BaseContentAdminExtra
-from base.models import BaseContent, ContactInfo
-from multimedia.admin import BaseMultimediaRelatedAddContentModelAdmin, \
+from merengue.base.admin import BaseContentAdminExtra
+from merengue.base.models import BaseContent, ContactInfo
+from merengue.multimedia.admin import BaseMultimediaRelatedAddContentModelAdmin, \
                              BaseMultimediaRelatedRemoveContentModelAdmin, \
                              PendingBaseMultimediaAdmin
-from multimedia.models import BaseMultimedia, Photo, Video, PanoramicView, Image3D
-from places.models import Location
-from section.models import (Carousel, Section, Document,
+from merengue.multimedia.models import BaseMultimedia, Photo, Video, PanoramicView, Image3D
+from merengue.places.models import Location
+from merengue.section.models import (Carousel, Section, Document,
                             AppSection, Menu, CustomStyle)
-from event.models import Event
-from event.admin import setup_event_admin
+from merengue.event.models import Event
+from merengue.event.admin import setup_event_admin
 
-from base.admin import (BaseContentRelatedLocationModelAdmin,
+from merengue.base.admin import (BaseContentRelatedLocationModelAdmin,
                         BaseContentRelatedContactInfoAdmin,
                         BaseContentRelatedItemsRelatedModelAdmin,
                         BaseContentRelatedPhotoModelAdmin,
@@ -25,15 +25,15 @@ from base.admin import (BaseContentRelatedLocationModelAdmin,
                         BaseContentRelatedImage3DModelAdmin,
                         LogEntryRelatedContentModelAdmin)
 
-from base.admin import get_subclasses_registry_in_admin
+from merengue.base.admin import get_subclasses_registry_in_admin
 
-from section.admin import (CarouselRelatedAddPhotoModelAdmin,
+from merengue.section.admin import (CarouselRelatedAddPhotoModelAdmin,
                            CarouselRelatedRemovePhotoModelAdmin,
                            BaseSectionRelatedDocumentModelAdmin,
                            BaseSectionRelatedMenuModelAdmin,
                            BaseSectionRelatedCustomStyleModelAdmin)
 
-from merengue.admin import site as admin_site
+from merengue.base.admin import site as admin_site
 
 IGNORE_CONTACT_ADMIN_MODEL = (Event, )
 IGNORE_LOCATION_ADMIN_MODEL = (Event, )

@@ -6,10 +6,10 @@ from django.template import RequestContext
 
 from searchform.registry import search_form_registry
 from searchform.utils import search_button_submitted
-from section.models import BaseSection, Document, Section
+from merengue.section.models import BaseSection, Document, Section
 
 from merengue.base.views import search_results
-from event.forms import EventCategoriesQuickSearchForm
+from merengue.event.forms import EventCategoriesQuickSearchForm
 
 
 def section_view(request, section_slug, original_context={}, template='section/document_view.html'):

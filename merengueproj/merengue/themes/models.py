@@ -5,8 +5,8 @@ from django.db import models
 from django.db.models import signals
 from django.utils.translation import ugettext_lazy as _
 
-from themes import get_theme_path
-from themes.managers import ThemeManager
+from merengue.themes import get_theme_path
+from merengue.themes.managers import ThemeManager
 
 
 class Theme(models.Model):

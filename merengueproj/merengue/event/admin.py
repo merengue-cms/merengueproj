@@ -16,7 +16,7 @@ from merengue.base.models import BaseContent, ContactInfo
 from merengue.base.widgets import AdminDateOfDateTimeWidget
 from batchadmin.forms import CHECKBOX_NAME
 from batchadmin.util import get_changelist
-from event.models import Event, Occurrence, Category, CategoryGroup
+from merengue.event.models import Event, Occurrence, Category, CategoryGroup
 
 SECTIONS_SLUG_EXCLUDE = ('eventos', )
 
@@ -262,9 +262,11 @@ class EventRelatedOccurrenceAdmin(BaseContentRelatedModelAdmin):
             field.widget = AdminDateOfDateTimeWidget()
         return field
 
-admin.site.register(Category, EventCategoryAdmin)
-admin.site.register(CategoryGroup, EventCategoryGroupAdmin)
-admin.site.register(Event, EventAdmin)
+
+def register(site):
+    site.register(Category, EventCategoryAdmin)
+    site.register(CategoryGroup, EventCategoryGroupAdmin)
+    site.register(Event, EventAdmin)
 
 
 def setup_event_admin(event_admin):

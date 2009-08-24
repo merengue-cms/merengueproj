@@ -139,7 +139,7 @@ def content_info(request, content_type, content_id):
 
 def places_ajax_nearby(request):
     # Next line will be used when event app was included
-    from event.models import Event, Occurrence
+    from merengue.event.models import Event, Occurrence
 
     type = request.GET.get('type', None)
     lat1 = request.GET.get('lat1', None)

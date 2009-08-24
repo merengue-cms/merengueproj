@@ -2,7 +2,7 @@
 
 from django.conf import settings
 
-from themes.models import Theme
+from merengue.themes.models import Theme
 
 
 def media(request):

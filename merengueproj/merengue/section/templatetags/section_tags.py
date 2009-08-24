@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from mptt.utils import tree_item_iterator
 
-from section.models import DocumentLink
+from merengue.section.models import DocumentLink
 
 
 register = template.Library()

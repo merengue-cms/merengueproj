@@ -13,9 +13,9 @@ from merengue.base.models import BaseContent
 from merengue.base.admin import (BaseAdmin, BaseContentRelatedModelAdmin,
                         WorkflowBatchActionProvider)
 from merengue.multimedia.models import Photo
-from section.models import (Menu, Section, AppSection, Carousel,
+from merengue.section.models import (Menu, Section, AppSection, Carousel,
                             BaseLink, AbsoluteLink, DocumentLink, Document)
-from section.widgets import ModifiedRelatedFieldWidgetWrapper, SearchFormOptionsWidget
+from merengue.section.widgets import ModifiedRelatedFieldWidgetWrapper, SearchFormOptionsWidget
 
 
 class MenuAdmin(BaseAdmin):

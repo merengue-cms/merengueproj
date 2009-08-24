@@ -2,7 +2,7 @@ from django.conf.urls.defaults import patterns, url
 
 from merengue.section.urls import docs_patterns, agenda_patterns
 
-urlpatterns = patterns('event.views',
+urlpatterns = patterns('merengue.event.views',
     url(r'^$', 'event_index', name='event_index'),
     url(r'^mas-votados/$', 'top_events_rated', name='event_top_rated'),
     url(r'^busqueda/$', 'event_search', name='event_search'),

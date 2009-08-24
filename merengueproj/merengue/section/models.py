@@ -141,8 +141,10 @@ class Menu(models.Model):
         bc.reverse()
         return bc
 
-
-mptt.register(Menu)
+try:
+    mptt.register(Menu)
+except mptt.AlreadyRegistered:
+    pass
 
 
 class BaseLink(models.Model, RealInstanceMixin):

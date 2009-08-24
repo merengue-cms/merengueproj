@@ -3,7 +3,7 @@ from django.contrib import admin
 
 admin.autodiscover()
 
-urlpatterns = patterns('base.views',
+urlpatterns = patterns('merengue.base.views',
     (r'^admin_redirect/(?P<content_type>\d+)/(?P<content_id>\d+)/(?P<url>.*)$', 'admin_link'),
     (r'^public_redirect/(?P<app_label>\w+)/(?P<model_name>\w+)/(?P<content_id>\d+)/$', 'public_link'),
     url(r'^enviar_comentario/(?P<content_type>\d+)/(?P<content_id>\d+)/(?P<parent_id>\d+)/$',

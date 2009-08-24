@@ -3,9 +3,9 @@ from django.conf.urls.defaults import *
 from django.conf import settings
 
 from searchform.registry import search_form_registry
-from merengue.base.admin import (setup_basecontents_admin,
-                                 setup_sections_admin, setup_multimedia_admin, setup_user_admin,
-                                 setup_extra_admin)
+from admin import (setup_basecontents_admin,
+                   setup_sections_admin, setup_multimedia_admin, setup_user_admin,
+                   setup_extra_admin)
 
 from merengue.base import admin
 
@@ -64,7 +64,7 @@ urlpatterns += patterns('',
     (r'^$', 'merengue.views.portal.index'),
 
     # actions
-    (r'^actions/', include('action.urls')),
+    (r'^actions/', include('merengue.action.urls')),
 
     # login and logout
     url(r'^cuentas/entrar/$', 'merengue.views.portal.try_login', name='login_form'),
@@ -72,17 +72,17 @@ urlpatterns += patterns('',
     url(r'^mapa-web/$', 'merengue.views.portal.site_map', name='site_map'),
 
     # base urls
-    (r'^base/', include('base.urls')),
+    (r'^base/', include('merengue.base.urls')),
 
     (r'^ajax/autocomplete/tags/(?P<app_name>.*)/(?P<model>.*)/$',
      'merengue.views.portal.ajax_autocomplete_tags'),
-    (r'^multimedia/', include('multimedia.urls')),
+    (r'^multimedia/', include('merengue.multimedia.urls')),
     # section
-    (r'^secciones/', include('section.urls')),
+    (r'^secciones/', include('merengue.section.urls')),
     # tinyimages
     (r'^tinyimages/', include('tinyimages.urls')),
     # other URLs
-    (r'^internal-links/', include('internallinks.urls')),
+    (r'^internal-links/', include('merengue.internallinks.urls')),
     (r'^threadedcomments/', include('threadedcomments.urls')),
     url(r'^invalidate/$', 'merengue.views.portal.invalidate_cache', name='invalidate_cache'),
     # i18n applications

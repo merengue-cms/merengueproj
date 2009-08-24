@@ -10,8 +10,8 @@ from merengue.section.views import section_view
 
 from rating.models import Vote
 
-from event.models import Event, Occurrence
-from event.forms import EventQuickSearchForm, EventAdvancedSearchForm
+from merengue.event.models import Event, Occurrence
+from merengue.event.forms import EventQuickSearchForm, EventAdvancedSearchForm
 
 
 def event_index(request):

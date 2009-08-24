@@ -1,7 +1,7 @@
 
 from south.db import db
 from django.db import models
-from event.models import *
+from merengue.event.models import *
 
 class Migration:
     
