@@ -2,6 +2,7 @@
 # Django settings for merengue project.
 
 from os import path
+from merengue import settings as merengue_settings
 
 ugettext = lambda s: s # dummy ugettext function, as said on django docs
 
@@ -142,28 +143,16 @@ INSTALLED_APPS = (
     'tagging',
     'sorl.thumbnail',
     'pagination',
-    'registry',
-    'multimedia',
-    'places',
-    'base',
-    'section',
-    'plug',
-    'themes',
-    'action',
-    'block',
-    'event',
-    'merengue',
     'inplaceeditform',
     'searchform',
     'inlinetrans',
     'mptt',
     'tinyimages',
     'rating',
-    'internallinks',
     'threadedcomments',
     'captcha',
     'south',
-)
+) + merengue_settings.MERENGUE_APPS
 
 TEST_RUNNER = 'merengue.test.run_tests'
 TEST_DB_CREATION_SUFFIX = 'WITH TEMPLATE template_postgis'
