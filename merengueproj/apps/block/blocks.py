@@ -1,3 +1,6 @@
+from django.template import RequestContext
+from django.template.loader import render_to_string
+
 from block.models import RegisteredBlock
 from registry.items import RegistrableItem
 from registry.signals import item_registered
@@ -9,6 +12,19 @@ class BaseBlock(RegistrableItem):
     @classmethod
     def get_category(cls):
         return 'block'
+
+    @classmethod
+    def render_block(cls, request, template_name='block.html', block_title=None, context=None):
+        if context is None:
+            context = {}
+        registered_block = cls.get_registered_item()
+        block_context = {
+            'block_title': block_title or registered_block.name,
+            'block': registered_block,
+        }
+        block_context.update(context)
+        return render_to_string(template_name, block_context,
+                                context_instance=RequestContext(request))
 
 
 class Block(BaseBlock):

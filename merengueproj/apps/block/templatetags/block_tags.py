@@ -25,7 +25,7 @@ class RenderBlocksNode(template.Node):
                 block = registered_block.get_registry_item_class()
                 if content is None and issubclass(block, Block):
                     rendered_blocks.append(block.render(request))
-                elif issubclass(block, ContentBlock):
+                elif content is not None and issubclass(block, ContentBlock):
                     rendered_blocks.append(block.render(request, content))
             return '\n'.join(rendered_blocks)
         except template.VariableDoesNotExist:

@@ -40,11 +40,15 @@ class RegistrableItem(object):
 
     @classmethod
     def get_config(cls):
-        registered_item = RegisteredItem.objects.get(
+        registered_item = cls.get_registered_item()
+        return ConfigDict(cls.config_params, registered_item.config)
+
+    @classmethod
+    def get_registered_item(cls):
+        return cls.model.objects.get(
             class_name=cls.get_class_name(),
             module=cls.get_module(),
         )
-        return ConfigDict(cls.config_params, registered_item.config)
 
     @classmethod
     def get_extended_attrs(cls):

@@ -13,10 +13,19 @@
   {% endblock %}
 {% endblock %}
 
-{% block sidebar %}
-  {% block contentsidebarblocks %}
+{% block leftsidebar %}
+  {% block contentleftsidebar %}
     {% render_blocks "leftsidebar" for content %}
-    {% block extracontentsidebarblocks %}
+    {% block extracontentleftsidebar %}
+    {% endblock %}
+  {% endblock %}
+  {{ block.super }}
+{% endblock %}
+
+{% block rightsidebar %}
+  {% block contentrightsidebar %}
+    {% render_blocks "rightsidebar" for content %}
+    {% block extracontentrightsidebar %}
     {% endblock %}
   {% endblock %}
   {{ block.super }}

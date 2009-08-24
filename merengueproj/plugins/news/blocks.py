@@ -1,5 +1,3 @@
-from django.template import RequestContext
-from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
 
 from block.blocks import Block, ContentBlock
@@ -13,10 +11,9 @@ class LatestNewsBlock(Block):
     @classmethod
     def render(cls, request):
         news_list = NewsItem.objects.published().order_by('-publish_date')
-        return render_to_string('news/block_latest.html',
-                                {'block_title': _('Latest news'),
-                                 'news_list': news_list},
-                                context_instance=RequestContext(request))
+        return cls.render_block(request, template_name='news/block_latest.html',
+                                block_title=_('Latest news'),
+                                context={'news_list': news_list})
 
 
 class NewsCommentsBlock(ContentBlock):
@@ -25,7 +22,6 @@ class NewsCommentsBlock(ContentBlock):
 
     @classmethod
     def render(cls, request, content):
-        return render_to_string('news/block_newscomments.html',
-                                {'block_title': _('News comments'),
-                                 'content': content},
-                                context_instance=RequestContext(request))
+        return cls.render_block(request, template_name='news/block_newscomments.html',
+                                block_title=_('News comments'),
+                                context={'content': content})
