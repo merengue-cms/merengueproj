@@ -140,19 +140,10 @@ def public_link(request, app_label, model_name, content_id):
         raise Http404
 
     if isinstance(content, BaseContent):
-        app_section_name = settings.APP_SECTION_MAP[content.get_class_name()]
-        if (settings.SECTION_MAP[app_section_name]['published'] or request.user.is_staff) \
-            and hasattr(content, 'public_link'):
-            # content will go to new django system if:
-            #  a) section is published
-            #  b) even if section was not published, I'm staff people
-            #     because I have to access to new URL for reviewing tasks
+        if hasattr(content, 'public_link'):
             return HttpResponseRedirect(content.public_link())
         else:
             return HttpResponseRedirect(content.link_by_user(request.user))
-
-    if hasattr(content, 'get_plone_link'):
-        return HttpResponseRedirect(content.get_plone_link())
 
     return HttpResponseRedirect(content.get_absolute_url())
 
