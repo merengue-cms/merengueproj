@@ -12,7 +12,6 @@ from django.utils.translation import ugettext
 from base.models import BaseContent
 from base.admin import (BaseAdmin, BaseContentRelatedModelAdmin,
                         WorkflowBatchActionProvider)
-from batchadmin.util import get_changelist
 from multimedia.models import Photo
 from section.models import (Menu, Section, AppSection, Carousel,
                             BaseLink, AbsoluteLink, DocumentLink, Document)
@@ -123,6 +122,7 @@ class BaseDocumentModelAdmin(object):
 
 
 class BaseSectionRelatedDocumentModelAdmin(BaseContentRelatedModelAdmin, WorkflowBatchActionProvider, BaseDocumentModelAdmin):
+    actions = BaseAdmin.actions + ['set_as_draft', 'set_as_published']
     selected = 'documents'
     change_list_template = "admin/section/document/change_list.html"
     list_display = ('name', 'slug', 'status', )
@@ -130,12 +130,6 @@ class BaseSectionRelatedDocumentModelAdmin(BaseContentRelatedModelAdmin, Workflo
     html_fields = ('body', )
     prepopulated_fields = {'slug': ('name_es', )}
     filter_horizontal = ('videos', )
-
-    # batch_actions = BaseAdmin.batch_actions + ['set_as_draft',
-    #                                            'set_as_published']
-    # batch_actions_perms = {'set_as_draft': 'base.can_draft',
-    #                        'set_as_published': 'base.can_published',
-    #                       }
 
     def queryset(self, request):
         return self.admin_site.basecontent.document_set.all()
@@ -296,7 +290,7 @@ class BaseSectionRelatedMenuModelAdmin(BaseContentRelatedModelAdmin):
     list_display_links = ('name', )
     prepopulated_fields = {'slug': ('name_es', )}
     ordering=('lft', )
-    # batch_actions = []
+    actions = []
     actions_on_top = False
     actions_on_bottom = False
     inlines = [AbsoluteLinkInline, DocumentLinkInline]
@@ -394,7 +388,7 @@ class BaseSectionRelatedMenuModelAdmin(BaseContentRelatedModelAdmin):
 class AppSectionAdmin(BaseSectionAdmin):
     list_display = ('name', 'slug', 'app_name')
     prepopulated_fields = {'slug': ('name_es', )}
-    # batch_actions = []
+    actions = []
     actions_on_top = False
     actions_on_bottom = False
 
@@ -466,48 +460,38 @@ class CarouselRelatedPhotoModelAdmin(BaseContentRelatedModelAdmin):
 
 
 class CarouselRelatedAddPhotoModelAdmin(CarouselRelatedPhotoModelAdmin):
-    # batch_actions = ['select_photo']
+    actions = ['select_photo']
 
-    def select_photo(self, request, changelist):
-        objects_id = request.POST.getlist('selected')
-
-        if objects_id:
+    def select_photo(self, request, queryset):
+        selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
+        if selected:
             if request.POST.get('post'):
-                changelist = get_changelist(request, self.model, self)
-                photos_selected = Photo.objects.filter(id__in=objects_id)
-                object = self.admin_site.basecontent
-                for photo_selected in photos_selected:
-                    object.photos_extra.add(photo_selected)
+                basecontent = self.admin_site.basecontent
+                for selected_photo in queryset:
+                    basecontent.photos_extra.add(selected_photo)
                 return
-            extra_context = {'title':
-                                _('Are you sure you want select this photos?'),
+            extra_context = {'title': _(u'Are you sure you want to select these photos?'),
                              'action_submit': 'select_photo'}
-            return self.confirm_action(request, objects_id, extra_context)
+            return self.confirm_action(request, queryset, extra_context)
     select_photo.short_description = _("Select photo")
 
 
-class CarouselRelatedRemovePhotoModelAdmin(CarouselRelatedPhotoModelAdmin, WorkflowBatchActionProvider):
-    # batch_actions = ['deselect_photo', 'set_as_draft', 'set_as_pending', 'set_as_published']
-    # batch_actions_perms = {
-    #     'set_as_draft': 'base.can_draft',
-    #     'set_as_pending': 'base.can_pending',
-    #     'set_as_published': 'base.can_published',
-    # }
+class CarouselRelatedRemovePhotoModelAdmin(CarouselRelatedPhotoModelAdmin,
+                                           WorkflowBatchActionProvider):
+    actions = ['deselect_photo', 'set_as_draft',
+               'set_as_pending', 'set_as_published']
 
-    def deselect_photo(self, request, changelist):
-        objects_id = request.POST.getlist('selected')
-        if objects_id:
+    def deselect_photo(self, request, queryset):
+        selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
+        if selected:
             if request.POST.get('post'):
-                changelist = get_changelist(request, self.model, self)
-                photos_deselected = Photo.objects.filter(id__in=objects_id)
-                object = self.admin_site.basecontent
-                for photo_deselected in photos_deselected:
-                    object.photos_extra.remove(photo_deselected)
+                basecontent = self.admin_site.basecontent
+                for deselected_photo in queryset:
+                    basecontent.photos_extra.remove(deselected_photo)
                 return
-            extra_context = {'title':
-                                _('Are you sure you want deselect this photos?'),
+            extra_context = {'title': _(u'Are you sure you want to deselect these photos?'),
                              'action_submit': 'deselect_photo'}
-            return self.confirm_action(request, objects_id, extra_context)
+            return self.confirm_action(request, queryset, extra_context)
     deselect_photo.short_description = _("Deselect photo")
 
     def queryset(self, request):
@@ -522,7 +506,7 @@ class DocumentAdmin(BaseAdmin, WorkflowBatchActionProvider, BaseDocumentModelAdm
     html_fields = ('body', )
     filter_horizontal=('videos', )
     prepopulated_fields = {'slug': ('name_es', )}
-    # batch_actions = BaseAdmin.batch_actions + ['set_as_published', 'set_as_draft']
+    actions = BaseAdmin.actions + ['set_as_published', 'set_as_draft']
 
     def formfield_for_dbfield(self, db_field, **kwargs):
         if db_field.name == 'search_form':
