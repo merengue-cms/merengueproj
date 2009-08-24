@@ -182,32 +182,10 @@ def content_related_items(context, content):
 
 @register.inclusion_tag('base/media_slide.html', takes_context=True)
 def media_slide(context, content):
-    from convention.models import ConventionRoom
-    from multimedia.models import BaseMultimedia
     content_images = content.multimedia.photos().published().order_by('multimediarelation__order')
     content_videos = content.multimedia.videos().published().order_by('multimediarelation__order')
     content_image3d = content.multimedia.images3d().published().order_by('multimediarelation__order')
     content_panoramicview = content.multimedia.panoramic_views().published().order_by('multimediarelation__order')
-    convention_rooms = ConventionRoom.objects.filter(resource_owner=content)
-    if convention_rooms:
-        extra_photos_ids = []
-        extra_videos_ids = []
-        extra_image3d_ids = []
-        extra_panoramicview_ids = []
-        for room in convention_rooms:
-            extra_photos_ids += [i['id'] for i in room.multimedia.photos().published().order_by('multimediarelation__order').values('id')]
-            extra_videos_ids += [i['id'] for i in room.multimedia.videos().published().order_by('multimediarelation__order').values('id')]
-            extra_image3d_ids += [i['id'] for i in room.multimedia.images3d().published().order_by('multimediarelation__order').values('id')]
-            extra_panoramicview_ids += [i['id'] for i in room.multimedia.panoramic_views().published().\
-                                                                             order_by('multimediarelation__order').values('id')]
-        if extra_photos_ids:
-            content_images = content_images | BaseMultimedia.objects.filter(id__in=set(extra_photos_ids)).distinct()
-        if extra_videos_ids:
-            content_videos = content_videos | BaseMultimedia.objects.filter(id__in=set(extra_videos_ids)).distinct()
-        if extra_image3d_ids:
-            content_image3d = content_image3d | BaseMultimedia.objects.filter(id__in=set(extra_image3d_ids)).distinct()
-        if extra_panoramicview_ids:
-            content_panoramicview = content_panoramicview | BaseMultimedia.objects.filter(id__in=set(extra_panoramicview_ids)).distinct()
     return {'content': content,
             'content_images': content_images,
             'content_videos': content_videos,
