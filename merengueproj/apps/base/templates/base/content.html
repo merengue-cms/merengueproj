@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% load i18n content_tags action_tags %}
+
+{% block extrabreadcrumbs %}
+  {% block beforecontentbreadcrumbs %}
+  {% endblock %}
+  {% block contentbreadcrumbs %}
+    <span class="breadcrumbSeparator">→</span>
+    {% cutrender %}{{ content }}{% endcutrender %}
+  {% endblock %}
+  {% block aftercontentbreadcrumbs %}
+  {% endblock %}
+{% endblock %}
+
+{% block content %}
+
+  {% block contenttitle %}
+    <div id="content-title" class="{{ content.class_name }}">
+      <h1 title="{{ content.name }}">{% cutrender %}{{ content }}{% endcutrender %}</h1>
+    </div>
+  {% endblock %}
+
+  {% block contentactions %}
+    <ul id="content-actions">
+    {% get_actions "content" for content as content_actions %}
+    {% for action in content_actions %}
+      <li id="action-{{ action.name }}">
+        <a href="{{ action.get_url }}">{% trans action.verbose_name %}</a>
+      </li>
+    {% endfor %}
+    {% content_admin_action content %}
+    </ul>
+  {% endblock %}
+{% endblock %}

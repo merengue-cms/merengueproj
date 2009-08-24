@@ -61,10 +61,16 @@
   </div>
   {% endblock headerwrapper %}
 
-  {% block breadcrumbsbox %}
-    {% include "inc.breadcrumbs.html" %}
+  {% block breadcrumbs %}
+    <div id="breadcrumbs">
+      {% include "inc.breadcrumbs.html" %}
+      {% block extrabreadcrumbs %}
+      {% endblock %}
+    <div>
   {% endblock %}
+
 {% endif %}
+
   <div id="contentwrapper">
   {% block contentwrapper %}
 

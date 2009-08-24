@@ -290,6 +290,16 @@ def content_comment_delete(request, comment_id):
         return HttpResponseRedirect(content.get_absolute_url())
 
 
+def content_view(request, content, template_name='content_view.html', extra_context=None):
+    """ Generic view for a content detail page """
+    if extra_context is None:
+        extra_context = {}
+    context = {'content': content}
+    context.update(extra_context)
+    return render_to_response(template_name, context,
+                              context_instance=RequestContext(request))
+
+
 def generic_object_list(request, queryset, title, menu_selected,
                         base_template, child_template_name,
                         original_context={},

@@ -13,8 +13,8 @@ def content_title(context, content):
     return {'content': content, 'request': context.get('request')}
 
 
-@register.inclusion_tag('base/content_edit_link.html', takes_context=True)
-def content_admin_link(context, content):
+@register.inclusion_tag('base/content_admin_action.html', takes_context=True)
+def content_admin_action(context, content):
     user = context.get('request').user
     if hasattr(content, 'can_edit') and callable(content.can_edit):
         can_edit = content.can_edit(user)
@@ -26,6 +26,7 @@ def content_admin_link(context, content):
         'user': user,
         'can_edit': can_edit,
         'MEDIA_URL': context.get('MEDIA_URL', '/media/'),
+        'THEME_URL': context.get('THEME_URL'),
     }
 
 

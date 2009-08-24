@@ -1,6 +1,6 @@
 {% load i18n inlinetrans %}
 {% if can_edit %}
-<span class="linkAdmin">
+<li class="linkAdmin">
   <a href="{{ content.get_admin_absolute_url }}" title="{% trans "Admin this content" %}">{% inline_trans "Admin this content" %}</a>
-</span>
+</li>
 {% endif %}
