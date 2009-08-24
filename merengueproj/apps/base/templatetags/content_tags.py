@@ -2,7 +2,6 @@ import operator
 
 from django import template
 from django.utils.text import unescape_entities
-from django.utils.translation import ugettext as _
 
 
 register = template.Library()
@@ -39,31 +38,6 @@ def content_specialized_fields(context, content):
     else:
         instance = content
 
-    if getattr(content, 'class_name', None) == u'accommodation':
-        if instance:
-            accommodation_type = instance.accommodation_type
-            if accommodation_type:
-                type_label = accommodation_type._meta.verbose_name
-                specialized_fields.append((type_label, accommodation_type))
-            accommodation_category = instance.accommodation_category_option
-            if accommodation_category:
-                category_label = accommodation_category._meta.verbose_name
-                specialized_fields.append((category_label, accommodation_category))
-    elif getattr(content, 'class_name', None) == u'flamencoplace':
-        if instance:
-            flamencoplace_type = instance.type
-            if flamencoplace_type:
-                type_label = _('Type')
-                specialized_fields.append((type_label, flamencoplace_type))
-    elif getattr(content, 'class_name', None) in [u'conventioncenter', u'conventionroom', u'conventioncompany', u'conventionboureau']:
-        if instance:
-            type_label = _('Type')
-            specialized_fields.append((type_label, {'name': u"%s"%instance._meta.verbose_name.capitalize()}))
-            convention_company_types = getattr(instance, 'convention_company_type', None)
-            if convention_company_types:
-                subtype = ', '.join([convention_company_type.name for convention_company_type in convention_company_types.all()])
-                if subtype:
-                    specialized_fields.append((_('Subtype'), {'name': subtype}))
     return {'content': content, 'user': context.get('request').user,
             'specialized_fields': specialized_fields}
 
