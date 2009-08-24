@@ -1,0 +1,172 @@
+{% load i18n comparison first_of_with_as_tags %}
+
+{% if content_images or content_videos or content_image3d or content_panoramicview %}
+  <link href="{{ MEDIA_URL }}css/shadowbox.css" rel="stylesheet" type="text/css" />
+  <link href="{{ MEDIA_URL }}css/slideshow.css" rel="stylesheet" type="text/css" media="screen" />
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/mootools.v1.11.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/shadowbox/shadowbox-mootools.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/shadowbox/shadowbox.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/shadowbox/shadowbox-{{ LANGUAGE_CODE }}.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/media.simple.slideshow.js"></script>
+      <div id="slideshow">
+            <div class="screenShotTable"  >
+            <div class="simpleImgGallery2" >
+                {% if content_images %}
+                <div class="imageController">
+                    <img  class="icon prevImg" alt="Previous" src="{{ MEDIA_URL }}img/carousel_previous.gif"/>
+                    <span class="imagesNumber">
+                            <span class="imgNow" >1</span>
+                            <span>/</span>
+                            <span class="imgMax">{{ content_images|length }}</span>
+                    </span>
+                    <img class="icon nextImg" alt="Next"
+                        src="{{ MEDIA_URL }}img/carousel_next.gif"/>
+                </div>
+                {% endif %}
+                {% if content_videos %}
+                <div class="videoController" style="{% if content_images %}display:none{% endif %}">
+                    <img  class="icon prevImg" alt="Previous" src="{{ MEDIA_URL }}img/carousel_previous.gif"/>
+                    <span class="imagesNumber">
+                            <span class="imgNow" >1</span>
+                            <span>/</span>
+                            <span class="imgMax">{{ content_videos|length }}</span>
+                    </span>
+                    <img class="icon nextImg" alt="Next"
+                        src="{{ MEDIA_URL }}img/carousel_next.gif"/>
+                </div>
+                {% endif %}
+                {% if content_images %}
+                    <span class="galleryButton toImages activeButton" >
+                        <img src="{{ MEDIA_URL }}img/photography_icon_pics.gif"/>
+                    </span>
+                {% endif %}
+                {% if content_videos %}
+                    <span class="galleryButton toVideos">
+                        <img src="{{ MEDIA_URL }}img/photography_icon_mov.gif"/>
+                    </span>
+                {% endif %}
+                {% if content_image3d %}
+                    {% with content_image3d|first as image3d %}
+                    <span class="galleryButton to3dImage">
+                      <a class="shadowlink" rel="shadowbox;height=360;width=360" href="{{ image3d.image3d.file.url }}" target="_blank">
+                        <img src="{{ MEDIA_URL }}img/3d.gif"/>
+                      </a>
+                    </span>
+                    {% endwith %}
+                {% endif %}
+                {% if content_panoramicview %}
+                    {% with content_panoramicview|first as panoramicview %}
+                    <span class="galleryButton to3dImage"">
+                      <a class="shadowlink" rel="shadowbox;height=360;width=360" href="{{ panoramicview.panoramicview.external_url }}" target="_blank">
+                        <img src="{{ MEDIA_URL }}img/360grados.gif"/>
+                      </a>
+                    </span>
+                    {% endwith %}
+                {% endif %}
+                <strong> <span> &nbsp;</span></strong>
+
+            </div>
+            {% if content_images %}
+                <div class="screenShotImgs">
+                    {% for image in content_images %}
+                       {% first_of_with_as image.name image.original_filename content.name as image_name %}
+                        <a class="image"
+                            href="{{ image.photo.image.url }}"
+                            title="{{ image_name }}"
+                            destino="{{ content.get_absoulte_url }}"
+                            style="{% if forloop.first %}display:inline
+                                   {% else %}display:none{% endif %}"
+                            thumb="{{ image.photo.image.thumbnail.url }}"
+                            rel="shadowbox[ContentGallery]">
+                                <img class="galleryImages"
+                                    title="{{ image_name }}"
+                                    alt="{{ image_name }}"
+                                    {% if_less forloop.counter 2 %}src="{{ image.photo.image.thumbnail.url }}"{% endif_less %}/>
+                          </a>
+                          <div class="hidden-caption" style="display:none">{{ image.photo.caption|safe }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if content_videos %}
+                <div class="screenShotVideos" style="{% if content_images %}display:none{% endif %}">
+                {% for video in content_videos %}
+                    {% first_of_with_as video.name video.original_filename content.name as video_name %}
+                     <a href="{% url multimedia.views.video_xml video.id %}"
+                        style="{% if forloop.first %}display:inline
+                               {% else %}display:none{% endif %}"
+                        title="{{ video_name }}";
+                        destino="{{ content.get_absolute_url }}"
+                        rel="shadowbox[VideoGallery];width=425;height=350;"
+                        class="video" >
+                        <img src="{% if video.video.preview %}{{ video.video.preview.thumbnail.url }}
+                                  {% else %}{{ MEDIA_URL }}img/andaluciavideo_preview_mini.jpg{% endif %}"
+                             class="galleryImages" 
+                             title="{{ video_name }}"/>
+                    </a>
+                {% endfor %}
+                </div>
+            {% endif %}
+
+            <script type="text/javascript">
+// <![CDATA[
+(function($) {
+
+    function load_shadows_minigalerias() {
+        gallery = $$('.screenShotTable');
+        if(gallery.length){
+            gallery = gallery[0];
+            Shadowbox.init({
+                assetUrl: '{{ MEDIA_URL }}',
+                loadingImage: '{{ MEDIA_URL }}img/loading.gif',
+                displayNav: true,
+                displayClose: true,
+                skipSetup: true,
+                continuous: true
+            });
+            images = $$('a.image');
+            if(images.length){
+                Shadowbox.setup(images, {
+                    gallery: 'ContentGallery',
+                    type: 'img',
+                    animSequence: 'sync',
+                    slideshowDelay: 3
+                });
+            }
+            var ImagesGallery = new AndaluciaGallery(gallery);
+
+            videos = $$('a.video');
+            if(videos.length){
+                Shadowbox.setup(videos, {
+                    gallery: 'VideoGallery',
+                    autoplayMovies: true,
+                    flvPlayer:'{{ MEDIA_URL }}flash/flvplayer.swf',
+                    type:'external'
+                });
+            }
+
+
+            external_links = $$('a.shadowlink');
+            if(external_links.length){
+                Shadowbox.setup(external_links, {
+                    type: 'iframe',
+                    animSequence: 'sync',
+                    continuous: true
+                });
+                external_links.each(function(el, i){
+                    el.setAttribute('target','');
+                });
+            }
+
+        }
+    }
+
+  $(document).ready( function() {
+      load_shadows_minigalerias();
+  });
+})(jQuery);
+// ]]>
+            </script>
+         </div>
+      </div>
+{% endif %}

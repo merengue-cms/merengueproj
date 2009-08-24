@@ -32,4 +32,26 @@
     {% content_admin_action content %}
     </ul>
   {% endblock %}
+
+  {% block contentzone %}
+    {% block contentmedia %}
+      {% media_slide content %}
+    {% endblock %}
+
+    {% block contentdescription %}
+      {% if content.description %}
+        <div class="contentDescription">{{ content.description|safe }}</div>
+      {% endif %}
+    {% endblock %}
+
+    {% block contentbody %}
+      {# to fill in for inherited templates #}
+    {% endblock %}
+
+    {% block contentcustomactions %}
+      {# to implement #}
+      {% block extracontentcustomactions %}
+      {% endblock %}
+    {% endblock %}
+  {% endblock %}
 {% endblock %}
