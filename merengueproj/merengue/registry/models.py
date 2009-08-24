@@ -27,3 +27,11 @@ class RegisteredItem(models.Model):
     def get_registry_item_class(self):
         module = import_module(self.module)
         return getattr(module, self.class_name)
+
+    def get_config(self):
+        parent_instance = getattr(self, 'registereditem_ptr', None)
+        if parent_instance is not None:
+            # because a inheritance JSONField problem
+            return parent_instance.config
+        else:
+            return self.config

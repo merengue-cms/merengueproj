@@ -41,7 +41,7 @@ class RegistrableItem(object):
     @classmethod
     def get_config(cls):
         registered_item = cls.get_registered_item()
-        return ConfigDict(cls.config_params, registered_item.config)
+        return ConfigDict(cls.config_params, registered_item.get_config())
 
     @classmethod
     def get_registered_item(cls):
