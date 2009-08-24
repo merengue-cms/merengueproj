@@ -15,7 +15,6 @@ from django.contrib.auth.models import Group, User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.admin.views.main import ChangeList, ERROR_FLAG
 from django.contrib.admin.options import IncorrectLookupParameters
-from django.contrib.admin.sites import AdminSite as DjangoAdminSite
 from django.contrib.admin.util import quote, unquote, flatten_fieldsets, _nest_help
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.gis import admin as geoadmin
@@ -38,6 +37,7 @@ from cmsutils.forms.widgets import AJAXAutocompletionWidget
 
 from batchadmin.util import model_ngettext, get_changelist
 
+from merengue.base.adminsite import site
 from merengue.base.forms import AdminBaseContentOwnersForm
 from merengue.base.models import Base, BaseContent, ContactInfo, MultimediaRelation
 from merengue.base.utils import geolocate_object_base, copy_request
@@ -135,10 +135,6 @@ def autodiscover(admin_site=None):
 
     # autodiscover was successful, reset loading flag.
     LOADING = False
-
-
-class AdminSite(DjangoAdminSite):
-    pass
 
 
 # Merengue Model Admins -----
@@ -1973,8 +1969,3 @@ def register(site):
 
 def setup_basecontent_admin(basecontent_admin_site):
     basecontent_admin_site.register(Location, BaseContentRelatedLocationModelAdmin)
-
-
-# This global object represents the default admin site, for the common case.
-# You can instantiate AdminSite in your own code to create a custom admin site.
-site = AdminSite()

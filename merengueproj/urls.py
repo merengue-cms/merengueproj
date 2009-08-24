@@ -10,14 +10,15 @@ from admin import (setup_basecontents_admin,
 from merengue.base import admin
 
 admin.autodiscover()
+
+
 app_admin_sites = setup_basecontents_admin() + setup_sections_admin() + \
                   setup_multimedia_admin() + setup_user_admin()
-app_admin_sites_extra = setup_extra_admin()
-app_admin_patterns = []
 
 # todos las subclases de basecontent tendran una interfaz de administracion
 # especifica para tratar localizacion, informacion de contacto, multimedia,
 # etc ...
+app_admin_patterns = []
 for model, app_admin_site, prefix in app_admin_sites:
     app_label = model._meta.app_label
     module_name = model._meta.module_name
@@ -25,10 +26,6 @@ for model, app_admin_site, prefix in app_admin_sites:
         (r'^admin/%s/%s/(?P<basecontent_id>\d+)/%s/(?P<url>.*)' %\
         (app_label, module_name, prefix), app_admin_site.root))
 
-
-for model, app_admin_site, prefix in app_admin_sites_extra:
-    app_admin_patterns.append(
-        (r'^%s/(?P<url>.*)' % prefix, app_admin_site.root))
 
 # do autodiscovering of all search forms
 search_form_registry.autodiscover()

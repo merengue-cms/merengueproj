@@ -25,15 +25,13 @@ from merengue.base.admin import (BaseContentRelatedLocationModelAdmin,
                         BaseContentRelatedImage3DModelAdmin,
                         LogEntryRelatedContentModelAdmin)
 
-from merengue.base.admin import get_subclasses_registry_in_admin
+from merengue.base.admin import site, get_subclasses_registry_in_admin
 
 from merengue.section.admin import (CarouselRelatedAddPhotoModelAdmin,
                            CarouselRelatedRemovePhotoModelAdmin,
                            BaseSectionRelatedDocumentModelAdmin,
                            BaseSectionRelatedMenuModelAdmin,
                            BaseSectionRelatedCustomStyleModelAdmin)
-
-from merengue.base.admin import site as admin_site
 
 IGNORE_CONTACT_ADMIN_MODEL = (Event, )
 IGNORE_LOCATION_ADMIN_MODEL = (Event, )
@@ -58,7 +56,7 @@ class AppAdminSite(admin.AdminSite):
 
 def setup_basecontents_admin():
     app_admin_sites = []
-    for model, model_admin in get_subclasses_registry_in_admin(BaseContent, admin_site=admin_site):
+    for model, model_admin in get_subclasses_registry_in_admin(BaseContent, admin_site=site):
         app_admin_site = AppAdminSite(model, model_admin)
         if model in IGNORE_CONTACT_ADMIN_MODEL:
             app_admin_site.no_contact = True
@@ -102,7 +100,7 @@ def setup_sections_admin():
 
 def setup_multimedia_admin():
     multimedia_admin_sites = []
-    for model, model_admin in get_subclasses_registry_in_admin(BaseMultimedia, admin_site=admin_site):
+    for model, model_admin in get_subclasses_registry_in_admin(BaseMultimedia, admin_site=site):
         multimedia_admin_site_add = AppAdminSite(model, model_admin)
         multimedia_admin_site_add.register(BaseContent, BaseMultimediaRelatedAddContentModelAdmin)
         multimedia_admin_sites.append((model, multimedia_admin_site_add, 'admin_add'))

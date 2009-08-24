@@ -4,6 +4,7 @@ import sys
 from django.conf import settings
 from django.conf.urls.defaults import include, url
 from django.contrib.admin.sites import AlreadyRegistered, NotRegistered
+from django.core.cache import cache
 from django.core.exceptions import ImproperlyConfigured
 from django.core.management.color import no_style
 from django.core.management.sql import sql_all
@@ -11,8 +12,8 @@ from django.db import connection, transaction
 from django.db.models import get_models
 from django.utils.importlib import import_module
 
-from merengue.base.admin import register_app, unregister_app
 from merengue import registry
+from merengue.base.admin import register_app, unregister_app
 from merengue.registry.items import (NotRegistered as NotRegisteredItem,
                             AlreadyRegistered as AlreadyRegisteredItem)
 
@@ -97,6 +98,8 @@ def find_plugin_url(plugin_name):
 
 
 def enable_plugin(plugin_name, register=True):
+    from merengue.plug import PLUG_CACHE_KEY
+    cache.delete(PLUG_CACHE_KEY)
     add_to_installed_apps(plugin_name)
     if register:
         try:
@@ -109,6 +112,8 @@ def enable_plugin(plugin_name, register=True):
 
 
 def disable_plugin(plugin_name, unregister=True):
+    from merengue.plug import PLUG_CACHE_KEY
+    cache.delete(PLUG_CACHE_KEY)
     remove_from_installed_apps(plugin_name)
     if unregister:
         try:

@@ -1,6 +1,8 @@
 from merengue.plug.models import RegisteredPlugin
 from merengue.registry.items import RegistrableItem
 
+PLUG_CACHE_KEY = 'plug__loaded'
+
 
 class Plugin(RegistrableItem):
     model = RegisteredPlugin
