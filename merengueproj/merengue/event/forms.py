@@ -11,8 +11,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from cmsutils.templatetags.datefilters import get_date_format
 
-from base.forms import QuickSearchForm, AdvancedSearchForm
-from base.searchterms import BindableSearchTerm
+from merengue.base.forms import QuickSearchForm, AdvancedSearchForm
+from merengue.base.searchterms import BindableSearchTerm
 from searchform.registry import search_form_registry
 from searchform.terms import TextSearchTerm, FreeTextSearchTerm, DateSearchTerm, ObjectsSearchTerm
 from event.models import CategoryGroup, Category, Event

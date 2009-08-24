@@ -1,5 +1,5 @@
-from plug.models import RegisteredPlugin
-from registry.items import RegistrableItem
+from merengue.plug.models import RegisteredPlugin
+from merengue.registry.items import RegistrableItem
 
 
 class Plugin(RegistrableItem):

@@ -1,7 +1,7 @@
 from django.utils.translation import ugettext as _
 from django.views.generic import list_detail
 
-from base.models import BaseContent
+from merengue.base.models import BaseContent
 from cmsutils.adminfilters import QueryStringManager
 from internallinks.forms import BaseContentSearchForm
 

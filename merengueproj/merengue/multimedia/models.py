@@ -13,7 +13,7 @@ from stdimage.fields import StdImageFieldFile
 from tagging.fields import TagField
 from transmeta import TransMeta
 
-from base.managers import WorkflowManager
+from merengue.base.managers import WorkflowManager
 from multimedia.managers import MultimediaManager
 
 PHOTO_MEDIA_PREFIX = 'fotos'

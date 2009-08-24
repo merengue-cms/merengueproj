@@ -3,10 +3,10 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 
-from base.decorators import content_public_required
-from base.views import search_results
+from merengue.base.decorators import content_public_required
+from merengue.base.views import search_results
 from searchform.utils import search_button_submitted
-from section.views import section_view
+from merengue.section.views import section_view
 
 from rating.models import Vote
 

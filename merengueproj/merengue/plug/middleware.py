@@ -1,7 +1,7 @@
 from django.core.cache import cache
 
-from plug.utils import enable_plugin, get_plugin_module_name
-from plug.models import RegisteredPlugin
+from merengue.plug.utils import enable_plugin, get_plugin_module_name
+from merengue.plug.models import RegisteredPlugin
 
 
 class ActivePluginsMiddleware(object):

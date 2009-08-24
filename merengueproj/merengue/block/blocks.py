@@ -2,8 +2,8 @@ from django.template import RequestContext
 from django.template.loader import render_to_string
 
 from block.models import RegisteredBlock
-from registry.items import RegistrableItem
-from registry.signals import item_registered
+from merengue.registry.items import RegistrableItem
+from merengue.registry.signals import item_registered
 
 
 class BaseBlock(RegistrableItem):

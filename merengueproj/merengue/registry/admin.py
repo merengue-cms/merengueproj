@@ -1,6 +1,6 @@
-from base.admin import BaseAdmin
-from registry.models import RegisteredItem
-from registry.widgets import ConfigWidget
+from merengue.base.admin import BaseAdmin
+from merengue.registry.models import RegisteredItem
+from merengue.registry.widgets import ConfigWidget
 
 
 class RegisteredItemAdmin(BaseAdmin):

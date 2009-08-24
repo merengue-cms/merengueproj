@@ -12,7 +12,7 @@ from django.utils.text import capfirst
 from django.utils.translation import get_language
 from django.utils.translation import ugettext_lazy as _
 
-from base.models import BaseContent
+from merengue.base.models import BaseContent
 from cmsutils.adminfilters import QueryStringManager
 from searchform.forms import SearchForm
 from searchform.registry import search_form_registry

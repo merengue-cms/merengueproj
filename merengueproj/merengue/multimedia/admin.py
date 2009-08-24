@@ -9,9 +9,9 @@ from django.contrib.auth.models import Group
 
 from batchadmin.util import model_ngettext
 
-from base.admin import BaseContentAdmin, BaseAdmin, VideoChecker,\
+from merengue.base.admin import BaseContentAdmin, BaseAdmin, VideoChecker,\
                        WorkflowBatchActionProvider, BaseContentRelatedModelAdmin
-from base.models import BaseContent, MultimediaRelation
+from merengue.base.models import BaseContent, MultimediaRelation
 from multimedia.models import Photo, Video, PanoramicView, Image3D, Audio
 
 

@@ -3,12 +3,12 @@ from django.db.models import signals
 from django.db.models.loading import load_app
 from django.utils.translation import ugettext_lazy as _
 
-from plug.utils import (add_to_installed_apps, are_installed_models,
+from merengue.plug.utils import (add_to_installed_apps, are_installed_models,
                        disable_plugin, enable_plugin,
                        install_models, get_plugin_module_name,
                        reload_app_directories_template_loader)
-from plug.managers import PluginManager
-from registry.models import RegisteredItem
+from merengue.plug.managers import PluginManager
+from merengue.registry.models import RegisteredItem
 
 
 class RegisteredPlugin(RegisteredItem):
@@ -29,7 +29,7 @@ def install_plugin(sender, instance, **kwargs):
     app_name = get_plugin_module_name(instance.directory_name)
     if instance.installed:
         app_mod = load_app(app_name)
-        # Needed update installed apps in order to get SQL command from plugin
+        # Needed update installed apps in order to get SQL command from merengue.plugin
         add_to_installed_apps(app_name)
         if not are_installed_models(app_mod):
             install_models(app_mod)

@@ -15,7 +15,7 @@ class SearchFilter(forms.Form):
         self.filters = filters or {}
 
     def recommended_other_words(self, contents, recursive=False):
-        from base.search_word import LevenshteinDistance, JaroWinkler
+        from merengue.base.search_word import LevenshteinDistance, JaroWinkler
         if not contents:
             if settings.SEARCH_ALGORITHM == 'JAROWINKLER':
                 searcher_words = JaroWinkler(**settings.PROPERTIES_JAROWINKLER)

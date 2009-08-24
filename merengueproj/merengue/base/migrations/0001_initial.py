@@ -2,7 +2,7 @@
 
 from south.db import db
 from django.db import models
-from base.models import *
+from merengue.base.models import *
 
 class Migration:
     

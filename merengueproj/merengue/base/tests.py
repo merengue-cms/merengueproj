@@ -1,5 +1,5 @@
 from django.test import TestCase
-from base.models import BaseContent
+from merengue.base.models import BaseContent
 
 
 class BaseModelTests(TestCase):

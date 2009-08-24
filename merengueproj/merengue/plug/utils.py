@@ -13,7 +13,7 @@ from django.utils.importlib import import_module
 
 from merengue.admin import register_app, unregister_app
 import registry
-from registry.items import (NotRegistered as NotRegisteredItem,
+from merengue.registry.items import (NotRegistered as NotRegisteredItem,
                             AlreadyRegistered as AlreadyRegisteredItem)
 
 

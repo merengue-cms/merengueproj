@@ -1,4 +1,4 @@
-from registry.admin import RegisteredItemAdmin
+from merengue.registry.admin import RegisteredItemAdmin
 from block.models import RegisteredBlock
 
 

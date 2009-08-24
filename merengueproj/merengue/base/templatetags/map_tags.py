@@ -13,7 +13,7 @@ from django.utils.translation import get_language
 from cmsutils.tag_utils import parse_args_kwargs_and_as_var, \
                                RenderWithArgsAndKwargsNode
 
-from base.models import BaseContent, LocatableContent
+from merengue.base.models import BaseContent, LocatableContent
 from places.models import BaseLocation
 
 import copy

@@ -1,9 +1,9 @@
 from django.db import transaction
 
-from registry.items import (RegistrableItem, RegistryError,
+from merengue.registry.items import (RegistrableItem, RegistryError,
                             NotRegistered, AlreadyRegistered)
-from registry.models import RegisteredItem
-from registry.signals import item_registered, item_unregistered
+from merengue.registry.models import RegisteredItem
+from merengue.registry.signals import item_registered, item_unregistered
 
 
 def is_registered(item_class):

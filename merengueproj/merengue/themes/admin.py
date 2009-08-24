@@ -1,4 +1,4 @@
-from base.admin import BaseAdmin, set_field_read_only
+from merengue.base.admin import BaseAdmin, set_field_read_only
 from themes.checker import check_themes
 from themes.models import Theme
 

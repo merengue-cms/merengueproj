@@ -1,6 +1,6 @@
 from django.db import connection
 
-from base.managers import WorkflowManager
+from merengue.base.managers import WorkflowManager
 
 
 class MultimediaManager(WorkflowManager):

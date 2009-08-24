@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.utils.http import urlquote
 
-from base.models import BaseContent
+from merengue.base.models import BaseContent
 
 
 def user_passes_test(test_func, login_url=None, redirect_field_name=REDIRECT_FIELD_NAME):

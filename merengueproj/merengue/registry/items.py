@@ -1,5 +1,5 @@
-from registry.models import RegisteredItem
-from registry.params import ConfigDict
+from merengue.registry.models import RegisteredItem
+from merengue.registry.params import ConfigDict
 
 # ---- Exception definitions ----
 
@@ -69,6 +69,6 @@ class PDFExport(Action):
 
     config_params = params.Single(name='pdfbin', default='/usr/bin/html2pdf')
 
->>> from plugins.pdfexport.actions import PDFExport
+>>> from merengue.plugins.pdfexport.actions import PDFExport
 >>> PDFExport.get_config()['pdfbin']
 """

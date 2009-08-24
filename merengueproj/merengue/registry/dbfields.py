@@ -1,6 +1,6 @@
 from cmsutils.db.fields import JSONField
 
-from registry.fields import ConfigFormField
+from merengue.registry.fields import ConfigFormField
 
 
 class ConfigField(JSONField):

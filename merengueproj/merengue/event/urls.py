@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import patterns, url
 
-from section.urls import docs_patterns, agenda_patterns
+from merengue.section.urls import docs_patterns, agenda_patterns
 
 urlpatterns = patterns('event.views',
     url(r'^$', 'event_index', name='event_index'),

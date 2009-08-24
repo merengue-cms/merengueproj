@@ -6,7 +6,7 @@ from searchform.terms import MultipleOptionsSearchTerm
 class ClassSearchTerm(MultipleOptionsSearchTerm):
 
     def _options(self):
-        from base.models import BaseContent
+        from merengue.base.models import BaseContent
         return [(c, _(c)) for c in BaseContent.objects.different_class_names()]
 
     options = property(_options)

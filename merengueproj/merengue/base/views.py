@@ -14,11 +14,11 @@ from django.views.generic import list_detail
 
 from cmsutils.adminfilters import QuerySetWrapper, filter_by_query_string
 
-from base.forms import CaptchaFreeThreadedCommentForm
+from merengue.base.forms import CaptchaFreeThreadedCommentForm
 from threadedcomments.models import FreeThreadedComment
 
-from base.models import BaseContent
-from base.utils import invalidate_cache_for_path
+from merengue.base.models import BaseContent
+from merengue.base.utils import invalidate_cache_for_path
 from captcha.decorators import add_captcha
 from places.forms import SearchFilter
 from rating.models import Vote

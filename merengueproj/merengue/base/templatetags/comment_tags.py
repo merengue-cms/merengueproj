@@ -1,7 +1,7 @@
 from django import template
 from django.contrib.contenttypes.models import ContentType
 
-from base.forms import CaptchaFreeThreadedCommentForm
+from merengue.base.forms import CaptchaFreeThreadedCommentForm
 from threadedcomments.models import FreeThreadedComment
 
 

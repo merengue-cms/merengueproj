@@ -24,7 +24,7 @@ from stdimage import StdImageField
 from transmeta import TransMeta
 from tagging.fields import TagField
 
-from base.managers import BaseContentManager, WorkflowManager
+from merengue.base.managers import BaseContentManager, WorkflowManager
 from multimedia.models import BaseMultimedia
 from places.models import Location
 

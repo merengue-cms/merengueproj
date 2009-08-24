@@ -9,8 +9,8 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
-from base.models import BaseContent
-from base.admin import (BaseAdmin, BaseContentRelatedModelAdmin,
+from merengue.base.models import BaseContent
+from merengue.base.admin import (BaseAdmin, BaseContentRelatedModelAdmin,
                         WorkflowBatchActionProvider)
 from multimedia.models import Photo
 from section.models import (Menu, Section, AppSection, Carousel,

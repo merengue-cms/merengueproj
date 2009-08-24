@@ -36,16 +36,16 @@ from cmsutils.forms.widgets import AJAXAutocompletionWidget
 
 from batchadmin.util import model_ngettext, get_changelist
 
-from base.forms import AdminBaseContentOwnersForm
-from base.models import Base, BaseContent, ContactInfo, MultimediaRelation
-from base.utils import geolocate_object_base, copy_request
-from base.widgets import (CustomTinyMCE, OpenLayersWidgetLatitudeLongitude,
+from merengue.base.forms import AdminBaseContentOwnersForm
+from merengue.base.models import Base, BaseContent, ContactInfo, MultimediaRelation
+from merengue.base.utils import geolocate_object_base, copy_request
+from merengue.base.widgets import (CustomTinyMCE, OpenLayersWidgetLatitudeLongitude,
                           OpenLayersInlineLatitudeLongitude, ReadOnlyWidget)
 from multimedia.models import Photo, Video, PanoramicView, Image3D, BaseMultimedia
 
 from places.models import Location
 
-from section.models import Document, BaseSection
+from merengue.section.models import Document, BaseSection
 
 from transmeta import get_real_fieldname_in_each_language
 

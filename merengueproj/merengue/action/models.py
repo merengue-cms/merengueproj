@@ -1,6 +1,6 @@
 from django.db import models
 
-from registry.models import RegisteredItem
+from merengue.registry.models import RegisteredItem
 
 
 class RegisteredAction(RegisteredItem):

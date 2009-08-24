@@ -2,7 +2,7 @@ from django import template
 from django.utils.datastructures import SortedDict
 from django.utils.functional import curry
 
-from base.models import BaseContent
+from merengue.base.models import BaseContent
 from multimedia.models import Photo
 
 register = template.Library()

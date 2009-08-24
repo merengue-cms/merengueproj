@@ -5,7 +5,7 @@ from django.db.models import Q
 
 from cmsutils.managers import ActiveManager
 
-from base.managers import WorkflowManager, BaseContentManager
+from merengue.base.managers import WorkflowManager, BaseContentManager
 
 
 class EventManager(ActiveManager, BaseContentManager):

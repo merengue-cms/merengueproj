@@ -10,10 +10,10 @@ from django.utils.html import escape
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
-from base.admin import BaseContentAdmin, BaseAdmin, BaseContentRelatedModelAdmin, Location, ReverseAdminInline
-from base.admin import InlineLocationModelAdmin
-from base.models import BaseContent, ContactInfo
-from base.widgets import AdminDateOfDateTimeWidget
+from merengue.base.admin import BaseContentAdmin, BaseAdmin, BaseContentRelatedModelAdmin, Location, ReverseAdminInline
+from merengue.base.admin import InlineLocationModelAdmin
+from merengue.base.models import BaseContent, ContactInfo
+from merengue.base.widgets import AdminDateOfDateTimeWidget
 from batchadmin.forms import CHECKBOX_NAME
 from batchadmin.util import get_changelist
 from event.models import Event, Occurrence, Category, CategoryGroup

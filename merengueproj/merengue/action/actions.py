@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 
 from action.models import RegisteredAction
-from registry.items import RegistrableItem
+from merengue.registry.items import RegistrableItem
 
 
 class BaseAction(RegistrableItem):

@@ -2,9 +2,9 @@ import os
 
 from django.db import transaction
 
-from plug.utils import get_plugin_config, get_plugins_dir
-from plug.models import RegisteredPlugin
-from registry import register, is_registered
+from merengue.plug.utils import get_plugin_config, get_plugins_dir
+from merengue.plug.models import RegisteredPlugin
+from merengue.registry import register, is_registered
 
 
 def check_plugins():

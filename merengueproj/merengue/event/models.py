@@ -9,8 +9,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.safestring import mark_safe
 from transmeta import TransMeta
 
-from base.models import BaseContent, BaseCategory, ContactInfo
-from section.models import BaseSection
+from merengue.base.models import BaseContent, BaseCategory, ContactInfo
+from merengue.section.models import BaseSection
 from places.models import Location
 
 from event.managers import EventManager, OccurrenceManager

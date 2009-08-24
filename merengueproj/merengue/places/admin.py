@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib.gis import admin as geoadmin
 from django.contrib.gis.maps.google import GoogleMap
 
-from base.admin import BaseAdmin, transmeta_aware_fieldname
+from merengue.base.admin import BaseAdmin, transmeta_aware_fieldname
 
 
 GMAP = GoogleMap(key=settings.GOOGLE_MAPS_API_KEY)

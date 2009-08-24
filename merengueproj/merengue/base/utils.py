@@ -5,7 +5,7 @@ from geopy import geocoders
 
 from cmsutils.cache import get_path_cache_key
 
-from base.models import Location
+from merengue.base.models import Location
 
 
 def geolocate_object_base(object_base_content):

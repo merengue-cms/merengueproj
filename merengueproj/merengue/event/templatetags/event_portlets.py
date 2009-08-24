@@ -1,6 +1,6 @@
 from django import template
 
-from base.models import BaseContent
+from merengue.base.models import BaseContent
 from event.models import Event
 from places.models import BaseCity, Province, TouristZone
 

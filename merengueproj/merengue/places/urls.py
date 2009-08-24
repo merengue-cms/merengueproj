@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import patterns, url
 
-from section.urls import section_patterns
+from merengue.section.urls import section_patterns
 
 urlpatterns = patterns('places.views',
     url(r'^$', 'places_index', name='places_index'),

@@ -8,7 +8,7 @@ from searchform.registry import search_form_registry
 from searchform.utils import search_button_submitted
 from section.models import BaseSection, Document, Section
 
-from base.views import search_results
+from merengue.base.views import search_results
 from event.forms import EventCategoriesQuickSearchForm
 
 

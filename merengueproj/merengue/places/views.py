@@ -11,9 +11,9 @@ from django.utils.translation import ugettext
 
 from cmsutils.adminfilters import filter_by_query_string
 
-from base.models import BaseContent, get_first_model
+from merengue.base.models import BaseContent, get_first_model
 from places.forms import SearchFilter
-from section.views import section_view
+from merengue.section.views import section_view
 
 MIN_FEATURED = 10
 MAX_CARRUSEL = 20

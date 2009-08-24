@@ -1,8 +1,8 @@
 from django.db import models
 from django.utils.importlib import import_module
 
-from registry.dbfields import ConfigField
-from registry.managers import RegisteredItemManager
+from merengue.registry.dbfields import ConfigField
+from merengue.registry.managers import RegisteredItemManager
 
 
 class RegisteredItem(models.Model):

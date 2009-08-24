@@ -1,8 +1,8 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from registry.managers import RegisteredItemManager
-from registry.models import RegisteredItem
+from merengue.registry.managers import RegisteredItemManager
+from merengue.registry.models import RegisteredItem
 
 
 PLACES = (('leftsidebar', _('Left sidebar')),
