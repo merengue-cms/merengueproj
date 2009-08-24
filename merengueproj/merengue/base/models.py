@@ -81,7 +81,7 @@ class BaseCategory(models.Model):
     @permalink
     def get_admin_absolute_url(self):
         content_type = ContentType.objects.get_for_model(self)
-        return ('base.views.admin_link', [content_type.id, self.id, ''])
+        return ('merengue.base.views.admin_link', [content_type.id, self.id, ''])
 
 
 class Base(models.Model):
@@ -127,7 +127,7 @@ class Base(models.Model):
     @permalink
     def get_admin_absolute_url(self):
         content_type = ContentType.objects.get_for_model(self)
-        return ('base.views.admin_link', [content_type.id, self.id, ''])
+        return ('merengue.base.views.admin_link', [content_type.id, self.id, ''])
 
     def is_published(self):
         return self.status == 'published'
@@ -340,7 +340,7 @@ class BaseContent(LocatableContent):
 
     @permalink
     def get_absolute_url(self):
-        return ('base.views.public_link', [self._meta.app_label, self._meta.module_name, self.id])
+        return ('merengue.base.views.public_link', [self._meta.app_label, self._meta.module_name, self.id])
 
     def link_by_user(self, user):
         """ User dependent link. To override in subclasses, if needed """

@@ -59,7 +59,7 @@
   {% else %}
     {% if original.basecontent_ptr or is_destination %}
       <li class="selected"><a href=".">{{ opts.verbose_name|capfirst }} {{ original }}</a></li>
-      {% if original.get_absolute_url %}<li><a href="{% url base.views.public_link opts.app_label opts.module_name object_id %}" class="viewsitelink">{% trans "View on site" %}</a></li>{% endif%}
+      {% if original.get_absolute_url %}<li><a href="{% url merengue.base.views.public_link opts.app_label opts.module_name object_id %}" class="viewsitelink">{% trans "View on site" %}</a></li>{% endif%}
       {% ifequal original.class_name "naturearea" %}
         <li><a href="admin/naturearea/viewpoint/">{% trans "Points of Interest" %}</a></li>
         <li><a href="admin/naturearea/trail/">{% trans "Trails" %}</a></li>

@@ -1,6 +1,6 @@
 from django.utils.translation import ugettext as _
 
-from block.blocks import Block, ContentBlock
+from merengue.block.blocks import Block, ContentBlock
 from plugins.news.models import NewsItem
 
 

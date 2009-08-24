@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 
-from base.views import content_view
+from merengue.base.views import content_view
 from plugins.news.models import NewsItem
 
 

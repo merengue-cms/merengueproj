@@ -1,4 +1,4 @@
-from base.admin import BaseCategoryAdmin, BaseContentAdmin
+from merengue.base.admin import BaseCategoryAdmin, BaseContentAdmin
 from plugins.news.models import NewsItem, NewsCategory
 
 

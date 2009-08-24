@@ -1,6 +1,6 @@
 from cmsutils.managers import ActiveManager
 
-from base.managers import BaseContentManager
+from merengue.base.managers import BaseContentManager
 
 
 class NewsItemManager(ActiveManager, BaseContentManager):

@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from transmeta import TransMeta
 
-from base.models import BaseContent, BaseCategory
+from merengue.base.models import BaseContent, BaseCategory
 from plugins.news.managers import NewsItemManager
 
 

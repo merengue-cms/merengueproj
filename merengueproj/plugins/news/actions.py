@@ -1,8 +1,8 @@
 from django.http import HttpResponse
 from django.utils.translation import ugettext_lazy as _
 
-from action.actions import ContentAction
-from registry import params
+from merengue.action.actions import ContentAction
+from merengue.registry import params
 
 
 class PDFExport(ContentAction):
