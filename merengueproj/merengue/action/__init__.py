@@ -1,4 +1,4 @@
-from action.models import RegisteredAction
+from merengue.action.models import RegisteredAction
 
 
 def get_action(name):

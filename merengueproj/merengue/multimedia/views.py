@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
-from multimedia.models import Video
+from merengue.multimedia.models import Video
 
 
 def video_xml(request, video_id, height=None, width=None):

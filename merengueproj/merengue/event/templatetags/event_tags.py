@@ -2,7 +2,7 @@ from django import template
 from django.db.models import Q
 
 from event.models import Event
-from multimedia.models import Photo
+from merengue.multimedia.models import Photo
 
 from datetime import datetime
 

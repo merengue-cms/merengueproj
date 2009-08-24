@@ -3,8 +3,8 @@ from django import template
 from cmsutils.tag_utils import (get_args_and_kwargs,
                                 parse_args_kwargs_and_as_var)
 
-from action.actions import ContentAction, SiteAction, UserAction
-from action.models import RegisteredAction
+from merengue.action.actions import ContentAction, SiteAction, UserAction
+from merengue.action.models import RegisteredAction
 
 
 register = template.Library()

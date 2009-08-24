@@ -11,8 +11,8 @@ from django.db import connection, transaction
 from django.db.models import get_models
 from django.utils.importlib import import_module
 
-from merengue.admin import register_app, unregister_app
-import registry
+from merengue.base.admin import register_app, unregister_app
+from merengue import registry
 from merengue.registry.items import (NotRegistered as NotRegisteredItem,
                             AlreadyRegistered as AlreadyRegisteredItem)
 

@@ -15,6 +15,7 @@ from django.contrib.auth.models import Group, User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.admin.views.main import ChangeList, ERROR_FLAG
 from django.contrib.admin.options import IncorrectLookupParameters
+from django.contrib.admin.sites import AdminSite as DjangoAdminSite
 from django.contrib.admin.util import quote, unquote, flatten_fieldsets, _nest_help
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.gis import admin as geoadmin
@@ -27,6 +28,7 @@ from django.forms.widgets import Media
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.utils.encoding import force_unicode
 from django.utils.html import escape
+from django.utils.importlib import import_module
 from django.utils.text import capfirst
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext
@@ -41,16 +43,105 @@ from merengue.base.models import Base, BaseContent, ContactInfo, MultimediaRelat
 from merengue.base.utils import geolocate_object_base, copy_request
 from merengue.base.widgets import (CustomTinyMCE, OpenLayersWidgetLatitudeLongitude,
                           OpenLayersInlineLatitudeLongitude, ReadOnlyWidget)
-from multimedia.models import Photo, Video, PanoramicView, Image3D, BaseMultimedia
-
-from places.models import Location
-
+from merengue.multimedia.models import Photo, Video, PanoramicView, Image3D, BaseMultimedia
+from merengue.places.models import Location
 from merengue.section.models import Document, BaseSection
 
 from transmeta import get_real_fieldname_in_each_language
 
+# A flag to tell us if autodiscover is running.  autodiscover will set this to
+# True while running, and False when it finishes.
+LOADING = False
+
 
 GMAP = GoogleMap(key=settings.GOOGLE_MAPS_API_KEY)
+
+
+def register_app(app_name, admin_site=None):
+    admin_function(function_name='register', app_name=app_name,
+                   admin_site=admin_site)
+
+
+def unregister_app(app_name, admin_site=None):
+    admin_function(function_name='unregister', app_name=app_name,
+                   admin_site=admin_site)
+
+
+def admin_function(function_name, app_name, admin_site=None):
+    import imp
+
+    if admin_site is None:
+        admin_site = site
+
+    # For each app, we need to look for an admin.py inside that app's
+    # package. We can't use os.path here -- recall that modules may be
+    # imported different ways (think zip files) -- so we need to get
+    # the app's __path__ and look for admin.py on that path.
+
+    # Step 1: find out the app's __path__ Import errors here will (and
+    # should) bubble up, but a missing __path__ (which is legal, but weird)
+    # fails silently -- apps that do weird things with __path__ might
+    # need to roll their own admin registration.
+    try:
+        app_path = import_module(app_name).__path__
+    except AttributeError:
+        return
+
+    # Step 2: use imp.find_module to find the app's admin.py. For some
+    # reason imp.find_module raises ImportError if the app can't be found
+    # but doesn't actually try to import the module. So skip this app if
+    # its admin.py doesn't exist
+    try:
+        imp.find_module('admin', app_path)
+    except ImportError:
+        return
+
+    # Step 3: import the app's admin file. If this has errors we want them
+    # to bubble up.
+    mod = __import__('%s.admin' % app_name, {}, {}, app_name.split('.'))
+
+    # Step 4: look for register function and call it, passing admin site
+    # as parameter
+    register_func = getattr(mod, function_name, None)
+    if register_func is not None and callable(register_func):
+        register_func(admin_site)
+
+
+def autodiscover(admin_site=None):
+    """
+    Like Django autodiscover, it search for admin.py modules and fail silently
+    when not present.
+
+    Main difference is that you can pass admin_site by parameter for
+    registration in this admin site.
+    """
+    # Bail out if autodiscover didn't finish loading from a previous call so
+    # that we avoid running autodiscover again when the URLconf is loaded by
+    # the exception handler to resolve the handler500 view.  This prevents an
+    # admin.py module with errors from re-registering models and raising a
+    # spurious AlreadyRegistered exception (see #8245).
+    global LOADING
+    if LOADING:
+        return
+    LOADING = True
+
+    from django.conf import settings
+
+    if admin_site is None:
+        admin_site = site
+
+    for app in settings.INSTALLED_APPS:
+        register_app(app, admin_site)
+
+    # autodiscover was successful, reset loading flag.
+    LOADING = False
+
+
+class AdminSite(DjangoAdminSite):
+    pass
+
+
+# Merengue Model Admins -----
 
 
 def get_subclasses_registry_in_admin(cls, list_cls=None, admin_site=None):
@@ -1276,7 +1367,7 @@ class LocationModelAdminMixin(object):
 class InlineLocationModelAdmin(LocationModelAdminMixin):
 
     def __init__(self, parent_model, admin_site):
-        from places.admin import GoogleAdmin
+        from merengue.places.admin import GoogleAdmin
 
         super(InlineLocationModelAdmin, self).__init__(parent_model, admin_site)
         self.geoModelAdmin = GoogleAdmin(parent_model, admin_site)
@@ -1882,3 +1973,8 @@ def register(site):
 
 def setup_basecontent_admin(basecontent_admin_site):
     basecontent_admin_site.register(Location, BaseContentRelatedLocationModelAdmin)
+
+
+# This global object represents the default admin site, for the common case.
+# You can instantiate AdminSite in your own code to create a custom admin site.
+site = AdminSite()

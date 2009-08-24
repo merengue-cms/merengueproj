@@ -25,8 +25,8 @@ from transmeta import TransMeta
 from tagging.fields import TagField
 
 from merengue.base.managers import BaseContentManager, WorkflowManager
-from multimedia.models import BaseMultimedia
-from places.models import Location
+from merengue.multimedia.models import BaseMultimedia
+from merengue.places.models import Location
 
 
 PRIORITY_CHOICES = (

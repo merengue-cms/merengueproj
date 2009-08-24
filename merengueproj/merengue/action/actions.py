@@ -1,6 +1,6 @@
 from django.core.urlresolvers import reverse
 
-from action.models import RegisteredAction
+from merengue.action.models import RegisteredAction
 from merengue.registry.items import RegistrableItem
 
 

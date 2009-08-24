@@ -1,5 +1,5 @@
 from merengue.registry.admin import RegisteredItemAdmin
-from block.models import RegisteredBlock
+from merengue.block.models import RegisteredBlock
 
 
 class RegisteredBlockAdmin(RegisteredItemAdmin):

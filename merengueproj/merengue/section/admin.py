@@ -12,7 +12,7 @@ from django.utils.translation import ugettext
 from merengue.base.models import BaseContent
 from merengue.base.admin import (BaseAdmin, BaseContentRelatedModelAdmin,
                         WorkflowBatchActionProvider)
-from multimedia.models import Photo
+from merengue.multimedia.models import Photo
 from section.models import (Menu, Section, AppSection, Carousel,
                             BaseLink, AbsoluteLink, DocumentLink, Document)
 from section.widgets import ModifiedRelatedFieldWidgetWrapper, SearchFormOptionsWidget

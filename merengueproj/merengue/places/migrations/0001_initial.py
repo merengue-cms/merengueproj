@@ -1,7 +1,7 @@
 
 from south.db import db
 from django.db import models
-from places.models import *
+from merengue.places.models import *
 
 class Migration:
     

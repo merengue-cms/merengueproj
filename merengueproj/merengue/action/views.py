@@ -1,4 +1,4 @@
-from action import get_action
+from merengue.action import get_action
 
 
 def dispatcher(request, name):

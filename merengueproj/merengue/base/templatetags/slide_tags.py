@@ -3,7 +3,7 @@ from django.utils.datastructures import SortedDict
 from django.utils.functional import curry
 
 from merengue.base.models import BaseContent
-from multimedia.models import Photo
+from merengue.multimedia.models import Photo
 
 register = template.Library()
 

@@ -12,7 +12,7 @@ from batchadmin.util import model_ngettext
 from merengue.base.admin import BaseContentAdmin, BaseAdmin, VideoChecker,\
                        WorkflowBatchActionProvider, BaseContentRelatedModelAdmin
 from merengue.base.models import BaseContent, MultimediaRelation
-from multimedia.models import Photo, Video, PanoramicView, Image3D, Audio
+from merengue.multimedia.models import Photo, Video, PanoramicView, Image3D, Audio
 
 
 class BaseMultimediaRelatedBaseContentModelAdmin(BaseContentAdmin, BaseContentRelatedModelAdmin):

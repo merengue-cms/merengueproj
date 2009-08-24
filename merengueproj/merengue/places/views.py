@@ -12,7 +12,7 @@ from django.utils.translation import ugettext
 from cmsutils.adminfilters import filter_by_query_string
 
 from merengue.base.models import BaseContent, get_first_model
-from places.forms import SearchFilter
+from merengue.places.forms import SearchFilter
 from merengue.section.views import section_view
 
 MIN_FEATURED = 10

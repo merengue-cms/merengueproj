@@ -19,7 +19,7 @@ from django.views.i18n import javascript_catalog
 from cmsutils.cache import get_path_cache_key
 
 from merengue.base.models import BaseContent
-from multimedia.models import BaseMultimedia
+from merengue.multimedia.models import BaseMultimedia
 from tagging.models import Tag
 
 from merengue.section.models import Section, AppSection, BaseSection

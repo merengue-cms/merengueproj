@@ -14,7 +14,7 @@ from tagging.fields import TagField
 from transmeta import TransMeta
 
 from merengue.base.managers import WorkflowManager
-from multimedia.managers import MultimediaManager
+from merengue.multimedia.managers import MultimediaManager
 
 PHOTO_MEDIA_PREFIX = 'fotos'
 VIDEO_MEDIA_PREFIX = 'videos'

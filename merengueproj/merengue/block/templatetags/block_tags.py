@@ -1,7 +1,7 @@
 from django import template
 
-from block.blocks import Block, ContentBlock
-from block.models import RegisteredBlock
+from merengue.block.blocks import Block, ContentBlock
+from merengue.block.models import RegisteredBlock
 
 
 register = template.Library()

@@ -20,7 +20,7 @@ from threadedcomments.models import FreeThreadedComment
 from merengue.base.models import BaseContent
 from merengue.base.utils import invalidate_cache_for_path
 from captcha.decorators import add_captcha
-from places.forms import SearchFilter
+from merengue.places.forms import SearchFilter
 from rating.models import Vote
 
 

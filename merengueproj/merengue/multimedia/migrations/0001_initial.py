@@ -1,7 +1,7 @@
 
 from south.db import db
 from django.db import models
-from multimedia.models import *
+from merengue.multimedia.models import *
 
 class Migration:
     

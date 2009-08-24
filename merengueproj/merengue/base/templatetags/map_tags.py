@@ -14,7 +14,7 @@ from cmsutils.tag_utils import parse_args_kwargs_and_as_var, \
                                RenderWithArgsAndKwargsNode
 
 from merengue.base.models import BaseContent, LocatableContent
-from places.models import BaseLocation
+from merengue.places.models import BaseLocation
 
 import copy
 

@@ -17,7 +17,7 @@ from cmsutils.db.fields import ColorField
 
 from merengue.base.managers import WorkflowManager
 from merengue.base.models import Base, BaseContent
-from multimedia.models import Photo, Video
+from merengue.multimedia.models import Photo, Video
 from searchform.registry import search_form_registry
 from stdimage import StdImageField
 from transmeta import TransMeta

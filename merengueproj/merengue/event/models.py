@@ -11,7 +11,7 @@ from transmeta import TransMeta
 
 from merengue.base.models import BaseContent, BaseCategory, ContactInfo
 from merengue.section.models import BaseSection
-from places.models import Location
+from merengue.places.models import Location
 
 from event.managers import EventManager, OccurrenceManager
 

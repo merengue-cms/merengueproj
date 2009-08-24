@@ -1,4 +1,4 @@
-from block.models import RegisteredBlock
+from merengue.block.models import RegisteredBlock
 
 
 def get_block(name):
