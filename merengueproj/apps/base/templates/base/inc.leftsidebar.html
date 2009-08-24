@@ -1,5 +1,6 @@
+{% load block_tags %}
 {% block leftsidebarblocks %}
-  {# to implement #}
+  {% render_blocks "leftsidebar" %}
   {% block extraleftsidebarblocks %}
   {% endblock %}
 {% endblock %}

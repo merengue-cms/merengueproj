@@ -3,6 +3,7 @@ from django.db import transaction
 from registry.items import (RegistrableItem, RegistryError,
                             NotRegistered, AlreadyRegistered)
 from registry.models import RegisteredItem
+from registry.signals import item_registered, item_unregistered
 
 
 def is_registered(item_class):
@@ -46,6 +47,7 @@ def register(item_class):
         raise
     else:
         transaction.savepoint_commit(sid)
+        item_registered.send(sender=item_class, registered_item=registered_item)
     transaction.managed(False)
 
 
@@ -55,6 +57,7 @@ def unregister(item_class):
     except RegisteredItem.DoesNotExist:
         raise NotRegistered('item class "%s" is not registered' % item_class)
     registered_item.delete()
+    item_unregistered.send(sender=item_class)
 
 
 def get_item(name, category):

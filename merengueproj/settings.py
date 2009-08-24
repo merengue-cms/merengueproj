@@ -150,6 +150,7 @@ INSTALLED_APPS = (
     'plug',
     'themes',
     'action',
+    'block',
     'event',
     'merengue',
     'inplaceeditform',

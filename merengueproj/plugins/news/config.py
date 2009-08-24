@@ -1,6 +1,7 @@
 from plug import Plugin
 
 from plugins.news.actions import PDFExport
+from plugins.news.blocks import LatestNewsBlock, NewsCommentsBlock
 
 
 class PluginConfig(Plugin):
@@ -13,3 +14,7 @@ class PluginConfig(Plugin):
     @classmethod
     def get_actions(cls):
         return [PDFExport]
+
+    @classmethod
+    def get_blocks(cls):
+        return [LatestNewsBlock, NewsCommentsBlock]

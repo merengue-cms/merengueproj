@@ -1,0 +1,9 @@
+{% extends "block.html" %}
+
+{% block blockbody %}
+  <ul>
+  {% for n in news_list %}
+    <li><a href="{{ n.get_absolute_url }}" title="{{ n }}">{{ n }}</a></li>
+  {% endfor %}
+  </ul>
+{% endblock %}

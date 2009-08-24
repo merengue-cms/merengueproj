@@ -1,0 +1,14 @@
+{% extends "block.html" %}
+
+{% load inlinetrans %}
+
+{% block blockbody %}
+  <p>{% inline_trans "Comments for this news item:" %}</p>
+  <ul>
+   <li>comment 1</li>
+   <li>comment 2</li>
+  </ul>
+  <p>{% inline_trans "Add a new comment:" %}</p>
+  <textarea>
+  </textarea>
+{% endblock %}

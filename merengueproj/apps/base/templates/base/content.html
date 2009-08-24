@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load i18n content_tags action_tags %}
+{% load i18n content_tags action_tags block_tags %}
 
 {% block extrabreadcrumbs %}
   {% block beforecontentbreadcrumbs %}
@@ -15,7 +15,7 @@
 
 {% block sidebar %}
   {% block contentsidebarblocks %}
-    {# to implement #}
+    {% render_blocks "leftsidebar" for content %}
     {% block extracontentsidebarblocks %}
     {% endblock %}
   {% endblock %}
@@ -58,7 +58,7 @@
     {% endblock %}
 
     {% block contentbodyblocks %}
-      {# to implement #}
+      {% render_blocks "content" for content %}
       {% block extracontentbodyblocks %}
       {% endblock %}
     {% endblock %}
