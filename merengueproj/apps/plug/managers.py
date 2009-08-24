@@ -4,6 +4,6 @@ from registry.managers import RegisteredItemManager
 class PluginManager(RegisteredItemManager):
     """ Plugin manager """
 
-    def active(self):
+    def actives(self):
         """ Retrieves active plugins for site """
         return super(PluginManager, self).get_query_set().filter(active=True)
