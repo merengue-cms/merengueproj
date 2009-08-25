@@ -19,7 +19,7 @@ from merengue.registry.items import (NotRegistered as NotRegisteredItem,
 
 
 def get_plugins_dir():
-    """ Returns plugins directory """
+    """Return plugins directory (settings.PLUGINS_DIR)."""
     plugins_dir = getattr(settings, 'PLUGINS_DIR', 'plugins')
     return plugins_dir
 
