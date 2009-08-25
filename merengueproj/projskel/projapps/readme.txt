@@ -1,1 +1,1 @@
-This directory is reserved for project applications (not plugins).
+Put here your project applications (not plugins).

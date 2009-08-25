@@ -101,7 +101,7 @@ DEBUG_TOOLBAR_PANELS = (
     #'debug_toolbar.panels.logger.LoggingPanel',
 )
 
-ROOT_URLCONF = 'merengueproj.urls'
+ROOT_URLCONF = 'projskel.urls'
 
 TEMPLATE_DIRS = (
     path.join(BASEDIR, 'templates'),
