@@ -19,6 +19,7 @@ def register(item_class):
     """ register a item in the registry """
     # all process will be in a unique transaction, we don't want to get
     # self committed
+    is_managed = transaction.is_managed()
     transaction.commit_unless_managed()
     transaction.enter_transaction_management()
     transaction.managed(True)
@@ -48,7 +49,7 @@ def register(item_class):
     else:
         transaction.savepoint_commit(sid)
         item_registered.send(sender=item_class, registered_item=registered_item)
-    transaction.managed(False)
+    transaction.managed(is_managed)
 
 
 def unregister(item_class):
