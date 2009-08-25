@@ -1,0 +1,94 @@
+import mimetypes
+import os
+import posixpath
+import stat
+import urllib
+
+from django.http import (Http404, HttpResponse, HttpResponseRedirect,
+                         HttpResponseNotModified)
+from django.utils.http import http_date
+from django.views.static import directory_index, was_modified_since
+
+from merengue.plug.models import RegisteredPlugin
+
+
+def get_active_plugins_full_path():
+    active_plugins = RegisteredPlugin.objects.actives()
+    paths = dict([(p.directory_name, p.get_path()) for p in active_plugins])
+    return paths
+
+
+def serve(request, path, document_root=None, show_indexes=False):
+    """
+    Serve static files combining media dirs for all plugins and apps.
+
+    This is based on django.views.static.serve.
+
+    To use, put a URL pattern such as::
+
+        (r'^(?P<path>.*)$', 'merengue.views.static.serve', {'document_root' : '/path/to/my/files/'})
+
+    in your URLconf. You must provide the ``document_root`` param. You may
+    also set ``show_indexes`` to ``True`` if you'd like to serve a basic index
+    of the directory.  This index view will use the template hardcoded below,
+    but if you'd like to override it, you can create a template called
+    ``static/directory_index.html``.
+    """
+
+    # Clean up given path to only allow serving files below document_root.
+    path = posixpath.normpath(urllib.unquote(path))
+    path = path.lstrip('/')
+    plugin = None
+    enabled_plugins_paths = get_active_plugins_full_path()
+    enabled_plugins_names = enabled_plugins_paths.keys()
+    newpath = ''
+    fallback_newpath = ''
+    for part in path.split('/'):
+        if not part:
+            # Strip empty path components.
+            continue
+        drive, part = os.path.splitdrive(part)
+        head, part = os.path.split(part)
+        if part in (os.curdir, os.pardir):
+            # Strip '.' and '..' in path.
+            continue
+        if not newpath and not plugin and part in enabled_plugins_names:
+            # Plugins media dir must come first in the URL
+            plugin = part
+            fallback_newpath = os.path.join(newpath, part).replace('\\', '/')
+            continue
+        newpath = os.path.join(newpath, part).replace('\\', '/')
+    fallback_newpath = os.path.join(fallback_newpath, newpath).replace('\\', '/')
+    if not plugin and newpath and path != newpath:
+        return HttpResponseRedirect(newpath)
+    # project media dir, standard django's static serve behavior
+    if plugin:
+        fullpath = os.path.join(enabled_plugins_paths[plugin], 'media', newpath)
+        try:
+            return _serve_path(request, newpath, fullpath, show_indexes)
+        except Http404:
+            fullpath = os.path.join(document_root, fallback_newpath)
+            return _serve_path(request, fallback_newpath, fullpath, show_indexes)
+    else:
+        fullpath = os.path.join(document_root, newpath)
+        return _serve_path(request, newpath, fullpath, show_indexes)
+
+
+def _serve_path(request, newpath, fullpath, show_indexes):
+    if os.path.isdir(fullpath):
+        if show_indexes:
+            return directory_index(newpath, fullpath)
+        raise(Http404, "Directory indexes are not allowed here.")
+    if not os.path.exists(fullpath):
+        raise(Http404, '"%s" does not exist' % fullpath)
+    # Respect the If-Modified-Since header.
+    statobj = os.stat(fullpath)
+    if not was_modified_since(request.META.get('HTTP_IF_MODIFIED_SINCE'),
+                              statobj[stat.ST_MTIME], statobj[stat.ST_SIZE]):
+        return HttpResponseNotModified()
+    mimetype = mimetypes.guess_type(fullpath)[0] or 'application/octet-stream'
+    contents = open(fullpath, 'rb').read()
+    response = HttpResponse(contents, mimetype=mimetype)
+    response["Last-Modified"] = http_date(statobj[stat.ST_MTIME])
+    response["Content-Length"] = len(contents)
+    return response

@@ -51,7 +51,7 @@ urlpatterns += patterns('',
 
     url(r'^searchform/jsi18n/$', 'merengue.views.portal.searchform_jsi18n', name='searchform_jsi18n'),
 
-    (r'^media/(.*)$', 'django.views.static.serve',
+    (r'^media/(.*)$', 'merengue.views.static.serve',
         {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
     (r'^cms/(.*)$', 'django.views.static.serve',
         {'document_root': settings.MEDIA_ROOT + '/cms'}),

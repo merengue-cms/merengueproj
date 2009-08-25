@@ -1,3 +1,6 @@
+import os
+
+from django.conf import settings
 from django.db import models
 from django.db.models import signals
 from django.db.models.loading import load_app
@@ -5,7 +8,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from merengue.plug.utils import (add_to_installed_apps, are_installed_models,
                                  disable_plugin, enable_plugin,
-                                 install_models, get_plugin_module_name,
+                                 install_models, get_plugins_dir,
+                                 get_plugin_module_name,
                                  reload_app_directories_template_loader)
 from merengue.plug.managers import PluginManager
 from merengue.registry.models import RegisteredItem
@@ -23,6 +27,13 @@ class RegisteredPlugin(RegisteredItem):
 
     def __unicode__(self):
         return self.name
+
+    def get_path(self):
+        """Full absolute path to the plugin root, including
+        settings.PLUGINS_DIR."""
+        basedir = settings.BASEDIR
+        plugins_dir = get_plugins_dir()
+        return os.path.join(basedir, plugins_dir, self.directory_name)
 
 
 def install_plugin(sender, instance, **kwargs):
