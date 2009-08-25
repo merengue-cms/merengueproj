@@ -1,0 +1,32 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block content %}
+{% if perms_lacking %}
+    <ul>
+    {% for obj in perms_lacking %}
+        <li>{{ obj }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <form action="" method="post">
+    {% for selected_object in selected_objects %}
+    <ul>{{ selected_object|unordered_list }}</ul>
+    {% endfor %}
+    {% if no_can_selected_objects %}
+        <h2>{{ no_can_selected_objects_message }}</h2>
+        <ul>
+        {% for obj in no_can_selected_objects %}
+            <li>{{ obj }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    <div>
+    <input type="hidden" name="post" value="yes" />
+    <input type="hidden" name="action" value="{{ action_submit }}" />
+
+    <input type="submit" value="{% trans "Yes, I'm sure" %}" />
+    </div>
+    </form>
+{% endif %}
+{% endblock %}
