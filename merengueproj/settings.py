@@ -86,23 +86,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'merengue.section.context_processors.section',
 )
 
-MIDDLEWARE_CLASSES = (
-    'cmsutils.middleware.I18NUpdateCacheMiddleware', # this has to be first
-    'django.middleware.common.CommonMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'pagination.middleware.PaginationMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'merengue.middleware.RemoveRandomAjaxParameter',
-    'merengue.section.middleware.SectionMiddleware',
-    'merengue.section.middleware.DebugSectionMiddleware',
-    'merengue.middleware.SimplifiedLayoutMiddleware',
-    'cmsutils.middleware.AutomatizedTestingMiddleware',
-    'merengue.plug.middleware.ActivePluginsMiddleware',
-    #'django.middleware.gzip.GZipMiddleware',
-    #'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'cmsutils.middleware.I18NFetchFromCacheMiddleware', # this has to be last
-)
+MIDDLEWARE_CLASSES = merengue_settings.MIDDLEWARE_CLASSES
 
 DEBUG_TOOLBAR_PANELS = (
     #'debug_toolbar.panels.version.VersionDebugPanel',
@@ -121,38 +105,12 @@ TEMPLATE_DIRS = (
     path.join(BASEDIR, 'templates'),
 )
 
-PLUGINS_DIR = 'plugins'
+PLUGINS_DIR = merengue_settings.PLUGINS_DIR
 
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/cuentas/entrar/'
 
-INSTALLED_APPS = (
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.admin',
-    'django.contrib.gis',
-    'django_extensions',
-    'debug_toolbar',
-    'template_utils',
-    'batchadmin',
-    'cmsutils',
-    'transmeta',
-    'rosetta',
-    'tagging',
-    'sorl.thumbnail',
-    'pagination',
-    'inplaceeditform',
-    'searchform',
-    'inlinetrans',
-    'mptt',
-    'tinyimages',
-    'rating',
-    'threadedcomments',
-    'captcha',
-    'south',
-) + merengue_settings.MERENGUE_APPS
+INSTALLED_APPS = merengue_settings.INSTALLED_APPS
 
 TEST_RUNNER = 'merengue.test.run_tests'
 TEST_DB_CREATION_SUFFIX = 'WITH TEMPLATE template_postgis'
@@ -165,42 +123,25 @@ FIXTURES_EXCLUDES = (
     'auth.permission',
 )
 
-DOCUMENT_STATUS_LIST = (
-    (1, ugettext('Draft')),
-    (2, ugettext('Published')),
-)
-
-STATUS_LIST = (
-    ('draft', ugettext('Borrador')),
-    ('pending', ugettext('Pendiente')),
-    ('published', ugettext('Publicado')),
-    ('pasive', ugettext('Registro pasivo')),
-    ('deleted_in_plone', ugettext('Borrado en Plone')),
-)
+STATUS_LIST = merengue_settings.STATUS_LIST
 
 BUILDBOT_IP = '192.168.11.209'
 INTERNAL_IPS = ('127.0.0.1', '80.36.82.38', BUILDBOT_IP)
 
 # Google API Key for localhost:8000
 # http://code.google.com/apis/maps/signup.html
-GOOGLE_MAPS_API_KEY = 'ABQIAAAAddxuy_lt2uAk9Y30XD3MJhQCULP4XOMyhPd8d_NrQQEO8sT8XBRRmJjQjU4qrycwOKb_v70y1h_1GQ'
-GOOGLE_MAPS_API_VERSION = '3.x'
-DEFAULT_LATITUDE = 36.851362
-DEFAULT_LONGITUDE = -5.753321
-
-FILTRABLE_MODELS = (
-)
+GOOGLE_MAPS_API_KEY = merengue_settings.GOOGLE_MAPS_API_KEY
+GOOGLE_MAPS_API_VERSION = merengue_settings.GOOGLE_MAPS_API_VERSION
+DEFAULT_LATITUDE = merengue_settings.DEFAULT_LATITUDE
+DEFAULT_LONGITUDE = merengue_settings.DEFAULT_LONGITUDE
 
 # Pagination options
-PAGE_VARIABLE = 'page'
+PAGE_VARIABLE = merengue_settings.PAGE_VARIABLE
 
 LIMIT_URL_SPIDER_TEST = 20
 
 # Overwrite options tinyMCE
-EXTRA_MCE = {
-'theme_advanced_buttons1': 'bold,italic,copy,paste,pasteword,underline,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,outdent,indent',
-}
-
+EXTRA_MCE = merengue_settings.EXTRA_MCE
 TINYMCE_MEDIA = MEDIA_URL + "cmsutils/js/widgets/tiny_mce/"
 
 SEARCHBAR_MIN_RESULTS = 5
@@ -217,11 +158,6 @@ CACHE_MIDDLEWARE_SECONDS = 3600*24
 CACHE_MIDDLEWARE_KEY_PREFIX = 'merengue'
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
-# It also can be JaroWinkler
-SEARCH_ALGORITHM = 'LevenshteinDistance'
-PROPERTIES_JAROWINKLER = {'accuracy': 0.75, 'weight': 0.05}
-PROPERTIES_LEVENTEIN = {'accuracy_letter': 3}
-
 SVNDIR = path.join(BASEDIR, 'apps')
 
 PRODUCTION_DB_URL = ""
@@ -232,18 +168,9 @@ ENABLE_TRANSLATION_SUGGESTIONS = False
 
 DEFAULT_FROM_EMAIL = 'no-reply@yaco.es'
 SUGGESTION_BOX_EMAIL = 'info@yaco.es'
+CONTACT_SUGGESTIONBOX_PREFIX = merengue_settings.SUGGESTION_BOX_EMAIL
 
-CONTACT_SUGGESTIONBOX_PREFIX = 'SUGGESTION BOX'
-
-CAPTCHA_SETTINGS = {
-    'NUMBER_SWAP': {
-                    'O': '0',
-                    'Z': '2',
-                    'S': '5',
-                    'B': '8',
-    },
-    'CASE_SENSITIVE': False,
-}
+CAPTCHA_SETTINGS = merengue_settings.CAPTCHA_SETTINGS
 
 # Allow overwriting any configuration in optional settings_local.py
 # (it can be used to set up your own database, debug and cache options, contact mails...)
