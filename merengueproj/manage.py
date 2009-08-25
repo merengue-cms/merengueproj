@@ -13,7 +13,6 @@ path = site.addsitedir(os.path.join(settings.BASEDIR, "libs"), set())
 if path:
     sys.path = list(path) + sys.path
 sys.path.insert(0, os.path.join(settings.BASEDIR, "apps"))
-sys.path.insert(0, os.path.join(settings.BASEDIR, "extapps"))
 sys.path.insert(0, os.path.join(settings.BASEDIR, "projapps"))
 
 
