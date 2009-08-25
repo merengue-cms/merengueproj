@@ -1,0 +1,158 @@
+/* ----- Global styles ----- */
+
+a {
+   text-decoration: none;
+}
+
+a:hover {
+   text-decoration: underline;
+}
+
+div#header {
+   height: 100px;
+   position: relative;
+   background: #3b4151;
+}
+
+div#header a {
+   color: white;
+}
+
+div#headerlogo {
+   height: 50px;
+   width: 200px;
+   left: 20px;
+   top: 0px;
+   position: absolute;
+   color: white;
+   font-weight: bold;
+}
+
+div#headerlinks {
+   position: absolute;
+   left: 0px;
+   bottom: -1px;
+}
+
+div#headerlinks ul {
+   margin: 0px;
+   margin-left: 20px;
+   padding: 0px;
+}
+
+div#headerlinks ul li {
+   display: inline;
+   margin: 0px;
+}
+
+div#headerlinks ul li a {
+   margin-right: 5px;
+   padding: 0px 15px;
+   text-align: center;
+   border: 1px solid #cccccc;
+   border-bottom-width: 0px;
+}
+
+div#headerlinks ul li a:hover {
+   background-color: #8b91a1;
+}
+
+div#headerlinks ul li.active a {
+   background-color: #eeeeee;
+   color: black;
+}
+
+div#useractions {
+   position: absolute;
+   top: 1em;
+   right: 20px;
+}
+
+div#useractions ul li {
+   display: inline;
+}
+
+div#portalactions {
+   position: absolute;
+   top: 1em;
+   left: 50%;
+}
+
+div#portalactions ul {
+   margin: 0px;
+   display: inline;
+}
+
+div#portalactions ul li {
+   display: inline;
+}
+
+div#breadcrumbs {
+   border: 1px solid black;
+   margin: 5px 10px;
+   padding: 0px 10px;
+   background-color: #abb1c1;
+}
+
+div#breadcrumbs a {
+   color: #333333;
+}
+
+div#breadcrumbs .breadcrumbSeparator {
+   margin-right: 5px;
+}
+
+div#container {
+   background-color: #eeeeee;
+}
+
+div#left-sidebar {
+   display: none;
+}
+
+div#contentwrapper {
+   position: relative;
+   height: 100%;
+}
+
+div#content {
+   float: left;
+   background: white;
+   border: 1px solid #333333;
+   margin-left: 10px;
+   width: 65%;
+   padding: 10px 20px;
+}
+
+div#right-sidebar {
+   margin-left: 72%;
+   padding-left: 10px;
+}
+
+div#right-sidebar h1 {
+   font-size: 1.5em;
+}
+
+div#footer {
+   text-align: center; 
+   color: #666666;
+   clear: both;
+   padding: 20px 0px;
+}
+
+div#content h1 {
+   background-color: #bbbbff;
+   margin: 0px -20px;
+   padding: 5px 20px;
+   border: 1px solid #333377;
+   border-left-width: 0px;
+   border-right-width: 0px;
+}
+
+ul#content-actions {
+   float: right;
+}
+
+ul#content-actions li {
+   display: inline;
+}

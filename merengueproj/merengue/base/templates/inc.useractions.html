@@ -1,0 +1,24 @@
+{% load i18n inlinetrans portal_tags %}
+<ul id="portal-actions">
+  {% if user.is_authenticated %}
+  <li id="header-profile-link">
+    <a href="#" title="{% trans "My profile" %}">{% inline_trans "My profile" %}</a>
+  </li>
+  {% endif %}
+  {% if user.is_superuser %}
+  <li id="header-invalidate-link">
+   {% if_cached_page %}
+    <a href="{% url invalidate_cache %}?path={% url_parser_log %}" title="Invalidate cache">{% inline_trans "Invalidate cache" %}</a>
+   {% else %}
+    <span class="deactivatedLink">{% inline_trans "Invalidate cache" %}</span>
+   {% endif_cached_page %}
+  </li>
+  {% endif %}
+  <li id="siteaction-login">
+  {% if user.is_anonymous %}
+    <a href="{% url login_form %}?next={% url_parser_log %}" title="{% trans 'Log in' %}">{% inline_trans "Log in" %}</a>
+  {% else %}
+    <a href="{% url logout %}?next={% url_parser_log %}" title="{% trans "Logout" %}">{% inline_trans 'Logout' %}</a>
+  </li>
+  {% endif %}
+</ul>

@@ -58,6 +58,18 @@
         {% include "inc.headerlinks.html" %}
       {% endblock %}
     </div>
+
+    <div id="useractions">
+      {% block useractions %}
+        {% include "inc.useractions.html" %}
+      {% endblock %}
+    </div>
+
+    <div id="portalactions">
+      {% block portalactions %}
+        {% include "inc.portalactions.html" %}
+      {% endblock %}
+    </div>
   </div>
   {% endblock headerwrapper %}
 
@@ -66,7 +78,7 @@
       {% include "inc.breadcrumbs.html" %}
       {% block extrabreadcrumbs %}
       {% endblock %}
-    <div>
+    </div>
   {% endblock %}
 
 {% endif %}

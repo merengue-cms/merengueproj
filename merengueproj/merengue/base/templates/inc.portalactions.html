@@ -1,0 +1,10 @@
+{% load i18n inlinetrans portal_tags %}
+<ul id="portal-actions">
+   {% for lang,lang_name in LANGUAGES %}
+    <li {% ifequal lang LANGUAGE_CODE %}class="currentLangItem"{% endifequal %}>
+        <a class="languageform" alt="{% trans 'Change language' %} {{ lang_name }}" href="?set_language={{ lang }}">
+            <img alt="{% trans 'Change language' %} {{ lang_name }}" src="{{ MEDIA_URL }}img/flag-{{ lang }}.gif"/>
+        </a>
+    </li>
+   {% endfor %}
+</ul>

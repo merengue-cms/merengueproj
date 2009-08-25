@@ -1,38 +1,9 @@
 {% load i18n inlinetrans portal_tags %}
 <ul id="header-links">
-  <li id="header-home-link">
+  <li id="header-home-link" class="active">
      <a href="/" title="{% trans "Home" %}">{% inline_trans "Home" %}</a>
   </li>
-  {% if user.is_authenticated %}
-  <li id="header-profile-link">
-    <a href="#" title="{% trans "My profile" %}">{% inline_trans "My profile" %}</a>
+  <li id="site-map">
+     <a href="/" title="{% trans "Site map" %}">{% inline_trans "Site map" %}</a>
   </li>
-  {% endif %}
-  {% if user.is_superuser %}
-  <li id="header-invalidate-link">
-   {% if_cached_page %}
-    <a href="{% url invalidate_cache %}?path={% url_parser_log %}" title="Invalidate cache">{% inline_trans "Invalidate cache" %}</a>
-   {% else %}
-    <span class="deactivatedLink">{% inline_trans "Invalidate cache" %}</span>
-   {% endif_cached_page %}
-  </li>
-  {% endif %}
-  <li>
-   <ul id="global-languageselector">
-   {% for lang,lang_name in LANGUAGES %}
-    <li {% ifequal lang LANGUAGE_CODE %}class="currentLangItem"{% endifequal %}>
-        <a class="languageform" alt="{% trans 'Change language' %} {{ lang_name }}" href="?set_language={{ lang }}">
-            <img alt="{% trans 'Change language' %} {{ lang_name }}" src="{{ MEDIA_URL }}img/flag-{{ lang }}.gif"/>
-        </a>
-    </li>
-   {% endfor %}
-   </ul>
-  </li>
-  <li id="siteaction-login">
-  {% if user.is_anonymous %}
-    <a href="{% url login_form %}?next={% url_parser_log %}" title="{% trans 'Log in' %}">{% inline_trans "Log in" %}</a>
-  {% else %}
-    <a href="{% url logout %}?next={% url_parser_log %}" title="{% trans "Logout" %}">{% inline_trans 'Logout' %}</a>
-  </li>
-  {% endif %}
 </ul>
