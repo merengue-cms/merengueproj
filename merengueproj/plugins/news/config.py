@@ -8,7 +8,9 @@ class PluginConfig(Plugin):
     name = 'News'
     description = 'News plugin'
     version = '0.0.1a'
-    url_prefix = 'news'
+    url_prefixes = (
+        ('news', 'plugins.news.urls'),
+    )
     media_dir = 'news'
 
     @classmethod

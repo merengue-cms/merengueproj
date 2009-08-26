@@ -79,22 +79,22 @@ def remove_from_installed_apps(plugin_name):
             settings.INSTALLED_APPS = tuple(settings.INSTALLED_APPS)
 
 
-def find_plugin_url(plugin_name):
+def find_plugin_urls(plugin_name):
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
-    plugin_url_re = r'^%s/' % plugin_config.url_prefix
-    plugin_url_name = "%s.urls" % plugin_name
-    try:
-        import_module(plugin_url_name)
-    except ImportError:
-        return (-1, None)
-    plugin_url = url(plugin_url_re, include(plugin_url_name), name=plugin_name)
-    proj_urls = import_module(settings.ROOT_URLCONF)
-    urlconf_names = [
-        getattr(p, 'urlconf_name', None) for p in proj_urls.urlpatterns]
-    index = -1
-    if plugin_url_name in urlconf_names:
-        index = urlconf_names.index(plugin_url_name)
-    return (index, plugin_url)
+    for url_prefix, urlconf in plugin_config.url_prefixes:
+        plugin_url_re = r'^%s/' % url_prefix
+        try:
+            import_module(urlconf)
+        except ImportError:
+            yield (-1, None)
+        plugin_url = url(plugin_url_re, include(urlconf), name=plugin_name)
+        proj_urls = import_module(settings.ROOT_URLCONF)
+        urlconf_names = [
+            getattr(p, 'urlconf_name', None) for p in proj_urls.urlpatterns]
+        index = -1
+        if urlconf in urlconf_names:
+            index = urlconf_names.index(urlconf)
+        yield (index, plugin_url)
 
 
 def enable_plugin(plugin_name, register=True):
@@ -126,17 +126,17 @@ def disable_plugin(plugin_name, unregister=True):
 
 
 def register_plugin_urls(plugin_name):
-    index, plugin_url = find_plugin_url(plugin_name)
-    if plugin_url and index < 0:
-        proj_urls = import_module(settings.ROOT_URLCONF)
-        proj_urls.urlpatterns += (plugin_url, )
+    for index, plugin_url in find_plugin_urls(plugin_name):
+        if plugin_url and index < 0:
+            proj_urls = import_module(settings.ROOT_URLCONF)
+            proj_urls.urlpatterns += (plugin_url, )
 
 
 def unregister_plugin_urls(plugin_name):
-    index, plugin_url = find_plugin_url(plugin_name)
-    if index > 0:
-        proj_urls = import_module(settings.ROOT_URLCONF)
-        del proj_urls.urlpatterns[index]
+    for index, plugin_url in find_plugin_urls(plugin_name):
+        if index > 0:
+            proj_urls = import_module(settings.ROOT_URLCONF)
+            del proj_urls.urlpatterns[index]
 
 
 def register_items(item_list):
