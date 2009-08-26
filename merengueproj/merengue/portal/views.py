@@ -22,23 +22,7 @@ from merengue.base.models import BaseContent
 from merengue.multimedia.models import BaseMultimedia
 from tagging.models import Tag
 
-from merengue.section.models import Section, AppSection, BaseSection
 from cmsutils.log import send_error, send_info
-
-
-def index(request):
-    if request.user.is_anonymous():
-        filters = {'main_document__status': 'published'}
-    else:
-        filters = {}
-    sections = list(
-        AppSection.objects.filter().select_related('main_document'),
-    ) + list(
-        Section.objects.filter(**filters).select_related('main_document'),
-    )
-    return render_to_response('portal/index.html',
-                              {'sections': sections},
-                              context_instance=RequestContext(request))
 
 
 @never_cache
@@ -203,14 +187,6 @@ def invalidate_cache(request):
         request.user.message_set.create(message=_("Cache from this page was invalidated"))
         return HttpResponseRedirect(_get_redirect_to(request.GET, redirect_field_name='path'))
     return HttpResponse('path parameter is needed in HTTP request')
-
-
-def site_map(request):
-    related_fields = ('main_document', 'main_menu', 'secondary_menu', 'interest_menu')
-    sections = BaseSection.objects.all().order_by('name_%s' % get_language()).select_related(*related_fields)
-    return render_to_response('portal/site_map.html',
-                              {'sections': sections},
-                              context_instance=RequestContext(request))
 
 
 def searchform_jsi18n(request):
