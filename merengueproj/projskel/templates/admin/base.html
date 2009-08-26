@@ -10,7 +10,7 @@
 <![endif]>
 
 {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
-<script src="{{ MEDIA_URL }}js/jquery-1.2.6.min.js"></script>
+<script src="{{ MEDIA_URL }}merengue/js/jquery-1.2.6.min.js"></script>
 <script type="text/javascript">
   (function($) {
     $(document).ready(function () {
@@ -25,7 +25,7 @@
 </script>
 {% block extrahead %}
 {{ block.super }}
-<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/admin.css" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}merengue/css/admin.css" />
 {% endblock %}
 
 {% if request.testing %}

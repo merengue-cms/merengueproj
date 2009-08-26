@@ -3,8 +3,8 @@
 
 {% block extrahead %}
 {{ block.super }}
-  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/reorder.css" />
-  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui-core-draggable-droppable-sortable.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}merengue/css/reorder.css" />
+  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/jquery-ui-core-draggable-droppable-sortable.min.js"></script>
 
   <script type="text/javascript">
   // <![CDATA[
@@ -71,7 +71,7 @@
     {% if mr.get_image %}
       <img src="{% thumbnail mr.get_image 100x100 crop %}" alt="image" />
     {% else %}
-      <img src="{{ MEDIA_URL }}img/image_not_available_{{ LANGUAGE_CODE }}.jpg" alt="image" />
+      <img src="{{ MEDIA_URL }}merengue/img/image_not_available_{{ LANGUAGE_CODE }}.jpg" alt="image" />
     {% endif %}
     </div>
   {% endfor %}

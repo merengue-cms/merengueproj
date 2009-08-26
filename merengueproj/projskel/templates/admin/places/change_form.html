@@ -4,11 +4,11 @@
 {% block extrahead %}{{ block.super }}
 {{ media }}
 {% if not coming_from_buildbot %} 
-<script type="text/javascript" src="{{ MEDIA_URL}}js/osmgeoadmin.latitude.longitude.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL}}merengue/js/osmgeoadmin.latitude.longitude.js"></script>
 {% endif %}
 <script type="text/javascript" src="/jsi18n/"></script>
 
-<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/admin.css" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}merengue/css/admin.css" />
 
 {% endblock %}
 

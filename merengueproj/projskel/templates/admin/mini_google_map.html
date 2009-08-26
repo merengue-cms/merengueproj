@@ -5,8 +5,6 @@
     <span class="longitude">{{ content.main_location.y }}</span>
     <span class="icon"> {% if content.location.main_location %}
                             {{ content.get_icon }}
-                        {% else %}
-                            {{ MEDIA_URL }}img/city_map_icon.png
                         {% endif %}
     </span>
     <span class="zoom">{{ zoom }}</span>
