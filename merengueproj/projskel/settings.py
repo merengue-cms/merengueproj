@@ -67,25 +67,6 @@ ADMIN_MEDIA_PREFIX = '/admin_media/'
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'v$*k)ri8i*yv@yb2w!c)t#aj$o=na8u#855#wsve4!iw%u__hy'
 
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'merengue.themes.loader.load_template_source', # for enabling theme support in Merengue
-    'django.template.loaders.filesystem.load_template_source',
-    'django.template.loaders.app_directories.load_template_source',
-#     'django.template.loaders.eggs.load_template_source',
-)
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.core.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.request',
-    'merengue.context_processors.all_context',
-    'merengue.themes.context_processors.media',
-    'merengue.section.context_processors.section',
-)
-
 MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + (
     # put here aditional middlewares
 )
@@ -108,12 +89,13 @@ TEMPLATE_DIRS = (
 )
 
 LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = '/cuentas/entrar/'
-
+LOGIN_URL = '/account/login/'
 
 INSTALLED_APPS += (
     # put here your project django apps
 )
+
+SVNDIR = path.join(BASEDIR, 'apps')
 
 TEST_RUNNER = 'merengue.test.run_tests'
 TEST_DB_CREATION_SUFFIX = 'WITH TEMPLATE template_postgis'
@@ -143,13 +125,6 @@ BATCHADMIN_JQUERY_JS= 'js/jquery-1.2.6.min.js'
 LOGOUT_PROTECTED_URL_REDIRECTS = (
     #(r'^/regularexpresion/(.*)$', '/redirect_url'),
 )
-
-CACHE_BACKEND = 'locmem:///'
-CACHE_MIDDLEWARE_SECONDS = 3600*24
-CACHE_MIDDLEWARE_KEY_PREFIX = 'merengue'
-CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
-
-SVNDIR = path.join(BASEDIR, 'apps')
 
 PRODUCTION_DB_URL = ""
 PRODUCTION_DB_UPDATE_PASSWORDS = (('admin', 'admin'), )

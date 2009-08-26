@@ -28,24 +28,24 @@ div#headerlogo {
    font-weight: bold;
 }
 
-div#headerlinks {
+div#header-links {
    position: absolute;
    left: 0px;
    bottom: -1px;
 }
 
-div#headerlinks ul {
+div#header-links ul {
    margin: 0px;
    margin-left: 20px;
    padding: 0px;
 }
 
-div#headerlinks ul li {
+div#header-links ul li {
    display: inline;
    margin: 0px;
 }
 
-div#headerlinks ul li a {
+div#header-links ul li a {
    margin-right: 5px;
    padding: 0px 15px;
    text-align: center;
@@ -53,41 +53,41 @@ div#headerlinks ul li a {
    border-bottom-width: 0px;
 }
 
-div#headerlinks ul li a:hover {
+div#header-links ul li a:hover {
    background-color: #8b91a1;
 }
 
-div#headerlinks ul li.active a {
+div#header-links ul li.active a {
    background-color: #eeeeee;
    color: black;
 }
 
-div#useractions {
+div#user-actions {
    position: absolute;
    top: 1em;
    right: 20px;
 }
 
-div#useractions ul li {
+div#user-actions ul li {
    display: inline;
 }
 
-div#useractions ul li {
+div#user-actions ul li {
    margin-right: 10px;
 }
 
-div#portalactions {
+div#language-tools {
    position: absolute;
    top: 1em;
    left: 50%;
 }
 
-div#portalactions ul {
+div#language-tools ul {
    margin: 0px;
    display: inline;
 }
 
-div#portalactions ul li {
+div#language-tools ul li {
    display: inline;
 }
 
