@@ -53,21 +53,27 @@
       {% endblock %}
     </div>
 
-    <div id="headerlinks">
+    <div id="header-links">
       {% block headerlinks %}
         {% include "inc.headerlinks.html" %}
       {% endblock %}
     </div>
 
-    <div id="useractions">
+    <div id="language-tools">
+      {% block languagetools %}
+        {% include "inc.languagetools.html" %}
+      {% endblock %}
+    </div>
+
+    <div id="user-actions">
       {% block useractions %}
         {% include "inc.useractions.html" %}
       {% endblock %}
     </div>
 
-    <div id="portalactions">
+    <div id="site-actions">
       {% block portalactions %}
-        {% include "inc.portalactions.html" %}
+        {% include "inc.siteactions.html" %}
       {% endblock %}
     </div>
   </div>

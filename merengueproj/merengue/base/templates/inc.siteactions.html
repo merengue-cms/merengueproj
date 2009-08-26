@@ -1,0 +1,9 @@
+{% load i18n inlinetrans action_tags portal_tags %}
+<ul id="site-actions">
+  {% get_actions "site" as site_actions %}
+  {% for action in site_actions %}
+  <li id="action-{{ action.name }}">
+    <a href="{% action_url action %}">{% trans action.verbose_name %}</a>
+  </li>
+  {% endfor %}
+</ul>

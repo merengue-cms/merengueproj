@@ -1,8 +1,18 @@
-from django.http import HttpResponse
+from django.core.urlresolvers import reverse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.action.actions import ContentAction
+from merengue.action.actions import SiteAction, ContentAction
 from merengue.registry import params
+
+
+class NewsIndex(SiteAction):
+    name = 'newsindex'
+    verbose_name = _('News index')
+
+    @classmethod
+    def get_response(cls, request):
+        return HttpResponseRedirect(reverse('news_index'))
 
 
 class PDFExport(ContentAction):
@@ -26,5 +36,5 @@ class PDFExport(ContentAction):
     ]
 
     @classmethod
-    def get_response(cls, request):
-        return HttpResponse("PDF from %s" % request.get_full_path())
+    def get_response(cls, request, content):
+        return HttpResponse("PDF for %s" % content)

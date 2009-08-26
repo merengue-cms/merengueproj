@@ -1,5 +1,5 @@
-{% load i18n inlinetrans portal_tags %}
-<ul id="portal-actions">
+{% load i18n inlinetrans action_tags portal_tags %}
+<ul id="language-tools">
    {% for lang,lang_name in LANGUAGES %}
     <li {% ifequal lang LANGUAGE_CODE %}class="currentLangItem"{% endifequal %}>
         <a class="languageform" alt="{% trans 'Change language' %} {{ lang_name }}" href="?set_language={{ lang }}">

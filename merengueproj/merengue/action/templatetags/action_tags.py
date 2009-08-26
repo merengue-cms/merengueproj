@@ -31,6 +31,7 @@ class GetActionsNode(template.Node):
             elif scope == 'content' and issubclass(item_class, ContentAction):
                 actions.append(item_class)
             elif scope == 'user' and issubclass(item_class, UserAction):
+                item_class.set_user(for_content)
                 actions.append(item_class)
         context[self.as_var] = actions
         return u''
@@ -46,3 +47,34 @@ def get_actions(parser, token):
         kwargs['for'] = args[2]
     args = []
     return GetActionsNode(args, kwargs, as_var)
+
+
+class ActionURLNode(template.Node):
+
+    def __init__(self, action, content_or_user):
+        self.action = action
+        self.content_or_user = content_or_user
+
+    def render(self, context):
+        if self.content_or_user is not None:
+            content_or_user = self.content_or_user.resolve(context)
+        else:
+            content_or_user = None
+        action = self.action.resolve(context)
+        if content_or_user:
+            return action.get_url(content_or_user)
+        else:
+            return action.get_url()
+
+
+@register.tag
+def action_url(parser, token):
+    bits = token.split_contents()
+    if len(bits) not in [2, 3, ]:
+        raise template.TemplateSyntaxError('"%r" tag requires one or two arguments' % bits[0])
+    action = parser.compile_filter(bits[1])
+    if len(bits) == 2:
+        content_or_user = None
+    else:
+        content_or_user = parser.compile_filter(bits[2])
+    return ActionURLNode(action, content_or_user)
