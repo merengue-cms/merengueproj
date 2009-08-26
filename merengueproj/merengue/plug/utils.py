@@ -3,11 +3,12 @@ import sys
 
 from django.conf import settings
 from django.conf.urls.defaults import include, url
-from django.contrib.admin.sites import AlreadyRegistered, NotRegistered
+from django.contrib.admin.sites import NotRegistered
 from django.core.cache import cache
 from django.core.exceptions import ImproperlyConfigured
 from django.core.management.color import no_style
 from django.core.management.sql import sql_all
+from django.core import urlresolvers
 from django.db import connection, transaction
 from django.db.models import get_models
 from django.utils.importlib import import_module
@@ -88,9 +89,10 @@ def find_plugin_urls(plugin_name):
         except ImportError:
             yield (-1, None)
         plugin_url = url(plugin_url_re, include(urlconf), name=plugin_name)
-        proj_urls = import_module(settings.ROOT_URLCONF)
+        urlresolvers._resolver_cache = {}
+        proj_urls = urlresolvers.get_resolver(None)
         urlconf_names = [
-            getattr(p, 'urlconf_name', None) for p in proj_urls.urlpatterns]
+            getattr(p, 'urlconf_name', None) for p in proj_urls.url_patterns]
         index = -1
         if urlconf in urlconf_names:
             index = urlconf_names.index(urlconf)
@@ -127,6 +129,8 @@ def register_plugin_urls(plugin_name):
         if plugin_url and index < 0:
             proj_urls = import_module(settings.ROOT_URLCONF)
             proj_urls.urlpatterns += (plugin_url, )
+    url_resolver = urlresolvers.get_resolver(None)
+    url_resolver._populate() # populate reverse urls, namespaces, etc.
 
 
 def unregister_plugin_urls(plugin_name):
