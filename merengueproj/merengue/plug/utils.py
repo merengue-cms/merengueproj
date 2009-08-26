@@ -102,10 +102,7 @@ def enable_plugin(plugin_name, register=True):
     cache.delete(PLUG_CACHE_KEY)
     add_to_installed_apps(plugin_name)
     if register:
-        try:
-            register_app(plugin_name)
-        except AlreadyRegistered:
-            pass
+        register_app(plugin_name)
         register_plugin_actions(plugin_name)
         register_plugin_blocks(plugin_name)
     register_plugin_urls(plugin_name)
