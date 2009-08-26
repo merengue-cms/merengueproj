@@ -1,5 +1,24 @@
 ugettext = lambda s: s # dummy ugettext function, as said on django docs
 
+# List of callables that know how to import templates from various sources.
+TEMPLATE_LOADERS = (
+    'merengue.themes.loader.load_template_source', # for enabling theme support in Merengue
+    'django.template.loaders.filesystem.load_template_source',
+    'django.template.loaders.app_directories.load_template_source',
+#     'django.template.loaders.eggs.load_template_source',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.request',
+    'merengue.context_processors.all_context',
+    'merengue.themes.context_processors.media',
+    'merengue.section.context_processors.section',
+)
+
 # merengue exclusive installed apps. you have to use at least these apps in your INSTALLED_APPS project settings
 MERENGUE_APPS = (
     'merengue.registry',
@@ -82,6 +101,12 @@ STATUS_LIST = (
 # merengue default directory for plugins
 PLUGINS_DIR = 'plugins'
 
+# cache default settings
+CACHE_BACKEND = 'locmem:///'
+CACHE_MIDDLEWARE_SECONDS = 3600*24
+CACHE_MIDDLEWARE_KEY_PREFIX = 'merengue'
+CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
+
 # Google API Key for localhost:8000
 # http://code.google.com/apis/maps/signup.html
 GOOGLE_MAPS_API_KEY = 'ABQIAAAAddxuy_lt2uAk9Y30XD3MJhQCULP4XOMyhPd8d_NrQQEO8sT8XBRRmJjQjU4qrycwOKb_v70y1h_1GQ'
@@ -93,6 +118,7 @@ DEFAULT_LONGITUDE = -5.753321
 PAGE_VARIABLE = 'page'
 
 # Default merengue options for tinyMCE
+TINYMCE_MEDIA = None # set to something like: MEDIA_URL + "cmsutils/js/widgets/tiny_mce/"
 EXTRA_MCE = {
     'theme_advanced_buttons1': 'bold,italic,copy,paste,pasteword,underline,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,outdent,indent',
 }
