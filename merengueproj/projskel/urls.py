@@ -30,7 +30,7 @@ for model, app_admin_site, prefix in app_admin_sites:
 # do autodiscovering of all search forms
 search_form_registry.autodiscover()
 
-urlpatterns += patterns('', *app_admin_patterns)
+urlpatterns = patterns('', *app_admin_patterns)
 
 js_info_dict = {
         'packages': ('django.conf', ),
