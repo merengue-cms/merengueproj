@@ -30,10 +30,6 @@ for model, app_admin_site, prefix in app_admin_sites:
 # do autodiscovering of all search forms
 search_form_registry.autodiscover()
 
-urlpatterns = patterns('',
-    (r'^admin/pending_[\w]+/$', 'merengue.views.portal.list_pending_redirect'),
-)
-
 urlpatterns += patterns('', *app_admin_patterns)
 
 js_info_dict = {
@@ -41,7 +37,6 @@ js_info_dict = {
 }
 
 urlpatterns += patterns('',
-    (r'^admin/contenidos/pendientes/$', 'merengue.views.portal.list_pending'),
     (r'^admin/r/(?P<content_type_id>\d+)/(?P<object_id>.+)/$',
      'cmsutils.views.generic.redirect_to_object'),
     (r'^admin/(.*)', admin.site.root),
@@ -53,20 +48,17 @@ urlpatterns += patterns('',
 
     (r'^media/(.*)$', 'merengue.views.static.serve',
         {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
-    (r'^cms/(.*)$', 'django.views.static.serve',
-        {'document_root': settings.MEDIA_ROOT + '/cms'}),
     (r'^i18n/setlang/$', 'merengue.views.portal.set_language'),
     (r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict),
     (r'^inplaceeditform/', include('inplaceeditform.urls')),
-    (r'^$', 'merengue.views.portal.index'),
 
     # actions
     (r'^actions/', include('merengue.action.urls')),
 
     # login and logout
-    url(r'^cuentas/entrar/$', 'merengue.views.portal.try_login', name='login_form'),
-    url(r'^cuentas/salir/$', 'merengue.views.portal.logout', name='logout'),
-    url(r'^mapa-web/$', 'merengue.views.portal.site_map', name='site_map'),
+    url(r'^account/login/$', 'merengue.views.portal.try_login', name='login_form'),
+    url(r'^account/logout/$', 'merengue.views.portal.logout', name='logout'),
+    url(r'^sitemap/$', 'merengue.views.portal.site_map', name='site_map'),
 
     # base urls
     (r'^base/', include('merengue.base.urls')),
@@ -75,7 +67,7 @@ urlpatterns += patterns('',
      'merengue.views.portal.ajax_autocomplete_tags'),
     (r'^multimedia/', include('merengue.multimedia.urls')),
     # section
-    (r'^secciones/', include('merengue.section.urls')),
+    (r'^sections/', include('merengue.section.urls')),
     # tinyimages
     (r'^tinyimages/', include('tinyimages.urls')),
     # other URLs
@@ -85,4 +77,7 @@ urlpatterns += patterns('',
     # i18n applications
     url(r'^rosetta/', include('rosetta.urls')),
     url(r'^inlinetrans/', include('inlinetrans.urls')),
+
+    # Your project URLs. Put here all your URLS:
+    (r'^$', 'website.views.index'),
 )
