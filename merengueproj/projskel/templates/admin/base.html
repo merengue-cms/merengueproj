@@ -56,7 +56,7 @@
                     <li {% ifequal lang.0 LANGUAGE_CODE %}class="currentLangItem"{% endifequal %}>
                     <form id="languages-{{ lang.0 }}" class="languageform" action="/i18n/setlang/" method="post">
                         <input type="hidden" value="{{ lang.0 }}" name="language"/>
-                        <input type="image" height="11" width="14" src="/media/img/flag-{{ lang.0 }}.gif" alt="{% trans 'Change language' %}"/>
+                        <input type="image" height="11" width="14" src="{{ MEDIA_URL }}merengue/img/flag-{{ lang.0 }}.gif" alt="{% trans 'Change language' %}"/>
                     </form>
                     </li>
                 {% endfor %}
