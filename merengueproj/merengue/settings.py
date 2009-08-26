@@ -11,6 +11,7 @@ MERENGUE_APPS = (
     'merengue.themes',
     'merengue.action',
     'merengue.block',
+    'merengue.portal',
     'merengue.event',
     'merengue.internallinks',
 )
