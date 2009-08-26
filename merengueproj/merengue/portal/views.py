@@ -38,7 +38,7 @@ def try_login(request, redirect_field_name='next'):
                 login(request, user)
                 message = _('Welcome %s') % user
                 if user.is_superuser and has_content_pending():
-                    url = reverse('merengue.views.portal.list_pending')
+                    url = reverse('merengue.portal.views.list_pending')
                     message += _('. You have a <a href="%s">pending</a> contents') %(url)
                 send_info(request, message)
                 if not redirect_to or '//' in redirect_to or ' ' in redirect_to:
@@ -100,7 +100,7 @@ def _content_status(status='pending', bool=True):
 
 @login_required
 def list_pending_redirect(request):
-    return HttpResponseRedirect(reverse('merengue.views.portal.list_pending'))
+    return HttpResponseRedirect(reverse('merengue.portal.views.list_pending'))
 
 
 @login_required
