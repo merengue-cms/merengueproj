@@ -7,7 +7,8 @@ from merengue.registry.models import RegisteredItem
 
 PLACES = (('leftsidebar', _('Left sidebar')),
           ('rightsidebar', _('Right sidebar')),
-          ('content', _('After content')))
+          ('beforecontent', _('Before content body')),
+          ('aftercontent', _('After content body')))
 
 
 class RegisteredBlock(RegisteredItem):

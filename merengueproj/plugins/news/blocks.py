@@ -18,7 +18,7 @@ class LatestNewsBlock(Block):
 
 class NewsCommentsBlock(ContentBlock):
     name = 'newscomment'
-    default_place = 'content'
+    default_place = 'aftercontent'
 
     @classmethod
     def render(cls, request, content):

@@ -1,0 +1,19 @@
+{% extends "block.html" %}
+
+{% load inlinetrans %}
+
+{% block blockbody %}
+<link href="{{ MEDIA_URL }}voting/styles.css" rel="stylesheet" type="text/css" />
+<div class="voting">
+  <span class="voting_label">{% inline_trans "Vote" %}</span>
+  <div class="stars">
+    <span>
+      <a href="#" class="vote1"></a>
+      <a href="#" class="vote2"></a>
+      <a href="#" class="vote3"></a>
+      <a href="#" class="vote4"></a>
+      <a href="#" class="vote5"></a>
+    </span>
+  </div>
+</div>
+{% endblock %}

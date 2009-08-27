@@ -52,6 +52,12 @@
   {% endblock %}
 
   {% block contentzone %}
+    {% block beforecontentblocks %}
+      {% render_blocks "beforecontent" for content %}
+      {% block extrabeforecontentblocks %}
+      {% endblock %}
+    {% endblock %}
+
     {% block contentmedia %}
       {% media_slide content %}
     {% endblock %}
@@ -66,9 +72,9 @@
       {# to fill in for inherited templates #}
     {% endblock %}
 
-    {% block contentbodyblocks %}
-      {% render_blocks "content" for content %}
-      {% block extracontentbodyblocks %}
+    {% block aftercontentblocks %}
+      {% render_blocks "aftercontent" for content %}
+      {% block extraaftercontentblocks %}
       {% endblock %}
     {% endblock %}
   {% endblock %}

@@ -1,0 +1,24 @@
+.voting .voting_label {
+    color: gray;
+    display: inline;
+    float: left;
+}
+.voting .stars {
+    background: transparent url(./star_icon.gif) repeat scroll 0 0;
+    display: inline;
+    float: left;
+    position: relative;
+    height: 20px;
+    width: 76px;
+    margin: 0 5px;
+}
+.voting .stars a {
+    position: relative;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    padding-left: 15px;
+}
+.voting .stars a:hover {
+    background: transparent url(./star_icon_over.gif) repeat-x scroll 0 0;
+}
