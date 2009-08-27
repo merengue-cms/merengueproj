@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.contenttypes.models import ContentType
 #from django.db import connection
 from django.db.models import get_model
@@ -152,8 +153,8 @@ def admin_link(request, content_type, content_id, url=''):
     """ Redirect to admin change page for an object """
     try:
         content = ContentType.objects.get_for_id(content_type).get_object_for_this_type(id=content_id)
-    except:
-        return HttpResponseRedirect('#')
+    except ObjectDoesNotExist:
+        raise Http404
 
     if isinstance(content, BaseContent):
         real_content = content._get_real_instance()
