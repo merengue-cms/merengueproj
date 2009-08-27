@@ -15,6 +15,15 @@ class NewsIndex(SiteAction):
         return HttpResponseRedirect(reverse('news_index'))
 
 
+class NewsRSS(SiteAction):
+    name = 'newsrss'
+    verbose_name = _('News rss')
+
+    @classmethod
+    def get_response(cls, request):
+        return HttpResponseRedirect(reverse('news_index'))
+
+
 class PDFExport(ContentAction):
     name = 'pdfexport'
     verbose_name = _('Export to PDF')

@@ -28,24 +28,24 @@ div#headerlogo {
    font-weight: bold;
 }
 
-div#header-links {
+div#site-actions {
    position: absolute;
    left: 0px;
    bottom: -1px;
 }
 
-div#header-links ul {
+div#site-actions ul {
    margin: 0px;
    margin-left: 20px;
    padding: 0px;
 }
 
-div#header-links ul li {
+div#site-actions ul li {
    display: inline;
    margin: 0px;
 }
 
-div#header-links ul li a {
+div#site-actions ul li a {
    margin-right: 5px;
    padding: 0px 15px;
    text-align: center;
@@ -53,13 +53,31 @@ div#header-links ul li a {
    border-bottom-width: 0px;
 }
 
-div#header-links ul li a:hover {
+div#site-actions ul li a:hover {
    background-color: #8b91a1;
 }
 
-div#header-links ul li.active a {
+div#site-actions ul li.active a {
    background-color: #eeeeee;
    color: black;
+}
+
+div#header-links {
+   position: absolute;
+   top: 1em;
+   right: 130px;
+   text-align: right;
+}
+
+div#header-links ul {
+   margin-top: 0;
+   margin-left: 0px;
+   list-style-type: none;
+}
+
+div#header-links ul li {
+   display: inline;
+   margin-right: 1em;
 }
 
 div#user-actions {
@@ -79,7 +97,7 @@ div#user-actions ul li {
 div#language-tools {
    position: absolute;
    top: 1em;
-   left: 50%;
+   right: 30px;
 }
 
 div#language-tools ul {

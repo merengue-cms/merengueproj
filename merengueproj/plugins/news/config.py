@@ -1,6 +1,6 @@
 from merengue.plug import Plugin
 
-from plugins.news.actions import PDFExport, NewsIndex
+from plugins.news.actions import PDFExport, NewsIndex, NewsRSS
 from plugins.news.blocks import LatestNewsBlock, NewsCommentsBlock
 
 
@@ -15,7 +15,7 @@ class PluginConfig(Plugin):
 
     @classmethod
     def get_actions(cls):
-        return [PDFExport, NewsIndex]
+        return [PDFExport, NewsIndex, NewsRSS]
 
     @classmethod
     def get_blocks(cls):
