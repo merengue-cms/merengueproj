@@ -50,3 +50,6 @@ body div#content-zone {
    width: 980px;
 }
 
+a img {
+   border: none;
+}
