@@ -3,9 +3,45 @@ from django.db.models.base import ModelBase
 from django.contrib.admin import ModelAdmin
 from django.contrib.admin.sites import AlreadyRegistered
 from django.contrib.admin.sites import AdminSite as DjangoAdminSite
+from django.utils.functional import update_wrapper
+from django.views.decorators.cache import never_cache
 
 
 class AdminSite(DjangoAdminSite):
+    related_admin_sites = {}
+    base_model_admins= {}
+
+    def admin_view(self, view, cacheable=False):
+
+        def inner(request, *args, **kwargs):
+            if not self.has_permission(request):
+                return self.login(request)
+            if 'base_model_admin' in kwargs.keys():
+                self.base_model_admin = kwargs.pop('base_model_admin')
+                self.base_object_id = kwargs.pop('base_object_id')
+            else:
+                self.base_model_admin = None
+                self.base_object_id = None
+            return view(request, *args, **kwargs)
+        if not cacheable:
+            inner = never_cache(inner)
+        return update_wrapper(inner, view)
+
+    def get_urls(self):
+        from django.conf.urls.defaults import patterns, url, include
+
+        urlpatterns = super(AdminSite, self).get_urls()
+        related_urlpatterns = []
+
+        for model, model_admin in self._registry.iteritems():
+            for key in self.related_admin_sites.keys():
+                if issubclass(model, key):
+                    for tool_name, related_admin_site in self.related_admin_sites[key].items():
+                        related_admin_site.base_model_admins[model] = model_admin
+                        related_urlpatterns += patterns('',
+                            url(r'^%s/%s/(?P<base_object_id>\d+)/%s/' % (model._meta.app_label, model._meta.module_name, tool_name),
+                                include(related_admin_site.urls), {'base_model_admin': model_admin}))
+        return related_urlpatterns + urlpatterns
 
     def register(self, model_or_iterable, admin_class=None, **options):
         """
@@ -46,6 +82,28 @@ class AdminSite(DjangoAdminSite):
 
             # Instantiate the admin class to save in the registry
             self._registry[model] = admin_class(model, self)
+
+    def register_related(self, model_or_iterable, admin_class=None, related_to=None, **options):
+        from merengue.base.admin import RelatedModelAdmin
+        if not admin_class:
+            raise Exception('Need a subclass of RelatedModelAdmin to register a related model admin' % admin_class.__name__)
+        if not issubclass(admin_class, RelatedModelAdmin):
+            raise Exception('%s modeladmin must be a subclass of RelatedModelAdmin' % admin_class.__name__)
+
+        tool_name = admin_class and getattr(admin_class, 'tool_name', None)
+        if not tool_name:
+            raise Exception('Can not register %s modeladmin without a tool_name' % admin_class.__name__)
+
+        if not related_to in self.related_admin_sites.keys():
+            self.related_admin_sites[related_to] = {}
+        if not tool_name in self.related_admin_sites[related_to].keys():
+            self.related_admin_sites[related_to][tool_name] = AdminSite(name=tool_name)
+        else:
+            raise AlreadyRegistered('The related tool %s is already registered for model %s' %\
+                                    (tool_name, related_to.__name__))
+        related_admin_site = self.related_admin_sites[related_to][tool_name]
+        related_admin_site.register(model_or_iterable, admin_class, **options)
+        return related_admin_site
 
 
 # This global object represents the default admin site, for the common case.

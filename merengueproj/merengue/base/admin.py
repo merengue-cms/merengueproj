@@ -485,6 +485,7 @@ class BaseAdmin(admin.ModelAdmin):
                     perms_needed.add(related.opts.verbose_name)
 
     def delete_view(self, request, objects_id=[], extra_context=None):
+        extra_context = self._base_update_extra_context(extra_context)
         "The 'delete' admin view for this model."
         if not isinstance(objects_id, list) and not isinstance(objects_id, tuple):
             # workaround to handle simple object deletion
@@ -628,6 +629,27 @@ class BaseAdmin(admin.ModelAdmin):
         return render_to_response(confirm_template,
                                   context,
                                   context_instance=template.RequestContext(request))
+
+    def _base_update_extra_context(self, extra_context=None):
+        extra_context = extra_context or {}
+        extra_context.update({'model_admin': self})
+        return extra_context
+
+    def changelist_view(self, request, extra_context=None):
+        extra_context = self._base_update_extra_context(extra_context)
+        return super(BaseAdmin, self).changelist_view(request, extra_context)
+
+    def add_view(self, request, form_url='', extra_context=None):
+        extra_context = self._base_update_extra_context(extra_context)
+        return super(BaseAdmin, self).add_view(request, form_url, extra_context)
+
+    def change_view(self, request, object_id, extra_context=None):
+        extra_context = self._base_update_extra_context(extra_context)
+        return super(BaseAdmin, self).change_view(request, object_id, extra_context)
+
+    def history_view(self, request, object_id, extra_context=None):
+        extra_context = self._base_update_extra_context(extra_context)
+        return super(BaseAdmin, self).history_view(request, object_id, extra_context)
 
 
 class BaseCategoryAdmin(BaseAdmin):
@@ -863,6 +885,95 @@ class BaseContentAdminExtra(BaseContentAdmin):
 
 class ContactInfoAdmin(BaseAdmin):
     search_fields = ('contact_email', 'contact_email2', 'phone', 'phone2', 'fax', )
+
+
+class RelatedModelAdmin(BaseAdmin):
+    tool_name = None
+    related_field = None
+
+    def __init__(self, *args, **kwargs):
+        super(RelatedModelAdmin, self).__init__(*args, **kwargs)
+        if not self.tool_name:
+            pass
+        if not self.related_field:
+            pass
+
+    def _get_base_content(self, request):
+        object_id = self.admin_site.base_object_id
+        model_admin = self.admin_site.base_model_admin
+        model = model_admin.model
+        opts = model._meta
+
+        try:
+            obj = model_admin.queryset(request).get(pk=unquote(object_id))
+        except model.DoesNotExist:
+            # Don't raise Http404 just yet, because we haven't checked
+            # permissions yet. We don't want an unauthenticated user to be able
+            # to determine whether a given object exists.
+            obj = None
+
+        if not model_admin.has_change_permission(request, obj):
+            raise PermissionDenied
+
+        if obj is None:
+            raise Http404(_('%(name)s object with primary key %(key)r does not exist.') % {'name': force_unicode(opts.verbose_name), 'key': escape(object_id)})
+
+        self.basecontent = obj
+        return obj
+
+    def _update_extra_context(self, request, extra_context=None):
+        extra_context = extra_context or {}
+        basecontent = self._get_base_content(request)
+        basecontent_type_id = ContentType.objects.get_for_model(basecontent).id
+        extra_context.update({'related_admin_site': self.admin_site,
+                              'basecontent': basecontent,
+                              'basecontent_opts': basecontent._meta,
+                              'basecontent_type_id': basecontent_type_id,
+                              'inside_basecontent': True,
+                              'selected': self.tool_name})
+        return extra_context
+
+    def changelist_view(self, request, extra_context=None):
+        extra_context = self._update_extra_context(request, extra_context)
+        return super(RelatedModelAdmin, self).changelist_view(request, extra_context)
+
+    def queryset(self, request):
+        base_qs = super(RelatedModelAdmin, self).queryset(request)
+        return base_qs.filter(**{self.related_field: self.basecontent})
+
+    def add_view(self, request, form_url='', extra_context=None):
+        extra_context = self._update_extra_context(request, extra_context)
+        return super(RelatedModelAdmin, self).add_view(request, form_url, extra_context)
+
+    def change_view(self, request, object_id, extra_context=None):
+        extra_context = self._update_extra_context(request, extra_context)
+        return super(RelatedModelAdmin, self).change_view(request, object_id, extra_context)
+
+    def delete_view(self, request, object_id, extra_context=None):
+        extra_context = self._update_extra_context(request, extra_context)
+        return super(RelatedModelAdmin, self).delete_view(request, object_id, extra_context)
+
+    def history_view(self, request, object_id, extra_context=None):
+        extra_context = self._update_extra_context(request, extra_context)
+        return super(RelatedModelAdmin, self).history_view(request, object_id, extra_context)
+
+    def save_model(self, request, obj, form, change):
+        super(RelatedModelAdmin, self).save_model(request, obj, form, change)
+        self.relate_base_content(request, obj, form, change)
+
+    def relate_base_content(self, request, obj, form, change):
+        if not change and hasattr(obj, self.related_field):
+            setattr(obj, self.related_field, self.basecontent)
+            obj.save()
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(RelatedModelAdmin, self).get_form(request, obj, **kwargs)
+        self.remove_related_field_from_form(form)
+        return form
+
+    def remove_related_field_from_form(self, form):
+        if self.related_field in form.base_fields.keys():
+            form.base_fields.pop(self.related_field)
 
 
 class BaseContentRelatedModelAdmin(BaseAdmin, StatusControlProvider):
