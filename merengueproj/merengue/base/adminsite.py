@@ -16,12 +16,8 @@ class AdminSite(DjangoAdminSite):
         def inner(request, *args, **kwargs):
             if not self.has_permission(request):
                 return self.login(request)
-            if 'base_model_admin' in kwargs.keys():
-                self.base_model_admin = kwargs.pop('base_model_admin')
-                self.base_object_id = kwargs.pop('base_object_id')
-            else:
-                self.base_model_admin = None
-                self.base_object_id = None
+            self.base_model_admin = kwargs.pop('base_model_admin', None)
+            self.base_object_id = kwargs.pop('base_object_id', None)
             return view(request, *args, **kwargs)
         if not cacheable:
             inner = never_cache(inner)
