@@ -30,13 +30,31 @@ class Param(object):
     def get_value(self):
         return getattr(self, 'value', self.default)
 
+    def get_value_display(self):
+        return self.get_value()
+
+    def get_value_from_datadict(self, data, name):
+        return data.get(name)
+
 
 class Single(Param):
     pass
 
 
 class List(Param):
-    pass
+
+    def get_value_display(self):
+        value = self.get_value()
+        return u'\n'.join(value)
+
+    def get_value_from_datadict(self, data, name):
+        values = data.getlist(name)
+        value = []
+        for v in values:
+            value += v.split('\r\n')
+        # delete empty lines
+        value = [v for v in value if v.strip()]
+        return value
 
 
 class Text(Param):

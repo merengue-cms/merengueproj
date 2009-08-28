@@ -16,10 +16,10 @@
       <input {{ widget_attrs }} type="text" value="{{ param.value }}">
     {% endifequal %}
     {% ifequal param.get_type "List" %}
-       XXX: to implement
+       <textarea {{ widget_attrs }} >{{ param.get_value_display }}</textarea>
     {% endifequal %}
     {% ifequal param.get_type "Text" %}
-       <textarea {{ widget_attrs }} >{{ param.value }}</textarea>
+       <textarea {{ widget_attrs }} >{{ param.get_value_display }}</textarea>
     {% endifequal %}
   {% endif %}
 </div>

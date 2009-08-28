@@ -15,10 +15,7 @@ class ParamWidget(widgets.Widget):
     def value_from_datadict(self, data, files, name):
         """ Returns a dictionary with only the value for widget param.
             ConfigWidget will compress all into a complete dictionary """
-        if self.param.get_type() == 'List':
-            value = data.getlist(name)
-        else:
-            value = data.get(name)
+        value = self.param.get_value_from_datadict(data, name)
         return {self.param.name: value}
 
     def render(self, name, value, attrs=None):

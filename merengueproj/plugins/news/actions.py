@@ -32,6 +32,8 @@ class PDFExport(ContentAction):
         params.Single(name='bestfriend', label=_('bestfriend'),
                       default='juan'),
         params.List(name='friends', label=_('friends'),
+                    default=['antonio', 'juan']),
+        params.List(name='more_friends', label=_('more friends'),
                     default=['antonio', 'juan'],
                     choices=[('antonio', 'Antonio'),
                              ('paco', 'Paco'),
