@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load inlinetrans %}
 {% block content %}
-<h1>{% inline_trans "Section list" %}</h1>
+<h1>{% inline_trans "Welcome to merengue" %}</h1>
 <ul class="sectionlist">
     {% for section in sections %}
         <li class="status{{ section.main_document.status }}">
