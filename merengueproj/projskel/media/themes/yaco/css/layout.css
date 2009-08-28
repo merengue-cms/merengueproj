@@ -1,0 +1,179 @@
+/* ----- global styles ----- */
+
+
+body {
+    font-size: 12pt;
+    font-family: arial;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+h1 {
+    font-size: 1.8em;
+    color:#54B848;
+}
+
+h2 {
+    font-size: 1.6em;
+}
+
+h3 {
+    font-size: 1.4em;
+}
+
+h4 {
+    font-size: 1.2em;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* ----- Useful class ----- */
+.visualClear {
+    display: block;
+    clear: both;
+}
+
+
+/* ----- content ----- */
+#container {
+    background: white url(/media/themes/yaco/img/leftsidebar_green.gif) repeat-y left top;
+}
+
+/* ----- header ----- */
+#header {
+    background: #2F2A12 url(/media/themes/yaco/img/header_back.gif) repeat-y left top;
+    height: 170px;
+    position: relative;
+}
+
+#headerlogo {
+    display: block;
+    position: absolute;
+    left: 70%;
+    top: 60px;
+    padding-left: 20px;
+}
+
+#header-links ul {
+    margin-top: 0;
+    padding-top: 1em;
+}
+
+#header ul {
+    margin-left: 3em;
+}
+
+#header-links ul li,
+#site-actions ul li,
+#language-tools ul li {
+    display: inline;
+}
+
+
+#user-actions a,
+#header-links a {
+    color: #54B848;
+}
+
+#user-actions {
+
+}
+
+#site-actions {
+    position: absolute;
+    bottom: 0;
+    display: block;
+    width: 70%;
+}
+
+#site-actions ul li{
+    margin-right: 0.8em;
+
+}
+
+#site-actions a {
+    color: #CCCCCC;
+}
+
+
+/* ----- content wrapper ----- */
+div#contentwrapper {
+    position: relative;
+    height: 100%;
+    margin-left: 2em;
+    padding: 0.5em 0 0 0.5em;
+}
+
+div#contentwrapper a {
+    color:#54B848;
+    text-decoration: underline;
+}
+
+div#contentwrapper a:hover {
+    color: #44EE22;
+}
+
+div#content {
+    position: relative;
+    float: left;
+    background: white;
+    margin-left: 10px;
+    width: 65%;
+    padding: 0 20px 10px 20px;
+}
+
+div#content ul {
+    list-style-type: square;
+    margin-left: 2em;
+}
+
+ul#content-actions li {
+    display: inline;
+    list-style: none;
+}
+
+/* -----  sidebar ----- */
+.block {
+    border: 1px solid #54B848;
+    padding: 1em;
+    width: 16em;
+}
+
+.block h1 {
+    margin-top: 0;
+}
+
+/* ----- left sidebar ----- */
+#left-sidebar {
+    display: none;
+}
+
+/* ----- right sidebar ----- */
+#right-sidebar {
+    margin-left: 70%;
+    padding: 0px 10px;
+}
+
+
+/* ----- left sidebar ----- */
+#footer {
+    margin-left: 3em;
+    display: block;
+    width: 100%;
+    color: #AAAAAA;
+    font-size: 0.8em;
+}
+
+#footer a {
+    color: #AAAAAA;
+}
