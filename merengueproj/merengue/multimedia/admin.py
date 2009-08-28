@@ -10,7 +10,8 @@ from django.contrib.auth.models import Group
 from batchadmin.util import model_ngettext
 
 from merengue.base.admin import BaseContentAdmin, BaseAdmin, VideoChecker,\
-                       WorkflowBatchActionProvider, BaseContentRelatedModelAdmin
+                       WorkflowBatchActionProvider, BaseContentRelatedModelAdmin,\
+                       RelatedModelAdmin
 from merengue.base.models import BaseContent, MultimediaRelation
 from merengue.multimedia.models import Photo, Video, PanoramicView, Image3D, Audio
 
@@ -230,9 +231,23 @@ class AudioAdmin(BaseMultimediaAdmin):
     list_display = ('__str__', 'status', 'last_editor')
 
 
+class RelatedBaseMultimediaAdmin(RelatedModelAdmin):
+
+    def relate_base_content(self, request, obj, form, change):
+        if not change:
+            multimedia_rel = MultimediaRelation.objects.create(content=self.basecontent,
+                multimedia=obj.basemultimedia_ptr)
+
+
+class RelatedPhotoAdmin(RelatedBaseMultimediaAdmin):
+    tool_name = 'photos'
+    related_field = 'basecontent'
+
+
 def register(site):
     site.register(Photo, PhotoAdmin)
     site.register(Video, VideoAdmin)
     site.register(PanoramicView, PanoramicViewAdmin)
     site.register(Image3D, Image3DAdmin)
     site.register(Audio, AudioAdmin)
+    site.register_related(Photo, RelatedPhotoAdmin, related_to=BaseContent)
