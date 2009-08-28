@@ -1,5 +1,3 @@
-<div class="breadcrumbs">
 {% for url in url_list %}
   <a href="{{ url.url }}">{{ url.label }}</a>{% if not forloop.last %} &rsaquo; {% endif %}
 {% endfor %}
-</div>

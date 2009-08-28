@@ -10,7 +10,7 @@ def _calculate_route(context):
     opts = context.get('opts', None)
     model_admin = context.get('model_admin', None)
     admin_site = model_admin.admin_site
-    original = context.get('original', None)
+    original = context.get('original', None) or context.get('object', None)
     site_list = [{'site': admin_site,
                   'opts': model_admin.opts,
                   'obj': original,
