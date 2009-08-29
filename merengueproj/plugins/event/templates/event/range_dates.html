@@ -1,0 +1,8 @@
+{% load inlinetrans datefilters %}{% spaceless %}
+{% if start and not end %}
+  {{ start|transdate }}
+{% endif %}
+{% if start and end %}
+    {% inline_trans "From" %} {{ start|transdate }} {% inline_trans "To" %} {{ end|transdate }}
+{% endif %}
+{% endspaceless %}

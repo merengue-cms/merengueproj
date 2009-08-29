@@ -1,0 +1,7 @@
+{% spaceless %}
+{% load inlinetrans %}
+{% for category in event.categories.all %}
+    {{ category }}{% if forloop.last %}{% else %},{% endif %}
+{% endfor %}
+{% endspaceless %}
+

@@ -1,0 +1,20 @@
+{% load inlinetrans thumbnail content_tags %}
+{% if highlight_events %}
+<h2 style="margin: 0px;">{% inline_trans "This week in Andalusia" %}</h2>
+<div class="week-events">
+  <table><tr>
+  {% for event in highlight_events %}
+    <td>
+    {% if event.main_image %}
+      <a href="{{ event.get_absolute_url }}"><img src="{% thumbnail event.main_image 100x132 %}" /></a>
+    {% endif %}
+      <strong><a href="{{ event.get_absolute_url }}">{{ event }}</a></strong>
+      <div class="week-event-location">
+        {% content_cities event %}<br />
+        {% content_provinces event %}
+      </div>
+    </td>
+  {% endfor %}
+  </tr></table>
+</div>
+{% endif %}

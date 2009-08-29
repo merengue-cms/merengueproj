@@ -1,0 +1,13 @@
+{% extends "event/event_base.html" %}
+
+{% load i18n event_tags %}
+
+{% block extrastyle %}
+  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}jscalendar/skins/aqua/theme.css" />
+{% endblock %}
+
+{% block menuselected %}index{% endblock %}
+
+{% block contentbody %}
+    {% highlight_events %}
+{% endblock contentbody %}

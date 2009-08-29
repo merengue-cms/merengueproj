@@ -1,0 +1,50 @@
+{% load i18n inlinetrans %}
+<table>
+  {% with form.binded_fields as fields %}
+  <tr>
+    <td>
+      {{ fields.name }}
+    </td>
+  </tr>
+  <tr>
+    <td id="firstCity">
+      <input type="radio" value="only-city" name="__cityselect" class="radioinput"/>
+      {{ fields.location__cities__name }}
+    </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td id="secondProvince" class="provinceAutolocation"><a class="autolocationDestination" href="{% url places_ajax_province %}"><!-- used for autolocations plugin --></a>
+      <input type="radio" value="province-and-tzone" name="__cityselect" class="radioinput"/>
+      {{ fields.location__cities__province }}
+    </td>
+    <td id="secondCity" class="cityAutolocation"><a class="autolocationDestination" href="{% url places_ajax_city %}"><!-- used for autolocations plugin --></a>
+      {{ fields.location__cities }}
+    </td>
+  </tr>
+  <tr>
+    <td class="searchType with-js-calendar with-js-calendar-margin">
+      {{ fields.cached_max_end__gte }}
+    </td>
+    <td class="searchType with-js-calendar">
+      {{ fields.cached_min_start__lte }}
+    </td>
+  </tr>
+  <tr>
+     <td colspan="2">
+       <div class="border"></div>
+     </td>
+  </tr>
+  <tr>
+    <td class="searchType" colspan="2">
+      {{ fields.categories }}
+    </td>
+
+  </tr>
+  {% endwith %}
+</table>
+<div class="selectedSearch">
+  <p>{% inline_trans "Search items" %} <span class="query"></span></p>
+  <input name="__section_slug" type="hidden" value="{{form.section.slug}}"/>
+  <input class="search-action" name="__search_action" type="submit" value="{% trans "Search" %}"/>
+</div>

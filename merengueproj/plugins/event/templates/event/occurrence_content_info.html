@@ -1,0 +1,86 @@
+{% load i18n inlinetrans content_tags list_utils comparison %}
+{% for occurrence in multiple %}
+{% with occurrence.event as content %}
+<div class="andaluciaContentInfo">
+  <span class="hide infoWindowHeight">150</span>
+  <h3>
+    <a href="{{ content.get_absolute_url }}" alt="{{ content.name }}" title="{{ content.name }}" target="_blank">{{ content.name|truncatewords:6 }}</a>
+  </h3>
+  <br />
+
+  {% if content.location %}
+  {% with content.location.cities.all as cities %}
+  {% with content.get_provinces as provinces %}
+  {% get_count cities as cities_count %}
+  {% get_count provinces as provinces_count %}
+  {% if provinces %}
+  {% ifequal provinces_count 1 %}
+  <div>
+    <strong>{% inline_trans "Province" %}:</strong>
+    <span>{{ provinces.0 }}</span>
+  </div>
+  {% else %}
+  <div>
+    <strong>{% inline_trans "Provinces" %}:</strong>
+    <span>{{ provinces|join:", " }}</span>
+  </div>
+  {% endifequal %}
+  {% endif %}
+  {% if cities %}
+  {% if_less_or_equal cities_count 1 %}
+  <div>
+    <strong>{% inline_trans "City" %}</strong>
+    <span>{{ cities.0 }}</span>
+  </div>
+  {% else %}
+  <div>
+    <strong>{% inline_trans "Cities" %}</strong>
+    <span>
+      {% for city in cities|dictsort:"name"|slice:":6" %}
+      {{ city }}{% if not forloop.last %}, {% endif %}
+      {% endfor %}
+      {% if cities|slice:"6:" %}...{% endif %}
+    </span>
+  </div>
+  {% endif_less_or_equal %}
+  {% endif %}
+  {% endwith %}
+  {% endwith %}
+  {% else %}
+  {% if content.province.id %}
+  <div>
+    <strong>{% inline_trans "Province" %}</strong>
+    <span>{{ content.province }}</span>
+  </div>
+  {% endif %}
+  {% if content.city.id %}
+  <div>
+    <strong>{% inline_trans "City" %}</strong>
+    <span>{{ content.city }}</span>
+  </div>
+  {% endif %}
+  {% if content.village.id %}
+  <div>
+    <strong>{% inline_trans "Village" %}</strong>
+    <span>{{ content.village }}</span>
+  </div>
+  {% endif %}
+  {% endif %}
+
+    {% if occurrence.place or occurrence.basecontent_location %}
+    <div>
+      <strong>{% inline_trans "Event location" %}:</strong>
+      </span>
+      {% if occurrence.basecontent_location %}
+         <a href="{{ occurrence.basecontent_location.get_absolute_url }}">{% firstof occurrence.place occurrence.basecontent_location %}</a>
+      {% else %}
+        {{ occurrence.place }}
+      {% endif %}
+      </span>
+    </div>
+    {% endif %}
+
+  <a href="{{ content.get_absolute_url }}" target="_blank">{% inline_trans "More info" %}</a> {% content_admin_link content %}
+</div>
+{% endwith %}
+{% endfor %}

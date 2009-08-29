@@ -1,0 +1,47 @@
+{% load i18n inlinetrans event_tags content_tags comparison %}
+{% if parent or children %}
+   {% if children %}  
+   <h2>{% inline_trans "Event Schedule" %}</h2>
+   <ul class="relatedEvents">
+       {% for child in children %}
+        <li id="event-{{ child.id }}">
+          {% if not child.visible %} 
+              <div class="title eventExpired">
+                  <div class="contentwithicon name">
+                      <img src="{{ MEDIA_URL }}img/event_list_icon_expired.jpg"  alt="{{ child.get_class_name }}"/>
+                      <a href="{{ child.public_link }}">{% cutrender 35 %}{{ child }}{% endcutrender %}</a>
+                  </div>
+          {% else %}
+              {% with  child.get_list_icon as list_icon %}
+                <div class="title">
+                  {% if list_icon %}
+                    <div class="contentwithicon name">
+                      <img src="{{ list_icon }}"  alt="{{ child.get_class_name }}"/>
+                      <a href="{{ child.public_link }}">{% cutrender 35 %}{{ child }}{% endcutrender %}</a>
+                    </div>
+                  {% else %}
+                    <div class="contenttype contenttype-{% spaceless %}{{ child.get_class_name }}{% endspaceless %}">
+                    <a href="{{ child.public_link }}">{% cutrender 35 %}{{ child }}{% endcutrender %}</a>
+                    </div>
+                  {% endif %}
+              {% endwith %}
+          {% endif %}
+
+                <div class="childcities">
+                {% with child.location.cities.all as cities %}
+                    {% for city in cities|slice:":2" %}
+                       <a href="{{ city.get_absolute_url }}">{{ city }}</a>{% if not forloop.last %},
+                       {% else %}{% if_greater cities.count 2 %},...{% endif_greater %}
+                       {% endif %}
+                    {% endfor %}
+                {% endwith %}
+                </div>
+                <div class="dates">{% range_dates_as_tag child.cached_min_start child.cached_max_end 'span' %}</div>
+            </div>
+        </li>
+      {% endfor %} 
+   </ul>
+   {% endif %}
+
+<div class="visualClear"></div>
+{% endif %}

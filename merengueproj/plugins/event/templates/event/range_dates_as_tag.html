@@ -1,0 +1,7 @@
+{% load inlinetrans datefilters %}
+{% if start %}
+   <{{ tag }} class="{% if classdef %}{{ classdef }} {% endif %}start" >{{ start|transdate }}</{{ tag }}>
+{% endif %}
+{% if end %}
+   <{{ tag }} class="{% if classdef %}{{ classdef }} {% endif %}end">{{ end|transdate }}</{{ tag }}>
+{% endif %}

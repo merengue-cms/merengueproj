@@ -1,0 +1,14 @@
+{% extends "base/search_results_view.html" %}
+
+{% block extrastyle %}
+  {{ block.super}}
+  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}jscalendar/skins/aqua/theme.css" />
+{% endblock %}
+
+{% block search_results_object_list %}
+  {% if object_list %}
+    {% with object_list as result_list %}
+    {% include "event/search_results.html" %}
+    {% endwith %}
+  {% endif %}
+{% endblock %}

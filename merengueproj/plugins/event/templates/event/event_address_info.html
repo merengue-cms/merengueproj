@@ -1,0 +1,83 @@
+{% load i18n inlinetrans content_tags event_tags list_utils %}
+{% if location.has_info or occurrence.place %}
+<h4>{% inline_trans "Location" %}</h4>
+
+{% if occurrence.place or occurrence.basecontent_location %}
+  <span class="twoColumns">
+     <strong>{% inline_trans "Event location" %}:</strong> 
+     {% if occurrence.basecontent_location %}
+         <a href="{{ occurrence.basecontent_location.get_absolute_url }}">{% firstof occurrence.place occurrence.basecontent_location %}</a>
+     {% else %}
+        {{ occurrence.place }}
+     {% endif %}
+  </span>
+{% endif %}
+
+{% if location.address %}
+  <span class="twoColumns">
+  <strong>{% inline_trans "Address" %}:</strong>
+  {% ifnotequal location.address_type.slug "ninguna" %}{{ location.address_type_txt }}{% endifnotequal %}
+  {{ location.address }}{% if location.number %}, {{ location.number }}{% endif %}{% if location.address_more_info %} - {{ location.address_more_info }}{% endif %}
+  </span>
+{% endif %}
+
+{% if location.postal_code %}
+  <span class="twoColumns">
+  <strong>{% inline_trans "Postal code" %}:</strong>
+  {{ location.postal_code }}
+  </span>
+{% endif %}
+
+{% with occurrence.get_cities as cities %}
+ {% if cities %}
+  {% if cities|length_is:"1" %}
+   <span class="twoColumns"><strong>{% inline_trans "City" %}:</strong>
+    <a href="{{ cities.0.get_absolute_url }}" title="{{ cities.0.name }}">{{ cities.0 }}</a>
+   </span>
+  {% else %}
+    <span class="twoColumns"><strong>{% inline_trans "Cities" %}:</strong>
+    {% for city in cities %}
+      <a href="{{ city.get_absolute_url }}" title="{{ city.name }}">{{ city }}</a>{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+    </span>
+  {% endif %}
+ {% endif %}
+{% endwith %}
+
+{% with occurrence.get_villages as villages %}
+ {% if villages %}
+  {% get_count villages as villages_count %}
+  {% if villages|length_is:"1" %}
+   <span class="twoColumns"><strong>{% inline_trans "Village" %}:</strong>
+    <a href="{{ villages.0.get_absolute_url }}" title="{{ villages.0.name }}">{{ villages.0 }}</a>
+   </span>
+  {% else %}
+    <span class="twoColumns"><strong>{% inline_trans "Villages" %}:</strong>
+    {% for village in villages %}
+      <a href="{{ village.get_absolute_url }}" title="{{ village.name }}">{{ village }}</a>{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+    </span>
+  {% endif %}
+ {% endif %}
+{% endwith %}
+
+{% with occurrence.get_provinces as provinces %}
+  {% if provinces %}
+   {% if provinces.distinct|length_is:"1" %}
+    <span class="twoColumns"><strong>{% inline_trans "Province" %}:</strong>
+     <a href="{{ provinces.0.get_absolute_url }}" title="{{ provinces.0.name }}">{{ provinces.0 }}</a>
+    </span>
+   {% else %}
+     <span class="twoColumns"><strong>{% inline_trans "Provinces" %}:</strong>
+     {% for province in provinces.distinct %}
+      <a href="{{ province.get_absolute_url }}" title="{{ province.name }}">{{ province }}</a>{% if not forloop.last %}, {% endif %}
+     {% endfor %}
+     </span>
+   {% endif %}
+  {% endif %}
+{% endwith %}
+
+<div class="visualClear"></div>
+{% endif %}
+
+
