@@ -1,0 +1,100 @@
+{% load i18n inlinetrans contenttype map_tags thumbnail %}
+{% if content_pois or display_content or content_areas %}
+<h2 id="mapa">{% inline_trans "Map" %}</h2>
+
+<div class="map-container">
+  {% if show_directions %}
+  <div class="googlemap-directions-form">
+    <h3 class="color">{% inline_trans "How to get there?" %}</h3>
+    <form class="directions-form">
+        <label for="id_from">{% inline_trans "Origin address" %}</label>
+        <input id="id_from" type="text" name="from" />
+        <input type="submit" value="{% trans "See route" %}" />
+    </form>
+  </div>
+  {% endif %}
+
+  {% if travel_directions %}
+  <div class="calculate-travel-route">
+    <span class="hide ajaxUrl">{{ travel_directions_ajax_url }}</span>
+    <a class="trigger-link" href="">{% inline_trans "Calculate travel route" %}</a>
+  </div>
+  {% endif %}
+
+  <div style="clear: both;"></div>
+
+  <div class="googlemap-sidebar">
+    <a href="#" class="close-link">X</a>
+    <div class="googlemap-directions"></div>
+  </div>
+
+  <div id="googlemap" class="googlemap-with-functions">
+  {% if show_map %}
+    <div class="mapParameters hide">
+      {% if zoom_to_bounds %}
+      <span class="bound0">{{ bounds.0 }}</span>
+      <span class="bound1">{{ bounds.1 }}</span>
+      <span class="bound2">{{ bounds.2 }}</span>
+      <span class="bound3">{{ bounds.3 }}</span>
+      {% else %}
+        {% if content.main_location %}
+        <span class="latitude">{{ content.main_location.y }}</span>
+        <span class="longitude">{{ content.main_location.x }}</span>
+        {% endif %}
+      {% endif %}
+      {% if markers_url %}
+      <span class="markersUrl">{{ markers_url }}</span>
+      {% endif %}
+      {% if not pois_hidden_initially %}
+        <span class="markersShownInitially">1</span>
+      {% endif %}
+    </div>
+
+    {% if display_content %}
+      {% if content.location.main_location %}
+        {% content_type content as content_type %}
+        <div class="mapPoint hide">
+          <span class="id">{{ content.id }}</span>
+          <span class="url">{% url content_info content_type=content_type.id, content_id=content.id %}?lang={{ LANGUAGE_CODE }}</span>
+          <span class="latitude">{{ content.main_location.y }}</span>
+          <span class="longitude">{{ content.main_location.x }}</span>
+          <span class="title">{{ content.name }}</span>
+          <span class="cluster_text">{{ content.get_cluster_text }}</span>
+          <span class="cluster_icon_name">{{ content.get_cluster_icon_name }}</span>
+          {% if show_main_image %}
+              <span class="iconImage">{% thumbnail content.main_image 40x40 %}</span>
+          {% else %}
+              <span class="iconImage">{{ content.get_icon }}</span>
+          {% endif %}
+          <span class="showSingle">1</span>
+        </div>
+      {% else %}
+        {% if content.main_location %}
+          {# is a city or village #}
+          {% content_type content as content_type %}
+          <div class="mapPoint hide">
+            <span class="id">{{ content.id }}</span>
+            <span class="url">{% url content_info content_type=content_type.id, content_id=content.id %}</span>
+            <span class="latitude">{{ content.main_location.y }}</span>
+            <span class="longitude">{{ content.main_location.x }}</span>
+            <span class="title">{{ content.name }}</span>
+
+          {% if show_main_image %}
+              <span class="iconImage">{% thumbnail content.main_image 40x40 %}</span>
+          {% else %}
+              <span class="iconImage">{{ content.get_icon }}</span>
+          {% endif %}
+            <span class="iconWidth">19</span>
+            <span class="iconHeight">35</span>
+            <span class="iconAnchorX">10</span>
+            <span class="iconAnchorY">35</span>
+            <span class="showSingle">1</span>
+          </div>
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  </div>
+  {% endif %}
+
+</div>
+{% endif %}

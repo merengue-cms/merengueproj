@@ -1,0 +1,65 @@
+{% load contenttype %}
+{% if show_map %}
+<script type="text/javascript" src="http://www.google.com/jsapi?key={{ GOOGLE_MAPS_API_KEY }}"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/ClusterMarker_1.3.2/unobfuscated/ClusterMarker.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.gmap.js"></script>
+
+<script type="text/javascript">
+    (function ($) {
+        $(document).ready(function () {
+            var setup_big_map = function() {
+                $("#googlemap").gmap({
+                      {% if map_type %}map_type: {{ map_type }},{% endif %}
+                      {% if force_cluster %}force_cluster_in_max_zoom: true,{% endif %}
+                      use_cluster: true,
+                      plus_icon_image: "{{ MEDIA_URL }}img/plus_marker.gif",
+                      filter_url: "{% url places_ajax_nearby %}",
+                      recalculate_marks_when_map_changes: true
+                      {% if content %}
+                        {% content_type content as content_type %}
+                            ,content_type_id: {{ content_type.id }},
+                            content_id: {{ content.id }}
+                      {% endif %}
+                  }).trigger("map-created");
+            };
+
+            var setup_googlemaps = function() {
+                {% if not on_click %}
+                setup_big_map();
+                {% endif %}
+                $(".mini-googlemap").gmap({
+                    use_cluster: false,
+                    show_directions: false,
+                    use_small_controls: true
+                });
+            };
+
+            google.load("maps", "2", {callback: setup_googlemaps, other_params: "sensor=false"});
+
+            {% if on_click %}
+            $("{{ on_click }}").click(function () {
+                 var that = this;
+                 var url = $(this).attr("href");
+                 var container = $("<div></div>").insertAfter(this);
+                 $.ajax({
+                     'url': url,
+                     'dataType': 'html',
+                     'type': 'GET',
+                     'cache': false,
+                     'success': function (data) {
+                         container.html(data).slideDown("slow", function () {
+                             setup_big_map();
+                             $(that).hide();
+                             $(that).prev().hide();
+                         });
+                     }
+                 });
+                 return false;
+            });
+            {% endif %}
+        });
+
+    })(jQuery);
+</script>
+
+{% endif %}

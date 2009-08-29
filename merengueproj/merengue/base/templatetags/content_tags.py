@@ -123,17 +123,6 @@ def content_list(context, resource_list, with_rating=False):
              }
 
 
-@register.inclusion_tag('places/show_cities.html', takes_context=True)
-def content_related_cities(context, cities_list, with_rating=False):
-    return {'resource_list': cities_list,
-            'request': context.get('request', None),
-            'MEDIA_URL': context.get('MEDIA_URL', '/media/'),
-            'LANGUAGE_CODE': context.get('LANGUAGE_CODE', 'es'),
-            'GOOGLE_MAPS_API_KEY': context.get('GOOGLE_MAPS_API_KEY', ''),
-            'user': context.get('user', None),
-             }
-
-
 @register.inclusion_tag('base/content_related_sections.html', takes_context=True)
 def content_related_sections(context, section_list, with_rating=False):
     return {'section_list': section_list,
@@ -166,13 +155,11 @@ def content_related_items(context, content):
     related_items_excluded = ['story']
     related_items = content.related_items.published().exclude(class_name__in=related_items_excluded)
     related_stories = content.related_items.published().filter(class_name='story')
-    related_cities = content.related_cities.all()
     related_sections = content.basesection_set.all()
 
     return {'content': content,
             'related_items': related_items,
             'related_stories': related_stories,
-            'related_cities': related_cities,
             'related_sections': related_sections,
             'request': context.get('request', None),
             'GOOGLE_MAPS_API_KEY': context.get('GOOGLE_MAPS_API_KEY', ''),

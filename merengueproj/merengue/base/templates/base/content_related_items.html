@@ -1,0 +1,8 @@
+{% load i18n inlinetrans content_tags %}
+
+{% if related_items or related_cities or related_sections %}
+  <h2>{% inline_trans "Related contents" %}</h2>
+ {% if related_items %}
+  {% content_list related_items %}
+ {% endif %}
+{% endif %}

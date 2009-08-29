@@ -9,7 +9,6 @@ from searchform.utils import search_button_submitted
 from merengue.section.models import BaseSection, Document, Section
 
 from merengue.base.views import search_results
-from merengue.event.forms import EventCategoriesQuickSearchForm
 
 
 def section_view(request, section_slug, original_context={}, template='section/document_view.html'):
@@ -37,22 +36,6 @@ def independent_document_view(request, document, section=None, original_context=
         section = request.section
     context = {'document': document, 'section': section.real_instance, 'search_form': search_form}
     context.update(original_context)
-    _update_context_section(context, section)
-
-    if search_button_submitted(request):
-        return search_results(request, search_form, context)
-    else:
-        return render_to_response(template,
-                                  context,
-                                  context_instance=RequestContext(request))
-
-
-def section_agenda(request, section_slug, original_context={}, template='section/section_agenda.html'):
-    section = get_object_or_404(BaseSection, slug=section_slug)
-    search_form = EventCategoriesQuickSearchForm(section)
-    context = {'section': section.real_instance, 'search_form': search_form}
-    context.update(original_context)
-    _update_context_section(context, section)
 
     if search_button_submitted(request):
         return search_results(request, search_form, context)
@@ -80,10 +63,6 @@ def section_custom_style(request, section_slug):
                               {'customstyle': section.customstyle},
                               context_instance=RequestContext(request),
                               mimetype='text/css')
-
-
-def _update_context_section(context, section):
-    context['event_categories'] = EventCategoriesQuickSearchForm.get_categories(section)
 
 
 def _parse_search_form_filters(value):

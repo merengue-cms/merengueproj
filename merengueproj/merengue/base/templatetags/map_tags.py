@@ -290,7 +290,7 @@ def _sort_content_types_args(x, y):
 
 def _get_content_types(args):
     if not args:
-        args = settings.FILTRABLE_MODELS
+        args = settings.MAP_FILTRABLE_MODELS
     args=list(args)
     args.sort(_sort_content_types_args)
     content_types = []
