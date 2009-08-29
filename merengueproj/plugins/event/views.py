@@ -3,15 +3,15 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 
-from merengue.base.decorators import content_public_required
-from merengue.base.views import search_results
 from searchform.utils import search_button_submitted
+
+from merengue.base.decorators import content_public_required
+from merengue.base.views import search_results, content_view
 from merengue.section.views import section_view
 
 from rating.models import Vote
-
-from merengue.event.models import Event, Occurrence
-from merengue.event.forms import EventQuickSearchForm, EventAdvancedSearchForm
+from plugins.event.models import Event, Occurrence
+from plugins.event.forms import EventQuickSearchForm, EventAdvancedSearchForm
 
 
 def event_index(request):
@@ -32,12 +32,10 @@ def event_view(request, event_slug):
     occurrences = event.occurrence_event.all()
     event_pois = list(children_occurrences) + list(occurrences)
 
-    return render_to_response('event/event_view.html',
-                              {'event': event,
-                               'parent': parent,
-                               'event_pois': event_pois,
-                               'show_moreoccurrences': show_moreoccurrences},
-                              context_instance=RequestContext(request))
+    return content_view(request, event, 'event/event_view.html',
+                        extra_context={'event_pois': event_pois,
+                                       'parent': parent,
+                                       'show_moreoccurrences': show_moreoccurrences, })
 
 
 def event_search(request):

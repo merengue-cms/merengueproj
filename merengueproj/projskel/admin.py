@@ -5,27 +5,14 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 
 from merengue.base.admin import BaseContentAdminExtra
-from merengue.base.models import BaseContent, ContactInfo
-from merengue.multimedia.admin import BaseMultimediaRelatedAddContentModelAdmin, \
-                             BaseMultimediaRelatedRemoveContentModelAdmin, \
-                             PendingBaseMultimediaAdmin
-from merengue.multimedia.models import BaseMultimedia, Photo, Video, PanoramicView, Image3D
-from merengue.places.models import Location
+from merengue.base.models import BaseContent
+from merengue.multimedia.admin import PendingBaseMultimediaAdmin
+from merengue.multimedia.models import BaseMultimedia, Photo
 from merengue.section.models import (Carousel, Section, Document,
                             AppSection, Menu, CustomStyle)
 from merengue.event.models import Event
-from merengue.event.admin import setup_event_admin
 
-from merengue.base.admin import (BaseContentRelatedLocationModelAdmin,
-                        BaseContentRelatedContactInfoAdmin,
-                        BaseContentRelatedItemsRelatedModelAdmin,
-                        BaseContentRelatedPhotoModelAdmin,
-                        BaseContentRelatedVideoModelAdmin,
-                        BaseContentRelatedPanoramicViewModelAdmin,
-                        BaseContentRelatedImage3DModelAdmin,
-                        LogEntryRelatedContentModelAdmin)
-
-from merengue.base.admin import site, get_subclasses_registry_in_admin
+from merengue.base.admin import LogEntryRelatedContentModelAdmin
 
 from merengue.section.admin import (CarouselRelatedAddPhotoModelAdmin,
                            CarouselRelatedRemovePhotoModelAdmin,
@@ -54,29 +41,6 @@ class AppAdminSite(admin.AdminSite):
         return super(AppAdminSite, self).root(request, url)
 
 
-def setup_basecontents_admin():
-    app_admin_sites = []
-    for model, model_admin in get_subclasses_registry_in_admin(BaseContent, admin_site=site):
-        app_admin_site = AppAdminSite(model, model_admin)
-        if model in IGNORE_CONTACT_ADMIN_MODEL:
-            app_admin_site.no_contact = True
-        else:
-            app_admin_site.register(ContactInfo, BaseContentRelatedContactInfoAdmin)
-        if model in IGNORE_LOCATION_ADMIN_MODEL:
-            app_admin_site.no_location = True
-        else:
-            app_admin_site.register(Location, BaseContentRelatedLocationModelAdmin)
-        app_admin_site.register(Photo, BaseContentRelatedPhotoModelAdmin)
-        app_admin_site.register(Video, BaseContentRelatedVideoModelAdmin)
-        app_admin_site.register(PanoramicView, BaseContentRelatedPanoramicViewModelAdmin)
-        app_admin_site.register(Image3D, BaseContentRelatedImage3DModelAdmin)
-        app_admin_site.register(BaseContent, BaseContentRelatedItemsRelatedModelAdmin)
-        if model == Event:
-            setup_event_admin(app_admin_site)
-        app_admin_sites.append((model, app_admin_site, 'admin'))
-    return app_admin_sites
-
-
 def setup_sections_admin():
     carousel_admin_site_add = AppAdminSite(Carousel)
     carousel_admin_site_add.register(Photo, CarouselRelatedAddPhotoModelAdmin)
@@ -96,18 +60,6 @@ def setup_sections_admin():
             (Section, section_admin_site, 'admin'),
             (AppSection, appsection_admin_site, 'admin'),
            ]
-
-
-def setup_multimedia_admin():
-    multimedia_admin_sites = []
-    for model, model_admin in get_subclasses_registry_in_admin(BaseMultimedia, admin_site=site):
-        multimedia_admin_site_add = AppAdminSite(model, model_admin)
-        multimedia_admin_site_add.register(BaseContent, BaseMultimediaRelatedAddContentModelAdmin)
-        multimedia_admin_sites.append((model, multimedia_admin_site_add, 'admin_add'))
-        multimedia_admin_site_remove = AppAdminSite(model)
-        multimedia_admin_site_remove.register(BaseContent, BaseMultimediaRelatedRemoveContentModelAdmin)
-        multimedia_admin_sites.append((model, multimedia_admin_site_remove, 'admin_remove'))
-    return multimedia_admin_sites
 
 
 def setup_user_admin():

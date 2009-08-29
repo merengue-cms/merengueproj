@@ -1,7 +1,7 @@
 from django import template
 from django.db.models import Q
 
-from merengue.event.models import Event
+from plugins.event.models import Event
 from merengue.multimedia.models import Photo
 
 from datetime import datetime

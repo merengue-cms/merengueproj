@@ -31,7 +31,6 @@ MERENGUE_APPS = (
     'merengue.action',
     'merengue.block',
     'merengue.portal',
-    'merengue.event',
     'merengue.internallinks',
 )
 
@@ -137,3 +136,9 @@ CAPTCHA_SETTINGS = {
 # Default parameters for suggestion box
 SUGGESTION_BOX_EMAIL = 'info@foo.com'
 CONTACT_SUGGESTIONBOX_PREFIX = 'SUGGESTION BOX'
+
+
+# Map parameters
+MAP_FILTRABLE_MODELS = (
+    'base.basecontent',
+)

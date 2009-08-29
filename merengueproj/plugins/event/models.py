@@ -13,7 +13,7 @@ from merengue.base.models import BaseContent, BaseCategory, ContactInfo
 from merengue.section.models import BaseSection
 from merengue.places.models import Location
 
-from merengue.event.managers import EventManager, OccurrenceManager
+from plugins.event.managers import EventManager, OccurrenceManager
 
 
 FREQS = (("YEARLY", _("Yearly")),
@@ -95,7 +95,7 @@ class Event(BaseContent):
 
     @permalink
     def public_link(self):
-        return ('event.views.event_view', [self.slug])
+        return ('plugins.event.views.event_view', [self.slug])
 
     def __unicode__(self):
         return self.title or self.name or u''

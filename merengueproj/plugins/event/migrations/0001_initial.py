@@ -1,12 +1,12 @@
-
 from south.db import db
 from django.db import models
-from merengue.event.models import *
+from plugins.event.models import *
+
 
 class Migration:
-    
+
     def forwards(self, orm):
-        
+
         # Adding model 'Category'
         db.create_table('event_category', (
             ('id', orm['event.Category:id']),
@@ -16,7 +16,7 @@ class Migration:
             ('slug', orm['event.Category:slug']),
         ))
         db.send_create_signal('event', ['Category'])
-        
+
         # Adding model 'Event'
         db.create_table('event_event', (
             ('basecontent_ptr', orm['event.Event:basecontent_ptr']),
@@ -30,7 +30,7 @@ class Migration:
             ('frequency', orm['event.Event:frequency']),
         ))
         db.send_create_signal('event', ['Event'])
-        
+
         # Adding model 'CategoryGroup'
         db.create_table('event_categorygroup', (
             ('id', orm['event.CategoryGroup:id']),
@@ -41,7 +41,7 @@ class Migration:
             ('hidden_in_global_search', orm['event.CategoryGroup:hidden_in_global_search']),
         ))
         db.send_create_signal('event', ['CategoryGroup'])
-        
+
         # Adding model 'Occurrence'
         db.create_table('event_occurrence', (
             ('id', orm['event.Occurrence:id']),
@@ -60,14 +60,14 @@ class Migration:
             ('end', orm['event.Occurrence:end']),
         ))
         db.send_create_signal('event', ['Occurrence'])
-        
+
         # Adding ManyToManyField 'Category.groups'
         db.create_table('event_category_groups', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('category', models.ForeignKey(orm.Category, null=False)),
-            ('categorygroup', models.ForeignKey(orm.CategoryGroup, null=False))
+            ('categorygroup', models.ForeignKey(orm.CategoryGroup, null=False)),
         ))
-        
+
         # Adding ManyToManyField 'CategoryGroup.sections'
         db.create_table('event_categorygroup_sections', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),

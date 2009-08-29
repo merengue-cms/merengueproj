@@ -1,22 +1,15 @@
-from django import template
-from django.contrib import admin
-from django.contrib.admin.util import unquote
-from django.core.exceptions import PermissionDenied
-from django.forms import DateField
-from django.http import Http404, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response, get_object_or_404
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.utils.encoding import force_unicode
-from django.utils.html import escape
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.base.admin import BaseContentAdmin, BaseAdmin, BaseContentRelatedModelAdmin, Location, ReverseAdminInline
+from merengue.base.admin import RelatedModelAdmin, BaseContentAdmin, BaseAdmin, Location, ReverseAdminInline
 from merengue.base.admin import InlineLocationModelAdmin
-from merengue.base.models import BaseContent, ContactInfo
-from merengue.base.widgets import AdminDateOfDateTimeWidget
+from merengue.base.models import ContactInfo
 from batchadmin.forms import CHECKBOX_NAME
 from batchadmin.util import get_changelist
-from merengue.event.models import Event, Occurrence, Category, CategoryGroup
+from plugins.event.models import Event, Occurrence, Category, CategoryGroup
 
 SECTIONS_SLUG_EXCLUDE = ('eventos', )
 
@@ -160,114 +153,16 @@ class BaseContentLocationOccurrenceAdmin(BaseContentAdmin):
     place_at.short_description = "Set occurrence location at content location"
 
 
-class EventRelatedOccurrenceAdmin(BaseContentRelatedModelAdmin):
-    change_list_template = 'admin/event/occurrence/change_list.html'
-    change_form_template = 'admin/event/occurrence/change_form.html'
+class RelatedOcurrenceAdmin(RelatedModelAdmin):
+    tool_name = 'occurrences'
+    related_field = 'event'
     list_display = ('__str__', 'start', 'end', 'google_minimap')
     list_filter = ('start', 'end', )
     html_fields = ('price', 'schedule', )
-    inlines = [OccurrenceContactInfoAdminInline, OccurrenceLocationAdminInline]
-
-    def __init__(self, *args, **kwargs):
-        super(EventRelatedOccurrenceAdmin, self).__init__(*args, **kwargs)
-        self.basecontent_admin = BaseContentLocationOccurrenceAdmin(BaseContent, self.admin_site)
-
-    def response_add(self, request, obj, post_url_continue='../%s/'):
-        opts = obj._meta
-        pk_value = obj._get_pk_val()
-
-        msg = ugettext('The %(name)s "%(obj)s" was added successfully.') % {'name': force_unicode(opts.verbose_name), 'obj': force_unicode(obj)}
-
-        if "_content_locate" in request.POST.keys():
-            self.message_user(request, msg + u' ' + ugettext('You can select a content to place your location.'))
-            return HttpResponseRedirect(post_url_continue % pk_value + 'content_locate/')
-        return super(EventRelatedOccurrenceAdmin, self).response_add(request, obj, post_url_continue)
-
-    def queryset(self, request):
-        return self.admin_site.basecontent.occurrence_event.all()
-
-    def save_model(self, request, obj, form, change):
-        obj.event = self.admin_site.basecontent
-        super(EventRelatedOccurrenceAdmin, self).save_model(
-                request, obj, form, change)
-
-    def get_form(self, request, obj=None, **kwargs):
-        form = super(EventRelatedOccurrenceAdmin, self).get_form(
-                request, obj, **kwargs)
-        if 'event' in form.base_fields.keys():
-            form.base_fields.pop('event')
-        return form
-
-    def get_formsets(self, request, obj=None):
-        for inline in self.inline_instances:
-            if isinstance(inline, OccurrenceLocationAdminInline) and\
-               obj and obj.basecontent_location:
-                continue
-            yield inline.get_formset(request, obj)
-
-    def save_formset(self, request, form, formset, change):
-        """ override method for updating event location from all occurrences """
-        formset.save()
-        formset.instance.event.update_location()
-
-    def __call__(self, request, url):
-        if url and 'content_locate' in url:
-            new_url = url[url.find('content_locate')+15:] or None
-            object_id = url[:url.find('/content_locate')]
-            try:
-                if object_id == 'add':
-                    self.basecontent_admin.occurrence=None
-                else:
-                    obj = self.model._default_manager.get(pk=unquote(object_id))
-                    self.basecontent_admin.occurrence=obj
-                return self.basecontent_admin(request, new_url)
-            except self.model.DoesNotExist:
-                pass
-        elif url and url.endswith('content_unplace'):
-            url = url[:url.find('/content_unplace')]
-            return self.unplace(request, unquote(url))
-        return super(EventRelatedOccurrenceAdmin, self).__call__(request, url)
-
-    def unplace(self, request, object_id):
-        opts = self.model._meta
-
-        try:
-            obj = self.model._default_manager.get(pk=unquote(object_id))
-        except self.model.DoesNotExist:
-            obj = None
-
-        if not self.has_change_permission(request, obj):
-            raise PermissionDenied
-
-        if obj is None:
-            raise Http404('%s object with primary key %r does not exist.' % (force_unicode(opts.verbose_name), escape(object_id)))
-
-        if request.method=='POST':
-            old_location = obj.basecontent_location
-            if old_location:
-                obj.basecontent_location=None
-                obj.save()
-                msg = ugettext(u"Occurrence is no longer placed at content %s." % old_location)
-                self.message_user(request, msg)
-            return HttpResponseRedirect("../")
-        else:
-            return render_to_response('admin/event/occurrence/unplace.html',
-                                      {'occurrence': obj},
-                                      context_instance=template.RequestContext(request))
-
-    def formfield_for_dbfield(self, db_field, **kwargs):
-        field = super(EventRelatedOccurrenceAdmin, self).formfield_for_dbfield(db_field, **kwargs)
-        if db_field.name in ['start', 'end']:
-            field = DateField(label=field.label)
-            field.widget = AdminDateOfDateTimeWidget()
-        return field
 
 
 def register(site):
     site.register(Category, EventCategoryAdmin)
     site.register(CategoryGroup, EventCategoryGroupAdmin)
     site.register(Event, EventAdmin)
-
-
-def setup_event_admin(event_admin):
-    event_admin.register(Occurrence, EventRelatedOccurrenceAdmin)
+    site.register_related(Occurrence, RelatedOcurrenceAdmin, related_to=Event)

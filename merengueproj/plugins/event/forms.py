@@ -15,7 +15,7 @@ from merengue.base.forms import QuickSearchForm, AdvancedSearchForm
 from merengue.base.searchterms import BindableSearchTerm
 from searchform.registry import search_form_registry
 from searchform.terms import TextSearchTerm, FreeTextSearchTerm, DateSearchTerm, ObjectsSearchTerm
-from merengue.event.models import CategoryGroup, Category, Event
+from plugins.event.models import CategoryGroup, Category, Event
 
 
 class EventCategorySearchTerm(BindableSearchTerm, ObjectsSearchTerm):
