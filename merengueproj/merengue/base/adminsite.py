@@ -37,6 +37,7 @@ class AdminSite(DjangoAdminSite):
                         related_urlpatterns += patterns('',
                             url(r'^%s/%s/(?P<base_object_id>\d+)/%s/' % (model._meta.app_label, model._meta.module_name, tool_name),
                                 include(related_admin_site.urls), {'base_model_admin': model_admin}))
+
         return related_urlpatterns + urlpatterns
 
     def register(self, model_or_iterable, admin_class=None, **options):
@@ -94,7 +95,7 @@ class AdminSite(DjangoAdminSite):
             self.related_admin_sites[related_to] = {}
         if not tool_name in self.related_admin_sites[related_to].keys():
             self.related_admin_sites[related_to][tool_name] = AdminSite(name=tool_name)
-        else:
+        elif tool_name != self.related_admin_sites[related_to][tool_name].name:
             raise AlreadyRegistered('The related tool %s is already registered for model %s' %\
                                     (tool_name, related_to.__name__))
         related_admin_site = self.related_admin_sites[related_to][tool_name]
