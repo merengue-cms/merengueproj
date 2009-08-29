@@ -233,7 +233,7 @@ class AudioAdmin(BaseMultimediaAdmin):
 
 class RelatedBaseMultimediaAdmin(RelatedModelAdmin):
 
-    def relate_base_content(self, request, obj, form, change):
+    def custom_relate_content(self, request, obj, form, change):
         if not change:
             multimedia_rel = MultimediaRelation.objects.create(content=self.basecontent,
                 multimedia=obj.basemultimedia_ptr)

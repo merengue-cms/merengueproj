@@ -140,19 +140,6 @@ def autodiscover(admin_site=None):
 # Merengue Model Admins -----
 
 
-def get_subclasses_registry_in_admin(cls, list_cls=None, admin_site=None):
-    if not cls.__subclasses__():
-        list_cls = list_cls or []
-        model_admin = admin_site and admin_site._registry.get(cls, None) or None
-        list_cls.append((cls, model_admin, ))
-    else:
-        for subcls in cls.__subclasses__():
-            if admin_site and cls in admin_site._registry.keys():
-                list_cls.append((cls, admin_site._registry[cls], ))
-            list_cls = get_subclasses_registry_in_admin(subcls, list_cls, admin_site)
-    return list_cls
-
-
 class UserCreationFormCust(UserCreationForm):
     username = forms.RegexField(label=_("Username"), max_length=30, regex=r'[^/]+$',
         error_message = _("This value must contain only letters, @, numbers and underscores."))
@@ -957,14 +944,17 @@ class RelatedModelAdmin(BaseAdmin):
         extra_context = self._update_extra_context(request, extra_context)
         return super(RelatedModelAdmin, self).history_view(request, object_id, extra_context)
 
+    def save_form(self, request, form, change):
+        # we associate related object
+        form.cleaned_data[self.related_field] = self.basecontent
+        return super(BaseAdmin, self).save_form(request, form, change)
+
     def save_model(self, request, obj, form, change):
         super(RelatedModelAdmin, self).save_model(request, obj, form, change)
-        self.relate_base_content(request, obj, form, change)
+        self.custom_relate_content(request, obj, form, change)
 
-    def relate_base_content(self, request, obj, form, change):
-        if not change and hasattr(obj, self.related_field):
-            setattr(obj, self.related_field, self.basecontent)
-            obj.save()
+    def custom_relate_content(self, request, obj, form, change):
+        pass # to override if child classes wants
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(RelatedModelAdmin, self).get_form(request, obj, **kwargs)
@@ -2074,7 +2064,7 @@ def register(site):
     ## register admin models
     site.register(User, UserAdmin)
     site.register(Group, GroupAdmin)
-    #admin.site.register(BaseContent, BaseContentAdmin)
+    site.register(BaseContent, BaseContentAdmin)
     site.register(ContactInfo, ContactInfoAdmin)
 
 
