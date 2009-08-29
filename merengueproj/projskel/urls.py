@@ -3,45 +3,25 @@ from django.conf.urls.defaults import *
 from django.conf import settings
 
 from searchform.registry import search_form_registry
-from admin import (setup_basecontents_admin,
-                   setup_sections_admin, setup_multimedia_admin, setup_user_admin,
-                   setup_extra_admin)
 
 from merengue.base import admin
 
 admin.autodiscover()
 
 
-app_admin_sites = setup_basecontents_admin() + setup_sections_admin() + \
-                  setup_multimedia_admin() + setup_user_admin()
-
-# todos las subclases de basecontent tendran una interfaz de administracion
-# especifica para tratar localizacion, informacion de contacto, multimedia,
-# etc ...
-app_admin_patterns = []
-for model, app_admin_site, prefix in app_admin_sites:
-    app_label = model._meta.app_label
-    module_name = model._meta.module_name
-    app_admin_patterns.append(
-        (r'^admin/%s/%s/(?P<basecontent_id>\d+)/%s/(?P<url>.*)' %\
-        (app_label, module_name, prefix), app_admin_site.root))
-
-
 # do autodiscovering of all search forms
 search_form_registry.autodiscover()
-
-urlpatterns = patterns('', *app_admin_patterns)
 
 js_info_dict = {
         'packages': ('django.conf', ),
 }
 
-urlpatterns += patterns('',
+urlpatterns = patterns('',
     (r'^admin/r/(?P<content_type_id>\d+)/(?P<object_id>.+)/$',
      'cmsutils.views.generic.redirect_to_object'),
     (r'^admin/', admin.site.urls),
-    # the next admin is only used for having the reverse url running
-    # for 'admin'
+
+    # the next admin is only used for having the reverse url running for 'admin'
     url(r'^admin/$', lambda request: '', name="admin_index"),
 
     url(r'^searchform/jsi18n/$', 'merengue.portal.views.searchform_jsi18n', name='searchform_jsi18n'),
@@ -54,6 +34,9 @@ urlpatterns += patterns('',
 
     # actions
     (r'^actions/', include('merengue.action.urls')),
+
+    # places
+    (r'^places/', include('merengue.places.urls')),
 
     # login and logout
     url(r'^account/login/$', 'merengue.portal.views.try_login', name='login_form'),
