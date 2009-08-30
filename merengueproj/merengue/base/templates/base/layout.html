@@ -42,7 +42,9 @@
 --> <body dir="ltr" {% block extrabodytag %}{% endblock %}><!--<![endif]-->
 
 <div id="container" class="{% block bodyextraclasses %}{% endblock %}">
-{% current_svn_rev %}
+  <div id="current-svn-revision">
+    {% current_svn_rev %}
+  </div>
 
 {% if not request.HIDE_DECORATIONS %}
   {% block headerwrapper %}
