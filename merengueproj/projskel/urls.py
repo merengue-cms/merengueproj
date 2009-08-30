@@ -19,7 +19,7 @@ js_info_dict = {
 urlpatterns = patterns('',
     (r'^admin/r/(?P<content_type_id>\d+)/(?P<object_id>.+)/$',
      'cmsutils.views.generic.redirect_to_object'),
-    (r'^admin/', admin.site.urls),
+    (r'^admin/', include(admin.site.urls)),
 
     # the next admin is only used for having the reverse url running for 'admin'
     url(r'^admin/$', lambda request: '', name="admin_index"),
