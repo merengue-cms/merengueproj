@@ -107,7 +107,6 @@ def enable_plugin(plugin_name, register=True):
         register_app(plugin_name)
         register_plugin_actions(plugin_name)
         register_plugin_blocks(plugin_name)
-    register_plugin_urls(plugin_name)
 
 
 def disable_plugin(plugin_name, unregister=True):

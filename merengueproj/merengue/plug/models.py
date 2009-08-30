@@ -10,6 +10,7 @@ from merengue.plug.utils import (add_to_installed_apps, are_installed_models,
                                  disable_plugin, enable_plugin,
                                  install_models, get_plugins_dir,
                                  get_plugin_module_name,
+                                 register_plugin_urls,
                                  reload_app_directories_template_loader)
 from merengue.plug.managers import PluginManager
 from merengue.registry.models import RegisteredItem
@@ -48,6 +49,7 @@ def install_plugin(sender, instance, **kwargs):
             instance.save()
         if instance.active:
             enable_plugin(app_name)
+            register_plugin_urls(app_name)
         else:
             disable_plugin(app_name)
         # app_directories template loader loads app_template_dirs in
