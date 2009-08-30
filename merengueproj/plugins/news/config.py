@@ -11,7 +11,6 @@ class PluginConfig(Plugin):
     url_prefixes = (
         ('news', 'plugins.news.urls'),
     )
-    media_dir = 'news'
 
     @classmethod
     def get_actions(cls):
