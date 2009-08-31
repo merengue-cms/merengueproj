@@ -68,3 +68,24 @@ def advanced_breadcrumbs(context):
     return {'url_list': url_list,
            }
 advanced_breadcrumbs = register.inclusion_tag('admin/advanced_breadcrumbs.html', takes_context=True)(advanced_breadcrumbs)
+
+
+def smart_relations_object_tool(context):
+    original = context.get('basecontent', None) or context.get('original', None)
+    model_admin = context.get('model_admin', None)
+    if not original:
+        return {}
+    from merengue.base.adminsite import site
+    from django.template.defaultfilters import slugify
+    tools = []
+    base_url = urlresolvers.reverse('admin:%s_%s_change' % (original._meta.app_label, original._meta.module_name), args=(original.id, ))
+    for key in site.related_admin_sites.keys():
+        if isinstance(original, key):
+            for tool_name, related_admin_site in site.related_admin_sites[key].items():
+                model, tool_model_admin = related_admin_site._registry.items()[0]
+                tools.append({'tool_name': tool_name,
+                              'tool_url': '%s%s/%s/%s/' % (base_url, slugify(tool_name), model._meta.app_label, model._meta.module_name, ),
+                              'selected': model_admin == tool_model_admin,
+                             })
+    return {'tools': tools}
+smart_relations_object_tool = register.inclusion_tag('admin/smart_relations_object_tool.html', takes_context=True)(smart_relations_object_tool)

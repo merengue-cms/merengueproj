@@ -232,6 +232,9 @@ class AudioAdmin(BaseMultimediaAdmin):
 
 
 class RelatedBaseMultimediaAdmin(RelatedModelAdmin):
+    search_fields = ('name', 'original_filename')
+    list_display = ('__str__', 'status', 'last_editor')
+    related_field = 'basecontent'
 
     def custom_relate_content(self, request, obj, form, change):
         if not change:
@@ -240,23 +243,24 @@ class RelatedBaseMultimediaAdmin(RelatedModelAdmin):
 
 
 class RelatedPhotoAdmin(RelatedBaseMultimediaAdmin):
-    tool_name = 'photos'
-    related_field = 'basecontent'
+    tool_name = 'Photos'
+    list_display = ('__str__', 'admin_thumbnail', 'status', 'last_editor', )
 
 
 class RelatedVideoAdmin(RelatedBaseMultimediaAdmin):
-    tool_name = 'videos'
-    related_field = 'basecontent'
+    tool_name = 'Videos'
 
 
 class RelatedPanoramicViewAdmin(RelatedBaseMultimediaAdmin):
-    tool_name = 'panoramicviews'
-    related_field = 'basecontent'
+    tool_name = 'Panoramic Views'
 
 
 class RelatedImage3DAdmin(RelatedBaseMultimediaAdmin):
-    tool_name = 'images3d'
-    related_field = 'basecontent'
+    tool_name = 'Images 3D'
+
+
+class RelatedAudioAdmin(RelatedBaseMultimediaAdmin):
+    tool_name = 'Audios'
 
 
 def register(site):
@@ -269,3 +273,4 @@ def register(site):
     site.register_related(Video, RelatedVideoAdmin, related_to=BaseContent)
     site.register_related(PanoramicView, RelatedPanoramicViewAdmin, related_to=BaseContent)
     site.register_related(Image3D, RelatedImage3DAdmin, related_to=BaseContent)
+    site.register_related(Audio, RelatedAudioAdmin, related_to=BaseContent)

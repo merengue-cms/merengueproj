@@ -1,0 +1,9 @@
+{% if tools %}
+  <div class="smart_relations_object_tool_container">
+  <ul class="smart_relations_object_tool">
+  {% for tool in tools %}
+    <li{% if tool.selected %} class="selected"{% endif %}><a href="{{ tool.tool_url }}">{{ tool.tool_name }}</a></li>
+  {% endfor %}
+  </ul>
+  </div>
+{% endif %}
