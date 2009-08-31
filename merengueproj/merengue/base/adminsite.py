@@ -25,6 +25,7 @@ class AdminSite(DjangoAdminSite):
 
     def get_urls(self):
         from django.conf.urls.defaults import patterns, url, include
+        from django.template.defaultfilters import slugify
 
         urlpatterns = super(AdminSite, self).get_urls()
         related_urlpatterns = []
@@ -35,7 +36,7 @@ class AdminSite(DjangoAdminSite):
                     for tool_name, related_admin_site in self.related_admin_sites[key].items():
                         related_admin_site.base_model_admins[model] = model_admin
                         related_urlpatterns += patterns('',
-                            url(r'^%s/%s/(?P<base_object_id>\d+)/%s/' % (model._meta.app_label, model._meta.module_name, tool_name),
+                            url(r'^%s/%s/(?P<base_object_id>\d+)/%s/' % (model._meta.app_label, model._meta.module_name, slugify(tool_name)),
                                 include(related_admin_site.urls), {'base_model_admin': model_admin}))
 
         return related_urlpatterns + urlpatterns
