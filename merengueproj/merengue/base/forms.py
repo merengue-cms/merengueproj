@@ -262,7 +262,6 @@ class BaseSearchForm(SearchForm):
 
     def render_search_results_map(self, request):
         results = self.search_results(request)
-        #import ipdb; ipdb.set_trace()
         context = RequestContext(request, {'object_list': results})
         template = Template("""
         {% load i18n map_tags %}
