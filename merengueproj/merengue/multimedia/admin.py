@@ -244,6 +244,21 @@ class RelatedPhotoAdmin(RelatedBaseMultimediaAdmin):
     related_field = 'basecontent'
 
 
+class RelatedVideoAdmin(RelatedBaseMultimediaAdmin):
+    tool_name = 'videos'
+    related_field = 'basecontent'
+
+
+class RelatedPanoramicViewAdmin(RelatedBaseMultimediaAdmin):
+    tool_name = 'panoramicviews'
+    related_field = 'basecontent'
+
+
+class RelatedImage3DAdmin(RelatedBaseMultimediaAdmin):
+    tool_name = 'images3d'
+    related_field = 'basecontent'
+
+
 def register(site):
     site.register(Photo, PhotoAdmin)
     site.register(Video, VideoAdmin)
@@ -251,3 +266,6 @@ def register(site):
     site.register(Image3D, Image3DAdmin)
     site.register(Audio, AudioAdmin)
     site.register_related(Photo, RelatedPhotoAdmin, related_to=BaseContent)
+    site.register_related(Video, RelatedVideoAdmin, related_to=BaseContent)
+    site.register_related(PanoramicView, RelatedPanoramicViewAdmin, related_to=BaseContent)
+    site.register_related(Image3D, RelatedImage3DAdmin, related_to=BaseContent)
