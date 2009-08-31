@@ -182,7 +182,11 @@ div#content ul#content-actions {
 }
 
 ul#content-actions li {
+    display: block;
     list-style: none;
+    font-size: 0.8em;
+    font-weight: bold;
+    padding: 3px 0 5px;
 }
 
 div#content ul#content-actions li a {
@@ -197,6 +201,10 @@ div#content ul#content-actions li#action-facebooklink a {
 
 div#content ul#content-actions li#action-facebooklink a:hover {
     background-position: right bottom;
+}
+
+li.linkAdmin a {
+    background:transparent url(/media/themes/yaco/img/linkadmin_icon.png) no-repeat scroll right top;
 }
 
 .contentDescription {
