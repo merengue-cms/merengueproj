@@ -93,7 +93,7 @@ STATUS_LIST = (
     ('draft', ugettext('Borrador')),
     ('pending', ugettext('Pendiente')),
     ('published', ugettext('Publicado')),
-    ('pasive', ugettext('Registro pasivo')),
+    ('passive', ugettext('Registro pasivo')),
     ('deleted_in_plone', ugettext('Borrado en Plone')),
 )
 
