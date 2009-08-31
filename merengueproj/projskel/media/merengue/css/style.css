@@ -53,3 +53,11 @@ body div#content-zone {
 a img {
    border: none;
 }
+
+/* ----- Develop version info ----- */
+#current-svn-revision {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: red;
+}
