@@ -52,7 +52,7 @@ def advanced_breadcrumbs(context):
     base_url = url_list[-1]['url']
 
     for r in route[1:]:
-        url_list += [{'label': _(r['site'].name.title()),
+        url_list += [{'label': _(r['site'].tool_label),
                       'url': base_url + r['site'].name + '/' + r['opts'].app_label + '/' + r['opts'].module_name + '/',
                      }]
         if r['obj']:
@@ -84,6 +84,7 @@ def smart_relations_object_tool(context):
             for tool_name, related_admin_site in site.related_admin_sites[key].items():
                 model, tool_model_admin = related_admin_site._registry.items()[0]
                 tools.append({'tool_name': tool_name,
+                              'tool_label': related_admin_site.tool_label,
                               'tool_url': '%s%s/%s/%s/' % (base_url, slugify(tool_name), model._meta.app_label, model._meta.module_name, ),
                               'selected': model_admin == tool_model_admin,
                              })

@@ -91,17 +91,27 @@ class AdminSite(DjangoAdminSite):
         tool_name = admin_class and getattr(admin_class, 'tool_name', None)
         if not tool_name:
             raise Exception('Can not register %s modeladmin without a tool_name' % admin_class.__name__)
+        tool_label = getattr(admin_class, 'tool_label', tool_name)
 
         if not related_to in self.related_admin_sites.keys():
             self.related_admin_sites[related_to] = {}
         if not tool_name in self.related_admin_sites[related_to].keys():
-            self.related_admin_sites[related_to][tool_name] = AdminSite(name=tool_name)
+            self.related_admin_sites[related_to][tool_name] = RelatedAdminSite(
+                name=tool_name,
+                tool_label=tool_label)
         elif tool_name != self.related_admin_sites[related_to][tool_name].name:
             raise AlreadyRegistered('The related tool %s is already registered for model %s' %\
                                     (tool_name, related_to.__name__))
         related_admin_site = self.related_admin_sites[related_to][tool_name]
         related_admin_site.register(model_or_iterable, admin_class, **options)
         return related_admin_site
+
+
+class RelatedAdminSite(AdminSite):
+
+    def __init__(self, name=None, app_name='admin', tool_label=None):
+        super(RelatedAdminSite, self).__init__(name, app_name)
+        self.tool_label = tool_label
 
 
 # This global object represents the default admin site, for the common case.

@@ -4,7 +4,8 @@ from django.forms.util import ErrorList
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
 from django.contrib.auth.models import Group
 
 from batchadmin.util import model_ngettext
@@ -38,17 +39,17 @@ class BaseMultimediaRelatedAddContentModelAdmin(BaseMultimediaRelatedBaseContent
                         mr = MultimediaRelation(content=basecontent, multimedia=multimedia)
                         mr.save(update_order=True)
                     updated = queryset.update(status='published')
-                    obj_log = _(u"Changed to %s") % u'published'
+                    obj_log = ugettext(u"Changed to %s") % u'published'
                     for obj in queryset:
                         self.log_change(request, obj, obj_log)
                     msg_data = {'number': updated,
                                 'model_name': model_ngettext(self.opts, updated),
                                 'state': 'published', }
-                    msg = _(u"Successfully set %(number)d %(model_name)s as %(state)s.") % msg_data
+                    msg = ugettext(u"Successfully set %(number)d %(model_name)s as %(state)s.") % msg_data
                     self.message_user(request, msg)
 
                 return self.change_state(request, queryset, state='published')
-            extra_context = {'title': _(u'Are you sure you want to associate these contents?'),
+            extra_context = {'title': ugettext(u'Are you sure you want to associate these contents?'),
                              'action_submit': 'associate_contents'}
             return self.confirm_action(request, queryset, extra_context)
     associate_contents.short_description = _(u"Associate contents")
@@ -68,7 +69,7 @@ class BaseMultimediaRelatedRemoveContentModelAdmin(BaseMultimediaRelatedBaseCont
                 for basecontent in queryset:
                     MultimediaRelation.objects.get(content=basecontent, multimedia=multimedia).delete()
                 return self.change_state(request, queryset, state='published')
-            extra_context = {'title': _('Are you sure you want disassociate this contents?'),
+            extra_context = {'title': ugettext('Are you sure you want disassociate this contents?'),
                              'action_submit': 'disassociate_contents'}
             return self.confirm_action(request, queryset, extra_context)
     disassociate_contents.short_description = _("Disassociate contents")
@@ -169,12 +170,12 @@ class PhotoAdmin(BaseMultimediaAdmin):
             cl.formset = None
         except IncorrectLookupParameters:
             if ERROR_FLAG in request.GET.keys():
-                return render_to_response('admin/invalid_setup.html', {'title': _('Database error')})
+                return render_to_response('admin/invalid_setup.html', {'title': ugettext('Database error')})
             return HttpResponseRedirect(request.path + '?' + ERROR_FLAG + '=1')
 
         class_name = getattr(request, 'CLASS_NAME', None)
         cl.has_filters=True
-        class_names=[{'name': _('All'), 'url': cl.get_query_string(remove='class_name')}]
+        class_names=[{'name': ugettext('All'), 'url': cl.get_query_string(remove='class_name')}]
         for i in BaseContent.objects.order_by('class_name').values('class_name').distinct():
             class_names.append({'name': i['class_name'],
                                 'url': cl.get_query_string(new_params={'class_name': i['class_name']})})
@@ -213,13 +214,13 @@ class Image3DAdmin(BaseMultimediaAdmin):
             old_file = obj and obj.file
             if not old_file and not file_cleaned_data:
                 global_errors = self.errors.get('__all__', ErrorList([]))
-                global_errors.extend(ErrorList([_(u'Please specify at least a video file ')]))
+                global_errors.extend(ErrorList([ugettext(u'Please specify at least a video file ')]))
                 self._errors['__all__'] = ErrorList(global_errors)
             elif file_cleaned_data:
                 extension = file_cleaned_data.name.split('.')[-1].lower()
                 if extension not in ('swf', 'swf'):
                     file_errors = self.errors.get('file', ErrorList([]))
-                    file_errors.extend(ErrorList([_(u'This file must be in swf format')]))
+                    file_errors.extend(ErrorList([ugettext(u'This file must be in swf format')]))
                     self._errors['file'] = ErrorList(file_errors)
             return self.cleaned_data
         form.clean = clean
@@ -243,24 +244,29 @@ class RelatedBaseMultimediaAdmin(RelatedModelAdmin):
 
 
 class RelatedPhotoAdmin(RelatedBaseMultimediaAdmin):
-    tool_name = 'Photos'
+    tool_name = 'photos'
+    tool_label = _('photos')
     list_display = ('__str__', 'admin_thumbnail', 'status', 'last_editor', )
 
 
 class RelatedVideoAdmin(RelatedBaseMultimediaAdmin):
-    tool_name = 'Videos'
+    tool_name = 'videos'
+    tool_label = _('videos')
 
 
 class RelatedPanoramicViewAdmin(RelatedBaseMultimediaAdmin):
-    tool_name = 'Panoramic Views'
+    tool_name = 'panoramicviews'
+    tool_label = _('panoramic views')
 
 
 class RelatedImage3DAdmin(RelatedBaseMultimediaAdmin):
-    tool_name = 'Images 3D'
+    tool_name = 'images3d'
+    tool_label = _('3d images')
 
 
 class RelatedAudioAdmin(RelatedBaseMultimediaAdmin):
-    tool_name = 'Audios'
+    tool_name = 'audios'
+    tool_label = _('audio files')
 
 
 def register(site):
