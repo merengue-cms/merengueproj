@@ -37,9 +37,6 @@ def try_login(request, redirect_field_name='next'):
             if user.is_active:
                 login(request, user)
                 message = _('Welcome %s') % user
-                if user.is_superuser and has_content_pending():
-                    url = reverse('merengue.portal.views.list_pending')
-                    message += _('. You have a <a href="%s">pending</a> contents') %(url)
                 send_info(request, message)
                 if not redirect_to or '//' in redirect_to or ' ' in redirect_to:
                     redirect_to = settings.LOGIN_REDIRECT_URL

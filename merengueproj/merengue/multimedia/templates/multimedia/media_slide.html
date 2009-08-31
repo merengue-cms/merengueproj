@@ -92,7 +92,7 @@
                 <div class="screenShotVideos" style="{% if content_images %}display:none{% endif %}">
                 {% for video in content_videos %}
                     {% first_of_with_as video.name video.original_filename content.name as video_name %}
-                     <a href="{% url multimedia.views.video_xml video.id %}"
+                     <a href="{% url video_xml video.id %}"
                         style="{% if forloop.first %}display:inline
                                {% else %}display:none{% endif %}"
                         title="{{ video_name }}";
@@ -140,7 +140,7 @@
                 Shadowbox.setup(videos, {
                     gallery: 'VideoGallery',
                     autoplayMovies: true,
-                    flvPlayer:'{{ MEDIA_URL }}flash/flvplayer.swf',
+                    flvPlayer:'{{ MEDIA_URL }}merengue/flash/flvplayer.swf',
                     type:'external'
                 });
             }
