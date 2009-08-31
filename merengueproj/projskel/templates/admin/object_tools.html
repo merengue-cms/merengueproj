@@ -42,10 +42,10 @@
     {% endif %}
     {% endif %}
 
-    <li{% ifequal selected "photos"%} class="selected"{% endifequal %}><a href="{{ basecontent.get_admin_absolute_url }}admin/multimedia/photo/">{% trans "Photos" %}</a></li>
-    <li{% ifequal selected "videos"%} class="selected"{% endifequal %}><a href="{{ basecontent.get_admin_absolute_url }}admin/multimedia/video/">{% trans "Videos" %}</a></li>
-     <li{% ifequal selected "panoramics"%} class="selected"{% endifequal %}><a href="{{ basecontent.get_admin_absolute_url }}admin/multimedia/panoramicview/">{% trans "Panoramic Views" %}</a></li>
-     <li{% ifequal selected "3ds"%} class="selected"{% endifequal %}><a href="{{ basecontent.get_admin_absolute_url }}admin/multimedia/image3d/">{% trans "Images 3d" %}</a></li>
+    <li{% ifequal selected "photos"%} class="selected"{% endifequal %}><a href="{{ basecontent.get_admin_absolute_url }}photos/multimedia/photo/">{% trans "Photos" %}</a></li>
+    <li{% ifequal selected "videos"%} class="selected"{% endifequal %}><a href="{{ basecontent.get_admin_absolute_url }}videos/multimedia/video/">{% trans "Videos" %}</a></li>
+     <li{% ifequal selected "panoramics"%} class="selected"{% endifequal %}><a href="{{ basecontent.get_admin_absolute_url }}panoramicviews/multimedia/panoramicview/">{% trans "Panoramic Views" %}</a></li>
+     <li{% ifequal selected "3ds"%} class="selected"{% endifequal %}><a href="{{ basecontent.get_admin_absolute_url }}images3d/multimedia/image3d/">{% trans "Images 3d" %}</a></li>
       {% if basecontent.related_habcenter.all %}
      <li{% ifequal selected "habcenter"%} class="selected"{% endifequal %}><a href="{{ basecontent.get_admin_absolute_url }}admin/healthandbeauty/habcenter/{{ basecontent.related_habcenter.all.0.id }}/">{% trans "HABCenter" %}</a></li>
       {% endif %}
@@ -82,10 +82,10 @@
       {% endif %}
 
       <li><a href="admin/base/basecontent/">{% trans "Related items" %}</a></li>
-      <li><a href="admin/multimedia/photo/">{% trans "Photos" %}</a></li>
-      <li><a href="admin/multimedia/video/">{% trans "Videos" %}</a></li>
-      <li><a href="admin/multimedia/panoramicview/">{% trans "Panoramic Views" %}</a></li>
-      <li><a href="admin/multimedia/image3d/">{% trans "Images 3d" %}</a></li>
+      <li><a href="photos/multimedia/photo/">{% trans "Photos" %}</a></li>
+      <li><a href="videos/multimedia/video/">{% trans "Videos" %}</a></li>
+      <li><a href="panoramicviews/multimedia/panoramicview/">{% trans "Panoramic Views" %}</a></li>
+      <li><a href="images3d/multimedia/image3d/">{% trans "Images 3d" %}</a></li>
       {% if original.related_habcenter.all %}
       <li><a href="admin/healthandbeauty/habcenter/{{ original.related_habcenter.all.0.id }}/">{% trans "HABCenter" %}</a></li>
       {% endif %}
