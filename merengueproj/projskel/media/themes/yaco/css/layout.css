@@ -37,6 +37,11 @@ ul {
     list-style: none;
 }
 
+b,
+strong {
+    color: #737373;
+}
+
 /* ----- Useful class ----- */
 .visualClear {
     display: block;
@@ -62,6 +67,11 @@ ul {
     left: 70%;
     top: 60px;
     padding-left: 20px;
+    color: white;
+}
+
+#headerlogo a.translatable {
+    color: white;
 }
 
 #header-links ul {
@@ -86,7 +96,15 @@ ul {
 }
 
 #user-actions {
+    position: absolute;
+    bottom: 0;
+    right: 100px;
+    display: block;
+    width: 20%;
+}
 
+#user-action a {
+    color: white;
 }
 
 #site-actions {
@@ -134,13 +152,35 @@ div#content {
 
 div#content ul {
     list-style-type: square;
-    margin-left: 2em;
+    margin: 0.4em 0 0.4em 2em;
 }
 
 ul#content-actions li {
     display: inline;
     list-style: none;
 }
+
+
+.contentDescription {
+    font-size: 0.8em;
+    color: #999999;
+}
+
+/* ----- breadcrumbs ----- */
+#breadcrumbs {
+    margin-left: 3em;
+}
+
+
+div#breadcrumbs a {
+    color:#54B848;
+    text-decoration: underline;
+}
+
+div#breadcrumbs a:hover {
+    color: #44EE22;
+}
+
 
 /* -----  sidebar ----- */
 .block {
