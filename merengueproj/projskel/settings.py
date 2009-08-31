@@ -82,7 +82,7 @@ DEBUG_TOOLBAR_PANELS = (
     #'debug_toolbar.panels.logger.LoggingPanel',
 )
 
-ROOT_URLCONF = 'projskel.urls'
+ROOT_URLCONF = '{{ project_name }}.urls'
 
 TEMPLATE_DIRS = (
     path.join(BASEDIR, 'templates'),

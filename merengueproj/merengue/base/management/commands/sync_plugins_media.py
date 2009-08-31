@@ -8,6 +8,7 @@ from django.conf import settings
 from django.utils.text import get_text_list
 from django.core.management.base import CommandError, AppCommand
 
+from merengue.base.management.base import MerengueCommand
 from merengue.plug.models import RegisteredPlugin
 
 try:
@@ -16,7 +17,7 @@ except NameError:
     from sets import Set as set # Python 2.3 fallback
 
 
-class Command(AppCommand):
+class Command(AppCommand, MerengueCommand):
     """Copy or symlink media files from all enabled plugins to the MEDIA_ROOT
     of the project.
 
