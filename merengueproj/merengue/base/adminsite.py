@@ -7,7 +7,7 @@ from django.utils.functional import update_wrapper
 from django.views.decorators.cache import never_cache
 
 
-class AdminSite(DjangoAdminSite):
+class BaseAdminSite(DjangoAdminSite):
     related_admin_sites = {}
     base_model_admins= {}
 
@@ -22,24 +22,6 @@ class AdminSite(DjangoAdminSite):
         if not cacheable:
             inner = never_cache(inner)
         return update_wrapper(inner, view)
-
-    def get_urls(self):
-        from django.conf.urls.defaults import patterns, url, include
-        from django.template.defaultfilters import slugify
-
-        urlpatterns = super(AdminSite, self).get_urls()
-        related_urlpatterns = []
-
-        for model, model_admin in self._registry.iteritems():
-            for key in self.related_admin_sites.keys():
-                if issubclass(model, key):
-                    for tool_name, related_admin_site in self.related_admin_sites[key].items():
-                        related_admin_site.base_model_admins[model] = model_admin
-                        related_urlpatterns += patterns('',
-                            url(r'^%s/%s/(?P<base_object_id>\d+)/%s/' % (model._meta.app_label, model._meta.module_name, slugify(tool_name)),
-                                include(related_admin_site.urls), {'base_model_admin': model_admin}))
-
-        return related_urlpatterns + urlpatterns
 
     def register(self, model_or_iterable, admin_class=None, **options):
         """
@@ -81,6 +63,27 @@ class AdminSite(DjangoAdminSite):
             # Instantiate the admin class to save in the registry
             self._registry[model] = admin_class(model, self)
 
+
+class AdminSite(BaseAdminSite):
+
+    def get_urls(self):
+        from django.conf.urls.defaults import patterns, url, include
+        from django.template.defaultfilters import slugify
+
+        urlpatterns = super(AdminSite, self).get_urls()
+        related_urlpatterns = []
+
+        for model, model_admin in self._registry.iteritems():
+            for key in self.related_admin_sites.keys():
+                if issubclass(model, key):
+                    for tool_name, related_admin_site in self.related_admin_sites[key].items():
+                        related_admin_site.base_model_admins[model] = model_admin
+                        related_urlpatterns += patterns('',
+                            url(r'^%s/%s/(?P<base_object_id>\d+)/%s/' % (model._meta.app_label, model._meta.module_name, slugify(tool_name)),
+                                include(related_admin_site.urls), {'base_model_admin': model_admin}))
+
+        return related_urlpatterns + urlpatterns
+
     def register_related(self, model_or_iterable, admin_class=None, related_to=None, **options):
         from merengue.base.admin import RelatedModelAdmin
         if not admin_class:
@@ -107,7 +110,7 @@ class AdminSite(DjangoAdminSite):
         return related_admin_site
 
 
-class RelatedAdminSite(AdminSite):
+class RelatedAdminSite(BaseAdminSite):
 
     def __init__(self, name=None, app_name='admin', tool_label=None):
         super(RelatedAdminSite, self).__init__(name, app_name)
