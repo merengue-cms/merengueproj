@@ -89,7 +89,6 @@ def find_plugin_urls(plugin_name):
         except ImportError:
             yield (-1, None)
         plugin_url = url(plugin_url_re, include(urlconf), name=plugin_name)
-        urlresolvers._resolver_cache = {}
         proj_urls = urlresolvers.get_resolver(None)
         urlconf_names = [
             getattr(p, 'urlconf_name', None) for p in proj_urls.url_patterns]
@@ -128,8 +127,7 @@ def register_plugin_urls(plugin_name):
         if plugin_url and index < 0:
             proj_urls = import_module(settings.ROOT_URLCONF)
             proj_urls.urlpatterns += (plugin_url, )
-    url_resolver = urlresolvers.get_resolver(None)
-    url_resolver._populate() # populate reverse urls, namespaces, etc.
+    update_admin_urls()
 
 
 def unregister_plugin_urls(plugin_name):
@@ -137,6 +135,17 @@ def unregister_plugin_urls(plugin_name):
         if index > 0:
             proj_urls = import_module(settings.ROOT_URLCONF)
             del proj_urls.urlpatterns[index]
+    update_admin_urls()
+
+
+def update_admin_urls():
+    from merengue.base import admin
+    urlconf = import_module(settings.ROOT_URLCONF)
+    url_patterns = urlconf.urlpatterns
+    for i, url_pattern in enumerate(url_patterns):
+        if getattr(url_pattern, 'app_name', '') == 'admin':
+            urlresolvers.clear_url_caches()
+            urlconf.urlpatterns[i] = url(r'^admin/', include(admin.site.urls))
 
 
 def register_items(item_list):
