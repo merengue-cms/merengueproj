@@ -25,9 +25,13 @@ class MerengueCommand(BaseCommand):
     pass
 
 
-def copy_helper(style, name, directory):
+def copy_helper(style, name, directory, symlink=False):
     """
-    Copies the merengue project tempalte into the specified directory.
+    Copies the merengue project template into the specified directory.
+
+    If symlink is True then Merengue and its directories (apps and plugins)
+    will be symlinked instead of copied. This is useful for developers of
+    the Merengue core.
 
     """
     # style -- A color style object (see django.core.management.color).
@@ -48,8 +52,9 @@ def copy_helper(style, name, directory):
         raise CommandError(e)
 
     # Determine where the merengue project template is
-    merengue_root = os.path.join(os.path.dirname(__file__), '..', '..', '..')
-    skel_dir = os.path.abspath(os.path.join(merengue_root, 'projskel'))
+    merengue_root = os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                                 '..', '..', '..'))
+    skel_dir = os.path.join(merengue_root, 'projskel')
 
     # Copy merengue project template
     copy_dir(skel_dir, top_dir, name, style)
@@ -57,13 +62,21 @@ def copy_helper(style, name, directory):
     # Copy or symlink merengue, its plugins and apps
     for d in 'apps', 'merengue', 'plugins':
         dest = os.path.join(top_dir, d)
-        os.makedirs(dest)
-        copy_dir(d, dest, name, style)
+        if sys.platform == 'win32':
+            message = "Linking is not supported by this platform (%s), copying merengue/media instead."
+            sys.stderr.write(style.NOTICE(message % sys.platform))
+            symlink = False
+        if symlink:
+            os.symlink(os.path.join(merengue_root, d), dest)
+        else:
+            os.makedirs(dest)
+            copy_dir(d, dest, name, style)
 
     # Symlink merengue's media
     merengue_media_dir = os.path.join(top_dir, 'media', 'merengue')
     if sys.platform == 'win32':
         message = "Linking is not supported by this platform (%s), copying merengue/media instead."
+        sys.stderr.write(style.NOTICE(message % sys.platform))
         copy_dir('merengue', merengue_media_dir, name, style)
     else:
         os.symlink('../merengue/media', merengue_media_dir)

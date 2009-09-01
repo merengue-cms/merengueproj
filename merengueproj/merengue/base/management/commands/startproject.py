@@ -1,5 +1,6 @@
 import os
 import re
+from optparse import make_option
 from random import choice
 
 from django.core.management.base import CommandError, LabelCommand
@@ -11,6 +12,10 @@ from merengue.base.management.base import MerengueCommand, copy_helper
 class Command(LabelCommand, MerengueCommand):
     """Based on django.core.management.commands.starproject, but handling the
     copy of the skeleton project differently."""
+    option_list = LabelCommand.option_list + (
+        make_option('-d', '--develop', action='store_true', dest='develop',
+            help="For development of Merengue's core, symlink instead of copy."),
+    )
     help = "Creates a Django project directory structure for the given project name in the current directory."
     args = "[projectname]"
     label = 'project name'
@@ -30,7 +35,7 @@ class Command(LabelCommand, MerengueCommand):
         else:
             raise CommandError("%r conflicts with the name of an existing Python module and cannot be used as a project name. Please try another name." % project_name)
 
-        copy_helper(self.style, project_name, directory)
+        copy_helper(self.style, project_name, directory, symlink=options['develop'])
 
         # Create a random SECRET_KEY hash, and put it in the main settings.
         main_settings_file = os.path.join(directory, project_name, 'settings.py')
