@@ -66,7 +66,7 @@ def copy_helper(style, name, directory):
         message = "Linking is not supported by this platform (%s), copying merengue/media instead."
         copy_dir('merengue', merengue_media_dir, name, style)
     else:
-        os.symlink('../merengue/media', dest)
+        os.symlink('../merengue/media', merengue_media_dir)
 
 
 def copy_dir(source, dest, name, style, link=False):
