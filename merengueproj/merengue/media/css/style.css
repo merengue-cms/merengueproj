@@ -1,0 +1,63 @@
+/* -----  Externals CSS imported ----- */
+
+@import url('editorstyles.css'); /* wysiwyg styles */
+
+
+/* ----- Global styles ----- */
+
+body {
+   background-color: white;
+   font-family: Verdana, Arial, sans-serif;
+   font-style: normal;
+   font-variant: normal;
+   font-weight: normal;
+   font-size: 69%;
+   line-height: normal;
+   font-size-adjust: none;
+   font-stretch: normal;
+   -x-system-font: none;
+   padding: 0px;
+   margin: 0px;
+   color: black;
+}
+
+p {
+   margin-top: 0pt;
+   margin-right: 0pt;
+   margin-bottom: 0.75em;
+   margin-left: 0pt;
+   line-height: 1.5em;
+   text-align: justify;
+}
+
+pre {
+   font-family: Monaco,"Courier New",Courier,monospace;
+   padding: 1em;
+   border: 1px solid rgb(140, 172, 187);
+   background-color: rgb(238, 238, 238);
+}
+
+ul {
+    line-height: 18px;
+}
+
+p ul li {
+   line-height: 1.5em;
+}
+
+body div#content-zone {
+   background: transparent url(/media/img/content_back.jpg) repeat-y scroll 175px top;
+   width: 980px;
+}
+
+a img {
+   border: none;
+}
+
+/* ----- Develop version info ----- */
+#current-svn-revision {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: red;
+}

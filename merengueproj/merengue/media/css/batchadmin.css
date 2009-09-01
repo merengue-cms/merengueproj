@@ -1,0 +1,37 @@
+.filtered #batch-action-form .actions {
+    margin-right: 160px !important;
+    border-right: 1px solid #ddd;
+}
+
+#batch-action-form .actions {
+    padding: 3px;
+    border-bottom: 1px solid #ddd;
+    background: #6E8196;
+    color: #fffffc;
+}
+
+#batch-action-form .actions label {
+    font-size: 11px;
+    margin-left: 0.5em;
+}
+
+#batch-action-form .actions button.all {
+    display: none;
+}
+
+#batch-action-form tbody tr input.batch-select {
+    margin: 0;
+}
+
+#batch-action-form tbody td:first-child {
+    width: 1.5em;
+    white-space: nowrap;
+}
+
+#batch-action-form .row1.selected {
+    background-color: #FBF6DE;
+}
+
+#batch-action-form .row2.selected {
+    background-color: #FFFEDF;
+}
