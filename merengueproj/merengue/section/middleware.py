@@ -2,14 +2,13 @@ from django.conf import settings
 from django.core.cache import cache
 from django.http import Http404
 
-from merengue.section.models import BaseSection
-from merengue.section.views import section_dispatcher
-
 
 class SectionMiddleware(object):
     """This middleware autodiscovers the current section from the url"""
 
     def process_request(self, request):
+        from merengue.section.models import BaseSection
+
         section = None
         if request.path:
             first_path_element = request.path.split('/')[1]
@@ -32,6 +31,7 @@ class SectionMiddleware(object):
         request.section = section
 
     def process_response(self, request, response):
+        from merengue.section.views import section_dispatcher
         if response.status_code != 404:
             return response # No need to check for a section for non-404 responses.
         try:
