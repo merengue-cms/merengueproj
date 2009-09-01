@@ -1,5 +1,6 @@
 import os
 
+from django.conf import settings
 from django.db import transaction
 from django.core.cache import cache
 
@@ -18,7 +19,7 @@ def check_plugins():
     sid = transaction.savepoint()
     try:
         # now look for all plugins in filesystem and enable them
-        for plugin_dir in os.listdir(get_plugins_dir()):
+        for plugin_dir in os.listdir(os.path.join(settings.BASEDIR, get_plugins_dir())):
             plugin_config = get_plugin_config(plugin_dir)
             if plugin_config:
                 if not is_registered(plugin_config):
