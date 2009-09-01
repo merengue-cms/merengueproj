@@ -3,30 +3,43 @@ from django.contrib.admin.options import IncorrectLookupParameters
 from django.forms.util import ErrorList
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
+from django.utils.datastructures import SortedDict
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
-from django.contrib.auth.models import Group
 
 from batchadmin.util import model_ngettext
 
-from merengue.base.admin import BaseContentAdmin, BaseAdmin, VideoChecker,\
-                       WorkflowBatchActionProvider, BaseContentRelatedModelAdmin,\
-                       RelatedModelAdmin
+from merengue.base.admin import (BaseContentAdmin, BaseAdmin, VideoChecker,
+                                 WorkflowBatchActionProvider, RelatedModelAdmin)
 from merengue.base.models import BaseContent, MultimediaRelation
-from merengue.multimedia.models import Photo, Video, PanoramicView, Image3D, Audio
+from merengue.multimedia.models import Photo, Video, PanoramicView, Image3D, Audio, BaseMultimedia
 
 
-class BaseMultimediaRelatedBaseContentModelAdmin(BaseContentAdmin, BaseContentRelatedModelAdmin):
-
+class BaseMultimediaContentRelatedModelAdmin(BaseContentAdmin, RelatedModelAdmin):
     list_filter = ('class_name', ) + BaseContentAdmin.list_filter
 
+    def get_actions(self, request):
+        """ by default, this admin does not return all hierarchy actions of all parents model admins """
+        class_actions = getattr(self.__class__, 'actions', [])
+        actions = []
+        actions.extend([self.get_action(action) for action in class_actions])
 
-class BaseMultimediaRelatedAddContentModelAdmin(BaseMultimediaRelatedBaseContentModelAdmin):
-    actions = ['associate_contents']
+        actions.sort(lambda a, b: cmp(a[2].lower(), b[2].lower()))
+        actions = SortedDict([
+            (name, (func, name, desc))
+            for func, name, desc in actions])
+
+        return actions
+
+
+class MultimediaAddContentRelatedModelAdmin(BaseMultimediaContentRelatedModelAdmin):
+    tool_name = 'addcontents'
+    tool_label = _('associate contents')
+    actions = ('associate_contents', )
 
     def queryset(self, request):
-        multimedia = self.admin_site.basecontent
+        multimedia = self.basecontent
         return BaseContent.objects.exclude(multimediarelation__multimedia=multimedia)
 
     def associate_contents(self, request, queryset):
@@ -34,41 +47,45 @@ class BaseMultimediaRelatedAddContentModelAdmin(BaseMultimediaRelatedBaseContent
         if selected:
             if request.POST.get('post'):
                 if self.has_change_permission(request):
-                    multimedia = self.admin_site.basecontent
-                    for basecontent in queryset:
-                        mr = MultimediaRelation(content=basecontent, multimedia=multimedia)
+                    multimedia = self.basecontent
+                    for content in queryset:
+                        mr = MultimediaRelation(content=content, multimedia=multimedia)
                         mr.save(update_order=True)
-                    updated = queryset.update(status='published')
-                    obj_log = ugettext(u"Changed to %s") % u'published'
-                    for obj in queryset:
-                        self.log_change(request, obj, obj_log)
-                    msg_data = {'number': updated,
-                                'model_name': model_ngettext(self.opts, updated),
-                                'state': 'published', }
-                    msg = ugettext(u"Successfully set %(number)d %(model_name)s as %(state)s.") % msg_data
+                        obj_log = ugettext(u"%s content associated to %s") % (content, multimedia)
+                        self.log_change(request, content, obj_log)
+                    msg_data = {'number': len(queryset),
+                                'model_name': model_ngettext(self.opts)}
+                    msg = ugettext(u"Successfully associated %(number)d %(model_name)s.") % msg_data
                     self.message_user(request, msg)
-
-                return self.change_state(request, queryset, state='published')
+                return # end action
             extra_context = {'title': ugettext(u'Are you sure you want to associate these contents?'),
                              'action_submit': 'associate_contents'}
             return self.confirm_action(request, queryset, extra_context)
     associate_contents.short_description = _(u"Associate contents")
 
 
-class BaseMultimediaRelatedRemoveContentModelAdmin(BaseMultimediaRelatedBaseContentModelAdmin):
-    actions = ['disassociate_contents']
+class MultimediaRemoveContentRelatedModelAdmin(BaseMultimediaContentRelatedModelAdmin):
+    actions = ('disassociate_contents', )
+    tool_name = 'removecontents'
+    tool_label = _('disassociate contents')
 
     def queryset(self, request):
-        return self.admin_site.basecontent.basecontent_set.all()
+        return self.basecontent.basecontent_set.all()
 
     def disassociate_contents(self, request, queryset):
         selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
         if selected:
             if request.POST.get('post'):
-                multimedia = self.admin_site.basecontent
-                for basecontent in queryset:
-                    MultimediaRelation.objects.get(content=basecontent, multimedia=multimedia).delete()
-                return self.change_state(request, queryset, state='published')
+                multimedia = self.basecontent
+                for content in queryset:
+                    MultimediaRelation.objects.get(content=content, multimedia=multimedia).delete()
+                    obj_log = ugettext(u"%s content associated to %s") % (content, multimedia)
+                    self.log_change(request, content, obj_log)
+                msg_data = {'number': len(queryset),
+                                'model_name': model_ngettext(self.opts)}
+                msg = ugettext(u"Successfully disassociated %(number)d %(model_name)s.") % msg_data
+                self.message_user(request, msg)
+                return # end action
             extra_context = {'title': ugettext('Are you sure you want disassociate this contents?'),
                              'action_submit': 'disassociate_contents'}
             return self.confirm_action(request, queryset, extra_context)
@@ -97,13 +114,6 @@ class BaseMultimediaAdmin(BaseAdmin, WorkflowBatchActionProvider):
         Hack for saving object as pending when user is editor
         """
         obj.last_editor = request.user
-        if not change:
-            try:
-                editors_group = Group.objects.get(name='editores')
-            except Group.DoesNotExist:
-                editors_group = None
-            if editors_group and editors_group in request.user.groups.all():
-                obj.status = 'pending'
         super(BaseMultimediaAdmin, self).save_model(request, obj, form, change)
 
 
@@ -280,3 +290,5 @@ def register(site):
     site.register_related(PanoramicView, RelatedPanoramicViewAdmin, related_to=BaseContent)
     site.register_related(Image3D, RelatedImage3DAdmin, related_to=BaseContent)
     site.register_related(Audio, RelatedAudioAdmin, related_to=BaseContent)
+    site.register_related(BaseContent, MultimediaAddContentRelatedModelAdmin, related_to=BaseMultimedia)
+    site.register_related(BaseContent, MultimediaRemoveContentRelatedModelAdmin, related_to=BaseMultimedia)
