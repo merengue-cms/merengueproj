@@ -1,3 +1,4 @@
+import os
 import sys
 
 from django.core import management as django_management
@@ -16,16 +17,16 @@ def get_commands():
 
     """
     global _merengue_commands
-    commands = django_management.get_commands()
     if _merengue_commands is None:
         _merengue_commands = {}
-        for name, app_name in commands.iteritems():
-            try:
-                command = django_management.load_command_class(app_name, name)
-            except ImportError:
-                sys.stderr.write("Error importing subcommand %s.%s, ignoring." % (app_name, name))
-            if isinstance(command, MerengueCommand):
-                _merengue_commands[name] = app_name
+        # look for commands into every merengue app
+        merengue_dir = os.path.abspath(os.path.join(__path__[0], '..', '..'))
+        for f in os.listdir(merengue_dir):
+            path = os.path.join(merengue_dir, f, 'management')
+            if os.path.isdir(path):
+                commands = django_management.find_commands(os.path.abspath(path))
+                for command in commands:
+                    _merengue_commands[command] = 'merengue.%s' % f
     return _merengue_commands
 
 

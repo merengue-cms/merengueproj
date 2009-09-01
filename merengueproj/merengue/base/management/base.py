@@ -54,11 +54,19 @@ def copy_helper(style, name, directory):
     # Copy merengue project template
     copy_dir(skel_dir, top_dir, name, style)
 
-    # Copy or symlink
+    # Copy or symlink merengue, its plugins and apps
     for d in 'apps', 'merengue', 'plugins':
         dest = os.path.join(top_dir, d)
         os.makedirs(dest)
         copy_dir(d, dest, name, style)
+
+    # Symlink merengue's media
+    merengue_media_dir = os.path.join(top_dir, 'media', 'merengue')
+    if sys.platform == 'win32':
+        message = "Linking is not supported by this platform (%s), copying merengue/media instead."
+        copy_dir('merengue', merengue_media_dir, name, style)
+    else:
+        os.symlink('../merengue/media', dest)
 
 
 def copy_dir(source, dest, name, style, link=False):
