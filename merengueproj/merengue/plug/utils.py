@@ -164,8 +164,8 @@ def register_plugin_templatetags(plugin_name):
 def unregister_plugin_templatetags(plugin_name):
     try:
         templatetags_mod = import_module('%s.templatetags' % plugin_name)
-        if templatetags_mod.__path__ not in templatetags.__path__:
-            templatetags.__path__.extend(templatetags_mod.__path__)
+        if templatetags_mod.__path__ in templatetags.__path__:
+            templatetags.__path__.remove(templatetags_mod.__path__)
     except ImportError:
         pass
 
