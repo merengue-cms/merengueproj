@@ -11,10 +11,10 @@ from django.utils.translation import ugettext
 
 from merengue.base.models import BaseContent
 from merengue.base.admin import (BaseAdmin, BaseContentRelatedModelAdmin,
-                        WorkflowBatchActionProvider)
+                        WorkflowBatchActionProvider, RelatedModelAdmin)
 from merengue.multimedia.models import Photo
 from merengue.section.models import (Menu, Section, AppSection, Carousel,
-                            BaseLink, AbsoluteLink, DocumentLink, Document)
+                            BaseLink, AbsoluteLink, DocumentLink, Document, CustomStyle)
 from merengue.section.widgets import ModifiedRelatedFieldWidgetWrapper, SearchFormOptionsWidget
 
 
@@ -24,7 +24,8 @@ class MenuAdmin(BaseAdmin):
 
 
 class BaseSectionAdmin(BaseAdmin):
-    list_display = ('name', 'slug')
+    list_display = ('name', 'slug', )
+    html_fields = ('description', )
     prepopulated_fields = {'slug': ('name_es', )}
 
     def get_form(self, request, obj=None, **kwargs):
@@ -55,6 +56,12 @@ class DocumentLinkAdmin(BaseAdmin):
 
 class SectionAdmin(BaseSectionAdmin):
     list_display = ('name', 'slug')
+
+
+class CustomStyleRelatedModelAdmin(RelatedModelAdmin):
+    tool_name = 'style'
+    tool_label = _('custom style')
+    related_field = 'basesection'
 
 
 class BaseSectionRelatedCustomStyleModelAdmin(BaseContentRelatedModelAdmin):
@@ -546,3 +553,4 @@ def register(site):
     site.register(Section, SectionAdmin)
     site.register(AppSection, AppSectionAdmin)
     site.register(Carousel, CarouselAdmin)
+    site.register_related(CustomStyle, CustomStyleRelatedModelAdmin, related_to=Section)

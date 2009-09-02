@@ -271,6 +271,7 @@ class BaseSection(Base, RealInstanceMixin):
         'CustomStyle',
         null = True,
         blank = True,
+        editable = False,
         verbose_name=_('custom style'),
     )
 
