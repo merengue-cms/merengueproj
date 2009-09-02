@@ -51,9 +51,6 @@
     <strong>{% inline_trans  "Event Type" %}:</strong> {% event_categories content %}
   {% endif %}
 </p>
-{% if content.description %}
-<div class="eventDescription">{{ content.description|default_if_none:""|safe }}</div>
-{% endif %}
 {% if parent %}
 <div class="parentEvent">{% inline_trans "This event is part of" %}: <a href="{{ parent.get_absolute_url }}">{{ parent }}</a></div>
 {% endif %}
