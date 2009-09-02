@@ -1,6 +1,7 @@
 import os
 import sys
 
+from django import templatetags
 from django.conf import settings
 from django.conf.urls.defaults import include, url
 from django.contrib.admin.sites import NotRegistered
@@ -106,6 +107,8 @@ def enable_plugin(plugin_name, register=True):
         register_app(plugin_name)
         register_plugin_actions(plugin_name)
         register_plugin_blocks(plugin_name)
+        register_plugin_templatetags(plugin_name)
+    register_plugin_urls(plugin_name)
 
 
 def disable_plugin(plugin_name, unregister=True):
@@ -119,6 +122,7 @@ def disable_plugin(plugin_name, unregister=True):
             pass
         unregister_plugin_actions(plugin_name)
         unregister_plugin_blocks(plugin_name)
+        unregister_plugin_templatetags(plugin_name)
     unregister_plugin_urls(plugin_name)
 
 
@@ -146,6 +150,24 @@ def update_admin_urls():
         if getattr(url_pattern, 'app_name', '') == 'admin':
             urlresolvers.clear_url_caches()
             urlconf.urlpatterns[i] = url(r'^admin/', include(admin.site.urls))
+
+
+def register_plugin_templatetags(plugin_name):
+    try:
+        templatetags_mod = import_module('%s.templatetags' % plugin_name)
+        if templatetags_mod.__path__ not in templatetags.__path__:
+            templatetags.__path__.extend(templatetags_mod.__path__)
+    except ImportError:
+        pass
+
+
+def unregister_plugin_templatetags(plugin_name):
+    try:
+        templatetags_mod = import_module('%s.templatetags' % plugin_name)
+        if templatetags_mod.__path__ not in templatetags.__path__:
+            templatetags.__path__.extend(templatetags_mod.__path__)
+    except ImportError:
+        pass
 
 
 def register_items(item_list):

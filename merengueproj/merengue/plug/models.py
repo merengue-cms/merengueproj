@@ -10,7 +10,6 @@ from merengue.plug.utils import (add_to_installed_apps, are_installed_models,
                                  disable_plugin, enable_plugin,
                                  install_models, get_plugins_dir,
                                  get_plugin_module_name,
-                                 register_plugin_urls,
                                  reload_app_directories_template_loader)
 from merengue.plug.managers import PluginManager
 from merengue.registry.models import RegisteredItem
@@ -41,7 +40,8 @@ def install_plugin(sender, instance, **kwargs):
     app_name = get_plugin_module_name(instance.directory_name)
     if instance.installed:
         app_mod = load_app(app_name)
-        # Needed update installed apps in order to get SQL command from merengue.plugin
+        # Needed update installed apps in order
+        # to get SQL command from merengue.plugin
         add_to_installed_apps(app_name)
         if not are_installed_models(app_mod):
             install_models(app_mod)
@@ -49,7 +49,6 @@ def install_plugin(sender, instance, **kwargs):
             instance.save()
         if instance.active:
             enable_plugin(app_name)
-            register_plugin_urls(app_name)
         else:
             disable_plugin(app_name)
         # app_directories template loader loads app_template_dirs in
