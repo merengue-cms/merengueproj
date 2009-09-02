@@ -11,5 +11,5 @@ class FacebookLink(ContentAction):
 
     @classmethod
     def get_response(cls, request, content):
-        request_url = 'http://%s%s' % (request.get_host(), request.get_full_path())
+        request_url = 'http://%s%s' % (request.get_host(), content.public_link())
         return HttpResponseRedirect('http://www.facebook.com/share.php?u=%s' % urlquote(request_url))
