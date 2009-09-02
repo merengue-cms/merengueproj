@@ -79,7 +79,20 @@ def copy_helper(style, name, directory, symlink=False):
         sys.stderr.write(style.NOTICE(message % sys.platform))
         copy_dir('merengue', merengue_media_dir, name, style)
     else:
-        os.symlink('../merengue/media', merengue_media_dir)
+        os.symlink(os.path.join('..', 'merengue', 'media'), merengue_media_dir)
+
+    # Symlink apps' media
+    apps_dir = os.path.join(top_dir, 'apps')
+    for app in os.listdir(apps_dir):
+        dest = os.path.join(top_dir, 'media', app)
+        app_media_dir = os.path.join(apps_dir, app, 'media')
+        if os.path.isdir(app_media_dir):
+            if sys.platform == 'win32':
+                message = "Linking is not supported by this platform (%s), copying apps/%s/media instead."
+                sys.stderr.write(style.NOTICE(message % (sys.platform, app)))
+                copy_dir(app_media_dir, dest, name, style)
+            else:
+                os.symlink(os.path.join('..', 'apps', app, 'media'), dest)
 
 
 def copy_dir(source, dest, name, style, link=False):
