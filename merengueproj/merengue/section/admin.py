@@ -4,14 +4,14 @@ from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from django.contrib.contenttypes.models import ContentType
 from django.forms.models import save_instance
 from django.forms.util import ValidationError
-from django.forms.widgets import HiddenInput
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
 from merengue.base.models import BaseContent
 from merengue.base.admin import (BaseAdmin, BaseContentRelatedModelAdmin,
-                        WorkflowBatchActionProvider, RelatedModelAdmin)
+                                 RelatedModelAdmin)
+from merengue.base.admin import set_field_read_only
 from merengue.multimedia.models import Photo
 from merengue.section.models import (Menu, Section, AppSection, Carousel,
                             BaseLink, AbsoluteLink, DocumentLink, Document, CustomStyle)
@@ -59,12 +59,6 @@ class SectionAdmin(BaseSectionAdmin):
 
 
 class CustomStyleRelatedModelAdmin(RelatedModelAdmin):
-    tool_name = 'style'
-    tool_label = _('custom style')
-    related_field = 'basesection'
-
-
-class BaseSectionRelatedCustomStyleModelAdmin(BaseContentRelatedModelAdmin):
     fieldsets = (
         (_('CSS Colors'), {'fields': ('color_1', 'color_2', 'color_3', 'menu_link_color')}),
         (_('Header images'), {'fields': ('content_head_background', 'menu_head_background')}),
@@ -72,50 +66,57 @@ class BaseSectionRelatedCustomStyleModelAdmin(BaseContentRelatedModelAdmin):
                                            'searcher_tab_image', 'searcher_last_tab_image',
                                            'search_results_item_background')}),
         )
-
-    def changelist_view(self, request, extra_context=None):
-        if not self.admin_site.basecontent.customstyle:
-            return self.add_view(request, extra_context=extra_context)
-        else:
-            object_id = "%s" % self.admin_site.basecontent.customstyle.id
-            return self.change_view(request, object_id=object_id, extra_context=extra_context)
-
-    def change_view(self, request, object_id, extra_context=None):
-        if object_id == 'delete':
-            object_id = "%s" % self.admin_site.basecontent.customstyle.id
-            return self.delete_view(request, object_id, extra_context)
-        else:
-            return super(BaseSectionRelatedCustomStyleModelAdmin, self).change_view(request, object_id, extra_context)
-
-    def queryset(self, request):
-        return self.admin_site.basecontent.customstyle
-
-    def save_model(self, request, obj, form, change):
-        super(BaseSectionRelatedCustomStyleModelAdmin, self).save_model(request, obj, form, change)
-        if not change:
-            self.admin_site.basecontent.customstyle = obj
-            self.admin_site.basecontent.save()
+    tool_name = 'style'
+    tool_label = _('custom style')
+    related_field = 'basesection'
+    one_to_one = True
 
     def has_delete_permission(self, request, obj=None):
         return False
 
-    def response_add(self, request, obj, post_url_continue='../%s/'):
-        post_url_continue='%s/'
-        return super(BaseSectionRelatedCustomStyleModelAdmin, self).response_add(request, obj, post_url_continue)
+
+class DocumentAdmin(BaseAdmin):
+    list_display = ('name', 'slug', 'status', )
+    list_filter = ('status', )
+    html_fields = ('description', 'body', )
+    filter_horizontal=('videos', )
+    prepopulated_fields = {'slug': ('name_es', )}
+    actions = BaseAdmin.actions + ['set_as_published', 'set_as_draft']
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(DocumentAdmin, self).get_form(request, obj, **kwargs)
+        if 'related_section' in form.base_fields.keys():
+            form.base_fields.pop('related_section')
+        return form
 
 
-class ReadOnlySlugWidget(HiddenInput):
+class DocumentRelatedModelAdmin(RelatedModelAdmin, DocumentAdmin):
+    tool_name = 'documents'
+    tool_label = _('documents')
+    related_field = 'related_section'
 
-    def render(self, name, value, attrs=None):
-        output = super(ReadOnlySlugWidget, self).render(name, value, attrs)
-        return mark_safe(output + value)
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(DocumentRelatedModelAdmin, self).get_form(request, obj, **kwargs)
+        if obj and obj.permanent and 'slug' in form.base_fields.keys():
+            set_field_read_only(form.base_fields['slug'], 'slug', obj)
+        return form
 
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        if db_field.name == 'search_form':
+            from searchform.registry import search_form_registry
+            db_field._choices = search_form_registry.get_choices()
 
-class BaseDocumentModelAdmin(object):
+        formfield = super(DocumentRelatedModelAdmin, self).formfield_for_dbfield(db_field, **kwargs)
+        if db_field.name == 'search_form_filters':
+            formfield.widget = SearchFormOptionsWidget()
 
-    def post_save_model(self, request, obj, form, change):
+        return formfield
+
+    def save_model(self, request, obj, form, change):
+        super(DocumentRelatedModelAdmin, self).save_model(request, obj, form, change)
         app_section = obj.related_section
         try:
+            # we avoid duplicated slugs
             if app_section:
                 app_section.document_set.exclude(pk=obj.pk).get(slug=obj.slug)
                 obj.slug = "%s-%s" %(obj.slug, obj.id)
@@ -126,71 +127,6 @@ class BaseDocumentModelAdmin(object):
                 obj.save()
         except Document.DoesNotExist:
             pass
-
-
-class BaseSectionRelatedDocumentModelAdmin(BaseContentRelatedModelAdmin, WorkflowBatchActionProvider, BaseDocumentModelAdmin):
-    actions = BaseAdmin.actions + ['set_as_draft', 'set_as_published']
-    selected = 'documents'
-    change_list_template = "admin/section/document/change_list.html"
-    list_display = ('name', 'slug', 'status', )
-    list_filter = ('status', )
-    html_fields = ('body', )
-    prepopulated_fields = {'slug': ('name_es', )}
-    filter_horizontal = ('videos', )
-
-    def queryset(self, request):
-        return self.admin_site.basecontent.document_set.all()
-
-    def save_model(self, request, obj, form, change):
-        obj.related_section = self.admin_site.basecontent
-        super(BaseSectionRelatedDocumentModelAdmin, self).save_model(
-                                                request, obj, form, change)
-        self.post_save_model(request, obj, form, change)
-
-    def has_change_permission_to_any(self, request):
-        return super(BaseSectionRelatedDocumentModelAdmin, self).has_change_permission(request, None)
-
-    def has_delete_permission(self, request, obj=None):
-        if obj:
-            return not obj.permanent
-        return super(BaseSectionRelatedDocumentModelAdmin, self).has_delete_permission(request, obj)
-
-    def get_form(self, request, obj=None, **kwargs):
-        form = super(BaseSectionRelatedDocumentModelAdmin, self).get_form(
-                                                    request, obj, **kwargs)
-        if 'related_section' in form.base_fields.keys():
-            form.base_fields.pop('related_section')
-
-        form = super(BaseSectionRelatedDocumentModelAdmin, self).get_form(request, obj, **kwargs)
-        if 'status' in form.base_fields.keys():
-            user = request.user
-            options = self._get_status_options(user, obj)
-            if options:
-                form.base_fields['status'].choices = options
-            else:
-                form.base_fields.pop('status')
-
-        if obj and obj.permanent and 'slug' in form.base_fields.keys():
-            slugfield = form.base_fields['slug']
-            slugfield.widget = ReadOnlySlugWidget(slugfield.widget.attrs)
-
-        return form
-
-    def formfield_for_dbfield(self, db_field, **kwargs):
-        if db_field.name == 'search_form':
-            from searchform.registry import search_form_registry
-            db_field._choices = search_form_registry.get_choices()
-
-        formfield = super(BaseSectionRelatedDocumentModelAdmin, self).formfield_for_dbfield(db_field, **kwargs)
-        if db_field.name == 'search_form_filters':
-            formfield.widget = SearchFormOptionsWidget()
-
-        return formfield
-
-    def __call__(self, request, url):
-        self.selected = 'main_menu'
-        self.selected_menu = self.admin_site.basecontent.main_menu
-        return super(BaseSectionRelatedDocumentModelAdmin, self).__call__(request, url)
 
 
 class BaseLinkInline(admin.TabularInline):
@@ -426,7 +362,7 @@ class AppSectionAdmin(BaseSectionAdmin):
 class CarouselAdmin(BaseAdmin):
     list_display = ('name', 'slug')
     prepopulated_fields = {'slug': ('name', )}
-    exclude = ('photos_extra', )
+    exclude = ('photo_list', )
 
     def formfield_for_dbfield(self, db_field, **kwargs):
         field = super(BaseAdmin, self).formfield_for_dbfield(db_field,
@@ -448,34 +384,49 @@ class CarouselAdmin(BaseAdmin):
                                                       extra_context)
 
 
-class CarouselRelatedPhotoModelAdmin(BaseContentRelatedModelAdmin):
+class CarouselPhotoRelatedModelAdmin(RelatedModelAdmin):
+    """ Add new photos to carousel or remove existing ones """
+    tool_name = 'photos'
+    tool_label = _('photos')
+    related_field = 'carousel'
     list_display = ('__str__', 'admin_thumbnail', 'status')
     html_fields = ('caption', )
     search_fields = ('name', 'original_filename')
     selected = 'photos'
     change_list_template = None
+    actions = ['deselect_photo', ]
 
-    def _update_extra_context(self, extra_context=None):
-        extra_context = super(CarouselRelatedPhotoModelAdmin, self)._update_extra_context(extra_context)
-        extra_context['inside_basecontent'] = False
-        extra_context['inside_carousel_section'] = True
-        return extra_context
+    def deselect_photo(self, request, queryset):
+        selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
+        if selected:
+            if request.POST.get('post'):
+                basecontent = self.basecontent
+                for deselected_photo in queryset:
+                    basecontent.photo_list.remove(deselected_photo)
+                return
+            extra_context = {'title': _(u'Are you sure you want to deselect these photos from carousel?'),
+                             'action_submit': 'deselect_photo'}
+            return self.confirm_action(request, queryset, extra_context)
+    deselect_photo.short_description = _("Deselect photo")
 
-    def save_model(self, request, obj, form, change):
-        super(CarouselRelatedPhotoModelAdmin, self).save_model(request, obj, form, change)
-        self.admin_site.basecontent.photos_extra.add(obj)
 
-
-class CarouselRelatedAddPhotoModelAdmin(CarouselRelatedPhotoModelAdmin):
+class CarouselRelatedChoosePhotoModelAdmin(CarouselPhotoRelatedModelAdmin):
+    """ Choose existing photos for a carousel """
+    tool_name = 'choosephotos'
+    tool_label = _('choose photos')
     actions = ['select_photo']
+    inherit_actions = False
+
+    def queryset(self, request, basecontent=None):
+        return Photo.objects.exclude(carousel=self.basecontent)
 
     def select_photo(self, request, queryset):
         selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
         if selected:
             if request.POST.get('post'):
-                basecontent = self.admin_site.basecontent
+                basecontent = self.basecontent
                 for selected_photo in queryset:
-                    basecontent.photos_extra.add(selected_photo)
+                    basecontent.photo_list.add(selected_photo)
                 return
             extra_context = {'title': _(u'Are you sure you want to select these photos?'),
                              'action_submit': 'select_photo'}
@@ -483,74 +434,11 @@ class CarouselRelatedAddPhotoModelAdmin(CarouselRelatedPhotoModelAdmin):
     select_photo.short_description = _("Select photo")
 
 
-class CarouselRelatedRemovePhotoModelAdmin(CarouselRelatedPhotoModelAdmin,
-                                           WorkflowBatchActionProvider):
-    actions = ['deselect_photo', 'set_as_draft',
-               'set_as_pending', 'set_as_published']
-
-    def deselect_photo(self, request, queryset):
-        selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
-        if selected:
-            if request.POST.get('post'):
-                basecontent = self.admin_site.basecontent
-                for deselected_photo in queryset:
-                    basecontent.photos_extra.remove(deselected_photo)
-                return
-            extra_context = {'title': _(u'Are you sure you want to deselect these photos?'),
-                             'action_submit': 'deselect_photo'}
-            return self.confirm_action(request, queryset, extra_context)
-    deselect_photo.short_description = _("Deselect photo")
-
-    def queryset(self, request):
-        return Photo.objects.filter(carousel=self.admin_site.basecontent)
-
-
-class DocumentAdmin(BaseAdmin, WorkflowBatchActionProvider, BaseDocumentModelAdmin):
-    change_form_template = 'admin/section/document/change_form.html'
-
-    list_display = ('name', 'slug', 'status', )
-    list_filter = ('status', )
-    html_fields = ('body', )
-    filter_horizontal=('videos', )
-    prepopulated_fields = {'slug': ('name_es', )}
-    actions = BaseAdmin.actions + ['set_as_published', 'set_as_draft']
-
-    def formfield_for_dbfield(self, db_field, **kwargs):
-        if db_field.name == 'search_form':
-            from searchform.registry import search_form_registry
-            db_field._choices = search_form_registry.get_choices()
-
-        formfield = super(DocumentAdmin, self).formfield_for_dbfield(db_field, **kwargs)
-        if db_field.name == 'search_form_filters':
-            formfield.widget = SearchFormOptionsWidget()
-        if db_field.name == 'name_en':
-            formfield.required = True
-
-        return formfield
-
-
-class NoSectionDocumentAdmin(DocumentAdmin):
-
-    def get_form(self, request, obj=None, **kwargs):
-        form = super(NoSectionDocumentAdmin, self).get_form(request, obj, **kwargs)
-        if 'related_section' in form.base_fields.keys():
-            form.base_fields.pop('related_section')
-        return form
-
-    def save_model(self, request, obj, form, change):
-        app_section = None
-        try:
-            app_name = settings.APP_SECTION_MAP[obj._meta.module_name]
-            app_section = AppSection.objects.get(slug=app_name)
-            obj.related_section = app_section
-        except AppSection.DoesNotExist:
-            pass
-        obj.save()
-        self.post_save_model(request, obj, form, change)
-
-
 def register(site):
     site.register(Section, SectionAdmin)
     site.register(AppSection, AppSectionAdmin)
     site.register(Carousel, CarouselAdmin)
+    site.register_related(Photo, CarouselPhotoRelatedModelAdmin, related_to=Carousel)
+    site.register_related(Photo, CarouselRelatedChoosePhotoModelAdmin, related_to=Carousel)
+    site.register_related(Document, DocumentRelatedModelAdmin, related_to=Section)
     site.register_related(CustomStyle, CustomStyleRelatedModelAdmin, related_to=Section)
