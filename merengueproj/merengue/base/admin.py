@@ -908,6 +908,8 @@ class RelatedModelAdmin(BaseAdmin):
             pass
         if not self.related_field:
             pass
+        for inline in self.inline_instances:
+            inline.admin_model = self # for allow retrieving basecontent object
 
     def _get_base_content(self, request):
         object_id = self.admin_site.base_object_id
@@ -980,7 +982,8 @@ class RelatedModelAdmin(BaseAdmin):
         super(RelatedModelAdmin, self).save_model(request, obj, form, change)
         opts = obj._meta
         field = opts.get_field_by_name(self.related_field)[0]
-        if isinstance(field, RelatedObject):
+        if isinstance(field, RelatedObject) and \
+           not isinstance(field.field, models.OneToOneField):
             # if related_field related foreign key (n elements)
             # we associate related object here
             manager = getattr(obj, field.get_accessor_name())

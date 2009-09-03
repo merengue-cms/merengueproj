@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.contrib import admin
-from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from django.contrib.contenttypes.models import ContentType
 from django.forms.models import save_instance
 from django.forms.util import ValidationError
@@ -9,13 +8,12 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
 from merengue.base.models import BaseContent
-from merengue.base.admin import (BaseAdmin, BaseContentRelatedModelAdmin,
-                                 RelatedModelAdmin)
+from merengue.base.admin import BaseAdmin, RelatedModelAdmin
 from merengue.base.admin import set_field_read_only
 from merengue.multimedia.models import Photo
 from merengue.section.models import (Menu, Section, AppSection, Carousel,
                             BaseLink, AbsoluteLink, DocumentLink, Document, CustomStyle)
-from merengue.section.widgets import ModifiedRelatedFieldWidgetWrapper, SearchFormOptionsWidget
+from merengue.section.widgets import SearchFormOptionsWidget
 
 
 class MenuAdmin(BaseAdmin):
@@ -205,57 +203,31 @@ class DocumentLinkInline(BaseLinkInline):
     verbose_name = _('Menu Document Link')
     verbose_name_plural = _('Menu Document Links')
 
-    def formfield_for_dbfield(self, db_field, **kwargs):
-        formfield = super(DocumentLinkInline, self).formfield_for_dbfield(db_field, **kwargs)
-        if formfield and isinstance(formfield.widget, RelatedFieldWidgetWrapper):
-            formfield.widget = ModifiedRelatedFieldWidgetWrapper(
-                    formfield.widget.widget,
-                    formfield.widget.rel,
-                    formfield.widget.admin_site)
-        return formfield
-
     def get_formset(self, request, obj=None, **kwargs):
         formset = super(DocumentLinkInline, self).get_formset(request, obj, **kwargs)
         if not formset:
             return formset
-        form=formset.form
+        form = formset.form
         if 'document' in form.base_fields.keys():
             qs = form.base_fields['document'].queryset
-            qs = qs.filter(related_section=self.admin_site.basecontent)
+            qs = qs.filter(related_section=self.admin_model.basecontent)
             form.base_fields['document'].queryset = qs
         return formset
 
 
-class BaseSectionRelatedMenuModelAdmin(BaseContentRelatedModelAdmin):
-    selected = 'main_menu'
+class BaseSectionMenuRelatedAdmin(RelatedModelAdmin):
     change_list_template = "admin/section/menu/change_list.html"
     list_display = ('level', 'name', 'slug', 'display_move_to', )
     list_display_links = ('name', )
     prepopulated_fields = {'slug': ('name_es', )}
     ordering=('lft', )
     actions = []
-    actions_on_top = False
-    actions_on_bottom = False
+    inherit_actions = False
     inlines = [AbsoluteLinkInline, DocumentLinkInline]
 
     def __init__(self, *args, **kwargs):
-        super(BaseSectionRelatedMenuModelAdmin, self).__init__(*args, **kwargs)
+        super(BaseSectionMenuRelatedAdmin, self).__init__(*args, **kwargs)
         self.old_inline_instances = [instance for instance in self.inline_instances]
-        if 'batchadmin_checkbox' in self.list_display:
-            self.list_display.remove('batchadmin_checkbox')
-
-    def __call__(self, request, url):
-        self.selected = 'main_menu'
-        self.selected_menu = self.admin_site.basecontent.main_menu
-        if url and url.startswith('interest'):
-            self.selected ='interest_menu'
-            self.selected_menu = self.admin_site.basecontent.interest_menu
-            url = url[9:] or None
-        elif url and url.startswith('secondary'):
-            self.selected ='secondary_menu'
-            self.selected_menu = self.admin_site.basecontent.secondary_menu
-            url = url[10:] or None
-        return super(BaseSectionRelatedMenuModelAdmin, self).__call__(request, url)
 
     def display_move_to(self, menu):
         hidden = u'<input type="hidden" class="thisMenu" name="next" value="%s" />' % menu.id
@@ -270,18 +242,26 @@ class BaseSectionRelatedMenuModelAdmin(BaseContentRelatedModelAdmin):
         return mark_safe('%s%s%s%s' % (hidden, init_move, cancel_move, options))
     display_move_to.allow_tags=True
 
-    def queryset(self, request):
-        if not self.selected_menu:
+    def get_menu(self, request, basecontent=None):
+        return super(BaseSectionMenuRelatedAdmin, self).queryset(request, basecontent).get()
+
+    def get_section_docs(self, request):
+        section = getattr(self.get_menu(request), self.related_field)
+        return section.document_set.all()
+
+    def queryset(self, request, basecontent=None):
+        menu = self.get_menu(request, basecontent)
+        if not menu:
             return Menu.tree.get_empty_query_set()
         else:
-            return Menu.tree.filter(tree_id=self.selected_menu.tree_id, level__gt=0)
+            return Menu.tree.filter(tree_id=menu.tree_id, level__gt=0)
 
     def get_form(self, request, obj=None, **kwargs):
-        form = super(BaseSectionRelatedMenuModelAdmin, self).get_form(
+        form = super(BaseSectionMenuRelatedAdmin, self).get_form(
                                                     request, obj, **kwargs)
         if 'parent' in form.base_fields.keys():
             qs = form.base_fields['parent'].queryset
-            qs = qs.filter(tree_id=self.selected_menu.tree_id, level__gt=0)
+            qs = qs.filter(tree_id=self.get_menu(request).tree_id, level__gt=0)
             form.base_fields['parent'].queryset = qs
         return form
 
@@ -297,8 +277,8 @@ class BaseSectionRelatedMenuModelAdmin(BaseContentRelatedModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if not obj.parent:
-            obj.parent = self.selected_menu
-        super(BaseSectionRelatedMenuModelAdmin, self).save_model(
+            obj.parent = self.get_menu(request)
+        super(BaseSectionMenuRelatedAdmin, self).save_model(
                                                 request, obj, form, change)
 
     def move_menus(self, request):
@@ -324,8 +304,20 @@ class BaseSectionRelatedMenuModelAdmin(BaseContentRelatedModelAdmin):
         media.add_js([settings.MEDIA_URL + "js/CollapsableMenuTree.js"])
         extra_context.update({'media': media.render(),
                               'moved_source': source})
-        return super(BaseSectionRelatedMenuModelAdmin, self).changelist_view(
+        return super(BaseSectionMenuRelatedAdmin, self).changelist_view(
                                                         request, extra_context)
+
+
+class MainMenuRelatedAdmin(BaseSectionMenuRelatedAdmin):
+    tool_name = 'mainmenu'
+    tool_label = _('main menu')
+    related_field = 'main_menu_section'
+
+
+class SecondaryMenuRelatedAdmin(BaseSectionMenuRelatedAdmin):
+    tool_name = 'secondarymenu'
+    tool_label = _('secondary menu')
+    related_field = 'secondary_menu_section'
 
 
 class AppSectionAdmin(BaseSectionAdmin):
@@ -442,3 +434,5 @@ def register(site):
     site.register_related(Photo, CarouselRelatedChoosePhotoModelAdmin, related_to=Carousel)
     site.register_related(Document, DocumentRelatedModelAdmin, related_to=Section)
     site.register_related(CustomStyle, CustomStyleRelatedModelAdmin, related_to=Section)
+    site.register_related(Menu, MainMenuRelatedAdmin, related_to=Section)
+    site.register_related(Menu, SecondaryMenuRelatedAdmin, related_to=Section)
