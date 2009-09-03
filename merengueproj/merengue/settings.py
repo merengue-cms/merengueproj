@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.gis',
+    'django.contrib.comments',
     'django_extensions',
     'debug_toolbar',
     'template_utils',
@@ -58,7 +59,6 @@ INSTALLED_APPS = (
     'mptt',
     'tinyimages',
     'rating',
-    'threadedcomments',
     'captcha',
     'south',
 ) + MERENGUE_APPS
@@ -142,3 +142,6 @@ CONTACT_SUGGESTIONBOX_PREFIX = 'SUGGESTION BOX'
 MAP_FILTRABLE_MODELS = (
     'base.basecontent',
 )
+
+# Customization Comment app for merengue, feedback
+COMMENTS_APP = 'plugins.feedback'

@@ -1,0 +1,12 @@
+{% load comments %}
+{% get_comment_list for content as feedback_list %}
+{% if feedback_list %}
+<ul>
+    {% for feedback in feedback_list %}
+        <li><h3>{{ feedback.user_name }}</h3>
+        <p>{{ feedback.comment }}<p>
+        </li>
+    {% endfor %}
+</ul>
+{% endif %}
+

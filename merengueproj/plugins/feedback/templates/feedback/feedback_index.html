@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% load i18n inlinetrans action_tags %}
+
+{% block pagetitle %}{% trans "Feedback index" %}{% endblock %}
+
+{% block extrabreadcrumbs %}
+  <span class="breadcrumbSeparator">→</span><a href="{% url feedback_index %}" title="{% trans "Feedback" %}">{% inline_trans "Feedback" %}</a>
+{% endblock %}
+
+{% block content %}
+<h1>{% inline_trans "Feedback Index" %}</h1>
+<ul class="feedback_list">
+  {% for feedback in feedback_list %}
+  <li>{{ feedback.comment }}</li>
+  {% endfor %}
+</ul>
+
+{% endblock %}
