@@ -3,7 +3,6 @@ from django.contrib.admin.options import IncorrectLookupParameters
 from django.forms.util import ErrorList
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
-from django.utils.datastructures import SortedDict
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
@@ -18,19 +17,7 @@ from merengue.multimedia.models import Photo, Video, PanoramicView, Image3D, Aud
 
 class BaseMultimediaContentRelatedModelAdmin(BaseContentAdmin, RelatedModelAdmin):
     list_filter = ('class_name', ) + BaseContentAdmin.list_filter
-
-    def get_actions(self, request):
-        """ by default, this admin does not return all hierarchy actions of all parents model admins """
-        class_actions = getattr(self.__class__, 'actions', [])
-        actions = []
-        actions.extend([self.get_action(action) for action in class_actions])
-
-        actions.sort(lambda a, b: cmp(a[2].lower(), b[2].lower()))
-        actions = SortedDict([
-            (name, (func, name, desc))
-            for func, name, desc in actions])
-
-        return actions
+    inherit_actions = False
 
 
 class MultimediaAddContentRelatedModelAdmin(BaseMultimediaContentRelatedModelAdmin):

@@ -26,6 +26,7 @@ from django.forms.models import ModelForm, BaseInlineFormSet, \
 from django.forms.util import ErrorList, ValidationError
 from django.forms.widgets import Media
 from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.utils.datastructures import SortedDict
 from django.utils.encoding import force_unicode
 from django.utils.html import escape
 from django.utils.importlib import import_module
@@ -275,6 +276,7 @@ class BaseAdmin(admin.ModelAdmin):
     edit_related = ()
     readonly_fields = ()
     list_per_page = 50
+    inherit_actions = True
     exclude = ('main_image', )
 
     def get_form(self, request, obj=None):
@@ -312,6 +314,26 @@ class BaseAdmin(admin.ModelAdmin):
             field.clean = new_clean
 
         return field
+
+    def get_actions(self, request):
+        """ by default, this admin does not return all hierarchy actions of all parents model admins """
+        if self.inherit_actions:
+            return super(BaseAdmin, self).get_actions(request)
+        else:
+            return self.get_not_inherited_actions(request)
+
+    def get_not_inherited_actions(self, request):
+        """ by default, this admin does not return all hierarchy actions of all parents model admins """
+        class_actions = getattr(self.__class__, 'actions', [])
+        actions = []
+        actions.extend([self.get_action(action) for action in class_actions])
+
+        actions.sort(lambda a, b: cmp(a[2].lower(), b[2].lower()))
+        actions = SortedDict([
+            (name, (func, name, desc))
+            for func, name, desc in actions])
+
+        return actions
 
     def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
         """ overrided for allow editing related objects in admin with "edit_related" option """
