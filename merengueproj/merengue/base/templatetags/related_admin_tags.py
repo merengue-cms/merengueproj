@@ -14,12 +14,14 @@ def _calculate_route(context):
     site_list = [{'site': admin_site,
                   'opts': model_admin.opts,
                   'obj': original,
+                  'admin': model_admin,
                  }]
     next = admin_site.base_model_admin
     prev = model_admin
     while next:
         site_list += [{'site': next.admin_site,
                        'opts': next.opts,
+                       'admin': next,
                        'obj': getattr(prev, 'basecontent', None),
                       }]
         prev = next
@@ -52,9 +54,12 @@ def advanced_breadcrumbs(context):
     base_url = url_list[-1]['url']
 
     for r in route[1:]:
-        url_list += [{'label': _(r['site'].tool_label),
-                      'url': base_url + r['site'].name + '/' + r['opts'].app_label + '/' + r['opts'].module_name + '/',
-                     }]
+        model_admin = r['admin']
+        if not model_admin.one_to_one:
+            # in one to one related models, we hide listings
+            url_list += [{'label': _(r['site'].tool_label),
+                        'url': base_url + r['site'].name + '/' + r['opts'].app_label + '/' + r['opts'].module_name + '/',
+                        }]
         if r['obj']:
             url_list += [{'label': r['obj'],
                           'url': base_url + r['site'].name + '/' + r['opts'].app_label + '/' + r['opts'].module_name + '/' + str(r['obj'].id) + '/',
@@ -73,6 +78,7 @@ advanced_breadcrumbs = register.inclusion_tag('admin/advanced_breadcrumbs.html',
 def smart_relations_object_tool(context):
     original = context.get('basecontent', None) or context.get('original', None)
     model_admin = context.get('model_admin', None)
+    request = context.get('request')
     if not original:
         return {}
     from merengue.base.adminsite import site
@@ -83,9 +89,18 @@ def smart_relations_object_tool(context):
         if isinstance(original, key):
             for tool_name, related_admin_site in site.related_admin_sites[key].items():
                 model, tool_model_admin = related_admin_site._registry.items()[0]
+                tool_url = '%s%s/%s/%s/' % (base_url, slugify(tool_name), model._meta.app_label, model._meta.module_name, )
+                if tool_model_admin.one_to_one:
+                    # link directly to change form or add form
+                    qs = tool_model_admin.queryset(request, basecontent=original)
+                    if qs:
+                        obj = qs.get()
+                        tool_url += str(obj.pk)
+                    else:
+                        tool_url += 'add/'
                 tools.append({'tool_name': tool_name,
                               'tool_label': related_admin_site.tool_label,
-                              'tool_url': '%s%s/%s/%s/' % (base_url, slugify(tool_name), model._meta.app_label, model._meta.module_name, ),
+                              'tool_url': tool_url,
                               'selected': model_admin == tool_model_admin,
                              })
     return {'tools': tools}

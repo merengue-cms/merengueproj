@@ -5,6 +5,7 @@ from django import template
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.db import models
+from django.db.models.related import RelatedObject
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib import admin
@@ -877,6 +878,7 @@ class ContactInfoAdmin(BaseAdmin):
 class RelatedModelAdmin(BaseAdmin):
     tool_name = None
     related_field = None
+    one_to_one = False
 
     def __init__(self, *args, **kwargs):
         super(RelatedModelAdmin, self).__init__(*args, **kwargs)
@@ -924,9 +926,12 @@ class RelatedModelAdmin(BaseAdmin):
         extra_context = self._update_extra_context(request, extra_context)
         return super(RelatedModelAdmin, self).changelist_view(request, extra_context)
 
-    def queryset(self, request):
+    def queryset(self, request, basecontent=None):
         base_qs = super(RelatedModelAdmin, self).queryset(request)
-        return base_qs.filter(**{self.related_field: self.basecontent})
+        if basecontent is None:
+            # we override our related content
+            basecontent = self.basecontent
+        return base_qs.filter(**{self.related_field: basecontent})
 
     def add_view(self, request, form_url='', extra_context=None):
         extra_context = self._update_extra_context(request, extra_context)
@@ -951,10 +956,24 @@ class RelatedModelAdmin(BaseAdmin):
 
     def save_model(self, request, obj, form, change):
         super(RelatedModelAdmin, self).save_model(request, obj, form, change)
+        opts = obj._meta
+        field = opts.get_field_by_name(self.related_field)[0]
+        if isinstance(field, RelatedObject):
+            # if related_field related foreign key (n elements)
+            # we associate related object here
+            manager = getattr(obj, field.get_accessor_name())
+            if not hasattr(manager, 'through'):
+                # we only know how handle many 2 many without intermediate models
+                manager.add(self.basecontent)
         self.custom_relate_content(request, obj, form, change)
 
     def custom_relate_content(self, request, obj, form, change):
-        pass # to override if child classes wants
+        """
+        Custom relation function. to override if child classes wants.
+        Useful for example in many2many relations with intermediate models, because
+        we don't know how to handle this.
+        """
+        pass
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(RelatedModelAdmin, self).get_form(request, obj, **kwargs)
