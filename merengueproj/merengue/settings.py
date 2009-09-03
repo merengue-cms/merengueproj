@@ -144,4 +144,4 @@ MAP_FILTRABLE_MODELS = (
 )
 
 # Customization Comment app for merengue, feedback
-COMMENTS_APP = 'plugins.feedback'
+# COMMENTS_APP = 'plugins.feedback'
