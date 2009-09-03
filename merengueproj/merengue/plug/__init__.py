@@ -18,3 +18,7 @@ class Plugin(RegistrableItem):
     @classmethod
     def get_blocks(cls):
         return [] # to override in plugins
+
+    @classmethod
+    def post_actions(cls):
+        pass

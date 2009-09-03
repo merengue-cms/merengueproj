@@ -108,6 +108,7 @@ def enable_plugin(plugin_name, register=True):
         register_plugin_actions(plugin_name)
         register_plugin_blocks(plugin_name)
         register_plugin_templatetags(plugin_name)
+        register_plugin_post_actions(plugin_name)
     register_plugin_urls(plugin_name)
 
 
@@ -204,6 +205,11 @@ def register_plugin_blocks(plugin_name):
 def unregister_plugin_blocks(plugin_name):
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
     unregister_items(plugin_config.get_blocks())
+
+
+def register_plugin_post_actions(plugin_name):
+    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    plugin_config.post_actions()
 
 
 def reload_app_directories_template_loader():
