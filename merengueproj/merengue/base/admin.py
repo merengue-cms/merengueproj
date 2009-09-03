@@ -962,7 +962,7 @@ class RelatedModelAdmin(BaseAdmin):
             # if related_field related foreign key (n elements)
             # we associate related object here
             manager = getattr(obj, field.get_accessor_name())
-            if not hasattr(manager, 'through'):
+            if getattr(manager, 'through', None) is None:
                 # we only know how handle many 2 many without intermediate models
                 manager.add(self.basecontent)
         self.custom_relate_content(request, obj, form, change)
