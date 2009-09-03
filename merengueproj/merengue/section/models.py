@@ -274,6 +274,7 @@ class BaseSection(Base, RealInstanceMixin):
         editable = False,
         verbose_name=_('custom style'),
     )
+    customstyle.delete_cascade = False
 
     objects = WorkflowManager()
 
