@@ -100,7 +100,7 @@ def find_plugin_urls(plugin_name):
 
 
 def enable_plugin(plugin_name, register=True):
-    from merengue.plug import PLUG_CACHE_KEY
+    from merengue.plugins import PLUG_CACHE_KEY
     cache.delete(PLUG_CACHE_KEY)
     add_to_installed_apps(plugin_name)
     if register:
@@ -113,7 +113,7 @@ def enable_plugin(plugin_name, register=True):
 
 
 def disable_plugin(plugin_name, unregister=True):
-    from merengue.plug import PLUG_CACHE_KEY
+    from merengue.plugins import PLUG_CACHE_KEY
     cache.delete(PLUG_CACHE_KEY)
     remove_from_installed_apps(plugin_name)
     if unregister:

@@ -4,12 +4,12 @@ from django.core.cache import cache
 class ActivePluginsMiddleware(object):
 
     def process_request(self, request):
-        from merengue.plug import PLUG_CACHE_KEY
+        from merengue.plugins import PLUG_CACHE_KEY
         loaded = cache.get(PLUG_CACHE_KEY)
         if not loaded:
-            from merengue.plug.utils import (enable_plugin, disable_plugin,
+            from merengue.plugins.utils import (enable_plugin, disable_plugin,
                                              get_plugin_module_name)
-            from merengue.plug.models import RegisteredPlugin
+            from merengue.plugins.models import RegisteredPlugin
             active_plugins = RegisteredPlugin.objects.actives()
             plugin_names = [get_plugin_module_name(p.directory_name)
                             for p in active_plugins]

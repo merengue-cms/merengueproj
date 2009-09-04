@@ -26,7 +26,7 @@ MERENGUE_APPS = (
     'merengue.places',
     'merengue.base',
     'merengue.section',
-    'merengue.plug',
+    'merengue.plugins',
     'merengue.themes',
     'merengue.action',
     'merengue.block',
@@ -69,7 +69,7 @@ MERENGUE_MIDDLEWARE_CLASSES = (
     'merengue.section.middleware.SectionMiddleware',
     'merengue.section.middleware.DebugSectionMiddleware',
     'merengue.middleware.SimplifiedLayoutMiddleware',
-    'merengue.plug.middleware.ActivePluginsMiddleware',
+    'merengue.plugins.middleware.ActivePluginsMiddleware',
 )
 
 # merengue usual middleware list. you can use this variable in your MIDDLEWARE_CLASSES project settings

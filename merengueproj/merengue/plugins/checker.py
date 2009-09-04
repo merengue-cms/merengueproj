@@ -4,9 +4,9 @@ from django.conf import settings
 from django.db import transaction
 from django.core.cache import cache
 
-from merengue.plug import PLUG_CACHE_KEY
-from merengue.plug.utils import get_plugin_config, get_plugins_dir
-from merengue.plug.models import RegisteredPlugin
+from merengue.plugins import PLUG_CACHE_KEY
+from merengue.plugins.utils import get_plugin_config, get_plugins_dir
+from merengue.plugins.models import RegisteredPlugin
 from merengue.registry import register, is_registered
 
 

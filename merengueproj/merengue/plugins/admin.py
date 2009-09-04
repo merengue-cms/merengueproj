@@ -2,9 +2,9 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.admin import set_field_read_only
-from merengue.plug.checker import check_plugins
-from merengue.plug.models import RegisteredPlugin
-from merengue.plug.utils import get_plugin_config
+from merengue.plugins.checker import check_plugins
+from merengue.plugins.models import RegisteredPlugin
+from merengue.plugins.utils import get_plugin_config
 from merengue.registry.admin import RegisteredItemAdmin
 
 

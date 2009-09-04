@@ -9,7 +9,7 @@ from django.http import (Http404, HttpResponse, HttpResponseRedirect,
 from django.utils.http import http_date
 from django.views.static import directory_index, was_modified_since
 
-from merengue.plug.models import RegisteredPlugin
+from merengue.plugins.models import RegisteredPlugin
 
 
 def get_active_plugins_full_path():
