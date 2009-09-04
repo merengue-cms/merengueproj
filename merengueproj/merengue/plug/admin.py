@@ -11,10 +11,12 @@ from merengue.registry.admin import RegisteredItemAdmin
 class RegisteredPluginAdmin(RegisteredItemAdmin):
     readonly_fields = RegisteredItemAdmin.readonly_fields + ('name',
         'description', 'version', 'timestamp', 'directory_name')
-    list_display = ('name', 'directory_name', 'installed', 'active')
+    list_display = ('name', 'directory_name', 'installed', 'active',
+                    'requires_apps', 'requires_plugins')
 
     def get_form(self, request, obj=None):
         form = super(RegisteredPluginAdmin, self).get_form(request, obj)
+        plugin_config = get_plugin_config(obj.directory_name)
         if not obj.installed:
             set_field_read_only(form.base_fields['active'], 'active', obj)
         # Check dependencies
@@ -42,6 +44,18 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
         check_plugins()
         return super(RegisteredPluginAdmin, self).changelist_view(request,
             extra_context)
+
+    def requires_plugins(self, obj):
+        plugin_config = get_plugin_config(obj.directory_name)
+        required_plugins = getattr(plugin_config, 'required_plugins', ())
+        return required_plugins or None
+    requires_plugins.short_description = _('Requires plugins')
+
+    def requires_apps(self, obj):
+        plugin_config = get_plugin_config(obj.directory_name)
+        required_apps = getattr(plugin_config, 'required_apps', ())
+        return required_apps or None
+    requires_apps.short_description = _('Requires applications')
 
 
 def register(site):
