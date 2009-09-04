@@ -1,4 +1,4 @@
-from merengue.plug import Plugin
+from merengue.plugins import Plugin
 
 
 class PluginConfig(Plugin):
