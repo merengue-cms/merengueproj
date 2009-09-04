@@ -246,7 +246,7 @@ class RelatedPhotoAdmin(RelatedBaseMultimediaAdmin):
     list_display = ('__str__', 'admin_thumbnail', 'status', 'last_editor', )
 
 
-class RelatedVideoAdmin(RelatedBaseMultimediaAdmin):
+class RelatedVideoAdmin(VideoChecker, RelatedBaseMultimediaAdmin):
     tool_name = 'videos'
     tool_label = _('videos')
 
