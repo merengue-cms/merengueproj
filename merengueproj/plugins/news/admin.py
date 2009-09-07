@@ -1,4 +1,5 @@
 from merengue.base.admin import BaseCategoryAdmin, BaseContentAdmin
+from merengue.section.admin import SectionContentAdmin
 from plugins.news.models import NewsItem, NewsCategory
 
 
@@ -9,6 +10,10 @@ class NewsCategoryAdmin(BaseCategoryAdmin):
 class NewsItemAdmin(BaseContentAdmin):
     list_filter = BaseContentAdmin.list_filter + ('categories', )
     html_fields = BaseContentAdmin.html_fields + ('body', )
+
+
+class NewsItemSectionAdmin(NewsItemAdmin, SectionContentAdmin):
+    pass
 
 
 def register(site):
