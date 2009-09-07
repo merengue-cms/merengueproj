@@ -12,13 +12,3 @@
 {% block contenttitle %}
   {% cutrender %}{{ document.name }}{% endcutrender %}
 {% endblock %}
-
-{% block contentactions %}
-  {% if document %}
-    {% content_admin_link document %}
-  {% else %}
-    {% if section %}
-      {% content_admin_link section %}
-    {% endif %}
-  {% endif %}
-{% endblock %}

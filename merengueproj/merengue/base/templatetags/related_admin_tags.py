@@ -1,7 +1,9 @@
 from django import template
 from django.core import urlresolvers
+from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext as _
 
+from merengue.base.adminsite import site
 
 register = template.Library()
 
@@ -81,8 +83,6 @@ def smart_relations_object_tool(context):
     request = context.get('request')
     if not original:
         return {}
-    from merengue.base.adminsite import site
-    from django.template.defaultfilters import slugify
     tools = []
     base_url = urlresolvers.reverse('admin:%s_%s_change' % (original._meta.app_label, original._meta.module_name), args=(original.id, ))
     for key in site.related_admin_sites.keys():

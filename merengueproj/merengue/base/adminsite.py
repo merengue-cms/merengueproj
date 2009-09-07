@@ -90,11 +90,10 @@ class AdminSite(BaseAdminSite):
             raise Exception('Need a subclass of RelatedModelAdmin to register a related model admin' % admin_class.__name__)
         if not issubclass(admin_class, RelatedModelAdmin):
             raise Exception('%s modeladmin must be a subclass of RelatedModelAdmin' % admin_class.__name__)
-
-        tool_name = admin_class and getattr(admin_class, 'tool_name', None)
+        tool_name = admin_class and (getattr(admin_class, 'tool_name', None) or getattr(model_or_iterable._meta, 'module_name', None))
         if not tool_name:
             raise Exception('Can not register %s modeladmin without a tool_name' % admin_class.__name__)
-        tool_label = getattr(admin_class, 'tool_label', tool_name)
+        tool_label = getattr(admin_class, 'tool_label', None) or getattr(model_or_iterable._meta, 'verbose_name', None)
 
         if not related_to in self.related_admin_sites.keys():
             self.related_admin_sites[related_to] = {}

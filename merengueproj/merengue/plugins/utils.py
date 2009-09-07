@@ -16,6 +16,7 @@ from django.utils.importlib import import_module
 
 from merengue import registry
 from merengue.base.admin import register_app, unregister_app
+from merengue.base.adminsite import site
 from merengue.registry.items import (NotRegistered as NotRegisteredItem,
                             AlreadyRegistered as AlreadyRegisteredItem)
 
@@ -109,6 +110,7 @@ def enable_plugin(plugin_name, register=True):
         register_plugin_blocks(plugin_name)
         register_plugin_templatetags(plugin_name)
         register_plugin_post_actions(plugin_name)
+        register_plugin_section_models(plugin_name)
     register_plugin_urls(plugin_name)
 
 
@@ -124,6 +126,7 @@ def disable_plugin(plugin_name, unregister=True):
         unregister_plugin_actions(plugin_name)
         unregister_plugin_blocks(plugin_name)
         unregister_plugin_templatetags(plugin_name)
+        unregister_plugin_section_models(plugin_name)
     unregister_plugin_urls(plugin_name)
 
 
@@ -210,6 +213,17 @@ def unregister_plugin_blocks(plugin_name):
 def register_plugin_post_actions(plugin_name):
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
     plugin_config.post_actions()
+
+
+def register_plugin_section_models(plugin_name):
+    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    from merengue.section.models import Section
+    for model, admin_model in plugin_config.section_models():
+        site.register_related(model, admin_model, related_to=Section)
+
+
+def unregister_plugin_section_models(plugin_name):
+    pass
 
 
 def reload_app_directories_template_loader():

@@ -22,6 +22,7 @@ def section_view(request, section_slug, original_context={}, template='section/d
 
 def document_view(request, section_slug, document_slug, original_context={}, template='section/document_view.html'):
     document = document_slug and get_object_or_404(Document, slug=document_slug, related_section__slug=section_slug)
+
     if not document or (not document.is_published() and not request.user.is_staff):
         raise Http404
     section = (document and document.related_section) or \

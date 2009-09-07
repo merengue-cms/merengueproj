@@ -1,4 +1,4 @@
-{% extends "base/base.html" %}
+{% extends "base.html" %}
 {% load i18n cache inlinetrans content_tags section_tags thumbnail %}
 
 {% block extrahead %}
@@ -16,10 +16,6 @@
     </script>
 
   {% endif %}
-{% endblock %}
-
-{% block extrastyles %}
-   <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}jscalendar/skins/aqua/theme.css" />
 {% endblock %}
 
 {% block customstyle %}
@@ -129,13 +125,6 @@
   {% block contentactionswrapper %}
   <div id="content_action" class="content_action">
   {% block contentactions %}
-    {% if document %}
-      {% content_admin_link document %}
-    {% else %}
-      {% if section %}
-        {% content_admin_link section %}
-      {% endif %}
-    {% endif %}
   {% endblock %}
   </div>
   {% endblock %}

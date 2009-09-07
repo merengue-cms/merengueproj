@@ -42,7 +42,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.gis',
-    'django.contrib.comments',
+    #'django.contrib.comments',
     'django_extensions',
     'debug_toolbar',
     'template_utils',

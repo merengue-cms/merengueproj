@@ -55,6 +55,14 @@ class DocumentLinkAdmin(BaseAdmin):
 class SectionAdmin(BaseSectionAdmin):
     list_display = ('name', 'slug')
 
+    def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
+        context['change_form_section'] = True
+        return super(SectionAdmin, self).render_change_form(request, context, add, change, form_url, obj)
+
+
+class SectionContentAdmin(RelatedModelAdmin):
+    related_field = 'basesection'
+
 
 class CustomStyleRelatedModelAdmin(RelatedModelAdmin):
     fieldsets = (
@@ -210,7 +218,7 @@ class DocumentLinkInline(BaseLinkInline):
         form = formset.form
         if 'document' in form.base_fields.keys():
             qs = form.base_fields['document'].queryset
-            qs = qs.filter(related_section=self.admin_model.basecontent)
+            qs = qs.filter(basesection=self.admin_model.basecontent)
             form.base_fields['document'].queryset = qs
         return formset
 

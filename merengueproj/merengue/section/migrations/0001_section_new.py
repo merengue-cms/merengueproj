@@ -57,19 +57,7 @@ class Migration:
         
         # Adding model 'Document'
         db.create_table('section_document', (
-            ('id', orm['section.Document:id']),
-            ('name_fr', orm['section.Document:name_fr']),
-            ('name_es', orm['section.Document:name_es']),
-            ('name_en', orm['section.Document:name_en']),
-            ('slug', orm['section.Document:slug']),
-            ('plain_description_fr', orm['section.Document:plain_description_fr']),
-            ('plain_description_es', orm['section.Document:plain_description_es']),
-            ('plain_description_en', orm['section.Document:plain_description_en']),
-            ('description_fr', orm['section.Document:description_fr']),
-            ('description_en', orm['section.Document:description_en']),
-            ('description_es', orm['section.Document:description_es']),
-            ('status', orm['section.Document:status']),
-            ('main_image', orm['section.Document:main_image']),
+            ('basecontent_ptr', orm['section.Document:basecontent_ptr']),
             ('body_en', orm['section.Document:body_en']),
             ('body_es', orm['section.Document:body_es']),
             ('body_fr', orm['section.Document:body_fr']),
@@ -110,7 +98,7 @@ class Migration:
         # Adding model 'DocumentLink'
         db.create_table('section_documentlink', (
             ('baselink_ptr', orm['section.DocumentLink:baselink_ptr']),
-            ('document', orm['section.DocumentLink:document']),
+            ('content', orm['section.DocumentLink:content']),
         ))
         db.send_create_signal('section', ['DocumentLink'])
         
@@ -339,7 +327,7 @@ class Migration:
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'interest_menu': ('django.db.models.fields.related.OneToOneField', [], {'blank': 'True', 'related_name': "'interest_menu_section'", 'unique': 'True', 'null': 'True', 'to': "orm['section.Menu']"}),
             'interest_menu_template': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'main_document': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['section.Document']", 'null': 'True', 'blank': 'True'}),
+            'main_document': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'section_main_document'", 'blank': 'True', 'null': 'True', 'to': "orm['section.Document']"}),
             'main_image': ('StdImageField', ["_('main image')"], {'editable': 'True', 'null': 'True', 'thumbnail_size': '(200,200)', 'blank': 'True'}),
             'main_menu': ('django.db.models.fields.related.OneToOneField', [], {'blank': 'True', 'related_name': "'main_menu_section'", 'unique': 'True', 'null': 'True', 'to': "orm['section.Menu']"}),
             'main_menu_template': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
@@ -377,37 +365,25 @@ class Migration:
             'searcher_tab_image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'})
         },
         'section.document': {
+            'basecontent_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['base.BaseContent']", 'unique': 'True', 'primary_key': 'True'}),
             'body_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'body_es': ('django.db.models.fields.TextField', [], {}),
             'body_fr': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'carousel': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['section.Carousel']", 'null': 'True', 'blank': 'True'}),
-            'description_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'description_es': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'description_fr': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'floatimage': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'main_image': ('StdImageField', ["_('main image')"], {'editable': 'True', 'null': 'True', 'thumbnail_size': '(200,200)', 'blank': 'True'}),
-            'name_en': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200', 'db_index': 'True'}),
-            'name_fr': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'permanent': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
             'photo': ('StdImageField', [], {'null': 'True', 'thumbnail_size': '(200,200)', 'blank': 'True'}),
             'photo_description_en': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'photo_description_es': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'photo_description_fr': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'plain_description_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'plain_description_es': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'plain_description_fr': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'related_section': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['section.BaseSection']", 'null': 'True', 'blank': 'True'}),
             'search_form': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'search_form_filters': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '200', 'db_index': 'True'}),
-            'status': ('django.db.models.fields.CharField', [], {'default': "'draft'", 'max_length': '20', 'db_index': 'True'}),
             'videos': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['multimedia.Video']", 'null': 'True', 'blank': 'True'})
         },
         'section.documentlink': {
             'baselink_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['section.BaseLink']", 'unique': 'True', 'primary_key': 'True'}),
-            'document': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['section.Document']", 'unique': 'True'})
+            'content': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['base.BaseContent']", 'unique': 'True'})
         },
         'section.menu': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),

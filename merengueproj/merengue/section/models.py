@@ -186,16 +186,16 @@ class AbsoluteLink(BaseLink):
 
 class DocumentLink(BaseLink):
 
-    document = models.OneToOneField('Document',
-        verbose_name=_('Document'),
+    content = models.OneToOneField(BaseContent,
+        verbose_name=_('Content'),
         )
 
     def get_absolute_url(self):
-        assert self.document is not None
-        return self.document.get_absolute_url()
+        assert self.content is not None
+        return self.content.get_absolute_url()
 
     def is_published(self):
-        return self.document.is_published()
+        return self.content.is_published()
 
 
 class BaseSection(Base, RealInstanceMixin):
@@ -258,6 +258,7 @@ class BaseSection(Base, RealInstanceMixin):
         null = True,
         blank = True,
         verbose_name=_('main document'),
+        related_name='section_main_document',
     )
     main_document.delete_cascade = False
 
@@ -395,7 +396,7 @@ class Carousel(models.Model):
         return unicode(self.name)
 
 
-class Document(Base):
+class Document(BaseContent):
 
     __metaclass__ = TransMeta
 
