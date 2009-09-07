@@ -1,5 +1,8 @@
 from merengue.plugins import Plugin
 
+from plugins.event.admin import EventSectionAdmin
+from plugins.event.models import Event
+
 
 class PluginConfig(Plugin):
     name = 'Events'
@@ -8,3 +11,7 @@ class PluginConfig(Plugin):
     url_prefixes = (
         ('event', 'plugins.event.urls'),
     )
+
+    @classmethod
+    def section_models(cls):
+        return [(Event, EventSectionAdmin)]

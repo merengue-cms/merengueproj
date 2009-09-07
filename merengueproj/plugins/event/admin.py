@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from merengue.base.admin import RelatedModelAdmin, BaseContentAdmin, BaseAdmin, Location, ReverseAdminInline
 from merengue.base.admin import InlineLocationModelAdmin
 from merengue.base.models import ContactInfo
+from merengue.section.admin import SectionContentAdmin
 from batchadmin.forms import CHECKBOX_NAME
 from batchadmin.util import get_changelist
 from plugins.event.models import Event, Occurrence, Category, CategoryGroup
@@ -44,7 +45,6 @@ class EventAdmin(BaseContentAdmin):
     exclude = ('expire_date', )
     list_display = ('name', 'google_minimap', 'cached_min_start', 'cached_max_end', 'status', 'user_modification_date', 'last_editor')
     list_filter = ('categories', 'frequency', 'status', 'user_modification_date', )
-    change_list_template = ""
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(EventAdmin, self).get_form(request, obj, **kwargs)
@@ -67,6 +67,10 @@ class EventAdmin(BaseContentAdmin):
             return HttpResponseRedirect('../%s/admin/event/occurrence/' % obj.id)
         else:
             return super(EventAdmin, self).response_add(request, obj)
+
+
+class EventSectionAdmin(EventAdmin, SectionContentAdmin):
+    pass
 
 
 class OccurrenceContactInfoAdminInline(ReverseAdminInline):
