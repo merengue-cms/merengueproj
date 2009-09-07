@@ -301,7 +301,8 @@ class BaseSectionMenuRelatedAdmin(RelatedModelAdmin):
     def changelist_view(self, request, extra_context={}):
         source = self.move_menus(request)
         media = self.media
-        media.add_js([settings.MEDIA_URL + "js/CollapsableMenuTree.js"])
+        media.add_js([settings.MEDIA_URL + "merengue/js/jquery-1.2.6.min.js"])
+        media.add_js([settings.MEDIA_URL + "merengue/js/section/CollapsableMenuTree.js"])
         extra_context.update({'media': media.render(),
                               'moved_source': source})
         return super(BaseSectionMenuRelatedAdmin, self).changelist_view(
