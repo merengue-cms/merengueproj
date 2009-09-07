@@ -11,8 +11,13 @@ class PluginConfig(Plugin):
     name = 'News'
     description = 'News plugin'
     version = '0.0.1a'
-    # required_apps = ('django.contrib.flatpages', )
-    # required_plugins = ('event', )
+#    required_apps = ('django.contrib.flatpages', )
+#    required_plugins = {
+#        'event': {
+#            'name': 'Events',
+#            'version': '0.0.1a',
+#        },
+#    }
     url_prefixes = (
         ('news', 'plugins.news.urls'),
     )

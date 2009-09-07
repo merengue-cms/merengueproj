@@ -29,6 +29,11 @@ def check_plugins():
                 plugin.directory_name = plugin_dir
                 plugin.description = getattr(plugin_config, 'description', '')
                 plugin.version = getattr(plugin_config, 'version', '')
+                plugin.required_apps = getattr(plugin_config, 'required_apps',
+                                               None)
+                plugin.required_plugins = getattr(plugin_config,
+                                                  'required_plugins',
+                                                  None)
                 plugin.save()
     except:
         transaction.savepoint_rollback(sid)

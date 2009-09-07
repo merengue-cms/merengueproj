@@ -343,3 +343,20 @@ ul.object-tools li.void_link a.din_smart_trigger {
 ul.object-tools li.void_link a.din_smart_trigger_open {
     background: #999999 url(../img/admin/gray-smart-tool-trigger-up.gif) no-repeat top right !important;
 }
+
+
+ul.dependencies {
+    padding-left: 15px;
+}
+
+ul.dependencies li.fulfilled {
+    list-style: none;
+    background: transparent url(/admin_media/img/admin/icon-yes.gif) no-repeat left center !important;
+    color: #44AD41;
+}
+
+ul.dependencies li.unfulfilled {
+    list-style: none;
+    background: transparent url(/admin_media/img/admin/icon-no.gif) no-repeat left center !important;
+    color: #FF0000;
+}

@@ -260,3 +260,20 @@ def reload_app_directories_template_loader():
             app_template_dirs = tuple(app_template_dirs)
             from django.template.loaders import app_directories
             app_directories.app_template_dirs = app_template_dirs
+
+
+def has_required_dependencies(plugin):
+    required_apps = plugin.required_apps or []
+    for app in required_apps:
+        if app not in settings.INSTALLED_APPS:
+            return False
+    required_plugins = plugin.required_plugins or {}
+    from merengue.plugins.models import RegisteredPlugin
+    for plugin, properties in required_plugins.iteritems():
+        filter_plugins = {'directory_name': plugin, 'active': True}
+        # HACK: Key for filter params dict can't be unicode strings
+        for attr, value in properties.iteritems():
+            filter_plugins.update({str(attr): value})
+        if not RegisteredPlugin.objects.filter(**filter_plugins):
+            return False
+    return True
