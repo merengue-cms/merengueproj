@@ -94,12 +94,33 @@ def copy_helper(style, name, directory, symlink=False):
             else:
                 os.symlink(os.path.join('..', 'apps', app, 'media'), dest)
 
+    # Copy or symlink default themes' media and templates
+    themes_dir = os.path.join(merengue_root, 'themes')
+    for theme in os.listdir(themes_dir):
+        theme_dir = os.path.join(themes_dir, theme)
+        dest_media = os.path.join(top_dir, 'media', 'themes', theme)
+        dest_templates = os.path.join(top_dir, 'templates', 'themes', theme)
+        if sys.platform == 'win32':
+            message = "Linking is not supported by this platform (%s), copying themes/%s instead." % theme
+            sys.stderr.write(style.NOTICE(message % sys.platform))
+            symlink = False
+        theme_dir_media = os.path.join(theme_dir, 'media')
+        theme_dir_templates = os.path.join(theme_dir, 'templates')
+        if symlink:
+            os.symlink(theme_dir_media, dest_media)
+            os.symlink(theme_dir_templates, dest_templates)
+        else:
+            copy_dir(theme_dir_media, dest_media, name, style)
+            copy_dir(theme_dir_templates, dest_templates, name, style)
+
 
 def copy_dir(source, dest, name, style, link=False):
     for d, subdirs, files in os.walk(source):
         relative_dir = d[len(source)+1:].replace('project_name', name)
         if relative_dir:
-            os.mkdir(os.path.join(dest, relative_dir))
+            new_relative_dir = os.path.join(dest, relative_dir)
+            if not os.path.exists(new_relative_dir):
+                os.makedirs(new_relative_dir)
         for i, subdir in enumerate(subdirs):
             if subdir.startswith('.'):
                 del subdirs[i]

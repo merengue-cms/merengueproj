@@ -1,0 +1,3 @@
+Merengue themes' media files (CSS, JS, etc.) are installed here.
+
+For themes' templates look at templates/themes/.
