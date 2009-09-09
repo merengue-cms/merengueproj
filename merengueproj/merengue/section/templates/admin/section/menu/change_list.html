@@ -15,7 +15,5 @@
 
 {% block content %}
   {{ block.super }}
-  {% if moved_source %}
-  <span class="movedSource hide">{{ moved_source }}</span>
-  {% endif %}
+  <div class="ajax-loading hide"><img src="{{ MEDIA_URL }}merengue/img/ajax-loader-admin.gif" /> {% trans "Saving" %}</span>
 {% endblock %}

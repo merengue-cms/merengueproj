@@ -225,7 +225,7 @@ class DocumentLinkInline(BaseLinkInline):
 
 class BaseSectionMenuRelatedAdmin(RelatedModelAdmin):
     change_list_template = "admin/section/menu/change_list.html"
-    list_display = ('level', 'name', 'slug', 'display_move_to', )
+    list_display = ('level', 'display_move_to', 'name', 'slug', )
     list_display_links = ('name', )
     prepopulated_fields = {'slug': ('name_es', )}
     ordering=('lft', )
@@ -310,7 +310,9 @@ class BaseSectionMenuRelatedAdmin(RelatedModelAdmin):
         source = self.move_menus(request)
         media = self.media
         media.add_js([settings.MEDIA_URL + "merengue/js/jquery-1.2.6.min.js"])
+        media.add_js([settings.MEDIA_URL + "merengue/js/jquery-ui-1.5.3.custom.min.js"])
         media.add_js([settings.MEDIA_URL + "merengue/js/section/CollapsableMenuTree.js"])
+        media.add_js([settings.MEDIA_URL + "merengue/js/section/OrderableMenuTree.js"])
         extra_context.update({'media': media.render(),
                               'moved_source': source})
         return super(BaseSectionMenuRelatedAdmin, self).changelist_view(

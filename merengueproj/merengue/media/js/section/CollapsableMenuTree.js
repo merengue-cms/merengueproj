@@ -2,143 +2,331 @@
     var plus = '<img class="plusMenu" src="/media/merengue/img/section/admin/plus.gif" /><img class="minusMenu hide" src="/media/merengue/img/section/admin/minus.gif" />';
     var span15 = '<span class="span15">&nbsp;</span>';
     var span50 = '<span class="span50">&nbsp;</span>';
+    var save_url = '/sections/ajax/save_menu_order/';
 
-    function show_submenus(menu) {
-        var level = menu.data('level');
-        menu.nextAll("tr").each(function() {
-            next_level = $(this).data('level');
-            if (next_level <= level) {
-                return false;
-            } else if (next_level == level + 1) {
-                $(this).show();
-                menu.find(".minusMenu").show();
-                menu.find(".plusMenu").hide();
-            }
+    function recalculateRows() {
+        var index=0;
+        $('#changelist table tbody tr:visible').each(function() {
+            $(this).removeClass('row1').removeClass('row2');
+            $(this).addClass('row' + (index%2+1));
+            index += 1;
         });
     }
 
-    function hide_submenus(menu) {
-        level = menu.data('level');
-        menu.nextAll("tr").each(function() {
-            next_level = $(this).data('level');
-            if (next_level <= level) {
-                return false;
+    function Node(element, level) {
+        this.children = [];
+        this.domelement = element;
+        this.level = level;
+        this.opened = false;
+        this.parent = null;
+        this.getRoot = function() {
+            if (!this.parent) return this;
+            return this.parent.getRoot();
+        }
+        this.getLevel = function() {
+            if (!this.parent) return 0;
+            return this.parent.getLevel()+1;
+        }
+        this.open = function() {
+            this.opened = true;
+            this.paintNodes();
+        }
+        this.close = function() {
+            this.closeChildren();
+            this.paintNodes();
+        }
+        this.addChild = function(node) {
+            this.children.push(node);
+            node.parent = this;
+        }
+        this.getChildren = function() {
+            return this.children;
+        }
+        this.setChildren = function(children) {
+            this.children = children;
+            for (var i in children) {
+                children[i].parent = this;
+            }
+        }
+        this.findLastLevelNode = function(level, lastnode) {
+            var children = this.getChildren();
+            var newnode = null;
+            if (this.getLevel() === level) {
+                return this;
+            } else if (this.getLevel() > level) {
+                return lastnode
+            }
+            for (i in children) {
+                newnode = children[i].findLastLevelNode(level, lastnode)
+                lastnode = newnode
+            }
+            return newnode
+        }
+        this.undecorate = function() {
+            var element = this.domelement;
+            element.find('.plusMenu').remove();
+            element.find('.minusMenu').remove();
+            element.find('.span15').remove();
+            element.find('.span50').remove();
+        }
+        this.decorate = function() {
+            var element = this.domelement;
+            if (this.children.length) {
+                element.children("th").eq(0).prepend(plus);
+                element.children("th").eq(0).css('white-space', 'nowrap');
+                element.children("th").eq(0).find('a').css('white-space', 'normal');
             } else {
-                $(this).hide();
-                $(this).find(".minusMenu").hide();
-                $(this).find(".plusMenu").show();
+                element.children("th").eq(0).prepend(span15);
             }
-        });
-    }
-
-    function make_level() {
-        var menu = $(this);
-        var level = $(this).data('level');
-        var next_level = $(this).next('tr').eq(0).data('level');
-        if (level!=1) {
-            menu.hide();
-        }
-       
-        if (next_level) {
-            if (next_level > level) {
-                menu.children("th").eq(0).prepend(plus);
-                menu.children("th").eq(0).css('white-space', 'nowrap');
-                menu.children("th").eq(0).find('a').css('white-space', 'normal');
-                menu.find(".plusMenu").click(function() {
-                    $(this).hide();
-                    show_submenus(menu);
-                    $(this).next(".minusMenu").show();
-                });
-                menu.find(".minusMenu").click(function() {
-                    $(this).hide();
-                    hide_submenus(menu);
-                    $(this).prev(".plusMenu").show();
-                });
+            for(var i=0;i<this.getLevel()-1;i++) {
+                element.children("th").eq(0).prepend(span50);
+            }
+            if (this.parent.opened) element.show(); else element.hide();
+            if (this.opened) {
+                element.find(".minusMenu").show();
+                element.find(".plusMenu").hide();
             } else {
-                menu.children("th").eq(0).prepend(span15);
+                element.find(".minusMenu").hide();
+                element.find(".plusMenu").show();
             }
-        } else {
-            menu.children("th").eq(0).prepend(span15);
         }
-
-        for(var i=0;i<level-1;i++) {
-            menu.children("th").eq(0).prepend(span50);
+        this.closeChildren = function() {
+            var children = this.children;
+            for (var i in children) {
+                children[i].closeChildren();
+            }
+            this.opened = false;
+        }
+        this.setListeners = function() {
+            var element = this.domelement;
+            var node = this;
+	    element.find(".plusMenu").click(function() {
+               node.open();
+            });
+	    element.find(".minusMenu").click(function() {
+               node.close();
+            });
+        }
+        this.paintNode = function() {
+            var element = this.domelement;
+            if (!element) return;
+            element.children('td').eq(0).hide();
+            element.children('td').eq(1).hide();
+            this.undecorate();
+            this.decorate();
+            this.setListeners();
+        }
+        this.paintNodes = function() {
+            var children = this.children;
+            for (var i in children) {
+                children[i].paintNodes();
+            }
+            this.paintNode();
+            recalculateRows();
+        }
+        this.findNodeByElement = function(element) {
+            var node = null;
+            if (this.domelement && this.domelement.get(0) === element.get(0)) {
+                return this;
+            } else { 
+                var children = this.children;
+                for (var i in children) { 
+                    node = children[i].findNodeByElement(element);
+                    if (node) return node;
+                }
+            }
+            return null;
+        }
+        this.unParent = function() {
+            var siblings = this.parent.getChildren();
+            var newsiblings = [];
+            for (var i in siblings) {
+                if (siblings[i] !== this) newsiblings.push(siblings[i]);
+            }
+            this.parent.setChildren(newsiblings);
+        }
+        this.moveLastChild = function(node) {
+            this.unParent();
+            node.addChild(this);
+        }
+        this.moveFirstChild = function(node) {
+            this.unParent();
+            this.parent = node;
+            var siblings = this.parent.getChildren();
+            var newsiblings = [];
+            newsiblings.push(this);
+            for (var i in siblings) {
+                newsiblings.push(siblings[i]);
+            }
+            this.parent.setChildren(newsiblings);
+        }
+        this.moveAfterWithLevel = function(node, level, recurse) {
+            if (node.getLevel() < level) {
+                this.unParent();
+                node.addChild(this);
+            } else if (node.getLevel() === level) {
+                this.moveAfter(node);
+            } else if (recurse) {
+                this.moveAfterWithLevel(node.parent, level, recurse);
+            } else {
+                this.moveAfter(node);
+            }
+        }
+        this.moveAfter = function(node) {
+            this.unParent();
+            this.parent = node.parent;
+            var siblings = this.parent.getChildren();
+            var newsiblings = [];
+            for (var i in siblings) {
+                newsiblings.push(siblings[i]);
+                if (siblings[i] === node) {
+                    newsiblings.push(this);
+                }
+            }
+            this.parent.setChildren(newsiblings);
+        }
+        this.moveBefore = function(node) {
+            this.unParent();
+            this.parent = node.parent;
+            var siblings = this.parent.getChildren();
+            var newsiblings = [];
+            for (var i in siblings) {
+                if (siblings[i] === node) {
+                    newsiblings.push(this);
+                }
+                newsiblings.push(siblings[i]);
+            }
+            this.parent.setChildren(newsiblings);
+        }
+        this.getQueryString = function() {
+            var children = this.children;
+            var str = '';
+            var parent_val;
+            if (!this.domelement) {
+                parent_val = 'menu0'
+            } else {
+                parent_val = 'menu'+this.domelement.find('input.thisMenu').val()
+            }
+            for (var i in children) {
+                child_val = children[i].domelement.find('input.thisMenu').val()
+                str += parent_val + '=' + child_val + '&'
+                str += children[i].getQueryString()
+            }
+            return str
         }
     }
 
-    function initMoveMenu() {
-        row = $(this).parents("tr")
-        row.addClass('selected-row');
-        $("a.initMoveMenu").hide();
-        $("ul.insertOptions").show();
-        row.nextAll("tr").each(function() {
-           if ($(this).data('level') <= row.data('level')) return false;
-           $(this).find("ul.insertOptions").hide();
-        });
-        row.find("ul.insertOptions").hide();
-        row.find("a.cancelMoveMenu").show();
-    }
-
-    function cancelMoveMenu() {
-        row = $(this).parents("tr")
-        row.removeClass('selected-row');
-        $("a.initMoveMenu").show();
-        $("ul.insertOptions").hide();
-        $("a.cancelMoveMenu").hide();
-    }
-
-    function moveMenu(menu, movement) {
-        source = $("tr.selected-row input.thisMenu").val();
-        target = $(menu).parents("tr").find("input.thisMenu").val();
-        window.location="?source=" + source + '&target=' + target + '&movement=' + movement
-    }
-
-    function insertPrev() {
-        moveMenu(this, 'left');
-    }
-
-    function insertNext() {
-        moveMenu(this, 'right');
-    }
-
-    function insertChild() {
-        moveMenu(this, 'first-child');
-    }
-
-    function bindMovementActions() {
-        $("a.initMoveMenu").click(initMoveMenu);
-        $("a.cancelMoveMenu").click(cancelMoveMenu);
-        $("a.insertPrev").click(insertPrev);
-        $("a.insertNext").click(insertNext);
-        $("a.insertChild").click(insertChild);
-    }
-
-    function displayMovedMenu() {
-        menu = $("span.movedSource").text();
-        if (!menu) return;
-        row = $("input.thisMenu[value="+menu+"]").parents("tr"); 
-        row.prevAll("tr").each(function() {
-            level = $(this).data('level');
-            if (row.data('level') > level) {
-                show_submenus($(this));
+    function Tree() {
+        this.root = new Node(null, 0);
+        this.findLastLevelNode = function(node, level) {
+            var children = node.getChildren();
+            for (i in children) {
+                newnode = (children[i], level)
             }
-            if (level == 0) {
-                return False;
+        }
+        this.insertIntoLastLevel = function(node, level) {
+            var parent_node = this.root.findLastLevelNode(level);
+            if (parent_node) {
+                parent_node.addChild(node);
             }
+        }
+        this.paintTree = function() {
+            this.root.paintNodes();
+        }
+        this.findNodeByElement = function(element) {
+            return this.root.findNodeByElement(element);
+        }
+        this.getQueryString = function() {
+            return this.root.getQueryString();
+        }
+    }
+
+
+    function make_tree() {
+    	var main_tree = new Tree();
+        $("#changelist table tbody tr").each(function(i) {
+            var td_level = $(this).children("td").eq(0);
+            var level = parseInt(td_level.text());
+            var node = new Node($(this), level);
+            main_tree.insertIntoLastLevel(node, level-1);
         });
+        main_tree.root.open();
+        return main_tree;
+    }
+  
+    function redo_row(node) {
+        if (node.domelement)
+            $("#changelist table tbody").append(node.domelement);
+        var children = node.getChildren();
+        for (var i in children) 
+            redo_row(children[i]);
+    }
+
+    function redo_table(tree) {
+        $("#changelist table tbody tr").remove();
+        var node = tree.root;
+        redo_row(node);
+        tree.paintTree();
+    }
+
+    function save_tree(tree) {
+        var data = tree.getQueryString();
+        $('.ajax-loading').show();
+        $.ajax({
+            data:data,
+            url: save_url,
+            type: "GET",
+            async: true,
+            success: function(response){
+                $('.ajax-loading').hide();
+            }});
     }
 
     $(document).ready(function () {
-        $("#changelist table thead tr").children("th").eq(0).remove();
-        $("#changelist table tbody tr").each(function(i) {
-            td_level = $(this).children("td").eq(0);
-            level = parseInt(td_level.text());
-            td_level.remove();
-            $(this).data('level', level);
+        $("#changelist table thead tr").children("th").eq(0).hide();
+        $("#changelist table thead tr").children("th").eq(1).hide();
+        var tree = make_tree();
+        tree.paintTree();
+        redo_table(tree);
+        $('#changelist table tbody').sortable({
+            items: 'tr',
+            containment: 'parent',
+            tolerance: 'pointer',
+            delay: 500,
+            placeholder: 'row1',
+            forcePlaceholderSize: true,
+            over: function() {
+            },
+            start: function(e, ui) {
+                var current = tree.findNodeByElement(ui.item);
+                current.close();
+                ui.helper.find('.span50').remove();
+            },
+            stop: function(e, ui) {
+                var current = tree.findNodeByElement(ui.item);
+                var previous = tree.findNodeByElement(ui.item.prevAll('tr:visible').eq(0));
+                var next = tree.findNodeByElement(ui.item.nextAll('tr:visible').eq(0));
+                if (!previous) {
+                    current.moveFirstChild(tree.root);
+                } else  {
+                    if (!next) {
+                        next_level = -1;
+                    } else {
+                        next_level = next.getLevel();
+                    }
+                    prev_level = previous.getLevel();
+                    if (next_level > prev_level) {
+                        current.moveBefore(next); 
+                    } else if (next_level === prev_level) {
+                        current.moveAfterWithLevel(previous, parseInt(ui.position.left/50)+1, false); 
+                    } else {
+                        current.moveAfterWithLevel(previous, parseInt(ui.position.left/50)+1, true); 
+                    }
+                }
+                redo_table(tree);
+                save_tree(tree);
+            }
         });
-        $("#changelist table tbody tr").each(make_level);
-        bindMovementActions();
-        displayMovedMenu();
     });
 
 })(jQuery);

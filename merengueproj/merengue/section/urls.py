@@ -2,6 +2,7 @@ from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('merengue.section.views',
     url(r'ajax/get_search_filters_and_options/$', 'get_search_filters_and_options', name='get_search_filters_and_options'),
+    url(r'ajax/save_menu_order/$', 'save_menu_order', name='save_menu_order'),
     url(r'^(?P<section_slug>[\w-]+)/$', 'section_view', name='section_view'),
     url(r'^(?P<section_slug>[\w-]+)/crear-documento-principal/$', 'create_and_link_document', name='create_and_link_document'),
     url(r'^(?P<section_slug>[\w-]+)/css/$', 'section_custom_style', name='section_custom_style'),

@@ -1,13 +1,15 @@
 
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseNotAllowed, HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
+from django.utils import simplejson
 
 from searchform.registry import search_form_registry
 from searchform.utils import search_button_submitted
 from merengue.section.models import BaseSection, Document, Section
 
+from merengue.section.models import Menu
 from merengue.base.views import search_results
 
 
@@ -112,6 +114,24 @@ def get_search_filters_and_options(request):
                                'value': value,
                               },
                               context_instance=RequestContext(request))
+
+
+@login_required
+def save_menu_order(request):
+    for key in request.GET.keys():
+        if key.startswith('menu'):
+            for value in request.GET.getlist(key):
+                parent_id = key[4:]
+                menu_id = value
+                menu = Menu.objects.get(id=menu_id)
+                try:
+                    parent = Menu.objects.get(id=parent_id)
+                except Menu.DoesNotExist:
+                    parent = menu.get_root()
+                menu.move_to(parent, 'last-child')
+                menu.save()
+    json_dict = simplejson.dumps([])
+    return HttpResponse(json_dict, mimetype='text/plain')
 
 
 def section_dispatcher(request, url):
