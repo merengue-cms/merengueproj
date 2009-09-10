@@ -97,8 +97,8 @@ class Menu(models.Model):
         return unicode(self.name)
 
     def get_absolute_url(self):
-        #if self.url == None:
-        self.update_url()
+        if self.url == None:
+            self.update_url()
         return self.url
 
     def update_url(self):
