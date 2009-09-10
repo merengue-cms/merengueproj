@@ -28,10 +28,17 @@ class Migration:
             ('main_menu_template', orm['section.BaseSection:main_menu_template']),
             ('secondary_menu_template', orm['section.BaseSection:secondary_menu_template']),
             ('interest_menu_template', orm['section.BaseSection:interest_menu_template']),
-            ('main_document', orm['section.BaseSection:main_document']),
+            ('main_content', orm['section.BaseSection:main_content']),
             ('customstyle', orm['section.BaseSection:customstyle']),
         ))
         db.send_create_signal('section', ['BaseSection'])
+        
+        # Adding model 'ContentLink'
+        db.create_table('section_contentlink', (
+            ('baselink_ptr', orm['section.ContentLink:baselink_ptr']),
+            ('content', orm['section.ContentLink:content']),
+        ))
+        db.send_create_signal('section', ['ContentLink'])
         
         # Adding model 'Menu'
         db.create_table('section_menu', (
@@ -95,13 +102,6 @@ class Migration:
         ))
         db.send_create_signal('section', ['Section'])
         
-        # Adding model 'DocumentLink'
-        db.create_table('section_documentlink', (
-            ('baselink_ptr', orm['section.DocumentLink:baselink_ptr']),
-            ('content', orm['section.DocumentLink:content']),
-        ))
-        db.send_create_signal('section', ['DocumentLink'])
-        
         # Adding model 'BaseLink'
         db.create_table('section_baselink', (
             ('id', orm['section.BaseLink:id']),
@@ -161,6 +161,9 @@ class Migration:
         # Deleting model 'BaseSection'
         db.delete_table('section_basesection')
         
+        # Deleting model 'ContentLink'
+        db.delete_table('section_contentlink')
+        
         # Deleting model 'Menu'
         db.delete_table('section_menu')
         
@@ -178,9 +181,6 @@ class Migration:
         
         # Deleting model 'Section'
         db.delete_table('section_section')
-        
-        # Deleting model 'DocumentLink'
-        db.delete_table('section_documentlink')
         
         # Deleting model 'BaseLink'
         db.delete_table('section_baselink')
@@ -327,7 +327,7 @@ class Migration:
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'interest_menu': ('django.db.models.fields.related.OneToOneField', [], {'blank': 'True', 'related_name': "'interest_menu_section'", 'unique': 'True', 'null': 'True', 'to': "orm['section.Menu']"}),
             'interest_menu_template': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'main_document': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'section_main_document'", 'blank': 'True', 'null': 'True', 'to': "orm['section.Document']"}),
+            'main_content': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'section_main_content'", 'blank': 'True', 'null': 'True', 'to': "orm['base.BaseContent']"}),
             'main_image': ('StdImageField', ["_('main image')"], {'editable': 'True', 'null': 'True', 'thumbnail_size': '(200,200)', 'blank': 'True'}),
             'main_menu': ('django.db.models.fields.related.OneToOneField', [], {'blank': 'True', 'related_name': "'main_menu_section'", 'unique': 'True', 'null': 'True', 'to': "orm['section.Menu']"}),
             'main_menu_template': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
@@ -349,6 +349,10 @@ class Migration:
             'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'photo_list': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['multimedia.Photo']", 'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '200', 'db_index': 'True'})
+        },
+        'section.contentlink': {
+            'baselink_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['section.BaseLink']", 'unique': 'True', 'primary_key': 'True'}),
+            'content': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['base.BaseContent']", 'unique': 'True'})
         },
         'section.customstyle': {
             'color_1': ('ColorField', [], {'null': 'True', 'blank': 'True'}),
@@ -380,10 +384,6 @@ class Migration:
             'search_form': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'search_form_filters': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'videos': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['multimedia.Video']", 'null': 'True', 'blank': 'True'})
-        },
-        'section.documentlink': {
-            'baselink_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['section.BaseLink']", 'unique': 'True', 'primary_key': 'True'}),
-            'content': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['base.BaseContent']", 'unique': 'True'})
         },
         'section.menu': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
