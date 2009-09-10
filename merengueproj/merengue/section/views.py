@@ -9,17 +9,48 @@ from searchform.registry import search_form_registry
 from searchform.utils import search_button_submitted
 from merengue.section.models import BaseSection, Document, Section
 
-from merengue.section.models import Menu
-from merengue.base.views import search_results
+from merengue.base.views import content_view, search_results
+from merengue.section.models import AbsoluteLink, ContentLink, Menu
 
 
 def section_view(request, section_slug, original_context={}, template='section/document_view.html'):
     section_slug = section_slug.strip('/')
     section = get_object_or_404(BaseSection, slug=section_slug)
-    context = {'section': section.real_instance, 'document': section.main_document}
-    context.update(original_context)
-    document_slug = (section.main_document and section.main_document.slug) or None
-    return document_view(request, section_slug, document_slug, original_context=context, template=template)
+    context = original_context or {}
+    context['section'] = section.real_instance
+    return content_view(request, section.main_content, template_name='section/section_view.html', extra_context=context)
+
+
+def content_section_view(request, section_slug, content_id, content_slug):
+    section = get_object_or_404(BaseSection, slug=section_slug)
+    content = section.related_content.get(pk=content_id)
+    context = {}
+    context['section'] = section.real_instance
+    return content_view(request, section.main_content, template_name='section/content_section_view.html', extra_context=context)
+
+
+def menu_section_view(request, section_slug, menu_slug):
+    section = get_object_or_404(BaseSection, slug=section_slug)
+    menu = None
+    try:
+        menu = section.main_menu.get_descendants().get(slug=menu_slug)
+    except Menu.DoesNotExist:
+        try:
+            menu = section.secondary_menu.get_descendants().get(slug=menu_slug)
+        except Menu.DoesNotExist:
+            try:
+                menu = section.interest_menu.get_descendants().get(slug=menu_slug)
+            except Menu.DoesNotExist:
+                raise Http404
+
+    link = menu.baselink.real_instance
+    if isinstance(link, AbsoluteLink):
+        return HttpResponseRedirect(link.url)
+    elif isinstance(link, ContentLink):
+        context = {}
+        context['section'] = section.real_instance
+        context['menu'] = menu
+        return content_view(request, link.content, template_name='section/menu_section_view.html', extra_context=context)
 
 
 def document_view(request, section_slug, document_slug, original_context={}, template='section/document_view.html'):

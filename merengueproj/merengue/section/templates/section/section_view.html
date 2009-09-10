@@ -1,0 +1,8 @@
+{% extends "content_view.html" %}
+
+{% load i18n content_tags %}
+
+{% block contentbreadcrumbs %}
+    <span class="breadcrumbSeparator">→</span>
+    <a href="." title="{{ section }}">{% cutrender %}{{ section }}{% endcutrender %}</a>
+{% endblock %}

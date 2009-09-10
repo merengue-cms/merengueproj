@@ -12,7 +12,7 @@ from merengue.base.admin import BaseAdmin, RelatedModelAdmin
 from merengue.base.admin import set_field_read_only
 from merengue.multimedia.models import Photo
 from merengue.section.models import (Menu, Section, AppSection, Carousel,
-                            BaseLink, AbsoluteLink, DocumentLink, Document, CustomStyle)
+                            BaseLink, AbsoluteLink, ContentLink, Document, CustomStyle)
 from merengue.section.widgets import SearchFormOptionsWidget
 
 
@@ -26,10 +26,10 @@ class BaseSectionAdmin(BaseAdmin):
     html_fields = ('description', )
     prepopulated_fields = {'slug': ('name_es', )}
 
-    def get_form(self, request, obj=None, **kwargs):
+    def get_form1(self, request, obj=None, **kwargs):
         form = super(BaseSectionAdmin, self).get_form(request, obj, **kwargs)
-        if 'main_document' in form.base_fields.keys():
-            qs = form.base_fields['main_document'].queryset
+        if 'main_content' in form.base_fields.keys():
+            qs = form.base_fields['main_content'].queryset
             if not obj:
                 qs = qs.model.objects.get_empty_query_set()
             else:
@@ -38,9 +38,9 @@ class BaseSectionAdmin(BaseAdmin):
             # sentido mostrar este campo si no tiene opciones ya que no
             # se pueden crear nuevos documentos desde aqui
             if qs.count():
-                form.base_fields['main_document'].queryset = qs
+                form.base_fields['main_content'].queryset = qs
             else:
-                form.base_fields.pop('main_document')
+                form.base_fields.pop('main_content')
         return form
 
 
@@ -48,8 +48,8 @@ class AbsoluteLinkAdmin(BaseAdmin):
     list_display = ('url', )
 
 
-class DocumentLinkAdmin(BaseAdmin):
-    list_display = ('document', )
+class ContentLinkAdmin(BaseAdmin):
+    list_display = ('content', )
 
 
 class SectionAdmin(BaseSectionAdmin):
@@ -170,8 +170,8 @@ class BaseLinkInline(admin.TabularInline):
 
         def clean(formset_self):
             data=formset_self.data
-            if data.get('documentlink-0-document', None) and data.get('absolutelink-0-url', None):
-                raise ValidationError(_('Sorry you can not select an Absolute Link and a Document Link simultaneously for this menu. Fulfill just one.'))
+            if data.get('contentlink-0-content', None) and data.get('absolutelink-0-url', None):
+                raise ValidationError(_('Sorry you can not select an Absolute Link and a Content Link simultaneously for this menu. Fulfill just one.'))
         formset.save_new=save_new
         formset.clean=clean
         return formset
@@ -205,21 +205,21 @@ class AbsoluteLinkInline(BaseLinkInline):
         return field
 
 
-class DocumentLinkInline(BaseLinkInline):
-    model = DocumentLink
+class ContentLinkInline(BaseLinkInline):
+    model = ContentLink
     max_num = 1
-    verbose_name = _('Menu Document Link')
-    verbose_name_plural = _('Menu Document Links')
+    verbose_name = _('Menu Content Link')
+    verbose_name_plural = _('Menu Content Links')
 
     def get_formset(self, request, obj=None, **kwargs):
-        formset = super(DocumentLinkInline, self).get_formset(request, obj, **kwargs)
+        formset = super(ContentLinkInline, self).get_formset(request, obj, **kwargs)
         if not formset:
             return formset
         form = formset.form
-        if 'document' in form.base_fields.keys():
-            qs = form.base_fields['document'].queryset
+        if 'content' in form.base_fields.keys():
+            qs = form.base_fields['content'].queryset
             qs = qs.filter(basesection=self.admin_model.basecontent)
-            form.base_fields['document'].queryset = qs
+            form.base_fields['content'].queryset = qs
         return formset
 
 
@@ -231,7 +231,7 @@ class BaseSectionMenuRelatedAdmin(RelatedModelAdmin):
     ordering=('lft', )
     actions = []
     inherit_actions = False
-    inlines = [AbsoluteLinkInline, DocumentLinkInline]
+    inlines = [AbsoluteLinkInline, ContentLinkInline]
 
     def __init__(self, *args, **kwargs):
         super(BaseSectionMenuRelatedAdmin, self).__init__(*args, **kwargs)
@@ -255,7 +255,7 @@ class BaseSectionMenuRelatedAdmin(RelatedModelAdmin):
 
     def get_section_docs(self, request):
         section = getattr(self.get_menu(request), self.related_field)
-        return section.document_set.all()
+        return section.content_set.all()
 
     def queryset(self, request, basecontent=None):
         menu = self.get_menu(request, basecontent)

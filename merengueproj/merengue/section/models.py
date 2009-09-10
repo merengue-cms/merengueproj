@@ -97,13 +97,14 @@ class Menu(models.Model):
         return unicode(self.name)
 
     def get_absolute_url(self):
-        if self.url == None:
-            self.update_url()
+        #if self.url == None:
+        self.update_url()
         return self.url
 
     def update_url(self):
         try:
-            self.url = self.baselink.get_absolute_url()
+            menus_ancestors = ('/').join([menu.slug for menu in self.get_ancestors()])
+            self.url = reverse('menu_section_view', args=(self.get_section().slug, menus_ancestors, self.slug))
         except BaseLink.DoesNotExist:
             self.url = ''
         self.save()
@@ -184,7 +185,7 @@ class AbsoluteLink(BaseLink):
         return True
 
 
-class DocumentLink(BaseLink):
+class ContentLink(BaseLink):
 
     content = models.OneToOneField(BaseContent,
         verbose_name=_('Content'),
@@ -253,14 +254,14 @@ class BaseSection(Base, RealInstanceMixin):
         editable=False,
     )
 
-    main_document = models.ForeignKey(
-        'Document',
+    main_content = models.ForeignKey(
+        BaseContent,
         null = True,
         blank = True,
-        verbose_name=_('main document'),
-        related_name='section_main_document',
+        verbose_name=_('main content'),
+        related_name='section_main_content',
     )
-    main_document.delete_cascade = False
+    main_content.delete_cascade = False
 
     related_content = models.ManyToManyField(
         BaseContent,
@@ -454,7 +455,7 @@ class Document(BaseContent):
         null=True,
         )
 
-    related_section = models.ForeignKey('BaseSection',
+    related_section = models.ForeignKey(BaseSection,
         verbose_name=_('related section'),
         blank=True,
         null=True,
@@ -508,8 +509,8 @@ class Document(BaseContent):
 
     def get_breadcrumbs(self):
         try:
-            link = self.documentlink
-        except DocumentLink.DoesNotExist:
+            link = self.contentlink
+        except ContentLink.DoesNotExist:
             link = None
         bc = []
         if link is None:
@@ -710,16 +711,16 @@ def handle_link_url_post_save(sender, instance, **kwargs):
     linklist = []
     if isinstance(instance, BaseLink):
         linklist = [instance]
-    elif isinstance(instance, Document):
+    elif isinstance(instance, BaseContent):
         try:
-            linklist = [instance.documentlink]
-        except DocumentLink.DoesNotExist:
+            linklist = [instance.contentlink]
+        except ContentLink.DoesNotExist:
             pass
     elif isinstance(instance, BaseSection):
-        for document in instance.document_set.all():
+        for content in instance.related_content.all():
             try:
-                linklist.append(document.documentlink)
-            except DocumentLink.DoesNotExist:
+                linklist.append(content.contentlink)
+            except ContentLink.DoesNotExist:
                 continue
 
     for link in linklist:
