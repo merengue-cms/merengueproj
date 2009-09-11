@@ -1,15 +1,14 @@
 
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils import simplejson
 
 from searchform.registry import search_form_registry
-from searchform.utils import search_button_submitted
 from merengue.section.models import BaseSection, Document, Section
 
-from merengue.base.views import content_view, search_results
+from merengue.base.views import content_view
 from merengue.section.models import AbsoluteLink, ContentLink, Menu
 
 
@@ -27,6 +26,13 @@ def content_section_view(request, section_slug, content_id, content_slug):
     context = {}
     context['section'] = section.real_instance
     return content_view(request, section.main_content, template_name='section/content_section_view.html', extra_context=context)
+
+
+def document_section_view(request, section_slug, document_slug):
+    document = get_object_or_404(Document, slug=document_slug)
+    context = {}
+    context['section'] = document.related_section
+    return content_view(request, document, template_name='section/content_section_view.html', extra_context=context)
 
 
 def menu_section_view(request, section_slug, menu_slug):
@@ -51,44 +57,6 @@ def menu_section_view(request, section_slug, menu_slug):
         context['section'] = section.real_instance
         context['menu'] = menu
         return content_view(request, link.content, template_name='section/menu_section_view.html', extra_context=context)
-
-
-def document_view(request, section_slug, document_slug, original_context={}, template='section/document_view.html'):
-    document = document_slug and get_object_or_404(Document, slug=document_slug, related_section__slug=section_slug)
-
-    if not document or (not document.is_published() and not request.user.is_staff):
-        raise Http404
-    section = (document and document.related_section) or \
-               get_object_or_404(BaseSection, slug=section_slug)
-    return independent_document_view(request, document, section, original_context, template)
-
-
-def independent_document_view(request, document, section=None, original_context={}, template='section/document_view.html'):
-    """Like document_view but with fewer restrictions"""
-    search_form = document.get_search_form()
-    if section is None:
-        section = request.section
-    context = {'document': document, 'section': section.real_instance, 'search_form': search_form}
-    context.update(original_context)
-
-    if search_button_submitted(request):
-        return search_results(request, search_form, context)
-    else:
-        return render_to_response(template,
-                                  context,
-                                  context_instance=RequestContext(request))
-
-
-@login_required
-def create_and_link_document(request, section_slug):
-    if request.method == 'POST':
-        s = get_object_or_404(Section, slug=section_slug)
-        d = Document.objects.create(related_section=s)
-        s.main_document = d
-        s.save()
-        return HttpResponseRedirect('/admin/section/section/%d/admin/section/document/%d/' % (s.id, d.id))
-    else:
-        return HttpResponseNotAllowed(['POST'])
 
 
 def section_custom_style(request, section_slug):
@@ -167,12 +135,21 @@ def save_menu_order(request):
 
 def section_dispatcher(request, url):
     parts = url.strip('/').split('/')
+    func = None
 
-    if len(parts) == 2:
-        return document_view(request, parts[0], parts[1])
-
-    elif len(parts) == 1:
-        return section_view(request, parts[0])
-
+    if len(parts) == 1:
+        func = section_view
+    elif len(parts) == 4 and parts[1] == 'contents':
+        func = content_section_view
+        del parts[1]
+    elif len(parts) == 3 and parts[1] == 'doc':
+        func = document_section_view
+        del parts[1]
+    elif len(parts) >= 2:
+        func = menu_section_view
+        parts = [parts[0], parts[-1]]
+    elif not url.startswith('/sections'):
+        return HttpResponseRedirect('/sections%s' %url)
     else:
         raise Http404
+    return func(request, *parts)

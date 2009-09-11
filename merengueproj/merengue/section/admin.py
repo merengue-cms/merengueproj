@@ -26,14 +26,14 @@ class BaseSectionAdmin(BaseAdmin):
     html_fields = ('description', )
     prepopulated_fields = {'slug': ('name_es', )}
 
-    def get_form1(self, request, obj=None, **kwargs):
+    def get_form(self, request, obj=None, **kwargs):
         form = super(BaseSectionAdmin, self).get_form(request, obj, **kwargs)
         if 'main_content' in form.base_fields.keys():
             qs = form.base_fields['main_content'].queryset
             if not obj:
                 qs = qs.model.objects.get_empty_query_set()
             else:
-                qs = qs.filter(related_section=obj)
+                qs = qs.filter(basesection=obj)
             # Como Document no esta registrado en el admin site, no tiene
             # sentido mostrar este campo si no tiene opciones ya que no
             # se pueden crear nuevos documentos desde aqui

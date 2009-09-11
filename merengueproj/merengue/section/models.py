@@ -479,7 +479,6 @@ class Document(BaseContent):
     def get_absolute_url(self):
         # do not use permalink here since this method is dynamic
         related_section = self.get_related_section()
-
         if isinstance(related_section.real_instance, AppSection):
             args = (self.slug, )
             app_name = related_section.real_instance.app_name
@@ -606,6 +605,10 @@ class Document(BaseContent):
                     return self._real_instance
             except (ObjectDoesNotExist, AttributeError, ValueError):
                 pass
+
+    @permalink
+    def public_link(self):
+        return ('document_view', [self.related_section.slug, self.slug])
 
 
 class CustomStyle(models.Model):
