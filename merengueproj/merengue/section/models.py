@@ -455,12 +455,6 @@ class Document(BaseContent):
         null=True,
         )
 
-    related_section = models.ForeignKey(BaseSection,
-        verbose_name=_('related section'),
-        blank=True,
-        null=True,
-        )
-
     permanent = models.BooleanField(verbose_name=_('permanent'),
                                     help_text=_('make this document not erasable and its slug ummutable'),
                                     editable=False,
@@ -488,16 +482,6 @@ class Document(BaseContent):
             url = reverse('document_view', None, args)
 
         return strip_section_prefix(url)
-
-    def get_admin_absolute_url(self):
-        # if you dont have related_section you are a subclass of document
-        # and you need to overwrite this method
-        related_section = self.related_section
-        if not related_section:
-            raise NotImplemented
-        url = 'admin/section/document/%d/' % self.id
-        base_url = related_section.real_instance.get_admin_absolute_url()
-        return u'%s%s' % (base_url, url)
 
     def get_related_section(self):
         # if you dont have related_section you are a subclass of document

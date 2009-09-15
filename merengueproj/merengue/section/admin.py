@@ -81,7 +81,7 @@ class CustomStyleRelatedModelAdmin(RelatedModelAdmin):
         return False
 
 
-class DocumentAdmin(BaseAdmin):
+class DocumentAdmin(SectionContentAdmin):
     list_display = ('name', 'slug', 'status', )
     list_filter = ('status', )
     html_fields = ('description', 'body', )
@@ -89,17 +89,10 @@ class DocumentAdmin(BaseAdmin):
     prepopulated_fields = {'slug': ('name_es', )}
     actions = BaseAdmin.actions + ['set_as_published', 'set_as_draft']
 
-    def get_form(self, request, obj=None, **kwargs):
-        form = super(DocumentAdmin, self).get_form(request, obj, **kwargs)
-        if 'related_section' in form.base_fields.keys():
-            form.base_fields.pop('related_section')
-        return form
 
-
-class DocumentRelatedModelAdmin(RelatedModelAdmin, DocumentAdmin):
+class DocumentRelatedModelAdmin(DocumentAdmin):
     tool_name = 'documents'
     tool_label = _('documents')
-    related_field = 'related_section'
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(DocumentRelatedModelAdmin, self).get_form(request, obj, **kwargs)
@@ -120,7 +113,7 @@ class DocumentRelatedModelAdmin(RelatedModelAdmin, DocumentAdmin):
 
     def save_model(self, request, obj, form, change):
         super(DocumentRelatedModelAdmin, self).save_model(request, obj, form, change)
-        app_section = obj.related_section
+        app_section = obj.basesection_set.all()[0]
         try:
             # we avoid duplicated slugs
             if app_section:
