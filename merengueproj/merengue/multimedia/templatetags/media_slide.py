@@ -6,6 +6,9 @@ register = template.Library()
 
 @register.inclusion_tag('media_slide.html', takes_context=True)
 def media_slide(context, content):
+    if not content:
+        # we cannot show any media slide
+        return {}
     content_images = content.multimedia.photos().published().order_by('multimediarelation__order')
     content_videos = content.multimedia.videos().published().order_by('multimediarelation__order')
     content_image3d = content.multimedia.images3d().published().order_by('multimediarelation__order')
