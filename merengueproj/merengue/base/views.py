@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 #from django.db import connection
 from django.db.models import get_model
@@ -156,13 +157,8 @@ def admin_link(request, content_type, content_id, url=''):
     except ObjectDoesNotExist:
         raise Http404
 
-    if isinstance(content, BaseContent):
-        real_content = content._get_real_instance()
-        if real_content is not None:
-            content = real_content
-
-    return HttpResponseRedirect('/admin/%s/%s/%d/%s' % (content._meta.app_label,
-                                    content._meta.module_name, content.id, url))
+    admin_prefix = '/admin/'
+    return HttpResponseRedirect(reverse('admin:admin_redirect', args=(content_type, content_id, )))
 
 
 @add_captcha(CaptchaFreeThreadedCommentForm)

@@ -307,7 +307,7 @@ class BaseSection(Base, RealInstanceMixin):
     @permalink
     def get_admin_absolute_url(self):
         content_type = ContentType.objects.get_for_model(self)
-        return ('base.views.admin_link', [content_type.id, self.id, ''])
+        return ('merengue.base.views.admin_link', [content_type.id, self.id, ''])
 
     def has_custom_style(self):
         return bool(self.customstyle)
@@ -482,28 +482,6 @@ class Document(BaseContent):
             url = reverse('document_view', None, args)
 
         return strip_section_prefix(url)
-
-    def get_related_section(self):
-        # if you dont have related_section you are a subclass of document
-        # and you need to overwrite this method
-        if not self.related_section:
-            raise NotImplemented
-        return self.related_section
-
-    def get_breadcrumbs(self):
-        try:
-            link = self.contentlink
-        except ContentLink.DoesNotExist:
-            link = None
-        bc = []
-        if link is None:
-            bc = self.get_related_section().get_breadcrumbs()
-        else:
-            bc = link.get_breadcrumbs()
-            bc.pop() # the last one is this document
-
-        bc.append((self.get_absolute_url(), unicode(self)))
-        return bc
 
     def get_search_form(self):
         if self.search_form:

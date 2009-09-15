@@ -1,10 +1,16 @@
 from django.conf import settings
 from django.db.models.base import ModelBase
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.urlresolvers import reverse
 from django.contrib.admin import ModelAdmin
 from django.contrib.admin.sites import AlreadyRegistered
 from django.contrib.admin.sites import AdminSite as DjangoAdminSite
+from django.contrib.contenttypes.models import ContentType
+from django.http import HttpResponseRedirect, Http404
 from django.utils.functional import update_wrapper
 from django.views.decorators.cache import never_cache
+
+from merengue.base.models import BaseContent
 
 
 class BaseAdminSite(DjangoAdminSite):
@@ -73,6 +79,14 @@ class AdminSite(BaseAdminSite):
         urlpatterns = super(AdminSite, self).get_urls()
         related_urlpatterns = []
 
+        # custom url definitions
+        custom_patterns = patterns('',
+            url(r'^admin_redirect/(?P<content_type_id>\d+)/(?P<object_id>.+)/$',
+                self.admin_view(self.admin_redirect),
+                name='admin_redirect'),
+        )
+
+        # related url definitions
         for model, model_admin in self._registry.iteritems():
             for key in self.related_admin_sites.keys():
                 if issubclass(model, key):
@@ -82,7 +96,33 @@ class AdminSite(BaseAdminSite):
                             url(r'^%s/%s/(?P<base_object_id>\d+)/%s/' % (model._meta.app_label, model._meta.module_name, slugify(tool_name)),
                                 include(related_admin_site.urls), {'base_model_admin': model_admin}))
 
-        return related_urlpatterns + urlpatterns
+        return custom_patterns + related_urlpatterns + urlpatterns
+
+    def admin_redirect(self, request, content_type_id, object_id):
+        """ redirect to content admin page or content related admin page in his section """
+        try:
+            content = ContentType.objects.get_for_id(content_type_id).get_object_for_this_type(id=object_id)
+        except ObjectDoesNotExist:
+            raise Http404
+        admin_prefix = reverse('admin:index')
+        model = content.__class__
+        if isinstance(content, BaseContent):
+            real_content = content._get_real_instance()
+            if real_content is not None:
+                content = real_content
+                model = content.__class__
+                related_sections = real_content.basesection_set.all()
+                if related_sections.count() == 1:
+                    # we have to redirect to the content related section
+                    section = related_sections.get().real_instance
+                    admin_prefix += 'section/section/%s/' % section.id
+                    section_sites = self.related_admin_sites[section.__class__]
+                    for admin_site in section_sites.values():
+                        if model in admin_site._registry:
+                            admin_prefix += admin_site.name + '/'
+                            break
+        return HttpResponseRedirect('%s%s/%s/%d/' % (admin_prefix, model._meta.app_label,
+                                    model._meta.module_name, content.id))
 
     def register_related(self, model_or_iterable, admin_class=None, related_to=None, **options):
         from merengue.base.admin import RelatedModelAdmin
