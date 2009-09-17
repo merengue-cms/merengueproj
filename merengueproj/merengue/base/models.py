@@ -301,42 +301,12 @@ class BaseContent(LocatableContent):
                 super(BaseContent, self).save(force_update=True)
 
     def get_real_instance(self):
-        # try looking in our cache
-        if hasattr(self, '_real_instance'):
+        """ get object child instance """
+        if hasattr(self, '_real_instance'): # try looking in our cache
             return self._real_instance
-
-        # python & django magic to get the real attributes of the object
-        field_names = self._meta.get_all_field_names()
-        keys = [k for k in self.__dict__.keys() if k in field_names]
-        # manytomany field to ourselves are hard
-        for key in keys + ['basecontent']:
-            field_names.remove(key)
-
-        # get the internal object that is a subclass of ourselves: sounds
-        # weird and *it is* weird. See Django subclassing tale for better
-        # understanding.
-        for field_name in field_names:
-            try:
-                obj = getattr(self, field_name)
-                if isinstance(obj, self.__class__):
-                    if type(obj) != type(self) and hasattr(obj, 'get_real_instance'):
-                        obj = obj.get_real_instance() or obj # recursive call
-                    self._real_instance = obj
-                    return self._real_instance
-            except (ObjectDoesNotExist, AttributeError, ValueError):
-                pass
-
-    def _get_class_name(self):
-        real_instance = self.get_real_instance()
-        if real_instance is not None:
-            return real_instance._meta.module_name
-        else:
-            return self._meta.module_name
-
-    def get_class_name(self):
-        if not self.class_name:
-            self.save()
-        return self.class_name
+        real_instance = getattr(self, self.class_name, self)
+        self._real_instance = real_instance
+        return real_instance
 
     @permalink
     def get_absolute_url(self):
@@ -388,21 +358,16 @@ class BaseContent(LocatableContent):
         return cls._meta.ordering
 
 
-def get_calculate_class_name(instance):
-    instance.class_name = instance._get_class_name()
-    try:
-        if getattr(instance, 'basecontent_ptr', None):
-            instance.basecontent_ptr.class_name = instance.class_name
-    except (ObjectDoesNotExist):
-        pass
+def calculate_class_name(instance):
+    instance.class_name = instance._meta.module_name
 
 
-def handle_base_content_class_name_pre_save(sender, instance, **kwargs):
+def base_content_pre_save_handler(sender, instance, **kwargs):
     if isinstance(instance, BaseContent) and not instance.id:
-        get_calculate_class_name(instance)
+        calculate_class_name(instance)
 
 
-signals.pre_save.connect(handle_base_content_class_name_pre_save)
+signals.pre_save.connect(base_content_pre_save_handler)
 
 
 class MultimediaRelation(models.Model):
