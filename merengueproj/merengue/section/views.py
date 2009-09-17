@@ -31,7 +31,7 @@ def content_section_view(request, section_slug, content_id, content_slug):
 def document_section_view(request, section_slug, document_slug):
     document = get_object_or_404(Document, slug=document_slug)
     context = {}
-    context['section'] = document.related_section
+    context['section'] = document.basesection_set.all()[0]
     return content_view(request, document, template_name='section/content_section_view.html', extra_context=context)
 
 

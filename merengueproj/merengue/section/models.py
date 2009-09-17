@@ -470,19 +470,6 @@ class Document(BaseContent):
     def __unicode__(self):
         return unicode(self.name)
 
-    def get_absolute_url(self):
-        # do not use permalink here since this method is dynamic
-        related_section = self.get_related_section()
-        if isinstance(related_section.real_instance, AppSection):
-            args = (self.slug, )
-            app_name = related_section.real_instance.app_name
-            url = reverse('%s_document_view' % app_name, None, args)
-        else:
-            args = (self.related_section.slug, self.slug)
-            url = reverse('document_view', None, args)
-
-        return strip_section_prefix(url)
-
     def get_search_form(self):
         if self.search_form:
             form_class = search_form_registry.get_form_class(self.search_form)
