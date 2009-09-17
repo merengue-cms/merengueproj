@@ -17,12 +17,13 @@ def section_view(request, section_slug, original_context={}, template='section/d
     section = get_object_or_404(BaseSection, slug=section_slug)
     context = original_context or {}
     context['section'] = section.real_instance
-    return content_view(request, section.main_content, template_name='section/section_view.html', extra_context=context)
+    main_content = section.main_content.get_real_instance()
+    return content_view(request, main_content, template_name='section/section_view.html', extra_context=context)
 
 
 def content_section_view(request, section_slug, content_id, content_slug):
     section = get_object_or_404(BaseSection, slug=section_slug)
-    content = section.related_content.get(pk=content_id)
+    content = section.related_content.get(pk=content_id).get_real_instance()
     context = {}
     context['section'] = section.real_instance
     return content_view(request, section.main_content, template_name='section/content_section_view.html', extra_context=context)
