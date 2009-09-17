@@ -36,8 +36,8 @@ def content_info(request, content_type, content_id):
         if isinstance(content, BaseContent) and content.main_location and not show_single:
             # FIXME Tendrá que hacerse con un manager especial
             multiple = [basecontent for basecontent in BaseContent.objects.filter(location__main_location = content.main_location)
-                                        if not getattr(basecontent._get_real_instance(), 'resource_owner', None) and
-                                           not getattr(basecontent._get_real_instance(), 'content_owner', None)]
+                                        if not getattr(basecontent.get_real_instance(), 'resource_owner', None) and
+                                           not getattr(basecontent.get_real_instance(), 'content_owner', None)]
             extra_contents = len(multiple) > 1
         else:
             multiple = [content]

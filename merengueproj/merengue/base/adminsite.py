@@ -107,7 +107,7 @@ class AdminSite(BaseAdminSite):
         admin_prefix = reverse('admin:index')
         model = content.__class__
         if isinstance(content, BaseContent):
-            real_content = content._get_real_instance()
+            real_content = content.get_real_instance()
             if real_content is not None:
                 content = real_content
                 model = content.__class__

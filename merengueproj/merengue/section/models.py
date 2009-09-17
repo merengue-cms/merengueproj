@@ -570,7 +570,7 @@ class Document(BaseContent):
 
     @permalink
     def public_link(self):
-        return ('document_view', [self.related_section.slug, self.slug])
+        return ('document_section_view', [self.basesection_set.all()[0].slug, self.slug])
 
 
 class CustomStyle(models.Model):

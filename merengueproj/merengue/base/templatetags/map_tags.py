@@ -153,8 +153,8 @@ class GoogleMapsNode(RenderWithArgsAndKwargsNode):
                                         show_main_image)
             if content_pois:
                 first_pois = content_pois[0]
-                if hasattr(first_pois, '_get_real_instance'):
-                    first_pois = first_pois._get_real_instance() or first_pois
+                if hasattr(first_pois, 'get_real_instance'):
+                    first_pois = first_pois.get_real_instance() or first_pois
                 pois_verbose_name_plural = first_pois._meta.verbose_name_plural
                 if hasattr(first_pois, 'get_icon_cluster'):
                     pois_icon_name = first_pois.get_icon_cluster()

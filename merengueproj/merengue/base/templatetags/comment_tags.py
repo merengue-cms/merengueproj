@@ -53,7 +53,7 @@ def content_comment(context, content, comment, show_links=True, show_children=Fa
 @register.inclusion_tag('base/content_comment_add.html', takes_context=True)
 def content_comment_add_form(context, content, parent_id=None):
     form = context.get('form', None)
-    if not form or form.content._get_real_instance() != content:
+    if not form or form.content.get_real_instance() != content:
         form = CaptchaFreeThreadedCommentForm(context['request'].user)
         form.content = content
     request = context['request']

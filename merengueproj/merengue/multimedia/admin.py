@@ -109,7 +109,7 @@ class PendingBaseMultimediaAdmin(BaseMultimediaAdmin):
     change_list_template = 'admin/extra/change_list.html'
 
     def admin_thumbnail(self, item):
-        instance = item._get_real_instance()
+        instance = item.get_real_instance()
         if hasattr(instance, 'admin_thumbnail'):
             return instance.admin_thumbnail()
         else:

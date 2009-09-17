@@ -34,7 +34,7 @@ def content_specialized_fields(context, content):
     specialized_fields = []
     if content.__class__.__subclasses__():
         # if content is not a leaf content we get real content
-        instance = content._get_real_instance()
+        instance = content.get_real_instance()
     else:
         instance = content
 
@@ -261,12 +261,12 @@ def cut_objects_list(context, items, max_len=90, separator=', '):
 
 @register.filter
 def verbose_base_content_name(value, arg=None):
-    return value._get_real_instance()._meta.verbose_name
+    return value.get_real_instance()._meta.verbose_name
 
 
 @register.filter
 def real_instance(value, arg=None):
-    return value._get_real_instance()
+    return value.get_real_instance()
 
 
 class IfNode(template.Node):

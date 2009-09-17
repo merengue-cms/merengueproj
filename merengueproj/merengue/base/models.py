@@ -300,7 +300,7 @@ class BaseContent(LocatableContent):
                 # we force an update since we already did an insert
                 super(BaseContent, self).save(force_update=True)
 
-    def _get_real_instance(self):
+    def get_real_instance(self):
         # try looking in our cache
         if hasattr(self, '_real_instance'):
             return self._real_instance
@@ -319,15 +319,15 @@ class BaseContent(LocatableContent):
             try:
                 obj = getattr(self, field_name)
                 if isinstance(obj, self.__class__):
-                    if type(obj) != type(self) and hasattr(obj, '_get_real_instance'):
-                        obj = obj._get_real_instance() or obj # recursive call
+                    if type(obj) != type(self) and hasattr(obj, 'get_real_instance'):
+                        obj = obj.get_real_instance() or obj # recursive call
                     self._real_instance = obj
                     return self._real_instance
             except (ObjectDoesNotExist, AttributeError, ValueError):
                 pass
 
     def _get_class_name(self):
-        real_instance = self._get_real_instance()
+        real_instance = self.get_real_instance()
         if real_instance is not None:
             return real_instance._meta.module_name
         else:
@@ -342,16 +342,13 @@ class BaseContent(LocatableContent):
     def get_absolute_url(self):
         return ('merengue.base.views.public_link', [self._meta.app_label, self._meta.module_name, self.id])
 
+    #@permalink
+    #def public_link(self):
+        #return ('content_view', [self.related_section.slug, self.slug])
+
     def link_by_user(self, user):
         """ User dependent link. To override in subclasses, if needed """
         raise Http404
-
-    def get_plone_link(self):
-        if self.plone_link and self.plone_link[-1] == '/':
-            plone_link = self.plone_link[:-1]
-        else:
-            plone_link = self.plone_link
-        return plone_link + '/langredirect'
 
     def can_edit(self, user):
         if not user.is_authenticated():
@@ -377,7 +374,7 @@ class BaseContent(LocatableContent):
             content=self,
         ).order_by('order')
         if ordered_photo_relations:
-            first_photo = ordered_photo_relations[0].multimedia._get_real_instance()
+            first_photo = ordered_photo_relations[0].multimedia.get_real_instance()
             if os.path.exists(first_photo.image.path):
                 self.main_image.save(os.path.basename(first_photo.image.name),
                                      first_photo.image)
@@ -438,7 +435,7 @@ class MultimediaRelation(models.Model):
             self.content.recalculate_main_image()
 
     def get_image(self):
-        instance = self.multimedia._get_real_instance()
+        instance = self.multimedia.get_real_instance()
         image = getattr(instance, 'image', None) or \
                 getattr(instance, 'preview', None)
         return image

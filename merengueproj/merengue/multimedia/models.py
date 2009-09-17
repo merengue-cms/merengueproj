@@ -73,7 +73,7 @@ class BaseMultimedia(models.Model):
         tags_field = self._meta.get_field('tags')
         tags_field._save(instance=self)
 
-    def _get_real_instance(self):
+    def get_real_instance(self):
         # try looking in our cache
         if hasattr(self, '_real_instance'):
             return self._real_instance
@@ -98,7 +98,7 @@ class BaseMultimedia(models.Model):
                 pass
 
     def _get_class_name(self):
-        real_instance = self._get_real_instance()
+        real_instance = self.get_real_instance()
         if real_instance is not None:
             return real_instance._meta.module_name
         else:
@@ -136,7 +136,7 @@ class BaseMultimedia(models.Model):
 
     @permalink
     def get_admin_absolute_url(self):
-        content_type = ContentType.objects.get_for_model(self._get_real_instance())
+        content_type = ContentType.objects.get_for_model(self.get_real_instance())
         return ('base.views.admin_link', [content_type.id, self.id, ''])
 
 

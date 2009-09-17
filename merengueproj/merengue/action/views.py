@@ -20,6 +20,8 @@ def content_action(request, content_type_id, object_id, name):
         obj = content_type.get_object_for_this_type(pk=object_id)
     except ObjectDoesNotExist:
         raise Http404("Content type %s object %s doesn't exist" % (content_type_id, object_id))
+    if hasattr(obj, 'get_real_instance'):
+        obj = obj.get_real_instance()
     return item_class.get_response(request, obj)
 
 

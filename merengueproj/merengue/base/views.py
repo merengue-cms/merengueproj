@@ -134,7 +134,7 @@ def public_link(request, app_label, model_name, content_id):
         raise Http404
 
     if isinstance(content, BaseContent):
-        real_content = content._get_real_instance()
+        real_content = content.get_real_instance()
         if real_content is not None:
             content = real_content
 
@@ -163,7 +163,7 @@ def admin_link(request, content_type, content_id, url=''):
 
 @add_captcha(CaptchaFreeThreadedCommentForm)
 def content_comment_form(request, content, parent_id, form=None, template='base/content_comment_add.html'):
-    if not form or form.content._get_real_instance() != content:
+    if not form or form.content.get_real_instance() != content:
         form = CaptchaFreeThreadedCommentForm(user=request.user)
         form.content = content
 
@@ -187,7 +187,7 @@ def content_comment_form(request, content, parent_id, form=None, template='base/
 def content_comment_add(request, content_type, content_id, parent_id=None):
     """ Create or save a freecomment form """
     content = BaseContent.objects.get(id=content_id)
-    content = content._get_real_instance()
+    content = content.get_real_instance()
     if request.POST:
 
         form = CaptchaFreeThreadedCommentForm(user=request.user, data=request.POST)
