@@ -111,22 +111,6 @@ class DocumentRelatedModelAdmin(DocumentAdmin):
 
         return formfield
 
-    def save_model(self, request, obj, form, change):
-        super(DocumentRelatedModelAdmin, self).save_model(request, obj, form, change)
-        app_section = obj.basesection_set.all()[0]
-        try:
-            # we avoid duplicated slugs
-            if app_section:
-                app_section.document_set.exclude(pk=obj.pk).get(slug=obj.slug)
-                obj.slug = "%s-%s" %(obj.slug, obj.id)
-                obj.save()
-            else:
-                obj.__class__.objects.get(slug=obj.slug)
-                obj.slug = "%s-%s" %(obj.slug, obj.id)
-                obj.save()
-        except Document.DoesNotExist:
-            pass
-
 
 class BaseLinkInline(admin.TabularInline):
 
