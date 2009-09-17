@@ -28,9 +28,9 @@ class GetActionsNode(template.Node):
             item_class = registered_action.get_registry_item_class()
             if scope == 'site' and issubclass(item_class, SiteAction):
                 actions.append(item_class)
-            elif scope == 'content' and issubclass(item_class, ContentAction):
+            elif for_content and scope == 'content' and issubclass(item_class, ContentAction):
                 actions.append(item_class)
-            elif scope == 'user' and issubclass(item_class, UserAction):
+            elif for_content and scope == 'user' and issubclass(item_class, UserAction):
                 item_class.set_user(for_content)
                 actions.append(item_class)
         context[self.as_var] = actions
