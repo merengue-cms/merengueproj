@@ -17,7 +17,8 @@
       {% else %}
         <li><a href="admin/base/contactinfo/add/">{% trans "Contact Info" %}</a></li>
       {% endif %}
-
+  {% else %}
+      {% if has_absolute_url %}<li><a href="../../../r/{{ content_type_id }}/{{ object_id }}/" class="viewsitelink">{% trans "View on site" %}</a></li>{% endif%}
   {% endif %}
 
   {% smart_relations_object_tool %} 
