@@ -470,6 +470,19 @@ class Document(BaseContent):
     def __unicode__(self):
         return unicode(self.name)
 
+    def get_absolute_url(self):
+        # do not use permalink here since this method is dynamic
+        related_section = self.get_related_section()
+        if isinstance(related_section.real_instance, AppSection):
+            args = (self.slug, )
+            app_name = related_section.real_instance.app_name
+            url = reverse('%s_document_view' % app_name, None, args)
+        else:
+            args = (self.related_section.slug, self.slug)
+            url = reverse('document_view', None, args)
+
+        return strip_section_prefix(url)
+
     def get_search_form(self):
         if self.search_form:
             form_class = search_form_registry.get_form_class(self.search_form)
@@ -529,31 +542,6 @@ class Document(BaseContent):
         cache_key += self.search_form
         cache_key += md5.md5(self.search_form_filters or '').hexdigest()
         return cache_key
-
-    def _get_real_instance(self):
-        # try looking in our cache
-        if hasattr(self, '_real_instance'):
-            return self._real_instance
-
-        # python & django magic to get the real attributes of the object
-        field_names = self._meta.get_all_field_names()
-        keys = [k for k in self.__dict__.keys() if k in field_names]
-        # manytomany field to ourselves are hard
-
-        for key in keys:
-            field_names.remove(key)
-
-        # get the internal object that is a subclass of ourselves: sounds
-        # weird and *it is* weird. See Django subclassing tale for better
-        # understanding.
-        for field_name in field_names:
-            try:
-                obj = getattr(self, field_name)
-                if isinstance(obj, self.__class__):
-                    self._real_instance = obj
-                    return self._real_instance
-            except (ObjectDoesNotExist, AttributeError, ValueError):
-                pass
 
     @permalink
     def public_link(self):
