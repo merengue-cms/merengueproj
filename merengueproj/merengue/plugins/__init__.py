@@ -22,3 +22,7 @@ class Plugin(RegistrableItem):
     @classmethod
     def post_actions(cls):
         pass
+
+    @classmethod
+    def section_models(cls):
+        return [] # to override in plugins
