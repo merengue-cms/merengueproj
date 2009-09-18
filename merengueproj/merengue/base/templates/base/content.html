@@ -2,6 +2,13 @@
 
 {% load i18n content_tags action_tags block_tags media_slide %}
 
+{% block metatags %}
+  {{ block.super }}
+  {% if request.section %}
+    <meta name="section" content="{{ request.section }}" />
+  {% endif %}
+{% endblock %}
+
 {% block extrabreadcrumbs %}
   {% block beforecontentbreadcrumbs %}
   {% endblock %}

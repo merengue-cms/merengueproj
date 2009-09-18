@@ -11,18 +11,23 @@ class SectionMiddleware(object):
 
         section = None
         if request.path:
-            first_path_element = request.path.split('/')[1]
+            path_list = request.path.split('/')
+            if path_list[1] == 'sections':
+                section_position = 2
+            else:
+                section_position = 1
+            section_path = path_list[section_position]
             slugs_cache_key = 'published_section_slugs'
             published_slugs = cache.get(slugs_cache_key)
             if published_slugs is None:
                 published_slugs = [v[0] for v in BaseSection.objects.published().values_list('slug')]
                 cache.set(slugs_cache_key, published_slugs)
-            if first_path_element in published_slugs:
+            if section_path in published_slugs:
                 try:
-                    cache_key = 'app_section_%s' % first_path_element
+                    cache_key = 'app_section_%s' % section_path
                     section = cache.get(cache_key)
                     if section is None:
-                        section = BaseSection.objects.get(slug=first_path_element)
+                        section = BaseSection.objects.get(slug=section_path)
                         cache.set(cache_key, section)
                 except:
                     # we put an blank except because some times in WSGI in a heavy loaded environments

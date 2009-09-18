@@ -6,6 +6,9 @@
   {% if LANGUAGE_CODE %}
     <meta http-equiv="content-language" content="{{ LANGUAGE_CODE }}">
   {% endif %}
+  {% block metatags %}
+    {% include "inc.metatags.html" %}
+  {% endblock %}
   <link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon.ico" type="image/gif" />
   <title>{% block pagetitle %}{% endblock %} - {% block sitetitle %}Merengue powered site{% endblock %}</title>
 
