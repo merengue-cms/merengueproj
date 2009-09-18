@@ -32,6 +32,7 @@ MERENGUE_APPS = (
     'merengue.block',
     'merengue.portal',
     'merengue.internallinks',
+    'merengue.collab',
 )
 
 # merengue usual installed apps. you can use this variable in your INSTALLED_APPS project settings

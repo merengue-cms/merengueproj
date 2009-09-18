@@ -12,7 +12,8 @@ from merengue.base.admin import BaseAdmin, RelatedModelAdmin
 from merengue.base.admin import set_field_read_only
 from merengue.multimedia.models import Photo
 from merengue.section.models import (Menu, Section, AppSection, Carousel,
-                            BaseLink, AbsoluteLink, ContentLink, Document, CustomStyle)
+                            BaseLink, AbsoluteLink, ContentLink, Document,
+                            DocumentSection, CustomStyle)
 from merengue.section.widgets import SearchFormOptionsWidget
 
 
@@ -414,10 +415,15 @@ class CarouselRelatedChoosePhotoModelAdmin(CarouselPhotoRelatedModelAdmin):
     select_photo.short_description = _("Select photo")
 
 
+class DocumentSectionModelAdmin(BaseAdmin):
+    ordering = ('position', )
+
+
 def register(site):
     site.register(Section, SectionAdmin)
     site.register(AppSection, AppSectionAdmin)
     site.register(Carousel, CarouselAdmin)
+    site.register(DocumentSection, DocumentSectionModelAdmin)
     site.register_related(Photo, CarouselPhotoRelatedModelAdmin, related_to=Carousel)
     site.register_related(Photo, CarouselRelatedChoosePhotoModelAdmin, related_to=Carousel)
     site.register_related(Document, DocumentRelatedModelAdmin, related_to=Section)

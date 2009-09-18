@@ -400,6 +400,7 @@ class Carousel(models.Model):
 class Document(BaseContent):
 
     __metaclass__ = TransMeta
+    content_section_view_template = 'section/document_section_view.html'
 
     body = models.TextField(
         verbose_name=_('body'),
@@ -533,6 +534,88 @@ class Document(BaseContent):
     @permalink
     def public_link(self):
         return ('document_section_view', [self.basesection_set.all()[0].slug, self.slug])
+
+
+class DocumentSection(models.Model):
+
+    __metaclass__ = TransMeta
+
+    document = models.ForeignKey(
+        Document,
+        verbose_name=_('Parent document'),
+        related_name='sections',
+        )
+
+    position = models.IntegerField(
+        editable=False,
+        )
+
+    body = models.TextField(
+        verbose_name=_('body'),
+        )
+
+    class Meta:
+        verbose_name = _('document section')
+        verbose_name_plural = _('document sections')
+        translate = ('body', )
+
+    def _flexisave(self):
+        return super(DocumentSection, self).save()
+
+    def _flexidelete(self):
+        super(DocumentSection, self).delete()
+
+    def _get_team(self):
+        return self.document.team
+
+    team = property(_get_team)
+
+    def move_to(self, pos):
+        try:
+            existing_position = DocumentSection.objects.get(document=self.document, position=pos)
+        except DocumentSection.DoesNotExist:
+            raise ValueError(_('Can not move to non existing position'))
+
+
+        if pos > self.position:
+            for i in DocumentSection.objects.filter(document=self.document, position__in=range(self.position+1, pos+1)):
+                i.position -= 1
+                i._flexisave()
+        elif pos < self.position:
+            for i in DocumentSection.objects.filter(document=self.document, position__in=range(pos, self.position)):
+                i.position += 1
+                i._flexisave()
+        else:
+            return
+        self.position = pos
+        self._flexisave()
+
+    def save(self, *args, **kwargs):
+        count = DocumentSection.objects.filter(document=self.document).count()
+        if self.position == None:
+            self.position = count
+        elif self.position >= count:
+            self.position = count-1
+        try:
+            existing_position = DocumentSection.objects.get(document=self.document, position=self.position)
+            if existing_position.id != self.id:
+                raise ValueError(_('Trying to save DocumentSection into an existing position'))
+        except DocumentSection.DoesNotExist:
+            pass
+
+        return super(DocumentSection, self).save(*args, **kwargs)
+
+    def delete(self):
+        pos = self.position
+        doc = self.document
+        super(DocumentSection, self).delete()
+
+        for i in DocumentSection.objects.filter(document=doc, position__gt=pos):
+            i.position -= 1
+            i._flexisave()
+
+    def __unicode__(self):
+        return u'%s - Section %s' % (self.document, self.position)
 
 
 class CustomStyle(models.Model):
