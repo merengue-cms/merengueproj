@@ -4,7 +4,9 @@
 
 
 {% block blockbody %}
-    {% menu_tag section.main_menu %}
-    {% menu_tag section.secondary_menu %}
+    {% if section %}
+        {% menu_tag section.main_menu %}
+        {% menu_tag section.secondary_menu %}
+    {% endif %}
 {% endblock %}
 
