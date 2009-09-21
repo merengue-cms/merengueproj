@@ -1,0 +1,8 @@
+{% extends "base/content.html" %}
+
+{% load block_tags %}
+
+{% block rightsidebar %}
+  {% render_blocks "leftsidebar" for content %}
+  {{ block.super }}
+{% endblock %}

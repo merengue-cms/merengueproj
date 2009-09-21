@@ -265,3 +265,9 @@ div#breadcrumbs a:hover {
 #footer a {
     color: #AAAAAA;
 }
+
+/* ------ Core Plugin ----- */
+
+ul.menu_ul {
+    padding-left: 1em;
+}
