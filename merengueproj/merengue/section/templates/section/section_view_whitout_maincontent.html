@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% load i18n content_tags inlinetrans %}
+
+{% block extrabreadcrumbs %}
+    <span class="breadcrumbSeparator">→</span>
+    <a href="." title="{{ section }}">{% cutrender %}{{ section }}{% endcutrender %}</a>
+{% endblock %}
+
+{% block content %}
+<div id="content-title">
+  <h1>{{ section }}</h1>
+</div>
+    {% inline_trans "This section have not a main content" %}. 
+    {% if admin_absolute_url %}{% inline_trans "You can edit in" %} <a href="{{ section.get_admin_absolute_url }}">{% inline_trans "here" %}</a> {% endif %}
+{% endblock %}
