@@ -1702,6 +1702,10 @@ class UserAdmin(BaseAdmin, UserAdminOriginal):
         super(UserAdmin, self).__init__(model, admin_site)
         self.owned_contents_admin = BaseContentOwnedAdmin(BaseContent, admin_site)
 
+    def add_view(self, request, form_url='', extra_context=None):
+        extra_context = self._base_update_extra_context(extra_context)
+        return super(BaseAdmin, self).add_view(request)
+
     def change_view(self, request, object_id, extra_context=None):
         return super(UserAdmin, self).change_view(request, object_id,
                                                   extra_context={'is_user_change_view': True})
