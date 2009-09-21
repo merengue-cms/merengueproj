@@ -29,7 +29,7 @@ class DelAdminFileWidget(AdminFileWidget):
                 if hasattr(value, 'temporary_file_path'):
                     file = value.temporary_file_path()
                 else:
-                    if hasattr(value, 'read'):
+                    if 'read' in dir(value):
                         file = StringIO(value.read())
                     else:
                         file = StringIO(value['content'])
