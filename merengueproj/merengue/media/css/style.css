@@ -61,3 +61,35 @@ a img {
     right: 20px;
     color: red;
 }
+
+/* ------ Core Plugin ----- */
+
+div#coremenu ul.menu1 li a.menu1{
+    font-size: 12pt;
+}
+
+div#coremenu ul.menu1 li a.menu2{
+    font-size: 10pt;
+}
+
+div#coremenu ul.menu_ul {
+    list-style: none;
+    text-transform: capitalize;
+}
+
+div#coremenu ul.menu_ul li.item a.item{
+    font-weight: normal;
+}
+
+div#coremenu ul.menu_ul li.item.selected a.selected{
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+div#coremenu ul.menu_ul li.item.selectedAncestors a.selectedAncestors{
+    font-weight: bold;
+}
+
+div#coremenu ul.menu_ul li.item.itemhidden {
+    display: none;
+}
