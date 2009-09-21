@@ -101,6 +101,8 @@ STATUS_LIST = (
 # merengue default directory for plugins
 PLUGINS_DIR = 'plugins'
 
+ACTIVED_DEFAULTS_PLUGINS = ('core', )
+
 # cache default settings
 CACHE_BACKEND = 'locmem:///'
 CACHE_MIDDLEWARE_SECONDS = 3600*24

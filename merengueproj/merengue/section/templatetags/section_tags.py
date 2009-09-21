@@ -5,23 +5,29 @@ from django.utils.translation import ugettext_lazy as _
 
 from mptt.utils import tree_item_iterator
 
-from merengue.section.models import DocumentLink
+from merengue.section.models import Menu
 
 
 register = template.Library()
 
 
 @register.inclusion_tag('section/menu_tag.html', takes_context=True)
-def menu_tag(context, menu, class_ul, document=None):
-    context = {'menu': menu, 'class_ul': class_ul, 'document': document,
-               'user': context.get('user', None)}
+def menu_tag(context, menu):
+    ancestors = []
+    menu_item = None
     try:
-        if document and document.documentlink:
-            ancestors = document.documentlink.menu.get_ancestors()[1:]
-            context.update({'ancestors': ancestors})
-    except DocumentLink.DoesNotExist:
+        menuitem_slug = context['request'].META['PATH_INFO'].split('/')[-2]
+        try:
+            menu_item = menu.get_descendants().get(slug=menuitem_slug)
+            ancestors = menu_item.get_ancestors()[1:]
+        except Menu.DoesNotExist:
+            pass
+    except IndexError:
         pass
-    return context
+    return {'menu': menu,
+            'user': context.get('user', None),
+            'menu_item': menu_item,
+            'ancestors': ancestors}
 
 
 @register.inclusion_tag('section/menu_sitemap_tag.html', takes_context=True)

@@ -1,15 +1,13 @@
 {% load mptt_tags smart_if %}
 {% if menu %}
-    {% with document.documentlink.menu as current_menu %}
     {% for node, structure in menu.get_descendants|tree_info %}
-      {% if node.is_published or user.is_staff %}
         {% if structure.new_level and node.level > 1 %}
-            <ul class="{{ class_ul }}{% if node.level > 2 %}{{node.level}}{% endif %}">
+            <ul class="menu_ul menu{% if node.level > 2 %}{{node.level}}{% endif %}">
         {% endif %}
-            <li id="{{ node.baselink.documentlink.document.name_en|slugify }}" class="{% ifequal current_menu node %}selectedMenu{% else %}{% if node in ancestors %}selectedMenu{% endif %}{% endifequal %}">
-                <a href="{{ node.get_absolute_url }}" class="{% ifequal current_menu node %}selected{% else %}{% if node in ancestors %}selected{% endif %}{% endifequal %}">{{ node.name }}</a>
-        {% for level in structure.closed_levels %}</li>{% if  level > 1 %}</ul>{% endif %}{% endfor %}
-      {% endif %}
+            {% with node.get_absolute_url as node_url %}
+                <li id="{{ node.slug }}" class="item {% ifequal node menu_item %}selected{% endifequal %}{% if node in ancestors %}selectedAncestors{% endif %} {% if node.level - menu_item.level > 1 %} itemhidden {% endif %}">
+                    <a href="{{ node.get_absolute_url }}">{{ node.name }}</a>
+            {% endwith %}
+        {% for level in structure.closed_levels %}</li>{% if level > 1 %}</ul>{% endif %}{% endfor %}
     {% endfor %}
-    {% endwith %}
 {% endif %}

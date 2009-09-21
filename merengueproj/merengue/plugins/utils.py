@@ -13,12 +13,32 @@ from django.core.management.sql import sql_all
 from django.core import urlresolvers
 from django.db import connection, transaction
 from django.db.models import get_models
+from django.db.models.loading import load_app
 from django.utils.importlib import import_module
 
 from merengue import registry
 from merengue.base.adminsite import site
 from merengue.registry.items import (NotRegistered as NotRegisteredItem,
                             AlreadyRegistered as AlreadyRegisteredItem)
+
+
+def install_plugin(instance, app_name):
+    if instance.installed:
+        app_mod = load_app(app_name)
+        # Needed update installed apps in order
+        # to get SQL command from merengue.plugin
+        add_to_installed_apps(app_name)
+        if app_mod and not are_installed_models(app_mod):
+            install_models(app_mod)
+            # Force instance saving after connection closes.
+            instance.save()
+        if instance.active:
+            enable_plugin(app_name)
+        else:
+            disable_plugin(app_name)
+        # app_directories template loader loads app_template_dirs in
+        # compile time, so we have to load it again.
+        reload_app_directories_template_loader()
 
 
 def get_plugins_dir():

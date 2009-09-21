@@ -1,3 +1,6 @@
+from django.conf import settings
+from django.db.models.signals import post_syncdb
+
 from merengue.plugins.models import RegisteredPlugin
 from merengue.registry.items import RegistrableItem
 
@@ -26,3 +29,16 @@ class Plugin(RegistrableItem):
     @classmethod
     def section_models(cls):
         return [] # to override in plugins
+
+
+def active_default_plugins(*args, **kwargs):
+    from merengue.plugins.checker import register_plugin
+    interactive = kwargs.get('interactive', None)
+    if interactive:
+        for plugin_dir in settings.ACTIVED_DEFAULTS_PLUGINS:
+            plugin = register_plugin(plugin_dir)
+            plugin.installed = True
+            plugin.active = True
+            plugin.save()
+
+post_syncdb.connect(active_default_plugins)
