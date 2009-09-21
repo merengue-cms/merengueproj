@@ -177,6 +177,4 @@ class CollabCommentRevisorStatus(models.Model):
         )
 
     def __unicode__(self):
-        if not self.short_comment:
-            return u'%s' % self.type
-        return u'%s: %s' % (self.type, self.short_comment)
+        return u'%s' % self.type

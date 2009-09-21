@@ -74,6 +74,12 @@
                     $(this).parent().find('.collaborative-comments-item-status').toggle('normal');
                     return false;
                 });
+
+                container.find('.collaborative-comments-item-status-history').each(function() {
+                    if (!$(this).find('.collaborative-comments-item-status').length) {
+                        $(this).hide();
+                    }
+                });
             }
 
             var setFolderActions = function(folder) {

@@ -28,7 +28,8 @@
         <div class="collaborative-comments-item-status-date">
           {{ status.revision_date }}
         </div>
-        {% if status.type.decorator %}<img src="{% thumbnail status.type.decorator 10x10 %}" />{% endif %}{{ status }}
+        {% if status.type.decorator %}<img src="{% thumbnail status.type.decorator 10x10 %}" />{% endif %}
+        {{ status }}{% if status.short_comment %}: {{ status.short_comment }}{% endif %}
         <div class="collaborative-comments-item-status-short-comment">
             {{ status.short_comment }}
         </div>

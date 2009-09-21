@@ -93,3 +93,13 @@ div#coremenu ul.menu_ul li.item.selectedAncestors a.selectedAncestors{
 div#coremenu ul.menu_ul li.item.itemhidden {
     display: none;
 }
+
+div.collab-comment-trigger,
+div.collab-translation-trigger {
+    display: inline;
+    margin-right: 2em;
+}
+
+div.document-section {
+    margin: 1em 0px;
+}
