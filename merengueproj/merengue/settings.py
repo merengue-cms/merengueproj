@@ -70,6 +70,7 @@ MERENGUE_MIDDLEWARE_CLASSES = (
     'merengue.section.middleware.SectionMiddleware',
     'merengue.section.middleware.DebugSectionMiddleware',
     'merengue.middleware.SimplifiedLayoutMiddleware',
+    'merengue.middleware.LocaleMiddleware',
     'merengue.plugins.middleware.ActivePluginsMiddleware',
 )
 

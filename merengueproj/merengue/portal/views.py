@@ -168,8 +168,6 @@ def set_language(request):
     response = django_set_language(request)
     if lang_code:
         response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
-        # set the plone cookie
-        response.set_cookie(settings.PLONE_LANGUAGE_COOKIE_NAME, lang_code)
     return response
 
 

@@ -1,3 +1,34 @@
+from django.conf import settings
+from django.utils import translation
+
+
+class LocaleMiddleware(object):
+    """
+    This middleware checks if we want to change language
+    """
+
+    def process_request(self, request):
+        forced_lang = request.GET.get('set_language', None)
+        if forced_lang:
+            get = request.GET.copy()
+            translation.activate(forced_lang)
+            request.LANGUAGE_CODE = translation.get_language()
+
+    def process_response(self, request, response):
+        forced_lang = request.GET.get('set_language', None)
+        if forced_lang:
+            get = request.GET.copy()
+            get.pop('set_language')
+            request.GET = get
+
+            if translation.check_for_language(forced_lang):
+                if hasattr(request, 'session'):
+                    request.session['django_language'] = forced_lang
+                else:
+                    response.set_cookie(settings.LANGUAGE_COOKIE_NAME, forced_lang)
+        return response
+
+
 class SimplifiedLayoutMiddleware(object):
     """
     This middleware checks if a simplified page layout is
