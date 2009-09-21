@@ -18,6 +18,7 @@ from cmsutils.db.fields import ColorField
 from merengue.base.managers import WorkflowManager
 from merengue.base.models import Base, BaseContent
 from merengue.multimedia.models import Photo, Video
+from merengue.section.managers import SectionManager
 from searchform.registry import search_form_registry
 from stdimage import StdImageField
 from transmeta import TransMeta
@@ -278,7 +279,7 @@ class BaseSection(Base, RealInstanceMixin):
     )
     customstyle.delete_cascade = False
 
-    objects = WorkflowManager()
+    objects = SectionManager()
 
     class Meta:
         abstract = False
@@ -327,7 +328,7 @@ def sections_permalink(func):
 
 
 class Section(BaseSection):
-    objects = WorkflowManager()
+    objects = SectionManager()
 
     @property
     def app_name(self):
@@ -339,6 +340,7 @@ class Section(BaseSection):
 
 
 class AppSection(BaseSection):
+    objects = SectionManager()
 
     @sections_permalink
     def get_absolute_url(self):
@@ -531,7 +533,7 @@ class Document(BaseContent):
 
     @permalink
     def public_link(self):
-        return ('document_section_view', [self.basesection_set.all()[0].slug, self.slug])
+        return ('document_section_view', [self.get_main_section().slug, self.slug])
 
 
 class DocumentSection(models.Model):

@@ -24,18 +24,14 @@ def section_view(request, section_slug, original_context={}):
 def content_section_view(request, section_slug, content_id, content_slug):
     section = get_object_or_404(BaseSection, slug=section_slug)
     content = section.related_content.get(pk=content_id).get_real_instance()
-    context = {}
-    context['section'] = section.real_instance
     template_name = getattr(content._meta, 'content_view_template')
-    return content_view(request, content, template_name=template_name, extra_context=context)
+    return content_view(request, content, template_name=template_name)
 
 
 def document_section_view(request, section_slug, document_slug):
     document = get_object_or_404(Document, slug=document_slug)
-    context = {}
-    context['section'] = document.basesection_set.all()[0]
     template_name = getattr(document._meta, 'content_view_template')
-    return content_view(request, document, template_name=template_name, extra_context=context)
+    return content_view(request, document, template_name=template_name)
 
 
 def menu_section_view(request, section_slug, menu_slug):

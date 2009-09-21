@@ -341,9 +341,13 @@ class BaseContent(LocatableContent):
     def get_absolute_url(self):
         return ('merengue.base.views.public_link', [self._meta.app_label, self._meta.module_name, self.id])
 
-    #@permalink
-    #def public_link(self):
-        #return ('content_view', [self.related_section.slug, self.slug])
+    @permalink
+    def public_link(self):
+        section = self.get_main_section()
+        if section:
+            return ('content_section_view', [section.slug, self.id, self.slug])
+        else:
+            raise NotImplementedError("Model %s has no implements a public_link method for content without main section" % self._meta)
 
     def link_by_user(self, user):
         """ User dependent link. To override in subclasses, if needed """
@@ -362,6 +366,13 @@ class BaseContent(LocatableContent):
             return super(BaseContent, self).get_icon()
         else:
             return settings.MEDIA_URL + 'img/' + self.get_class_name() + '_map_icon.jpg'
+
+    def get_main_section(self):
+        """ Get main section of a content """
+        try:
+            return self.basesection_set.main()
+        except ObjectDoesNotExist:
+            return None
 
     def calculate_rank(self):
         return 100.0 # default implementation
