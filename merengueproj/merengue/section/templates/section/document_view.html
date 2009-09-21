@@ -2,6 +2,11 @@
 
 {% load inlinetrans content_tags inplace_edit collaborative %}
 
+ {% block extrahead %}
+   {% inplace_media %}
+   {% collaborative_comments_media %}
+ {% endblock %}
+
 {% block contentbody %}
     {% for document_section in content.sections.all %}
       <div class="document-section">

@@ -1,0 +1,10 @@
+{% load i18n %}
+            {% if message %}
+            <div class="collab-comments-add-comment-form-message">{{ message }}</div>
+            {% endif %}
+            <form id="collab-comments-add-comment-form" method="post" action="{% url ajax_add_comment ct.id content.id %}">
+            <table>
+            {{ form.as_table }}
+            </table>
+            <input type="submit" class="submit" value="{% trans "Add comment" %}" />
+            </form>

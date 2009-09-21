@@ -1,0 +1,29 @@
+{% load i18n %}
+<div class="collaborative-comments-ui">
+  <div class="collaborative-comments-hidden-parameters">
+      <span id="collaborative-comment-update-num-url">{% url ajax_num_comments ct.id content.id %}</span>
+      <span id="collaborative-comment-num-comments-container">.collaborative-comment-num-for-{{ ct.id }}-{{ content.id }}</span>
+  </div>
+
+  <div class="collaborative-comments-outer-zone">
+  </div>
+
+  <div class="collaborative-comments-main">
+    <h1>{% trans "Comments for" %}: {{ content }}</h1>
+    <div class="collaborative-comments-folder-selector">
+        <ul>
+            <li class="collaborative-comments-list-folder selected"><a href="{% url ajax_list_comments ct.id content.id %}" target="#collaborative-comments-list-id" id="collaborative-comments-main-folder-trigger">{% trans "comments" %} (<span class="collaborative-comment-num-for-{{ ct.id }}-{{ content.id }}">0</span>)</a></li>  
+            <li class="collaborative-comments-add-comment-folder"><a href="{% url ajax_add_comment ct.id content.id %}" target="#collaborative-comments-add-comment-id">{% trans "add comment" %}</a></li>  
+        </ul>
+    </div>
+    <div class="collaborative-comments-folder-active">
+        <div class="collaborative-comments-folder collaborative-comments-list" id="collaborative-comments-list-id">
+        </div>
+        <div class="collaborative-comments-folder collaborative-comments-add-comment" id="collaborative-comments-add-comment-id">
+        </div>
+    </div>
+    <div class="collaborative-comments-main-close">
+        <a href="#">X</a>
+    </div>
+  </div>
+</div>

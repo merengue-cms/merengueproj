@@ -1,0 +1,52 @@
+{% load i18n collaborative thumbnail %}
+{% with comment.get_last_revision_status as revision_status %}
+
+{% ifcanviewcollabcomment comment %}
+  <div class="collaborative-comments-item">
+    <div class="collaborative-comments-hidden-parameters">
+        <span class="collaborative-comments-item-update-url">{% url ajax_get_comment comment.id %}</span>
+    </div>
+    <h1>{{ comment.comment_user_type }}</h1>
+    <div class="collaborative-comments-current-status">
+      {% if revision_status.type.decorator %}<img src="{% thumbnail revision_status.type.decorator 20x20 %}" />{% endif %}{{ revision_status|default:"" }}
+    </div>
+    <div class="collaborative-comments-item-comment">
+      {% ifequal revision_status.type.result "replace" %}
+        {{ revision_status.type.reason }}
+      {% else %}
+        {{ comment.comment }}
+      {% endifequal %}
+    </div>
+    <div class="collaborative-comments-item-author">
+       {% trans "By" %}: {{ comment.get_user_name }}
+    </div>
+    <div class="collaborative-comments-item-status-history">
+    <a class="toggle" href="#">{% trans "Revision History" %}</a>
+    {% for status in comment.collabcommentrevisorstatus_set.all %}
+      {% ifcanviewstatus status %}
+      <div class="collaborative-comments-item-status">
+        <div class="collaborative-comments-item-status-date">
+          {{ status.revision_date }}
+        </div>
+        {% if status.type.decorator %}<img src="{% thumbnail status.type.decorator 10x10 %}" />{% endif %}{{ status }}
+        <div class="collaborative-comments-item-status-short-comment">
+            {{ status.short_comment }}
+        </div>
+        <div class="collaborative-comments-item-status-revisor">
+            {% trans "Revisor" %}: {{ status.revisor }}
+        </div>
+      </div>
+      {% endifcanviewstatus %}
+    {% endfor %}
+    </div>
+    {% if is_revisor %}
+    <div class="collaborative-comments-item-revisor">
+        <a class="collaborative-comments-item-revisor-trigger" 
+           href="{% url ajax_revise_comment comment.id %}">{% trans "Revise this comment" %}</a>
+        <div class="collaborative-comments-item-revisor-actions">
+        </div>
+    </div>
+    {% endif %}
+  </div>
+{% endifcanviewcollabcomment %}
+{% endwith %}

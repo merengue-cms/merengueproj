@@ -1,13 +1,114 @@
 from django import template
+from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
+
+from merengue.collab.utils import get_comments_for_object
+
 
 register = template.Library()
 
 
+def collaborative_comments_media(context):
+    return {'MEDIA_URL': context.get('MEDIA_URL', settings.MEDIA_URL),
+           }
+register.inclusion_tag("collab/collaborative_comments_media.html", takes_context=True)(collaborative_comments_media)
+
+
 def collaborative_comments(context, content):
-    return {}
+    comments = get_comments_for_object(content)
+    return {'num_comments': comments.count(),
+            'ct': ContentType.objects.get_for_model(content),
+            'content': content,
+            }
 register.inclusion_tag("collab/collaborative_comments.html", takes_context=True)(collaborative_comments)
 
 
 def collaborative_translation(context, content):
     return {}
 register.inclusion_tag("collab/collaborative_translation.html", takes_context=True)(collaborative_translation)
+
+
+class IfNode(template.Node):
+
+    def __init__(self, if_node, else_node):
+        self.if_node = if_node
+        self.else_node = else_node
+
+    def __repr__(self):
+        return '<IfNode>'
+
+    def check(self, context):
+        raise NotImplementedError
+
+    def render(self, context):
+        if self.check(context):
+            return self.if_node.render(context)
+        else:
+            return self.else_node.render(context)
+
+
+class IsVisibleCommentNode(IfNode):
+
+    def __init__(self, comment, *args):
+        self.comment = comment
+        super(IsVisibleCommentNode, self).__init__(*args)
+
+    def check(self, context):
+        comment = template.Variable(self.comment).resolve(context)
+        user = template.Variable('user').resolve(context)
+        status = comment.get_last_revision_status()
+        if user.has_perm('can_revise') or not status\
+           or not status.type.result == 'hide':
+            return True
+        else:
+            return False
+
+
+class IsVisibleStatusNode(IfNode):
+
+    def __init__(self, status, *args):
+        self.status = status
+        super(IsVisibleStatusNode, self).__init__(*args)
+
+    def check(self, context):
+        status = template.Variable(self.status).resolve(context)
+        user = template.Variable('user').resolve(context)
+        if user.has_perm('can_revise') \
+           or not status.type.result == 'hide':
+            return True
+        else:
+            return False
+
+
+def ifcanviewcollabcomment(parser, token):
+    bits = list(token.split_contents())
+    if len(bits) != 2:
+        raise template.TemplateSyntaxError('%r takes one arguments' % bits[0])
+    comment = bits[1]
+    end_tag = 'end' + bits[0]
+    node_ismember = parser.parse(('else', end_tag))
+    token = parser.next_token()
+    if token.contents == 'else':
+        node_notismember = parser.parse((end_tag, ))
+        parser.delete_first_token()
+    else:
+        node_notismember = template.NodeList()
+    return IsVisibleCommentNode(comment, node_ismember, node_notismember)
+ifcanviewcollabcomment = register.tag(ifcanviewcollabcomment)
+
+
+def ifcanviewstatus(parser, token):
+    bits = list(token.split_contents())
+    if len(bits) != 2:
+        raise template.TemplateSyntaxError('%r takes one arguments' % bits[0])
+    status = bits[1]
+    end_tag = 'end' + bits[0]
+    node_ismember = parser.parse(('else', end_tag))
+    token = parser.next_token()
+    if token.contents == 'else':
+        node_notismember = parser.parse((end_tag, ))
+        parser.delete_first_token()
+    else:
+        node_notismember = template.NodeList()
+    return IsVisibleStatusNode(status, node_ismember, node_notismember)
+ifcanviewstatus = register.tag(ifcanviewstatus)

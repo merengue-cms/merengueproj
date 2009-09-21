@@ -59,6 +59,8 @@ urlpatterns = patterns('',
     # i18n applications
     url(r'^rosetta/', include('rosetta.urls')),
     url(r'^inlinetrans/', include('inlinetrans.urls')),
+    # collaborative views
+    (r'^collab/', include('merengue.collab.urls')),
 
     # Your project URLs. Put here all your URLS:
     (r'^$', 'website.views.index'),
