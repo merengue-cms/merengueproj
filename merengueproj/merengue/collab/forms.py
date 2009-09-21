@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 
 from merengue.collab.models import CollabComment, CollabCommentRevisorStatus
 
@@ -53,3 +54,26 @@ class CollabCommentRevisorStatusForm(forms.ModelForm):
         self.instance.revisor = self.user
         self.instance.comment = self.content
         super(CollabCommentRevisorStatusForm, self).save(commit)
+
+
+class CollabTranslationForm(forms.Form):
+
+    languages = forms.ChoiceField(label=_('translation language'))
+    translation = forms.CharField(label=_('translation'), widget=forms.Textarea, required=False)
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        self.content = kwargs.pop('content', None)
+        self.is_html = kwargs.pop('is_html', None)
+        self.language_code = kwargs.pop('language_code', None)
+        self.languages = kwargs.pop('languages', None)
+        field = kwargs.pop('field', None)
+        self.field = '%s_%s' % (field, self.language_code)
+        super(CollabTranslationForm, self).__init__(*args, **kwargs)
+        self.fields['languages'].choices=self.languages
+        self.fields['languages'].initial=self.language_code
+        self.fields['translation'].initial = getattr(self.content, self.field, '')
+
+    def save(self, commit=True):
+        setattr(self.content, self.field, self.cleaned_data.get('translation'))
+        self.content.save()

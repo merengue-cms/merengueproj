@@ -1,0 +1,115 @@
+.collaborative-translation-hidden-parameters {
+    display: none;
+}
+
+.collaborative-translation-ui {
+    display: none;
+}
+
+.collaborative-translation-outer-zone {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    background: black;
+    filter: alpha(opacity=65);
+    -moz-opacity: 0.65;
+    opacity: 0.65;
+}
+
+.collaborative-translation-main {
+    position: fixed;
+    width: 80%;
+    height: 70%;
+    border: 1px solid black;
+    top: 15%;
+    left: 10%;
+    filter: alpha(opacity=100);
+    -moz-opacity: 1;
+    opacity: 1;
+    background: white;
+    overflow: hidden;
+}
+
+.collaborative-translation-main h1 {
+    padding: 0px 20px 0px 40px;
+    border-bottom: 1px solid black;
+}
+
+.collaborative-translation-main-close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.collaborative-translation-workplace {
+    padding: 0px 20px;
+    font-size: 0.8em;
+}
+
+.collaborative-translation-workplace-translation-middle,
+.collaborative-translation-workplace-translation-language,
+.collaborative-translation-workplace-original-language {
+    position: absolute;
+    top: 70px;
+    bottom: 10px;
+    left: 20px;
+    right: 55%;
+    height: auto;
+    padding: 10px;
+    border: 1px solid gray;
+}
+
+.collaborative-translation-current-value {
+    position: absolute;
+    overflow: auto;
+    top: 40px;
+    bottom: 0px;
+    height: auto;
+    padding-right: 20px;
+}
+
+.collaborative-translation-workplace-translation-language {
+    left: 55%;
+    right: 20px;
+    overflow: auto;
+}
+
+.collaborative-translation-workplace-translation-middle {
+    left: 45%;
+    right: 45%;
+    border-width: 0px;
+    background: url(/media/merengue/img/collab/translate_arrow.jpg) repeat-y top right;
+    padding-left: 1px;
+}
+
+.collaborative-translation-workplace-translation-language label {
+    font-weight: bold;
+}
+
+.collaborative-translation-workplace-translation-language textarea {
+    display: block;
+    width: 100%;
+}
+
+.collaborative-translation-ui input,
+.collaborative-translation-ui textarea,
+.collaborative-translation-ui select {
+    border: 1px solid gray;
+    background: #dddddd;
+}
+
+.collab-translation-edit-form-message {
+    color: red;
+}
+
+.collaborative-translation-current-language {
+    font-weight: bold;
+    border-bottom: 1px solid gray;
+    margin: -10px -10px;
+    padding: 5px 10px;
+    background: #dddddd;
+}

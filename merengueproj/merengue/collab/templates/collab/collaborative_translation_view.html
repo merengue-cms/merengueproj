@@ -1,0 +1,34 @@
+{% load i18n %}
+<div class="collaborative-translation-ui">
+  <div class="collaborative-translation-hidden-parameters">
+    <span class="collaborative-translation-edit-translation-url">{% url ajax_edit_translation ct.id content.id field %}{% if is_html %}?is_html=1{% endif %}</span>
+  </div>
+
+  <div class="collaborative-translation-outer-zone">
+  </div>
+
+  <div class="collaborative-translation-main">
+    <h1>{% trans "Translation for" %}: {{ content }}</h1>
+    <div class="collaborative-translation-main-close">
+        <a href="#">X</a>
+    </div>
+    <div class="collaborative-translation-workplace">
+           <div class="collaborative-translation-workplace-original-language">
+             <div class="collaborative-translation-current-language">
+             {{ current_language }}
+             </div>
+             <div class="collaborative-translation-current-value">
+             {% if is_html %}
+                 {{ original_value|safe }}
+             {% else %}
+                 {{ original_value }}
+             {% endif %}
+             </div>
+           </div>
+           <div class="collaborative-translation-workplace-translation-middle">
+           </div>
+           <div class="collaborative-translation-workplace-translation-language">
+           </div>
+    </div>
+  </div>
+</div>

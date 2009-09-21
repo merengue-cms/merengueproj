@@ -1,0 +1,16 @@
+{% load i18n %}
+<div class="collaborative-translation-hidden-parameters">
+{% for lang in languages %}
+<span class="collab-translation-edit-form-url-for-{{ lang.0 }}">{% url ajax_edit_translation ct.id content.id field lang.0 %}</span>
+{% endfor %}
+</div>
+
+{% if message %}
+<div class="collab-translation-edit-form-message">{{ message }}</div>
+{% endif %}
+
+<form id="collab-translation-edit-form" action="{% url ajax_edit_translation ct.id content.id field translation_language_code %}" method="post">
+{{ form.as_p }}
+{% if is_html %}<input type="hidden" value="1" name="is_html" />{% endif %}
+<input type="submit" class="submit" value="{% trans "Translate" %}" />
+</form>

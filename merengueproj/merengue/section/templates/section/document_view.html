@@ -5,14 +5,17 @@
  {% block extrahead %}
    {% inplace_media %}
    {% collaborative_comments_media %}
+   {% collaborative_translation_media %}
  {% endblock %}
 
 {% block contentbody %}
     {% for document_section in content.sections.all %}
       <div class="document-section">
         {% inplace_edit document_section "body" %}
+        <div class="document-section-actions">
         {% collaborative_comments document_section %}
-        {% collaborative_translation document_section %}
+        {% collaborative_translation document_section "body" 1 %}
+        </div>
       </div>
     {% endfor %}
 {% endblock %}

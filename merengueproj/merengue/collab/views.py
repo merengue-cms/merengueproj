@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.http import HttpResponse, Http404
@@ -5,8 +6,10 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils import simplejson
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import get_language
 
-from merengue.collab.forms import CollabCommentForm, CollabCommentRevisorStatusForm
+from merengue.collab.forms import CollabCommentForm, CollabCommentRevisorStatusForm,\
+                                  CollabTranslationForm
 from merengue.collab.models import CollabComment
 from merengue.collab.utils import get_comments_for_object
 
@@ -36,8 +39,8 @@ def ajax_add_comment(request, content_type_id, content_id):
     if request.method=='POST':
         form = CollabCommentForm(request.POST, content=content, request=request)
         if form.is_valid():
-            message = _('Your comment has been added')
             form.save()
+            message = _('Your comment has been added')
             form = CollabCommentForm(content=content, request=request)
     else:
         form = CollabCommentForm(content=content, request=request)
@@ -69,8 +72,8 @@ def ajax_revise_comment(request, comment_id):
     if request.method=='POST':
         form = CollabCommentRevisorStatusForm(request.POST, content=comment, request=request)
         if form.is_valid():
-            message = _('Your revisor status has been added')
             form.save()
+            message = _('Your revisor status has been added')
             form = CollabCommentRevisorStatusForm(content=comment, request=request)
     else:
         form = CollabCommentRevisorStatusForm(content=comment, request=request)
@@ -110,3 +113,88 @@ def ajax_num_comments(request, content_type_id, content_id):
     comments = get_comments_for_object(content)
     json_dict = simplejson.dumps({'num': comments.count()})
     return HttpResponse(json_dict, mimetype='application/javascript')
+
+
+def ajax_admin_translation(request, content_type_id, content_id, field):
+    ct = get_object_or_404(ContentType, id=content_type_id)
+    try:
+        content = ct.get_object_for_this_type(id=content_id)
+    except models.ObjectDoesNotExist:
+        raise Http404('No %s matches the given query.' % ct.model_class()._meta.object_name)
+
+    is_html = request.GET.get('is_html', False)
+    original_value = getattr(content, field, '')
+    languages = settings.LANGUAGES
+    current_language = get_language()
+    for code, name in languages:
+        if current_language == code:
+            current_language = name
+            break
+    return render_to_response('collab/collaborative_translation_view.html',
+                              {'content': content,
+                               'ct': ct,
+                               'field': field,
+                               'original_value': original_value,
+                               'current_language': current_language,
+                               'is_html': is_html,
+                              },
+                              context_instance=RequestContext(request))
+
+
+def ajax_edit_translation(request, content_type_id, content_id, field, language_id=None):
+    ct = get_object_or_404(ContentType, id=content_type_id)
+    try:
+        content = ct.get_object_for_this_type(id=content_id)
+    except models.ObjectDoesNotExist:
+        raise Http404('No %s matches the given query.' % ct.model_class()._meta.object_name)
+
+    translation_field = '%s_%s' % (field, language_id)
+    translation_value = getattr(content, translation_field, '')
+    current_language = get_language()
+    languages = [(code, name) for code, name in settings.LANGUAGES if code!=current_language]
+    language_id = language_id or languages[0][0]
+    for code, name in languages:
+        if language_id == code:
+            translation_language = name
+            translation_language_code = code
+            break
+
+    message = None
+    if request.method == 'POST':
+        is_html = request.POST.get('is_html', False)
+        form = CollabTranslationForm(request.POST,
+                                     content=content,
+                                     request=request,
+                                     language_code=translation_language_code,
+                                     languages=languages,
+                                     field=field,
+                                     is_html=is_html)
+        if form.is_valid():
+            form.save()
+            message = _('Your translation has been saved')
+            form = CollabTranslationForm(content=content,
+                                         request=request,
+                                         language_code=translation_language_code,
+                                         languages=languages,
+                                         field=field,
+                                         is_html=is_html)
+    else:
+        is_html = request.GET.get('is_html', False)
+        form = CollabTranslationForm(content=content,
+                                     request=request,
+                                     language_code=translation_language_code,
+                                     languages=languages,
+                                     field=field,
+                                     is_html=is_html)
+    return render_to_response('collab/collaborative_translation_edit.html',
+                              {'content': content,
+                               'ct': ct,
+                               'field': field,
+                               'translation_value': translation_value,
+                               'translation_language': translation_language,
+                               'translation_language_code': translation_language_code,
+                               'form': form,
+                               'languages': languages,
+                               'message': message,
+                              },
+                              context_instance=RequestContext(request))

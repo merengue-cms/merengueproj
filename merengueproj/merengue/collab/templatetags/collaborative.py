@@ -2,6 +2,7 @@ from django import template
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 
+from cmsutils.forms.widgets import TINYMCE_JS
 from merengue.collab.utils import get_comments_for_object
 
 
@@ -23,8 +24,19 @@ def collaborative_comments(context, content):
 register.inclusion_tag("collab/collaborative_comments.html", takes_context=True)(collaborative_comments)
 
 
-def collaborative_translation(context, content):
-    return {}
+def collaborative_translation_media(context):
+    return {'MEDIA_URL': context.get('MEDIA_URL', settings.MEDIA_URL),
+            'TINYMCE_JS': TINYMCE_JS,
+           }
+register.inclusion_tag("collab/collaborative_translation_media.html", takes_context=True)(collaborative_translation_media)
+
+
+def collaborative_translation(context, content, field, is_html=False):
+    return {'content': content,
+            'ct': ContentType.objects.get_for_model(content),
+            'field': field,
+            'is_html': bool(is_html),
+            }
 register.inclusion_tag("collab/collaborative_translation.html", takes_context=True)(collaborative_translation)
 
 
