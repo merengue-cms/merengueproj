@@ -27,6 +27,7 @@ def menu_tag(context, menu):
     return {'menu': menu,
             'user': context.get('user', None),
             'menu_item': menu_item,
+            'menu_item__level': menu_item and menu_item.level or 1,
             'ancestors': ancestors}
 
 
