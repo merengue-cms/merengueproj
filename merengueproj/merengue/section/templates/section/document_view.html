@@ -11,7 +11,7 @@
 {% block contentbody %}
     {% for document_section in content.sections.all %}
       <div class="document-section">
-        {% inplace_edit document_section "body" %}
+        {% inplace_edit document_section "body|safe" "merengue.section.forms.DocumentSectionForm" %}
         <div class="document-section-actions">
         {% collaborative_comments document_section %}
         {% collaborative_translation document_section "body" 1 %}

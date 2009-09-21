@@ -417,6 +417,14 @@ class CarouselRelatedChoosePhotoModelAdmin(CarouselPhotoRelatedModelAdmin):
 
 class DocumentSectionModelAdmin(BaseAdmin):
     ordering = ('position', )
+    html_fields = ('body', )
+
+
+class DocumentSectionRelatedModelAdmin(RelatedModelAdmin):
+    tool_name = 'sections'
+    tool_label = _('document sections')
+    ordering = ('position', )
+    html_fields = ('body', )
 
 
 def register(site):
@@ -430,3 +438,4 @@ def register(site):
     site.register_related(CustomStyle, CustomStyleRelatedModelAdmin, related_to=Section)
     site.register_related(Menu, MainMenuRelatedAdmin, related_to=Section)
     site.register_related(Menu, SecondaryMenuRelatedAdmin, related_to=Section)
+    site.register_related(DocumentSection, DocumentSectionRelatedModelAdmin, related_to=Document)
