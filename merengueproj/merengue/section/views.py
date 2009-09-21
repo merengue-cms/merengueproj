@@ -34,7 +34,7 @@ def document_section_view(request, section_slug, document_slug):
     document = get_object_or_404(Document, slug=document_slug)
     context = {}
     context['section'] = document.basesection_set.all()[0]
-    template_name = getattr(document, 'content_section_view_template', 'section/content_section_view.html')
+    template_name = getattr(document._meta, 'content_view_template')
     return content_view(request, document, template_name=template_name, extra_context=context)
 
 
