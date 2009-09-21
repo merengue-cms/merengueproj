@@ -1,14 +1,13 @@
-{% extends "section/base_section.html" %}
+{% extends "content_view.html" %}
 
-{% load inlinetrans content_tags %}
+{% load inlinetrans content_tags inplace_edit collaborative %}
 
-{% block breadcrumbs %}
-    {% with document.get_breadcrumbs as breadcrumbs %}
-        {% include "section/inc.breadcrumbs.html" %}
-    {% endwith %}
-
-{% endblock %}
-
-{% block contenttitle %}
-  {% cutrender %}{{ document.name }}{% endcutrender %}
+{% block contentbody %}
+    {% for document_section in content.sections.all %}
+      <div class="document-section">
+        {% inplace_edit document_section "body" %}
+        {% collaborative_comments document_section %}
+        {% collaborative_translation document_section %}
+      </div>
+    {% endfor %}
 {% endblock %}

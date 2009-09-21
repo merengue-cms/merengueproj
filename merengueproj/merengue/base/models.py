@@ -203,7 +203,35 @@ class LocatableContent(Base):
     admin_thumbnail.allow_tags = True
 
 
+class BaseContentMeta(TransMeta):
+    '''
+    Metaclass for all base content types.
+
+    The syntax to us it is next:
+
+        class MyModel(BaseContent):
+            my_field = models.CharField(max_length=20)
+
+            class Meta:
+                content_view_template = 'myapp/mymodel_view.html'
+    '''
+
+    def __new__(cls, name, bases, attrs):
+        if 'Meta' in attrs and hasattr(attrs['Meta'], 'content_view_template'):
+            content_view_template = attrs['Meta'].content_view_template
+            delattr(attrs['Meta'], 'content_view_template')
+        else:
+            content_view_template = 'content_view.html'
+
+        new_class = super(BaseContentMeta, cls).__new__(cls, name, bases, attrs)
+        if hasattr(new_class, '_meta'):
+            new_class._meta.content_view_template = content_view_template
+        return new_class
+
+
 class BaseContent(LocatableContent):
+    __metaclass__ = BaseContentMeta
+
     contact_info = models.ForeignKey(ContactInfo,
                                      verbose_name=_('contact info'),
                                      null=True, blank=True, editable=False)
@@ -268,6 +296,7 @@ class BaseContent(LocatableContent):
             ("can_change_map_icon", "Can edit map icon field"),
         )
         ordering = ('name_es', )
+        #content_view_template = 'content_view.html' # default definition by BaseContentMeta metaclass
 
     @classmethod
     def get_menu_name(cls):

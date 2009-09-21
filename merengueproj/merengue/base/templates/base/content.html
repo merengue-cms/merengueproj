@@ -4,8 +4,8 @@
 
 {% block metatags %}
   {{ block.super }}
-  {% if request.section %}
-    <meta name="section" content="{{ request.section }}" />
+  {% if section %}
+    <meta name="section" content="{{ section }}" />
   {% endif %}
 {% endblock %}
 
@@ -13,6 +13,10 @@
   {% block beforecontentbreadcrumbs %}
   {% endblock %}
   {% block contentbreadcrumbs %}
+    {% if section %}
+      <span class="breadcrumbSeparator">→</span>
+      <a href="{{ section.get_absolute_url }}" title="{{ section }}">{% cutrender %}{{ section }}{% endcutrender %}</a>
+    {% endif %}
     <span class="breadcrumbSeparator">→</span>
     <a href="." title="{{ content }}">{% cutrender %}{{ content }}{% endcutrender %}</a>
   {% endblock %}

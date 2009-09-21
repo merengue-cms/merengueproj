@@ -12,7 +12,7 @@ from merengue.base.views import content_view
 from merengue.section.models import AbsoluteLink, ContentLink, Menu
 
 
-def section_view(request, section_slug, original_context={}, template='section/document_view.html'):
+def section_view(request, section_slug, original_context={}):
     section_slug = section_slug.strip('/')
     section = get_object_or_404(BaseSection, slug=section_slug)
     context = original_context or {}
@@ -26,8 +26,7 @@ def content_section_view(request, section_slug, content_id, content_slug):
     content = section.related_content.get(pk=content_id).get_real_instance()
     context = {}
     context['section'] = section.real_instance
-    content = section.main_content and section.main_content.get_real_instance() or None
-    template_name = getattr(content, 'content_section_view_template', 'section/content_section_view.html')
+    template_name = getattr(content._meta, 'content_view_template')
     return content_view(request, content, template_name=template_name, extra_context=context)
 
 

@@ -399,9 +399,6 @@ class Carousel(models.Model):
 
 class Document(BaseContent):
 
-    __metaclass__ = TransMeta
-    content_section_view_template = 'section/document_section_view.html'
-
     body = models.TextField(
         verbose_name=_('body'),
         )
@@ -467,6 +464,7 @@ class Document(BaseContent):
         verbose_name = _('document')
         verbose_name_plural = _('documents')
         translate = ('body', 'photo_description', )
+        content_view_template = 'section/document_view.html'
 
     def __unicode__(self):
         return unicode(self.name)
