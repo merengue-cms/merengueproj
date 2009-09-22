@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<django-objects version="1.0">
+    <object pk="3" model="collab.collabcommentusertype">
+        <field type="CharField" name="name">comment</field>
+        <field type="CharField" name="label_es">Comentario</field>
+        <field type="CharField" name="label_en">Comment</field>
+        <field type="CharField" name="label_fr"></field>
+    </object>
+    <object pk="4" model="collab.collabcommentusertype">
+        <field type="CharField" name="name">bug</field>
+        <field type="CharField" name="label_es">Informe de error</field>
+        <field type="CharField" name="label_en">Bug report</field>
+        <field type="CharField" name="label_fr"></field>
+    </object>
+    <object pk="5" model="collab.collabcommentusertype">
+        <field type="CharField" name="name">feature</field>
+        <field type="CharField" name="label_es">Ampliación de funcionaliad</field>
+        <field type="CharField" name="label_en">Feature request</field>
+        <field type="CharField" name="label_fr"></field>
+    </object>
+    <object pk="7" model="collab.collabcommentrevisorstatustype">
+        <field type="CharField" name="name">done</field>
+        <field type="CharField" name="label_es">Hecho</field>
+        <field type="CharField" name="label_en">Done</field>
+        <field type="CharField" name="label_fr"></field>
+        <field type="FileField" name="decorator"></field>
+        <field type="CharField" name="result">just</field>
+        <field type="TextField" name="reason_en"></field>
+        <field type="TextField" name="reason_fr"></field>
+        <field type="TextField" name="reason_es"></field>
+    </object>
+    <object pk="6" model="collab.collabcommentrevisorstatustype">
+        <field type="CharField" name="name">working</field>
+        <field type="CharField" name="label_es">Trabajando</field>
+        <field type="CharField" name="label_en">Working</field>
+        <field type="CharField" name="label_fr"></field>
+        <field type="FileField" name="decorator"></field>
+        <field type="CharField" name="result">just</field>
+        <field type="TextField" name="reason_en"></field>
+        <field type="TextField" name="reason_fr"></field>
+        <field type="TextField" name="reason_es"></field>
+    </object>
+    <object pk="5" model="collab.collabcommentrevisorstatustype">
+        <field type="CharField" name="name">accepted</field>
+        <field type="CharField" name="label_es">Aceptado</field>
+        <field type="CharField" name="label_en">Accepted</field>
+        <field type="CharField" name="label_fr"></field>
+        <field type="FileField" name="decorator"></field>
+        <field type="CharField" name="result">just</field>
+        <field type="TextField" name="reason_en"></field>
+        <field type="TextField" name="reason_fr"></field>
+        <field type="TextField" name="reason_es"></field>
+    </object>
+    <object pk="8" model="collab.collabcommentrevisorstatustype">
+        <field type="CharField" name="name">delete</field>
+        <field type="CharField" name="label_es">Borrado</field>
+        <field type="CharField" name="label_en">Delete</field>
+        <field type="CharField" name="label_fr"></field>
+        <field type="FileField" name="decorator"></field>
+        <field type="CharField" name="result">replace</field>
+        <field type="TextField" name="reason_en">This comment has been deleted by a revisor</field>
+        <field type="TextField" name="reason_fr"></field>
+        <field type="TextField" name="reason_es">Este comentario ha sido borrado por un revisor</field>
+    </object>
+    <object pk="9" model="collab.collabcommentrevisorstatustype">
+        <field type="CharField" name="name">inappropiate</field>
+        <field type="CharField" name="label_es">Inapropiado</field>
+        <field type="CharField" name="label_en">Inappropiate</field>
+        <field type="CharField" name="label_fr"></field>
+        <field type="FileField" name="decorator"></field>
+        <field type="CharField" name="result">replace</field>
+        <field type="TextField" name="reason_en">This comment has been deleted due to inappropiate content</field>
+        <field type="TextField" name="reason_fr"></field>
+        <field type="TextField" name="reason_es">Este comentario ha sido borrado por contener contenido inapropiado</field>
+    </object>
+    <object pk="10" model="collab.collabcommentrevisorstatustype">
+        <field type="CharField" name="name">hidden</field>
+        <field type="CharField" name="label_es">Oculto</field>
+        <field type="CharField" name="label_en">Hidden</field>
+        <field type="CharField" name="label_fr"></field>
+        <field type="FileField" name="decorator"></field>
+        <field type="CharField" name="result">hide</field>
+        <field type="TextField" name="reason_en"></field>
+        <field type="TextField" name="reason_fr"></field>
+        <field type="TextField" name="reason_es"></field>
+    </object>
+</django-objects>
