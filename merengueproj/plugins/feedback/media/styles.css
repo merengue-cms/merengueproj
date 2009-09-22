@@ -18,70 +18,71 @@
 /* comments */
 
 
-#firstcomment h3 {
+#feedback #firstcomment h3 {
     margin: 0;
     margin-top: 0.5em;
     padding: 5px;
 }
 
-#firstcomment a.commentLink {
+#feedback #firstcomment a.commentLink {
     margin-right:1em;
     position:absolute;
     right:1em;
 }
 
-#firstcomment .commentinfo {
+#feedback #firstcomment .commentinfo {
     font-size: 8pt;
     padding: 5px;
     color: gray;
 }
 
-#firstcomment .commentBody {
+#feedback #firstcomment .commentBody {
    padding: 0.5em;
    font-size: 10pt;
 }
 
-#firstcomment .actions {
+#feedback #firstcomment .actions {
     height: 20px;
 }
 
-#firstcomment div#firstactions {
+#feedback #firstcomment div#firstactions {
     background: none;
 }
 
-#firstcomment .actions a {
+#feedback #firstcomment .actions a {
     padding: 3px;
     margin-right: 0.5em;
     font-weight: bold;
 }
 
-#firstcomment h3.censured,
-#firstcomment div.censured {
+#feedback #firstcomment h3.censured,
+#feedback #firstcomment div.censured {
     opacity:0.4;
     filter:alpha(opacity=40)
 }
 
-#firstcomment .public a.publishComment {
+#feedback #firstcomment .public a.publishComment {
     display:none;
 }
 
-#firstcomment .censured a.censureComment {
+#feedback #firstcomment .censured a.censureComment {
     display:none;
 }
 
-#firstcomment .comment {
+#feedback #firstcomment .comment {
     margin-left: 2em;
 }
 
 
-#firstcomment h3,
-#firstcomment .commentBody,
-#firstcomment .actions,
-#firstcomment .commentinfo {
+#feedback #firstcomment h3,
+#feedback #firstcomment .commentBody,
+#feedback #firstcomment .actions,
+#feedback #firstcomment .commentinfo {
     background:#CCDDFF none repeat scroll 0 0;
 }
 
-#firstcomment .actions a {
+#feedback #firstcomment .actions a {
+    text-decoration:none;
     background: #FFFFFF none repeat scroll 0 0;
     border:1px solid black;
     font-weight: normal;
@@ -89,17 +90,61 @@
 }    
 
 
-.commentform ul {
+#feedback .commentform ul {
     list-style: none;
     padding: 1em;
 }
 
-.commentform ul li {
+#feedback .commentform ul li {
     margin-bottom: 10px;
 }
 
-.commentform ul li label {
+#feedback .commentform ul li label {
     margin-right: 2em;
     display: block;
+}
+
+
+/* Yaco theme customization  */
+#feedback {
+    width: 100%;
+}
+
+#feedback #firstcomment .actions {
+    height: 25px;
+}
+
+#feedback .actions a {
+    font-size: 75%;
+}
+
+#feedback #firstcomment .commentLink {
+    font-size: 75%;
+}
+
+#feedback h2#comment-header {
+    display: none;
+}
+
+#feedback #firstcomment .commentform,
+#feedback #firstcomment h3,
+#feedback #firstcomment .commentBody,
+#feedback #firstcomment .actions,
+#feedback #firstcomment .commentinfo {
+    background:#F2F2F1 none repeat scroll 0 0;
+}
+
+#feedback #firstcomment .actions a {
+    background: #FFFFFF none repeat scroll 0 0;
+}
+
+#feedback textarea {
+    width: 100%;
+}
+
+#feedback select,
+#feedback textarea,
+#feedback input {
+    border:1px solid #CCCCCC;
 }
 
