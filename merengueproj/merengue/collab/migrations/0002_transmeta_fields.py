@@ -7,15 +7,6 @@ class Migration:
     
     def forwards(self, orm):
         
-        # Deleting field 'CollabCommentRevisorStatusType.label'
-        db.delete_column('collab_collabcommentrevisorstatustype', 'label')
-        
-        # Deleting field 'CollabCommentUserType.labels'
-        db.delete_column('collab_collabcommentusertype', 'label')
-
-        # Deleting field 'CollabCommentRevisorStatusType.reason'
-        db.delete_column('collab_collabcommentrevisorstatustype', 'reason')
-        
         # Adding field 'CollabCommentRevisorStatusType.label_fr'
         db.add_column('collab_collabcommentrevisorstatustype', 'label_fr', orm['collab.CollabCommentRevisorStatusType:label_fr'])
         
@@ -23,7 +14,7 @@ class Migration:
         db.add_column('collab_collabcommentrevisorstatustype', 'label_en', orm['collab.CollabCommentRevisorStatusType:label_en'])
         
         # Adding field 'CollabCommentUserType.label_es'
-        db.add_column('collab_collabcommentusertype', 'label_es', orm['collab.CollabCommentUserType:label_es'])
+        db.rename_column('collab_collabcommentusertype', 'label', 'label_es')
         
         # Adding field 'CollabCommentUserType.label_fr'
         db.add_column('collab_collabcommentusertype', 'label_fr', orm['collab.CollabCommentUserType:label_fr'])
@@ -38,10 +29,10 @@ class Migration:
         db.add_column('collab_collabcommentusertype', 'label_en', orm['collab.CollabCommentUserType:label_en'])
         
         # Adding field 'CollabCommentRevisorStatusType.label_es'
-        db.add_column('collab_collabcommentrevisorstatustype', 'label_es', orm['collab.CollabCommentRevisorStatusType:label_es'])
+        db.rename_column('collab_collabcommentrevisorstatustype', 'label', 'label_es')
         
         # Adding field 'CollabCommentRevisorStatusType.reason_es'
-        db.add_column('collab_collabcommentrevisorstatustype', 'reason_es', orm['collab.CollabCommentRevisorStatusType:reason_es'])
+        db.rename_column('collab_collabcommentrevisorstatustype', 'reason', 'reason_es')
         
     
     
@@ -54,7 +45,7 @@ class Migration:
         db.delete_column('collab_collabcommentrevisorstatustype', 'label_en')
         
         # Deleting field 'CollabCommentUserType.label_es'
-        db.delete_column('collab_collabcommentusertype', 'label_es')
+        db.rename_column('collab_collabcommentusertype', 'label_es', 'label')
         
         # Deleting field 'CollabCommentUserType.label_fr'
         db.delete_column('collab_collabcommentusertype', 'label_fr')
@@ -69,19 +60,10 @@ class Migration:
         db.delete_column('collab_collabcommentusertype', 'label_en')
         
         # Deleting field 'CollabCommentRevisorStatusType.label_es'
-        db.delete_column('collab_collabcommentrevisorstatustype', 'label_es')
+        db.rename_column('collab_collabcommentrevisorstatustype', 'label_es', 'label')
         
         # Deleting field 'CollabCommentRevisorStatusType.reason_es'
-        db.delete_column('collab_collabcommentrevisorstatustype', 'reason_es')
-        
-        # Adding field 'CollabCommentRevisorStatusType.label'
-        db.add_column('collab_collabcommentrevisorstatustype', 'label', orm['collab.CollabCommentRevisorStatusType:label'])
-    
-        # Adding field 'CollabCommentUserType.label'
-        db.add_column('collab_collabcommentusertype', 'label', orm['collab.CollabCommentUserType:label'])
-        
-        # Adding field 'CollabCommentRevisorStatusType.reason'
-        db.add_column('collab_collabcommentrevisorstatustype', 'reason', orm['collab.CollabCommentRevisorStatusType:reason'])
+        db.rename_column('collab_collabcommentrevisorstatustype', 'reason_es', 'reason')
         
     
     models = {
