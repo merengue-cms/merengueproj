@@ -20,7 +20,8 @@ def section_view(request, section_slug, original_context={}):
     main_content = section.main_content and section.main_content.get_real_instance() or None
     if not main_content:
         return section_view_whitout_maincontent(request, context)
-    return content_view(request, main_content, template_name='section/section_view.html', extra_context=context)
+    template_name = getattr(main_content._meta, 'content_view_template')
+    return content_view(request, main_content, template_name=template_name, extra_context=context)
 
 
 def content_section_view(request, section_slug, content_id, content_slug):
