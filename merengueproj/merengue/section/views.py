@@ -185,5 +185,6 @@ def insert_document_section_after(request, document_id, document_section_id=None
     return render_to_response('section/document_section_view.html',
                               {'content': document,
                                'document_section': newsection,
+                               'newly': True,
                               },
                               context_instance=RequestContext(request))

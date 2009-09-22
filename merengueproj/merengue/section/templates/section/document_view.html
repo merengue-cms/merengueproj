@@ -10,6 +10,8 @@
  {% endblock %}
 
 {% block contentbody %}
+    {% insert_document_section_after content %}
+
     {% for document_section in content.sections.all %}
     {% include "section/document_section_view.html" %}
     {% endfor %}
