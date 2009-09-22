@@ -1,2 +1,105 @@
-.feedback {
+
+#captcha-extra-image {
+    float: left;
+    margin-left: 20px;
+    margin-right: 20px;
 }
+#captcha-comment {
+    font-weight: bold;
+}
+#captcha-image {
+    display: inline;
+}
+#id_captcha {
+    margin-left: 10px;
+    width: 100px;
+}
+
+/* comments */
+
+
+#firstcomment h3 {
+    margin: 0;
+    margin-top: 0.5em;
+    padding: 5px;
+}
+
+#firstcomment a.commentLink {
+    margin-right:1em;
+    position:absolute;
+    right:1em;
+}
+
+#firstcomment .commentinfo {
+    font-size: 8pt;
+    padding: 5px;
+    color: gray;
+}
+
+#firstcomment .commentBody {
+   padding: 0.5em;
+   font-size: 10pt;
+}
+
+#firstcomment .actions {
+    height: 20px;
+}
+
+#firstcomment div#firstactions {
+    background: none;
+}
+
+#firstcomment .actions a {
+    padding: 3px;
+    margin-right: 0.5em;
+    font-weight: bold;
+}
+
+#firstcomment h3.censured,
+#firstcomment div.censured {
+    opacity:0.4;
+    filter:alpha(opacity=40)
+}
+
+#firstcomment .public a.publishComment {
+    display:none;
+}
+
+#firstcomment .censured a.censureComment {
+    display:none;
+}
+
+#firstcomment .comment {
+    margin-left: 2em;
+}
+
+
+#firstcomment h3,
+#firstcomment .commentBody,
+#firstcomment .actions,
+#firstcomment .commentinfo {
+    background:#CCDDFF none repeat scroll 0 0;
+}
+
+#firstcomment .actions a {
+    background: #FFFFFF none repeat scroll 0 0;
+    border:1px solid black;
+    font-weight: normal;
+    margin-left: 2px;
+}    
+
+
+.commentform ul {
+    list-style: none;
+    padding: 1em;
+}
+
+.commentform ul li {
+    margin-bottom: 10px;
+}
+
+.commentform ul li label {
+    margin-right: 2em;
+    display: block;
+}
+

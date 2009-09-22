@@ -1,16 +1,16 @@
-from django.contrib.comments.admin import CommentsAdmin
-from plugins.feedback.models import Feedback
+from merengue.base.admin import BaseAdmin
+from threadedcomments.models import FreeThreadedComment
 
 
-class FeedbackAdmin(CommentsAdmin):
+class FeedbackAdmin(BaseAdmin):
     pass
 
 
 def register(site):
     """ Merengue admin registration callback """
-    site.register(Feedback, FeedbackAdmin)
+    site.register(FreeThreadedComment, FeedbackAdmin)
 
 
 def unregister(site):
     """ Merengue admin unregistration callback """
-    site.unregister(Feedback)
+    site.unregister(FreeThreadedComment)

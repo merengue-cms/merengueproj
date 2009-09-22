@@ -1,26 +1,19 @@
-from plugins.feedback.models import Feedback
-from django.contrib.comments.forms import CommentForm
-#from captcha.fields import CaptchaField
-from django import forms
+from merengue.base.forms import BaseModelForm
+
+from threadedcomments.models import FreeThreadedComment
+from threadedcomments.forms import FreeThreadedCommentForm
+from captcha.fields import CaptchaField
 
 
-class CaptchaFeedbackForm(CommentForm):
-    # XXX: Add captcha system
-
-    parent_id = forms.CharField(widget=forms.HiddenInput(), required=False)
+class CaptchaFreeThreadedCommentForm(BaseModelForm, FreeThreadedCommentForm):
 
     class Meta:
-        model = Feedback
-        fields = ('comment', 'user_name', 'user_url', 'user_email', )
+        model = FreeThreadedComment
+        fields = ('comment', 'name', 'website', 'email', )
 
-    def get_comment_model(self):
-        # Use our custom comment model instead of the built-in one.
-        return Feedback
-
-    def get_comment_create_data(self):
-        # Use the data of the superclass, and add parent field
-        data = super(CaptchaFeedbackForm, self).get_comment_create_data()
-        parent_id = self.cleaned_data['parent_id']
-        if parent_id:
-            data['parent'] = Feedback.objects.get(id=parent_id)
-        return data
+    def __init__(self, user, *args, **kwargs):
+        super(CaptchaFreeThreadedCommentForm, self).__init__(*args, **kwargs)
+        if user.is_anonymous():
+            captcha_field = CaptchaField()
+            self.fields['captcha'] = captcha_field
+            self.declared_fields['captcha'] = captcha_field

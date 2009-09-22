@@ -1,22 +1,10 @@
 {% extends "block.html" %}
 
-{% load inlinetrans comments i18n feedback %}
+{% load comment_tags %}
 
 {% block blockbody %}
-<link href="{{ MEDIA_URL }}feedback/styles.css" rel="stylesheet" type="text/css" />
+
 <div class="feedback">
-
-{% content_feedbacks_list content %}
-
-{% get_comment_form for content as form %}
-<form action="{% comment_form_target %}" method="POST">
-  {{ form.as_ul }}
-    <input type="hidden" name="next" value="{{ content.get_absolute_url }}" />
-    <div>
-        <input type="submit" name="preview" class="submit-post" value="{% trans "Preview" %}">
-        <input type="submit" name="submit" class="submit-post" value="{% trans "Send" %}">
-    </div>
-</form>
-
+{% content_comments content %}
 </div>
 {% endblock %}

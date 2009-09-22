@@ -1,0 +1,12 @@
+{% load i18n %}
+<form method="POST"
+    {% if parent_id %} action="{% url comment_add_parent content_type_id,content_id,parent_id %}"
+    {% else %} action="{% url comment_add content_type_id,content_id %}" 
+    {% endif %}>
+    <ul>
+        {{ form.as_ul }}
+    </ul>
+    <div class="submitline">
+       <input class="submit" type="submit" value="{% trans "Submit Comment" %}"/>
+    </div>
+</form>

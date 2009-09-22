@@ -1,0 +1,26 @@
+{% load pagination_tags inlinetrans i18n comment_tags %}
+
+{% comments_media %}
+
+<h2 id="comment-header">{% inline_trans "Comments on this content" %}:</h2>
+
+<div id="firstcomment">
+    <div id="comment-error" style="display:none">
+       {% trans "An error has occurred, try again" %}
+    </div>
+    <div id="firstactions" class="actions ">
+        <a class="addReply"
+           href="{% url comment_add content_type_id content.id %}">{% inline_trans "Reply" %}</a>
+        <a  style="display:none" class="hideReply"
+           href="#">{% inline_trans "Hide Reply" %}</a>
+    </div>
+
+    <div class="commentform"></div>
+    {% if comments %}
+        {% for comment in comments %}
+            {% content_comment content comment 1 1 %}
+        {% endfor %}
+    {% endif %}
+    <div class="commentresults" style="display:none"></div>
+</div>
+<div class="visualClass"></div>
