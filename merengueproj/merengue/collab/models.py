@@ -5,6 +5,8 @@ from django.db import models
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
+from transmeta import TransMeta
+
 
 REVISOR_RESULTS = (
     ('just', ugettext('Just set status')),
@@ -14,6 +16,8 @@ REVISOR_RESULTS = (
 
 
 class CollabCommentType(models.Model):
+    __metaclass__ = TransMeta
+
     name = models.CharField(
         _('name'),
         max_length = 20,
@@ -26,6 +30,7 @@ class CollabCommentType(models.Model):
 
     class Meta:
         abstract = True
+        translate = ('label', )
 
     def __unicode__(self):
         return self.label
@@ -56,6 +61,9 @@ class CollabCommentRevisorStatusType(CollabCommentType):
         blank = True,
         null = True,
         )
+
+    class Meta:
+        translate = ('reason', )
 
 
 class CollabComment(models.Model):
