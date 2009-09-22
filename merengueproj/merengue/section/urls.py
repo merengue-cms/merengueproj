@@ -3,6 +3,8 @@ from django.conf.urls.defaults import patterns, url
 urlpatterns = patterns('merengue.section.views',
     url(r'ajax/get_search_filters_and_options/$', 'get_search_filters_and_options', name='get_search_filters_and_options'),
     url(r'ajax/save_menu_order/$', 'save_menu_order', name='save_menu_order'),
+    url(r'ajax/document/(?P<document_id>\d+)/section/create/first/$', 'insert_document_section_after', name='insert_document_section_after'),
+    url(r'ajax/document/(?P<document_id>\d+)/section/create/after/(?P<document_section_id>\d+)/$', 'insert_document_section_after', name='insert_document_section_after'),
     url(r'^(?P<section_slug>[\w-]+)/$', 'section_view', name='section_view'),
     url(r'^(?P<section_slug>[\w-]+)/css/$', 'section_custom_style', name='section_custom_style'),
     url(r'^(?P<section_slug>[\w-]+)/contents/(?P<content_id>\d+)/(?P<content_slug>[\w-]+)/$', 'content_section_view', name='content_section_view'),

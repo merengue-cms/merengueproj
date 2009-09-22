@@ -1,0 +1,10 @@
+{% load i18n %}
+{% if document_section %}
+  <span class="document-section-insert-after-trigger">
+     <a href="{% url insert_document_section_after document.id document_section.id %}">{% trans "Insert document section here" %}</a>
+  </span>
+{% else %}
+  <span class="document-section-insert-after-trigger">
+     <a href="{% url insert_document_section_after document.id %}">{% trans "Insert document section here" %}</a>
+  </span>
+{% endif %}

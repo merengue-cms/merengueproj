@@ -6,7 +6,8 @@ from django.template import RequestContext
 from django.utils import simplejson
 
 from searchform.registry import search_form_registry
-from merengue.section.models import BaseSection, Document, Section
+from merengue.section.models import BaseSection, Document, Section, \
+                                    DocumentSection
 
 from merengue.base.views import content_view
 from merengue.section.models import AbsoluteLink, ContentLink, Menu
@@ -169,3 +170,20 @@ def section_dispatcher(request, url):
     else:
         raise Http404
     return func(request, *parts)
+
+
+@login_required
+def insert_document_section_after(request, document_id, document_section_id=None):
+    document = get_object_or_404(Document, id=document_id)
+    if not document_section_id:
+        position = 0
+    else:
+        section = get_object_or_404(DocumentSection, id=document_section_id)
+        position = section.position + 1
+    newsection = DocumentSection.objects.create(document=document)
+    newsection.move_to(position)
+    return render_to_response('section/document_section_view.html',
+                              {'content': document,
+                               'document_section': newsection,
+                              },
+                              context_instance=RequestContext(request))

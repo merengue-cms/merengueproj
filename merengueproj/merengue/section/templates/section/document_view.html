@@ -1,21 +1,16 @@
 {% extends "content_view.html" %}
 
-{% load inlinetrans content_tags inplace_edit collaborative %}
+{% load inlinetrans content_tags inplace_edit collaborative document_tags %}
 
  {% block extrahead %}
    {% inplace_media %}
    {% collaborative_comments_media %}
    {% collaborative_translation_media %}
+   {% document_section_media %}
  {% endblock %}
 
 {% block contentbody %}
     {% for document_section in content.sections.all %}
-      <div class="document-section">
-        {% inplace_edit document_section "body|safe" "merengue.section.forms.DocumentSectionForm" %}
-        <div class="document-section-actions">
-        {% collaborative_comments document_section %}
-        {% collaborative_translation document_section "body" 1 %}
-        </div>
-      </div>
+    {% include "section/document_section_view.html" %}
     {% endfor %}
 {% endblock %}

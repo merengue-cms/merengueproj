@@ -558,6 +558,7 @@ class DocumentSection(models.Model):
         verbose_name = _('document section')
         verbose_name_plural = _('document sections')
         translate = ('body', )
+        ordering = ('position', )
 
     def _flexisave(self):
         return super(DocumentSection, self).save()

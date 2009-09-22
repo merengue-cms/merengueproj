@@ -1,0 +1,10 @@
+{% load inlinetrans content_tags inplace_edit collaborative document_tags %}
+
+      <div class="document-section" id="document-section-{{ document_section.id }}">
+        {% inplace_edit document_section "body|safe" "merengue.section.forms.DocumentSectionForm" %}
+        <div class="document-section-actions">
+        {% collaborative_comments document_section %}
+        {% collaborative_translation document_section "body" 1 %}
+        {% insert_document_section_after content document_section %}
+        </div>
+      </div>
