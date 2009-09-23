@@ -1,4 +1,6 @@
 from merengue.plugins import Plugin
+from merengue.section.admin import DocumentRelatedModelAdmin
+from merengue.section.models import Document
 
 from plugins.core.blocks import CoreMenuBlock
 
@@ -14,3 +16,8 @@ class PluginConfig(Plugin):
     @classmethod
     def get_blocks(cls):
         return [CoreMenuBlock]
+
+    @classmethod
+    def section_models(cls):
+        # section_models of merengue core
+        return [(Document, DocumentRelatedModelAdmin)]
