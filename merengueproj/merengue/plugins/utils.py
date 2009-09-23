@@ -18,8 +18,11 @@ from django.utils.importlib import import_module
 
 from merengue import registry
 from merengue.base.adminsite import site
+from merengue.base.models import BaseContent
+from merengue.multimedia.admin import register_related_multimedia
 from merengue.registry.items import (NotRegistered as NotRegisteredItem,
                             AlreadyRegistered as AlreadyRegisteredItem)
+from merengue.section.models import Section
 
 
 def install_plugin(instance, app_name):
@@ -239,9 +242,11 @@ def register_plugin_post_actions(plugin_name):
 
 def register_plugin_section_models(plugin_name):
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
-    from merengue.section.models import Section
     for model, admin_model in plugin_config.section_models():
-        site.register_related(model, admin_model, related_to=Section)
+        site_related = site.register_related(model, admin_model, related_to=Section)
+        plugin_config.section_register_hook(site_related, model)
+        if issubclass(model, BaseContent):
+            register_related_multimedia(site_related, model)
 
 
 def unregister_plugin_section_models(plugin_name):

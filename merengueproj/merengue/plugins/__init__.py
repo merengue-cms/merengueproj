@@ -31,6 +31,10 @@ class Plugin(RegistrableItem):
     def section_models(cls):
         return [] # to override in plugins
 
+    @classmethod
+    def section_register_hook(cls, site_related, model):
+        pass
+
 
 def active_default_plugins(*args, **kwargs):
     if kwargs['sender'] == plugin_models:

@@ -14,8 +14,13 @@ from merengue.base.models import BaseContent
 
 
 class BaseAdminSite(DjangoAdminSite):
-    related_admin_sites = {}
-    base_model_admins= {}
+    related_admin_sites = None
+    base_model_admins = None
+
+    def __init__(self, *args, **kwargs):
+        self.related_admin_sites = {}
+        self.base_model_admins = {}
+        super(BaseAdminSite, self).__init__(*args, **kwargs)
 
     def admin_view(self, view, cacheable=False):
 
@@ -28,6 +33,31 @@ class BaseAdminSite(DjangoAdminSite):
         if not cacheable:
             inner = never_cache(inner)
         return update_wrapper(inner, view)
+
+    def get_urls(self):
+        from django.conf.urls.defaults import patterns, url, include
+        from django.template.defaultfilters import slugify
+
+        urlpatterns = super(BaseAdminSite, self).get_urls()
+        related_urlpatterns = []
+
+        # custom url definitions
+        custom_patterns = patterns('',
+            url(r'^admin_redirect/(?P<content_type_id>\d+)/(?P<object_id>.+)/$',
+                self.admin_view(self.admin_redirect),
+                name='admin_redirect'),
+        )
+        # related url definitions
+        for model, model_admin in self._registry.iteritems():
+            for key in self.related_admin_sites.keys():
+                if issubclass(model, key):
+                    for tool_name, related_admin_site in self.related_admin_sites[key].items():
+                        related_admin_site.base_model_admins[model] = model_admin
+                        related_urlpatterns += patterns('',
+                            url(r'^%s/%s/(?P<base_object_id>\d+)/%s/' % (model._meta.app_label, model._meta.module_name, slugify(tool_name)),
+                                include(related_admin_site.urls), {'base_model_admin': model_admin}))
+
+        return custom_patterns + related_urlpatterns + urlpatterns
 
     def register(self, model_or_iterable, admin_class=None, **options):
         """
@@ -68,35 +98,6 @@ class BaseAdminSite(DjangoAdminSite):
 
             # Instantiate the admin class to save in the registry
             self._registry[model] = admin_class(model, self)
-
-
-class AdminSite(BaseAdminSite):
-
-    def get_urls(self):
-        from django.conf.urls.defaults import patterns, url, include
-        from django.template.defaultfilters import slugify
-
-        urlpatterns = super(AdminSite, self).get_urls()
-        related_urlpatterns = []
-
-        # custom url definitions
-        custom_patterns = patterns('',
-            url(r'^admin_redirect/(?P<content_type_id>\d+)/(?P<object_id>.+)/$',
-                self.admin_view(self.admin_redirect),
-                name='admin_redirect'),
-        )
-
-        # related url definitions
-        for model, model_admin in self._registry.iteritems():
-            for key in self.related_admin_sites.keys():
-                if issubclass(model, key):
-                    for tool_name, related_admin_site in self.related_admin_sites[key].items():
-                        related_admin_site.base_model_admins[model] = model_admin
-                        related_urlpatterns += patterns('',
-                            url(r'^%s/%s/(?P<base_object_id>\d+)/%s/' % (model._meta.app_label, model._meta.module_name, slugify(tool_name)),
-                                include(related_admin_site.urls), {'base_model_admin': model_admin}))
-
-        return custom_patterns + related_urlpatterns + urlpatterns
 
     def admin_redirect(self, request, content_type_id, object_id):
         """ redirect to content admin page or content related admin page in his section """
@@ -147,6 +148,10 @@ class AdminSite(BaseAdminSite):
         related_admin_site = self.related_admin_sites[related_to][tool_name]
         related_admin_site.register(model_or_iterable, admin_class, **options)
         return related_admin_site
+
+
+class AdminSite(BaseAdminSite):
+    pass
 
 
 class RelatedAdminSite(BaseAdminSite):

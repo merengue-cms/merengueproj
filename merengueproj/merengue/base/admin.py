@@ -915,7 +915,7 @@ class RelatedModelAdmin(BaseAdmin):
         opts = model._meta
 
         try:
-            obj = model_admin.queryset(request).get(pk=unquote(object_id))
+            obj = model.objects.get(pk=unquote(object_id))
         except model.DoesNotExist:
             # Don't raise Http404 just yet, because we haven't checked
             # permissions yet. We don't want an unauthenticated user to be able
