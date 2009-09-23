@@ -21,4 +21,10 @@
       {% if has_absolute_url %}<li><a href="../../../r/{{ content_type_id }}/{{ object_id }}/" class="viewsitelink">{% trans "View on site" %}</a></li>{% endif%}
   {% endif %}
 
-  {% smart_relations_object_tool %} 
+  {% if original %}
+    {% smart_relations_object_tool original %}
+  {% endif %}
+
+  {% if basecontent %}
+    {% smart_relations_object_tool basecontent %}
+  {% endif %}
