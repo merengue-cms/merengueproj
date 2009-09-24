@@ -1,6 +1,6 @@
 ugettext = lambda s: s # dummy ugettext function, as said on django docs
 
-# List of callables that know how to import templates from various sources.
+# List of  callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'merengue.themes.loader.load_template_source', # for enabling theme support in Merengue
     'django.template.loaders.filesystem.load_template_source',
