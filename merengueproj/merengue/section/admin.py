@@ -8,7 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
 from merengue.base.models import BaseContent
-from merengue.base.admin import BaseAdmin, RelatedModelAdmin
+from merengue.base.admin import BaseAdmin, BaseContentAdmin, RelatedModelAdmin
 from merengue.base.admin import set_field_read_only
 from merengue.multimedia.models import Photo
 from merengue.section.models import (Menu, Section, AppSection, Carousel,
@@ -82,7 +82,7 @@ class CustomStyleRelatedModelAdmin(RelatedModelAdmin):
         return False
 
 
-class DocumentAdmin(SectionContentAdmin):
+class DocumentAdmin(BaseContentAdmin):
     list_display = ('name', 'slug', 'status', )
     list_filter = ('status', )
     html_fields = ('description', 'body', )
@@ -91,7 +91,7 @@ class DocumentAdmin(SectionContentAdmin):
     actions = BaseAdmin.actions + ['set_as_published', 'set_as_draft']
 
 
-class DocumentRelatedModelAdmin(DocumentAdmin):
+class DocumentRelatedModelAdmin(SectionContentAdmin, DocumentAdmin):
     tool_name = 'documents'
     tool_label = _('documents')
 
