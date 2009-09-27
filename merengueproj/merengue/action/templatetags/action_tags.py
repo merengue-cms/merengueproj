@@ -23,7 +23,7 @@ class GetActionsNode(template.Node):
         # TODO: Support not yet implemented for content types
         for_content = kwargs.get('for', None)
         actions = []
-        registered_actions = RegisteredAction.objects.all()
+        registered_actions = RegisteredAction.objects.actives()
         for registered_action in registered_actions:
             item_class = registered_action.get_registry_item_class()
             if scope == 'site' and issubclass(item_class, SiteAction):

@@ -18,7 +18,6 @@ class RegisteredPlugin(RegisteredItem):
     required_apps = RequiredAppsField()
     required_plugins = RequiredPluginsField()
     installed = models.BooleanField(default=False)
-    active = models.BooleanField(default=False)
     directory_name = models.CharField(_('directory name'), max_length=100,
                                       unique=True)
 

@@ -21,7 +21,7 @@ class RenderBlocksNode(template.Node):
             else:
                 content = None
             rendered_blocks = []
-            for registered_block in RegisteredBlock.objects.filter(placed_at=self.place):
+            for registered_block in RegisteredBlock.objects.actives().filter(placed_at=self.place):
                 block = registered_block.get_registry_item_class()
                 if content is None and issubclass(block, Block):
                     rendered_blocks.append(block.render(request))
