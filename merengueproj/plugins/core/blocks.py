@@ -9,6 +9,8 @@ class CoreMenuBlock(Block):
 
     @classmethod
     def render(cls, request):
+        if not request.section:
+            return '' # renders nothing
         return cls.render_block(request, template_name='core/block_menu.html',
                                 block_title=_('Menu'),
                                 context={'section': request.section})
