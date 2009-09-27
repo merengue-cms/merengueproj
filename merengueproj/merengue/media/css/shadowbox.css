@@ -191,6 +191,8 @@ HTML snapshot:
   font-family: 'Lucida Grande', Tahoma, sans-serif;
   font-size: 12px;
   color: #000;
+  background-color: white;
+  height: 30px;
   margin: 0 ;
 }
 
