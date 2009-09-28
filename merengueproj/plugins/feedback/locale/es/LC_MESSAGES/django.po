@@ -2,40 +2,40 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-09-28 22:05+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2009-09-28 22:24\n"
+"Last-Translator: <lin@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Translated-Using: django-rosetta 0.4.RC2\n"
 
 #: blocks.py:13
 msgid "Feedback content"
-msgstr ""
+msgstr "Comentarios al contenido"
 
 #: views.py:73
 msgid "Your message has been posted successfully."
-msgstr ""
+msgstr "Tu mensaje se ha enviado correctamente."
 
 #: templates/feedback/content_comment_add.html:10
 msgid "Submit Comment"
-msgstr ""
+msgstr "Enviar comentario"
 
 #: templates/feedback/content_comment_preview.html:4
 #: templates/feedback/content_comment_preview.html:13
 msgid "Send comment to"
-msgstr ""
+msgstr "Enviar comentario a"
 
 #: templates/feedback/content_comments.html:9
 msgid "An error has occurred, try again"
-msgstr ""
+msgstr "A ocurrido un error, inténtelo de nuevo"
 
 #: templates/feedback/feedback_index.html:5
 msgid "Feedback index"
