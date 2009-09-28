@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-28 22:06+0200\n"
+"POT-Creation-Date: 2009-09-28 23:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -475,6 +475,10 @@ msgstr ""
 msgid "Page not found"
 msgstr ""
 
+#: templates/404.html:8
+msgid "Menu"
+msgstr ""
+
 #: templates/404.html:17
 msgid ""
 "404 Error - The Page you are looking for is no longer available at this URL."
@@ -502,12 +506,18 @@ msgstr ""
 msgid "We recommend you to"
 msgstr ""
 
+#: templates/inc.breadcrumbs.html:2 templates/inc.headerlinks.html:4
+#: templatetags/related_admin_tags.py:84
+msgid "Home"
+msgstr ""
+
 #: templates/inc.footer.html:4 templates/inc.footer.html.py:5
+#: templates/inc.footer.html:11
 msgid "Merengue powered"
 msgstr ""
 
-#: templates/inc.headerlinks.html:4 templatetags/related_admin_tags.py:84
-msgid "Home"
+#: templates/inc.footer.html:13
+msgid "General conditions"
 msgstr ""
 
 #: templates/inc.headerlinks.html:7
@@ -522,8 +532,28 @@ msgstr ""
 msgid "Admin this content"
 msgstr ""
 
+#: templates/base/content_related_items.html:4
+msgid "Related contents"
+msgstr ""
+
+#: templates/base/google_map.html:3
+msgid "Map"
+msgstr ""
+
+#: templates/base/google_map.html:8
+msgid "How to get there?"
+msgstr ""
+
+#: templates/base/google_map.html:10
+msgid "Origin address"
+msgstr ""
+
 #: templates/base/google_map.html:12
 msgid "See route"
+msgstr ""
+
+#: templates/base/google_map.html:20
+msgid "Calculate travel route"
 msgstr ""
 
 #: templatetags/content_filters.py:13
