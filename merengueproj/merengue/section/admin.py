@@ -24,7 +24,8 @@ class MenuAdmin(BaseAdmin):
 
 class BaseSectionAdmin(BaseAdmin):
     list_display = ('name', 'slug', )
-    html_fields = ('description', )
+    html_fields = ()
+    removed_fields = ('description', )
     prepopulated_fields = {'slug': ('name_es', )}
 
     def get_form(self, request, obj=None, **kwargs):

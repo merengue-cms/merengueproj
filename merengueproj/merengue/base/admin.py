@@ -272,6 +272,7 @@ class BaseAdmin(admin.ModelAdmin):
     autocomplete_fields = {}
     edit_related = ()
     readonly_fields = ()
+    removed_fields = ()
     list_per_page = 50
     inherit_actions = True
     exclude = ('main_image', )
@@ -300,6 +301,8 @@ class BaseAdmin(admin.ModelAdmin):
             elif 'url' in options: # Must have url or choices defined
                 url = options.pop('url')
                 field.widget = AJAXAutocompletionWidget(url=url, attrs=options)
+        elif db_fieldname in self.removed_fields:
+            return
 
         if db_fieldname == 'name' and field and field.required:
             old_clean = field.clean
