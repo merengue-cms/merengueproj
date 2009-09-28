@@ -44,7 +44,7 @@
  <body dir="ltr" class="ie ie8"><![endif]--> <!--[if !IE]>
 --> <body dir="ltr" {% block extrabodytag %}{% endblock %}><!--<![endif]-->
 
-<div id="container" class="{% block bodyextraclasses %}{% endblock %}">
+<div id="container" class="theme-{{ theme }} {% block bodyextraclasses %}{% endblock %}">
   <div id="current-svn-revision">
     {% current_svn_rev %}
   </div>

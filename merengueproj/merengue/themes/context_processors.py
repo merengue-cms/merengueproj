@@ -9,6 +9,7 @@ def media(request):
     try:
         active_theme = Theme.objects.active()
         return {
+            'theme': active_theme.name,
             'THEME_MEDIA_URL': '%sthemes/%s/' % (settings.MEDIA_URL, active_theme.directory_name),
         }
     except Theme.DoesNotExist:
