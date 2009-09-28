@@ -77,8 +77,9 @@
 #feedback #firstcomment h3,
 #feedback #firstcomment .commentBody,
 #feedback #firstcomment .actions,
+#feedback .commentform,
 #feedback #firstcomment .commentinfo {
-    background:#CCDDFF none repeat scroll 0 0;
+    background: #CCDDFF none repeat scroll 0 0;
 }
 
 #feedback #firstcomment .actions a {
@@ -87,8 +88,7 @@
     border:1px solid black;
     font-weight: normal;
     margin-left: 2px;
-}    
-
+}
 
 #feedback .commentform ul {
     list-style: none;
@@ -104,8 +104,6 @@
     display: block;
 }
 
-
-/* Yaco theme customization  */
 #feedback {
     width: 100%;
 }
@@ -126,18 +124,6 @@
     display: none;
 }
 
-#feedback #firstcomment .commentform,
-#feedback #firstcomment h3,
-#feedback #firstcomment .commentBody,
-#feedback #firstcomment .actions,
-#feedback #firstcomment .commentinfo {
-    background:#F2F2F1 none repeat scroll 0 0;
-}
-
-#feedback #firstcomment .actions a {
-    background: #FFFFFF none repeat scroll 0 0;
-}
-
 #feedback textarea {
     width: 100%;
 }
@@ -146,5 +132,6 @@
 #feedback textarea,
 #feedback input {
     border:1px solid #CCCCCC;
+    margin: 2px;
 }
 
