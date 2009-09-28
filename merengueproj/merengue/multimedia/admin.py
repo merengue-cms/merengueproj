@@ -39,7 +39,8 @@ class MultimediaAddContentRelatedModelAdmin(BaseMultimediaContentRelatedModelAdm
                     for content in queryset:
                         mr = MultimediaRelation(content=content, multimedia=multimedia)
                         mr.save(update_order=True)
-                        obj_log = ugettext(u"%s content associated to %s") % (content, multimedia)
+                        obj_log = ugettext(u"%(content)s content associated to %(multimedia)s") % {
+                            'content': content, 'multimedia': multimedia}
                         self.log_change(request, content, obj_log)
                     msg_data = {'number': len(queryset),
                                 'model_name': model_ngettext(self.opts)}
@@ -67,7 +68,8 @@ class MultimediaRemoveContentRelatedModelAdmin(BaseMultimediaContentRelatedModel
                 multimedia = self.basecontent
                 for content in queryset:
                     MultimediaRelation.objects.get(content=content, multimedia=multimedia).delete()
-                    obj_log = ugettext(u"%s content associated to %s") % (content, multimedia)
+                    obj_log = ugettext(u"%(content)s content associated to %(multimedia)s") % {
+                        'content': content, 'multimedia': multimedia}
                     self.log_change(request, content, obj_log)
                 msg_data = {'number': len(queryset),
                                 'model_name': model_ngettext(self.opts)}

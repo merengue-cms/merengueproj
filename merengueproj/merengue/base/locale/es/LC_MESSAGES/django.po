@@ -1,0 +1,548 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-09-28 22:06+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin.py:143 admin.py:148
+msgid "Username"
+msgstr ""
+
+#: admin.py:144 admin.py:149
+msgid "This value must contain only letters, @, numbers and underscores."
+msgstr ""
+
+#: admin.py:309
+msgid "This field is required."
+msgstr ""
+
+#: admin.py:478
+#, python-format
+msgid "One or more %(fieldname)s in %(name)s: %(obj)s"
+msgstr ""
+
+#: admin.py:483
+#, python-format
+msgid "One or more %(fieldname)s in %(name)s:"
+msgstr ""
+
+#: admin.py:526 admin.py:583 admin.py:624
+msgid "Are you sure?"
+msgstr ""
+
+#: admin.py:561 admin.py:929
+#, python-format
+msgid "%(name)s object with primary key %(key)r does not exist."
+msgstr ""
+
+#: admin.py:576
+#, python-format
+msgid "The %(name)s \"%(obj)s\" was deleted successfully."
+msgstr ""
+
+#: admin.py:671
+msgid "Are you sure you want to set this items as draft?"
+msgstr ""
+
+#: admin.py:673
+msgid "Set as draft"
+msgstr ""
+
+#: admin.py:677
+msgid "Are you sure you want to set this items as pending?"
+msgstr ""
+
+#: admin.py:679
+msgid "Set as pending"
+msgstr ""
+
+#: admin.py:683
+msgid "Are you sure you want to set this items as published?"
+msgstr ""
+
+#: admin.py:685
+msgid "Set as published"
+msgstr ""
+
+#: admin.py:694
+#, python-format
+msgid "Changed to %s"
+msgstr ""
+
+#: admin.py:698
+#, python-format
+msgid "Successfully set %(number)d %(model_name)s as %(state)s."
+msgstr ""
+
+#: admin.py:706
+#, python-format
+msgid "Change state of selected %(verbose_name_plural)s"
+msgstr ""
+
+#: admin.py:748
+msgid "Assigned owners"
+msgstr ""
+
+#: admin.py:767
+msgid "Are you sure you want to assign these owners to these contents?"
+msgstr ""
+
+#: admin.py:773
+msgid "Assign owners"
+msgstr ""
+
+#: admin.py:876
+msgid "Are you sure you want geoautolocalized?"
+msgstr ""
+
+#: admin.py:877
+msgid "These objects have a manual localization"
+msgstr ""
+
+#: admin.py:879
+msgid "Autogeolocalize"
+msgstr ""
+
+#: admin.py:1105
+msgid "Please specify at least a video file or a video url"
+msgstr ""
+
+#: admin.py:1111
+msgid "Video file must be in flv format"
+msgstr ""
+
+#: admin.py:1124
+msgid "Click to Locate"
+msgstr ""
+
+#: admin.py:1127
+msgid "Location Maps"
+msgstr ""
+
+#: admin.py:1200
+msgid "Address"
+msgstr ""
+
+#: admin.py:1329
+msgid "Select first a content type"
+msgstr ""
+
+#: admin.py:1336
+msgid "Database error"
+msgstr ""
+
+#: admin.py:1347 admin.py:1348
+msgid "All"
+msgstr ""
+
+#: admin.py:1427
+msgid "Are you sure you want to place content at the following location?"
+msgstr ""
+
+#: admin.py:1432
+msgid "Select where do you want to place the content"
+msgstr ""
+
+#: admin.py:1442
+msgid "Content location set successfully."
+msgstr ""
+
+#: admin.py:1446
+msgid "Content location unchanged."
+msgstr ""
+
+#: admin.py:1477
+#, python-format
+msgid "The %(name)s \"%(obj)s\" was added successfully."
+msgstr ""
+
+#: admin.py:1480
+msgid "You can select a content to place your location."
+msgstr ""
+
+#: admin.py:1521
+#, python-format
+msgid "Content is no longer placed at %s."
+msgstr ""
+
+#: admin.py:1539
+msgid "Error in id"
+msgstr ""
+
+#: admin.py:1544
+msgid "deleted"
+msgstr ""
+
+#: admin.py:1568
+msgid "Admin url"
+msgstr ""
+
+#: admin.py:1574
+msgid "Public url"
+msgstr ""
+
+#: admin.py:1581
+msgid "Content type"
+msgstr ""
+
+#: admin.py:1594
+msgid "Added"
+msgstr ""
+
+#: admin.py:1600
+msgid "Changed"
+msgstr ""
+
+#: admin.py:1606
+msgid "Deleted"
+msgstr ""
+
+#: admin.py:1664
+msgid "Unassigned ownership"
+msgstr ""
+
+#: admin.py:1667
+#, python-format
+msgid "Successfully unassigned ownership for %(count)d %(model_name)s."
+msgstr ""
+
+#: admin.py:1683
+msgid "Are you sure you want to unassign ownership of these objects?"
+msgstr ""
+
+#: admin.py:1686
+msgid "Unassign ownership"
+msgstr ""
+
+#: forms.py:165 models.py:280
+msgid "owners"
+msgstr ""
+
+#: forms.py:299 forms.py:321
+msgid "Base contents"
+msgstr ""
+
+#: forms.py:305 forms.py:306 forms.py:324 forms.py:325
+msgid "Name"
+msgstr ""
+
+#: forms.py:307 forms.py:326
+msgid "which name"
+msgstr ""
+
+#: forms.py:341
+msgid "Base Content Quick Search Form"
+msgstr ""
+
+#: forms.py:345
+msgid "Base Content Advanced Search Form"
+msgstr ""
+
+#: models.py:33
+msgid "Lowest"
+msgstr ""
+
+#: models.py:34
+msgid "Very Low"
+msgstr ""
+
+#: models.py:35
+msgid "Low"
+msgstr ""
+
+#: models.py:36
+msgid "Medium"
+msgstr ""
+
+#: models.py:37
+msgid "High"
+msgstr ""
+
+#: models.py:38
+msgid "Very high"
+msgstr ""
+
+#: models.py:39
+msgid "Super high"
+msgstr ""
+
+#: models.py:40
+msgid "Highest"
+msgstr ""
+
+#: models.py:45
+msgid "contact email"
+msgstr ""
+
+#: models.py:47
+msgid "contact email2"
+msgstr ""
+
+#: models.py:49
+msgid "url"
+msgstr ""
+
+#: models.py:51
+msgid "phone"
+msgstr ""
+
+#: models.py:53
+msgid "phone2"
+msgstr ""
+
+#: models.py:55
+msgid "fax"
+msgstr ""
+
+#: models.py:59 models.py:236
+msgid "contact info"
+msgstr ""
+
+#: models.py:60
+msgid "contacts info"
+msgstr ""
+
+#: models.py:63
+msgid "Without contact email"
+msgstr ""
+
+#: models.py:68 models.py:89
+msgid "name"
+msgstr ""
+
+#: models.py:69 models.py:90
+msgid "slug"
+msgstr ""
+
+#: models.py:73
+msgid "base category"
+msgstr ""
+
+#: models.py:74
+msgid "base categories"
+msgstr ""
+
+#: models.py:91 models.py:93
+msgid "description"
+msgstr ""
+
+#: models.py:96
+msgid "Publication status"
+msgstr ""
+
+#: models.py:97
+msgid "Enter the current status"
+msgstr ""
+
+#: models.py:99
+msgid "main image"
+msgstr ""
+
+#: models.py:139
+msgid "map icon"
+msgstr ""
+
+#: models.py:141
+msgid "is autolocated"
+msgstr ""
+
+#: models.py:143
+msgid "location"
+msgstr ""
+
+#: models.py:180
+msgid "Without location"
+msgstr ""
+
+#: models.py:202
+msgid "Thumbnail"
+msgstr ""
+
+#: models.py:239
+msgid "related items"
+msgstr ""
+
+#: models.py:241
+msgid "creation date"
+msgstr ""
+
+#: models.py:244 models.py:248
+msgid "modification date"
+msgstr ""
+
+#: models.py:256
+msgid "Tags"
+msgstr ""
+
+#: models.py:260 models.py:416
+msgid "multimedia"
+msgstr ""
+
+#: models.py:269
+msgid "class name"
+msgstr ""
+
+#: models.py:274
+msgid "rank value"
+msgstr ""
+
+#: models.py:287
+msgid "base content"
+msgstr ""
+
+#: models.py:288
+msgid "base contents"
+msgstr ""
+
+#: models.py:306
+msgid "Without name"
+msgstr ""
+
+#: models.py:414
+msgid "content"
+msgstr ""
+
+#: models.py:418
+msgid "is featured"
+msgstr ""
+
+#: models.py:421
+msgid "Order"
+msgstr ""
+
+#: models.py:425
+msgid "multimedia relation"
+msgstr ""
+
+#: models.py:426
+msgid "multimedia relations"
+msgstr ""
+
+#: models.py:452
+msgid "Human Order"
+msgstr ""
+
+#: views.py:31
+msgid "less than 50"
+msgstr ""
+
+#: views.py:33
+msgid "from 50 to 100"
+msgstr ""
+
+#: views.py:35
+msgid "from 100 to 300"
+msgstr ""
+
+#: views.py:37
+msgid "greater than 300"
+msgstr ""
+
+#: views.py:95
+#, python-format
+msgid "%(result_count)d %(msg_results)s found"
+msgstr ""
+
+#: views.py:96
+msgid "results"
+msgstr ""
+
+#: views.py:351
+msgid "The most rated ones"
+msgstr ""
+
+#: views.py:369
+msgid "The most commented ones"
+msgstr ""
+
+#: widgets.py:134
+msgid "View on map"
+msgstr ""
+
+#: templates/404.html:4 templates/404.html.py:12
+msgid "Page not found"
+msgstr ""
+
+#: templates/404.html:17
+msgid ""
+"404 Error - The Page you are looking for is no longer available at this URL."
+msgstr ""
+
+#: templates/404.html:20
+msgid "Probably you found a bad link or mistyped the URL. We recommend you to"
+msgstr ""
+
+#: templates/404.html:21 templates/500.html:130
+msgid "return to <a href=\"/\">home</a>"
+msgstr ""
+
+#: templates/500.html:16 templates/500.html.py:121
+msgid "Server Error"
+msgstr ""
+
+#: templates/500.html:126
+msgid ""
+"500 Error - The server encountered an internal error or misconfiguration and "
+"was unable to complete your request."
+msgstr ""
+
+#: templates/500.html:129
+msgid "We recommend you to"
+msgstr ""
+
+#: templates/inc.footer.html:4 templates/inc.footer.html.py:5
+msgid "Merengue powered"
+msgstr ""
+
+#: templates/inc.headerlinks.html:4 templatetags/related_admin_tags.py:84
+msgid "Home"
+msgstr ""
+
+#: templates/inc.headerlinks.html:7
+msgid "Site map"
+msgstr ""
+
+#: templates/inc.languagetools.html:5 templates/inc.languagetools.html.py:6
+msgid "Change language"
+msgstr ""
+
+#: templates/base/content_admin_action.html:4
+msgid "Admin this content"
+msgstr ""
+
+#: templates/base/google_map.html:12
+msgid "See route"
+msgstr ""
+
+#: templatetags/content_filters.py:13
+msgid "yes,no,maybe"
+msgstr ""
+
+#: templatetags/map_tags.py:315
+msgid "What is there nearby?"
+msgstr ""
+
+#: templatetags/related_admin_tags.py:87 templatetags/related_admin_tags.py:90
+msgid "opts"
+msgstr ""
+
+#: templatetags/related_admin_tags.py:98
+#: templatetags/related_admin_tags.py:115
+msgid "Add"
+msgstr ""
+
+#: templatetags/related_admin_tags.py:107
+msgid "site"
+msgstr ""

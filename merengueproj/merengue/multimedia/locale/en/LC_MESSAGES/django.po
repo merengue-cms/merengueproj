@@ -1,0 +1,188 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-09-28 22:11+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin.py:26
+msgid "associate contents"
+msgstr ""
+
+#: admin.py:42 admin.py:71
+#, python-format
+msgid "%(content)s content associated to %(multimedia)s"
+msgstr ""
+
+#: admin.py:47
+#, python-format
+msgid "Successfully associated %(number)d %(model_name)s."
+msgstr ""
+
+#: admin.py:50
+msgid "Are you sure you want to associate these contents?"
+msgstr ""
+
+#: admin.py:53
+msgid "Associate contents"
+msgstr ""
+
+#: admin.py:59
+msgid "disassociate contents"
+msgstr ""
+
+#: admin.py:76
+#, python-format
+msgid "Successfully disassociated %(number)d %(model_name)s."
+msgstr ""
+
+#: admin.py:79
+msgid "Are you sure you want disassociate this contents?"
+msgstr ""
+
+#: admin.py:82
+msgid "Disassociate contents"
+msgstr ""
+
+#: admin.py:127 models.py:203 models.py:242 models.py:278
+msgid "Thumbnail"
+msgstr ""
+
+#: admin.py:173
+msgid "Database error"
+msgstr ""
+
+#: admin.py:178
+msgid "All"
+msgstr ""
+
+#: admin.py:217
+msgid "Please specify at least a video file "
+msgstr ""
+
+#: admin.py:223
+msgid "This file must be in swf format"
+msgstr ""
+
+#: admin.py:248 models.py:179
+msgid "photos"
+msgstr ""
+
+#: admin.py:254 models.py:230
+msgid "videos"
+msgstr ""
+
+#: admin.py:259 models.py:266
+msgid "panoramic views"
+msgstr ""
+
+#: admin.py:264
+msgid "3d images"
+msgstr ""
+
+#: admin.py:269
+msgid "audio files"
+msgstr ""
+
+#: models.py:27 models.py:29
+msgid "name"
+msgstr ""
+
+#: models.py:32
+msgid "date added"
+msgstr ""
+
+#: models.py:34
+msgid "tags"
+msgstr ""
+
+#: models.py:40
+msgid "class name"
+msgstr ""
+
+#: models.py:44
+msgid "Publication status"
+msgstr ""
+
+#: models.py:45
+msgid "Enter the current status"
+msgstr ""
+
+#: models.py:48
+msgid "authors"
+msgstr ""
+
+#: models.py:54
+msgid "base multimedia"
+msgstr ""
+
+#: models.py:55
+msgid "base multimedias"
+msgstr ""
+
+#: models.py:167 models.py:287
+msgid "image"
+msgstr ""
+
+#: models.py:171
+msgid "caption"
+msgstr ""
+
+#: models.py:173 models.py:224
+msgid "plone uid"
+msgstr ""
+
+#: models.py:178
+msgid "photo"
+msgstr ""
+
+#: models.py:212
+msgid "video file"
+msgstr ""
+
+#: models.py:215 models.py:254
+msgid "preview image"
+msgstr ""
+
+#: models.py:220
+msgid "external url"
+msgstr ""
+
+#: models.py:221
+msgid "The url of one video from youtube or google-video"
+msgstr ""
+
+#: models.py:229
+msgid "video"
+msgstr ""
+
+#: models.py:259
+msgid "url"
+msgstr ""
+
+#: models.py:265
+msgid "panoramic view"
+msgstr ""
+
+#: models.py:291
+msgid "image 3d"
+msgstr ""
+
+#: models.py:292
+msgid "images 3d"
+msgstr ""
+
+#: models.py:304 models.py:309 models.py:310
+msgid "audio file"
+msgstr ""
