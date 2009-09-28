@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-28 22:05+0200\n"
-"PO-Revision-Date: 2009-09-28 22:24\n"
+"POT-Creation-Date: 2009-09-28 23:03+0200\n"
+"PO-Revision-Date: 2009-09-28 23:04\n"
 "Last-Translator: <lin@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -24,6 +24,50 @@ msgstr "Comentarios al contenido"
 msgid "Your message has been posted successfully."
 msgstr "Tu mensaje se ha enviado correctamente."
 
+#: templates/feedback/content_comment.html:4
+#: templates/feedback/content_comment.html:6
+#: templates/feedback/content_comment.html:8
+msgid "said"
+msgstr "dijo"
+
+#: templates/feedback/content_comment.html:10
+msgid "link to here"
+msgstr "enlace"
+
+#: templates/feedback/content_comment.html:14
+msgid "Send by"
+msgstr "Enviado por"
+
+#: templates/feedback/content_comment.html:14
+msgid "on"
+msgstr "en"
+
+#: templates/feedback/content_comment.html:22
+#: templates/feedback/content_comments.html:13
+msgid "Reply"
+msgstr "Responder"
+
+#: templates/feedback/content_comment.html:23
+#: templates/feedback/content_comments.html:15
+msgid "Hide Reply"
+msgstr "Ocultar respuesta"
+
+#: templates/feedback/content_comment.html:26
+msgid "Publish"
+msgstr "Publicar"
+
+#: templates/feedback/content_comment.html:28
+msgid "Censure"
+msgstr "Censurar"
+
+#: templates/feedback/content_comment.html:30
+msgid "Delete"
+msgstr ""
+
+#: templates/feedback/content_comment.html:32
+msgid "Edit"
+msgstr "Modificar"
+
 #: templates/feedback/content_comment_add.html:10
 msgid "Submit Comment"
 msgstr "Enviar comentario"
@@ -32,6 +76,18 @@ msgstr "Enviar comentario"
 #: templates/feedback/content_comment_preview.html:13
 msgid "Send comment to"
 msgstr "Enviar comentario a"
+
+#: templates/feedback/content_comment_preview.html:8
+msgid "Send comment"
+msgstr "Enviar comentario"
+
+#: templates/feedback/content_comment_preview.html:15
+msgid "Return to"
+msgstr "Volver a"
+
+#: templates/feedback/content_comments.html:5
+msgid "Comments on this content"
+msgstr "Comentarios de este contenido"
 
 #: templates/feedback/content_comments.html:9
 msgid "An error has occurred, try again"
@@ -44,3 +100,8 @@ msgstr ""
 #: templates/feedback/feedback_index.html:8
 msgid "Feedback"
 msgstr ""
+
+#: templates/feedback/feedback_index.html:12
+#, fuzzy
+msgid "Feedback Index"
+msgstr "Comentarios al contenido"
