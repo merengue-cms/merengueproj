@@ -33,7 +33,7 @@ def find_pos(lang, include_djangos = False, include_rosetta = False):
     for appname in settings.INSTALLED_APPS:
         if 'rosetta' == appname and include_rosetta == False:
             continue
-            
+        appname = str(appname) # to avoid a fail in __import__ sentence
         p = appname.rfind('.')
         if p >= 0:
             app = getattr(__import__(appname[:p], {}, {}, [appname[p+1:]]), appname[p+1:])
