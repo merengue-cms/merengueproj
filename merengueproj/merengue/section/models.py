@@ -401,10 +401,6 @@ class Carousel(models.Model):
 
 class Document(BaseContent):
 
-    body = models.TextField(
-        verbose_name=_('body'),
-        )
-
     photo = StdImageField(
         verbose_name=_('photo'),
         upload_to='document_photos',
@@ -465,7 +461,7 @@ class Document(BaseContent):
     class Meta:
         verbose_name = _('document')
         verbose_name_plural = _('documents')
-        translate = ('body', 'photo_description', )
+        translate = ('photo_description', )
         content_view_template = 'section/document_view.html'
 
     def __unicode__(self):
