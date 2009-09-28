@@ -84,8 +84,8 @@
 
 #feedback #firstcomment .actions a {
     text-decoration:none;
-    background: #FFFFFF none repeat scroll 0 0;
-    border:1px solid black;
+    background: #e6e0da none repeat scroll 0 0;
+    border:1px solid #CCCCCC;
     font-weight: normal;
     margin-left: 2px;
 }
