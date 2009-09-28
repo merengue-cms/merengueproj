@@ -2,20 +2,22 @@ import os
 import sys
 
 from django.core import management as django_management
+from django.core.management.base import BaseCommand, handle_default_options
 
 from merengue.base.management.base import MerengueCommand
-
 
 # cache of loaded Merengue commands
 _merengue_commands = None
 
 
-def get_commands():
+def get_commands(only_merengue_commands=False):
     """
     Like django.core.management.get_commands but filters only merengue
-    management commands (commands extending MerengueCommand)
-
+    management commands (commands extending MerengueCommand) if only_merengue_commands
+    is True
     """
+    if not only_merengue_commands:
+        return django_management.get_commands()
     global _merengue_commands
     if _merengue_commands is None:
         _merengue_commands = {}
@@ -34,8 +36,11 @@ class ManagementUtility(django_management.ManagementUtility):
     """
     Based on django.core.management.ManagementUtility, modified for considering
     only MerengueCommands.
-
     """
+
+    def __init__(self, argv=None, only_merengue_commands=False):
+        super(ManagementUtility, self).__init__(argv)
+        self.only_merengue_commands = only_merengue_commands
 
     def main_help_text(self):
         """
@@ -57,7 +62,7 @@ class ManagementUtility(django_management.ManagementUtility):
 
         """
         try:
-            app_name = get_commands()[subcommand]
+            app_name = get_commands(self.only_merengue_commands)[subcommand]
             if isinstance(app_name, MerengueCommand):
                 # If the command is already loaded, use it directly.
                 klass = app_name
@@ -69,10 +74,72 @@ class ManagementUtility(django_management.ManagementUtility):
             sys.exit(1)
         return klass
 
+    def execute(self):
+        """
+        Given the command-line arguments, this figures out which subcommand is
+        being run, creates a parser appropriate to that command, and runs it.
+
+        Taken from django execute method, but enabling all active plugins
+        before execution.
+        """
+        # Preprocess options to extract --settings and --pythonpath.
+        # These options could affect the commands that are available, so they
+        # must be processed early.
+        parser = django_management.LaxOptionParser(usage="%prog subcommand [options] [args]",
+                                 version=django_management.get_version(),
+                                 option_list=BaseCommand.option_list)
+        try:
+            options, args = parser.parse_args(self.argv)
+            handle_default_options(options)
+        except:
+            pass # Ignore any option errors at this point.
+
+        try:
+            subcommand = self.argv[1]
+        except IndexError:
+            sys.stderr.write("Type '%s help' for usage.\n" % self.prog_name)
+            sys.exit(1)
+
+        if subcommand == 'help':
+            if len(args) > 2:
+                self.fetch_command(args[2]).print_help(self.prog_name, args[2])
+            else:
+                parser.print_lax_help()
+                sys.stderr.write(self.main_help_text() + '\n')
+                sys.exit(1)
+        # Special-cases: We want 'django-admin.py --version' and
+        # 'django-admin.py --help' to work, for backwards compatibility.
+        elif self.argv[1:] == ['--version']:
+            # LaxOptionParser already takes care of printing the version.
+            pass
+        elif self.argv[1:] == ['--help']:
+            parser.print_lax_help()
+            sys.stderr.write(self.main_help_text() + '\n')
+        else:
+            # This is override fragment of Django execute method
+            from merengue.plugins import enable_active_plugins
+            command = self.fetch_command(subcommand)
+            enable_active_plugins()
+            command.run_from_argv(self.argv)
+
 
 def execute_from_command_line(argv=None):
     """
-    A simple method that runs a ManagementUtility.
+    A simple method that runs a ManagementUtility (merengue-admin.py)
+
+    Only we can call merengue commands (not all django ones)
     """
-    utility = ManagementUtility(argv)
+    utility = ManagementUtility(argv, only_merengue_commands=True)
+    utility.execute()
+
+
+def execute_manager(settings_mod, argv=None):
+    """
+    Like execute_from_command_line(), but for use by manage.py, a
+    project-specific django-admin.py utility.
+
+    In this case we can call every django command (not only merengue ones)
+    """
+    django_management.setup_environ(settings_mod)
+    utility = ManagementUtility(argv, only_merengue_commands=False)
     utility.execute()

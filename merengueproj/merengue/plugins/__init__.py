@@ -58,6 +58,12 @@ def register_plugin(plugin_dir):
     return None
 
 
+def enable_active_plugins():
+    from merengue.plugins.utils import enable_plugin, get_plugin_module_name
+    for plugin_registered in RegisteredPlugin.objects.actives():
+        enable_plugin(get_plugin_module_name(plugin_registered.directory_name))
+
+
 def active_default_plugins(*args, **kwargs):
     if kwargs['sender'] == plugin_models:
         interactive = kwargs.get('interactive', None)
@@ -67,5 +73,6 @@ def active_default_plugins(*args, **kwargs):
                 plugin.installed = True
                 plugin.active = True
                 plugin.save()
+
 
 post_syncdb.connect(active_default_plugins)

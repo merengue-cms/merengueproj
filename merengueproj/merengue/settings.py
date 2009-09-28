@@ -96,8 +96,6 @@ STATUS_LIST = (
     ('draft', ugettext('Borrador')),
     ('pending', ugettext('Pendiente')),
     ('published', ugettext('Publicado')),
-    ('passive', ugettext('Registro pasivo')),
-    ('deleted_in_plone', ugettext('Borrado en Plone')),
 )
 
 # merengue default directory for plugins
