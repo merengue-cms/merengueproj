@@ -15,7 +15,7 @@ def is_registered(item_class):
         return True
 
 
-def register(item_class):
+def register(item_class, activate=False):
     """ register a item in the registry """
     # all process will be in a unique transaction, we don't want to get
     # half committed
@@ -39,6 +39,8 @@ def register(item_class):
                                     % item_class)
         registered_item.category = item_class.get_category()
         registered_item.set_default_config(item_class)
+        if activate:
+            registered_item.activate()
     except:
         transaction.savepoint_rollback(sid)
         raise

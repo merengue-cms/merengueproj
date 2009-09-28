@@ -136,6 +136,10 @@ def enable_plugin(plugin_name, register=True):
         register_plugin_post_actions(plugin_name)
         register_plugin_section_models(plugin_name)
     register_plugin_urls(plugin_name)
+    # activate plugin in DB
+    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    registered_plugin = plugin_config.get_registered_item()
+    registered_plugin.activate()
 
 
 def disable_plugin(plugin_name, unregister=True):
@@ -202,7 +206,7 @@ def unregister_plugin_templatetags(plugin_name):
 def register_items(item_list):
     try:
         for item_class in item_list:
-            registry.register(item_class)
+            registry.register(item_class, activate=True)
     except AlreadyRegisteredItem:
         pass
 

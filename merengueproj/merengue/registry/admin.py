@@ -4,7 +4,7 @@ from merengue.registry.models import RegisteredItem
 
 class RegisteredItemAdmin(BaseAdmin):
     readonly_fields = ('class_name', 'module', 'category', )
-    list_display = ('class_name', 'module', 'category', )
+    list_display = ('class_name', 'module', 'category', 'active', )
     list_filter = ('category', )
 
     def get_form(self, request, obj=None, **kwargs):

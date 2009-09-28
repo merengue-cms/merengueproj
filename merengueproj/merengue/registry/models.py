@@ -9,7 +9,7 @@ class RegisteredItem(models.Model):
     class_name = models.CharField(max_length=100, db_index=True)
     module = models.CharField(max_length=200, db_index=True)
     category = models.CharField(max_length=100, db_index=True)
-    active = models.BooleanField(default=True)
+    active = models.BooleanField(default=False)
     config = ConfigField()
 
     objects = RegisteredItemManager()
@@ -36,3 +36,15 @@ class RegisteredItem(models.Model):
             return parent_instance.config
         else:
             return self.config
+
+    def activate(self, commit=True):
+        if not self.active:
+            self.active = True
+            if commit:
+                self.save()
+
+    def deactivate(self, commit=True):
+        if self.active:
+            self.active = False
+            if commit:
+                self.save()
