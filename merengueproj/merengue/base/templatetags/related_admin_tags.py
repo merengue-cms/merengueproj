@@ -140,7 +140,7 @@ def _get_url_related_admin_site(context, admin_site, model_admin_next, obj):
     return model_admin_url
 
 
-def _smart_relations_object_tool_admin_site(context, admin_site, model_admin, obj, tools=None, tools_url=None):
+def _smart_relations_object_tool_admin_site(context, admin_site, model_admin, obj, tools=None, tools_url=None, level=0):
     tools = tools or []
     tools_admin_site = []
     tools_url = tools_url or []
@@ -161,10 +161,11 @@ def _smart_relations_object_tool_admin_site(context, admin_site, model_admin, ob
     if tools_admin_site:
         tools.append(tools_admin_site)
 
-
     if isinstance(admin_site, RelatedAdminSite):
         model_admin_next = _get_base_model_admin(admin_site)
-        return _smart_relations_object_tool_admin_site(context, model_admin_next.admin_site, model_admin_next, obj, tools, tools_url)
+        level = level -1
+        if level >= -1:
+            return _smart_relations_object_tool_admin_site(context, model_admin_next.admin_site, model_admin_next, obj, tools, tools_url, level)
     return tools
 
 

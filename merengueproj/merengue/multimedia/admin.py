@@ -275,19 +275,15 @@ def register(site):
     site.register(PanoramicView, PanoramicViewAdmin)
     site.register(Image3D, Image3DAdmin)
     site.register(Audio, AudioAdmin)
-
     register_related_multimedia(site, BaseContent)
 
 
-def register_related_multimedia(site_related, related_to):
-    site_related2 = site_related.register_related(Photo, RelatedPhotoAdmin, related_to=related_to)
-    site_related.register_related(Video, RelatedVideoAdmin, related_to=related_to)
-    site_related.register_related(PanoramicView, RelatedPanoramicViewAdmin, related_to=related_to)
-    site_related.register_related(Image3D, RelatedImage3DAdmin, related_to=related_to)
-    site_related.register_related(Audio, RelatedAudioAdmin, related_to=related_to)
+def register_related_multimedia(site, related_to):
+    site.register_related(Photo, RelatedPhotoAdmin, related_to=related_to)
+    site.register_related(Video, RelatedVideoAdmin, related_to=related_to)
+    site.register_related(PanoramicView, RelatedPanoramicViewAdmin, related_to=related_to)
+    site.register_related(Image3D, RelatedImage3DAdmin, related_to=related_to)
+    site.register_related(Audio, RelatedAudioAdmin, related_to=related_to)
 
-    site_related.register_related(BaseContent, MultimediaAddContentRelatedModelAdmin, related_to=BaseMultimedia)
-    site_related.register_related(BaseContent, MultimediaRemoveContentRelatedModelAdmin, related_to=BaseMultimedia)
-
-    site_related2.register_related(BaseContent, MultimediaAddContentRelatedModelAdmin, related_to=BaseMultimedia)
-    site_related2.register_related(BaseContent, MultimediaRemoveContentRelatedModelAdmin, related_to=BaseMultimedia)
+    site.register_related(BaseContent, MultimediaAddContentRelatedModelAdmin, related_to=BaseMultimedia)
+    site.register_related(BaseContent, MultimediaRemoveContentRelatedModelAdmin, related_to=BaseMultimedia)

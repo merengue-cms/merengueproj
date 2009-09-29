@@ -125,7 +125,7 @@ class BaseAdminSite(DjangoAdminSite):
         return HttpResponseRedirect('%s%s/%s/%d/' % (admin_prefix, model._meta.app_label,
                                     model._meta.module_name, content.id))
 
-    def register_related(self, model_or_iterable, admin_class=None, related_to=None, **options):
+    def _register_related(self, model_or_iterable, admin_class=None, related_to=None, **options):
         from merengue.base.admin import RelatedModelAdmin
         if not admin_class:
             raise Exception('Need a subclass of RelatedModelAdmin to register a related model admin' % admin_class.__name__)
@@ -149,9 +149,61 @@ class BaseAdminSite(DjangoAdminSite):
         related_admin_site.register(model_or_iterable, admin_class, **options)
         return related_admin_site
 
+    def _get_admin_site_for_model(self, related_to, admin_sites_returned=None, branch=None):
+        admin_sites_returned = admin_sites_returned or []
+        branch = branch or []
+
+        for model in self._registry.keys():
+            if related_to == model or issubclass(related_to, model):
+                admin_sites_returned.append(self)
+                break
+
+        for related_to_model, related_admin_site in self.related_admin_sites.items():
+            for related_admin_site_tool_name, related_admin_site_value in related_admin_site.items():
+                is_in_branch = False
+                for model_branch in branch:
+                    if model_branch == related_to or issubclass(related_to, model_branch) or issubclass(related_to, model_branch):
+                        is_in_branch = True
+                        break
+
+                if not is_in_branch:
+                    admin_sites_returned.extend(related_admin_site_value._get_admin_site_for_model(related_to, admin_sites_returned, branch + [related_to]))
+
+        return admin_sites_returned
+
 
 class AdminSite(BaseAdminSite):
-    pass
+
+    steps = {}
+
+    def set_steps(self, model_or_iterable, admin_class, related_to, **options):
+        if related_to and not related_to in self.steps.keys():
+            self.steps[related_to] = {}
+            self.steps[related_to] = {}
+        if model_or_iterable not in self.steps[related_to].keys():
+            self.steps[related_to][model_or_iterable] = {}
+        self.steps[related_to][model_or_iterable][admin_class] = options
+
+    def register_related(self, model_or_iterable, admin_class=None, related_to=None, **options):
+        self.set_steps(model_or_iterable, admin_class, related_to, **options)
+
+        # Register model_or_iterable in every admin site which contains at related_to
+        admin_sites = list(set(self._get_admin_site_for_model(related_to)))
+        for admin_site in admin_sites:
+            admin_site._register_related(model_or_iterable=model_or_iterable, admin_class=admin_class,
+                                                related_to=related_to, **options)
+
+
+        # Register the admin site related with model_or_iterable in every admin site of model_or_iterable
+        admin_sites = list(set(self._get_admin_site_for_model(model_or_iterable)))
+        for model_to, admin_site_attrs in self.steps.items():
+            if not issubclass(model_or_iterable, model_to):
+                continue
+            for model, admin_models in admin_site_attrs.items():
+                for admin_class, options in admin_models.items():
+                    for admin_site in admin_sites:
+                        admin_site._register_related(model_or_iterable=model, admin_class=admin_class,
+                                                related_to=model_to, **options)
 
 
 class RelatedAdminSite(BaseAdminSite):

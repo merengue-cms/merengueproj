@@ -422,10 +422,11 @@ class DocumentSectionModelAdmin(BaseAdmin):
 
 
 class DocumentSectionRelatedModelAdmin(RelatedModelAdmin):
-    tool_name = 'sections'
+    tool_name = 'documents'
     tool_label = _('document sections')
     ordering = ('position', )
     html_fields = ('body', )
+    related_field = 'document'
 
 
 def register(site):

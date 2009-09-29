@@ -250,7 +250,7 @@ def register_plugin_section_models(plugin_name):
         site_related = site.register_related(model, admin_model, related_to=Section)
         plugin_config.section_register_hook(site_related, model)
         if issubclass(model, BaseContent):
-            register_related_multimedia(site_related, model)
+            register_related_multimedia(site, BaseContent)
 
 
 def unregister_plugin_section_models(plugin_name):
@@ -308,3 +308,7 @@ def has_required_dependencies(plugin):
         if not RegisteredPlugin.objects.filter(**filter_plugins):
             return False
     return True
+
+
+from merengue.section.admin import register as register_section
+register_section(site)
