@@ -1,7 +1,10 @@
 {% extends "admin/base_site.html" %}
 {% load i18n %}
 
-{% block extrastyle %}<link rel="stylesheet" type="text/css" href="{% load adminmedia %}{% admin_media_prefix %}css/dashboard.css" />{% endblock %}
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="{% load adminmedia %}{% admin_media_prefix %}css/dashboard.css" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}merengue/css/adminuma.css" />
+{% endblock %}
 
 {% block coltype %}colMS{% endblock %}
 
@@ -10,9 +13,111 @@
 {% block breadcrumbs %}{% endblock %}
 
 {% block content %}
+<script type="text/javascript">
+    var showingControlPanel = 0;
+    
+    var DHTML = (document.getElementById || document.all || document.layers);
+    
+    function getObj(name)
+    {
+      if (document.getElementById)
+      {
+        this.obj = document.getElementById(name);
+        this.style = document.getElementById(name).style;
+      }
+      else if (document.all)
+      {
+        this.obj = document.all[name];
+        this.style = document.all[name].style;
+      }
+      else if (document.layers)
+      {
+        this.obj = document.layers[name];
+        this.style = document.layers[name];
+      }
+    }
+    
+    function showControlPanel(){
+        if (showingControlPanel){
+            showingControlPanel = 0;
+        } else {
+            showingControlPanel = 1;
+        }
+        
+        // First, we show controlpanel
+        var flag = showingControlPanel;
+        var x = new getObj('controlpanel');
+        x.style.visibility = (flag) ? 'visible' : 'hidden'
+        x.style.display = (flag) ? 'block':'none'
+        // Second, we show message to hide controlpanel
+        var z = new getObj('showingControlPanel');
+        z.style.visibility = (flag) ? 'visible' : 'hidden'
+        z.style.display = (flag) ? 'inline':'none'
+        
+        // Finally, we hide everything else
+        var y = new getObj('contentmanagement');
+        y.style.visibility = (flag) ? 'hidden':'visible'
+        y.style.display = (flag) ? 'none':'block'
+        y = new getObj('sitebuilding');
+        y.style.visibility = (flag) ? 'hidden':'visible'
+        y.style.display = (flag) ? 'none':'block'
+        y = new getObj('usermanagement');
+        y.style.visibility = (flag) ? 'hidden':'visible'
+        y.style.display = (flag) ? 'none':'block'
+        
+
+    }
+    
+</script>
+
+
 <div id="content-main">
+<div id="content-uma">
+    <div class="module-uma" id="contentmanagement">
+        <h1>Content management</h1>
+        <p>Manage your site's content</p>
+            <h2>Content <div align=right style="float: right"><a class="addlink" href="base/basecontent/add/">{% trans 'Add' %}</a> <a class="changelink" href="base/basecontent/">{% trans 'Change' %}</a></div></h2>
+            <p>View, edit and delete your site's contents.</p>
+            <h2>Contact info <div align=right style="float: right"><a class="addlink" href="base/contactinfo/add/">{% trans 'Add' %}</a> <a class="changelink" href="base/contactinfo/">{% trans 'Change' %}</a></div></h2>
+            <p>View, edit and delete your site's contact info.</p>
+            <h2>Section <div align=right style="float: right"><a class="addlink" href="section/section/add/">{% trans 'Add' %}</a> <a class="changelink" href="section/section/">{% trans 'Change' %}</a></div></h2>
+            <p>View, edit and delete your site's sections.</p>
+        <h1>Multimedia</h1>
+            <h2>Photos <div align=right style="float: right"><a class="addlink" href="multimedia/photo/add/">{% trans 'Add' %}</a> <a class="changelink" href="multimedia/photo/">{% trans 'Change' %}</a></div></h2>
+            <p>View, edit and delete your site's photos.</p>
+            <h2>Video <div align=right style="float: right"><a class="addlink" href="multimedia/video/add/">{% trans 'Add' %}</a> <a class="changelink" href="multimedia/video/">{% trans 'Change' %}</a></div></h2>
+            <p>View, edit and delete your site's videos.</p>
+            <h2>Audio <div align=right style="float: right"><a class="addlink" href="multimedia/audio/add/">{% trans 'Add' %}</a> <a class="changelink" href="multimedia/audio/">{% trans 'Change' %}</a></div></h2>
+            <p>View, edit and delete your site's audios.</p>
+            <h2>Panoramic views <div align=right style="float: right"><a class="addlink" href="multimedia/panoramicview/add/">{% trans 'Add' %}</a> <a class="changelink" href="multimedia/panoramicview/">{% trans 'Change' %}</a></div></h2>
+            <p>View, edit and delete your site's panoramic views.</p>
+            <h2>Images 3D <div align=right style="float: right"><a class="addlink" href="multimedia/image3d/add/">{% trans 'Add' %}</a> <a class="changelink" href="multimedia/image3d/">{% trans 'Change' %}</a></div></h2>
+            <p>View, edit and delete your site's Images 3D.</p>
+    </div>
+    <div class="module-uma float_right" id="sitebuilding">
+        <h1>Site building</h1>
+        <p>Control how your site looks and feels.</p>
+            <h2>Blocks <div align=right style="float: right"><a class="addlink" href="block/registeredblock/add/">{% trans 'Add' %}</a> <a class="changelink" href="block/registeredblock/">{% trans 'Change' %}</a></div></h2>
+            <p>View, edit and delete your site's blocks.</p>
+            <h2>Plugins <div align=right style="float: right"><a class="addlink" href="plugins/registeredplugin/add/">{% trans 'Add' %}</a> <a class="changelink" href="plugins/registeredplugin/">{% trans 'Change' %}</a></div></h2>
+            <p>View, edit and delete your site's plugin.</p>
+            <h2>Themes <div align=right style="float: right"><a class="addlink" href="themes/theme/add/">{% trans 'Add' %}</a> <a class="changelink" href="themes/theme/">{% trans 'Change' %}</a></div></h2>
+            <p>View, edit and delete your site's themes.</p>
+    </div>
+    <div style="clear:right" ></div>
+    <div class="module-uma float_right" id="usermanagement">
+        <h1>User management</h1>
+        <p>Manage your site's users, groups and access to site features.</p>
+            <h2>Groups <div align=right style="float: right"><a class="addlink" href="auth/group/add/">{% trans 'Add' %}</a> <a class="changelink" href="auth/group/">{% trans 'Change' %}</a></div></h2>
+            <p>View, edit and delete your site's groups.</p>
+            <h2>Users <div align=right style="float: right"><a class="addlink" href="auth/user/add/">{% trans 'Add' %}</a> <a class="changelink" href="auth/user/">{% trans 'Change' %}</a></div></h2>
+            <p>View, edit and delete your site's users.</p>
+    </div>
+    <div style="clear:both" ></div>
 
 {% if app_list %}
+    <div id="controlpanel" class="module-uma module-uma-big" style="visibility:hidden; display:none;">
+        <h1>Control panel <a name="control-panel"></a></h1>
     {% for app in app_list %}
         <div class="module">
         <table summary="{% blocktrans with app.name as name %}Models available in the {{ name }} application.{% endblocktrans %}">
@@ -41,28 +146,24 @@
         </table>
         </div>
     {% endfor %}
+    </div>
 {% else %}
     <p>{% trans "You don't have permission to edit anything." %}</p>
 {% endif %}
 </div>
 {% endblock %}
-
+</div> <!--- end content-uma -->
 {% block sidebar %}
 <div id="content-related">
-    <div class="module" id="recent-actions-module">
-        <h2>{% trans 'Recent Actions' %}</h2>
-        <h3>{% trans 'My Actions' %}</h3>
-            {% load log %}
-            {% get_admin_log 10 as admin_log for_user user %}
-            {% if not admin_log %}
-            <p>{% trans 'None available' %}</p>
-            {% else %}
-            <ul class="actionlist">
-            {% for entry in admin_log %}
-            <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %}">{% if not entry.is_deletion %}<a href="{{ entry.get_admin_url }}">{% endif %}{{ entry.object_repr }}{% if not entry.is_deletion %}</a>{% endif %}<br /><span class="mini quiet">{% filter capfirst %}{% trans entry.content_type.name %}{% endfilter %}</span></li>
-            {% endfor %}
-            </ul>
-            {% endif %}
+    <div class="module" id="administrator-menu">
+        <h2>{{user.username}}</h2>
+        <h3>{% trans 'My Account' %}</h3>
+        <h3><span onclick='showControlPanel();' title="{% trans 'Control panel' %}">{% trans 'Control panel' %} <span id="showingControlPanel" style="visibility:hidden;">({% trans 'hide' %})</span></span></h3>
+        <h3>{% trans 'Create content' %}</h3>
+        <h3>{% trans 'Administer' %}</h3>
+            <h4>{% trans 'Content management' %}</h4>
+            <h4>{% trans 'Site building' %}</h4>
+            <h4><a href="/admin/auth/user/" title="{% trans 'User management' %}">{% trans 'User management' %}</a></h4>
     </div>
 </div>
 {% endblock %}

@@ -1,0 +1,71 @@
+#content-uma{
+    float: left;
+    width: 80%;
+}
+
+.module{
+    background-color: #FFF;
+}
+
+.dashboard #content{
+    width: 100%;
+}
+
+#content-main{
+    /* float: left; */
+    width: 100%;
+}
+
+#content-main .module{
+    background-color: #FFF;
+}
+
+#content-related{
+    float: left;
+    margin-right: 0px;
+    margin-left: 15px;
+    margin-top: 5px;
+    width: 15%;
+    /*border: 1px solid #000;*/
+}
+
+#administrator-menu h4{
+    margin-left: 10px;
+}
+
+.module-uma{
+    width: 49%;
+    float: left;
+    border: 1px solid #000;
+    /* padding: 5px; */
+    /* margin-left: 5px;*/
+    margin-top: 5px;
+}
+
+.module-uma h2{
+    background: #7CA0C7 url(/admin_media/img/admin/default-bg.gif) repeat-x scroll left top;
+    color: white;
+    margin: 0;
+    padding: 2px 5px 3px;
+}
+
+.module-uma h2 a{
+    color: white;
+    font-size: 12px;
+}
+
+.module-uma-big{
+    width: 100%;
+    border: 0px;
+}
+
+.float_right{
+    float:right;
+}
+
+.clear {
+    clear:both;
+}
+.clear_right {
+    clear:right;
+}
