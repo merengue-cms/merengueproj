@@ -1,26 +1,26 @@
-#content-uma{
+#content-merengue {
     float: left;
     width: 80%;
 }
 
-.module{
+.module {
     background-color: #FFF;
 }
 
-.dashboard #content{
+.dashboard #content {
     width: 100%;
 }
 
-#content-main{
+#content-main {
     /* float: left; */
     width: 100%;
 }
 
-#content-main .module{
+#content-main .module {
     background-color: #FFF;
 }
 
-#content-related{
+#content-related {
     float: left;
     margin-right: 0px;
     margin-left: 15px;
@@ -29,11 +29,11 @@
     /*border: 1px solid #000;*/
 }
 
-#administrator-menu h4{
+#administrator-menu h4 {
     margin-left: 10px;
 }
 
-.module-uma{
+.module-merengue {
     width: 49%;
     float: left;
     border: 1px solid #000;
@@ -42,24 +42,24 @@
     margin-top: 5px;
 }
 
-.module-uma h2{
+.module-merengue h2 {
     background: #7CA0C7 url(/admin_media/img/admin/default-bg.gif) repeat-x scroll left top;
     color: white;
     margin: 0;
     padding: 2px 5px 3px;
 }
 
-.module-uma h2 a{
+.module-merengue h2 a {
     color: white;
     font-size: 12px;
 }
 
-.module-uma-big{
+.module-merengue-big {
     width: 100%;
     border: 0px;
 }
 
-.float_right{
+.float_right {
     float:right;
 }
 
