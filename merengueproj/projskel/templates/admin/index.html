@@ -3,7 +3,7 @@
 
 {% block extrastyle %}
 <link rel="stylesheet" type="text/css" href="{% load adminmedia %}{% admin_media_prefix %}css/dashboard.css" />
-<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}merengue/css/adminuma.css" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}merengue/css/merengueadmin.css" />
 {% endblock %}
 
 {% block coltype %}colMS{% endblock %}
@@ -72,8 +72,8 @@
 
 
 <div id="content-main">
-<div id="content-uma">
-    <div class="module-uma" id="contentmanagement">
+<div id="content-merengue">
+    <div class="module-merengue" id="contentmanagement">
         <h1>Content management</h1>
         <p>Manage your site's content</p>
             <h2>Content <div align=right style="float: right"><a class="addlink" href="base/basecontent/add/">{% trans 'Add' %}</a> <a class="changelink" href="base/basecontent/">{% trans 'Change' %}</a></div></h2>
@@ -94,7 +94,7 @@
             <h2>Images 3D <div align=right style="float: right"><a class="addlink" href="multimedia/image3d/add/">{% trans 'Add' %}</a> <a class="changelink" href="multimedia/image3d/">{% trans 'Change' %}</a></div></h2>
             <p>View, edit and delete your site's Images 3D.</p>
     </div>
-    <div class="module-uma float_right" id="sitebuilding">
+    <div class="module-merengue float_right" id="sitebuilding">
         <h1>Site building</h1>
         <p>Control how your site looks and feels.</p>
             <h2>Blocks <div align=right style="float: right"><a class="addlink" href="block/registeredblock/add/">{% trans 'Add' %}</a> <a class="changelink" href="block/registeredblock/">{% trans 'Change' %}</a></div></h2>
@@ -105,7 +105,7 @@
             <p>View, edit and delete your site's themes.</p>
     </div>
     <div style="clear:right" ></div>
-    <div class="module-uma float_right" id="usermanagement">
+    <div class="module-merengue float_right" id="usermanagement">
         <h1>User management</h1>
         <p>Manage your site's users, groups and access to site features.</p>
             <h2>Groups <div align=right style="float: right"><a class="addlink" href="auth/group/add/">{% trans 'Add' %}</a> <a class="changelink" href="auth/group/">{% trans 'Change' %}</a></div></h2>
@@ -116,7 +116,7 @@
     <div style="clear:both" ></div>
 
 {% if app_list %}
-    <div id="controlpanel" class="module-uma module-uma-big" style="visibility:hidden; display:none;">
+    <div id="controlpanel" class="module-merengue module-merengue-big" style="visibility:hidden; display:none;">
         <h1>Control panel <a name="control-panel"></a></h1>
     {% for app in app_list %}
         <div class="module">
@@ -152,7 +152,7 @@
 {% endif %}
 </div>
 {% endblock %}
-</div> <!--- end content-uma -->
+</div> <!--- end content-merengue -->
 {% block sidebar %}
 <div id="content-related">
     <div class="module" id="administrator-menu">
