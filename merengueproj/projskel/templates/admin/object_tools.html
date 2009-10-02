@@ -1,11 +1,11 @@
 {% load i18n content_tags related_admin_tags %}
-    {% if basecontent %}
-      <li><a href="{% url admin:index %}{{ basecontent_opts.app_label}}/{{ basecontent_opts.module_name }}/{{ basecontent.id }}/">{{ basecontent_opts.verbose_name|capfirst }} {{ basecontent }}</a></li>
-    {% endif %}
-    {% if original.basecontent_ptr or is_destination %}
-      <li class="selected"><a href=".">{{ opts.verbose_name|capfirst }} {{ original }}</a></li>
+    {% if original %}
       {% if original.get_absolute_url %}<li><a href="{% url merengue.base.views.public_link opts.app_label opts.module_name object_id %}" class="viewsitelink">{% trans "View on site" %}</a></li>{% endif%}
+    {% endif %}
 
+    {% smart_relations_object_tool %}
+
+    {% if original.basecontent_ptr or is_destination %}
       {% if original.location and original.location_id %}
         <li><a href="admin/places/location/{{ original.location.id }}/">{% trans "Location" %}</a></li>
       {% else %}
@@ -17,8 +17,4 @@
       {% else %}
         <li><a href="admin/base/contactinfo/add/">{% trans "Contact Info" %}</a></li>
       {% endif %}
-  {% else %}
-      {% if has_absolute_url %}<li><a href="../../../r/{{ content_type_id }}/{{ object_id }}/" class="viewsitelink">{% trans "View on site" %}</a></li>{% endif%}
   {% endif %}
-
-  {% smart_relations_object_tool %}

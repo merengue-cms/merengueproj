@@ -122,7 +122,8 @@ def _get_object_tools_in_route(route):
             continue
         model_admin = item['admin']
         tool_name = item['tool_name']
-        obj_tool = {'base_object': item['obj'],
+        obj_tool = {'base_object': obj,
+                    'base_object_opts': obj and obj._meta or None,
                     'tools': _smart_relations_object_tool_admin_site(
                                         item['site'],
                                         item['admin'],
