@@ -422,7 +422,7 @@ class DocumentSectionModelAdmin(BaseAdmin):
 
 
 class DocumentSectionRelatedModelAdmin(RelatedModelAdmin):
-    tool_name = 'documents'
+    tool_name = 'document_sections'
     tool_label = _('document sections')
     ordering = ('position', )
     html_fields = ('body', )
@@ -433,7 +433,6 @@ def register(site):
     site.register(Section, SectionAdmin)
     site.register(AppSection, AppSectionAdmin)
     site.register(Carousel, CarouselAdmin)
-    site.register(DocumentSection, DocumentSectionModelAdmin)
     site.register_related(Photo, CarouselPhotoRelatedModelAdmin, related_to=Carousel)
     site.register_related(Photo, CarouselRelatedChoosePhotoModelAdmin, related_to=Carousel)
     site.register_related(Document, DocumentRelatedModelAdmin, related_to=Section)
