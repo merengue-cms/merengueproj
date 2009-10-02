@@ -294,7 +294,7 @@ ul.din_smart_relations_object_tool {
     display: block;
     float: left;
     position: absolute;
-    z-index: 1000;
+    z-index: 9999;
     top: 20px;
 }
 
@@ -308,7 +308,7 @@ ul.object-tools li.din_selected a {
     background-image: none !important;
 }
 
-ul.object-tools li.void_link:hover a.din_smart_trigger,
+ul.object-tools li.parent:hover a.din_smart_trigger,
 ul.object-tools li.din_selected a.din_smart_trigger {
     background: #5b80b2 url(../img/admin/smart-tool-trigger.gif) no-repeat top right !important;
     float: left;
@@ -318,16 +318,16 @@ ul.object-tools li.din_selected a.din_smart_trigger {
     margin-left: 2px;
 }
 
-ul.object-tools li.void_link:hover a.din_smart_trigger_open,
+ul.object-tools li.parent:hover a.din_smart_trigger_open,
 ul.object-tools li.din_selected a.din_smart_trigger_open {
     background-image: url(../img/admin/smart-tool-trigger-up.gif) !important;
 }
 
-ul.object-tools li.void_link:hover span {
+ul.object-tools li.parent:hover span {
     background-color: #5b80b2;
 }
 
-ul.object-tools li.void_link span {
+ul.object-tools li.parent span {
     width: 50px;
     float: left;
     height: 14px;
@@ -336,11 +336,11 @@ ul.object-tools li.void_link span {
     color: white;
 }
 
-ul.object-tools li.void_link a.din_smart_trigger {
+ul.object-tools li.parent a.din_smart_trigger {
     background: #999999 url(../img/admin/gray-smart-tool-trigger.gif) no-repeat top right !important;
 }
 
-ul.object-tools li.void_link a.din_smart_trigger_open {
+ul.object-tools li.parent a.din_smart_trigger_open {
     background: #999999 url(../img/admin/gray-smart-tool-trigger-up.gif) no-repeat top right !important;
 }
 

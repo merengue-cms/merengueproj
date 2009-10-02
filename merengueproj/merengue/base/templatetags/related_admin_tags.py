@@ -3,8 +3,6 @@ from django.core import urlresolvers
 from django.core.urlresolvers import NoReverseMatch
 from django.utils.translation import ugettext as _
 
-from merengue.base.adminsite import RelatedAdminSite
-
 register = template.Library()
 
 
@@ -18,58 +16,22 @@ def _calculate_route(context):
                     'opts': model_admin.opts,
                     'obj': original,
                     'admin': model_admin,
+                    'tool_name': None,
                     }]
-        _calculate_route_subadminsite(context, admin_site, model_admin, site_list)
+        next = admin_site.base_tools_model_admins.get(getattr(model_admin, 'tool_name', None), None)
+        prev = model_admin
+        while next:
+            object_id = admin_site.base_object_ids.get(getattr(prev, 'tool_name', None), None)
+            site_list += [{'site': next.admin_site,
+                        'opts': next.opts,
+                        'admin': next,
+                        'obj': next._get_base_content(context.get('request'), object_id, next),
+                        'tool_name': getattr(prev, 'tool_name', None),
+                        }]
+            prev = next
+            next = admin_site.base_tools_model_admins.get(getattr(prev, 'tool_name', None), None)
         site_list.reverse()
         return site_list
-    return None
-
-
-def _calculate_route_subadminsite(context, admin_site, model_admin, site_list):
-    try:
-        next = _get_base_model_admin(admin_site)
-    except IndexError:
-        return
-    prev = model_admin
-    while next:
-        site_list += [{'site': next.admin_site,
-                    'opts': next.opts,
-                    'admin': next,
-                    'obj': _get_obj(context, prev, site_list),
-                    }]
-
-        prev = next
-        if next and next.admin_site:
-            _calculate_route_subadminsite(context, next.admin_site, next, site_list)
-        next = getattr(next, 'base_model_admin', None)
-
-
-def _get_base_model_admin(admin_site):
-    return getattr(admin_site, 'base_model_admin', admin_site.base_model_admins.values()[0])
-
-
-def _get_obj(context, model_admin, site_list):
-    related_field = getattr(model_admin, 'related_field', None)
-    if related_field:
-        obj = getattr(model_admin, related_field, None)
-        if obj:
-            return obj
-        try:
-            obj = model_admin._get_base_content(context['request'])
-        except AttributeError:
-            pass
-        if obj:
-            return obj
-        try:
-            related_obj = site_list[-1]['obj']
-            obj = getattr(related_obj, related_field, None)
-            if obj:
-                return obj
-            obj = getattr(related_obj, "%s_set" % related_field, None)
-            if obj:
-                return obj.all()[0]
-        except IndexError:
-            pass
     return None
 
 
@@ -123,24 +85,11 @@ def advanced_breadcrumbs(context):
 advanced_breadcrumbs = register.inclusion_tag('admin/advanced_breadcrumbs.html', takes_context=True)(advanced_breadcrumbs)
 
 
-def _get_url_related_admin_site(context, admin_site, model_admin_next, obj):
-    is_add_view = context.get('add', None)
-    is_change_view = context.get('change', None)
-    original = context.get('original', None)
-    tool_name = model_admin_next.tool_name or model_admin_next.model._meta.module_name
-    model_admin_url = ''
-    if original == obj:
-        if is_change_view:
-            model_admin_url = '%s/%s/%s/' %(tool_name, model_admin_next.model._meta.app_label, model_admin_next.model._meta.module_name)
-    else:
-        if not is_add_view and not is_change_view:
-            model_admin_url = '../../../%s/%s/%s/' %(tool_name, model_admin_next.model._meta.app_label, model_admin_next.model._meta.module_name)
-        if is_change_view:
-            model_admin_url = '../../../../%s/%s/%s/' %(tool_name, model_admin_next.model._meta.app_label, model_admin_next.model._meta.module_name)
-    return model_admin_url
+def _get_url_for_model_admin(model_admin):
+    return '%s/%s/' % (model_admin.model._meta.app_label, model_admin.model._meta.module_name)
 
 
-def _smart_relations_object_tool_admin_site(context, admin_site, model_admin, obj, tools=None, tools_url=None, level=0):
+def _smart_relations_object_tool_admin_site(admin_site, model_admin, obj, tool_name, tools=None, tools_url=None):
     tools = tools or []
     tools_admin_site = []
     tools_url = tools_url or []
@@ -148,33 +97,51 @@ def _smart_relations_object_tool_admin_site(context, admin_site, model_admin, ob
 
     for related_admin_site__keys, related_admin_site__values in related_admin_sites.items():
         if isinstance(obj, related_admin_site__keys):
-            for tool_name, related_admin_site in related_admin_site__values.items():
+            for related_tool_name, related_admin_site in related_admin_site__values.items():
                 model, tool_model_admin = related_admin_site._registry.items()[0]
-                tool_url = _get_url_related_admin_site(context, related_admin_site, tool_model_admin, obj)
+                tool_url = _get_url_for_model_admin(tool_model_admin)
                 if not tool_url in tools_url:
                     tools_url.append(tool_url)
-                    tools_admin_site.append({'tool_name': tool_name,
+                    tools_admin_site.append({'tool_name': related_tool_name,
                                 'tool_label': related_admin_site.tool_label,
-                                'tool_url': tool_url,
-                                'selected': context.get('model_admin', None) == tool_model_admin,
+                                'tool_url': '%s/%s' % (related_tool_name, tool_url),
+                                'selected': tool_name == related_tool_name,
                                 })
     if tools_admin_site:
-        tools.append(tools_admin_site)
+        tools += tools_admin_site
 
-    if isinstance(admin_site, RelatedAdminSite):
-        model_admin_next = _get_base_model_admin(admin_site)
-        level = level -1
-        if level >= -1:
-            return _smart_relations_object_tool_admin_site(context, model_admin_next.admin_site, model_admin_next, obj, tools, tools_url, level)
     return tools
 
 
-def smart_relations_object_tool(context, obj, obj_related=None):
-    original = obj
-    model_admin = context.get('model_admin', None)
-    request = context.get('request')
-    model_admin = context.get('model_admin', None)
-    admin_site = model_admin.admin_site
-    tools = _smart_relations_object_tool_admin_site(context, admin_site, model_admin, obj)
-    return {'tools': tools}
+def _get_object_tools_in_route(route):
+    base_url = urlresolvers.reverse('admin:index')
+    res = []
+    for item in route:
+        obj = item['obj']
+        if not obj:
+            continue
+        model_admin = item['admin']
+        tool_name = item['tool_name']
+        obj_tool = {'base_object': item['obj'],
+                    'tools': _smart_relations_object_tool_admin_site(
+                                        item['site'],
+                                        item['admin'],
+                                        item['obj'],
+                                        item['tool_name'],
+                                   ),
+                   }
+        base_url += '%s/%s/' % (model_admin.model._meta.app_label, model_admin.model._meta.module_name)
+        if tool_name:
+            # Thereis a next model_admin and an object for this model_admin
+            base_url += '%s/' % (obj.id)
+            obj_tool['base_url'] = base_url
+            base_url += '%s/' % tool_name
+        res.append(obj_tool)
+    return res
+
+
+def smart_relations_object_tool(context):
+    route = _calculate_route(context)
+    obj_tools = _get_object_tools_in_route(route)
+    return {'obj_tools': obj_tools}
 smart_relations_object_tool = register.inclusion_tag('admin/smart_relations_object_tool.html', takes_context=True)(smart_relations_object_tool)
