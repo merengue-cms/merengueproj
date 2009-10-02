@@ -12,6 +12,9 @@ from django.views.decorators.cache import never_cache
 
 from merengue.base.models import BaseContent
 
+OBJECT_ID_PREFIX = 'base_object_id_'
+MODEL_ADMIN_PREFIX = 'base_model_admin_'
+
 
 class BaseAdminSite(DjangoAdminSite):
     related_admin_sites = None
@@ -20,6 +23,8 @@ class BaseAdminSite(DjangoAdminSite):
     def __init__(self, *args, **kwargs):
         self.related_admin_sites = {}
         self.base_model_admins = {}
+        self.base_object_ids = {}
+        self.base_tools_model_admins = {}
         super(BaseAdminSite, self).__init__(*args, **kwargs)
 
     def admin_view(self, view, cacheable=False):
@@ -27,8 +32,11 @@ class BaseAdminSite(DjangoAdminSite):
         def inner(request, *args, **kwargs):
             if not self.has_permission(request):
                 return self.login(request)
-            self.base_model_admin = kwargs.pop('base_model_admin', None)
-            self.base_object_id = kwargs.pop('base_object_id', None)
+            for key in kwargs.keys():
+                if key.startswith(OBJECT_ID_PREFIX):
+                    self.base_object_ids.update({key[len(OBJECT_ID_PREFIX):]: kwargs.pop(key)})
+                if key.startswith(MODEL_ADMIN_PREFIX):
+                    self.base_tools_model_admins.update({key[len(MODEL_ADMIN_PREFIX):]: kwargs.pop(key)})
             return view(request, *args, **kwargs)
         if not cacheable:
             inner = never_cache(inner)
@@ -54,8 +62,12 @@ class BaseAdminSite(DjangoAdminSite):
                     for tool_name, related_admin_site in self.related_admin_sites[key].items():
                         related_admin_site.base_model_admins[model] = model_admin
                         related_urlpatterns += patterns('',
-                            url(r'^%s/%s/(?P<base_object_id>\d+)/%s/' % (model._meta.app_label, model._meta.module_name, slugify(tool_name)),
-                                include(related_admin_site.urls), {'base_model_admin': model_admin}))
+                            url(r'^%(app)s/%(model)s/(?P<%(pref)s%(tname)s>\d+)/%(tname)s/' % ({'app': model._meta.app_label,
+                                                                                                'model': model._meta.module_name,
+                                                                                                'pref': OBJECT_ID_PREFIX,
+                                                                                                'tname': slugify(tool_name),
+                                                                                               }),
+                                include(related_admin_site.urls), {'%s%s' % (MODEL_ADMIN_PREFIX, slugify(tool_name)): model_admin}))
 
         return custom_patterns + related_urlpatterns + urlpatterns
 
@@ -149,9 +161,8 @@ class BaseAdminSite(DjangoAdminSite):
         related_admin_site.register(model_or_iterable, admin_class, **options)
         return related_admin_site
 
-    def _get_admin_site_for_model(self, related_to, admin_sites_returned=None, branch=None):
-        admin_sites_returned = admin_sites_returned or []
-        branch = branch or []
+    def _get_admin_site_for_model(self, related_to):
+        admin_sites_returned = []
 
         for model in self._registry.keys():
             if related_to == model or issubclass(related_to, model):
@@ -160,15 +171,7 @@ class BaseAdminSite(DjangoAdminSite):
 
         for related_to_model, related_admin_site in self.related_admin_sites.items():
             for related_admin_site_tool_name, related_admin_site_value in related_admin_site.items():
-                is_in_branch = False
-                for model_branch in branch:
-                    if model_branch == related_to or issubclass(related_to, model_branch) or issubclass(related_to, model_branch):
-                        is_in_branch = True
-                        break
-
-                if not is_in_branch:
-                    admin_sites_returned.extend(related_admin_site_value._get_admin_site_for_model(related_to, admin_sites_returned, branch + [related_to]))
-
+                admin_sites_returned += related_admin_site_value._get_admin_site_for_model(related_to)
         return admin_sites_returned
 
 
