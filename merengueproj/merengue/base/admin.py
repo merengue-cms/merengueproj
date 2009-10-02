@@ -277,6 +277,31 @@ class BaseAdmin(admin.ModelAdmin):
     inherit_actions = True
     exclude = ('main_image', )
 
+    def _get_base_content(self, request, object_id=None, model_admin=None):
+        if not object_id:
+            object_id = self.admin_site.base_object_ids.get(self.tool_name, None)
+        if not model_admin:
+            model_admin = self.admin_site.base_tools_model_admins.get(self.tool_name, None)
+        model = model_admin.model
+        opts = model._meta
+
+        try:
+            obj = model.objects.get(pk=unquote(object_id))
+        except model.DoesNotExist:
+            # Don't raise Http404 just yet, because we haven't checked
+            # permissions yet. We don't want an unauthenticated user to be able
+            # to determine whether a given object exists.
+            obj = None
+
+        if not model_admin.has_change_permission(request, obj):
+            raise PermissionDenied
+
+        if obj is None:
+            raise Http404(_('%(name)s object with primary key %(key)r does not exist.') % {'name': force_unicode(opts.verbose_name), 'key': escape(object_id)})
+
+        self.basecontent = obj
+        return obj
+
     def get_form(self, request, obj=None):
         form = super(BaseAdmin, self).get_form(request, obj)
         if hasattr(self, 'readonly_fields'):
@@ -910,29 +935,6 @@ class RelatedModelAdmin(BaseAdmin):
             pass
         for inline in self.inline_instances:
             inline.admin_model = self # for allow retrieving basecontent object
-
-    def _get_base_content(self, request):
-        object_id = self.admin_site.base_object_id
-        model_admin = self.admin_site.base_model_admin
-        model = model_admin.model
-        opts = model._meta
-
-        try:
-            obj = model.objects.get(pk=unquote(object_id))
-        except model.DoesNotExist:
-            # Don't raise Http404 just yet, because we haven't checked
-            # permissions yet. We don't want an unauthenticated user to be able
-            # to determine whether a given object exists.
-            obj = None
-
-        if not model_admin.has_change_permission(request, obj):
-            raise PermissionDenied
-
-        if obj is None:
-            raise Http404(_('%(name)s object with primary key %(key)r does not exist.') % {'name': force_unicode(opts.verbose_name), 'key': escape(object_id)})
-
-        self.basecontent = obj
-        return obj
 
     def _update_extra_context(self, request, extra_context=None):
         extra_context = extra_context or {}
