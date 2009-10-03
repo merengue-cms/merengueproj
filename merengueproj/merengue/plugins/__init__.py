@@ -12,6 +12,7 @@ PLUG_CACHE_KEY = 'plug__loaded'
 
 class Plugin(RegistrableItem):
     model = RegisteredPlugin
+    url_prefixes = ()
 
     @classmethod
     def get_category(cls):
