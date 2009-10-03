@@ -161,8 +161,9 @@ class BaseAdminSite(DjangoAdminSite):
         related_admin_site.register(model_or_iterable, admin_class, **options)
         return related_admin_site
 
-    def _get_admin_site_for_model(self, related_to):
-        admin_sites_returned = []
+    def _get_admin_site_for_model(self, related_to, admin_sites_returned=None, branch=None):
+        admin_sites_returned = admin_sites_returned or []
+        branch = branch or []
 
         for model in self._registry.keys():
             if related_to == model or issubclass(related_to, model):
@@ -171,7 +172,15 @@ class BaseAdminSite(DjangoAdminSite):
 
         for related_to_model, related_admin_site in self.related_admin_sites.items():
             for related_admin_site_tool_name, related_admin_site_value in related_admin_site.items():
-                admin_sites_returned += related_admin_site_value._get_admin_site_for_model(related_to)
+                is_in_branch = False
+                for model_branch in branch:
+                    if model_branch == related_to or issubclass(related_to, model_branch) or issubclass(related_to, model_branch):
+                        is_in_branch = True
+                        break
+
+                if not is_in_branch:
+                    admin_sites_returned.extend(related_admin_site_value._get_admin_site_for_model(related_to, admin_sites_returned, branch + [related_to]))
+
         return admin_sites_returned
 
 
@@ -215,6 +224,12 @@ class RelatedAdminSite(BaseAdminSite):
         super(RelatedAdminSite, self).__init__(name, app_name)
         self.tool_label = tool_label
 
+    def register(self, model_or_iterable, admin_class=None, **options):
+        super(RelatedAdminSite, self).register(model_or_iterable, admin_class, **options)
+        model_admin = self._registry[model_or_iterable]
+        if not model_admin.tool_name:
+            # we set tool_name as admin site one, a good default value if tool_name was not defined in ModelAdmin class
+            model_admin.tool_name = self.name
 
 # This global object represents the default admin site, for the common case.
 # You can instantiate AdminSite in your own code to create a custom admin site.
