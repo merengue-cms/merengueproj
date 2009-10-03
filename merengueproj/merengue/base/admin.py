@@ -275,7 +275,6 @@ class BaseAdmin(admin.ModelAdmin):
     removed_fields = ()
     list_per_page = 50
     inherit_actions = True
-    exclude = ('main_image', )
 
     def _get_base_content(self, request, object_id=None, model_admin=None):
         if not object_id:
@@ -764,6 +763,7 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
     edit_related = ()
     html_fields = ('description', )
     prepopulated_fields = {'slug': ('name_es', )}
+    exclude = ('main_image', )
     autocomplete_fields = {'tags': {'url': '/ajax/autocomplete/tags/base/basecontent/',
                                     'multiple': True,
                                     'multipleSeparator': " ",
