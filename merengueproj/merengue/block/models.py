@@ -8,6 +8,7 @@ from merengue.registry.models import RegisteredItem
 PLACES = (('leftsidebar', _('Left sidebar')),
           ('rightsidebar', _('Right sidebar')),
           ('beforecontent', _('Before content body')),
+          ('homepage', _('Home page')),
           ('aftercontent', _('After content body')))
 
 
