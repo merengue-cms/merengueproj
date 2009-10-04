@@ -11,3 +11,9 @@ class Highlight(Base):
 
     class Meta:
         ordering = ('-weight', )
+
+    def get_absolute_url(self):
+        if self.related_content:
+            return self.related_content.get_absolute_url()
+        else:
+            return '#'

@@ -1,0 +1,20 @@
+{% extends "block.html" %}
+
+{% load thumbnail inlinetrans %}
+
+{% block blocktitle %}{% endblock %}
+
+{% block blockbody %}
+  {% for highlight in highlight_items %}
+    <div class="highlightItem">
+    {% with highlight.get_absolute_url as highlight_url %}
+      <h1><a href="{{ highlight_url }}" title="{{ highlight }}">{{ highlight }}</a></h1>
+      {% if highlight.main_image %}
+        <img src="{% thumbnail highlight.main_image 100x100 %}" alt="{{ highlight }}" class="floatImage"/>
+      {% endif %}
+      <p>{{ highlight.description|safe }}</p>
+      <div class="visualClear"></div>
+    {% endwith %}
+    </div>
+  {% endfor %}
+{% endblock %}
