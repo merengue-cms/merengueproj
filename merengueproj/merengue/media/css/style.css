@@ -103,3 +103,19 @@ div.collab-translation-trigger {
 div.document-section {
     margin: 1em 0px;
 }
+
+/* ----- image styles ----- */
+.floatImage {
+    float: left;
+    padding: 0.5em;
+}
+
+/* ----- Useful classes ----- */
+.visualClear {
+    display: block;
+    clear: both;
+}
+
+.visualPadding {
+    padding: 1em;
+}
