@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% load inlinetrans %}
+
+{% block content %}
+  {% block hometitle %}
+    <div id="content-title">
+      <h1>{% inline_trans "Welcome to merengue" %}</h1>
+    </div>
+  {% endblock %}
+
+  {% block homepagecontent %}
+    {% render_blocks "homepage" %}
+  {% endblock %}
+{% endblock %}
