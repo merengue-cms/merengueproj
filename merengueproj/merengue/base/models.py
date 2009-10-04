@@ -107,6 +107,9 @@ class Base(models.Model):
         translate = ('name', 'description', 'plain_description', )
         ordering = ('name_es', )
 
+    def __unicode__(self):
+        return self.name or ugettext('Without name')
+
     def save(self, *args, **kwargs):
         for lang in settings.LANGUAGES:
             field_name = 'description_%s' % lang[0]
@@ -301,9 +304,6 @@ class BaseContent(LocatableContent):
     @classmethod
     def get_menu_name(cls):
         return u"%s_menu" % cls._meta.module_name
-
-    def __unicode__(self):
-        return self.name or ugettext('Without name')
 
     def save(self, update_rank=True, **kwargs):
         super(BaseContent, self).save(**kwargs)
