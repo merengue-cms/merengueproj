@@ -1,5 +1,5 @@
 {% load i18n %}
-
+{% if content_files %}
 <div class="contentFiles">
 {% block contentfilestitle %}
   <h2>{% trans "Attached files" %}</h2>
@@ -18,3 +18,4 @@
   </ul>
 {% endblock %}
 </div>
+{% endif %}
