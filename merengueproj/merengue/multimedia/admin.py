@@ -12,7 +12,8 @@ from batchadmin.util import model_ngettext
 from merengue.base.admin import (BaseContentAdmin, BaseAdmin, VideoChecker,
                                  WorkflowBatchActionProvider, RelatedModelAdmin)
 from merengue.base.models import BaseContent, MultimediaRelation
-from merengue.multimedia.models import Photo, Video, PanoramicView, Image3D, Audio, BaseMultimedia
+from merengue.multimedia.models import (Photo, Video, PanoramicView, Image3D,
+                                        File, Audio, BaseMultimedia)
 
 
 class BaseMultimediaContentRelatedModelAdmin(BaseContentAdmin, RelatedModelAdmin):
@@ -264,6 +265,11 @@ class RelatedImage3DAdmin(RelatedBaseMultimediaAdmin):
     tool_label = _('3d images')
 
 
+class RelatedFileAdmin(RelatedBaseMultimediaAdmin):
+    tool_name = 'files'
+    tool_label = _('files')
+
+
 class RelatedAudioAdmin(RelatedBaseMultimediaAdmin):
     tool_name = 'audios'
     tool_label = _('audio files')
@@ -283,6 +289,7 @@ def register_related_multimedia(site, related_to):
     site.register_related(Video, RelatedVideoAdmin, related_to=related_to)
     site.register_related(PanoramicView, RelatedPanoramicViewAdmin, related_to=related_to)
     site.register_related(Image3D, RelatedImage3DAdmin, related_to=related_to)
+    site.register_related(File, RelatedFileAdmin, related_to=related_to)
     site.register_related(Audio, RelatedAudioAdmin, related_to=related_to)
 
     site.register_related(BaseContent, MultimediaAddContentRelatedModelAdmin, related_to=BaseMultimedia)

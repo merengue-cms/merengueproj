@@ -1,0 +1,20 @@
+{% load i18n %}
+
+<div class="contentFiles">
+{% block contentfilestitle %}
+  <h2>{% trans "Attached files" %}</h2>
+{% endblock %}
+{% block contentfilesbody %}
+  <ul>
+  {% for multimedia in content_files %}
+    {% with multimedia.file as file %}
+    {% block contentfileitem %}
+      <li id="content-file-{{ file.id }}">
+        <a href="{{ file.file.url }}" title="{{ file }}">{{ file }}</a>
+      </li>
+    {% endblock %}
+    {% endwith %}
+  {% endfor %}
+  </ul>
+{% endblock %}
+</div>

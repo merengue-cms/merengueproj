@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load i18n content_tags action_tags block_tags media_slide %}
+{% load i18n content_tags action_tags block_tags media_tags %}
 
 {% block metatags %}
   {{ block.super }}
@@ -78,6 +78,10 @@
       {% if content.description %}
         <div class="contentDescription">{{ content.description|safe }}</div>
       {% endif %}
+    {% endblock %}
+
+    {% block contentfiles %}
+      {% media_files content %}
     {% endblock %}
 
     {% block contentbody %}

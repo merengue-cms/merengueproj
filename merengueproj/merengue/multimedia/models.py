@@ -21,6 +21,7 @@ VIDEO_MEDIA_PREFIX = 'videos'
 PANORAMIC_VIEWS_MEDIA_PREFIX = 'vistas_panoramicas'
 IMAGE3D_MEDIA_PREFIX = 'imagenes3d'
 AUDIO_MEDIA_PREFIX = 'audios'
+FILE_MEDIA_PREFIX = 'files'
 
 
 class BaseMultimedia(models.Model):
@@ -298,6 +299,24 @@ class Image3D(BaseMultimedia):
     objects = WorkflowManager()
 
 
+class File(BaseMultimedia):
+    """ Attached file """
+
+    file = models.FileField(verbose_name=_('attached file'),
+                            max_length=200,
+                            upload_to=FILE_MEDIA_PREFIX)
+
+    class Meta:
+        verbose_name = _('attached file')
+        verbose_name_plural = _('attached files')
+
+    def save(self, **kwargs):
+        self._save_original_filename(self.file)
+        super(File, self).save(**kwargs)
+
+    objects = WorkflowManager()
+
+
 class Audio(BaseMultimedia):
     """ Audio file """
 
@@ -307,7 +326,7 @@ class Audio(BaseMultimedia):
 
     class Meta:
         verbose_name = _('audio file')
-        verbose_name_plural = _('audio file')
+        verbose_name_plural = _('audio files')
 
     def save(self, **kwargs):
         self._save_original_filename(self.file)

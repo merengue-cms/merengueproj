@@ -42,3 +42,7 @@ class MultimediaManager(WorkflowManager):
     def images3d(self):
         """ only returns 3d images """
         return self.by_model("image3d")
+
+    def files(self):
+        """ only returns files """
+        return self.by_model("file")

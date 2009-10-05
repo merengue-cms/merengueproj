@@ -21,3 +21,16 @@ def media_slide(context, content):
             'MEDIA_URL': context['MEDIA_URL'],
             'request': context['request'],
             'LANGUAGE_CODE': context.get('LANGUAGE_CODE', 'es'), }
+
+
+@register.inclusion_tag('media_files.html', takes_context=True)
+def media_files(context, content):
+    if not content:
+        # we cannot show any media slide
+        return {}
+    content_files = content.multimedia.files().published().order_by('multimediarelation__order')
+    return {'content': content,
+            'content_files': content_files,
+            'MEDIA_URL': context['MEDIA_URL'],
+            'request': context['request'],
+            'LANGUAGE_CODE': context.get('LANGUAGE_CODE', 'es'), }
