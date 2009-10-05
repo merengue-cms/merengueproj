@@ -63,7 +63,7 @@ class ManagementUtility(django_management.ManagementUtility):
         """
         try:
             app_name = get_commands(self.only_merengue_commands)[subcommand]
-            if isinstance(app_name, MerengueCommand):
+            if isinstance(app_name, BaseCommand):
                 # If the command is already loaded, use it directly.
                 klass = app_name
             else:
@@ -116,10 +116,12 @@ class ManagementUtility(django_management.ManagementUtility):
             parser.print_lax_help()
             sys.stderr.write(self.main_help_text() + '\n')
         else:
-            # This is override fragment of Django execute method
-            from merengue.plugins import enable_active_plugins
             command = self.fetch_command(subcommand)
-            enable_active_plugins()
+            if subcommand not in ['migrate', 'syncdb']:
+                # This is override fragment of Django execute method
+                # only works if models are been created (not with syncdb neither migrate)
+                from merengue.plugins import enable_active_plugins
+                enable_active_plugins()
             command.run_from_argv(self.argv)
 
 
