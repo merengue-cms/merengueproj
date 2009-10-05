@@ -7,7 +7,10 @@
 
 {% block bodyclass %}dashboard{% endblock %}
 
-{% block breadcrumbs %}{% endblock %}
+{% block breadcrumbs %}
+<div class="breadcrumbs"><a href="../">
+{% trans "Home" %}</a> &rsaquo; {% trans "Control panel" %}
+{% endblock %}
 
 {% block content %}
 <div id="content-main">
