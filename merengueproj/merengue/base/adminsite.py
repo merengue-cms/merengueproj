@@ -1,4 +1,5 @@
 from django.conf import settings
+from django import template
 from django.db.models.base import ModelBase
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
@@ -7,7 +8,9 @@ from django.contrib.admin.sites import AlreadyRegistered
 from django.contrib.admin.sites import AdminSite as DjangoAdminSite
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseRedirect, Http404
+from django.shortcuts import render_to_response
 from django.utils.functional import update_wrapper
+from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
 
 from merengue.base.models import BaseContent
@@ -51,6 +54,9 @@ class BaseAdminSite(DjangoAdminSite):
 
         # custom url definitions
         custom_patterns = patterns('',
+            url(r'^control_panel/$',
+                self.admin_view(self.control_panel),
+                name='control_panel'),
             url(r'^admin_redirect/(?P<content_type_id>\d+)/(?P<object_id>.+)/$',
                 self.admin_view(self.admin_redirect),
                 name='admin_redirect'),
@@ -136,6 +142,22 @@ class BaseAdminSite(DjangoAdminSite):
                             break
         return HttpResponseRedirect('%s%s/%s/%d/' % (admin_prefix, model._meta.app_label,
                                     model._meta.module_name, content.id))
+
+    def index(self, request):
+        """ merengue admin index page. It's a friendly admin page """
+        app_dict = {}
+        context = {
+            'title': _('Site administration'),
+            'root_path': self.root_path,
+        }
+        context_instance = template.RequestContext(request, current_app=self.name)
+        return render_to_response('admin/merengue_index.html', context,
+            context_instance=context_instance,
+        )
+
+    def control_panel(self, request):
+        """ admin control panel. Similar to django admin index page """
+        return super(BaseAdminSite, self).index(request, {'title': _('Control Panel')})
 
     def _register_related(self, model_or_iterable, admin_class=None, related_to=None, **options):
         from merengue.base.admin import RelatedModelAdmin
