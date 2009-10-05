@@ -64,28 +64,36 @@
   {% endblock %}
 
   {% block contentzone %}
+  <div id="content-zone">
     {% block beforecontentblocks %}
       {% render_blocks "beforecontent" for content %}
       {% block extrabeforecontentblocks %}
       {% endblock %}
     {% endblock %}
 
-    {% block contentmedia %}
-      {% media_slide content %}
-    {% endblock %}
+    {% block beforecontentbody %}
 
-    {% block contentdescription %}
-      {% if content.description %}
-        <div class="contentDescription">{{ content.description|safe }}</div>
-      {% endif %}
-    {% endblock %}
+      {% block contentmedia %}
+        {% media_slide content %}
+      {% endblock %}
 
-    {% block contentfiles %}
-      {% media_files content %}
-    {% endblock %}
+      {% block contentdescription %}
+        {% if content.description %}
+          <div class="contentDescription">{{ content.description|safe }}</div>
+        {% endif %}
+      {% endblock %}
+
+      {% block contentfiles %}
+        {% media_files content %}
+      {% endblock %}
+
+    {% endblock beforecontentbody %}
 
     {% block contentbody %}
       {# to fill in for inherited templates #}
+    {% endblock %}
+
+    {% block aftercontentbody %}
     {% endblock %}
 
     {% block aftercontentblocks %}
@@ -93,5 +101,6 @@
       {% block extraaftercontentblocks %}
       {% endblock %}
     {% endblock %}
+  </div>
   {% endblock %}
 {% endblock %}
