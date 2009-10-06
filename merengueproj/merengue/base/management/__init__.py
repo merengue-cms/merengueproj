@@ -117,9 +117,9 @@ class ManagementUtility(django_management.ManagementUtility):
             sys.stderr.write(self.main_help_text() + '\n')
         else:
             command = self.fetch_command(subcommand)
-            if subcommand not in ['migrate', 'syncdb']:
+            if subcommand not in ['migrate', 'syncdb', 'startproject']:
                 # This is override fragment of Django execute method
-                # only works if models are been created (not with syncdb neither migrate)
+                # only works if models have been created (not with syncdb, startproject neither migrate)
                 from merengue.plugins import enable_active_plugins
                 enable_active_plugins()
             command.run_from_argv(self.argv)
