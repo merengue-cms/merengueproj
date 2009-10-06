@@ -9,7 +9,6 @@ transmeta http://django-transmeta.googlecode.com/svn/trunk/transmeta
 rating https://svnpub.yaco.es/djangoapps/rating/trunk/rating
 inlinetrans http://django-inlinetrans.googlecode.com/svn/trunk/inlinetrans 
 captcha https://svnpub.yaco.es/djangoapps/captcha/trunk/captcha
-inplaceeditform https://svnpub.yaco.es/djangoapps/inplaceeditform/branches/transmeta/inplaceeditform/
 tinyimages https://svnpub.yaco.es/djangoapps/tinyimages/trunk/tinyimages/
 threadedcomments http://django-threadedcomments.googlecode.com/svn/trunk/threadedcomments
 tagging http://django-tagging.googlecode.com/svn/trunk/tagging/
