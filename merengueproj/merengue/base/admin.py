@@ -6,6 +6,7 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.db import models
 from django.db.models.related import RelatedObject
+from django.db.models.fields.related import ForeignKey
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib import admin
 from django.contrib.admin.models import LogEntry
@@ -43,7 +44,8 @@ from merengue.base.forms import AdminBaseContentOwnersForm
 from merengue.base.models import Base, BaseContent, ContactInfo
 from merengue.base.utils import geolocate_object_base, copy_request
 from merengue.base.widgets import (CustomTinyMCE, OpenLayersWidgetLatitudeLongitude,
-                          OpenLayersInlineLatitudeLongitude, ReadOnlyWidget)
+                          OpenLayersInlineLatitudeLongitude, ReadOnlyWidget,
+                          RelatedBaseContentWidget)
 from merengue.multimedia.models import BaseMultimedia
 from merengue.places.models import Location
 from merengue.section.models import Document
@@ -337,6 +339,9 @@ class BaseAdmin(admin.ModelAdmin):
                 return old_clean(value)
             field.clean = new_clean
 
+        if isinstance(db_field, ForeignKey):
+            if db_field.related.parent_model == BaseContent:
+                field.widget = RelatedBaseContentWidget(field.widget, field.widget.rel, field.widget.admin_site)
         return field
 
     def get_actions(self, request):
@@ -758,6 +763,7 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
     search_fields = ('name', )
     date_hierarchy = 'creation_date'
     list_filter = ('is_autolocated', 'status', 'user_modification_date', 'last_editor', )
+    select_list_filter = ('class_name', 'status', 'user_modification_date', )
     actions = ['set_as_draft', 'set_as_pending', 'set_as_published', 'assign_owners']
     filter_horizontal = ('owners', )
     edit_related = ()
@@ -905,6 +911,51 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
                              'action_submit': 'autogeolocalize_objects', 'no_can_selected_objects': no_can_selected_objects, 'no_can_selected_objects_message': _('These objects have a manual localization')}
             return self.confirm_action(request, objects_id, extra_context)
     autogeolocalize_objects.short_description = _("Autogeolocalize")
+
+    def changelist_view(self, request, extra_context=None):
+        if request.GET.pop('for_select', None):
+            return self.select_changelist_view(request, extra_context)
+        return super(BaseContentAdmin, self).changelist_view(request, extra_context)
+
+    def select_changelist_view(self, request, extra_context=None):
+        extra_context = self._base_update_extra_context(extra_context)
+        opts = self.model._meta
+        app_label = opts.app_label
+
+        list_display = list(self.list_display)
+        try:
+            list_display.remove('action_checkbox')
+        except ValueError:
+            pass
+
+        try:
+            cl = ChangeList(request, self.model, list_display, self.list_display_links, self.select_list_filter,
+                self.date_hierarchy, self.search_fields, self.list_select_related, self.list_per_page, self.list_editable, self)
+        except IncorrectLookupParameters:
+            if ERROR_FLAG in request.GET.keys():
+                return render_to_response('admin/invalid_setup.html', {'title': _('Database error')})
+            return HttpResponseRedirect(request.path + '?' + ERROR_FLAG + '=1')
+        cl.formset=None
+        cl.params.update({'for_select': 1})
+        context = {
+            'title': cl.title,
+            'is_popup': cl.is_popup,
+            'cl': cl,
+            'media': self.media,
+            'has_add_permission': False,
+            'root_path': self.admin_site.root_path,
+            'app_label': app_label,
+            'action_form': None,
+            'actions_on_top': [],
+            'actions_on_bottom': [],
+        }
+        context.update(extra_context or {})
+        context_instance = template.RequestContext(request, current_app=self.admin_site.name)
+        return render_to_response(self.change_list_template or [
+            'admin/%s/%s/change_list.html' % (app_label, opts.object_name.lower()),
+            'admin/%s/change_list.html' % app_label,
+            'admin/change_list.html',
+        ], context, context_instance=context_instance)
 
 
 class BaseContentAdminExtra(BaseContentAdmin):

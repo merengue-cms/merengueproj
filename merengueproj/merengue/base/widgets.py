@@ -197,3 +197,18 @@ class TranslatableInputDateWidget(DateTimeInput):
         jsdates = '<script type="text/javascript" src="%sjs/dates_l10n/dates_l10n_%s.js"></script>' % (settings.MEDIA_URL, get_language())
         jsdates += '<script type="text/javascript" src="%sjs/translatable_input_date_widget.js"></script>' % settings.MEDIA_URL
         return mark_safe(u'%s<input%s /><input%s />' % (jsdates, flatatt(final_attrs), flatatt(hidden_final_attrs)))
+
+
+class RelatedBaseContentWidget(RelatedFieldWidgetWrapper):
+
+    def __init__(self, *args, **kwargs):
+        super(RelatedBaseContentWidget, self).__init__(*args, **kwargs)
+
+    def render(self, name, value, *args, **kwargs):
+        output = '<div style="float: left;">'
+        output += super(RelatedBaseContentWidget, self).render(name, value, *args, **kwargs)
+        output += '<br />'
+        output += u'<a id="lookup_id_%s" href="/admin/base/basecontent/?for_select=1" onclick="javascript:showRelatedObjectLookupPopup(this); return false;">%s</a>' % (name, _('Select content'))
+        output += '</div>'
+        output += '<br style="clear: left;" />'
+        return mark_safe(u''.join(output))
