@@ -199,6 +199,30 @@ class TranslatableInputDateWidget(DateTimeInput):
         return mark_safe(u'%s<input%s /><input%s />' % (jsdates, flatatt(final_attrs), flatatt(hidden_final_attrs)))
 
 
+class InputTimeWidget(forms.TextInput):
+
+    class Media:
+        js = (settings.ADMIN_MEDIA_PREFIX + "js/calendar.js",
+              '%smerengue/js/DateTimeShortcuts.js' % settings.MEDIA_URL)
+
+    def __init__(self, attrs={}):
+        super(InputTimeWidget, self).__init__(attrs={'class': 'vTimeField', 'size': '8'})
+
+
+class TranslatableSplitDateTimeWidget(forms.SplitDateTimeWidget):
+    """
+    TranslatableSplitDateTimeWidget widget
+    """
+
+    def __init__(self, attrs=None):
+        widgets = [TranslatableInputDateWidget, InputTimeWidget]
+        forms.MultiWidget.__init__(self, widgets, attrs)
+
+    def format_output(self, rendered_widgets):
+        return mark_safe(u'<p class="datetime">%s %s<br />%s %s</p>' % \
+            (_('Date:'), rendered_widgets[0], _('Time:'), rendered_widgets[1]))
+
+
 class RelatedBaseContentWidget(RelatedFieldWidgetWrapper):
 
     def __init__(self, *args, **kwargs):
