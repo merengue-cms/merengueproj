@@ -438,5 +438,5 @@ def register(site):
     site.register_related(Document, DocumentRelatedModelAdmin, related_to=Section)
     site.register_related(CustomStyle, CustomStyleRelatedModelAdmin, related_to=Section)
     site.register_related(Menu, MainMenuRelatedAdmin, related_to=Section)
-    site.register_related(Menu, SecondaryMenuRelatedAdmin, related_to=Section)
+    #site.register_related(Menu, SecondaryMenuRelatedAdmin, related_to=Section)
     site.register_related(DocumentSection, DocumentSectionRelatedModelAdmin, related_to=Document)
