@@ -1,0 +1,87 @@
+/* MODULES */
+.module { border:1px solid #dcc9a5; margin-bottom:5px; background:#f7ebd3; }
+.module p, .module ul, .module h3, .module h4, .module dl, .module pre { padding-left:10px; padding-right:10px; }
+.module blockquote { margin-left:12px; }
+.module ul, .module ol { margin-left:1.5em; }
+.module h3 { margin-top:.6em; }
+.module h2, .module caption { margin:0; padding:2px 5px 3px 5px; font-size:11px; text-align:left; font-weight:bold; background:#aa9874 url(../img/admin/default-bg.gif) top left repeat-x; color:white; }
+.module table { border-collapse: collapse; }
+
+
+/*----------------------*/
+
+/* DATE AND TIME */
+p.datetime { line-height:20px; margin:0; padding:0; color:#666; font-size:11px; font-weight:bold; }
+.datetime span { font-size:11px; color:#dcc9a5; font-weight:normal; white-space:nowrap; }
+.vTimeField { margin-top: 4px; margin-left: 7px; }
+table p.datetime { font-size:10px; margin-left:0; padding-left:0; }
+
+/* CALENDARS & CLOCKS */
+.calendarbox, .clockbox { margin:5px auto; font-size:11px; width:16em; text-align:center; background:#f7ebd3; position:relative; }
+
+.ie6 div.calendarbox {
+    margin-top: 40px;
+}
+
+.clockbox { width:auto; }
+.calendar { margin:0; padding: 0; }
+.calendar table { margin:0; padding:0; border-collapse:collapse; background:white; width:176px; }
+.calendar caption, .calendarbox h2 { margin: 0; font-size:11px; text-align:center; border-top:none; }
+.calendar th { font-size:10px; color:#403326; padding:2px 3px; text-align:center; background:#eddec1 url(../img/admin/nav-bg.gif) 0 50% repeat-x; border-bottom:1px solid #dcc9a5; }
+.calendar td { font-size:11px; text-align: center; padding: 0; border-top:1px solid #dcc9a5; border-bottom:none; }
+.calendar td.selected a { background: #C9DBED; }
+.calendar td.nonday { background:#efefef; }
+.calendar td.today a { background:#ffc; }
+.calendar td a, .timelist a { display: block; font-weight:bold; padding:4px; text-decoration: none; color:#444; }
+.calendar td a:hover, .timelist a:hover { background: #403326; color:white; }
+.calendar td a:active, .timelist a:active { background: #036; color:white; }
+.calendarnav { font-size:10px; text-align: center; color:#dcc9a5; margin:0; padding:1px 3px; }
+.calendarnav a:link, #calendarnav a:visited, #calendarnav a:hover { color: #999; }
+.calendar-shortcuts { background:#f7ebd3; font-size:10px; line-height:11px; border-top:1px solid #dcc9a5; padding:3px 0 4px; color:#dcc9a5; }
+.calendarbox .calendarnav-previous, .calendarbox .calendarnav-next { display:block; position:absolute; font-weight:bold; font-size:12px; background:#C9DBED url(../img/admin/default-bg.gif) bottom left repeat-x; padding:1px 4px 2px 4px; color:white; }
+.calendarnav-previous:hover, .calendarnav-next:hover { background:#036; }
+.calendarnav-previous { top:0; left:0; }
+.calendarnav-next { top:0; right:0; }
+.calendar-cancel { margin:0 !important; padding:0; font-size:10px; background:#eddec1 url(../img/admin/nav-bg.gif) 0 50% repeat-x;  border-top:1px solid #dcc9a5; }
+.calendar-cancel a { padding:2px; color:#403326; }
+ul.timelist, .timelist li { list-style-type:none; margin:0; padding:0; }
+.timelist a { padding:2px; }
+
+.calendarbox .calendarnav-next-month,
+.calendarbox .calendarnav-previous-month {
+   position: absolute;
+   top: 0px;
+   font-weight: bold;
+   font-size: 12px;
+   padding-top: 1px;
+   padding-bottom: 2px;
+}
+
+.calendarbox .calendarnav-previous-month {
+   left: 17px;
+}
+
+.calendarbox .calendarnav-next-month {
+   right: 17px;
+}
+
+.calendarbox .calendarnav-next-month,
+.calendarbox .calendarnav-previous-month,
+.calendarbox .calendarnav-previous,
+.calendarbox .calendarnav-next {
+   background: #dcc9a5 url(/admin_media/img/admin/default-bg.gif) repeat-x left bottom;
+   color: white;
+   padding-left: 0px;
+   padding-right: 0px;
+   text-align: center;
+   height: 15px;
+   width: 16px;
+}
+
+.calendarbox .calendarnav-next-month:hover,
+.calendarbox .calendarnav-previous-month:hover,
+.calendarbox .calendarnav-previous:hover,
+.calendarbox .calendarnav-next:hover {
+   background: none;
+   background-color: #403326;
+}
