@@ -339,9 +339,10 @@ class BaseAdmin(admin.ModelAdmin):
                 return old_clean(value)
             field.clean = new_clean
 
-        if isinstance(db_field, ForeignKey):
-            if db_field.related.parent_model == BaseContent:
-                field.widget = RelatedBaseContentWidget(field.widget, field.widget.rel, field.widget.admin_site)
+        # Commented because fails with documents
+        #if isinstance(db_field, ForeignKey):
+            #if db_field.related.parent_model == BaseContent:
+                #field.widget = RelatedBaseContentWidget(field.widget, field.widget.rel, field.widget.admin_site)
         return field
 
     def get_actions(self, request):
