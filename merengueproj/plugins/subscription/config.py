@@ -8,7 +8,7 @@ class PluginConfig(Plugin):
     version = '0.0.1a'
 
     url_prefixes = (
-        ('jugadores', 'plugins.subscription.urls'),
+        ('subscriptions', 'plugins.subscription.urls'),
     )
 
     @classmethod
