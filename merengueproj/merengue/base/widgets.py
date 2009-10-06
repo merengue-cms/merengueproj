@@ -173,13 +173,13 @@ class TranslatableInputDateWidget(DateTimeInput):
 
     class Media:
         js = ('/jsi18n/',
-              '%sjs/dates_l10n/dates_l10n.js' % settings.MEDIA_URL,
+              '%smerengue/js/dates_l10n/dates_l10n.js' % settings.MEDIA_URL,
               '%sjs/core.js' % settings.ADMIN_MEDIA_PREFIX,
               '%sjs/calendar.js' % settings.ADMIN_MEDIA_PREFIX,
-              '%sjs/DateTimeShortcuts.js' % settings.MEDIA_URL,
+              '%smerengue/js/DateTimeShortcuts.js' % settings.MEDIA_URL,
                 )
 
-        css = {'all': ('%scss/event_calendar.css' % settings.MEDIA_URL, )}
+        css = {'all': ('%smerengue/css/event_calendar.css' % settings.MEDIA_URL, )}
 
     def render(self, name, value, attrs=None):
         if value is None:
@@ -194,8 +194,8 @@ class TranslatableInputDateWidget(DateTimeInput):
         if value != '':
             # Only add the 'value' attribute if a value is non-empty.
             hidden_final_attrs['value'] = force_unicode(value)
-        jsdates = '<script type="text/javascript" src="%sjs/dates_l10n/dates_l10n_%s.js"></script>' % (settings.MEDIA_URL, get_language())
-        jsdates += '<script type="text/javascript" src="%sjs/translatable_input_date_widget.js"></script>' % settings.MEDIA_URL
+        jsdates = '<script type="text/javascript" src="%smerengue/js/dates_l10n/dates_l10n_%s.js"></script>' % (settings.MEDIA_URL, get_language())
+        jsdates = '<script type="text/javascript" src="%smerengue/js/translatable_input_date_widget.js"></script>' % settings.MEDIA_URL
         return mark_safe(u'%s<input%s /><input%s />' % (jsdates, flatatt(final_attrs), flatatt(hidden_final_attrs)))
 
 
