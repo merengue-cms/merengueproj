@@ -65,9 +65,6 @@ class Migration:
         # Adding model 'Document'
         db.create_table('section_document', (
             ('basecontent_ptr', orm['section.Document:basecontent_ptr']),
-            ('body_en', orm['section.Document:body_en']),
-            ('body_es', orm['section.Document:body_es']),
-            ('body_fr', orm['section.Document:body_fr']),
             ('photo', orm['section.Document:photo']),
             ('floatimage', orm['section.Document:floatimage']),
             ('photo_description_en', orm['section.Document:photo_description_en']),
@@ -370,9 +367,6 @@ class Migration:
         },
         'section.document': {
             'basecontent_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['base.BaseContent']", 'unique': 'True', 'primary_key': 'True'}),
-            'body_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'body_es': ('django.db.models.fields.TextField', [], {}),
-            'body_fr': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'carousel': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['section.Carousel']", 'null': 'True', 'blank': 'True'}),
             'floatimage': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
             'permanent': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
