@@ -431,13 +431,6 @@ class Document(BaseContent):
         )
     carousel.delete_cascade = False
 
-    videos = models.ManyToManyField(
-        Video,
-        verbose_name=_('videos'),
-        blank=True,
-        null=True,
-        )
-
     search_form = models.CharField(
         verbose_name=_('search form'),
         max_length=200,

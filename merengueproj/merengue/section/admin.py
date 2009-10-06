@@ -87,7 +87,6 @@ class DocumentAdmin(BaseContentAdmin):
     list_display = ('name', 'slug', 'status', )
     list_filter = ('status', )
     html_fields = ('description', 'body', )
-    filter_horizontal=('videos', )
     prepopulated_fields = {'slug': ('name_es', )}
     actions = BaseAdmin.actions + ['set_as_published', 'set_as_draft']
 
