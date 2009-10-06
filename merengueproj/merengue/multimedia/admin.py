@@ -293,4 +293,5 @@ def register_related_multimedia(site, related_to):
     site.register_related(Audio, RelatedAudioAdmin, related_to=related_to)
 
     site.register_related(BaseContent, MultimediaAddContentRelatedModelAdmin, related_to=BaseMultimedia)
-    site.register_related(BaseContent, MultimediaRemoveContentRelatedModelAdmin, related_to=BaseMultimedia)
+    # commented for problems with previous register_related call (see ticket #157)
+    #site.register_related(BaseContent, MultimediaRemoveContentRelatedModelAdmin, related_to=BaseMultimedia)
