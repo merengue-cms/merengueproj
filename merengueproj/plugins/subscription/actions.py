@@ -13,3 +13,7 @@ class SubscriptionAction(ContentAction):
     @classmethod
     def get_response(cls, request, content):
         return HttpResponseRedirect(reverse("subscription_form", args=(content.slug, )))
+
+    @classmethod
+    def has_action(cls, content):
+        return content.subscribable_set.actives()

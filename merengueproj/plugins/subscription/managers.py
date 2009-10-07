@@ -8,6 +8,3 @@ class SubscribableManager(ActiveManager, BaseContentManager):
 
     def __init__(self):
         super(SubscribableManager, self).__init__(from_date='start_date', to_date='end_date')
-
-    def actives(self):
-        return super(SubscribableManager, self).actives()
