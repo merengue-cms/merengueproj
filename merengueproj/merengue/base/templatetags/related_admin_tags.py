@@ -100,13 +100,12 @@ def _smart_relations_object_tool_admin_site(admin_site, model_admin, obj, tool_n
             for related_tool_name, related_admin_site in related_admin_site__values.items():
                 model, tool_model_admin = related_admin_site._registry.items()[0]
                 tool_url = _get_url_for_model_admin(tool_model_admin)
-                if not tool_url in tools_url:
-                    tools_url.append(tool_url)
-                    tools_admin_site.append({'tool_name': related_tool_name,
-                                'tool_label': related_admin_site.tool_label,
-                                'tool_url': '%s/%s' % (related_tool_name, tool_url),
-                                'selected': tool_name == related_tool_name,
-                                })
+                tools_url.append(tool_url)
+                tools_admin_site.append({'tool_name': related_tool_name,
+                            'tool_label': related_admin_site.tool_label,
+                            'tool_url': '%s/%s' % (related_tool_name, tool_url),
+                            'selected': tool_name == related_tool_name,
+                            })
     if tools_admin_site:
         tools += tools_admin_site
 
