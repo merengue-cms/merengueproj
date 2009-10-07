@@ -10,7 +10,7 @@ from django.contrib.gis.geos import GEOSGeometry, GEOSException
 from django.forms.util import flatatt
 from django.forms.widgets import DateTimeInput
 from django.utils import datetime_safe
-from django.utils.encoding import force_unicode
+from django.utils.encoding import force_unicode, smart_unicode
 from django.utils.safestring import mark_safe
 from django.utils.translation import get_language
 from django.utils.translation import ugettext as _
@@ -225,14 +225,28 @@ class TranslatableSplitDateTimeWidget(forms.SplitDateTimeWidget):
 
 class RelatedBaseContentWidget(RelatedFieldWidgetWrapper):
 
+    class Media:
+        js = ('%smerengue/js/jquery.basecontentwidget.js' % settings.MEDIA_URL, )
+
     def __init__(self, *args, **kwargs):
+        self.hide_original_widget = kwargs.pop('hide_original_widget', True)
         super(RelatedBaseContentWidget, self).__init__(*args, **kwargs)
 
     def render(self, name, value, *args, **kwargs):
-        output = '<div style="float: left;">'
-        output += super(RelatedBaseContentWidget, self).render(name, value, *args, **kwargs)
-        output += '<br />'
+        output = u'<div style="float: left;" class="RelatedBaseContentWidget">'
+        if self.hide_original_widget:
+            output += u'<div style="padding-top: 3px; font-size:12px;">'
+            output += u'<span class="selected_content">'
+            output += smart_unicode(value)
+            output += u'</span>'
+            output += u'</div>'
+            output += u'<div style="display: none;">'
+            output += super(RelatedBaseContentWidget, self).render(name, value, *args, **kwargs)
+            output += u'</div>'
+        else:
+            output += super(RelatedBaseContentWidget, self).render(name, value, *args, **kwargs)
+            output += u'<br />'
         output += u'<a id="lookup_id_%s" href="/admin/base/basecontent/?for_select=1" onclick="javascript:showRelatedObjectLookupPopup(this); return false;">%s</a>' % (name, _('Select content'))
-        output += '</div>'
-        output += '<br style="clear: left;" />'
+        output += u'</div>'
+        output += u'<br style="clear: left;" />'
         return mark_safe(u''.join(output))
