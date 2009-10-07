@@ -1,9 +1,8 @@
 from django.conf import settings
 from django.core.cache import cache
+from django.utils.cache import _generate_cache_header_key
 from django.utils.encoding import smart_str
 from geopy import geocoders
-
-from cmsutils.cache import get_path_cache_key
 
 from merengue.base.models import Location
 
@@ -44,5 +43,8 @@ def copy_request(request, delete_list):
 
 def invalidate_cache_for_path(request_path):
     """ invalidates cache based on request.path """
-    path_cache_key = get_path_cache_key(request_path)
-    cache.delete(path_cache_key)
+    # wrap a dummy request object for call django function
+    request = object()
+    request.path = request_path
+    cache_header_key = _generate_cache_header_key(settings.CACHE_MIDDLEWARE_KEY_PREFIX, request)
+    cache.delete(cache_header_key)

@@ -16,9 +16,8 @@ from django.views.decorators.cache import never_cache
 from django.views.i18n import set_language as django_set_language
 from django.views.i18n import javascript_catalog
 
-from cmsutils.cache import get_path_cache_key
-
 from merengue.base.models import BaseContent
+from merengue.base.utils import invalidate_cache_for_path
 from merengue.multimedia.models import BaseMultimedia
 from tagging.models import Tag
 
@@ -176,9 +175,7 @@ def set_language(request):
 def invalidate_cache(request):
     path = request.REQUEST.get('path', None)
     if path:
-        key_prefix = settings.CACHE_MIDDLEWARE_KEY_PREFIX
-        cache_key = get_path_cache_key(path, key_prefix)
-        cache.delete(cache_key)
+        invalidate_cache_for_path(path)
         request.user.message_set.create(message=_("Cache from this page was invalidated"))
         return HttpResponseRedirect(_get_redirect_to(request.GET, redirect_field_name='path'))
     return HttpResponse('path parameter is needed in HTTP request')
