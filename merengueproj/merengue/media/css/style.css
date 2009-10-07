@@ -119,3 +119,24 @@ div.document-section {
 .visualPadding {
     padding: 1em;
 }
+
+div.errormessage, div#messagebox ul#info-list {
+    background: #FFCC1B  no-repeat scroll 5px 50%;
+    border: 1px solid #FFA500;
+    list-style-type: none;
+    margin: 0 0 8px;
+    padding: 0.5em 1em 0.5em 3em;
+    color: black;
+}
+
+span.errormsg {
+    background: transparent url(/media/merengue/img/icon_error.gif) no-repeat scroll 0 0;
+    color: red;
+    padding-left: 20px;
+}
+
+span.infomsg {
+    background: transparent url(/media/merengue/img/info_icon.gif) no-repeat scroll 0 0;
+    color: green;
+    padding-left: 20px;
+}
