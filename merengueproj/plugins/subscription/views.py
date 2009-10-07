@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from cmsutils.log import send_info
 from merengue.base.models import BaseContent
+from merengue.base.utils import invalidate_cache_for_path
 
 
 def subscription_form(request, basecontent_slug):
@@ -24,7 +25,9 @@ def subscription_form(request, basecontent_slug):
     if form.is_valid():
         form.save()
         send_info(request, _('Request send successfully'))
-        return HttpResponseRedirect(content.get_absolute_url())
+        url_redirect = content.get_absolute_url()
+        invalidate_cache_for_path(url_redirect)
+        return HttpResponseRedirect(url_redirect)
     return render_to_response('subscription/subscription_form.html',
                               {'form': form,
                                'content': content,
