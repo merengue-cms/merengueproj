@@ -103,6 +103,8 @@ PLUGINS_DIR = 'plugins'
 
 ACTIVED_DEFAULTS_PLUGINS = ('core', )
 
+SESSION_ENGINE = 'merengue.backends.db'  # The module to store session data
+
 # cache default settings
 CACHE_BACKEND = 'locmem:///'
 CACHE_MIDDLEWARE_SECONDS = 3600*24
