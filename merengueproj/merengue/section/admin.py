@@ -31,16 +31,22 @@ class BaseSectionAdmin(BaseAdmin):
     def get_form(self, request, obj=None, **kwargs):
         form = super(BaseSectionAdmin, self).get_form(request, obj, **kwargs)
         if 'main_content' in form.base_fields.keys():
-            qs = form.base_fields['main_content'].queryset
+            field = form.base_fields['main_content']
+            qs = field.queryset
             if not obj:
                 qs = qs.model.objects.get_empty_query_set()
             else:
                 qs = qs.filter(basesection=obj)
+
+            # first change widget to default one (not RelatedBaseContentWidget)
+            old_widget = field.widget.widget
+            field.widget = old_widget
+
             # Como Document no esta registrado en el admin site, no tiene
             # sentido mostrar este campo si no tiene opciones ya que no
             # se pueden crear nuevos documentos desde aqui
             if qs.count():
-                form.base_fields['main_content'].queryset = qs
+                field.queryset = qs
             else:
                 form.base_fields.pop('main_content')
         return form
