@@ -2,8 +2,11 @@
 <ul id="site-actions">
   {% get_actions "site" as site_actions %}
   {% for action in site_actions %}
-  <li id="action-{{ action.name }}">
-    <a href="{% action_url action %}">{% trans action.verbose_name %}</a>
-  </li>
+    {% action_url action as action_link %}
+      {% if action_link %}
+        <li id="action-{{ action.name }}">
+            <a href="{{ action_link }}">{% trans action.verbose_name %}</a>
+        </li>
+      {% endif %}
   {% endfor %}
 </ul>

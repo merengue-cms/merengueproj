@@ -24,6 +24,10 @@ class BaseAction(RegistrableItem):
     def get_response(cls):
         raise NotImplementedError()
 
+    @classmethod
+    def has_action(cls):
+        return True
+
 
 class SiteAction(BaseAction):
 
@@ -33,6 +37,10 @@ class SiteAction(BaseAction):
 
 
 class UserAction(BaseAction):
+
+    @classmethod
+    def has_action(cls, user):
+        return super(UserAction, cls).has_action()
 
     @classmethod
     def get_url(cls, user):
@@ -49,3 +57,7 @@ class ContentAction(BaseAction):
     @classmethod
     def get_response(cls, content):
         raise NotImplementedError()
+
+    @classmethod
+    def has_action(cls, content):
+        return super(ContentAction, cls).has_action()

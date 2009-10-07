@@ -51,30 +51,40 @@ def get_actions(parser, token):
 
 class ActionURLNode(template.Node):
 
-    def __init__(self, action, content_or_user):
+    def __init__(self, action, content_or_user, variable_context):
         self.action = action
         self.content_or_user = content_or_user
+        self.variable_context = variable_context
 
     def render(self, context):
+        context[self.variable_context] = None
         if self.content_or_user is not None:
             content_or_user = self.content_or_user.resolve(context)
         else:
             content_or_user = None
         action = self.action.resolve(context)
+        action_link = None
         if content_or_user:
-            return action.get_url(content_or_user)
+            if action.has_action(content_or_user):
+                action_link = action.get_url(content_or_user)
         else:
-            return action.get_url()
+            if action.has_action():
+                action_link = action.get_url()
+        if action_link:
+            context[self.variable_context] = action_link
+        return ''
 
 
 @register.tag
 def action_url(parser, token):
     bits = token.split_contents()
-    if len(bits) not in [2, 3, ]:
+    if len(bits) not in [4, 5, ]:
         raise template.TemplateSyntaxError('"%r" tag requires one or two arguments' % bits[0])
     action = parser.compile_filter(bits[1])
-    if len(bits) == 2:
+    if len(bits) == 4:
         content_or_user = None
+        variable_context = bits[3]
     else:
         content_or_user = parser.compile_filter(bits[2])
-    return ActionURLNode(action, content_or_user)
+        variable_context = bits[4]
+    return ActionURLNode(action, content_or_user, variable_context)
