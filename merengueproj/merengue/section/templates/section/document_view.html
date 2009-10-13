@@ -1,6 +1,6 @@
 {% extends "content_view.html" %}
 
-{% load inlinetrans content_tags inplace_edit collaborative document_tags %}
+{% load inlinetrans content_tags permission_tags inplace_edit collaborative document_tags %}
 
  {% block extrahead %}
    {% inplace_media %}
@@ -10,9 +10,10 @@
  {% endblock %}
 
 {% block contentbody %}
+  {% ifcanedit user content %}
     {% insert_document_section_after content %}
-
-    {% for document_section in content.sections.all %}
+  {% endifcanedit %}
+  {% for document_section in content.sections.all %}
     {% include "section/document_section_view.html" %}
-    {% endfor %}
+  {% endfor %}
 {% endblock %}
