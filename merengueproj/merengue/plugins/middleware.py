@@ -7,6 +7,8 @@ from django.utils import translation
 class ActivePluginsMiddleware(object):
 
     def process_request(self, request):
+        if request.get_full_path().startswith(settings.MEDIA_URL):
+            return None # plugin activation is not needed on static files
         from merengue.plugins import PLUG_CACHE_KEY
         loaded = cache.get(PLUG_CACHE_KEY)
         if not loaded:
