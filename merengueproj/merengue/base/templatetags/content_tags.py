@@ -1,5 +1,3 @@
-import operator
-
 from django import template
 from django.utils.text import unescape_entities
 
@@ -29,88 +27,6 @@ def content_admin_action(context, content):
     }
 
 
-@register.inclusion_tag('base/content_specialized_fields.html', takes_context=True)
-def content_specialized_fields(context, content):
-    specialized_fields = []
-    if content.__class__.__subclasses__():
-        # if content is not a leaf content we get real content
-        instance = content.get_real_instance()
-    else:
-        instance = content
-
-    return {'content': content, 'user': context.get('request').user,
-            'specialized_fields': specialized_fields}
-
-
-@register.inclusion_tag('base/content_handicapped_services.html', takes_context=True)
-def content_handicapped_services(context, content):
-    return {'content': content, 'request': context.get('request')}
-
-
-@register.inclusion_tag('base/content_features.html', takes_context=True)
-def content_features(context, content):
-    return {'content': content, 'request': context.get('request')}
-
-
-@register.inclusion_tag('base/address_info.html', takes_context=True)
-def address_info(context, content, showtitle=True):
-    return {'content': content,
-            'showtitle': showtitle,
-            'request': context.get('request')}
-
-
-@register.inclusion_tag('base/address_info_provinces_separated.html', takes_context=True)
-def address_info_provinces_separated(context, content):
-    return {'content': content, 'request': context.get('request')}
-
-
-@register.inclusion_tag('base/content_cities.html', takes_context=True)
-def content_cities(context, content):
-    return {'content': content, 'request': context.get('request')}
-
-
-@register.inclusion_tag('base/content_provinces.html', takes_context=True)
-def content_provinces(context, content):
-    return {'content': content, 'request': context.get('request')}
-
-
-@register.inclusion_tag('base/content_provinces_cities.html', takes_context=True)
-def content_provinces_cities(context, content):
-    provinces_cities = {}
-    provinces = {}
-    if content.location:
-        for basecity in content.location.cities.all().select_related('province'):
-            province = basecity.province
-            provinces[province.id] = province
-            cities = provinces_cities.setdefault(province.id, [])
-            cities.append(basecity)
-
-    sorted_provinces = sorted(provinces.values(), key=operator.attrgetter('name'))
-    provinces_cities = [(prov, provinces_cities[prov.id]) for prov in sorted_provinces]
-
-    return {'content': content,
-            'provinces_cities': provinces_cities,
-            'request': context.get('request')}
-
-
-@register.inclusion_tag('base/content_villages.html', takes_context=True)
-def content_villages(context, content):
-    return {'content': content, 'request': context.get('request')}
-
-
-@register.inclusion_tag('base/contact_info.html', takes_context=True)
-def contact_info(context, content, showtitle=True):
-    return contact_info_specified(context, content, None, showtitle)
-
-
-@register.inclusion_tag('base/contact_info.html', takes_context=True)
-def contact_info_specified(context, content, contact_info, showtitle=True):
-    return {'content': content,
-            'contact_info': contact_info or content.contact_info,
-            'showtitle': showtitle,
-            'request': context.get('request')}
-
-
 @register.inclusion_tag('base/content_list.html', takes_context=True)
 def content_list(context, resource_list, with_rating=False):
     return {'resource_list': resource_list,
@@ -123,29 +39,11 @@ def content_list(context, resource_list, with_rating=False):
              }
 
 
-@register.inclusion_tag('base/content_related_sections.html', takes_context=True)
-def content_related_sections(context, section_list, with_rating=False):
-    return {'section_list': section_list,
-            'request': context.get('request', None),
-            'MEDIA_URL': context.get('MEDIA_URL', '/media/'),
-            'LANGUAGE_CODE': context.get('LANGUAGE_CODE', 'es'),
-            'user': context.get('user', None),
-             }
-
-
 @register.inclusion_tag('base/content_thumbnail.html', takes_context=True)
 def content_thumbnail(context, content, no_link=False):
     return {'content': content,
             'request': context.get('request', None),
             'no_link': no_link,
-            'MEDIA_URL': context.get('MEDIA_URL', '/media/'),
-            'LANGUAGE_CODE': context.get('LANGUAGE_CODE', 'es'), }
-
-
-@register.inclusion_tag('base/touristservice_thumbnail.html', takes_context=True)
-def touristservice_thumbnail(context, content):
-    return {'content': content,
-            'request': context.get('request', None),
             'MEDIA_URL': context.get('MEDIA_URL', '/media/'),
             'LANGUAGE_CODE': context.get('LANGUAGE_CODE', 'es'), }
 
