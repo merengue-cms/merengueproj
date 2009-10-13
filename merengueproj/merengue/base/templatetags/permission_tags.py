@@ -29,13 +29,5 @@ def ifcanedit(parser, token):
         raise template.TemplateSyntaxError, '%r takes two arguments' % bits[0]
     user = bits[1]
     content = bits[2]
-    end_tag = 'end' + bits[0]
-    node_can_edit = parser.parse(('else', end_tag))
-    token = parser.next_token()
-    if token.contents == 'else':
-        node_not_can_edit = parser.parse((end_tag, ))
-        parser.delete_first_token()
-    else:
-        node_not_can_edit = template.NodeList()
-    return IfCanEditNode(user, content, node_can_edit, node_not_can_edit)
+    return IfCanEditNode(user, content, parser, token)
 ifcanedit = register.tag(ifcanedit)
