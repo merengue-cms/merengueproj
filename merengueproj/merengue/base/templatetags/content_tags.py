@@ -168,6 +168,7 @@ def real_instance(value, arg=None):
 
 
 class IfNode(template.Node):
+    """ An abstract node for checking things """
 
     def __init__(self, if_node, else_node):
         self.if_node = if_node
@@ -184,36 +185,3 @@ class IfNode(template.Node):
             return self.if_node.render(context)
         else:
             return self.else_node.render(context)
-
-
-class HasFeature(IfNode):
-
-    def __init__(self, content, feature, *args):
-        self.feature = feature
-        self.content = content
-        super(HasFeature, self).__init__(*args)
-
-    def check(self, context):
-        content = template.Variable(self.content).resolve(context)
-        feature = template.Variable(self.feature).resolve(context)
-        if not hasattr(content, 'features'):
-            return False
-        return bool(content.features.filter(slug=feature))
-
-
-def ifhasfeature(parser, token):
-    bits = list(token.split_contents())
-    if len(bits) != 3:
-        raise template.TemplateSyntaxError, '%r takes two arguments' % bits[0]
-    content = bits[1]
-    feature = bits[2]
-    end_tag = 'end' + bits[0]
-    node_hasfeature = parser.parse(('else', end_tag))
-    token = parser.next_token()
-    if token.contents == 'else':
-        node_nothasfeature = parser.parse((end_tag, ))
-        parser.delete_first_token()
-    else:
-        node_nothasfeature = template.NodeList()
-    return HasFeature(content, feature, node_hasfeature, node_nothasfeature)
-ifhasfeature = register.tag(ifhasfeature)
