@@ -1,12 +1,14 @@
 {% load i18n inlinetrans action_tags portal_tags %}
-<ul id="site-actions">
-  {% get_actions "site" as site_actions %}
-  {% for action in site_actions %}
-    {% action_url action as action_link %}
-      {% if action_link %}
-        <li id="action-{{ action.name }}">
-            <a href="{{ action_link }}">{% trans action.verbose_name %}</a>
-        </li>
-      {% endif %}
-  {% endfor %}
-</ul>
+{% get_actions "site" as site_actions %}
+{% if site_actions %}
+    <ul id="site-actions">
+    {% for action in site_actions %}
+        {% action_url action as action_link %}
+        {% if action_link %}
+            <li id="action-{{ action.name }}">
+                <a href="{{ action_link }}">{% trans action.verbose_name %}</a>
+            </li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+{% endif %}
