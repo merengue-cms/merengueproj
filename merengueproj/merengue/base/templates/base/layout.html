@@ -45,9 +45,11 @@
 --> <body dir="ltr" {% block extrabodytag %}{% endblock %}><!--<![endif]-->
 
 <div id="container" class="theme-{{ theme }} {% block bodyextraclasses %}{% endblock %}">
+  {% block currentrevision %}
   <div id="current-svn-revision">
     {% current_svn_rev %}
   </div>
+  {% endblock %}
 
 {% if not request.HIDE_DECORATIONS %}
   {% block headerwrapper %}
