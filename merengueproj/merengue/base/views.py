@@ -4,14 +4,11 @@ from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 #from django.db import connection
 from django.db.models import get_model
-from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.shortcuts import render_to_response, get_object_or_404
+from django.http import HttpResponseRedirect, Http404
+from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.utils import simplejson
-from django.utils.datastructures import SortedDict
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
-from django.views.decorators.cache import never_cache
 from django.views.generic import list_detail
 
 from cmsutils.adminfilters import QuerySetWrapper, filter_by_query_string
@@ -20,45 +17,9 @@ from merengue.base.forms import CaptchaFreeThreadedCommentForm
 from threadedcomments.models import FreeThreadedComment
 
 from merengue.base.models import BaseContent
-from merengue.base.utils import invalidate_cache_for_path
 from captcha.decorators import add_captcha
 from merengue.places.forms import SearchFilter
 from rating.models import Vote
-
-
-CONVERT_PRICE = SortedDict((
-                    ('0',
-                        {'operator': 'lte', 'value': 50, 'label': _('less than 50')}),
-                    ('50',
-                        {'operator': 'lte', 'value': 100, 'label': _('from 50 to 100')}),
-                    ('100',
-                        {'operator': 'lte', 'value': 300, 'label': _('from 100 to 300')}),
-                    ('300',
-                        {'label': _('greater than 300')}),
-                ))
-
-
-def add_price_lte(filters):
-
-    new_filters = filters
-    if 'price__gte' in new_filters:
-        price__gte = filters['price__gte']
-        converter = CONVERT_PRICE.get(price__gte, None)
-        operator = converter.get('operator', None)
-        value = converter.get('value', None)
-        if converter and operator and value:
-            new_filters['price__%s' % operator] = value
-    elif 'price__in' in new_filters:
-        values = [int(val) for val in new_filters['price__in']]
-        max_value = max(values)
-        min_value = min(values)
-        new_filters['price__gte'] = min_value
-        converter = CONVERT_PRICE.get(unicode(max_value), None)
-        converter_value = converter and converter.get('value', None)
-        if converter and converter_value:
-            new_filters['price__lte'] = converter_value
-        del new_filters['price__in']
-    return new_filters
 
 
 def add_related_content(filters):
@@ -180,111 +141,6 @@ def content_comment_form(request, content, parent_id, form=None, template='base/
                                'form': form,
                               },
                               context_instance=RequestContext(request))
-
-
-@never_cache
-@add_captcha(CaptchaFreeThreadedCommentForm)
-def content_comment_add(request, content_type, content_id, parent_id=None):
-    """ Create or save a freecomment form """
-    content = BaseContent.objects.get(id=content_id)
-    content = content.get_real_instance()
-    if request.POST:
-
-        form = CaptchaFreeThreadedCommentForm(user=request.user, data=request.POST)
-    else:
-        if request.is_ajax():
-            return content_comment_form(request, content, parent_id)
-        else:
-            return content_comment_form(request, content, parent_id,
-                              template='base/content_comment_preview.html')
-
-    if form.is_valid():
-        new_comment = form.save(commit=False)
-        new_comment.ip_address = request.META.get('REMOTE_ADDR', None)
-        new_comment.content_type = get_object_or_404(ContentType, id=int(content_type))
-        new_comment.object_id = int(content_id)
-        if parent_id:
-            new_comment.parent = get_object_or_404(FreeThreadedComment, id=int(parent_id))
-        new_comment.save()
-
-        # invalidate content view for avoid anonymous cache issues (see ticket #2459)
-        invalidate_cache_for_path(content.public_link())
-
-        if request.user and not request.user.is_anonymous():
-            request.user.message_set.create(message="Your message has been posted successfully.")
-        else:
-            request.session['successful_data'] = {
-                'name': form.cleaned_data['name'],
-                'website': form.cleaned_data['website'],
-                'email': form.cleaned_data['email'],
-            }
-        if request.is_ajax():
-            moderation = request.user and request.user.is_staff
-            return render_to_response('base/content_comment.html',
-                                      {'content': content,
-                                       'content_id': content_id,
-                                       'content_type_id': content_type,
-                                       'parent_id': parent_id,
-                                       'show_links': True,
-                                       'moderation': moderation,
-                                       'show_children': False,
-                                       'comment': new_comment},
-                                       context_instance=RequestContext(request))
-
-        else:
-            return HttpResponseRedirect(content.get_absolute_url())
-    else:
-        if request.is_ajax():
-            return render_to_response('base/content_comment_add.html',
-                                  {'form': form,
-                                   'content': content,
-                                   'content_id': content_id,
-                                   'content_type_id': content_type,
-                                   'parent_id': parent_id,
-                                   'comment': form.instance,
-                                   'errors': form.errors},
-                                  context_instance=RequestContext(request))
-        return render_to_response('base/content_comment_preview.html',
-                                  {'form': form,
-                                   'content': content,
-                                   'content_id': content_id,
-                                   'content_type_id': content_type,
-                                   'parent_id': parent_id,
-                                   'comment': form.instance,
-                                   'errors': form.errors},
-                                  context_instance=RequestContext(request))
-
-
-def content_comment_change_visibity(request, comment_id, publish=True):
-    """ Change visibility status for a commnet """
-    comment = get_object_or_404(FreeThreadedComment, id=comment_id)
-    content = comment.content_object
-    if request.user and not request.user.is_staff:
-        return HttpResponseRedirect(content.get_absolute_url())
-
-    comment.is_public = not comment.is_public
-    comment.save()
-    if request.is_ajax():
-        json = simplejson.dumps({'is_public': comment.is_public}, ensure_ascii=False)
-        return HttpResponse(json, 'text/javascript')
-    else:
-        return HttpResponseRedirect(content.get_absolute_url())
-
-
-def content_comment_delete(request, comment_id):
-    """ Delete comment from database """
-    comment = get_object_or_404(FreeThreadedComment, id=comment_id)
-    content = comment.content_object
-
-    if request.user and not request.user.is_staff:
-        return HttpResponseRedirect(content.get_absolute_url())
-
-    comment.delete()
-    if request.is_ajax():
-        json = simplejson.dumps({'is_deleted': True}, ensure_ascii=False)
-        return HttpResponse(json, 'text/javascript')
-    else:
-        return HttpResponseRedirect(content.get_absolute_url())
 
 
 def content_view(request, content, template_name=None, extra_context=None):
