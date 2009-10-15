@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 #from django.db import connection
 from django.db.models import get_model
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect, Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext
@@ -104,11 +104,11 @@ def public_link(request, app_label, model_name, content_id):
 
     if isinstance(content, BaseContent):
         if hasattr(content, 'public_link'):
-            return HttpResponseRedirect(content.public_link())
+            return HttpResponsePermanentRedirect(content.public_link())
         else:
-            return HttpResponseRedirect(content.link_by_user(request.user))
+            return HttpResponsePermanentRedirect(content.link_by_user(request.user))
 
-    return HttpResponseRedirect(content.get_absolute_url())
+    return HttpResponsePermanentRedirect(content.get_absolute_url())
 
 
 def admin_link(request, content_type, content_id, url=''):
