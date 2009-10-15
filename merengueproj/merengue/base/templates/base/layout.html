@@ -94,10 +94,12 @@
   </div>
   {% endblock headerwrapper %}
 
-  {% block breadcrumbs %}
+  {% block breadcrumbswrapper %}
     <div id="breadcrumbs">
-      {% include "inc.breadcrumbs.html" %}
-      {% block extrabreadcrumbs %}
+      {% block breadcrumbs %}
+        {% include "inc.breadcrumbs.html" %}
+        {% block extrabreadcrumbs %}
+        {% endblock %}
       {% endblock %}
     </div>
   {% endblock %}
