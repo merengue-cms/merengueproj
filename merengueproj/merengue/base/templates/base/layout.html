@@ -52,35 +52,45 @@
 {% if not request.HIDE_DECORATIONS %}
   {% block headerwrapper %}
   <div id="header">
+    {% block headerlogowrapper %}
     <div id="headerlogo">
       {% block headerlogo %}
         {% include "inc.headerlogo.html" %}
       {% endblock %}
     </div>
+    {% endblock %}
 
+    {% block headerlinkswrapper %}
     <div id="header-links">
       {% block headerlinks %}
         {% include "inc.headerlinks.html" %}
       {% endblock %}
     </div>
+    {% endblock %}
 
+    {% block languagetoolswrapper %}
     <div id="language-tools">
       {% block languagetools %}
         {% include "inc.languagetools.html" %}
       {% endblock %}
     </div>
+    {% endblock %}
 
+    {% block useractionswrapper %}
     <div id="user-actions">
       {% block useractions %}
         {% include "inc.useractions.html" %}
       {% endblock %}
     </div>
+    {% endblock %}
 
+    {% block portalactionswrapper %}
     <div id="site-actions">
       {% block portalactions %}
         {% include "inc.siteactions.html" %}
       {% endblock %}
     </div>
+    {% endblock %}
   </div>
   {% endblock headerwrapper %}
 
