@@ -84,6 +84,8 @@ def copy_helper(style, name, directory, symlink=False):
     # Symlink apps' media
     apps_dir = os.path.join(top_dir, 'apps')
     for app in os.listdir(apps_dir):
+        if app.startswith('.'):
+            continue # we ignore hidden directories
         dest = os.path.join(top_dir, 'media', app)
         app_media_dir = os.path.join(apps_dir, app, 'media')
         if os.path.isdir(app_media_dir):
@@ -97,6 +99,8 @@ def copy_helper(style, name, directory, symlink=False):
     # Copy or symlink default themes' media and templates
     themes_dir = os.path.join(merengue_root, 'themes')
     for theme in os.listdir(themes_dir):
+        if theme.startswith('.'):
+            continue # we ignore hidden directories
         theme_dir = os.path.join(themes_dir, theme)
         dest_media = os.path.join(top_dir, 'media', 'themes', theme)
         dest_templates = os.path.join(top_dir, 'templates', 'themes', theme)
