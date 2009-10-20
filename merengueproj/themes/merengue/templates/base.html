@@ -18,15 +18,16 @@
 {% block breadcrumbswrapper %}{% endblock %}
 
 {% block  contentwrapper %}
-    <div id="header-links">
-      {% block headerlinks %}
-        {% include "inc.headerlinks.html" %}
-      {% endblock %}
-    </div>
 
     <div id="language-tools">
       {% block languagetools %}
         {% include "inc.languagetools.html" %}
+      {% endblock %}
+    </div>
+
+    <div id="header-links">
+      {% block headerlinks %}
+        {% include "inc.headerlinks.html" %}
       {% endblock %}
     </div>
 
@@ -51,7 +52,13 @@
       {% endblock %}
     </div>
   {% endblock %}
-
+  {% if not request.HIDE_MENU %}
+    <div id="right-sidebar">
+      {% block rightsidebar %}
+        {% include "inc.rightsidebar.html" %}
+      {% endblock %}
+    </div>
+  {% endif %}
   {% if not request.HIDE_MENU %}
     <div id="left-sidebar">
       {% block leftsidebar %}
@@ -68,13 +75,7 @@
     {% endblock %}
   </div>
 
-  {% if not request.HIDE_MENU %}
-    <div id="right-sidebar">
-      {% block rightsidebar %}
-        {% include "inc.rightsidebar.html" %}
-      {% endblock %}
-    </div>
-  {% endif %}
+
 
   </div>
 
