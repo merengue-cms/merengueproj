@@ -1,0 +1,92 @@
+{% extends "base/layout.html" %}
+{% load i18n inlinetrans breadcrumbs messagebox svn %}
+
+{% block extrastyles %}
+  <link href="{{ THEME_MEDIA_URL }}css/layout.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block headerwrapper %}
+  <div id="header">
+    <div id="headerlogo">
+      {% block headerlogo %}
+        {% include "inc.headerlogo.html" %}
+      {% endblock %}
+    </div>
+  </div>
+{% endblock headerwrapper %}
+
+{% block breadcrumbswrapper %}{% endblock %}
+
+{% block  contentwrapper %}
+    <div id="header-links">
+      {% block headerlinks %}
+        {% include "inc.headerlinks.html" %}
+      {% endblock %}
+    </div>
+
+    <div id="language-tools">
+      {% block languagetools %}
+        {% include "inc.languagetools.html" %}
+      {% endblock %}
+    </div>
+
+    <div id="user-actions">
+      {% block useractions %}
+        {% include "inc.useractions.html" %}
+      {% endblock %}
+    </div>
+
+    <div id="site-actions">
+      {% block portalactions %}
+        {% include "inc.siteactions.html" %}
+      {% endblock %}
+    </div>
+
+  {% block contentbreadcrumbs %}
+    <div id="breadcrumbs">
+      {% block breadcrumbs %}
+        {% include "inc.breadcrumbs.html" %}
+        {% block extrabreadcrumbs %}
+        {% endblock %}
+      {% endblock %}
+    </div>
+  {% endblock %}
+
+  {% if not request.HIDE_MENU %}
+    <div id="left-sidebar">
+      {% block leftsidebar %}
+        {% include "inc.leftsidebar.html" %}
+      {% endblock %}
+    </div>
+  {% endif %}
+
+  <div id="content" class="{% block contentclass %}withsidebar{% endblock %}">
+    <div id="messagebox">
+      {% messagebox %}
+    </div>
+    {% block content %}
+    {% endblock %}
+  </div>
+
+  {% if not request.HIDE_MENU %}
+    <div id="right-sidebar">
+      {% block rightsidebar %}
+        {% include "inc.rightsidebar.html" %}
+      {% endblock %}
+    </div>
+  {% endif %}
+
+  </div>
+
+  {% if not request.HIDE_DECORATIONS %}
+    <div class="visualClear"></div>
+
+    {% block footerwrapper %}
+      <div id="footer">
+      {% block footer %}
+        {% include "inc.footer.html" %}
+      {% endblock %}
+      </div>
+    {% endblock %}
+  {% endif %}
+{% endblock contentwrapper %}

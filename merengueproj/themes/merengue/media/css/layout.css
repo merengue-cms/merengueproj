@@ -1,0 +1,52 @@
+/* ----- global styles ----- */
+
+
+body {
+    font-size: 12pt;
+    font-family: arial;
+    background: #f4edda;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    color: #339911;
+    text-decoration: underline;
+}
+
+h1 {
+    font-size: 1.8em;
+    color:#cda873;
+}
+
+h2 {
+    font-size: 1.6em;
+}
+
+h3 {
+    font-size: 1.4em;
+}
+
+h4 {
+    font-size: 1.2em;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+
+/* ----- Useful class ----- */
+.visualClear {
+    display: block;
+    clear: both;
+}
+
+#container {
+    margin: 0 auto 0 auto;
+    width: 986px;
+}
