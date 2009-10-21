@@ -9,10 +9,11 @@ body {
 
 a {
     text-decoration: none;
+    color: #f1ddbc;
 }
 
 a:hover {
-    color: #339911;
+    color: #cea672;
     text-decoration: underline;
 }
 
@@ -113,4 +114,37 @@ ul {
 
 body div#content-zone {
     width: auto;
+}
+
+
+/* footer */
+#footer {
+    background: white url(/media/themes/merengue/img/content_bottom.jpg) no-repeat left bottom;
+    display: block;
+    width: 100%;
+    height: 25px;
+}
+
+#footer-left {
+    float: left;
+    display: block;
+    width: 245px;
+}
+
+#footer-middle {
+    float: left;
+    display: block;
+    width: 480px;
+    border-top: 1px solid #f2e3b8;
+}
+
+#powered-by {
+    background: white url(/media/themes/merengue/img/merengue_icon.jpg) no-repeat right center;
+    padding-right: 20px;
+}
+
+#footer-right {
+    float: left;
+    display: block;
+    width: 241px;
 }
