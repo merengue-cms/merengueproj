@@ -3,6 +3,9 @@
 
 {% block extrastyles %}
   <link href="{{ THEME_MEDIA_URL }}css/layout.css" rel="stylesheet" type="text/css" />
+    <!--[if IE]>
+        <link rel="stylesheet" type="text/css" href="{{ THEME_MEDIA_URL }}css/iefixes.css" />
+    <![endif]-->
 {% endblock %}
 
 {% block headerwrapper %}
@@ -30,7 +33,7 @@
         {% include "inc.headerlinks.html" %}
       {% endblock %}
     </div>
-
+  <div class="borderLeft"><div class="borderRight">
     <div id="user-actions">
       {% block useractions %}
         {% include "inc.useractions.html" %}
@@ -43,6 +46,22 @@
       {% endblock %}
     </div>
 
+  {% if not request.HIDE_MENU %}
+    <div id="right-sidebar">
+      {% block rightsidebar %}
+        {% include "inc.rightsidebar.html" %}
+      {% endblock %}
+    </div>
+  {% endif %}
+  {% if not request.HIDE_MENU %}
+    <div id="left-sidebar">&nbsp;
+      {% block leftsidebar %}
+        {% include "inc.leftsidebar.html" %}
+      {% endblock %}
+    </div>
+  {% endif %}
+
+  <div id="content" class="{% block contentclass %}withsidebar{% endblock %}">
   {% block contentbreadcrumbs %}
     <div id="breadcrumbs">
       {% block breadcrumbs %}
@@ -52,33 +71,14 @@
       {% endblock %}
     </div>
   {% endblock %}
-  {% if not request.HIDE_MENU %}
-    <div id="right-sidebar">
-      {% block rightsidebar %}
-        {% include "inc.rightsidebar.html" %}
-      {% endblock %}
-    </div>
-  {% endif %}
-  {% if not request.HIDE_MENU %}
-    <div id="left-sidebar">
-      {% block leftsidebar %}
-        {% include "inc.leftsidebar.html" %}
-      {% endblock %}
-    </div>
-  {% endif %}
-
-  <div id="content" class="{% block contentclass %}withsidebar{% endblock %}">
     <div id="messagebox">
       {% messagebox %}
     </div>
     {% block content %}
     {% endblock %}
   </div>
-
-
-
-  </div>
-
+      <div class="visualClear"></div>
+  </div></div>
   {% if not request.HIDE_DECORATIONS %}
     <div class="visualClear"></div>
 

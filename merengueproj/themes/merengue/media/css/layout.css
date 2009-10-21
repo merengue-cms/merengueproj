@@ -4,7 +4,7 @@
 body {
     font-size: 12pt;
     font-family: arial;
-    background: #f4edda;
+    background: #f8f4e8;
 }
 
 a {
@@ -49,11 +49,21 @@ ul {
 
 #container {
     margin: 0 auto 0 auto;
-    width: 986px;
+    width: 983px;
 }
 
 #contentwrapper {
-    background: white;
+    background: white url(/media/themes/merengue/img/content_top.jpg) no-repeat left top;
+}
+
+.borderLeft {
+    background: transparent url(/media/themes/merengue/img/border_left.jpg) repeat-y left top;
+    margin-left: -1px;
+}
+
+.borderRight {
+    padding: 0 5px;
+    background: transparent url(/media/themes/merengue/img/border_right.jpg) repeat-y right top;
 }
 
 #language-tools {
@@ -77,7 +87,6 @@ ul {
 }
 
 #header-links {
-    background: white url(/media/themes/merengue/img/content_top.jpg) no-repeat left top;
     padding-top: 10px;
     padding-left: 10px;
 }
@@ -91,24 +100,31 @@ ul {
 /* left-sidebar */
 #left-sidebar {
     float: left;
-    width: 245px;
+    width: 244px;
 }
 
 /* right-sidebar */
 #right-sidebar {
     float:right;
     display: block;
-    width: 241px;
+    width: 240px;
 }
 
 #right-sidebar div {
     margin: 0.4em;
 }
 
+
+/* site actions */
+#site-actions ul li {
+    display: inline;
+}
+
+
 /* Content */
 #content {
     float: left;
-    width: 480px;
+    width: 470px;
     padding: 0 10px;
 }
 
@@ -123,6 +139,8 @@ body div#content-zone {
     display: block;
     width: 100%;
     height: 25px;
+    font-size: 9pt;
+    padding-top: 10px;
 }
 
 #footer-left {
@@ -138,9 +156,21 @@ body div#content-zone {
     border-top: 1px solid #f2e3b8;
 }
 
-#powered-by {
-    background: white url(/media/themes/merengue/img/merengue_icon.jpg) no-repeat right center;
+#footer-middle a {
+    width: 31%;
+    float: left;
+    display: block;
+    padding-top: 5px;
+}
+
+a#general-conditions {
+    text-align: center
+}
+
+a#powered-by {
+    background: transparent url(/media/themes/merengue/img/merengue_icon.jpg) no-repeat right center;
     padding-right: 20px;
+    text-align: right;
 }
 
 #footer-right {
