@@ -1,10 +1,1 @@
-{% load i18n inlinetrans action_tags portal_tags %}
-<ul id="language-tools">
-   {% for lang,lang_name in LANGUAGES %}
-    <li {% ifequal lang LANGUAGE_CODE %}class="currentLangItem"{% endifequal %}>
-        <a class="languageform" alt="{% trans 'Change language' %} {{ lang_name }}" href="?set_language={{ lang }}">
-            <img alt="{% trans 'Change language' %} {{ lang_name }}" src="{{ MEDIA_URL }}merengue/img/flag-{{ lang }}.gif"/>
-        </a>
-    </li>
-   {% endfor %}
-</ul>
+{% extends "base/inc.languagetools.html" %}
