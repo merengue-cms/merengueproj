@@ -25,22 +25,24 @@ def register(item_class, activate=False):
             raise RegistryError('item class "%s" to be registered is not '
                                 'a RegistrableItem subclass' % item_class)
 
-        attributes = {
-            'class_name': item_class.get_class_name(),
-            'module': item_class.get_module(),
-        }
-        # Add attributes for extended class
-        extended_attrs = item_class.get_extended_attrs()
-        attributes.update(extended_attrs)
-        registered_item, created = item_class.model.objects.get_or_create(
-            **attributes)
-        if not created:
+        try:
+            registered_item = item_class.model.objects.get_by_item(item_class)
+        except item_class.model.DoesNotExist:
+            attributes = {
+                'class_name': item_class.get_class_name(),
+                'module': item_class.get_module(),
+            }
+            # Add attributes for extended class
+            extended_attrs = item_class.get_extended_attrs()
+            attributes.update(extended_attrs)
+            registered_item = RegisteredItem.objects.create(**attributes)
+            registered_item.category = item_class.get_category()
+            registered_item.set_default_config(item_class)
+            if activate:
+                registered_item.activate()
+        else:
             raise AlreadyRegistered('item class "%s" is already registered'
                                     % item_class)
-        registered_item.category = item_class.get_category()
-        registered_item.set_default_config(item_class)
-        if activate:
-            registered_item.activate()
     except:
         transaction.savepoint_rollback(sid)
         raise

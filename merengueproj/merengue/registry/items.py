@@ -1,3 +1,5 @@
+from django.core.exceptions import ObjectDoesNotExist
+
 from merengue.registry.models import RegisteredItem
 from merengue.registry.params import ConfigDict
 
@@ -45,10 +47,12 @@ class RegistrableItem(object):
 
     @classmethod
     def get_registered_item(cls):
-        return cls.model.objects.get(
-            class_name=cls.get_class_name(),
-            module=cls.get_module(),
-        )
+        for registered_item in cls.model.objects.cache():
+            # note: we do not use get to use cache from caching manager
+            if registered_item.module == cls.get_module() and \
+               registered_item.class_name == cls.get_class_name():
+                return registered_item
+        raise ObjectDoesNotExist
 
     @classmethod
     def get_extended_attrs(cls):

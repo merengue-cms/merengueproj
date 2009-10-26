@@ -10,6 +10,6 @@ class SectionManager(WorkflowManager):
         """ main menu """
         # XXX: for now, first menu will be main menu
         try:
-            return self.all()[0]
+            return self.all().cache()[0]
         except IndexError:
             raise ObjectDoesNotExist()
