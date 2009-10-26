@@ -76,7 +76,7 @@ ul {
 #language-tools  ul li a {
     display: block;
     width: 30px;
-    height: 20px;
+    height: 24px;
     float: left;
 }
 
@@ -91,7 +91,6 @@ ul {
 #language-tools  ul li a:hover, 
 #language-tools  ul li.currentLangItem a  {
     background-position: left bottom !important;
-    padding-top: 7px;
 }
 
 #header-links {
