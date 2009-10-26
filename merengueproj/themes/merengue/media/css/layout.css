@@ -98,6 +98,32 @@ ul {
     padding-left: 10px;
 }
 
+#header-links ul {
+    margin-bottom: 0.8em;
+}
+
+#header-links li {
+    background: transparent url(/media/themes/merengue/img/left_menu_button.jpg) no-repeat left top;
+    padding: 6px 0 5px 11px;
+}
+
+.ie #header-links li {
+    padding: 0px 0 0 11px;
+}
+
+#header-links li a {
+    padding: 6px 12px 6px 0;
+    background: transparent url(/media/themes/merengue/img/right_menu_button.jpg) no-repeat right top;
+}
+
+#header-links li.active {
+    background: transparent url(/media/themes/merengue/img/left_actived_menu_button.jpg) no-repeat left top;
+}
+
+#header-links li.active a {
+    background: transparent url(/media/themes/merengue/img/right_actived_menu_button.jpg) no-repeat right top;
+}
+
 #header-links ul li,
 #language-tools  ul li {
     display: inline;
