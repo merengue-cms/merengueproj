@@ -1,6 +1,10 @@
 {% extends "base/layout.html" %}
 {% load i18n inlinetrans breadcrumbs messagebox svn %}
 
+{% block shortcut %}
+ <link rel="shortcut icon" href="{{ THEME_MEDIA_URL }}img/favicon.ico" type="image/gif" />
+{% endblock %}
+
 {% block extrastyles %}
   <link href="{{ THEME_MEDIA_URL }}css/layout.css" rel="stylesheet" type="text/css" />
     <!--[if IE]>
@@ -23,9 +27,12 @@
 {% block  contentwrapper %}
 
     <div id="language-tools">
+
+    {% with THEME_MEDIA_URL as MEDIA_UR1L %}
       {% block languagetools %}
         {% include "inc.languagetools.html" %}
       {% endblock %}
+    {% endwith %}
     </div>
 
     <div id="header-links">

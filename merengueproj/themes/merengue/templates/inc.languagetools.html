@@ -1,0 +1,8 @@
+{% extends "base/inc.languagetools.html" %}
+
+{% load i18n %}
+
+{% block languageitem %}
+  <a id="{{ lang }}" class="languageform" alt="{% trans 'Change language' %} {{ lang_name }}" href="?set_language={{ lang }}">
+  </a>
+{% endblock %}
