@@ -2,7 +2,7 @@ from django.contrib.gis.db.models import GeoManager
 from django.contrib.gis.db.models.query import GeoQuerySet
 from django.db import connection
 
-from cmsutils.cachemanager import CachingManager, CachingQuerySet
+from cmsutils.cache import CachingManager, CachingQuerySet
 
 
 class BaseManager(CachingManager, GeoManager):
