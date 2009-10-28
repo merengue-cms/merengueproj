@@ -4,7 +4,7 @@
 body {
     font-size: 12pt;
     font-family: arial;
-    background: #f8f4e8;
+    background: #f4f0e5;
 }
 
 a {
@@ -66,11 +66,16 @@ ul {
     background: transparent url(/media/themes/merengue/img/border_right.jpg) repeat-y right top;
 }
 
+#headerlogo {
+    height: 36px;
+    margin-left: 25px;
+}
+
 #language-tools {
     float: right;
     text-align: right;
     width: 100px;
-    margin-top: 5px;
+    margin-top: 15px;
     margin-right: 10px;
 }
 #language-tools  ul li a {
@@ -94,7 +99,7 @@ ul {
 }
 
 #header-links {
-    padding-top: 10px;
+    padding-top: 28px;
     padding-left: 10px;
 }
 
@@ -115,6 +120,10 @@ ul {
     padding: 7px 12px 7px 5px;
     font-size: 10pt;
     background: transparent url(/media/themes/merengue/img/right_menu_button.jpg) no-repeat right top;
+}
+
+#header-links li a:hover {
+    text-decoration: none;
 }
 
 #header-links li.active {
@@ -165,6 +174,11 @@ ul {
     display: inline;
 }
 
+
+/* breadcrumbs */
+#breadcrumbs {
+    font-size: 10pt;
+}
 
 /* Content */
 #content {
