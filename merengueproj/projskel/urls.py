@@ -64,7 +64,4 @@ urlpatterns = patterns('',
 
     # Your project URLs. Put here all your URLS:
     (r'^$', 'website.views.index'),
-
-    # section without prefix
-    (r'^', include('merengue.section.urls')),
 )
