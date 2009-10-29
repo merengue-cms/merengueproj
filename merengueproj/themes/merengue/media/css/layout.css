@@ -180,6 +180,11 @@ ul {
     font-size: 10pt;
 }
 
+.breadcrumbSeparator {
+    background: transparent url(/media/themes/merengue/img/bread_arrow.jpg) no-repeat left center;
+    font-size: 0;
+    padding:8px 6px 0 4px;
+} 
 /* Content */
 #content {
     float: left;
