@@ -10,7 +10,7 @@ from merengue.registry.signals import item_registered, item_unregistered
 def is_registered(item_class):
     try:
         RegisteredItem.objects.get_by_item(item_class)
-    except RegisteredItem.DoesNotExist:
+    except ObjectDoesNotExist:
         return False
     else:
         return True
