@@ -1,4 +1,5 @@
-{% load i18n inlinetrans %}
+{% load i18n inlinetrans block_tags %}
+
 
 {% block leftfooter %}
   <div id="footer-left">
@@ -19,7 +20,9 @@
     </p>
   </div>
 {% endblock %}
+
 {% block rightfooter %}
   <div id="footer-right">
+    {% render_blocks "footer" %}
   </div>
 {% endblock %}

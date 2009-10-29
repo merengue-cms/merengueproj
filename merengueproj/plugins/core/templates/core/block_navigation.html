@@ -1,0 +1,15 @@
+{% extends "block.html" %}
+
+{% load i18n section_tags %}
+
+
+{% block blockbody %}
+  <ul class="sections">
+  {% for section in sections %}
+    <li><a href="{{ section.get_absolute_url }}" title="{{ section }}">{{ section }}</a>
+    {% menu_tag section.main_menu %}
+    </li>
+  {% endfor %}
+  </ul>
+{% endblock %}
+

@@ -2,7 +2,7 @@ from merengue.plugins import Plugin
 from merengue.section.admin import DocumentRelatedModelAdmin
 from merengue.section.models import Document
 
-from plugins.core.blocks import CoreMenuBlock
+from plugins.core.blocks import CoreMenuBlock, NavigationBlock
 
 
 class PluginConfig(Plugin):
@@ -15,7 +15,7 @@ class PluginConfig(Plugin):
 
     @classmethod
     def get_blocks(cls):
-        return [CoreMenuBlock]
+        return [CoreMenuBlock, NavigationBlock]
 
     @classmethod
     def section_models(cls):

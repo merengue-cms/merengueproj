@@ -296,7 +296,7 @@ class BaseSection(Base, RealInstanceMixin):
         return [subcl._meta.module_name for subcl in self.__class__.__subclasses__()]
 
     def get_absolute_url(self):
-        return self.real_instance.get_absolute_url()
+        return strip_section_prefix(self.real_instance.get_absolute_url())
 
     def get_breadcrumbs(self):
         return [(self.get_absolute_url(), unicode(self))]
@@ -315,7 +315,7 @@ class BaseSection(Base, RealInstanceMixin):
 
 
 def strip_section_prefix(link):
-    return link.replace('secciones/', '')
+    return link.replace('sections/', '')
 
 
 def sections_permalink(func):

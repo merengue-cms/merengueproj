@@ -9,7 +9,8 @@ PLACES = (('leftsidebar', _('Left sidebar')),
           ('rightsidebar', _('Right sidebar')),
           ('beforecontent', _('Before content body')),
           ('homepage', _('Home page')),
-          ('aftercontent', _('After content body')))
+          ('aftercontent', _('After content body')),
+          ('footer', _('Footer')))
 
 
 class RegisteredBlock(RegisteredItem):
