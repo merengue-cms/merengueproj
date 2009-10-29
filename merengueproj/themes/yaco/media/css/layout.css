@@ -266,8 +266,83 @@ div#breadcrumbs a:hover {
     color: #AAAAAA;
 }
 
+/* ----- form errors ----- */
+ul.errorlist {
+    margin: 0 !important;
+    padding: 0 !important;
+    color: white;
+}
+
+ul.errorlist li {
+    background-color: red;
+    border: 1px solid red;
+    padding: 4px 5px 4px 25px;
+}
+
 /* ------ Core Plugin ----- */
 
 ul.menu_ul {
     padding-left: 1em;
+}
+
+/* ----- feedback plugin ----- */
+.theme-yaco #feedback {
+    margin-top: 3em;
+    background: #ddfdd9;
+}
+
+.theme-yaco #feedback #firstcomment h3,
+.theme-yaco #feedback #firstcomment .commentBody,
+.theme-yaco #feedback #firstcomment .actions,
+.theme-yaco #feedback .commentform,
+.theme-yaco #feedback #firstcomment .commentinfo {
+    background: #ddfdd9 none repeat scroll 0 0;
+}
+
+.theme-yaco #feedback h1 {
+    color: #54B848;
+}
+
+.theme-yaco #feedback h3,
+.theme-yaco #feedback p {
+    color: #737373;
+}
+
+.theme-yaco #feedback #firstcomment div#firstactions {
+    background: none;
+}
+
+.theme-yaco #feedback #firstcomment .commentBody {
+    font-weight: bold;
+}
+
+.theme-yaco #feedback .actions a {
+    color: black;
+}
+
+
+.theme-yaco #feedback #firstcomment .commentLink {
+    font-size: 0.6em;
+    right: 30px;
+    color: gray;
+}
+
+/* ----- attached files for contents ----- */
+div.contentFiles {
+    clear: right;
+    float: right;
+    border: 1px solid lightgray;
+    margin: 0.5em;
+    padding: 0.5em;
+    width: 180px;
+}
+
+div.contentFiles h2 {
+    font-size: 1em;
+    text-align: right;
+    margin-top: 0;
+}
+
+div.contentFiles ul {
+    text-align: right;
 }
