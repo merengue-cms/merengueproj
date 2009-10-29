@@ -28,7 +28,7 @@ def register(item_class, activate=False):
 
         try:
             registered_item = item_class.model.objects.get_by_item(item_class)
-        except item_class.model.DoesNotExist:
+        except ObjectDoesNotExist:
             attributes = {
                 'class_name': item_class.get_class_name(),
                 'module': item_class.get_module(),
