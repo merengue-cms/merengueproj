@@ -17,7 +17,7 @@ from cmsutils.db.fields import ColorField
 
 from merengue.base.managers import WorkflowManager
 from merengue.base.models import Base, BaseContent
-from merengue.multimedia.models import Photo, Video
+from merengue.multimedia.models import Photo
 from merengue.section.managers import SectionManager
 from searchform.registry import search_form_registry
 from stdimage import StdImageField
@@ -522,7 +522,7 @@ class Document(BaseContent):
 
     @permalink
     def public_link(self):
-        return ('document_section_view', [self.get_main_section().slug, self.slug])
+        return ('document_section_view', [self.get_main_section().slug, self.id, self.slug])
 
 
 class DocumentSection(models.Model):

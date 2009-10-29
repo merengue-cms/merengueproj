@@ -8,6 +8,6 @@ urlpatterns = patterns('merengue.section.views',
     url(r'^(?P<section_slug>[\w-]+)/$', 'section_view', name='section_view'),
     url(r'^(?P<section_slug>[\w-]+)/css/$', 'section_custom_style', name='section_custom_style'),
     url(r'^(?P<section_slug>[\w-]+)/contents/(?P<content_id>\d+)/(?P<content_slug>[\w-]+)/$', 'content_section_view', name='content_section_view'),
-    url(r'^(?P<section_slug>[\w-]+)/doc/(?P<document_slug>[\w-]+)/$', 'document_section_view', name='document_section_view'),
+    url(r'^(?P<section_slug>[\w-]+)/doc/(?P<document_id>\d+)/(?P<document_slug>[\w-]+)/$', 'document_section_view', name='document_section_view'),
     url(r'^(?P<section_slug>[\w-]+)(/[\w\-]+)*/(?P<menu_slug>[\w-]+)/$', 'menu_section_view', name='menu_section_view'),
 )

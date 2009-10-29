@@ -32,8 +32,8 @@ def content_section_view(request, section_slug, content_id, content_slug):
     return content_view(request, content, template_name=template_name)
 
 
-def document_section_view(request, section_slug, document_slug):
-    document = get_object_or_404(Document, slug=document_slug)
+def document_section_view(request, section_slug, document_id, document_slug):
+    document = get_object_or_404(Document, id=document_id)
     template_name = getattr(document._meta, 'content_view_template')
     return content_view(request, document, template_name=template_name)
 
