@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 
 from merengue.registry.items import (RegistrableItem, RegistryError,
@@ -54,7 +55,7 @@ def register(item_class, activate=False):
 def unregister(item_class):
     try:
         registered_item = RegisteredItem.objects.get_by_item(item_class)
-    except RegisteredItem.DoesNotExist:
+    except ObjectDoesNotExist:
         raise NotRegistered('item class "%s" is not registered' % item_class)
     registered_item.delete()
     item_unregistered.send(sender=item_class)
