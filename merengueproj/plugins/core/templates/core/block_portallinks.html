@@ -1,0 +1,12 @@
+{% load i18n inlinetrans %}
+
+<div id="portal-{{ category }}-links">
+  <ul>
+  {% for link in links %}
+    <li id="portal-link-{{ link.id }}">
+      <a href="{{ link.get_absolute_url }}" title="{{ link }}">{{ link }}</a>
+    </li>
+  {% endfor %}
+  </ul>
+</div>
+

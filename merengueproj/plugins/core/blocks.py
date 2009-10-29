@@ -2,6 +2,7 @@ from django.utils.translation import ugettext as _
 
 from merengue.block.blocks import Block
 from merengue.section.models import BaseSection
+from merengue.portal.models import PortalLink
 
 
 class CoreMenuBlock(Block):
@@ -28,3 +29,30 @@ class NavigationBlock(Block):
                                 block_title=_('Menu'),
                                 context={'sections': sections,
                                          'active_section': request.section})
+
+
+class LinkBaseBlock(Block):
+    """ Abstract base class for blocks that render portal links """
+    category = None
+
+    @classmethod
+    def render(cls, request):
+        links = PortalLink.objects.cache().filter(category=cls.category)
+        return cls.render_block(request, template_name='core/block_portallinks.html',
+                                block_title=_('Portal links'),
+                                context={'links': links,
+                                         'category': cls.category})
+
+
+class PrimaryLinksBlock(LinkBaseBlock):
+    """ Block that renders primary portal links """
+    name = 'primarylinks'
+    default_place = 'header'
+    category = 'primary'
+
+
+class SecondaryLinksBlock(LinkBaseBlock):
+    """ Block that renders secondary portal links """
+    name = 'secondarylinks'
+    default_place = 'footer'
+    category = 'secondary'

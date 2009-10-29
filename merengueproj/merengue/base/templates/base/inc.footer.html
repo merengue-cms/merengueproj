@@ -13,16 +13,16 @@
 
 {% block middlefooter %}
   <div id="footer-middle">
-    <p>
-      <a href="#" id="powered-by">{% inline_trans "Merengue powered" %}</a>
-      <br/>
-      <a href="#" id="general-conditions">{% inline_trans "General conditions" %}</a>
-    </p>
+    {% render_blocks "footer" %}
   </div>
 {% endblock %}
 
 {% block rightfooter %}
   <div id="footer-right">
-    {% render_blocks "footer" %}
+    <p>
+      <a href="#" id="powered-by">{% inline_trans "Merengue powered" %}</a>
+      <br/>
+      <a href="#" id="general-conditions">{% inline_trans "General conditions" %}</a>
+    </p>
   </div>
 {% endblock %}

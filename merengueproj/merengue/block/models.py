@@ -10,6 +10,7 @@ PLACES = (('leftsidebar', _('Left sidebar')),
           ('beforecontent', _('Before content body')),
           ('homepage', _('Home page')),
           ('aftercontent', _('After content body')),
+          ('header', _('Header')),
           ('footer', _('Footer')))
 
 
