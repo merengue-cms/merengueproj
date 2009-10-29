@@ -36,7 +36,7 @@ def register(item_class, activate=False):
             # Add attributes for extended class
             extended_attrs = item_class.get_extended_attrs()
             attributes.update(extended_attrs)
-            registered_item = RegisteredItem.objects.create(**attributes)
+            registered_item = item_class.model.objects.create(**attributes)
             registered_item.category = item_class.get_category()
             registered_item.set_default_config(item_class)
             if activate:
