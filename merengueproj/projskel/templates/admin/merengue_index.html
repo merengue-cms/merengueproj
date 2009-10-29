@@ -16,60 +16,73 @@
 <div id="content-main">
 <div id="content-merengue">
     <div class="module-merengue" id="contentmanagement">
-        <h1>{% trans "Content management" %}</h1>
-        <p>{% trans "Manage your site's content" %}</p>
-            <h2>{% trans "Content" %} <div align=right style="float: right"><a class="addlink" href="base/basecontent/add/">{% trans 'Add' %}</a> <a class="changelink" href="base/basecontent/">{% trans 'Change' %}</a></div></h2>
-            <p>{% trans "View, edit and delete your site's contents." %}</p>
-            <h2>{% trans "Contact info" %} <div align=right style="float: right"><a class="addlink" href="base/contactinfo/add/">{% trans 'Add' %}</a> <a class="changelink" href="base/contactinfo/">{% trans 'Change' %}</a></div></h2>
-            <p>{% trans "View, edit and delete your site's contact info." %}</p>
-            <h2>{% trans "Section" %} <div align=right style="float: right"><a class="addlink" href="section/section/add/">{% trans 'Add' %}</a> <a class="changelink" href="section/section/">{% trans 'Change' %}</a></div></h2>
-            <p>{% trans "View, edit and delete your site's sections." %}</p>
-        <h1>{% trans "Multimedia" %}</h1>
-            <h2>{% trans "Photos" %} <div align=right style="float: right"><a class="addlink" href="multimedia/photo/add/">{% trans 'Add' %}</a> <a class="changelink" href="multimedia/photo/">{% trans 'Change' %}</a></div></h2>
-            <p>{% trans "View, edit and delete your site's photos." %}</p>
-            <h2>{% trans "Video" %} <div align=right style="float: right"><a class="addlink" href="multimedia/video/add/">{% trans 'Add' %}</a> <a class="changelink" href="multimedia/video/">{% trans 'Change' %}</a></div></h2>
-            <p>{% trans "View, edit and delete your site's videos." %}</p>
-            <h2>{% trans "Audio" %} <div align=right style="float: right"><a class="addlink" href="multimedia/audio/add/">{% trans 'Add' %}</a> <a class="changelink" href="multimedia/audio/">{% trans 'Change' %}</a></div></h2>
-            <p>{% trans "View, edit and delete your site's audios." %}</p>
-            <h2>{% trans "Panoramic views" %} <div align=right style="float: right"><a class="addlink" href="multimedia/panoramicview/add/">{% trans 'Add' %}</a> <a class="changelink" href="multimedia/panoramicview/">{% trans 'Change' %}</a></div></h2>
-            <p>{% trans "View, edit and delete your site's panoramic views." %}</p>
-            <h2>{% trans "Images 3D" %} <div align=right style="float: right"><a class="addlink" href="multimedia/image3d/add/">{% trans 'Add' %}</a> <a class="changelink" href="multimedia/image3d/">{% trans 'Change' %}</a></div></h2>
-            <p>{% trans "View, edit and delete your site's Images 3D." %}</p>
+      <h1>{% trans "Content management" %}</h1>
+      <p>{% trans "Manage your site's content" %}</p>
+      <dl>
+        <dt><a href="base/basecontent/" title="{% trans "Content" %}">{% trans "Content" %}</a></dt>
+        <dd>{% trans "View, edit and delete your site's contents." %}</dd>
+        <dt><a href="base/contactinfo/" title="{% trans "Contact info" %}">{% trans "Contact info" %}</a></dt>
+        <dd>{% trans "View, edit and delete your site's contact info." %}</dd>
+        <dt><a href="section/section/" title="{% trans "Section" %}">{% trans "Section" %}</a></dt>
+        <dd>{% trans "View, edit and delete your site's sections." %}</dd>
+      </dl>
     </div>
-    <div class="module-merengue float_right" id="sitebuilding">
-        <h1>{% trans "Site building" %}</h1>
-        <p>{% trans "Control how your site looks and feels." %}</p>
-            <h2>{% trans "Blocks" %} <div align=right style="float: right"><a class="addlink" href="block/registeredblock/add/">{% trans 'Add' %}</a> <a class="changelink" href="block/registeredblock/">{% trans 'Change' %}</a></div></h2>
-            <p>{% trans "View, edit and delete your site's blocks." %}</p>
-            <h2>{% trans "Plugins" %} <div align=right style="float: right"><a class="addlink" href="plugins/registeredplugin/add/">{% trans 'Add' %}</a> <a class="changelink" href="plugins/registeredplugin/">{% trans 'Change' %}</a></div></h2>
-            <p>{% trans "View, edit and delete your site's plugin." %}</p>
-            <h2>{% trans "Themes" %} <div align=right style="float: right"><a class="addlink" href="themes/theme/add/">{% trans 'Add' %}</a> <a class="changelink" href="themes/theme/">{% trans 'Change' %}</a></div></h2>
-            <p>{% trans "View, edit and delete your site's themes." %}</p>
+    <div class="module-merengue" id="sitebuilding">
+      <h1>{% trans "Site building" %}</h1>
+      <p>{% trans "Control how your site looks and feels." %}</p>
+      <dl>
+        <dt><a href="block/registeredblock/" title="{% trans "Blocks" %}">{% trans "Blocks" %}</a></dt>
+        <dd>{% trans "View, edit and delete your site's blocks." %}</dd>
+        <dt><a href="plugins/registeredplugin/" title="{% trans "Plugins" %}">{% trans "Plugins" %}</a></dt>
+        <dd>{% trans "View, edit and delete your site's plugin." %}</dd>
+        <dt><a href="themes/theme/" title="{% trans "Themes" %}">{% trans "Themes" %}</a></dt>
+        <dd>{% trans "View, edit and delete your site's themes." %}</dd>
+      </dl>
     </div>
-    <div style="clear:right" ></div>
-    <div class="module-merengue float_right" id="usermanagement">
-        <h1>{% trans "User management" %}</h1>
-        <p>{% trans "Manage your site's users, groups and access to site features." %}</p>
-            <h2>{% trans "Groups" %} <div align=right style="float: right"><a class="addlink" href="auth/group/add/">{% trans 'Add' %}</a> <a class="changelink" href="auth/group/">{% trans 'Change' %}</a></div></h2>
-            <p>{% trans "View, edit and delete your site's groups." %}</p>
-            <h2>{% trans "Users" %} <div align=right style="float: right"><a class="addlink" href="auth/user/add/">{% trans 'Add' %}</a> <a class="changelink" href="auth/user/">{% trans 'Change' %}</a></div></h2>
-            <p>{% trans "View, edit and delete your site's users." %}</p>
+    <div class="module-merengue" id="multimedia">
+      <h1>{% trans "Multimedia" %}</h1>
+      <dl>
+        <dt><a href="multimedia/photo/" title="{% trans "Photos" %}">{% trans "Photos" %}</a></dt>
+        <dd>{% trans "View, edit and delete your site's photos." %}</dd>
+        <dt><a href="multimedia/video/" title="{% trans "Video" %}">{% trans "Video" %}</a></dt>
+        <dd>{% trans "View, edit and delete your site's videos." %}</dd>
+        <dt><a href="multimedia/audio/" title="{% trans "Audio" %}">{% trans "Audio" %}</a></dt>
+        <dd>{% trans "View, edit and delete your site's audios." %}</dd>
+        <dt><a href="multimedia/panoramicview/" title="{% trans "Panoramic views" %}">{% trans "Panoramic views" %}</a></dt>
+        <dd>{% trans "View, edit and delete your site's panoramic views." %}</dd>
+        <dt><a href="multimedia/image3d/" title="{% trans "Images 3D" %}">{% trans "Images 3D" %}</a></dt>
+        <dd>{% trans "View, edit and delete your site's Images 3D." %}</dd>
+      </dl>
     </div>
-    <div style="clear:both" ></div>
+    <div class="module-merengue" id="usermanagement">
+      <h1>{% trans "User management" %}</h1>
+      <p>{% trans "Manage your site's users, groups and access to site features." %}</p>
+      <dl>
+        <dt><a href="auth/group" title="{% trans "Groups" %}">{% trans "Groups" %}</a></dt>
+        <dd>{% trans "View, edit and delete your site's groups." %}</dd>
+        <dt><a href="auth/user/" title="{% trans "Themes" %}">{% trans "Users" %}</a></dt>
+        <dd>{% trans "View, edit and delete your site's users." %}</dd>
+      </dl>
+    </div>
 </div>
 {% endblock %}
 </div> <!--- end content-merengue -->
 {% block sidebar %}
 <div id="content-related">
-    <div class="module" id="administrator-menu">
-        <h2>{{ user.username }}</h2>
-        <h3>{% trans 'My Account' %}</h3>
-        <h3><a href="{% url admin:control_panel %}">{% trans "Control panel" %}</a></h3>
-        <h3>{% trans 'Create content' %}</h3>
-        <h3>{% trans 'Administer' %}</h3>
-            <h4>{% trans 'Content management' %}</h4>
-            <h4>{% trans 'Site building' %}</h4>
-            <h4><a href="/admin/auth/user/" title="{% trans 'User management' %}">{% trans 'User management' %}</a></h4>
-    </div>
+  <div class="module" id="administrator-menu">
+    <h2>{{ user.username }}</h2>
+    <ul class="level1">
+      <li>{% trans 'My Account' %}</li>
+      <li><a href="{% url admin:control_panel %}">{% trans "Control panel" %}</a></li>
+        <li>{% trans 'Create content' %}</li>
+        <li>{% trans 'Administer' %}
+          <ul class="level2">
+            <li>{% trans 'Content management' %}</li>
+            <li>{% trans 'Site building' %}</li>
+            <li><a href="/admin/auth/user/" title="{% trans 'User management' %}">{% trans 'User management' %}</a></li>
+          </ul>
+        </li>
+    </ul>
+  </div>
 </div>
 {% endblock %}
