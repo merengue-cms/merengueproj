@@ -10,7 +10,7 @@ class CoreMenuBlock(Block):
     default_place = 'leftsidebar'
 
     @classmethod
-    def render(cls, request):
+    def render(cls, request, place):
         if not request.section:
             return '' # renders nothing
         return cls.render_block(request, template_name='core/block_menu.html',
@@ -23,7 +23,7 @@ class NavigationBlock(Block):
     default_place = 'footer'
 
     @classmethod
-    def render(cls, request):
+    def render(cls, request, place):
         sections = BaseSection.objects.published()
         return cls.render_block(request, template_name='core/block_navigation.html',
                                 block_title=_('Menu'),
