@@ -8,7 +8,7 @@ class VotingBlock(ContentBlock):
     default_place = 'beforecontent'
 
     @classmethod
-    def render(cls, request, content):
+    def render(cls, request, place, content):
         return cls.render_block(request, template_name='voting/block_voting.html',
                                 block_title=_('Vote content'),
                                 context={'content': content})
