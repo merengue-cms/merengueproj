@@ -9,7 +9,7 @@ class HighlightBlock(Block):
     default_place = 'homepage'
 
     @classmethod
-    def render(cls, request):
+    def render(cls, request, place):
         highlight_items = Highlight.objects.published()
         return cls.render_block(request, template_name='highlight/block_highlight.html',
                                 block_title=_('Highlight'),
