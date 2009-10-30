@@ -1,0 +1,4 @@
+{% load inplace_edit %}
+{% if object %}
+    {% inplace_edit object "content|safe" form %}
+{% endif %}
