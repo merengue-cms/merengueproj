@@ -12,6 +12,7 @@ class PluginConfig(Plugin):
         ('dashboard', 'plugins.ezdashboard.urls'),
     )
     config_params = [
+        params.Single(name='theme', label=_('EzWeb theme'), default='default'),
         params.Single(name='ezweburl', label=_('EzWeb base URL'), default='http://ezweb.yaco.es/'),
     ]
 
