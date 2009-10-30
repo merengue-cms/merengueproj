@@ -50,10 +50,10 @@ def register_plugin(plugin_dir):
         plugin.description = getattr(plugin_config, 'description', '')
         plugin.version = getattr(plugin_config, 'version', '')
         plugin.required_apps = getattr(plugin_config, 'required_apps',
-                                        None)
+                                       None)
         plugin.required_plugins = getattr(plugin_config,
-                                            'required_plugins',
-                                            None)
+                                          'required_plugins',
+                                          None)
         plugin.save()
         return plugin
     return None
