@@ -22,12 +22,12 @@ class RenderBlocksNode(template.Node):
                 content = None
             rendered_blocks = []
             for registered_block in RegisteredBlock.objects.actives():
-                if registered_block.placed_at == self.place:
+                if registered_block.print_block(self.place):
                     block = registered_block.get_registry_item_class()
                     if content is None and issubclass(block, Block):
-                        rendered_blocks.append(block.render(request))
+                        rendered_blocks.append(block.render(request, self.place))
                     elif content is not None and issubclass(block, ContentBlock):
-                        rendered_blocks.append(block.render(request, content))
+                        rendered_blocks.append(block.render(request, self.place, content))
             return '\n'.join(rendered_blocks)
         except template.VariableDoesNotExist:
             return ''
