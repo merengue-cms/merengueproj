@@ -9,7 +9,7 @@ class LatestNewsBlock(Block):
     default_place = 'leftsidebar'
 
     @classmethod
-    def render(cls, request):
+    def render(cls, request, place):
         news_list = NewsItem.objects.published().order_by('-publish_date')
         return cls.render_block(request, template_name='news/block_latest.html',
                                 block_title=_('Latest news'),
@@ -21,7 +21,7 @@ class NewsCommentsBlock(ContentBlock):
     default_place = 'aftercontent'
 
     @classmethod
-    def render(cls, request, content):
+    def render(cls, request, place, content):
         return cls.render_block(request, template_name='news/block_newscomments.html',
                                 block_title=_('News comments'),
                                 context={'content': content})
