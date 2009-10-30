@@ -1,35 +1,20 @@
+from django.utils.translation import ugettext_lazy as _
+
 from merengue.plugins import Plugin
-
-from plugins.news.actions import PDFExport, NewsIndex, NewsRSS
-from plugins.news.blocks import LatestNewsBlock, NewsCommentsBlock
-
-from plugins.news.models import NewsItem
-from plugins.news.admin import NewsItemSectionAdmin
+from merengue.registry import params
 
 
 class PluginConfig(Plugin):
-    name = 'News'
-    description = 'News plugin'
+    name = 'EzDashboard'
+    description = 'Dashboard for users plugins like iGoogle, based on EzWeb platform'
     version = '0.0.1a'
-#    required_apps = ('django.contrib.flatpages', )
-#    required_plugins = {
-#        'event': {
-#            'name': 'Events',
-#            'version': '0.0.1a',
-#        },
-#    }
     url_prefixes = (
-        ('news', 'plugins.news.urls'),
+        ('dashboard', 'plugins.ezdashboard.urls'),
     )
+    config_params = [
+        params.Single(name='ezweburl', label=_('EzWeb base URL'), default='http://ezweb.yaco.es/'),
+    ]
 
-    @classmethod
-    def get_actions(cls):
-        return [PDFExport, NewsIndex, NewsRSS]
-
-    @classmethod
-    def get_blocks(cls):
-        return [LatestNewsBlock, NewsCommentsBlock]
-
-    @classmethod
-    def section_models(cls):
-        return [(NewsItem, NewsItemSectionAdmin)]
+    #@classmethod
+    #def get_blocks(cls):
+        #return [LatestNewsBlock, NewsCommentsBlock]
