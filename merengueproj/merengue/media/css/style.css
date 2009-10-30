@@ -140,3 +140,9 @@ span.infomsg {
     color: green;
     padding-left: 20px;
 }
+
+/* Inplace edit form */
+
+span.inplace_view_editable_field {
+    display: block;
+}
