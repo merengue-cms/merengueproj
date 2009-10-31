@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import template
+from django.conf import settings
 from django.forms.models import modelform_factory, ModelMultipleChoiceField
 from django.forms.fields import MultipleChoiceField
 from django.contrib.contenttypes.models import ContentType
@@ -12,18 +13,19 @@ try:
 except ImportError:
     pass
 
+
 def change_foreing_key(obj):
     obj_dict = obj.__dict__
     obj_dict_result = obj_dict.copy()
     for key, value in obj_dict.items():
         if '_id' in key:
-            key2 = key.replace('_id','')
+            key2 = key.replace('_id', '')
             obj_dict_result[key2] = obj_dict_result[key]
             del obj_dict_result[key]
 
     manytomany_list = obj._meta.many_to_many
     for manytomany in manytomany_list:
-        obj_dict_result[manytomany.name] = [ obj_rel.id for obj_rel in manytomany.value_from_object(obj)]
+        obj_dict_result[manytomany.name] = [obj_rel.id for obj_rel in manytomany.value_from_object(obj)]
     return obj_dict_result
 
 
@@ -63,9 +65,10 @@ def has_translation(field_obj, obj, current_language):
             return True
     return False
 
+
 def transmeta_procesing(field_obj, value, obj, current_language):
     if has_transmeta and not has_translation(field_obj, obj, current_language):
         field_name_generic = field_obj.name.split('_')
-        if len(field_name_generic) > 1:
+        if len(field_name_generic) > 1 and field_name_generic[-1] in [lcode for lcode, ldescription in settings.LANGUAGES]:
             value = getattr(obj, field_name_generic[0])
     return value

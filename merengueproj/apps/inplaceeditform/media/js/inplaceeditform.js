@@ -1,19 +1,15 @@
-
-var $j = jQuery.noConflict();
-
-function inplaceeditform_ready(form_prefix, field_name, obj_id, content_type_id, form, filters){
-
-    $j('#view_'+form_prefix+'-'+field_name+'').bind("mouseenter",function(){
-      $j(this).addClass("chunk_over");
+function inplaceeditform_ready($){
+    $('.inplace-view-editable-field').bind("mouseenter",function(){
+        $(this).addClass("edit_over");
     }).bind("mouseleave",function(){
-      $j(this).removeClass("chunk_over");
+        $(this).removeClass("edit_over");
     });
 
-    $j('#view_'+form_prefix+'-'+field_name+'').dblclick(function (){
-        $j('span#view_'+form_prefix+'-'+field_name+'_save').fadeOut();
-        document.getElementById('view_'+form_prefix+'-'+field_name+'').style.display = 'none';
-        document.getElementById('tools_'+form_prefix+'-'+field_name+'').style.display = 'block';
-        var tools_error = document.getElementById('tools_'+form_prefix+'-'+field_name+'_error');
+    $('.inplace-view-editable-field').dblclick(function (){
+        $(this).hide();
+        var tools = $(this).next('.inplace-tools');
+        tools.show();
+        var tools_error = tools.find('.inplace-tools-error')[0];
         var child_nodes = tools_error.childNodes;
         for (i=0; i<child_nodes.length; i++)
         {
@@ -21,23 +17,26 @@ function inplaceeditform_ready(form_prefix, field_name, obj_id, content_type_id,
         }
     });
 
-    $j('#tools_'+form_prefix+'-'+field_name+'_cancel_id').click(function (){
-        $j('span#view_'+form_prefix+'-'+field_name+'_save').fadeOut();
-        document.getElementById('tools_'+form_prefix+'-'+field_name+'').style.display = 'none';
-        document.getElementById('view_'+form_prefix+'-'+field_name+'').style.display = 'block';
+    $('.inplace-tools .cancel').click(function (){
+        var inplace_tools = $(this).parent();
+        inplace_tools.hide();
+        inplace_tools.prev('.inplace-view-editable-field').show();
     });
 
-    $j('#tools_'+form_prefix+'-'+field_name+'_apply_id').click(function (){
+    $('.inplace-tools .apply').click(function (){
+        var auto_id = $(this).parent().find('.field_id').html();
+        var field_name = $(this).parent().find('.field_name').html();
+        var obj_id = $(this).parent().find('.obj_id').html();
+        var content_type_id = $(this).parent().find('.content_type_id').html();
+        var form = $(this).parent().find('.form').html();
+        var filters = $.evalJSON($(this).parent().find('.filters').html());
 
-
-        var value_input = $j('#id_'+form_prefix+'-'+field_name+'');
-
-        var value_input = $j('#id_'+form_prefix+'-'+field_name+'')[0];
+        var value_input = $(this).parent().find('#' + auto_id);
         var value;
 
-        if (value_input.multiple)
+        if (value_input.attr('multiple'))
         {
-            var options_selected = $j('#id_'+form_prefix+'-'+field_name+' option:selected');
+            var options_selected = value_input.find('option:selected');
             value = [];
             for( i =0; i< options_selected.length; i++)
             {
@@ -45,27 +44,25 @@ function inplaceeditform_ready(form_prefix, field_name, obj_id, content_type_id,
             }
         }
         else{
-            value = value_input.value;
+            value = value_input[0].value;
         }
         var form_query = '';
         if (form)
         {
             form_query = '&form='+form;
         }
-//         filters[filters.length]='|safe';
-        x = filters;
-        var data = 'id='+obj_id+'&field='+field_name+'&value='+encodeURIComponent($j.toJSON(value))+'&content_type_id='+content_type_id+form_query+'&'+'filters='+$j.toJSON(filters);
-        $j.ajax({
+        var _self = this; 
+        var data = 'id='+obj_id+'&field='+field_name+'&value='+encodeURIComponent($.toJSON(value))+'&content_type_id='+content_type_id+form_query+'&'+'filters='+$.toJSON(filters);
+        $.ajax({
         data: data,
         url: "/inplaceeditform/",
         type: "POST",
         async:true,
         success: function(response){
-
             response = eval("("+ response +")");
             if (response.errors)
-            {
-                var tools_error = $j('#tools_'+form_prefix+'-'+field_name+'_error')[0];
+            {   
+                var tools_error = $(_self).parent().find('.inplace-tools-error')[0];
                 var child_nodes = tools_error.childNodes;
                 for (i=0; i<child_nodes.length; i++)
                 {
@@ -73,7 +70,7 @@ function inplaceeditform_ready(form_prefix, field_name, obj_id, content_type_id,
                 }
                 var ul = document.createElement('ul');
                 ul.className = "errors";
-                $j('#tools_'+form_prefix+'-'+field_name+'_error')[0].appendChild(ul);
+                tools_error.appendChild(ul);
                 for (var error in response)
                 {
                     if (error != 'errors')
@@ -89,13 +86,16 @@ function inplaceeditform_ready(form_prefix, field_name, obj_id, content_type_id,
             }
             else
             {
-                $j('#tools_'+form_prefix+'-'+field_name+'')[0].style.display = 'none';
-                $j('#view_'+form_prefix+'-'+field_name+'')[0].style.display = 'block';
-                $j('#view_'+form_prefix+'-'+field_name+'_id')[0].innerHTML = response.value;
-                $j('div#view_'+form_prefix+'-'+field_name+'_save').fadeIn();
-                window.setTimeout("$j('div#view_"+form_prefix+"-"+field_name+"_save').fadeOut()", 2000);
+
+                var inplace_tools = $(_self).parent();
+                inplace_tools.hide();
+                inplace_tools.prev('.inplace-view-editable-field').html(response.value)
+                inplace_tools.prev('.inplace-view-editable-field').show();
+                var inplace_messages = inplace_tools.prev().prev('.inplace-messages');    
+                inplace_messages.fadeIn();
+                window.setTimeout("jQuery('.inplace-messages').fadeOut()", 2000);
             }
         }
     });
-  });
+    });
 }
