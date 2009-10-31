@@ -20,9 +20,9 @@ class ChunkForm(forms.ModelForm):
         super(ChunkForm, self).__init__(*args, **kwargs)
         extra_mce_settings = getattr(settings, 'EXTRA_MCE', {})
         extra_mce_settings.update({'inplace_edit': True,
-                              'theme_advanced_buttons1': 'undo,redo,separator,cut,copy,paste,pastetext,pasteword,separator,preview,separator',
-                              'theme_advanced_buttons2': 'bold,italic,underline,justifyleft,justifycenter,justifyright,bullist,numlist,outdent,indent',
-                              'theme_advanced_buttons3': 'fontselect,fontsizeselect,link,code',
+                              'theme_advanced_buttons1': 'outdent,indent,cut,copy,paste,pastetext,pasteword,preview,code',
+                              'theme_advanced_buttons2': 'bold,italic,underline,justifyleft,justifycenter,justifyright,bullist,numlist,link',
+                              'theme_advanced_buttons3': 'fontselect,fontsizeselect,',
                               'file_browser_callback': 'CustomFileBrowser',
                              })
         content_language = "content_%s" % get_language()

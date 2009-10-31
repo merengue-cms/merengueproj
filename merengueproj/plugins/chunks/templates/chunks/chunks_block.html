@@ -2,12 +2,17 @@
 
 {% load i18n chunks %}
 
+{% block blocktitle %}
+{% endblock %}
 
 {% block blockbody %}
-    {% inplace_media_chunk %}
+    {% if chunks %}
+        {% inplace_media_chunk %}
+    {% endif %}
     {% for chunk in chunks %}
         <div id="chunk-{{ chunk.key }}" class="chunks">
             {% inplace_chunk chunk.key %}
         </div>
     {% endfor %}
+
 {% endblock %}

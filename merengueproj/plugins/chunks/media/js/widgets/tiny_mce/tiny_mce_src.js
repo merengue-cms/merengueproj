@@ -3372,8 +3372,7 @@ TinyMCE_Control.prototype = {
 	queryCommandState : function(c) {
 		return this.getDoc().queryCommandState(c);
 	},
-    calculate_offsetHeigth: function(tag)
-    {
+    calculate_offsetHeigth: function(tag){
         var tag_offset = 0;
         if(tag.offsetHeight!=0 && typeof(tag.offsetHeight) == 'number')
             return tag.offsetHeight;
@@ -3386,8 +3385,6 @@ TinyMCE_Control.prototype = {
             }
         }
         return tag_offset;
-
-
     },
 	_onAdd : function(replace_element, form_element_name, target_document) {
 		var hc, th, to, editorTemplate;
@@ -3414,18 +3411,30 @@ TinyMCE_Control.prototype = {
             if(span) {
               var offsetHeightExtra = 0;
               if (this.settings.theme_advanced_buttons1 != null && this.settings.theme_advanced_buttons1 != ""){
-                offsetHeightExtra += 25;
+                offsetHeightExtra += 30;
               }
               if (this.settings.theme_advanced_buttons2 != null && this.settings.theme_advanced_buttons2 != ""){
-                offsetHeightExtra += 25;
+                offsetHeightExtra += 30;
               }
               if (this.settings.theme_advanced_buttons3 != null && this.settings.theme_advanced_buttons3 != ""){
-                offsetHeightExtra += 25;
+                offsetHeightExtra += 30;
               }
               if (this.settings.theme_advanced_buttons4 != null && this.settings.theme_advanced_buttons4 != ""){
-                offsetHeightExtra += 25;
+                offsetHeightExtra += 30;
               }
 		      this.settings['height']= offsetHeightExtra + this.calculate_offsetHeigth(span);
+              var i=0;
+              var no_text = false;
+              while(i < span.childNodes.length && !no_text) {
+                var tag = span.childNodes[i];
+                if(tag.nodeType!=3 && tag.offsetWidth!=0 && typeof(tag.offsetWidth) == 'number') {
+                    this.settings['width'] = 10 + tag.offsetWidth;
+                    no_text = true;
+                }
+                i++;
+
+              }
+              
             }
 		}
 		if (to.getEditorTemplate)

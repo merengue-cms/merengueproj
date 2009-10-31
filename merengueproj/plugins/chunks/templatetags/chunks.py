@@ -19,16 +19,19 @@ def inplace_chunk(context, key, mode='simple', height=100, cache_time=0):
             cache.set(cache_key, c, int(cache_time))
     except Chunk.DoesNotExist:
         content = ''
-    context.update({'object': c, 'form': 'plugins.chunks.forms.forms.ChunkForm'})
-    return context
+    return {'object': c,
+            'form': 'plugins.chunks.forms.forms.ChunkForm',
+            'MEDIA_URL': context.get('MEDIA_URL', ''),
+            'user': getattr(context['request'], 'user', None),
+           }
 register.inclusion_tag("chunks/chunk.html", takes_context=True)(inplace_chunk)
 
 
 def inplace_media_chunk(context):
-    return context.update({
+    return {
             'request': context['request'],
             'user': context['request'].user,
             'MEDIA_URL': context.get('MEDIA_URL', settings.MEDIA_URL),
             'ADMIN_MEDIA_PREFIX': settings.ADMIN_MEDIA_PREFIX,
-    })
+    }
 register.inclusion_tag("chunks/chunk_media.html", takes_context=True)(inplace_media_chunk)

@@ -39,10 +39,10 @@ class TinyMCEChunk(TinyMCE):
                     var field_name = "%(field_name)s";
                     tinyMCE.init(%(mce_settings)s);
                     jQuery("#view_%(field_name)s").dblclick(function () {
-                        var tools = document.getElementById("tools_%(field_name)s");
-                        var textarea = document.getElementById("id_%(field_name)s");
+                        var tools = jQuery(this).next('.inplace-tools');
+                        var textarea = tools.find("#id_%(field_name)s");
                         var editor_id = tinyMCE.idCounter;
-                        tinyMCE.addMCEControl(textarea, textarea.id);
+                        tinyMCE.addMCEControl(textarea[0], textarea[0].id);
                         jQuery("#tools_%(field_name)s_cancel_id").click(function () {
                             tinyMCE.removeMCEControl("mce_editor_" + editor_id);
                         });
