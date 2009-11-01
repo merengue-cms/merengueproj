@@ -31,6 +31,7 @@ urlpatterns = patterns('',
     (r'^i18n/setlang/$', 'merengue.portal.views.set_language'),
     (r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict),
     (r'^inplaceeditform/', include('inplaceeditform.urls')),
+    (r'^reports/', include('auto_reports.urls')),
 
     # actions
     (r'^actions/', include('merengue.action.urls')),
