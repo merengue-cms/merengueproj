@@ -1,5 +1,5 @@
 {% extends "admin/base_site.html" %}
-{% load adminmedia admin_list i18n %}
+{% load adminmedia admin_list i18n auto_reports_tags %}
 
 {% block extrastyle %}
   {{ block.super }}
@@ -33,6 +33,7 @@
   <div id="content-main">
     {% block object-tools %}
         <ul class="object-tools">
+          {% auto_reports_admin %}
           {% if inside_basecontent %}
           {% include "admin/object_tools.html" %}
           {% endif %}
