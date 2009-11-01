@@ -63,6 +63,7 @@ INSTALLED_APPS = (
     'captcha',
     'south',
     'threadedcomments',
+    'auto_reports',
 ) + MERENGUE_APPS
 
 # merengue exclusive middlewares. you have to put at least these middleware in your project settings

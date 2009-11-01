@@ -141,7 +141,7 @@ def _get_object_tools_in_route(route):
 
 
 def smart_relations_object_tool(context):
-    route = _calculate_route(context)
+    route = _calculate_route(context) or []
     obj_tools = _get_object_tools_in_route(route)
     return {'obj_tools': obj_tools}
 smart_relations_object_tool = register.inclusion_tag('admin/smart_relations_object_tool.html', takes_context=True)(smart_relations_object_tool)
