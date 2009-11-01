@@ -1,6 +1,7 @@
 import csv
-from copy import copy
 import locale
+
+from copy import copy
 
 from django.contrib.admin import site
 from django.contrib.contenttypes.models import ContentType
