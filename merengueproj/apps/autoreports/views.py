@@ -58,7 +58,7 @@ def model_admin_reports_view(request, app_name, model_name, model_admin_module,
                              model_admin_class_name, fields=None, list_headers=None,
                              ordering=None, filters=Q()):
     model_admin = getattr(__import__(model_admin_module, {}, {}, model_admin_class_name), model_admin_class_name)
-    fields = fields or getattr(model_admin, 'list_export', None)
+    fields = fields or getattr(model_admin, 'report_fields', None)
     if request.GET.get('q', None):
         request = copy(request)
         class_model = ContentType.objects.get(app_label=app_name, model=model_name).model_class()
