@@ -3,10 +3,12 @@
 <div class="document-section" id="document-section-{{ document_section.id }}">
   {% ifcanedit user content %}
     {% if newly %}
-    {% inplace_edit document_section "body|safe" %}
+      {% inplace_edit document_section "body|safe" %}
     {% else %}
-    {% inplace_edit document_section "body|safe" "merengue.section.forms.DocumentSectionForm" %}
+      {% inplace_edit document_section "body|safe" "merengue.section.forms.DocumentSectionForm" %}
     {% endif %}
+  {% else %}
+    {{ document_section.body|safe }}
   {% endifcanedit %}
   <div class="document-section-actions">
     {% collaborative_comments document_section %}
