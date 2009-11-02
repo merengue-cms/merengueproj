@@ -56,10 +56,12 @@ def menu_section_view(request, section_slug, menu_slug):
     if isinstance(link, AbsoluteLink):
         return HttpResponseRedirect(link.url)
     elif isinstance(link, ContentLink):
+        content = link.content.get_real_instance()
         context = {}
         context['section'] = section.real_instance
         context['menu'] = menu
-        return content_view(request, link.content, template_name='section/menu_section_view.html', extra_context=context)
+        context['base_template'] = getattr(content._meta, 'content_view_template')
+        return content_view(request, content, template_name='section/menu_section_view.html', extra_context=context)
 
 
 def section_view_whitout_maincontent(request, context):
