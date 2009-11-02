@@ -5,7 +5,7 @@ from cmsutils.adminfilters import QueryStringManager
 register = template.Library()
 
 
-def auto_reports_admin(context):
+def autoreports_admin(context):
     context_tag = {}
     model_admin = context.get('model_admin', None)
     if model_admin:
@@ -27,7 +27,7 @@ def auto_reports_admin(context):
             query_string += query_string_extra
         context_tag['query_string'] = query_string
     return context_tag
-smart_relations_object_tool = register.inclusion_tag('auto_reports/auto_reports_admin.html', takes_context=True)(auto_reports_admin)
+smart_relations_object_tool = register.inclusion_tag('autoreports/autoreports_admin.html', takes_context=True)(autoreports_admin)
 
 
 def _object_owner(request, model_admin):

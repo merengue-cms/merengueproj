@@ -14,7 +14,7 @@ from django.utils.translation import get_language
 from decimal import Decimal
 from cmsutils.adminfilters import QueryStringManager
 
-from auto_reports.utils import add_domain
+from autoreports.utils import add_domain
 
 CHANGE_VALUE = {'get_absolute_url': add_domain}
 EXCLUDE_FIELDS = ('batchadmin_checkbox', )
