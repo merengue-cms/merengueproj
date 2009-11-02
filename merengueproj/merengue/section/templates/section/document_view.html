@@ -2,12 +2,12 @@
 
 {% load inlinetrans content_tags permission_tags inplace_edit collaborative document_tags %}
 
- {% block extrahead %}
-   {% inplace_media %}
-   {% collaborative_comments_media %}
-   {% collaborative_translation_media %}
-   {% document_section_media %}
- {% endblock %}
+{% block extrahead %}
+  {% inplace_media %}
+  {% collaborative_comments_media %}
+  {% collaborative_translation_media %}
+  {% document_section_media %}
+{% endblock %}
 
 {% block contentbody %}
   {% ifcanedit user content %}
