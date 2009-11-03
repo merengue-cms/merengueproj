@@ -246,7 +246,18 @@ class RelatedBaseContentWidget(RelatedFieldWidgetWrapper):
         else:
             output += super(RelatedBaseContentWidget, self).render(name, value, *args, **kwargs)
             output += u'<br />'
-        output += u'<a id="lookup_id_%s" href="/admin/base/basecontent/?for_select=1" onclick="javascript:showRelatedObjectLookupPopup(this); return false;">%s</a>' % (name, _('Select content'))
+        params=[]
+        if getattr(self.widget, 'choices', None):
+            for id, value in self.widget.choices:
+                if not isinstance(id, int):
+                    continue
+                params.append(str(id))
+        if params:
+            params_str = '&id__in=%s' % ','.join(params)
+        else:
+            params_str = ''
+
+        output += u'<a id="lookup_id_%s" href="/admin/base/basecontent/?for_select=1%s" onclick="javascript:showRelatedObjectLookupPopup(this); return false;">%s</a>' % (name, params_str, _('Select content'))
         output += u'</div>'
         output += u'<br style="clear: left;" />'
         return mark_safe(u''.join(output))

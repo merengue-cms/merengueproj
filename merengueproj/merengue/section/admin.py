@@ -38,10 +38,6 @@ class BaseSectionAdmin(BaseAdmin):
             else:
                 qs = qs.filter(basesection=obj)
 
-            # first change widget to default one (not RelatedBaseContentWidget)
-            old_widget = field.widget.widget
-            field.widget = old_widget
-
             # Como Document no esta registrado en el admin site, no tiene
             # sentido mostrar este campo si no tiene opciones ya que no
             # se pueden crear nuevos documentos desde aqui
