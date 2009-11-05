@@ -204,6 +204,12 @@ class BaseSection(Base, RealInstanceMixin):
 
     __metaclass__ = TransMeta
 
+    order = models.IntegerField(
+        _('order'),
+        blank=True,
+        null=True,
+    )
+
     main_menu = models.OneToOneField(
         Menu,
         verbose_name=_('main menu'),
@@ -283,6 +289,7 @@ class BaseSection(Base, RealInstanceMixin):
 
     class Meta:
         abstract = False
+        ordering = ('order', )
 
     def __unicode__(self):
         return unicode(self.name)

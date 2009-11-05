@@ -23,7 +23,7 @@ class MenuAdmin(BaseAdmin):
 
 
 class BaseSectionAdmin(BaseAdmin):
-    list_display = ('name', 'slug', )
+    list_display = ('order', 'name', 'slug', )
     html_fields = ()
     removed_fields = ('description', )
     prepopulated_fields = {'slug': ('name_es', )}
@@ -57,7 +57,6 @@ class ContentLinkAdmin(BaseAdmin):
 
 
 class SectionAdmin(BaseSectionAdmin):
-    list_display = ('name', 'slug')
 
     def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
         context['change_form_section'] = True
