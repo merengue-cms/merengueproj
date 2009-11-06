@@ -360,3 +360,8 @@ ul.dependencies li.unfulfilled {
     background: transparent url(/admin_media/img/admin/icon-no.gif) no-repeat left center !important;
     color: #FF0000;
 }
+
+.row-holder {
+    background-color: #f0ffff;
+    border: 1px dashed #999999;
+}

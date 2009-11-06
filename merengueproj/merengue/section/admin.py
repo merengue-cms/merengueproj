@@ -8,7 +8,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
 from merengue.base.models import BaseContent
-from merengue.base.admin import BaseAdmin, BaseContentAdmin, RelatedModelAdmin
+from merengue.base.admin import BaseAdmin, BaseContentAdmin, RelatedModelAdmin, \
+                                BaseOrderableAdmin
 from merengue.base.admin import set_field_read_only
 from merengue.multimedia.models import Photo
 from merengue.section.models import (Menu, Section, AppSection, Carousel,
@@ -22,8 +23,11 @@ class MenuAdmin(BaseAdmin):
     prepopulated_fields = {'slug': ('name_es', )}
 
 
-class BaseSectionAdmin(BaseAdmin):
-    list_display = ('order', 'name', 'slug', )
+class BaseSectionAdmin(BaseOrderableAdmin):
+    sortablefield = 'order'
+    ordering = ('order', )
+    list_display = ('name', 'slug', )
+    list_display_links = ('name', )
     html_fields = ()
     removed_fields = ('description', )
     prepopulated_fields = {'slug': ('name_es', )}
