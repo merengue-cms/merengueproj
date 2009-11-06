@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% load i18n inlinetrans action_tags videoplayer %}
+
+{% block extramedia %}{% videoplayerjs %}{% endblock %}
+
+{% block pagetitle %}{% trans "Streaming live" %}{% endblock %}
+
+{% block content %}
+<h1>{% inline_trans "Streaming live" %}</h1>
+<div class="video">
+{% videoplayer %}
+</div>
+
+{% endblock %}

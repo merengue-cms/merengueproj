@@ -1,0 +1,16 @@
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+  <script type="text/javascript">
+    params = { AllowScriptAccess: 'always' };
+    function livestreamPlayerCallback(event) {
+    	if (event == "ready") {
+    		player.setChannel({{ channel }});
+    		player.setClipID({{ clipid }});
+    		player.startPlayback();
+    	}
+    }
+    swfobject.embedSWF("http://cdn.livestream.com/chromelessPlayer/wrappers/JSPlayer.swf",
+      "livestreamPlayer", "500", "214", "9.0.0", "expressInstall.swf", null, params);
+    function init() {
+      player = document.getElementById("livestreamPlayer");
+    }
+  </script>
