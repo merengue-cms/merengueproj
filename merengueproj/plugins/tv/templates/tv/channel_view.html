@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% load i18n inlinetrans action_tags videoplayer %}
+
+{% block extrahead %}{% if video %}{% videoplayerjs video %}{% endif %}{% endblock %}
+
+{% block pagetitle %}{{ content }}{% endblock %}
+
+{% block extrabodytag %}onload="init()"{% endblock %}
+
+{% block content %}
+{{ block.super }}
+    {% if video %}
+        <div class="video">
+            {% videoplayer video %}
+        </div>
+    {% endif %}
+{% endblock %}

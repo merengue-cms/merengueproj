@@ -1,7 +1,8 @@
 from django.contrib.gis.db import models
+from django.db.models import permalink
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.base.models import Base
+from merengue.base.models import BaseContent
 from merengue.multimedia.models import Video
 
 
@@ -12,13 +13,18 @@ class VideoStreaming(Video):
                                help_text='Channel in Livestream')
 
 
-class Channel(Base):
-    pass
+class Channel(BaseContent):
+
+    @permalink
+    def public_link(self):
+        return ('channel_view', [self.slug])
 
 
 class Schedule(models.Model):
-    broadcast_date = models.DateTimeField(('broadcast date'))
+    broadcast_date = models.DateTimeField(('broadcast date'),
+                                          help_text=_('In hours'))
     channel = models.ForeignKey(Channel, verbose_name=_('channel'),
-                                related_name='schedules')
+                                related_name='schedules',
+                                default='yacontents')
     video = models.ForeignKey(VideoStreaming, verbose_name=_('video'),
                               related_name='schedules')
