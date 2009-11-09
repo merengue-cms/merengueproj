@@ -3,8 +3,9 @@
     params = { AllowScriptAccess: 'always' };
     function livestreamPlayerCallback(event) {
     	if (event == "ready") {
-    		player.setChannel({{ channel }});
-    		player.setClipID({{ clipid }});
+    		player.setDevKey("BQjQRk3wTe-uulEMJI3Y4l9L0cg5gd9nBUVD_RhiB99_ok6cyTmnvOBaqeD1zF3dPlYXA4V6hEM2wQPfQZnzBd79v_t4fhD2zsJF4awWMTU");
+            player.setChannel("{{ channel }}");
+    		player.setClipID("{{ clipid }}");
     		player.startPlayback();
     	}
     }

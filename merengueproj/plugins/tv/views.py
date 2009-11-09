@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404
 
 from merengue.base.views import content_view
 
-from plugins.event.models import VideoStreaming
+from plugins.tv.models import VideoStreaming
 
 
 def video_index(request):

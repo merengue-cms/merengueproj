@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from merengue.base.admin import BaseAdmin
-from merengue.multimedia.admin import VideoAdmin
+from merengue.multimedia.admin import BaseMultimediaAdmin, VideoAdmin
 from plugins.tv.models import Channel, Schedule, VideoStreaming
 
 
@@ -13,7 +13,17 @@ class ScheduleAdmin(BaseAdmin):
 
 
 class VideoStreamingAdmin(VideoAdmin):
-    pass
+
+    exclude = ('authors', 'file', 'external_url')
+
+    def get_form(self, request, obj=None):
+        form = super(BaseMultimediaAdmin, self).get_form(request, obj)
+
+        def clean(self):
+            super(form, self).clean()
+            return self.cleaned_data
+        form.clean = clean
+        return form
 
 
 def register(site):

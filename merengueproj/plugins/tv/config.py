@@ -7,4 +7,5 @@ class PluginConfig(Plugin):
     version = '0.0.1a'
 
     url_prefixes = (
+        ('canales-de-television', 'plugins.tv.urls'),
     )

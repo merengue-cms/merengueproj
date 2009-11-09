@@ -2,14 +2,16 @@
 
 {% load i18n inlinetrans action_tags videoplayer %}
 
-{% block extramedia %}{% videoplayerjs %}{% endblock %}
+{% block extrahead %}{% videoplayerjs content %}{% endblock %}
 
 {% block pagetitle %}{% trans "Streaming live" %}{% endblock %}
+
+{% block extrabodytag %}onload="init()"{% endblock %}
 
 {% block content %}
 <h1>{% inline_trans "Streaming live" %}</h1>
 <div class="video">
-{% videoplayer %}
+{% videoplayer content %}
 </div>
 
 {% endblock %}
