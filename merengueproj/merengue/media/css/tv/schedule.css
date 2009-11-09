@@ -1,0 +1,109 @@
+.schedule-week-view table th {
+    text-align: center;
+}
+
+.schedule-week-view table td {
+    border-left: 1px solid #dddddd;
+    border-right: 1px solid #dddddd;
+}
+
+.hours-th {
+    width: 80px;
+}
+
+.videoAccess a {
+    display: block;
+    width: auto;
+    position: absolute;
+    text-align: center;
+}
+
+.videoAccess .video-name {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.videoAccess .video-preview {
+    margin: 5px 0px 2px;
+}
+
+.videoAccess .video-start,
+.videoAccess .video-end {
+    padding-top: 15px;
+    color: black;
+}
+
+.videoAccess .video-start {
+    background: url(/media/merengue/img/tv/tv_start.gif) no-repeat top center;
+    float: left;
+}
+
+.videoAccess .video-end {
+    background: url(/media/merengue/img/tv/tv_end.gif) no-repeat top center;
+    float: right;
+}
+
+.videoAccess {
+    border: 1px solid #adb3be;
+    z-index: 9999;
+    background: white;
+    overflow: hidden;
+    padding: 5px;
+    position: absolute;
+}
+
+.videoAccessReduced {
+    position: static;
+    width: 250px !important;
+    height: auto !important;
+    float: left;
+    background: none;
+    border: none;
+}
+
+.actual-date {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-left: 260px;
+}
+
+.filter-date {
+    margin: 0px -15px;
+    font-weight: bold;
+    font-size: 1.2em;
+    background: #f1f5f8;
+    padding: 5px 20px;
+    border: 1px solid #e9ecef;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    clear: both;
+}
+
+.filter-date {
+    background: #f4f7fa;
+    border-bottom-width: 0px;
+    font-size: 10px;
+    font-weight: normal;
+}
+
+.filter-date th {
+    text-align: center;
+}
+
+.filter-date td {
+    padding: 1px 10px;
+    text-align: center;
+}
+
+.filter-date td.cal_not_in_month {
+    background: #dddddd;
+}
+
+.filter-date table.cal_month_calendar {
+    border: 1px solid #dddddd;
+    float: left;
+}
+
+.filter-date ul.extra-filters {
+    margin-left: 260px;
+}

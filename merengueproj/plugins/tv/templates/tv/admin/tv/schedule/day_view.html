@@ -1,0 +1,22 @@
+{% extends "tv/admin/tv/schedule/week_view.html" %}
+
+{% load i18n schedule %}
+
+  {% block date_filters %}
+  <div class="filter-date">
+    {% month_cal base_date.month base_date.year %}
+    <div class="actual-date">{{ actual_date }}</div>
+    <ul class="extra-filters">
+       <li><a href="?{% get_week_view_params base_date %}">{% trans "Week view" %}</a></li>
+       <li>
+       {% if reduced_view %}
+         <span class="set-reduced-view hide"></span>
+         <a href="{{ cl.get_query_string }}">{% trans "View all hours" %}</a>
+       {% else %}
+         <a href="{{ cl.get_query_string }}&reduced_view=1">{% trans "Only show videos" %}</a>
+       {% endif %}
+       </li>
+    </ul>
+    <br style="clear: both;" />
+  </div>
+  {% endblock %}

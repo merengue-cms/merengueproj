@@ -1,0 +1,67 @@
+{% extends "admin/change_list.html" %}
+
+{% load i18n schedule %}
+
+{% block extrahead %}
+  {{ block.super }}
+  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/tv/Schedule.js"></script>
+{% endblock %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}merengue/css/tv/schedule.css" />
+{% endblock %}
+
+{% block content %}
+
+
+  {% block date_filters %}
+  <div class="filter-date">
+    {% month_cal base_date.month base_date.year %}
+    <div class="actual-date">{{ actual_date }}</div>
+    <ul class="extra-filters">
+       {% if dayview %}<li><a href="">{% trans "Week view" %}</a></li>{% endif %}
+       {% block extra-filters %}
+       {% endblock extra-filters %}
+    </ul>
+    <br style="clear: both;" />
+  </div>
+  {% endblock %}
+
+  {% block actual_date %} 
+  {% endblock %}
+
+  {{ block.super }}
+
+  <br style="clear: both;" />
+  <span class="hide" id="hoursdelta">{{ hoursdelta }}</span>
+
+  <div class="schedule-week-view module">
+    <table style="width: 100%">
+      <thead>
+      <tr>
+        <th class="hours-th"></th>
+        {% for day in days %}
+        <th class="day-{{ day.index }}">
+          {% if day.datefilter %}
+            <a href="?{{ day.datefilter }}">{{ day.name }}<br />{{ day.date }}</a>
+          {% else %}
+            {{ day.name }}<br />{{ day.date }}
+          {% endif %}
+        </th>
+        {% endfor %}
+      </tr>
+      </thead>
+      <tbody>
+      {% for hour in hours %}
+      <tr class="hour-{{ hour }} {% cycle "row1" "row2" %}">
+        <td>{{ hour.hour }}<span class="hour-init-seconds hide">{{ hour.seconds_of_day }}</span></td>
+        {% for day in days %}
+        <td></td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock content %}

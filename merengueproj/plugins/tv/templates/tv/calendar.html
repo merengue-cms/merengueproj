@@ -1,0 +1,23 @@
+
+{% load i18n %}
+
+<table class="cal_month_calendar">
+<tr><th colspan="7">{{ month }} {{ year }}</th></tr>
+<tr>
+{% for day in headers %}
+<th>{{ day|date:"D"|slice:":1" }}</hd>
+{% endfor %}
+</tr>
+{% for week in calendar %}
+<tr>
+{% for day in week %}
+<td class="{% if not day.in_month %}cal_not_in_month{% endif %}">
+
+<a href="?broadcast_date__day={{ day.day|date:"j" }}&broadcast_date__month={{ day.day|date:"m" }}&broadcast_date__year={{ day.day|date:"Y" }}">{{ day.day|date:"j" }}</a>
+
+</td>
+{% endfor %}
+</tr>
+{% endfor %}
+
+</table>
