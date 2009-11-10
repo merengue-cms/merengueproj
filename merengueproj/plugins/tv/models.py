@@ -17,7 +17,7 @@ class Channel(BaseContent):
 
     @permalink
     def public_link(self):
-        return ('channel_view', [self.slug])
+        return ('channel_view', (self.slug, ))
 
 
 class Schedule(models.Model):
@@ -25,6 +25,6 @@ class Schedule(models.Model):
                                           help_text=_('In hours'))
     channel = models.ForeignKey(Channel, verbose_name=_('channel'),
                                 related_name='schedules',
-                                default='yacontents')
+                               )
     video = models.ForeignKey(VideoStreaming, verbose_name=_('video'),
                               related_name='schedules')

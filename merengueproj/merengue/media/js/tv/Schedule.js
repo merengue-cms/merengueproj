@@ -118,10 +118,12 @@
                     if ($(this).width() + $(this).offset().left > border) {
                         $(this).css('left', border - $(this).width());
                     }
+		    $(this).css('z-index', '99999');
                 }).bind('mouseleave', function() {
                     $(this).css('height', $(this).data('old_height'));
                     $(this).css('width', $(this).data('old_width'));
                     $(this).css('left', $(this).data('old_left'));
+		    $(this).css('z-index', '1');
                 });
             }
 
@@ -130,9 +132,9 @@
             }
 
             $(this).hide();
+            moveObjectTools();
             reduced = $('.set-reduced-view').length;
             fillWeek();
-            moveObjectTools();
             if (reduced) {
                 $('.schedule-week-view').hide();
             } else {
