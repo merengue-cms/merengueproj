@@ -30,6 +30,7 @@ class NewsItem(BaseContent):
 
     class Meta:
         translate = ('body', )
+        content_view_template = 'news/newsitem_view.html'
 
     @permalink
     def public_link(self):
