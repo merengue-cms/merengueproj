@@ -8,3 +8,9 @@
   <span class="breadcrumbSeparator">→</span><a href="{% url news_index %}" title="{% trans "News" %}">{% inline_trans "News" %}</a>
 {% endblock %}
 
+{% block contentbody %}
+  <div class="contentbody news-contentbody">
+    {{ content.body|safe }}
+  </div>
+{% endblock %}
+
