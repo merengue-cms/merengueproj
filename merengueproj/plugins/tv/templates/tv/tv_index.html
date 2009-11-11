@@ -14,13 +14,31 @@
 
 
 {% block content %}
+    {% for item in channels %}
+      <div class="channel" id="{{ item.name }}">
+        <img id="emphasized1" src="/media/themes/yacontents/img/topimageframe_blue_long.gif" alt="border image" />
+        <div class="channel_content">
+           {% if item.main_image %}
+            <div class="channel_image">
+                <img src="/media/{{ item.main_image }}" alt="{{ item.name }}"/>
+            </div>
+            {% endif %}
 
-<ul>
-    {% for channel in channels %}
-        <li>
-            <a href="{{ channel.get_absolute_url }}"> {{ channel }} </a>
-        </li>
+            <div class="item_title">
+               <a href="{{ channel.get_absolute_url }}"><span class="channel_number">{% inline_trans "Channel" %}{{ forloop.counter }} // </span><h2>{{ item.name }}</h2></a>
+            </div>
+
+            {% if item.description %}
+            <div class="channel_description">
+                {{ item.description|safe }}
+            </div>
+            {% endif %}
+            
+        </div>
+        <div id="grey_continuation_long"></div>
+        <div class="visualClear"></div>
+    </div>
+
     {% endfor %}
-</ul>
 
 {% endblock %}
