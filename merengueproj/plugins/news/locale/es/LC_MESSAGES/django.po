@@ -1,0 +1,102 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-11-12 13:04+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: actions.py:11 templates/news/news_index.html:5
+#: templates/news/news_index.html.py:12
+msgid "News index"
+msgstr ""
+
+#: actions.py:20
+msgid "News rss"
+msgstr ""
+
+#: actions.py:29
+msgid "Export to PDF"
+msgstr ""
+
+#: actions.py:31
+msgid "username"
+msgstr ""
+
+#: actions.py:32
+msgid "bestfriend"
+msgstr ""
+
+#: actions.py:34
+msgid "friends"
+msgstr ""
+
+#: actions.py:36
+msgid "more friends"
+msgstr ""
+
+#: actions.py:42
+msgid "season"
+msgstr ""
+
+#: actions.py:43
+msgid "Spring"
+msgstr ""
+
+#: actions.py:44
+msgid "Summer"
+msgstr ""
+
+#: actions.py:45
+msgid "Autumn"
+msgstr ""
+
+#: actions.py:46
+msgid "Winter"
+msgstr ""
+
+#: blocks.py:15
+msgid "Latest news"
+msgstr ""
+
+#: blocks.py:26
+msgid "News comments"
+msgstr ""
+
+#: models.py:16
+msgid "news category"
+msgstr ""
+
+#: models.py:17
+msgid "news categories"
+msgstr ""
+
+#: models.py:25
+msgid "category"
+msgstr ""
+
+#: models.py:27
+msgid "body"
+msgstr ""
+
+#: templates/news/block_newscomments.html:6
+msgid "Comments for this news item:"
+msgstr ""
+
+#: templates/news/block_newscomments.html:11
+msgid "Add a new comment:"
+msgstr ""
+
+#: templates/news/news_index.html:8 templates/news/newsitem_view.html:8
+msgid "News"
+msgstr ""
