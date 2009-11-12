@@ -12,6 +12,11 @@
   </div>
 {% endblock %}
 
+{% block breadcrumbs %}
+    {% include "inc.breadcrumbs.html" %}
+    <span class="breadcrumbSeparator">→</span>
+    <span>{% inline_trans "Channels" %}</span>
+{% endblock %}
 
 {% block content %}
     {% for item in channels %}

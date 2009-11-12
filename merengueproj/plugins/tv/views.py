@@ -20,7 +20,8 @@ def channel_view(request, channel_slug):
     videos = [schedule.video for schedule in channel.schedules.filter(broadcast_date__lte=now)
                              if now < schedule.broadcast_date + timedelta(seconds=3600*schedule.video.duration)]
     video = videos and videos[0] or channel.schedules.all() and channel.schedules.all()[0].video or None
-    return content_view(request, channel, 'tv/channel_view.html', {'video': video})
+    return content_view(request, channel, 'tv/channel_view.html', {'video': video,
+                                                                    'channel': channel})
 
 
 def video_view(request, video_id):

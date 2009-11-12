@@ -8,6 +8,14 @@
 
 {% block extrabodytag %}onload="init()"{% endblock %}
 
+{% block breadcrumbs %}
+    {% include "inc.breadcrumbs.html" %}
+    <span class="breadcrumbSeparator">→</span>
+    <a href="/canales-de-television" title="{% trans "Channels" %}">{% inline_trans "Channels" %}</a>
+    <span class="breadcrumbSeparator">→</span>
+    <span>{{ channel }}
+{% endblock %}
+
 {% block content %}
 {{ block.super }}
     {% if video %}
