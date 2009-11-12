@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-12 10:27+0100\n"
-"PO-Revision-Date: 2009-11-12 11:38\n"
+"POT-Creation-Date: 2009-11-12 19:48+0100\n"
+"PO-Revision-Date: 2009-11-12 19:50\n"
 "Last-Translator: <dev@merengueproject.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,9 +16,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Translated-Using: django-rosetta 0.4.RC2\n"
 
-#: admin.py:122 admin.py:163
+#: admin.py:123 admin.py:164
 msgid "Database error"
 msgstr "Error de la base de datos"
+
+#: blocks.py:15
+msgid "Latest video"
+msgstr "Últimos vídeos"
 
 #: models.py:10
 msgid "duration"
@@ -40,11 +44,16 @@ msgstr "a las"
 msgid "video"
 msgstr "vídeo"
 
-#: templates/tv/tv_index.html:11
+#: templates/tv/block_latest.html:9
+msgid "min"
+msgstr ""
+
+#: templates/tv/channel_view.html:14 templates/tv/tv_index.html:11
+#: templates/tv/tv_index.html.py:18
 msgid "Channels"
 msgstr "Canales"
 
-#: templates/tv/tv_index.html:28
+#: templates/tv/tv_index.html:33
 msgid "Channel"
 msgstr "Canal"
 
