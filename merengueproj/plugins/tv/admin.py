@@ -32,7 +32,8 @@ class ScheduleAdmin(BaseAdmin):
 
     def get_video_name(self, obj):
         html = '<div class="video-name">%s</div>' % obj.video.name
-        html += '<div class="video-preview"><img src="%s" /></div>' % obj.video.preview.thumbnail.url()
+        #if obj.video.preview:
+        #    html += '<div class="video-preview"><img src="%s" /></div>' % obj.preview.thumbnail.url()
         html += '<div class="video-start">%s</div>' % obj.broadcast_date.strftime('%H:%Mh')
         video_end = obj.broadcast_date + datetime.timedelta(seconds=obj.video.duration)
         html += '<div class="video-end">%s</div>' % video_end.strftime('%H:%Mh')

@@ -1,0 +1,17 @@
+{% extends "block.html" %}
+{% load inlinetrans %}
+{% block blockbody %}
+  <ul id="video-list">
+  {% for n in video_list %}
+    <li>
+      <a class="title" href="/canales-de-television/video/{{ n.id }}" title="{{ n }}">{{ n }}</a>
+      {% if n.duration %}
+      <span>{{ n.duration }}{% inline_trans "min" %}</span>
+      {% endif %}
+      {% if n.preview %}
+         <a href="/canales-de-television/video/{{ n.id }}" title="{{ n }}" ><img src="{{ n.preview.thumbnail.url }}" alt="{{ n }}"/></a>
+      {% endif %}
+    </li>
+  {% endfor %}
+  </ul>
+{% endblock %}

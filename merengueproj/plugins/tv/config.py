@@ -1,5 +1,7 @@
 from merengue.plugins import Plugin
 
+from plugins.tv.blocks import LatestVideoBlock
+
 
 class PluginConfig(Plugin):
     name = 'Tv'
@@ -9,3 +11,7 @@ class PluginConfig(Plugin):
     url_prefixes = (
         ('canales-de-television', 'plugins.tv.urls'),
     )
+
+    @classmethod
+    def get_blocks(cls):
+        return [LatestVideoBlock, ]
