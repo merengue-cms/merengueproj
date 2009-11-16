@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
+import os
 
 from django import template
 from django.contrib.admin.options import IncorrectLookupParameters
@@ -32,8 +33,8 @@ class ScheduleAdmin(BaseAdmin):
 
     def get_video_name(self, obj):
         html = '<div class="video-name">%s</div>' % obj.video.name
-        #if obj.video.preview:
-        #    html += '<div class="video-preview"><img src="%s" /></div>' % obj.preview.thumbnail.url()
+        if obj.video.preview and obj.preview.video.preview.thumbnail and os.path.exists(obj.video.preview.thumbnail.path()):
+            html += '<div class="video-preview"><img src="%s" /></div>' % obj.video.preview.thumbnail.url()
         html += '<div class="video-start">%s</div>' % obj.broadcast_date.strftime('%H:%Mh')
         video_end = obj.broadcast_date + datetime.timedelta(seconds=obj.video.duration)
         html += '<div class="video-end">%s</div>' % video_end.strftime('%H:%Mh')
