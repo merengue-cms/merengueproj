@@ -1,0 +1,36 @@
+{% load i18n %}
+<div id="content-main" class="control-panel">
+
+{% if app_list %}
+    {% for app in app_list %}
+        <div class="module">
+        <table summary="{% blocktrans with app.name as name %}Models available in the {{ name }} application.{% endblocktrans %}">
+        <caption><a href="{{ relative_path }}{{ app.app_url }}" class="section">{% blocktrans with app.name as name %}{{ name }}{% endblocktrans %}</a></caption>
+        {% for model in app.models %}
+            <tr>
+            {% if model.perms.change %}
+                <th scope="row"><a href="{{ relative_path }}{{ model.admin_url }}">{{ model.name }}</a></th>
+            {% else %}
+                <th scope="row">{{ model.name }}</th>
+            {% endif %}
+
+            {% if model.perms.add %}
+                <td><a href="{{ relative_path }}{{ model.admin_url }}add/" class="addlink">{% trans 'Add' %}</a></td>
+            {% else %}
+                <td>&nbsp;</td>
+            {% endif %}
+
+            {% if model.perms.change %}
+                <td><a href="{{ relative_path }}{{ model.admin_url }}" class="changelink">{% trans 'Change' %}</a></td>
+            {% else %}
+                <td>&nbsp;</td>
+            {% endif %}
+            </tr>
+        {% endfor %}
+        </table>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>{% trans "You don't have permission to edit anything." %}</p>
+{% endif %}
+</div>
