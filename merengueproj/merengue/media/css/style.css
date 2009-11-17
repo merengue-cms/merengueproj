@@ -57,7 +57,7 @@ a img {
 /* ----- Develop version info ----- */
 #current-svn-revision {
     position: absolute;
-    top: 20px;
+    top: 5px;
     right: 20px;
     color: red;
 }

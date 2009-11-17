@@ -10,6 +10,7 @@ BASEDIR = path.dirname(path.abspath(__file__))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+DEBUG_TOOLBAR = DEBUG
 
 ADMINS = (
     ('Manuel Saelices', 'msaelices@yaco.es'),
@@ -69,17 +70,6 @@ SECRET_KEY = 'v$*k)ri8i*yv@yb2w!c)t#aj$o=na8u#855#wsve4!iw%u__hy'
 
 MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + (
     # put here aditional middlewares
-)
-
-DEBUG_TOOLBAR_PANELS = (
-    #'debug_toolbar.panels.version.VersionDebugPanel',
-    #'debug_toolbar.panels.timer.TimerDebugPanel',
-    #'debug_toolbar.panels.headers.HeaderDebugPanel',
-    #'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
-    #'debug_toolbar.panels.sql.SQLDebugPanel',
-    #'debug_toolbar.panels.cache.CacheDebugPanel',
-    'debug_toolbar.panels.template.TemplateDebugPanel',
-    #'debug_toolbar.panels.logger.LoggingPanel',
 )
 
 ROOT_URLCONF = '{{ project_name }}.urls'

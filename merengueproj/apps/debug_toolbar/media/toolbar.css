@@ -109,6 +109,10 @@
     margin-left: 10px;
 }
 
+#djDebug .highlight pre {
+    background-color: black !important;
+}
+
 #djDebug th {
     font-weight: bold;
     text-align: left;
