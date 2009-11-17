@@ -32,9 +32,6 @@ jQuery(function($) {
 				$('#djDebugWindow').show();
 				return false;
 			});
-			$('#djDebugTemplatePanel a.djTemplateShowContext').click(function() {
-				$.djDebug.toggle_content($(this).parent().next());
-			});
 		},
 		open: function() {
 			$(document).bind('keydown.djDebug', function(e) {
