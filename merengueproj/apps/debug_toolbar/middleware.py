@@ -12,6 +12,7 @@ _HTML_TYPES = ('text/html', 'application/xhtml+xml')
 _END_HEAD_RE = re.compile(r'</head>', re.IGNORECASE)
 _START_BODY_RE = re.compile(r'<body([^<]*)>', re.IGNORECASE)
 _END_BODY_RE = re.compile(r'</body>', re.IGNORECASE)
+_DEBUG_TOOLBAR_RE = re.compile(r'<!-- begin debug toolbar -->([\W\S]+)<!-- end debug toolbar -->')
 
 class DebugToolbarMiddleware(object):
     """
@@ -22,7 +23,7 @@ class DebugToolbarMiddleware(object):
         self.debug_toolbar = None
 
     def show_toolbar(self, request):
-        if not settings.DEBUG:
+        if not getattr(settings, 'DEBUG_TOOLBAR', settings.DEBUG):
             return False
         if request.is_ajax():
             return False
@@ -66,6 +67,10 @@ class DebugToolbarMiddleware(object):
             if response['Content-Type'].split(';')[0] in _HTML_TYPES:
                 # Saving this here in case we ever need to inject into <head>
                 #response.content = _END_HEAD_RE.sub(smart_str(self.debug_toolbar.render_styles() + "%s" % match.group()), response.content)
+                if _DEBUG_TOOLBAR_RE.search(response.content): # to avoid caching problems
+                    response.content = _DEBUG_TOOLBAR_RE.sub('', response.content)
                 response.content = _START_BODY_RE.sub(smart_str('<body\\1>' + self.debug_toolbar.render_toolbar()), response.content)
-                response.content = _END_BODY_RE.sub(smart_str('<script src="' + request.META.get('SCRIPT_NAME', '') + '/__debug__/m/toolbar.js" type="text/javascript" charset="utf-8"></script></body>'), response.content)
+                javascript_chunk = smart_str('<script src="' + request.META.get('SCRIPT_NAME', '') + '/__debug__/m/toolbar.js" type="text/javascript" charset="utf-8"></script></body>')
+                if javascript_chunk not in response.content: # avoid caching problems
+                    response.content = _END_BODY_RE.sub(javascript_chunk, response.content)
         return response
