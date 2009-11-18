@@ -75,7 +75,7 @@ strong {
     color: white;
 }
 
-#header-links ul {
+#header-blocks ul {
     margin-top: 0;
     padding-top: 1em;
 }
@@ -84,20 +84,20 @@ strong {
     margin-left: 3em;
 }
 
-#header-links ul li,
+#header-blocks ul li,
 #site-actions ul li,
 #language-tools ul li {
     display: inline;
 }
 
-#header-links ul li {
+#header-blocks ul li {
     border-right: 2px solid #666666;
     font-weight: bold;
     padding: 0 0.5em;
 }
 
 #user-actions a,
-#header-links a {
+#header-blocks a {
     color: #54B848;
 }
 
