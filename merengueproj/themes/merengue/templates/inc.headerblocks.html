@@ -1,0 +1,10 @@
+{% load i18n inlinetrans portal_tags block_tags %}
+<ul>
+  <li id="header-home-link" class="active">
+     <span class="selectedImage">
+     <a href="/" title="{% trans "Home" %}">{% inline_trans "Home" %}</a>
+     </span>
+  </li>
+</ul>
+
+{% render_blocks "header" %}

@@ -98,54 +98,56 @@ ul {
     background-position: left bottom !important;
 }
 
-#header-links {
+#header-blocks {
     padding-top: 28px;
     padding-left: 10px;
+    padding-bottom: 13px;
 }
 
-#header-links ul {
+#header-blocks ul {
     margin-bottom: 0.8em;
+    display: inline;
 }
 
-#header-links li {
+#header-blocks li {
     background: transparent url(/media/themes/merengue/img/left_menu_button.jpg) no-repeat left top;
     padding: 5px 0 5px 11px;
 }
 
-.ie #header-links li {
+.ie #header-blocks li {
     padding: 0px 0 0 11px;
 }
 
-#header-links li a {
+#header-blocks li a {
     padding: 7px 12px 7px 5px;
     font-size: 10pt;
     background: transparent url(/media/themes/merengue/img/right_menu_button.jpg) no-repeat right top;
 }
 
-#header-links li a:hover {
+#header-blocks li a:hover {
     text-decoration: none;
 }
 
-#header-links li.active {
+#header-blocks li.active {
     background: transparent url(/media/themes/merengue/img/left_actived_menu_button.jpg) no-repeat left 2px;
 }
 
-.ie #header-links li.active {
+.ie #header-blocks li.active {
     background-position: left 1px;
 }
 
-#header-links li.active a {
+#header-blocks li.active a {
     padding: 0 0 9px 0;
     color: #cfa86f;
     background: transparent url(/media/themes/merengue/img/selected_menu.jpg) no-repeat center bottom;
 }
 
-#header-links li.active span.selectedImage {
+#header-blocks li.active span.selectedImage {
     padding: 4px 12px 6px 5px;
     background: transparent url(/media/themes/merengue/img/right_actived_menu_button.jpg) no-repeat right top;
 }
 
-#header-links ul li,
+#header-blocks ul li,
 #language-tools  ul li {
     display: inline;
 }
@@ -196,6 +198,15 @@ body div#content-zone {
     width: auto;
 }
 
+/* portal links */
+#portal-primary-links {
+    display: inline;
+}
+
+#portal-secondary-links a {
+    padding-left: 10px;
+}
+
 
 /* footer */
 #footer {
@@ -216,15 +227,15 @@ body div#content-zone {
 #footer-middle {
     float: left;
     display: block;
-    width: 480px;
     border-top: 1px solid #f2e3b8;
+    width: 480px;
 }
 
 #footer-middle a {
-    width: 31%;
     float: left;
     display: block;
     padding-top: 5px;
+    padding-right: 15px;
 }
 
 a#general-conditions {

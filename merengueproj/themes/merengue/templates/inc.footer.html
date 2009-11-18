@@ -1,12 +1,19 @@
-{% load i18n inlinetrans %}
+{% load i18n inlinetrans block_tags %}
+
 <div id="footer-left">&nbsp;
 </div>
 <div id="footer-middle">
-  <a href="http://www.yaco.es" id="" >Copyright © Yaco 2009</a>
+  <ul>
+    <li><a href="http://www.yaco.es" id="" >Copyright © Yaco 2009</a></li>
+    <li><a href="#" id="general-conditions">{% inline_trans "General conditions" %}</a></li>
+    <li><a href="#" id="powered-by">{% inline_trans "Merengue powered" %}</a></li>
+  </ul>
 
-  <a href="#" id="general-conditions">{% inline_trans "General conditions" %}</a>
-  
-  <a href="#" id="powered-by">{% inline_trans "Merengue powered" %}</a>
+  {% render_blocks "footer" %}
 </div>
 <div id="footer-right">&nbsp;
 </div>
+
+{% block rightfooter %}
+
+{% endblock %}
