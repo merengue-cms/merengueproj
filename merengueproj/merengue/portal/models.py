@@ -17,7 +17,7 @@ class PortalLink(models.Model):
     __metaclass__ = TransMeta
 
     name = models.CharField(verbose_name=_('name'), max_length=200)
-    content = models.OneToOneField(BaseContent, verbose_name=_('Content'),
+    content = models.ForeignKey(BaseContent, verbose_name=_('Content'),
                                    blank=True, null=True)
     external_url = models.URLField(verbose_name=_('url'), blank=True, null=True)
     cached_url = models.URLField(verbose_name=_('url'), blank=True,
