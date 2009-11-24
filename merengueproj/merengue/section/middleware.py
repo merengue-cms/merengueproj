@@ -3,7 +3,7 @@ from django.core.cache import cache
 from django.http import Http404
 
 
-class SectionMiddleware(object):
+class RequestSectionMiddleware(object):
     """This middleware autodiscovers the current section from the url"""
 
     def process_request(self, request):
@@ -34,6 +34,10 @@ class SectionMiddleware(object):
                     # backends specific exceptions can be thrown, i.e. psycopg.ProgrammingError
                     pass
         request.section = section
+
+
+class ResponseSectionMiddleware(object):
+    """This middleware autodiscovers the current section from the url"""
 
     def process_response(self, request, response):
         from merengue.section.views import section_dispatcher

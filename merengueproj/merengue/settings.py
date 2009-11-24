@@ -69,7 +69,7 @@ INSTALLED_APPS = (
 # merengue exclusive middlewares. you have to put at least these middleware in your project settings
 MERENGUE_MIDDLEWARE_CLASSES = (
     'merengue.middleware.RemoveRandomAjaxParameter',
-    'merengue.section.middleware.SectionMiddleware',
+    'merengue.section.middleware.RequestSectionMiddleware',
     'merengue.section.middleware.DebugSectionMiddleware',
     'merengue.middleware.SimplifiedLayoutMiddleware',
     'merengue.middleware.LocaleMiddleware',
@@ -89,6 +89,7 @@ MIDDLEWARE_CLASSES = (
 ) + MERENGUE_MIDDLEWARE_CLASSES + (
     #'django.middleware.gzip.GZipMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'merengue.section.middleware.ResponseSectionMiddleware',
     'cmsutils.middleware.I18NFetchFromCacheMiddleware', # this has to be last
 )
 
