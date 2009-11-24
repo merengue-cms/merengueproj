@@ -36,7 +36,7 @@ from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
 from cmsutils.forms.widgets import AJAXAutocompletionWidget
-
+from transmeta import get_all_translatable_fields, get_real_fieldname_in_each_language
 from batchadmin.util import model_ngettext, get_changelist
 
 from merengue.base.adminsite import site
@@ -277,6 +277,20 @@ class BaseAdmin(admin.ModelAdmin):
     removed_fields = ()
     list_per_page = 50
     inherit_actions = True
+
+    def __init__(self, model, admin_site):
+        super(BaseAdmin, self).__init__(model, admin_site)
+        # add all translatable fields to search_fields parameter
+        # i.e. if search_fields = ('name',) would change to ('name_es', 'name_en',)
+        trans_fields = get_all_translatable_fields(self.model)
+        trans_search_fields = []
+        for f in self.search_fields:
+            if f in trans_fields:
+                for trans_f in get_real_fieldname_in_each_language(f):
+                    trans_search_fields.append(trans_f)
+            else:
+                trans_search_fields.append(f)
+        self.search_fields = tuple(trans_search_fields)
 
     def _get_base_content(self, request, object_id=None, model_admin=None):
         if not object_id:
