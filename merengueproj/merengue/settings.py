@@ -161,5 +161,11 @@ DEBUG_TOOLBAR_PANELS = (
     #'debug_toolbar.panels.logger.LoggingPanel',
 )
 
+DEBUG_TOOLBAR_EXCLUDED_URLS = (
+    r'^/tinyimages/',
+)
+
+JQUERY_BASE_MEDIA = 'merengue/js/'
+
 # Customization Comment app for merengue, feedback
 # COMMENTS_APP = 'plugins.feedback'

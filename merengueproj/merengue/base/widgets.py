@@ -40,9 +40,9 @@ class CustomTinyMCE(TinyMCE):
     class Media:
         js = (TINYMCE_JS,
               '%smerengue/js/tiny_mce_internal_links/tiny_mce_internal_links.js' % settings.MEDIA_URL,
-              #'%stinyimages/js/tiny_mce_file.js' % settings.MEDIA_URL,
+              '%stinyimages/js/tiny_mce_file.js' % settings.MEDIA_URL,
               #'%sjs/tiny_mce_iframes/tiny_mce_iframes.js' % settings.MEDIA_URL,
-              #'%stinyimages/js/tinyimages.js' % settings.MEDIA_URL,
+              '%stinyimages/js/tinyimages.js' % settings.MEDIA_URL,
               #'%sjs/tiny_mce_preformatted_text/tiny_mce_preformatted_text.js' % settings.MEDIA_URL,
                 )
 
