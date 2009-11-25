@@ -39,6 +39,24 @@ def _get_fieldsets(self):
             yield fieldset_dict
 
 
+def _get_tabs(self):
+    if not self.tabs:
+        yield dict(name=None, fields=self)
+    else:
+        for tab, fieldsets in self.tabs:
+            tabs_dict = dict(name=tab, fieldsets=[])
+            for fieldset, fields in fieldsets:
+                fieldset_dict = dict(name=fieldset, fields=[])
+                for field_name in fields:
+                    if field_name in self.fields.keyOrder:
+                        fieldset_dict['fields'].append(self[field_name])
+                if not fieldset_dict['fields']:
+                    # if there is no fields in this fieldset, we continue to next fieldset
+                    continue
+                tabs_dict['fieldsets'].append(fieldset_dict)
+            yield tabs_dict
+
+
 def _as_div(self):
     "Returns this form rendered as HTML <div>s."
     return render_to_string('base/baseform.html', {'form': self})
@@ -55,6 +73,37 @@ class FormAdminDjango(object):
 
     def as_django_admin(self):
         return render_to_string('base/form_admin_django.html', {'form': self, })
+
+
+class FormTabs(object):
+    """
+    Abstract class implemented to provide form with tabs like
+    Usage::
+
+       class FooForm(forms.Form, FormTabs):
+          tabs = (
+                  (_(tab1), (
+                        (_(accordion1),
+                            (fiel1d, field2, ... )),
+                        (_(accordion2), ...)
+                    ),
+                ),
+                ...
+            )
+    """
+    tabs = ()
+    get_tabs = property(_get_tabs)
+
+    class Media:
+        js = (
+              settings.MEDIA_URL + "merengue/js/formtabs/jquery-ui-1.6.custom.min.js",
+              settings.MEDIA_URL + "merengue/js/formtabs/formtabs_initial.js",
+             )
+        css = {'all': (settings.MEDIA_URL + "merengue/css/formtabs/ui-lightness/ui.all.css",
+                      )}
+
+    def as_tab(self):
+        return render_to_string('base/formtabs.html', {'form': self, })
 
 
 class BaseForm(forms.Form):

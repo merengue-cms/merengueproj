@@ -1,0 +1,42 @@
+{% load i18n stringfilters %}
+{% block content  %}
+
+
+<div id="tabs"> <!--div1-->
+    <ul>
+    {% for tab in form.get_tabs %}
+        <li> <a href="#{{ tab.name|slugify }}"> {{ tab.name|truncatechars:"10" }} </a></li>
+    {% endfor %}
+    </ul>
+
+    {% for tab in form.get_tabs %}
+        <div id="{{ tab.name|slugify }}" class="accordion">  <!--div2-->
+            <h2> {{ tab.name }} </h2>
+            {% for fieldset in tab.fieldsets %}
+                {% if fieldset.name %}
+                    <div> <!--div3-->
+                        <h3><a href="#"> {{ fieldset.name }}</a></h3>
+                        <div> <!--div4-->
+                {% endif %}
+                {% for field in fieldset.fields %}
+                    <div id="baseform-fieldname-{{ field.html_name }}" class="{% if field.errors %}error {% endif %}field BaseFormStringWidget{% if field.field.column_style %} {{ field.field.column_style }}{% endif %}"> <!--div5-->
+                    <label for="id_{{ field.html_name }}">{{ field.label }}</label>
+                    {% if field.field.required %}
+                        <span class="fieldRequired" title="Required"></span>
+                    {% endif %}
+                    {{ field.errors }} 
+                    <div id="{{ field.html_name }}_help" class="formHelp"> {{ field.help_text }}</div> <!--div7-->
+                        {{ field }}
+                    </div><!--div5-->
+                {% endfor %}
+                {% if fieldset.name %}
+                        </div> <!--div4-->
+                    </div> <!--div3-->
+                {% endif %}
+            {% endfor %}
+        </div><!--div2-->
+    {% endfor %}
+</div><!--div1-->
+
+{% endblock %}
+
