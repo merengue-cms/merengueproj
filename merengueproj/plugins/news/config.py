@@ -1,7 +1,7 @@
 from merengue.plugins import Plugin
 
 from plugins.news.actions import PDFExport, NewsIndex, NewsRSS
-from plugins.news.blocks import LatestNewsBlock, NewsCommentsBlock
+from plugins.news.blocks import LatestNewsBlock
 
 from plugins.news.models import NewsItem
 from plugins.news.admin import NewsItemSectionAdmin
@@ -28,7 +28,7 @@ class PluginConfig(Plugin):
 
     @classmethod
     def get_blocks(cls):
-        return [LatestNewsBlock, NewsCommentsBlock]
+        return [LatestNewsBlock]
 
     @classmethod
     def section_models(cls):
