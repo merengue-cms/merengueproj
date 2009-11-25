@@ -14,11 +14,13 @@ _START_BODY_RE = re.compile(r'<body([^<]*)>', re.IGNORECASE)
 _END_BODY_RE = re.compile(r'</body>', re.IGNORECASE)
 _DEBUG_TOOLBAR_RE = re.compile(r'<!-- begin debug toolbar -->([\W\S]+)<!-- end debug toolbar -->')
 
+
 class DebugToolbarMiddleware(object):
     """
     Middleware to set up Debug Toolbar on incoming request and render toolbar
     on outgoing response.
     """
+
     def __init__(self):
         self.debug_toolbar = None
 
@@ -29,6 +31,10 @@ class DebugToolbarMiddleware(object):
             return False
         if not request.META.get('REMOTE_ADDR') in settings.INTERNAL_IPS:
             return False
+        for url_pattern in getattr(settings, 'DEBUG_TOOLBAR_EXCLUDED_URLS', []):
+            if re.match(url_pattern, request.get_full_path()):
+                # this is an excluded URL. We wont show toolbar
+                return False
         return True
 
     def process_request(self, request):
