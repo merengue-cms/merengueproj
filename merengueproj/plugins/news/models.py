@@ -2,6 +2,8 @@ from django.db import models
 from django.db.models import permalink
 from django.utils.translation import ugettext_lazy as _
 
+from cmsutils.cache import CachingManager
+
 from merengue.base.models import BaseContent, BaseCategory
 from plugins.news.managers import NewsItemManager
 
@@ -15,6 +17,8 @@ class NewsCategory(BaseCategory):
     class Meta:
         verbose_name = _('news category')
         verbose_name_plural = _('news categories')
+
+    objects = CachingManager(cache_object_retrieval=True)
 
 
 class NewsItem(BaseContent):
