@@ -82,7 +82,7 @@ class FormTabs(object):
 
        class FooForm(forms.Form, FormTabs):
           tabs = (
-                  (_(tab1), (
+                  ({'name': _(tab1_name), 'title': _(tab1_title)}, (
                         (_(accordion1),
                             (fiel1d, field2, ... )),
                         (_(accordion2), ...)

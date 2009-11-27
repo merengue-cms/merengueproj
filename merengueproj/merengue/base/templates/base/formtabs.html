@@ -5,13 +5,13 @@
 <div id="tabs"> <!--div1-->
     <ul>
     {% for tab in form.get_tabs %}
-        <li> <a href="#{{ tab.name|slugify }}"> {{ tab.name|truncatechars:"10" }} </a></li>
+        <li> <a href="#{{ tab.name.title|slugify }}"> {{ tab.name.name }} </a></li>
     {% endfor %}
     </ul>
 
     {% for tab in form.get_tabs %}
-        <div id="{{ tab.name|slugify }}" class="accordion">  <!--div2-->
-            <h2> {{ tab.name }} </h2>
+        <div id="{{ tab.name.title|slugify }}" class="accordion">  <!--div2-->
+            <h2> {{ tab.name.title }} </h2>
             {% for fieldset in tab.fieldsets %}
                 {% if fieldset.name %}
                     <div> <!--div3-->
