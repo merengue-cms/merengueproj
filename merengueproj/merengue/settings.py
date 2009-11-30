@@ -47,7 +47,6 @@ INSTALLED_APPS = (
     'django_extensions',
     'template_utils',
     'debug_toolbar',
-    'batchadmin',
     'cmsutils',
     'transmeta',
     'rosetta',
