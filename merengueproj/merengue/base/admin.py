@@ -927,7 +927,10 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
     autogeolocalize_objects.short_description = _("Autogeolocalize")
 
     def changelist_view(self, request, extra_context=None):
-        if request.GET.pop('for_select', None):
+        if request.GET.get('for_select', None):
+            get = request.GET.copy()
+            del(get['for_select'])
+            request.GET = get
             return self.select_changelist_view(request, extra_context)
         return super(BaseContentAdmin, self).changelist_view(request, extra_context)
 
