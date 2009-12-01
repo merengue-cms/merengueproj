@@ -11,6 +11,10 @@
     width: 80px;
 }
 
+td.tddroppable {
+    background: #99ddff;
+}
+
 .videoAccess a {
     display: block;
     width: auto;

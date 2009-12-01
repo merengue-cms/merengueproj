@@ -69,6 +69,7 @@
                 newdiv.css('top', calculateTop(init_td, start, init_seconds));
                 newdiv.css('width', init_td.css('width'));
                 newdiv.css('height', calculateHeight(end_td, start, end));
+                newdiv.data('parenttd', init_td);
             }
 
             var insertScheduleRow = function(row) {
@@ -100,31 +101,93 @@
                 });
             }
 
-            var videoAccessEfects = function() {
-                $(".videoAccess").bind('mouseenter', function() {
-                    var child_height = $(this).children().eq(0).height();
-                    var child_width = $(this).children().eq(0).width();
+            var setDragAndDrop = function() {
+                $('.videoAccess').draggable({
+                    tolerance: 'pointer',
+                    delay: 500,
+                    revert: 'invalid',
+                    cursorAt: { left: 5,
+                                top: 5 }
+                });
+                $('.schedule-week-view tbody td.schedule').droppable({
+                    accept: '.videoAccess',
+                    hoverClass: 'tddroppable',
+                    tolerance: 'pointer',
+                    drop: function(event, ui) {
+                        var old_left = ui.draggable.data('old_left');
+                        var old_top = ui.draggable.data('old_top');
+                        $.ajax({
+                            url: window.location.href,
+                            type: "GET",
+                            async: true,
+                            data: { date: $(this).find('.td_datetime').html(),
+                                    schedule_id: ui.draggable.find('.schedule_id').html()
+                                  },
+                            dataType: 'json',
+                            success: function(response){
+                                ui.draggable.find('.video-start').html(response.start_date);
+                                ui.draggable.find('.video-end').html(response.end_date);
+                            },
+                            error: function(response){
+                                ui.draggable.data('old_left', old_left);
+                                ui.draggable.data('old_top', old_top);
+                                ui.draggable.css('left', old_left);
+                                ui.draggable.css('top', old_top);
+                                collapseSchedule(ui.draggable);
+                        }});
+                        ui.draggable.data('old_left', $(this).offset().left);
+                        ui.draggable.data('old_top', $(this).offset().top);
+                        ui.draggable.css('left', $(this).offset().left);
+                        ui.draggable.css('top', $(this).offset().top);
+                    }
+                });
+            }
+
+            var expandSchedule = function(schedule) {
+                if (!schedule.data('keep')) {
+                    var child_height = schedule.children().eq(0).height();
+                    var child_width = schedule.children().eq(0).width();
                     var table = $('.schedule-week-view table');
                     var border = table.offset().left + table.width();
-                    $(this).data('old_height', $(this).height());
-                    $(this).data('old_width', $(this).width());
-                    $(this).data('old_left', $(this).offset().left);
-                    if (child_height > $(this).height()) {
-                        $(this).css('height', child_height);
+                    schedule.data('old_height', schedule.height());
+                    schedule.data('old_width', schedule.width());
+                    schedule.data('old_left', schedule.offset().left);
+                    schedule.data('old_top', schedule.offset().top);
+                    schedule.data('keep', false);
+                    if (child_height > schedule.height()) {
+                        schedule.css('height', child_height);
                     }
-                    if (child_width > $(this).width()) {
-                        $(this).css('width', child_width);
+                    if (child_width > schedule.width()) {
+                        schedule.css('width', child_width);
                     }
-                    if ($(this).width() + $(this).offset().left > border) {
-                        $(this).css('left', border - $(this).width());
+                    if (schedule.width() + schedule.offset().left > border) {
+                        schedule.css('left', border - schedule.width());
                     }
-		    $(this).css('z-index', '99999');
+                    schedule.css('z-index', '99999');
+                }
+            }
+
+            var collapseSchedule = function(schedule) {
+                if (!schedule.data('keep')) {
+                    schedule.css('height', schedule.data('old_height'));
+                    schedule.css('width', schedule.data('old_width'));
+                    schedule.css('left', schedule.data('old_left'));
+                    schedule.css('top', schedule.data('old_top'));
+                    schedule.css('z-index', '1');
+                }
+            }
+
+            var videoAccessEfects = function() {
+                $(".videoAccess").bind('mouseenter', function() {
+                    expandSchedule($(this));
                 }).bind('mouseleave', function() {
-                    $(this).css('height', $(this).data('old_height'));
-                    $(this).css('width', $(this).data('old_width'));
-                    $(this).css('left', $(this).data('old_left'));
-		    $(this).css('z-index', '1');
+                    collapseSchedule($(this));
+                }).bind('mousedown', function() {
+                    $(this).data('keep', true);
+                }).bind('mouseup', function() {
+                    $(this).data('keep', false);
                 });
+                setDragAndDrop();
             }
 
             var moveObjectTools = function() {

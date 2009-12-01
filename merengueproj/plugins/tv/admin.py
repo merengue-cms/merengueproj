@@ -5,8 +5,9 @@ import os
 from django import template
 from django.contrib.admin.options import IncorrectLookupParameters
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response
+from django.utils import simplejson
 from django.utils.encoding import smart_str
 from django.utils.translation import ugettext as _
 from django.utils.dates import WEEKDAYS, MONTHS
@@ -33,8 +34,11 @@ class ScheduleAdmin(BaseAdmin):
 
     def get_video_name(self, obj):
         html = '<div class="video-name">%s</div>' % obj.video.name
-        if obj.video.preview and obj.preview.video.preview.thumbnail and os.path.exists(obj.video.preview.thumbnail.path()):
-            html += '<div class="video-preview"><img src="%s" /></div>' % obj.video.preview.thumbnail.url()
+        html += '<div class="video-preview">'
+        if obj.video.preview and obj.video.preview.thumbnail and os.path.exists(obj.video.preview.thumbnail.path()):
+            html += '<img src="%s" />' % obj.video.preview.thumbnail.url()
+        html += '</div>'
+        html += '<span class="schedule_id hide">%s</span>' % obj.id
         html += '<div class="video-start">%s</div>' % obj.broadcast_date.strftime('%H:%Mh')
         video_end = obj.broadcast_date + datetime.timedelta(seconds=obj.video.duration)
         html += '<div class="video-end">%s</div>' % video_end.strftime('%H:%Mh')
@@ -193,10 +197,37 @@ class ScheduleAdmin(BaseAdmin):
                                   context, context_instance=context_instance)
 
     def changelist_view(self, request, extra_context=None):
+        if request.is_ajax():
+            return self.change_schedule_date(request)
+
         if request.GET.get('broadcast_date__day', None):
             return self.day_view(request, extra_context)
             return super(ScheduleAdmin, self).changelist_view(request, extra_context)
         return self.week_view(request, extra_context)
+
+    def change_schedule_date(self, request):
+        date = request.GET.get('date', None)
+        schedule_id = request.GET.get('schedule_id', None)
+
+        if not date or not schedule_id:
+            raise Http404
+
+        try:
+            schedule = Schedule.objects.get(id=schedule_id)
+        except Schedule.DoesNotExist:
+            raise Http404
+
+        schedule.broadcast_date = datetime.datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+        schedule.save()
+
+        start_date = schedule.broadcast_date.strftime('%H:%Mh')
+        video_end = schedule.broadcast_date + datetime.timedelta(seconds=schedule.video.duration)
+        end_date = video_end.strftime('%H:%Mh')
+
+        json = simplejson.dumps({'start_date': start_date,
+                                 'end_date': end_date,
+                                }, ensure_ascii=False)
+        return HttpResponse(json, 'text/javascript')
 
 
 class VideoStreamingAdmin(VideoAdmin):

@@ -4,6 +4,7 @@
 
 {% block extrahead %}
   {{ block.super }}
+  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/jquery-ui-1.5.3.custom.min.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/tv/Schedule.js"></script>
 {% endblock %}
 
@@ -57,7 +58,7 @@
       <tr class="hour-{{ hour }} {% cycle "row1" "row2" %}">
         <td>{{ hour.hour }}<span class="hour-init-seconds hide">{{ hour.seconds_of_day }}</span></td>
         {% for day in days %}
-        <td></td>
+        <td class="schedule"><span class="td_datetime hide">{{ day.date|date:"Y-m-d" }} {{ hour.hour|time:"H:i:s" }}</span></td>
         {% endfor %}
       </tr>
       {% endfor %}
