@@ -58,7 +58,7 @@ urlpatterns = patterns('',
     (r'^threadedcomments/', include('threadedcomments.urls')),
     url(r'^invalidate/$', 'merengue.portal.views.invalidate_cache', name='invalidate_cache'),
     # i18n applications
-    url(r'^rosetta/', include('rosetta.urls')),
+    url(r'^transhette/', include('transhette.urls')),
     url(r'^inlinetrans/', include('inlinetrans.urls')),
     # collaborative views
     (r'^collab/', include('merengue.collab.urls')),

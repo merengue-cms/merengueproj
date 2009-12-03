@@ -49,7 +49,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'cmsutils',
     'transmeta',
-    'rosetta',
+    'transhette',
     'tagging',
     'sorl.thumbnail',
     'pagination',

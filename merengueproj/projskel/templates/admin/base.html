@@ -37,7 +37,7 @@
 </script>
 {% endif %}
 </head>
-{% load i18n rosetta_tags %}
+{% load i18n transhette_tags %}
 
 <body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}">
 
@@ -63,7 +63,7 @@
                 {% endfor %}
             </ul>
         {% block userlinks %}
-          {% if_can_access_rosetta %}<a href="{% url rosetta-home %}">Rosetta</a> / {% endif_can_access_rosetta %}
+          {% if_can_access_transhette %}<a href="{% url transhette-home %}">Rosetta</a> / {% endif_can_access_transhette %}
           {% url django-admindocs-docroot as docsroot %}
           {% if docsroot %}
             <a href="{{ docsroot }}">{% trans 'Documentation' %}</a> /

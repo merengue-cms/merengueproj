@@ -119,7 +119,7 @@ LOGOUT_PROTECTED_URL_REDIRECTS = (
 PRODUCTION_DB_URL = ""
 PRODUCTION_DB_UPDATE_PASSWORDS = (('admin', 'admin'), )
 
-# For rosetta
+# For transhette
 ENABLE_TRANSLATION_SUGGESTIONS = False
 
 # Allow overwriting any configuration in optional settings_local.py
