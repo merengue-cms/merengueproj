@@ -34,6 +34,7 @@ from django.utils.text import capfirst
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
+from django.views.decorators.csrf import csrf_protect
 
 from cmsutils.forms.widgets import AJAXAutocompletionWidget
 from transmeta import get_all_translatable_fields, get_real_fieldname_in_each_language
@@ -537,6 +538,7 @@ class BaseAdmin(admin.ModelAdmin):
                     assert False
                     perms_needed.add(related.opts.verbose_name)
 
+    @csrf_protect
     def delete_view(self, request, objects_id=[], extra_context=None):
         extra_context = self._base_update_extra_context(extra_context)
         "The 'delete' admin view for this model."
@@ -688,14 +690,17 @@ class BaseAdmin(admin.ModelAdmin):
         extra_context.update({'model_admin': self})
         return extra_context
 
+    @csrf_protect
     def changelist_view(self, request, extra_context=None):
         extra_context = self._base_update_extra_context(extra_context)
         return super(BaseAdmin, self).changelist_view(request, extra_context)
 
+    @csrf_protect
     def add_view(self, request, form_url='', extra_context=None):
         extra_context = self._base_update_extra_context(extra_context)
         return super(BaseAdmin, self).add_view(request, form_url, extra_context)
 
+    @csrf_protect
     def change_view(self, request, object_id, extra_context=None):
         extra_context = self._base_update_extra_context(extra_context)
         return super(BaseAdmin, self).change_view(request, object_id, extra_context)
@@ -926,6 +931,7 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
             return self.confirm_action(request, objects_id, extra_context)
     autogeolocalize_objects.short_description = _("Autogeolocalize")
 
+    @csrf_protect
     def changelist_view(self, request, extra_context=None):
         if request.GET.get('for_select', None):
             get = request.GET.copy()
@@ -1347,6 +1353,7 @@ class BaseOrderableAdmin(BaseAdmin):
     change_list_template = "admin/basecontent/sortable_change_list.html"
     sortablefield = 'position'
 
+    @csrf_protect
     def changelist_view(self, request, extra_context=None):
         if request.method == 'POST':
             neworder = request.POST.get('neworder', None)
@@ -1378,6 +1385,7 @@ class LogEntryRelatedContentModelAdmin(admin.ModelAdmin):
                                         }
     list_filter = ('content_type', )
 
+    @csrf_protect
     def changelist_view(self, request, extra_context=None):
         status = request.GET.get('status', None)
         content = request.GET.get('content_type__id__exact', None)
@@ -1477,6 +1485,7 @@ class BaseContentLocateAdmin(BaseContentAdmin):
     def has_delete_permission(self, request, obj=None):
         return False
 
+    @csrf_protect
     def change_view(self, request, object_id, extra_context=None):
         choices = self.batchadmin_choices
         if request.method == 'POST':
@@ -1501,6 +1510,7 @@ class BaseContentLocateAdmin(BaseContentAdmin):
                              'action_submit': 'place_at'}
             return self.confirm_action(request, [object_id], extra_context)
 
+    @csrf_protect
     def changelist_view(self, request, extra_context=None):
         extra_context = {'title': _(u'Select where do you want to place the content')}
         return super(BaseContentLocateAdmin, self).changelist_view(request, extra_context)
@@ -1719,10 +1729,12 @@ class BaseContentOwnedAdmin(BaseAdmin):
         else:
             return BaseContent.objects.filter(owners=self.base_user)
 
+    @csrf_protect
     def changelist_view(self, request, extra_context=None):
         extra_context = self._update_extra_context(extra_context)
         return super(BaseContentOwnedAdmin, self).changelist_view(request, extra_context)
 
+    @csrf_protect
     def change_view(self, request, object_id, extra_context=None):
         extra_context = self._update_extra_context(extra_context)
         changelist = get_changelist(request, self.model, self)
@@ -1775,10 +1787,12 @@ class UserAdmin(BaseAdmin, UserAdminOriginal):
         super(UserAdmin, self).__init__(model, admin_site)
         self.owned_contents_admin = BaseContentOwnedAdmin(BaseContent, admin_site)
 
+    @csrf_protect
     def add_view(self, request, form_url='', extra_context=None):
         extra_context = self._base_update_extra_context(extra_context)
         return super(BaseAdmin, self).add_view(request)
 
+    @csrf_protect
     def change_view(self, request, object_id, extra_context=None):
         return super(UserAdmin, self).change_view(request, object_id,
                                                   extra_context={'is_user_change_view': True})
