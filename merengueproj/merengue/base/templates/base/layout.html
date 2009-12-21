@@ -41,6 +41,7 @@
 </head>
 
 <body dir="ltr" {% block extrabodytag %}{% endblock %}>
+<div id="page-wrapper">
 
 <div id="container" class="theme-{{ theme }} {% block bodyextraclasses %}{% endblock %}">
   {% block currentrevision %}
@@ -163,6 +164,6 @@
 
 {% block extrabody %}
 {% endblock %}
-
+</div>
 </body>
 </html>
