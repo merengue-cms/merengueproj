@@ -9,7 +9,7 @@
     {% endfor %}
     </ul>
 {% else %}
-    <form action="" method="post">{% csrf_token %}
+    <form action="" method="post">
     {% for selected_object in selected_objects %}
     <ul>{{ selected_object|unordered_list }}</ul>
     {% endfor %}
