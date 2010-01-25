@@ -57,7 +57,7 @@ Nos bajamos del SVN de django:
   $ export SVNDIR=$HOME/src/SVN
   $ mkdir -p $SVNDIR
   $ cd $SVNDIR
-  $ svn co http://code.djangoproject.com/svn/django/trunk/ django_src
+  $ svn co http://code.djangoproject.com/svn/django/tags/releases/1.1 django_src
 
 Instalamos la API de django en el python del sistema (mejor la 2.4):
 
@@ -251,14 +251,17 @@ Se realiza con el siguiente comando:
 
   $ ./manage.py rebuild_db --template=template_postgis
 
+
 Visualizar el sitio
 -------------------
 
-Accedemos por el navegador a http://localhost:8000/admin/ y comprobamos que la web se ha levantado correctamente. Para ver la versión publica de la web, podemos acceder a http://localhost:8000/
+Accedemos por el navegador a http://localhost:8000/admin/ y comprobamos que la web se ha levantado correctamente.
 
-Usuario para interfaz de administracíon:
+Para ver la versión publica de la web, podemos acceder a http://localhost:8000/
+
+Usuario por defecto para interfaz de administracíon:
 Usuario: admin
-Contraseña: andalucia06
+Contraseña: admin
 
 Nota: hay que incluir las / finales en las URLs
 
