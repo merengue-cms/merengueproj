@@ -9,86 +9,12 @@ class Migration:
         
         # Adding field 'BaseSection.order'
         db.add_column('section_basesection', 'order', orm['section.basesection:order'])
-        
-        # Deleting field 'BaseSection.plain_description_en'
-        db.delete_column('section_basesection', 'plain_description_en')
-        
-        # Deleting field 'Document.photo_description_fr'
-        db.delete_column('section_document', 'photo_description_fr')
-        
-        # Deleting field 'BaseSection.name_en'
-        db.delete_column('section_basesection', 'name_en')
-        
-        # Deleting field 'DocumentSection.body_en'
-        db.delete_column('section_documentsection', 'body_en')
-        
-        # Deleting field 'BaseSection.description_en'
-        db.delete_column('section_basesection', 'description_en')
-        
-        # Deleting field 'Menu.name_fr'
-        db.delete_column('section_menu', 'name_fr')
-        
-        # Deleting field 'DocumentSection.body_fr'
-        db.delete_column('section_documentsection', 'body_fr')
-        
-        # Deleting field 'Document.photo_description_en'
-        db.delete_column('section_document', 'photo_description_en')
-        
-        # Deleting field 'BaseSection.plain_description_fr'
-        db.delete_column('section_basesection', 'plain_description_fr')
-        
-        # Deleting field 'BaseSection.name_fr'
-        db.delete_column('section_basesection', 'name_fr')
-        
-        # Deleting field 'Menu.name_en'
-        db.delete_column('section_menu', 'name_en')
-        
-        # Deleting field 'BaseSection.description_fr'
-        db.delete_column('section_basesection', 'description_fr')
-        
     
     
     def backwards(self, orm):
         
         # Deleting field 'BaseSection.order'
         db.delete_column('section_basesection', 'order')
-        
-        # Adding field 'BaseSection.plain_description_en'
-        db.add_column('section_basesection', 'plain_description_en', orm['section.basesection:plain_description_en'])
-        
-        # Adding field 'Document.photo_description_fr'
-        db.add_column('section_document', 'photo_description_fr', orm['section.document:photo_description_fr'])
-        
-        # Adding field 'BaseSection.name_en'
-        db.add_column('section_basesection', 'name_en', orm['section.basesection:name_en'])
-        
-        # Adding field 'DocumentSection.body_en'
-        db.add_column('section_documentsection', 'body_en', orm['section.documentsection:body_en'])
-        
-        # Adding field 'BaseSection.description_en'
-        db.add_column('section_basesection', 'description_en', orm['section.basesection:description_en'])
-        
-        # Adding field 'Menu.name_fr'
-        db.add_column('section_menu', 'name_fr', orm['section.menu:name_fr'])
-        
-        # Adding field 'DocumentSection.body_fr'
-        db.add_column('section_documentsection', 'body_fr', orm['section.documentsection:body_fr'])
-        
-        # Adding field 'Document.photo_description_en'
-        db.add_column('section_document', 'photo_description_en', orm['section.document:photo_description_en'])
-        
-        # Adding field 'BaseSection.plain_description_fr'
-        db.add_column('section_basesection', 'plain_description_fr', orm['section.basesection:plain_description_fr'])
-        
-        # Adding field 'BaseSection.name_fr'
-        db.add_column('section_basesection', 'name_fr', orm['section.basesection:name_fr'])
-        
-        # Adding field 'Menu.name_en'
-        db.add_column('section_menu', 'name_en', orm['section.menu:name_en'])
-        
-        # Adding field 'BaseSection.description_fr'
-        db.add_column('section_basesection', 'description_fr', orm['section.basesection:description_fr'])
-        
     
     
     models = {
