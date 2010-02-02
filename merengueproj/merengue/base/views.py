@@ -103,10 +103,12 @@ def public_link(request, app_label, model_name, content_id):
         raise Http404
 
     if isinstance(content, BaseContent):
-        if hasattr(content, 'public_link'):
-            return HttpResponsePermanentRedirect(content.public_link())
-        else:
+        try:
+            # first we try find out if content has an user dependant URL
             return HttpResponsePermanentRedirect(content.link_by_user(request.user))
+        except NotImplementedError:
+            # we use public link
+            return HttpResponsePermanentRedirect(content.public_link())
 
     return HttpResponsePermanentRedirect(content.get_absolute_url())
 
@@ -141,6 +143,13 @@ def content_comment_form(request, content, parent_id, form=None, template='base/
                                'form': form,
                               },
                               context_instance=RequestContext(request))
+
+
+def public_view(request, app_label, model_name, content_id, content_slug):
+    """ Default public view for any content """
+    model = get_model(app_label, model_name)
+    content = model.objects.get(pk=content_id)
+    return content_view(request, content)
 
 
 def content_view(request, content, template_name=None, extra_context=None):

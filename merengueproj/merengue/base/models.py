@@ -9,7 +9,6 @@ from django.core.management import call_command
 from django.core.exceptions import ObjectDoesNotExist, SuspiciousOperation
 from django.db.models import signals, permalink
 from django.db.models.query import delete_objects, CollectedObjects
-from django.http import Http404
 from django.template.loader import render_to_string
 from django.utils.encoding import force_unicode
 from django.utils.html import strip_tags
@@ -347,11 +346,11 @@ class BaseContent(LocatableContent):
         if section:
             return ('content_section_view', [section.slug, self.id, self.slug])
         else:
-            raise NotImplementedError("Model %s has no implements a public_link method for content without main section" % self._meta)
+            return ('merengue.base.views.public_view', [self._meta.app_label, self._meta.module_name, self.id, self.slug])
 
     def link_by_user(self, user):
         """ User dependent link. To override in subclasses, if needed """
-        raise Http404
+        raise NotImplementedError("Model %s has no implements a link_by_user method" % self._meta)
 
     def can_edit(self, user):
         if not user.is_authenticated():
