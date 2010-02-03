@@ -7,6 +7,9 @@ class RegisteredItemAdmin(BaseAdmin):
     list_display = ('class_name', 'module', 'category', 'active', )
     list_filter = ('category', )
 
+    def has_add_permission(self, request):
+        return False
+
     def get_form(self, request, obj=None, **kwargs):
         form = super(RegisteredItemAdmin, self).get_form(request, obj, **kwargs)
 
