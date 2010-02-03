@@ -26,6 +26,9 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
             set_field_read_only(installed_field, 'installed', obj)
         return form
 
+    def has_add_permission(self, request):
+        return False
+
     def changelist_view(self, request, extra_context=None):
         check_plugins()
         return super(RegisteredPluginAdmin, self).changelist_view(request,
