@@ -975,6 +975,13 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
         ], context, context_instance=context_instance)
 
 
+class BaseContentViewAdmin(BaseContentAdmin):
+    """ An special admin to find and edit all site contents """
+
+    def has_add_permission(self, request):
+        return False
+
+
 class BaseContentAdminExtra(BaseContentAdmin):
     change_list_template = 'admin/extra/change_list.html'
     list_display = BaseContentAdmin.list_display + ('class_name', )
@@ -1804,7 +1811,7 @@ def register(site):
     ## register admin models
     site.register(User, UserAdmin)
     site.register(Group, GroupAdmin)
-    site.register(BaseContent, BaseContentAdmin)
+    site.register(BaseContent, BaseContentViewAdmin)
     site.register(ContactInfo, ContactInfoAdmin)
 
 
