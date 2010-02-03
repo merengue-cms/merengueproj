@@ -7,6 +7,9 @@ class RegisteredBlockAdmin(RegisteredItemAdmin):
     list_display = RegisteredItemAdmin.list_display + ('placed_at', )
     list_filter = ('placed_at', )
 
+    def has_add_permission(self, request):
+        return False
+
 
 def register(site):
     site.register(RegisteredBlock, RegisteredBlockAdmin)
