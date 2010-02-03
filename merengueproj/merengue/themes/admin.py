@@ -13,6 +13,9 @@ class ThemeAdmin(BaseAdmin):
             set_field_read_only(form.base_fields['active'], 'active', obj)
         return form
 
+    def has_add_permission(self, request):
+        return False
+
     def changelist_view(self, request, extra_context=None):
         check_themes()
         return super(ThemeAdmin, self).changelist_view(request, extra_context)
