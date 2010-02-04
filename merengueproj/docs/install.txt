@@ -1,192 +1,216 @@
-Preparación de directorios 
---------------------------
+Directories preparation
+-----------------------
 
-Deberíamos tener en nuestro ordenador al menos dos directorios. En el proceso usaremos ordenes export para definirlos:
+We must have at least two directories in our computer. In the process
+we use export command to define it.
 
- * Uno para bajarnos proyectos externos del subversion (export SVNDIR=$HOME/src/SVN)
- * Uno para nuestros proyectos, bajados de nuestro subversion (export SRCDIR=$HOME/proyectos)
+ * One to download subversion external projects (export SVNDIR=$HOME/src/SVN)
+ * Another one for merengue project, (export SRCDIR=$HOME/projects)
 
+Previous install
+----------------
 
-Instalaciones previas
----------------------
+This documents describe which are the project dependencies and how to
+install in a ubuntu/debian based distribution.
 
- * ipython: es un intérprete python con autocompletado, ayuda, etc. 
+Some python packages are installed using easy_install, for use that
+you need to have installed python-setuptools
 
+Dependencies: postgresql python-psycopg2 python-imaging python-beautifulsoup geopy
+ 
+ * postgresql: the object-relational database system that we will use.
+
+ # apt-get install postgresql
+
+ * python-psycopg: python interface to postgresql database.
+
+ # apt-get install python-psycopg2
+
+ * python-imaging: adds image processing capabilities to your Python
+ interpreter. For model data fields.
+
+ # apt-get install python-imaging
+
+ * geopy: makes it easy for developers to locate the coordinates of
+ addresses, cities, countries, and landmarks across the globe.
+
+ # easy_install geopy
+
+ * python-beautifulsoup: a Python HTML/XML parser designed for quick
+ turnaround projects like screen-scraping. For text field HTML
+ cleaning. 
+
+ # apt-get install python-beautifulsoup
+
+ Recommended
+ -----------
+
+  * ipython: a python shell with auto complete, help, etc.
+  
   # apt-get install ipython
 
- * postgresql: la base de datos que usaremos 
+Install modes
+-------------
 
-  # apt-get install postgresql
+There are two merengue install method, according to the type of CMS
+project you want implement:
 
- * python-psycopg: interfaz de python con la base de datos postgresql 
+ * Producction mode: using a stable freeze merengue version.
 
-  # apt-get install python-psycopg2
+ * Development mode: using the merengue svn trunk version.
 
- * python-imaging: Para los campos tipo datos de los modelos
+Djando install
+--------------
 
-  # apt-get install python-imaging
+Merengue use a specific django version. We download the django version
+from svn:
 
- * geopy
-  # easy_install geopy
+ $ mkdir -p $SVNDIR
+ $ cd $SVNDIR
+ $ svn checkout http://code.djangoproject.com/svn/django/tags/releases/1.1 django_src
 
- * python-beautifulsoup: para la limpieza del HTML en los campos de texto.
-  # apt-get install python-beautifulsoup
+You can install it in your operating system using setup.py:
 
+ # cd $SVNDIR/django_src/
+ # python setup.py install
 
-Modos de instalación
---------------------
+But if you have django installed using package, you can add it to your
+python path:
 
-Hay dos métodos de instalación de merengue, según el tipo de proyecto CMS que deseas implementar:
+ $ export PYTHONPATH=$SVNDIR/django_src/django:$PYTHONPATH
+ 
+ And for bin:
 
- * Modo producción: supone que el desarrollador quiere trabajar con una versión de merengue congelada, y que no desea ir actualizando de versión a medida que desarrolla.
+ $ export PATH=$SVNDIR/django_src/django/bin:$PATH
 
- * Modo desarrollo: el desarrollador quiere trabajar con la última versión de SVN de merengue, actualizando periódicamente para así ir siempre a la última.
+Test if you have the correct django version:
 
+ $ python -c "import django; print django.VERSION"
+ and you will see: (1, 1, 0, 'final', 0)
 
-Instalación de Django
----------------------
+We can use alternatives for django-admin (if we install different
+versions we can choose). Furthermore we don't need to write complete
+path to use it:
 
-a) Para modo producción:
-
-(( completar ))
-
-b) Para modo desarrollo:
-
-Nos bajamos del SVN de django:
-
-  $ export SVNDIR=$HOME/src/SVN
-  $ mkdir -p $SVNDIR
-  $ cd $SVNDIR
-  $ svn co http://code.djangoproject.com/svn/django/tags/releases/1.1 django_src
-
-Instalamos la API de django en el python del sistema (mejor la 2.4):
-
-  # ln -s $SVNDIR/django_src/django  /usr/lib/python2.4/site-packages/django
-
-Lo probamos con lo siguiente:
-
-  $ ipython
-  >>> import django
-  >>>
-
-Podemos usar alteratives para los ejecutables de django (si instalamos diferentes versiones podremos elegir). Ademas así no tenemos que escribir la ruta completa para usar cosas como django-admin.py:
-
-sudo update-alternatives --install /usr/local/bin/django-admin.py django-admin.py /usr/lib/python2.4/site-packages/django/bin/django-admin.py 10
-
-sudo update-alternatives --install /usr/local/bin/compile-messages.py  compile-messages.py /usr/lib/python2.4/site-packages/django/bin/compile-messages.py 10
-
-sudo update-alternatives --install /usr/local/bin/make-messages.py  make-messages.py /usr/lib/python2.4/site-packages/django/bin/make-messages.py 10
+sudo update-alternatives --install /usr/local/bin/django-admin.py django-admin.py /usr/lib/pythonX.X/site-packages/django/bin/django-admin.py 10
+sudo update-alternatives --install /usr/local/bin/compile-messages.py  compile-messages.py /usr/lib/pythonX.X/site-packages/django/bin/compile-messages.py 10
+sudo update-alternatives --install /usr/local/bin/make-messages.py  make-messages.py /usr/lib/pythonX.X/site-packages/django/bin/make-messages.py 10
 
 
-Instalación de nuestro sistema
-------------------------------
+Installing merengue
+-------------------
 
-a) En modo producción:
+Download the project repository (not necessary, because you are
+reading that, you downloaded it before):
 
-(( completar ))
+ $ mkdir $SRCDIR
+ $ cd $SRCDIR
 
-b) En modo desarrollo:
-
-Nos bajamos el repositorio del proyecto (no necesario, porque si estás leyendo esto es que ya lo habrás realizado):
-
-  $ export SRCDIR=$HOME/proyectos
-  $ mkdir $SRCDIR
-  $ cd $SRCDIR
-
-Y para bajarse las últimas fuentes en desarrollo:
-
-  $ svn co https://svnpub.yaco.es/merengue/trunk/merengueproj
+ $ svn checkout https://svnpub.yaco.es/merengue/trunk/merengueproj
 
 
-Instalación de extensiones para GIS
------------------------------------
+GIS extensions install
+----------------------
 
-Nota: las instrucciones de instalación están online en http://geodjango.org/docs/install.html
+Note: install instructions are online at http://geodjango.org/docs/install.html
 
-Para Ubuntu > 8.04, se hace todo desde paquetería, con la siguiente orden:
+In Ubuntu > 8.04, you can install all using packages:
 
-  $ sudo apt-get install binutils libgdal1-1.5.0 postgresql-8.3-postgis python-psycopg2 python-setuptools
-  $ export PG_CONFIG='/usr/lib/postgresql/8.3/bin/pg_config'
+ $ sudo apt-get install binutils libgdal1-1.5.0 postgresql-8.3-postgis python-psycopg2 python-setuptools
+ $ export PG_CONFIG='/usr/lib/postgresql/8.3/bin/pg_config'
 
-Para Ubuntu <= 8.04, necesitamos compilarlo a mano:
+ Note: If you have postgresql-8.4 and there is no package
+ postgresql-8.4-postgis, you will use postgresql-8.3 for all, use the
+ option -p 5433 with psql, createuser, createdb, and configure your
+ merengue project to use that port in database.
 
- 1. Cabeceras de código fuente de postgresql:
+If your distribution doesn't have the package postgis it's necessary to
+compile:
 
-  $ sudo apt-get install postgresql-server-dev-8.2
-  $ export PG_CONFIG='/usr/lib/postgresql/8.2/bin/pg_config'
+ 1. Postgresql source headers:
 
- 2. Librería GEOS:
+ $ sudo apt-get install postgresql-server-dev-X.X
+ $ export PG_CONFIG='/usr/lib/postgresql/X.X/bin/pg_config'
 
+ 2. GEOS library:
+
+  url: http://trac.osgeo.org/geos/
   $ cd resources
-  $ tar xjf geos-3.0.3.tar.bz2
-  $ cd geos-3.0.3
+  $ tar xjf geos-x.x.x.tar.bz2
+  $ cd geos-x.x.x
   $ ./configure && make
   $ sudo make install
 
- 3. Librería PROJ.4
-
+ 3. PROJ.4 library:
+  
+  url: http://download.osgeo.org/proj/
+  download proj-x.x.x.tar.gz and proj-datumgrid-x.x.tar.gz
   $ cd resources
-  $ tar xzf proj-4.6.1.tar.gz
-  $ cd proj-4.6.1/nad
-  $ tar xzf ../../proj-datumgrid-1.4.tar.gz
+  $ tar xzf proj-x.x.x.tar.gz
+  $ cd proj-x.x.x/nad
+  $ tar xzf ../../proj-datumgrid-x.x.tar.gz
   $ cd ..
   $ ./configure
   $ make
   $ sudo make install
   $ cd ..
 
- 4. PostGIS
+ 4. PostGIS:
 
-  $ tar xzf postgis-1.3.4.tar.gz
-  $ cd postgis-1.3.4
+  url: http://postgis.refractions.net/
+  $ tar xzf postgis-x.x.x.tar.gz
+  $ cd postgis-x.x.x
   $ ./configure --with-pgsql=$PG_CONFIG --datadir=`$PG_CONFIG --sharedir`
   $ make
   $ sudo make install
   $ cd ..
 
- 5. Librería GDAL
+ 5. GDAL library:
 
-  $ tar xzf gdal-1.5.3.tar.gz
-  $ cd gdal-1.5.3
+  url: http://trac.osgeo.org/gdal/
+  $ tar xzf gdal-x.x.x.tar.gz
+  $ cd gdal-x.x.x
   $ ./configure
   $ make # Go get some coffee, this takes a while.
   $ sudo make install
   $ cd ..
 
- 6. Actualizar todas las librerías dinámicas
+ 6. Update all dynamic libraries:
 
- Nota: asegurarse antes de que en el fichero /etc/ld.so.conf está el
-incluido el directorio /usr/local/lib
+ Note: make sure that the file /etc/ld.so.conf is in directory
+ /usr/local/lib
 
   $ sudo ldconfig -v
 
-
-Para fedora >= 10 podemos instalarlo de paqueteria:
+In fedora >= 10 we can install using packages:
 
   $ sudo yum install postgis geos proj gdal
 
 
-Creación del proyecto en merengue
----------------------------------
+Merengue project creation
+-------------------------
 
-  $ cd $SRCDIR/
+ $ cd $SRCDIR/
 
-a) En modo producción:
+a) Production mode:
 
   $ ./merengueproj/bin/merengue-admin.py startproject myproject
 
 
-b) En modo desarrollo:
+b) Development mode:
 
   $ ./merengueproj/bin/merengue-admin.py startproject myproject --develop
 
 
-Configuración de la base de datos
-----------------------------------
+Database configuration
+----------------------
 
-Es necesario configurar la base de datos cambiando los parámetros DATABASE_* del fichero de configuración myproject/settings.py, creados con el comando merengue-admin.py
+It's necessary configure the database changing DATABASE_* parameters
+in the configuration file myproject/settings.py, created with
+merengue-admin.py
 
-Nosotros supondremos que has configurado una BD postgresql con los siguientes parámetros::
+Let's suppose that you were configuring a postgresql database with the
+following parameters:
 
     DATABASE_ENGINE = 'postgresql_psycopg2'
     DATABASE_NAME = 'myproject'
@@ -195,100 +219,116 @@ Nosotros supondremos que has configurado una BD postgresql con los siguientes pa
     DATABASE_HOST = ''
     DATABASE_PORT = ''
 
-Suponemos que tu usuario tiene permisos de superadministrador de
-Postgresql. Si no fuera el caso, hay que ejecutar lo siguiente:
+We suppose that your use has superadmin permissions in postgresql. If
+not, you can do it:
 
-  $ sudo su postgres
-  $ createuser tuusuario  --> decir que será superadministrador
-  $ exit    # volvemos a tu usuario
+ $ sudo su postgres
+ $ createuser yourusername --> when ask say yes to be a superadmin
+ $ exit
 
-Creamos una base de datos plantilla para postgis:
+Create postgis template database:
 
-  $ createdb -E UTF8 template_postgis
-  $ createlang -d template_postgis plpgsql
+ $ createdb -E UTF8 template_postgis
+ $ createlang -d template_postgis plpgsql
 
-  Para ubuntu > 8.04 (instalando postgres-8.3-postgis)
+    In ubuntu > 8.04 (with postgres-8.3-postgis package)
 
-      $ PG_GIS_TEMPLATES=/usr/share/postgresql-8.3-postgis/
-      $ psql -d template_postgis -f $PG_GIS_TEMPLATES/lwpostgis.sql
-      $ psql -d template_postgis -f $PG_GIS_TEMPLATES/spatial_ref_sys.sql
+     $ PG_GIS_TEMPLATES=/usr/share/postgresql-8.3-postgis/
+     $ psql -d template_postgis -f $PG_GIS_TEMPLATES/lwpostgis.sql
+     $ psql -d template_postgis -f $PG_GIS_TEMPLATES/spatial_ref_sys.sql
 
-  Para otro caso
+     Note: remember that if you have postgresql-8.3 and 8.4 running at the
+     same time you need to add -p 5433 option to psql createdb and
+     createlang commands.
 
-      $ psql -d template_postgis -f `$PG_CONFIG --sharedir`/lwpostgis.sql
-      $ psql -d template_postgis -f `$PG_CONFIG --sharedir`/spatial_ref_sys.sql
+    In other case:
 
-  $ psql -d template_postgis -c "GRANT ALL ON geometry_columns TO PUBLIC;"
-  $ psql -d template_postgis -c "GRANT ALL ON spatial_ref_sys TO PUBLIC;"
+     $ psql -d template_postgis -f `$PG_CONFIG --sharedir`/lwpostgis.sql
+     $ psql -d template_postgis -f `$PG_CONFIG --sharedir`/spatial_ref_sys.sql
 
-Creamos la base de datos:
+ $ psql -d template_postgis -c "GRANT ALL ON geometry_columns TO PUBLIC;"
+ $ psql -d template_postgis -c "GRANT ALL ON spatial_ref_sys TO PUBLIC;"
 
-  $ createuser myproject -P
-  (asignamos la contraseña "myproject" y hacemos que sea superusuario, necesario para ejectuar test de portal)
-  $ createdb -T template_postgis --owner=myproject myproject
 
-Damos permiso de conexión a la base de datos desde el ordenador local. Editamos /etc/postgresql/X.X/main/pg_hba.conf, añadiendo la siguiente línea (no al final):
+Creating the project database:
+------------------------------
+
+ $ createuser myproject -P
+ (we set "myproject" password and make that users superuser, necessary
+ for exec portal test)
+ $ createdb -T template_postgis --owner=myproject myproject
+
+We permit connections to database from local computer. Editing
+/etc/postgresql/X.X/main/pg_hba.conf adding the following line (not at
+the end):
 
   local myproject myproject trust
-  local test_myproject myproject trust  # necesario para la ejecucion de pruebas
+  local test_myproject myproject trust  # necessary for tests
 
-Reiniciamos postgresql y comprobamos el acceso:
+Restart postgresql and check access:
 
   # /etc/init.d/postgresql restart
   # psql myproject -U myproject
 
-Accedemos al directorio de nuestro sistema ($SRCDIR/myproject). Comprobamos que el servidor django de desarrollo arranca bien:
+Go to our project directory ($SRCDIR/myproject). Test that django
+development server runs ok:
 
   $ ./manage.py runserver
 
 
-Construir la base de datos inicial
+Building the initial database:
 ----------------------------------
 
-La base de datos creada está vacía. Necesitamos construir el modelo de datos e incluir los datos iniciales mínimos.
+The created database is empty. We need to build the data model and add
+minimal initial data.
 
-Se realiza con el siguiente comando:
+You can do it with that command:
 
   $ ./manage.py rebuild_db --template=template_postgis
 
 
-Visualizar el sitio
+View the site:
 -------------------
 
-Accedemos por el navegador a http://localhost:8000/admin/ y comprobamos que la web se ha levantado correctamente.
+Open the web browser and go to http://localhost:8000/admin/ and check
+that the web is running ok.
 
-Para ver la versión publica de la web, podemos acceder a http://localhost:8000/
+To see the web public version, we can access to http://localhost:8000/
 
-Usuario por defecto para interfaz de administracíon:
-Usuario: admin
-Contraseña: admin
+Default admin interface user:
+user: admin
+password: admin
 
-Nota: hay que incluir las / finales en las URLs
+Note: It's necessary to put the end / in urls
 
 
-Activar el autocompletado del manage.py (opcional)
---------------------------------------------------
+More information
+----------------
+Activate the manage.py auto complete
+------------------------------------
 
-Copiamos fichero django_bash_completion en /etc :
+Copy the file django_bash_completion in /etc:
 
   $ sudo cp $SVNDIR/django_src/extras/django_bash_completion /etc
 
-Activamos completado, incluyendo en el fichero $HOME/.bashrc lo siguiente:
+We activate the auto complete including in file $HOME/.bashrc the following
+line:
 
   if [ -f /etc/django_bash_completion ]; then
     . /etc/django_bash_completion
   fi
 
 
-Backup y reconstrucción de la base de datos
+Database backup and rebuild:
 -------------------------------------------
 
-Se puede hacer un backup en SQL de toda la base de datos, con el siguiente comando:
+You can make a database backup in SQL with the following command:
 
    $ ./manage.py backupdb
 
-Cuando hay cambios en los modelos de datos, se puede reconstruir la base de datos entera (sólo en el servidor de desarrollo), mediante el comando siguiente:
+When you make changes in your data models, you can rebuild the
+database (only in development server), with the following command:
 
    $ ./manage.py rebuild_db --template=template_postgis
 
-El comando anterior adicionalmente y por motivos de seguridad, te realizará creará automáticamente una copia de seguridad.
+The previous command for security reasons makes a database backup.
