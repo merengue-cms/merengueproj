@@ -1,15 +1,12 @@
-from django.shortcuts import render_to_response, get_object_or_404
-from django.template import RequestContext
+from django.shortcuts import get_object_or_404
 
-from merengue.base.views import content_view
+from merengue.base.views import content_view, content_list
 from plugins.news.models import NewsItem
 
 
 def news_index(request):
     news_list = NewsItem.objects.published()
-    return render_to_response('news/news_index.html',
-                              {'news_list': news_list},
-                              context_instance=RequestContext(request))
+    return content_list(request, news_list, template_name='news/news_index.html')
 
 
 def newsitem_view(request, newsitem_slug):

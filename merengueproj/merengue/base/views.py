@@ -164,6 +164,18 @@ def content_view(request, content, template_name=None, extra_context=None):
                               context_instance=RequestContext(request))
 
 
+def content_list(request, queryset, paginate_by=10, page=None,
+                 template_name='content_list.html', extra_context=None):
+    """ Generic view for a list page """
+    return list_detail.object_list(request, queryset,
+                                   template_name=template_name,
+                                   allow_empty=True,
+                                   paginate_by=paginate_by,
+                                   page=page,
+                                   template_object_name='content',
+                                   extra_context=extra_context)
+
+
 def generic_object_list(request, queryset, title, menu_selected,
                         base_template, child_template_name,
                         original_context={},

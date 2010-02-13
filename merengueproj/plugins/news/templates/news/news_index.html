@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "content_list.html" %}
 
 {% load i18n inlinetrans action_tags %}
 
@@ -8,12 +8,5 @@
   <span class="breadcrumbSeparator">→</span><a href="{% url news_index %}" title="{% trans "News" %}">{% inline_trans "News" %}</a>
 {% endblock %}
 
-{% block content %}
-<h1>{% inline_trans "News index" %}</h1>
-<ul class="newsList">
-  {% for n in news_list %}
-  <li><a href="{{ n.get_absolute_url }}">{{ n.name }}</a></li>
-  {% endfor %}
-</ul>
+{% block listtitle %}{% trans "News index" %}{% endblock %}
 
-{% endblock %}
