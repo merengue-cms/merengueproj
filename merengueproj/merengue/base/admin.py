@@ -23,7 +23,7 @@ from django.contrib.gis.db import models as geomodels
 from django.contrib.gis.maps.google import GoogleMap
 from django.forms.models import ModelForm, BaseInlineFormSet, \
                                 fields_for_model, save_instance, modelformset_factory
-from django.forms.util import ErrorList, ValidationError
+from django.forms.util import ValidationError
 from django.forms.widgets import Media
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.utils.datastructures import SortedDict
@@ -998,6 +998,26 @@ class ContactInfoAdmin(BaseAdmin):
 
 
 class RelatedModelAdmin(BaseAdmin):
+    """
+    A related model admin. This admin will be appears
+
+    Example use::
+
+      class Book(models.Model):
+          ...
+
+      class Page(models.Model):
+          book = models.ForeignKey(Book)
+          ...
+
+      class PageRelatedAdmin(RelatedModelAdmin):
+          model = Page
+          tool_name = 'pages'
+          tool_label = 'book pages'
+          related_field = 'book'
+
+      >>> site.register_related(Page, PageRelatedAdmin, related_to=Book)
+    """
     tool_name = None
     related_field = None
     one_to_one = False
@@ -1170,32 +1190,6 @@ class BaseContentRelatedModelAdmin(BaseAdmin, StatusControlProvider):
         return form
 
 
-class VideoChecker(object):
-
-    def get_form(self, request, obj=None):
-        form = super(VideoChecker, self).get_form(request, obj)
-
-        def clean(self):
-            super(form, self).clean()
-            file_cleaned_data = self.cleaned_data.get('file', None)
-            url_cleaned_data = self.cleaned_data.get('external_url', None)
-            old_file=obj and obj.file
-
-            if not old_file and not url_cleaned_data and not file_cleaned_data:
-                global_errors = self.errors.get('__all__', ErrorList([]))
-                global_errors.extend(ErrorList([_(u'Please specify at least a video file or a video url')]))
-                self._errors['__all__'] = ErrorList(global_errors)
-            elif file_cleaned_data:
-                extension = file_cleaned_data.name.split('.')[-1].lower()
-                if extension not in ('flv', 'f4v'):
-                    file_errors = self.errors.get('file', ErrorList([]))
-                    file_errors.extend(ErrorList([_(u'Video file must be in flv format')]))
-                    self._errors['file'] = ErrorList(file_errors)
-            return self.cleaned_data
-        form.clean = clean
-        return form
-
-
 class LocationModelAdminMixin(object):
 
     title_first_fieldset = None
@@ -1320,14 +1314,6 @@ class BaseContentRelatedContactInfoAdmin(BaseContentRelatedModelAdmin):
         self.admin_site.basecontent.save()
 
 
-class PublicTypeAdmin(BaseAdmin):
-    search_fields = ('name_es', )
-
-
-class SegmentAdmin(BaseAdmin):
-    search_fields = ('name_es', )
-
-
 class BaseOrderableInlines(admin.ModelAdmin):
 
     def __init__(self, *args, **kwargs):
@@ -1352,6 +1338,9 @@ class BaseOrderableInlines(admin.ModelAdmin):
 
 
 class BaseOrderableAdmin(BaseAdmin):
+    """
+    A model admin that can reorder content by a sortablefield
+    """
     change_list_template = "admin/basecontent/sortable_change_list.html"
     sortablefield = 'position'
 
@@ -1369,6 +1358,66 @@ class BaseOrderableAdmin(BaseAdmin):
                 item.save()
 
         return super(BaseOrderableAdmin, self).changelist_view(request, extra_context)
+
+
+class OrderableRelatedModelAdmin(RelatedModelAdmin):
+    """
+    A model admin that can reorder related content.
+
+    Example use::
+
+      class Book(models.Model):
+          ...
+
+      class Page(models.Model):
+          books = models.ManyToManyField(Book, through='PageBook')
+
+      class PageBook(models.Model):
+          book = models.ForeignKey(Book)
+          page = models.ForeignKey(Page)
+          order = models.PositiveIntegerField()
+
+      class PageOrderableRelatedAdmin(OrderableRelatedModelAdmin):
+          model = Page
+          tool_name = 'pages'
+          tool_label = 'book pages'
+          related_field = 'books'
+          sortablefield = 'order'
+          # next line is needed to have same ordering in admin
+          ordering = ('pagebook__order', )
+
+          def get_relation_obj(self, through_model, obj):
+              return through_model.objects.get(book=self.basecontent, page=obj)
+
+      >>> site.register_related(Page, PageOrderableRelatedAdmin, related_to=Book)
+    """
+    change_list_template = "admin/basecontent/sortable_change_list.html"
+    sortablefield = 'position'
+
+    def changelist_view(self, request, extra_context=None):
+        if request.method == 'POST':
+            neworder_list = request.POST.get('neworder', None)
+            page = request.GET.get('p', 0)
+            if neworder_list is None:
+                return super(BaseOrderableAdmin, self).changelist_view(request, extra_context)
+            neworder_list = neworder_list.split(',')
+            items = self.queryset(request).filter(id__in=neworder_list)
+            for item in items:
+                field = item._meta.get_field_by_name(self.related_field)[0]
+                through_model = field.field.rel.through_model
+                neworder = neworder_list.index(unicode(item.id)) + (int(page) * 50)
+                relation = self.get_relation_obj(through_model, item)
+                setattr(relation, self.sortablefield, neworder)
+                relation.save()
+
+        return super(OrderableRelatedModelAdmin, self).changelist_view(request, extra_context)
+
+    def get_relation_obj(self, through_model, obj):
+        """
+        Callback method that get relationship content for a item.
+        To override in subclasses. See example implementation above.
+        """
+        raise NotImplementedError('You have to override this method')
 
 
 class LogEntryRelatedContentModelAdmin(admin.ModelAdmin):

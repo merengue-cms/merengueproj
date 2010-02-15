@@ -9,7 +9,7 @@ from django.utils.translation import ugettext
 
 from batchadmin.util import model_ngettext
 
-from merengue.base.admin import (BaseContentAdmin, BaseAdmin, VideoChecker,
+from merengue.base.admin import (OrderableRelatedModelAdmin, BaseContentAdmin, BaseAdmin,
                                  WorkflowBatchActionProvider, RelatedModelAdmin)
 from merengue.base.models import BaseContent, MultimediaRelation
 from merengue.multimedia.models import (Photo, Video, PanoramicView, Image3D,
@@ -191,6 +191,32 @@ class PhotoAdmin(BaseMultimediaAdmin):
         return super(PhotoAdmin, self).changelist_view(request, context)
 
 
+class VideoChecker(object):
+
+    def get_form(self, request, obj=None):
+        form = super(VideoChecker, self).get_form(request, obj)
+
+        def clean(self):
+            super(form, self).clean()
+            file_cleaned_data = self.cleaned_data.get('file', None)
+            url_cleaned_data = self.cleaned_data.get('external_url', None)
+            old_file=obj and obj.file
+
+            if not old_file and not url_cleaned_data and not file_cleaned_data:
+                global_errors = self.errors.get('__all__', ErrorList([]))
+                global_errors.extend(ErrorList([_(u'Please specify at least a video file or a video url')]))
+                self._errors['__all__'] = ErrorList(global_errors)
+            elif file_cleaned_data:
+                extension = file_cleaned_data.name.split('.')[-1].lower()
+                if extension not in ('flv', 'f4v'):
+                    file_errors = self.errors.get('file', ErrorList([]))
+                    file_errors.extend(ErrorList([_(u'Video file must be in flv format')]))
+                    self._errors['file'] = ErrorList(file_errors)
+            return self.cleaned_data
+        form.clean = clean
+        return form
+
+
 class VideoAdmin(VideoChecker, BaseMultimediaAdmin):
     search_fields = ('name', 'original_filename')
     list_display = ('__str__', 'status', 'last_editor')
@@ -233,15 +259,22 @@ class AudioAdmin(BaseMultimediaAdmin):
     list_display = ('__str__', 'status', 'last_editor')
 
 
-class RelatedBaseMultimediaAdmin(RelatedModelAdmin):
+class RelatedBaseMultimediaAdmin(OrderableRelatedModelAdmin):
+    sortablefield = 'order'
     search_fields = ('name', 'original_filename')
     list_display = ('__str__', 'status', 'last_editor')
     related_field = 'basecontent'
+    ordering = ('multimediarelation__order', )
 
     def custom_relate_content(self, request, obj, form, change):
         if not change:
             multimedia_rel = MultimediaRelation.objects.create(content=self.basecontent,
                 multimedia=obj.basemultimedia_ptr)
+
+    def get_relation_obj(self, through_model, obj):
+        return through_model.objects.get(
+            content=self.basecontent, multimedia=obj,
+        )
 
 
 class RelatedPhotoAdmin(RelatedBaseMultimediaAdmin):
