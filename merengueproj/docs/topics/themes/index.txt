@@ -1,0 +1,192 @@
+.. _topics-themes-index:
+
+====================
+Working with themes
+====================
+
+.. highlightlang:: html+django
+
+
+Overview
+========
+
+Merengue supports themes, allowing for completely different "look & feel", while maintaning all the merengue functionality, thusly separating logic and presentation.
+
+Directory tree
+--------------
+
+Themes consist of templates (HTML, TXT, etc.) and media files (images, CSS, Javascript, etc).
+
+Merengue's builtin themes are distributed along merengue, in the ``themes`` directory. They're copied in.
+
+A project's themes are separated into two directories: ``media/themes/`` and ``/themes/``. For example a ``violet`` theme will be located in:
+
+.. code-block:: python
+
+    merengue_project/templates/themes/violet/
+    merengue_project/media/themes/violet/
+
+In the first directory there are all Django templates for:
+
+* Changing site layout.
+* Any HTML markup changes.
+
+Inside the media directory there are all kind of static resources needed by the theme templates, such as CSS, images or javascript files.
+
+Template theme mechanism
+------------------------
+
+.. note::
+
+    Please look `Django template language`_, to get info about template syntax.
+
+Let's take this example template, included maybe in one of the plugins templates directory. Imaging a events plugin that list all events published in site:
+
+.. code-block:: html+django
+
+    {% extends "base.html" %}
+    
+    {% block content %}
+      <ul id="event-list">
+      {% for event in event_list %}
+        <li>{{ event.name }}</li>
+      {% endfor %}
+      </ul>
+    {% endblock %}
+
+This template extends a base template for layout rendering. By default, Django will looks for ``base.html`` in this directories:
+
+* Firstly, look into the project templates dir, i.e. ``merengueproj/templates/``.
+* Secondly, look into the applications installed template dir, i.e. ``merengueproj/apps/foo/templates/``.
+
+Merengue overrides this behaviour, doing the first look into active theme directory. If you configures ``violet`` theme as active one, and example template was rendered, 
+merengue will look firstly a "base.html" in this directory:
+
+.. code-block:: bash
+
+    merengueproj/templates/themes/violet/
+
+
+Then, placing a ``base.html`` into your theme directory, you will get change layout page maintaining all event plugin functionality.
+
+.. _`Django template language`: http://docs.djangoproject.com/en/dev/topics/templates/#topics-templates
+
+
+Overriding template layout
+--------------------------
+
+Merengue html layout is designed to be flexible and bring all possibilities to extends in many ways.
+
+To reach a tight integration between merengue, themes and plugins, we have to follow this conventions:
+
+1. All plugins and merengue templates, will extends ``base.html`` template, that looks into your theme if is the active theme for your site.
+2. Usually your theme ``base.html`` will extends ``base/layout.html`` template, located in ``merengueproj/apps/base/templates/``. This is merengue main template, for defining layout and put all functionality blocks.
+3. ``base/layout.html`` will split page into a small fragments, included with ``include`` templatetag. All fragments are templates named ``inc.foofragment.html``. If you put a fragment template with same name into your theme directory, merengue will use it for rendering this piece of page.
+
+Let's go with a example. First we can look a fragment of ``base/layout.html``, located in ``merengueproj/apps/base/templates/`` (you can view whole `template layout`_):
+
+.. code-block:: html+django
+
+    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+    <html>
+    <head>
+      ...
+      <link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon.ico" type="image/gif" />
+      <title>{% block pagetitle %}{% endblock %} - 
+             {% block sitetitle %}Merengue powered site{% endblock %}
+      </title>
+    
+      {% block cssstyles %}
+        {% include "inc.cssstyles.html" %}
+        {% block extrastyles %}{% endblock %}
+      {% endblock %}
+    
+      ...
+
+.. _`template layout`: http://tracpub.yaco.es/merengue/browser/trunk/merengueproj/merengue/base/templates/base/layout.html
+
+As you see, this base layout template will contains several blocks that you can overrides in your theme ``base.html`` template. Besides, some blocks includes other templates that renders a page fragment. For example, ``base/layout.html`` includes ``inc.cssstyles.html`` to render CSS files... So, if you place a ``inc.csstyles.html`` into your themes template directory, merengue looks your template if ''violet'' theme was active.
+
+Then, if for example you want to redefine CSS to use your own CSS file, instead of default one, you have two possibilities:
+
+1. Without overriding ``base.html`` and placing a ``inc.cssstyles.html`` in your theme template directory.
+2. Overriding ``base.html`` and changing css block, like this:
+
+.. code-block:: html+django
+
+    {% extends "base/layout.html" %}
+    
+    {% block cssstyles %}
+      {{ block.super }} {# if you want to load default css file #}
+      <link href="{{ THEME_MEDIA_URL }}violet.css" rel="stylesheet" type="text/css" />
+    {% endblock %}
+
+.. note::
+    ``THEME_MEDIA_URL`` is a context variable available in every template you create. This will used for linking to your media resources, placed in your theme media directory (in this case will be ``merengueproj/media/themes/violet/``). If you place a ``violet.css`` file in that directory, your CSS will be loaded successfully.
+
+As schema, the templates mainly used in theme development are located in these places:
+
+.. code-block:: bash
+
+    merengueproj/
+     |-- templates/
+     |    |-- themes/
+     |    |    |-- violet/
+     |    |    |    |-- base.html # your main templated, used for page layout rendering in merengue and in all plugins when your theme is active
+     |    |    |    `-- inc.cssstyles.html # a example page fragment overrides from merengue one
+     |-- merengue/
+     |    |-- base/
+     |    |    |-- templates/
+     |    |    |    |-- base/
+     |    |    |    |    |-- layout.html # merengue default layout rendering. Usually your theme base.html will extends that
+     |    |    |    |    `-- ...
+     |    |    |    |-- inc.cssstyles.html # this page fragment will be never used when violet theme was active, because violet overrides
+     |    |    |    |-- inc.footer.html # this page fragment will be used because violet theme does not overrides it.
+     |    |    |    |-- base.html # default base.html used when no theme was activated. Only extends base/layout.html without overriding.
+     |    |    |    `-- ...
+     |    |    `-- ...
+     |    `-- ...
+     |-- media/
+     |    |-- themes/
+     |    |    |-- violet/
+     |    |    |    |-- violet.css
+     |    |    |    `-- ...
+     |    |    `-- ...
+     |    `-- ...
+     `-- ...
+
+(( TODO ))
+
+Overriding plugins CSS
+----------------------
+
+Some plugins came with its own CSS and JS files, that are included in any HTML fragment (blocks, actions, etc.).
+
+For example, ``feedback`` plugin add a ``styles.css`` in a block after content view, with this fragment inside:
+
+.. code-block:: css
+
+    #feedback #firstcomment .commentinfo {
+        font-size: 8pt;
+        padding: 5px;
+        color: gray;
+    }
+
+Then, if you wants to override plugin CSS, and you add ``#feedback #firstcomment .commentinfo`` selector in your theme CSS file, browser will take the plugins one and ignore yours, because the plugin CSS file is after the theme CSS one.
+
+The way to solve these is add this CSS fragment into your CSS file:
+
+.. code-block:: css
+
+    .theme-violet #firstcomment .commentinfo {
+        font-size: 8pt;
+        padding: 5px;
+        color: gray;
+    }
+
+This works because in ``base/layout.html`` we add a CSS class to ``#container`` div, with active theme.
+
+Internals
+---------
+
+(( TODO ))

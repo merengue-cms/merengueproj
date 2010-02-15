@@ -1,0 +1,240 @@
+.. _topics-actions:
+
+====================
+Working with actions
+====================
+
+.. highlightlang:: html+django
+
+
+Overview
+========
+
+What is an action?
+------------------
+
+An action is a task that user can do with portal site, or with some content.
+
+Examples was:
+
+* PDF export of a content.
+* Send actual URL viewing to a somebody.
+* Add actual URL to facebook.
+
+Actions categories
+------------------
+
+Actions are usually placed in different places in a site layout. The default categories are:
+
+* ``Site actions``: actions enabled in all portal.
+* ``Content actions``: actions enabled in a content view page.
+* ``User actions``: usually user tools, only for logged users.
+
+
+Actions rendering
+-----------------
+
+This would be an example rendering:
+
+.. code-block:: html+django
+
+    ... <!-- some stuff -->
+    
+    <ul id="site-actions">
+    {% get_actions "site" as site_actions %}
+    {% for action in site_actions %}
+      <li id="action-{{ action.name }}">
+        <a href="{{ action.get_url }}">{% trans action.verbose_name %}</a>
+      </li>
+    {% endfor %}
+    </ul>
+    
+    ... <!-- more stuff -->
+    
+    <ul id="content-actions">
+    {% get_actions "content" for content as content_actions %}
+    {% for action in content_actions %}
+      <li id="action-{{ action.name }}">
+        <a href="{{ action.get_url }}">{% trans action.verbose_name %}</a>
+      </li>
+    {% endfor %}
+    </ul>
+    
+    ... <!-- more stuff -->
+    
+    <ul id="user-actions">
+    {% get_actions "user" as user_actions %}
+    {% for action in user_actions %}
+      <li id="action-{{ action.name }}">
+        <a href="{{ action.get_url }}">{% trans action.verbose_name %}</a>
+      </li>
+    {% endfor %}
+    </ul>
+    
+    ... <!-- now... we place all user actions -->
+    
+    <ul id="all-user-actions">
+    {% for user in all_users %}
+      {% get_actions "user" for user as user_actions %}
+      {% for action in user_actions %}
+        <li id="action-{{ action.name }}">
+          <a href="{{ action.get_url }}">{% trans action.verbose_name %}</a>
+        </li>
+      {% endfor %}
+    {% endfor %}
+    </ul>
+
+
+Actions URLs
+------------
+
+By default, all actions go to ``action.urls`` dispatcher, for perform one action. The URL was:
+
+* for all site actions: ``/actions/site/$action_name/``
+* for all content actions ``/actions/content/$content_type_id/$content_id/$action_name/``
+* for all user actions ``/actions/user/$username/$action_name/``
+
+All this URLs will call to views defined in ``actions.views``. These views will call to ``perform`` method in action dispatcher, which is a class definition for this action. See next point for more information.
+
+
+Programming actions
+===================
+
+Actions definition
+------------------
+
+Action perform usually will occurs in some plugin views. For this reason, an action usually will redirect to one view, with right parameters.
+
+This fragment would be an example for action definitions:
+
+.. code-block: python
+
+    from django.http import HttpResponseRedirect
+    from django.core.urlresolvers import reverse
+    
+    from merengue.action.actions import SiteAction, ContentAction
+    
+    class PDFExport(ContentAction):
+       name = 'pdfexport'
+    
+       # ... more stuff
+       def get_response(self, request, content_type_id, content_id):
+          return HttpResponseRedirect(
+              reverse("pdf_export", args=[content_type_id, content_id]),
+          )
+    
+    
+    class SendPage(SiteAction):
+       name = 'sendpage'
+       # ... more stuff
+       def get_response(self, request):
+          return HttpResponseRedirect(
+              reverse("sendpage", args=[request.get_full_path()]),
+          )
+
+.. note::
+
+    Why dont perform action in action definition class itself? Because less coupling principle: you can have some utility views that make some process (maybe in other apps)... This is independent from actions links. Think in a third app reusable view like this:
+
+.. code-block: python
+
+    from django.conf import settings
+    
+    def sendto_page(request, path_to_send, from_email=None, cc_emails=None):
+       if from_email is None:
+           from_email = settings.DEFAULT_FROM_EMAIL
+       # ... more stuff
+
+If you find a view like previous, you can use it as usual.
+
+Actions registry and configuration
+----------------------------------
+
+.. _`registry documentation`: http://
+
+Actions registry and configuration setup are implemented using ``registry`` application (more info in :ref:`registry documentation <topics-plugins-registration>`). See this example:
+
+.. code-block:: python
+
+    from django.conf import settings
+    from django.utils.translation import ugettext as _
+    
+    from registry import params
+    
+    class PDFExport(ContentAction):
+       # ... more stuff
+       config_params = [
+           params.Single(_('HTML to PDF binary'), default='/usr/bin/pdftotext'),
+       ]
+    
+    
+    class SendPage(SiteAction):
+       # ... more stuff
+       config_params = [
+           params.Single(name='from_email',
+                         verbose_name=_('From email address'),
+                         default=settings.DEFAULT_FROM_EMAIL),
+           params.List(name='cc_emails',
+                       verbose_name=_('CC email addresses'))
+       ]
+
+This config parameters would be customized in merengue admin interface.
+
+For accessing to configuration inside an app, you can do like this:
+
+.. code-block:: bash
+
+    >>> from plugins.myplugin.actions import SendPage
+    >>> SendPage.get_config('cc_emails').value
+    ['info@yoursite.com',]
+    >>> SendPage.get_config('cc_emails').label
+    'CC email addresses'
+
+Then, you can have a decoupled actions from a reusable view with this code:
+
+.. code-block:: python
+
+     class SendPage(SiteAction):
+        # ... more stuff
+        def get_url(self, request):
+           return HttpResponseRedirect(
+               reverse("sendpage",
+                       args=[request.get_full_path()]),
+                       kwargs={'from_email': self.get_config('from_email'),
+                               'cc_emails': self.get_config('cc_emails'),}),
+           )
+
+Or inside view:
+
+.. code-block:: python
+
+    from plugins.myplugin.actions import SendPage
+    
+    def sendpage(request, request_path):
+       from_email = SendPage.get_config('from_email')
+       # ... do stuff
+
+Other way is using ``actions.get_action`` function:
+
+.. code-block:: python
+
+    from merengue.action import get_action
+    
+    def sendpage(request, path_to_send):
+        action = get_action('sendpage')
+        from_email = action.config['from_email']
+        cc_emails = action.config['cc_emails']
+        # do your staff ...
+
+And... how I can access to configuration of all actions (customized or not)? Using ``actions.get_actions`` method, like this:
+
+.. code-block:: python
+
+    from merengue.action import get_actions
+    
+    def user_actions(request):
+        actions = get_actions(category='user')
+        # ... do stuff
+
+.. note::
+    ``{% get_actions ... %``} templatetag uses ``actions.get_actions`` function inside. So, you can retrieve actions in same way in views as in templates.

@@ -1,0 +1,22 @@
+
+.. _index:
+
+======================
+Merengue documentation
+======================
+
+.. rubric:: Everything you need to know about Merengue.
+
+
+The components
+===============
+
+    * **Plugins:**
+      :ref:`Configuration <topics-plugins-configuration>` |
+      :ref:`Development <topics-plugins-development>`
+
+    * **Themes:**
+      :ref:`Development <topics-themes-index>`
+
+    * **Actions:**
+      :ref:`Development <topics-actions>`

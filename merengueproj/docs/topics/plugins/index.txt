@@ -1,0 +1,139 @@
+.. _topics-plugins-index:
+
+====================
+Working with plugins
+====================
+
+.. highlightlang:: html+django
+
+
+Overview
+========
+
+Plugin configuration is defined in a ``PluginConfig`` class in a ``config.py`` module inside your plugin directory. This class is readed when plugin is loaded in merengue.
+
+
+.. _topics-plugins-configuration:
+
+Configuration
+=============
+
+Example
+-------
+
+.. code-block:: python
+
+    from plug import Plugin
+    
+    class PluginConfig(Plugin):
+        url_prefixes = (
+            ('fooplugin', 'plugins.fooplugin.urls'),
+        )
+    
+        @classmethod
+        def get_actions(cls):
+            return [...]
+    
+        @classmethod
+        def get_blocks(cls):
+            return [...]
+    
+        @classmethod
+        def section_models(cls):
+            return [...]
+
+
+Available parameters reference
+------------------------------
+
+``url_prefixes``
+~~~~~~~~~~~~~~~~
+
+Default value: ``None``
+
+This parameter is mandatory. This is the URL prefix for all plugins urls.
+
+Example:
+
+.. code-block:: python
+
+    class PluginConfig(Plugin):
+        url_prefixes = (
+            ('fooplugin', 'plugins.fooplugin.urls'),
+            ...
+        )
+
+
+With this example, if plugin was activated, merengue plugin system will perform a operation like this:
+
+.. code-block:: python
+
+    urlpatterns += patterns('',
+      (r'^fooplugin/', include('plugins.fooplugin.urls')),
+    )
+
+.. _topics-plugins-development:
+
+Development
+===========
+
+Writing a custom plugin
+-----------------------
+
+To write a merengue custom plugin, you need to create an Django application with several conventions:
+
+* A defined directory layout.
+* Write a configuration file.
+* Extend some components.
+* Extend some base models.
+
+
+Plugin tree
+-----------
+
+All plugins will be placed below ``plugins`` merengue directory.
+
+This is a conventional plugin tree:
+
+.. code-block:: python
+
+     /plugins/
+         |-- fooplugin/
+         |   |-- config.py
+         |   |-- models.py
+         |   |-- views.py
+         |   |-- urls.py
+         |   `-- templates/
+         |       `-- fooplugin/
+         |   `-- media/
+         |       `-- fooplugin/
+         |
+         ...
+
+
+Let's explain every part listed before:
+
+* ``models.py`` is conventional Django app model file. See :ref:`base models <topics-models-base>` to get more info about base models you can extend of.
+* ``config.py`` is the configuration file for plugin. See :ref:`plugin configuration reference <topics-plugins-configuration>`.
+* ``actions.py`` is portal actions file. See :ref:`actions reference <topics-actions>`.
+* ``views.py`` is conventional `Django views`_ file.
+* ``urls.py`` is conventional `Django urls`_ file. You can use it for control a URL namespace (i.e. all ``/fooplugin/.*`` urls).
+* ``templates/fooplugin/`` is a directory for ``fooplugin`` template namespace.
+* ``media/fooplugin/`` is a directory for media resources like icons, css, etc.
+
+.. _`Django views`: http://docs.djangoproject.com/en/dev/topics/http/views/#topics-http-views
+.. _`Django URLs`: http://docs.djangoproject.com/en/dev/topics/http/urls/#topics-http-urls
+
+Example "news" plugin
+---------------------
+
+You can see an `example plugin`_.
+
+.. _`example plugin`: https://tracpub.yaco.es/merengue/browser/trunk/merengueproj/plugins/news/
+
+To complete
+-----------
+
+Challenges to resolve:
+
+ * Poder hacer que cada plugin tenga su espacio reservado para los media. Ver https://trac.yaco.es/formacion/wiki/MetodologiaDesarrolloDjango#Ficherosmultimedia para una posible solución.

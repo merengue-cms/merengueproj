@@ -1,0 +1,14 @@
+.. _topics-index:
+
+Using Merengue
+==============
+
+Introductions to all the key parts of Merengue you'll need to know:
+
+.. toctree::
+   :maxdepth: 1
+
+   install
+   plugins/index
+   themes/index
+   actions
