@@ -717,16 +717,10 @@ def handle_link_url_post_save(sender, instance, **kwargs):
     if isinstance(instance, BaseLink):
         linklist = [instance]
     elif isinstance(instance, BaseContent):
-        try:
-            linklist = [instance.contentlink]
-        except ContentLink.DoesNotExist:
-            pass
+        linklist = instance.contentlink_set.all()
     elif isinstance(instance, BaseSection):
         for content in instance.related_content.all():
-            try:
-                linklist.append(content.contentlink)
-            except ContentLink.DoesNotExist:
-                continue
+            linklist += content.contentlink_set.all()
 
     for link in linklist:
         if link and link.get_absolute_url() != link.menu.url:
