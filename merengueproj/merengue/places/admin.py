@@ -2,7 +2,8 @@ from django.conf import settings
 from django.contrib.gis import admin as geoadmin
 from django.contrib.gis.maps.google import GoogleMap
 
-from merengue.base.admin import BaseAdmin, transmeta_aware_fieldname
+from transmeta import canonical_fieldname
+from merengue.base.admin import BaseAdmin
 
 
 GMAP = GoogleMap(key=settings.GOOGLE_MAPS_API_KEY)
@@ -29,7 +30,7 @@ class BasePlaceAdmin(BaseAdmin):
 
     def formfield_for_dbfield(self, db_field, **kwargs):
         field = super(BasePlaceAdmin, self).formfield_for_dbfield(db_field, **kwargs)
-        db_fieldname = transmeta_aware_fieldname(db_field)
+        db_fieldname = canonical_fieldname(db_field)
         if db_fieldname == 'description':
             field.widget.attrs['rows'] = 4
         return field

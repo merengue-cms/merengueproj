@@ -36,7 +36,8 @@ from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
 from cmsutils.forms.widgets import AJAXAutocompletionWidget
-from transmeta import get_all_translatable_fields, get_real_fieldname_in_each_language
+from transmeta import (canonical_fieldname, get_all_translatable_fields,
+                       get_real_fieldname_in_each_language)
 from batchadmin.util import model_ngettext, get_changelist
 
 from merengue.base.adminsite import site
@@ -44,8 +45,8 @@ from merengue.base.forms import AdminBaseContentOwnersForm
 from merengue.base.models import Base, BaseContent, ContactInfo
 from merengue.base.utils import geolocate_object_base, copy_request
 from merengue.base.widgets import (CustomTinyMCE, OpenLayersWidgetLatitudeLongitude,
-                          OpenLayersInlineLatitudeLongitude, ReadOnlyWidget,
-                          RelatedBaseContentWidget)
+                                   OpenLayersInlineLatitudeLongitude, ReadOnlyWidget,
+                                   RelatedBaseContentWidget)
 from merengue.multimedia.models import BaseMultimedia
 from merengue.places.models import Location
 from merengue.section.models import Document
@@ -254,11 +255,6 @@ class OSMGeoAdminLatitudeLongitude(geoadmin.OSMGeoAdmin):
     widget = OpenLayersWidgetLatitudeLongitude
 
 
-def transmeta_aware_fieldname(db_field):
-    """ all "description_en", "description_fr", etc. field names will return "description" """
-    return getattr(db_field, 'original_fieldname', db_field.name) # original_fieldname is set by transmeta
-
-
 def set_field_read_only(field, field_name, obj):
     """ utility function for convert a widget field into a read only widget """
     if hasattr(obj, 'get_%s_display' % field_name):
@@ -328,7 +324,7 @@ class BaseAdmin(admin.ModelAdmin):
 
     def formfield_for_dbfield(self, db_field, **kwargs):
         field = super(BaseAdmin, self).formfield_for_dbfield(db_field, **kwargs)
-        db_fieldname = transmeta_aware_fieldname(db_field)
+        db_fieldname = canonical_fieldname(db_field)
 
         # tinymce editor for html fields
         if db_fieldname in self.html_fields:
@@ -899,7 +895,7 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
 
     def formfield_for_dbfield(self, db_field, **kwargs):
         field = super(BaseContentAdmin, self).formfield_for_dbfield(db_field, **kwargs)
-        db_fieldname = transmeta_aware_fieldname(db_field)
+        db_fieldname = canonical_fieldname(db_field)
         if db_fieldname == 'description':
             field.widget.attrs['rows'] = 4
         return field
