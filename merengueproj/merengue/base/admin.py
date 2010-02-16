@@ -1341,8 +1341,6 @@ class OrderableRelatedModelAdmin(RelatedModelAdmin):
           tool_label = 'book pages'
           related_field = 'books'
           sortablefield = 'order'
-          # next line is needed to have same ordering in admin
-          ordering = ('pagebook__order', )
 
           def get_relation_obj(self, through_model, obj):
               return through_model.objects.get(book=self.basecontent, page=obj)
@@ -1351,6 +1349,15 @@ class OrderableRelatedModelAdmin(RelatedModelAdmin):
     """
     change_list_template = "admin/basecontent/sortable_change_list.html"
     sortablefield = 'position'
+
+    def get_ordering(self):
+        """
+        Returns ordering by sortablefield
+        """
+        opts = self.model._meta
+        field = opts.get_field_by_name(self.related_field)[0]
+        relation_lookup = field.field.rel.through.lower()
+        return ('%s__order' % relation_lookup, 'asc')
 
     def changelist_view(self, request, extra_context=None):
         if request.method == 'POST':
@@ -1406,3 +1413,21 @@ def register(site):
 
 def setup_basecontent_admin(basecontent_admin_site):
     basecontent_admin_site.register(Location, BaseContentRelatedLocationModelAdmin)
+
+
+# ----- begin monkey patching -----
+
+# we change ChangeList.get_ordering for allowing define a dynamic ordering
+# Django does not allow that. We have create a ticket for fix that
+# For more details, see django ticket http://code.djangoproject.com/ticket/12875
+legacy_get_ordering = ChangeList.get_ordering
+
+
+def new_get_ordering(self):
+    if getattr(self.model_admin, 'get_ordering'):
+        return self.model_admin.get_ordering()
+    return legacy_get_ordering(self)
+
+from django.contrib.admin.views.main import ChangeList
+
+ChangeList.get_ordering = new_get_ordering

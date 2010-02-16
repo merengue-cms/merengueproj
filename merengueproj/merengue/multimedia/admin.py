@@ -264,7 +264,6 @@ class RelatedBaseMultimediaAdmin(OrderableRelatedModelAdmin):
     search_fields = ('name', 'original_filename')
     list_display = ('__str__', 'status', 'last_editor')
     related_field = 'basecontent'
-    ordering = ('multimediarelation__order', )
 
     def custom_relate_content(self, request, obj, form, change):
         if not change:
