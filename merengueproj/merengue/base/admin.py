@@ -7,9 +7,8 @@ from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.db import models
 from django.db.models.related import RelatedObject
 from django.db.models.fields.related import ForeignKey
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response
 from django.contrib import admin
-from django.contrib.admin.models import LogEntry
 from django.contrib.auth.admin import UserAdmin as UserAdminOriginal
 from django.contrib.auth.admin import GroupAdmin
 from django.contrib.auth.models import Group, User
@@ -25,7 +24,7 @@ from django.forms.models import ModelForm, BaseInlineFormSet, \
                                 fields_for_model, save_instance, modelformset_factory
 from django.forms.util import ValidationError
 from django.forms.widgets import Media
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404
 from django.utils.datastructures import SortedDict
 from django.utils.encoding import force_unicode
 from django.utils.html import escape
@@ -38,18 +37,14 @@ from django.utils.translation import ugettext_lazy as _
 from cmsutils.forms.widgets import AJAXAutocompletionWidget
 from transmeta import (canonical_fieldname, get_all_translatable_fields,
                        get_real_fieldname_in_each_language)
-from batchadmin.util import model_ngettext, get_changelist
 
 from merengue.base.adminsite import site
 from merengue.base.forms import AdminBaseContentOwnersForm
-from merengue.base.models import Base, BaseContent, ContactInfo
-from merengue.base.utils import geolocate_object_base, copy_request
+from merengue.base.models import BaseContent, ContactInfo
 from merengue.base.widgets import (CustomTinyMCE, OpenLayersWidgetLatitudeLongitude,
                                    OpenLayersInlineLatitudeLongitude, ReadOnlyWidget,
                                    RelatedBaseContentWidget)
-from merengue.multimedia.models import BaseMultimedia
 from merengue.places.models import Location
-from merengue.section.models import Document
 
 # A flag to tell us if autodiscover is running.  autodiscover will set this to
 # True while running, and False when it finishes.
@@ -735,7 +730,7 @@ class WorkflowBatchActionProvider(object):
                 updated = queryset.update(status=state)
                 obj_log = ugettext("Changed to %s") % state
                 msg_data = {'number': updated,
-                            'model_name': model_ngettext(self.opts, updated),
+                            'model_name': self.opts.verbose_name,
                             'state': state}
                 msg = ugettext(u"Successfully set %(number)d %(model_name)s as %(state)s.") % msg_data
                 for obj in queryset:
@@ -790,7 +785,7 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
             selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
             n = queryset.count()
             obj_log = ugettext("Assigned owners")
-            msg = "Successfully set owners for %d %s." % (n, model_ngettext(self.opts, n))
+            msg = "Successfully set owners for %d %s." % (n, self.opts.verbose_name)
             if n:
                 owner_list = User.objects.filter(id__in=owners)
                 for obj in queryset:
@@ -900,28 +895,6 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
             field.widget.attrs['rows'] = 4
         return field
 
-    def autogeolocalize_object(self, request, changelist, object_base_content):
-        geolocate_object_base(object_base_content)
-
-    def autogeolocalize_objects(self, request, changelist):
-        objects_id = request.POST.getlist('selected')
-        no_can_selected_objects = changelist.model.objects.filter(is_autolocated= False, location__main_location__isnull=False, id__in=objects_id)
-        no_can_selected_objects_ids = ["%s"%ncso.id for ncso in no_can_selected_objects]
-        set_no_can_selected_objects_ids = set(no_can_selected_objects_ids)
-        set_objects_id = set(objects_id)
-        objects_id = list(set_objects_id.difference(set_no_can_selected_objects_ids))
-        if objects_id or no_can_selected_objects:
-            if request.POST.get('post', False):
-                changelist = get_changelist(request, self.model, self)
-                objects_base_content = changelist.model.objects.filter(id__in=objects_id)
-                for object_base_content in objects_base_content:
-                    self.autogeolocalize_object(request, changelist, object_base_content)
-                return ""
-            extra_context = {'title': _('Are you sure you want geoautolocalized?'),
-                             'action_submit': 'autogeolocalize_objects', 'no_can_selected_objects': no_can_selected_objects, 'no_can_selected_objects_message': _('These objects have a manual localization')}
-            return self.confirm_action(request, objects_id, extra_context)
-    autogeolocalize_objects.short_description = _("Autogeolocalize")
-
     def changelist_view(self, request, extra_context=None):
         if request.GET.get('for_select', None):
             get = request.GET.copy()
@@ -976,17 +949,6 @@ class BaseContentViewAdmin(BaseContentAdmin):
 
     def has_add_permission(self, request):
         return False
-
-
-class BaseContentAdminExtra(BaseContentAdmin):
-    change_list_template = 'admin/extra/change_list.html'
-    list_display = BaseContentAdmin.list_display + ('class_name', )
-
-    def changelist_view(self, request, extra_context=None):
-        template_base = 'batchadmin/change_list.html'
-        return super(BaseContentAdmin, self).changelist_view(request,
-                                                             extra_context={'template_base': template_base,
-                                                                            'admin_extra': True})
 
 
 class ContactInfoAdmin(BaseAdmin):
@@ -1416,408 +1378,6 @@ class OrderableRelatedModelAdmin(RelatedModelAdmin):
         raise NotImplementedError('You have to override this method')
 
 
-class LogEntryRelatedContentModelAdmin(admin.ModelAdmin):
-    list_display = ('object_repr_slice', 'get_link_contenttype', 'img_is_addition',
-                    'img_is_change', 'img_is_deletion', 'get_link_admin_url',
-                    'get_link_public_url', 'action_time')
-
-    change_list_template = 'admin/logentry/change_list.html'
-
-    converter_status_in_document_status = {
-                                            'draft': 1,
-                                            'published': 2,
-                                            'pending': None,
-                                            'deleted_in_plone': None,
-                                        }
-    list_filter = ('content_type', )
-
-    def changelist_view(self, request, extra_context=None):
-        status = request.GET.get('status', None)
-        content = request.GET.get('content_type__id__exact', None)
-        try:
-            if status:
-                request_copy = copy_request(request, ['status'])
-                if content:
-                    objects_ids = []
-                    list_models = [BaseMultimedia]
-                    list_models.extend(Base.__subclasses__())
-                    content = ContentType.objects.get(id=content)
-                    for basemodel in list_models:
-                        for model in basemodel.__subclasses__():
-                            if content.model_class() == model:
-                                objects_ids.extend([unicode(o.id) for o in model.objects.filter(status=status)])
-                    document_status = self.converter_status_in_document_status[status]
-                    if content.model_class() == Document:
-                        objects_ids.extend([unicode(o.id) for o in Document.objects.filter(status=document_status)])
-                    request_copy.GET['object_id__in'] = (',').join(objects_ids)
-                    request_copy.GET['object_id__in'] = (',').join(objects_ids)
-                else:
-                    request.user.message_set.create(message=u"%s"%_('Select first a content type'))
-            else:
-                request_copy = request
-            cl = ChangeList(request_copy, self.model, self.list_display, self.list_display_links, self.list_filter,
-                self.date_hierarchy, self.search_fields, self.list_select_related, self.list_per_page, self)
-        except IncorrectLookupParameters:
-            if ERROR_FLAG in request.GET.keys():
-                return render_to_response('admin/invalid_setup.html', {'title': _('Database error')})
-            return HttpResponseRedirect(request.path + '?' + ERROR_FLAG + '=1')
-
-        cl.has_filters=True
-        status_list = settings.STATUS_LIST
-
-        if status:
-            if content:
-                del cl.params['object_id__in']
-            cl.params.update({'status': status})
-
-        status_types = [{'name': _('All'), 'url': cl.get_query_string(remove='status')}]
-        status_selected = _('All')
-        for value, label in status_list:
-            if status == value:
-                status_selected = label
-            status_types.append({'name': label,
-                                'url': cl.get_query_string(new_params={'status': value})})
-
-        return super(LogEntryRelatedContentModelAdmin, self).changelist_view(
-                request=request_copy,
-                extra_context={'has_add_permission': False,
-                               'cl': cl,
-                               'status_types': status_types,
-                               'status_selected': status_selected,
-                              },
-                )
-
-    def queryset(self, request):
-        return LogEntry.objects.filter(user=self.admin_site.basecontent)
-
-    def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
-        return render_to_response('admin/logentry/change_form.html',
-                                  context,
-                                  context_instance=template.RequestContext(request))
-
-
-class BaseContentLocateAdmin(BaseContentAdmin):
-    """ Internal model admin for placing an content inside a base content object """
-    list_display = ('name', 'get_icon_tag', 'class_name', 'get_cities_text',
-                    'get_provinces_text', 'google_minimap', 'status', 'user_modification_date')
-    list_filter = BaseContentAdmin.list_filter + ('class_name', )
-    search_fields = ('name', )
-    actions = ['place_at', ]
-    change_list_template = 'admin/basecontent/locate_change_list.html'
-
-    def __init__(self, placed_object_attr, *args, **kwargs):
-        super(BaseContentLocateAdmin, self).__init__(*args, **kwargs)
-        self.placed_object_attr = placed_object_attr
-        if 'batchadmin_checkbox' in self.list_display:
-            self.list_display.remove('batchadmin_checkbox')
-
-    def queryset(self, request):
-        # Do not return BaseContentAdmin.queryset
-        # I need all basecontent objects to be placed
-        return super(BaseContentAdmin, self).queryset(request)
-
-    def set_placed_object(self, obj):
-        """ set obj as placed object """
-        self.placed_object = obj
-
-    def has_change_permission(self, request, obj=None):
-        opts = self.placed_object._meta
-        return request.user.has_perm(opts.app_label + '.' + opts.get_add_permission())
-
-    def has_add_permission(self, request):
-        return False
-
-    def has_delete_permission(self, request, obj=None):
-        return False
-
-    def change_view(self, request, object_id, extra_context=None):
-        choices = self.batchadmin_choices
-        if request.method == 'POST':
-            changelist = get_changelist(request, self.model, self)
-            action_index = int(request.POST.get('index', 0))
-            data = {}
-            for key in request.POST:
-                if key not in (admin.ACTION_CHECKBOX_NAME, 'index'):
-                    data[key] = request.POST.getlist(key)[action_index]
-            action_form = self.batch_action_form(data, auto_id=None)
-            action_form.fields['action'].choices = choices
-
-            if action_form.is_valid():
-                action = action_form.cleaned_data['action']
-                response = self.batchadmin_dispatch(request, changelist, action)
-                if isinstance(response, HttpResponse):
-                    return response
-                return HttpResponseRedirect("..")
-        else:
-            object = get_object_or_404(self.model, id=object_id)
-            extra_context = {'title': ugettext('Are you sure you want to place content at the following location?'),
-                             'action_submit': 'place_at'}
-            return self.confirm_action(request, [object_id], extra_context)
-
-    def changelist_view(self, request, extra_context=None):
-        extra_context = {'title': _(u'Select where do you want to place the content')}
-        return super(BaseContentLocateAdmin, self).changelist_view(request, extra_context)
-
-    def place_at(self, request, queryset):
-        selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
-        if queryset.count() == 1:
-            obj = queryset[0]
-            # we associate object selected to placed object
-            setattr(self.placed_object, self.placed_object_attr, obj)
-            self.placed_object.save()
-            msg = ugettext(u"Content location set successfully.")
-            self.message_user(request, msg)
-            return HttpResponseRedirect('../../')
-        else:
-            msg = ugettext(u"Content location unchanged.")
-            self.message_user(request, msg)
-    place_at.short_description = "Place location at content"
-
-
-class BaseContentLocateProvider(object):
-    """ model admin that provide placing object functionality from placed object """
-
-    change_form_template = 'admin/basecontent/locate_change_form.html'
-    # field for associate object to another. You have to override this attribute
-    placed_object_attr = 'basecontent_location'
-
-    def __init__(self, *args, **kwargs):
-        super(BaseContentLocateProvider, self).__init__(*args, **kwargs)
-        # this will be out related admin for locating objects
-        self.basecontent_admin = BaseContentLocateAdmin(self.placed_object_attr, BaseContent, self.admin_site)
-
-    def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
-        original = context.get('original', None)
-        if original is not None:
-            context.update({
-                'content_location': getattr(original, self.placed_object_attr),
-            })
-        return super(BaseContentLocateProvider, self).render_change_form(
-            request, context, add, change, form_url, obj,
-        )
-
-    def response_add(self, request, obj, post_url_continue='../%s/'):
-        opts = obj._meta
-        pk_value = obj._get_pk_val()
-
-        msg = ugettext('The %(name)s "%(obj)s" was added successfully.') % {'name': force_unicode(opts.verbose_name), 'obj': force_unicode(obj)}
-
-        if "_content_locate" in request.POST.keys():
-            self.message_user(request, msg + u' ' + ugettext('You can select a content to place your location.'))
-            return HttpResponseRedirect(post_url_continue % pk_value + 'content_locate/')
-        return super(BaseContentLocateProvider, self).response_add(request, obj, post_url_continue)
-
-    def __call__(self, request, url):
-        if url and 'content_locate' in url:
-            new_url = url[url.find('content_locate')+15:] or None
-            object_id = url[:url.find('/content_locate')]
-            try:
-                if object_id == 'add':
-                    self.basecontent_admin.set_placed_object(None)
-                else:
-                    obj = self.model._default_manager.get(pk=unquote(object_id))
-                    self.basecontent_admin.set_placed_object(obj)
-                # we delegate location to basecontent_admin
-                return self.basecontent_admin(request, new_url)
-            except self.model.DoesNotExist:
-                pass
-        elif url and url.endswith('content_unplace'):
-            url = url[:url.find('/content_unplace')]
-            return self.unplace(request, unquote(url))
-        return super(BaseContentLocateProvider, self).__call__(request, url)
-
-    def unplace(self, request, object_id):
-        opts = self.model._meta
-        try:
-            obj = self.model._default_manager.get(pk=unquote(object_id))
-        except self.model.DoesNotExist:
-            obj = None
-
-        if not self.has_change_permission(request, obj):
-            raise PermissionDenied
-
-        if obj is None:
-            raise Http404('%s object with primary key %r does not exist.' % (force_unicode(opts.verbose_name), escape(object_id)))
-
-        content_location = getattr(obj, self.placed_object_attr)
-        if request.method == 'POST':
-            if content_location:
-                setattr(obj, self.placed_object_attr, None)
-                obj.save()
-                msg = ugettext(u"Content is no longer placed at %s." % content_location)
-                self.message_user(request, msg)
-            return HttpResponseRedirect("../")
-        else:
-            return render_to_response('admin/basecontent/unplace.html',
-                                      {'content': obj,
-                                       'content_location': content_location},
-                                      context_instance=template.RequestContext(request))
-
-
-#### monkey patching ####
-
-# Hago un poco de monkey patching para mostrar lo que quiero en LogEntryRelatedContentModelAdmin.
-# atributo list_display
-
-
-def get_url(self, admin=False, url=None, label=None):
-    if not self.object_id.isdigit():
-        return _('Error in id')
-    if self.object_id and not url:
-        try:
-            object = self.content_type.model_class().objects.get(pk=self.object_id)
-        except models.ObjectDoesNotExist:
-            return _('deleted')
-        try:
-            if admin:
-                url = '/admin/%s' %self.get_admin_url()
-            else:
-                try:
-                    get_absolute_url = getattr(object, 'get_absolute_url', '')
-                    url = get_absolute_url and get_absolute_url() or get_absolute_url
-                except TypeError:
-                    pass
-            label = url
-        except AttributeError:
-            pass
-
-    if url:
-        if len(label) > 30:
-            label = "%s ..." % label[:30]
-        return mark_safe("<a href='%s'>%s</a>" % (url, label))
-    return '---'
-
-
-def get_link_admin_url(self):
-    return self.get_url(True)
-get_link_admin_url.allow_tags = True
-get_link_admin_url.short_description = _('Admin url')
-
-
-def get_link_public_url(self):
-    return self.get_url(False)
-get_link_public_url.allow_tags = True
-get_link_public_url.short_description = _('Public url')
-
-
-def get_link_contenttype(self):
-    model_class = self.content_type.model_class()
-    return self.get_url(url='/admin/%s/%s/'% (model_class._meta.app_label, model_class._meta.module_name), label=self.content_type.__unicode__())
-get_link_contenttype.allow_tags = True
-get_link_contenttype.short_description = _('Content type')
-
-
-def get_img(self, value, text=''):
-    if value:
-        return mark_safe('<img alt="False" src="%simg/admin/icon-yes.gif"/> %s' % (settings.ADMIN_MEDIA_PREFIX, text))
-    else:
-        return mark_safe('<img alt="False" src="%simg/admin/icon-no.gif"/> %s' % (settings.ADMIN_MEDIA_PREFIX, text))
-
-
-def img_is_addition(self):
-    return self.get_img(self.is_addition())
-img_is_addition.allow_tags = True
-img_is_addition.short_description = _('Added')
-
-
-def img_is_change(self):
-    return self.get_img(self.is_change(), '<p>%s</p>' % self.change_message)
-img_is_change.allow_tags = True
-img_is_change.short_description = _('Changed')
-
-
-def img_is_deletion(self):
-    return self.get_img(self.is_deletion())
-img_is_deletion.allow_tags = True
-img_is_deletion.short_description = _('Deleted')
-
-
-def object_repr_slice(self):
-    if len(self.object_repr) < 40:
-        return self.object_repr
-    else:
-        return "%s..." % self.object_repr[:40]
-
-LogEntry.object_repr_slice = object_repr_slice
-LogEntry.get_url = get_url
-LogEntry.get_link_admin_url = get_link_admin_url
-LogEntry.get_link_public_url = get_link_public_url
-LogEntry.get_link_contenttype = get_link_contenttype
-LogEntry.get_img = get_img
-LogEntry.img_is_addition = img_is_addition
-LogEntry.img_is_change = img_is_change
-LogEntry.img_is_deletion = img_is_deletion
-
-
-class BaseContentOwnedAdmin(BaseAdmin):
-    change_list_template = 'admin/auth/user/owned_contents.html'
-    actions = ['unassign_ownership']
-    search_fields = ('name', )
-    list_display = ('name', 'class_name', 'get_cities_text', 'get_provinces_text', 'google_minimap', 'status')
-    list_filter = ('class_name', 'status')
-    ordering = ('name', )
-    base_user = None
-
-    def _update_extra_context(self, extra_context=None):
-        extra_context = extra_context or {}
-        basecontent_type_id = ContentType.objects.get_for_model(BaseContent).id
-        extra_context.update({'base_user': self.base_user,
-                              'base_user_opts': self.base_user._meta,
-                             })
-        return extra_context
-
-    def queryset(self, request):
-        if not self.base_user:
-            return BaseContent.objects.get_empty_queryset()
-        else:
-            return BaseContent.objects.filter(owners=self.base_user)
-
-    def changelist_view(self, request, extra_context=None):
-        extra_context = self._update_extra_context(extra_context)
-        return super(BaseContentOwnedAdmin, self).changelist_view(request, extra_context)
-
-    def change_view(self, request, object_id, extra_context=None):
-        extra_context = self._update_extra_context(extra_context)
-        changelist = get_changelist(request, self.model, self)
-        post = request.POST.copy()
-        post.update({'selected': object_id})
-        request.POST = post
-        redirect_to = '..'
-        return self.unassign_ownership(request, changelist, redirect_to)
-
-    def del_ownership(self, request, queryset, redirect_to):
-        n = queryset.count()
-        obj_log = ugettext(u"Unassigned ownership")
-        msg_data = {'count': n,
-                    'model_name': model_ngettext(self.opts, n)}
-        msg = ugettext(u"Successfully unassigned ownership for %(count)d %(model_name)s.") % msg_data
-        if n:
-            for obj in queryset:
-                obj.owners.remove(self.base_user)
-                self.log_change(request, obj, obj_log)
-            self.message_user(request, msg)
-        if redirect_to:
-            return HttpResponseRedirect(redirect_to)
-
-    def unassign_ownership(self, request, queryset, redirect_to=None):
-        if not self.has_change_permission(request):
-            raise PermissionDenied
-        selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
-        if selected:
-            if request.POST.get('post', False):
-                return self.del_ownership(request, queryset, redirect_to)
-            extra_context = {'title': _(u'Are you sure you want to unassign ownership of these objects?'),
-                             'action_submit': 'unassign_ownership'}
-            return self.confirm_action(request, queryset, extra_context)
-    unassign_ownership.short_description = _(u"Unassign ownership")
-
-    def has_add_permission(self, request):
-        return False
-
-    def has_delete_permission(self, request, obj=None):
-        return False
-
-
 class UserAdmin(BaseAdmin, UserAdminOriginal):
     form = UserChangeFormCust
     add_form = UserCreationFormCust
@@ -1826,7 +1386,6 @@ class UserAdmin(BaseAdmin, UserAdminOriginal):
 
     def __init__(self, model, admin_site):
         super(UserAdmin, self).__init__(model, admin_site)
-        self.owned_contents_admin = BaseContentOwnedAdmin(BaseContent, admin_site)
 
     def add_view(self, request, form_url='', extra_context=None):
         extra_context = self._base_update_extra_context(extra_context)
@@ -1835,21 +1394,6 @@ class UserAdmin(BaseAdmin, UserAdminOriginal):
     def change_view(self, request, object_id, extra_context=None):
         return super(UserAdmin, self).change_view(request, object_id,
                                                   extra_context={'is_user_change_view': True})
-
-    def __call__(self, request, url):
-        if url and url.find('/owned')>=0:
-            url = url.replace('/owned', '')
-            try:
-                user_id, url = url.split('/', 1)
-            except:
-                user_id = url
-                url = None
-            user_id = unquote(user_id)
-            self.owned_contents_admin.base_user = User.objects.get(id=user_id)
-            url = url or None
-            return self.owned_contents_admin.__call__(request, url)
-        else:
-            return super(UserAdmin, self).__call__(request, url)
 
 
 def register(site):
