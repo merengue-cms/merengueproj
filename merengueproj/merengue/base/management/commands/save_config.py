@@ -7,6 +7,7 @@ from django.db.models.loading import load_app
 from django.conf import settings
 from django.core import serializers
 from django.core.management.base import CommandError, LabelCommand
+from django.utils.encoding import smart_str
 
 from merengue.base.management.base import MerengueCommand
 from merengue.plugins.models import RegisteredPlugin
@@ -53,6 +54,10 @@ class Command(LabelCommand, MerengueCommand):
         pass
 
     def add_fixtures(self, zip_config, plugin, plugin_path, plugin_path_zip):
+        """ backup fixtures into zip file """
+        # next to sentences is for avoiding problems with zipfile module (encoding errors)
+        plugin_path = smart_str(plugin_path)
+        plugin_path_zip = smart_str(plugin_path_zip)
         plugin_modname = get_plugin_module_name(plugin.directory_name)
         plugin_mod = load_app(plugin_modname)
         plugin_models = get_models(plugin_mod)
@@ -65,6 +70,10 @@ class Command(LabelCommand, MerengueCommand):
         zip_config.writestr(fixtures_file, "\n".join(data))
 
     def add_folder(self, zip_config, path_root, path_zip):
+        """ backup a folder into zip file """
+        # first, some encoding sentences to avoid problems with zipfile module
+        path_root = smart_str(path_root)
+        path_zip = smart_str(path_zip)
         for i, (dirpath, dirnames, filenames) in enumerate(os.walk(path_root)):
             # HACK: Avoid adding files from hidden directories
             dirnames_copy = list(dirnames)
