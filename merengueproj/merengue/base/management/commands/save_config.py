@@ -55,7 +55,7 @@ class Command(LabelCommand, MerengueCommand):
 
     def add_fixtures(self, zip_config, plugin, plugin_path, plugin_path_zip):
         """ backup fixtures into zip file """
-        # next to sentences is for avoiding problems with zipfile module (encoding errors)
+        # next two sentences is for avoiding problems with zipfile module (encoding errors)
         plugin_path = smart_str(plugin_path)
         plugin_path_zip = smart_str(plugin_path_zip)
         plugin_modname = get_plugin_module_name(plugin.directory_name)
