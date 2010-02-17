@@ -1428,6 +1428,4 @@ def new_get_ordering(self):
         return self.model_admin.get_ordering()
     return legacy_get_ordering(self)
 
-from django.contrib.admin.views.main import ChangeList
-
 ChangeList.get_ordering = new_get_ordering
