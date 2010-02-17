@@ -9,12 +9,13 @@ from django.utils.translation import ugettext
 
 from merengue.base.models import BaseContent
 from merengue.base.admin import BaseAdmin, BaseContentAdmin, RelatedModelAdmin, \
-                                BaseOrderableAdmin
+                                BaseOrderableAdmin, OrderableRelatedModelAdmin
 from merengue.base.admin import set_field_read_only
 from merengue.multimedia.models import Photo
 from merengue.section.models import (Menu, Section, AppSection, Carousel,
-                            BaseLink, AbsoluteLink, ContentLink, Document,
-                            DocumentSection, CustomStyle)
+                                     BaseLink, AbsoluteLink, ContentLink, Document,
+                                     DocumentSection, CustomStyle,
+                                     SectionRelatedContent)
 from merengue.section.widgets import SearchFormOptionsWidget
 
 
@@ -67,8 +68,18 @@ class SectionAdmin(BaseSectionAdmin):
         return super(SectionAdmin, self).render_change_form(request, context, add, change, form_url, obj)
 
 
-class SectionContentAdmin(RelatedModelAdmin):
+class SectionContentAdmin(OrderableRelatedModelAdmin):
     related_field = 'basesection'
+    sortablefield = 'order'
+
+    def custom_relate_content(self, request, obj, form, change):
+        if not change:
+            section_relatedcontent_rel = SectionRelatedContent.objects.create(
+                basesection=self.basecontent,
+                basecontent=obj)
+
+    def get_relation_obj(self, through_model, obj):
+        return through_model.objects.get(basesection=self.basecontent, basecontent=obj)
 
 
 class CustomStyleRelatedModelAdmin(RelatedModelAdmin):

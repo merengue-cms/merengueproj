@@ -69,7 +69,7 @@ class EventAdmin(BaseContentAdmin):
             return super(EventAdmin, self).response_add(request, obj)
 
 
-class EventSectionAdmin(EventAdmin, SectionContentAdmin):
+class EventSectionAdmin(SectionContentAdmin, EventAdmin):
     pass
 
 

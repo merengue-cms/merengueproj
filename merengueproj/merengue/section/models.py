@@ -272,6 +272,7 @@ class BaseSection(Base, RealInstanceMixin):
         BaseContent,
         verbose_name=_('related contents'),
         editable=False,
+        through='SectionRelatedContent',
     )
 
     customstyle = models.ForeignKey(
@@ -330,6 +331,15 @@ def sections_permalink(func):
         link = reverse(bits[0], None, *bits[1:3])
         return strip_section_prefix(link)
     return inner
+
+
+class SectionRelatedContent(models.Model):
+    basesection = models.ForeignKey(BaseSection)
+    basecontent = models.ForeignKey(BaseContent)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        db_table = 'section_basesection_related_content'
 
 
 class Section(BaseSection):
