@@ -1424,7 +1424,7 @@ legacy_get_ordering = ChangeList.get_ordering
 
 
 def new_get_ordering(self):
-    if getattr(self.model_admin, 'get_ordering'):
+    if hasattr(self.model_admin, 'get_ordering'):
         return self.model_admin.get_ordering()
     return legacy_get_ordering(self)
 
