@@ -17,6 +17,7 @@ from merengue.block.models import RegisteredBlock
 from merengue.base.management.base import MerengueCommand
 from merengue.plugins.models import RegisteredPlugin
 from merengue.plugins.utils import get_plugin_module_name
+from merengue.registry import RegisteredItem
 from merengue.themes.models import Theme
 
 
@@ -31,7 +32,7 @@ class Command(LabelCommand, MerengueCommand):
     help = "Creates a zip file from merengue site configuration"
     args = "[config_name]"
     label = 'config name'
-    requires_model_validation = False
+    requires_model_validation = True
     can_import_settings = False
 
     def handle_label(self, config_name, **options):
@@ -43,6 +44,7 @@ class Command(LabelCommand, MerengueCommand):
         zip_config = zipfile.ZipFile(path_zip, "w",
                                      compression=zipfile.ZIP_DEFLATED)
         models_to_save = (
+            (RegisteredItem, "registry"),
             (RegisteredAction, "actions"),
             (RegisteredBlock, "blocks"),
             (RegisteredPlugin, "plugins"),
@@ -134,7 +136,8 @@ class Command(LabelCommand, MerengueCommand):
             models_list = model_or_models
         for model_item in models_list:
             queryset = model_item.objects.all()
-            data.append(serializers.serialize(format, queryset))
+            serialized_string = serializers.serialize(format, queryset)
+            data.append(serialized_string)
         return data
 
     def add_folder(self, zip_config, path_root, path_zip):
