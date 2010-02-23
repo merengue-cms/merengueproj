@@ -1,0 +1,147 @@
+.. _topics-commands-merengue-admin:
+
+=================
+merengue-admin.py
+=================
+
+``merengue-admin.py`` is Merengue's command-line utility for
+administrative tasks. This document outlines all it can do.
+
+``merengue-admin.py`` extends ``django-admin.py`` adding some specific
+commands.
+
+Usage
+=====
+
+.. code-block:: bash
+
+    merengue-admin.py <subcommand> [options]
+
+``subcommand`` should be one of the subcommands listed in this
+document or some of the django-admin.py subcommands.
+``options``, which is optional, should be zero or more of the options available
+for the given subcommand.
+
+Getting runtime help
+--------------------
+
+.. django-admin-option:: --help
+
+Run ``merengue-admin.py help`` to display a list of all available subcommands.
+Run ``merengue-admin.py help <subcommand>`` to display a description of the
+given subcommand and a list of its available options.
+
+Available subcommands
+=====================
+
+create_tv_data
+--------------
+
+Creates example tv contents.
+
+-d, --directory
+~~~~~~~~~~~~~~~
+
+Directory that contains preview files.
+
+init_gis
+--------
+
+Initializes GIS on database.
+
+packtheme [theme_name]
+----------------------
+
+Creates a zip file from a theme.
+
+-o, --overwrite
+~~~~~~~~~~~~~~~
+
+Overwrites the zip file.
+
+restore_config [config_name]
+----------------------------
+
+Restores merengue site configuration from a zip file.
+
+save_config [config_name]
+-------------------------
+
+Creates a zip file from merengue site configuration.
+
+-o, --overwrite
+~~~~~~~~~~~~~~~
+
+Overwrites the zip file.
+
+-a, --all
+~~~~~~~~~
+
+Saves all files on file system.
+
+startproject [projectname]
+--------------------------
+
+Creates a Django project directory structure for the given project
+name in the current directory.
+
+-d, --develop
+~~~~~~~~~~~~~
+
+For development of Merengue's core, symlink instead of copy.
+
+sync_plugins_media [appname appname ...]
+----------------------------------------
+
+Copies or links media files from all enabled plugins to the MEDIA_ROOT
+of the project.
+
+This command is useful for deployment with a web server, because plugins can
+have their own media files. For development the view
+merengue.views.static.serve can be used.
+
+.. note::
+Based on the build_media management command from Pinax:
+http://github.com/pinax/pinax/blob/0f12c3a3a4ac396eeba734a52a285c7e2d7a7ea7/pinax/apps/staticfiles/management/commands/build_media.py
+which in turn is based on the collectmedia management command by Brian Beck:
+http://blog.brianbeck.com/post/50940622/collectmedia
+
+-i, --interactive
+~~~~~~~~~~~~~~~~~
+
+Runs in interactive mode, asking before modifying files and selecting from multiple sources.
+
+-a, --all
+~~~~~~~~~
+
+Traverses all enabled plugins.
+
+-e, --exclude
+~~~~~~~~~~~~~
+
+A space-delimited list of glob-style patterns to ignore. Use multiple times to add more.
+
+-n, --dry-run
+~~~~~~~~~~~~~
+
+Do everything except modify the filesystem.
+
+-l, --link
+~~~~~~~~~~
+
+Creates a symbolic link to each file instead of copying.
+
+unpacktheme [theme_name]
+------------------------
+
+Unzips a zip file and create a theme.
+
+-o, --overwrite
+~~~~~~~~~~~~~~~
+
+Overwrites the theme directories.
+
+-p, --path
+~~~~~~~~~~
+
+Path of zip file.
