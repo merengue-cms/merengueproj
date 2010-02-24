@@ -10,6 +10,7 @@ from django.utils.translation import ugettext
 from django.views.generic import list_detail
 
 from merengue.base.models import BaseContent
+from tagging.models import TaggedItem
 
 
 def _get_results_msg(count):
@@ -92,7 +93,9 @@ def content_view(request, content, template_name=None, extra_context=None):
     """ Generic view for a content detail page """
     if extra_context is None:
         extra_context = {}
-    context = {'content': content}
+    ctype = ContentType.objects.get_for_model(content)
+    metatags = TaggedItem.objects.filter(content_type=ctype, object_id=content.id)
+    context = {'content': content, 'metatags': metatags}
     context.update(extra_context)
     if template_name is None:
         template_name = content._meta.content_view_template
