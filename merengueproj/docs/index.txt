@@ -11,6 +11,9 @@ Merengue documentation
 The components
 ===============
 
+    * **Install:**
+      :ref:`Installation <topics-install>`
+
     * **Plugins:**
       :ref:`Configuration <topics-plugins-configuration>` |
       :ref:`Development <topics-plugins-development>`
