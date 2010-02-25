@@ -1,0 +1,51 @@
+Fabric Installer for Merengue
+
+1. Requisites
+2. Project creation
+3. After installation
+4. Troubleshooting
+
+=============
+1. Requisites
+=============
+In order execute the fabric installation script you might want to install the following packages:
+ - Python 2.5 or higher
+ - Fabric: A Python deploying tool
+ - Virtualenv: A virtual environment to install Python packages
+ - Subversion
+ 
+ This script is designed to work under GNU/Linux systems, although it may work in other systems. To install merengue just run:
+    # ./install_merengue.sh
+
+===================
+2. Project creation
+===================
+During the intallation process, the installer will ask you to create a first merengue project. Enter a name for your project and it will create it automatically, including the database and the database user. Check before doing this that your database management system is installed and running.
+
+=====================
+3. After installation
+=====================
+If you have created the project, there are a number of steps left before you can use your new merengue project. You need to give your user permission to access the database created. The script creates the database, the user and the password with the same same of the project, so in case you are using PostgreSQL you should add something like:
+    local project_name project_name METHOD
+to your pg_hba.conf file.
+After doing this, check that your user has access to the database, if you are using PostgreSQL you can log with:
+    # psql -U project_name project_name
+    
+If you can log, you are ready to finish your merengue installation. First, enter the virtual environment created with the name you selected during the installation. Move to INSTALLATION_DIRECTORY/VIRTUALENV_NAME and type:
+    # source bin/activate
+
+Now move to your project directory and execute:
+    # ./manage.py syncdb
+    # ./manage.py migrate
+
+Your application installation is finished, start the server with:
+    # ./manage.py runserver
+and browse the URL http://localhost:8000
+
+==================
+4. Troubleshooting
+==================
+
+1) Subversion checkout complaints about "--trust-server-cert" option
+
+We are working in getting a valid certificate, but by now you must use this svn flag. The problem is this option was added in Subversion 1.6, so if you have an older version the script will not work.
