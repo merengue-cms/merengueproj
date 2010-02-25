@@ -257,6 +257,9 @@ class BaseContent(LocatableContent):
     # tagging info
     tags = TagField(verbose_name=_('Tags'))
 
+    # meta info
+    metadesc = models.TextField(verbose_name=_('meta description'), null=True, blank=True)
+
     # multimedia resources
     multimedia = models.ManyToManyField(BaseMultimedia,
                                         verbose_name=_('multimedia'),

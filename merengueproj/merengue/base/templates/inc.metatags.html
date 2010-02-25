@@ -1,2 +1,6 @@
 <meta name="keywords" content="Merengue, Django, Python, CMS, open-source{% for tag in metatags %}, {{ tag.tag.name }}{% endfor %}" />
-<meta name="description" content="Merengue is a pretty CMS built with Django web framework" />
+{% if content.metadesc %}
+    <meta name="description" content="{{ content.metadesc }}" />
+{% else %}
+    <meta name="description" content="Merengue is a pretty CMS built with Django web framework" />
+{% endif %}
