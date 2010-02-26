@@ -40,6 +40,12 @@ PRIORITY_CHOICES = (
     )
 
 
+COMMENTABLE_CHOICES = (
+    ('disabled', _('disabled')),
+    ('allowed', _('allowed')),
+    )
+
+
 class ContactInfo(models.Model):
     contact_email = models.EmailField(verbose_name=_('contact email'),
                                      max_length=200, blank=True, null=True)
@@ -260,6 +266,10 @@ class BaseContent(LocatableContent):
     # meta info
     metadesc = models.TextField(verbose_name=_('meta description'), null=True, blank=True)
 
+    commentable = models.CharField(_('comments'), max_length=20, choices=COMMENTABLE_CHOICES,
+                              default='allowed', help_text=_('Is that content commentable'),
+                              editable=True)
+
     # multimedia resources
     multimedia = models.ManyToManyField(BaseMultimedia,
                                         verbose_name=_('multimedia'),
@@ -398,6 +408,9 @@ class BaseContent(LocatableContent):
     @classmethod
     def get_resource_order(cls):
         return cls._meta.ordering
+
+    def is_commentable(self):
+        return self.commentable == 'allowed'
 
 
 def calculate_class_name(instance):
