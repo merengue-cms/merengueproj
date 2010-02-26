@@ -264,7 +264,7 @@ class BaseContent(LocatableContent):
     tags = TagField(verbose_name=_('Tags'))
 
     # meta info
-    metadesc = models.TextField(verbose_name=_('meta description'), null=True, blank=True)
+    meta_desc = models.TextField(verbose_name=_('meta description'), null=True, blank=True)
 
     commentable = models.CharField(_('comments'), max_length=20, choices=COMMENTABLE_CHOICES,
                               default='allowed', help_text=_('Is that content commentable'),

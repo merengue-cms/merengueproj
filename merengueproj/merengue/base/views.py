@@ -94,8 +94,8 @@ def content_view(request, content, template_name=None, extra_context=None):
     if extra_context is None:
         extra_context = {}
     ctype = ContentType.objects.get_for_model(content)
-    metatags = TaggedItem.objects.filter(content_type=ctype, object_id=content.id)
-    context = {'content': content, 'metatags': metatags}
+    meta_tags = TaggedItem.objects.filter(content_type=ctype, object_id=content.id)
+    context = {'content': content, 'meta_tags': meta_tags}
     context.update(extra_context)
     if template_name is None:
         template_name = content._meta.content_view_template
