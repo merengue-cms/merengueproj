@@ -136,7 +136,7 @@ def virtualenv_setup():
 
 
 def svn_checkout(repository):
-    return run("svn co --non-interactive --trust-server-cert %s" % repository)
+    return run("svn co --non-interactive %s" % repository)
 
 
 def django_setup():
