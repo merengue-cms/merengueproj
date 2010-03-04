@@ -2,10 +2,8 @@ from django.contrib.gis.db.models import GeoManager
 from django.contrib.gis.db.models.query import GeoQuerySet
 from django.db import connection
 
-from cmsutils.cache import CachingManager, CachingQuerySet
 
-
-class BaseManager(CachingManager, GeoManager):
+class BaseManager(GeoManager):
     """ base manager for all content types """
 
     # XXX: for now we have no customization,
@@ -31,7 +29,7 @@ class WorkflowManager(BaseManager):
         return self.by_status('draft')
 
 
-class CommentsQuerySet(CachingQuerySet, GeoQuerySet):
+class CommentsQuerySet(GeoQuerySet):
 
     def with_comment_number(self, ordered_by_comment_number=False):
         from django.contrib.contenttypes.models import ContentType

@@ -37,7 +37,7 @@ class LinkBaseBlock(Block):
 
     @classmethod
     def render(cls, request, place):
-        links = PortalLink.objects.cache().filter(category=cls.category)
+        links = PortalLink.objects.filter(category=cls.category)
         return cls.render_block(request, template_name='core/block_portallinks.html',
                                 block_title=_('Portal links'),
                                 context={'links': links,

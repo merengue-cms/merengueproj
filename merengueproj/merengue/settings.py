@@ -63,6 +63,7 @@ INSTALLED_APPS = (
     'south',
     'threadedcomments',
     'autoreports',
+    'johnny',
 ) + MERENGUE_APPS
 
 # merengue exclusive middlewares. you have to put at least these middleware in your project settings
@@ -77,11 +78,14 @@ MERENGUE_MIDDLEWARE_CLASSES = (
 
 # merengue usual middleware list. you can use this variable in your MIDDLEWARE_CLASSES project settings
 MIDDLEWARE_CLASSES = (
-    'cmsutils.middleware.I18NUpdateCacheMiddleware', # this has to be first
+    'johnny.middleware.LocalStoreClearMiddleware', # this has to be first
+    'cmsutils.middleware.I18NUpdateCacheMiddleware',
+    'johnny.middleware.QueryCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.middleware.transaction.TransactionMiddleware',
+    # TransactionMiddleware is incompatible with johnny-cache
+    #'django.middleware.transaction.TransactionMiddleware',
     'pagination.middleware.PaginationMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'cmsutils.middleware.AutomatizedTestingMiddleware',
@@ -107,10 +111,11 @@ ACTIVED_DEFAULTS_PLUGINS = ('core', )
 SESSION_ENGINE = 'merengue.backends.db'  # The module to store session data
 
 # cache default settings
-CACHE_BACKEND = 'locmem:///'
+CACHE_BACKEND = 'johnny.backends.locmem:///'
 CACHE_MIDDLEWARE_SECONDS = 3600*24
 CACHE_MIDDLEWARE_KEY_PREFIX = 'merengue'
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
+JOHNNY_MIDDLEWARE_KEY_PREFIX = 'merengue'
 
 # Google API Key for localhost:8000
 # http://code.google.com/apis/maps/signup.html
@@ -155,7 +160,7 @@ DEBUG_TOOLBAR_PANELS = (
     #'debug_toolbar.panels.headers.HeaderDebugPanel',
     #'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
     'debug_toolbar.panels.sql.SQLDebugPanel',
-    #'debug_toolbar.panels.cache.CacheDebugPanel',
+    'debug_toolbar.panels.cache.CacheDebugPanel',
     'debug_toolbar.panels.template.TemplateDebugPanel',
     #'debug_toolbar.panels.logger.LoggingPanel',
 )

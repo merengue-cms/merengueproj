@@ -1,9 +1,9 @@
-from cmsutils.cache import CachingManager
+from django.db import models
 
 
-class ThemeManager(CachingManager):
+class ThemeManager(models.Manager):
     """ Theme manager """
 
     def active(self):
         """ Retrieves active theme for site """
-        return self.cache().get(active=True)
+        return self.get(active=True)

@@ -7,15 +7,20 @@ import urllib
 from django.http import (Http404, HttpResponse, HttpResponseRedirect,
                          HttpResponseNotModified)
 from django.utils.http import http_date
+from django.utils.functional import memoize
 from django.views.static import directory_index, was_modified_since
 
 from merengue.plugins.models import RegisteredPlugin
+
+
+_plugins_full_path_cache = {}
 
 
 def get_active_plugins_full_path():
     active_plugins = RegisteredPlugin.objects.actives()
     paths = dict([(p.directory_name, p.get_path()) for p in active_plugins])
     return paths
+get_active_plugins_full_path = memoize(get_active_plugins_full_path, _plugins_full_path_cache, 1)
 
 
 def serve(request, path, document_root=None, show_indexes=False):

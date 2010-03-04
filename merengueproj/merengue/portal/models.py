@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from cmsutils.cache import CachingManager
 from transmeta import TransMeta
 
 from merengue.base.models import BaseContent
@@ -24,8 +23,6 @@ class PortalLink(models.Model):
                                  null=True, editable=False)
     order = models.IntegerField(_('order'), blank=True, null=True)
     category = models.CharField(_('category'), max_length=100, choices=CATEGORIES)
-
-    objects = CachingManager()
 
     class Meta:
         verbose_name = _('portal link')

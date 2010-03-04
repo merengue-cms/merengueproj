@@ -122,6 +122,10 @@ PRODUCTION_DB_UPDATE_PASSWORDS = (('admin', 'admin'), )
 # For transhette
 ENABLE_TRANSLATION_SUGGESTIONS = False
 
+# For johnny cache. Johnny cache key prefix should not be the same in other projects
+CACHE_BACKEND = 'johnny.backends.locmem:///'
+JOHNNY_MIDDLEWARE_KEY_PREFIX = '%s-cache' % DATABASE_NAME
+
 # Allow overwriting any configuration in optional settings_local.py
 # (it can be used to set up your own database, debug and cache options, contact mails...)
 try:

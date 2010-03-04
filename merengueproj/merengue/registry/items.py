@@ -47,7 +47,7 @@ class RegistrableItem(object):
 
     @classmethod
     def get_registered_item(cls):
-        for registered_item in cls.model.objects.cache():
+        for registered_item in cls.model.objects.all():
             # note: we do not use get to use cache from caching manager
             if registered_item.module == cls.get_module() and \
                registered_item.class_name == cls.get_class_name():

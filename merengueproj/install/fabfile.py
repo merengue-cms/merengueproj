@@ -48,6 +48,7 @@ def background_setup():
     pip_install('simplejson')
     pip_install('http://geopy.googlecode.com/svn/trunk/')
     pip_install('django')
+    pip_install('johnny-cache')
 
 
 def database_menu():
