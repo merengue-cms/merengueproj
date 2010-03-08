@@ -14,4 +14,36 @@
         <field to="auth.group" name="groups" rel="ManyToManyRel"></field>
         <field to="auth.permission" name="user_permissions" rel="ManyToManyRel"></field>
     </object>
+    <object pk="1" model="base.basecontent">
+        <field type="CharField" name="name_es"> Welcome to Merengue </field>
+        <field type="CharField" name="name_en"> Welcome to Merengue </field>
+        <field type="CharField" name="name_fr"> Welcome to Merengue </field>
+        <field type="SlugField" name="slug"> welcome </field>
+        <field type="TextField" name="plain_description_fr"> </field>
+        <field type="TextField" name="plain_description_es"> </field>
+        <field type="TextField" name="plain_description_en"> </field>
+        <field type="TextField" name="description_fr">
+        Merengue is a full-featured CMS useful for creating websites without writing a single line of code or customizing and extending with any of the plethora of existing Django applications.
+        </field>
+        <field type="TextField" name="description_en">
+        Merengue is a full-featured CMS useful for creating websites without writing a single line of code or customizing and extending with any of the plethora of existing Django applications.
+        </field>
+        <field type="TextField" name="description_es">
+        Merengue is a full-featured CMS useful for creating websites without writing a single line of code or customizing and extending with any of the plethora of existing Django applications.
+        </field>
+        <field type="CharField" name="status">published</field>
+        <field type="FileField" name="main_image"> </field>
+        <field to="base.contactinfo" name="contact_info" rel="ManyToOneRel"> <None> </None> </field>
+        <field type="DateTimeField" name="creation_date">2010-03-08 13:47:08</field>
+        <field type="DateTimeField" name="modification_date">2010-03-08 15:47:07</field>
+        <field type="DateTimeField" name="user_modification_date">2010-03-08 15:47:07</field>
+        <field to="auth.user" name="last_editor" rel="ManyToOneRel">1</field>
+        <field type="CharField" name="tags"> </field>
+        <field type="TextField" name="meta_desc"> </field>
+        <field type="CharField" name="commentable">allowed</field>
+        <field type="CharField" name="class_name">document</field>
+        <field type="FloatField" name="rank">100.0</field>
+        <field to="base.basecontent" name="related_items" rel="ManyToManyRel"> </field>
+        <field to="auth.user" name="owners" rel="ManyToManyRel"> </field>
+    </object>
 </django-objects>
