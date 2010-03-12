@@ -6,9 +6,13 @@
   <span class="breadcrumbSeparator">→</span>
   <a href="{% url dashboard %}" title="{% trans "Dashboard" %}">{% inline_trans "Dashboard" %}</a>
 {% endblock %}
-
 {% block content %}
-  <iframe src="{{ plugin_config.ezweburl.value }}lite" width="100%" height="500px" style="border: none">
-    <p>{% trans "Your browser does not support iframes" %}</p>
-  </iframe>
+    <iframe id="ezweframe"
+            src="{{ plugin_config.url.value }}{% if plugin_config.lite.value %}lite{% endif %}?theme={{ plugin_config.theme.value }}" 
+            width="{{ plugin_config.width.value }}"
+            height="{{ plugin_config.height.value }}" 
+            style="{{ plugin_config.style.value }}"
+            class="{{ plugin_config.class.value }}">
+        <p>{% trans "Your browser does not support iframes" %}</p>
+    </iframe>
 {% endblock %}
