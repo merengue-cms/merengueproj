@@ -1,7 +1,6 @@
 import os
 
 from django.conf import settings
-from django.db import transaction
 from django.core.cache import cache
 
 from merengue.plugins import PLUG_CACHE_KEY, register_plugin
@@ -14,13 +13,6 @@ def check_plugins():
     # all process will be in a unique transaction, we don't want to get
     # self committed
     cache.delete(PLUG_CACHE_KEY)
-    sid = transaction.savepoint()
-    try:
-        # now look for all plugins in filesystem and enable them
-        for plugin_dir in os.listdir(os.path.join(settings.BASEDIR, get_plugins_dir())):
-            register_plugin(plugin_dir)
-    except:
-        transaction.savepoint_rollback(sid)
-        raise
-    else:
-        transaction.savepoint_commit(sid)
+    # now look for all plugins in filesystem and enable them
+    for plugin_dir in os.listdir(os.path.join(settings.BASEDIR, get_plugins_dir())):
+        register_plugin(plugin_dir)
