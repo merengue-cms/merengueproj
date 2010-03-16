@@ -8,13 +8,13 @@ body {
 }
 
 a {
-    text-decoration: none;
-    color: #cda873;    /* #f1ddbc;*/
+    color:#CEA670;
+    text-decoration:none;
 }
 
-a:hover {
-    color: #cea672;
-    text-decoration: underline;
+a:hover{
+    color:#997b53;
+    text-decoration:none;
 }
 
 h1 {
@@ -206,7 +206,6 @@ body div#content-zone {
 #portal-secondary-links a {
     padding-left: 10px;
 }
-
 
 /* footer */
 #footer {

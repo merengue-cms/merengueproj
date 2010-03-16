@@ -313,6 +313,7 @@ ul.menu_ul {
     background: #ddfdd9 none repeat scroll 0 0;
 }
 
+.theme-yaco #feedback h2,
 .theme-yaco #feedback h1 {
     color: #54B848;
 }

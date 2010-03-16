@@ -22,6 +22,7 @@
     margin: 0;
     margin-top: 0.5em;
     padding: 5px;
+    position: relative;
 }
 
 #feedback #firstcomment a.commentLink {

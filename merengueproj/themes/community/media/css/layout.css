@@ -147,6 +147,10 @@ div#content {
    padding: 10px 20px;
 }
 
+body div#content-zone { 
+    width: auto;
+}
+
 ul#content-actions {
    position: absolute;
    top: 10px;
