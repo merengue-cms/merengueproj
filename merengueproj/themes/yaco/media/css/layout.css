@@ -109,6 +109,15 @@ strong {
     padding: 0 0.5em;
 }
 
+#language-tools ul li img {
+    padding: 3px 2px;
+}
+
+#language-tools ul li.currentLangItem img {
+    padding: 2px;
+    border: 1px solid #54B848;
+}
+
 #user-actions {
     position: absolute;
     top: 70px;
@@ -266,6 +275,11 @@ div#breadcrumbs a:hover {
     color: #AAAAAA;
 }
 
+a#powered-by {
+    background: transparent url(/media/themes/merengue/img/merengue_icon.jpg) no-repeat right center;
+    padding-right: 20px;
+    text-align: right;
+}
 /* ----- form errors ----- */
 ul.errorlist {
     margin: 0 !important;
