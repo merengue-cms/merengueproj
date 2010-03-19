@@ -63,6 +63,10 @@ Dependencies: ``postgresql``, ``python-psycopg2``, ``python-imaging``, ``python-
 * ``johnny-cache``: Django app to speedup merengue providing a clever 
   cache mechanism.
 
+    .. code-block:: bash
+
+        $ easy_install johnny-cache
+
 Recommended
 -----------
 
