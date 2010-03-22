@@ -69,15 +69,15 @@
   {% endif %}
 
   <div id="content" class="{% block contentclass %}withsidebar{% endblock %}">
-  {% block contentbreadcrumbs %}
     <div id="breadcrumbs">
-      {% block breadcrumbs %}
         {% include "inc.breadcrumbs.html" %}
-        {% block extrabreadcrumbs %}
+        {% block contentbreadcrumbs %}
+            {% block breadcrumbs %}
+                {% block extrabreadcrumbs %}
+                {% endblock %}
+            {% endblock %}
         {% endblock %}
-      {% endblock %}
     </div>
-  {% endblock %}
     <div id="messagebox">
       {% messagebox %}
     </div>
