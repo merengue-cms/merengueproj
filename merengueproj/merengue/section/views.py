@@ -19,7 +19,7 @@ def section_view(request, section_slug, original_context={}):
     context = original_context or {}
     context['section'] = section.real_instance
     main_content = section.main_content and section.main_content.get_real_instance() or None
-    if not main_content:
+    if not main_content or not main_content.is_published():
         return section_view_whitout_maincontent(request, context)
     template_name = getattr(main_content._meta, 'content_view_template')
     return content_view(request, main_content, template_name=template_name, extra_context=context)
@@ -34,6 +34,8 @@ def content_section_view(request, section_slug, content_id, content_slug):
 
 def document_section_view(request, section_slug, document_id, document_slug):
     document = get_object_or_404(Document, id=document_id)
+    if not request.user.is_staff and not document.is_published():
+        raise Http404
     template_name = getattr(document._meta, 'content_view_template')
     return content_view(request, document, template_name=template_name)
 
