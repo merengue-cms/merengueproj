@@ -26,7 +26,7 @@ from merengue.section.models import Section
 
 
 def install_plugin(instance, app_name):
-    if instance.installed:
+    if not instance.installed:
         app_mod = load_app(app_name)
         # Needed update installed apps in order
         # to get SQL command from merengue.plugin
