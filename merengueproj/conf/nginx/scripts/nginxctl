@@ -1,0 +1,46 @@
+BASEDIR="/home/merengue"
+NGINX="$BASEDIR/nginx"
+PIDFILE="$BASEDIR/pid/nginx.pid"
+
+export LC_ALL=es_ES.UTF-8
+
+function start {
+   echo "Iniciando Nginx:"
+   cd $BASEDIR
+   . virtualenv/bin/activate
+   $NGINX/sbin/nginx -p $BASEDIR/ -c $NGINX/conf/nginx.conf
+}
+
+function stop {
+    echo "Terminando Nginx:"
+    $NGINX/sbin/nginx -p $BASEDIR/ -c $NGINX/conf/nginx.conf -s stop
+}
+
+function reload {
+    echo "Reiniciando Nginx:"
+    $NGINX/sbin/nginx -p $BASEDIR/ -c $NGINX/conf/nginx.conf -s reload
+}
+
+case "$1" in
+    start)
+        start
+    ;;
+
+    stop)
+        stop
+    ;;
+    restart)
+        stop
+        start
+    ;;
+    reload)
+	reload
+    ;;
+    *)
+        echo "Usage: /etc/init.d/merenguebeta {start|stop|restart}"
+        exit 1
+    ;;
+esac
+
+exit 0
+
