@@ -47,8 +47,6 @@ def inplace_edit(context, obj, expression, form='', expression2=None):
     empty_value = (isinstance(value, str) and value.strip() == u'' or not value)
 
     if field_lang and not has_translation(field_obj, obj, current_language):
-        missing_msg = u'<h3 class="missing-translation">%s</h3>' % ugettext_lazy('Translation missing')
-        form_obj.initial[field_obj.name] = missing_msg 
         old_value = form_obj.initial[field_obj.name]
         if old_value:
             form_obj.initial[field_obj.name] = old_value 

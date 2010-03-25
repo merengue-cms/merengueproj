@@ -6,7 +6,7 @@ from django.forms.fields import MultipleChoiceField
 from django.contrib.contenttypes.models import ContentType
 
 has_transmeta = False
-DEFAULT_VALUE = '<h3 class="missing-translation">Translation missing</h3>'
+DEFAULT_VALUE = ''
 try:
     from transmeta import TransMeta
     has_transmeta = True
