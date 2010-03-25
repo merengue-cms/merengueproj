@@ -556,6 +556,7 @@ class DocumentSection(models.Model):
 
     body = models.TextField(
         verbose_name=_('body'),
+        blank=True,
         )
 
     class Meta:
