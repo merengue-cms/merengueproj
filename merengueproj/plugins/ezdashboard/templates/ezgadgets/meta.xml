@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Template schemaLocation="http://morfeo-project.org/2007/Template">
+<Catalog.ResourceDescription>
+    <Vendor>Yaco</Vendor>
+    <Name>{{ gadget }}</Name>
+    <Version>{{ gadget.version }}</Version>
+    <Author>Yaco</Author>
+    <Mail>info@yaco.es</Mail>
+    <Description>{{ gadget.description }}</Description>
+    <ImageURI>http://es.xkcd.com/site_media/strips/turing_test.png</ImageURI>
+    <WikiURI>http://es.xkcd.com/site_media/strips/turing_test.png</WikiURI>
+</Catalog.ResourceDescription>
+
+<Platform.Preferences>
+{% for preference in gadget.preferences %}
+{% with preference.type|lower as preference_type %}
+{% ifequal preference_type "list" %}
+ <Preference name="{{ preference.name }}" type="{{ preference.type }}" description="{{ preference.description }}" label="{{ preference.label }}" default="{{ preference.default }}" >
+  {% for option in preference.options %}
+  <Option value="{{ option.value }}" name="{{ option.name }}"/>
+  {% endfor %}
+ </Preference>
+{% else %}
+ <Preference name="{{ preference.name }}" type="{{ preference.type }}" description="{{ preference.description }}" label="{{ preference.label }}" default="{{ preference.default }}" />
+{% endifequal %}
+{% endwith %}
+{% endfor %}
+</Platform.Preferences>
+
+<Platform.StateProperties/>
+
+<Platform.Wiring>
+{% for slot in gadget.slots %}
+ <Slot name="{{ slot.name }}" type="{{ slot.type }}" label="{{ slot.label }}" friendcode="{{ slot.friendcode }}" /> 
+{% endfor %}
+{% for event in gadget.events %}
+ <Event name="{{ event.name }}" type="{{ event.type }}" label="{{ event.label }}" friendcode="{{ event.friendcode }}" /> 
+{% endfor %}
+</Platform.Wiring>
+
+<Platform.Link>
+{% block gadgetlink %}
+    <XHTML href="{{ gadget.url }}" cacheable="false" />
+{% endblock %}
+</Platform.Link>
+
+<Platform.Rendering width="{{ gadget.width|default:"5" }}" height="{{ gadget.height|default:"20" }}"/>
+
+</Template>
+
+

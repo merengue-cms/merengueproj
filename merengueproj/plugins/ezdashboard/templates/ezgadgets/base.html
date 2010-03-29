@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> 
+<html>
+<head>
+<base href="{{ SITE_URL }}" />
+
+{% block css %}
+ {# put here your CSS files #}
+{% endblock %}
+
+{% block jsapi %}
+ {# put here your JS api (jquery, prototype, etc.) #}
+{% endblock %}
+
+{% block ezwebapi %}
+  <script type="text/javascript" src="{{ EZWEB_URL }}ezweb/js/EzWebAPI/EzWebAPI.js"></script>
+{% endblock %}
+
+<script type="text/javascript">
+
+/* ----- gadgets preferences ----- */
+{% for preference in gadget.preferences %}
+  var {{ preference.name }} = EzWebAPI.createRGadgetVariable("{{ preference.name }}", {{ preference.name }}Handler);
+{% endfor %}
+
+/* ----- gadgets slots ----- */
+{% for slot in gadget.slots %}
+  var {{ slot.name }} = EzWebAPI.createRGadgetVariable("{{ slot.name }}", {{ slot.name }}Handler);
+{% endfor %}
+
+/* ----- gadgets events ----- */
+{% for event in gadget.events %}
+  var {{ event.name }} = EzWebAPI.createRWGadgetVariable("{{ event.name }}");
+{% endfor %}
+
+/* ----- here goes handler javascript code ----- */
+{% block javascript %}
+ {# put here your javascript code #}
+{% endblock %}
+</script>
+</head>
+<body onload="{% block onload %}{% endblock %}">
+  <div id="header">
+  {% block header %}
+  {% endblock %}
+  </div>
+
+  <div id="content">
+  {% block content %}
+  {% endblock %}
+  </div>
+
+  <div id="footer" >
+  {% block footer %}
+  {% endblock %}
+  </div>
+</body>
+</html>
