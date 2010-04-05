@@ -1,0 +1,38 @@
+#!/bin/bash -e
+
+BASEDIR=/home/merengue
+MERENGUEDIR=$BASEDIR/merengueproject
+PROJECTDIR=$MERENGUEDIR/beta_merengue
+
+function enable_virtualenv {
+    echo "Activando el entorno (virtualenv)"
+    cd $BASEDIR
+    . virtualenv/bin/activate
+}
+
+function update_code {
+    echo "Actualizando el proyecto a la ultima revision"
+    cd $MERENGUEDIR
+    svn up
+}
+function remove_pyc_files {
+    echo "Eliminando ficheros precompilados de python"
+    find -iname "*.pyc" -exec rm {}  \;
+}
+function dmigrate {
+    echo "Actualizando la base de datos"
+    cd $PROJECTDIR
+    python manage.py migrate
+}
+function servers_restart {
+    echo "Reiniciando los servidores"
+    cd $BASEDIR
+    . scripts/nginxctl restart
+    . scripts/portaluma restart
+}
+
+enable_virtualenv
+update_code
+remove_pyc_files
+dmigrate
+servers_restart
