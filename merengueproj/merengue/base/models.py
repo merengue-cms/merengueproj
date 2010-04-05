@@ -9,6 +9,7 @@ from django.core.management import call_command
 from django.core.exceptions import ObjectDoesNotExist, SuspiciousOperation
 from django.db.models import signals, permalink
 from django.db.models.query import delete_objects, CollectedObjects
+from django.db.models.signals import post_save
 from django.template.loader import render_to_string
 from django.utils.encoding import force_unicode
 from django.utils.html import strip_tags
@@ -19,6 +20,7 @@ from django.contrib.auth.models import User
 
 from cmsutils.db.fields import AutoSlugField
 from cmsutils.signals import post_rebuild_db
+from south.signals import pre_migrate, post_migrate
 from stdimage import StdImageField
 from transmeta import TransMeta
 from tagging.fields import TagField
@@ -611,3 +613,23 @@ delete.alters_data = True
 models.Model.add_to_class('delete', delete)
 models.Model.add_to_class('break_relations', break_relations)
 models.Model.add_to_class('_collect_sub_objects', _collect_sub_objects)
+
+
+# ----- south signals handling -----
+
+post_save_receivers = None
+
+
+def handle_pre_migrate(sender, **kwargs):
+    global post_save_receivers
+    post_save_receivers = post_save.receivers
+    post_save.receivers = []
+
+
+def handle_post_migrate(sender, **kwargs):
+    global post_save_receivers
+    post_save.receivers = post_save_receivers
+
+
+pre_migrate.connect(handle_pre_migrate)
+post_migrate.connect(handle_post_migrate)
