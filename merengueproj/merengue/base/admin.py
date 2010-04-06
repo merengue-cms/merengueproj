@@ -20,6 +20,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.gis import admin as geoadmin
 from django.contrib.gis.db import models as geomodels
 from django.contrib.gis.maps.google import GoogleMap
+from django.contrib.sites.admin import Site, SiteAdmin
 from django.forms.models import ModelForm, BaseInlineFormSet, \
                                 fields_for_model, save_instance, modelformset_factory
 from django.forms.util import ValidationError
@@ -1409,6 +1410,7 @@ def register(site):
     site.register(Group, GroupAdmin)
     site.register(BaseContent, BaseContentViewAdmin)
     site.register(ContactInfo, ContactInfoAdmin)
+    site.register(Site, SiteAdmin)
 
 
 def setup_basecontent_admin(basecontent_admin_site):
