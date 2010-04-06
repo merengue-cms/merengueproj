@@ -2,8 +2,7 @@ from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.template.loader import render_to_string
-
-from plugins.ezdashboard.config import PluginConfig
+from django.utils.importlib import import_module
 
 
 class Gadget(object):
@@ -26,26 +25,29 @@ class Gadget(object):
 
     def _site_url(self):
         site = Site.objects.get_current()
-        return 'http://%s' % site.domain
+        return '%s://%s' % ((self.request.is_secure() and "https" or "http"),
+                            site.domain)
 
     def _build_context(self):
         site = Site.objects.get_current()
-        plugin_config = PluginConfig.get_config()
+        # We use import_module to avoid circular dependencies
+        plugin_mod = import_module("plugins.ezdashboard.config").PluginConfig
+        plugin_config = plugin_mod.get_config()
         return {
             'gadget': self,
             'SITE_DOMAIN': site.domain,
             'SITE_URL': self._site_url(),
-            'EZWEB_URL': plugin_config.url.value,
+            'EZWEB_URL': plugin_config['url'].value,
         }
 
     def meta_url(self):
         return '%s%s' % (self._site_url(),
-                         reverse('ezdashboard.views.gadget_meta',
+                         reverse('plugins.ezdashboard.views.gadget_meta',
                          args=[self.name]))
 
     def url(self):
         return '%s%s' % (self._site_url(),
-                         reverse('ezdashboard.views.gadget_view',
+                         reverse('plugins.ezdashboard.views.gadget_view',
                          args=[self.name]))
 
     def meta(self):

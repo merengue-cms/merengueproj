@@ -12,6 +12,7 @@ class PluginConfig(Plugin):
     url_prefixes = (
         ('dashboard', 'plugins.ezdashboard.urls'),
     )
+    required_apps = ('django.contrib.sites', )
     config_params = [
         params.Single(name='theme', label=_('EzWeb theme'), default='default'),
         params.Single(name='url', label=_('EzWeb base URL'),
