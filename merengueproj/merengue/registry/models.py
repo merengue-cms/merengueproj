@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.importlib import import_module
+from django.utils.translation import ugettext_lazy as _
 
 from merengue.registry.dbfields import ConfigField
 from merengue.registry.managers import RegisteredItemManager
@@ -10,6 +11,7 @@ class RegisteredItem(models.Model):
     module = models.CharField(max_length=200, db_index=True)
     category = models.CharField(max_length=100, db_index=True)
     active = models.BooleanField(default=False)
+    order = models.IntegerField(_("Order"), blank=True, null=True)
     config = ConfigField()
 
     objects = RegisteredItemManager()
