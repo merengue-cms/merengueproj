@@ -4,7 +4,7 @@
   <ul>
   {% for link in links %}
     <li id="portal-link-{{ link.id }}" {% if forloop.last %} class="last" {% endif %}>
-      <a href="{{ link.get_absolute_url }}" title="{{ link }}">{{ link }}</a>
+      <a href="{{ link.get_absolute_url }}" title="{{ link }}"><span>{{ link }}</span></a>
     </li>
   {% endfor %}
   </ul>
