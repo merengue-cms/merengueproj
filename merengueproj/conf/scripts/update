@@ -13,7 +13,7 @@ function enable_virtualenv {
 function update_code {
     echo "Actualizando el proyecto a la ultima revision"
     cd $MERENGUEDIR
-    svn up
+    svn up --username=$SVNUSERNAME --password=$SVNPASSWORD
 }
 function remove_pyc_files {
     echo "Eliminando ficheros precompilados de python"
