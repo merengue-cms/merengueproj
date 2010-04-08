@@ -1,0 +1,19 @@
+{% extends base_template %}
+
+{% load i18n content_tags viewlet_tags %}
+
+{% block extrabreadcrumbs %}
+    <span class="breadcrumbSeparator">→</span>
+    <a href="{{ section.get_absolute_url }}" title="{{ section }}">{% cutrender %}{{ section }}{% endcutrender %}</a>
+    {% for menu_ancestor in  menu.get_ancestors %}
+        {% if menu_ancestor.level %}
+            <span class="breadcrumbSeparator">→</span>
+            <a href="{{ menu_ancestor.get_absolute_url }}" title="{{ menu_ancestor }}">{% cutrender %}{{ menu_ancestor }}{% endcutrender %}</a>
+        {% endif %}
+    {% endfor %}
+    <span class="breadcrumbSeparator">→</span> {{ registered_viewlet.get_registry_item_class.label }}
+{% endblock %}
+
+{% block content %}
+  {% render_viewlet registered_viewlet %}
+{% endblock %}

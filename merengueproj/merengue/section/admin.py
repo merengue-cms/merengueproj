@@ -13,8 +13,8 @@ from merengue.base.admin import BaseAdmin, BaseContentAdmin, RelatedModelAdmin, 
 from merengue.base.admin import set_field_read_only
 from merengue.multimedia.models import Photo
 from merengue.section.models import (Menu, Section, AppSection, Carousel,
-                                     BaseLink, AbsoluteLink, ContentLink, Document,
-                                     DocumentSection, CustomStyle,
+                                     BaseLink, AbsoluteLink, ContentLink, ViewletLink,
+                                     Document, DocumentSection, CustomStyle,
                                      SectionRelatedContent)
 from merengue.section.widgets import SearchFormOptionsWidget
 
@@ -59,6 +59,10 @@ class AbsoluteLinkAdmin(BaseAdmin):
 
 class ContentLinkAdmin(BaseAdmin):
     list_display = ('content', )
+
+
+class ViewletLinkAdmin(BaseAdmin):
+    list_display = ('viewlet', )
 
 
 class SectionAdmin(BaseSectionAdmin):
@@ -166,8 +170,8 @@ class BaseLinkInline(admin.TabularInline):
             data=formset_self.data
             if data.get('contentlink-0-content', None) and data.get('absolutelink-0-url', None):
                 raise ValidationError(_('Sorry you can not select an Absolute Link and a Content Link simultaneously for this menu. Fulfill just one.'))
-        formset.save_new=save_new
-        formset.clean=clean
+        formset.save_new = save_new
+        formset.clean = clean
         return formset
 
 
@@ -217,6 +221,13 @@ class ContentLinkInline(BaseLinkInline):
         return formset
 
 
+class ViewletLinkInline(BaseLinkInline):
+    model = ViewletLink
+    max_num = 1
+    verbose_name = _('Menu Viewlet Link')
+    verbose_name_plural = _('Menu Viewlet Links')
+
+
 class BaseSectionMenuRelatedAdmin(RelatedModelAdmin):
     change_list_template = "admin/section/menu/change_list.html"
     list_display = ('level', 'display_move_to', 'name', 'slug', )
@@ -225,7 +236,7 @@ class BaseSectionMenuRelatedAdmin(RelatedModelAdmin):
     ordering=('lft', )
     actions = []
     inherit_actions = False
-    inlines = [AbsoluteLinkInline, ContentLinkInline]
+    inlines = [AbsoluteLinkInline, ContentLinkInline, ViewletLinkInline]
 
     def __init__(self, *args, **kwargs):
         super(BaseSectionMenuRelatedAdmin, self).__init__(*args, **kwargs)

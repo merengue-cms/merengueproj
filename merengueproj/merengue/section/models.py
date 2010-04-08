@@ -19,6 +19,7 @@ from merengue.base.managers import WorkflowManager
 from merengue.base.models import Base, BaseContent
 from merengue.multimedia.models import Photo
 from merengue.section.managers import SectionManager
+from merengue.viewlet.models import RegisteredViewlet
 from searchform.registry import search_form_registry
 from stdimage import StdImageField
 from transmeta import TransMeta
@@ -196,6 +197,18 @@ class ContentLink(BaseLink):
 
     def is_published(self):
         return self.content.is_published()
+
+
+class ViewletLink(BaseLink):
+
+    viewlet = models.ForeignKey(RegisteredViewlet, verbose_name=_('Viewlet'))
+
+    def get_absolute_url(self):
+        assert self.viewlet is not None
+        return self.menu.get_absolute_url()
+
+    def is_published(self):
+        return True
 
 
 class BaseSection(Base, RealInstanceMixin):

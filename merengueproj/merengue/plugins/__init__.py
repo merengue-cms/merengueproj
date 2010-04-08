@@ -27,6 +27,10 @@ class Plugin(RegistrableItem):
         return [] # to override in plugins
 
     @classmethod
+    def get_viewlets(cls):
+        return [] # to override in plugins
+
+    @classmethod
     def post_actions(cls):
         pass
 

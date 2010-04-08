@@ -1,3 +1,13 @@
-#from django.db import models
+from django.db import models
 
-# Create your models here.
+from merengue.registry.managers import RegisteredItemManager
+from merengue.registry.models import RegisteredItem
+
+
+class RegisteredViewlet(RegisteredItem):
+    name = models.CharField(max_length=100)
+
+    objects = RegisteredItemManager()
+
+    def __unicode__(self):
+        return self.name

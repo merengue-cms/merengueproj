@@ -10,7 +10,7 @@ from merengue.section.models import BaseSection, Document, Section, \
                                     DocumentSection
 
 from merengue.base.views import content_view
-from merengue.section.models import AbsoluteLink, ContentLink, Menu
+from merengue.section.models import AbsoluteLink, ContentLink, ViewletLink, Menu
 
 
 def section_view(request, section_slug, original_context={}):
@@ -57,6 +57,14 @@ def menu_section_view(request, section_slug, menu_slug):
     link = menu.baselink.real_instance
     if isinstance(link, AbsoluteLink):
         return HttpResponseRedirect(link.url)
+    elif isinstance(link, ViewletLink):
+        context = {}
+        context['section'] = section.real_instance
+        context['menu'] = menu
+        context['registered_viewlet'] = link.viewlet
+        context['base_template'] = 'base.html'
+        return render_to_response('section/viewlet_section_view.html', context,
+                                  context_instance=RequestContext(request))
     elif isinstance(link, ContentLink):
         content = link.content.get_real_instance()
         context = {}

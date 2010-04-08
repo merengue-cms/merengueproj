@@ -132,6 +132,7 @@ def enable_plugin(plugin_name, register=True):
         register_app(plugin_name)
         register_plugin_actions(plugin_name)
         register_plugin_blocks(plugin_name)
+        register_plugin_viewlets(plugin_name)
         register_plugin_templatetags(plugin_name)
         register_plugin_post_actions(plugin_name)
         register_plugin_section_models(plugin_name)
@@ -154,6 +155,7 @@ def disable_plugin(plugin_name, unregister=True):
             pass
         unregister_plugin_actions(plugin_name)
         unregister_plugin_blocks(plugin_name)
+        unregister_plugin_viewlets(plugin_name)
         unregister_plugin_templatetags(plugin_name)
         unregister_plugin_section_models(plugin_name)
     unregister_plugin_urls(plugin_name)
@@ -237,6 +239,16 @@ def register_plugin_blocks(plugin_name):
 def unregister_plugin_blocks(plugin_name):
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
     unregister_items(plugin_config.get_blocks())
+
+
+def register_plugin_viewlets(plugin_name):
+    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    register_items(plugin_config.get_viewlets())
+
+
+def unregister_plugin_viewlets(plugin_name):
+    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    unregister_items(plugin_config.get_viewlets())
 
 
 def register_plugin_post_actions(plugin_name):

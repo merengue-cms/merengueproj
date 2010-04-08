@@ -30,6 +30,7 @@ MERENGUE_APPS = (
     'merengue.themes',
     'merengue.action',
     'merengue.block',
+    'merengue.viewlet',
     'merengue.portal',
     'merengue.internallinks',
     'merengue.collab',
