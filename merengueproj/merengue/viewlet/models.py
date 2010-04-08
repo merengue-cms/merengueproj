@@ -10,4 +10,4 @@ class RegisteredViewlet(RegisteredItem):
     objects = RegisteredItemManager()
 
     def __unicode__(self):
-        return self.name
+        return u'%s (%s)' % (self.get_registry_item_class().label, self.name)
