@@ -17,6 +17,7 @@ from merengue.base.models import BaseContent
 
 OBJECT_ID_PREFIX = 'base_object_id_'
 MODEL_ADMIN_PREFIX = 'base_model_admin_'
+PLUGIN_ADMIN_PREFIX = 'plugin_admin'
 
 
 class BaseAdminSite(DjangoAdminSite):
@@ -145,7 +146,6 @@ class BaseAdminSite(DjangoAdminSite):
 
     def index(self, request):
         """ merengue admin index page. It's a friendly admin page """
-        app_dict = {}
         context = {
             'title': _('Site administration'),
             'root_path': self.root_path,
@@ -188,7 +188,7 @@ class BaseAdminSite(DjangoAdminSite):
         branch = branch or []
 
         for model in self._registry.keys():
-            if related_to == model or issubclass(related_to, model):
+            if related_to == model or issubclass(model, related_to):
                 admin_sites_returned.append(self)
                 break
 
@@ -206,7 +206,7 @@ class BaseAdminSite(DjangoAdminSite):
         return admin_sites_returned
 
 
-class AdminSite(BaseAdminSite):
+class RelatedModelRegistrable(object):
 
     steps = {}
 
@@ -238,6 +238,68 @@ class AdminSite(BaseAdminSite):
                     for admin_site in admin_sites:
                         admin_site._register_related(model_or_iterable=model, admin_class=admin_class,
                                                 related_to=model_to, **options)
+
+
+class AdminSite(BaseAdminSite, RelatedModelRegistrable):
+
+    def __init__(self, *args, **kwargs):
+        super(AdminSite, self).__init__(*args, **kwargs)
+        self.plugin_site = PluginAdminSite(main_admin_site=self)
+
+    def get_urls(self):
+        from django.conf.urls.defaults import patterns, url, include
+
+        urlpatterns = super(AdminSite, self).get_urls()
+
+        # custom url definitions
+        custom_patterns = patterns('',
+            url('^' + PLUGIN_ADMIN_PREFIX + '/',
+                include(self.plugin_site.urls),
+            ),
+        )
+        return custom_patterns + urlpatterns
+
+    def index(self, request, extra_context=None):
+        extra_context = extra_context or {}
+
+        app_dict = {}
+        user = request.user
+        for model, model_admin in self.plugin_site._registry.items():
+            app_label = model._meta.app_label
+            has_module_perms = user.has_module_perms(app_label)
+
+            if app_label in app_dict:
+                continue
+
+            if has_module_perms:
+                app_dict[app_label] = {
+                    'name': app_label.title(),
+                    'app_url': PLUGIN_ADMIN_PREFIX + '/' + app_label + '/',
+                    'has_module_perms': has_module_perms,
+                }
+
+        # Sort the apps alphabetically.
+        app_list = app_dict.values()
+        app_list.sort(lambda x, y: cmp(x['name'], y['name']))
+
+        extra_context.update(
+            {'plugins': app_dict})
+        return super(AdminSite, self).index(request, extra_context)
+
+
+class PluginAdminSite(BaseAdminSite, RelatedModelRegistrable):
+
+    def __init__(self, *args, **kwargs):
+        self.main_site = kwargs.pop('main_admin_site', None)
+        self.i_am_plugin_site = True
+        self.prefix = PLUGIN_ADMIN_PREFIX
+        super(PluginAdminSite, self).__init__(*args, **kwargs)
+
+    def index(self, request):
+        return super(BaseAdminSite, self).index(request, {'title': _('Plugin administration'), 'inplugin': True})
+
+    def app_index(self, request, app_label, extra_context=None):
+        return super(PluginAdminSite, self).app_index(request, app_label, {'inplugin': True})
 
 
 class RelatedAdminSite(BaseAdminSite):

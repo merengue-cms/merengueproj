@@ -42,6 +42,10 @@ class Plugin(RegistrableItem):
     def section_register_hook(cls, site_related, model):
         pass
 
+    @classmethod
+    def get_model_admins(cls):
+        return [] # to override in plugins
+
 
 def register_plugin(plugin_dir):
     plugin_config = get_plugin_config(plugin_dir)

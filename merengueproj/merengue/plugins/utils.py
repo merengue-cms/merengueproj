@@ -136,6 +136,7 @@ def enable_plugin(plugin_name, register=True):
         register_plugin_templatetags(plugin_name)
         register_plugin_post_actions(plugin_name)
         register_plugin_section_models(plugin_name)
+        register_plugin_in_plugin_admin_site(plugin_name)
     register_plugin_urls(plugin_name)
     # activate plugin in DB
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
@@ -262,7 +263,15 @@ def register_plugin_section_models(plugin_name):
         site_related = site.register_related(model, admin_model, related_to=Section)
         plugin_config.section_register_hook(site_related, model)
         if issubclass(model, BaseContent):
-            register_related_multimedia(site, BaseContent)
+            register_related_multimedia(site.plugin_site, BaseContent)
+
+
+def register_plugin_in_plugin_admin_site(plugin_name):
+    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    for model, admin_model in plugin_config.get_model_admins():
+        site.plugin_site.register(model, admin_model)
+        if issubclass(model, BaseContent):
+            register_related_multimedia(site.plugin_site, BaseContent)
 
 
 def unregister_plugin_section_models(plugin_name):

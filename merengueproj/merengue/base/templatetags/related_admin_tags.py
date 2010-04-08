@@ -7,7 +7,6 @@ register = template.Library()
 
 
 def _calculate_route(context):
-    opts = context.get('opts', None)
     model_admin = context.get('model_admin', None)
     if model_admin:
         admin_site = model_admin.admin_site
@@ -37,7 +36,6 @@ def _calculate_route(context):
 
 def advanced_breadcrumbs(context):
     add = context.get('add', None)
-    change = context.get('change', None)
     route = _calculate_route(context)
     url_list = []
 
@@ -45,12 +43,16 @@ def advanced_breadcrumbs(context):
         try:
             url_list = [{'label': _('Home'),
                         'url': urlresolvers.reverse('admin:index'),
-                        },
-                        {'label': _(route[0]['opts'].app_label.title()),
-                        'url': urlresolvers.reverse('admin:app_list', args=(route[0]['opts'].app_label, )),
+                        }]
+            if getattr(route[0]['site'], 'i_am_plugin_site', False):
+                url_list += [{'label': _('Plugin administration'),
+                            'url': url_list[0]['url'] + route[0]['site'].prefix + '/',
+                            }]
+            url_list += [{'label': _(route[0]['opts'].app_label.title()),
+                        'url': url_list[-1]['url'] + route[0]['opts'].app_label,
                         },
                         {'label': _(route[0]['opts'].verbose_name_plural.title()),
-                        'url': urlresolvers.reverse('admin:%s_%s_changelist' % (route[0]['opts'].app_label, route[0]['opts'].module_name)),
+                        'url': url_list[-1]['url'] + route[0]['opts'].app_label + '/' + route[0]['opts'].module_name,
                         }]
             if route[0]['obj']:
                 url_list += [{'label':route[0]['obj'],
