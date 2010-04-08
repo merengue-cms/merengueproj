@@ -133,9 +133,11 @@
   {% endif %}
 
   <div id="content" class="{% block contentclass %}withsidebar{% endblock %}">
+    {% block messagebox %}
     <div id="messagebox">
       {% messagebox %}
     </div>
+    {% endblock %}
     {% block content %}
     {% endblock %}
   </div>
