@@ -66,6 +66,17 @@
         <dd>{% trans "View, edit and delete your site's users." %}</dd>
       </dl>
     </div>
+{% if plugins %}
+    <div class="module-merengue" id="plugins">
+      <h1>{% trans "Plugin administration" %}</h1>
+      <p>{% trans "Manage your installed plugins." %}</p>
+      <dl>
+      {% for plug in plugins.values %}
+        <dt><a href="{{ plug.app_url }}" title="{{ plug.name }}">{{ plug.name }}</a></dt>
+      {% endfor %}
+      </dl>
+    </div>
+{% endif %}
 </div>
 {% endblock %}
 </div> <!--- end content-merengue -->

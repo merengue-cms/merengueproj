@@ -9,14 +9,24 @@
 
 {% block breadcrumbs %}
 <div class="breadcrumbs"><a href="../">
+{% if inplugin %}
+{% trans "Home" %}</a> &rsaquo; {% trans "Plugin administration" %}
+{% else %}
 {% trans "Home" %}</a> &rsaquo; {% trans "Control panel" %}
+{% endif %}
 </div>
 {% endblock %}
 
 {% block content %}
+{% if inplugin %}
+{% with "" as relative_path %}
+{% include "admin/inc.content_index.html" %}
+{% endwith %}
+{% else %}
 {% with "../" as relative_path %}
 {% include "admin/inc.content_index.html" %}
 {% endwith %}
+{% endif %}
 {% endblock %}
 
 {% block sidebar %}

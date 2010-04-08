@@ -4,8 +4,14 @@
 {% if not is_popup %}
 
 {% block breadcrumbs %}
-<div class="breadcrumbs"><a href="../">
-{% trans "Home" %}</a> &rsaquo; 
+<div class="breadcrumbs">
+{% if inplugin %}
+<a href="../../">{% trans "Home" %}</a> &rsaquo; 
+<a href="../">{% trans "Plugin administration" %}</a>
+{% else %}
+<a href="../">{% trans "Home" %}</a>
+{% endif %}
+&rsaquo;
 {% for app in app_list %}
 {% trans app.name %}
 {% endfor %}</div>{% endblock %}
