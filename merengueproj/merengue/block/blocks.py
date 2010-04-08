@@ -48,7 +48,6 @@ def registered_block(sender, **kwargs):
         registered_item = kwargs['registered_item']
         registered_item.placed_at = sender.default_place
         registered_item.name = sender.name
-        registered_item.order = sender.order
         registered_item.save()
 
 
