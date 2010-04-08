@@ -4,8 +4,8 @@ from plugins.news.actions import PDFExport, NewsIndex, NewsRSS
 from plugins.news.blocks import LatestNewsBlock
 from plugins.news.viewlets import LatestNewsViewlet
 
-from plugins.news.models import NewsItem
-from plugins.news.admin import NewsItemSectionAdmin
+from plugins.news.models import NewsItem, NewsCategory
+from plugins.news.admin import NewsItemSectionAdmin, NewsItemAdmin, NewsCategoryAdmin
 
 
 class PluginConfig(Plugin):
@@ -38,3 +38,8 @@ class PluginConfig(Plugin):
     @classmethod
     def section_models(cls):
         return [(NewsItem, NewsItemSectionAdmin)]
+
+    @classmethod
+    def get_model_admins(cls):
+        return [(NewsCategory, NewsCategoryAdmin),
+                (NewsItem, NewsItemAdmin)]

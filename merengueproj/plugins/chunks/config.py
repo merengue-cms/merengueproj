@@ -3,6 +3,8 @@ from merengue.plugins import Plugin
 #from merengue.section.models import Document
 
 from plugins.chunks.blocks import ChunksBlock
+from plugins.chunks.models import Chunk
+from plugins.chunks.admin import ChunkAdmin
 
 
 class PluginConfig(Plugin):
@@ -21,3 +23,7 @@ class PluginConfig(Plugin):
     #def section_models(cls):
         ## section_models of merengue core
         #return [(Document, DocumentRelatedModelAdmin)]
+
+    @classmethod
+    def get_model_admins(cls):
+        return [(Chunk, ChunkAdmin)]
