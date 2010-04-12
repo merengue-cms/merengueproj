@@ -144,12 +144,14 @@ class BaseAdminSite(DjangoAdminSite):
         return HttpResponseRedirect('%s%s/%s/%d/' % (admin_prefix, model._meta.app_label,
                                     model._meta.module_name, content.id))
 
-    def index(self, request):
+    def index(self, request, extra_context=None):
         """ merengue admin index page. It's a friendly admin page """
+        extra_context = extra_context or {}
         context = {
             'title': _('Site administration'),
             'root_path': self.root_path,
         }
+        context.update(extra_context)
         context_instance = template.RequestContext(request, current_app=self.name)
         return render_to_response('admin/merengue_index.html', context,
             context_instance=context_instance,
