@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-28 22:12+0200\n"
+"POT-Creation-Date: 2010-04-12 11:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,125 +16,133 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.py:70
+#: admin.py:91
 msgid "CSS Colors"
 msgstr ""
 
-#: admin.py:71
+#: admin.py:92
 msgid "Header images"
 msgstr ""
 
-#: admin.py:72
+#: admin.py:93
 msgid "Searcher images"
 msgstr ""
 
-#: admin.py:77 models.py:278
+#: admin.py:98 models.py:296
 msgid "custom style"
 msgstr ""
 
-#: admin.py:96 models.py:467
+#: admin.py:116 models.py:484
 msgid "documents"
 msgstr ""
 
-#: admin.py:152
+#: admin.py:172
 msgid ""
 "Sorry you can not select an Absolute Link and a Content Link simultaneously "
 "for this menu. Fulfill just one."
 msgstr ""
 
-#: admin.py:161
+#: admin.py:181
 msgid "Menu Absolute Link"
 msgstr ""
 
-#: admin.py:162
+#: admin.py:182
 msgid "Menu Absolute Links"
 msgstr ""
 
-#: admin.py:189
+#: admin.py:209
 msgid "Menu Content Link"
 msgstr ""
 
-#: admin.py:190
+#: admin.py:210
 msgid "Menu Content Links"
 msgstr ""
 
-#: admin.py:220
+#: admin.py:227
+msgid "Menu Viewlet Link"
+msgstr ""
+
+#: admin.py:228
+msgid "Menu Viewlet Links"
+msgstr ""
+
+#: admin.py:247
 msgid "Move this menu"
 msgstr ""
 
-#: admin.py:221
+#: admin.py:248
 msgid "Cancel move"
 msgstr ""
 
-#: admin.py:223
+#: admin.py:250
 msgid "Before"
 msgstr ""
 
-#: admin.py:224
+#: admin.py:251
 msgid "After"
 msgstr ""
 
-#: admin.py:225
+#: admin.py:252
 msgid "Child"
 msgstr ""
 
-#: admin.py:302 models.py:209
+#: admin.py:329 models.py:226
 msgid "main menu"
 msgstr ""
 
-#: admin.py:308 models.py:218
+#: admin.py:335 models.py:235
 msgid "secondary menu"
 msgstr ""
 
-#: admin.py:371 models.py:372
+#: admin.py:398 models.py:400
 msgid "photos"
 msgstr ""
 
-#: admin.py:388
+#: admin.py:415
 msgid "Are you sure you want to deselect these photos from carousel?"
 msgstr ""
 
-#: admin.py:391
+#: admin.py:418
 msgid "Deselect photo"
 msgstr ""
 
-#: admin.py:397
+#: admin.py:424
 msgid "choose photos"
 msgstr ""
 
-#: admin.py:412
+#: admin.py:439
 msgid "Are you sure you want to select these photos?"
 msgstr ""
 
-#: admin.py:415
+#: admin.py:442
 msgid "Select photo"
 msgstr ""
 
-#: admin.py:425 models.py:559
+#: admin.py:452 models.py:577
 msgid "document sections"
 msgstr ""
 
-#: models.py:67 models.py:360
+#: models.py:68 models.py:388
 msgid "name"
 msgstr ""
 
-#: models.py:72 models.py:365
+#: models.py:73 models.py:393
 msgid "slug"
 msgstr ""
 
-#: models.py:79
+#: models.py:80
 msgid "Parent"
 msgstr ""
 
-#: models.py:86 models.py:179
+#: models.py:87 models.py:180
 msgid "url"
 msgstr ""
 
-#: models.py:93 models.py:156
+#: models.py:94 models.py:157
 msgid "menu"
 msgstr ""
 
-#: models.py:94
+#: models.py:95
 msgid "menus"
 msgstr ""
 
@@ -142,147 +150,151 @@ msgstr ""
 msgid "Content"
 msgstr ""
 
-#: models.py:227
+#: models.py:204
+msgid "Viewlet"
+msgstr ""
+
+#: models.py:219
+msgid "order"
+msgstr ""
+
+#: models.py:244
 msgid "interest menu"
 msgstr ""
 
-#: models.py:235
+#: models.py:252
 msgid "custom main menu template"
 msgstr ""
 
-#: models.py:243
+#: models.py:260
 msgid "custom secondary menu template"
 msgstr ""
 
-#: models.py:251
+#: models.py:268
 msgid "custom interest menu template"
 msgstr ""
 
-#: models.py:262
+#: models.py:279
 msgid "main content"
 msgstr ""
 
-#: models.py:269
+#: models.py:286
 msgid "related contents"
 msgstr ""
 
-#: models.py:378
+#: models.py:406
 msgid "class name"
 msgstr ""
 
-#: models.py:405 models.py:554
-msgid "body"
-msgstr ""
-
-#: models.py:409
+#: models.py:433
 msgid "photo"
 msgstr ""
 
-#: models.py:417
+#: models.py:441
 msgid "float image"
 msgstr ""
 
-#: models.py:418
+#: models.py:442
 msgid "make image float in view"
 msgstr ""
 
-#: models.py:424
+#: models.py:448
 msgid "photo description"
 msgstr ""
 
-#: models.py:432
+#: models.py:456
 msgid "carousel"
 msgstr ""
 
-#: models.py:440
-msgid "videos"
-msgstr ""
-
-#: models.py:446
+#: models.py:463
 msgid "search form"
 msgstr ""
 
-#: models.py:453
+#: models.py:470
 msgid "searcher options"
 msgstr ""
 
-#: models.py:458
+#: models.py:475
 msgid "permanent"
 msgstr ""
 
-#: models.py:459
+#: models.py:476
 msgid "make this document not erasable and its slug ummutable"
 msgstr ""
 
-#: models.py:466
+#: models.py:483
 msgid "document"
 msgstr ""
 
-#: models.py:545
+#: models.py:562
 msgid "Parent document"
 msgstr ""
 
-#: models.py:558
+#: models.py:571
+msgid "body"
+msgstr ""
+
+#: models.py:576
 msgid "document section"
 msgstr ""
 
-#: models.py:578
+#: models.py:596
 msgid "Can not move to non existing position"
 msgstr ""
 
-#: models.py:603
+#: models.py:621
 msgid "Trying to save DocumentSection into an existing position"
 msgstr ""
 
-#: models.py:624
+#: models.py:642
 msgid "color 1"
 msgstr ""
 
-#: models.py:630
+#: models.py:648
 msgid "color 2"
 msgstr ""
 
-#: models.py:636
+#: models.py:654
 msgid "color 3"
 msgstr ""
 
-#: models.py:642
+#: models.py:660
 msgid "menu link color"
 msgstr ""
 
-#: models.py:652
+#: models.py:670
 msgid "An arrow pointing to the left for multiple select widgets. (11x11)"
 msgstr ""
 
-#: models.py:660
+#: models.py:678
 msgid "An arrow pointing to the right for multiple select widgets. (11x11)"
 msgstr ""
 
-#: models.py:668
+#: models.py:686
 msgid ""
 "Background image of a searcher tab. Both selected and not selected. (298x85)"
 "<br />You can use <a href=\"/media/img/searcher_tab_a_visits.gif\" target="
 "\"_blank\">this image</a> as a template."
 msgstr ""
 
-#: models.py:676
+#: models.py:694
 msgid ""
 "Background image of the last searcher tab. Both selected and not selected. "
 "(299x85)<br />You can use <a href=\"/media/img/searcher_tab_b_visits.gif\" "
 "target=\"_blank\">this image</a> as a template."
 msgstr ""
 
-#: models.py:684
+#: models.py:702
 msgid ""
 "A vertical gradient image for use in the search results item backgrounds. "
 "(1x126)"
 msgstr ""
 
-#: models.py:692
+#: models.py:710
 msgid "Background image for headers in the menu zone. (175x34)"
 msgstr ""
 
-#: models.py:700
+#: models.py:718
 msgid "Background image for headers in the content zone. (775x34)"
 msgstr ""
 

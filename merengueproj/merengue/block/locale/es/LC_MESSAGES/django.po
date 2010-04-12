@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-28 23:07+0200\n"
+"POT-Creation-Date: 2010-04-12 11:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,17 +17,33 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: models.py:8
-msgid "Left sidebar"
+msgid "All"
 msgstr ""
 
 #: models.py:9
-msgid "Right sidebar"
+msgid "Left sidebar"
 msgstr ""
 
 #: models.py:10
-msgid "Before content body"
+msgid "Right sidebar"
 msgstr ""
 
 #: models.py:11
+msgid "Before content body"
+msgstr ""
+
+#: models.py:12
+msgid "Home page"
+msgstr ""
+
+#: models.py:13
 msgid "After content body"
+msgstr ""
+
+#: models.py:14
+msgid "Header"
+msgstr ""
+
+#: models.py:15
+msgid "Footer"
 msgstr ""

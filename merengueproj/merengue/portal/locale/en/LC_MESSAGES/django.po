@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-28 22:12+0200\n"
+"POT-Creation-Date: 2010-04-12 11:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,24 +16,60 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: views.py:39
+#: models.py:9
+msgid "Primary link"
+msgstr ""
+
+#: models.py:10
+msgid "Secondary link"
+msgstr ""
+
+#: models.py:18
+msgid "name"
+msgstr ""
+
+#: models.py:19
+msgid "Content"
+msgstr ""
+
+#: models.py:21 models.py:22
+msgid "url"
+msgstr ""
+
+#: models.py:24
+msgid "order"
+msgstr ""
+
+#: models.py:25
+msgid "category"
+msgstr ""
+
+#: models.py:28
+msgid "portal link"
+msgstr ""
+
+#: models.py:29
+msgid "portal links"
+msgstr ""
+
+#: views.py:38
 #, python-format
 msgid "Welcome %s"
 msgstr ""
 
-#: views.py:46
+#: views.py:45
 msgid "User exists, but it have not active account"
 msgstr ""
 
-#: views.py:48
+#: views.py:47
 msgid "Credentials are incorrect"
 msgstr ""
 
-#: views.py:144
+#: views.py:143
 msgid "Thanks for visit"
 msgstr ""
 
-#: views.py:182
+#: views.py:179
 msgid "Cache from this page was invalidated"
 msgstr ""
 
