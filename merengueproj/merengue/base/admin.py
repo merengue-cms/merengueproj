@@ -765,10 +765,10 @@ class StatusControlProvider(object):
 
 class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProvider):
     change_list_template = "admin/basecontent/change_list.html"
-    list_display = ('name', 'google_minimap', 'status', 'user_modification_date', 'last_editor')
+    list_display = ('name', 'status', 'user_modification_date', 'last_editor')
     search_fields = ('name', )
     date_hierarchy = 'creation_date'
-    list_filter = ('is_autolocated', 'status', 'user_modification_date', 'last_editor', )
+    list_filter = ('status', 'user_modification_date', 'last_editor', )
     select_list_filter = ('class_name', 'status', 'user_modification_date', )
     actions = ['set_as_draft', 'set_as_pending', 'set_as_published', 'assign_owners']
     filter_horizontal = ('owners', )
@@ -943,6 +943,10 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
             'admin/%s/change_list.html' % app_label,
             'admin/change_list.html',
         ], context, context_instance=context_instance)
+
+if settings.USE_GIS:
+    BaseContentAdmin.list_display += ('google_minimap', )
+    BaseContentAdmin.list_filter += ('is_autolocated', )
 
 
 class BaseContentViewAdmin(BaseContentAdmin):
