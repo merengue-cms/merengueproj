@@ -8,11 +8,12 @@ from django.db.models.query import QuerySet
 
 manager_parent_classes = [Manager]
 commentsqueryset_parent_classes = [QuerySet]
+
 if settings.USE_GIS:
     from django.contrib.gis.db.models import GeoManager
     from django.contrib.gis.db.models.query import GeoQuerySet
-    manager_parent_classes.append(GeoManager)
-    commentsqueryset_parent_classes.append(GeoQuerySet)
+    manager_parent_classes = [GeoManager]
+    commentsqueryset_parent_classes = [GeoQuerySet]
 
 
 class ManagerMeta(type):
@@ -33,6 +34,7 @@ class CommentsQuerySetMeta(type):
 
 class BaseManager:
     """ base manager for all content types """
+    __metaclass__ = ManagerMeta
 
     # XXX: for now we have no customization,
     # but I think in future can be useful

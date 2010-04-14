@@ -159,66 +159,67 @@ if settings.USE_GIS:
         location = models.ForeignKey(Location, verbose_name=_('location'),
                                      null=True, blank=True, editable=False)
 
-    objects = WorkflowManager()
+        objects = WorkflowManager()
 
-    class Meta:
-        abstract = True
+        class Meta:
+            abstract = True
 
-    @property
-    def main_location(self):
-        if self.location is not None:
-            return self.location.main_location
-        return None
+        @property
+        def main_location(self):
+            if self.location is not None:
+                return self.location.main_location
+            return None
 
-    def get_icon(self):
-        if self.map_icon:
-            return self.map_icon.url
-        else:
-            return settings.MEDIA_URL + 'img/default_map_icon.jpg'
+        def get_icon(self):
+            if self.map_icon:
+                return self.map_icon.url
+            else:
+                return settings.MEDIA_URL + 'img/default_map_icon.jpg'
 
-    def get_icon_tag(self):
-        return '<img src="%s" title="%s"/>' %(self.get_icon(), self._meta.verbose_name)
-    get_icon_tag.allow_tags = True
+        def get_icon_tag(self):
+            return '<img src="%s" title="%s"/>' %(self.get_icon(), self._meta.verbose_name)
+        get_icon_tag.allow_tags = True
 
-    def has_location(self):
-        return self.location and self.location.has_location()
+        def has_location(self):
+            return self.location and self.location.has_location()
 
-    def google_minimap(self):
-        location = self.main_location
-        if location:
-            return render_to_string('admin/mini_google_map.html',
-                                    {'content': self,
-                                     'zoom': 16,
-                                     'index': self.id,
-                                     'MEDIA_URL': settings.MEDIA_URL,
-                                     'GOOGLE_MAPS_API_KEY': settings.GOOGLE_MAPS_API_KEY})
-        else:
-            return _('Without location')
-    google_minimap.allow_tags = True
+        def google_minimap(self):
+            location = self.main_location
+            if location:
+                return render_to_string('admin/mini_google_map.html',
+                                        {'content': self,
+                                        'zoom': 16,
+                                        'index': self.id,
+                                        'MEDIA_URL': settings.MEDIA_URL,
+                                        'GOOGLE_MAPS_API_KEY': settings.GOOGLE_MAPS_API_KEY})
+            else:
+                return _('Without location')
+        google_minimap.allow_tags = True
 
-    def admin_thumbnail(self):
-        if not self.main_image:
-            return ''
-        file_access_failed = False
-        try:
-            if not self.main_image or not self.main_image.thumbnail or \
-               not os.path.exists(self.main_image.thumbnail.path()):
+        def admin_thumbnail(self):
+            if not self.main_image:
+                return ''
+            file_access_failed = False
+            try:
+                if not self.main_image or not self.main_image.thumbnail or \
+                not os.path.exists(self.main_image.thumbnail.path()):
+                    file_access_failed = True
+            except SuspiciousOperation:
                 file_access_failed = True
-        except SuspiciousOperation:
-            file_access_failed = True
 
-        if file_access_failed:
-            # in development server may not exists thumbnails from
-            # production db. See ticket #1659
-            return 'file not exists in filesystem'
+            if file_access_failed:
+                # in development server may not exists thumbnails from
+                # production db. See ticket #1659
+                return 'file not exists in filesystem'
 
-        thumb_url = self.main_image.thumbnail.url()
-        return u'<a href="%s"><img src="%s" alt="%s" /></a>' % \
-                    (self.main_image.url, thumb_url, self.name)
-    admin_thumbnail.short_description = _('Thumbnail')
-    admin_thumbnail.allow_tags = True
+            thumb_url = self.main_image.thumbnail.url()
+            return u'<a href="%s"><img src="%s" alt="%s" /></a>' % \
+                        (self.main_image.url, thumb_url, self.name)
+        admin_thumbnail.short_description = _('Thumbnail')
+        admin_thumbnail.allow_tags = True
 
     BaseClass = LocatableContent
+
 
 class BaseContentMeta(TransMeta):
     '''
