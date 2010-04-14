@@ -2,6 +2,7 @@
 
 from south.db import db
 from django.db import models
+from django.conf import settings
 from merengue.base.models import *
 
 class Migration:
@@ -121,5 +122,11 @@ class Migration:
             'postal_code': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'})
         }
     }
+
+    if not settings.USE_GIS:
+        del models['places.location']
+        del models['base.basecontent']['location']
+        del models['base.basecontent']['map_icon']
+        del models['base.basecontent']['is_autolocated']
     
     complete_apps = ['base']

@@ -1,6 +1,7 @@
 
 from south.db import db
 from django.db import models
+from django.conf import settings
 from merengue.section.models import *
 
 
@@ -218,5 +219,11 @@ class Migration:
             'order': ('django.db.models.fields.PositiveIntegerField', [], {})
         }
     }
+
+    if not settings.USE_GIS:
+        del models['places.location']
+        del models['base.basecontent']['location']
+        del models['base.basecontent']['map_icon']
+        del models['base.basecontent']['is_autolocated']
 
     complete_apps = ['section']

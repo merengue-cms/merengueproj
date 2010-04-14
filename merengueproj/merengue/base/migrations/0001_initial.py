@@ -2,6 +2,7 @@
 
 from south.db import db
 from django.db import models
+from django.conf import settings
 from merengue.base.models import *
 
 class Migration:
@@ -21,32 +22,33 @@ class Migration:
         db.send_create_signal('base', ['ContactInfo'])
         
         # Adding model 'BaseContent'
-        db.create_table('base_basecontent', (
-            ('id', orm['base.BaseContent:id']),
-            ('name_fr', orm['base.BaseContent:name_fr']),
-            ('name_es', orm['base.BaseContent:name_es']),
-            ('name_en', orm['base.BaseContent:name_en']),
-            ('slug', orm['base.BaseContent:slug']),
-            ('plain_description_fr', orm['base.BaseContent:plain_description_fr']),
-            ('plain_description_es', orm['base.BaseContent:plain_description_es']),
-            ('plain_description_en', orm['base.BaseContent:plain_description_en']),
-            ('description_fr', orm['base.BaseContent:description_fr']),
-            ('description_en', orm['base.BaseContent:description_en']),
-            ('description_es', orm['base.BaseContent:description_es']),
-            ('status', orm['base.BaseContent:status']),
-            ('main_image', orm['base.BaseContent:main_image']),
-            ('map_icon', orm['base.BaseContent:map_icon']),
-            ('is_autolocated', orm['base.BaseContent:is_autolocated']),
-            ('location', orm['base.BaseContent:location']),
-            ('contact_info', orm['base.BaseContent:contact_info']),
-            ('creation_date', orm['base.BaseContent:creation_date']),
-            ('modification_date', orm['base.BaseContent:modification_date']),
-            ('user_modification_date', orm['base.BaseContent:user_modification_date']),
-            ('last_editor', orm['base.BaseContent:last_editor']),
-            ('tags', orm['base.BaseContent:tags']),
-            ('class_name', orm['base.BaseContent:class_name']),
-            ('rank', orm['base.BaseContent:rank']),
-        ))
+        data = (('id', orm['base.BaseContent:id']),
+                ('name_fr', orm['base.BaseContent:name_fr']),
+                ('name_es', orm['base.BaseContent:name_es']),
+                ('name_en', orm['base.BaseContent:name_en']),
+                ('slug', orm['base.BaseContent:slug']),
+                ('plain_description_fr', orm['base.BaseContent:plain_description_fr']),
+                ('plain_description_es', orm['base.BaseContent:plain_description_es']),
+                ('plain_description_en', orm['base.BaseContent:plain_description_en']),
+                ('description_fr', orm['base.BaseContent:description_fr']),
+                ('description_en', orm['base.BaseContent:description_en']),
+                ('description_es', orm['base.BaseContent:description_es']),
+                ('status', orm['base.BaseContent:status']),
+                ('main_image', orm['base.BaseContent:main_image']),
+                ('contact_info', orm['base.BaseContent:contact_info']),
+                ('creation_date', orm['base.BaseContent:creation_date']),
+                ('modification_date', orm['base.BaseContent:modification_date']),
+                ('user_modification_date', orm['base.BaseContent:user_modification_date']),
+                ('last_editor', orm['base.BaseContent:last_editor']),
+                ('tags', orm['base.BaseContent:tags']),
+                ('class_name', orm['base.BaseContent:class_name']),
+                ('rank', orm['base.BaseContent:rank']))
+        if settings.USE_GIS:
+            gis_data = (('map_icon', orm['base.BaseContent:map_icon']),
+                        ('is_autolocated', orm['base.BaseContent:is_autolocated']),
+                        ('location', orm['base.BaseContent:location']))
+            data = data + gis_data
+        db.create_table('base_basecontent', data)
         db.send_create_signal('base', ['BaseContent'])
         
         # Adding model 'MultimediaRelation'
@@ -200,5 +202,11 @@ class Migration:
             'postal_code': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'})
         }
     }
-    
+
+    if not settings.USE_GIS:
+        del models['places.location']
+        del models['base.basecontent']['location']
+        del models['base.basecontent']['map_icon']
+        del models['base.basecontent']['is_autolocated']
+
     complete_apps = ['base']

@@ -1,7 +1,7 @@
 import datetime
 
 from django.conf import settings
-from django.contrib.gis.db import models
+from django.db import models
 from django.db.models import permalink
 from django.db.models.signals import post_save, post_delete
 from django.template.loader import render_to_string

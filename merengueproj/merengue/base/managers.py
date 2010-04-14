@@ -1,9 +1,36 @@
 from django.contrib.gis.db.models import GeoManager
 from django.contrib.gis.db.models.query import GeoQuerySet
 from django.db import connection
+from django.db.models import Manager
+from django.db.models.query import QuerySet
 
 
-class BaseManager(GeoManager):
+manager_parent_classes = [Manager]
+commentsqueryset_parent_classes = [QuerySet]
+if settings.USE_GIS:
+    from django.contrib.gis.db.models import GeoManager
+    from django.contrib.gis.db.models.query import GeoQuerySet
+    manager_parent_classes.append(GeoManager)
+    commentsqueryset_parent_classes.append(GeoQuerySet)
+
+
+class ManagerMeta(type):
+
+    def __new__(meta, name, bases, dct):
+        newbases = list(bases) + manager_parent_classes + [object]
+        newbases = tuple(newbases)
+        return type.__new__(meta, name, newbases, dct)
+
+
+class CommentsQuerySetMeta(type):
+
+    def __new__(meta, name, bases, dct):
+        newbases = list(bases) + commentsqueryset_parent_classes + [object]
+        newbases = tuple(newbases)
+        return type.__new__(meta, name, newbases, dct)
+
+
+class BaseManager:
     """ base manager for all content types """
 
     # XXX: for now we have no customization,
@@ -29,7 +56,8 @@ class WorkflowManager(BaseManager):
         return self.by_status('draft')
 
 
-class CommentsQuerySet(GeoQuerySet):
+class CommentsQuerySet:
+    __metaclass__ = CommentsQuerySetMeta
 
     def with_comment_number(self, ordered_by_comment_number=False):
         from django.contrib.contenttypes.models import ContentType

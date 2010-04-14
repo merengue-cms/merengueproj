@@ -24,19 +24,7 @@ install in a ubuntu/debian based distribution.
 Some python packages are installed using easy_install, for use that
 you need to have installed python-setuptools
 
-Dependencies: ``postgresql``, ``python-psycopg2``, ``python-imaging``, ``python-beautifulsoup``, ``geopy``, ``johnny-cache``
-
-* ``postgresql``: the object-relational database system that we will use.
-
-    .. code-block:: bash
-
-        $ apt-get install postgresql
-
-* ``python-psycopg``: python interface to postgresql database.
-
-    .. code-block:: bash
-
-        $ apt-get install python-psycopg2
+Dependencies: ``python-imaging``, ``python-beautifulsoup``, ``johnny-cache``
 
 * ``python-imaging``: adds image processing capabilities to your Python
   interpreter. For model data fields.
@@ -45,22 +33,17 @@ Dependencies: ``postgresql``, ``python-psycopg2``, ``python-imaging``, ``python-
 
         $ apt-get install python-imaging
 
-* ``geopy``: makes it easy for developers to locate the coordinates of
-  addresses, cities, countries, and landmarks across the globe.
-
-    .. code-block:: bash
-
-        $ easy_install geopy
-
 * ``python-beautifulsoup``: a Python HTML/XML parser designed for quick
   turnaround projects like screen-scraping. For text field HTML
-  cleaning. 
+  cleaning.
 
     .. code-block:: bash
 
         $ apt-get install python-beautifulsoup
 
 * ``johnny-cache``: Django app to speedup merengue providing a clever 
+=======
+* ``johnny-cache``: Django app to speedup merengue providing a clever
   cache mechanism.
 
     .. code-block:: bash
@@ -111,7 +94,7 @@ python path:
     .. code-block:: bash
 
         $ export PYTHONPATH=$SVNDIR/django_src/django:$PYTHONPATH
- 
+
 And for bin:
 
     .. code-block:: bash
@@ -148,6 +131,165 @@ reading that, you downloaded it before):
         $ mkdir $SRCDIR
         $ cd $SRCDIR
         $ svn checkout https://svnpub.yaco.es/merengue/trunk/merengueproj
+
+Merengue project creation
+-------------------------
+
+    .. code-block:: bash
+
+        $ cd $SRCDIR/
+
+* Production mode:
+
+    .. code-block:: bash
+
+        $ ./merengueproj/bin/merengue-admin.py startproject myproject
+
+
+* Development mode:
+
+    .. code-block:: bash
+
+        $ ./merengueproj/bin/merengue-admin.py startproject myproject --develop
+
+
+Database configuration
+----------------------
+
+It's necessary configure the database changing ``DATABASE_*`` parameters
+in the configuration file ``myproject/settings.py``, created with
+``merengue-admin.py``
+
+Let's suppose that you were configuring a postgresql database with the
+following parameters:
+
+    .. code-block:: bash
+
+       DATABASE_ENGINE = 'postgresql_psycopg2'
+       DATABASE_NAME = 'myproject'
+       DATABASE_USER = 'myproject'
+       DATABASE_PASSWORD = 'password'
+       DATABASE_HOST = 'localhost'
+       DATABASE_PORT = '5432'
+
+You can use all database engine supported by django
+http://docs.djangoproject.com/en/1.1/ref/settings/#database-engine
+
+Creating the project database (postgresql):
+-------------------------------------------
+
+We suppose that your use has superadmin permissions in postgresql. If
+not, you can do it:
+
+    .. code-block:: bash
+
+        $ sudo su postgres
+        $ createuser yourusername # when ask say yes to be a superadmin
+        $ exit
+
+We set "myproject" password and make that users superuser, necessary
+for exec portal test.
+
+    .. code-block:: bash
+
+        $ createuser myproject -P
+        $ createdb --owner=myproject myproject
+
+Building the initial database:
+----------------------------------
+
+The created database is empty. We need to build the data model and add
+minimal initial data.
+
+You can do it with that command:
+
+    .. code-block:: bash
+
+        $ ./manage.py syncdb
+
+You can ignore the creation of superuser because it will be created
+with fixtures.
+
+View the site
+-------------
+
+    .. code-block:: bash
+
+        $ ./manage.py runserver
+
+
+Open the web browser and go to http://localhost:8000/admin/ and check
+that the web is running successfully.
+
+To see the web public version, we can access to http://localhost:8000/
+
+Default admin interface user:
+
+.. code-block:: bash
+
+    user: admin
+    password: admin
+
+.. admonition: Note
+
+    It's necessary to put the end ``/`` in urls
+
+
+More information
+================
+
+Activate the manage.py auto completion
+--------------------------------------
+
+Copy the file ``django_bash_completion`` in ``/etc``:
+
+    .. code-block:: bash
+
+        $ sudo cp $SVNDIR/django_src/extras/django_bash_completion /etc
+
+We activate the auto complete including in file ``$HOME/.bashrc`` the following
+line:
+
+    .. code-block:: bash
+
+        if [ -f /etc/django_bash_completion ]; then
+          . /etc/django_bash_completion
+        fi
+
+
+=====================
+Installation with GIS
+=====================
+
+If you want to install with GIS support it's necessary some specific
+installations and configurations.
+
+Previous install
+================
+
+Apart from the previous dependencies if you want to use GIS there are
+more dependencies.
+
+Dependencies: ``postgresql``, ``python-psycopg2``, ``geopy``
+
+* ``postgresql``: the object-relational database system that we will use.
+
+    .. code-block:: bash
+
+        $ apt-get install postgresql
+
+* ``python-psycopg``: python interface to postgresql database.
+
+    .. code-block:: bash
+
+        $ apt-get install python-psycopg2
+
+* ``geopy``: makes it easy for developers to locate the coordinates of
+  addresses, cities, countries, and landmarks across the globe.
+
+    .. code-block:: bash
+
+        $ easy_install geopy
 
 
 GIS extensions install
@@ -250,26 +392,15 @@ compile:
 .. _`PostGIS`: http://postgis.refractions.net/
 .. _`GDAL`: http://trac.osgeo.org/gdal/
 
-Merengue project creation
--------------------------
+Settings
+--------
 
-    .. code-block:: bash
+For use GIS it's necessary to add some lines to settings.py:
 
-        $ cd $SRCDIR/
+    .. code-block:: python
 
-* Production mode:
-
-    .. code-block:: bash
-
-        $ ./merengueproj/bin/merengue-admin.py startproject myproject
-
-
-* Development mode:
-
-    .. code-block:: bash
-
-        $ ./merengueproj/bin/merengue-admin.py startproject myproject --develop
-
+       USE_GIS = True
+       INSTALLED_APPS += ('django.contrib.gis', 'merengue.places')
 
 Database configuration
 ----------------------
@@ -366,7 +497,7 @@ development server runs ok:
 
 
 Building the initial database:
-----------------------------------
+------------------------------
 
 The created database is empty. We need to build the data model and add
 minimal initial data.
@@ -376,54 +507,6 @@ You can do it with that command:
     .. code-block:: bash
 
         $ ./manage.py rebuild_db --template=template_postgis
-
-
-View the site
--------------
-
-    .. code-block:: bash
-
-        $ ./manage.py runserver
-
-
-Open the web browser and go to http://localhost:8000/admin/ and check
-that the web is running successfuly.
-
-To see the web public version, we can access to http://localhost:8000/
-
-Default admin interface user:
-
-.. code-block:: bash
-
-    user: admin
-    password: admin
-
-.. admonition: Note
-
-    It's necessary to put the end ``/`` in urls
-
-
-More information
-================
-
-Activate the manage.py auto completion
---------------------------------------
-
-Copy the file ``django_bash_completion`` in ``/etc``:
-
-    .. code-block:: bash
-
-        $ sudo cp $SVNDIR/django_src/extras/django_bash_completion /etc
-
-We activate the auto complete including in file ``$HOME/.bashrc`` the following
-line:
-
-    .. code-block:: bash
-
-        if [ -f /etc/django_bash_completion ]; then
-          . /etc/django_bash_completion
-        fi
-
 
 Database backup and rebuild
 ---------------------------

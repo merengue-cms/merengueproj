@@ -20,7 +20,8 @@ from django.contrib.auth.models import User
 
 from cmsutils.db.fields import AutoSlugField
 from cmsutils.signals import post_rebuild_db
-from south.introspection_plugins import geodjango
+if settings.USE_GIS:
+    from south.introspection_plugins import geodjango
 from south.signals import pre_migrate, post_migrate
 from stdimage import StdImageField
 from transmeta import TransMeta
@@ -144,15 +145,19 @@ class Base(models.Model):
         return self.status == 'published'
 
 
-class LocatableContent(Base):
-    """ Base class for all locatable content """
-    # map icon for google maps
-    map_icon = StdImageField(_('map icon'), upload_to='map_icons',
-                               null=True, blank=True)
-    is_autolocated = models.BooleanField(verbose_name=_("is autolocated"),
-                                      default=False)
-    location = models.ForeignKey(Location, verbose_name=_('location'),
-                                 null=True, blank=True, editable=False)
+BaseClass = Base
+if settings.USE_GIS:
+    from merengue.places.models import Location
+
+    class LocatableContent(Base):
+        """ Base class for all locatable content """
+        # map icon for google maps
+        map_icon = StdImageField(_('map icon'), upload_to='map_icons',
+                                   null=True, blank=True)
+        is_autolocated = models.BooleanField(verbose_name=_("is autolocated"),
+                                          default=False)
+        location = models.ForeignKey(Location, verbose_name=_('location'),
+                                     null=True, blank=True, editable=False)
 
     objects = WorkflowManager()
 
@@ -213,6 +218,7 @@ class LocatableContent(Base):
     admin_thumbnail.short_description = _('Thumbnail')
     admin_thumbnail.allow_tags = True
 
+    BaseClass = LocatableContent
 
 class BaseContentMeta(TransMeta):
     '''
@@ -240,7 +246,7 @@ class BaseContentMeta(TransMeta):
         return new_class
 
 
-class BaseContent(LocatableContent):
+class BaseContent(BaseClass):
     __metaclass__ = BaseContentMeta
 
     contact_info = models.ForeignKey(ContactInfo,
