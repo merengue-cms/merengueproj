@@ -1361,6 +1361,7 @@ class OrderableRelatedModelAdmin(RelatedModelAdmin):
         return ('%s__order' % relation_lookup, 'asc')
 
     def changelist_view(self, request, extra_context=None):
+        extra_context = self._update_extra_context(request, extra_context)
         if request.method == 'POST':
             neworder_list = request.POST.get('neworder', None)
             page = request.GET.get('p', 0)
