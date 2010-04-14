@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import ConfigParser
 import os
+from StringIO import StringIO
 import zipfile
 
 from django.db import connection, transaction
@@ -61,9 +62,9 @@ class Command(LabelCommand, MerengueCommand):
         Extract and return a dictionary with configuration parameters
         from zipped config.ini file
         """
-        config_file = zip_config.open("config.ini", "r")
+        config_fp = StringIO(zip_config.read("config.ini"))
         config = ConfigParser.ConfigParser()
-        config.readfp(config_file)
+        config.readfp(config_fp, 'r')
         config_dic = {}
         config_items = config.items("main")
         # From list of tuples to dict
@@ -82,7 +83,7 @@ class Command(LabelCommand, MerengueCommand):
                 file_name = model_to_restore[1]
                 format = 'json'
                 fixtures_file_name = "%s.%s" % (file_name, format)
-                fixtures_data = zip_config.read(fixtures_file_name, "r")
+                fixtures_data = zip_config.read(fixtures_file_name)
                 fixtures = serializers.deserialize(format, fixtures_data)
                 has_objects = False
                 for fixture in fixtures:
