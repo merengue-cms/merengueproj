@@ -1,4 +1,5 @@
 from django import template
+from django.conf import settings
 
 from merengue.block.blocks import Block, ContentBlock
 from merengue.block.models import RegisteredBlock
@@ -33,7 +34,8 @@ class RenderBlocksNode(template.Node):
                         rendered_blocks.append(block.render(request,
                                                             self.place,
                                                             content))
-            return '\n'.join(rendered_blocks)
+            return "<div class='blockContainer'>%s</div>" \
+                   % '\n'.join(rendered_blocks)
         except template.VariableDoesNotExist:
             return ''
 
@@ -63,3 +65,12 @@ def do_render_blocks(parser, token):
         raise (template.TemplateSyntaxError, "%r tag's argument should be in "
                                              "quotes" % tag_name)
     return RenderBlocksNode(place[1:-1], content)
+
+
+@register.inclusion_tag('blocks/header.html', takes_context=True)
+def render_blocks_media(context):
+    if 'user' in context and context['user'].is_staff:
+        return {'is_staff': True,
+                'MEDIA_URL': settings.MEDIA_URL + 'block/'}
+    else:
+        return {'is_staff': False}

@@ -1,0 +1,15 @@
+.blockContainerBorder {
+    /* border-radius */
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    /* box-shadow */
+    -webkit-box-shadow: #808080 0px 0px 10px;
+    -moz-box-shadow: #808080 0px 0px 10px;
+    box-shadow: #808080 0px 0px 10px;
+}
+
+.blockContainer .block {
+
+}
+

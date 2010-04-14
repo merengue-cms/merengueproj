@@ -1,4 +1,4 @@
-{% load i18n inlinetrans breadcrumbs messagebox svn %}
+{% load i18n inlinetrans breadcrumbs messagebox svn block_tags %}
 {% block doctype %}<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">{% endblock %}
 <html>
 <head>
@@ -24,6 +24,7 @@
   {% endblock %}
 
   {% inlinetrans_media %}
+  {% render_blocks_media %}
 
   {% block extrascripts %}{% endblock %}
 

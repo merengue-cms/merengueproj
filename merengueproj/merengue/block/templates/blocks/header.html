@@ -1,0 +1,25 @@
+{% load i18n %}{% if is_staff %}
+<script language="javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script language="javascript" src="{{ MEDIA_URL }}js/jquery-ui-1.8.dragdrop.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/render_blocks.css"/>
+<script language="javascript">
+;(function($) {
+    $(document).ready(enableDragging);
+    function enableDragging() {
+        $(".blockContainer").sortable({
+            connectWith: '.blockContainer',
+            containment: 'document',
+            opacity: 0.6,
+            revert: true,
+            start: function(event, ui) {
+                $(".blockContainer").parent().addClass("blockContainerBorder");
+            },
+            stop: function(event, ui) {
+                $(".blockContainer").parent().removeClass("blockContainerBorder");
+            }
+        });
+        $(".blockContainer").disableSelection();
+    }
+})(jQuery);
+</script>
+{% endif %}
