@@ -1287,7 +1287,7 @@ class BaseOrderableInlines(admin.ModelAdmin):
 
     def _media(self):
         __media = super(BaseOrderableInlines, self)._media()
-        __media.add_js(['js/jquery-ui-1.5.3.custom.min.js'])
+        __media.add_js(['js/jquery-ui-1.8.dragdrop.min.js'])
         if self.stacked_inline:
             __media.add_js(['js/menu-sort-stacked.js'])
         if self.tabular_inline:

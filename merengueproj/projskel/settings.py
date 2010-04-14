@@ -109,9 +109,6 @@ TINYMCE_MEDIA = MEDIA_URL + "cmsutils/js/widgets/tiny_mce/"
 
 SEARCHBAR_MIN_RESULTS = 5
 
-BATCHADMIN_MEDIA_PREFIX= ''
-BATCHADMIN_JQUERY_JS= 'js/jquery-1.2.6.min.js'
-
 LOGOUT_PROTECTED_URL_REDIRECTS = (
     #(r'^/regularexpresion/(.*)$', '/redirect_url'),
 )

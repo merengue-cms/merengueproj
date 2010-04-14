@@ -9,7 +9,7 @@ License <http://www.gnu.org/licenses/lgpl.html>
 
 == Depencies ==
 
-<script src="/media/js/jquery-1.2.6.min.js"></script>
+<script src="/media/js/jquery-1.4.2.min.js"></script>
 
 == How to install ==
 
