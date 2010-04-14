@@ -1,6 +1,4 @@
 from django.conf import settings
-from django.contrib.gis.db.models import GeoManager
-from django.contrib.gis.db.models.query import GeoQuerySet
 from django.db import connection
 from django.db.models import Manager
 from django.db.models.query import QuerySet

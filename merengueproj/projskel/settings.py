@@ -51,6 +51,12 @@ SITE_REGISTER_ID = 2
 # to load the internationalization machinery.
 USE_I18N = True
 
+# PostGIS extension flag
+USE_GIS = False
+
+if USE_GIS:
+    INSTALLED_APPS += ('django.contrib.gis', 'merengue.places', )
+
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = path.join(BASEDIR, 'media/')

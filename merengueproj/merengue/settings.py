@@ -23,7 +23,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 MERENGUE_APPS = (
     'merengue.registry',
     'merengue.multimedia',
-    'merengue.places',
     'merengue.base',
     'merengue.section',
     'merengue.plugins',
@@ -43,7 +42,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admin',
-    'django.contrib.gis',
     #'django.contrib.comments',
     'django_extensions',
     'template_utils',
@@ -174,6 +172,3 @@ JQUERY_BASE_MEDIA = 'merengue/js/'
 
 # Customization Comment app for merengue, feedback
 # COMMENTS_APP = 'plugins.feedback'
-
-# PostGIS extension flag
-USE_GIS = False

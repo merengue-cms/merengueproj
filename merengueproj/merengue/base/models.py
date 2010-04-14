@@ -3,7 +3,10 @@ import os
 import re
 
 from django.conf import settings
-from django.contrib.gis.db import models
+if settings.USE_GIS:
+    from django.contrib.gis.db import models
+else:
+    from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.core.management import call_command
 from django.core.exceptions import ObjectDoesNotExist, SuspiciousOperation
@@ -29,7 +32,6 @@ from tagging.fields import TagField
 
 from merengue.base.managers import BaseContentManager, WorkflowManager
 from merengue.multimedia.models import BaseMultimedia
-from merengue.places.models import Location
 
 
 PRIORITY_CHOICES = (
@@ -188,10 +190,10 @@ if settings.USE_GIS:
             if location:
                 return render_to_string('admin/mini_google_map.html',
                                         {'content': self,
-                                        'zoom': 16,
-                                        'index': self.id,
-                                        'MEDIA_URL': settings.MEDIA_URL,
-                                        'GOOGLE_MAPS_API_KEY': settings.GOOGLE_MAPS_API_KEY})
+                                         'zoom': 16,
+                                         'index': self.id,
+                                         'MEDIA_URL': settings.MEDIA_URL,
+                                         'GOOGLE_MAPS_API_KEY': settings.GOOGLE_MAPS_API_KEY})
             else:
                 return _('Without location')
         google_minimap.allow_tags = True
@@ -202,7 +204,7 @@ if settings.USE_GIS:
             file_access_failed = False
             try:
                 if not self.main_image or not self.main_image.thumbnail or \
-                not os.path.exists(self.main_image.thumbnail.path()):
+                   not os.path.exists(self.main_image.thumbnail.path()):
                     file_access_failed = True
             except SuspiciousOperation:
                 file_access_failed = True
@@ -540,7 +542,8 @@ def recalculate_main_image(sender, instance, **kwargs):
 
 
 signals.post_delete.connect(recalculate_main_image, sender=MultimediaRelation)
-post_rebuild_db.connect(init_gis)
+if settings.USE_GIS:
+    post_rebuild_db.connect(init_gis)
 
 
 def _collect_sub_objects(self, seen_objs, parent=None, nullable=False):

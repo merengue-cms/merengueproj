@@ -5,8 +5,6 @@ import re
 from django import forms
 from django.conf import settings
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper, AdminDateWidget
-from django.contrib.gis.admin.widgets import OpenLayersWidget
-from django.contrib.gis.geos import GEOSGeometry, GEOSException
 from django.forms.util import flatatt
 from django.forms.widgets import DateTimeInput
 from django.utils import datetime_safe
@@ -110,57 +108,6 @@ class RelatedFieldWidgetWrapperWithoutAdding(RelatedFieldWidgetWrapper):
         return self.widget.render(name, value, *args, **kwargs)
 
 
-class OpenLayersWidgetLatitudeLongitude(OpenLayersWidget):
-
-    def render(self, name, value, attrs):
-        html = super(OpenLayersWidgetLatitudeLongitude, self).render(name, value, attrs)
-        # If a string reaches here (via a validation error on another
-        # field) then just reconstruct the Geometry.
-        if isinstance(value, basestring):
-            try:
-                value = GEOSGeometry(value)
-            except (GEOSException, ValueError):
-                value = None
-
-        if value and value.geom_type.upper() != self.geom_type:
-            value = None
-
-        geom_type = self.params['geom_type']
-        if geom_type.name == 'Point':
-            value_latitude = (value and value.get_y()) or ''
-            value_longitude = (value and value.get_x()) or ''
-            latitude = self._emule_widget_django('latitude', 'latitude', name, value_latitude)
-            longitude = self._emule_widget_django('longitude', 'longitude', name, value_longitude)
-            view_on_map = "<input id='view_on_map_%s' class='view_on_map' type='button' value='%s'/>" % (name, _('View on map'))
-            return mark_safe("%s %s %s %s"% (html, latitude, longitude, view_on_map))
-        return html
-
-    def _emule_widget_django(self, label, sufix, name, value):
-        label = _(label)
-        _id = "%s_%s" %(name, sufix)
-        _str = """<div class='form-row %s'>
-            <div>
-                <label for='id_%s'>%s:</label>
-                <input id='id_%s' class='change_%s' type='text' name='%s' value='%s'/>
-            </div>
-        </div>"""%(name, _id, label, _id, sufix, _id, value)
-        return _str
-
-
-class OpenLayersInlineAwareWidget(OpenLayersWidget):
-
-    def render(self, name, value, attrs=None):
-        self.params.update({'widget_name': name})
-        return super(OpenLayersInlineAwareWidget, self).render(name, value, attrs)
-
-
-class OpenLayersInlineLatitudeLongitude(OpenLayersWidgetLatitudeLongitude):
-
-    def render(self, name, value, attrs=None):
-        self.params.update({'widget_name': name})
-        return super(OpenLayersInlineLatitudeLongitude, self).render(name, value, attrs)
-
-
 class AdminDateOfDateTimeWidget(AdminDateWidget):
 
     def render(self, name, value, attrs=None):
@@ -261,3 +208,55 @@ class RelatedBaseContentWidget(RelatedFieldWidgetWrapper):
         output += u'</div>'
         output += u'<br style="clear: left;" />'
         return mark_safe(u''.join(output))
+
+if settings.USE_GIS:
+    from django.contrib.gis.admin.widgets import OpenLayersWidget
+    from django.contrib.gis.geos import GEOSGeometry, GEOSException
+
+    class OpenLayersWidgetLatitudeLongitude(OpenLayersWidget):
+
+        def render(self, name, value, attrs):
+            html = super(OpenLayersWidgetLatitudeLongitude, self).render(name, value, attrs)
+            # If a string reaches here (via a validation error on another
+            # field) then just reconstruct the Geometry.
+            if isinstance(value, basestring):
+                try:
+                    value = GEOSGeometry(value)
+                except (GEOSException, ValueError):
+                    value = None
+
+            if value and value.geom_type.upper() != self.geom_type:
+                value = None
+
+            geom_type = self.params['geom_type']
+            if geom_type.name == 'Point':
+                value_latitude = (value and value.get_y()) or ''
+                value_longitude = (value and value.get_x()) or ''
+                latitude = self._emule_widget_django('latitude', 'latitude', name, value_latitude)
+                longitude = self._emule_widget_django('longitude', 'longitude', name, value_longitude)
+                view_on_map = "<input id='view_on_map_%s' class='view_on_map' type='button' value='%s'/>" % (name, _('View on map'))
+                return mark_safe("%s %s %s %s"% (html, latitude, longitude, view_on_map))
+            return html
+
+        def _emule_widget_django(self, label, sufix, name, value):
+            label = _(label)
+            _id = "%s_%s" %(name, sufix)
+            _str = """<div class='form-row %s'>
+                <div>
+                    <label for='id_%s'>%s:</label>
+                    <input id='id_%s' class='change_%s' type='text' name='%s' value='%s'/>
+                </div>
+            </div>"""%(name, _id, label, _id, sufix, _id, value)
+            return _str
+
+    class OpenLayersInlineAwareWidget(OpenLayersWidget):
+
+        def render(self, name, value, attrs=None):
+            self.params.update({'widget_name': name})
+            return super(OpenLayersInlineAwareWidget, self).render(name, value, attrs)
+
+    class OpenLayersInlineLatitudeLongitude(OpenLayersWidgetLatitudeLongitude):
+
+        def render(self, name, value, attrs=None):
+            self.params.update({'widget_name': name})
+            return super(OpenLayersInlineLatitudeLongitude, self).render(name, value, attrs)

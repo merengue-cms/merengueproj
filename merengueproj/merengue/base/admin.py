@@ -17,9 +17,6 @@ from django.contrib.admin.views.main import ChangeList, ERROR_FLAG
 from django.contrib.admin.options import IncorrectLookupParameters
 from django.contrib.admin.util import quote, unquote, flatten_fieldsets, _nest_help
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from django.contrib.gis import admin as geoadmin
-from django.contrib.gis.db import models as geomodels
-from django.contrib.gis.maps.google import GoogleMap
 from django.contrib.sites.admin import Site, SiteAdmin
 from django.forms.models import ModelForm, BaseInlineFormSet, \
                                 fields_for_model, save_instance, modelformset_factory
@@ -42,17 +39,12 @@ from transmeta import (canonical_fieldname, get_all_translatable_fields,
 from merengue.base.adminsite import site
 from merengue.base.forms import AdminBaseContentOwnersForm
 from merengue.base.models import BaseContent, ContactInfo
-from merengue.base.widgets import (CustomTinyMCE, OpenLayersWidgetLatitudeLongitude,
-                                   OpenLayersInlineLatitudeLongitude, ReadOnlyWidget,
+from merengue.base.widgets import (CustomTinyMCE, ReadOnlyWidget,
                                    RelatedBaseContentWidget)
-from merengue.places.models import Location
 
 # A flag to tell us if autodiscover is running.  autodiscover will set this to
 # True while running, and False when it finishes.
 LOADING = False
-
-
-GMAP = GoogleMap(key=settings.GOOGLE_MAPS_API_KEY)
 
 
 def register_app(app_name, admin_site=None):
@@ -122,8 +114,6 @@ def autodiscover(admin_site=None):
     if LOADING:
         return
     LOADING = True
-
-    from django.conf import settings
 
     if admin_site is None:
         admin_site = site
@@ -245,10 +235,6 @@ class ReverseAdminInline(admin.StackedInline):
         }
         defaults.update(kwargs)
         return self._inlineformset_factory(self.parent_model, self.model, **defaults)
-
-
-class OSMGeoAdminLatitudeLongitude(geoadmin.OSMGeoAdmin):
-    widget = OpenLayersWidgetLatitudeLongitude
 
 
 def set_field_read_only(field, field_name, obj):
@@ -1153,109 +1139,6 @@ class BaseContentRelatedModelAdmin(BaseAdmin, StatusControlProvider):
         return form
 
 
-class LocationModelAdminMixin(object):
-
-    title_first_fieldset = None
-
-    def set_fieldset(self):
-        """Returns a BaseInlineFormSet class for use in admin add/change views."""
-        render_message = ugettext('Click to Locate')
-        adding = "<a name 'ajax_geolocation'>(<a href='#ajax_geolocation' class='ajax_geolocation'>%s</a>) <input id='id_input_ajax' type='text' class='input_ajax'><img id='img_ajax_loader' src='%simg/ajax-loader-transparent.gif' class='hide ajax_geolocation' />" % (render_message, settings.MEDIA_URL)
-
-        title_fieldset = mark_safe("%s %s" % (ugettext(u'Location Maps'), adding))
-
-        self.fieldsets = (
-            (self.title_first_fieldset, {'fields': ('address', 'address_type', 'number', 'postal_code', 'address_more_info', 'cities')}),
-            (title_fieldset,
-                {'fields': ('main_location', 'main_altitude', 'gps_location', 'gps_altitude', 'borders', )}
-            ),
-        )
-
-    def get_form(self, request, obj=None):
-        form = super(LocationModelAdminMixin, self).get_form(request, obj)
-        self.set_fieldset()
-        return form
-
-    def get_formset(self, request, obj=None, **kwargs):
-        form_set = super(LocationModelAdminMixin, self).get_formset(request, obj)
-        self.set_fieldset()
-        return form_set
-
-    def formfield_for_dbfield(self, db_field, **kwargs):
-        if isinstance(db_field, geomodels.GeometryField):
-            request = kwargs.pop('request', None)
-            # Setting the widget with the newly defined widget.
-            kwargs['widget'] = self.get_map_widget(db_field)
-            return db_field.formfield(**kwargs)
-        else:
-            return super(LocationModelAdminMixin, self).formfield_for_dbfield(db_field, **kwargs)
-
-    def _media(self):
-        __media = super(LocationModelAdminMixin, self)._media()
-        __media.add_js(['js/osmgeoadmin.latitude.longitude.js'])
-        return __media
-    media = property(_media)
-
-
-class InlineLocationModelAdmin(LocationModelAdminMixin):
-
-    def __init__(self, parent_model, admin_site):
-        from merengue.places.admin import GoogleAdmin
-
-        super(InlineLocationModelAdmin, self).__init__(parent_model, admin_site)
-        self.geoModelAdmin = GoogleAdmin(parent_model, admin_site)
-        self.geoModelAdmin.widget = OpenLayersInlineLatitudeLongitude
-        self.geoModelAdmin.map_template = 'gis/admin/google_inline.html'
-
-    def _media(self, *args, **kwargs):
-        media_super = super(InlineLocationModelAdmin, self)._media(*args, **kwargs)
-        media_geo = self.geoModelAdmin._media(*args, **kwargs)
-        media_super.add_js(media_geo._js)
-        media_super.add_css(media_geo._css)
-        media_super.add_js(['js/osmgeoadmin.latitude.longitude.js'])
-        return media_super
-    media = property(_media)
-
-    def get_formset(self, request, obj=None, **kwargs):
-        """Returns a BaseInlineFormSet class for use in admin add/change views."""
-        self.set_fieldset()
-        return super(InlineLocationModelAdmin, self).get_formset(request, obj, **kwargs)
-
-    def get_map_widget(self, *args, **kwargs):
-        return self.geoModelAdmin.get_map_widget(*args, **kwargs)
-
-
-class BaseContentRelatedLocationModelAdmin(LocationModelAdminMixin, BaseContentRelatedModelAdmin, OSMGeoAdminLatitudeLongitude):
-    selected = 'location'
-    is_foreign_model = True
-    extra_js = [GMAP.api_url + GMAP.key]
-    map_width = 500
-    map_height = 300
-    default_zoom = 10
-    default_lat = 4500612.0
-    default_lon = -655523.0
-    map_template = 'gis/admin/google.html'
-    title_first_fieldset = _('Address')
-
-    def response_change(self, request, obj):
-        super(BaseContentRelatedLocationModelAdmin, self).response_change(request, obj)
-        return HttpResponseRedirect(self.admin_site.basecontent.get_admin_absolute_url())
-
-    def response_add(self, request, obj):
-        response = super(BaseContentRelatedLocationModelAdmin, self).response_add(request, obj)
-        if response.get('location', 'location') == '../':
-            post_url = self.admin_site.basecontent.get_admin_absolute_url()
-            return HttpResponseRedirect(post_url)
-        return response
-
-    def save_model(self, request, obj, form, change):
-        self.admin_site.basecontent.is_autolocated = False
-        self.admin_site.basecontent.save()
-        super(BaseContentRelatedLocationModelAdmin, self).save_model(request, obj, form, change)
-        self.admin_site.basecontent.location = obj
-        self.admin_site.basecontent.save()
-
-
 class BaseContentRelatedContactInfoAdmin(BaseContentRelatedModelAdmin):
     selected = 'contact'
     is_foreign_model = True
@@ -1418,10 +1301,6 @@ def register(site):
     site.register(Site, SiteAdmin)
 
 
-def setup_basecontent_admin(basecontent_admin_site):
-    basecontent_admin_site.register(Location, BaseContentRelatedLocationModelAdmin)
-
-
 # ----- begin monkey patching -----
 
 # we change ChangeList.get_ordering for allowing define a dynamic ordering
@@ -1436,3 +1315,121 @@ def new_get_ordering(self):
     return legacy_get_ordering(self)
 
 ChangeList.get_ordering = new_get_ordering
+
+
+if settings.USE_GIS:
+    from django.contrib.gis import admin as geoadmin
+    from django.contrib.gis.db import models as geomodels
+    from django.contrib.gis.maps.google import GoogleMap
+    from merengue.places.models import Location
+    from merengue.base.widgets import (OpenLayersWidgetLatitudeLongitude,
+                                   OpenLayersInlineLatitudeLongitude)
+
+
+    GMAP = GoogleMap(key=settings.GOOGLE_MAPS_API_KEY)
+
+    class LocationModelAdminMixin(object):
+
+        title_first_fieldset = None
+
+        def set_fieldset(self):
+            """Returns a BaseInlineFormSet class for use in admin add/change views."""
+            render_message = ugettext('Click to Locate')
+            adding = "<a name 'ajax_geolocation'>(<a href='#ajax_geolocation' class='ajax_geolocation'>%s</a>) <input id='id_input_ajax' type='text' class='input_ajax'><img id='img_ajax_loader' src='%simg/ajax-loader-transparent.gif' class='hide ajax_geolocation' />" % (render_message, settings.MEDIA_URL)
+
+            title_fieldset = mark_safe("%s %s" % (ugettext(u'Location Maps'), adding))
+
+            self.fieldsets = (
+                (self.title_first_fieldset, {'fields': ('address', 'address_type', 'number', 'postal_code', 'address_more_info', 'cities')}),
+                (title_fieldset,
+                    {'fields': ('main_location', 'main_altitude', 'gps_location', 'gps_altitude', 'borders', )}
+                ),
+            )
+
+        def get_form(self, request, obj=None):
+            form = super(LocationModelAdminMixin, self).get_form(request, obj)
+            self.set_fieldset()
+            return form
+
+        def get_formset(self, request, obj=None, **kwargs):
+            form_set = super(LocationModelAdminMixin, self).get_formset(request, obj)
+            self.set_fieldset()
+            return form_set
+
+        def formfield_for_dbfield(self, db_field, **kwargs):
+            if isinstance(db_field, geomodels.GeometryField):
+                request = kwargs.pop('request', None)
+                # Setting the widget with the newly defined widget.
+                kwargs['widget'] = self.get_map_widget(db_field)
+                return db_field.formfield(**kwargs)
+            else:
+                return super(LocationModelAdminMixin, self).formfield_for_dbfield(db_field, **kwargs)
+
+        def _media(self):
+            __media = super(LocationModelAdminMixin, self)._media()
+            __media.add_js(['js/osmgeoadmin.latitude.longitude.js'])
+            return __media
+        media = property(_media)
+
+    class OSMGeoAdminLatitudeLongitude(geoadmin.OSMGeoAdmin):
+        widget = OpenLayersWidgetLatitudeLongitude
+
+    class InlineLocationModelAdmin(LocationModelAdminMixin):
+
+        def __init__(self, parent_model, admin_site):
+            from merengue.places.admin import GoogleAdmin
+
+            super(InlineLocationModelAdmin, self).__init__(parent_model, admin_site)
+            self.geoModelAdmin = GoogleAdmin(parent_model, admin_site)
+            self.geoModelAdmin.widget = OpenLayersInlineLatitudeLongitude
+            self.geoModelAdmin.map_template = 'gis/admin/google_inline.html'
+
+        def _media(self, *args, **kwargs):
+            media_super = super(InlineLocationModelAdmin, self)._media(*args, **kwargs)
+            media_geo = self.geoModelAdmin._media(*args, **kwargs)
+            media_super.add_js(media_geo._js)
+            media_super.add_css(media_geo._css)
+            media_super.add_js(['js/osmgeoadmin.latitude.longitude.js'])
+            return media_super
+        media = property(_media)
+
+        def get_formset(self, request, obj=None, **kwargs):
+            """Returns a BaseInlineFormSet class for use in admin add/change views."""
+            self.set_fieldset()
+            return super(InlineLocationModelAdmin, self).get_formset(request, obj, **kwargs)
+
+        def get_map_widget(self, *args, **kwargs):
+            return self.geoModelAdmin.get_map_widget(*args, **kwargs)
+
+    class BaseContentRelatedLocationModelAdmin(LocationModelAdminMixin, BaseContentRelatedModelAdmin, OSMGeoAdminLatitudeLongitude):
+        selected = 'location'
+        is_foreign_model = True
+        extra_js = [GMAP.api_url + GMAP.key]
+        map_width = 500
+        map_height = 300
+        default_zoom = 10
+        default_lat = 4500612.0
+        default_lon = -655523.0
+        map_template = 'gis/admin/google.html'
+        title_first_fieldset = _('Address')
+
+        def response_change(self, request, obj):
+            super(BaseContentRelatedLocationModelAdmin, self).response_change(request, obj)
+            return HttpResponseRedirect(self.admin_site.basecontent.get_admin_absolute_url())
+
+        def response_add(self, request, obj):
+            response = super(BaseContentRelatedLocationModelAdmin, self).response_add(request, obj)
+            if response.get('location', 'location') == '../':
+                post_url = self.admin_site.basecontent.get_admin_absolute_url()
+                return HttpResponseRedirect(post_url)
+            return response
+
+        def save_model(self, request, obj, form, change):
+            self.admin_site.basecontent.is_autolocated = False
+            self.admin_site.basecontent.save()
+            super(BaseContentRelatedLocationModelAdmin, self).save_model(request, obj, form, change)
+            self.admin_site.basecontent.location = obj
+            self.admin_site.basecontent.save()
+
+    def setup_basecontent_admin(basecontent_admin_site):
+        basecontent_admin_site.register(Location, BaseContentRelatedLocationModelAdmin)
