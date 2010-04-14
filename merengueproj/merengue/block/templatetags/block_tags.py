@@ -71,6 +71,6 @@ def do_render_blocks(parser, token):
 def render_blocks_media(context):
     if 'user' in context and context['user'].is_staff:
         return {'is_staff': True,
-                'MEDIA_URL': settings.MEDIA_URL + 'block/'}
+                'MEDIA_URL': settings.MEDIA_URL}
     else:
         return {'is_staff': False}
