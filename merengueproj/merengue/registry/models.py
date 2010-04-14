@@ -2,6 +2,8 @@ from django.db import models
 from django.utils.importlib import import_module
 from django.utils.translation import ugettext_lazy as _
 
+from south.modelsinspector import add_introspection_rules
+
 from merengue.registry.dbfields import ConfigField
 from merengue.registry.managers import RegisteredItemManager
 
@@ -50,3 +52,16 @@ class RegisteredItem(models.Model):
             self.active = False
             if commit:
                 self.save()
+
+
+# ----- adding south rules to help introspection -----
+
+rules = [
+  (
+    (ConfigField, ),
+    [],
+    {},
+  ),
+]
+
+add_introspection_rules(rules, ["^merengue\.registry"])

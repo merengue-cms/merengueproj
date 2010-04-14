@@ -20,6 +20,7 @@ from django.contrib.auth.models import User
 
 from cmsutils.db.fields import AutoSlugField
 from cmsutils.signals import post_rebuild_db
+from south.introspection_plugins import geodjango
 from south.signals import pre_migrate, post_migrate
 from stdimage import StdImageField
 from transmeta import TransMeta
