@@ -18,33 +18,33 @@ msgstr ""
 
 #: forms.py:11
 msgid "The name"
-msgstr ""
+msgstr "El nombre"
 
 #: forms.py:11
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: forms.py:11
 msgid "which name"
-msgstr ""
+msgstr "con nombre"
 
 #: forms.py:12
 msgid "The description"
-msgstr ""
+msgstr "La descripción"
 
 #: forms.py:12
 msgid "Description"
-msgstr ""
+msgstr "Descripción"
 
 #: forms.py:12
 msgid "which description"
-msgstr ""
+msgstr "con descripción"
 
 #: views.py:21
 #, python-format
 msgid "%s contents found"
-msgstr ""
+msgstr "Encontrados %s contenidos"
 
 #: views.py:23
 msgid "Contents searcher"
-msgstr ""
+msgstr "Buscador de contenidos"

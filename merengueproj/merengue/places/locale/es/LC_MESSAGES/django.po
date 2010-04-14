@@ -18,36 +18,36 @@ msgstr ""
 
 #: forms.py:12
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: models.py:10
 msgid "main location"
-msgstr ""
+msgstr "Localización principal"
 
 #: models.py:12
 msgid "borders"
-msgstr ""
+msgstr "bordes"
 
 #: models.py:39
 msgid "address"
-msgstr ""
+msgstr "dirección"
 
 #: models.py:41
 msgid "postal_code"
-msgstr ""
+msgstr "código postal"
 
 #: models.py:47
 msgid "location"
-msgstr ""
+msgstr "localización"
 
 #: models.py:48
 msgid "locations"
-msgstr ""
+msgstr "localizaciones"
 
 #: models.py:56
 msgid "Without localization"
-msgstr ""
+msgstr "Sin localización"
 
 #: models.py:63
 msgid "Address"
-msgstr ""
+msgstr "Dirección"

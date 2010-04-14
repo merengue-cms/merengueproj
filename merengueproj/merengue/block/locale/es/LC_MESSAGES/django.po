@@ -18,32 +18,32 @@ msgstr ""
 
 #: models.py:8
 msgid "All"
-msgstr ""
+msgstr "Todo"
 
 #: models.py:9
 msgid "Left sidebar"
-msgstr ""
+msgstr "Barra lateral izquierda"
 
 #: models.py:10
 msgid "Right sidebar"
-msgstr ""
+msgstr "Barra lateral derecha"
 
 #: models.py:11
 msgid "Before content body"
-msgstr ""
+msgstr "Antes del contenido del cuerpo"
 
 #: models.py:12
 msgid "Home page"
-msgstr ""
+msgstr "Portada"
 
 #: models.py:13
 msgid "After content body"
-msgstr ""
+msgstr "Después del contenido del cuerpo"
 
 #: models.py:14
 msgid "Header"
-msgstr ""
+msgstr "Cabecera"
 
 #: models.py:15
 msgid "Footer"
-msgstr ""
+msgstr "Pie de página"

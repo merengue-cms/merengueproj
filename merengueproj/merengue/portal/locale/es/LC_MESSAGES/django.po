@@ -18,77 +18,77 @@ msgstr ""
 
 #: models.py:9
 msgid "Primary link"
-msgstr ""
+msgstr "Enlace primario"
 
 #: models.py:10
 msgid "Secondary link"
-msgstr ""
+msgstr "Enlace secundario"
 
 #: models.py:18
 msgid "name"
-msgstr ""
+msgstr "nombre"
 
 #: models.py:19
 msgid "Content"
-msgstr ""
+msgstr "Contenido"
 
 #: models.py:21 models.py:22
 msgid "url"
-msgstr ""
+msgstr "url"
 
 #: models.py:24
 msgid "order"
-msgstr ""
+msgstr "orden"
 
 #: models.py:25
 msgid "category"
-msgstr ""
+msgstr "categoría"
 
 #: models.py:28
 msgid "portal link"
-msgstr ""
+msgstr "enlace al portal"
 
 #: models.py:29
 msgid "portal links"
-msgstr ""
+msgstr "enlaces al portal"
 
 #: views.py:38
 #, python-format
 msgid "Welcome %s"
-msgstr ""
+msgstr "Bienvenido %s"
 
 #: views.py:45
 msgid "User exists, but it have not active account"
-msgstr ""
+msgstr "El usuario existe, pero no tiene una cuenta activa"
 
 #: views.py:47
 msgid "Credentials are incorrect"
-msgstr ""
+msgstr "Las credenciales son incorrectas"
 
 #: views.py:143
 msgid "Thanks for visit"
-msgstr ""
+msgstr "Gracias por la visita"
 
 #: views.py:179
 msgid "Cache from this page was invalidated"
-msgstr ""
+msgstr "La caché de esta página ha sido invalidada"
 
 #: templates/portal/list_pending.html:5 templates/portal/list_pending.html:8
 msgid "Pending contents"
-msgstr ""
+msgstr "Esperando contenidos"
 
 #: templates/portal/login_form.html:32 templates/portal/login_form.html:45
 msgid "Case sensitive, make sure caps lock is not enabled."
-msgstr ""
+msgstr "Distingue mayúsculas y minúsculas, asegúrese de que el bloqueo de mayúsculas no está activado."
 
 #: templates/portal/login_form.html:53
 msgid "Password"
-msgstr ""
+msgstr "Contraseña"
 
 #: templates/portal/login_form.html:56
 msgid "Login"
-msgstr ""
+msgstr "Login"
 
 #: templates/portal/searchform.html:7
 msgid "Search"
-msgstr ""
+msgstr "Buscar"

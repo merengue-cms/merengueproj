@@ -4,43 +4,33 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
-msgid ""
-msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-12 11:58+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 
 #: admin.py:91
 msgid "CSS Colors"
-msgstr ""
+msgstr "Colores CSS"
 
 #: admin.py:92
 msgid "Header images"
-msgstr ""
+msgstr "Imágenes de cabecera"
 
 #: admin.py:93
 msgid "Searcher images"
-msgstr ""
+msgstr "Buscador de imágenes"
 
 #: admin.py:98 models.py:296
 msgid "custom style"
-msgstr ""
+msgstr "estilo personalizado"
 
 #: admin.py:116 models.py:484
 msgid "documents"
-msgstr ""
+msgstr "documentos"
 
 #: admin.py:172
 msgid ""
 "Sorry you can not select an Absolute Link and a Content Link simultaneously "
 "for this menu. Fulfill just one."
-msgstr ""
+msgstr "Lo sentimos, no puede seleccionar un enlace absoluto y un enlace de contenido simultáneamente "
+"para este menú. Seleccione solo uno."
 
 #: admin.py:181
 msgid "Menu Absolute Link"
@@ -68,87 +58,87 @@ msgstr ""
 
 #: admin.py:247
 msgid "Move this menu"
-msgstr ""
+msgstr "Mover este menú"
 
 #: admin.py:248
 msgid "Cancel move"
-msgstr ""
+msgstr "Cancelar"
 
 #: admin.py:250
 msgid "Before"
-msgstr ""
+msgstr "Antes"
 
 #: admin.py:251
 msgid "After"
-msgstr ""
+msgstr "Después"
 
 #: admin.py:252
 msgid "Child"
-msgstr ""
+msgstr "Hijo"
 
 #: admin.py:329 models.py:226
 msgid "main menu"
-msgstr ""
+msgstr "menú principal"
 
 #: admin.py:335 models.py:235
 msgid "secondary menu"
-msgstr ""
+msgstr "menú secundario"
 
 #: admin.py:398 models.py:400
 msgid "photos"
-msgstr ""
+msgstr "fotos"
 
 #: admin.py:415
 msgid "Are you sure you want to deselect these photos from carousel?"
-msgstr ""
+msgstr "¿Está seguro de que desea anular la selección de estas fotos del expositor?"
 
 #: admin.py:418
 msgid "Deselect photo"
-msgstr ""
+msgstr "Anular selección de foto"
 
 #: admin.py:424
 msgid "choose photos"
-msgstr ""
+msgstr "elija las fotos"
 
 #: admin.py:439
 msgid "Are you sure you want to select these photos?"
-msgstr ""
+msgstr "¿Está seguro de que desea seleccionar estas fotos?"
 
 #: admin.py:442
 msgid "Select photo"
-msgstr ""
+msgstr "Seleccione foto"
 
 #: admin.py:452 models.py:577
 msgid "document sections"
-msgstr ""
+msgstr "secciones de documentos"
 
 #: models.py:68 models.py:388
 msgid "name"
-msgstr ""
+msgstr "nombre"
 
 #: models.py:73 models.py:393
 msgid "slug"
-msgstr ""
+msgstr "pegar"
 
 #: models.py:80
 msgid "Parent"
-msgstr ""
+msgstr "Padre"
 
 #: models.py:87 models.py:180
 msgid "url"
-msgstr ""
+msgstr "url"
 
 #: models.py:94 models.py:157
 msgid "menu"
-msgstr ""
+msgstr "menú"
 
 #: models.py:95
 msgid "menus"
-msgstr ""
+msgstr "menús"
 
 #: models.py:192
 msgid "Content"
-msgstr ""
+msgstr "Contenido"
 
 #: models.py:204
 msgid "Viewlet"
@@ -156,7 +146,7 @@ msgstr ""
 
 #: models.py:219
 msgid "order"
-msgstr ""
+msgstr "orden"
 
 #: models.py:244
 msgid "interest menu"
@@ -164,11 +154,11 @@ msgstr ""
 
 #: models.py:252
 msgid "custom main menu template"
-msgstr ""
+msgstr "plantilla personalizada de menú principal"
 
 #: models.py:260
 msgid "custom secondary menu template"
-msgstr ""
+msgstr "plantilla personalizada de menú secundario"
 
 #: models.py:268
 msgid "custom interest menu template"
@@ -176,23 +166,23 @@ msgstr ""
 
 #: models.py:279
 msgid "main content"
-msgstr ""
+msgstr "contenido principal"
 
 #: models.py:286
 msgid "related contents"
-msgstr ""
+msgstr "contenidos relacionados"
 
 #: models.py:406
 msgid "class name"
-msgstr ""
+msgstr "nombre de la clase"
 
 #: models.py:433
 msgid "photo"
-msgstr ""
+msgstr "foto"
 
 #: models.py:441
 msgid "float image"
-msgstr ""
+msgstr "imagen flotante"
 
 #: models.py:442
 msgid "make image float in view"
@@ -200,23 +190,23 @@ msgstr ""
 
 #: models.py:448
 msgid "photo description"
-msgstr ""
+msgstr "descripción de la foto"
 
 #: models.py:456
 msgid "carousel"
-msgstr ""
+msgstr "expositor"
 
 #: models.py:463
 msgid "search form"
-msgstr ""
+msgstr "formulario de búsquedea"
 
 #: models.py:470
 msgid "searcher options"
-msgstr ""
+msgstr "opciones del buscador"
 
 #: models.py:475
 msgid "permanent"
-msgstr ""
+msgstr "permanente"
 
 #: models.py:476
 msgid "make this document not erasable and its slug ummutable"
@@ -224,43 +214,43 @@ msgstr ""
 
 #: models.py:483
 msgid "document"
-msgstr ""
+msgstr "documento"
 
 #: models.py:562
 msgid "Parent document"
-msgstr ""
+msgstr "Documento padre"
 
 #: models.py:571
 msgid "body"
-msgstr ""
+msgstr "cuerpo"
 
 #: models.py:576
 msgid "document section"
-msgstr ""
+msgstr "sección del documento"
 
 #: models.py:596
 msgid "Can not move to non existing position"
-msgstr ""
+msgstr "No se puede mover a uan posición que no existe"
 
 #: models.py:621
 msgid "Trying to save DocumentSection into an existing position"
-msgstr ""
+msgstr "Intentando salvar DocumentSection en una posición existente"
 
 #: models.py:642
 msgid "color 1"
-msgstr ""
+msgstr "color 1"
 
 #: models.py:648
 msgid "color 2"
-msgstr ""
+msgstr "color 2"
 
 #: models.py:654
 msgid "color 3"
-msgstr ""
+msgstr "color 3"
 
 #: models.py:660
 msgid "menu link color"
-msgstr ""
+msgstr "color del link del menú"
 
 #: models.py:670
 msgid "An arrow pointing to the left for multiple select widgets. (11x11)"
@@ -268,7 +258,7 @@ msgstr ""
 
 #: models.py:678
 msgid "An arrow pointing to the right for multiple select widgets. (11x11)"
-msgstr ""
+msgstr "Una flecha que apunta hacia la izquierda para seleccionar múltiples widgets. (11x11)"
 
 #: models.py:686
 msgid ""
@@ -288,38 +278,38 @@ msgstr ""
 msgid ""
 "A vertical gradient image for use in the search results item backgrounds. "
 "(1x126)"
-msgstr ""
+msgstr "Una imagen de gradiente vertical para usar en los fondos de los resultados de la búsqueda. "
 
 #: models.py:710
 msgid "Background image for headers in the menu zone. (175x34)"
-msgstr ""
+msgstr "Imagen de fondo para cabeceras en la zona del menú. (175x34)"
 
 #: models.py:718
 msgid "Background image for headers in the content zone. (775x34)"
-msgstr ""
+msgstr "Imagen de fondo para cabeceras en la zona de contenido. (775x34)"
 
 #: widgets.py:23
 msgid "Please wait..."
-msgstr ""
+msgstr "Espere, por favor..."
 
 #: templates/admin/section/menu/change_list.html:11
 #, python-format
 msgid "Add %(name)s"
-msgstr ""
+msgstr "Añadir %(name)s"
 
 #: templates/admin/section/menu/change_list.html:18
 msgid "Saving"
-msgstr ""
+msgstr "Guardando"
 
 #: templates/section/document_section_add.html:4
 #: templates/section/document_section_add.html:8
 msgid "Insert document section here"
-msgstr ""
+msgstr "Insertar aquí sección del documento"
 
 #: templatetags/section_tags.py:76
 msgid "Agenda"
-msgstr ""
+msgstr "Agenda"
 
 #: templatetags/section_tags.py:99
 msgid "Searcher"
-msgstr ""
+msgstr "Buscador"

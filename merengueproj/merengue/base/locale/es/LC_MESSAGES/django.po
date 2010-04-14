@@ -18,210 +18,210 @@ msgstr ""
 
 #: admin.py:142 admin.py:147
 msgid "Username"
-msgstr ""
+msgstr "Usuario"
 
 #: admin.py:143 admin.py:148
 msgid "This value must contain only letters, @, numbers and underscores."
-msgstr ""
+msgstr "Este valor debe contener sólo letras, @, números y guiones bajos."
 
 #: admin.py:307 admin.py:599
 #, python-format
 msgid "%(name)s object with primary key %(key)r does not exist."
-msgstr ""
+msgstr "El objeto %(name)s con clave primaria %(key)r no existe"
 
 #: admin.py:344
 msgid "This field is required."
-msgstr ""
+msgstr "Este campo es obligatorio."
 
 #: admin.py:516
 #, python-format
 msgid "One or more %(fieldname)s in %(name)s: %(obj)s"
-msgstr ""
+msgstr "Uno o más %(fieldname)s en %(name)s: %(obj)s"
 
 #: admin.py:521
 #, python-format
 msgid "One or more %(fieldname)s in %(name)s:"
-msgstr ""
+msgstr "Uno o más %(fieldname)s en %(name)s:"
 
 #: admin.py:564 admin.py:621 admin.py:662
 msgid "Are you sure?"
-msgstr ""
+msgstr "¿Está seguro?"
 
 #: admin.py:614
 #, python-format
 msgid "The %(name)s \"%(obj)s\" was deleted successfully."
-msgstr ""
+msgstr "Se eliminó con éxito el %(name)s \"%(obj)s\"."
 
 #: admin.py:709
 msgid "Are you sure you want to set this items as draft?"
-msgstr ""
+msgstr "¿Está seguro de que quiere marcar este objeto como borrador?"
 
 #: admin.py:711
 msgid "Set as draft"
-msgstr ""
+msgstr "Marcado como borrador."
 
 #: admin.py:715
 msgid "Are you sure you want to set this items as pending?"
-msgstr ""
+msgstr "¿Está seguro de que quiere marcar este objeto como pendiente?"
 
 #: admin.py:717
 msgid "Set as pending"
-msgstr ""
+msgstr "Marcado como pendiente"
 
 #: admin.py:721
 msgid "Are you sure you want to set this items as published?"
-msgstr ""
+msgstr "¿Está seguro de que quiere marcar este objeto como publicado?"
 
 #: admin.py:723
 msgid "Set as published"
-msgstr ""
+msgstr "Marcado como publicado"
 
 #: admin.py:732
 #, python-format
 msgid "Changed to %s"
-msgstr ""
+msgstr "Cambiado a %s"
 
 #: admin.py:736
 #, python-format
 msgid "Successfully set %(number)d %(model_name)s as %(state)s."
-msgstr ""
+msgstr "%(number)d %(model_name)s marcado con éxito como %(state)s."
 
 #: admin.py:744
 #, python-format
 msgid "Change state of selected %(verbose_name_plural)s"
-msgstr ""
+msgstr "Cambiar estado de los %(verbose_name_plural)s seleccionados"
 
 #: admin.py:788
 msgid "Assigned owners"
-msgstr ""
+msgstr "Propietarios asignados"
 
 #: admin.py:807
 msgid "Are you sure you want to assign these owners to these contents?"
-msgstr ""
+msgstr "¿Está seguro de que quiere asignar estos propietarios a estos contenidos?"
 
 #: admin.py:813
 msgid "Assign owners"
-msgstr ""
+msgstr "Propietarios asignados"
 
 #: admin.py:923
 msgid "Database error"
-msgstr ""
+msgstr "Error en la base de datos"
 
 #: admin.py:1158
 msgid "Click to Locate"
-msgstr ""
+msgstr "Haga click para localizar"
 
 #: admin.py:1161
 msgid "Location Maps"
-msgstr ""
+msgstr "Mapas de localización"
 
 #: admin.py:1234
 msgid "Address"
-msgstr ""
+msgstr "Dirección"
 
 #: adminsite.py:151
 msgid "Site administration"
-msgstr ""
+msgstr "Administración del sitio"
 
 #: adminsite.py:162
 msgid "Control Panel"
-msgstr ""
+msgstr "Panel de control"
 
 #: adminsite.py:301 templatetags/related_admin_tags.py:48
 msgid "Plugin administration"
-msgstr ""
+msgstr "Administración de plugins"
 
 #: forms.py:214 models.py:297
 msgid "owners"
-msgstr ""
+msgstr "propietarios"
 
 #: forms.py:348 forms.py:370
 msgid "Base contents"
-msgstr ""
+msgstr "Contenidos base"
 
 #: forms.py:354 forms.py:355 forms.py:373 forms.py:374
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: forms.py:356 forms.py:375
 msgid "which name"
-msgstr ""
+msgstr "con nombre"
 
 #: forms.py:390
 msgid "Base Content Quick Search Form"
-msgstr ""
+msgstr "Formulario de búsqueda rápida de contenido base"
 
 #: forms.py:394
 msgid "Base Content Advanced Search Form"
-msgstr ""
+msgstr "Formulario de búsqueda avanzada de contenido base"
 
 #: models.py:34
 msgid "Lowest"
-msgstr ""
+msgstr "Más bajo"
 
 #: models.py:35
 msgid "Very Low"
-msgstr ""
+msgstr "Muy bajo"
 
 #: models.py:36
 msgid "Low"
-msgstr ""
+msgstr "Bajo"
 
 #: models.py:37
 msgid "Medium"
-msgstr ""
+msgstr "Medio"
 
 #: models.py:38
 msgid "High"
-msgstr ""
+msgstr "Alto"
 
 #: models.py:39
 msgid "Very high"
-msgstr ""
+msgstr "Muy alto"
 
 #: models.py:40
 msgid "Super high"
-msgstr ""
+msgstr "Super alto"
 
 #: models.py:41
 msgid "Highest"
-msgstr ""
+msgstr "Más alto"
 
 #: models.py:46
 msgid "disabled"
-msgstr ""
+msgstr "No permitido"
 
 #: models.py:47
 msgid "allowed"
-msgstr ""
+msgstr "Permitido"
 
 #: models.py:52
 msgid "contact email"
-msgstr ""
+msgstr "email de contacto"
 
 #: models.py:54
 msgid "contact email2"
-msgstr ""
+msgstr "email2 de contacto"
 
 #: models.py:56
 msgid "url"
-msgstr ""
+msgstr "url"
 
 #: models.py:58
 msgid "phone"
-msgstr ""
+msgstr "teléfono"
 
 #: models.py:60
 msgid "phone2"
-msgstr ""
+msgstr "teléfono2"
 
 #: models.py:62
 msgid "fax"
-msgstr ""
+msgstr "fax"
 
 #: models.py:66 models.py:246
 msgid "contact info"
-msgstr ""
+msgstr "información de contacto"
 
 #: models.py:67
 msgid "contacts info"
@@ -229,87 +229,87 @@ msgstr ""
 
 #: models.py:70
 msgid "Without contact email"
-msgstr ""
+msgstr "Sin email de contacto"
 
 #: models.py:75 models.py:96
 msgid "name"
-msgstr ""
+msgstr "nombre"
 
 #: models.py:76 models.py:97
 msgid "slug"
-msgstr ""
+msgstr "pegar"
 
 #: models.py:80
 msgid "base category"
-msgstr ""
+msgstr "Categoría base"
 
 #: models.py:81
 msgid "base categories"
-msgstr ""
+msgstr "Categorías base"
 
 #: models.py:98 models.py:100
 msgid "description"
-msgstr ""
+msgstr "descripción"
 
 #: models.py:103
 msgid "Publication status"
-msgstr ""
+msgstr "Estado de la publicación"
 
 #: models.py:104
 msgid "Enter the current status"
-msgstr ""
+msgstr "Introduzca el nuevo estado"
 
 #: models.py:106
 msgid "main image"
-msgstr ""
+msgstr "imagen principal"
 
 #: models.py:118
 msgid "Without name"
-msgstr ""
+msgstr "Sin nombre"
 
 #: models.py:149
 msgid "map icon"
-msgstr ""
+msgstr "icono del mapa"
 
 #: models.py:151
 msgid "is autolocated"
-msgstr ""
+msgstr "es autolocalizado"
 
 #: models.py:153
 msgid "location"
-msgstr ""
+msgstr "localización"
 
 #: models.py:190
 msgid "Without location"
-msgstr ""
+msgstr "Sin localización"
 
 #: models.py:212
 msgid "Thumbnail"
-msgstr ""
+msgstr "Imagen en miniatura"
 
 #: models.py:249
 msgid "related items"
-msgstr ""
+msgstr "artículos relacionados"
 
 #: models.py:251
 msgid "creation date"
-msgstr ""
+msgstr "fecha de creación"
 
 #: models.py:254 models.py:258
 msgid "modification date"
-msgstr ""
+msgstr "fecha de modificación"
 
 #: models.py:266
 msgid "Tags"
-msgstr ""
+msgstr "Etiquetas"
 
 #: models.py:269
 msgid "meta description"
-msgstr ""
+msgstr "metadescripción"
 
 #: models.py:271
 msgid "comments"
-msgstr ""
+msgstr "comentarios"
 
 #: models.py:272
 msgid "Is that content commentable"
@@ -321,23 +321,23 @@ msgstr ""
 
 #: models.py:286
 msgid "class name"
-msgstr ""
+msgstr "nombre de la clase"
 
 #: models.py:291
 msgid "rank value"
-msgstr ""
+msgstr "valor del rango"
 
 #: models.py:304
 msgid "base content"
-msgstr ""
+msgstr "contenido base"
 
 #: models.py:305
 msgid "base contents"
-msgstr ""
+msgstr "contenidos base"
 
 #: models.py:431
 msgid "content"
-msgstr ""
+msgstr "contenido"
 
 #: models.py:435
 msgid "is featured"
@@ -345,100 +345,101 @@ msgstr ""
 
 #: models.py:438
 msgid "Order"
-msgstr ""
+msgstr "Orden"
 
 #: models.py:442
 msgid "multimedia relation"
-msgstr ""
+msgstr "relación multimedia"
 
 #: models.py:443
 msgid "multimedia relations"
-msgstr ""
+msgstr "relaciones multimedia"
 
 #: models.py:469
 msgid "Human Order"
-msgstr ""
+msgstr "Orden humano"
 
 #: views.py:17
 #, python-format
 msgid "%(result_count)d %(msg_results)s found"
-msgstr ""
+msgstr "%(result_count)d %(msg_results)s encontrado"
 
 #: views.py:18
 msgid "results"
-msgstr ""
+msgstr "resultados"
 
 #: widgets.py:134
 msgid "View on map"
-msgstr ""
+msgstr "Ver en el mapa"
 
 #: widgets.py:223
 msgid "Date:"
-msgstr ""
+msgstr "Fecha"
 
 #: widgets.py:223
 msgid "Time:"
-msgstr ""
+msgstr "Hora"
 
 #: widgets.py:260
 msgid "Select content"
-msgstr ""
+msgstr "Seleccionar contenido"
 
 #: templates/404.html:4 templates/404.html.py:12
 msgid "Page not found"
-msgstr ""
+msgstr "Página no encuntrada"
 
 #: templates/404.html:17
 msgid ""
 "404 Error - The Page you are looking for is no longer available at this URL."
-msgstr ""
+msgstr "Error 404 - La página que estaba buscando no está disponible en esta URL"
 
 #: templates/404.html:20
 msgid "Probably you found a bad link or mistyped the URL. We recommend you to"
-msgstr ""
+msgstr "Probablemente haya encontrado un vínculo incorrecto o haya escrito mal la dirección. Le recomendamos"
 
 #: templates/404.html:21 templates/500.html:130
 msgid "return to <a href=\"/\">home</a>"
-msgstr ""
+msgstr "regresar a <a href=\"/\">home</a>"
 
 #: templates/500.html:16 templates/500.html.py:121
 msgid "Server Error"
-msgstr ""
+msgstr "Error del servidor"
 
 #: templates/500.html:126
 msgid ""
 "500 Error - The server encountered an internal error or misconfiguration and "
 "was unable to complete your request."
-msgstr ""
+msgstr "Error 500 - El servidor ha encontrado un error interno o no está configurado y "
+"no ha sido posible completar su petición"
 
 #: templates/500.html:129
 msgid "We recommend you to"
-msgstr ""
+msgstr "Le recomendamos"
 
 #: templates/base/content_admin_action.html:4
 msgid "Admin this content"
-msgstr ""
+msgstr "Administrar este comentario"
 
 #: templates/base/google_map.html:12
 msgid "See route"
-msgstr ""
+msgstr "Ver ruta"
 
 #: templates/base/inc.footer.html:7
 msgid "Merengue powered"
-msgstr ""
+msgstr "Merengue powered"
 
 #: templates/base/inc.languagetools.html:6
 #: templates/base/inc.languagetools.html:7
 msgid "Change language"
-msgstr ""
+msgstr "Cambiar lenguaje"
 
 #: templatetags/content_filters.py:13
 msgid "yes,no,maybe"
-msgstr ""
+msgstr "si,no,quizás"
 
 #: templatetags/map_tags.py:315
 msgid "What is there nearby?"
-msgstr ""
+msgstr "¿Qué hay cerca?"
 
 #: templatetags/related_admin_tags.py:44
 msgid "Home"
@@ -450,8 +451,8 @@ msgstr ""
 
 #: templatetags/related_admin_tags.py:62 templatetags/related_admin_tags.py:79
 msgid "Add"
-msgstr ""
+msgstr "Añadir"
 
 #: templatetags/related_admin_tags.py:71
 msgid "site"
-msgstr ""
+msgstr "sitio"

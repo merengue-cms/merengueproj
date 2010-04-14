@@ -18,12 +18,12 @@ msgstr ""
 
 #: models.py:13
 msgid "name"
-msgstr ""
+msgstr "nombre"
 
 #: models.py:14
 msgid "description"
-msgstr ""
+msgstr "descripción"
 
 #: models.py:17
 msgid "directory name"
-msgstr ""
+msgstr "directorio"

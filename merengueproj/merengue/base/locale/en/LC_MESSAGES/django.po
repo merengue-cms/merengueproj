@@ -18,20 +18,20 @@ msgstr ""
 
 #: admin.py:142 admin.py:147
 msgid "Username"
-msgstr ""
+msgstr "Nombre de usuario"
 
 #: admin.py:143 admin.py:148
 msgid "This value must contain only letters, @, numbers and underscores."
-msgstr ""
+msgstr "Este valor debe contener sólo letras, @, números y guiones bajos."
 
 #: admin.py:307 admin.py:599
 #, python-format
 msgid "%(name)s object with primary key %(key)r does not exist."
-msgstr ""
+msgstr "El objeto %(name)s con clave primaria %(key)r no existe"
 
 #: admin.py:344
 msgid "This field is required."
-msgstr ""
+msgstr "Este campo es obligatorio."
 
 #: admin.py:516
 #, python-format

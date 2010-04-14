@@ -18,20 +18,20 @@ msgstr ""
 
 #: admin.py:25
 msgid "Not all dependencies are met"
-msgstr "dsadsa"
+msgstr "No se cumplen todas las dependencias"
 
 #: models.py:15
 msgid "name"
-msgstr ""
+msgstr "nombre"
 
 #: models.py:16
 msgid "description"
-msgstr ""
+msgstr "descripción"
 
 #: models.py:17
 msgid "version"
-msgstr ""
+msgstr "versión"
 
 #: models.py:21
 msgid "directory name"
-msgstr ""
+msgstr "directorio"

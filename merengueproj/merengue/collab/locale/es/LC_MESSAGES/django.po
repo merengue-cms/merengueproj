@@ -18,11 +18,11 @@ msgstr ""
 
 #: forms.py:61
 msgid "translation language"
-msgstr ""
+msgstr "traducción de idiomas"
 
 #: forms.py:62
 msgid "translation"
-msgstr ""
+msgstr "traducción"
 
 #: models.py:12
 msgid "Just set status"
@@ -30,27 +30,27 @@ msgstr ""
 
 #: models.py:13
 msgid "Display an alternative comment in public view"
-msgstr ""
+msgstr "Mostrar un comentario alternativo en la vista pública"
 
 #: models.py:14
 msgid "Hide comment from public view"
-msgstr ""
+msgstr "Ocultar comentarios en la vista pública"
 
 #: models.py:22
 msgid "name"
-msgstr ""
+msgstr "nombre"
 
 #: models.py:27
 msgid "label"
-msgstr ""
+msgstr "etiqueta"
 
 #: models.py:45
 msgid "decorator"
-msgstr ""
+msgstr "decorador"
 
 #: models.py:52
 msgid "result"
-msgstr ""
+msgstr "resultado"
 
 #: models.py:56
 msgid "Select the resulting action this status trigger"
@@ -58,31 +58,31 @@ msgstr ""
 
 #: models.py:60
 msgid "reason"
-msgstr ""
+msgstr "motivo"
 
 #: models.py:73
 msgid "content type"
-msgstr ""
+msgstr "tipo de contenido"
 
 #: models.py:77
 msgid "object ID"
-msgstr ""
+msgstr "ID del objeto"
 
 #: models.py:87 models.py:163
 msgid "user"
-msgstr ""
+msgstr "usuario"
 
 #: models.py:95
 msgid "user's name"
-msgstr ""
+msgstr "nombre del usuario"
 
 #: models.py:100
 msgid "user's email address"
-msgstr ""
+msgstr "email del usuario"
 
 #: models.py:104
 msgid "user's URL"
-msgstr ""
+msgstr "URL del usuario"
 
 #: models.py:110
 msgid "comment user type"
@@ -90,43 +90,43 @@ msgstr ""
 
 #: models.py:114
 msgid "comment"
-msgstr ""
+msgstr "comentario"
 
 #: models.py:118
 msgid "date/time submitted"
-msgstr ""
+msgstr "fecha/hora enviada"
 
 #: models.py:123
 msgid "IP address"
-msgstr ""
+msgstr "Dirección IP"
 
 #: models.py:131
 msgid "collaborative comment"
-msgstr ""
+msgstr "comentario colaborativo"
 
 #: models.py:132
 msgid "collaborative comments"
-msgstr ""
+msgstr "comentarios colaborativos"
 
 #: models.py:157
 msgid "revised comment"
-msgstr ""
+msgstr "comentario revisado"
 
 #: models.py:171
 msgid "revised comment status"
-msgstr ""
+msgstr "estado del comentario revisado"
 
 #: models.py:175
 msgid "date/time revised"
-msgstr ""
+msgstr "fecha/hora revisada"
 
 #: models.py:181
 msgid "short comment"
-msgstr ""
+msgstr "comentario corto"
 
 #: views.py:43
 msgid "Your comment has been added"
-msgstr ""
+msgstr "Tu comentario ha sido añadido"
 
 #: views.py:76
 msgid "Your revisor status has been added"
@@ -134,53 +134,53 @@ msgstr ""
 
 #: views.py:174
 msgid "Your translation has been saved"
-msgstr ""
+msgstr "Su traducción ha sido guardada"
 
 #: templates/collab/collaborative_comments.html:7
 msgid "Comments"
-msgstr ""
+msgstr "Comentarios"
 
 #: templates/collab/collaborative_comments_add.html:9
 msgid "Add comment"
-msgstr ""
+msgstr "Añadir comentario"
 
 #: templates/collab/collaborative_comments_list_item.html:21
 msgid "By"
-msgstr ""
+msgstr "Por"
 
 #: templates/collab/collaborative_comments_list_item.html:24
 msgid "Revision History"
-msgstr ""
+msgstr "Historial de revisión"
 
 #: templates/collab/collaborative_comments_list_item.html:38
 msgid "Revisor"
-msgstr ""
+msgstr "Revisor"
 
 #: templates/collab/collaborative_comments_list_item.html:47
 msgid "Revise this comment"
-msgstr ""
+msgstr "Revisar este comentario"
 
 #: templates/collab/collaborative_comments_revise.html:9
 msgid "Add revision"
-msgstr ""
+msgstr "Añadir revisión"
 
 #: templates/collab/collaborative_comments_view.html:12
 msgid "Comments for"
-msgstr ""
+msgstr "Comentarios para"
 
 #: templates/collab/collaborative_comments_view.html:15
 msgid "comments"
-msgstr ""
+msgstr "comentarios"
 
 #: templates/collab/collaborative_comments_view.html:16
 msgid "add comment"
-msgstr ""
+msgstr "añadir comentarios"
 
 #: templates/collab/collaborative_translation.html:7
 #: templates/collab/collaborative_translation_edit.html:15
 msgid "Translate"
-msgstr ""
+msgstr "Traducir"
 
 #: templates/collab/collaborative_translation_view.html:11
 msgid "Translation for"
-msgstr ""
+msgstr "Traducción para"
