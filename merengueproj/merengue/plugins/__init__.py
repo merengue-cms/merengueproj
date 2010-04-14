@@ -1,5 +1,6 @@
 from django.conf import settings
-from django.db.models.signals import post_syncdb
+
+from south.signals import post_migrate
 
 from merengue.plugins import models as plugin_models
 from merengue.plugins.models import RegisteredPlugin
@@ -84,4 +85,4 @@ def active_default_plugins(*args, **kwargs):
                 plugin.save()
 
 
-post_syncdb.connect(active_default_plugins)
+post_migrate.connect(active_default_plugins)
