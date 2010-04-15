@@ -3,7 +3,18 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-04-15 09:21+0200\n"
+"PO-Revision-Date: 2009-12-03 16:36\n"
+"Last-Translator: <lin@yaco.es>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: admin.py:91
 msgid "CSS Colors"
@@ -29,8 +40,9 @@ msgstr "documentos"
 msgid ""
 "Sorry you can not select an Absolute Link and a Content Link simultaneously "
 "for this menu. Fulfill just one."
-msgstr "Lo sentimos, no puede seleccionar un enlace absoluto y un enlace de contenido simultáneamente "
-"para este menú. Seleccione solo uno."
+msgstr ""
+"Lo sentimos, no puede seleccionar un enlace absoluto y un enlace de "
+"contenido simultáneamente para este menú. Seleccione solo uno."
 
 #: admin.py:181
 msgid "Menu Absolute Link"
@@ -90,7 +102,8 @@ msgstr "fotos"
 
 #: admin.py:415
 msgid "Are you sure you want to deselect these photos from carousel?"
-msgstr "¿Está seguro de que desea anular la selección de estas fotos del expositor?"
+msgstr ""
+"¿Está seguro de que desea anular la selección de estas fotos del expositor?"
 
 #: admin.py:418
 msgid "Deselect photo"
@@ -118,7 +131,7 @@ msgstr "nombre"
 
 #: models.py:73 models.py:393
 msgid "slug"
-msgstr "slug"
+msgstr ""
 
 #: models.py:80
 msgid "Parent"
@@ -258,7 +271,9 @@ msgstr ""
 
 #: models.py:678
 msgid "An arrow pointing to the right for multiple select widgets. (11x11)"
-msgstr "Una flecha que apunta hacia la izquierda para seleccionar múltiples widgets. (11x11)"
+msgstr ""
+"Una flecha que apunta hacia la izquierda para seleccionar múltiples widgets. "
+"(11x11)"
 
 #: models.py:686
 msgid ""
@@ -278,7 +293,9 @@ msgstr ""
 msgid ""
 "A vertical gradient image for use in the search results item backgrounds. "
 "(1x126)"
-msgstr "Una imagen de gradiente vertical para usar en los fondos de los resultados de la búsqueda. "
+msgstr ""
+"Una imagen de gradiente vertical para usar en los fondos de los resultados "
+"de la búsqueda. "
 
 #: models.py:710
 msgid "Background image for headers in the menu zone. (175x34)"
