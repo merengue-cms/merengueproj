@@ -36,9 +36,6 @@ urlpatterns = patterns('',
     # actions
     (r'^actions/', include('merengue.action.urls')),
 
-    # places
-    (r'^places/', include('merengue.places.urls')),
-
     # login and logout
     url(r'^account/login/$', 'merengue.portal.views.try_login', name='login_form'),
     url(r'^account/logout/$', 'merengue.portal.views.logout', name='logout'),
@@ -66,3 +63,7 @@ urlpatterns = patterns('',
     # Your project URLs. Put here all your URLS:
     (r'^$', 'website.views.index'),
 )
+
+if settings.USE_GIS:
+    # places
+    urlpatterns += patterns('', (r'^places/', include('merengue.places.urls')),)
