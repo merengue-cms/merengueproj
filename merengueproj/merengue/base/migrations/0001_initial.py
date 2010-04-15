@@ -8,7 +8,17 @@ from merengue.base.models import *
 class Migration:
     
     def forwards(self, orm):
-        
+        # Adding model 'Location'
+        if settings.USE_GIS:
+            db.create_table('places_location', (
+                ('id', orm['places.Location:id']),
+                ('main_location', orm['places.Location:main_location']),
+                ('borders', orm['places.Location:borders']),
+                ('address', orm['places.Location:address']),
+                ('postal_code', orm['places.Location:postal_code']),
+            ))
+            db.send_create_signal('places', ['Location'])
+
         # Adding model 'ContactInfo'
         db.create_table('base_contactinfo', (
             ('id', orm['base.ContactInfo:id']),
@@ -100,7 +110,9 @@ class Migration:
         # Dropping ManyToManyField 'BaseContent.related_items'
         db.delete_table('base_basecontent_related_items')
         
-    
+        if settings.USE_GIS:
+            # Deleting model 'Location'
+            db.delete_table('places_location')
     
     models = {
         'auth.group': {
@@ -209,4 +221,4 @@ class Migration:
         del models['base.basecontent']['map_icon']
         del models['base.basecontent']['is_autolocated']
 
-    complete_apps = ['base']
+    complete_apps = ['base', 'places']

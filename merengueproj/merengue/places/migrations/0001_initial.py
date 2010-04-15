@@ -6,25 +6,12 @@ from merengue.places.models import *
 class Migration:
     
     def forwards(self, orm):
-        
-        # Adding model 'Location'
-        db.create_table('places_location', (
-            ('id', orm['places.Location:id']),
-            ('main_location', orm['places.Location:main_location']),
-            ('borders', orm['places.Location:borders']),
-            ('address', orm['places.Location:address']),
-            ('postal_code', orm['places.Location:postal_code']),
-        ))
-        db.send_create_signal('places', ['Location'])
-        
+        pass # merengue.places models are added in merengue.base migrations
     
     
     def backwards(self, orm):
-        
+        pass # merengue.places models are deleted in merengue.base migrations
         # Deleting model 'Location'
-        db.delete_table('places_location')
-        
-    
     
     models = {
         'places.location': {
