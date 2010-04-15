@@ -237,7 +237,7 @@ msgstr "nombre"
 
 #: models.py:76 models.py:97
 msgid "slug"
-msgstr "pegar"
+msgstr "slug"
 
 #: models.py:80
 msgid "base category"
