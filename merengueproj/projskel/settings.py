@@ -113,6 +113,11 @@ LIMIT_URL_SPIDER_TEST = 20
 # Overwrite options tinyMCE
 TINYMCE_MEDIA = MEDIA_URL + "cmsutils/js/widgets/tiny_mce/"
 
+TINYMCE_EXTRA_MEDIA = {
+   'js': None,
+   'css': None,
+}
+
 SEARCHBAR_MIN_RESULTS = 5
 
 LOGOUT_PROTECTED_URL_REDIRECTS = (

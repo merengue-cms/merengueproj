@@ -132,6 +132,11 @@ EXTRA_MCE = {
     'theme_advanced_buttons1': 'bold,italic,copy,paste,pasteword,underline,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,outdent,indent',
 }
 
+TINYMCE_EXTRA_MEDIA = {
+   'js': None,
+   'css': None,
+}
+
 # Captcha default settings
 CAPTCHA_SETTINGS = {
     'NUMBER_SWAP': {

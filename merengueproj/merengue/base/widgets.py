@@ -57,7 +57,12 @@ class CustomTinyMCE(TinyMCE):
         self.mce_settings['plugin_file_url'] = "/tinyimages/file_upload/"
         self.mce_settings['file_browser_callback'] = "TinyImagesFileBrowser"
         self.mce_settings['urlconverter_callback'] = "customUrlConverter"
-        self.mce_settings['content_css'] = "/media/merengue/css/editorstyles.css"
+        content_css = settings.TINYMCE_EXTRA_MEDIA.get('css', [])
+        content_js = settings.TINYMCE_EXTRA_MEDIA.get('css', [])
+        content_css.extend(["merengue/css/editorstyles.css"])
+        content_css = ["%s%s" % (settings.MEDIA_URL, css) for css in content_css]
+        self.mce_settings['content_css'] = content_css
+        self.mce_settings['content_js'] = content_js
         self.mce_settings['extended_valid_elements'] = "hr[class|width|size|noshade],font[face|size|color|style],iframe[src|width|height|id|class|frameborder|border|marginwidth|marginheight|leftmargin|topmargin|allowtransparency|style],span[class|align|style],-table[border=0|cellspacing|cellpadding|width|height|class|align|summary|style|dir|id|lang|bgcolor|background|bordercolor],-tr[id|lang|dir|class|rowspan|width|height|align|valign|style|bgcolor|background|bordercolor],tbody[id|class],thead[id|class],tfoot[id|class],-td[id|lang|dir|class|colspan|rowspan|width|height|align|valign|style|bgcolor|background|bordercolor|scope],-th[id|lang|dir|class|colspan|rowspan|width|height|align|valign|style|scope],caption[id|lang|dir|class|style]"
 
     def render(self, name, value, attrs=None):
