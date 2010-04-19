@@ -1,18 +1,15 @@
 from django.conf import settings
 from django.contrib import admin
-from django.contrib.contenttypes.models import ContentType
 from django.forms.models import save_instance
 from django.forms.util import ValidationError
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
-from merengue.base.models import BaseContent
 from merengue.base.admin import BaseAdmin, BaseContentAdmin, RelatedModelAdmin, \
                                 BaseOrderableAdmin, OrderableRelatedModelAdmin
 from merengue.base.admin import set_field_read_only
-from merengue.multimedia.models import Photo
-from merengue.section.models import (Menu, Section, AppSection, Carousel,
+from merengue.section.models import (Menu, Section, AppSection,
                                      BaseLink, AbsoluteLink, ContentLink, ViewletLink,
                                      Document, DocumentSection, CustomStyle,
                                      SectionRelatedContent)
@@ -360,81 +357,6 @@ class AppSectionAdmin(BaseSectionAdmin):
         return form
 
 
-class CarouselAdmin(BaseAdmin):
-    list_display = ('name', 'slug')
-    prepopulated_fields = {'slug': ('name', )}
-    exclude = ('photo_list', )
-
-    def formfield_for_dbfield(self, db_field, **kwargs):
-        field = super(BaseAdmin, self).formfield_for_dbfield(db_field,
-                                                             **kwargs)
-
-        if db_field.name == 'class_name':
-            base_contents = BaseContent.objects.all().values('class_name')\
-                                                     .distinct('class_name')
-            base_contents_class_name = [v['class_name'] for v in base_contents\
-                                        if v['class_name']]
-            field.queryset = ContentType.objects.filter(
-                                    model__in=base_contents_class_name)
-        return field
-
-    def change_view(self, request, object_id, extra_context=None):
-        extra_context = extra_context or {}
-        extra_context.update({'is_carousel': True})
-        return super(CarouselAdmin, self).change_view(request, object_id,
-                                                      extra_context)
-
-
-class CarouselPhotoRelatedModelAdmin(RelatedModelAdmin):
-    """ Add new photos to carousel or remove existing ones """
-    tool_name = 'photos'
-    tool_label = _('photos')
-    related_field = 'carousel'
-    list_display = ('__str__', 'admin_thumbnail', 'status')
-    html_fields = ('caption', )
-    search_fields = ('name', 'original_filename')
-    selected = 'photos'
-    change_list_template = None
-    actions = ['deselect_photo', ]
-
-    def deselect_photo(self, request, queryset):
-        selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
-        if selected:
-            if request.POST.get('post'):
-                basecontent = self.basecontent
-                for deselected_photo in queryset:
-                    basecontent.photo_list.remove(deselected_photo)
-                return
-            extra_context = {'title': _(u'Are you sure you want to deselect these photos from carousel?'),
-                             'action_submit': 'deselect_photo'}
-            return self.confirm_action(request, queryset, extra_context)
-    deselect_photo.short_description = _("Deselect photo")
-
-
-class CarouselRelatedChoosePhotoModelAdmin(CarouselPhotoRelatedModelAdmin):
-    """ Choose existing photos for a carousel """
-    tool_name = 'choosephotos'
-    tool_label = _('choose photos')
-    actions = ['select_photo']
-    inherit_actions = False
-
-    def queryset(self, request, basecontent=None):
-        return Photo.objects.exclude(carousel=self.basecontent)
-
-    def select_photo(self, request, queryset):
-        selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
-        if selected:
-            if request.POST.get('post'):
-                basecontent = self.basecontent
-                for selected_photo in queryset:
-                    basecontent.photo_list.add(selected_photo)
-                return
-            extra_context = {'title': _(u'Are you sure you want to select these photos?'),
-                             'action_submit': 'select_photo'}
-            return self.confirm_action(request, queryset, extra_context)
-    select_photo.short_description = _("Select photo")
-
-
 class DocumentSectionModelAdmin(BaseAdmin):
     ordering = ('position', )
     html_fields = ('body', )
@@ -451,9 +373,6 @@ class DocumentSectionRelatedModelAdmin(RelatedModelAdmin):
 def register(site):
     site.register(Section, SectionAdmin)
     site.register(AppSection, AppSectionAdmin)
-    site.register(Carousel, CarouselAdmin)
-    site.register_related(Photo, CarouselPhotoRelatedModelAdmin, related_to=Carousel)
-    site.register_related(Photo, CarouselRelatedChoosePhotoModelAdmin, related_to=Carousel)
     site.register_related(Document, DocumentRelatedModelAdmin, related_to=Section)
     site.register_related(CustomStyle, CustomStyleRelatedModelAdmin, related_to=Section)
     site.register_related(Menu, MainMenuRelatedAdmin, related_to=Section)

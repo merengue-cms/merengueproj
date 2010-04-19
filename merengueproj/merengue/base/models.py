@@ -156,8 +156,6 @@ if settings.USE_GIS:
         # map icon for google maps
         map_icon = StdImageField(_('map icon'), upload_to='map_icons',
                                    null=True, blank=True)
-        is_autolocated = models.BooleanField(verbose_name=_("is autolocated"),
-                                          default=False)
         location = models.ForeignKey(Location, verbose_name=_('location'),
                                      null=True, blank=True, editable=False)
 
@@ -318,7 +316,6 @@ class BaseContent(BaseClass):
             ("can_draft", "Can set as draft"),
             ("can_pending", "Can set as pending"),
             ("can_published", "Can set as published"),
-            ("can_change_is_autolocated", "Can edit is_autolocated field"),
             ("can_change_main_image", "Can edit main image field"),
             ("can_change_map_icon", "Can edit map icon field"),
         )

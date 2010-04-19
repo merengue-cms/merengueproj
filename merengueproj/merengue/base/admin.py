@@ -848,9 +848,6 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
                     form.base_fields['status'].initial = 'pending'
             else:
                 form.base_fields.pop('status')
-        if 'is_autolocated' in keys and\
-           not request.user.has_perm('base.can_change_is_autolocated'):
-            form.base_fields.pop('is_autolocated')
         if 'main_image' in keys and\
            not request.user.has_perm('base.can_change_main_image'):
             form.base_fields.pop('main_image')
@@ -932,7 +929,6 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
 
 if settings.USE_GIS:
     BaseContentAdmin.list_display += ('google_minimap', )
-    BaseContentAdmin.list_filter += ('is_autolocated', )
 
 
 class BaseContentViewAdmin(BaseContentAdmin):
@@ -1425,7 +1421,6 @@ if settings.USE_GIS:
             return response
 
         def save_model(self, request, obj, form, change):
-            self.admin_site.basecontent.is_autolocated = False
             self.admin_site.basecontent.save()
             super(BaseContentRelatedLocationModelAdmin, self).save_model(request, obj, form, change)
             self.admin_site.basecontent.location = obj

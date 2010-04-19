@@ -8,7 +8,6 @@ from django.db import models
 from django.db.models import permalink
 from django.db.models.signals import post_save
 from django.utils.translation import ugettext_lazy as _
-from django.template.loader import render_to_string
 
 import mptt
 
@@ -16,11 +15,9 @@ from cmsutils.adminfilters import QueryStringManager
 
 from merengue.base.managers import WorkflowManager
 from merengue.base.models import Base, BaseContent
-from merengue.multimedia.models import Photo
 from merengue.section.managers import SectionManager
 from merengue.viewlet.models import RegisteredViewlet
 from searchform.registry import search_form_registry
-from stdimage import StdImageField
 from transmeta import TransMeta
 
 
@@ -340,60 +337,7 @@ class AppSection(BaseSection):
         return settings.SECTION_MAP[self.slug]['app_name']
 
 
-class Carousel(models.Model):
-
-    name = models.CharField(
-        verbose_name=_('name'),
-        max_length=200,
-        )
-
-    slug = models.SlugField(
-        verbose_name=_('slug'),
-        max_length=200,
-        blank=False,
-        null=False,
-        )
-
-    photo_list = models.ManyToManyField(Photo,
-        verbose_name=_('photos'),
-        blank=True,
-        null=True,
-        )
-
-    class_name = models.ManyToManyField(ContentType,
-        verbose_name=_('class name'),
-        blank=True,
-        null=True,
-        )
-
-    def photos(self):
-        return self.photos_bag()
-
-    def photos_bag(self, bag=50):
-        return self.photo_list.all()[:bag]
-
-    def render(self):
-        render_string = render_to_string('base/photos_secundary_carousel.html',
-                        {'photos': self.photos(),
-                        'MEDIA_URL': getattr(settings, 'MEDIA_URL', '/media/'),
-                        'LANGUAGE_CODE': getattr(settings, 'LANGUAGE_CODE', 'es'),
-                         },
-                        )
-        return render_string
-
-    def __unicode__(self):
-        return unicode(self.name)
-
-
 class Document(BaseContent):
-
-    photo = StdImageField(
-        verbose_name=_('photo'),
-        upload_to='document_photos',
-        thumbnail_size=(200, 200),
-        blank=True,
-        null=True,
-    )
 
     floatimage = models.BooleanField(
         verbose_name=_('float image'),
@@ -401,14 +345,6 @@ class Document(BaseContent):
         blank=True,
         default=False,
     )
-
-    carousel = models.ForeignKey(
-        Carousel,
-        verbose_name=_('carousel'),
-        blank=True,
-        null=True,
-    )
-    carousel.delete_cascade = False
 
     search_form = models.CharField(
         verbose_name=_('search form'),

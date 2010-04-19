@@ -84,7 +84,6 @@ def places_ajax_nearby(request):
         else:
             filter = {'main_location__contained': bounds}
         contents = ctype.model_class().objects.filter(**filter)
-        contents = [c for c in contents if not getattr(c, 'is_autolocated', False)]
     return render_to_response('base/markers.xml', {'contents': contents,
                                                    'areas': contents,
                                                   },

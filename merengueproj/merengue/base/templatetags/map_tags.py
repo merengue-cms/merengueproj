@@ -25,6 +25,7 @@ register = template.Library()
 
 
 if settings.USE_GIS:
+
     def get_bounds(content, content_pois, content_areas):
         """ gets map bounds. first try to get content bounds,
             last will get content_pois extent """
@@ -36,8 +37,7 @@ if settings.USE_GIS:
         if borders:
             return borders.extent
         else:
-            points = [c.main_location for c in content_pois if c.has_location() and\
-                                                               not getattr(c, 'is_autolocated', False)]
+            points = [c.main_location for c in content_pois if c.has_location()]
 
             areas = []
             for c in content_areas:
@@ -134,8 +134,6 @@ if settings.USE_GIS:
             # do stuff
             content_pois = localized(content_pois)
 
-            if getattr(content, 'is_autolocated', False):
-                content = None
             bounds = None
 
             if content is None or not content.has_location() or zoom == 'auto':
@@ -255,8 +253,6 @@ if settings.USE_GIS:
         # break this rendering if we are in builbot
         if context.get('coming_from_buildbot', False):
             return {'show_map': False}
-        if getattr(content, 'is_autolocated', False):
-            content = None
         return {
             'show_map': True,
             'content': content,
@@ -334,12 +330,10 @@ if settings.USE_GIS:
         return ProximityFilter(content_types)
     register.tag('google_map_proximity_filter', google_map_proximity_filter)
 
-
     def localized(objects):
         return [c for c in objects
                 if (getattr(c, 'has_location', None)
-                    and c.has_location()
-                    and not getattr(c, 'is_autolocated', False))]
+                    and c.has_location())]
 
     register.filter('localized', localized)
 else:
