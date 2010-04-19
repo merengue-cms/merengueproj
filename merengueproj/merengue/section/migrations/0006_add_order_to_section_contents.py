@@ -9,8 +9,12 @@ class Migration:
 
     def forwards(self, orm):
         "Write your forwards migration here"
-        db.execute('ALTER TABLE "section_basesection_related_content" ADD COLUMN "order" integer CHECK ("order" >= 0)')
-        db.execute('UPDATE "section_basesection_related_content" SET "order" = 0')
+        if db.backend_name == 'mysql':
+            db.execute('ALTER TABLE `section_basesection_related_content` ADD COLUMN `order` integer UNSIGNED NOT NULL')
+            db.execute('UPDATE `section_basesection_related_content` SET `order` = 0')
+        else:
+            db.execute('ALTER TABLE "section_basesection_related_content" ADD COLUMN "order" integer CHECK ("order" >= 0)')
+            db.execute('UPDATE "section_basesection_related_content" SET "order" = 0')
 
     def backwards(self, orm):
         "Write your backwards migration here"

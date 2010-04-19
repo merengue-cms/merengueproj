@@ -7,10 +7,8 @@ from django.utils.translation import ugettext
 
 class BaseLocation(models.Model):
 
-    main_location = models.PointField(verbose_name=_('main location'),
-                                      blank=True, null=True)
-    borders = models.PolygonField(verbose_name=_('borders'),
-                                  null=True, blank=True)
+    main_location = models.PointField(verbose_name=_('main location'))
+    borders = models.PolygonField(verbose_name=_('borders'))
 
     class Meta:
         abstract = True

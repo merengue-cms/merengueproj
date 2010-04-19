@@ -9,7 +9,11 @@ class Migration:
 
     def forwards(self, orm):
         "Write your forwards migration here"
-        db.execute('ALTER TABLE "section_contentlink" DROP CONSTRAINT "section_contentlink_content_id_key"')
+        if db.backend_name == 'mysql':
+            db.execute('DROP INDEX `content_id` ON `section_contentlink`')
+            db.execute('CREATE INDEX `section_contentlink_content_id` ON `section_contentlink` (`content_id`)')
+        else:
+            db.execute('ALTER TABLE "section_contentlink" DROP CONSTRAINT "section_contentlink_content_id_key"')
 
     def backwards(self, orm):
         "Write your backwards migration here"

@@ -17,7 +17,10 @@ class Migration:
         db.alter_column('section_documentsection', 'body_es', orm['section.documentsection:body_es'])
         
         # Creating unique_together for [slug] on BaseSection.
-        db.execute('ALTER TABLE "section_basesection" ADD CONSTRAINT "section_basesection_slug_key" UNIQUE ("slug")')
+        if db.backend_name == 'mysql':
+            db.execute('ALTER TABLE `section_basesection` ADD CONSTRAINT `section_basesection_slug_key` UNIQUE (`slug`)')
+        else:
+            db.execute('ALTER TABLE "section_basesection" ADD CONSTRAINT "section_basesection_slug_key" UNIQUE ("slug")')
     
     
     def backwards(self, orm):
