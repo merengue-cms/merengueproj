@@ -41,7 +41,6 @@ def menu_sitemap_tag(context, section, class_ul):
         get_menu_iterative(context, section.main_menu, menu_tree)
         get_static_main_menu(context, section, menu_tree)
         get_menu_agenda(context, section, menu_tree)
-        get_menu_iterative(context, section.secondary_menu, menu_tree)
         new_context['menu_tree'] = menu_tree
     return new_context
 
