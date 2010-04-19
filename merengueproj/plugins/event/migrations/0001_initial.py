@@ -43,11 +43,9 @@ class Migration:
         db.send_create_signal('event', ['CategoryGroup'])
 
         # Adding model 'Occurrence'
-        db.create_table('event_occurrence', (
+        data = (
             ('id', orm['event.Occurrence:id']),
-            ('location', orm['event.Occurrence:location']),
             ('place', orm['event.Occurrence:place']),
-            ('basecontent_location', orm['event.Occurrence:basecontent_location']),
             ('contact_info', orm['event.Occurrence:contact_info']),
             ('event', orm['event.Occurrence:event']),
             ('price_es', orm['event.Occurrence:price_es']),
@@ -58,7 +56,13 @@ class Migration:
             ('schedule_fr', orm['event.Occurrence:schedule_fr']),
             ('start', orm['event.Occurrence:start']),
             ('end', orm['event.Occurrence:end']),
-        ))
+        )
+
+        if settings.USE_GIS:
+            data = data + (('location', orm['event.Occurrence:location']),
+                           ('basecontent_location', orm['event.Occurrence:basecontent_location']))
+
+        db.create_table('event_occurrence', data)
         db.send_create_signal('event', ['Occurrence'])
 
         # Adding ManyToManyField 'Category.groups'
@@ -359,5 +363,13 @@ class Migration:
             'url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
         }
     }
+
+    if not settings.USE_GIS:
+        del models['places.location']
+        del models['base.basecontent']['location']
+        del models['base.basecontent']['map_icon']
+        del models['base.basecontent']['is_autolocated']
+        del models['event.occurrence']['location']
+        del models['event.occurrence']['basecontent_location']
     
     complete_apps = ['event']

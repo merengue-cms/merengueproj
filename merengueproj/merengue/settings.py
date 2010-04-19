@@ -133,8 +133,8 @@ EXTRA_MCE = {
 }
 
 TINYMCE_EXTRA_MEDIA = {
-   'js': None,
-   'css': None,
+   'js': [],
+   'css': [],
 }
 
 # Captcha default settings

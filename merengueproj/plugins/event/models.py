@@ -11,7 +11,8 @@ from transmeta import TransMeta
 
 from merengue.base.models import BaseContent, BaseCategory, ContactInfo
 from merengue.section.models import BaseSection
-from merengue.places.models import Location
+if settings.USE_GIS:
+    from merengue.places.models import Location
 
 from plugins.event.managers import EventManager, OccurrenceManager
 
@@ -99,72 +100,78 @@ class Event(BaseContent):
     def __unicode__(self):
         return self.title or self.name or u''
 
-    def get_locations(self):
-        """ Get visible locations for maps """
-        return [occurrence.main_location for occurrence in self.occurrence_event.visibles()]
+    if settings.USE_GIS:
+        def get_locations(self):
+            """ Get visible locations for maps """
+            return [occurrence.main_location for occurrence in self.occurrence_event.visibles()]
 
-    def update_location(self):
-        if self.location is None:
-            self.location = Location.objects.create()
-        # XXX: see if this method is needed
-        self.location.save()
-        self.save()
+        def update_location(self):
+            if self.location is None:
+                self.location = Location.objects.create()
+            # XXX: see if this method is needed
+            self.location.save()
+            self.save()
 
-    def has_location(self):
-        return bool(self.main_location)
+        def has_location(self):
+            return bool(self.main_location)
 
-    def _main_location(self):
-        if self.location is not None and self.location.main_location is not None:
-            return self.location.main_location
-        occurrence_locations = self.get_locations()
-        for l in occurrence_locations:
-            if l:
-                return l
-        return None
-    main_location = property(_main_location)
+        def _main_location(self):
+            if self.location is not None and self.location.main_location is not None:
+                return self.location.main_location
+            occurrence_locations = self.get_locations()
+            for l in occurrence_locations:
+                if l:
+                    return l
+            return None
+        main_location = property(_main_location)
 
-    def get_location(self):
-        if self.location is not None and self.location.main_location is not None:
-            return self.location
-        for occurrence in self.occurrence_event.visibles():
-            if occurrence.main_location:
-                return occurrence.location
-        return None
+        def get_location(self):
+            if self.location is not None and self.location.main_location is not None:
+                return self.location
+            for occurrence in self.occurrence_event.visibles():
+                if occurrence.main_location:
+                    return occurrence.location
+            return None
+
+        def google_minimap(self):
+            ocurrences = self.occurrence_event.published()
+            if ocurrences:
+                ocurrence = ocurrences[0]
+                location = ocurrence.main_location
+                if location:
+                    return render_to_string('admin/mini_google_map.html',
+                                            {'content': ocurrence,
+                                             'zoom': 16,
+                                             'index': self.id,
+                                             'MEDIA_URL': settings.MEDIA_URL,
+                                             'GOOGLE_MAPS_API_KEY': settings.GOOGLE_MAPS_API_KEY})
+            return _('Without location')
+        google_minimap.allow_tags = True
 
     @classmethod
     def get_resource_order(cls):
         return ('cached_min_start', )
 
-    def google_minimap(self):
-        ocurrences = self.occurrence_event.published()
-        if ocurrences:
-            ocurrence = ocurrences[0]
-            location = ocurrence.main_location
-            if location:
-                return render_to_string('admin/mini_google_map.html',
-                                        {'content': ocurrence,
-                                         'zoom': 16,
-                                         'index': self.id,
-                                         'MEDIA_URL': settings.MEDIA_URL,
-                                         'GOOGLE_MAPS_API_KEY': settings.GOOGLE_MAPS_API_KEY})
-        return _('Without location')
-    google_minimap.allow_tags = True
 
 
 class Occurrence(models.Model):
     """ Event that occurs """
     __metaclass__ = TransMeta
 
-    location = models.ForeignKey(Location, verbose_name=_('location'),
-                                 null=True, blank=True, editable=False)
+    if settings.USE_GIS:
+        location = models.ForeignKey(Location, verbose_name=_('location'),
+                                     null=True, blank=True, editable=False)
+        basecontent_location = models.ForeignKey(BaseContent,
+                                                 verbose_name=_('located in'),
+                                                 null=True, blank=True,
+                                                 editable=False)
+    else:
+        loaction = None
+        basecontent_location = None
 
     place = models.CharField(_("name location"), max_length=200,
                                  blank=True, null=True)
 
-    basecontent_location = models.ForeignKey(BaseContent,
-                                             verbose_name=_('located in'),
-                                             null=True, blank=True,
-                                             editable=False)
     contact_info = models.ForeignKey(ContactInfo,
                                      verbose_name=_('contact info'),
                                      null=True, blank=True, editable=False)
@@ -247,7 +254,7 @@ class Occurrence(models.Model):
     def get_place(self):
         if self.place:
             return mark_safe("<span class='title'>%s</span>" %(self.place))
-        else:
+        elif self.location:
             locations = self.location.cities.all()
             if locations:
                 location = locations[0]
