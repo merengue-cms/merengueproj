@@ -115,11 +115,10 @@ class Menu(models.Model):
             return True
 
     def get_section(self):
-        for menu_attr in ('main_menu_section', 'interest_menu_section', 'secondary_menu_section'):
-            try:
-                return getattr(self, menu_attr)
-            except BaseSection.DoesNotExist:
-                pass
+        try:
+            return getattr(self, 'main_menu_section')
+        except BaseSection.DoesNotExist:
+            pass
 
         if self.parent is not None:
             return self.parent.get_section()
@@ -530,10 +529,6 @@ def create_menus(sender, **kwargs):
     if created:
         instance.main_menu = Menu.objects.create(
                         name_es='Main menu of %s' % unicode(instance))
-        instance.secondary_menu = Menu.objects.create(
-                        name_es='Secondary menu of %s' % unicode(instance))
-        instance.interest_menu = Menu.objects.create(
-                        name_es='Interest menu of %s' % unicode(instance))
         instance.save()
 
 post_save.connect(create_menus, sender=Section, dispatch_uid='SectionMenusSignalDispatcher')

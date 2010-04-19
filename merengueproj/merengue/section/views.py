@@ -46,13 +46,7 @@ def menu_section_view(request, section_slug, menu_slug):
     try:
         menu = section.main_menu.get_descendants().get(slug=menu_slug)
     except Menu.DoesNotExist:
-        try:
-            menu = section.secondary_menu.get_descendants().get(slug=menu_slug)
-        except Menu.DoesNotExist:
-            try:
-                menu = section.interest_menu.get_descendants().get(slug=menu_slug)
-            except Menu.DoesNotExist:
-                raise Http404
+        raise Http404
 
     link = menu.baselink.real_instance
     if isinstance(link, AbsoluteLink):
