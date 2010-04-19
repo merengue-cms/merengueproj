@@ -305,7 +305,7 @@ class BaseSectionMenuRelatedAdmin(RelatedModelAdmin):
         source = self.move_menus(request)
         media = self.media
         media.add_js([settings.MEDIA_URL + "merengue/js/jquery-1.4.2.min.js"])
-        media.add_js([settings.MEDIA_URL + "merengue/js/jquery-ui-core-draggable-droppable-sortable.min.js"])
+        media.add_js([settings.MEDIA_URL + "merengue/js/jquery-ui-1.8.dragdrop.min.js"])
         media.add_js([settings.MEDIA_URL + "merengue/js/section/CollapsableMenuTree.js"])
         media.add_js([settings.MEDIA_URL + "merengue/js/section/OrderableMenuTree.js"])
         extra_context.update({'media': media.render(),
