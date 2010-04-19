@@ -339,24 +339,19 @@ class AppSection(BaseSection):
 
 class Document(BaseContent):
 
-    floatimage = models.BooleanField(
-        verbose_name=_('float image'),
-        help_text=_('make image float in view'),
-        blank=True,
-        default=False,
-    )
-
     search_form = models.CharField(
         verbose_name=_('search form'),
         max_length=200,
         blank=True,
         null=True,
+        editable=False, # until search form feature was completed
     )
 
     search_form_filters = models.TextField(
         verbose_name=_('searcher options'),
         blank=True,
         null=True,
+        editable=False, # until search form feature was completed
     )
 
     permanent = models.BooleanField(verbose_name=_('permanent'),
