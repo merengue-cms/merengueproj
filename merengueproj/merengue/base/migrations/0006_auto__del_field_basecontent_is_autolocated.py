@@ -1,5 +1,6 @@
 # encoding: utf-8
 import datetime
+from django.conf import settings
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
@@ -8,14 +9,14 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-
-        # Deleting field 'basecontent.is_autolocated'
-        db.delete_column('base_basecontent', 'is_autolocated')
+        if settings.USE_GIS:
+            # Deleting field 'basecontent.is_autolocated'
+            db.delete_column('base_basecontent', 'is_autolocated')
 
     def backwards(self, orm):
-
-        # Adding field 'basecontent.is_autolocated'
-        db.add_column('base_basecontent', 'is_autolocated', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True), keep_default=False)
+        if settings.USE_GIS:
+            # Adding field 'basecontent.is_autolocated'
+            db.add_column('base_basecontent', 'is_autolocated', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True), keep_default=False)
 
     models = {
         'auth.group': {
@@ -124,5 +125,9 @@ class Migration(SchemaMigration):
             'postal_code': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'})
         }
     }
+    if not settings.USE_GIS:
+        del models['places.location']
+        del models['base.basecontent']['location']
+        del models['base.basecontent']['map_icon']
 
     complete_apps = ['base']

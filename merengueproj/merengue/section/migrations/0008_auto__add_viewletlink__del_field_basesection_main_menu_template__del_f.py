@@ -1,5 +1,6 @@
 # encoding: utf-8
 import datetime
+from django.conf import settings
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
@@ -110,19 +111,19 @@ class Migration(SchemaMigration):
         db.add_column('section_customstyle', 'menu_head_background', self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True), keep_default=False)
 
         # Adding field 'customstyle.menu_link_color'
-        db.add_column('section_customstyle', 'menu_link_color', self.gf('ColorField')(null=True, blank=True), keep_default=False)
+        db.add_column('section_customstyle', 'menu_link_color', self.gf('cmsutils.db.fields.ColorField')(null=True, blank=True), keep_default=False)
 
         # Adding field 'customstyle.searcher_left_arrow'
         db.add_column('section_customstyle', 'searcher_left_arrow', self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True), keep_default=False)
 
         # Adding field 'customstyle.color_3'
-        db.add_column('section_customstyle', 'color_3', self.gf('ColorField')(null=True, blank=True), keep_default=False)
+        db.add_column('section_customstyle', 'color_3', self.gf('cmsutils.db.fields.ColorField')(null=True, blank=True), keep_default=False)
 
         # Adding field 'customstyle.color_2'
-        db.add_column('section_customstyle', 'color_2', self.gf('ColorField')(null=True, blank=True), keep_default=False)
+        db.add_column('section_customstyle', 'color_2', self.gf('cmsutils.db.fields.ColorField')(null=True, blank=True), keep_default=False)
 
         # Adding field 'customstyle.color_1'
-        db.add_column('section_customstyle', 'color_1', self.gf('ColorField')(null=True, blank=True), keep_default=False)
+        db.add_column('section_customstyle', 'color_1', self.gf('cmsutils.db.fields.ColorField')(null=True, blank=True), keep_default=False)
 
 
     models = {
@@ -358,5 +359,10 @@ class Migration(SchemaMigration):
             'registereditem_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['registry.RegisteredItem']", 'unique': 'True', 'primary_key': 'True'})
         }
     }
+    if not settings.USE_GIS:
+        del models['places.location']
+        del models['base.basecontent']['location']
+        del models['base.basecontent']['map_icon']
+        del models['base.basecontent']['is_autolocated']
 
     complete_apps = ['section']

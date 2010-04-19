@@ -1,5 +1,6 @@
 # encoding: utf-8
 import datetime
+from django.conf import settings
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
@@ -267,5 +268,10 @@ class Migration(SchemaMigration):
             'registereditem_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['registry.RegisteredItem']", 'unique': 'True', 'primary_key': 'True'})
         }
     }
+    if not settings.USE_GIS:
+        del models['places.location']
+        del models['base.basecontent']['location']
+        del models['base.basecontent']['map_icon']
+        del models['base.basecontent']['is_autolocated']
 
     complete_apps = ['section']
