@@ -320,12 +320,6 @@ class MainMenuRelatedAdmin(BaseSectionMenuRelatedAdmin):
     related_field = 'main_menu_section'
 
 
-class SecondaryMenuRelatedAdmin(BaseSectionMenuRelatedAdmin):
-    tool_name = 'secondarymenu'
-    tool_label = _('secondary menu')
-    related_field = 'secondary_menu_section'
-
-
 class AppSectionAdmin(BaseSectionAdmin):
     list_display = ('name', 'slug', 'app_name')
     prepopulated_fields = {'slug': ('name_es', )}
@@ -376,5 +370,4 @@ def register(site):
     site.register_related(Document, DocumentRelatedModelAdmin, related_to=Section)
     site.register_related(CustomStyle, CustomStyleRelatedModelAdmin, related_to=Section)
     site.register_related(Menu, MainMenuRelatedAdmin, related_to=Section)
-    site.register_related(Menu, SecondaryMenuRelatedAdmin, related_to=Section)
     site.register_related(DocumentSection, DocumentSectionRelatedModelAdmin, related_to=Document)
