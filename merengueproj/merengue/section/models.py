@@ -13,7 +13,6 @@ from django.template.loader import render_to_string
 import mptt
 
 from cmsutils.adminfilters import QueryStringManager
-from cmsutils.db.fields import ColorField
 
 from merengue.base.managers import WorkflowManager
 from merengue.base.models import Base, BaseContent
@@ -231,48 +230,6 @@ class BaseSection(Base, RealInstanceMixin):
         editable=False,
     )
 
-    secondary_menu = models.OneToOneField(
-        Menu,
-        verbose_name=_('secondary menu'),
-        blank=True,
-        null=True,
-        related_name='secondary_menu_section',
-        editable=False,
-    )
-
-    interest_menu = models.OneToOneField(
-        Menu,
-        verbose_name=_('interest menu'),
-        blank=True,
-        null=True,
-        related_name='interest_menu_section',
-        editable=False,
-    )
-
-    main_menu_template = models.CharField(
-        _('custom main menu template'),
-        max_length=200,
-        blank=True,
-        null=True,
-        editable=False,
-    )
-
-    secondary_menu_template = models.CharField(
-        _('custom secondary menu template'),
-        max_length=200,
-        blank=True,
-        null=True,
-        editable=False,
-    )
-
-    interest_menu_template = models.CharField(
-        _('custom interest menu template'),
-        max_length=200,
-        blank=True,
-        null=True,
-        editable=False,
-    )
-
     main_content = models.ForeignKey(
         BaseContent,
         null = True,
@@ -436,7 +393,7 @@ class Document(BaseContent):
         thumbnail_size=(200, 200),
         blank=True,
         null=True,
-        )
+    )
 
     floatimage = models.BooleanField(
         verbose_name=_('float image'),
@@ -445,19 +402,12 @@ class Document(BaseContent):
         default=False,
     )
 
-    photo_description = models.CharField(
-        verbose_name=_('photo description'),
-        max_length=200,
-        blank=True,
-        null=True,
-        )
-
     carousel = models.ForeignKey(
         Carousel,
         verbose_name=_('carousel'),
         blank=True,
         null=True,
-        )
+    )
     carousel.delete_cascade = False
 
     search_form = models.CharField(
@@ -465,25 +415,25 @@ class Document(BaseContent):
         max_length=200,
         blank=True,
         null=True,
-        )
+    )
 
     search_form_filters = models.TextField(
         verbose_name=_('searcher options'),
         blank=True,
         null=True,
-        )
+    )
 
     permanent = models.BooleanField(verbose_name=_('permanent'),
                                     help_text=_('make this document not erasable and its slug ummutable'),
                                     editable=False,
-                                    default=False)
+                                    default=False,
+    )
 
     objects = WorkflowManager()
 
     class Meta:
         verbose_name = _('document')
         verbose_name_plural = _('documents')
-        translate = ('photo_description', )
         content_view_template = 'section/document_view.html'
 
     def __unicode__(self):
@@ -639,85 +589,7 @@ class DocumentSection(models.Model):
 
 
 class CustomStyle(models.Model):
-    color_1 = ColorField(
-        verbose_name=_('color 1'),
-        null = True,
-        blank = True,
-        )
-
-    color_2 = ColorField(
-        verbose_name=_('color 2'),
-        null = True,
-        blank = True,
-        )
-
-    color_3 = ColorField(
-        verbose_name=_('color 3'),
-        null = True,
-        blank = True,
-        )
-
-    menu_link_color = ColorField(
-        verbose_name=_('menu link color'),
-        null = True,
-        blank = True,
-        )
-
-    searcher_left_arrow = models.ImageField(
-        verbose_name= ('searcher left arrow'),
-        upload_to='sections_styles',
-        null=True,
-        blank=True,
-        help_text=_('An arrow pointing to the left for multiple select widgets. (11x11)'),
-        )
-
-    searcher_right_arrow = models.ImageField(
-        verbose_name= ('searcher right arrow'),
-        upload_to='sections_styles',
-        null=True,
-        blank=True,
-        help_text=_('An arrow pointing to the right for multiple select widgets. (11x11)'),
-        )
-
-    searcher_tab_image = models.ImageField(
-        verbose_name= ('searcher tab image'),
-        upload_to='sections_styles',
-        null=True,
-        blank=True,
-        help_text=_('Background image of a searcher tab. Both selected and not selected. (298x85)<br />You can use <a href="/media/img/searcher_tab_a_visits.gif" target="_blank">this image</a> as a template.'),
-        )
-
-    searcher_last_tab_image = models.ImageField(
-        verbose_name= ('searcher last tab image'),
-        upload_to='sections_styles',
-        null=True,
-        blank=True,
-        help_text=_('Background image of the last searcher tab. Both selected and not selected. (299x85)<br />You can use <a href="/media/img/searcher_tab_b_visits.gif" target="_blank">this image</a> as a template.'),
-        )
-
-    search_results_item_background = models.ImageField(
-        verbose_name= ('search results item background'),
-        upload_to='sections_styles',
-        null=True,
-        blank=True,
-        help_text=_('A vertical gradient image for use in the search results item backgrounds. (1x126)'),
-        )
-
-    menu_head_background = models.ImageField(
-        verbose_name= ('menu head background'),
-        upload_to='sections_styles',
-        null=True,
-        blank=True,
-        help_text=_('Background image for headers in the menu zone. (175x34)'),
-        )
-
-    content_head_background = models.ImageField(
-        verbose_name= ('content head background'),
-        upload_to='sections_styles',
-        null=True,
-        blank=True,
-        help_text=_('Background image for headers in the content zone. (775x34)'),
-        )
+    pass
 
 
 def create_menus(sender, **kwargs):

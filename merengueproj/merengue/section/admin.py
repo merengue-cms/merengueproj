@@ -87,13 +87,6 @@ class SectionContentAdmin(OrderableRelatedModelAdmin):
 
 
 class CustomStyleRelatedModelAdmin(RelatedModelAdmin):
-    fieldsets = (
-        (_('CSS Colors'), {'fields': ('color_1', 'color_2', 'color_3', 'menu_link_color')}),
-        (_('Header images'), {'fields': ('content_head_background', 'menu_head_background')}),
-        (_('Searcher images'), {'fields': ('searcher_left_arrow', 'searcher_right_arrow',
-                                           'searcher_tab_image', 'searcher_last_tab_image',
-                                           'search_results_item_background')}),
-        )
     tool_name = 'style'
     tool_label = _('custom style')
     related_field = 'basesection'

@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ObjectDoesNotExist, SuspiciousOperation
 from django.contrib.auth.models import User
 
+from south.modelsinspector import add_introspection_rules
 from stdimage import StdImageField
 from stdimage.fields import StdImageFieldFile
 from tagging.fields import TagField
@@ -333,3 +334,16 @@ class Audio(BaseMultimedia):
         super(Audio, self).save(**kwargs)
 
     objects = WorkflowManager()
+
+
+# ----- adding south rules to help introspection -----
+
+rules = [
+  (
+    (StdImageField, ),
+    [],
+    {},
+  ),
+]
+
+add_introspection_rules(rules, ["^stdimage\.fields\.StdImageField"])

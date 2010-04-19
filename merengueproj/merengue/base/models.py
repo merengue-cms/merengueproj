@@ -109,7 +109,7 @@ class Base(models.Model):
                               editable=True)
     main_image = StdImageField(_('main image'), upload_to='content_images',
                                thumbnail_size=(200, 200),
-                               null=True, blank=True, editable=True)
+                               null=True, blank=True, editable=False)
 
     objects = WorkflowManager()
 
