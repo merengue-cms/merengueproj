@@ -219,6 +219,7 @@ class BaseSection(Base, RealInstanceMixin):
         _('order'),
         blank=True,
         null=True,
+        editable=False,
     )
 
     main_menu = models.OneToOneField(
