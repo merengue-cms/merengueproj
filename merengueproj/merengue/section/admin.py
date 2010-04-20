@@ -326,13 +326,13 @@ class PortalMenuAdmin(MenuAdmin):
     inlines = [AbsoluteLinkInline, ContentLinkInline, ViewletLinkInline]
 
     def queryset(self, request, basecontent=None):
-        basecontent = Menu.tree.get(id=settings.MENU_PORTAL_ID)
+        basecontent = Menu.tree.get(slug=settings.MENU_PORTAL_SLUG)
         return basecontent.get_descendants()
 
     def save_form(self, request, form, change):
         menu = form.save(commit=False)
         if not getattr(menu, self.related_field, None):
-            basecontent = Menu.objects.get(id=settings.MENU_PORTAL_ID)
+            basecontent = Menu.objects.get(slug=settings.MENU_PORTAL_SLUG)
             setattr(menu, self.related_field, basecontent)
         return menu
 

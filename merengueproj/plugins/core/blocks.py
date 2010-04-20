@@ -38,7 +38,7 @@ class PortalMenuBlock(Block):
 
     @classmethod
     def render(cls, request, place):
-        portal_menu = Menu.objects.get(id=settings.MENU_PORTAL_ID)
+        portal_menu = Menu.objects.get(slug=settings.MENU_PORTAL_SLUG)
         return cls.render_block(request, template_name='core/block_portal_menu.html',
                                 block_title=_('Portal Menu'),
                                 context={'portal_menu': portal_menu})
