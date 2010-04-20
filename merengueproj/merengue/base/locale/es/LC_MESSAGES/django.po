@@ -418,7 +418,7 @@ msgstr "Le recomendamos"
 
 #: templates/base/content_admin_action.html:4
 msgid "Admin this content"
-msgstr "Administrar este comentario"
+msgstr "Administrar este contenido"
 
 #: templates/base/google_map.html:12
 msgid "See route"
