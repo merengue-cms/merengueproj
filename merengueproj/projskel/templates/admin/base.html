@@ -63,7 +63,7 @@
                 {% endfor %}
             </ul>
         {% block userlinks %}
-          {% if_can_access_transhette %}<a href="{% url transhette-home %}">Rosetta</a> / {% endif_can_access_transhette %}
+          {% if_can_access_transhette %}<a href="{% url transhette-home %}">Transhette</a> / {% endif_can_access_transhette %}
           {% url django-admindocs-docroot as docsroot %}
           {% if docsroot %}
             <a href="{{ docsroot }}">{% trans 'Documentation' %}</a> /
