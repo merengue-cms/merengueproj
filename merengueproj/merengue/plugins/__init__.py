@@ -1,8 +1,8 @@
 from django.conf import settings
+from django.utils.translation import ugettext
 
 from south.signals import post_migrate
 
-from merengue.plugins import models as plugin_models
 from merengue.plugins.models import RegisteredPlugin
 from merengue.plugins.utils import get_plugin_config
 from merengue.registry import register, is_registered
@@ -75,14 +75,19 @@ def enable_active_plugins():
 
 
 def active_default_plugins(*args, **kwargs):
-    if kwargs['sender'] == plugin_models:
+    if kwargs['app'] == 'section':
         interactive = kwargs.get('interactive', None)
-        if interactive:
-            for plugin_dir in settings.ACTIVED_DEFAULTS_PLUGINS:
-                plugin = register_plugin(plugin_dir)
-                plugin.installed = True
-                plugin.active = True
-                plugin.save()
+        for plugin_dir in settings.ACTIVED_DEFAULTS_PLUGINS:
+            # register the core plugin
+            plugin = register_plugin(plugin_dir)
+            plugin.installed = True
+            plugin.active = True
+            from merengue.section.models import Menu
+            portal_menu, created = Menu.objects.get_or_create(slug='portal_menu')
+            for lang_code, lang_text in settings.LANGUAGES:
+                setattr(portal_menu, 'name_%s' % lang_code, ugettext('portal menu'))
+            portal_menu.save()
+            plugin.save()
 
 
 post_migrate.connect(active_default_plugins)
