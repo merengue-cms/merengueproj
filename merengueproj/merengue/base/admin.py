@@ -761,7 +761,6 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
     edit_related = ()
     html_fields = ('description', )
     prepopulated_fields = {'slug': ('name_es', )}
-    exclude = ('main_image', )
     autocomplete_fields = {'tags': {'url': '/ajax/autocomplete/tags/base/basecontent/',
                                     'multiple': True,
                                     'multipleSeparator': " ",
