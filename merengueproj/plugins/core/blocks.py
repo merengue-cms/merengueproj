@@ -1,7 +1,8 @@
+from django.conf import settings
 from django.utils.translation import ugettext as _
 
 from merengue.block.blocks import Block
-from merengue.section.models import BaseSection
+from merengue.section.models import BaseSection, Menu
 from merengue.portal.models import PortalLink
 
 
@@ -29,6 +30,18 @@ class NavigationBlock(Block):
                                 block_title=_('Menu'),
                                 context={'sections': sections,
                                          'active_section': request.section})
+
+
+class PortalMenuBlock(Block):
+    name = 'portalmenu'
+    default_place = 'beforecontent'
+
+    @classmethod
+    def render(cls, request, place):
+        portal_menu = Menu.objects.get(id=settings.MENU_PORTAL_ID)
+        return cls.render_block(request, template_name='core/block_portal_menu.html',
+                                block_title=_('Portal Menu'),
+                                context={'portal_menu': portal_menu})
 
 
 class LinkBaseBlock(Block):

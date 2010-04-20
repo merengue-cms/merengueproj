@@ -31,6 +31,11 @@ def menu_tag(context, menu):
             'ancestors': ancestors}
 
 
+@register.inclusion_tag('section/menu_portal_tag.html', takes_context=True)
+def menu_portal_tag(context, menu):
+    return menu_tag(context, menu)
+
+
 @register.inclusion_tag('section/menu_sitemap_tag.html', takes_context=True)
 def menu_sitemap_tag(context, section, class_ul):
     new_context = {}

@@ -41,31 +41,40 @@ def document_section_view(request, section_slug, document_id, document_slug):
 
 
 def menu_section_view(request, section_slug, menu_slug):
-    section = get_object_or_404(BaseSection, slug=section_slug)
     menu = None
-    try:
-        menu = section.main_menu.get_descendants().get(slug=menu_slug)
-    except Menu.DoesNotExist:
-        raise Http404
+    if section_slug:
+        section = get_object_or_404(BaseSection, slug=section_slug)
+        try:
+            menu = section.main_menu.get_descendants().get(slug=menu_slug)
+        except Menu.DoesNotExist:
+            raise Http404
+    else:
+        try:
+            menu = Menu.objects.filter(main_menu_section__isnull=True).get(slug=menu_slug)
+        except Menu.DoesNotExist:
+            raise Http404
 
     link = menu.baselink.real_instance
     if isinstance(link, AbsoluteLink):
         return HttpResponseRedirect(link.url)
-    elif isinstance(link, ViewletLink):
+    else:
         context = {}
-        context['section'] = section.real_instance
+        if section_slug:
+            context['section'] = section.real_instance
         context['menu'] = menu
-        context['registered_viewlet'] = link.viewlet
-        context['base_template'] = 'base.html'
-        return render_to_response('section/viewlet_section_view.html', context,
-                                  context_instance=RequestContext(request))
-    elif isinstance(link, ContentLink):
-        content = link.content.get_real_instance()
-        context = {}
-        context['section'] = section.real_instance
-        context['menu'] = menu
-        context['base_template'] = getattr(content._meta, 'content_view_template')
-        return content_view(request, content, template_name='section/menu_section_view.html', extra_context=context)
+        if isinstance(link, ViewletLink):
+            context['registered_viewlet'] = link.viewlet
+            context['base_template'] = 'base.html'
+            return render_to_response('section/viewlet_section_view.html', context,
+                                    context_instance=RequestContext(request))
+        elif isinstance(link, ContentLink):
+            content = link.content.get_real_instance()
+            context['base_template'] = getattr(content._meta, 'content_view_template')
+            return content_view(request, content, template_name='section/menu_section_view.html', extra_context=context)
+
+
+def menu_view(request, menu_slug):
+    return menu_section_view(request, section_slug=None, menu_slug=menu_slug)
 
 
 def section_view_whitout_maincontent(request, context):

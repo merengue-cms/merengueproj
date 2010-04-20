@@ -102,7 +102,11 @@ class Menu(models.Model):
     def update_url(self):
         try:
             menus_ancestors = ('/').join([menu.slug for menu in self.get_ancestors()])
-            self.url = reverse('menu_section_view', args=(self.get_section().slug, menus_ancestors, self.slug))
+            section = self.get_section()
+            if section:
+                self.url = reverse('menu_section_view', args=(section.slug, menus_ancestors, self.slug))
+            else:
+                self.url = reverse('menu_view', args=(menus_ancestors, self.slug))
         except BaseLink.DoesNotExist:
             self.url = ''
         self.save()

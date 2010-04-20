@@ -5,7 +5,7 @@ from merengue.registry import params
 from merengue.section.admin import DocumentRelatedModelAdmin
 from merengue.section.models import Document
 
-from plugins.core.blocks import CoreMenuBlock, NavigationBlock, PrimaryLinksBlock, SecondaryLinksBlock
+from plugins.core.blocks import CoreMenuBlock, NavigationBlock, PrimaryLinksBlock, SecondaryLinksBlock, PortalMenuBlock
 
 
 class PluginConfig(Plugin):
@@ -18,13 +18,11 @@ class PluginConfig(Plugin):
 
     config_params = [
         params.Single(name='home_initial_content',
-                      label=_('home initial content'), default='1')
-    ]
-
+                      label=_('home initial content'), default='1')]
 
     @classmethod
     def get_blocks(cls):
-        return [CoreMenuBlock, NavigationBlock, PrimaryLinksBlock, SecondaryLinksBlock]
+        return [CoreMenuBlock, NavigationBlock, PrimaryLinksBlock, SecondaryLinksBlock, PortalMenuBlock]
 
     @classmethod
     def section_models(cls):

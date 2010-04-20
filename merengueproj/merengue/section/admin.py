@@ -17,8 +17,68 @@ from merengue.section.widgets import SearchFormOptionsWidget
 
 
 class MenuAdmin(BaseAdmin):
-    list_display = ('name', 'slug')
+    list_display = ('level', 'display_move_to', 'name', 'slug', )
+    list_display_links = ('name', )
     prepopulated_fields = {'slug': ('name_es', )}
+    ordering=('lft', )
+    actions = []
+    inherit_actions = False
+
+    def __init__(self, *args, **kwargs):
+        super(MenuAdmin, self).__init__(*args, **kwargs)
+        self.old_inline_instances = [instance for instance in self.inline_instances]
+
+    def display_move_to(self, menu):
+        hidden = u'<input type="hidden" class="thisMenu" name="next" value="%s" />' % menu.id
+        init_move = u'<a href="#" class="initMoveMenu" title="%(title)s">%(title)s</a>' % {'title': ugettext(u'Move this menu')}
+        cancel_move = u'<a href="#" class="cancelMoveMenu hide" title="%(title)s">%(title)s</a>' % {'title': ugettext(u'Cancel move')}
+        options = (
+            u'<li><a href="#" class="insertPrev" title="%(title)s">%(title)s</a></li>' % {'title': ugettext(u'Before')},
+            u'<li><a href="#" class="insertNext" title="%(title)s">%(title)s</a></li>' % {'title': ugettext(u'After')},
+            u'<li><a href="#" class="insertChild" title="%(title)s">%(title)s</a></li>' % {'title': ugettext(u'Child')},
+            )
+        options = u'<ul class="insertOptions hide">' + u''.join(options) + u'</ul>'
+        return mark_safe('%s%s%s%s' % (hidden, init_move, cancel_move, options))
+    display_move_to.allow_tags=True
+
+    def get_formsets(self, request, obj=None):
+        self.inline_instances = []
+        res = []
+        for inline in self.old_inline_instances:
+            formset = inline.get_formset(request, obj)
+            if formset:
+                self.inline_instances.append(inline)
+                res.append(formset)
+        return res
+
+    def move_menus(self, request):
+        source_id = request.GET.pop('source', None)
+        target_id = request.GET.pop('target', None)
+        movement = request.GET.pop('movement', None)
+        if not source_id and not target_id and not movement:
+            return
+
+        if source_id and target_id and movement:
+            query = self.queryset(request)
+            try:
+                source_menu = query.get(id=source_id[0])
+                target_menu = query.get(id=target_id[0])
+                source_menu.move_to(target_menu, movement[0])
+                return source_id[0]
+            except:
+                pass
+
+    def changelist_view(self, request, extra_context={}):
+        source = self.move_menus(request)
+        media = self.media
+        media.add_js([settings.MEDIA_URL + "merengue/js/jquery-1.4.2.min.js"])
+        media.add_js([settings.MEDIA_URL + "merengue/js/jquery-ui-1.8.dragdrop.min.js"])
+        media.add_js([settings.MEDIA_URL + "merengue/js/section/CollapsableMenuTree.js"])
+        media.add_js([settings.MEDIA_URL + "merengue/js/section/OrderableMenuTree.js"])
+        extra_context.update({'media': media.render(),
+                              'moved_source': source})
+        return super(MenuAdmin, self).changelist_view(
+                                                        request, extra_context)
 
 
 class BaseSectionAdmin(BaseOrderableAdmin):
@@ -206,7 +266,9 @@ class ContentLinkInline(BaseLinkInline):
         form = formset.form
         if 'content' in form.base_fields.keys():
             qs = form.base_fields['content'].queryset
-            qs = qs.filter(basesection=self.admin_model.basecontent)
+            admin_model = getattr(self, 'admin_model', None)
+            if admin_model:
+                qs = qs.filter(basesection=admin_model.basecontent)
             form.base_fields['content'].queryset = qs
         return formset
 
@@ -218,32 +280,8 @@ class ViewletLinkInline(BaseLinkInline):
     verbose_name_plural = _('Menu Viewlet Links')
 
 
-class BaseSectionMenuRelatedAdmin(RelatedModelAdmin):
+class BaseSectionMenuRelatedAdmin(MenuAdmin, RelatedModelAdmin):
     change_list_template = "admin/section/menu/change_list.html"
-    list_display = ('level', 'display_move_to', 'name', 'slug', )
-    list_display_links = ('name', )
-    prepopulated_fields = {'slug': ('name_es', )}
-    ordering=('lft', )
-    actions = []
-    inherit_actions = False
-    inlines = [AbsoluteLinkInline, ContentLinkInline, ViewletLinkInline]
-
-    def __init__(self, *args, **kwargs):
-        super(BaseSectionMenuRelatedAdmin, self).__init__(*args, **kwargs)
-        self.old_inline_instances = [instance for instance in self.inline_instances]
-
-    def display_move_to(self, menu):
-        hidden = u'<input type="hidden" class="thisMenu" name="next" value="%s" />' % menu.id
-        init_move = u'<a href="#" class="initMoveMenu" title="%(title)s">%(title)s</a>' % {'title': ugettext(u'Move this menu')}
-        cancel_move = u'<a href="#" class="cancelMoveMenu hide" title="%(title)s">%(title)s</a>' % {'title': ugettext(u'Cancel move')}
-        options = (
-            u'<li><a href="#" class="insertPrev" title="%(title)s">%(title)s</a></li>' % {'title': ugettext(u'Before')},
-            u'<li><a href="#" class="insertNext" title="%(title)s">%(title)s</a></li>' % {'title': ugettext(u'After')},
-            u'<li><a href="#" class="insertChild" title="%(title)s">%(title)s</a></li>' % {'title': ugettext(u'Child')},
-            )
-        options = u'<ul class="insertOptions hide">' + u''.join(options) + u'</ul>'
-        return mark_safe('%s%s%s%s' % (hidden, init_move, cancel_move, options))
-    display_move_to.allow_tags=True
 
     def get_menu(self, request, basecontent=None):
         return super(BaseSectionMenuRelatedAdmin, self).queryset(request, basecontent).get()
@@ -251,13 +289,6 @@ class BaseSectionMenuRelatedAdmin(RelatedModelAdmin):
     def get_section_docs(self, request):
         section = getattr(self.get_menu(request), self.related_field)
         return section.content_set.all()
-
-    def queryset(self, request, basecontent=None):
-        menu = self.get_menu(request, basecontent)
-        if not menu:
-            return Menu.tree.get_empty_query_set()
-        else:
-            return Menu.tree.filter(tree_id=menu.tree_id, level__gt=0)
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(BaseSectionMenuRelatedAdmin, self).get_form(
@@ -268,15 +299,12 @@ class BaseSectionMenuRelatedAdmin(RelatedModelAdmin):
             form.base_fields['parent'].queryset = qs
         return form
 
-    def get_formsets(self, request, obj=None):
-        self.inline_instances = []
-        res = []
-        for inline in self.old_inline_instances:
-            formset = inline.get_formset(request, obj)
-            if formset:
-                self.inline_instances.append(inline)
-                res.append(formset)
-        return res
+    def queryset(self, request, basecontent=None):
+        menu = self.get_menu(request, basecontent)
+        if not menu:
+            return Menu.tree.get_empty_query_set()
+        else:
+            return Menu.tree.filter(tree_id=menu.tree_id, level__gt=0)
 
     def save_model(self, request, obj, form, change):
         if not obj.parent:
@@ -284,40 +312,35 @@ class BaseSectionMenuRelatedAdmin(RelatedModelAdmin):
         super(BaseSectionMenuRelatedAdmin, self).save_model(
                                                 request, obj, form, change)
 
-    def move_menus(self, request):
-        source_id = request.GET.pop('source', None)
-        target_id = request.GET.pop('target', None)
-        movement = request.GET.pop('movement', None)
-        if not source_id and not target_id and not movement:
-            return
-
-        if source_id and target_id and movement:
-            query = self.queryset(request)
-            try:
-                source_menu = query.get(id=source_id[0])
-                target_menu = query.get(id=target_id[0])
-                source_menu.move_to(target_menu, movement[0])
-                return source_id[0]
-            except:
-                pass
-
-    def changelist_view(self, request, extra_context={}):
-        source = self.move_menus(request)
-        media = self.media
-        media.add_js([settings.MEDIA_URL + "merengue/js/jquery-1.4.2.min.js"])
-        media.add_js([settings.MEDIA_URL + "merengue/js/jquery-ui-1.8.dragdrop.min.js"])
-        media.add_js([settings.MEDIA_URL + "merengue/js/section/CollapsableMenuTree.js"])
-        media.add_js([settings.MEDIA_URL + "merengue/js/section/OrderableMenuTree.js"])
-        extra_context.update({'media': media.render(),
-                              'moved_source': source})
-        return super(BaseSectionMenuRelatedAdmin, self).changelist_view(
-                                                        request, extra_context)
-
 
 class MainMenuRelatedAdmin(BaseSectionMenuRelatedAdmin):
     tool_name = 'mainmenu'
     tool_label = _('main menu')
     related_field = 'main_menu_section'
+
+
+class PortalMenuAdmin(MenuAdmin):
+    tool_name = 'portalmenu'
+    tool_label = _('portal menu')
+    related_field = 'parent'
+    inlines = [AbsoluteLinkInline, ContentLinkInline, ViewletLinkInline]
+
+    def queryset(self, request, basecontent=None):
+        basecontent = Menu.tree.get(id=settings.MENU_PORTAL_ID)
+        return basecontent.get_descendants()
+
+    def save_form(self, request, form, change):
+        menu = form.save(commit=False)
+        if not getattr(menu, self.related_field, None):
+            basecontent = Menu.objects.get(id=settings.MENU_PORTAL_ID)
+            setattr(menu, self.related_field, basecontent)
+        return menu
+
+    def save_model(self, request, obj, form, change):
+        if not obj.parent:
+            obj.parent = self.get_menu(request)
+        super(PortalMenuAdmin, self).save_model(
+                                                request, obj, form, change)
 
 
 class AppSectionAdmin(BaseSectionAdmin):
@@ -367,6 +390,7 @@ class DocumentSectionRelatedModelAdmin(RelatedModelAdmin):
 def register(site):
     site.register(Section, SectionAdmin)
     site.register(AppSection, AppSectionAdmin)
+    site.register(Menu, PortalMenuAdmin)
     site.register_related(Document, DocumentRelatedModelAdmin, related_to=Section)
     site.register_related(CustomStyle, CustomStyleRelatedModelAdmin, related_to=Section)
     site.register_related(Menu, MainMenuRelatedAdmin, related_to=Section)
