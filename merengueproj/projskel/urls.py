@@ -48,6 +48,8 @@ urlpatterns = patterns('',
     (r'^multimedia/', include('merengue.multimedia.urls')),
     # section
     (r'^sections/', include('merengue.section.urls')),
+    # menu
+    url(r'^menu(/[\w\-]+)*/(?P<menu_slug>[\w-]+)/$', 'merengue.section.views.menu_view', name='menu_view'),
     # tinyimages
     (r'^tinyimages/', include('tinyimages.urls')),
     # other URLs
@@ -66,4 +68,4 @@ urlpatterns = patterns('',
 
 if settings.USE_GIS:
     # places
-    urlpatterns += patterns('', (r'^places/', include('merengue.places.urls')),)
+    urlpatterns += patterns('', (r'^places/', include('merengue.places.urls')), )

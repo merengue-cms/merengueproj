@@ -1,4 +1,4 @@
-
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
@@ -44,15 +44,13 @@ def menu_section_view(request, section_slug, menu_slug):
     menu = None
     if section_slug:
         section = get_object_or_404(BaseSection, slug=section_slug)
-        try:
-            menu = section.main_menu.get_descendants().get(slug=menu_slug)
-        except Menu.DoesNotExist:
-            raise Http404
+        root_menu = section.main_menu
     else:
-        try:
-            menu = Menu.objects.filter(main_menu_section__isnull=True).get(slug=menu_slug)
-        except Menu.DoesNotExist:
-            raise Http404
+        root_menu = Menu.objects.get(slug=settings.MENU_PORTAL_SLUG)
+    try:
+        menu = root_menu.get_descendants().get(slug=menu_slug)
+    except Menu.DoesNotExist:
+        raise Http404
 
     link = menu.baselink.real_instance
     if isinstance(link, AbsoluteLink):

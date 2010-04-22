@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import permalink
 from django.db.models.signals import post_save
+from django.template import defaultfilters
 from django.utils.translation import ugettext_lazy as _
 
 import mptt
@@ -101,12 +102,13 @@ class Menu(models.Model):
 
     def update_url(self):
         try:
-            menus_ancestors = ('/').join([menu.slug for menu in self.get_ancestors()])
+            menus_ancestors = [menu.slug for menu in self.get_ancestors()][1:] # first is a dummy root menu and we discard it
+            ancestors_path = menus_ancestors and '/%s' % '/'.join(menus_ancestors) or ''
             section = self.get_section()
             if section:
-                self.url = reverse('menu_section_view', args=(section.slug, menus_ancestors, self.slug))
+                self.url = reverse('menu_section_view', args=(section.slug, ancestors_path, self.slug))
             else:
-                self.url = reverse('menu_view', args=(menus_ancestors, self.slug))
+                self.url = reverse('menu_view', args=(ancestors_path, self.slug))
         except BaseLink.DoesNotExist:
             self.url = ''
         self.save()
@@ -531,8 +533,11 @@ def create_menus(sender, **kwargs):
     instance = kwargs.get('instance')
 
     if created:
+        menu_name = 'Main menu of %s' % unicode(instance)
         instance.main_menu = Menu.objects.create(
-                        name_es='Main menu of %s' % unicode(instance))
+            name_es=menu_name,
+            slug=defaultfilters.slugify(menu_name),
+        )
         instance.save()
 
 post_save.connect(create_menus, sender=Section, dispatch_uid='SectionMenusSignalDispatcher')
