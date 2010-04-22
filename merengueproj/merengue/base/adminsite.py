@@ -7,13 +7,15 @@ from django.contrib.admin import ModelAdmin
 from django.contrib.admin.sites import AlreadyRegistered
 from django.contrib.admin.sites import AdminSite as DjangoAdminSite
 from django.contrib.contenttypes.models import ContentType
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.shortcuts import render_to_response
 from django.utils.functional import update_wrapper
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
 
 from merengue.base.models import BaseContent
+from merengue.base.adminforms import UploadConfigForm
+from cmsutils.log import send_info, send_error
 
 OBJECT_ID_PREFIX = 'base_object_id_'
 MODEL_ADMIN_PREFIX = 'base_model_admin_'
@@ -61,6 +63,12 @@ class BaseAdminSite(DjangoAdminSite):
             url(r'^admin_redirect/(?P<content_type_id>\d+)/(?P<object_id>.+)/$',
                 self.admin_view(self.admin_redirect),
                 name='admin_redirect'),
+            url(r'^siteconfig/$',
+                self.admin_view(self.site_configuration),
+                name='site_configuration'),
+            url(r'^siteconfig/save/$',
+                self.admin_view(self.save_configuration),
+                name='save_configuration'),
         )
         # related url definitions
         for model, model_admin in self._registry.iteritems():
@@ -143,6 +151,33 @@ class BaseAdminSite(DjangoAdminSite):
                             break
         return HttpResponseRedirect('%s%s/%s/%d/' % (admin_prefix, model._meta.app_label,
                                     model._meta.module_name, content.id))
+
+    def site_configuration(self, request):
+        if request.method == 'POST':
+            form = UploadConfigForm(request.POST, request.FILES)
+            if form.is_valid():
+                # llamar restore_config
+                # redireccionar a /siteconfig/ con mensaje de 'configuracion guardada' con send_info
+                send_info(request, _('Configuracion guardada satisfactoriamente.'))
+                HttpResponseRedirect('siteconfig/')
+        else:
+            form = UploadConfigForm()
+            # anyadir context = form. importar form
+            return render_to_response('admin/siteconfig.html', {'form': form})
+
+    def save_configuration(self, request):
+        #llamar a la funcion "save_config" para que devuelva el path del fichero .zip
+        #path = save_config
+        path = '/home/oscar/prueba.zip'
+        if path:
+            #return ZIP
+            response = HttpResponse(path, mimetype='application/x-zip-compressed')
+            response['Content-Disposition'] = 'attachment; filename=prueba.zip'
+            return response
+
+
+        else:
+            send_error(request, _('No PATH'))
 
     def index(self, request, extra_context=None):
         """ merengue admin index page. It's a friendly admin page """

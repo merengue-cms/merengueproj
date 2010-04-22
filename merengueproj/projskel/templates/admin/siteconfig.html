@@ -1,0 +1,21 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<div id="content-main">
+<div id="content-merengue">
+    <div class="module-merengue" id="contentmanagement">
+      <h1>{% trans "Save/Restore configuration" %}</h1>
+      <p>{% trans "Upload a configuration" %}</p>
+    </div>
+</div>
+</div>
+
+<form enctype="multipart/form-data" method="post" action=".">
+    <label for="id_file">{% trans "Select a .zip file:" %}</label>
+    {{ form.file }}
+    <p><input type="Submit" value="Submit" /></p>
+</form>
+
+{% endblock %}
