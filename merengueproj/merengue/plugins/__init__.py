@@ -83,7 +83,7 @@ def active_default_plugins(*args, **kwargs):
             plugin.installed = True
             plugin.active = True
             from merengue.section.models import Menu
-            portal_menu, created = Menu.objects.get_or_create(slug='portal_menu')
+            portal_menu, created = Menu.objects.get_or_create(slug='')
             for lang_code, lang_text in settings.LANGUAGES:
                 setattr(portal_menu, 'name_%s' % lang_code, ugettext('portal menu'))
             portal_menu.save()
