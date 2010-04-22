@@ -12,13 +12,15 @@ register = template.Library()
 
 
 @register.inclusion_tag('section/menu_tag.html', takes_context=True)
-def menu_tag(context, menu):
+def menu_tag(context, menu, descendants=None):
     ancestors = []
     menu_item = None
+    if descendants is None:
+        descendants = menu.get_descendants()
     try:
         menuitem_slug = context['request'].META['PATH_INFO'].split('/')[-2]
         try:
-            menu_item = menu.get_descendants().get(slug=menuitem_slug)
+            menu_item = descendants.get(slug=menuitem_slug)
             ancestors = menu_item.get_ancestors()[1:]
         except Menu.DoesNotExist:
             pass

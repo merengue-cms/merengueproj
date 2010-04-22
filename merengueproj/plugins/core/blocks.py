@@ -12,11 +12,16 @@ class CoreMenuBlock(Block):
 
     @classmethod
     def render(cls, request, place):
-        if not request.section:
+        section = request.section
+        main_menu = section.main_menu
+        descendants = main_menu.get_descendants()
+        if not request.section or not descendants:
             return '' # renders nothing
         return cls.render_block(request, template_name='core/block_menu.html',
                                 block_title=_('Menu'),
-                                context={'section': request.section})
+                                context={'section': section,
+                                         'menu': main_menu,
+                                         'descendants': descendants})
 
 
 class NavigationBlock(Block):
@@ -26,8 +31,10 @@ class NavigationBlock(Block):
     @classmethod
     def render(cls, request, place):
         sections = BaseSection.objects.published()
+        if not sections:
+            return '' # renders nothing
         return cls.render_block(request, template_name='core/block_navigation.html',
-                                block_title=_('Menu'),
+                                block_title=_('Navigation'),
                                 context={'sections': sections,
                                          'active_section': request.section})
 
