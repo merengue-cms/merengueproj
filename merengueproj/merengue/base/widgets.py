@@ -187,9 +187,14 @@ class RelatedBaseContentWidget(RelatedFieldWidgetWrapper):
     def render(self, name, value, *args, **kwargs):
         output = u'<div style="float: left;" class="RelatedBaseContentWidget">'
         if self.hide_original_widget:
-            output += u'<div style="padding-top: 3px; font-size:12px;">'
+            output += u'<div style="padding-top: 3px; font-size:12px; line-height: 16px;">'
             output += u'<span class="selected_content">'
             output += smart_unicode(value)
+            output += u'</span>'
+            output += u'<span class="remove_current" style="display: none; margin: 0px 1em;">'
+            output += u'<img style="cursor: pointer;" src="%(media)smerengue/img/admin/cancel.png" alt="%(title)s" title="%(title)s" />' % {
+                'title': _(u'Remove'),
+                'media': settings.MEDIA_URL}
             output += u'</span>'
             output += u'</div>'
             output += u'<div style="display: none;">'
