@@ -130,19 +130,15 @@ class Menu(models.Model):
             return self.parent.get_section()
 
     def get_breadcrumbs(self):
-        bc = [(self.get_absolute_url(), unicode(self))]
-        parent = self.parent
-        while parent is not None and parent.parent is not None:
+        """ Menu breadcrumbs (not included itself) """
+        bc = []
+        for parent in self.get_ancestors()[1:]:
             url = parent.get_absolute_url()
-            if url is None: # the first menu node does not have link
-                break
             bc.append((url, unicode(parent)))
-            parent = parent.parent
 
         section = self.get_section()
-        bc.append((section.get_absolute_url(), unicode(section)))
-
-        bc.reverse()
+        if section:
+            bc.insert(0, (section.get_absolute_url(), unicode(section)))
         return bc
 
 try:
