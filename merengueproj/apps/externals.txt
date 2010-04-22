@@ -18,3 +18,7 @@ pagination http://django-pagination.googlecode.com/svn/trunk/pagination
 template_utils http://django-template-utils.googlecode.com/svn/trunk/template_utils
 mptt http://django-mptt.googlecode.com/svn/trunk/mptt
 autoreports http://svnpub.yaco.es/djangoapps/autoreports/trunk/autoreports
+cssutils http://cssutils.googlecode.com/svn/trunk/src/cssutils/
+encutils http://cssutils.googlecode.com/svn/trunk/src/encutils/
+
+
