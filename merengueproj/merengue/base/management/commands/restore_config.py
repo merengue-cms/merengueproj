@@ -79,7 +79,7 @@ class Command(LabelCommand, MerengueCommand):
         try:
             models = set()
             for model_to_restore, file_name in models_to_restore:
-                model_to_restore.objects.all().delete() # we first delete all possible content
+                model_to_restore.objects.all().delete() # we first delete all objects to avoid duplication problems
                 format = 'json'
                 fixtures_file_name = "%s.%s" % (file_name, format)
                 fixtures_data = zip_config.read(fixtures_file_name)
