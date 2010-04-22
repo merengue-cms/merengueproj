@@ -13,6 +13,8 @@ class CoreMenuBlock(Block):
     @classmethod
     def render(cls, request, place):
         section = request.section
+        if not section:
+            return '' # renders nothing
         main_menu = section.main_menu
         descendants = main_menu.get_descendants()
         if not request.section or not descendants:
