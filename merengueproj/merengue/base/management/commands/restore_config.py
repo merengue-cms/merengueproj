@@ -43,12 +43,11 @@ class Command(LabelCommand, MerengueCommand):
         if "MERENGUE_VERSION" != version:
             raise CommandError("Merengue version error")
         models_to_restore = (
-            (RegisteredItem, "registry"),
+            (RegisteredItem, "registry"), # this has to be first in tuple
             (RegisteredAction, "actions"),
             (RegisteredBlock, "blocks"),
             (RegisteredPlugin, "plugins"),
             (Theme, "themes"),
-            (RegisteredItem, "registry"),
         )
         self.restore_models(zip_config, models_to_restore)
         if restore_all:
@@ -79,8 +78,8 @@ class Command(LabelCommand, MerengueCommand):
         sid = transaction.savepoint()
         try:
             models = set()
-            for model_to_restore in models_to_restore:
-                file_name = model_to_restore[1]
+            for model_to_restore, file_name in models_to_restore:
+                model_to_restore.objects.all().delete() # we first delete all possible content
                 format = 'json'
                 fixtures_file_name = "%s.%s" % (file_name, format)
                 fixtures_data = zip_config.read(fixtures_file_name)
