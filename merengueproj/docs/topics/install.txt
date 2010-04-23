@@ -41,8 +41,6 @@ Dependencies: ``python-imaging``, ``python-beautifulsoup``, ``johnny-cache``
 
         $ apt-get install python-beautifulsoup
 
-* ``johnny-cache``: Django app to speedup merengue providing a clever 
-=======
 * ``johnny-cache``: Django app to speedup merengue providing a clever
   cache mechanism.
 
