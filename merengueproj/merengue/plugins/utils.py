@@ -39,9 +39,6 @@ def install_plugin(instance, app_name):
             enable_plugin(app_name)
         else:
             disable_plugin(app_name)
-        # app_directories template loader loads app_template_dirs in
-        # compile time, so we have to load it again.
-        reload_app_directories_template_loader()
 
 
 def get_plugins_dir():
@@ -142,6 +139,9 @@ def enable_plugin(plugin_name, register=True):
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
     registered_plugin = plugin_config.get_registered_item()
     registered_plugin.activate()
+    # app_directories template loader loads app_template_dirs in
+    # compile time, so we have to load it again.
+    reload_app_directories_template_loader()
 
 
 def disable_plugin(plugin_name, unregister=True):
@@ -160,6 +160,9 @@ def disable_plugin(plugin_name, unregister=True):
         unregister_plugin_templatetags(plugin_name)
         unregister_plugin_section_models(plugin_name)
     unregister_plugin_urls(plugin_name)
+    # app_directories template loader loads app_template_dirs in
+    # compile time, so we have to load it again.
+    reload_app_directories_template_loader()
 
 
 def register_plugin_urls(plugin_name):
