@@ -987,8 +987,17 @@ class RelatedModelAdmin(BaseAdmin):
                               'selected': self.tool_name})
         return extra_context
 
+    def is_created_one_to_one_object(self):
+        module_name = self.model._meta.module_name
+        return getattr(self.basecontent, module_name, None)
+
     def changelist_view(self, request, extra_context=None):
         extra_context = self._update_extra_context(request, extra_context)
+        if self.one_to_one:
+            obj_created = self.is_created_one_to_one_object()
+            if obj_created:
+                return HttpResponseRedirect('%s%s' % (request.get_full_path(), obj_created.pk))
+            return HttpResponseRedirect('%sadd' % request.get_full_path())
         return super(RelatedModelAdmin, self).changelist_view(request, extra_context)
 
     def queryset(self, request, basecontent=None):
@@ -1000,6 +1009,10 @@ class RelatedModelAdmin(BaseAdmin):
 
     def add_view(self, request, form_url='', extra_context=None):
         extra_context = self._update_extra_context(request, extra_context)
+        if self.one_to_one:
+            obj_created = self.is_created_one_to_one_object()
+            if obj_created:
+                return HttpResponseRedirect('%s../%s' % (request.get_full_path(), obj_created.pk))
         return super(RelatedModelAdmin, self).add_view(request, form_url, extra_context)
 
     def change_view(self, request, object_id, extra_context=None):
