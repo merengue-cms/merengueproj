@@ -521,7 +521,10 @@ class DocumentSection(models.Model):
 
 
 class CustomStyle(models.Model):
-    pass
+
+    css_chunk = models.TextField(
+        verbose_name=_('css chunk'),
+    )
 
 
 def create_menus(sender, **kwargs):

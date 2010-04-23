@@ -9,6 +9,13 @@
   {% endif %}
 {% endblock %}
 
+{% block cssstyles %}
+    {{ block.super }}
+    <style type="text/css">
+        {% include "section/inc.customstyle.html" %}
+    </style>
+{% endblock %}
+
 {% block extrabreadcrumbs %}
   {% block beforecontentbreadcrumbs %}
   {% endblock %}

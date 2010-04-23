@@ -9,6 +9,7 @@ from django.utils.translation import ugettext
 from merengue.base.admin import BaseAdmin, BaseContentAdmin, RelatedModelAdmin, \
                                 BaseOrderableAdmin, OrderableRelatedModelAdmin
 from merengue.base.admin import set_field_read_only
+from merengue.section.fields import CSSValidatorField
 from merengue.section.models import (Menu, Section, AppSection,
                                      BaseLink, AbsoluteLink, ContentLink, ViewletLink,
                                      Document, DocumentSection, CustomStyle,
@@ -83,6 +84,12 @@ class CustomStyleRelatedModelAdmin(RelatedModelAdmin):
     tool_label = _('custom style')
     related_field = 'basesection'
     one_to_one = True
+
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        formfield = super(CustomStyleRelatedModelAdmin, self).formfield_for_dbfield(db_field, **kwargs)
+        if db_field.name == 'css_chunk':
+            formfield = CSSValidatorField(db_field.name, kwargs['request'])
+        return formfield
 
     def has_delete_permission(self, request, obj=None):
         return False

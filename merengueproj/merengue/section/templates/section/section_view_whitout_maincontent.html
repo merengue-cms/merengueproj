@@ -7,6 +7,13 @@
     <a href="." title="{{ section }}">{% cutrender %}{{ section }}{% endcutrender %}</a>
 {% endblock %}
 
+{% block cssstyles %}
+    {{ block.super }}
+    <style type="text/css">
+        {% include "section/inc.customstyle.html" %}
+    </style>
+{% endblock %}
+
 {% block content %}
 <div id="content-title">
   <h1>{{ section }}</h1>
