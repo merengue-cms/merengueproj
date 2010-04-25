@@ -70,21 +70,15 @@ project you want implement:
 Djando install
 --------------
 
-Merengue use a specific django version. We download the django version
-from svn:
+Merengue use a Django 1.1.1 version (latest official version). You can install
+it with these instructions:
 
     .. code-block:: bash
 
-        $ mkdir -p $SVNDIR
-        $ cd $SVNDIR
-        $ svn checkout http://code.djangoproject.com/svn/django/tags/releases/1.1 django_src
-
-You can install it in your operating system using setup.py:
-
-    .. code-block:: bash
-
-        $ cd $SVNDIR/django_src/
-        $ python setup.py install
+        $ wget http://www.djangoproject.com/download/1.1.1/tarball/
+        $ tar xzvf Django-1.1.1.tar.gz
+        $ cd Django-1.1.1
+        $ sudo python setup.py install
 
 But if you have django installed using package, you can add it to your
 python path:

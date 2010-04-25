@@ -11,6 +11,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.management import call_command
 from django.core.exceptions import ObjectDoesNotExist, SuspiciousOperation
 from django.db.models import signals, permalink
+from django.db.models.fields.related import OneToOneRel
 from django.db.models.query import delete_objects, CollectedObjects
 from django.db.models.signals import post_save
 from django.template.loader import render_to_string
@@ -550,34 +551,44 @@ def _collect_sub_objects(self, seen_objs, parent=None, nullable=False):
 
     When done, seen_objs.items() will be in the format:
         [(model_class, {pk_val: obj, pk_val: obj, ...}),
-         (model_class, {pk_val: obj, pk_val: obj, ...}), ...]
+            (model_class, {pk_val: obj, pk_val: obj, ...}), ...]
     """
     pk_val = self._get_pk_val()
-    if seen_objs.add(self.__class__, pk_val, self, parent, nullable):
+    if seen_objs.add(self.__class__, pk_val, self,
+                        type(parent), parent, nullable):
         return
 
     for related in self._meta.get_all_related_objects():
         rel_opts_name = related.get_accessor_name()
-        field = related.field
-        delete_cascade = getattr(field, 'delete_cascade', True)
+        delete_cascade = getattr(related.field, 'delete_cascade', True)
         if not delete_cascade:
             continue
-        if isinstance(related.field.rel, models.OneToOneRel):
+        if isinstance(related.field.rel, OneToOneRel):
             try:
                 sub_obj = getattr(self, rel_opts_name)
             except ObjectDoesNotExist:
                 pass
             else:
-                sub_obj._collect_sub_objects(seen_objs, self.__class__, related.field.null)
+                sub_obj._collect_sub_objects(seen_objs, self, related.field.null)
         else:
-            for sub_obj in getattr(self, rel_opts_name).all():
-                sub_obj._collect_sub_objects(seen_objs, self.__class__, related.field.null)
+            # To make sure we can access all elements, we can't use the
+            # normal manager on the related object. So we work directly
+            # with the descriptor object.
+            for cls in self.__class__.mro():
+                if rel_opts_name in cls.__dict__:
+                    rel_descriptor = cls.__dict__[rel_opts_name]
+                    break
+            else:
+                raise AssertionError("Should never get here.")
+            delete_qs = rel_descriptor.delete_manager(self).all()
+            for sub_obj in delete_qs:
+                sub_obj._collect_sub_objects(seen_objs, self, related.field.null)
 
     # Handle any ancestors (for the model-inheritance case). We do this by
     # traversing to the most remote parent classes -- those with no parents
     # themselves -- and then adding those instances to the collection. That
     # will include all the child instances down to "self".
-    parent_stack = self._meta.parents.values()
+    parent_stack = [p for p in self._meta.parents.values() if p is not None]
     while parent_stack:
         link = parent_stack.pop()
         parent_obj = getattr(self, link.name)
