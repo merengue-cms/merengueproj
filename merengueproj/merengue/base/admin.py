@@ -1054,7 +1054,7 @@ class OrderableRelatedModelAdmin(RelatedModelAdmin):
             neworder_list = request.POST.get('neworder', None)
             page = request.GET.get('p', 0)
             if neworder_list is None:
-                return super(BaseOrderableAdmin, self).changelist_view(request, extra_context)
+                return super(OrderableRelatedModelAdmin, self).changelist_view(request, extra_context)
             neworder_list = neworder_list.split(',')
             items = self.queryset(request).filter(id__in=neworder_list)
             for item in items:
