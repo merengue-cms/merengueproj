@@ -360,7 +360,7 @@ compile:
          $ tar xzf gdal-x.x.x.tar.gz
          $ cd gdal-x.x.x
          $ ./configure
-         $ make $ Go get some coffee, this takes a while.
+         $ make # Go get some coffee, this takes a while.
          $ sudo make install
          $ cd ..
 
@@ -431,9 +431,9 @@ included).
 Upgrading merengue models in development mode
 =============================================
 
-If you are in development mode, when you update merengue code maybe models can
-change. For upgrading models after a code update, you can use south ``migrate``
-command as follows:
+If your merengue project is in development mode, when you update merengue code
+maybe models can change. For upgrading models after a code update, you can use
+south ``migrate`` command as follows:
 
     .. code-block:: bash
 
