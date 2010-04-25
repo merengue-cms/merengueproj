@@ -6,17 +6,19 @@ How to install Merengue
 
 This document will get you up and running with Merengue.
 
-Directories preparation
+.. admonition:: Conventions
+
+    We must have a convention about your code parent folder, used both for
+    merengue and for your project. In example would be a ``src`` directory
+    below your home directory. Then you will export ``SRCDIR`` environment:
+
+    .. code-block:: bash
+
+        $ export SRCDIR=$HOME/src
+
+
+Installing dependencies
 =======================
-
-We must have at least two directories in our computer. In the process
-we use export command to define it.
-
-* One to download subversion external projects: ``export SVNDIR=$HOME/src/SVN``
-* Another one for merengue project: ``export SRCDIR=$HOME/projects``
-
-Previous install
-================
 
 This documents describe which are the project dependencies and how to
 install in a ubuntu/debian based distribution.
@@ -48,8 +50,9 @@ Dependencies: ``python-imaging``, ``python-beautifulsoup``, ``johnny-cache``
 
         $ easy_install johnny-cache
 
-Recommended
------------
+
+Recommended dependencies
+------------------------
 
 * ``ipython``: a python shell with auto complete, help, etc.
 
@@ -57,18 +60,9 @@ Recommended
 
         $ apt-get install ipython
 
-Install modes
--------------
 
-There are two merengue install method, according to the type of CMS
-project you want implement:
-
-* Producction mode: using a stable freeze merengue version.
-
-* Development mode: using the merengue svn trunk version.
-
-Djando install
---------------
+Installing Django
+=================
 
 Merengue use Django 1.1.1 version (latest official version). You can install
 it with these instructions:
@@ -99,7 +93,7 @@ path to use it:
 
 
 Installing merengue
--------------------
+===================
 
 Download the project repository (not necessary, because you are
 reading that, you downloaded it before):
@@ -113,22 +107,30 @@ reading that, you downloaded it before):
 Merengue project creation
 -------------------------
 
+You've got two options to start a new merengue project: production mode and
+development mode.
+
+In production mode, project will contain a freezed merengue version (it will be
+copied). So, if you are using merengue subversion code, any following updates
+will not affect to your project.
+
+In development mode, project will contain symbolic links to merengue code. So,
+if you are using merengue subversion code, your project will be affected by any
+later merengue updates (new features, new fixes or new possible errors or
+incompatible changes).
+
+* Project creation in *production mode*:
+
     .. code-block:: bash
 
-        $ cd $SRCDIR/
-
-* Production mode:
-
-    .. code-block:: bash
-
-        $ ./merengueproj/bin/merengue-admin.py startproject myproject
+        $ $SRCDIR/merengueproj/bin/merengue-admin.py startproject myproject
 
 
-* Development mode:
+* Project creation in *development mode*:
 
     .. code-block:: bash
 
-        $ ./merengueproj/bin/merengue-admin.py startproject myproject --develop
+        $ $SRCDIR/merengueproj/bin/merengue-admin.py startproject myproject --develop
 
 
 Database configuration
@@ -153,51 +155,67 @@ following parameters:
 You can use all database engine supported by django
 http://docs.djangoproject.com/en/1.1/ref/settings/#database-engine
 
-Creating the project database (postgresql):
--------------------------------------------
+.. admonition:: postgresql as convention database
 
-We suppose that your use has superadmin permissions in postgresql. If
-not, you can do it:
+    Next steps will consider postgresql as choiced database engine.
+    Other engines can be used, but you have to adapt instructions to the
+    specific database engine commands.
+
+
+Creating the project database
+-----------------------------
+
+.. admonition:: Note
+
+    We suppose that your user has superadmin permissions in postgresql.
 
     .. code-block:: bash
 
-        $ sudo su postgres
-        $ createuser yourusername # when ask say yes to be a superadmin
-        $ exit
-
-We set "myproject" password and make that users superuser, necessary
-for exec portal test.
-
-    .. code-block:: bash
-
-        $ createuser myproject -P
+        $ createuser myproject
         $ createdb --owner=myproject myproject
 
-Building the initial database:
-----------------------------------
+We have to permit connections to database from local computer. Editing
+/etc/postgresql/X.X/main/pg_hba.conf adding the following line (not at
+the end):
 
-The created database is empty. We need to build the data model and add
-minimal initial data.
+    .. code-block:: bash
 
-You can do it with that command:
+        local myproject myproject trust
+        local test_myproject myproject trust # necessary for tests
+
+Restart postgresql and check access with this command:
+
+    .. code-block:: bash
+
+        $ psql myproject -U myproject
+
+
+Building initial merengue models
+--------------------------------
+
+You need build merengue initial models with these two commands:
 
     .. code-block:: bash
 
         $ ./manage.py syncdb
+        $ ./manage.py migrate
 
-You can ignore the creation of superuser because it will be created
-with fixtures.
+You can ignore the creation of superuser because a user named ``admin`` with
+``admin`` password will be created automatically.
+
 
 View the site
 -------------
+
+Go to our project directory (``$SRCDIR/myproject``). Test that django
+development server runs ok:
 
     .. code-block:: bash
 
         $ ./manage.py runserver
 
-
 Open the web browser and go to http://localhost:8000/admin/ and check
-that the web is running successfully.
+that the admin web interface is running successfully.
 
 To see the web public version, we can access to http://localhost:8000/
 
@@ -208,42 +226,29 @@ Default admin interface user:
     user: admin
     password: admin
 
-.. admonition: Note
 
-    It's necessary to put the end ``/`` in urls
-
-
-More information
-================
-
-Activate the manage.py auto completion
---------------------------------------
-
-Copy the file ``django_bash_completion`` in ``/etc``:
-
-    .. code-block:: bash
-
-        $ sudo cp $SVNDIR/django_src/extras/django_bash_completion /etc
-
-We activate the auto complete including in file ``$HOME/.bashrc`` the following
-line:
-
-    .. code-block:: bash
-
-        if [ -f /etc/django_bash_completion ]; then
-          . /etc/django_bash_completion
-        fi
-
-
-=====================
 Installation with GIS
 =====================
 
-If you want to install with GIS support it's necessary some specific
-installations and configurations.
+Merengue CMS has built-in GIS features disabled by default.
+
+If you want add GIS support to your merengue project it's necessary some
+specific installations and configurations. You can skip this section if GIS is
+not needed for your project.
+
+
+Settings changes
+----------------
+
+For use GIS it's necessary to change one line to your project ``settings.py``:
+
+    .. code-block:: python
+
+       USE_GIS = True
+
 
 Previous install
-================
+----------------
 
 Apart from the previous dependencies if you want to use GIS there are
 more dependencies.
@@ -370,43 +375,9 @@ compile:
 .. _`PostGIS`: http://postgis.refractions.net/
 .. _`GDAL`: http://trac.osgeo.org/gdal/
 
-Settings
---------
 
-For use GIS it's necessary to add some lines to settings.py:
-
-    .. code-block:: python
-
-       USE_GIS = True
-       INSTALLED_APPS += ('django.contrib.gis', 'merengue.places')
-
-Database configuration
-----------------------
-
-It's necessary configure the database changing ``DATABASE_*`` parameters
-in the configuration file ``myproject/settings.py``, created with
-``merengue-admin.py``
-
-Let's suppose that you were configuring a postgresql database with the
-following parameters:
-
-    .. code-block:: bash
-
-       DATABASE_ENGINE = 'postgresql_psycopg2'
-       DATABASE_NAME = 'myproject'
-       DATABASE_USER = 'myproject'
-       DATABASE_PASSWORD = ''
-       DATABASE_HOST = ''
-       DATABASE_PORT = ''
-
-We suppose that your use has superadmin permissions in postgresql. If
-not, you can do it:
-
-    .. code-block:: bash
-
-        $ sudo su postgres
-        $ createuser yourusername # when ask say yes to be a superadmin
-        $ exit
+Changes in database configuration
+---------------------------------
 
 Create postgis template database:
 
@@ -439,67 +410,36 @@ Create postgis template database:
         $ psql -d template_postgis -c "GRANT ALL ON spatial_ref_sys TO PUBLIC;"
 
 
-Creating the project database:
-------------------------------
+Creating the project database
+-----------------------------
 
-We set "myproject" password and make that users superuser, necessary
-for exec portal test.
+Database creation changes slightly because project database has to use
+``template_postgis`` as database template (with all postgis extensions
+included).
 
     .. code-block:: bash
 
-        $ createuser myproject -P
+        $ createuser myproject
         $ createdb -T template_postgis --owner=myproject myproject
 
-We permit connections to database from local computer. Editing
-/etc/postgresql/X.X/main/pg_hba.conf adding the following line (not at
-the end):
+
+Upgrading merengue models in development mode
+=============================================
+
+If you are in development mode, when you update merengue code maybe models can
+change. For upgrading models after a code update, you can use south ``migrate``
+command as follows:
 
     .. code-block:: bash
 
-        local myproject myproject trust
-        local test_myproject myproject trust # necessary for tests
-
-Restart postgresql and check access:
-
-    .. code-block:: bash
-
-        $ /etc/init.d/postgresql restart
-        $ psql myproject -U myproject
-
-Go to our project directory (``$SRCDIR/myproject``). Test that django
-development server runs ok:
-
-    .. code-block:: bash
-
-        $ ./manage.py runserver
+        $ ./manage.py migrate
 
 
-Building the initial database:
-------------------------------
-
-The created database is empty. We need to build the data model and add
-minimal initial data.
-
-You can do it with that command:
-
-    .. code-block:: bash
-
-        $ ./manage.py rebuild_db --template=template_postgis
-
-Database backup and rebuild
----------------------------
+Database backup
+===============
 
 You can make a database backup in SQL with the following command:
 
     .. code-block:: bash
 
         $ ./manage.py backupdb
-
-When you make changes in your data models, you can rebuild the
-database (only in development server), with the following command:
-
-    .. code-block:: bash
-
-        $ ./manage.py rebuild_db --template=template_postgis
-
-The previous command for security reasons makes a database backup.
