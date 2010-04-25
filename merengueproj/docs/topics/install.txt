@@ -70,7 +70,7 @@ project you want implement:
 Djando install
 --------------
 
-Merengue use a Django 1.1.1 version (latest official version). You can install
+Merengue use Django 1.1.1 version (latest official version). You can install
 it with these instructions:
 
     .. code-block:: bash
