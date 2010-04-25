@@ -16,6 +16,10 @@ This document will get you up and running with Merengue.
 
         $ export SRCDIR=$HOME/src
 
+    Also we have a convention about operating system for installing system
+    packages. We will suppose *Ubuntu OS*, and you will have to adapt ``apt-get``
+    commands to your specific system.
+
 
 Installing dependencies
 =======================
@@ -104,6 +108,7 @@ reading that, you downloaded it before):
         $ cd $SRCDIR
         $ svn checkout https://svnpub.yaco.es/merengue/trunk/merengueproj
 
+
 Merengue project creation
 -------------------------
 
@@ -133,12 +138,18 @@ incompatible changes).
         $ $SRCDIR/merengueproj/bin/merengue-admin.py startproject myproject --develop
 
 
-Database configuration
-----------------------
+Database installation and configuration
+---------------------------------------
 
 It's necessary configure the database changing ``DATABASE_*`` parameters
 in the configuration file ``myproject/settings.py``, created with
 ``merengue-admin.py``
+
+.. admonition:: postgresql as convention database
+
+    Next steps will consider postgresql as choiced database engine.
+    Other engines can be used, but you have to adapt instructions to the
+    specific database engine commands.
 
 Let's suppose that you were configuring a postgresql database with the
 following parameters:
@@ -155,11 +166,19 @@ following parameters:
 You can use all database engine supported by django
 http://docs.djangoproject.com/en/1.1/ref/settings/#database-engine
 
-.. admonition:: postgresql as convention database
+Installing database and python dependencies: ``postgresql``, ``python-psycopg2``.
 
-    Next steps will consider postgresql as choiced database engine.
-    Other engines can be used, but you have to adapt instructions to the
-    specific database engine commands.
+* ``postgresql``: the object-relational database system that we will use.
+
+    .. code-block:: bash
+
+        $ apt-get install postgresql
+
+* ``python-psycopg``: python interface to postgresql database.
+
+    .. code-block:: bash
+
+        $ apt-get install python-psycopg2
 
 
 Creating the project database
@@ -169,10 +188,12 @@ Creating the project database
 
     We suppose that your user has superadmin permissions in postgresql.
 
-    .. code-block:: bash
+PostgreSQL database and user is created with these instructions:
 
-        $ createuser myproject
-        $ createdb --owner=myproject myproject
+.. code-block:: bash
+
+    $ createuser myproject
+    $ createdb --owner=myproject myproject
 
 We have to permit connections to database from local computer. Editing
 /etc/postgresql/X.X/main/pg_hba.conf adding the following line (not at
@@ -247,25 +268,18 @@ For use GIS it's necessary to change one line to your project ``settings.py``:
        USE_GIS = True
 
 
-Previous install
-----------------
+PostGIS dependencies
+--------------------
+
+.. admonition:: Note
+
+    Again, we are supposing you have Postgresql as database backend and PostGIS
+    as GIS extensions. If you are using other engine you have to adapt these 
+    instructions.
+    GeoDjango install instructions are online at http://geodjango.org/docs/install.html
 
 Apart from the previous dependencies if you want to use GIS there are
-more dependencies.
-
-Dependencies: ``postgresql``, ``python-psycopg2``, ``geopy``
-
-* ``postgresql``: the object-relational database system that we will use.
-
-    .. code-block:: bash
-
-        $ apt-get install postgresql
-
-* ``python-psycopg``: python interface to postgresql database.
-
-    .. code-block:: bash
-
-        $ apt-get install python-psycopg2
+more dependencies:
 
 * ``geopy``: makes it easy for developers to locate the coordinates of
   addresses, cities, countries, and landmarks across the globe.
@@ -278,9 +292,6 @@ Dependencies: ``postgresql``, ``python-psycopg2``, ``geopy``
 GIS extensions install
 ----------------------
 
-.. admonition:: Note
-
-    Install instructions are online at http://geodjango.org/docs/install.html
 
 In Ubuntu > 8.04, you can install all using packages:
 
@@ -358,12 +369,6 @@ compile:
     .. code-block:: bash
 
         $ sudo ldconfig -v
-
-* In fedora >= 10 we can install using packages:
-
-    .. code-block:: bash
-
-        $ sudo yum install postgis geos proj gdal
 
 .. admonition:: Note
 
