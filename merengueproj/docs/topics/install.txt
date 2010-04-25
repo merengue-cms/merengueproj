@@ -80,26 +80,12 @@ it with these instructions:
         $ cd Django-1.1.1
         $ sudo python setup.py install
 
-But if you have django installed using package, you can add it to your
-python path:
-
-    .. code-block:: bash
-
-        $ export PYTHONPATH=$SVNDIR/django_src/django:$PYTHONPATH
-
-And for bin:
-
-    .. code-block:: bash
-
-        $ export PATH=$SVNDIR/django_src/django/bin:$PATH
-
 Test if you have the correct django version:
 
     .. code-block:: bash
 
         $ python -c "import django; print django.VERSION"
-        $ (1, 1, 0, 'final', 0)
-
+        $ (1, 1, 1, 'final', 0)
 
 We can use alternatives for django-admin (if we install different
 versions we can choose). Furthermore we don't need to write complete
