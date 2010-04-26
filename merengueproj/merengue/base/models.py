@@ -2,6 +2,7 @@
 import os
 import re
 
+import django
 from django.conf import settings
 if settings.USE_GIS:
     from django.contrib.gis.db import models
@@ -552,11 +553,22 @@ def _collect_sub_objects(self, seen_objs, parent=None, nullable=False):
     When done, seen_objs.items() will be in the format:
         [(model_class, {pk_val: obj, pk_val: obj, ...}),
             (model_class, {pk_val: obj, pk_val: obj, ...}), ...]
+
+    Patched Django version to allowing disable delete cascade behavior in
+    foreign keys fields.
     """
     pk_val = self._get_pk_val()
-    if seen_objs.add(self.__class__, pk_val, self,
+    # This Django version checking is a needed workaround
+    # because internal API was changed in
+    # http://code.djangoproject.com/changeset/12600
+    if django.VERSION[:3] == (1, 1, 1):
+        if seen_objs.add(self.__class__, pk_val, self,
+                         parent, nullable):
+            return
+    else: # For Django 1.1.2 or newer
+        if seen_objs.add(self.__class__, pk_val, self,
                         type(parent), parent, nullable):
-        return
+            return
 
     for related in self._meta.get_all_related_objects():
         rel_opts_name = related.get_accessor_name()
