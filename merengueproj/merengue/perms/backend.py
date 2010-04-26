@@ -1,5 +1,6 @@
 # permissions import
-import permissions.utils
+import merengue.perms.utils
+
 
 class ObjectPermissionsBackend(object):
     """Django backend for object permissions. Needs Django 1.2.
@@ -37,4 +38,4 @@ class ObjectPermissionsBackend(object):
         obj
             The object for which the permission should be checked.
         """
-        return permissions.utils.has_permission(obj, user, permission_codename)
+        return merengue.perms.utils.has_permission(obj, user, permission_codename)

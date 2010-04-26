@@ -1,13 +1,11 @@
-from django.contrib import admin
+from merengue.perms.models import ObjectPermission
+from merengue.perms.models import Permission
+from merengue.perms.models import PrincipalRoleRelation
+from merengue.perms.models import Role
 
-from permissions.models import ObjectPermission
-admin.site.register(ObjectPermission)
 
-from permissions.models import Permission
-admin.site.register(Permission)
-
-from permissions.models import Role
-admin.site.register(Role)
-
-from permissions.models import PrincipalRoleRelation
-admin.site.register(PrincipalRoleRelation)
+def register(site):
+    site.register(ObjectPermission)
+    site.register(Permission)
+    site.register(Role)
+    site.register(PrincipalRoleRelation)

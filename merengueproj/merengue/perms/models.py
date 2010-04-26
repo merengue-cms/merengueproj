@@ -1,10 +1,11 @@
-# django imports
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
-from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
+
+from merengue.base.models import BaseContent
+
 
 class Permission(models.Model):
     """A permission which can be granted to users/groups and objects.
@@ -29,6 +30,7 @@ class Permission(models.Model):
     def __unicode__(self):
         return "%s (%s)" % (self.name, self.codename)
 
+
 class ObjectPermission(models.Model):
     """Grants permission for specific user/group and object.
 
@@ -46,9 +48,7 @@ class ObjectPermission(models.Model):
     role = models.ForeignKey("Role", verbose_name=_(u"Role"), blank=True, null=True)
     permission = models.ForeignKey(Permission, verbose_name=_(u"Permission"))
 
-    content_type = models.ForeignKey(ContentType, verbose_name=_(u"Content type"))
-    content_id = models.PositiveIntegerField(verbose_name=_(u"Content id"))
-    content = generic.GenericForeignKey(ct_field="content_type", fk_field="content_id")
+    content = models.ForeignKey(BaseContent)
 
     def __unicode__(self):
         if self.role:
@@ -56,7 +56,7 @@ class ObjectPermission(models.Model):
         else:
             principal = self.user
 
-        return "%s / %s / %s - %s" % (self.permission.name, principal, self.content_type, self.content_id)
+        return "%s / %s / %s" % (self.permission.name, principal, self.content)
 
     def get_principal(self):
         """Returns the principal.
@@ -73,6 +73,7 @@ class ObjectPermission(models.Model):
 
     principal = property(get_principal, set_principal)
 
+
 class ObjectPermissionInheritanceBlock(models.Model):
     """Blocks the inheritance for specific permission and object.
 
@@ -85,13 +86,11 @@ class ObjectPermissionInheritanceBlock(models.Model):
         The object for which the inheritance is blocked.
     """
     permission = models.ForeignKey(Permission, verbose_name=_(u"Permission"))
-
-    content_type = models.ForeignKey(ContentType, verbose_name=_(u"Content type"))
-    content_id = models.PositiveIntegerField(verbose_name=_(u"Content id"))
-    content = generic.GenericForeignKey(ct_field="content_type", fk_field="content_id")
+    content = models.ForeignKey(BaseContent)
 
     def __unicode__(self):
-        return "%s / %s - %s" % (self.permission, self.content_type, self.content_id)
+        return "%s / %s" % (self.permission, self.content)
+
 
 class Role(models.Model):
     """A role gets permissions to do something. Principals (users and groups)
@@ -128,6 +127,7 @@ class Role(models.Model):
         """
         return PrincipalRoleRelation.objects.filter(role=self, content=content)
 
+
 class PrincipalRoleRelation(models.Model):
     """A role given to a principal (user or group). If a content object is
     given this is a local role, i.e. the principal has this role only for this
@@ -149,10 +149,7 @@ class PrincipalRoleRelation(models.Model):
     user = models.ForeignKey(User, verbose_name=_(u"User"), blank=True, null=True)
     group = models.ForeignKey(Group, verbose_name=_(u"Group"), blank=True, null=True)
     role = models.ForeignKey(Role, verbose_name=_(u"Role"))
-
-    content_type = models.ForeignKey(ContentType, verbose_name=_(u"Content type"), blank=True, null=True)
-    content_id = models.PositiveIntegerField(verbose_name=_(u"Content id"), blank=True, null=True)
-    content = generic.GenericForeignKey(ct_field="content_type", fk_field="content_id")
+    content = models.ForeignKey(BaseContent, blank=True, null=True)
 
     def get_principal(self):
         """Returns the principal.

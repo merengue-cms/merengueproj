@@ -1,15 +1,15 @@
 # django imports
 from django import template
-from django.core.exceptions import ImproperlyConfigured
-from django.contrib.auth.models import User, AnonymousUser
 
-import permissions.utils
+import merengue.perms.utils
 register = template.Library()
 
+
 class PermissionComparisonNode(template.Node):
-    """Implements a node to provide an if current user has passed permission 
+    """Implements a node to provide an if current user has passed permission
     for current object.
     """
+
     @classmethod
     def handle_token(cls, parser, token):
         bits = token.contents.split()
@@ -20,7 +20,7 @@ class PermissionComparisonNode(template.Node):
         nodelist_true = parser.parse(('else', end_tag))
         token = parser.next_token()
         if token.contents == 'else': # there is an 'else' clause in the tag
-            nodelist_false = parser.parse((end_tag,))
+            nodelist_false = parser.parse((end_tag, ))
             parser.delete_first_token()
         else:
             nodelist_false = ""
@@ -35,14 +35,14 @@ class PermissionComparisonNode(template.Node):
     def render(self, context):
         obj = context.get("obj")
         request = context.get("request")
-        if permissions.utils.has_permission(self.permission, request.user, obj):
+        if merengue.perms.utils.has_permission(self.permission, request.user, obj):
             return self.nodelist_true.render(context)
         else:
             return self.nodelist_false
+
 
 @register.tag
 def ifhasperm(parser, token):
     """This function provides functionality for the 'ifhasperm' template tag.
     """
     return PermissionComparisonNode.handle_token(parser, token)
-
