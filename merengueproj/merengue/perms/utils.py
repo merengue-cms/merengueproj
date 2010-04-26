@@ -3,7 +3,7 @@ from django.db import IntegrityError
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ImproperlyConfigured
 
 # permissions imports
 from merengue.perms.models import ObjectPermission
@@ -469,7 +469,7 @@ def reset(obj):
 # Registering ################################################################
 
 
-def register_permission(name, codename, ctypes=[]):
+def register_permission(name, codename, ctypes=None, for_models=None):
     """Registers a permission to the framework. Returns the permission if the
     registration was successfully, otherwise False.
 
@@ -481,10 +481,19 @@ def register_permission(name, codename, ctypes=[]):
         codename
             The unique codename of the permission. This is used internally to
             identify the permission.
-        content_types
+        ctypes
             The content type for which the permission is active. This can be
             used to display only reasonable permissions for an object.
+        for_models
+            It's complementary to The models for which the permission is active. This can be
+            used to display only reasonable permissions for an object.
     """
+    if for_models and ctypes:
+        raise ImproperlyConfigured("You cannot call register_permission both with ctypes and models parameters")
+    if for_models is not None:
+        ctypes = [ContentType.objects.get_for_model(model) for model in for_models]
+    if ctypes is None:
+        ctypes = []
     try:
         p = Permission.objects.create(name=name, codename=codename)
         p.content_types = ctypes

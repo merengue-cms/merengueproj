@@ -46,6 +46,19 @@ Creating a custom permission
     >>> from merengue.perms.utils import register_permission
     >>> register_permission('Vote', 'vote')
     <Permission: Vote (vote)>
+    >>> from merengue.perms.utils import register_permission
+    >>> register_permission('Vote', 'vote')
+
+You can create a custom permission available only for some models (inherited
+from ``BaseContent``):
+
+.. code-block:: python
+
+    >>> from merengue.section.models import Document
+    >>> from plugins.news.models import NewsItem
+    >>> register_permission('My permission', 'myperm', 
+                            for_models=[Document, NewsItem])
+    <Permission: My permission (myperm)>
 
 Creating a role and assigning user to role
 ------------------------------------------

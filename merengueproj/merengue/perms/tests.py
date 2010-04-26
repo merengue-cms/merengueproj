@@ -1,6 +1,7 @@
 # django imports
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
 from django.test import TestCase
 from django.test.client import Client
 
@@ -544,6 +545,17 @@ class RegistrationTestCase(TestCase):
         # Unregister the permission again
         result = merengue.perms.utils.unregister_permission("change")
         self.assertEqual(result, False)
+
+        # Register a permission with content types
+        ctypes = [ContentType.objects.get_for_model(BaseContent)]
+        perm_1 = merengue.perms.utils.register_permission(
+            "Change BaseContent", "change_basecontent", ctypes=ctypes,
+        )
+        self.assertEqual(list(perm_1.content_types.all()), ctypes)
+        perm_2 = merengue.perms.utils.register_permission(
+            "View BaseContent", "view_basecontent", for_models=[BaseContent])
+        self.assertEqual(list(perm_2.content_types.all()), ctypes)
+
 
 # django imports
 from django.core.handlers.wsgi import WSGIRequest
