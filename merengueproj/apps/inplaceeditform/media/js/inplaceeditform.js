@@ -1,11 +1,12 @@
 function inplaceeditform_ready($){
-    $('.inplace-view-editable-field').bind("mouseenter",function(){
+    $('.inplace-view-editable-field').unbind('.inplaceEditForm');
+    $('.inplace-view-editable-field').bind("mouseenter.inplaceEditForm",function(){
         $(this).addClass("edit_over");
-    }).bind("mouseleave",function(){
+    }).bind("mouseleave.inplaceEditForm",function(){
         $(this).removeClass("edit_over");
     });
 
-    $('.inplace-view-editable-field').dblclick(function (){
+    $('.inplace-view-editable-field').bind('dblclick.inplaceEditForm',function (){
         $(this).hide();
         var tools = $(this).next('.inplace-tools');
         tools.show();
@@ -13,13 +14,15 @@ function inplaceeditform_ready($){
         tools_error.children().remove();
     });
 
-    $('.inplace-tools .cancel').click(function (){
+    $('.inplace-tools .cancel').unbind('.inplaceEditForm');
+    $('.inplace-tools .cancel').bind('click.inplaceEditForm', function (){
         var inplace_tools = $(this).parent();
         inplace_tools.hide();
         inplace_tools.prev('.inplace-view-editable-field').show();
     });
 
-    $('.inplace-tools .apply').click(function (){
+    $('.inplace-tools .apply').unbind('.inplaceEditForm');
+    $('.inplace-tools .apply').bind('click.inplaceEditForm', function (){
         var _self = this;
         var auto_id = $(this).parent().find('.field_id').html();
         var field_name = $(this).parent().find('.field_name').html();
@@ -56,8 +59,8 @@ function inplaceeditform_ready($){
             url: "/inplaceeditform/",
             type: "POST",
             async:true,
+            dataType: 'json',
             success: function(response){
-                response = eval("("+ response +")");
                 if (response.errors)
                 {   
                     var tools_error = $(_self).parent().find('.inplace-tools-error');
