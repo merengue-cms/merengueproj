@@ -93,7 +93,6 @@ INSTALLED_APPS += (
 
 SVNDIR = path.join(BASEDIR, 'apps')
 
-TEST_RUNNER = 'merengue.test.run_tests'
 TEST_DB_CREATION_SUFFIX = 'WITH TEMPLATE template_postgis'
 
 FIXTURE_DIRS = (
