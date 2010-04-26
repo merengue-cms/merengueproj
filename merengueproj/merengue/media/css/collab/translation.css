@@ -30,6 +30,7 @@
     opacity: 1;
     background: white;
     overflow: hidden;
+    z-index: 20;
 }
 
 .collaborative-translation-main h1 {

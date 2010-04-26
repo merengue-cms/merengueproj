@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils import simplejson
+from django.utils.translation import get_language_from_request
 
 from searchform.registry import search_form_registry
 from merengue.section.models import BaseSection, Document, Section, \
@@ -186,7 +187,9 @@ def section_dispatcher(request, url):
 
 
 @login_required
-def insert_document_section_after(request, document_id, document_section_id=None):
+def insert_document_section_after(request):
+    document_id = request.GET.get('document_id', None)
+    document_section_id = request.GET.get('document_section_id', None)
     document = get_object_or_404(Document, id=document_id)
     if not document_section_id:
         position = 0
@@ -204,8 +207,23 @@ def insert_document_section_after(request, document_id, document_section_id=None
 
 
 @login_required
-def document_section_delete(request, document_id, document_section_id):
+def document_section_delete(request):
+    document_id = request.GET.get('document_id', None)
+    document_section_id = request.GET.get('document_section_id', None)
     section = get_object_or_404(DocumentSection, id=document_section_id)
     section.delete()
     json_dict = simplejson.dumps({'errors': 0})
+    return HttpResponse(json_dict, mimetype='text/plain')
+
+
+@login_required
+def document_section_edit(request):
+    document_id = request.POST.get('document_id', None)
+    document_section_id = request.POST.get('document_section_id', None)
+    document_section_body = request.POST.get('document_section_body', None)
+    section = get_object_or_404(DocumentSection, id=document_section_id)
+    lang = get_language_from_request(request)
+    setattr(section, 'body_' + lang, document_section_body)
+    section.save()
+    json_dict = simplejson.dumps({'errors': 0, 'body': section.body})
     return HttpResponse(json_dict, mimetype='text/plain')

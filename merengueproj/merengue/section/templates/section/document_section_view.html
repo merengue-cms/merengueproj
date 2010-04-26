@@ -1,6 +1,9 @@
 {% load i18n inlinetrans content_tags permission_tags inplace_edit collaborative document_tags %}
 
 <div class="document-section" id="document-section-{{ document_section.id }}">
+  <div class="document-section-config" style="display: none;">
+    <span class="document-section-id">{{ document_section.id }}</span>
+  </div>
   <div class="document-section-actions-menu">
      <a href="#" class="document-section-actions-trigger">
      <img src="{{ MEDIA_URL }}merengue/img/section/section_actions.png"
@@ -9,18 +12,22 @@
      </a>
   <div class="document-section-actions">
     <ul>
-    <li>{% collaborative_comments document_section %}</li>
+      <li>{% collaborative_comments document_section %}</li>
     {% ifcanedit user content %}
+      <li><a href="#" class="document-section-edit">{% trans "Edit document section" %}</a></li>
+      <li><a href="#" class="document-section-insert">{% trans "Insert document section" %}</a></li>
+      <li><a href="#" class="document-section-delete">{% trans "Delete document section" %}</a></li>
       <li>{% collaborative_translation document_section "body" 1 %}</li>
-      <li>{% insert_document_section_after content document_section %}</li>
-      <li><a href="{% url document_section_delete document_id=content.id document_section_id=document_section.id %}" class="document-section-delete">{% trans "Delete section" %}</a></li>
     {% endifcanedit %}
     </ul>
   </div>
   </div>
-  {% ifcanedit user content %}
-      {% inplace_edit document_section "body|safe" "merengue.section.forms.DocumentSectionForm" %}
-  {% else %}
-    {{ document_section.body|safe }}
-  {% endifcanedit %}
+
+  <div class="document-section-body">
+    {% if document_section.body %}
+        {{ document_section.body|safe }}
+    {% else %}
+        {% trans "This section has no content" %}
+    {% endif %}
+  </div>
 </div>
