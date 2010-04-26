@@ -304,6 +304,8 @@ class BaseSectionMenuRelatedAdmin(MenuAdmin, RelatedModelAdmin):
         if 'parent' in form.base_fields.keys():
             qs = form.base_fields['parent'].queryset
             qs = qs.filter(tree_id=self.get_menu(request).tree_id, level__gt=0)
+            if obj:
+                qs = qs.exclude(pk=obj.pk)
             form.base_fields['parent'].queryset = qs
         return form
 
@@ -336,18 +338,23 @@ class PortalMenuAdmin(MenuAdmin):
         basecontent = Menu.tree.get(slug=settings.MENU_PORTAL_SLUG)
         return basecontent.get_descendants()
 
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(PortalMenuAdmin, self).get_form(
+                                                    request, obj, **kwargs)
+        if 'parent' in form.base_fields.keys():
+            qs = form.base_fields['parent'].queryset
+            root_menu = Menu.tree.get(slug=settings.MENU_PORTAL_SLUG)
+            descendants = root_menu.get_descendants()
+            qs = qs.filter(pk__in=descendants.values('pk').query)
+            form.base_fields['parent'].queryset = qs
+        return form
+
     def save_form(self, request, form, change):
         menu = form.save(commit=False)
         if not getattr(menu, self.related_field, None):
             basecontent = Menu.objects.get(slug=settings.MENU_PORTAL_SLUG)
             setattr(menu, self.related_field, basecontent)
         return menu
-
-    def save_model(self, request, obj, form, change):
-        if not obj.parent:
-            obj.parent = self.get_menu(request)
-        super(PortalMenuAdmin, self).save_model(
-                                                request, obj, form, change)
 
 
 class AppSectionAdmin(BaseSectionAdmin):
