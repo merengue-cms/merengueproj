@@ -104,7 +104,6 @@ reading that, you downloaded it before):
 
     .. code-block:: bash
 
-        $ mkdir $SRCDIR
         $ cd $SRCDIR
         $ svn checkout https://svnpub.yaco.es/merengue/trunk/merengueproj
 
