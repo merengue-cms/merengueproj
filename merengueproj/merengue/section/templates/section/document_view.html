@@ -10,10 +10,12 @@
 {% endblock %}
 
 {% block contentbody %}
+<div class="merengue-document">
   {% ifcanedit user content %}
     {% insert_document_section_after content %}
   {% endifcanedit %}
   {% for document_section in content.sections.all %}
     {% include "section/document_section_view.html" %}
   {% endfor %}
+</div>
 {% endblock %}

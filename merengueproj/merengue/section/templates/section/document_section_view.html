@@ -1,20 +1,26 @@
-{% load inlinetrans content_tags permission_tags inplace_edit collaborative document_tags %}
+{% load i18n inlinetrans content_tags permission_tags inplace_edit collaborative document_tags %}
 
 <div class="document-section" id="document-section-{{ document_section.id }}">
+  <div class="document-section-actions-menu">
+     <a href="#" class="document-section-actions-trigger">
+     <img src="{{ MEDIA_URL }}merengue/img/section/section_actions.png"
+          alt="{% trans "Document section actions" %}"
+          title="{% trans "Document section actions" %}" />
+     </a>
+  <div class="document-section-actions">
+    <ul>
+    <li>{% collaborative_comments document_section %}</li>
+    {% ifcanedit user content %}
+      <li>{% collaborative_translation document_section "body" 1 %}</li>
+      <li>{% insert_document_section_after content document_section %}</li>
+      <li><a href="{% url document_section_delete document_id=content.id document_section_id=document_section.id %}" class="document-section-delete">{% trans "Delete section" %}</a></li>
+    {% endifcanedit %}
+    </ul>
+  </div>
+  </div>
   {% ifcanedit user content %}
-    {% if newly %}
-      {% inplace_edit document_section "body|safe" %}
-    {% else %}
       {% inplace_edit document_section "body|safe" "merengue.section.forms.DocumentSectionForm" %}
-    {% endif %}
   {% else %}
     {{ document_section.body|safe }}
   {% endifcanedit %}
-  <div class="document-section-actions">
-    {% collaborative_comments document_section %}
-    {% ifcanedit user content %}
-      {% collaborative_translation document_section "body" 1 %}
-      {% insert_document_section_after content document_section %}
-    {% endifcanedit %}
-  </div>
 </div>

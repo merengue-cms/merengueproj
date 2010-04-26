@@ -201,3 +201,11 @@ def insert_document_section_after(request, document_id, document_section_id=None
                                'newly': True,
                               },
                               context_instance=RequestContext(request))
+
+
+@login_required
+def document_section_delete(request, document_id, document_section_id):
+    section = get_object_or_404(DocumentSection, id=document_section_id)
+    section.delete()
+    json_dict = simplejson.dumps({'errors': 0})
+    return HttpResponse(json_dict, mimetype='text/plain')

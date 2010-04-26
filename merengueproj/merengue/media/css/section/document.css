@@ -1,0 +1,30 @@
+.document-section-actions {
+    display: none;
+}
+
+.document-section-actions-menu {
+    width: 12px; 
+    height: 12px;
+    float: left;
+    margin: 0px 1em 1em 0px;
+    position: relative;
+}
+
+.document-section {
+    clear: left;
+}
+
+.document-section-actions {
+    position: absolute;
+    left: 20px;
+    top: 0px;
+    width: 300px;
+    border: 1px solid black;
+    background-color: white;
+    padding: 1em;
+}
+
+.document-section-active {
+    border: 1px solid #ffaa55;
+    background-color: #ffeeaa;
+}

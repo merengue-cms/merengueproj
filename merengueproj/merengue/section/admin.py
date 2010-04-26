@@ -176,7 +176,8 @@ class AbsoluteLinkInline(BaseLinkInline):
     def _media(self):
         from django import forms
 
-        js = ['%sjs/tiny_mce_internal_links/no_tiny_mce_internal_links.js' % settings.MEDIA_URL]
+        #js = ['%sjs/tiny_mce_internal_links/no_tiny_mce_internal_links.js' % settings.MEDIA_URL]
+        js = []
         if self.prepopulated_fields:
             js.append('%sjs/urlify.js' % settings.ADMIN_MEDIA_PREFIX)
         if self.filter_vertical or self.filter_horizontal:
