@@ -377,12 +377,8 @@ class BaseContent(BaseClass):
         raise NotImplementedError("Model %s has no implements a link_by_user method" % self._meta)
 
     def can_edit(self, user):
-        if not user.is_authenticated():
-            return False
-        if user.is_superuser or (user.is_staff and \
-           user.has_perm(self._meta.app_label + '.' + self._meta.get_change_permission())):
-            return True
-        return not self.is_published() and user in self.owners.all()
+        from merengue.perms.utils import has_permission
+        return has_permission(self, user, 'edit')
 
     def get_icon(self):
         if self.map_icon:

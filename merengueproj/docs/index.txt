@@ -24,5 +24,8 @@ The components
     * **Actions:**
       :ref:`Development <topics-actions>`
 
+    * **Permissions:**
+      :ref:`Permissions <topics-permissions>`
+
     * **merengue-admin.py:**
       :ref:`Development <topics-commands-merengue-admin>`

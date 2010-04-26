@@ -28,3 +28,12 @@ class PluginConfig(Plugin):
     def section_models(cls):
         # section_models of merengue core
         return [(Document, DocumentRelatedModelAdmin)]
+
+    @classmethod
+    def get_perms(cls):
+        return ()
+        # an example was:
+        #return (
+        #    ('vote', _('Vote content')),
+        #    ('mark_as_finished', _('View any content'), models=[Document]),
+        #)

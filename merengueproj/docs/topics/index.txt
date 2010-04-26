@@ -11,4 +11,5 @@ Introductions to all the key parts of Merengue you'll need to know:
    install
    plugins/index
    themes/index
+   permissions
    actions

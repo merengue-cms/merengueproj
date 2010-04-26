@@ -24,6 +24,7 @@ MERENGUE_APPS = (
     'merengue.registry',
     'merengue.multimedia',
     'merengue.base',
+    'merengue.perms',
     'merengue.section',
     'merengue.plugins',
     'merengue.themes',
