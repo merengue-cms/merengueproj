@@ -11,4 +11,6 @@ class DocumentSectionForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(DocumentSectionForm, self).__init__(*args, **kwargs)
-        self.fields['body_es'].widget = widgets.TinyMCE(extra_mce_settings={'inplace_edit': True, 'height': 120, })
+        for field_name, field in self.fields.items():
+            if field_name.startswith('body'):
+                field.widget = widgets.TinyMCE(extra_mce_settings={'inplace_edit': True, 'height': 120, })
