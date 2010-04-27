@@ -1,6 +1,7 @@
 import os
 import ConfigParser
 
+from django.conf import settings
 from django.db import models
 from django.db.models import signals
 from django.utils.translation import ugettext_lazy as _
@@ -24,6 +25,9 @@ class Theme(models.Model):
     def get_path(self):
         """ get theme template path """
         return get_theme_path(self.directory_name)
+
+    def get_theme_media_url(self):
+        return '%sthemes/%s/' % (settings.MEDIA_URL, self.directory_name)
 
     def update_from_fs(self, commit=True):
         """ update theme info from filesystem """
