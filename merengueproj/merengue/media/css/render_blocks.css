@@ -13,3 +13,22 @@
 
 }
 
+.blockContainer .block .blockTools {
+    float: left;
+    position: absolute;
+    display: none;
+}
+
+.blockContainer .block .blockTools a {
+    background: transparent url("../img/arrow_refresh.png") no-repeat 0px 5px;
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+.blockContainer .blockDrag {
+    color: #999;
+    font-style: italic;
+    padding: 2px;
+    font-size: 1em;
+}

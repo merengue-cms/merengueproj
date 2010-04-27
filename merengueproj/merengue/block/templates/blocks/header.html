@@ -3,21 +3,104 @@
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}merengue/css/render_blocks.css"/>
 <script language="javascript">
 ;(function($) {
-    $(document).ready(enableDragging);
+    $(document).ready(init);
+    var originalBlocksOrder;
+
+    function init() {
+        initDragging();
+        originalBlocksOrder = getBlocksOrder();
+    }
+
+    function getBlocksOrder() {
+        var orderList = [];
+        $(".blockOrder").each(function() {
+            orderList.push($(this).val());
+        });
+        return orderList.join(",");
+    }
+
+    function initDragging() {
+        $(".block").each(function() {
+            var aTools, divTools, position;
+            position = $(this).position();
+            aTools = $("<a>");
+            divTools = $("<div>");
+            aTools.attr("href", "javascript:void(0)");
+            aTools.attr("title", "{% trans "Enable/disable blocks dragging" %}");
+            aTools.click(enableDragging);
+            divTools.append(aTools);
+            divTools.addClass("blockTools");
+            divTools.css({"left": position.left - 20});
+            divTools.css({"top": position.top});
+            $(this).append(divTools);
+            $(this).hover(function() {
+                $(this).children(".blockTools").toggle();
+            });
+        });
+    }
+
     function enableDragging() {
-        $(".blockContainer").sortable({
-            connectWith: '.blockContainer',
-            containment: 'document',
-            opacity: 0.6,
-            revert: true,
-            start: function(event, ui) {
-                $(".blockContainer").parent().addClass("blockContainerBorder");
-            },
-            stop: function(event, ui) {
-                $(".blockContainer").parent().removeClass("blockContainerBorder");
+        $(".blockContainer").each(function() {
+            if ($(this).children().length < 2) {
+                var child;
+                child = $("<div>");
+                child.html("Drag here");
+                child.addClass("blockDrag");
+                $(this).append(child);
             }
         });
-        $(".blockContainer").disableSelection();
+        if (!$(".blockContainer").hasClass("blockContainerBorder")) {
+            $(".blockContainer").addClass("blockContainerBorder");
+            $(".blockContainer").sortable({
+                connectWith: '.blockContainer',
+                containment: 'document',
+                opacity: 0.6,
+                revert: true,
+                start: function(event, ui) {
+                    $(".block .blockTools").hide();
+                },
+                stop: function(event, ui) {
+                    $(".block .blockTools").hide();
+                    disableDragging();
+                    recalculatePosition(ui.item);
+                    postNewOrder();
+                }
+            });
+            $(".blockContainer").disableSelection();
+        } else {
+            disableDragging();
+        }
+        return false;
+    }
+
+    function disableDragging() {
+        $(".blockContainer").sortable( "destroy" )
+        $(".blockContainer").removeClass("blockContainerBorder");
+        $(".blockContainer .blockDrag").remove();
+    }
+
+    function recalculatePosition(ui) {
+        var position;
+        position = $(ui).position();
+        divTools = $(ui).children(".blockTools");
+        divTools.css({"left": position.left - 20});
+        divTools.css({"top": position.top});
+    }
+
+    function postNewOrder() {
+        var newOrder = getBlocksOrder();
+        // TODO: Make POST to save new orders
+        /*
+        $.ajax({
+            url: "{% url %}",
+            type: "POST",
+            data: ({new_order : newOrder}),
+            dataType: "html",
+            success: function(msg) {
+                alert(msg);
+            }
+        });
+        */
     }
 })(jQuery);
 </script>
