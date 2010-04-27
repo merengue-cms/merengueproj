@@ -32,21 +32,11 @@ def fix_merengue_links():
                 print "In this directory merengue module cannot be imported"
             else:
                 break
-        for d, subdirs, files in os.walk(cwd):
-            for f in files:
-                filepath = os.path.join(cwd, d, f)
-                if os.path.islink(filepath) and os.path.lexists(filepath): # is a broken link
-                    fixlink(filepath, merengue_path)
-
-
-def fixlink(filepath, merengue_path):
-    link_src = os.path.realpath(filepath)
-    index = link_src.find('merengueproj') + len('merengueproj')
-    new_link_src = link_src.replace(link_src[0:index], merengue_path.rstrip('/'))
-    if new_link_src != link_src:
-        print 'Fixing %s, changing from broken "%s" to "%s" location...' % (filepath, link_src, new_link_src)
-        os.remove(filepath)
-        os.symlink(new_link_src, filepath)
+        merengue_link_path = os.path.join(cwd, 'merengueproj')
+        link_src = os.path.realpath(merengue_link_path)
+        os.remove(merengue_link_path)
+        os.symlink(merengue_path, merengue_link_path)
+        print 'Fixing %s, changing from broken "%s" to "%s" location...' % (merengue_link_path, link_src, merengue_path)
 
 try:
     import django
