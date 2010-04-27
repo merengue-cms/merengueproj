@@ -227,3 +227,35 @@ def document_section_edit(request):
     section.save()
     json_dict = simplejson.dumps({'errors': 0, 'body': section.body})
     return HttpResponse(json_dict, mimetype='text/plain')
+
+
+@login_required
+def document_section_move(request):
+    document_id = request.GET.get('document_id', None)
+    document = get_object_or_404(Document, id=document_id)
+    document_section_id = request.GET.get('document_section_id', None)
+    prevsection = request.GET.get('document_section_prev', None)
+    nextsection = request.GET.get('document_section_next', None)
+    section = get_object_or_404(DocumentSection, id=document_section_id)
+    if nextsection:
+        next_section = get_object_or_404(DocumentSection, id=nextsection)
+        print '>>>>>', next_section.id, next_section.position
+        print '>>>>>', section.id, section.position
+        if next_section.position > section.position:
+            position = next_section.position - 1
+            if position < 0:
+                position = 0
+        else:
+            position = next_section.position
+        section.move_to(position)
+    elif prevsection:
+        prev_section = get_object_or_404(DocumentSection, id=prevsection)
+        print prev_section.id, prev_section.position
+        print section.id, section.position
+        if prev_section.position > section.position:
+            position = prev_section.position
+        else:
+            position = prev_section.position + 1
+        section.move_to(position)
+    json_dict = simplejson.dumps({'errors': 0, 'position': section.position})
+    return HttpResponse(json_dict, mimetype='text/plain')

@@ -4,7 +4,7 @@
         mode: 'none',
         width: "100%",
         height: "100%",
-        plugins: "preview,paste,fullscreen",
+        plugins: "preview,paste,fullscreen,table",
         button_tile_map: true,
         apply_source_formatting: false,
         theme_advanced_toolbar_align: "left",
@@ -13,8 +13,8 @@
         theme_advanced_resizing: false,
         theme_advanced_resize_horizontal: false,
         theme_advanced_toolbar_location: "top",
-        theme_advanced_buttons1: "bold,italic,underline,justifyleft,justifycenter,justifyright,bullist,numlist,outdent,indent",
-        theme_advanced_buttons2: "formatselect,link,image,code,fullscreen",
+        theme_advanced_buttons1: "undo,redo,separator,cut,copy,paste,pasteword,separator,bold,italic,underline,separator,justifyleft,justifycenter,justifyright,separator,bullist,numlist,outdent,indent,separator,preformatted_text,tablecontrols",
+        theme_advanced_buttons2: "styleselect,formatselect,fontselect,fontsizeselect,separator,forecolor,link,image,code,fullscreen",
         theme_advanced_buttons3: "",
         theme_advanced_buttons4: "",
         theme: "advanced",
@@ -76,7 +76,6 @@
                         if (typeof($.fn.CollaborativeTranslation)!='undefined')
                             new_section.find(".collab-translation-trigger a").CollaborativeTranslation();
                 	new_section.DocumentSection(doc, options);
-                        hideSectionMenu();
                         new_section.show('slow');
                     }
                 });
@@ -104,7 +103,6 @@
             var editSection = function() {
                 var body = section.find('.document-section-body');
                 var newbody = section.find('.new-document-section-body');
-	        hideSectionMenu();
                 if (newbody.length) {
                     return false;
                 }
@@ -153,6 +151,28 @@
                 return false;
             };
 
+            var moveSection = function() {
+                var url = options['section_move_url'];
+                var prev = section.prev('.document-section').find('.document-section-config .document-section-id').text();
+                var next = section.next('.document-section').find('.document-section-config .document-section-id').text();
+                $.ajax({
+                    url: url,
+                    cache: false,
+                    type: "GET",
+                    async: true,
+                    dataType: 'json',
+                    data: {document_section_id: section_id,
+                           document_id: options['document_id'],
+                           document_section_prev: prev,
+                           document_section_next: next},
+                    success: function(response){
+                        if (!response.errors) {
+                            hideSectionMenu();
+                        }
+                    }});
+                return false;
+            };
+
             var bindEditButtons = function() {
                 section.find('.cancel-edition').bind('click', cancelEdition);
                 section.find('.save-edition').bind('click', performEdition);
@@ -166,7 +186,9 @@
                 edit_trigger.bind('click', editSection);
                 insert_trigger.bind('click', insertSection);
                 delete_trigger.bind('click', deleteSection);
+                section_menu.find('a').bind('click', hideSectionMenu);
                 section.bind('close-menu', hideSectionMenu);
+                section.bind('save-position', moveSection);
             };
 
             var initConfig = function() {
@@ -193,6 +215,7 @@
                 var section_insert_url = config_div.find('.section-insert-url').text();
                 var section_delete_url = config_div.find('.section-delete-url').text();
                 var section_edit_url = config_div.find('.section-edit-url').text();
+                var section_move_url = config_div.find('.section-move-url').text();
                 var section_delete_message = config_div.find('.section-delete-message').text();
                 var document_id = config_div.find('.document_id').text();
 
@@ -200,6 +223,7 @@
                     section_insert_url: section_insert_url,
                     section_delete_url: section_delete_url,
                     section_edit_url: section_edit_url,
+                    section_move_url: section_move_url,
                     section_delete_message: section_delete_message,
                     document_id: document_id
                 }
@@ -230,10 +254,29 @@
                 return false;
             };
 
+            var initSortable = function() {
+                doc.sortable({
+                    handle: '.document-section-move-trigger',
+                    items: '.document-section',
+                    placeholder: 'document-section-place-holder',
+                    forcePlaceholderSize: true,
+                    start: function(event, ui) {
+                        var item = ui.item;
+                        item.addClass('document-section-dragging');
+                    },
+                    update: function(event, ui) {
+                        var item = ui.item;
+                        item.removeClass('document-section-dragging');
+                        item.trigger('save-position');
+                    }
+                }); 
+            };
+
             var initDocument = function() {
                 settings = getSettings();
                 doc.find('.insert-first-section').click(insertFirstSection);
                 doc.find('.document-section').DocumentSection(doc, settings);
+                initSortable();
             };
 
             initDocument();

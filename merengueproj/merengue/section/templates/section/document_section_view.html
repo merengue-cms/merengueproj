@@ -5,11 +5,20 @@
     <span class="document-section-id">{{ document_section.id }}</span>
   </div>
   <div class="document-section-actions-menu">
+     <div class="document-section-actions-icons">
      <a href="#" class="document-section-actions-trigger">
      <img src="{{ MEDIA_URL }}merengue/img/section/section_actions.png"
           alt="{% trans "Document section actions" %}"
           title="{% trans "Document section actions" %}" />
      </a>
+     {% ifcanedit user content %}
+     <span class="document-section-move-trigger">
+     <img src="{{ MEDIA_URL }}merengue/img/draggable.png"
+          alt="{% trans "Drag and drop to reorder sections" %}"
+          title="{% trans "Drag and drop to reorder sections" %}" />
+     </span>
+     {% endifcanedit %}
+     </div>
   <div class="document-section-actions">
     <ul>
       <li>{% collaborative_comments document_section %}</li>

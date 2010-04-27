@@ -3,11 +3,43 @@
 }
 
 .document-section-actions-menu {
-    width: 12px; 
-    height: 12px;
+    width: 24px; 
+    height: 24px;
     float: left;
-    margin: 0px 1em 1em 0px;
+    margin: 0px 0.5em 0px 0px;
     position: relative;
+    overflow: hidden;
+}
+
+.document-section-actions-icons span,
+.document-section-actions-icons a {
+    display: block;
+    text-align: center;
+    width: 24px; 
+    height: 24px;
+    overflow: hidden;
+}
+
+.document-section-active .document-section-actions-menu {
+    overflow: visible;
+}
+
+.document-section-active .document-section-actions-icons span,
+.document-section-active .document-section-actions-icons a {
+    background: white;
+    border: 1px solid black;
+    border-right-color: white;
+    z-index: 30;
+    position: relative;
+}
+
+.document-section-active .document-section-actions-icons .document-section-move-trigger {
+    border-right-color: black;
+    cursor: pointer;
+}
+
+.document-section-active .document-section-actions-icons .document-section-move-trigger img {
+    margin-top: 4px;
 }
 
 .document-section {
@@ -16,7 +48,7 @@
 
 .document-section-actions {
     position: absolute;
-    left: 20px;
+    left: 25px;
     top: 0px;
     width: 300px;
     border: 1px solid black;
@@ -28,4 +60,23 @@
 .document-section-active {
     border: 1px solid #ffaa55;
     background-color: #ffeeaa;
+}
+
+.document-section-dragging .document-section-actions {
+    display: none !important;
+}
+
+.document-section-dragging .document-section-actions-icons a {
+    border-right-color: black;
+}
+    
+.document-section-dragging .document-section-actions-icons .document-section-move-trigger img {
+    position: absolute;
+    bottom: 0px;
+    left: 5px;
+}
+
+.document-section-place-holder {
+    background-color: #ffeecc;
+    border: 1px dashed #eeddbb;
 }
