@@ -239,8 +239,6 @@ def document_section_move(request):
     section = get_object_or_404(DocumentSection, id=document_section_id)
     if nextsection:
         next_section = get_object_or_404(DocumentSection, id=nextsection)
-        print '>>>>>', next_section.id, next_section.position
-        print '>>>>>', section.id, section.position
         if next_section.position > section.position:
             position = next_section.position - 1
             if position < 0:
@@ -250,8 +248,6 @@ def document_section_move(request):
         section.move_to(position)
     elif prevsection:
         prev_section = get_object_or_404(DocumentSection, id=prevsection)
-        print prev_section.id, prev_section.position
-        print section.id, section.position
         if prev_section.position > section.position:
             position = prev_section.position
         else:

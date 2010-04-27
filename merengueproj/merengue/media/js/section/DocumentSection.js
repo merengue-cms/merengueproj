@@ -264,9 +264,12 @@
                         var item = ui.item;
                         item.addClass('document-section-dragging');
                     },
-                    update: function(event, ui) {
+                    stop: function(event, ui) {
                         var item = ui.item;
                         item.removeClass('document-section-dragging');
+                    },
+                    update: function(event, ui) {
+                        var item = ui.item;
                         item.trigger('save-position');
                     }
                 }); 
