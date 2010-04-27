@@ -557,7 +557,7 @@ def _collect_sub_objects(self, seen_objs, parent=None, nullable=False):
     # This Django version checking is a needed workaround
     # because internal API was changed in
     # http://code.djangoproject.com/changeset/12600
-    if django.VERSION[:3] == (1, 1, 1):
+    if django.VERSION[:3] in [(1, 1, 0), (1, 1, 1)]:
         if seen_objs.add(self.__class__, pk_val, self,
                          parent, nullable):
             return
