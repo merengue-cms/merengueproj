@@ -1,7 +1,9 @@
 {% extends "block.html" %}
 
+{% load i18n %}
+
 {% block blockbody %}
-<div id="cse" style="width: 100%;">Loading</div>
+<div id="cse" style="width: 100%;">{% trans "Loading" %}</div>
 <script src="http://www.google.com/jsapi" type="text/javascript"></script>
 <script type="text/javascript">
   google.load('search', '1', {language : '{{ plugin_config.language.value }}'});
