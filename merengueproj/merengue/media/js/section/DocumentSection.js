@@ -30,6 +30,7 @@
             var trigger_menu_link = $(this).find('a.document-section-actions-trigger');
             var section_menu = $(this).find('.document-section-actions');
             var edit_buttons = section_document.find('.merengue-document-helpers .document-section-edition');
+            var saved_edition = null;
 
             /* Menu display/hide */
             var initSectionMenu = function() {
@@ -151,6 +152,34 @@
                 return false;
             };
 
+            var startDragging = function() {
+                var newbody = section.find('.new-document-section-body');
+                var body = section.find('.document-section-body');
+                if (newbody.length) {
+                    saved_edition = newbody.tinymce().getContent();
+                    newbody.tinymce().hide();
+                    newbody.remove();
+                    section.find('.document-section-edition').remove();
+                    body.show();
+                }
+            };
+
+            var stopDragging = function() {
+                if (saved_edition != null) {
+                    var body = section.find('.document-section-body');
+                    var newbody = section.find('.new-document-section-body');
+                    newbody = body.clone();
+                    body.after(newbody);
+                    body.hide();
+                    newbody.addClass('new-document-section-body');
+                    newbody.html(saved_edition);
+                    newbody.after(edit_buttons.clone());
+                    newbody.tinymce(tinymce_settings);
+                    bindEditButtons();
+                    saved_edition = null;
+                }
+            };
+
             var moveSection = function() {
                 var url = options['section_move_url'];
                 var prev = section.prev('.document-section').find('.document-section-config .document-section-id').text();
@@ -189,6 +218,8 @@
                 section_menu.find('a').bind('click', hideSectionMenu);
                 section.bind('close-menu', hideSectionMenu);
                 section.bind('save-position', moveSection);
+                section.bind('stop-dragging', stopDragging);
+                section.bind('start-dragging', startDragging);
             };
 
             var initConfig = function() {
@@ -263,10 +294,12 @@
                     start: function(event, ui) {
                         var item = ui.item;
                         item.addClass('document-section-dragging');
+                        item.trigger('start-dragging');
                     },
                     stop: function(event, ui) {
                         var item = ui.item;
                         item.removeClass('document-section-dragging');
+                        item.trigger('stop-dragging');
                     },
                     update: function(event, ui) {
                         var item = ui.item;
