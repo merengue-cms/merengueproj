@@ -44,5 +44,5 @@ class CSSValidatorWidget(AdminTextareaWidget):
         self.final_attrs = final_attrs
         widget_show_all_errors = self.widget_checkbox(final_attrs, _('Show all errors'), "_show_all_errors")
         widget_normalize = self.widget_checkbox(final_attrs, _('Normalize css'), "_normalize")
-        widget_text = u'%s %s %s' % (widget_text, widget_show_all_errors, widget_normalize)
+        widget_text = u'%s <div class="css-validator-checkboxes"><div>%s</div><div>%s</div></div>' % (widget_text, widget_show_all_errors, widget_normalize)
         return mark_safe(widget_text)

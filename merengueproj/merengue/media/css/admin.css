@@ -365,3 +365,15 @@ ul.dependencies li.unfulfilled {
     background-color: #f0ffff;
     border: 1px dashed #999999;
 }
+
+div.css-validator-checkboxes {
+    display: inline;
+}
+
+div.css-validator-checkboxes div{
+    display: inline;
+}
+
+textarea#id_css_chunk {
+    display: inline !important;
+}

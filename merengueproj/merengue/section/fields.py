@@ -29,8 +29,8 @@ class CSSValidatorField(fields.CharField):
         parser = cssutils.CSSParser(raiseExceptions=True)
         try:
             value_parse = parser.parseString(clean_value)
-        except SyntaxErr:
-            raise ValidationError(_('Syntax Error'))
+        except SyntaxErr, e:
+            raise ValidationError(_('Syntax Error %s' % e.msg))
         if self.request.POST.get('%s_normalize' % self.name, None):
             clean_value = value_parse.cssText
         if self.request.POST.get('%s_show_all_errors' % self.name, None):

@@ -89,6 +89,7 @@ class CustomStyleRelatedModelAdmin(RelatedModelAdmin):
         formfield = super(CustomStyleRelatedModelAdmin, self).formfield_for_dbfield(db_field, **kwargs)
         if db_field.name == 'css_chunk':
             formfield = CSSValidatorField(db_field.name, kwargs['request'])
+            formfield.help_text = _('Custom style for the section. Can you use the variables $media_url and $theme_url')
         return formfield
 
     def has_delete_permission(self, request, obj=None):
