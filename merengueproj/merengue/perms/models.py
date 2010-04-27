@@ -19,12 +19,17 @@ class Permission(models.Model):
         The unique codename of the permission. This is used internal to
         identify a permission.
 
+    builtin
+        A builtin permission will appears in the manage permission view of
+        every content. Will be False by default.
+
     content_types
         The content types for which the permission is active. This can be
         used to display only reasonable permissions for an object.
     """
     name = models.CharField(_(u"Name"), max_length=100, unique=True)
     codename = models.CharField(_(u"Codename"), max_length=100, unique=True)
+    builtin = models.BooleanField(_(u"Builtin permission"), default=False, editable=False)
     content_types = models.ManyToManyField(ContentType, verbose_name=_(u"Content Types"), blank=True, null=True, related_name="content_types")
 
     def __unicode__(self):

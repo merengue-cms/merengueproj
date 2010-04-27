@@ -469,7 +469,7 @@ def reset(obj):
 # Registering ################################################################
 
 
-def register_permission(name, codename, ctypes=None, for_models=None):
+def register_permission(name, codename, ctypes=None, for_models=None, builtin=False):
     """Registers a permission to the framework. Returns the permission if the
     registration was successfully, otherwise False.
 
@@ -485,8 +485,11 @@ def register_permission(name, codename, ctypes=None, for_models=None):
             The content type for which the permission is active. This can be
             used to display only reasonable permissions for an object.
         for_models
-            It's complementary to The models for which the permission is active. This can be
-            used to display only reasonable permissions for an object.
+            It's complementary to The models for which the permission is active.
+            This can be used to display only reasonable permissions for an object.
+        builtin
+            A builtin permission will appears in the manage permission view of
+            every content. Will be False by default.
     """
     if for_models and ctypes:
         raise ImproperlyConfigured("You cannot call register_permission both with ctypes and models parameters")
@@ -495,7 +498,7 @@ def register_permission(name, codename, ctypes=None, for_models=None):
     if ctypes is None:
         ctypes = []
     try:
-        p = Permission.objects.create(name=name, codename=codename)
+        p = Permission.objects.create(name=name, codename=codename, builtin=builtin)
         p.content_types = ctypes
         p.save()
     except IntegrityError:

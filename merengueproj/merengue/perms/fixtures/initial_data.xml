@@ -3,13 +3,16 @@
     <object pk="1" model="perms.permission">
         <field type="CharField" name="name">View</field>
         <field type="CharField" name="codename">view</field>
+        <field type="BooleanField" name="builtin">True</field>
     </object>
     <object pk="2" model="perms.permission">
         <field type="CharField" name="name">Edit</field>
         <field type="CharField" name="codename">edit</field>
+        <field type="BooleanField" name="builtin">True</field>
     </object>
     <object pk="3" model="perms.permission">
         <field type="CharField" name="name">Delete</field>
         <field type="CharField" name="codename">delete</field>
+        <field type="BooleanField" name="builtin">True</field>
     </object>
 </django-objects>

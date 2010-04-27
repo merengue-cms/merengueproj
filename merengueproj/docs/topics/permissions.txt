@@ -32,6 +32,22 @@ How it works?
 Builtin permissions on merengue
 -------------------------------
 
+A builtin permission will appears in the manage permission view of every content.
+
+The builtin permissions in merengue are:
+
+    View (``view``)
+        A non published content will be visible for anonymous if this permission
+        is activated for this content.
+
+    Edit (``edit``)
+        If a user is member of a role with this permission or for a content
+        which has activated that permission for a user role, user will can edit
+        the content.
+
+    Delete (``delete``)
+        If user has this permission in a content, user will be able to delete it.
+
 (( to be completed ))
 
 
