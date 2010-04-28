@@ -178,7 +178,7 @@ The way to solve these is add this CSS fragment into your CSS file:
 
 .. code-block:: css
 
-    .theme-violet #firstcomment .commentinfo {
+    .theme-violet #feedback #firstcomment .commentinfo {
         font-size: 8pt;
         padding: 5px;
         color: gray;
