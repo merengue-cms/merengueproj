@@ -14,7 +14,7 @@ from merengue.block.models import RegisteredBlock
 from merengue.base.management.base import MerengueCommand
 from merengue.plugin.models import RegisteredPlugin
 from merengue.registry import RegisteredItem
-from merengue.themes.models import Theme
+from merengue.theme.models import Theme
 
 
 class Command(LabelCommand, MerengueCommand):

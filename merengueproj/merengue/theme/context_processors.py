@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from merengue.themes.models import Theme
+from merengue.theme.models import Theme
 
 
 def media(request):

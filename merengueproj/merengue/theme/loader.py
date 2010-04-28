@@ -7,14 +7,14 @@ from django.conf import settings
 from django.template import TemplateDoesNotExist
 from django.utils._os import safe_join
 
-from merengue.themes import get_theme_root_dirs
+from merengue.theme import get_theme_root_dirs
 
 
 def get_template_sources(template_name, template_dirs=None):
     """
     Look for template into active theme directory
     """
-    from merengue.themes.models import Theme
+    from merengue.theme.models import Theme
     try:
         active_theme = Theme.objects.active()
     except Theme.DoesNotExist:

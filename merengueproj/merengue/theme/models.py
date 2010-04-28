@@ -6,8 +6,8 @@ from django.db import models
 from django.db.models import signals
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.themes import get_theme_path
-from merengue.themes.managers import ThemeManager
+from merengue.theme import get_theme_path
+from merengue.theme.managers import ThemeManager
 
 
 class Theme(models.Model):
@@ -16,6 +16,9 @@ class Theme(models.Model):
     installed = models.BooleanField(default=False)
     active = models.BooleanField(default=False)
     directory_name = models.CharField(_('directory name'), max_length=100)
+
+    class Meta:
+        db_table = 'themes_theme'
 
     objects = ThemeManager()
 

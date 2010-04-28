@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.template import Library
 
-from merengue.themes.models import Theme
+from merengue.theme.models import Theme
 
 register = Library()
 
