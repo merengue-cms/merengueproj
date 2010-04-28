@@ -131,9 +131,31 @@ You can see an `example plugin`_.
 
 .. _`example plugin`: https://tracpub.yaco.es/merengue/browser/trunk/merengueproj/plugins/news/
 
-To complete
------------
 
-Challenges to resolve:
+Required plugins in a project
+-----------------------------
 
- * Poder hacer que cada plugin tenga su espacio reservado para los media. Ver https://trac.yaco.es/formacion/wiki/MetodologiaDesarrolloDjango#Ficherosmultimedia para una posible solución.
+Sometimes your project requires that some plugins were activated by default and
+user cannot deactivated them. For example project logic may rely in existence
+of certains models defined in a plugin.
+
+You can define plugins that will be installed and activated by default including
+next setting in your project settings:
+
+.. code-block:: python
+
+    REQUIRED_PLUGINS = ('core', 'fooplugin', )
+
+Default: ``('core', )`` (``core`` plugin)
+
+.. admonition:: About ``core`` plugin
+
+    ``core`` plugin have to be included in ``REQUIRED_PLUGINS`` to maintain all
+    merengue features.
+
+After changing ``REQUIRED_PLUGINS`` setting, you have to register plugin with this
+command to get new plugins activated (and their models created if exist)::
+
+    python manage.py migrate
+
+

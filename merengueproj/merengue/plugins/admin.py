@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.admin import set_field_read_only
@@ -17,6 +18,10 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
         form = super(RegisteredPluginAdmin, self).get_form(request, obj)
         if not obj.installed:
             set_field_read_only(form.base_fields['active'], 'active', obj)
+        if obj.directory_name in settings.REQUIRED_PLUGINS:
+            # required plugins cannot being deactivated or uninstalled
+            set_field_read_only(form.base_fields['active'], 'active', obj)
+            set_field_read_only(form.base_fields['installed'], 'installed', obj)
         if not has_required_dependencies(obj):
             installed_field = form.base_fields['installed']
             help_text = installed_field.help_text

@@ -106,7 +106,8 @@ STATUS_LIST = (
 # merengue default directory for plugins
 PLUGINS_DIR = 'plugins'
 
-ACTIVED_DEFAULTS_PLUGINS = ('core', )
+# merengue required plugins in project (will be activated by default)
+REQUIRED_PLUGINS = ('core', )
 
 SESSION_ENGINE = 'merengue.backends.db'  # The module to store session data
 

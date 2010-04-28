@@ -77,8 +77,8 @@ def enable_active_plugins():
 def active_default_plugins(*args, **kwargs):
     if kwargs['app'] == 'section':
         interactive = kwargs.get('interactive', None)
-        for plugin_dir in settings.ACTIVED_DEFAULTS_PLUGINS:
-            # register the core plugin
+        # register required plugins
+        for plugin_dir in settings.REQUIRED_PLUGINS:
             plugin = register_plugin(plugin_dir)
             plugin.installed = True
             plugin.active = True
