@@ -5,8 +5,8 @@ from django.db import models
 from django.db.models import signals
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.plugins.utils import install_plugin, get_plugins_dir, get_plugin_module_name
-from merengue.plugins.managers import PluginManager
+from merengue.plugin.utils import install_plugin, get_plugins_dir, get_plugin_module_name
+from merengue.plugin.managers import PluginManager
 from merengue.registry.dbfields import RequiredPluginsField, RequiredAppsField
 from merengue.registry.models import RegisteredItem
 
@@ -20,6 +20,9 @@ class RegisteredPlugin(RegisteredItem):
     installed = models.BooleanField(default=False)
     directory_name = models.CharField(_('directory name'), max_length=100,
                                       unique=True)
+
+    class Meta:
+        db_table = 'plugins_registeredplugin'
 
     objects = PluginManager()
 

@@ -73,6 +73,6 @@ class PDFExport(Action):
 
     config_params = params.Single(name='pdfbin', default='/usr/bin/html2pdf')
 
->>> from merengue.plugins.pdfexport.actions import PDFExport
+>>> from merengue.plugin.pdfexport.actions import PDFExport
 >>> PDFExport.get_config()['pdfbin']
 """

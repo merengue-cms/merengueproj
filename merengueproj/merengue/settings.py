@@ -22,11 +22,11 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 # merengue exclusive installed apps. you have to use at least these apps in your INSTALLED_APPS project settings
 MERENGUE_APPS = (
     'merengue.registry',
+    'merengue.plugin',
     'merengue.multimedia',
     'merengue.base',
-    'merengue.perms',
     'merengue.section',
-    'merengue.plugins',
+    'merengue.perms',
     'merengue.themes',
     'merengue.action',
     'merengue.block',
@@ -73,7 +73,7 @@ MERENGUE_MIDDLEWARE_CLASSES = (
     'merengue.section.middleware.DebugSectionMiddleware',
     'merengue.middleware.SimplifiedLayoutMiddleware',
     'merengue.middleware.LocaleMiddleware',
-    'merengue.plugins.middleware.ActivePluginsMiddleware',
+    'merengue.plugin.middleware.ActivePluginsMiddleware',
 )
 
 # merengue usual middleware list. you can use this variable in your MIDDLEWARE_CLASSES project settings

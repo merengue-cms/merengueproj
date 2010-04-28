@@ -1,4 +1,4 @@
-from merengue.plugins import Plugin
+from merengue.plugin import Plugin
 
 from plugins.event.admin import EventSectionAdmin
 from plugins.event.models import Event

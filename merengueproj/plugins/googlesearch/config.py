@@ -1,6 +1,6 @@
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.plugins import Plugin
+from merengue.plugin import Plugin
 from merengue.registry import params
 
 from plugins.googlesearch.blocks import GoogleSearchBlock

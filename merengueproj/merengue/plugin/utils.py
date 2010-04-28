@@ -121,7 +121,7 @@ def find_plugin_urls(plugin_name):
 
 
 def enable_plugin(plugin_name, register=True):
-    from merengue.plugins import PLUG_CACHE_KEY
+    from merengue.plugin import PLUG_CACHE_KEY
     from merengue.base.admin import register_app
     cache.delete(PLUG_CACHE_KEY)
     add_to_installed_apps(plugin_name)
@@ -145,7 +145,7 @@ def enable_plugin(plugin_name, register=True):
 
 
 def disable_plugin(plugin_name, unregister=True):
-    from merengue.plugins import PLUG_CACHE_KEY
+    from merengue.plugin import PLUG_CACHE_KEY
     from merengue.base.admin import unregister_app
     cache.delete(PLUG_CACHE_KEY)
     remove_from_installed_apps(plugin_name)
@@ -323,7 +323,7 @@ def has_required_dependencies(plugin):
         if app not in settings.INSTALLED_APPS:
             return False
     required_plugins = plugin.required_plugins or {}
-    from merengue.plugins.models import RegisteredPlugin
+    from merengue.plugin.models import RegisteredPlugin
     for plugin, properties in required_plugins.iteritems():
         filter_plugins = {'directory_name': plugin, 'active': True}
         # HACK: Key for filter params dict can't be unicode strings

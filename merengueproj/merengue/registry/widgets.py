@@ -71,7 +71,7 @@ class RequiredPluginsWidget(ConfigWidget):
         """ rendering function. """
         required_plugins = value or {}
         plugins_li = []
-        from merengue.plugins.models import RegisteredPlugin
+        from merengue.plugin.models import RegisteredPlugin
         for plugin, properties in required_plugins.iteritems():
             filter_plugins = {'directory_name': plugin, 'active': True}
             # HACK: Key for filter params dict can't be unicode strings

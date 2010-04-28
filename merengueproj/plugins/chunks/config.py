@@ -1,4 +1,4 @@
-from merengue.plugins import Plugin
+from merengue.plugin import Plugin
 #from merengue.section.admin import DocumentRelatedModelAdmin
 #from merengue.section.models import Document
 

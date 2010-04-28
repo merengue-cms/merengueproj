@@ -12,7 +12,7 @@ from django.core.management.color import no_style
 from merengue.action.models import RegisteredAction
 from merengue.block.models import RegisteredBlock
 from merengue.base.management.base import MerengueCommand
-from merengue.plugins.models import RegisteredPlugin
+from merengue.plugin.models import RegisteredPlugin
 from merengue.registry import RegisteredItem
 from merengue.themes.models import Theme
 

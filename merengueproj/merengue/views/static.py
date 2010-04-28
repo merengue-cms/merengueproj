@@ -10,7 +10,7 @@ from django.utils.http import http_date
 from django.utils.functional import memoize
 from django.views.static import directory_index, was_modified_since
 
-from merengue.plugins.models import RegisteredPlugin
+from merengue.plugin.models import RegisteredPlugin
 
 
 _plugins_full_path_cache = {}

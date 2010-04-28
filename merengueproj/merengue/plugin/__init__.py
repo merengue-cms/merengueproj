@@ -3,8 +3,8 @@ from django.utils.translation import ugettext
 
 from south.signals import post_migrate
 
-from merengue.plugins.models import RegisteredPlugin
-from merengue.plugins.utils import get_plugin_config
+from merengue.plugin.models import RegisteredPlugin
+from merengue.plugin.utils import get_plugin_config
 from merengue.registry import register, is_registered
 from merengue.registry.items import RegistrableItem
 
@@ -69,7 +69,7 @@ def register_plugin(plugin_dir):
 
 
 def enable_active_plugins():
-    from merengue.plugins.utils import enable_plugin, get_plugin_module_name
+    from merengue.plugin.utils import enable_plugin, get_plugin_module_name
     for plugin_registered in RegisteredPlugin.objects.actives():
         enable_plugin(get_plugin_module_name(plugin_registered.directory_name))
 

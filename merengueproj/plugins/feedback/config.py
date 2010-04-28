@@ -1,4 +1,4 @@
-from merengue.plugins import Plugin
+from merengue.plugin import Plugin
 from plugins.feedback.blocks import FeedbackBlock
 
 

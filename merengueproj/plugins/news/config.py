@@ -1,4 +1,4 @@
-from merengue.plugins import Plugin
+from merengue.plugin import Plugin
 
 from plugins.news.actions import PDFExport, NewsIndex, NewsRSS
 from plugins.news.blocks import LatestNewsBlock

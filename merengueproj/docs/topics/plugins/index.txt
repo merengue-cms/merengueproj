@@ -23,7 +23,7 @@ Example
 
 .. code-block:: python
 
-    from plug import Plugin
+    from merengue.plugin import Plugin
     
     class PluginConfig(Plugin):
         url_prefixes = (
