@@ -6,20 +6,20 @@ Plugins development
 
 .. highlightlang:: html+django
 
+.. _topics-plugins-overview:
 
 Overview
 ========
 
 (( to be completed ))
 
+.. _topics-plugins-configuration:
 
 Configuration
 =============
 
 Plugin configuration is defined in a ``PluginConfig`` class in a ``config.py`` module inside your plugin directory. This class is readed when plugin is loaded in merengue.
 
-
-.. _topics-plugins-configuration:
 
 Example plugin config
 ---------------------
@@ -80,13 +80,12 @@ system will perform a operation like this:
       (r'^fooplugin/', include('plugins.fooplugin.urls')),
     )
 
-.. _topics-plugins-development:
-
 Method reference
 ----------------
 
 (( to be completed ))
 
+.. _topics-plugins-development:
 
 Development
 ===========
@@ -173,7 +172,7 @@ Default: ``('core', )`` (``core`` plugin)
     merengue features.
 
 After changing ``REQUIRED_PLUGINS`` setting, you have to register plugin with this
-command to get new plugins activated (and their models created if exist)::
+command to get new plugins activated (and also get their models created if exist)::
 
     python manage.py migrate
 

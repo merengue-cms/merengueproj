@@ -15,6 +15,7 @@ The components
       :ref:`Installation <topics-install>`
 
     * **Plugins:**
+      :ref:`Overview <topics-plugins-overview>` |
       :ref:`Configuration <topics-plugins-configuration>` |
       :ref:`Development <topics-plugins-development>`
 
