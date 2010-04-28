@@ -24,6 +24,12 @@ class PortalLink(models.Model):
     order = models.IntegerField(_('order'), blank=True, null=True)
     category = models.CharField(_('category'), max_length=100, choices=CATEGORIES)
 
+    slug = models.SlugField(verbose_name=_('slug'),
+                            max_length=200,
+                            blank=False,
+                            null=False)
+
+
     class Meta:
         verbose_name = _('portal link')
         verbose_name_plural = _('portal links')
