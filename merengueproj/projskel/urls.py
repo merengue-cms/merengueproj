@@ -36,6 +36,9 @@ urlpatterns = patterns('',
     # actions
     (r'^actions/', include('merengue.action.urls')),
 
+    # blocks
+    (r'^blocks/', include('merengue.block.urls')),
+
     # login and logout
     url(r'^account/login/$', 'merengue.portal.views.try_login', name='login_form'),
     url(r'^account/logout/$', 'merengue.portal.views.logout', name='logout'),

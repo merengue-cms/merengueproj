@@ -563,7 +563,7 @@ def _collect_sub_objects(self, seen_objs, parent=None, nullable=False):
             return
     else: # For Django 1.1.2 or newer
         if seen_objs.add(self.__class__, pk_val, self,
-                        type(parent), parent, nullable):
+                         parent, nullable):
             return
 
     for related in self._meta.get_all_related_objects():

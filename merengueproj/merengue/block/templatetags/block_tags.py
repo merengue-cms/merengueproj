@@ -34,8 +34,10 @@ class RenderBlocksNode(template.Node):
                         rendered_blocks.append(block.render(request,
                                                             self.place,
                                                             content))
-            return "<div class='blockContainer'>%s</div>" \
-                   % '\n'.join(rendered_blocks)
+            return "<div class='blockContainer'>%s" \
+                   "<input type=\"hidden\" class=\"blockPlace\" value=\"%s\">" \
+                   "</div>" \
+                   % ('\n'.join(rendered_blocks), self.place)
         except template.VariableDoesNotExist:
             return ''
 
