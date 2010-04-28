@@ -29,4 +29,4 @@ The components
       :ref:`Permissions <topics-permissions>`
 
     * **merengue-admin.py:**
-      :ref:`Development <topics-commands-merengue-admin>`
+      :ref:`Command reference <topics-commands-merengue-admin>`
