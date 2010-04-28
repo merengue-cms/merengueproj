@@ -48,7 +48,7 @@ class EventAdmin(BaseContentAdmin):
     exclude = ('expire_date', )
     list_display = ('name', 'cached_min_start', 'cached_max_end', 'status', 'user_modification_date', 'last_editor')
     if settings.USE_GIS:
-        list_display = list_display + (('google_minimap', ), )
+        list_display = list_display + ('google_minimap', )
     list_filter = ('categories', 'frequency', 'status', 'user_modification_date', )
 
     def get_form(self, request, obj=None, **kwargs):
@@ -85,15 +85,14 @@ class OccurrenceContactInfoAdminInline(ReverseAdminInline):
 
 
 if settings.USE_GIS:
+
     class OccurrenceLocationAdminInline(InlineLocationModelAdmin, ReverseAdminInline):
         model = Location
         verbose_name_plural = _('Ocurrence Locations')
         parent_fk_name = 'location'
 
-
     class BaseContentLocationOccurrenceAdmin(BaseContentAdmin):
         list_display = ('name', 'google_minimap', 'status', 'class_name')
-
         list_filter = BaseContentAdmin.list_filter + ('class_name', )
         search_fields = ('name', )
         batch_actions = ['place_at', ]
