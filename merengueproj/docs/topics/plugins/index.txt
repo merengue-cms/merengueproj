@@ -129,7 +129,7 @@ Example "news" plugin
 
 You can see an `example plugin`_.
 
-.. _`example plugin`: https://tracpub.yaco.es/merengue/browser/trunk/merengueproj/plugins/news/
+.. _`example plugin`: http://tracpub.yaco.es/merengue/browser/trunk/merengueproj/plugins/news/
 
 
 Required plugins in a project
