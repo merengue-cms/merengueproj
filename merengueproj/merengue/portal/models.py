@@ -10,6 +10,8 @@ CATEGORIES = (
     ('secondary', _('Secondary link')),
 )
 
+LINK_MEDIA_PREFIX = 'links'
+
 
 class PortalLink(models.Model):
     """ Primary and secondary portal links """
@@ -28,6 +30,10 @@ class PortalLink(models.Model):
                             max_length=200,
                             blank=False,
                             null=False)
+
+    image = models.ImageField(verbose_name=_('image'),
+                              null=True, blank=True,
+                              upload_to=LINK_MEDIA_PREFIX)
 
 
     class Meta:
