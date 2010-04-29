@@ -515,6 +515,7 @@ class WorkflowBatchActionProvider(object):
                 msg = ugettext(u"Successfully set %(number)d %(model_name)s as %(state)s.") % msg_data
                 for obj in queryset:
                     self.log_change(request, obj, obj_log)
+                    obj.save()
                 self.message_user(request, msg)
             else:
                 extra_context = {'title': confirm_msg,

@@ -1,5 +1,8 @@
+import datetime
+
 from django.db import models
 from django.db.models import permalink
+from django.db.models.signals import pre_save
 from django.utils.translation import ugettext_lazy as _
 
 from cmsutils.cache import CachingManager
@@ -40,3 +43,10 @@ class NewsItem(BaseContent):
         else:
             # go to news item inside section which created it
             return ('content_section_view', [section.slug, self.id, self.slug])
+
+
+def set_publish_date(sender, instance, **kwargs):
+    if instance.status == 'published' and not instance.publish_date:
+        instance.publish_date = datetime.datetime.now()
+
+pre_save.connect(set_publish_date, sender=NewsItem)

@@ -11,14 +11,8 @@ class NewsItemAdmin(BaseContentAdmin):
     list_filter = BaseContentAdmin.list_filter + ('categories', )
     html_fields = BaseContentAdmin.html_fields + ('body', )
 
-    def get_form(self, *args, **kwargs):
-        form = BaseContentAdmin.get_form(self, *args, **kwargs)
-        def _get_media(self):
-            media = self._get_media()
-            media.add_js(['/media/news/date_auto_fill.js'])
-            return media
-        form.media = property(_get_media)
-        return form
+    class Media:
+        js = ('news/date_auto_fill.js', )
 
 
 class NewsItemSectionAdmin(NewsItemAdmin, SectionContentAdmin):
