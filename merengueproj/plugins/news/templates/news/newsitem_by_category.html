@@ -7,7 +7,10 @@
             {% thumbnail news.main_image 146x88 as thumb %}
             <img class="imageLeft" width="146px" height="88px" src="{{ thumb }}" />
         {% else %}
+           <div class="noImage">
             <img class="imageLeft" width="146px" height="88px" src="{{ THEME_MEDIA_URL }}img/no_image.jpg" />
+            <span class="noImageText">{% trans "No Image" %}</span>
+           </div>
         {% endif %}
         <h2>{{ news.name }}</h2>
         <span class="date">{{ news.publish_date|date }}</span>
