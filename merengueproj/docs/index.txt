@@ -46,8 +46,11 @@ Topics
  * **Permissions:**
    :ref:`Permissions <topics-permissions>`
 
-Command
-=======
+Reference
+=========
+
+ * **Merengue settings:**
+   Merengue :ref:`specific settings <ref-settings>`
 
  * **merengue-admin.py:**
-      :ref:`Command reference <topics-commands-merengue-admin>`
+   :ref:`Command reference <topics-commands-merengue-admin>`

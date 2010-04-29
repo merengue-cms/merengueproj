@@ -181,3 +181,11 @@ JQUERY_BASE_MEDIA = 'merengue/js/'
 # COMMENTS_APP = 'plugins.feedback'
 
 MENU_PORTAL_SLUG = 'portal_menu'
+
+# Dictionary with fixtures to load for every application
+# After migrating (with south) 'foo' application Merengue will load
+# every SITE_FIXTURES['foo'] files
+# Syntax: {
+#    'app_name': ('fixture_to_load1', 'fixture_to_load2', ...),
+#    ...}
+SITE_FIXTURES = {}

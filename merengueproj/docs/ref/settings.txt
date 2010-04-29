@@ -1,0 +1,40 @@
+.. _ref-settings:
+
+==========================
+Merengue specific settings
+==========================
+
+.. contents::
+    :local:
+    :depth: 1
+
+Available settings
+==================
+
+Here's a full list of all available merengue settings.
+
+.. setting:: SITE_FIXTURES
+
+SITE_FIXTURES
+-------------
+
+Default: ``{}`` (Empty dictionary)
+
+A dictionary mapping with fixtures to load for every application
+It will executed after migrating (with south) models for every application.
+Example:
+
+.. code-block:: python
+
+    SITE_FIXTURES = {
+        'blog': ('blogs_data.xml', )
+        'news': ('news_data.xml', 'news_users.json', )
+    }
+
+In this example, after migrate 'news' application Merengue will load
+``news_data.xml`` and ``news_users.json``, located in one of `settings.FIXTURE_DIRS`_.
+
+.. _settings.FIXTURE_DIRS: http://docs.djangoproject.com/en/1.1/ref/settings/#fixture-dirs
+
+
+(( to be completed ))

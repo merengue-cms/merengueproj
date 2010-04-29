@@ -656,6 +656,12 @@ def handle_pre_migrate(sender, **kwargs):
 def handle_post_migrate(sender, **kwargs):
     global post_save_receivers
     post_save.receivers = post_save_receivers
+    # site fixtures loading after migration
+    for app_name, fixtures in getattr(settings, 'SITE_FIXTURES', {}).items():
+        if app_name == kwargs['app']: # only migrate
+            for fixture in fixtures:
+                fixture_path = os.path.join(settings.FIXTURES_ROOT, fixture)
+                call_command('loaddata', fixture_path, verbosity=1)
 
 
 pre_migrate.connect(handle_pre_migrate)
