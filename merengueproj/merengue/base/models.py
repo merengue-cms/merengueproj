@@ -27,6 +27,7 @@ from cmsutils.db.fields import AutoSlugField
 from cmsutils.signals import post_rebuild_db
 if settings.USE_GIS:
     from south.introspection_plugins import geodjango
+from south.modelsinspector import add_introspection_rules
 from south.signals import pre_migrate, post_migrate
 from stdimage import StdImageField
 from transmeta import TransMeta
@@ -641,6 +642,17 @@ models.Model.add_to_class('delete', delete)
 models.Model.add_to_class('break_relations', break_relations)
 models.Model.add_to_class('_collect_sub_objects', _collect_sub_objects)
 
+# ----- adding south rules to help introspection -----
+
+rules = [
+  (
+    (AutoSlugField, ),
+    [],
+    {"autofromfield": ["autofromfield", {}]},
+  ),
+]
+
+add_introspection_rules(rules, ["^cmsutils\.db\.fields\.AutoSlugField"])
 
 # ----- south signals handling -----
 

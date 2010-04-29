@@ -36,7 +36,7 @@
                     {% endfor %}
                 {% endwith %}
                 </div>
-                <div class="dates">{% range_dates_as_tag child.cached_min_start child.cached_max_end 'span' %}</div>
+                <div class="dates">{% range_dates_as_tag child.start child.end 'span' %}</div>
             </div>
         </li>
       {% endfor %} 

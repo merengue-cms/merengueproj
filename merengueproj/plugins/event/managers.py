@@ -16,13 +16,13 @@ class EventManager(ActiveManager, BaseContentManager):
         super(EventManager, self).__init__(from_date='publish_date', to_date='expire_date')
 
     def actives(self):
-        return super(EventManager, self).actives().filter(cached_max_end__gte=datetime.now(), status='published')
+        return super(EventManager, self).actives().filter(end__gte=datetime.now(), status='published')
 
     def actives_in_date(self, onedate):
-        return super(EventManager, self).actives().filter(cached_max_end__gte=onedate, status='published')
+        return super(EventManager, self).actives().filter(end__gte=onedate, status='published')
 
     def actives_in_range(self, start, end):
-        return super(EventManager, self).actives().filter(Q(cached_max_end__lte=start, cached_max_end__gte=end), status='published')
+        return super(EventManager, self).actives().filter(Q(end__lte=start, end__gte=end), status='published')
 
     def allpublished(self):
         return self.filter(status='published')
@@ -37,9 +37,9 @@ class EventManager(ActiveManager, BaseContentManager):
         weekday = day.weekday()
         first_week_day = datetime(day.year, day.month, day.day, hour=0, minute=0) - timedelta(weekday)
         last_week_day = datetime(day.year, day.month, day.day, hour=23, minute=59) + timedelta(6-weekday)
-        this_week_filter = Q(cached_min_start__lte=last_week_day,
-                             cached_min_start__gte=first_week_day) | \
-                           Q(cached_min_start__lte=day, cached_max_end__gte=day)
+        this_week_filter = Q(start__lte=last_week_day,
+                             start__gte=first_week_day) | \
+                           Q(start__lte=day, end__gte=day)
         return self.published().filter(this_week_filter)
 
 

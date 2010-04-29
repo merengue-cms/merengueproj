@@ -21,7 +21,7 @@ def portlet_content_active_events(context, content, limit=7):
             filter = {'location__cities__in': content.cities.published()}
         elif isinstance(content, BaseContent):
             filter = {'occurrence_event__basecontent_location': content}
-        related_events = Event.objects.actives().filter(**filter).order_by('cached_min_start')
+        related_events = Event.objects.actives().filter(**filter).order_by('start')
 
         return {'content': content,
                 'events': related_events[:limit],

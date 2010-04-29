@@ -65,7 +65,7 @@ def range_dates_as_tag(context, start, end, tag='span', classdef=None):
 @register.inclusion_tag('event/related_events.html', takes_context=True)
 def related_events(context, event):
     active_event_filter = {'status': 'published',
-                           'cached_max_end__gte': datetime.now(),
+                           'end__gte': datetime.now(),
                            }
     children = event.event_set.filter(**active_event_filter)
     if children == []:
@@ -116,5 +116,5 @@ def highlight_events(context, section=None, event_number=3):
     if highlight_events_count < event_number:
         events = Event.objects.published().filter(filter_section).distinct()
         highlight_events = highlight_events | events
-    highlight_events = highlight_events.order_by('-is_highlight', 'cached_min_start')[:event_number]
+    highlight_events = highlight_events.order_by('-is_highlight', 'start')[:event_number]
     return {'highlight_events': highlight_events}

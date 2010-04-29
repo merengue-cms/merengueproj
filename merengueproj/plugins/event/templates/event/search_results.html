@@ -39,8 +39,8 @@
   {% resource_locations item %}
 
   <li><strong>{% inline_trans "The event type" %}:</strong> {{ item.categories.all|join:", " }}</li>
-  {% if item.cached_min_start %}
-    <li><strong>{% inline_trans "Date" %}:</strong> {% range_dates item.cached_min_start item.cached_max_end %}
+  {% if item.start %}
+    <li><strong>{% inline_trans "Date" %}:</strong> {% range_dates item.start item.end %}
   </li>
   {% endif %}
 
