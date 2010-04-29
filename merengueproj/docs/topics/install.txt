@@ -203,6 +203,13 @@ the end):
         local myproject myproject trust
         local test_myproject myproject trust # necessary for tests
 
+Reload pg_hba.conf in postgresql server:
+    
+    .. code-block:: bash
+ 
+        $ /etc/init.d/postgresql-X.X reload
+      
+
 Restart postgresql and check access with this command:
 
     .. code-block:: bash
