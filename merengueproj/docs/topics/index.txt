@@ -9,7 +9,10 @@ Introductions to all the key parts of Merengue you'll need to know:
    :maxdepth: 1
 
    install
+   userguide/index
    plugins/index
    themes/index
    permissions
+   blocks
    actions
+   viewlets

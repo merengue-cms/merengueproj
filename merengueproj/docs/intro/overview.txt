@@ -1,0 +1,138 @@
+.. _intro-overview:
+
+=================
+Merengue overview
+=================
+
+(( to be completed. talk a little about merengue goals and philosophy ))
+
+The goal of this document is to give you enough technical specifics to
+understand how Merengue works. When you're ready to start a project, you can
+:ref:`start with the tutorial <intro-tutorial>` or :ref:`dive right into more
+detailed documentation <topics-index>`.
+
+Main Merengue features out-of-the-box
+=====================================
+
+(( to be completed ))
+
+Data model
+----------
+
+(( to be completed, say models is translatable ))
+
+Pluggable
+---------
+
+(( to be completed ))
+
+GIS integrated
+--------------
+
+(( to be completed ))
+
+Full featured management interface
+----------------------------------
+
+(( to be completed ))
+
+
+Focused on programmers
+======================
+
+Merengue was created by a Python enthusiast team, who loves elegant code and
+clean APIs but with pragmatic approaches to the solution.
+
+With that, you've got a free, and rich, Python API to do almost all things you
+can imagine, with a good designed data model for content management.
+
+.. admonition:: Django knowledge needed
+
+    Merengue API has been created using parts of Django API. You need to know
+    `Django API`_ to understand better Merengue one.
+
+.. _Django API: http://docs.djangoproject.com/
+
+Look these examples:
+
+.. code-block:: python
+
+    >>> from merengue.base.models import BaseContent
+
+    # all contents published in your CMS
+    >>> BaseContent.objects.published()
+    [...]
+
+    # create a content from a plugin (a news item, that inherits from BaseContent)
+    >>> from plugins.news.models import NewsItem
+    >>> newsitem = NewsItem(name_es='Mi noticia', name_en='My news item')
+    >>> newsitem.publish_date = datetime.datetime.now()
+    >>> newsitem.save()
+
+    # managing permissions
+    >>> from django.contrib.auth.models import User
+    >>> staff_user = User.objects.create(username='roque')
+    >>> from merengue.perms.utils import register_permission, register_role
+    >>> register_permission('Vote news item', 'vote_newsitem', 
+                            for_models=[NewsItem])
+    >>> editor = register_role('Editor')
+    >>> editor.add_principal(staff_user) # add user to role 'Editor'
+    >>> grant_permission(newsitem, editor, 'vote_newsitem')
+    >>> has_permission(content, staff_user, 'vote')
+    True
+
+
+A complete management interface
+===============================
+
+The management interface its half based on Django admin (with many steroids)
+and half a WYSYWYG interface (for example to manage blocks layout).
+
+(( to be completed ))
+
+Theme management
+----------------
+
+Block reordering
+----------------
+
+Plugin management
+-----------------
+
+
+Theming
+=======
+
+(( to be completed ))
+
+For example, next template will be render blocks located at ``leftsidebar``
+place in the rightsidebar zone. You only have to create this template as your
+``templates/themes/yourtheme/base.html`` and activate theme in admin interface.
+
+.. code-block:: html+django
+
+    {% extends "base/layout.html" %}
+
+    {% load block_tags %}
+
+    {% block rightsidebar %}
+      {% render_blocks "leftsidebar" for content %}
+      {{ block.super }}
+    {% endblock %}
+
+.. admonition:: Django knowledge needed
+
+    Merengue uses Django templating system. See `Django templates` to get more
+    info about Merengue templating.
+
+.. Django templates_: http://docs.djangoproject.com/en/1.1/topics/templates/
+
+
+This is just the surface
+========================
+
+This is only a Merengue overview, to deep into more information, see :ref:`Merengue docs <index>`.
+
+You can now to `download Merengue`_ and read :ref:`the tutorial <intro-tutorial>`.
+
+.. _download Merengue: http://www.merengueproject.org/download/

@@ -1,0 +1,7 @@
+.. _topics-blocks:
+
+======
+Blocks
+======
+
+(( to be completed ))

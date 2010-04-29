@@ -8,25 +8,46 @@ Merengue documentation
 .. rubric:: Everything you need to know about Merengue.
 
 
-The components
-===============
+Introduction
+============
 
-    * **Install:**
-      :ref:`Installation <topics-install>`
+ * **Install:**
+   Read the :ref:`install instructions<topics-install>` for installing merengue framework.
 
-    * **Plugins:**
-      :ref:`Overview <topics-plugins-overview>` |
-      :ref:`Configuration <topics-plugins-configuration>` |
-      :ref:`Development <topics-plugins-development>`
+ * **Overview:**
+   Read the :ref:`overview <intro-overview>` to take a glance.
 
-    * **Themes:**
-      :ref:`Development <topics-themes-index>`
+ * **Tutorial:**
+   Creates your first Merengue site reading the :ref:`tutorial <intro-tutorial>`
 
-    * **Actions:**
-      :ref:`Development <topics-actions>`
+Managing content
+================
 
-    * **Permissions:**
-      :ref:`Permissions <topics-permissions>`
+ * **User guide:**
+   Learn to manage content with merengue reading the :ref:`user guide <topics-userguide>`
 
-    * **merengue-admin.py:**
+Topics
+======
+
+ * **Plugins:**
+   :ref:`Overview <topics-plugins-overview>` |
+   :ref:`Configuration <topics-plugins-configuration>` |
+   :ref:`Development <topics-plugins-development>`
+
+ * **Themes:**
+   :ref:`Theming with Merengue <topics-themes-index>`
+
+ * **Blocks:**
+   :ref:`Blocks <topics-blocks>`
+
+ * **Actions:**
+   :ref:`Actions <topics-actions>`
+
+ * **Permissions:**
+   :ref:`Permissions <topics-permissions>`
+
+Command
+=======
+
+ * **merengue-admin.py:**
       :ref:`Command reference <topics-commands-merengue-admin>`

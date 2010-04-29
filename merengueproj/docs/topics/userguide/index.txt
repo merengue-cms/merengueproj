@@ -1,0 +1,7 @@
+.. _topics-userguide:
+
+===================
+Merengue user guide
+===================
+
+(( to be completed ))
