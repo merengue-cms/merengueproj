@@ -1,5 +1,6 @@
 # encoding: utf-8
 import datetime
+from django.conf import settings
 from south.db import db
 from south.v2 import DataMigration
 from django.db import connection
