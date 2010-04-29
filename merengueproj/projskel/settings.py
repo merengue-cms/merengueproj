@@ -96,12 +96,13 @@ SVNDIR = path.join(BASEDIR, 'apps')
 TEST_DB_CREATION_SUFFIX = 'WITH TEMPLATE template_postgis'
 
 FIXTURE_DIRS = (
-    path.join(BASEDIR, 'fixtures', 'base'),
+    path.join(BASEDIR, 'fixtures', ),
 )
 
-FIXTURES_EXCLUDES = (
-    'auth.permission',
-)
+SITE_FIXTURES = {
+    # Site fixtures that will be loaded after data migration. Syntax:
+    # 'app_name': ('fixture1', 'fixture2', ...)
+}
 
 BUILDBOT_IP = '192.168.11.209'
 INTERNAL_IPS = ('127.0.0.1', '80.36.82.38', BUILDBOT_IP)
