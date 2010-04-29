@@ -39,3 +39,6 @@ Use a non GIS database with a GIS project
 **Solution**: one of these:
    * Use a GIS database (it depends of your database engine).
    * Define ``USE_GIS=False`` if you don't need geographic features.
+
+
+(( to be completed ))
