@@ -1,0 +1,35 @@
+Merengue was initially created at Yaco Sistemas, originally for Malaga
+University.
+
+The PRIMARY AUTHORS are (ordered by aproximated LOC number):
+
+    * Manuel Saelices <msaelices@yaco.es>
+    * Emilio Sánchez <esanchez@yaco.es>
+    * Pablo Martín <pmartin@yaco.es>
+    * Daniel García <dgarcia@yaco.es>
+
+Other merengue DEVELOPERS are:
+
+    * Javier de la Rosa <versae@gmail.com>
+    * Antonio Pérez-Aranda <aperezaranda@yaco.es>
+    * Fidel Ramos <fidelramos@gmail.com>
+    * Diego Escalante <munoz.escalante@gmail.com>
+    * Oscar Díaz <odiaz@yaco.es>
+
+APPRECIATED CONTRIBUTORS, who have contributed to improve merengue reporting
+bugs, adding translations, doing graphical design, taken design decisions, etc:
+
+    * Isabel Serván <iservan@yaco.es> as graphical designer
+    * Victoriano Giralt <victoriano@uma.es>
+    * Antonio Campos <acampos@uma.es>
+    * Manuel Baleriola <mbaleriola@uma.es>
+    * Ignacio Pérez <ipm@uma.es>
+    * Manuel Viera <mviera@yaco.es>
+    * Julio Rivas <julio.r.m.1982@gmail.com>
+
+And a big THANK YOU goes to:
+
+    * Malaga University for finance merengue in its initial phases.
+    * Turismo Andaluz for allowing us to use some code from www.andalucia.org.
+    * Adrian Holovaty, Simon Willison and Jacob Kaplan-Moss for creating Django.
+    * Guido van Rossum for creating Python.
