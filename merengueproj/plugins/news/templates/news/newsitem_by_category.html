@@ -1,0 +1,19 @@
+{% load i18n news_tags thumbnail %}
+{% get_news_of_category news_category_active as news_list %}
+<ul>
+{% for news in news_list %}
+    <li>
+        {% if news.main_image %}
+            {% thumbnail news.main_image 146x88 as thumb %}
+            <img class="imageLeft" width="146px" height="88px" src="{{ thumb }}" />
+        {% else %}
+            <img class="imageLeft" width="146px" height="88px" src="{{ THEME_MEDIA_URL }}img/no_image.jpg" />
+        {% endif %}
+        <h2>{{ news.name }}</h2>
+        <span class="date">{{ news.publish_date|date }}</span>
+        <p>{{ news.description|safe|truncatewords_html:20 }}</p>
+        <a class="readMore" href="{{ news.get_absolute_url }}" alt="{% trans 'read more' %}" title="{% trans 'read more' %}"><img src="{{ THEME_MEDIA_URL }}img/read_more.gif" /></a>
+        <div class="visualClear"></div>
+    </li>
+{% endfor %}
+</ul>
