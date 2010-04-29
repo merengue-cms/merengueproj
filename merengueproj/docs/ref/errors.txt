@@ -1,0 +1,41 @@
+.. _ref-errors:
+
+======================
+Common Merengue errors
+======================
+
+.. contents::
+    :local:
+    :depth: 1
+
+Database errors
+===============
+
+Here's a full list of all available merengue settings.
+
+.. setting:: SITE_FIXTURES
+
+Use a non GIS database with a GIS project
+-----------------------------------------
+
+**Error traceback**::
+
+    Traceback (most recent call last):
+    ...
+        version_tuple = postgis_version_tuple()
+    File "/home/user/django_src_1.1.X/django/contrib/gis/db/backend/postgis/management.py", line 46, in postgis_version_tuple
+        version = postgis_lib_version()
+    File "/home/user/django_src_1.1.X/django/contrib/gis/db/backend/postgis/management.py", line 26, in postgis_lib_version
+        return _get_postgis_func('postgis_lib_version')
+    File "/home/user/django_src_1.1.X/django/contrib/gis/db/backend/postgis/management.py", line 13, in _get_postgis_func
+        cursor.execute('SELECT %s()' % func)
+    File "/home/user/django_src_1.1.X/django/db/backends/util.py", line 19, in execute
+        return self.cursor.execute(sql, params)
+    psycopg2.ProgrammingError: no existe la función postgis_lib_version()
+    LINE 1: SELECT postgis_lib_version()
+
+**Cause**: you are using a non GIS database but your project is configured with ``USE_GIS=True``
+
+**Solution**: one of these:
+   * Use a GIS database (it depends of your database engine).
+   * Define ``USE_GIS=False`` if you don't need geographic features.

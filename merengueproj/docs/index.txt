@@ -52,5 +52,8 @@ Reference
  * **Merengue settings:**
    Merengue :ref:`specific settings <ref-settings>`
 
+ * **Common errors:**
+   :ref:`Errors reference <ref-errors>`
+
  * **merengue-admin.py:**
    :ref:`Command reference <topics-commands-merengue-admin>`
