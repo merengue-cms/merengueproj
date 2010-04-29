@@ -78,7 +78,7 @@ Look these examples:
     >>> editor = register_role('Editor')
     >>> editor.add_principal(staff_user) # add user to role 'Editor'
     >>> grant_permission(newsitem, editor, 'vote_newsitem')
-    >>> has_permission(content, staff_user, 'vote')
+    >>> has_permission(newsitem, staff_user, 'vote')
     True
 
 
@@ -90,14 +90,25 @@ and half a WYSYWYG interface (for example to manage blocks layout).
 
 (( to be completed ))
 
+Content management
+------------------
+
+(( to be completed ))
+
 Theme management
 ----------------
+
+(( to be completed ))
 
 Block reordering
 ----------------
 
+(( to be completed ))
+
 Plugin management
 -----------------
+
+(( to be completed ))
 
 
 Theming
