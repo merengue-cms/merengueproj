@@ -427,8 +427,8 @@ included).
         $ createdb -T template_postgis --owner=myproject myproject
 
 
-Upgrading merengue models in development mode
-=============================================
+Upgrading merengue in development mode
+======================================
 
 If your merengue project is in development mode, when you update merengue code
 maybe models can change. For upgrading models after a code update, you can use
@@ -437,6 +437,12 @@ south ``migrate`` command as follows:
     .. code-block:: bash
 
         $ ./manage.py migrate
+
+Also, we recommend you follow `changes`_ on merengue `skel project`_ because may
+be needed to reproduce some of these changes in your project.
+
+.. _`changes`: https://tracpub.yaco.es/merengue/log/trunk/merengueproj/projskel
+.. _`skel project`: http://tracpub.yaco.es/merengue/browser/trunk/merengueproj/projskel
 
 
 Database backup
