@@ -50,7 +50,7 @@ class Category(BaseCategory):
 
 
 class Event(BaseContent):
-    """ Andalucia event """
+    """ An event """
 
     publish_date = models.DateTimeField(blank=True, null=True, db_index=True, editable=False)
     expire_date = models.DateTimeField(blank=True, null=True, db_index=True)
