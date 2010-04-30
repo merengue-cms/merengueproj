@@ -347,7 +347,7 @@ class PortalMenuAdmin(MenuAdmin):
             qs = form.base_fields['parent'].queryset
             root_menu = Menu.tree.get(slug=settings.MENU_PORTAL_SLUG)
             descendants = root_menu.get_descendants()
-            qs = qs.filter(pk__in=descendants.values('pk').query)
+            qs = descendants and qs.filter(pk__in=descendants.values('pk').query) or descendants
             form.base_fields['parent'].queryset = qs
         return form
 
