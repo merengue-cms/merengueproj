@@ -1,0 +1,65 @@
+{% extends "block.html" %}
+
+{% block blockbody %}
+  <span id="eventsCalendar" class="calendar" style="font-size:73%;"></span>
+
+<link href="{{ MEDIA_URL }}merengue/css/jquery-ui-1.8.css" rel="stylesheet" type="text/css"/>
+<script src="{{ MEDIA_URL }}merengue/js/jquery-ui-1.8.min.js"></script>
+<script language="javascript" src="{{ MEDIA_URL }}merengue/js/jquery.ui.datepicker-{{ LANGUAGE_CODE }}.js"></script>
+
+<script language="javascript" >
+;(function($) {
+    $(document).ready(function() {
+        var datepickerOptions, eventDate;
+        eventDate = {};
+        {% for date, event in events_dic.items %}
+        eventDate["{{ date }}"] = {
+            'name': [true, "calendarEventDay", "{{ event.name|join:" / " }}"],
+            'url': '{{ event.url }}'
+        }
+        {% endfor %}
+        datepickerOptions = {
+            changeMonth: true,
+            changeYear: true,
+            beforeShowDay: function(date) {
+                var key;
+                key = date.getFullYear() +"-"+ (date.getMonth() + 1) +"-"+ date.getDate();
+                return (eventDate[key] && eventDate[key]['name']) || [false, "", ""];
+            },
+            onSelect: function(dateText, inst) {
+                var date, key;
+                date = new Date(Date(dateText));
+                key = date.getFullYear() +"-"+ (date.getMonth() + 1) +"-"+ date.getDate();
+                console.log(dateText)
+                console.log(key)
+                if (eventDate[key]) {
+                    window.location = eventDate[key]['url'];
+                }
+            },
+            onChangeMonthYear: function(year, month, inst) {
+                $.ajax({
+                    url: "{% url events_calendar %}",
+                    type: "GET",
+                    data: ({month: month, year: year}),
+                    dataType: "json",
+                    success: function(events) {
+                        // TODO: The eventDate must be updated with new events
+                        // dates, but when the calendar is redraw, the event
+                        // beforeShowDay is not triggered, so, the new events
+                        // dates never be drawn.
+                        // eventDate = events;
+                    }
+                });
+            }
+        };
+        $("#eventsCalendar").datepicker(datepickerOptions);
+    });
+})(jQuery);
+
+
+</script>
+
+
+
+{% endblock %}
+

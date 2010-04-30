@@ -19,10 +19,13 @@ class Category(BaseCategory):
 
 class Event(BaseContent):
     """ An event """
-    publish_date = models.DateTimeField(blank=True, null=True, db_index=True, editable=False)
+    publish_date = models.DateTimeField(blank=True, null=True, db_index=True,
+                                        editable=False)
     expire_date = models.DateTimeField(blank=True, null=True, db_index=True)
-    start = models.DateTimeField(_('Start date'), null=True, editable=False, db_index=True)
-    end = models.DateTimeField(_('End date'), null=True, editable=False, db_index=True)
+    start = models.DateTimeField(_('Start date'), null=True, editable=True,
+                                db_index=True)
+    end = models.DateTimeField(_('End date'), null=True, editable=True,
+                               db_index=True)
     categories = models.ManyToManyField(Category,
                                       verbose_name=_('category'),
                                       blank=True, null=True, db_index=True)
@@ -38,7 +41,7 @@ class Event(BaseContent):
         return ('plugins.event.views.event_view', [self.slug])
 
     def __unicode__(self):
-        return self.title or self.name or u''
+        return self.name or u''
 
     def visible(self):
         return self.end > datetime.datetime.now()
