@@ -4,7 +4,7 @@ from datetime import date
 from django.utils.translation import ugettext as _
 
 from merengue.block.blocks import Block
-from plugins.event.models import Occurrence
+from plugins.event.models import Event
 
 
 class EventsCalendarBlock(Block):
@@ -17,7 +17,7 @@ class EventsCalendarBlock(Block):
         filters = (
             #Q(start__month=current_month) | Q(end__month=current_month),
         )
-        events_list = Occurrence.objects.all().filter(*filters)
+        events_list = Event.objects.all().filter(*filters)
         return cls.render_block(request,
                                 template_name='event/block_calendar.html',
                                 block_title=_('Events calendar'),
