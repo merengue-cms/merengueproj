@@ -5,7 +5,7 @@ from django.db.models import Q
 
 from cmsutils.managers import ActiveManager
 
-from merengue.base.managers import WorkflowManager, BaseContentManager
+from merengue.base.managers import BaseContentManager
 
 
 class EventManager(ActiveManager, BaseContentManager):
@@ -41,19 +41,3 @@ class EventManager(ActiveManager, BaseContentManager):
                              start__gte=first_week_day) | \
                            Q(start__lte=day, end__gte=day)
         return self.published().filter(this_week_filter)
-
-
-class OccurrenceManager(WorkflowManager):
-    """ don't show finished events
-    """
-
-    def by_status(self, status):
-        return self.filter(event__status=status)
-
-    def visibles(self):
-        """ for use in views """
-        return self.filter(end__gte=datetime.now()) or self.all()
-
-    def published(self):
-        """ only and visible published objects """
-        return self.filter(event__status='published', end__gte=datetime.now())
