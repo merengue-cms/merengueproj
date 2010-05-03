@@ -1,4 +1,6 @@
 import datetime
+
+from django.core.urlresolvers import reverse
 from django.db.models import Q
 
 from plugins.event.models import Event
@@ -16,10 +18,16 @@ def getEventsMonthYear(month, year):
         while event_date.month == month and event_date <= event.end:
             key = "%s-%s-%s" % (event_date.year, event_date.month,
                                 event_date.day)
-            event_date += datetime.timedelta(1)
             if key not in events_dic:
                 events_dic[key] = {}
                 events_dic[key]['name'] = []
+                events_dic[key]['url'] = event.public_link()
+            else:
+                events_dic[key]['url'] = reverse("plugins.event.views.event_list",
+                                            args=(event_date.year,
+                                                  event_date.month,
+                                                  event_date.day))
+
             events_dic[key]['name'].append(event.name)
-            events_dic[key]['url'] = event.public_link()
+            event_date += datetime.timedelta(1)
     return events_dic

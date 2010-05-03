@@ -1,0 +1,14 @@
+{% extends "content_view.html" %}
+
+{% load i18n inlinetrans action_tags %}
+
+{% block pagetitle %}{{ content }}{% endblock %}
+
+{% block contentbody %}
+  <div class="contentbody event-contentbody">
+    {% trans "start date" %}: {{ content.start|date }} - {{ content.start|time }} <br/>
+    {% trans "end date" %}: {{ content.end|date }} - {{ content.end|time }} <br/>
+    {{ content.description }}
+  </div>
+{% endblock %}
+
