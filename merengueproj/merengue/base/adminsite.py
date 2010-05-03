@@ -15,7 +15,8 @@ from django.views.decorators.cache import never_cache
 
 from merengue.base.models import BaseContent
 from merengue.base.adminforms import UploadConfigForm
-from cmsutils.log import send_info, send_error
+from cmsutils.log import send_info
+from datetime import datetime
 
 OBJECT_ID_PREFIX = 'base_object_id_'
 MODEL_ADMIN_PREFIX = 'base_model_admin_'
@@ -159,25 +160,24 @@ class BaseAdminSite(DjangoAdminSite):
                 # llamar restore_config
                 # redireccionar a /siteconfig/ con mensaje de 'configuracion guardada' con send_info
                 send_info(request, _('Configuracion guardada satisfactoriamente.'))
-                HttpResponseRedirect('siteconfig/')
+                return HttpResponseRedirect('/admin/siteconfig')
         else:
             form = UploadConfigForm()
             # anyadir context = form. importar form
             return render_to_response('admin/siteconfig.html', {'form': form})
 
     def save_configuration(self, request):
-        #llamar a la funcion "save_config" para que devuelva el path del fichero .zip
-        #path = save_config
-        path = '/home/oscar/prueba.zip'
-        if path:
-            #return ZIP
-            response = HttpResponse(path, mimetype='application/x-zip-compressed')
-            response['Content-Disposition'] = 'attachment; filename=prueba.zip'
-            return response
+        from merengue.base.utils import save_config
 
+        zip_name = datetime.now()
 
-        else:
-            send_error(request, _('No PATH'))
+        response = HttpResponse(mimetype='application/x-zip-compressed')
+        response['Content-Disposition'] = 'attachment; filename="%s.zip"' % zip_name.isoformat('-')
+
+        buffer_zip = save_config()
+
+        response.write(buffer_zip.getvalue())
+        return response
 
     def index(self, request, extra_context=None):
         """ merengue admin index page. It's a friendly admin page """
