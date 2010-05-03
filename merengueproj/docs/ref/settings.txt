@@ -11,7 +11,11 @@ Merengue specific settings
 Available settings
 ==================
 
-Here's a full list of all available merengue settings.
+Here's a full list of all available merengue settings. All these settings are
+defined in `merengue/settings.py`_ and can be overriden in your project
+settings.
+
+.. _merengue/settings.py: http://tracpub.yaco.es/merengue/browser/trunk/merengueproj/merengue/settings.py
 
 .. setting:: SITE_FIXTURES
 
@@ -35,6 +39,22 @@ In this example, after migrate 'news' application Merengue will load
 ``news_data.xml`` and ``news_users.json``, located in one of `settings.FIXTURE_DIRS`_.
 
 .. _settings.FIXTURE_DIRS: http://docs.djangoproject.com/en/1.1/ref/settings/#fixture-dirs
+
+MERENGUE_URLS_PREFIX
+--------------------
+
+Default: ``cms``
+
+It will be the prefix for all URLs managed by merengue.
+
+In your project ``urls.py`` file, merengue URLs are included as follows:
+
+.. code-block:: python
+
+    # merengue URLs
+    (r'^%s/' % settings.MERENGUE_URLS_PREFIX, include('merengue.urls')),
+
+You can override this settings if you prefer other prefix than ``cms``.
 
 
 (( to be completed ))

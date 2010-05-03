@@ -189,3 +189,6 @@ MENU_PORTAL_SLUG = 'portal_menu'
 #    'app_name': ('fixture_to_load1', 'fixture_to_load2', ...),
 #    ...}
 SITE_FIXTURES = {}
+
+# Prefix for all merengue URLs
+MERENGUE_URLS_PREFIX = 'cms'

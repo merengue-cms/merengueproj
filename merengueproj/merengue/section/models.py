@@ -290,7 +290,7 @@ class BaseSection(Base, RealInstanceMixin):
 
 
 def strip_section_prefix(link):
-    return link.replace('sections/', '')
+    return link.replace('%s/sections/' % settings.MERENGUE_URLS_PREFIX, '')
 
 
 def sections_permalink(func):
