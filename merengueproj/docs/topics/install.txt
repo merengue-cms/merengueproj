@@ -298,8 +298,14 @@ more dependencies:
 GIS extensions install
 ----------------------
 
+In Ubuntu 10.04, you could install all using packages over postgresql-8.4:
 
-In Ubuntu > 8.04, you can install all using packages:
+    .. code-block:: bash
+
+        $ sudo apt-get install binutils libgdal1-1.6.0 postgresql-8.4-postgis python-psycopg2 python-setuptools
+        $ export PG_CONFIG='/usr/lib/postgresql/8.4/bin/pg_config'
+
+In Ubuntu > 8.04 < 10.04, you can install all using packages over postgresql-8.3:
 
     .. code-block:: bash
 
@@ -309,7 +315,7 @@ In Ubuntu > 8.04, you can install all using packages:
 
 .. admonition:: Note
 
-    If you have postgresql-8.4 and there is no package
+    If you have postgresql-8.4 in ubuntu earlier to 10.04 and there is no package
     ``postgresql-8.4-postgis``, you will use ``postgresql-8.3`` for all, use the
     option ``-p 5433`` with ``psql``, ``createuser``, ``createdb``, and
     configure your merengue project to use that port in database.
@@ -397,13 +403,25 @@ Create postgis template database:
         $ createdb -E UTF8 template_postgis
         $ createlang -d template_postgis plpgsql
 
-* In ubuntu > 8.04 (with postgres-8.3-postgis package)
+* In ubuntu > 10.04:
+
+    .. code-block:: bash
+
+            $ PG_GIS_TEMPLATES=/usr/share/postgresql/8.4/contrib/
+            $ psql -d template_postgis -f $PG_GIS_TEMPLATES/postgis.sql
+            $ psql -d template_postgis -f $PG_GIS_TEMPLATES/spatial_ref_sys.sql
+            $ psql -d template_postgis -c "GRANT ALL ON geometry_columns TO PUBLIC;"
+            $ psql -d template_postgis -c "GRANT ALL ON spatial_ref_sys TO PUBLIC;"
+
+* In ubuntu > 8.04 < 10.04 (with postgres-8.3-postgis package)
 
     .. code-block:: bash
 
             $ PG_GIS_TEMPLATES=/usr/share/postgresql-8.3-postgis/
             $ psql -d template_postgis -f $PG_GIS_TEMPLATES/lwpostgis.sql
             $ psql -d template_postgis -f $PG_GIS_TEMPLATES/spatial_ref_sys.sql
+            $ psql -d template_postgis -c "GRANT ALL ON geometry_columns TO PUBLIC;"
+            $ psql -d template_postgis -c "GRANT ALL ON spatial_ref_sys TO PUBLIC;"
 
 .. admonition:: Note
 
