@@ -1,21 +1,24 @@
-BASEDIR="/home/merengue"
-PIDFILE="$BASEDIR/pid/beta_merengue.pid"
+#!/bin/bash -x
+
+BASEDIR="/home/merengueproject"
+PROJECTNAME="merengueprojectorg"
+PROJECTDIR=$BASEDIR/$PROJECTNAME
+PIDFILE="$BASEDIR/pid/$PROJECTNAME.pid"
 VIRTUALENV=$BASEDIR/virtualenv/
 SOCKET="$BASEDIR/sock/uwsgi.sock"
-PROJECTNAME="beta_merengue"
-LOGFILE="$BASEDIR/logs/beta_merengue.uwsgi.log"
+LOGFILE="$BASEDIR/logs/$PROJECTNAME.uwsgi.log"
 
 export LC_ALL=es_ES.UTF-8
 
 function start {
-   echo "Iniciando Merengue Beta:"
+   echo "Iniciando Merengue:"
    cd $BASEDIR
    . $BASEDIR/virtualenv/bin/activate
-   $BASEDIR/bin/uwsgi -p 2 -C -M 4 -A 4 -m -s $SOCKET -H $VIRTUALENV $PROJECTNAME.wsgi --pythonpath $BASEDIR/merengueproject/beta_merengue/ --pidfile $PIDFILE -d $LOGFILE
+   $BASEDIR/bin/uwsgi -p 2 -C -M 4 -A 4 -m -s $SOCKET -H $VIRTUALENV $PROJECTNAME.wsgi --pythonpath $PROJECTDIR/ --pidfile $PIDFILE -d $LOGFILE
 }
 
 function stop {
-    echo "Terminando Merengue Beta:"
+    echo "Terminando Merengue:"
     pgrep uwsgi |xargs kill -9
 }
 
@@ -32,7 +35,7 @@ case "$1" in
         start
     ;;
     *)
-        echo "Usage: /etc/init.d/merenguebeta {start|stop|restart}"
+        echo "Usage: ~/scripts/merengue {start|stop|restart}"
         exit 1
     ;;
 esac

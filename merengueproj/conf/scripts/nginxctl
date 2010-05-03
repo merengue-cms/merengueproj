@@ -1,4 +1,6 @@
-BASEDIR="/home/merengue"
+#!/bin/bash
+
+BASEDIR="/home/merengueproject"
 NGINX="$BASEDIR/nginx"
 PIDFILE="$BASEDIR/pid/nginx.pid"
 
@@ -37,7 +39,7 @@ case "$1" in
 	reload
     ;;
     *)
-        echo "Usage: /etc/init.d/merenguebeta {start|stop|restart}"
+        echo "Usage: /etc/init.d/nginxctl {start|stop|restart}"
         exit 1
     ;;
 esac

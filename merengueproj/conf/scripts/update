@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-BASEDIR=/home/merengue
+BASEDIR=/home/merengueproject
 MERENGUEDIR=$BASEDIR/merengueproject
 PROJECTDIR=$MERENGUEDIR/beta_merengue
 
@@ -31,8 +31,29 @@ function servers_restart {
     . scripts/portaluma restart
 }
 
-enable_virtualenv
-update_code
-remove_pyc_files
-dmigrate
-servers_restart
+function update_doc {
+    echo "Updating merengueproject documentacion"
+    cd $BASEDIR/docs/
+    touch index.txt
+    make html
+}
+
+case "$1" in 
+    project)
+        enable_virtualenv
+	update_code
+	remove_pyc_files
+	dmigrate
+	servers_restart
+    ;;
+    documentation)
+        enable_virtualenv
+        update_doc
+    ;;
+    *)
+        echo "Usage: ~/scripts/update {project|documentation}"
+        exit 1
+    ;;
+esac
+
+exit 0
