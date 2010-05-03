@@ -13,7 +13,7 @@ body {
 	font-family:'HelveticaNeue-UltraLight','Helvetica Neue UltraLight','Helvetica Neue',Arial,Helvetica,sans-serif;
 	font-weight: 100;
 	}
-#bd { background:#e9deca; }
+#bd { background:transparent; }
 #ft { color:#487858; font-size:90%; padding-bottom: 2em; }
 
 /*** links ***/
@@ -172,10 +172,16 @@ dt .literal, table .literal { background:none; }
 #bd a.reference tt.literal { border-bottom: 1px #234f32 dotted; }
  
 /*** notes & admonitions ***/
-.note, .admonition { padding:.8em 1em .8em; margin: 1em 0; border:1px solid #94da3a; }
+.note, .admonition { 
+	padding:.8em 1em .8em; 
+	margin: 1em 0; 
+	}
 .admonition-title { font-weight:bold; margin-top:0 !important; margin-bottom:0 !important;}
 .admonition .last { margin-bottom:0 !important; }
-.note, .admonition { padding-left:65px; background:url(docicons-note.png) .8em .8em no-repeat;}
+.note, .admonition { 
+	padding-left:65px; 
+	background:url(docicons-note.png) .8em .8em no-repeat #FCF9E8;
+	}
 div.admonition-philosophy { padding-left:65px; background:url(docicons-philosophy.png) .8em .8em no-repeat;}
 div.admonition-behind-the-scenes { padding-left:65px; background:url(docicons-behindscenes.png) .8em .8em no-repeat;}
 
