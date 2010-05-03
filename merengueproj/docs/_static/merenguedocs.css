@@ -34,7 +34,11 @@ a:hover {
 a:visited {
 	color:#938b82;
 	}
-#bd a:hover { background-color:#E0FFB8; color:#234f32; text-decoration:none; }
+#bd a:hover { 
+	background-color:#FCF9E8; 
+	color:#234f32; 
+	text-decoration:none; 
+	}
 #bd #sidebar a:hover { 
 	color:#c4741d; 
 	border-bottom: 1px dotted;
@@ -139,7 +143,7 @@ dt { font-weight:bold; margin-top:.5em; font-size:1.1em; }
 dd { margin-bottom:.8em; }
 ol.toc { margin-bottom: 2em; }
 ol.toc li { font-size:125%; padding: .5em; line-height:1.2em; clear: right; }
-ol.toc li.b { background-color: #E0FFB8; }
+ol.toc li.b { background-color: #FCF9E8; }
 ol.toc li a:hover { background-color: transparent !important; text-decoration: underline !important; }
 ol.toc span.release-date { color:#487858; float: right; font-size: 85%; padding-right: .5em; }
 ol.toc span.comment-count { font-size: 75%; color: #999; }
@@ -159,7 +163,7 @@ table.docutils { border-collapse:collapse; }
 h4 .literal { color: #234f32; font-size: 13px; }
 pre { 
 	font-size:small; 
-	background:#F0E9DD; 
+	background:#EBE8DF; 
 	border:1px solid #B4B0A4; 
 	border-width:1px 0; 
 	margin: 1em 0; 
