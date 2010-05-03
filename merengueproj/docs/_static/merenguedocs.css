@@ -9,7 +9,6 @@ body {
 	}
 #custom-doc { width:76.54em;*width:74.69em;min-width:995px; max-width:100em; margin:auto; text-align:left; padding-top:16px; margin-top:0;} 
 #hd { 
-	font-size: 120%;
 	padding: 4px 0 12px 0; 
 	font-family:'HelveticaNeue-UltraLight','Helvetica Neue UltraLight','Helvetica Neue',Arial,Helvetica,sans-serif;
 	font-weight: 100;
@@ -47,7 +46,7 @@ a.reference em { font-style: normal; }
 /*** sidebar ***/
 #sidebar div.sphinxsidebarwrapper { font-size:92%; margin-right: 14px; }
 #sidebar h3, #sidebar h4 { 
-	color: white; 
+	color: #917250; 
 	}
 #sidebar a { color: white; }
 #sidebar ul ul { margin-top:0; margin-bottom:0; }
@@ -58,9 +57,12 @@ div.nav { margin: 0; font-size: 11px; text-align: right; color: #487858;}
 #hd div.nav { margin-top: -27px; }
 #ft div.nav { margin-bottom: -18px; }
 #hd h1 a { 
-	color: white; 
+	color: #917250; 
 	font-family:'HelveticaNeue-UltraLight','Helvetica Neue UltraLight','Helvetica Neue',Arial,Helvetica,sans-serif;
 	font-weight: 100;
+	letter-spacing: 1px;
+	font-size: 140%;
+	text-shadow: 1px 1px 0 #f4eede;
 	}
 #hd h1 a:hover {
 	border-bottom: 1px dotted;
@@ -88,13 +90,22 @@ margin-top:1em;
 font-family:'HelveticaNeue-UltraLight','Helvetica Neue UltraLight','Helvetica Neue',Arial,Helvetica,sans-serif; 
 font-weight:100; }
 h1 { 
-	font-size:218%; 
+	font-size:220%; 
 	margin-top:0.6em; 
-	margin-bottom:.4em; 
+	margin-bottom:0.6em; 
 	line-height:1.1em; 
 	}
-h2 { font-size:175%; margin-bottom:.6em; line-height:1.2em; color:#092e20; }
-h3 { font-size:150%; font-weight:bold; margin-bottom:.2em; color:#487858; }
+h2 { 
+	font-size:175%; 
+	margin-bottom:.6em; 
+	line-height:1.2em; 
+	color:#092e20; 
+	}
+h3 { 
+	font-size:160%; 
+	margin-bottom:.2em; 
+	color:#917250; 
+	}
 h4 { font-size:125%; font-weight:bold; margin-top:1.5em; margin-bottom:3px; }
 div.figure { text-align: center; }
 div.figure p.caption { font-size:1em; margin-top:0; margin-bottom:1.5em; color: #555;}
@@ -146,7 +157,16 @@ table.docutils { border-collapse:collapse; }
 .literal { color:#234f32; }
 #sidebar .literal { color:white; background:transparent; font-size:11px; }
 h4 .literal { color: #234f32; font-size: 13px; }
-pre { font-size:small; background:#E0FFB8; border:1px solid #94da3a; border-width:1px 0; margin: 1em 0; padding: .3em .4em; overflow: hidden; line-height: 1.3em;}
+pre { 
+	font-size:small; 
+	background:#F0E9DD; 
+	border:1px solid #B4B0A4; 
+	border-width:1px 0; 
+	margin: 1em 0; 
+	padding: .3em .4em; 
+	overflow: hidden; 
+	line-height: 1.3em;
+	}
 dt .literal, table .literal { background:none; }
 #bd a.reference { text-decoration: none; }
 #bd a.reference tt.literal { border-bottom: 1px #234f32 dotted; }
