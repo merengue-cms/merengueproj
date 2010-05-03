@@ -15,7 +15,7 @@ def event_view(request, event_slug):
 
 def events_calendar(request):
     mimetype = "application/json"
-    if (request.GET and request.is_ajax() and 'month' in request.GET
+    if (request.GET and 'month' in request.GET
         and 'year' in request.GET):
         month = int(request.GET['month'])
         year = int(request.GET['year'])
