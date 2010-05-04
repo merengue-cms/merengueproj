@@ -1,11 +1,11 @@
 from django.conf import settings
 
-from merengue.base.admin import BaseContentAdmin, RelatedModelAdmin
+from merengue.base.admin import BaseContentAdmin, BaseCategoryAdmin
 from merengue.section.admin import SectionContentAdmin
 from plugins.event.models import Event, Category
 
 
-class EventCategoryAdmin(RelatedModelAdmin):
+class EventCategoryAdmin(BaseCategoryAdmin):
     ordering = ('name_es', )
     search_fields = ('name_es', )
 
@@ -28,4 +28,3 @@ class EventSectionAdmin(EventAdmin, SectionContentAdmin):
 def register(site):
     site.register(Category, EventCategoryAdmin)
     site.register(Event, EventAdmin)
-    site.register_related(Category, EventCategoryAdmin, related_to=Event)
