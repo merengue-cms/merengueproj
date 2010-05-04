@@ -34,7 +34,7 @@ a img {border: none;}
 /* a:link, a:visited { color:#ffc757; } */
 #bd a:link, #bd a:visited { 
 	color:#915403; 
-	text-decoration:underline; 
+	text-decoration:none; 
 	}
 #bd #sidebar a:link, #bd #sidebar { 
 	color:#917250; 
@@ -69,7 +69,15 @@ a.reference em { font-style: normal; }
 #sidebar li { margin-top: 0.2em; margin-bottom: 0.2em; }
 
 /*** nav ***/
-div.nav { margin: 0; font-size: 11px; text-align: right; color: #487858;}
+div.nav { 
+	margin: 0; 
+	font-size: 11px; 
+	text-align: right; 
+	color: #938B82;
+	}
+div.nav a:hover{
+	background-color:#FCF9E8;
+}
 #hd div.nav { margin-top: -27px; }
 #ft div.nav { margin-bottom: -18px; }
 #hd h1 a { 
@@ -203,9 +211,6 @@ pre {
 	}
 dt .literal, table .literal { background:none; }
 
-#bd a.reference { 
-	text-decoration: underline; 
-	}
 #bd a.reference tt.literal { 
 	border-bottom: 1px #234f32 dotted; 
 	}
@@ -232,11 +237,6 @@ div.admonition-behind-the-scenes { padding-left:65px; background:url(docicons-be
 /*** versoinadded/changes ***/
 div.versionadded, div.versionchanged {  }
 div.versionadded span.title, div.versionchanged span.title { font-weight: bold; }
-
-/** buscador **/
-.p#searchbox  form, {
-	font-style: italic;
-}
 
 /*** p-links ***/
 a.headerlink { color: #c60f0f; font-size: 0.8em; padding: 0 4px 0 4px; text-decoration: none; visibility: hidden; }
