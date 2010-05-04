@@ -130,19 +130,19 @@ font-weight:100; }
 h1 { 
 	font-size:220%; 
 	margin-top:0.6em; 
-	margin-bottom:0.6em; 
 	line-height:1.1em; 
 	}
 h2 { 
-	font-size:175%; 
+	font-size:180%; 
 	margin-bottom:.6em; 
 	line-height:1.2em; 
-	color:#092e20; 
+	color:#7A736C; 
 	}
 h3 { 
 	font-size:160%; 
 	margin-bottom:.2em; 
 	color:#917250; 
+	border-bottom: 1px dotted;
 	}
 h4 { font-size:125%; font-weight:bold; margin-top:1.5em; margin-bottom:3px; }
 div.figure { text-align: center; }
