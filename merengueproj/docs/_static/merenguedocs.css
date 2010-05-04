@@ -14,12 +14,13 @@ body {
 	font-weight: 100;
 	}
 #bd #yui-main {
-	background: white url(doc_bg.png) no-repeat top right;
+	background: transparent url(doc_bg.png) no-repeat top right;
 	padding-top: 50px;
 	width: 662px;
 }
 #bd #yui-main .yui-b {
-	margin-left: 2px;
+	margin-left: 0px;
+	background-color: white;
 }
 #ft { color:#487858; font-size:90%; padding-bottom: 2em; }
 
@@ -107,8 +108,8 @@ div.nav { margin: 0; font-size: 11px; text-align: right; color: #487858;}
 	margin: 0 0 0 20px; 
 	background: transparent; 
 	color: black; 
-	width: 631px;
-	padding: 0.3em 2em 1em 2em;
+	width: 635px;
+	padding: 0.3em 1em 1em 1em;
 	margin: 0 0 24px 20px; 
 	}
 

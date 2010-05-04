@@ -107,11 +107,9 @@ body{
 }
 .yui-t1 #yui-main,.yui-t2 #yui-main,.yui-t3 #yui-main {
 	float:right;
-	margin-left:-25em;
 	}
 .yui-t4 #yui-main,.yui-t5 #yui-main,.yui-t6 #yui-main {
 	float:right;
-	margin-right:-25em;
 	}
 .yui-t1 .yui-b {
 	float:left;
