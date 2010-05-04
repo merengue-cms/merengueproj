@@ -4,54 +4,177 @@
 Merengue overview
 =================
 
-(( to be completed. talk a little about merengue goals and philosophy ))
+Merengue is a fully featured CMS framework built on top of `Django framework`_.
+It's not only a plug-and-play CMS but a framework to build CMS sites amazingly
+fast and with clean and reusable code, using our preferred web framework.
+
+For achieving that, we have:
+
+ * Take conventions that are not possible in Django, because you are building
+   CMS's and not generic web applications. Thanks to these conventions we can
+   make merengue skinnable.
+
+ * Build a pluggable system that allows plugins create new models, handle URLs,
+   defining content or site actions, blocks, creates custom admin zones, etc.
+
+ * Creates a default data model with all needed to allow content management.
+   You can inherits some of these models in your plugins to create new content
+   types.
 
 The goal of this document is to give you enough technical specifics to
 understand how Merengue works. When you're ready to start a project, you can
 :ref:`start with the tutorial <intro-tutorial>` or :ref:`dive right into more
 detailed documentation <topics-index>`.
 
-Main Merengue features out-of-the-box
-=====================================
+.. _Django framework: http://www.djangoproject.com/
 
-(( to be completed ))
+.. admonition:: Django knowledge needed
+
+    Merengue has been created using Django. You need to know some 
+    `Django concepts`_ in order to understand better Merengue ones.
+
+.. _Django concepts: http://docs.djangoproject.com/
+
+
+Main Merengue features
+======================
+
+These are some Merengue out-of-the-box features
 
 Data model
 ----------
 
-(( to be completed, say models is translatable ))
+Merengue cames with a complete data model for managing content. All models will
+be translatable by default and may be geolocalized (if you enable GIS).
+
+Some of those models are:
+
+ * Base content, that will be inherits by all managed content types (news
+   items, events, documents, forums, etc.). Those content types will share all
+   merengue CMS features (workflow, featured admin interface, permissions, etc.).
+ 
+ * Sections, that will be used to divide your site into several parts, that
+   could be managed by different groups of users.
+
+ * Menu items, for creating a navigation inside site or sections. Menu items will
+   be hierarchical and will link to some content or external link.
+
+ * Collaborative document, that inherits base content to allow collaborative
+   edition and translation by simultaneous users.
+
+ * News items, events, and others, that are defined in Merengue plugins.
 
 Pluggable
 ---------
 
-(( to be completed ))
+A pluggable system definition depends on ``plugin`` concept. For Merengue, a
+``plugin`` is a thing that is developed by somene and can be installed without
+changing a line of code.
+
+In that sense, when you install a plugin, merengue will (among other things):
+
+ * Synchronize plugin data models.
+
+ * Register plugin as Django application.
+
+ * Include some URL prefixes to be handled by plugin.
+
+ * Register plugins blocks (zones in screen to render things).
+
+ * Register plugins actions (for content or site wide).
+
+ * Register custom admin sub-sites.
+
+.. admonition:: Django applications
+
+    In our sense of ``pluggable`` concept, Django applications are not plugins,
+    because needs some work to integrate in your site (URLs inclusion, change
+    settings, sync database, work on templates, etc.)
+
+Permissions
+-----------
+
+Merengue include a customizable permissions system, with a good default
+permissions for content management. You can define roles, permissions and
+grants permissions to roles and contents.
+
+Main advantages with `Django permissions`_ are more granularity and that all
+will persist in database, and so can be configurable by admin user, using
+management interface.
+
+.. _Django permissions: http://docs.djangoproject.com/en/1.1/topics/auth/#id1
 
 GIS integrated
 --------------
 
 (( to be completed ))
 
+Out-of-the-box caching
+----------------------
+
+(( to be completed ))
+
+Theming
+-------
+
+(( to be completed. include two screenshots of a same view with different themes ))
+
+For example, next template will be render blocks located at ``leftsidebar``
+place in the rightsidebar zone. You only have to create this template as your
+``templates/themes/yourtheme/base.html`` and activate theme in admin interface.
+
+.. code-block:: html+django
+
+    {% extends "base/layout.html" %}
+
+    {% load block_tags %}
+
+    {% block rightsidebar %}
+      {% render_blocks "leftsidebar" for content %}
+      {{ block.super }}
+    {% endblock %}
+
+.. admonition:: Django knowledge needed
+
+    Merengue uses Django templating system. See `Django templates` to get more
+    info about Merengue templating.
+
+.. Django templates_: http://docs.djangoproject.com/en/1.1/topics/templates/
+
 Full featured management interface
 ----------------------------------
+
+The management interface its half based on Django admin (with many steroids)
+and half a WYSYWYG interface (for example to manage blocks layout).
+
+* **Content management**
+
+(( to be completed ))
+
+* **Theme management**
+
+(( to be completed ))
+
+* **Block reordering**
+
+(( to be completed ))
+
+* **Plugin management**
 
 (( to be completed ))
 
 
+Philosophy
+==========
+
 Focused on programmers
-======================
+----------------------
 
 Merengue was created by a Python enthusiast team, who loves elegant code and
 clean APIs but with pragmatic approaches to the solution.
 
 With that, you've got a free, and rich, Python API to do almost all things you
 can imagine, with a good designed data model for content management.
-
-.. admonition:: Django knowledge needed
-
-    Merengue API has been created using parts of Django API. You need to know
-    `Django API`_ to understand better Merengue one.
-
-.. _Django API: http://docs.djangoproject.com/
 
 Look these examples:
 
@@ -81,63 +204,7 @@ Look these examples:
     >>> has_permission(newsitem, staff_user, 'vote')
     True
 
-
-A complete management interface
-===============================
-
-The management interface its half based on Django admin (with many steroids)
-and half a WYSYWYG interface (for example to manage blocks layout).
-
-(( to be completed ))
-
-Content management
-------------------
-
-(( to be completed ))
-
-Theme management
-----------------
-
-(( to be completed ))
-
-Block reordering
-----------------
-
-(( to be completed ))
-
-Plugin management
------------------
-
-(( to be completed ))
-
-
-Theming
-=======
-
-(( to be completed ))
-
-For example, next template will be render blocks located at ``leftsidebar``
-place in the rightsidebar zone. You only have to create this template as your
-``templates/themes/yourtheme/base.html`` and activate theme in admin interface.
-
-.. code-block:: html+django
-
-    {% extends "base/layout.html" %}
-
-    {% load block_tags %}
-
-    {% block rightsidebar %}
-      {% render_blocks "leftsidebar" for content %}
-      {{ block.super }}
-    {% endblock %}
-
-.. admonition:: Django knowledge needed
-
-    Merengue uses Django templating system. See `Django templates` to get more
-    info about Merengue templating.
-
-.. Django templates_: http://docs.djangoproject.com/en/1.1/topics/templates/
-
+(( to be completed. Follow with other philosophic principles ))
 
 This is just the surface
 ========================

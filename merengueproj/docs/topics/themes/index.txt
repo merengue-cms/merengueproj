@@ -155,7 +155,7 @@ As schema, the templates mainly used in theme development are located in these p
      |    `-- ...
      `-- ...
 
-(( TODO ))
+(( to be completed ))
 
 Overriding plugins CSS
 ----------------------
@@ -189,4 +189,4 @@ This works because in ``base/layout.html`` we add a CSS class to ``#container`` 
 Internals
 ---------
 
-(( TODO ))
+(( to be completed ))
