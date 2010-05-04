@@ -154,16 +154,15 @@ class BaseAdminSite(DjangoAdminSite):
                                     model._meta.module_name, content.id))
 
     def site_configuration(self, request):
+        from merengue.base.utils import restore_config
         if request.method == 'POST':
             form = UploadConfigForm(request.POST, request.FILES)
             if form.is_valid():
-                # llamar restore_config
-                # redireccionar a /siteconfig/ con mensaje de 'configuracion guardada' con send_info
-                send_info(request, _('Configuracion guardada satisfactoriamente.'))
-                return HttpResponseRedirect('/admin/siteconfig')
+                restore_config(request.FILES['file'])
+            send_info(request, _('Configuracion guardada satisfactoriamente.'))
+            return HttpResponseRedirect('/admin/siteconfig')
         else:
             form = UploadConfigForm()
-            # anyadir context = form. importar form
             return render_to_response('admin/siteconfig.html', {'form': form})
 
     def save_configuration(self, request):

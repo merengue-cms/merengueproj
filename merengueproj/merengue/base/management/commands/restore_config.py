@@ -1,20 +1,10 @@
 # -*- coding: utf-8 -*-
-import ConfigParser
 import os
-from StringIO import StringIO
 import zipfile
 
-from django.db import connection, transaction
-from django.core import serializers
 from django.core.management.base import CommandError, LabelCommand
-from django.core.management.color import no_style
-
-from merengue.action.models import RegisteredAction
-from merengue.block.models import RegisteredBlock
 from merengue.base.management.base import MerengueCommand
-from merengue.plugin.models import RegisteredPlugin
-from merengue.registry import RegisteredItem
-from merengue.theme.models import Theme
+from merengue.base.utils import restore_config
 
 
 class Command(LabelCommand, MerengueCommand):
@@ -36,77 +26,4 @@ class Command(LabelCommand, MerengueCommand):
         except zipfile.BadZipFile, zipfile.LargeZipFile:
             raise CommandError("Bad or too large zip file \"%s\"" \
                                % config_name)
-        config = self.get_config(zip_config)
-        restore_all = (config.get("mode", "fixtures") == "all")
-        version = config.get("version", "MERENGUE_VERSION")
-        # TODO: Implement method to get current merengue version
-        if "MERENGUE_VERSION" != version:
-            raise CommandError("Merengue version error")
-        models_to_restore = (
-            (RegisteredItem, "registry"), # this has to be first in tuple
-            (RegisteredAction, "actions"),
-            (RegisteredBlock, "blocks"),
-            (RegisteredPlugin, "plugins"),
-            (Theme, "themes"),
-        )
-        self.restore_models(zip_config, models_to_restore)
-        if restore_all:
-            # TODO: Implement "all" mode restore
-            pass
-        zip_config.close()
-        print 'File restored successfully'
-
-    def get_config(self, zip_config):
-        """
-        Extract and return a dictionary with configuration parameters
-        from zipped config.ini file
-        """
-        config_fp = StringIO(zip_config.read("config.ini"))
-        config = ConfigParser.ConfigParser()
-        config.readfp(config_fp, 'r')
-        config_dic = {}
-        config_items = config.items("main")
-        # From list of tuples to dict
-        [config_dic.update({item[0]: item[1]}) for item in config_items]
-        return config_dic
-
-    def restore_models(self, zip_config, models_to_restore):
-        """
-        Add models in tuple of tuples models_to_restore to merengue database
-        (ModelClass, "file_name")
-        """
-        sid = transaction.savepoint()
-        try:
-            models = set()
-            for model_to_restore, file_name in models_to_restore:
-                model_to_restore.objects.all().delete() # we first delete all objects to avoid duplication problems
-                format = 'json'
-                fixtures_file_name = "%s.%s" % (file_name, format)
-                fixtures_data = zip_config.read(fixtures_file_name)
-                fixtures = serializers.deserialize(format, fixtures_data)
-                has_objects = False
-                for fixture in fixtures:
-                    if fixture:
-                        has_objects = True
-                    fixture.save()
-                    models.add(fixture.object.__class__)
-            # HACK: If we found even one object in a fixture, we need to reset
-            # the database sequences.
-            if has_objects:
-                self.sequence_reset_sql(models)
-        except Exception, e:
-            transaction.savepoint_rollback(sid)
-            raise CommandError("Unable to restore models from fixtures: %s" \
-                               % e)
-        else:
-            transaction.savepoint_commit(sid)
-
-    def sequence_reset_sql(self, models):
-        """
-        Reset the database sequences
-        """
-        cursor = connection.cursor()
-        sequence_sql = connection.ops.sequence_reset_sql(no_style(), models)
-        if sequence_sql:
-            for line in sequence_sql:
-                cursor.execute(line)
+        restore_config(zip_config) #hay que evitar esto: asi el comando funciona, pero la idea es que no sea necesario nada mas que un argumento, el archivo .zip en sí. zip_config se ha agregado para que funcione el comando. debe de haber algo mal hecho, es posible que el codigo se haya "partido" mal.

@@ -14,10 +14,13 @@ from merengue.plugin.models import RegisteredPlugin
 from merengue.plugin.utils import get_plugin_module_name
 from merengue.registry import RegisteredItem
 from merengue.theme.models import Theme
+from merengue.base.management.base import MerengueCommand # Spare import
 
+from django.core import serializers
+from django.core.management.color import no_style
+from django.db import connection, transaction
 from django.db.models import get_models
 from django.db.models.loading import load_app
-from django.core import serializers
 
 
 if settings.USE_GIS:
@@ -200,3 +203,83 @@ def add_folder(zip_config, path_root, path_zip):
                 dir_path = dirpath.replace(path_root, path_zip)
                 zip_path = os.path.join(dir_path, filename)
                 zip_config.write(file_path, zip_path)
+
+
+def restore_config(zip_config):
+    config = get_config(zip_config)
+    restore_all = (config.get("mode", "fixtures") == "all")
+    version = config.get("version", "MERENGUE_VERSION")
+    # TODO: Implement method to get current merengue version
+    if "MERENGUE_VERSION" != version:
+        raise CommandError("Merengue version error") # To fix. CommandError can not be displayed TTW.
+    models_to_restore = (
+        (RegisteredItem, "registry"), # this has to be first in tuple
+        (RegisteredAction, "actions"),
+        (RegisteredBlock, "blocks"),
+        (RegisteredPlugin, "plugins"),
+        (Theme, "themes"),
+    )
+    restore_models(zip_config, models_to_restore)
+    if restore_all:
+        # TODO: Implement "all" mode restore
+        pass
+    zip_config.close()
+    print 'File restored successfully'
+
+
+def get_config(zip_config):
+    """
+    Extract and return a dictionary with configuration parameters
+    from zipped config.ini file
+    """
+    config_fp = StringIO(zip_config.read("config.ini"))
+    config = ConfigParser.ConfigParser()
+    config.readfp(config_fp, 'r')
+    config_dic = {}
+    config_items = config.items("main")
+    # From list of tuples to dict
+    [config_dic.update({item[0]: item[1]}) for item in config_items]
+    return config_dic
+
+
+def restore_models(zip_config, models_to_restore):
+    """
+    Add models in tuple of tuples models_to_restore to merengue database
+    (ModelClass, "file_name")
+    """
+    sid = transaction.savepoint()
+    try:
+        models = set()
+        for model_to_restore, file_name in models_to_restore:
+            model_to_restore.objects.all().delete() # we first delete all objects to avoid duplication problems
+            format = 'json'
+            fixtures_file_name = "%s.%s" % (file_name, format)
+            fixtures_data = zip_config.read(fixtures_file_name)
+            fixtures = serializers.deserialize(format, fixtures_data)
+            has_objects = False
+            for fixture in fixtures:
+                if fixture:
+                    has_objects = True
+                fixture.save()
+                models.add(fixture.object.__class__)
+        # HACK: If we found even one object in a fixture, we need to reset
+        # the database sequences.
+        if has_objects:
+            sequence_reset_sql(models)
+    except Exception, e:
+        transaction.savepoint_rollback(sid)
+        raise CommandError("Unable to restore models from fixtures: %s" \
+                               % e)
+    else:
+        transaction.savepoint_commit(sid)
+
+
+def sequence_reset_sql(models):
+    """
+    Reset the database sequences
+    """
+    cursor = connection.cursor()
+    sequence_sql = connection.ops.sequence_reset_sql(no_style(), models)
+    if sequence_sql:
+        for line in sequence_sql:
+            cursor.execute(line)
