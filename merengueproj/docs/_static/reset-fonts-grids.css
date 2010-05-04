@@ -109,7 +109,7 @@ body{
 	float:right;
 	}
 .yui-t4 #yui-main,.yui-t5 #yui-main,.yui-t6 #yui-main {
-	float:right;
+	float:left;
 	}
 .yui-t1 .yui-b {
 	float:left;
@@ -157,7 +157,7 @@ body{
 	*margin-right:19.125em;
 	}
 .yui-t6 .yui-b {
-	float:left;
+	float:right;
 	width:23.0769em;
 	*width:22.50em;
 	}
