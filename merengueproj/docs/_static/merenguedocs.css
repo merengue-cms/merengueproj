@@ -24,7 +24,10 @@ a {
 	}
 a img {border: none;}
 /* a:link, a:visited { color:#ffc757; } */
-#bd a:link, #bd a:visited { color:#ab5603; text-decoration:underline; }
+#bd a:link, #bd a:visited { 
+	color:#915403; 
+	text-decoration:underline; 
+	}
 #bd #sidebar a:link, #bd #sidebar { 
 	color:#917250; 
 	text-decoration:none; 
@@ -138,7 +141,10 @@ ins { font-weight: bold; text-decoration: none; }
 ul { padding-left:30px; }
 ol { padding-left:30px; }
 ol.arabic li { list-style-type: decimal; }
-ul li { list-style-type:square; margin-bottom:.4em; }
+ul li { 
+	list-style-type:square; 
+	margin-bottom:.4em; 
+	}
 ol li { margin-bottom: .4em; }
 ul ul { padding-left:1.2em; }
 ul ul ul { padding-left:1em; }
@@ -180,8 +186,13 @@ pre {
 	line-height: 1.3em;
 	}
 dt .literal, table .literal { background:none; }
-#bd a.reference { text-decoration: none; }
-#bd a.reference tt.literal { border-bottom: 1px #234f32 dotted; }
+
+#bd a.reference { 
+	text-decoration: underline; 
+	}
+#bd a.reference tt.literal { 
+	border-bottom: 1px #234f32 dotted; 
+	}
  
 /*** notes & admonitions ***/
 .note, .admonition { 
