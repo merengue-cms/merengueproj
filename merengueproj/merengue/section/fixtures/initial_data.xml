@@ -46,4 +46,48 @@
         <field to="base.basecontent" name="related_items" rel="ManyToManyRel"> </field>
         <field to="auth.user" name="owners" rel="ManyToManyRel"> </field>
     </object>
+    <object pk="2" model="section.menu">
+        <field type="CharField" name="name_es">Main menu of section</field>
+        <field type="CharField" name="name_en"><None></None></field>
+        <field type="CharField" name="name_fr"><None></None></field>
+        <field type="SlugField" name="slug">main-menu-of-section</field>
+        <field to="section.menu" name="parent" rel="ManyToOneRel"><None></None></field>
+        <field type="CharField" name="url"><None></None></field>
+        <field type="PositiveIntegerField" name="lft">1</field>
+        <field type="PositiveIntegerField" name="rght">2</field>
+        <field type="PositiveIntegerField" name="tree_id">2</field>
+        <field type="PositiveIntegerField" name="level">0</field>
+    </object>
+    <object pk="1" model="section.basesection">
+        <field type="CharField" name="name_es">section</field>
+        <field type="CharField" name="name_en">section</field>
+        <field type="CharField" name="name_fr">section</field>
+        <field type="SlugField" name="slug">section</field>
+        <field type="TextField" name="plain_description_es"><None></None></field>
+        <field type="TextField" name="plain_description_en"><None></None></field>
+        <field type="TextField" name="plain_description_fr"><None></None></field>
+        <field type="TextField" name="description_es"><None></None></field>
+        <field type="TextField" name="description_en"><None></None></field>
+        <field type="TextField" name="description_fr"><None></None></field>
+        <field type="CharField" name="status">published</field>
+        <field type="FileField" name="main_image"></field>
+        <field type="IntegerField" name="order"><None></None></field>
+        <field to="section.menu" name="main_menu" rel="OneToOneRel">2</field>
+        <field to="base.basecontent" name="main_content" rel="ManyToOneRel">1</field>
+        <field to="section.customstyle" name="customstyle" rel="ManyToOneRel"><None></None></field>
+    </object>
+    <object pk="1" model="section.sectionrelatedcontent">
+        <field to="section.basesection" name="basesection" rel="ManyToOneRel">1</field>
+        <field to="base.basecontent" name="basecontent" rel="ManyToOneRel">1</field>
+        <field type="PositiveIntegerField" name="order">0</field>
+    </object>
+    <object pk="1" model="section.section">
+    </object>
+    <object pk="1" model="section.document">
+        <field type="CharField" name="search_form"><None></None></field>
+        <field type="TextField" name="search_form_filters"><None></None></field>
+        <field type="BooleanField" name="permanent">False</field>
+        <field to="base.basecontent" name="related_items" rel="ManyToManyRel"></field>
+        <field to="auth.user" name="owners" rel="ManyToManyRel"></field>
+    </object>
 </django-objects>
