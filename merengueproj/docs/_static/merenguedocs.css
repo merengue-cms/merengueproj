@@ -199,6 +199,7 @@ pre {
 	padding: .3em 0.4em; 
 	overflow: hidden; 
 	line-height: 1.3em;
+	width: 98%;
 	}
 dt .literal, table .literal { background:none; }
 
@@ -231,6 +232,11 @@ div.admonition-behind-the-scenes { padding-left:65px; background:url(docicons-be
 /*** versoinadded/changes ***/
 div.versionadded, div.versionchanged {  }
 div.versionadded span.title, div.versionchanged span.title { font-weight: bold; }
+
+/** buscador **/
+.p#searchbox  form, {
+	font-style: italic;
+}
 
 /*** p-links ***/
 a.headerlink { color: #c60f0f; font-size: 0.8em; padding: 0 4px 0 4px; text-decoration: none; visibility: hidden; }
