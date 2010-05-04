@@ -1,4 +1,9 @@
-#index p.rubric { font-size:150%; font-weight:normal; margin-bottom:.2em; color:#487858; }
+#index p.rubric { 
+	font-size:150%; 
+	font-weight:100; 
+	margin-bottom:.2em; 
+	color:#938b82; 
+	}
 
 #index div.section dt { font-weight: normal; }
 
