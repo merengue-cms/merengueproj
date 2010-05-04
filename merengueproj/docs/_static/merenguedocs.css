@@ -40,7 +40,7 @@ a img {border: none;}
 	text-decoration:none; 
 	}
 #bd #sidebar a:link, #bd #sidebar { 
-	color:#917250; 
+	color:#8c6a46;
 	text-decoration:none; 
 	}
 a:hover { 
@@ -63,9 +63,9 @@ h2 a, h3 a, h4 a { text-decoration:none !important; }
 a.reference em { font-style: normal; }
 
 /*** sidebar ***/
-#sidebar div.sphinxsidebarwrapper { font-size:92%; margin-right: 14px; }
+#sidebar div.sphinxsidebarwrapper { font-size:1.1em; margin-right: 10px; }
 #sidebar h3, #sidebar h4 { 
-	color: #917250; 
+	color: #917250; margin-left: 10px;
 	}
 #sidebar a { color: white; }
 #sidebar ul ul { margin-top:0; margin-bottom:0; }
@@ -74,7 +74,7 @@ a.reference em { font-style: normal; }
 /*** nav ***/
 div.nav { 
 	margin: 0; 
-	font-size: 11px; 
+	font-size: 14px; 
 	text-align: right; 
 	color: #938B82;
 	}
