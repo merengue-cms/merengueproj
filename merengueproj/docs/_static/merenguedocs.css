@@ -13,7 +13,14 @@ body {
 	font-family:'HelveticaNeue-UltraLight','Helvetica Neue UltraLight','Helvetica Neue',Arial,Helvetica,sans-serif;
 	font-weight: 100;
 	}
-#bd { background:transparent; }
+#bd #yui-main {
+	background: white url(doc_bg.png) no-repeat top right;
+	padding-top: 50px;
+	width: 662px;
+}
+#bd #yui-main .yui-b {
+	margin-left: 2px;
+}
 #ft { color:#487858; font-size:90%; padding-bottom: 2em; }
 
 /*** links ***/
@@ -96,7 +103,14 @@ div.nav { margin: 0; font-size: 11px; text-align: right; color: #487858;}
 
 /*** content ***/
 #yui-main div.yui-b { position: relative; }
-#yui-main div.yui-b { margin: 0 0 0 20px; background: white; color: black; padding: 0.3em 2em 1em 2em; }
+#yui-main div.yui-b  { 
+	margin: 0 0 0 20px; 
+	background: transparent; 
+	color: black; 
+	width: 631px;
+	padding: 0.3em 2em 1em 2em;
+	margin: 0 0 24px 20px; 
+	}
 
 /*** basic styles ***/
 dd { margin-left:15px; }
