@@ -42,6 +42,10 @@ def coming_from_buildbot(request):
     return context
 
 
+def merengue_urls_prefix(request):
+    return {'MERENGUE_URLS_PREFIX': settings.MERENGUE_URLS_PREFIX}
+
+
 def all_context(request):
     """
     Add all template context
@@ -51,5 +55,6 @@ def all_context(request):
     context.update(site(request))
     context.update(expire_time_cached(request))
     context.update(coming_from_buildbot(request))
+    context.update(merengue_urls_prefix(request))
     # add here more context dict to the request
     return context

@@ -2,7 +2,7 @@
 {% load i18n admin_modify customize_admin_modify adminmedia %}
 
 {% block extrahead %}{{ block.super }}
-<script type="text/javascript" src="/jsi18n/"></script>
+<script type="text/javascript" src="/{{ MERENGUE_URLS_PREFIX}}/jsi18n/"></script>
 {{ media }}
 {% endblock %}
 
