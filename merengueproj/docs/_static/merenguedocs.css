@@ -15,7 +15,7 @@ body {
 	}
 #bd #yui-main {
 	background: transparent url(doc_bg.png) no-repeat top right;
-	padding-top: 50px;
+	padding-top: 45px;
 	width: 662px;
 }
 #bd #yui-main .yui-b {
@@ -109,7 +109,7 @@ div.nav { margin: 0; font-size: 11px; text-align: right; color: #487858;}
 	background: transparent; 
 	color: black; 
 	width: 635px;
-	padding: 0.3em 1em 1em 1em;
+	padding: 0 1em 1em 1em;
 	margin: 0 0 24px 20px; 
 	}
 
