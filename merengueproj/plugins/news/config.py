@@ -2,7 +2,7 @@ from merengue.plugin import Plugin
 
 from plugins.news.actions import PDFExport, NewsIndex, NewsRSS
 from plugins.news.blocks import LatestNewsBlock
-from plugins.news.viewlets import LatestNewsViewlet
+from plugins.news.viewlets import LatestNewsViewlet, AllNewsViewlet
 
 from plugins.news.models import NewsItem, NewsCategory
 from plugins.news.admin import NewsItemSectionAdmin, NewsItemAdmin, NewsCategoryAdmin
@@ -33,7 +33,7 @@ class PluginConfig(Plugin):
 
     @classmethod
     def get_viewlets(cls):
-        return [LatestNewsViewlet, ]
+        return [LatestNewsViewlet, AllNewsViewlet]
 
     @classmethod
     def section_models(cls):

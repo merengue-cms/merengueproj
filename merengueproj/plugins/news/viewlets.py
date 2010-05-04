@@ -10,6 +10,17 @@ class LatestNewsViewlet(Viewlet):
 
     @classmethod
     def render(cls, request):
+        news_list = NewsItem.objects.published().order_by('-publish_date')[:5]
+        return cls.render_viewlet(request, template_name='news/viewlet_latest.html',
+                                  context={'news_list': news_list})
+
+
+class AllNewsViewlet(Viewlet):
+    name = 'allnews'
+    label = _('All news')
+
+    @classmethod
+    def render(cls, request):
         news_list = NewsItem.objects.published().order_by('-publish_date')
         return cls.render_viewlet(request, template_name='news/viewlet_latest.html',
                                   context={'news_list': news_list})

@@ -10,7 +10,7 @@ class LatestNewsBlock(Block):
 
     @classmethod
     def render(cls, request, place):
-        news_list = NewsItem.objects.published().order_by('-publish_date')
+        news_list = NewsItem.objects.published().order_by('-publish_date')[:5]
         return cls.render_block(request, template_name='news/block_latest.html',
                                 block_title=_('Latest news'),
                                 context={'news_list': news_list})
