@@ -13,6 +13,9 @@ body {
 	font-family:'HelveticaNeue-UltraLight','Helvetica Neue UltraLight','Helvetica Neue',Arial,Helvetica,sans-serif;
 	font-weight: 100;
 	}
+#hd h1 {
+	padding: 0.2em 0 1em 0;
+}
 #bd #yui-main {
 	background: transparent url(doc_bg.png) no-repeat top right;
 	padding-top: 45px;
@@ -129,8 +132,8 @@ font-family:'HelveticaNeue-UltraLight','Helvetica Neue UltraLight','Helvetica Ne
 font-weight:100; }
 h1 { 
 	font-size:220%; 
-	margin-top:0.6em; 
-	line-height:1.1em; 
+	margin-top:0.6em 0 0.3em 0; 
+	line-height:1.2em; 
 	}
 h2 { 
 	font-size:180%; 
@@ -214,6 +217,12 @@ dt .literal, table .literal { background:none; }
 #bd a.reference tt.literal { 
 	border-bottom: 1px #234f32 dotted; 
 	}
+/*** searcher results ***/
+.context{
+	border-top: 1px dotted #915403;
+	background-color: #F7F6F2;
+	padding-bottom: 1em;
+}
  
 /*** notes & admonitions ***/
 .note, .admonition { 
