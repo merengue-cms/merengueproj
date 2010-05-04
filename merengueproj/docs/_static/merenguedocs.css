@@ -20,6 +20,7 @@ body {
 a {
 	text-decoration: none;
 	font-weight: normal;
+	color: #917250;
 	}
 a img {border: none;}
 /* a:link, a:visited { color:#ffc757; } */
@@ -74,14 +75,21 @@ div.nav { margin: 0; font-size: 11px; text-align: right; color: #487858;}
 #global-nav { 
 	position:absolute; 
 	top:5px; 
+	font-size: 11px;
 	margin-left: -5px; 
 	padding:7px 0; 
-	color:#263E2B; }
-#global-nav a:link, #global-nav a:visited {color:#487858;}
+	color:#263E2B; 
+	}
+#global-nav a:link, #global-nav a:visited 
+	{
+	color:#917250;
+	}
 #global-nav a {padding:0 4px;}
 #global-nav a.about {padding-left:0;}
 #global-nav:hover {color:#fff;}
-#global-nav:hover a:link, #global-nav:hover a:visited  { color:#ffc757; }
+#global-nav:hover a:link, #global-nav:hover a:visited  { 
+	color:#C4741D; 
+	}
 
 /*** content ***/
 #yui-main div.yui-b { position: relative; }
