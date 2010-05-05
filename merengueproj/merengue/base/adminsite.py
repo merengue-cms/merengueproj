@@ -1,3 +1,6 @@
+import zipfile
+from datetime import datetime
+
 from django.conf import settings
 from django import template
 from django.db.models.base import ModelBase
@@ -13,10 +16,9 @@ from django.utils.functional import update_wrapper
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
 
+from cmsutils.log import send_info
 from merengue.base.models import BaseContent
 from merengue.base.adminforms import UploadConfigForm
-from cmsutils.log import send_info
-from datetime import datetime
 
 OBJECT_ID_PREFIX = 'base_object_id_'
 MODEL_ADMIN_PREFIX = 'base_model_admin_'
@@ -158,7 +160,9 @@ class BaseAdminSite(DjangoAdminSite):
         if request.method == 'POST':
             form = UploadConfigForm(request.POST, request.FILES)
             if form.is_valid():
-                restore_config(request.FILES['file'])
+                zip_config = zipfile.ZipFile(request.FILES['file'], "r",
+                                             compression=zipfile.ZIP_DEFLATED)
+                restore_config(zip_config)
             send_info(request, _('Configuracion guardada satisfactoriamente.'))
             return HttpResponseRedirect('/admin/siteconfig')
         else:
