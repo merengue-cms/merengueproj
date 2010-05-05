@@ -8,8 +8,9 @@
             {% with node.get_absolute_url as node_url %}
                 <li id="{{ node.slug }}" class="item {% if structure.new_level %}first{% endif %} {% ifequal node menu_item %}selected{% endifequal %}{% if node in ancestors %}selectedAncestors{% endif %} {% if node.level - menu_item__level > 1 %} itemhidden {% endif %}">
                     <a href="{{ node.get_absolute_url }}" class="item {% ifequal node menu_item %}selected{% endifequal %}{% if node in ancestors %}selectedAncestors{% endif %} {% if node.level - menu_item__level > 1 %} itemhidden {% endif %} menu{{node.level}}">{{ node.name }}</a>
+                {% if not node.get_descendants %}</li>{% endif %}
             {% endwith %}
-        {% for level in structure.closed_levels %}</li>{% if level > 1 %}</ul>{% endif %}{% endfor %}
+        {% for level in structure.closed_levels %}{% if level > 1 %}</ul></li>{% endif %}{% endfor %}
     {% endfor %}
     </ul>
 {% endif %}
