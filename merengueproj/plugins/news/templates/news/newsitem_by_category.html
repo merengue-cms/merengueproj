@@ -5,10 +5,12 @@
     <li>
         {% if news.main_image %}
             {% thumbnail news.main_image 146x88 as thumb %}
-            <img class="imageLeft" width="146px" height="88px" src="{{ thumb }}" />
+            <div class="imageLeft" >
+              <img width="146px" height="88px" src="{{ thumb }}" />
+            </div>
         {% else %}
-           <div class="noImage">
-            <img class="imageLeft" width="146px" height="88px" src="{{ THEME_MEDIA_URL }}img/no_image.jpg" />
+           <div class="imageLeft noImage">
+            <img width="146px" height="88px" src="{{ THEME_MEDIA_URL }}img/no_image.jpg" />
             <span class="noImageText">{% trans "No Image" %}</span>
            </div>
         {% endif %}
