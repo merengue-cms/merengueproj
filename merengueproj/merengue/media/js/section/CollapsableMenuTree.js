@@ -2,7 +2,7 @@
     var plus = '<img class="plusMenu" src="/media/merengue/img/section/admin/plus.gif" /><img class="minusMenu hide" src="/media/merengue/img/section/admin/minus.gif" />';
     var span15 = '<span class="span15">&nbsp;</span>';
     var span50 = '<span class="span50">&nbsp;</span>';
-    var save_url = '/sections/ajax/save_menu_order/';
+    var save_url = '/cms/sections/ajax/save_menu_order/';
 
     function recalculateRows() {
         var index=0;
