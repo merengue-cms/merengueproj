@@ -33,8 +33,6 @@
                                 parseInt(date_splitted[1]) - 1,
                                 parseInt(date_splitted[0]));
                 key = date.getFullYear() +"-"+ (date.getMonth() + 1) +"-"+ date.getDate();
-                console.log(dateText)
-                console.log(key)
                 if (eventDate[key]) {
                     window.location = eventDate[key]['url'];
                 }
