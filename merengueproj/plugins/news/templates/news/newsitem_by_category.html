@@ -14,7 +14,7 @@
             <span class="noImageText">{% trans "No Image" %}</span>
            </div>
         {% endif %}
-        <h2>{{ news.name }}</h2>
+        <h2><a href="{{ news.get_absolute_url }}" alt="{{ news.name }}" title="{{ news.name }}">{{ news.name }}</a></h2>
         <span class="date">{{ news.publish_date|date }}</span>
         <p>{{ news.description|safe|truncatewords_html:20 }}</p>
         <a class="readMore" href="{{ news.get_absolute_url }}" alt="{% trans 'read more' %}" title="{% trans 'read more' %}"><img src="{{ THEME_MEDIA_URL }}img/read_more.gif" /></a>

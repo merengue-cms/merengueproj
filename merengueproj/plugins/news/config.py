@@ -1,4 +1,7 @@
+from django.utils.translation import ugettext_lazy as _
+
 from merengue.plugin import Plugin
+from merengue.registry import params
 
 from plugins.news.actions import PDFExport, NewsIndex, NewsRSS
 from plugins.news.blocks import LatestNewsBlock
@@ -12,13 +15,11 @@ class PluginConfig(Plugin):
     name = 'News'
     description = 'News plugin'
     version = '0.0.1a'
-#    required_apps = ('django.contrib.flatpages', )
-#    required_plugins = {
-#        'event': {
-#            'name': 'Events',
-#            'version': '0.0.1a',
-#        },
-#    }
+
+    config_params = [
+        params.Single(name='limit', label=_('limit for templatetags'), default='3'),
+    ]
+
     url_prefixes = (
         ('news', 'plugins.news.urls'),
     )

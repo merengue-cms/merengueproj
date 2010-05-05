@@ -2,6 +2,7 @@ import re
 
 from django import template
 
+from plugins.news.config import PluginConfig
 from plugins.news.models import NewsCategory, NewsItem
 
 
@@ -14,8 +15,7 @@ class NewsCategoryNode(template.Node):
         self.var_name = var_name
 
     def render(self, context):
-        context[self.var_name] = NewsCategory.objects.filter().distinct()
-        #context[self.var_name] = NewsCategory.objects.filter(newsitem__isnull=False).distinct()
+        context[self.var_name] = NewsCategory.objects.filter(newsitem__isnull=False).distinct()
         return ''
 
 
@@ -39,8 +39,11 @@ class NewsItemNode(template.Node):
 
     def render(self, context):
         category = context[self.category]
-        context[self.var_name] = NewsItem.objects.filter(categories=category).distinct()
-        #context[self.var_name] = NewsCategory.objects.filter(newsitem__isnull=False).distinct()
+        newsitems = NewsItem.objects.published().filter(categories=category).distinct()
+        limit = PluginConfig.get_config().get('limit', None)
+        if limit:
+            newsitems = newsitems[:int(limit.value)]
+        context[self.var_name] = newsitems
         return ''
 
 

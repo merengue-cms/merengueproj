@@ -34,6 +34,7 @@ class NewsItem(BaseContent):
     class Meta:
         translate = ('body', )
         content_view_template = 'news/newsitem_view.html'
+        ordering = ('-publish_date', '-id')
 
     @permalink
     def public_link(self):
