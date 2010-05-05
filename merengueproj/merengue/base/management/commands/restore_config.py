@@ -26,4 +26,4 @@ class Command(LabelCommand, MerengueCommand):
         except zipfile.BadZipFile, zipfile.LargeZipFile:
             raise CommandError("Bad or too large zip file \"%s\"" \
                                % config_name)
-        restore_config(zip_config) #hay que evitar esto: asi el comando funciona, pero la idea es que no sea necesario nada mas que un argumento, el archivo .zip en sí. zip_config se ha agregado para que funcione el comando. debe de haber algo mal hecho, es posible que el codigo se haya "partido" mal.
+        restore_config(zip_config)

@@ -1,24 +1,23 @@
-import zipfile
 from datetime import datetime
 
-from django.conf import settings
 from django import template
-from django.db.models.base import ModelBase
+from django.contrib.admin import ModelAdmin
+from django.contrib.admin.sites import AdminSite as DjangoAdminSite
+from django.contrib.admin.sites import AlreadyRegistered
+from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
-from django.contrib.admin import ModelAdmin
-from django.contrib.admin.sites import AlreadyRegistered
-from django.contrib.admin.sites import AdminSite as DjangoAdminSite
-from django.contrib.contenttypes.models import ContentType
+from django.conf import settings
+from django.db.models.base import ModelBase
 from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.utils.functional import update_wrapper
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
 
-from cmsutils.log import send_info
-from merengue.base.models import BaseContent
 from merengue.base.adminforms import UploadConfigForm
+from merengue.base.models import BaseContent
 
 OBJECT_ID_PREFIX = 'base_object_id_'
 MODEL_ADMIN_PREFIX = 'base_model_admin_'
@@ -160,14 +159,13 @@ class BaseAdminSite(DjangoAdminSite):
         if request.method == 'POST':
             form = UploadConfigForm(request.POST, request.FILES)
             if form.is_valid():
-                zip_config = zipfile.ZipFile(request.FILES['file'], "r",
-                                             compression=zipfile.ZIP_DEFLATED)
-                restore_config(zip_config)
-            send_info(request, _('Configuracion guardada satisfactoriamente.'))
-            return HttpResponseRedirect('/admin/siteconfig')
+                restore_config(form.cleaned_data['zipfile'])
+                request.user.message_set.create(message=_('Settings saved successfully'))
         else:
             form = UploadConfigForm()
-            return render_to_response('admin/siteconfig.html', {'form': form})
+        return render_to_response('admin/siteconfig.html',
+                                      {'form': form},
+                                      context_instance=RequestContext(request))
 
     def save_configuration(self, request):
         from merengue.base.utils import save_config

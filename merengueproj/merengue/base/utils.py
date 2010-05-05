@@ -1,20 +1,20 @@
+import ConfigParser
+import os
+import zipfile
+from cStringIO import StringIO
+
 from django.conf import settings
 from django.core.cache import cache
 from django.utils.cache import _generate_cache_header_key
 from django.utils.encoding import smart_str
 
-from cStringIO import StringIO
-import ConfigParser
-import os
-import zipfile
-
 from merengue.action.models import RegisteredAction
+from django.core.management.base import CommandError
 from merengue.block.models import RegisteredBlock
 from merengue.plugin.models import RegisteredPlugin
 from merengue.plugin.utils import get_plugin_module_name
 from merengue.registry import RegisteredItem
 from merengue.theme.models import Theme
-from merengue.base.management.base import MerengueCommand # Spare import
 
 from django.core import serializers
 from django.core.management.color import no_style

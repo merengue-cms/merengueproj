@@ -1,28 +1,37 @@
 {% extends "admin/base_site.html" %}
 {% load i18n %}
 
+{% block extrahead %}
+    {{ block.super }}
+    <link href="/media_admin/css/forms.css" type="text/css" rel="stylesheet">
+{% endblock %}
+
+
+{% block title %}
+    {% trans "Advanced Report" %} {{ block.super }}
+{% endblock %}
+
+{% block breadcrumbs %}{% if not is_popup %}
+<div class="breadcrumbs">
+     <a href="../">{% trans "Home" %}</a> &rsaquo;
+     {% trans "Report Form" %}
+</div>
+{% endif %}{% endblock %}
+
 {% block content %}
-
-<div id="content-main">
-<div id="content-merengue">
-    <div class="module-merengue" id="contentmanagement">
-        <h1>{% trans "Save/Restore configuration" %}</h1>
-        <p>{% trans "Upload a configuration" %}</p>
-
-        <form enctype="multipart/form-data" method="post" action=".">
-            <label for="id_file">{% trans "Select a .zip file:" %}</label>
-            {{ form.file }}
-            <p><input type="Submit" value="{% trans 'Submit' %}" /></p>
-        </form>
-
-        <p>{% trans "Save actual configuration" %}</p>
-
-        <form method="get" action="save">
-            <p><input type="Submit" value="{% trans 'Save config' %}" /></p>
-        </form>
-
-    </div>
-</div>
-</div>
-
+    {{ block.super }}
+    <h1>{% trans "Save/Restore configuration" %}</h1>
+        <div id="content-main">
+            <form enctype="multipart/form-data" method="post" action=".">
+                {{ form.as_django_admin }}
+            <div class="submit-row">
+                <input type="Submit" value="{% trans 'Submit config' %}" />
+            </div>
+            </form>
+            <form method="get" action="save">
+            <div class="submit-row">
+                <input type="Submit" value="{% trans 'Save actual config' %}" />
+            </div>
+            </form>
+        </div>
 {% endblock %}
