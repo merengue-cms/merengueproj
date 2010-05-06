@@ -6,6 +6,7 @@
 <link href="{{ MEDIA_URL }}merengue/css/jquery-ui-1.8.css" rel="stylesheet" type="text/css"/>
 <script src="{{ MEDIA_URL }}merengue/js/jquery-ui-1.8.min.js"></script>
 <script language="javascript" src="{{ MEDIA_URL }}merengue/js/jquery.ui.datepicker-{{ LANGUAGE_CODE }}.js"></script>
+<script language="javascript" src="{{ MEDIA_URL }}event/jquery.qtip.js"></script>
 
 <script language="javascript" >
 ;(function($) {
@@ -14,7 +15,7 @@
         eventDate = {};
         {% for date, event in events_dic.items %}
         eventDate["{{ date }}"] = {
-            'name': [true, "calendarEventDay", "{{ event.name|join:" / " }}"],
+            'name': '{{ event.name|safe }}',
             'url': '{{ event.url }}'
         }
         {% endfor %}
@@ -25,9 +26,13 @@
                 var key;
                 key = date.getFullYear() +"-"+ (date.getMonth() + 1) +"-"+ date.getDate();
                 if (eventDate[key] && eventDate[key]['name'])
-                    return [true, "calendarEventDay", "{{ event.name|join:" / " }}"];
+                {
+                    return [true, "calendarEventDay", eventDate[key]['name']];
+                }
                 else
+                {
                     return [false, "", ""];
+                }
             },
             onSelect: function(dateText, inst) {
                 var date, key;
@@ -49,18 +54,31 @@
                     success: function(events) {
                         eventDate = events;
                         $("#eventsCalendar").datepicker("refresh");
+                        bind_days_tooltip();
                     }
                 });
             }
         };
         $("#eventsCalendar").datepicker(datepickerOptions);
+        bind_days_tooltip();
     });
+
+    function bind_days_tooltip ()
+    {
+        $('.calendarEventDay[title]').qtip({
+            position: {
+               corner: {
+                  target: 'topMiddle',
+                  tooltip: 'bottomMiddle'
+               }
+            },
+            hide: {fixed: true},
+            style: {border: {radius: 5, color: 'black'}, tip: 'bottomMiddle'},
+        });
+    }
+
 })(jQuery);
-
-
 </script>
-
-
 
 {% endblock %}
 
