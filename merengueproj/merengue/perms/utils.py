@@ -250,7 +250,7 @@ def grant_permission(role, permission, obj=None):
 
     obj
         The content object for which the permission should be granted.
-        If obj is None, the permissions should be ganted for all contents.
+        If obj is None, the permissions should be granted for all contents.
 
     """
     if not isinstance(permission, Permission):
@@ -336,7 +336,7 @@ def has_permission(obj, user, codename, roles=None):
     while obj is not None:
         p = ObjectPermission.objects.filter(
             Q(content=obj, role__in=roles, permission__codename=codename) |
-            Q(content=None, role__in=roles, permission__codename=codename))
+            Q(content__isnull=True, role__in=roles, permission__codename=codename))
 
         if p.count() > 0:
             return True

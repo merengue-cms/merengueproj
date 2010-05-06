@@ -56,12 +56,7 @@ class ObjectPermission(models.Model):
     content = models.ForeignKey(BaseContent, blank=True, null=True)
 
     def __unicode__(self):
-        if self.role:
-            principal = self.role
-        else:
-            principal = self.user
-
-        return "%s / %s / %s" % (self.permission.name, principal, self.content)
+        return "%s / %s / %s" % (self.permission.name, self.role, self.content)
 
     def get_principal(self):
         """Returns the principal.
