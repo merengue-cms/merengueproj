@@ -53,7 +53,7 @@ class ObjectPermission(models.Model):
     role = models.ForeignKey("Role", verbose_name=_(u"Role"), blank=True, null=True)
     permission = models.ForeignKey(Permission, verbose_name=_(u"Permission"))
 
-    content = models.ForeignKey(BaseContent)
+    content = models.ForeignKey(BaseContent, blank=True, null=True)
 
     def __unicode__(self):
         if self.role:

@@ -1,5 +1,5 @@
 # django imports
-from django.db import IntegrityError
+from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 from django.contrib.contenttypes.models import ContentType
@@ -235,14 +235,11 @@ def get_local_roles(obj, principal):
 # Permissions ################################################################
 
 
-def grant_permission(obj, role, permission):
+def grant_permission(role, permission, obj=None):
     """Grants passed permission to passed role. Returns True if the permission
     was able to be added, otherwise False.
 
     **Parameters:**
-
-    obj
-        The content object for which the permission should be granted.
 
     role
         The role for which the permission should be granted.
@@ -250,6 +247,11 @@ def grant_permission(obj, role, permission):
     permission
         The permission which should be granted. Either a permission
         object or the codename of a permission.
+
+    obj
+        The content object for which the permission should be granted.
+        If obj is None, the permissions should be ganted for all contents.
+
     """
     if not isinstance(permission, Permission):
         try:
@@ -257,7 +259,8 @@ def grant_permission(obj, role, permission):
         except Permission.DoesNotExist:
             return False
 
-    ct = ContentType.objects.get_for_model(obj)
+    if obj:
+        ct = ContentType.objects.get_for_model(obj)
     try:
         ObjectPermission.objects.get(role=role, content=obj, permission=permission)
     except ObjectPermission.DoesNotExist:
@@ -332,7 +335,8 @@ def has_permission(obj, user, codename, roles=None):
 
     while obj is not None:
         p = ObjectPermission.objects.filter(
-            content=obj, role__in=roles, permission__codename=codename)
+            Q(content=obj, role__in=roles, permission__codename=codename) |
+            Q(content=None, role__in=roles, permission__codename=codename))
 
         if p.count() > 0:
             return True
@@ -373,9 +377,8 @@ def add_inheritance_block(obj, permission):
     try:
         ObjectPermissionInheritanceBlock.objects.get(content=obj, permission=permission)
     except ObjectPermissionInheritanceBlock.DoesNotExist:
-        try:
-            result = ObjectPermissionInheritanceBlock.objects.create(content=obj, permission=permission)
-        except IntegrityError:
+        result, created = ObjectPermissionInheritanceBlock.objects.get_or_create(content=obj, permission=permission)
+        if not created:
             return False
     return True
 
@@ -497,12 +500,14 @@ def register_permission(name, codename, ctypes=None, for_models=None, builtin=Fa
         ctypes = [ContentType.objects.get_for_model(model) for model in for_models]
     if ctypes is None:
         ctypes = []
-    try:
-        p = Permission.objects.create(name=name, codename=codename, builtin=builtin)
-        p.content_types = ctypes
-        p.save()
-    except IntegrityError:
+
+    perms = Permission.objects.filter(Q(name=name) | Q(codename=codename))
+    if perms.count() > 0:
         return False
+
+    p = Permission.objects.create(name=name, codename=codename, builtin=builtin)
+    p.content_types = ctypes
+    p.save()
     return p
 
 
@@ -531,11 +536,10 @@ def register_role(name):
     name
         The unique role name.
     """
-    try:
-        role = Role.objects.create(name=name)
-    except IntegrityError:
-        return False
-    return role
+    role, created = Role.objects.get_or_create(name=name)
+    if created:
+        return role
+    return False
 
 
 def unregister_role(name):
@@ -566,11 +570,10 @@ def register_group(name):
     name
         The unique group name.
     """
-    try:
-        group = Group.objects.create(name=name)
-    except IntegrityError:
-        return False
-    return group
+    group, created = Group.objects.get_or_create(name=name)
+    if created:
+        return group
+    return False
 
 
 def unregister_group(name):

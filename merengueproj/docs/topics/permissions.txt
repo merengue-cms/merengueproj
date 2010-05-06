@@ -95,7 +95,15 @@ Granting a permission to a content
     >>> from merengue.base.models import BaseContent
     >>> content = BaseContent.objects.create(slug='mycontent', name_en='My content')
     >>> from merengue.perms.utils import grant_permission
-    >>> grant_permission(content, editor, 'vote')
+    >>> grant_permission(editor, 'vote', content)
+
+Granting a permission to all contents
+----------------------------------
+
+.. code-block:: python
+
+    >>> from merengue.perms.utils import grant_permission
+    >>> grant_permission(editor, 'vote')
 
 Checking permissions
 --------------------
@@ -114,7 +122,7 @@ You can assign a role to an user globally (for all contents) or locally (to one 
 .. code-block:: python
 
     >>> othercontent = BaseContent.objects.create(slug='othercontent', name_en='Other content')
-    >>> grant_permission(othercontent, editor, 'vote') # like "content"
+    >>> grant_permission(editor, 'vote', othercontent) # like "content"
     >>> from merengue.perms.utils import add_local_role
     >>> add_local_role(othercontent, plain_user, editor)
     # plain_user will be editor only in othercontent

@@ -306,22 +306,22 @@ class PermissionTestCase(TestCase):
         """
         """
         # Add per object
-        result = merengue.perms.utils.grant_permission(self.page_1, self.role_1, self.permission)
+        result = merengue.perms.utils.grant_permission(self.role_1, self.permission, self.page_1)
         self.assertEqual(result, True)
 
         # Add per codename
-        result = merengue.perms.utils.grant_permission(self.page_1, self.role_1, "view_perm")
+        result = merengue.perms.utils.grant_permission(self.role_1, "view_perm", self.page_1)
         self.assertEqual(result, True)
 
         # Add ermission which does not exist
-        result = merengue.perms.utils.grant_permission(self.page_1, self.role_1, "hurz")
+        result = merengue.perms.utils.grant_permission(self.role_1, "hurz", self.page_1)
         self.assertEqual(result, False)
 
     def test_remove_permission(self):
         """
         """
         # Add
-        result = merengue.perms.utils.grant_permission(self.page_1, self.role_1, "view_perm")
+        result = merengue.perms.utils.grant_permission(self.role_1, "view_perm", self.page_1)
         self.assertEqual(result, True)
 
         # Remove
@@ -338,7 +338,7 @@ class PermissionTestCase(TestCase):
         result = merengue.perms.utils.has_permission(self.page_1, self.user, "view_perm")
         self.assertEqual(result, False)
 
-        result = merengue.perms.utils.grant_permission(self.page_1, self.role_1, self.permission)
+        result = merengue.perms.utils.grant_permission(self.role_1, self.permission, self.page_1)
         self.assertEqual(result, True)
 
         result = merengue.perms.utils.has_permission(self.page_1, self.user, "view_perm")
@@ -359,7 +359,7 @@ class PermissionTestCase(TestCase):
         self.assertEqual(result, False)
 
         owner = merengue.perms.utils.register_role("Owner")
-        merengue.perms.utils.grant_permission(self.page_1, owner, "view_perm")
+        merengue.perms.utils.grant_permission(owner, "view_perm", self.page_1)
 
         result = merengue.perms.utils.has_permission(self.page_1, creator, "view_perm", [owner])
         self.assertEqual(result, True)
@@ -370,7 +370,7 @@ class PermissionTestCase(TestCase):
         result = merengue.perms.utils.has_permission(self.page_1, self.user, "view_perm")
         self.assertEqual(result, False)
 
-        merengue.perms.utils.grant_permission(self.page_1, self.role_2, self.permission)
+        merengue.perms.utils.grant_permission(self.role_2, self.permission, self.page_1)
         merengue.perms.utils.add_local_role(self.page_1, self.user, self.role_2)
 
         result = merengue.perms.utils.has_permission(self.page_1, self.user, "view_perm")
@@ -411,7 +411,7 @@ class PermissionTestCase(TestCase):
         self.assertEqual(self.permission.__unicode__(), "View permission (view_perm)")
 
         # ObjectPermission
-        merengue.perms.utils.grant_permission(self.page_1, self.role_1, self.permission)
+        merengue.perms.utils.grant_permission(self.role_1, self.permission, self.page_1)
         opr = ObjectPermission.objects.get(permission=self.permission, role=self.role_1)
         self.assertEqual(opr.__unicode__(), "View permission / Role 1 / Page 1")
 
@@ -424,7 +424,7 @@ class PermissionTestCase(TestCase):
     def test_reset(self):
         """
         """
-        result = merengue.perms.utils.grant_permission(self.page_1, self.role_1, "view_perm")
+        result = merengue.perms.utils.grant_permission(self.role_1, "view_perm", self.page_1)
         self.assertEqual(result, True)
 
         result = merengue.perms.utils.has_permission(self.page_1, self.user, "view_perm")
