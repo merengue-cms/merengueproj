@@ -32,8 +32,12 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
         return form
 
     def save_form(self, request, form, change):
-        if 'installed' in form.changed_data and form.cleaned_data['installed'] == True:
-            form.cleaned_data['active'] = True # it has no sense install a plugin without activate
+        if 'installed' in form.changed_data:
+            if form.cleaned_data['installed'] == True:
+                # it has no sense install a plugin without activate
+                form.cleaned_data['active'] = True
+            else:
+                form.cleaned_data['active'] = False
         return form.save(commit=False)
 
     def has_add_permission(self, request):
