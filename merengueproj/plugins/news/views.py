@@ -8,7 +8,7 @@ from plugins.news.models import NewsItem, NewsCategory
 
 
 def news_index(request):
-    news_list = NewsItem.objects.published()
+    news_list = get_news()
     return content_list(request, news_list, template_name='news/news_index.html')
 
 
@@ -26,3 +26,11 @@ def newsitem_by_category_view(request, newscategory_slug):
                                        context_instance=RequestContext(request))
         return HttpResponse(news_string, mimetype='txt/html')
     return HttpResponseRedirect('/')
+
+
+def get_news(limit=0):
+    news = NewsItem.objects.published().order_by("-publish_date")
+    if limit:
+        return news[:limit]
+    else:
+        return news

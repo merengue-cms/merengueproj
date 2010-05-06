@@ -1,7 +1,7 @@
 from django.utils.translation import ugettext as _
 
 from merengue.viewlet.viewlets import Viewlet
-from plugins.news.models import NewsItem
+from plugins.news.views import get_news
 
 
 class LatestNewsViewlet(Viewlet):
@@ -10,7 +10,7 @@ class LatestNewsViewlet(Viewlet):
 
     @classmethod
     def render(cls, request):
-        news_list = NewsItem.objects.published().order_by('-publish_date')[:5]
+        news_list = get_news(10)
         return cls.render_viewlet(request, template_name='news/viewlet_latest.html',
                                   context={'news_list': news_list})
 
@@ -21,6 +21,8 @@ class AllNewsViewlet(Viewlet):
 
     @classmethod
     def render(cls, request):
-        news_list = NewsItem.objects.published().order_by('-publish_date')
+        news_list = get_news()
         return cls.render_viewlet(request, template_name='news/viewlet_latest.html',
-                                  context={'news_list': news_list})
+                                  context={'news_list': news_list,
+                                           'is_paginated': True,
+                                           'paginate_by': 10})

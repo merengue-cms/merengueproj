@@ -1,7 +1,7 @@
 from django.utils.translation import ugettext as _
 
 from merengue.block.blocks import Block, ContentBlock
-from plugins.news.models import NewsItem
+from plugins.news.views import get_news
 
 
 class LatestNewsBlock(Block):
@@ -10,7 +10,7 @@ class LatestNewsBlock(Block):
 
     @classmethod
     def render(cls, request, place):
-        news_list = NewsItem.objects.published().order_by('-publish_date')[:5]
+        news_list = get_news(5)
         return cls.render_block(request, template_name='news/block_latest.html',
                                 block_title=_('Latest news'),
                                 context={'news_list': news_list})
