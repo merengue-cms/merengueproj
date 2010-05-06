@@ -35,10 +35,10 @@ def install_plugin(instance, app_name):
             install_models(app_mod)
             # Force instance saving after connection closes.
             instance.save()
-        if instance.active:
-            enable_plugin(app_name)
-        else:
-            disable_plugin(app_name)
+    if instance.active:
+        enable_plugin(app_name)
+    else:
+        disable_plugin(app_name)
 
 
 def get_plugins_dir():
