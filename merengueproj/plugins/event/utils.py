@@ -15,7 +15,14 @@ def getEventsMonthYear(month, year):
     events_dic = {}
     for event in (i for i in events if i.is_published()):
         event_date = event.start
-        while event_date.month == month and event_date <= event.end:
+        while (event.start.month <= month <= event.end.month
+            and event_date <= event.end):
+            if event_date.month < month:
+                event_date += datetime.timedelta(1)
+                continue
+            elif event_date.month > month:
+                break
+
             key = "%s-%s-%s" % (event_date.year, event_date.month,
                                 event_date.day)
             if key not in events_dic:

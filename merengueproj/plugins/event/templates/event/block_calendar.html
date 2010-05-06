@@ -24,7 +24,10 @@
             beforeShowDay: function(date) {
                 var key;
                 key = date.getFullYear() +"-"+ (date.getMonth() + 1) +"-"+ date.getDate();
-                return (eventDate[key] && eventDate[key]['name']) || [false, "", ""];
+                if (eventDate[key] && eventDate[key]['name'])
+                    return [true, "calendarEventDay", "{{ event.name|join:" / " }}"];
+                else
+                    return [false, "", ""];
             },
             onSelect: function(dateText, inst) {
                 var date, key;
