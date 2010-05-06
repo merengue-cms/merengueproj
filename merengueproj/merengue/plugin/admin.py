@@ -31,6 +31,11 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
             set_field_read_only(installed_field, 'installed', obj)
         return form
 
+    def save_form(self, request, form, change):
+        if 'installed' in form.changed_data and form.cleaned_data['installed'] == True:
+            form.cleaned_data['active'] = True # it has no sense install a plugin without activate
+        return form.save(commit=False)
+
     def has_add_permission(self, request):
         return False
 
