@@ -34,8 +34,8 @@
 }
 
 .collaborative-translation-main h1 {
-    padding: 0px 20px 0px 40px;
-    border-bottom: 1px solid black;
+    padding: 0px 20px 10px 40px;
+    border-bottom: 1px dotted #ccc;
 }
 
 .collaborative-translation-main-close {
@@ -61,7 +61,8 @@
     right: 55%;
     height: auto;
     padding: 10px;
-    border: 1px solid gray;
+    border: 1px solid #EFCB00;
+    background-color: #FDF7D3;
 }
 
 .collaborative-translation-current-value {
@@ -77,6 +78,8 @@
     left: 50%;
     right: 20px;
     overflow: auto;
+    background-color: #e9eff5;
+    border: 1px solid #ccc;
 }
 
 .collaborative-translation-workplace-translation-middle {
@@ -85,6 +88,7 @@
     border-width: 0px;
     background: url(/media/merengue/img/collab/translate_arrow.jpg) repeat-y top right;
     padding-left: 1px;
+    margin-top: 5px;
 }
 
 .collaborative-translation-workplace-translation-language label {
@@ -109,10 +113,7 @@
 
 .collaborative-translation-current-language {
     font-weight: bold;
-    border-bottom: 1px solid gray;
-    margin: -10px -10px;
-    padding: 5px 10px;
-    background: #dddddd;
+    border-bottom: 1px solid #EFCB00;
 }
 
 .collaborative-translation-workplace .mceEditorIframe {
