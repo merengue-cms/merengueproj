@@ -28,9 +28,22 @@ def newsitem_by_category_view(request, newscategory_slug):
     return HttpResponseRedirect('/')
 
 
+def news_by_date(request, year, month, day):
+    news = get_news_by_date(year, month, day)
+    return content_list(request, news, template_name='news/news_index.html')
+
+
 def get_news(limit=0):
     news = NewsItem.objects.published().order_by("-publish_date")
     if limit:
         return news[:limit]
     else:
         return news
+
+
+def get_news_by_date(year, month, day):
+    news = NewsItem.objects.published()
+    news = news.filter(publish_date__year=year,
+                       publish_date__month=month,
+                       publish_date__day=day)
+    return news.order_by("-publish_date")
