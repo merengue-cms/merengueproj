@@ -1,5 +1,5 @@
 {% extends "admin/change_list.html" %}
-
+{% load i18n %}
 
 {% block extrahead %}
     {{ block.super }}
@@ -9,6 +9,11 @@
 {% endblock %}
 
 {% block content %}
+<span class="draggable-icon"
+      style="display: none; float: left; margin-right: 1em; width: 14px; height: 20px; cursor: pointer;
+             background: url({{ MEDIA_URL }}merengue/img/draggable.png) no-repeat bottom center;"
+      title="{% trans "Click and drag to reorder" %}" />
+</span>
 {{ block.super }}
 
 {% if not request.GET.q %}
