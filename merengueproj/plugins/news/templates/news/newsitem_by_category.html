@@ -15,7 +15,11 @@
            </div>
         {% endif %}
         <h2><a href="{{ news.get_absolute_url }}" alt="{{ news.name }}" title="{{ news.name }}">{{ news.name }}</a></h2>
-        <span class="date">{{ news.publish_date|date }}</span>
+        <span class="date">
+            {% with news.publish_date as date %}
+                <a href="{% url plugins.news.views.news_by_date date.year date.month date.day%}"> {{ date|date }} </a>
+            {% endwith %}
+        </span>
         <p>{{ news.description|safe|truncatewords_html:20 }}</p>
         <a class="readMore" href="{{ news.get_absolute_url }}" alt="{% trans 'read more' %}" title="{% trans 'read more' %}"><img src="{{ THEME_MEDIA_URL }}img/read_more.gif" /></a>
         <div class="visualClear"></div>
