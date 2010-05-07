@@ -1,7 +1,28 @@
 {% extends "block.html" %}
+{% load i18n %}
 
 {% block blockbody %}
-  <span id="eventsCalendar" class="calendar" style="font-size:73%;"></span>
+  <style type="text/css">
+    #datepicker-loading {
+        z-index: 5000;
+        position: absolute;
+        top: 50%;
+        left: 30%;
+        padding: 5px;
+        border: 1px solid gray;
+        background: #eee;
+    }
+    #eventsCalendar {
+        font-size:73%;
+        position: relative;
+    }
+  </style>
+
+  <div id="eventsCalendar" class="calendar">
+      <div id="datepicker-loading">
+        {% trans "Loading..." %}<img src="{{ MEDIA_URL }}merengue/img/ajax-loader-admin.gif" title="loading"/>
+      </div>
+  </div>
 
 <link href="{{ MEDIA_URL }}merengue/css/jquery-ui-1.8.css" rel="stylesheet" type="text/css"/>
 <script src="{{ MEDIA_URL }}merengue/js/jquery-ui-1.8.min.js"></script>
@@ -46,12 +67,14 @@
                 }
             },
             onChangeMonthYear: function(year, month, inst) {
+                $('#datepicker-loading').fadeIn("slow");
                 $.ajax({
                     url: "{% url events_calendar %}",
                     type: "GET",
                     data: ({month: month, year: year}),
                     dataType: "json",
                     success: function(events) {
+                        $('#datepicker-loading').fadeOut("slow");
                         eventDate = events;
                         $("#eventsCalendar").datepicker("refresh");
                         bind_days_tooltip();
@@ -61,6 +84,7 @@
         };
         $("#eventsCalendar").datepicker(datepickerOptions);
         bind_days_tooltip();
+        $('#datepicker-loading').hide();
     });
 
     function bind_days_tooltip ()
