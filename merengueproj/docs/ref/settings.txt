@@ -56,5 +56,23 @@ In your project ``urls.py`` file, merengue URLs are included as follows:
 
 You can override this settings if you prefer other prefix than ``cms``.
 
+TINYMCE_EXTRA_MEDIA
+-------------------
+
+Default: ``{ 'js': [], 'css': [] }``
+
+Sometimes is useful for your site add extra CSS or Javascript files inside
+Merengue HTML editor (TinyMCE). This would be useful to add your public styles
+into HTML editor to be even more WYSIWYG.
+
+You need include all media without ``MEDIA_URL`` prefix. This is an example:
+
+.. code-block:: python
+
+    TINYMCE_EXTRA_MEDIA = {
+        'js': [],
+        'css': ['themes/yourtheme/css/layout.css'],
+    }
+
 
 (( to be completed ))

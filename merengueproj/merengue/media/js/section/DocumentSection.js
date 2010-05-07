@@ -251,7 +251,7 @@
 
             initSection();
         });
-    }
+    };
 
     $.fn.MerengueDocument = function () {
         return this.each(function () {
@@ -334,9 +334,12 @@
 
             initDocument();
         });
-    }
+    };
 
-    $(document).ready(function () {
-        $(".merengue-document").MerengueDocument();
-    });
+    $.fn.MerengueDocument.set_tinymce_settings = function (new_settings) {
+        for(var index in new_settings) {
+            tinymce_settings[index] = new_settings[index];
+        }
+    };
+
 })(jQuery);
