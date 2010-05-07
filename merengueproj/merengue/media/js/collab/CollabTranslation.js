@@ -76,13 +76,13 @@
                         var link = main_ui.find(".collaborative-translation-edit-translation-url").text();
                         setTranslationZone(link);
                         setCollaborativeTranslationActions();
-                        main_ui.show('normal');
+                        main_ui.show(400);
                     }});
                 return false;
             }
 
             var closeCollaborativeTranslation = function() {
-                $(".collaborative-translation-ui").hide('normal', function() {
+                $(".collaborative-translation-ui").hide(400, function() {
                    if (is_html) {
                        textarea_id = translation_zone.find('textarea').attr('id');
                        if (typeof(textarea_id)!='undefined')

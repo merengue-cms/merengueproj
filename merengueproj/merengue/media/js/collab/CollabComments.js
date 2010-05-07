@@ -71,7 +71,7 @@
                 });
 
                 container.find('.collaborative-comments-item-status-history a.toggle').click(function() {
-                    $(this).parent().find('.collaborative-comments-item-status').toggle('normal');
+                    $(this).parent().find('.collaborative-comments-item-status').toggle(400);
                     return false;
                 });
 
@@ -142,13 +142,13 @@
                         setCollaborativeCommentsActions();
                         loadMainFolder();
                         recountComments();
-                        main_ui.show('normal');
+                        main_ui.show(400);
                     }});
                 return false;
             }
 
             function closeCollaborativeComments() {
-                $(".collaborative-comments-ui").hide('normal', function() {
+                $(".collaborative-comments-ui").hide(400, function() {
                    $(this).remove();
                 });
                 return false;
