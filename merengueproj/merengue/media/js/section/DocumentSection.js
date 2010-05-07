@@ -226,10 +226,27 @@
                 section_id = section.find('.document-section-config .document-section-id').text();
             };
 
+            var setBodyEditableNotOver = function() {
+                var body = section.find('.document-section-body-editable');
+                body.removeClass('document-section-body-editable-over');
+            };
+
+            var setBodyEditableOver = function() {
+                var body = section.find('.document-section-body-editable');
+                body.addClass('document-section-body-editable-over');
+            };
+
+            var initEditableBody = function() {
+                var body = section.find('.document-section-body-editable');
+                body.bind('mouseover', setBodyEditableOver).bind('mouseenter', setBodyEditableOver).bind('mouseleave', setBodyEditableNotOver);
+                body.bind('dblclick', editSection);
+            };
+
             var initSection = function() {
                 initConfig();
                 initSectionMenu();
                 bindListeners();
+                initEditableBody();
             };
 
             initSection();

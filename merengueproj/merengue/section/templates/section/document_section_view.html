@@ -32,7 +32,7 @@
   </div>
   </div>
 
-  <div class="document-section-body">
+  <div class="document-section-body{% ifcanedit user content %} document-section-body-editable" title="{% trans "Double click to edit" %}"{% endifcanedit %}">
     {% if document_section.body %}
         {{ document_section.body|safe }}
     {% else %}

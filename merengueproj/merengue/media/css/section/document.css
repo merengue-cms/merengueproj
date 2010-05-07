@@ -117,3 +117,8 @@
 .collab-translation-trigger a {
     background: url(/media/merengue/img/section/section_translate.png) no-repeat center left;
 }
+
+.document-section-body-editable-over {
+    background-color: #ffffbb;
+    cursor: pointer;
+}
