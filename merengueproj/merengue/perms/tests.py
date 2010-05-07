@@ -317,6 +317,10 @@ class PermissionTestCase(TestCase):
         result = merengue.perms.utils.grant_permission(self.role_1, "hurz", self.page_1)
         self.assertEqual(result, False)
 
+        # Add for all objects
+        result = merengue.perms.utils.grant_permission(self.role_1, self.permission)
+        self.assertEqual(result, True)
+
     def test_remove_permission(self):
         """
         """
@@ -325,11 +329,27 @@ class PermissionTestCase(TestCase):
         self.assertEqual(result, True)
 
         # Remove
-        result = merengue.perms.utils.remove_permission(self.page_1, self.role_1, "view_perm")
+        result = merengue.perms.utils.remove_permission(self.role_1, "view_perm", self.page_1)
         self.assertEqual(result, True)
 
         # Remove again
-        result = merengue.perms.utils.remove_permission(self.page_1, self.role_1, "view_perm")
+        result = merengue.perms.utils.remove_permission(self.role_1, "view_perm", self.page_1)
+        self.assertEqual(result, False)
+
+        # Add permission for all contents
+        result = merengue.perms.utils.grant_permission(self.role_1, "view_perm")
+        self.assertEqual(result, True)
+
+        # Not allowed to remove Object-level permissions if role has global permissions
+        result = merengue.perms.utils.remove_permission(self.role_1, "view_perm", self.page_1)
+        self.assertEqual(result, False)
+
+        # Remove permission for all contents
+        result = merengue.perms.utils.remove_permission(self.role_1, "view_perm")
+        self.assertEqual(result, True)
+
+        # Remove again
+        result = merengue.perms.utils.remove_permission(self.role_1, "view_perm")
         self.assertEqual(result, False)
 
     def test_has_permission_role(self):
@@ -344,7 +364,75 @@ class PermissionTestCase(TestCase):
         result = merengue.perms.utils.has_permission(self.page_1, self.user, "view_perm")
         self.assertEqual(result, True)
 
-        result = merengue.perms.utils.remove_permission(self.page_1, self.role_1, "view_perm")
+        result = merengue.perms.utils.remove_permission(self.role_1, "view_perm", self.page_1)
+        self.assertEqual(result, True)
+
+        result = merengue.perms.utils.has_permission(self.page_1, self.user, "view_perm")
+        self.assertEqual(result, False)
+
+    def test_has_permission_all_content(self):
+
+        # Add individual permission
+        result = merengue.perms.utils.grant_permission(self.role_1, self.permission, self.page_1)
+        self.assertEqual(result, True)
+
+        # Add global perimission
+        result = merengue.perms.utils.grant_permission(self.role_1, self.permission)
+        self.assertEqual(result, True)
+
+        result = merengue.perms.utils.has_permission(self.page_1, self.user, "view_perm")
+        self.assertEqual(result, True)
+
+        result = merengue.perms.utils.has_permission(self.page_2, self.user, "view_perm")
+        self.assertEqual(result, True)
+
+        # Remove individual permission
+        result = merengue.perms.utils.remove_permission(self.role_1, self.permission, self.page_1)
+        self.assertEqual(result, True)
+
+        # Try individual permission
+        result = merengue.perms.utils.remove_permission(self.role_1, self.permission, self.page_2)
+        self.assertEqual(result, False)
+
+        result = merengue.perms.utils.has_permission(self.page_1, self.user, "view_perm")
+        self.assertEqual(result, True)
+
+        result = merengue.perms.utils.has_permission(self.page_2, self.user, "view_perm")
+        self.assertEqual(result, True)
+
+        # Remove global permission
+        result = merengue.perms.utils.remove_permission(self.role_1, self.permission)
+        self.assertEqual(result, True)
+
+        result = merengue.perms.utils.has_permission(self.page_1, self.user, "view_perm")
+        self.assertEqual(result, False)
+
+        result = merengue.perms.utils.has_permission(self.page_2, self.user, "view_perm")
+        self.assertEqual(result, False)
+
+        # Add global perimission
+        result = merengue.perms.utils.grant_permission(self.role_1, self.permission)
+        self.assertEqual(result, True)
+
+        # Add individual permission
+        result = merengue.perms.utils.grant_permission(self.role_1, self.permission, self.page_1)
+        self.assertEqual(result, True)
+
+        result = merengue.perms.utils.has_permission(self.page_1, self.user, "view_perm")
+        self.assertEqual(result, True)
+
+        result = merengue.perms.utils.has_permission(self.page_2, self.user, "view_perm")
+        self.assertEqual(result, True)
+
+        # Remove individual permission
+        result = merengue.perms.utils.remove_permission(self.role_1, self.permission, self.page_1)
+        self.assertEqual(result, True)
+
+        result = merengue.perms.utils.has_permission(self.page_1, self.user, "view_perm")
+        self.assertEqual(result, True)
+
+        # Remove global permission
+        result = merengue.perms.utils.remove_permission(self.role_1, self.permission)
         self.assertEqual(result, True)
 
         result = merengue.perms.utils.has_permission(self.page_1, self.user, "view_perm")

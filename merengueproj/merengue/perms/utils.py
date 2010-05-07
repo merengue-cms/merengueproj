@@ -261,6 +261,7 @@ def grant_permission(role, permission, obj=None):
 
     if obj:
         ct = ContentType.objects.get_for_model(obj)
+
     try:
         ObjectPermission.objects.get(role=role, content=obj, permission=permission)
     except ObjectPermission.DoesNotExist:
@@ -269,7 +270,7 @@ def grant_permission(role, permission, obj=None):
     return True
 
 
-def remove_permission(obj, role, permission):
+def remove_permission(role, permission, obj=None):
     """Removes passed permission from passed role and object. Returns True if
     the permission has been removed.
 
@@ -277,6 +278,7 @@ def remove_permission(obj, role, permission):
 
     obj
         The content object for which a permission should be removed.
+        If obj is None, the permissions should be removed for all contents.
 
     role
         The role for which a permission should be removed.
@@ -291,7 +293,8 @@ def remove_permission(obj, role, permission):
         except Permission.DoesNotExist:
             return False
 
-    ct = ContentType.objects.get_for_model(obj)
+    if obj:
+        ct = ContentType.objects.get_for_model(obj)
 
     try:
         op = ObjectPermission.objects.get(role=role, content=obj, permission = permission)

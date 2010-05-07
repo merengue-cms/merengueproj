@@ -102,7 +102,6 @@ Granting a permission to all contents
 
 .. code-block:: python
 
-    >>> from merengue.perms.utils import grant_permission
     >>> grant_permission(editor, 'vote')
 
 Checking permissions
@@ -113,6 +112,22 @@ Checking permissions
     >>> from merengue.perms.utils import has_permission
     >>> has_permission(content, staff_user, 'vote')
     True
+
+Removing a permission to a content
+----------------------------------
+
+.. code-block:: python
+
+    >>> from merengue.perms.utils import remove_permission
+    >>> remove_permission(editor, 'vote', content)
+
+Removing a permission to all contents
+----------------------------------
+
+.. code-block:: python
+
+    >>> remove_permission(editor, 'vote')
+
 
 Local roles
 -----------
