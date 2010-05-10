@@ -56,6 +56,26 @@ In your project ``urls.py`` file, merengue URLs are included as follows:
 
 You can override this settings if you prefer other prefix than ``cms``.
 
+CACHE_BACKEND
+-------------
+
+Default: ``johnny.backends.locmem:///'``
+
+``CACHE_BACKEND`` is not a Merengue settings but a `Django one`_, but we mention
+that settings because Merengue uses `Johnny Cache`_ as smart caching manager.
+
+This implies you have to prepend ``johnny.backends.`` to your project caching
+backends in order to get it works with ``johnny-cache`` (see
+`Johnny Cache backends`_). Example:
+
+.. code-block:: python
+
+    CACHE_BACKEND = 'johnny.backends.memcached://127.0.0.1:11211/'
+
+.. _Django one: http://docs.djangoproject.com/en/1.1/ref/settings/#cache-backend
+.. _Johnny Cache: http://packages.python.org/johnny-cache/
+.. _Johnny Cache backends: http://packages.python.org/johnny-cache/backends.html
+
 TINYMCE_EXTRA_MEDIA
 -------------------
 
@@ -73,6 +93,5 @@ You need include all media without ``MEDIA_URL`` prefix. This is an example:
         'js': [],
         'css': ['themes/yourtheme/css/layout.css'],
     }
-
 
 (( to be completed ))

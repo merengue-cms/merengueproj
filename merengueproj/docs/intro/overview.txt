@@ -10,14 +10,18 @@ fast and with clean and reusable code, using our preferred web framework.
 
 For achieving that, we have:
 
- * Take conventions that are not possible in Django, because you are building
-   CMS's and not generic web applications. Thanks to these conventions we can
-   make merengue skinnable.
+ * Taked conventions that are not possible in Django, because with Merengue you
+   are building CMS sites and not generic web applications. For example, thanks
+   to these conventions we can make Merengue skinnable.
 
- * Build a pluggable system that allows plugins create new models, handle URLs,
+ * Created both a complete API for managing content and a poweful out-of-the-box
+   CMS with all basic needed of any CMS site (permissions, theming, plugins,
+   actions, etc.).
+
+ * Built a pluggable system that allows plugins create new models, handle URLs,
    defining content or site actions, blocks, creates custom admin zones, etc.
 
- * Creates a default data model with all needed to allow content management.
+ * Created a default data model with all needed to allow content management.
    You can inherits some of these models in your plugins to create new content
    types.
 
@@ -51,7 +55,7 @@ Some of those models are:
 
  * Base content, that will be inherits by all managed content types (news
    items, events, documents, forums, etc.). Those content types will share all
-   merengue CMS features (workflow, featured admin interface, permissions, etc.).
+   Merengue CMS features (workflow, featured admin interface, permissions, etc.).
  
  * Sections, that will be used to divide your site into several parts, that
    could be managed by different groups of users.
@@ -71,7 +75,7 @@ A pluggable system definition depends on ``plugin`` concept. For Merengue, a
 ``plugin`` is a thing that is developed by somene and can be installed without
 changing a line of code.
 
-In that sense, when you install a plugin, merengue will (among other things):
+In that sense, when you install a plugin, Merengue will (among other things):
 
  * Synchronize plugin data models.
 
@@ -112,7 +116,10 @@ GIS integrated
 Out-of-the-box caching
 ----------------------
 
-(( to be completed ))
+Merengue uses `Johnny Cache`_ to cache all SQL sentences in a smart way. With
+this integration you can forgot about queryset caching and invalidation.
+
+.. _Johnny Cache: http://packages.python.org/johnny-cache/
 
 Theming
 -------
@@ -149,17 +156,39 @@ and half a WYSYWYG interface (for example to manage blocks layout).
 
 * **Content management**
 
+Merengue allow manager to creates any content
+
 (( to be completed ))
 
 * **Theme management**
 
 (( to be completed ))
 
-* **Block reordering**
+* **Visual block reordering**
 
 (( to be completed ))
 
 * **Plugin management**
+
+(( to be completed ))
+
+Some other cool features
+------------------------
+
+* **Collaborative edition**
+
+(( to be completed ))
+
+* **Translation tools**
+
+(( to be completed. Transhette, inlinetrans, transmeta. Put a screenshot 
+   of inlinetrans and other from document section translation ))
+
+* **South integrated**
+
+(( to be completed ))
+
+* **South integrated**
 
 (( to be completed ))
 
