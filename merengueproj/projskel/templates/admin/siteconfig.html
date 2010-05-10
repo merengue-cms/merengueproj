@@ -1,37 +1,58 @@
 {% extends "admin/base_site.html" %}
-{% load i18n %}
+{% load i18n adminmedia %}
 
 {% block extrahead %}
     {{ block.super }}
-    <link href="/media_admin/css/forms.css" type="text/css" rel="stylesheet">
+    <link href="{% admin_media_prefix %}css/base.css" type="text/css" rel="stylesheet">
+    <link href="{% admin_media_prefix %}css/forms.css" type="text/css" rel="stylesheet">
+    <style type="text/css">
+     fieldset {
+        border: none;
+     }
+    </style>
 {% endblock %}
 
 
 {% block title %}
-    {% trans "Advanced Report" %} {{ block.super }}
+    {% trans "Save/restore configuration" %} {{ block.super }}
 {% endblock %}
 
 {% block breadcrumbs %}{% if not is_popup %}
 <div class="breadcrumbs">
      <a href="../">{% trans "Home" %}</a> &rsaquo;
-     {% trans "Report Form" %}
+     {% trans "Save / Restore config" %}
 </div>
 {% endif %}{% endblock %}
 
 {% block content %}
     {{ block.super }}
     <h1>{% trans "Save/Restore configuration" %}</h1>
-        <div id="content-main">
-            <form enctype="multipart/form-data" method="post" action=".">
-                {{ form.as_django_admin }}
-            <div class="submit-row">
-                <input type="Submit" value="{% trans 'Submit config' %}" />
-            </div>
-            </form>
-            <form method="get" action="save">
-            <div class="submit-row">
-                <input type="Submit" value="{% trans 'Save actual config' %}" />
-            </div>
-            </form>
-        </div>
+    <div id="content-main">
+        <form enctype="multipart/form-data" method="post" action=".">
+            <fieldset class="module">
+              <h2>{% trans 'Upload saved configuration' %}</h2>
+              <div class="form-row"> {% trans 'Upload and restore a .zip file containing a saved Merengue configuration' %} </div>
+              <div class="form-row">
+                
+                {{ form.as_div }}
+                <input type="submit" name="_submit" class="default" value="{% trans 'Submit config' %}" />
+              </div>
+            </fieldset>
+        </form>
+
+        <div class="module aligned"></div>
+
+        <form method="get" action="save">
+            <fieldset class="module">
+                <h2>{% trans 'Save actual configuration' %}</h2>
+                <div class="form-row"> {% trans 'Save actual Merengue configuration into a .zip file that can be restored' %} </div>
+                <div class="form-row">
+                <input type="submit" name="_save" class="default" value="{% trans 'Save actual config' %}" />
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
 {% endblock %}
+
+

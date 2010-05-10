@@ -1,10 +1,10 @@
 import zipfile
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from merengue.base.forms import FormAdminDjango
+from merengue.base.forms import BaseForm
 
 
-class UploadConfigForm(forms.Form, FormAdminDjango):
+class UploadConfigForm(BaseForm):
     zipfile = forms.FileField(label=_("Select a .zip file:"))
 
     def clean_zipfile(self):
