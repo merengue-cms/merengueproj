@@ -2,6 +2,7 @@
 html { background:#092e20;}
 body { 
 	font-size:13px;
+	line-height: 19px;
 	font-family:'HelveticaNeue-UltraLight','Helvetica Neue UltraLight','Helvetica Neue',Arial,Helvetica,sans-serif;
 	font-weight: 100;
 	background:url(merengue_bg.jpg) repeat #e6d8c0; 
@@ -75,8 +76,13 @@ a.reference em { font-style: normal; }
 
 /*** sidebar ***/
 #sidebar div.sphinxsidebarwrapper { font-size:1.1em; margin-right: 10px; }
+a.sphinxsidebarwrapper h3 {
+	font-weight: 100;
+}
 #sidebar h3, #sidebar h4 { 
-	color: #917250; margin-left: 10px;
+	color: #917250; 
+	font-weight: 100;
+	margin-bottom: 0.5em;
 	}
 #sidebar a { color: white; }
 #sidebar ul ul { margin-top:0; margin-bottom:0; }
@@ -159,7 +165,7 @@ h2 {
 	}
 h3 { 
 	font-size:160%; 
-	margin-bottom:.2em; 
+	padding-bottom:.2em; 
 	color:#917250; 
 	border-bottom: 1px dotted;
 	}
@@ -167,10 +173,9 @@ h4 { font-size:125%; font-weight:bold; margin-top:1.5em; margin-bottom:3px; }
 div.figure { text-align: center; }
 div.figure p.caption { font-size:1em; margin-top:0; margin-bottom:1.5em; color: #555;}
 hr { color:#ccc; background-color:#ccc; height:1px; border:0; }
-p, ul, dl { 
-	margin-top:.6em; 
-	margin-bottom:1em; 
-	padding-bottom: 0.1em;
+p, dl { 
+	margin: 0.6em 0 0 0; 
+	letter-spacing: 1px;
 	}
 #yui-main div.yui-b img { max-width: 50em; margin-left: auto; margin-right: auto; display: block; }
 caption { font-size:1em; font-weight:bold; margin-top:0.5em; margin-bottom:0.5em; margin-left: 2px; text-align: center; }
@@ -180,7 +185,10 @@ em { font-style: italic; }
 ins { font-weight: bold; text-decoration: none; }
 
 /*** lists ***/
-ul { padding-left:30px; }
+ul { 
+	padding-left:30px; x
+	font-size: 12px;
+	}
 ol { padding-left:30px; }
 ol.arabic li { list-style-type: decimal; }
 ul li { 
