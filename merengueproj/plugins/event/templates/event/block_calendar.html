@@ -31,6 +31,23 @@
 
 <script language="javascript" >
 ;(function($) {
+    function bind_days_tooltip ()
+    {
+        $('.calendarEventDay').each(function() {
+            var title = $(this).attr("title");
+            $(this).attr("title", "");
+            $(this).qtip({ content: title,
+            hide: {fixed: true},
+            position: {
+               corner: {
+                  target: 'topMiddle',
+                  tooltip: 'bottomMiddle'
+               }
+            },
+            style: {border: {color: "{{ calendar_tooltip_color }}"}, tip: 'bottomMiddle'}
+            });
+        });
+    }
     $(document).ready(function() {
         var datepickerOptions, eventDate;
         eventDate = {};
@@ -86,21 +103,6 @@
         bind_days_tooltip();
         $('#datepicker-loading').hide();
     });
-
-    function bind_days_tooltip ()
-    {
-        $('.calendarEventDay[title]').qtip({
-            position: {
-               corner: {
-                  target: 'topMiddle',
-                  tooltip: 'bottomMiddle'
-               }
-            },
-            hide: {fixed: true},
-            style: {border: {radius: 5, color: "{{ calendar_tooltip_color }}"}, tip: 'bottomMiddle'},
-        });
-    }
-
 })(jQuery);
 </script>
 
