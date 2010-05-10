@@ -76,9 +76,6 @@ a.reference em { font-style: normal; }
 
 /*** sidebar ***/
 #sidebar div.sphinxsidebarwrapper { font-size:1.1em; margin-right: 10px; }
-a.sphinxsidebarwrapper h3 {
-	font-weight: 100;
-}
 #sidebar h3, #sidebar h4 { 
 	color: #917250; 
 	font-weight: 100;
