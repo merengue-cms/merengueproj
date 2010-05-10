@@ -8,6 +8,7 @@ from merengue.registry.signals import item_registered, item_unregistered
 
 
 def is_registered(item_class):
+    """ Returns if a class is registered as RegisteredItem """
     try:
         RegisteredItem.objects.get_by_item(item_class)
     except ObjectDoesNotExist:
@@ -16,8 +17,18 @@ def is_registered(item_class):
         return True
 
 
+def is_broken(registered_item):
+    """ Returns if registered item is broken (not exist in file system) """
+    try:
+        registered_item.get_registry_item_class()
+    except ImportError:
+        return True
+    else:
+        return False
+
+
 def register(item_class, activate=False):
-    """ register a item in the registry """
+    """ Register a item in the registry """
     # all process will be in a unique transaction, we don't want to get
     # half committed
     sid = transaction.savepoint()

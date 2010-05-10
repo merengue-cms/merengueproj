@@ -1,0 +1,11 @@
+{% extends "admin/change_form.html" %}
+
+{% load i18n%}
+
+{% block form_top %}
+  {% if is_broken %}
+  <p class="errornote">
+    <strong>{% trans "This item is broken. You cannot edit this object until problem was fixed" %}</strong>
+  </p>
+  {% endif %}
+{% endblock %}

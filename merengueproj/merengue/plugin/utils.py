@@ -20,6 +20,7 @@ from merengue import registry
 from merengue.base.adminsite import site
 from merengue.base.models import BaseContent
 from merengue.multimedia.admin import register_related_multimedia
+from merengue.plugin.exceptions import ActivePluginBroken
 from merengue.registry.items import (NotRegistered as NotRegisteredItem,
                             AlreadyRegistered as AlreadyRegisteredItem)
 from merengue.section.models import Section
@@ -120,9 +121,20 @@ def find_plugin_urls(plugin_name):
         yield (index, plugin_url)
 
 
+def is_plugin_broken(plugin_name):
+    """ Returns if plugin is broken (not exist in file system) """
+    if get_plugin_config(plugin_name, prepend_plugins_dir=False):
+        return False
+    else:
+        return True
+
+
 def enable_plugin(plugin_name, register=True):
     from merengue.plugin import PLUG_CACHE_KEY
     from merengue.base.admin import register_app
+    if is_plugin_broken(plugin_name):
+        raise ActivePluginBroken("'%s' plugin is an active plugin that is broken. Please check this \
+plugin is correctly installed in plugins directory." % plugin_name)
     cache.delete(PLUG_CACHE_KEY)
     add_to_installed_apps(plugin_name)
     if register:

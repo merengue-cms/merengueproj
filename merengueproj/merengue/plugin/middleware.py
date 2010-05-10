@@ -16,7 +16,7 @@ class ActivePluginsMiddleware(object):
                                              get_plugin_module_name)
             from merengue.plugin.models import RegisteredPlugin
             # enable active plugins
-            active_plugins = RegisteredPlugin.objects.actives()
+            active_plugins = RegisteredPlugin.objects.with_brokens().actives().cleaning_brokens()
             plugin_names = [get_plugin_module_name(p.directory_name)
                             for p in active_plugins]
             for plugin_name in plugin_names:
@@ -28,7 +28,7 @@ class ActivePluginsMiddleware(object):
                 translation.deactivate()
                 translation.activate(lang)
             # deactivate inactive plugins
-            inactive_plugins = RegisteredPlugin.objects.inactives()
+            inactive_plugins = RegisteredPlugin.objects.inactives().cleaning_brokens()
             for plugin in inactive_plugins:
                 plugin_name = get_plugin_module_name(plugin.directory_name)
                 disable_plugin(plugin_name, unregister=True)

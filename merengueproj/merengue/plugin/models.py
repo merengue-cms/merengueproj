@@ -38,7 +38,7 @@ class RegisteredPlugin(RegisteredItem):
 
 
 def install_plugin_signal(sender, instance, **kwargs):
-    if instance.directory_name:
+    if instance.directory_name and not instance.broken:
         app_name = get_plugin_module_name(instance.directory_name)
         install_plugin(instance, app_name)
 signals.post_save.connect(install_plugin_signal, sender=RegisteredPlugin)

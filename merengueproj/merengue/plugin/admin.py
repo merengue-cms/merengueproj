@@ -9,10 +9,12 @@ from merengue.registry.admin import RegisteredItemAdmin
 
 
 class RegisteredPluginAdmin(RegisteredItemAdmin):
+    change_list_template = 'admin/plugin/plugin_change_list.html'
     readonly_fields = RegisteredItemAdmin.readonly_fields + ('name',
         'description', 'version', 'timestamp', 'directory_name')
     list_display = ('name', 'directory_name', 'installed', 'active',
                     'required_apps', 'required_plugins')
+    ordering = ('broken', )
 
     def get_form(self, request, obj=None):
         form = super(RegisteredPluginAdmin, self).get_form(request, obj)

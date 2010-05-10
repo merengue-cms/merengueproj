@@ -13,6 +13,7 @@ class RegisteredItem(models.Model):
     module = models.CharField(max_length=200, db_index=True)
     category = models.CharField(max_length=100, db_index=True)
     active = models.BooleanField(default=False)
+    broken = models.BooleanField(default=False, editable=False)
     order = models.IntegerField(_("Order"), blank=True, null=True)
     config = ConfigField()
 
