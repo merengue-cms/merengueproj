@@ -7,14 +7,25 @@ body {
 	background:url(merengue_bg.jpg) repeat #e6d8c0; 
 	color: white;
 	}
-#custom-doc { width:76.54em;*width:74.69em;min-width:995px; max-width:100em; margin:auto; text-align:left; padding-top:16px; margin-top:0;} 
+#custom-doc { 
+	width:76.54em;
+	*width:74.69em;
+	min-width:995px; 
+	max-width:100em; 
+	margin:auto; 
+	text-align:left; 
+	padding-top:16px; 
+	margin-top:0;
+	background:transparent url(inner_logo.jpg) no-repeat 670px top;
+	} 
+
 #hd { 
 	padding: 4px 0 12px 0; 
 	font-family:'HelveticaNeue-UltraLight','Helvetica Neue UltraLight','Helvetica Neue',Arial,Helvetica,sans-serif;
-	font-weight: 100;
+	font-weight: 100; 
 	}
 #hd h1 {
-	padding: 0.2em 0 1em 0;
+	padding: 1em 0 1.5em 0;
 }
 #bd #yui-main {
 	background: transparent url(doc_bg.png) no-repeat top right;
@@ -74,15 +85,20 @@ a.reference em { font-style: normal; }
 /*** nav ***/
 div.nav { 
 	margin: 0; 
-	font-size: 14px; 
 	text-align: right; 
 	color: #938B82;
 	}
 div.nav a:hover{
 	background-color:#FCF9E8;
 }
-#hd div.nav { margin-top: -27px; }
-#ft div.nav { margin-bottom: -18px; }
+#hd div.nav { 
+	margin: -32px 338px 0 0;
+	font-size: 12px; 
+	}
+#ft div.nav { 
+	margin-bottom: -18px; 
+	margin-right: 338px;
+	}
 #hd h1 a { 
 	color: #917250; 
 	font-family:'HelveticaNeue-UltraLight','Helvetica Neue UltraLight','Helvetica Neue',Arial,Helvetica,sans-serif;
