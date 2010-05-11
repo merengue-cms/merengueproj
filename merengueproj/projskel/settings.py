@@ -42,8 +42,6 @@ LANGUAGES = (
     ('fr', ugettext('Français')),
 )
 
-TRANSMETA_DEFAULT_LANGUAGE = 'es'
-
 SITE_ID = 1
 SITE_REGISTER_ID = 2
 
