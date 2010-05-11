@@ -30,7 +30,7 @@ if settings.USE_GIS:
 from south.modelsinspector import add_introspection_rules
 from south.signals import pre_migrate, post_migrate
 from stdimage import StdImageField
-from transmeta import TransMeta
+from transmeta import TransMeta, get_fallback_fieldname
 from tagging.fields import TagField
 
 from merengue.base.managers import BaseContentManager, WorkflowManager
@@ -80,7 +80,7 @@ class ContactInfo(models.Model):
 class BaseCategory(models.Model):
     __metaclass__ = TransMeta
     name = models.CharField(verbose_name=_('name'), max_length=200)
-    slug = AutoSlugField(verbose_name=_('slug'), autofromfield='name_es',
+    slug = AutoSlugField(verbose_name=_('slug'), autofromfield=get_fallback_fieldname('name'),
                          max_length=200, db_index=True, editable=False)
 
     class Meta:
@@ -119,7 +119,7 @@ class Base(models.Model):
     class Meta:
         abstract = True
         translate = ('name', 'description', 'plain_description', )
-        ordering = ('name_es', )
+        ordering = (get_fallback_fieldname('name'), )
 
     def __unicode__(self):
         return self.name or ugettext('Without name')
@@ -322,7 +322,7 @@ class BaseContent(BaseClass):
             ("can_change_main_image", "Can edit main image field"),
             ("can_change_map_icon", "Can edit map icon field"),
         )
-        ordering = ('name_es', )
+        ordering = (get_fallback_fieldname('name'), )
         #content_view_template = 'content_view.html' # default definition by BaseContentMeta metaclass
 
     @classmethod

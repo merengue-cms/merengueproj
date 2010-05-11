@@ -7,6 +7,8 @@ import random
 from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand
 
+from transmeta import get_fallback_fieldname
+
 
 class Command(BaseCommand):
     help = (u"Create example tv contents")
@@ -30,9 +32,9 @@ class Command(BaseCommand):
 
         print "Creating channels...",
         for name, slug in self.channels:
-            (channel, created) = Channel.objects.get_or_create(name_es=name)
+            (channel, created) = Channel.objects.get_or_create(slug=slug)
             if created:
-                channel.slug = slug
+                setattr(channel, get_fallback_fieldname('name'), name)
                 channel.status = 'published'
                 channel.save()
         print "DONE"

@@ -34,7 +34,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from cmsutils.forms.widgets import AJAXAutocompletionWidget
 from transmeta import (canonical_fieldname, get_all_translatable_fields,
-                       get_real_fieldname_in_each_language)
+                       get_real_fieldname_in_each_language,
+                       get_fallback_fieldname)
 
 from merengue.base.adminsite import site
 from merengue.base.forms import AdminBaseContentOwnersForm
@@ -477,8 +478,8 @@ class BaseAdmin(admin.ModelAdmin):
 
 
 class BaseCategoryAdmin(BaseAdmin):
-    ordering = ('name_es', )
-    search_fields = ('name_es', )
+    ordering = (get_fallback_fieldname('name'), )
+    search_fields = (get_fallback_fieldname('name'), )
 
 
 class WorkflowBatchActionProvider(object):
@@ -554,7 +555,7 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
     filter_horizontal = ('owners', )
     edit_related = ()
     html_fields = ('description', )
-    prepopulated_fields = {'slug': ('name_es', )}
+    prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
     autocomplete_fields = {'tags': {'url': '/ajax/autocomplete/tags/base/basecontent/',
                                     'multiple': True,
                                     'multipleSeparator': " ",

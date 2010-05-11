@@ -19,7 +19,7 @@ from merengue.base.models import Base, BaseContent
 from merengue.section.managers import SectionManager
 from merengue.viewlet.models import RegisteredViewlet
 from searchform.registry import search_form_registry
-from transmeta import TransMeta
+from transmeta import TransMeta, get_fallback_fieldname
 
 
 class RealInstanceMixin(object):
@@ -534,9 +534,9 @@ def create_menus(sender, **kwargs):
     if created:
         menu_name = 'Main menu of %s' % unicode(instance)
         instance.main_menu = Menu.objects.create(
-            name_es=menu_name,
             slug=defaultfilters.slugify(menu_name),
         )
+        setattr(instance, get_fallback_fieldname('name'), menu_name)
         instance.save()
 
 post_save.connect(create_menus, sender=Section, dispatch_uid='SectionMenusSignalDispatcher')

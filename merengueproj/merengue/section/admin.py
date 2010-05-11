@@ -6,6 +6,8 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
+from transmeta import get_fallback_fieldname
+
 from merengue.base.admin import BaseAdmin, BaseContentAdmin, RelatedModelAdmin, \
                                 BaseOrderableAdmin, OrderableRelatedModelAdmin
 from merengue.base.admin import set_field_read_only
@@ -24,7 +26,7 @@ class BaseSectionAdmin(BaseOrderableAdmin):
     list_display_links = ('name', )
     html_fields = ()
     removed_fields = ('description', )
-    prepopulated_fields = {'slug': ('name_es', )}
+    prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(BaseSectionAdmin, self).get_form(request, obj, **kwargs)
@@ -100,7 +102,7 @@ class DocumentAdmin(BaseContentAdmin):
     list_display = ('name', 'slug', 'status', )
     list_filter = ('status', )
     html_fields = ('description', 'body', )
-    prepopulated_fields = {'slug': ('name_es', )}
+    prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
     actions = BaseAdmin.actions + ['set_as_published', 'set_as_draft']
 
 
@@ -227,7 +229,7 @@ class ViewletLinkInline(BaseLinkInline):
 class MenuAdmin(BaseAdmin):
     list_display = ('level', 'display_move_to', 'name', 'slug', )
     list_display_links = ('name', )
-    prepopulated_fields = {'slug': ('name_es', )}
+    prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
     ordering=('lft', )
     actions = []
     inherit_actions = False
@@ -361,7 +363,7 @@ class PortalMenuAdmin(MenuAdmin):
 
 class AppSectionAdmin(BaseSectionAdmin):
     list_display = ('name', 'slug', 'app_name')
-    prepopulated_fields = {'slug': ('name_es', )}
+    prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
     actions = []
     actions_on_top = False
     actions_on_bottom = False
