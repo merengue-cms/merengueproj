@@ -17,6 +17,7 @@
         position: relative;
     }
   </style>
+  <div id="calendar_border_color" style="display: none"></div>
 
   <div id="eventsCalendar" class="calendar">
       <div id="datepicker-loading">
@@ -31,24 +32,28 @@
 
 <script language="javascript" >
 ;(function($) {
-    function bind_days_tooltip ()
-    {
-        $('.calendarEventDay').each(function() {
-            var title = $(this).attr("title");
-            $(this).attr("title", "");
-            $(this).qtip({ content: title,
-            hide: {fixed: true},
-            position: {
-               corner: {
-                  target: 'topMiddle',
-                  tooltip: 'bottomMiddle'
-               }
-            },
-            style: {border: {color: "{{ calendar_tooltip_color }}"}, tip: 'bottomMiddle'}
-            });
-        });
-    }
     $(document).ready(function() {
+        function bind_days_tooltip ()
+        {
+            var border_color = $("#calendar_border_color").css("background-color");
+            if (border_color == "" || border_color == "transparent")
+                border_color = "#000000";
+            $('.calendarEventDay').each(function() {
+                var title = $(this).attr("title");
+                $(this).attr("title", "");
+                $(this).qtip({ content: title,
+                hide: {fixed: true},
+                position: {
+                   corner: {
+                      target: 'topMiddle',
+                      tooltip: 'bottomMiddle'
+                   }
+                },
+                style: {border: {color: border_color}, tip: 'bottomMiddle'}
+                });
+            });
+        }
+
         var datepickerOptions, eventDate;
         eventDate = {};
         {% for date, event in events_dic.items %}
@@ -105,6 +110,5 @@
     });
 })(jQuery);
 </script>
-
 {% endblock %}
 
