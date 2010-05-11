@@ -38,7 +38,7 @@
 }
 
 .collaborative-comments-folder-selector {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #cccccc;
     padding: 0px;
     margin: 0px;
     position: absolute;
@@ -62,14 +62,14 @@
 }
 
 .collaborative-comments-folder-selector ul li a {
-    border: 1px solid black;
+    border: 1px solid #CCC;
     padding: 0px 30px;
     margin-left: 10px;
 }
 
 .collaborative-comments-folder-selector ul li.selected a {
-    background: #dddddd;
-    border-bottom: 1px solid #dddddd;
+    background: #E9EFF5;
+    border-bottom: 1px solid #E9EFF5;
 }
 
 .collaborative-comments-item {
@@ -88,7 +88,7 @@
 }
 
 .collaborative-comments-folder-active {
-    background: #dddddd;
+    background: #E9EFF5;
     position: absolute;
     overflow: auto;
     top: 101px;
