@@ -235,6 +235,38 @@ Look these examples:
 
 (( to be completed. Follow with other philosophic principles ))
 
+Extensible data schema. Not hierarchical pages
+----------------------------------------------
+
+Some CMS are based in a simple data model with hierarchical pages or nodes,
+with not a semantic meaning but only data.
+
+Merengue content management is based on a extensible base model (non abstract),
+where all content types (documents, forums, news items, events, etc.)
+inheriting from that base model.
+
+So, with Merengue you can build a managed system that maps into an existent
+reality. For example, in next models we map a books authoring, and books and
+authors will be managed in Merengue, because both inherits from BaseContent:
+
+.. code-block:: python
+
+    from merengue.base.models import BaseContent
+
+    class Author(BaseContent):
+        first_name = models.CharField(max_length=100)
+        last_name = models.CharField(max_length=100)
+
+    class Book(BaseContent):
+        authors = models.ManyToManyField(Author)
+
+Plugins are not renderers
+-------------------------
+
+Plugins developed can do a lot of things... are not only place holders renderers.
+
+(( to be completed ))
+
 This is just the surface
 ========================
 
