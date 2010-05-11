@@ -35,6 +35,7 @@
 
 .collaborative-comments-main h1 {
     padding: 0px 20px 0px 40px;
+    border-bottom: 1px dotted #CCCCCC;
 }
 
 .collaborative-comments-folder-selector {
@@ -63,7 +64,7 @@
 
 .collaborative-comments-folder-selector ul li a {
     border: 1px solid #CCC;
-    padding: 0px 30px;
+    padding: 2px 30px;
     margin-left: 10px;
 }
 
@@ -146,7 +147,7 @@
 .collaborative-comments-ui textarea,
 .collaborative-comments-ui select {
     border: 1px solid gray;
-    background: #dddddd;
+    background: #FDF7D3;
 }
 
 .collaborative-comments-ui table th,
