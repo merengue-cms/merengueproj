@@ -103,8 +103,8 @@
 .collaborative-translation-ui input,
 .collaborative-translation-ui textarea,
 .collaborative-translation-ui select {
-    border: 1px solid gray;
-    background: #dddddd;
+    border: 1px solid #ccc;
+    background: #FCF8E1;
 }
 
 .collab-translation-edit-form-message {
