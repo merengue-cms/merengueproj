@@ -75,7 +75,13 @@ h2 a, h3 a, h4 a { text-decoration:none !important; }
 a.reference em { font-style: normal; }
 
 /*** sidebar ***/
-#sidebar div.sphinxsidebarwrapper { font-size:1.1em; margin-right: 10px; }
+#sidebar div.sphinxsidebarwrapper { 
+	margin-right: 10px;
+	}
+#sidebar ul.sphinxsidebarwrapper {
+	font-size: 12px; 
+	line-height: 18px;
+}
 #sidebar h3, #sidebar h4 { 
 	color: #917250; 
 	font-weight: 100;
