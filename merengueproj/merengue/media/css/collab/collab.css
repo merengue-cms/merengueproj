@@ -146,8 +146,8 @@
 .collaborative-comments-ui input,
 .collaborative-comments-ui textarea,
 .collaborative-comments-ui select {
-    border: 1px solid gray;
-    background: #FDF7D3;
+    border: 1px solid #ccc;
+    background: #FCF8E1;
 }
 
 .collaborative-comments-ui table th,
@@ -163,7 +163,7 @@
 
 .collaborative-comments-ui table {
     background: white;
-    border: 1px solid gray;
+    border: 1px solid #ccc;
     width: 100%;
     margin: 1em 0px;
     padding: 1em 0px;
