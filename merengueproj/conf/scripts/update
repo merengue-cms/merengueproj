@@ -1,8 +1,7 @@
 #!/bin/bash -e
 
 BASEDIR=/home/merengueproject
-MERENGUEDIR=$BASEDIR/merengueproject
-PROJECTDIR=$MERENGUEDIR/beta_merengue
+PROJECTDIR=$BASEDIR/merengueprojectorg
 
 function enable_virtualenv {
     echo "Activando el entorno (virtualenv)"
@@ -12,7 +11,7 @@ function enable_virtualenv {
 
 function update_code {
     echo "Actualizando el proyecto a la ultima revision"
-    cd $MERENGUEDIR
+    cd $PROJECTDIR
     svn up --username=$SVNUSERNAME --password=$SVNPASSWORD
 }
 function remove_pyc_files {
@@ -28,12 +27,13 @@ function servers_restart {
     echo "Reiniciando los servidores"
     cd $BASEDIR
     . scripts/nginxctl restart
-    . scripts/portaluma restart
+    . scripts/merengue restart
 }
 
 function update_doc {
     echo "Updating merengueproject documentacion"
     cd $BASEDIR/docs/
+    svn up --username=$SVNUSERNAME --password=$SVNPASSWORD
     touch index.txt
     make html
 }
