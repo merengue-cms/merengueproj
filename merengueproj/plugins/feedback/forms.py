@@ -17,4 +17,3 @@ class CaptchaFreeThreadedCommentForm(BaseModelForm, FreeThreadedCommentForm):
 #            captcha_field = CaptchaField()
 #            self.fields['captcha'] = captcha_field
 #            self.declared_fields['captcha'] = captcha_field
-        pass

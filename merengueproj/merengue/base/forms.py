@@ -3,12 +3,16 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.core.exceptions import FieldError
+from django.forms.forms import BoundField
 from django.forms.models import save_instance
 from django.http import HttpResponse, Http404
 from django.template import RequestContext, Template
 from django.template.loader import render_to_string
 from django.utils.datastructures import SortedDict
+from django.utils.encoding import force_unicode
+from django.utils.html import conditional_escape
 from django.utils.text import capfirst
+from django.utils.safestring import mark_safe
 from django.utils.translation import get_language
 from django.utils.translation import ugettext_lazy as _
 
@@ -75,6 +79,123 @@ class FormAdminDjango(object):
         return render_to_string('base/form_admin_django.html', {'form': self, })
 
 
+class FormRequiredFields(object):
+
+    required_css_class = 'required'
+
+    def as_table_required(self):
+        "Returns this form rendered as HTML <tr>s -- excluding the <table></table>."
+        return self._html_output_required(
+            normal_row = u'<tr%(html_class_attr)s><th>%(label)s</th><td>%(errors)s%(field)s%(help_text)s</td></tr>',
+            error_row = u'<tr><td colspan="2">%s</td></tr>',
+            row_ender = u'</td></tr>',
+            help_text_html = u'<br />%s',
+            errors_on_separate_row = False)
+
+    def as_ul_required(self):
+        "Returns this form rendered as HTML <li>s -- excluding the <ul></ul>."
+        return self._html_output_required(
+            normal_row = u'<li%(html_class_attr)s>%(errors)s%(label)s %(field)s%(help_text)s</li>',
+            error_row = u'<li>%s</li>',
+            row_ender = '</li>',
+            help_text_html = u' %s',
+            errors_on_separate_row = False)
+
+    def as_p_required(self):
+        "Returns this form rendered as HTML <p>s."
+        return self._html_output_required(
+            normal_row = u'<p%(html_class_attr)s>%(label)s %(field)s%(help_text)s</p>',
+            error_row = u'%s',
+            row_ender = '</p>',
+            help_text_html = u' %s',
+            errors_on_separate_row = True)
+
+    def css_classes(self, extra_classes=None):
+        """
+        Returns a string of space-separated CSS classes for this field.
+        """
+        if hasattr(extra_classes, 'split'):
+            extra_classes = extra_classes.split()
+        extra_classes = set(extra_classes or [])
+        if self.errors and hasattr(self.form, 'error_css_class'):
+            extra_classes.add(self.form.error_css_class)
+        if self.field.required and hasattr(self.form, 'required_css_class'):
+            extra_classes.add(self.form.required_css_class)
+        return ' '.join(extra_classes)
+
+    def _html_output_required(self, normal_row, error_row, row_ender, help_text_html, errors_on_separate_row):
+        "Helper function for outputting HTML. Used by as_table(), as_ul(), as_p()."
+        top_errors = self.non_field_errors() # Errors that should be displayed above all fields.
+        output, hidden_fields = [], []
+
+        for name, field in self.fields.items():
+            html_class_attr = ''
+            bf = BoundField(self, field, name)
+            bf_errors = self.error_class([conditional_escape(error) for error in bf.errors]) # Escape and cache in local variable.
+            if bf.is_hidden:
+                if bf_errors:
+                    top_errors.extend([u'(Hidden field %s) %s' % (name, force_unicode(e)) for e in bf_errors])
+                hidden_fields.append(unicode(bf))
+            else:
+                # Create a 'class="..."' atribute if the row should have any
+                # CSS classes applied.
+                html_class_attr = ''
+                if field.required:
+                    html_class_attr = ' class="%s"' % self.required_css_class
+
+                if errors_on_separate_row and bf_errors:
+                    output.append(error_row % force_unicode(bf_errors))
+
+                if bf.label:
+                    label = conditional_escape(force_unicode(bf.label))
+                    # Only add the suffix if the label does not end in
+                    # punctuation.
+                    if self.label_suffix:
+                        if label[-1] not in ':?.!':
+                            label += self.label_suffix
+                    label = bf.label_tag(label) or ''
+                else:
+                    label = ''
+
+                if field.help_text:
+                    help_text = help_text_html % force_unicode(field.help_text)
+                else:
+                    help_text = u''
+
+                output.append(normal_row % {
+                    'errors': force_unicode(bf_errors),
+                    'label': force_unicode(label),
+                    'field': unicode(bf),
+                    'help_text': help_text,
+                    'html_class_attr': html_class_attr,
+                })
+
+        if top_errors:
+            output.insert(0, error_row % force_unicode(top_errors))
+
+        if hidden_fields: # Insert any hidden fields in the last row.
+            str_hidden = u''.join(hidden_fields)
+            if output:
+                last_row = output[-1]
+                # Chop off the trailing row_ender (e.g. '</td></tr>') and
+                # insert the hidden fields.
+                if not last_row.endswith(row_ender):
+                    # This can happen in the as_p() case (and possibly others
+                    # that users write): if there are only top errors, we may
+                    # not be able to conscript the last row for our purposes,
+                    # so insert a new, empty row.
+                    last_row = (normal_row % {'errors': '', 'label': '',
+                                              'field': '', 'help_text': '',
+                                              'html_class_attr': html_class_attr})
+                    output.append(last_row)
+                output[-1] = last_row[:-len(row_ender)] + str_hidden + row_ender
+            else:
+                # If there aren't any rows in the output, just append the
+                # hidden fields.
+                output.append(str_hidden)
+        return mark_safe(u'\n'.join(output))
+
+
 class FormTabs(object):
     """
     Abstract class implemented to provide form with tabs like
@@ -106,7 +227,7 @@ class FormTabs(object):
         return render_to_string('base/formtabs.html', {'form': self, })
 
 
-class BaseForm(forms.Form):
+class BaseForm(forms.Form, FormRequiredFields):
     fieldsets = ()
     two_columns_fields = ()
     three_columns_fields = ()
@@ -127,7 +248,7 @@ class BaseForm(forms.Form):
     as_div = _as_div
 
 
-class BaseModelForm(forms.ModelForm, FormAdminDjango):
+class BaseModelForm(forms.ModelForm, FormAdminDjango, FormRequiredFields):
     fieldsets = ()
     two_columns_fields = ()
     three_columns_fields = ()

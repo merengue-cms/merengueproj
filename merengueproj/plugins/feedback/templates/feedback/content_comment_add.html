@@ -4,7 +4,7 @@
     {% else %} action="{% url comment_add content_type_id,content_id %}" 
     {% endif %}>
     <ul>
-        {{ form.as_ul }}
+        {{ form.as_ul_required }}
     </ul>
     <div class="submitline">
        <input class="submit" type="submit" value="{% trans "Submit Comment" %}"/>
