@@ -475,7 +475,7 @@ def reset(obj):
 # Registering ################################################################
 
 
-def register_permission(name, codename, ctypes=None, for_models=None, builtin=False):
+def register_permission(name, codename, for_models=None, ctypes=None, builtin=False):
     """Registers a permission to the framework. Returns the permission if the
     registration was successfully, otherwise False.
 
@@ -487,12 +487,12 @@ def register_permission(name, codename, ctypes=None, for_models=None, builtin=Fa
         codename
             The unique codename of the permission. This is used internally to
             identify the permission.
-        ctypes
-            The content type for which the permission is active. This can be
-            used to display only reasonable permissions for an object.
         for_models
             It's complementary to The models for which the permission is active.
             This can be used to display only reasonable permissions for an object.
+        ctypes
+            The content type for which the permission is active. This can be
+            used to display only reasonable permissions for an object.
         builtin
             A builtin permission will appears in the manage permission view of
             every content. Will be False by default.

@@ -24,6 +24,7 @@ from merengue.plugin.exceptions import ActivePluginBroken
 from merengue.registry.items import (NotRegistered as NotRegisteredItem,
                             AlreadyRegistered as AlreadyRegisteredItem)
 from merengue.section.models import Section
+from merengue.perms.utils import register_permission, unregister_permission
 
 
 def install_plugin(instance, app_name):
@@ -146,6 +147,7 @@ plugin is correctly installed in plugins directory." % plugin_name)
         register_plugin_post_actions(plugin_name)
         register_plugin_section_models(plugin_name)
         register_plugin_in_plugin_admin_site(plugin_name)
+        register_plugin_perms(plugin_name)
     register_plugin_urls(plugin_name)
     # activate plugin in DB
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
@@ -171,6 +173,7 @@ def disable_plugin(plugin_name, unregister=True):
         unregister_plugin_viewlets(plugin_name)
         unregister_plugin_templatetags(plugin_name)
         unregister_plugin_section_models(plugin_name)
+        unregister_plugin_perms(plugin_name)
     unregister_plugin_urls(plugin_name)
     # app_directories template loader loads app_template_dirs in
     # compile time, so we have to load it again.
@@ -287,6 +290,18 @@ def register_plugin_in_plugin_admin_site(plugin_name):
         site.plugin_site.register(model, admin_model)
         if issubclass(model, BaseContent):
             register_related_multimedia(site.plugin_site, BaseContent)
+
+
+def register_plugin_perms(plugin_name):
+    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    for perm in plugin_config.get_perms():
+        register_permission(*perm)
+
+
+def unregister_plugin_perms(plugin_name):
+    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    for perm in plugin_config.get_perms():
+        unregister_permission(perm[1])
 
 
 def unregister_plugin_section_models(plugin_name):

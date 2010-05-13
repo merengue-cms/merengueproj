@@ -47,6 +47,10 @@ class Plugin(RegistrableItem):
     def get_model_admins(cls):
         return [] # to override in plugins
 
+    @classmethod
+    def get_perms(cls):
+        return [] # to override in plugins
+
 
 def register_plugin(plugin_dir):
     plugin_config = get_plugin_config(plugin_dir)
