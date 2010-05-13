@@ -1,5 +1,8 @@
 (function ($) {
-    var plus = '<img class="plusMenu" src="/media/merengue/img/section/admin/plus.gif" /><img class="minusMenu hide" src="/media/merengue/img/section/admin/minus.gif" />';
+    var plus;
+    var minus;
+    var draggable;
+    var draggable_disabled;
     var span15 = '<span class="span15">&nbsp;</span>';
     var span50 = '<span class="span50">&nbsp;</span>';
     var save_url = '/cms/sections/ajax/save_menu_order/';
@@ -18,6 +21,7 @@
         this.domelement = element;
         this.level = level;
         this.opened = false;
+        this.expand = false;
         this.parent = null;
         this.getRoot = function() {
             if (!this.parent) return this;
@@ -68,11 +72,13 @@
             element.find('.minusMenu').remove();
             element.find('.span15').remove();
             element.find('.span50').remove();
+            element.find('.draggable-icon').remove();
+            element.find('.draggable-icon-disabled').remove();
         }
         this.decorate = function() {
             var element = this.domelement;
             if (this.children.length) {
-                element.children("th").eq(0).prepend(plus);
+                element.children("th").eq(0).prepend(minus.clone()).prepend(plus.clone().show());
                 element.children("th").eq(0).css('white-space', 'nowrap');
                 element.children("th").eq(0).find('a').css('white-space', 'normal');
             } else {
@@ -88,6 +94,12 @@
             } else {
                 element.find(".minusMenu").hide();
                 element.find(".plusMenu").show();
+            }
+            element.children("th").eq(0).prepend(draggable.clone().show());
+            element.children("th").eq(0).prepend(draggable_disabled.clone());
+            if (this.expand) {
+                element.find('.plusMenu').trigger('click');
+                this.expand=false;
             }
         }
         this.closeChildren = function() {
@@ -164,6 +176,7 @@
             if (node.getLevel() < level) {
                 this.unParent();
                 node.addChild(this);
+                node.expand=true;
             } else if (node.getLevel() === level) {
                 this.moveAfter(node);
             } else if (recurse) {
@@ -283,6 +296,10 @@
     }
 
     $(document).ready(function () {
+        plus = $('.plusMenu');
+        minus = $('.minusMenu');
+        draggable = $('.draggable-icon');
+        draggable_disabled = $('.draggable-icon-disabled');
         $("#changelist table thead tr").children("th").eq(0).hide();
         $("#changelist table thead tr").children("th").eq(1).hide();
         var tree = make_tree();
@@ -290,22 +307,28 @@
         redo_table(tree);
         $('#changelist table tbody').sortable({
             items: 'tr',
-            containment: 'parent',
             tolerance: 'pointer',
             delay: 500,
             placeholder: 'row1',
+            forceHelperSize: true,
             forcePlaceholderSize: true,
+            handle: '.draggable-icon',
             over: function() {
             },
             start: function(e, ui) {
                 var current = tree.findNodeByElement(ui.item);
                 current.close();
                 ui.helper.find('.span50').remove();
+                $(this).find('.draggable-icon').hide();
+                $(this).find('.draggable-icon-disabled').show();
+                ui.helper.find('.draggable-icon').show();
+                ui.helper.find('.draggable-icon-disabled').hide();
             },
             stop: function(e, ui) {
                 var current = tree.findNodeByElement(ui.item);
                 var previous = tree.findNodeByElement(ui.item.prevAll('tr:visible').eq(0));
                 var next = tree.findNodeByElement(ui.item.nextAll('tr:visible').eq(0));
+
                 if (!previous) {
                     current.moveFirstChild(tree.root);
                 } else  {

@@ -16,4 +16,14 @@
 {% block content %}
   {{ block.super }}
   <div class="ajax-loading hide"><img src="{{ MEDIA_URL }}merengue/img/ajax-loader-admin.gif" /> {% trans "Saving" %}</span>
+  <img class="plusMenu hide" src="{{ MEDIA_URL }}merengue/img/section/admin/plus.gif" />
+  <img class="minusMenu hide" src="{{ MEDIA_URL }}merengue/img/section/admin/minus.gif" />
+  <img class="draggable-icon" style="display: none; margin-right: 1em;"
+        src="{{ MEDIA_URL }}merengue/img/draggable_1.png"
+        alt="{% trans "Click and drag to reorder" %}"
+        title="{% trans "Click and drag to reorder" %}" />
+  <img class="draggable-icon-disabled" style="display: none; margin-right: 1em;"
+        src="{{ MEDIA_URL }}merengue/img/draggable_2.png"
+        alt="{% trans "Click and drag to reorder" %}"
+        title="{% trans "Click and drag to reorder" %}" />
 {% endblock %}
