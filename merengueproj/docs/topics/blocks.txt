@@ -4,4 +4,100 @@
 Blocks
 ======
 
+Plugin tree
+-----------
+
+We know the conventional plugin tree (see :ref:`plugin development reference
+<topics-plugins-development>`). Here we emphasize the files on which we are
+going to work in this example:
+
+.. code-block:: html
+
+     /plugins/
+         |-- news/
+         |   |-- ...
+         |   |-- config.py
+         |   |-- blocks.py
+         |   `-- templates/
+         |       `-- news/
+         |           |-- block_latest.html
+         |
+         ...
+
+
+Example plugin block
+--------------------
+
+This is a ``blocks.py`` file code fragment:
+
+.. code-block:: python
+
+    from django.utils.translation import ugettext as _
+
+    from merengue.block.blocks import Block, ContentBlock
+    from plugins.news.views import get_news
+
+
+    class LatestNewsBlock(Block):
+        name = 'latestnews'
+        default_place = 'leftsidebar'
+
+        @classmethod
+        def render(cls, request, place):
+            news_list = get_news(5)
+            return cls.render_block(request, template_name='news/block_latest.html',
+                                    block_title=_('Latest news'),
+                                    context={'news_list': news_list})
+
+* ``name`` is the block name.
+* ``default_place`` indicates the place where the block will be showed by default.
+* ``render`` is a similar function to the ``render_to_response`` Django function. This function is the responsible for displaying the block.
+* ``news_list`` stores the number of news gotten by ``get_news``.
+* ``template_name`` is the full name of the block template.
+* ``block_title`` is the block title.
+* ``context`` is a dictionary of values to render the template with.
+
+
+How to render the block
+-----------------------
+
+Now we must create a template for our block inside ``block_latest.html``:
+
+.. code-block:: html+django
+
+    {% extends "block.html" %}
+
+    {% block blockbody %}
+    <ul>
+    {% for n in news_list %}
+        <li><a href="{{ n.get_absolute_url }}" title="{{ n }}">{{ n }}</a></li>
+    {% endfor %}
+    </ul>
+    {% endblock %}
+
+This template shows the title of the last published news. The number of news that is considered
+"last news" is specified in render function inside the ``blocks.py`` (five in this case).
+
+
+How to register the block
+-------------------------
+
+Our ``LatestNewsBlock`` class must be referenced in the plugin configuration inside ``config.py`` file:
+
+.. code-block:: python
+
+    from merengue.plugin import Plugin
+    from plugins.news.blocks import LatestNewsBlock
+    #some stuff
+
+
+    class PluginConfig(Plugin):
+    #some stuff
+
+        @classmethod
+        def get_blocks(cls):
+            return [LatestNewsBlock]
+
+* ``get_blocks`` is a classmethod that returns the specified blocks that we want to register.
+
 (( to be completed ))
