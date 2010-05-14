@@ -2,7 +2,7 @@
 {% get_news_of_category news_category_active as news_list %}
 <ul>
 {% for news in news_list %}
-    <li>
+    <li class="newsitem2{% if forloop.first %} first {% endif %}{% if forloop.last %} last {% endif %}">
         {% if news.main_image %}
             {% thumbnail news.main_image 146x88 as thumb %}
             <div class="imageLeft" >
