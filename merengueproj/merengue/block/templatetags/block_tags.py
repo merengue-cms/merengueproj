@@ -26,11 +26,10 @@ class RenderBlocksNode(template.Node):
             for registered_block in registered_blocks:
                 if registered_block.print_block(self.place):
                     block = registered_block.get_registry_item_class()
-                    if content is None and issubclass(block, Block):
+                    if issubclass(block, Block):
                         rendered_blocks.append(block.render(request,
                                                             self.place))
-                    elif content is not None and issubclass(block,
-                                                            ContentBlock):
+                    elif issubclass(block, ContentBlock):
                         rendered_blocks.append(block.render(request,
                                                             self.place,
                                                             content))
