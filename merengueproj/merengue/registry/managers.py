@@ -34,9 +34,11 @@ class RegisteredItemQuerySet(QuerySet):
         deleted from file system.
         """
         from merengue.registry import is_broken
+        from merengue.plugin.utils import is_plugin_broken, get_plugin_module_name
         cleaned_items = []
         for registered_item in self.with_brokens():
-            if is_broken(registered_item):
+            plugin_name = get_plugin_module_name(registered_item.directory_name)
+            if is_broken(registered_item) or is_plugin_broken(plugin_name):
                 registered_item.broken = True
                 registered_item.save()
             else:

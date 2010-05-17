@@ -21,7 +21,7 @@ def is_broken(registered_item):
     """ Returns if registered item is broken (not exist in file system) """
     try:
         registered_item.get_registry_item_class()
-    except ImportError:
+    except (ImportError, TypeError):
         return True
     else:
         return False

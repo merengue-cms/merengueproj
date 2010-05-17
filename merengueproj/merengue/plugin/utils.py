@@ -1,15 +1,21 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
+try:
+    from cStringIO import StringIO
+except ImportError:
+    from StringIO import StringIO
+
 
 from django import templatetags
 from django.conf import settings
 from django.conf.urls.defaults import include, url
 from django.contrib.admin.sites import NotRegistered
 from django.core.cache import cache
-from django.core.exceptions import ImproperlyConfigured
+from django.core.exceptions import ImproperlyConfigured, FieldError
 from django.core.management.color import no_style
 from django.core.management.sql import sql_all
+from django.core.management.validation import get_validation_errors
 from django.core import urlresolvers
 from django.db import connection, transaction
 from django.db.models import get_models
@@ -125,6 +131,20 @@ def find_plugin_urls(plugin_name):
 def is_plugin_broken(plugin_name):
     """ Returns if plugin is broken (not exist in file system) """
     if get_plugin_config(plugin_name, prepend_plugins_dir=False):
+        try:
+            # try to import plugin modules (if exists) to validate those models
+            models_modname = '%s.models' % plugin_name
+            models_module = import_module(models_modname)
+            s = StringIO()
+            num_errors = get_validation_errors(s, models_module)
+            if num_errors:
+                # the plugin was broken because some models validation break
+                return True
+        except ImportError:
+            # usually means models module does not exists. Don't worry about that
+            pass
+        except (TypeError, FieldError, SyntaxError): # some validation error when importing models
+            return True
         return False
     else:
         return True
@@ -135,7 +155,7 @@ def enable_plugin(plugin_name, register=True):
     from merengue.base.admin import register_app
     if is_plugin_broken(plugin_name):
         raise ActivePluginBroken("'%s' plugin is an active plugin that is broken. Please check this \
-plugin is correctly installed in plugins directory." % plugin_name)
+plugin is correctly installed in plugins directory or the models are correctly defined." % plugin_name)
     cache.delete(PLUG_CACHE_KEY)
     add_to_installed_apps(plugin_name)
     if register:

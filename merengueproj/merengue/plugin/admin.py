@@ -31,6 +31,12 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
                                         % (help_text,
                                           _('Not all dependencies are met'))
             set_field_read_only(installed_field, 'installed', obj)
+        # checking if plugin is broken
+        if obj.broken:
+            # a broken registered item will be not editable by anybody
+            for field_name, field in form.base_fields.items():
+                set_field_read_only(field, field_name, obj)
+
         return form
 
     def save_form(self, request, form, change):
@@ -49,6 +55,12 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
         check_plugins()
         return super(RegisteredPluginAdmin, self).changelist_view(request,
             extra_context)
+
+    def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
+        context.update({
+            'is_broken': obj.broken,
+        })
+        return super(RegisteredItemAdmin, self).render_change_form(request, context, add, change, form_url, obj)
 
 
 def register(site):
