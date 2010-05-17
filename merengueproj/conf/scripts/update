@@ -26,8 +26,12 @@ function dmigrate {
 function servers_restart {
     echo "Reiniciando los servidores"
     cd $BASEDIR
-    . scripts/nginxctl restart
     . scripts/merengue restart
+}
+
+function sync_plugins_media {
+    cd $PROJECTDIR
+    python manage.py sync_plugins_media --all
 }
 
 function update_doc {
@@ -44,6 +48,7 @@ case "$1" in
 	update_code
 	remove_pyc_files
 	dmigrate
+        sync_plugins_media
 	servers_restart
     ;;
     documentation)
