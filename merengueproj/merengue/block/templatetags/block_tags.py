@@ -29,7 +29,7 @@ class RenderBlocksNode(template.Node):
                     if issubclass(block, Block):
                         rendered_blocks.append(block.render(request,
                                                             self.place))
-                    elif issubclass(block, ContentBlock):
+                    elif issubclass(block, ContentBlock) and content is not None:
                         rendered_blocks.append(block.render(request,
                                                             self.place,
                                                             content))
