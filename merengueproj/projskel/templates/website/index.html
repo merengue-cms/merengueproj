@@ -1,1 +1,7 @@
-{% extends "base/content.html" %}
+{% extends "content_view.html" %}
+
+{% load inlinetrans block_tags %}
+
+{% block aftercontentbody %}
+  {% render_blocks "homepage" %}
+{% endblock %}
