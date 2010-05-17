@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib import admin
 from django.forms.models import save_instance
-from django.forms.util import ValidationError
+from django.forms.util import ValidationError, ErrorList
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
@@ -261,6 +261,27 @@ class MenuAdmin(BaseAdmin):
                 self.inline_instances.append(inline)
                 res.append(formset)
         return res
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(MenuAdmin, self).get_form(request, obj, **kwargs)
+        form = type('MenuForm', (form, ), {'section': getattr(self, 'basecontent', None)})
+        model_admin = self
+
+        def clean(self):
+            cleaned_data = super(self.__class__, self).clean()
+            if 'slug' in cleaned_data and cleaned_data['slug']:
+                if self.section:
+                    menu_root = self.section.main_menu
+                else:
+                    menu_root = Menu.tree.get(slug=settings.MENU_PORTAL_SLUG)
+                same_slug = menu_root.get_descendants().filter(slug=cleaned_data['slug']).exclude(pk=self.instance.pk)
+                if same_slug:
+                    slug_errors = self.errors.get('slug', ErrorList([]))
+                    slug_errors.extend(ErrorList([_(u'Please set other slug. This slug has been assigned')]))
+                    self._errors['slug'] = ErrorList(slug_errors)
+            return cleaned_data
+        form.clean = clean
+        return form
 
     def move_menus(self, request):
         source_id = request.GET.pop('source', None)
