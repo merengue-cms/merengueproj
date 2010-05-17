@@ -23,6 +23,12 @@ function dmigrate {
     cd $PROJECTDIR
     python manage.py migrate
 }
+
+function sync_plugins_media {
+    cd $PROJECTDIR
+    python manage.py sync_plugins_media --all
+}
+
 function servers_restart {
     echo "Reiniciando los servidores"
     cd $BASEDIR
@@ -42,23 +48,8 @@ function update_doc {
     make html
 }
 
-case "$1" in 
-    project)
-        enable_virtualenv
-	update_code
-	remove_pyc_files
-	dmigrate
-        sync_plugins_media
-	servers_restart
-    ;;
-    documentation)
-        enable_virtualenv
-        update_doc
-    ;;
-    *)
-        echo "Usage: ~/scripts/update {project|documentation}"
-        exit 1
-    ;;
-esac
-
-exit 0
+enable_virtualenv
+update_code
+remove_pyc_files
+dmigrate
+servers_restart
