@@ -21,7 +21,7 @@ def section_view(request, section_slug, original_context={}):
     context['section'] = section.real_instance
     main_content = section.main_content and section.main_content.get_real_instance() or None
     if not main_content:
-        return section_view_whitout_maincontent(request, context)
+        return section_view_without_maincontent(request, context)
     template_name = getattr(main_content._meta, 'content_view_template')
     return content_view(request, main_content, template_name=template_name, extra_context=context)
 
@@ -74,7 +74,7 @@ def menu_view(request, menu_slug):
     return menu_section_view(request, section_slug=None, menu_slug=menu_slug)
 
 
-def section_view_whitout_maincontent(request, context):
+def section_view_without_maincontent(request, context):
     user = request.user
     section = context['section']
     admin_absolute_url = False
@@ -84,7 +84,7 @@ def section_view_whitout_maincontent(request, context):
                                   user.has_perm('section.change_basesection'))):
             admin_absolute_url = True
     context['admin_absolute_url'] = admin_absolute_url
-    return render_to_response('section/section_view_whitout_maincontent.html', context,
+    return render_to_response('section/section_view_without_maincontent.html', context,
                                   context_instance=RequestContext(request))
 
 
