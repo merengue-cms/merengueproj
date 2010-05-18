@@ -8,12 +8,14 @@ Plugins development
 
 .. _topics-plugins-overview:
 
+
 Overview
 ========
 
 (( to be completed ))
 
 .. _topics-plugins-configuration:
+
 
 Configuration
 =============
@@ -86,6 +88,7 @@ Method reference
 (( to be completed ))
 
 .. _topics-plugins-development:
+
 
 Development
 ===========
@@ -177,3 +180,24 @@ command to get new plugins activated (and also get their models created if exist
     python manage.py migrate
 
 
+Broken plugins
+==============
+
+Merengue detects broken plugins that are downloaded in ``plugins``directory.
+You can see it in plugins admin view:
+
+    .. image:: _images/broken_plugins.png
+
+Merengue broken plugin detection tries to avoid break entire system when you
+download a third party plugin. Broken plugin cannot be installed but if you
+have a broken plugin activated, the exception will break whole system.
+
+Plugins can be broken because one of this causes:
+
+* **Removed from file system:** some times ago, plugin was in file system,
+  and Merengue registered it, but later was deleted.
+
+* **Models are wrong:** models does not validate.
+ 
+* **Syntax error:** you have a syntax error in some code of the plugin. Merengue
+  tried to import plugin and a ``SyntaxError`` was raised.
