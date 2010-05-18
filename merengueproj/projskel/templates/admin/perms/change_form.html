@@ -1,0 +1,31 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+
+{% block after_field_sets %}
+
+<div id="changelist" class="module">
+<table cellspacing="0">
+<thead>
+<tr>
+<th>Permissions</th>
+{% if original %}
+<th>{{ original|title }}</th>
+{% else %}
+<th>{% trans "New Role" %}</th>
+{% endif %}
+</tr>
+</thead>
+<tbody>
+{% for perm, checked in permissions %}
+<tr class="{% cycle 'row1' 'row2' %}">
+<td>{{ perm }}</td>
+<td><input type="checkbox" {% if checked %}checked="checked"{% endif %} class="action-select" value="{{ perm.id }}" name="selected_perm" /></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+</div>
+
+{% endblock %}
