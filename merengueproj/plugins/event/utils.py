@@ -38,8 +38,6 @@ def getEventsMonthYear(month, year):
             events_dic[key]['name'].append(event.name)
             event_date += datetime.timedelta(1)
     for key in events_dic:
-        html = '<ul>'
-        html += ''.join('<li>%s</li>' % i for i in events_dic[key]['name'])
-        html += '</ul>'
+        html = '<br/>'.join('%s' % i for i in events_dic[key]['name'])
         events_dic[key]['name'] = html
     return events_dic

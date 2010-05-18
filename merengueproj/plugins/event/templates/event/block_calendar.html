@@ -6,6 +6,7 @@
     #datepicker-loading {
         z-index: 5000;
         position: absolute;
+        display: none;
         top: 50%;
         left: 30%;
         padding: 5px;
@@ -17,8 +18,6 @@
         position: relative;
     }
   </style>
-  <div id="calendar_border_color" style="display: none"></div>
-
   <div id="eventsCalendar" class="calendar">
       <div id="datepicker-loading">
         {% trans "Loading..." %}<img src="{{ MEDIA_URL }}merengue/img/ajax-loader-admin.gif" title="loading"/>
@@ -26,39 +25,26 @@
   </div>
 
 <link href="{{ MEDIA_URL }}merengue/css/jquery-ui-1.8.css" rel="stylesheet" type="text/css"/>
+<link href="{{ MEDIA_URL }}event/jquery.tooltip.css" rel="stylesheet" type="text/css"/>
 <script src="{{ MEDIA_URL }}merengue/js/jquery-ui-1.8.min.js"></script>
 <script language="javascript" src="{{ MEDIA_URL }}merengue/js/jquery.ui.datepicker-{{ LANGUAGE_CODE }}.js"></script>
-<script language="javascript" src="{{ MEDIA_URL }}event/jquery.qtip.js"></script>
+<script language="javascript" src="{{ MEDIA_URL }}event/lib/jquery.dimensions.js"></script>
+<script language="javascript" src="{{ MEDIA_URL }}event/lib/jquery.bgiframe.js"></script>
+<script language="javascript" src="{{ MEDIA_URL }}event/jquery.tooltip.js"></script>
 
 <script language="javascript" >
 ;(function($) {
     $(document).ready(function() {
         function bind_days_tooltip ()
         {
-            var border_color = $("#calendar_border_color").css("background-color");
-            if (border_color == "" || border_color == "transparent")
-                border_color = "#000000";
-            $('.calendarEventDay').each(function() {
-                var title = $(this).attr("title");
-                $(this).attr("title", "");
-                $(this).qtip({ content: title,
-                hide: {fixed: true},
-                position: {
-                   corner: {
-                      target: 'topMiddle',
-                      tooltip: 'bottomMiddle'
-                   }
-                },
-                style: {border: {color: border_color}, tip: 'bottomMiddle'}
-                });
-            });
+            $(".calendarEventDay").tooltip();
         }
 
         var datepickerOptions, eventDate;
         eventDate = {};
         {% for date, event in events_dic.items %}
         eventDate["{{ date }}"] = {
-            'name': '{{ event.name|safe }}',
+            'name': '{{ event.name }}',
             'url': '{{ event.url }}'
         }
         {% endfor %}
