@@ -396,3 +396,7 @@ textarea#id_css_chunk {
     color: #54556f;
     font-style: italic;
 }
+
+#changeform table {
+    width: 100%;
+}
