@@ -20,11 +20,16 @@ class RoleAdmin(BaseAdmin):
 
     def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
         permissions = []
-        if change:
+        if request.method == 'POST':
+            selected = request.POST.getlist('selected_perm')
             for perm in Permission.objects.all():
-                permissions.append((perm, perm.objectpermission_set.filter(role=obj) and True or False))
+                    permissions.append((perm, unicode(perm.id) in selected))
         else:
-            permissions = [(perm, False) for perm in Permission.objects.all()]
+            if change:
+                for perm in Permission.objects.all():
+                    permissions.append((perm, perm.objectpermission_set.filter(role=obj) and True or False))
+            else:
+                permissions = [(perm, False) for perm in Permission.objects.all()]
         context['permissions'] = permissions
         return super(RoleAdmin, self).render_change_form(request, context, add, change, form_url, obj)
 
