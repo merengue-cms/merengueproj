@@ -10,7 +10,7 @@ class LatestNewsBlock(Block):
 
     @classmethod
     def render(cls, request, place):
-        news_list = get_news(5)
+        news_list = get_news(request, 5)
         return cls.render_block(request, template_name='news/block_latest.html',
                                 block_title=_('Latest news'),
                                 context={'news_list': news_list})

@@ -3,12 +3,13 @@ from django.shortcuts import get_object_or_404
 from django.template import RequestContext
 from django.template.loader import render_to_string
 
+from cmsutils.adminfilters import QueryStringManager
 from merengue.base.views import content_view, content_list
 from plugins.news.models import NewsItem, NewsCategory
 
 
 def news_index(request):
-    news_list = get_news()
+    news_list = get_news(request)
     return content_list(request, news_list, template_name='news/news_index.html')
 
 
@@ -29,21 +30,24 @@ def newsitem_by_category_view(request, newscategory_slug):
 
 
 def news_by_date(request, year, month, day):
-    news = get_news_by_date(year, month, day)
+    news = get_news_by_date(request, year, month, day)
     return content_list(request, news, template_name='news/news_index.html')
 
 
-def get_news(limit=0):
+def get_news(request=None, limit=0):
     news = NewsItem.objects.published().order_by("-publish_date")
+    qsm = QueryStringManager(request)
+    filters = qsm.get_filters()
+    news = news.filter(**filters)
     if limit:
         return news[:limit]
     else:
         return news
 
 
-def get_news_by_date(year, month, day):
-    news = NewsItem.objects.published()
+def get_news_by_date(request, year, month, day):
+    news = get_news(request)
     news = news.filter(publish_date__year=year,
                        publish_date__month=month,
                        publish_date__day=day)
-    return news.order_by("-publish_date")
+    return news
