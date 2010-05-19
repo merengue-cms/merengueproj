@@ -1,4 +1,8 @@
+from os import path
+
 ugettext = lambda s: s # dummy ugettext function, as said on django docs
+
+MERENGUEDIR = path.dirname(path.abspath(__file__))
 
 # List  of  callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -17,6 +21,10 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'merengue.context_processors.all_context',
     'merengue.theme.context_processors.media',
     'merengue.section.context_processors.section',
+)
+
+TEMPLATE_DIRS = (
+    path.join(MERENGUEDIR, 'templates'),
 )
 
 # merengue exclusive installed apps. you have to use at least these apps in your INSTALLED_APPS project settings
