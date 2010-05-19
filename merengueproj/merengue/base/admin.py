@@ -480,6 +480,7 @@ class BaseAdmin(admin.ModelAdmin):
 class BaseCategoryAdmin(BaseAdmin):
     ordering = (get_fallback_fieldname('name'), )
     search_fields = (get_fallback_fieldname('name'), )
+    prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
 
 
 class WorkflowBatchActionProvider(object):

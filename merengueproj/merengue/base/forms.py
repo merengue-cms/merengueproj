@@ -217,7 +217,6 @@ class FormTabs(object):
 
     class Media:
         js = (
-              settings.MEDIA_URL + "merengue/js/formtabs/jquery-ui-1.6.custom.min.js",
               settings.MEDIA_URL + "merengue/js/formtabs/formtabs_initial.js",
              )
         css = {'all': (settings.MEDIA_URL + "merengue/css/formtabs/ui-lightness/ui.all.css",

@@ -80,8 +80,7 @@ class ContactInfo(models.Model):
 class BaseCategory(models.Model):
     __metaclass__ = TransMeta
     name = models.CharField(verbose_name=_('name'), max_length=200)
-    slug = AutoSlugField(verbose_name=_('slug'), autofromfield=get_fallback_fieldname('name'),
-                         max_length=200, db_index=True, editable=False)
+    slug = models.SlugField(verbose_name=_('slug'), max_length=200, db_index=True)
 
     class Meta:
         verbose_name = _('base category')
