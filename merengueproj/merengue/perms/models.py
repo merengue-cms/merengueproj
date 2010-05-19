@@ -32,6 +32,9 @@ class Permission(models.Model):
     builtin = models.BooleanField(_(u"Builtin permission"), default=False, editable=False)
     content_types = models.ManyToManyField(ContentType, verbose_name=_(u"Content Types"), blank=True, null=True, related_name="content_types")
 
+    class Meta:
+        ordering = ('name', )
+
     def __unicode__(self):
         return "%s (%s)" % (self.name, self.codename)
 
