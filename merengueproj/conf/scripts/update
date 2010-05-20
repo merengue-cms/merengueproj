@@ -36,7 +36,7 @@ function servers_restart {
 }
 
 function sync_plugins_media {
-    cd $PROJECTDIR
+    cd $PROJECTDIR/beta_merengue
     python manage.py sync_plugins_media --all
 }
 
