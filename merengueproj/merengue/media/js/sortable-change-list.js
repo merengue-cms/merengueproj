@@ -13,7 +13,7 @@ jQuery(function($) {
     }
     $('.module table tbody').sortable({
         items: 'tr',
-        containment: 'parent',
+        containment: 'document',
         tolerance: 'pointer',
         delay: 500,
         placeholder: 'row-holder',
