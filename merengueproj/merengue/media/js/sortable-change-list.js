@@ -15,7 +15,6 @@ jQuery(function($) {
         items: 'tr',
         containment: 'document',
         tolerance: 'pointer',
-        delay: 500,
         placeholder: 'row-holder',
         axis: 'y',
         forceHelperSize: true,

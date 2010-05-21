@@ -308,7 +308,6 @@
         $('#changelist table tbody').sortable({
             items: 'tr',
             tolerance: 'pointer',
-            delay: 500,
             placeholder: 'row1',
             forceHelperSize: true,
             forcePlaceholderSize: true,
