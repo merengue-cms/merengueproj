@@ -4,8 +4,11 @@
 {% block pagetitle %}{% trans "Send comment to" %} {{ content }}{% endblock %}
 {% block bodycolorclass %}comments{% endblock %}
 {% block breadcrumbs %}
+    {{ block.super }}
     <span class="breadcrumbSeparator">→</span>
-    <span>{% inline_trans "Send comment" %}</span>
+    <a href="{{ content.get_absolute_url }}">{{ content }}</a>
+    <span class="breadcrumbSeparator">→</span>
+    <a href=".">{% inline_trans "Send comment" %}</a>
     {% block storybreadcrumbs %}{% endblock %}
 {% endblock %}
 
