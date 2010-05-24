@@ -9,7 +9,9 @@ def get_theme_root_dirs(template_dirs=None):
     if not template_dirs:
         template_dirs = settings.TEMPLATE_DIRS
     for template_dir in template_dirs:
-        yield safe_join(template_dir, 'themes')
+        template_path = safe_join(template_dir, 'themes')
+        if os.path.isdir(template_path):
+            yield template_path
 
 
 def get_theme_dirs(template_dirs=None):
