@@ -4,12 +4,3 @@
     {% endif %}
 
     {% smart_relations_object_tool %}
-
-    {% if original.basecontent_ptr or is_destination %}
-      {% if original.location and original.location_id %}
-        <li><a href="admin/places/location/{{ original.location.id }}/">{% trans "Location" %}</a></li>
-      {% else %}
-        <li><a href="admin/places/location/add/">{% trans "Location" %}</a></li>
-      {% endif %}
-
-  {% endif %}

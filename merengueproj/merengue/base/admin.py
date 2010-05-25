@@ -864,94 +864,11 @@ class RelatedModelAdmin(BaseAdmin):
             form.base_fields.pop(self.related_field)
 
 
-class BaseContentRelatedModelAdmin(BaseAdmin, StatusControlProvider):
-    selected = ''
-    is_foreign_model = False
-
-    def _update_extra_context(self, extra_context=None):
-        extra_context = extra_context or {}
-        basecontent_type_id = ContentType.objects.get_for_model(BaseContent).id
-        extra_context.update({'basecontent': self.admin_site.basecontent,
-                              'basecontent_opts': self.admin_site.basecontent._meta,
-                              'basecontent_type_id': basecontent_type_id,
-                              'inside_basecontent': True,
-                              'is_foreign_model': self.is_foreign_model,
-                              'no_location': getattr(self.admin_site, 'no_location', False),
-                              'no_contact': getattr(self.admin_site, 'no_contact', False),
-                              'selected': self.selected})
-        return extra_context
-
-    def has_add_permission(self, request):
-        """
-        Overrides Django admin behaviour to add ownership based access control
-        """
-        has_add_perm = super(BaseContentRelatedModelAdmin, self).has_add_permission(request)
-        if has_add_perm:
-            return True
-        # we consider an user can add a related item of a content if can add this content
-        model_admin = self.admin_site.model_admin
-        if model_admin:
-            return model_admin.has_add_permission(request)
-        return False
-
-    def has_change_permission(self, request, obj=None):
-        """
-        Overrides Django admin behaviour to add ownership based access control
-        """
-        has_change_perm = super(BaseContentRelatedModelAdmin, self).has_change_permission(request, obj)
-        if has_change_perm:
-            return True
-        # we consider an user can add a related item of a content if can add this content
-        model_admin = self.admin_site.model_admin
-        basecontent = self.admin_site.basecontent
-        if model_admin and basecontent:
-            return model_admin.has_change_permission(request, basecontent)
-        return False
-
-    def changelist_view(self, request, extra_context=None):
-        extra_context = self._update_extra_context(extra_context)
-        return super(BaseContentRelatedModelAdmin, self).changelist_view(request, extra_context)
-
-    def change_view(self, request, object_id, extra_context=None):
-        extra_context = self._update_extra_context(extra_context)
-        return super(BaseContentRelatedModelAdmin, self).change_view(request, object_id, extra_context)
-
-    def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
-        context = self._update_extra_context(context)
-        return super(BaseContentRelatedModelAdmin, self).render_change_form(request, context, add, change, form_url, obj)
-
-    def delete_view(self, request, object_id, extra_context=None):
-        extra_context = self._update_extra_context(extra_context)
-        return super(BaseContentRelatedModelAdmin, self).delete_view(request, object_id, extra_context)
-
-    def history_view(self, request, object_id, extra_context=None):
-        extra_context = self._update_extra_context(extra_context)
-        return super(BaseContentRelatedModelAdmin, self).history_view(request, object_id, extra_context)
-
-    def get_form(self, request, obj=None, **kwargs):
-        """
-        Overrides Django admin behaviour
-        """
-        form = super(BaseContentRelatedModelAdmin, self).get_form(request, obj, **kwargs)
-        if 'status' in form.base_fields.keys():
-            user = request.user
-            options = self._get_status_options(user, obj)
-            if options:
-                form.base_fields['status'].choices = options
-                if 'pending' in [o[0] for o in options]:
-                    form.base_fields['status'].initial = 'pending'
-            else:
-                form.base_fields.pop('status')
-
-        return form
-
-
 class BaseContentRelatedContactInfoAdmin(RelatedModelAdmin):
     tool_name = 'contact_info'
     tool_label = _('contact info')
     one_to_one = True
     related_field = 'basecontent'
-    is_foreign_model = True
 
 
 class BaseOrderableInlines(admin.ModelAdmin):
@@ -1094,6 +1011,8 @@ def register(site):
     site.register(ContactInfo, ContactInfoAdmin)
     site.register(Site, SiteAdmin)
     register_related_base(site, BaseContent)
+    if settings.USE_GIS:
+        register_related_gis(site, BaseContent)
 
 
 def register_related_base(site, related_to):
@@ -1140,9 +1059,9 @@ if settings.USE_GIS:
             title_fieldset = mark_safe("%s %s" % (ugettext(u'Location Maps'), adding))
 
             self.fieldsets = (
-                (self.title_first_fieldset, {'fields': ('address', 'address_type', 'number', 'postal_code', 'address_more_info', 'cities')}),
+                (self.title_first_fieldset, {'fields': ('address', 'postal_code', )}),
                 (title_fieldset,
-                    {'fields': ('main_location', 'main_altitude', 'gps_location', 'gps_altitude', 'borders', )}
+                    {'fields': ('main_location', 'borders', )}
                 ),
             )
 
@@ -1182,7 +1101,7 @@ if settings.USE_GIS:
             super(InlineLocationModelAdmin, self).__init__(parent_model, admin_site)
             self.geoModelAdmin = GoogleAdmin(parent_model, admin_site)
             self.geoModelAdmin.widget = OpenLayersInlineLatitudeLongitude
-            self.geoModelAdmin.map_template = 'gis/admin/google_inline.html'
+            self.geoModelAdmin.map_template = 'admin/gis/google_inline.html'
 
         def _media(self, *args, **kwargs):
             media_super = super(InlineLocationModelAdmin, self)._media(*args, **kwargs)
@@ -1201,34 +1120,22 @@ if settings.USE_GIS:
         def get_map_widget(self, *args, **kwargs):
             return self.geoModelAdmin.get_map_widget(*args, **kwargs)
 
-    class BaseContentRelatedLocationModelAdmin(LocationModelAdminMixin, BaseContentRelatedModelAdmin, OSMGeoAdminLatitudeLongitude):
-        selected = 'location'
-        is_foreign_model = True
+    class BaseContentRelatedLocationModelAdmin(LocationModelAdminMixin, RelatedModelAdmin, OSMGeoAdminLatitudeLongitude):
+        tool_name = 'location'
+        tool_label = _('location')
+        one_to_one = True
+        related_field = 'basecontent'
         extra_js = [GMAP.api_url + GMAP.key]
         map_width = 500
         map_height = 300
         default_zoom = 10
         default_lat = 4500612.0
         default_lon = -655523.0
-        map_template = 'gis/admin/google.html'
+        map_template = 'admin/gis/google.html'
         title_first_fieldset = _('Address')
-
-        def response_change(self, request, obj):
-            super(BaseContentRelatedLocationModelAdmin, self).response_change(request, obj)
-            return HttpResponseRedirect(self.admin_site.basecontent.get_admin_absolute_url())
-
-        def response_add(self, request, obj):
-            response = super(BaseContentRelatedLocationModelAdmin, self).response_add(request, obj)
-            if response.get('location', 'location') == '../':
-                post_url = self.admin_site.basecontent.get_admin_absolute_url()
-                return HttpResponseRedirect(post_url)
-            return response
-
-        def save_model(self, request, obj, form, change):
-            self.admin_site.basecontent.save()
-            super(BaseContentRelatedLocationModelAdmin, self).save_model(request, obj, form, change)
-            self.admin_site.basecontent.location = obj
-            self.admin_site.basecontent.save()
 
     def setup_basecontent_admin(basecontent_admin_site):
         basecontent_admin_site.register(Location, BaseContentRelatedLocationModelAdmin)
+
+    def register_related_gis(site, related_to):
+        site.register_related(Location, BaseContentRelatedLocationModelAdmin, related_to=related_to)

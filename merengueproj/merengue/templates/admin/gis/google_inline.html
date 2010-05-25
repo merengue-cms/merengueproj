@@ -1,0 +1,5 @@
+{% extends "admin/gis/openlayers_inline.html" %}
+{% block extrastyle %}{{ block.super }}
+<style type="text/css">v\:* {behavior:url(#default#VML);}</style>
+{% endblock %}
+{% block openlayers %}{% include "admin/gis/google.js" %}{% endblock %}
