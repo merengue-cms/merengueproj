@@ -95,7 +95,7 @@
                 element.find(".minusMenu").hide();
                 element.find(".plusMenu").show();
             }
-            element.children("th").eq(0).prepend(draggable.clone().show());
+            element.children("th").eq(0).prepend(draggable.clone().load(function(){$(this).show()}));
             element.children("th").eq(0).prepend(draggable_disabled.clone());
             if (this.expand) {
                 element.find('.plusMenu').trigger('click');
