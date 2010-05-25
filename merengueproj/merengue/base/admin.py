@@ -42,6 +42,7 @@ from merengue.base.forms import AdminBaseContentOwnersForm
 from merengue.base.models import BaseContent, ContactInfo
 from merengue.base.widgets import (CustomTinyMCE, ReadOnlyWidget,
                                    RelatedBaseContentWidget)
+from genericforeignkey.admin import GenericAdmin
 
 # A flag to tell us if autodiscover is running.  autodiscover will set this to
 # True while running, and False when it finishes.
@@ -248,7 +249,7 @@ def set_field_read_only(field, field_name, obj):
     field.required = False
 
 
-class BaseAdmin(admin.ModelAdmin):
+class BaseAdmin(GenericAdmin, admin.ModelAdmin):
     html_fields = ()
     autocomplete_fields = {}
     edit_related = ()

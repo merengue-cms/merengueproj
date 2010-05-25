@@ -1,5 +1,4 @@
 from merengue.base.admin import BaseAdmin
-
 from plugins.standingout.models import StandingOut
 
 
