@@ -10,7 +10,7 @@ class LatestNewsViewlet(Viewlet):
 
     @classmethod
     def render(cls, request):
-        news_list = get_news(10)
+        news_list = get_news(request, 10)
         return cls.render_viewlet(request, template_name='news/viewlet_latest.html',
                                   context={'news_list': news_list})
 
@@ -21,7 +21,7 @@ class AllNewsViewlet(Viewlet):
 
     @classmethod
     def render(cls, request):
-        news_list = get_news()
+        news_list = get_news(request)
         return cls.render_viewlet(request, template_name='news/viewlet_latest.html',
                                   context={'news_list': news_list,
                                            'is_paginated': True,
