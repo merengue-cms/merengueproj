@@ -20,5 +20,5 @@ mptt http://django-mptt.googlecode.com/svn/trunk/mptt
 autoreports http://svnpub.yaco.es/djangoapps/autoreports/trunk/autoreports
 cssutils http://cssutils.googlecode.com/svn/trunk/src/cssutils/
 encutils http://cssutils.googlecode.com/svn/trunk/src/encutils/
-
+genericforeignkey http://svnpub.yaco.es/djangoapps/genericforeignkey/trunk/genericforeignkey
 
