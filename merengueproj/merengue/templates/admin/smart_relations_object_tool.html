@@ -1,8 +1,9 @@
+{% load i18n %}
 {% for obj_tool in obj_tools %}
     <div class="smart_relations_object_tool_container">
   
         <ul class="smart_relations_object_tool">
-            <li class="parent"><a href="{{ obj_tool.base_url }}">{{ obj_tool.base_object_opts.verbose_name|capfirst }} {{ obj_tool.base_object }}</a></li>
+            <li class="parent"><a href="{{ obj_tool.base_url }}">{% blocktrans with obj_tool.base_object_opts.verbose_name|capfirst as model %}{{ model }} children{% endblocktrans %}</a></li>
             {% for tools_admin_site in obj_tool.tools %}
                 <li{% if tools_admin_site.selected %} class="selected"{% endif %}><a href="{{ obj_tool.base_url }}{{ tools_admin_site.tool_url }}">{{ tools_admin_site.tool_label }}</a></li>
             {% endfor %}
