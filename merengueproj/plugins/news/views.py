@@ -36,7 +36,7 @@ def news_by_date(request, year, month, day):
 
 def get_news(request=None, limit=0):
     news = NewsItem.objects.published().order_by("-publish_date")
-    qsm = QueryStringManager(request)
+    qsm = QueryStringManager(request, page_var='page')
     filters = qsm.get_filters()
     news = news.filter(**filters)
     if limit:
