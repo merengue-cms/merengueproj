@@ -784,8 +784,10 @@ class RelatedModelAdmin(BaseAdmin):
         return extra_context
 
     def is_created_one_to_one_object(self):
-        module_name = self.model._meta.module_name
-        return getattr(self.basecontent, module_name, None)
+        obj = self.model._default_manager.filter(**{self.related_field: self.basecontent})
+        if obj:
+            return obj[0]
+        return None
 
     def changelist_view(self, request, extra_context=None):
         extra_context = self._update_extra_context(request, extra_context)
@@ -943,25 +945,12 @@ class BaseContentRelatedModelAdmin(BaseAdmin, StatusControlProvider):
         return form
 
 
-class BaseContentRelatedContactInfoAdmin(BaseContentRelatedModelAdmin):
-    selected = 'contact'
+class BaseContentRelatedContactInfoAdmin(RelatedModelAdmin):
+    tool_name = 'contact_info'
+    tool_label = _('contact info')
+    one_to_one = True
+    related_field = 'basecontent'
     is_foreign_model = True
-
-    def response_change(self, request, obj):
-        super(BaseContentRelatedContactInfoAdmin, self).response_change(request, obj)
-        return HttpResponseRedirect(self.admin_site.basecontent.get_admin_absolute_url())
-
-    def response_add(self, request, obj):
-        response = super(BaseContentRelatedContactInfoAdmin, self).response_add(request, obj)
-        if response.get('location', 'location') == '../':
-            post_url = self.admin_site.basecontent.get_admin_absolute_url()
-            return HttpResponseRedirect(post_url)
-        return response
-
-    def save_model(self, request, obj, form, change):
-        super(BaseContentRelatedContactInfoAdmin, self).save_model(request, obj, form, change)
-        self.admin_site.basecontent.contact_info = obj
-        self.admin_site.basecontent.save()
 
 
 class BaseOrderableInlines(admin.ModelAdmin):
@@ -1103,6 +1092,12 @@ def register(site):
     site.register(BaseContent, BaseContentViewAdmin)
     site.register(ContactInfo, ContactInfoAdmin)
     site.register(Site, SiteAdmin)
+    register_related_base(site, BaseContent)
+
+
+def register_related_base(site, related_to):
+    site.register_related(ContactInfo, BaseContentRelatedContactInfoAdmin, related_to=related_to)
+
 
 
 # ----- begin monkey patching -----

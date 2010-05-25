@@ -7,11 +7,6 @@
     {% else %}
       <li><a href="{{ basecontent.get_admin_absolute_url }}admin/places/location/add/">{% trans "Location" %}</a></li>
     {% endif %}
-    {% if basecontent.contact_info %}
-      <li><a href="{{ basecontent.get_admin_absolute_url }}admin/base/contactinfo/{{ basecontent.contact_info.id }}/">{% trans "Contact Info" %}</a></li>
-    {% else %}
-      <li><a href="{{ basecontent.get_admin_absolute_url }}admin/base/contactinfo/add/">{% trans "Contact Info" %}</a></li>
-    {% endif %}
     <li class="selected">
       <span class="selected-with-subtools">
         <a href="{{ basecontent.get_admin_absolute_url }}admin/base/basecontent/contents/">{% trans "Related items" %}</a></li>

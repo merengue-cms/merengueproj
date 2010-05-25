@@ -32,7 +32,13 @@
 <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">{% block form_top %}{% endblock %}
 <div>
 {% if is_popup %}<input type="hidden" name="_popup" value="1" />{% endif %}
-{% if save_on_top %}{% submit_row %}{% endif %}
+{% if save_on_top %}
+  {% if inside_basecontent %}
+    {% customize_submit_row %}
+  {% else %}
+    {% submit_row %}
+  {% endif %}
+{% endif %}
 {% if errors %}
     <p class="errornote">
     {% blocktrans count errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
@@ -77,7 +83,7 @@
 </div>
 {% endblock %}
 
-{% if inside_basecontent and is_foreign_model %}
+{% if inside_basecontent %}
   {% customize_submit_row %}
 {% else %}
   {% submit_row %}

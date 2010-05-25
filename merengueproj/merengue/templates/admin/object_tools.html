@@ -12,9 +12,4 @@
         <li><a href="admin/places/location/add/">{% trans "Location" %}</a></li>
       {% endif %}
 
-      {% if original.contact_info %}
-        <li><a href="admin/base/contactinfo/{{ original.contact_info.id }}/">{% trans "Contact Info" %}</a></li>
-      {% else %}
-        <li><a href="admin/base/contactinfo/add/">{% trans "Contact Info" %}</a></li>
-      {% endif %}
   {% endif %}
