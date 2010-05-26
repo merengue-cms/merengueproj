@@ -8,7 +8,10 @@ try:
     from functools import wraps
 except ImportError:
     from django.utils.functional import wraps  # Python 2.3, 2.4 fallback.
-from uuid import uuid4
+try:
+    from uuid import uuid4
+except ImportError:
+    from johnny.uuidcompat import uuid4
 try:
     from hashlib import md5
 except ImportError:
