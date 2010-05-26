@@ -34,15 +34,14 @@ from merengue.perms.utils import register_permission, unregister_permission
 
 
 def install_plugin(instance, app_name):
-    if not instance.installed:
-        app_mod = load_app(app_name)
-        # Needed update installed apps in order
-        # to get SQL command from merengue.pluggable
-        add_to_installed_apps(app_name)
-        if app_mod and not are_installed_models(app_mod):
-            install_models(app_mod)
-            # Force instance saving after connection closes.
-            instance.save()
+    app_mod = load_app(app_name)
+    # Needed update installed apps in order
+    # to get SQL command from merengue.pluggable
+    add_to_installed_apps(app_name)
+    if app_mod and not are_installed_models(app_mod):
+        install_models(app_mod)
+        # Force instance saving after connection closes.
+        instance.save()
     if instance.active:
         enable_plugin(app_name)
     else:
