@@ -77,8 +77,6 @@ def admin_link(request, content_type, content_id, url=''):
         content = ContentType.objects.get_for_id(content_type).get_object_for_this_type(id=content_id)
     except ObjectDoesNotExist:
         raise Http404
-
-    admin_prefix = '/admin/'
     return HttpResponseRedirect(reverse('admin:admin_redirect', args=(content_type, content_id, )))
 
 
