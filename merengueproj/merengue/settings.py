@@ -30,7 +30,7 @@ TEMPLATE_DIRS = (
 # merengue exclusive installed apps. you have to use at least these apps in your INSTALLED_APPS project settings
 MERENGUE_APPS = (
     'merengue.registry',
-    'merengue.plugin',
+    'merengue.pluggable',
     'merengue.multimedia',
     'merengue.base',
     'merengue.section',
@@ -82,7 +82,7 @@ MERENGUE_MIDDLEWARE_CLASSES = (
     'merengue.section.middleware.DebugSectionMiddleware',
     'merengue.middleware.SimplifiedLayoutMiddleware',
     'merengue.middleware.LocaleMiddleware',
-    'merengue.plugin.middleware.ActivePluginsMiddleware',
+    'merengue.pluggable.middleware.ActivePluginsMiddleware',
 )
 
 # merengue usual middleware list. you can use this variable in your MIDDLEWARE_CLASSES project settings

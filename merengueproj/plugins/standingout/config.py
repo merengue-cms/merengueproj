@@ -1,4 +1,4 @@
-from merengue.plugin import Plugin
+from merengue.pluggable import Plugin
 
 from plugins.standingout.admin import StandingOutAdmin, StandingOutCategoryAdmin
 from plugins.standingout.models import StandingOut, StandingOutCategory

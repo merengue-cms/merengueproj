@@ -12,7 +12,7 @@ class PluginManager(RegisteredItemManager):
         If you use this method you will prevent errors with python modules
         deleted from file system or broken modules.
         """
-        from merengue.plugin import is_broken
+        from merengue.pluggable import is_broken
         cleaned_items = []
         for registered_item in self.with_brokens():
             if is_broken(registered_item):

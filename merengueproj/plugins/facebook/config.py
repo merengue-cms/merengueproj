@@ -1,4 +1,4 @@
-from merengue.plugin import Plugin
+from merengue.pluggable import Plugin
 
 from plugins.facebook.actions import FacebookLink
 

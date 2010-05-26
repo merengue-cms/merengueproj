@@ -30,7 +30,7 @@ This is a ``config.py`` file code fragment:
 
 .. code-block:: python
 
-    from merengue.plugin import Plugin
+    from merengue.pluggable import Plugin
 
     class PluginConfig(Plugin):
         url_prefixes = (

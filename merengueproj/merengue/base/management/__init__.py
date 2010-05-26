@@ -122,7 +122,7 @@ class ManagementUtility(django_management.ManagementUtility):
                                   'datamigration']:
                 # This is override fragment of Django execute method
                 # only works if models have been created (not with syncdb, startproject neither migrate)
-                from merengue.plugin import enable_active_plugins
+                from merengue.pluggable import enable_active_plugins
                 enable_active_plugins()
             command.run_from_argv(self.argv)
 

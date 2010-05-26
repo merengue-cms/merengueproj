@@ -1,4 +1,4 @@
-from merengue.plugin import Plugin
+from merengue.pluggable import Plugin
 
 from plugins.event.admin import EventAdmin, EventCategoryAdmin, EventSectionAdmin
 from plugins.event.blocks import EventsCalendarBlock

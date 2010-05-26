@@ -9,7 +9,7 @@ from django.utils.text import get_text_list
 from django.core.management.base import CommandError, AppCommand
 
 from merengue.base.management.base import MerengueCommand
-from merengue.plugin.models import RegisteredPlugin
+from merengue.pluggable.models import RegisteredPlugin
 
 try:
     set

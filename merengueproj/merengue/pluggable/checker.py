@@ -3,8 +3,8 @@ import os
 from django.conf import settings
 from django.core.cache import cache
 
-from merengue.plugin import PLUG_CACHE_KEY, register_plugin
-from merengue.plugin.utils import get_plugins_dir
+from merengue.pluggable import PLUG_CACHE_KEY, register_plugin
+from merengue.pluggable.utils import get_plugins_dir
 
 
 def check_plugins():

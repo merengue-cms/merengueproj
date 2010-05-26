@@ -4,7 +4,7 @@ from django.utils.translation import ugettext as _
 from django.utils.safestring import mark_safe
 from django.conf import settings
 
-from PIL import Image
+import Image
 try:
     from cStringIO import StringIO
 except ImportError:

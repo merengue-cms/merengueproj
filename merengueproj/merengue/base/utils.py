@@ -11,8 +11,8 @@ from django.utils.encoding import smart_str
 from merengue.action.models import RegisteredAction
 from django.core.management.base import CommandError
 from merengue.block.models import RegisteredBlock
-from merengue.plugin.models import RegisteredPlugin
-from merengue.plugin.utils import get_plugin_module_name
+from merengue.pluggable.models import RegisteredPlugin
+from merengue.pluggable.utils import get_plugin_module_name
 from merengue.registry import RegisteredItem
 from merengue.theme.models import Theme
 

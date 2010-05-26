@@ -86,7 +86,7 @@ Our ``LatestNewsBlock`` class must be referenced in the plugin configuration ins
 
 .. code-block:: python
 
-    from merengue.plugin import Plugin
+    from merengue.pluggable import Plugin
     from plugins.news.blocks import LatestNewsBlock
     #some stuff
 
