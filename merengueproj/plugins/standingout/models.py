@@ -32,3 +32,8 @@ class StandingOut(models.Model):
 
     class Meta:
         ordering = ('related_content_type', 'related_id', 'obj_content_type', 'id')
+
+    def __unicode__(self):
+        if not self.related_content_type or not self.related_id:
+            return unicode(self.obj)
+        return "%s --> %s" %(unicode(self.obj), unicode(self.related))
