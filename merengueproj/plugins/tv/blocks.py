@@ -9,7 +9,7 @@ class LatestVideoBlock(Block):
     default_place = 'rightsidebar'
 
     @classmethod
-    def render(cls, request, channel):
+    def render(cls, request, channel, context, *args, **kwargs):
         video_list = VideoStreaming.objects.all()
         return cls.render_block(request, template_name='tv/block_latest.html',
                                 block_title=_('Latest video'),

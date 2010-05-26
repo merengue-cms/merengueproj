@@ -1,0 +1,21 @@
+{% extends "block.html" %}
+
+{% load i18n %}
+
+{% block blocktitle %}
+    {% trans "highlights" %}
+{% endblock %}
+
+{% block blockbody %}
+  <ul>
+    {% for standingout in standingouts %}
+        <li>
+            {% if standingout.obj.get_absolute_url %}
+                <a href="{{ standingout.obj.get_absolute_url }}">{{ standingout.obj }}</a>
+            {% else %}
+                {{ standingout.obj }}
+            {% endif %}
+        </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

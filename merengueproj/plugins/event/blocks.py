@@ -12,7 +12,7 @@ class EventsCalendarBlock(Block):
     default_place = 'rightsidebar'
 
     @classmethod
-    def render(cls, request, place):
+    def render(cls, request, place, context, *args, **kwargs):
         current_month = date.today().month
         current_year = date.today().year
         events_dic = getEventsMonthYear(current_month, current_year)

@@ -31,7 +31,7 @@ class Block(BaseBlock):
     default_place = 'leftsidebar'
 
     @classmethod
-    def render(cls, request, place):
+    def render(cls, request, place, context, *args, **kwargs):
         raise NotImplementedError()
 
 
@@ -39,7 +39,7 @@ class ContentBlock(BaseBlock):
     default_place = 'content'
 
     @classmethod
-    def render(cls, request, place, content):
+    def render(cls, request, place, content, context, *args, **kwargs):
         raise NotImplementedError()
 
 

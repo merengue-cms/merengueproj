@@ -11,7 +11,7 @@ class CoreMenuBlock(Block):
     default_place = 'leftsidebar'
 
     @classmethod
-    def render(cls, request, place):
+    def render(cls, request, place, context, *args, **kwargs):
         section = request.section
         if not section:
             return '' # renders nothing
@@ -31,7 +31,7 @@ class NavigationBlock(Block):
     default_place = 'footer'
 
     @classmethod
-    def render(cls, request, place):
+    def render(cls, request, place, context, *args, **kwargs):
         sections = BaseSection.objects.published()
         if not sections:
             return '' # renders nothing
@@ -46,7 +46,7 @@ class PortalMenuBlock(Block):
     default_place = 'beforecontent'
 
     @classmethod
-    def render(cls, request, place):
+    def render(cls, request, place, context, *args, **kwargs):
         portal_menu = Menu.objects.get(slug=settings.MENU_PORTAL_SLUG)
         return cls.render_block(request, template_name='core/block_portal_menu.html',
                                 block_title=_('Portal Menu'),
@@ -58,7 +58,7 @@ class LinkBaseBlock(Block):
     category = None
 
     @classmethod
-    def render(cls, request, place):
+    def render(cls, request, place, context, *args, **kwargs):
         links = PortalLink.objects.filter(category=cls.category)
         return cls.render_block(request, template_name='core/block_portallinks.html',
                                 block_title=_('Portal links'),

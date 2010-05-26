@@ -264,11 +264,10 @@ class MenuAdmin(BaseAdmin):
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(MenuAdmin, self).get_form(request, obj, **kwargs)
-        form = type('MenuForm', (form, ), {'section': getattr(self, 'basecontent', None)})
-        model_admin = self
 
         def clean(self):
             cleaned_data = super(self.__class__, self).clean()
+            cleaned_data.update(self.clean_old())
             if 'slug' in cleaned_data and cleaned_data['slug']:
                 if self.section:
                     menu_root = self.section.main_menu
@@ -280,7 +279,9 @@ class MenuAdmin(BaseAdmin):
                     slug_errors.extend(ErrorList([_(u'Please set other slug. This slug has been assigned')]))
                     self._errors['slug'] = ErrorList(slug_errors)
             return cleaned_data
+        form.clean_old = form.clean
         form.clean = clean
+        form.section = getattr(self, 'basecontent', None)
         return form
 
     def move_menus(self, request):

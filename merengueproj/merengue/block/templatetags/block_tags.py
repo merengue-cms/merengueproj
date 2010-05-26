@@ -28,11 +28,13 @@ class RenderBlocksNode(template.Node):
                     block = registered_block.get_registry_item_class()
                     if issubclass(block, Block):
                         rendered_blocks.append(block.render(request,
-                                                            self.place))
+                                                            self.place,
+                                                            context))
                     elif issubclass(block, ContentBlock) and content is not None:
                         rendered_blocks.append(block.render(request,
                                                             self.place,
-                                                            content))
+                                                            content,
+                                                            context))
             return "<div class='blockContainer'>%s" \
                    "<input type=\"hidden\" class=\"blockPlace\" value=\"%s\">" \
                    "</div>" \

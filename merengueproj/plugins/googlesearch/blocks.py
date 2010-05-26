@@ -8,7 +8,7 @@ class GoogleSearchBlock(Block):
     default_place = 'leftsidebar'
 
     @classmethod
-    def render(cls, request, place):
+    def render(cls, request, place, context, *args, **kwargs):
         from plugins.googlesearch.config import PluginConfig
         return cls.render_block(request, template_name='googlesearch/block_googlesearch.html',
                                 block_title=_('Search'),
