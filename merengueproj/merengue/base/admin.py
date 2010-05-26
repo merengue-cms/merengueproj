@@ -1086,7 +1086,7 @@ if settings.USE_GIS:
 
         def _media(self):
             __media = super(LocationModelAdminMixin, self)._media()
-            __media.add_js(['js/osmgeoadmin.latitude.longitude.js'])
+            __media.add_js(['merengue/js/gis/osmgeoadmin.latitude.longitude.js'])
             return __media
         media = property(_media)
 
@@ -1108,7 +1108,7 @@ if settings.USE_GIS:
             media_geo = self.geoModelAdmin._media(*args, **kwargs)
             media_super.add_js(media_geo._js)
             media_super.add_css(media_geo._css)
-            media_super.add_js(['js/osmgeoadmin.latitude.longitude.js'])
+            media_super.add_js(['js/gis/osmgeoadmin.latitude.longitude.js'])
             return media_super
         media = property(_media)
 
