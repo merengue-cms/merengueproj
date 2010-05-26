@@ -30,7 +30,7 @@ install in a ubuntu/debian based distribution.
 Some python packages are installed using easy_install, for use that
 you need to have installed python-setuptools
 
-Dependencies: ``python-imaging``, ``python-beautifulsoup``, ``johnny-cache``
+Dependencies: ``python-imaging``, ``python-beautifulsoup``
 
 * ``python-imaging``: adds image processing capabilities to your Python
   interpreter. For model data fields.
@@ -46,13 +46,6 @@ Dependencies: ``python-imaging``, ``python-beautifulsoup``, ``johnny-cache``
     .. code-block:: bash
 
         $ apt-get install python-beautifulsoup
-
-* ``johnny-cache``: Django app to speedup merengue providing a clever
-  cache mechanism.
-
-    .. code-block:: bash
-
-        $ easy_install johnny-cache
 
 
 Recommended dependencies

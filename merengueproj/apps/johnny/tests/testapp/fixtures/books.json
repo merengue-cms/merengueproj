@@ -1,0 +1,31 @@
+[
+  {
+    "model" : "testapp.book",
+    "pk" : 1,
+    "fields" : {
+      "title" : "Death and Life of Great American Cities",
+      "prefix": "The",
+      "slug" : "death-and-life-great-american-cities",
+      "authors" : [1],
+      "isbn": "0375508732",
+      "pages": 250,
+      "publisher" : 1,
+      "published" : "2007-11-25",
+      "genre": [1]
+    }
+  },
+  {
+    "model" : "testapp.book",
+    "pk" : 2,
+    "fields" : {
+      "title" : "War and Peace",
+      "prefix" : "",
+      "slug" : "war-and-peace",
+      "authors" : [2],
+      "isbn": "9780307266934",
+      "pages": 1296,
+      "published" : "2007-10-16",
+      "genre": [3]
+    }
+  }
+]

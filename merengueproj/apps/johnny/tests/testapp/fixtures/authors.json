@@ -1,0 +1,32 @@
+[
+  {
+    "model" : "testapp.persontype",
+    "pk" : 1,
+    "fields" : {
+      "title" : "Author",
+      "slug" : "author"
+    }
+  },
+  {
+    "model" : "testapp.person",
+    "pk" : 1,
+    "fields" : {
+      "first_name": "Jane",
+      "last_name" : "Jacobs",
+      "slug": "jane-jacobs",
+      "gender": 2,
+      "person_types": [1]
+    }
+  },
+  {
+    "model" : "testapp.person",
+    "pk" : 2,
+    "fields" : {
+      "first_name" : "Leo",
+      "last_name" : "Tolstoy",
+      "slug": "leo-tolstoy",
+      "gender": 1,
+      "person_types": [1]
+    }
+  }
+]
