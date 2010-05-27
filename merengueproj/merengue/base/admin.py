@@ -746,10 +746,6 @@ class BaseContentViewAdmin(BaseContentAdmin):
         return False
 
 
-class ContactInfoAdmin(BaseAdmin):
-    search_fields = ('contact_email', 'contact_email2', 'phone', 'phone2', 'fax', )
-
-
 class RelatedModelAdmin(BaseAdmin):
     """
     A related model admin. This admin will be appears
@@ -1020,7 +1016,6 @@ def register(site):
     site.register(User, UserAdmin)
     site.register(Group, GroupAdmin)
     site.register(BaseContent, BaseContentViewAdmin)
-    site.register(ContactInfo, ContactInfoAdmin)
     site.register(Site, SiteAdmin)
     register_related_base(site, BaseContent)
     if settings.USE_GIS:
