@@ -87,7 +87,7 @@ def copy_merengue_dirs(style, name, merengue_root, top_dir, symlink, remove_if_e
         make_symlink(os.path.join(merengue_parent_dir, 'plugins'), dest, remove_if_exists)
     else:
         os.makedirs(dest)
-        copy_dir('plugins', dest, name, remove_if_exists, style)
+        copy_dir(os.path.join(merengue_parent_dir, 'plugins'), dest, name, remove_if_exists, style)
 
     # Symlink merengue's media
     merengue_media_dir = os.path.join(top_dir, 'media', 'merengue')
