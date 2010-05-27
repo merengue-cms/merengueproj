@@ -38,6 +38,7 @@ def copy_helper(style, name, directory, symlink=False):
     # name -- The name of the project.
     # directory -- The directory to which the layout template should be copied.
     import re
+    from merengue import settings as merengue_settings
     if not re.search(r'^[_a-zA-Z]\w*$', name): # If it's not a valid directory name.
         # Provide a smart error message, depending on the error.
         if not re.search(r'^[_a-zA-Z]', name):
@@ -51,10 +52,9 @@ def copy_helper(style, name, directory, symlink=False):
     except OSError, e:
         raise CommandError(e)
 
-    # Determine where the merengue project template is
-    merengue_root = os.path.abspath(os.path.join(os.path.dirname(__file__),
-                                                 '..', '..', '..'))
-    skel_dir = os.path.join(merengue_root, 'projskel')
+    merengue_root = merengue_settings.MERENGUEDIR
+
+    skel_dir = os.path.join(merengue_root, 'skel', 'project')
 
     # Copy merengue project template
     copy_dir(skel_dir, top_dir, name, False, style)
@@ -65,6 +65,9 @@ def copy_helper(style, name, directory, symlink=False):
 
 def copy_merengue_dirs(style, name, merengue_root, top_dir, symlink, remove_if_exists=False):
     """ Copy or symlink all needed merengue directories """
+
+    merengue_parent_dir = os.path.split(merengue_root)[0]
+
     if sys.platform == 'win32':
         message = "Linking is not supported by this platform (%s), copying instead." % sys.platform
         sys.stderr.write(style.NOTICE(message % sys.platform))
@@ -73,31 +76,30 @@ def copy_merengue_dirs(style, name, merengue_root, top_dir, symlink, remove_if_e
     else:
         symlink_possible = True
 
-    # Copy or symlink merengue, its plugins and apps
-    if symlink:
-        dest = os.path.join(top_dir, 'merengueproj')
+    # Symlink "merengue" top dir
+    if symlink_possible:
+        dest = os.path.join(top_dir, 'merengue')
         make_symlink(merengue_root, dest, remove_if_exists)
 
-    # Copy or symlink merengue, its plugins and apps
-    for d in 'apps', 'merengue', 'plugins':
-        dest = os.path.join(top_dir, d)
-        if symlink:
-            make_symlink(os.path.join('merengueproj', d), dest, remove_if_exists)
-        else:
-            os.makedirs(dest)
-            copy_dir(d, dest, name, remove_if_exists, style)
+    # Copy or symlink merengue plugins
+    dest = os.path.join(top_dir, 'plugins')
+    if symlink:
+        make_symlink(os.path.join(merengue_parent_dir, 'plugins'), dest, remove_if_exists)
+    else:
+        os.makedirs(dest)
+        copy_dir('plugins', dest, name, remove_if_exists, style)
 
     # Symlink merengue's media
     merengue_media_dir = os.path.join(top_dir, 'media', 'merengue')
     if not symlink_possible:
-        message = "Linking is not supported by this platform (%s), copying merengue/media instead." % sys.platform
+        message = "Linking is not supported by this platform (%s), copying merengue/media instead."
         sys.stderr.write(style.NOTICE(message % sys.platform))
-        copy_dir('merengue', merengue_media_dir, name, remove_if_exists, style)
+        copy_dir(os.path.join(merengue_root, 'media'), merengue_media_dir, name, remove_if_exists, style)
     else:
-        make_symlink(os.path.join('..', 'merengueproj', 'merengue', 'media'), merengue_media_dir, remove_if_exists)
+        make_symlink(os.path.join('..', 'merengue', 'media'), merengue_media_dir, remove_if_exists)
 
     # Symlink apps' media
-    apps_dir = os.path.join(top_dir, 'apps')
+    apps_dir = os.path.join(merengue_root, 'apps')
     for app in os.listdir(apps_dir):
         if app.startswith('.'):
             continue # we ignore hidden directories
@@ -109,7 +111,7 @@ def copy_merengue_dirs(style, name, merengue_root, top_dir, symlink, remove_if_e
                 sys.stderr.write(style.NOTICE(message % (sys.platform, app)))
                 copy_dir(app_media_dir, dest, name, remove_if_exists, style)
             else:
-                make_symlink(os.path.join('..', 'merengueproj', 'apps', app, 'media'), dest, remove_if_exists)
+                make_symlink(os.path.join('..', 'merengue', 'apps', app, 'media'), dest, remove_if_exists)
 
     # Copy or symlink default themes' media and templates
     themes_dir = os.path.join(merengue_root, 'themes')
@@ -120,8 +122,8 @@ def copy_merengue_dirs(style, name, merengue_root, top_dir, symlink, remove_if_e
         dest_media = os.path.join(top_dir, 'media', 'themes', theme)
         dest_templates = os.path.join(top_dir, 'templates', 'themes', theme)
         if symlink:
-            make_symlink(os.path.join('..', '..', 'merengueproj', 'themes', theme, 'media'), dest_media, remove_if_exists)
-            make_symlink(os.path.join('..', '..', 'merengueproj', 'themes', theme, 'templates'), dest_templates, remove_if_exists)
+            make_symlink(os.path.join('..', '..', 'merengue', 'themes', theme, 'media'), dest_media, remove_if_exists)
+            make_symlink(os.path.join('..', '..', 'merengue', 'themes', theme, 'templates'), dest_templates, remove_if_exists)
         else:
             copy_dir(os.path.join(theme_dir, 'media'), dest_media, name, remove_if_exists, style)
             copy_dir(os.path.join(theme_dir, 'templates'), dest_templates, name, remove_if_exists, style)
