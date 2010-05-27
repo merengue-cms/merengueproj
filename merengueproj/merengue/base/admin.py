@@ -104,8 +104,11 @@ def admin_function(function_name, app_name, admin_site=None):
     if register_func is not None and callable(register_func):
         register_func(admin_site)
 
-    # finally, we add this app to admin site registry
-    admin_site.apps_registered.append(app_name)
+    # finally, we add/remove this app to admin site registry
+    if function_name == 'register':
+        admin_site.apps_registered.append(app_name)
+    else:
+        admin_site.apps_registered.remove(app_name)
 
 
 def autodiscover(admin_site=None):

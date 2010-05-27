@@ -29,6 +29,7 @@ class BaseAdminSite(DjangoAdminSite):
     base_model_admins = None
 
     def __init__(self, *args, **kwargs):
+        self.apps_registered = []
         self.related_admin_sites = {}
         self.base_model_admins = {}
         self.base_object_ids = {}
