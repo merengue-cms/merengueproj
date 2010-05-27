@@ -73,6 +73,7 @@ INSTALLED_APPS = (
     'autoreports',
     'johnny',
     'genericforeignkey',
+    'oembed',
 ) + MERENGUE_APPS
 
 # merengue exclusive middlewares. you have to put at least these middleware in your project settings

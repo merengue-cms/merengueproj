@@ -1,0 +1,31 @@
+{% extends "multimedia/slide/basemultimedia_slide_link.html" %}
+{% load thumbnail i18n %}
+{% block thumbnail %}
+   {% if multimedia.postcard.preview %}
+     {% thumbnail multimedia.postcard.preview size %}
+   {% else %}
+     {% thumbnail multimedia.postcard.file size as pthumb %}
+     {% if pthumb %}
+       {{ pthumb }}  
+     {% else %}
+       {{ MEDIA_URL }}merengue/img/multimedia/previews/postcard_preview.jpg
+     {% endif %}
+   {% endif %}
+{% endblock %}
+{% block fullview %}
+  {% thumbnail multimedia.postcard.file 640x480 as pthumb %}
+     {% if pthumb %}
+       {{ pthumb }}
+     {% else %}
+       {{ multimedia.postcard.file.url }}
+     {% endif %}
+{% endblock %}
+{% block extraoptions %}
+  {% thumbnail multimedia.postcard.file 640x480 as pthumb %}
+  {% if not pthumb %}
+    type=external
+  {% endif %}
+{% endblock %}
+{% block caption %}
+  <a href="{{ multimedia.get_absolute_url }}">{% trans "Send" %}</a>
+{% endblock %}

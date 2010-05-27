@@ -21,4 +21,5 @@ autoreports http://svnpub.yaco.es/djangoapps/autoreports/trunk/autoreports
 cssutils http://cssutils.googlecode.com/svn/trunk/src/cssutils/
 encutils http://cssutils.googlecode.com/svn/trunk/src/encutils/
 genericforeignkey http://svnpub.yaco.es/djangoapps/genericforeignkey/trunk/genericforeignkey
+oembed http://django-oembed.googlecode.com/svn/trunk/oembed/
 

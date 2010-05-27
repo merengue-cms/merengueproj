@@ -54,6 +54,10 @@ a img {
    border: none;
 }
 
+.hide {
+    display: none;
+}
+
 /* ----- Develop version info ----- */
 #current-svn-revision {
     position: absolute;

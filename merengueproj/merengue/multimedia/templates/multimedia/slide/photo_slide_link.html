@@ -1,0 +1,6 @@
+{% extends "multimedia/slide/basemultimedia_slide_link.html" %}
+{% load thumbnail %}
+{% block thumbnail %}{% thumbnail multimedia.photo.image size %}{% endblock %}
+{% block fullview %}{% thumbnail multimedia.photo.image 640x480 as thumb%}{% if thumb %}{{ thumb }}{% else %}{{ multimedia.photo.image.url }}{% endif %}{% endblock %}
+{% block caption %}{{ multimedia.photo.caption|safe }}{% endblock %}
+{% block extraoptions %}{% endblock %}

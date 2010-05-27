@@ -1,0 +1,41 @@
+{% extends "multimedia/slide/basemultimedia_slide_link.html" %}
+{% load thumbnail media_tags %}
+{% block thumbnail %}
+   {% if multimedia.video.preview %}
+     {% thumbnail multimedia.video.preview size %}
+   {% else %}
+     {{ MEDIA_URL }}merengue/img/multimedia/previews/video_preview.jpg
+   {% endif %}
+{% endblock %}
+{% block fullview %}{% spaceless %}
+  {% if multimedia.video.file %}
+    {% url merengue.multimedia.views.video_xml multimedia.id %}
+  {% else %}
+  {% extra_oembed 320x262 as oembed_url %}{{ multimedia.video.external_url }}{% endoembed %}
+  {% ifequal oembed_url multimedia.video.external_url %}
+    {{ multimedia.video.external_url }}
+  {% else %}
+    #video-{{ multimedia.id }}
+  {% endifequal %}
+  {% endif %}
+{% endspaceless %}{% endblock %}
+{% block extraoptions %}{% spaceless %}
+  {% if multimedia.video.file %}
+    type=external;autoplayMovies=true;flvPlayer={{ MEDIA_URL }}merengue/flash/flvplayer.swf
+  {% else %}
+  {% extra_oembed 320x262 as oembed_url %}{{ multimedia.video.external_url }}{% endoembed %}
+  {% ifequal oembed_url multimedia.video.external_url %}
+  {% else %}
+    type=inline;height=300;width=325
+  {% endifequal %}
+  {% endif %}
+{% endspaceless %}{% endblock %}
+
+{% block inline-content %}
+  {% if not multimedia.video.file %}
+  {% extra_oembed 320x262 as oembed_url %}{{ multimedia.video.external_url }}{% endoembed %}
+  {% ifnotequal oembed_url multimedia.video.external_url %}
+  <div id="video-{{ multimedia.id }}" class="hide">{{ oembed_url }}</div>
+  {% endifnotequal %}
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "multimedia/slide/basemultimedia_slide_link.html" %}
+{% load thumbnail media_tags %}
+{% block thumbnail %}{% thumbnail multimedia.background.file size %}{% endblock %}
+{% block fullview %}{% thumbnail multimedia.background.file 640x480 %}{% endblock %}
+{% block extraoptions %}{% endblock %}
+{% block caption %}
+{% with multimedia.background as obj %}
+{% downloadlink obj as dlink %}
+  {{ dlink|safe }}
+{% endwith %}
+{% endblock %}

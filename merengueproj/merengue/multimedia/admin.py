@@ -7,7 +7,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
-from batchadmin.util import model_ngettext
+#from batchadmin.util import model_ngettext
 
 from merengue.base.admin import (OrderableRelatedModelAdmin, BaseContentAdmin, BaseAdmin,
                                  WorkflowBatchActionProvider, RelatedModelAdmin)
@@ -44,7 +44,7 @@ class MultimediaAddContentRelatedModelAdmin(BaseMultimediaContentRelatedModelAdm
                             'content': content, 'multimedia': multimedia}
                         self.log_change(request, content, obj_log)
                     msg_data = {'number': len(queryset),
-                                'model_name': model_ngettext(self.opts)}
+                                'model_name': self.opts}
                     msg = ugettext(u"Successfully associated %(number)d %(model_name)s.") % msg_data
                     self.message_user(request, msg)
                 return # end action
@@ -73,7 +73,7 @@ class MultimediaRemoveContentRelatedModelAdmin(BaseMultimediaContentRelatedModel
                         'content': content, 'multimedia': multimedia}
                     self.log_change(request, content, obj_log)
                 msg_data = {'number': len(queryset),
-                                'model_name': model_ngettext(self.opts)}
+                                'model_name': self.opts}
                 msg = ugettext(u"Successfully disassociated %(number)d %(model_name)s.") % msg_data
                 self.message_user(request, msg)
                 return # end action

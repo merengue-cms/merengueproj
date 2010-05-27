@@ -1,0 +1,14 @@
+{% load thumbnail first_of_with_as_tags %}
+{% first_of_with_as multimedia.name multimedia.original_filename content.name as multimedia_name %}
+
+   {% thumbnail default size as th %}
+   <a 
+      href="{% block fullview %}"{% thumbnail default 640x480 %}"{% endblock %}"
+      title="{{ multimedia_name }}"
+      destino="{{ multimedia.get_absoulte_url }}"
+      rel="shadowbox[{{ multimedia.class_name }}];{% block extraoptions %}{% endblock %}">
+
+     <img src="{% block thumbnail %}{{ th }}{% endblock %}" alt="{{ multimedia_name }}" title="{{ multimedia_name }}" />
+   </a>
+   <div class="hidden-caption" style="display:none">{% block caption %}{% endblock %}</div>
+   {% block inline-content %}{% endblock %}

@@ -1,0 +1,131 @@
+
+/*#screenShotLinks {
+  display: block;
+  margin-top: 0;
+}
+
+#screenShotLinks li {
+  display: inline;
+  padding: 0 0.2em;
+}*/
+
+#slideshow{
+    padding-left:0;
+    margin-bottom: 1em;
+    margin-right: 1em;
+    background: white;
+    float: left;
+}
+
+.simpleImgGallery2 {
+  height:32px;
+  padding-bottom: 3px;
+  border-style: solid;
+  border-width: 1px;
+  margin-left: 1px;
+  overflow: hidden;
+  position: absolute;
+  top: 0px;
+  background: white;
+  width: 232px;
+  z-index: 10;
+}
+
+.simpleImgGallery2:hover {
+  height: auto;
+}
+
+.simpleImgGallery2 img {
+/*  margin-right: 0.2em;*/
+}
+.simpleImgGallery2 div.imageController {
+  float: right;
+  margin: 4px 1em;
+  height: 24px;
+  line-height: 24px;
+}
+
+
+.simpleImgGallery2 .galleryButton {
+  border-bottom: none;
+  border-left: none;
+  cursor: pointer;
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+  margin: 4px;
+  width: 30px;
+  height: 24px;
+  display: block;
+  float: left;
+  text-align: center;
+}
+
+#shadowbox_counter b,
+.screenShotTable .imagesNumber {
+    font-weight: bold;
+    color: #a0a0a0;
+}
+
+.screenShotTable .activeButton {
+    filter: alpha(opacity=100) !important;
+}
+
+
+.screenShotAudios,
+.screenShotVideos,
+.screenShotImgs {
+    text-align: center;
+}
+
+.simpleImgGallery2 .activeButton {
+  opacity:1;
+}
+
+#slidewhow  {
+  float: left;
+  margin-right: 1em;
+}
+
+#slideshow .screenShotTable {
+  width: 235px !important;
+  margin: 0 10px 0 -0.1em;
+  position: relative;
+  padding-top: 35px;
+}
+
+span.imgMax,
+span.imgNow {
+    margin: 0pt;
+    padding: 0pt;
+    display: inline;
+}
+
+
+img.galleryImages {
+    margin: 1em auto 0 auto;
+}
+
+span.playbutton {
+    position: absolute;
+    display: block;
+    width: 40px;
+    height: 40px;
+    top:100px;
+    left: 100px;
+    width:40px;
+    background: transparent url(/media/merengue/img/multimedia/video_play.png) no-repeat center center;
+}
+
+
+.ie6 span.playbutton {
+    background: transparent url(/media/merengue/img/multimedia/video_play.gif) no-repeat center center;
+}
+
+.MultimediaSlideVisualZone {
+    text-align: center;
+    padding-top: 15px;
+}
+
+.MultimediaSlideVisualZone img {
+    vertical-align: center;
+}

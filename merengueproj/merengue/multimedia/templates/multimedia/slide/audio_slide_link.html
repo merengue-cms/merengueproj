@@ -1,0 +1,11 @@
+{% extends "multimedia/slide/basemultimedia_slide_link.html" %}
+{% load thumbnail %}
+{% block thumbnail %}
+   {% if multimedia.audio.preview %}
+     {% thumbnail multimedia.audio.preview size %}
+   {% else %}
+     {{ MEDIA_URL }}merengue/img/multimedia/previews/audio_preview.jpg
+   {% endif %}
+{% endblock %}
+{% block fullview %}{% url multimedia.views.audio_xml multimedia.id %}{% endblock %}
+{% block extraoptions %}type=external{% endblock %}

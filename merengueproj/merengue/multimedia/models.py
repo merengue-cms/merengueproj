@@ -141,6 +141,9 @@ class BaseMultimedia(models.Model):
         content_type = ContentType.objects.get_for_model(self.get_real_instance())
         return ('base.views.admin_link', [content_type.id, self.id, ''])
 
+    def get_default_preview(self):
+        return u'merengue/img/multimedia/image_not_available.jpg'
+
 
 def get_calculate_class_name(instance):
     instance.class_name = instance._get_class_name()

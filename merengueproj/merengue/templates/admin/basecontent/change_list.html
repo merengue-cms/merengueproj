@@ -1,14 +1,1 @@
 {% extends "admin/change_list.html" %}
-{% load admin_list admin_tags %}
-
-{% block extrahead %}
-    {{ block.super }}
-    <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/fade.in.googlemap.js"> </script>
-{% endblock %}
-
-{% block result_list %}
-  <span style="display: none" id="google-maps-api-key">{{ GOOGLE_MAPS_API_KEY }}</span>
-  {% if action_form and actions_on_top and cl.full_result_count %}{% admin_actions %}{% endif %}
-    {% basecontent_result_list cl %}
-  {% if action_form and actions_on_bottom and cl.full_result_count %}{% admin_actions %}{% endif %}
-{% endblock %}
