@@ -19,6 +19,9 @@
 {% block document %}
   <div id="custom-doc" class="{% block bodyclass %}{{ 'yui-t6' if pagename != 'index' else '' }}{% endblock %}">
     <div id="hd">
+      <a href="http://www.merengueproject.org">
+        <img alt="logo de merengue" src="{{ pathto('_static/inner_logo.jpg', 1) }}"/>
+      </a>
       <h1><a href="{{ pathto('index') }}">{{ docstitle }}</a></h1>
       <div id="global-nav">
         <a title="Home page" href="{{ pathto('index') }}">Home</a> {{ reldelim2 }}

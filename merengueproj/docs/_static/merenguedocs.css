@@ -17,7 +17,6 @@ body {
 	text-align:left; 
 	padding-top:16px; 
 	margin-top:0;
-	background:transparent url(inner_logo.jpg) no-repeat 670px top;
 	} 
 
 #hd { 
@@ -45,7 +44,11 @@ a {
 	font-weight: normal;
 	color: #917250;
 	}
-a img {border: none;}
+
+a img {
+    border: none;
+    float: right;
+}
 /* a:link, a:visited { color:#ffc757; } */
 #bd a:link, #bd a:visited { 
 	color:#915403; 
