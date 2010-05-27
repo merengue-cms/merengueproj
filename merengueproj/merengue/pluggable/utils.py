@@ -26,9 +26,8 @@ from merengue import registry
 from merengue.base.adminsite import site
 from merengue.base.models import BaseContent
 from merengue.multimedia.admin import register_related_multimedia
-from merengue.pluggable.exceptions import ActivePluginBroken
 from merengue.registry.items import (NotRegistered as NotRegisteredItem,
-                            AlreadyRegistered as AlreadyRegisteredItem)
+                                     AlreadyRegistered as AlreadyRegisteredItem)
 from merengue.section.models import Section
 from merengue.perms.utils import register_permission, unregister_permission
 
@@ -152,9 +151,7 @@ def is_plugin_broken(plugin_name):
 def enable_plugin(plugin_name, register=True):
     from merengue.pluggable import PLUG_CACHE_KEY
     from merengue.base.admin import register_app
-    if is_plugin_broken(plugin_name):
-        raise ActivePluginBroken("'%s' plugin is an active plugin that is broken. Please check this \
-plugin is correctly installed in plugins directory or the models are correctly defined." % plugin_name)
+    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
     cache.delete(PLUG_CACHE_KEY)
     add_to_installed_apps(plugin_name)
     if register:
@@ -169,7 +166,6 @@ plugin is correctly installed in plugins directory or the models are correctly d
         register_plugin_perms(plugin_name)
     register_plugin_urls(plugin_name)
     # activate plugin in DB
-    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
     registered_plugin = plugin_config.get_registered_item()
     registered_plugin.activate()
     # app_directories template loader loads app_template_dirs in

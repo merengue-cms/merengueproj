@@ -65,6 +65,12 @@ def admin_function(function_name, app_name, admin_site=None):
     if admin_site is None:
         admin_site = site
 
+    # we ensure we not registered twice or unregister unexisting
+    if function_name == 'register' and app_name in admin_site.apps_registered:
+        return
+    elif function_name == 'unregister' and app_name not in admin_site.apps_registered:
+        return
+
     # For each app, we need to look for an admin.py inside that app's
     # package. We can't use os.path here -- recall that modules may be
     # imported different ways (think zip files) -- so we need to get
@@ -97,6 +103,9 @@ def admin_function(function_name, app_name, admin_site=None):
     register_func = getattr(mod, function_name, None)
     if register_func is not None and callable(register_func):
         register_func(admin_site)
+
+    # finally, we add this app to admin site registry
+    admin_site.apps_registered.append(app_name)
 
 
 def autodiscover(admin_site=None):

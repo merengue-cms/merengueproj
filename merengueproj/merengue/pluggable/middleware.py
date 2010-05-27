@@ -12,8 +12,8 @@ class ActivePluginsMiddleware(object):
         from merengue.pluggable import PLUG_CACHE_KEY
         loaded = cache.get(PLUG_CACHE_KEY)
         if not loaded:
-            from merengue.pluggable.utils import (enable_plugin, disable_plugin,
-                                             get_plugin_module_name)
+            from merengue.pluggable.utils import (enable_plugin,
+                                                  get_plugin_module_name)
             from merengue.pluggable.models import RegisteredPlugin
             # enable active plugins
             active_plugins = RegisteredPlugin.objects.with_brokens().actives().cleaning_brokens()
@@ -27,10 +27,5 @@ class ActivePluginsMiddleware(object):
                 translation.trans_real._translations = {}
                 translation.deactivate()
                 translation.activate(lang)
-            # deactivate inactive plugins
-            inactive_plugins = RegisteredPlugin.objects.inactives().cleaning_brokens()
-            for plugin in inactive_plugins:
-                plugin_name = get_plugin_module_name(plugin.directory_name)
-                disable_plugin(plugin_name, unregister=True)
             cache.set(PLUG_CACHE_KEY, 1)
         return None

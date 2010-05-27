@@ -119,7 +119,11 @@ PLUGINS_DIR = 'plugins'
 # merengue required plugins in project (will be activated by default)
 REQUIRED_PLUGINS = ('core', )
 
-SESSION_ENGINE = 'merengue.backends.db'  # The module to store session data
+# if merengue will detect broken plugins
+DETECT_BROKEN_PLUGINS = True
+
+# The module to store session data
+SESSION_ENGINE = 'merengue.backends.db'
 
 # cache default settings
 CACHE_BACKEND = 'johnny.backends.locmem:///'

@@ -1,2 +1,0 @@
-class ActivePluginBroken(Exception):
-    pass
