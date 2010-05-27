@@ -1,6 +1,6 @@
 from merengue.base.admin import BaseAdmin, set_field_read_only
-from merengue.theme.checker import check_themes
-from merengue.theme.models import Theme
+from merengue.theming.checker import check_themes
+from merengue.theming.models import Theme
 
 
 class ThemeAdmin(BaseAdmin):

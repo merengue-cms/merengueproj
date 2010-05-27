@@ -14,7 +14,7 @@ from merengue.block.models import RegisteredBlock
 from merengue.pluggable.models import RegisteredPlugin
 from merengue.pluggable.utils import get_plugin_module_name
 from merengue.registry import RegisteredItem
-from merengue.theme.models import Theme
+from merengue.theming.models import Theme
 
 from django.core import serializers
 from django.core.management.color import no_style

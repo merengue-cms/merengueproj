@@ -6,7 +6,7 @@ MERENGUEDIR = path.dirname(path.abspath(__file__))
 
 # List  of  callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'merengue.theme.loader.load_template_source', # for enabling theme support in Merengue
+    'merengue.theming.loader.load_template_source', # for enabling theme support in Merengue
     'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
 #     'django.template.loaders.eggs.load_template_source',
@@ -19,7 +19,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.request',
     'merengue.context_processors.all_context',
-    'merengue.theme.context_processors.media',
+    'merengue.theming.context_processors.media',
     'merengue.section.context_processors.section',
 )
 
@@ -35,7 +35,7 @@ MERENGUE_APPS = (
     'merengue.base',
     'merengue.section',
     'merengue.perms',
-    'merengue.theme',
+    'merengue.theming',
     'merengue.action',
     'merengue.block',
     'merengue.viewlet',

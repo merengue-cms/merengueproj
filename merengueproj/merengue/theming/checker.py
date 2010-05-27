@@ -1,7 +1,7 @@
 from django.db import transaction
 
-from merengue.theme import get_theme_dirs
-from merengue.theme.models import Theme
+from merengue.theming import get_theme_dirs
+from merengue.theming.models import Theme
 
 
 def check_themes():
