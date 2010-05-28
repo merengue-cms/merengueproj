@@ -533,10 +533,8 @@ def create_menus(sender, **kwargs):
 
     if created:
         menu_name = 'Main menu of %s' % unicode(instance)
-        instance.main_menu = Menu.objects.create(
-            slug=defaultfilters.slugify(menu_name),
-        )
-        setattr(instance, get_fallback_fieldname('name'), menu_name)
+        instance.main_menu = Menu.objects.create(**{'slug': defaultfilters.slugify(menu_name),
+                                                    get_fallback_fieldname('name'): menu_name})
         instance.save()
 
 post_save.connect(create_menus, sender=Section, dispatch_uid='SectionMenusSignalDispatcher')
