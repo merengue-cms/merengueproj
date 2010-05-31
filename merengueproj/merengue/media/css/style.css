@@ -150,3 +150,17 @@ span.infomsg {
 span.inplace_view_editable_field {
     display: block;
 }
+
+
+/* section translation */
+#id_translation_tbl {
+    width: 500px;
+}
+
+.collaborative-translation-workplace-translation-language .collab-translation-edit-form-message {
+    color: black;
+    padding: 0.5em;
+    border: 1px solid #EFCB00;
+    margin-bottom: 0.5em;
+    background: #FDF7D3;
+}
