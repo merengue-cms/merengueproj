@@ -13,7 +13,7 @@
         theme_advanced_resizing: false,
         theme_advanced_resize_horizontal: false,
         theme_advanced_toolbar_location: "top",
-        theme_advanced_buttons1: "undo,redo,separator,cut,copy,paste,pasteword,separator,bold,italic,underline,separator,justifyleft,justifycenter,justifyright,separator,bullist,numlist,outdent,indent,separator,preformatted_text,tablecontrols",
+        theme_advanced_buttons1: "undo,redo,separator,cut,copy,paste,pasteword,separator,bold,italic,underline,separator,justifyleft,justifycenter,justifyright,separator,bullist,numlist,outdent,indent,separator,preformatted_text,table",
         theme_advanced_buttons2: "styleselect,formatselect,fontselect,fontsizeselect,separator,forecolor,link,image,code,fullscreen",
         theme_advanced_buttons3: "",
         theme_advanced_buttons4: "",

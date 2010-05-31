@@ -151,6 +151,10 @@ span.inplace_view_editable_field {
     display: block;
 }
 
+/* document section */
+.merengue-document #mce_0_tbl {
+    clear:both;
+}
 
 /* section translation */
 #id_translation_tbl {
