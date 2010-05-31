@@ -164,3 +164,32 @@ span.inplace_view_editable_field {
     margin-bottom: 0.5em;
     background: #FDF7D3;
 }
+
+/* portlets */
+#left-sidebar {
+    margin-top: 11px;
+}
+
+#right-sidebar {
+    margin-top: 29px;
+}
+ 
+#left-sidebar h1,
+#right-sidebar h1 {
+    font-size: 1.3em;
+}
+
+/* calendar */
+#eventsCalendar .ui-datepicker {
+    width: 15em;
+}
+
+#eventsCalendar .ui-datepicker .ui-datepicker-prev,
+#eventsCalendar .ui-datepicker .ui-datepicker-next {
+    top: 6px;
+}
+
+#eventsCalendar .ui-datepicker select.ui-datepicker-month,
+#eventsCalendar .ui-datepicker select.ui-datepicker-year {
+    width:40%;
+}
