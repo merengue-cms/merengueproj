@@ -6,13 +6,33 @@
 <div id="cse" style="width: 100%;">{% trans "Loading" %}</div>
 <script src="http://www.google.com/jsapi" type="text/javascript"></script>
 <script type="text/javascript">
-  google.load('search', '1', {language : '{{ plugin_config.language.value }}'});
+  google.load("search", "1", {language : "{{ plugin_config.language.value }}"});
   google.setOnLoadCallback(function(){
-    var customSearchControl = new google.search.CustomSearchControl('{{ plugin_config.custom_search_control.value }}');
+    var customSearchControl = new google.search.CustomSearchControl("{{ plugin_config.custom_search_control.value }}");
     customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
-    customSearchControl.draw('cse');
+    var drawOptions = new google.search.DrawOptions();
+    drawOptions.setDrawMode(google.search.SearchControl.DRAW_MODE_TABBED);
+    var searchFormElement = document.getElementById("{{ plugin_config.search_form_content.value }}");
+    drawOptions.setSearchFormRoot(searchFormElement);
+    var content = document.getElementById("{{ plugin_config.search_result_content.value }}");
+    var element = document.createElement("div");
+    element.id= "search_result_content";
+    content.insertBefore(element, content.firstChild);
+    customSearchControl.draw(element, drawOptions);
+    customSearchControl.setSearchCompleteCallback(null,
+        function(searchControl, searcher)
+        {
+            var content = document.getElementById("{{ plugin_config.search_result_content.value }}");
+            for (var i=0; i<content.childNodes.length; i++){
+                if(content.childNodes[i].id != "search_result_content" && content.childNodes[i].nodeType != 3) {
+                    content.childNodes[i].style.display = "none";
+                }
+            }
+        });
   }, true);
 </script>
 <link rel="stylesheet" href="http://www.google.com/cse/style/look/default.css" type="text/css" /> 
+<link rel="stylesheet" href="{{ MEDIA_URL }}googlesearch/style.css" type="text/css" /> 
 
 {% endblock %}
+
