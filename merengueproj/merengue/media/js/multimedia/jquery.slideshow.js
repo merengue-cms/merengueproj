@@ -90,7 +90,7 @@
             var showTypes = function() {
                 $.each(typeorder, function(index, t) {
                     if (typeof(types[t]) != 'undefined') {
-                        menu.append('<span class="galleryButton galleryButton-'+ t +'"><img src="' + mediaurl + 'merengue/img/multimedia/mediacontents/' + t + '_action_link.jpg" /></span>')
+                        menu.append('<span class="galleryButton galleryButton-'+ t +'"><img src="' + mediaurl + 'merengue/img/multimedia/mediacontents/' + t + '_action_link.png" /></span>')
                         types[t].order=index;
                     }
                 });
