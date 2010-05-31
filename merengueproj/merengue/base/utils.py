@@ -52,9 +52,9 @@ if settings.USE_GIS:
             pass
 
 
-def copy_request(request, delete_list):
+def copy_request(request, delete_list, copy=None):
     from copy import deepcopy
-    request_copy = deepcopy(request)
+    request_copy = copy and copy(request) or deepcopy(request)
     for delete_item in delete_list:
         if delete_item in request_copy.GET:
             del request_copy.GET[delete_item]
