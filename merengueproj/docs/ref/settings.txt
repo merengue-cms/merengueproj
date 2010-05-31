@@ -59,7 +59,7 @@ You can override this settings if you prefer other prefix than ``cms``.
 CACHE_BACKEND
 -------------
 
-Default: ``johnny.backends.locmem:///'``
+Default: ``johnny.backends.locmem:///``
 
 ``CACHE_BACKEND`` is not a Merengue settings but a `Django one`_, but we mention
 that settings because Merengue uses `Johnny Cache`_ as smart caching manager.

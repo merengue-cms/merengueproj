@@ -468,6 +468,49 @@ Database backup
 
 You can make a database backup in SQL with the following command:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        $ ./manage.py backupdb
+    $ ./manage.py backupdb
+
+
+==================
+Deploying Merengue
+==================
+
+To deploying merengue, because Merengue is Django based, we recommend the reading
+of `Deploying Django`_ documentation.
+
+(( to be completed ))
+
+
+Example Merengue configuration with nginx and WSGI
+==================================================
+
+(( to be completed ))
+
+
+Configuring caching
+===================
+
+Merengue uses a smart content caching, implemented using `Johnny Cache`. This
+fantastic application does transparent caching of all your data models. When
+user updates any content of a model, cache for this model is invalidated
+transparently.
+
+Merengue uses local memory by default for caching. The main problem is when you
+use local memory backend in multithreaded environments, with this settings:
+
+.. code-block:: python
+
+    CACHE_BACKEND = 'johnny.backends.locmem:///'
+
+In multithreaded environments, this configuration may cause randomized errors
+of views not refreshed correctly, after a content modification. The way to get
+fixed this error is changing cache backend to something like memcached:
+
+.. code-block:: python
+
+    CACHE_BACKEND = 'johnny.backends.memcached://127.0.0.1:11211/'
+
+.. _`Deploying Django`: http://docs.djangoproject.com/en/dev/howto/deployment/
+.. _`Johnny Cache`: http://packages.python.org/johnny-cache/
