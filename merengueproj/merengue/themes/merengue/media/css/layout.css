@@ -25,15 +25,15 @@ h1 {
 }
 
 h2 {
-    font-size: 1.6em;
-}
-
-h3 {
     font-size: 1.4em;
 }
 
-h4 {
+h3 {
     font-size: 1.2em;
+}
+
+h4 {
+    font-size: 1em;
 }
 
 ul {
@@ -270,6 +270,10 @@ body div#content-zone {
 
 
 /* comment form */
+#feedback #firstcomment .actions a {
+	background: #F0E6D5;
+    border: 1px solid #CEA670;
+}
 .theme-merengue #feedback #firstcomment h3,
 .theme-merengue #feedback #firstcomment .commentBody,
 .theme-merengue #feedback #firstcomment .actions,
