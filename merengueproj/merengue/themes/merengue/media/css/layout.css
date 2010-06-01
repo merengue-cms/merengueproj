@@ -152,13 +152,15 @@ ul {
     display: inline;
 }
 
+/*buttons*/
 li.linkAdmin {
 	background: #f0e6d5;
 	border: 1px solid #F2EDDA;
 	width: 41%;
 	cursor: pointer;
 	padding: 2px;
-	text-align: center;	
+	text-align: center;
+    float: right;
 	/* box-shadow */
 	-webkit-box-shadow: 0 1px 2px rgba(89, 70, 49, 0.3);
 	-moz-box-shadow: 0 1px 2px rgba(89, 70, 49, 0.3);
@@ -169,14 +171,15 @@ li.linkAdmin {
 	border-radius: 4px;
 }
 
-/*buttons*/
 li#action-pdfexport {
 	background: #f0e6d5;
 	border: 1px solid #F2EDDA;
 	width: 25%;
 	cursor: pointer;
 	padding: 2px;
-	text-align: center;	
+	text-align: center;
+    float:left;
+    margin-left: 130px;
 	/* box-shadow */
 	-webkit-box-shadow: 0 1px 2px rgba(89, 70, 49, 0.3);
 	-moz-box-shadow: 0 1px 2px rgba(89, 70, 49, 0.3);
@@ -193,7 +196,7 @@ li#action-newsindex {
 	width: 20%;
 	cursor: pointer;
 	padding: 2px;
-	text-align: center;	
+	text-align: center;
 	/* box-shadow */
 	-webkit-box-shadow: 0 1px 2px rgba(89, 70, 49, 0.3);
 	-moz-box-shadow: 0 1px 2px rgba(89, 70, 49, 0.3);
@@ -265,6 +268,24 @@ li#action-newsrss {
 
 body div#content-zone {
     width: auto;
+}
+
+.contentDescription {
+    font-size: 12px;
+}
+
+
+/*news*/
+.news-contentbody {
+    font-size: 12px;
+}
+
+.newsitem#content-title {
+    font-size: 19px;
+}
+
+.comment {
+    font-size: 12px; 
 }
 
 /* portal links */
