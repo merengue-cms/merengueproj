@@ -1,3 +1,4 @@
+import os
 import sys
 import subprocess
 
@@ -14,7 +15,10 @@ def check_plugins():
     # all process will be in a unique transaction, we don't want to get
     # self committed
     cache.delete(PLUG_CACHE_KEY)
-    python_path_env = ':'.join(sys.path)
+    process_environ = {
+        'PYTHONPATH': ':'.join(sys.path),
+        'DJANGO_SETTINGS_MODULE': os.environ['DJANGO_SETTINGS_MODULE'],
+    }
 
     if settings.DETECT_NEW_PLUGINS:
         # now look for all plugins in filesystem and register them
@@ -23,7 +27,7 @@ def check_plugins():
         # (fields, m2m, etc.)
         process = subprocess.Popen(
             [sys.executable, 'manage.py', "register_new_plugins"],
-            cwd=settings.BASEDIR, env={'PYTHONPATH': python_path_env},
+            cwd=settings.BASEDIR, env=process_environ,
         )
         process.wait()
 
@@ -33,7 +37,7 @@ def check_plugins():
         # (fields, m2m, etc.)
         process = subprocess.Popen(
             [sys.executable, 'manage.py', "mark_broken_plugins"],
-            cwd=settings.BASEDIR, env={'PYTHONPATH': python_path_env},
+            cwd=settings.BASEDIR, env=process_environ,
         )
         process.wait()
 
