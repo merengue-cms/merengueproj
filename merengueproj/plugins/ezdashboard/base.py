@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
@@ -39,6 +40,10 @@ class Gadget(object):
             'SITE_URL': self._site_url(),
             'EZWEB_URL': plugin_config['url'].value,
         }
+
+    @property
+    def image_url(self):
+        return '%s%sgadgets/%s.jpg'%(self._site_url(), settings.MEDIA_URL, self.name)
 
     def meta_url(self):
         return '%s%s' % (self._site_url(),

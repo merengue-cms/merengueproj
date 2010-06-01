@@ -7,7 +7,7 @@
     <Author>Yaco</Author>
     <Mail>info@yaco.es</Mail>
     <Description>{{ gadget.description }}</Description>
-    <ImageURI>http://es.xkcd.com/site_media/strips/turing_test.png</ImageURI>
+    <ImageURI>{% if gadget.image_url %}{{ gadget.image_url }}{% else %}http://es.xkcd.com/site_media/strips/turing_test.png{% endif %}</ImageURI>
     <WikiURI>http://es.xkcd.com/site_media/strips/turing_test.png</WikiURI>
 </Catalog.ResourceDescription>
 
