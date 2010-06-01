@@ -119,6 +119,9 @@ PLUGINS_DIR = 'plugins'
 # merengue required plugins in project (will be activated by default)
 REQUIRED_PLUGINS = ('core', )
 
+# if merengue will detect new plugins in file system
+DETECT_NEW_PLUGINS = True
+
 # if merengue will detect broken plugins
 DETECT_BROKEN_PLUGINS = True
 
