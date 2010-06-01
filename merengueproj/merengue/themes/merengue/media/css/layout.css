@@ -224,6 +224,68 @@ body div#content-zone {
     padding-left: 10px;
 }
 
+
+
+/* comment form */
+.theme-merengue #feedback #firstcomment h3,
+.theme-merengue #feedback #firstcomment .commentBody,
+.theme-merengue #feedback #firstcomment .actions,
+.theme-merengue #feedback .commentform,
+.theme-merengue #feedback #firstcomment .commentinfo {
+    background: #FDF7D3;
+}
+
+.theme-merengue #feedback .commentform form {
+    border: 1px solid #EFCB00;
+}
+
+.theme-merengue #feedback .required label {
+    display: inline;
+    padding-right: 8px;
+    background: transparent url(/media/merengue/img/required.gif) no-repeat right center;
+}
+
+.theme-merengue #feedback .required input {
+    display: block;
+}
+
+.theme-merengue #feedback .errorlist {
+    color: #CDA873;
+}
+
+.theme-merengue #feedback div.actions.public {
+    padding: 0 0.3em 0.3em;
+}
+
+/* portlets */
+#left-sidebar {
+    margin-top: 11px;
+}
+
+#right-sidebar {
+    margin-top: 29px;
+}
+ 
+#left-sidebar h1,
+#right-sidebar h1 {
+    font-size: 1.3em;
+}
+
+/* calendar */
+#eventsCalendar .ui-datepicker {
+    width: 15em;
+}
+
+#eventsCalendar .ui-datepicker .ui-datepicker-prev,
+#eventsCalendar .ui-datepicker .ui-datepicker-next {
+    top: 6px;
+}
+
+#eventsCalendar .ui-datepicker select.ui-datepicker-month,
+#eventsCalendar .ui-datepicker select.ui-datepicker-year {
+    width:40%;
+}
+
 /* footer */
 #footer {
     background: white url(/media/themes/merengue/img/content_bottom.jpg) no-repeat left bottom;
