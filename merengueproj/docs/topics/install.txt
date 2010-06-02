@@ -75,8 +75,9 @@ Test if you have the correct django version:
 
     .. code-block:: bash
 
+        $ cd $SRCDIR
         $ python -c "import django; print django.VERSION"
-        $ (1, 1, 1, 'final', 0)
+        (1, 1, 1, 'final', 0)
 
 We can use alternatives for django-admin (if we install different
 versions we can choose). Furthermore we don't need to write complete
@@ -152,8 +153,8 @@ following parameters:
        DATABASE_NAME = 'myproject'
        DATABASE_USER = 'myproject'
        DATABASE_PASSWORD = 'password'
-       DATABASE_HOST = 'localhost'
-       DATABASE_PORT = '5432'
+       DATABASE_HOST = ''
+       DATABASE_PORT = ''
 
 You can use all database engine supported by django
 http://docs.djangoproject.com/en/1.1/ref/settings/#database-engine
