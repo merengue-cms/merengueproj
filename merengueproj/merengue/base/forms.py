@@ -18,6 +18,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.models import BaseContent
 from cmsutils.adminfilters import QueryStringManager
+from genericforeignkey.forms import GenericAdminModelForm
 from searchform.forms import SearchForm
 from searchform.registry import search_form_registry
 from searchform.terms import FreeTextSearchTerm, TextSearchTerm
@@ -502,6 +503,10 @@ class BaseContentAdvancedSearchForm(BaseBaseContentSearchForm, AdvancedSearchFor
             del self.fields['features'].filters['basecontent__class_name']
         if 'handicapped_services' in self.fields:
             del self.fields['handicapped_services'].filters['basecontent__class_name']
+
+
+class BaseAdminModelForm(GenericAdminModelForm):
+    pass
 
 
 def register_search_forms():

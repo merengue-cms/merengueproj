@@ -38,7 +38,7 @@ from transmeta import (canonical_fieldname, get_all_translatable_fields,
                        get_fallback_fieldname)
 
 from merengue.base.adminsite import site
-from merengue.base.forms import AdminBaseContentOwnersForm
+from merengue.base.forms import AdminBaseContentOwnersForm, BaseAdminModelForm
 from merengue.base.models import BaseContent, ContactInfo
 from merengue.base.widgets import (CustomTinyMCE, ReadOnlyWidget,
                                    RelatedBaseContentWidget)
@@ -269,6 +269,7 @@ class BaseAdmin(GenericAdmin, admin.ModelAdmin):
     removed_fields = ()
     list_per_page = 50
     inherit_actions = True
+    form = BaseAdminModelForm
 
     def __init__(self, model, admin_site):
         super(BaseAdmin, self).__init__(model, admin_site)

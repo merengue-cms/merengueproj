@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib import admin
 from django.forms.models import save_instance
-from django.forms.util import ValidationError, ErrorList
+from django.forms.util import ValidationError
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
@@ -12,6 +12,7 @@ from merengue.base.admin import BaseAdmin, BaseContentAdmin, RelatedModelAdmin, 
                                 BaseOrderableAdmin, OrderableRelatedModelAdmin
 from merengue.base.admin import set_field_read_only
 from merengue.section.fields import CSSValidatorField
+from merengue.section.forms import MenuAdminModelForm
 from merengue.section.models import (Menu, Section, AppSection,
                                      BaseLink, AbsoluteLink, ContentLink, ViewletLink,
                                      Document, DocumentSection, CustomStyle,
@@ -163,8 +164,10 @@ class BaseLinkInline(admin.TabularInline):
 
         def clean(formset_self):
             data=formset_self.data
-            if data.get('contentlink-0-content', None) and data.get('absolutelink-0-url', None):
-                raise ValidationError(_('Sorry you can not select an Absolute Link and a Content Link simultaneously for this menu. Fulfill just one.'))
+            if data.get('contentlink-0-content', None) and data.get('absolutelink-0-url', None) or \
+               data.get('viewletlink-0-viewlet', None) and data.get('contentlink-0-content', None) or \
+               data.get('viewletlink-0-viewlet', None) and data.get('absolutelink-0-content', None):
+                raise ValidationError(_('Sorry you can not select two or more options simultaneously for this menu. Fulfill just one.'))
         formset.save_new = save_new
         formset.clean = clean
         return formset
@@ -234,6 +237,7 @@ class MenuAdmin(BaseAdmin):
     actions = []
     inherit_actions = False
     inlines = [AbsoluteLinkInline, ContentLinkInline, ViewletLinkInline]
+    form = MenuAdminModelForm
 
     def __init__(self, *args, **kwargs):
         super(MenuAdmin, self).__init__(*args, **kwargs)
@@ -264,23 +268,6 @@ class MenuAdmin(BaseAdmin):
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(MenuAdmin, self).get_form(request, obj, **kwargs)
-
-        def clean(self):
-            cleaned_data = super(self.__class__, self).clean()
-            cleaned_data.update(self.clean_old())
-            if 'slug' in cleaned_data and cleaned_data['slug']:
-                if self.section:
-                    menu_root = self.section.main_menu
-                else:
-                    menu_root = Menu.tree.get(slug=settings.MENU_PORTAL_SLUG)
-                same_slug = menu_root.get_descendants().filter(slug=cleaned_data['slug']).exclude(pk=self.instance.pk)
-                if same_slug:
-                    slug_errors = self.errors.get('slug', ErrorList([]))
-                    slug_errors.extend(ErrorList([_(u'Please set other slug. This slug has been assigned')]))
-                    self._errors['slug'] = ErrorList(slug_errors)
-            return cleaned_data
-        form.clean_old = form.clean
-        form.clean = clean
         form.section = getattr(self, 'basecontent', None)
         return form
 
