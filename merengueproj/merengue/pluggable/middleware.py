@@ -16,7 +16,7 @@ class ActivePluginsMiddleware(object):
                                                   get_plugin_module_name)
             from merengue.pluggable.models import RegisteredPlugin
             # enable active plugins
-            active_plugins = RegisteredPlugin.objects.with_brokens().actives().cleaning_brokens()
+            active_plugins = RegisteredPlugin.objects.actives()
             plugin_names = [get_plugin_module_name(p.directory_name)
                             for p in active_plugins]
             for plugin_name in plugin_names:
