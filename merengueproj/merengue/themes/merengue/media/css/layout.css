@@ -177,7 +177,7 @@ ul {
 	cursor: pointer;
 	padding: 0 5px;
 	text-align: center;
-    float:left;
+    float:right;
 	/* box-shadow */
 	-webkit-box-shadow: 0 1px 2px rgba(89, 70, 49, 0.3);
 	-moz-box-shadow: 0 1px 2px rgba(89, 70, 49, 0.3);
@@ -353,6 +353,7 @@ body div#content-zone {
 /* calendar */
 #eventsCalendar .ui-datepicker {
     width: 15em;
+	margin-left: -1.2em;
 }
 
 #eventsCalendar .ui-datepicker .ui-datepicker-prev,
