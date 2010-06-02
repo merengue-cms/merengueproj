@@ -159,7 +159,7 @@ ul {
 	display: inline;
 	font-size: 80%;
 	background: #f0e6d5;
-	border: 1px solid #F2EDDA;
+	border: 1px solid white;
 	cursor: pointer;
 	padding: 2px;
 	text-align: center;
@@ -179,7 +179,7 @@ ul {
 	display: inline;
 	font-size: 80%;
 	background: #f0e6d5;
-	border: 1px solid #F2EDDA;
+	border: 1px solid white;
 	width: 25%;
 	cursor: pointer;
 	padding: 2px;
@@ -311,6 +311,15 @@ body div#content-zone {
 
 #right-sidebar {
     margin-top: 29px;
+	background-color: #fff3dd;
+	min-height:300px;
+	width:	22%;
+	margin: 0 8px;
+	border: 1px solid #ede8e8;
+	/* border-radius */
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
 }
  
 #left-sidebar h1,
