@@ -77,7 +77,10 @@ def enable_active_plugins():
 
 
 def active_default_plugins(*args, **kwargs):
-    if kwargs['app'] == 'section':
+    # Only want to run this signal after all application was migrated, but
+    # south have not a "post all migrations" signal.
+    # The workaround is "collab" have to be the last application migrated
+    if kwargs['app'] == 'collab':
         interactive = kwargs.get('interactive', None)
         # register required plugins
         for plugin_dir in settings.REQUIRED_PLUGINS:
