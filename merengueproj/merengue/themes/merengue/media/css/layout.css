@@ -167,7 +167,7 @@ ul {
 	background: #f0e6d5;
 	border: 1px solid white;
 	cursor: pointer;
-	padding: 2px;
+	padding: 0 5px;
 	text-align: center;
     float:left;
 	/* box-shadow */
@@ -186,9 +186,8 @@ ul {
 	font-size: 80%;
 	background: #f0e6d5;
 	border: 1px solid white;
-	width: 25%;
 	cursor: pointer;
-	padding: 2px;
+	padding: 0 5px;
 	text-align: center;
 	/* box-shadow */
 	-webkit-box-shadow: 0 1px 2px rgba(89, 70, 49, 0.3);
@@ -281,23 +280,23 @@ body div#content-zone {
 }
 
 #feedback #firstcomment .actions a {
-	background: #F0E6D5;
-    border: 1px solid #CEA670;
+	background: #FCF9E8 !important;
+    border: 1px solid #EDE8E8 !important;
 }
 .theme-merengue #feedback #firstcomment h3,
 .theme-merengue #feedback #firstcomment .commentBody,
 .theme-merengue #feedback #firstcomment .actions,
 .theme-merengue #feedback .commentform,
 .theme-merengue #feedback #firstcomment .commentinfo {
-    background: #FDF7D3;
+    background: #FCF9E8;
 }
 
 .theme-merengue #feedback .commentform form {
-    border: 1px solid #EFCB00;
+    border: 1px solid #EDE8E8;
 }
 
 .theme-merengue #feedback .required label {
-    display: inline;
+    display: inline; 
     padding-right: 8px;
     background: transparent url(/media/merengue/img/required.gif) no-repeat right center;
 }
