@@ -4,8 +4,12 @@ from django import forms
 from django.conf import settings
 from django.utils.translation import get_language
 
+from merengue.base.forms import BaseAdminModelForm
 from plugins.chunks.forms import widgets
 from plugins.chunks.models import Chunk
+
+
+replace_dict = {u'á': u'&aacute;', u'é': u'&eacute;', u'í': u'&iacute;', u'ó': u'&oacute;', u'ú': u'&uacute;', u'ñ': '&ntilde;', u'Ñ': '&Ntilde;'}
 
 
 class ChunkForm(forms.ModelForm):
@@ -30,3 +34,19 @@ class ChunkForm(forms.ModelForm):
 
     def save(self, current_language, commit=True):
         return super(ChunkForm, self).save(commit)
+
+
+class ChunkAdminModelForm(BaseAdminModelForm):
+
+    def clean(self):
+        if self.cleaned_data.get('content'):
+            for key in self.cleaned_data['content'].keys():
+                self.cleaned_data['content'][key] = ''.join(map(replace, self.cleaned_data['content'][key]))
+        return self.cleaned_data
+
+
+def replace(c):
+    if c in replace_dict.keys():
+        return replace_dict[c]
+    else:
+        return c

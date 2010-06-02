@@ -4,8 +4,7 @@ from models import Chunk
 from cmsutils.forms.widgets import TinyMCE
 
 from merengue.base.admin import BaseAdmin
-
-replace_dict = {u'á': u'&aacute;', u'é': u'&eacute;', u'í': u'&iacute;', u'ó': u'&oacute;', u'ú': u'&uacute;', u'ñ': '&ntilde;', u'Ñ': '&Ntilde;'}
+from plugins.chunks.forms.forms import ChunkAdminModelForm
 
 
 class TransTinyMCEWidget(TinyMCE):
@@ -26,24 +25,13 @@ class TransTinyMCEWidget(TinyMCE):
 class ChunkAdmin(BaseAdmin):
     list_display = ('key', )
     search_fields = ('key', 'content')
+    form = ChunkAdminModelForm
 
     def formfield_for_dbfield(self, db_field, **kwargs):
         field = super(ChunkAdmin, self).formfield_for_dbfield(db_field, **kwargs)
         if db_field.name.find('content') == 0:
             field.widget = TransTinyMCEWidget()
         return field
-
-    def get_form(self, request, obj=None):
-        form = super(ChunkAdmin, self).get_form(request, obj)
-
-        def clean(self):
-            if self.cleaned_data.get('content'):
-                for key in self.cleaned_data['content'].keys():
-                    self.cleaned_data['content'][key] = ''.join(map(replace, self.cleaned_data['content'][key]))
-            return self.cleaned_data
-
-        form.clean = clean
-        return form
 
 
 def register(site):
@@ -54,10 +42,3 @@ def register(site):
 def unregister(site):
     """ Merengue admin unregistration callback """
     site.unregister(Chunk)
-
-
-def replace(c):
-    if c in replace_dict.keys():
-        return replace_dict[c]
-    else:
-        return c
