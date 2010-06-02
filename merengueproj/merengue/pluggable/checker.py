@@ -3,9 +3,8 @@ import sys
 import subprocess
 
 from django.conf import settings
-from django.core.cache import cache
 
-from merengue.pluggable import PLUG_CACHE_KEY
+from merengue.pluggable.loading import load_plugins
 from merengue.pluggable.utils import is_plugin_broken, get_plugin_module_name
 
 
@@ -14,7 +13,6 @@ def check_plugins():
         one in database """
     # all process will be in a unique transaction, we don't want to get
     # self committed
-    cache.delete(PLUG_CACHE_KEY)
     process_environ = {
         'PYTHONPATH': ':'.join(sys.path),
         'DJANGO_SETTINGS_MODULE': os.environ['DJANGO_SETTINGS_MODULE'],
@@ -40,6 +38,9 @@ def check_plugins():
             cwd=settings.BASEDIR, env=process_environ,
         )
         process.wait()
+
+    # finally, we reload active plugins
+    load_plugins()
 
 
 def mark_broken_plugins():

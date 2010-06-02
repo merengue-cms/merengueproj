@@ -8,8 +8,6 @@ from merengue.pluggable.utils import get_plugin_config
 from merengue.registry import register, is_registered
 from merengue.registry.items import RegistrableItem
 
-PLUG_CACHE_KEY = 'plug__loaded'
-
 
 class Plugin(RegistrableItem):
     model = RegisteredPlugin

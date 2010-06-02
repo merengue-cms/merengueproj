@@ -11,7 +11,6 @@ from django import templatetags
 from django.conf import settings
 from django.conf.urls.defaults import include, url
 from django.contrib.admin.sites import NotRegistered
-from django.core.cache import cache
 from django.core.exceptions import ImproperlyConfigured, FieldError
 from django.core.management.color import no_style
 from django.core.management.sql import sql_all
@@ -149,10 +148,8 @@ def is_plugin_broken(plugin_name):
 
 
 def enable_plugin(plugin_name, register=True):
-    from merengue.pluggable import PLUG_CACHE_KEY
     from merengue.base.admin import register_app
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
-    cache.delete(PLUG_CACHE_KEY)
     add_to_installed_apps(plugin_name)
     if register:
         register_app(plugin_name)
@@ -174,9 +171,7 @@ def enable_plugin(plugin_name, register=True):
 
 
 def disable_plugin(plugin_name, unregister=True):
-    from merengue.pluggable import PLUG_CACHE_KEY
     from merengue.base.admin import unregister_app
-    cache.delete(PLUG_CACHE_KEY)
     remove_from_installed_apps(plugin_name)
     if unregister:
         try:
