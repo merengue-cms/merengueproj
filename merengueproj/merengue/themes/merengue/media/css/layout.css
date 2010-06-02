@@ -111,10 +111,8 @@ ul {
 }
 
 #header-blocks {
-	background: transparent url(/media/themes/merengue/img/border_right.jpg) repeat-y right top;
     padding-top: 28px;
     padding-left: 10px;
-    padding-bottom: 13px;
 }
 
 #header-blocks ul {
