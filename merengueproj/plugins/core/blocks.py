@@ -43,7 +43,7 @@ class NavigationBlock(Block):
 
 class PortalMenuBlock(Block):
     name = 'portalmenu'
-    default_place = 'beforecontent'
+    default_place = 'header'
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):
