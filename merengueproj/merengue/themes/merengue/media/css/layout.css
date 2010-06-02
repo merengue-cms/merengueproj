@@ -1,9 +1,9 @@
 /* ----- global styles ----- */
-html {
+/* html {
 	background: -webkit-gradient(linear, left top, left bottom, from(#f4f0e5), to(#f2e0a9));
 	background: -moz-linear-gradient(top,  #f4f0e5,  #f2e0a9);
 	height:auto;
-}
+} */
 
 body {
     font-family: arial;
@@ -48,6 +48,9 @@ ul {
     list-style: none;
 }
 
+#header {
+	background: transparent url(/media/themes/merengue/img/header_bg.jpg) no-repeat center top;
+}
 
 /* ----- Useful class ----- */
 .visualClear {
@@ -67,10 +70,11 @@ ul {
 .borderLeft {
     background: transparent url(/media/themes/merengue/img/border_left.jpg) repeat-y left top;
     margin-left: -1px;
+	padding-top: 10px;
 }
 
 .borderRight {
-    padding: 0 5px;
+    padding: 10px 5px 0 5px;
     background: transparent url(/media/themes/merengue/img/border_right.jpg) repeat-y right top;
 }
 
@@ -107,6 +111,7 @@ ul {
 }
 
 #header-blocks {
+	background: transparent url(/media/themes/merengue/img/border_right.jpg) repeat-y right top;
     padding-top: 28px;
     padding-left: 10px;
     padding-bottom: 13px;
@@ -187,7 +192,7 @@ ul {
 	margin: 0 5px 0 0;
 	display: inline;
 	font-size: 80%;
-	background: #f0e6d5;
+	background: #f4f0e5;
 	border: 1px solid white;
 	cursor: pointer;
 	padding: 0 5px;
@@ -200,6 +205,11 @@ ul {
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
+}
+
+/* portalmenu */
+#portalmenu {
+	margin-top: 15px;
 }
 
 /* left-sidebar */
