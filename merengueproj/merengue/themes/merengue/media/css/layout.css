@@ -159,6 +159,9 @@ ul {
 #language-tools  ul li {
     display: inline;
 }
+#user-actions {
+	margin-top: 10px;
+}
 
 #content-actions li {
 	margin: 0 5px 0 0;
@@ -280,15 +283,15 @@ body div#content-zone {
 }
 
 #feedback #firstcomment .actions a {
-	background: #FCF9E8 !important;
-    border: 1px solid #EDE8E8 !important;
+	background: #F0E6D5 !important;
+    border: 1px solid #E5CFAE !important;
 }
 .theme-merengue #feedback #firstcomment h3,
 .theme-merengue #feedback #firstcomment .commentBody,
 .theme-merengue #feedback #firstcomment .actions,
 .theme-merengue #feedback .commentform,
 .theme-merengue #feedback #firstcomment .commentinfo {
-    background: #FCF9E8;
+    background: #fcf9e3;
 }
 
 .theme-merengue #feedback .commentform form {
@@ -312,6 +315,7 @@ body div#content-zone {
 .theme-merengue #feedback div.actions.public {
     padding: 0 0.3em 0.3em;
 }
+
 
 /* portlets */
 #left-sidebar {
