@@ -30,10 +30,12 @@ h1 {
 
 h2 {
     font-size: 1.4em;
+    color:#cda873;
 }
 
 h3 {
     font-size: 1.2em;
+    color:#cda873;
 }
 
 h4 {
@@ -258,9 +260,6 @@ body div#content-zone {
     font-size: 19px;
 }
 
-.comment {
-    font-size: 12px; 
-}
 
 /* portal links */
 #portal-primary-links {
@@ -272,8 +271,15 @@ body div#content-zone {
 }
 
 
-
 /* comment form */
+.comment {
+    font-size: 12px; 
+}
+
+.comment p {
+    font-size: 12px;
+}
+
 #feedback #firstcomment .actions a {
 	background: #F0E6D5;
     border: 1px solid #CEA670;
