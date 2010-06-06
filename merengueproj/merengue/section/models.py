@@ -233,6 +233,7 @@ class BaseSection(Base, RealInstanceMixin):
         null = True,
         blank = True,
         verbose_name=_('main content'),
+        help_text=_('content selected here will be shown when entering the section'),
         related_name='section_main_content',
     )
     main_content.delete_cascade = False
