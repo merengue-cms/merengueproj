@@ -1,4 +1,5 @@
 import os
+from os import path
 
 from django.conf import settings
 from django.utils._os import safe_join
@@ -18,7 +19,9 @@ def get_theme_dirs(template_dirs=None):
     """ Returns all theme directories"""
     for themes_root in get_theme_root_dirs():
         for theme_dir in os.listdir(themes_root):
-            yield theme_dir, safe_join(themes_root, theme_dir)
+            if path.isdir(safe_join(themes_root, theme_dir)) and \
+               not theme_dir.startswith('.'):
+                yield theme_dir, safe_join(themes_root, theme_dir)
 
 
 def get_theme_path(directory_name=None):
