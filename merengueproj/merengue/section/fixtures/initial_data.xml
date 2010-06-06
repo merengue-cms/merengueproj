@@ -59,10 +59,10 @@
         <field type="PositiveIntegerField" name="level">0</field>
     </object>
     <object pk="1" model="section.basesection">
-        <field type="CharField" name="name_es">section</field>
-        <field type="CharField" name="name_en">section</field>
-        <field type="CharField" name="name_fr">section</field>
-        <field type="SlugField" name="slug">section</field>
+        <field type="CharField" name="name_es">Sección de prueba</field>
+        <field type="CharField" name="name_en">Test section</field>
+        <field type="CharField" name="name_fr"><None></None></field>
+        <field type="SlugField" name="slug">test-section</field>
         <field type="TextField" name="plain_description_es"><None></None></field>
         <field type="TextField" name="plain_description_en"><None></None></field>
         <field type="TextField" name="plain_description_fr"><None></None></field>
