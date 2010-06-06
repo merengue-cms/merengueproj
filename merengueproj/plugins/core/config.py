@@ -5,6 +5,7 @@ from merengue.registry import params
 from merengue.section.admin import DocumentRelatedModelAdmin
 from merengue.section.models import Document
 
+from plugins.core.actions import LoginAction, LogoutAction
 from plugins.core.blocks import CoreMenuBlock, NavigationBlock, PrimaryLinksBlock, SecondaryLinksBlock, PortalMenuBlock
 
 
@@ -19,6 +20,10 @@ class PluginConfig(Plugin):
     config_params = [
         params.Single(name='home_initial_content',
                       label=_('home initial content'), default='1')]
+
+    @classmethod
+    def get_actions(cls):
+        return [LoginAction, LogoutAction]
 
     @classmethod
     def get_blocks(cls):
