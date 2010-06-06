@@ -13,7 +13,7 @@ class BaseAction(RegistrableItem):
         return 'action'
 
     @classmethod
-    def get_url(cls):
+    def get_url(cls, request):
         raise NotImplementedError()
 
     @classmethod
@@ -32,7 +32,7 @@ class BaseAction(RegistrableItem):
 class SiteAction(BaseAction):
 
     @classmethod
-    def get_url(cls):
+    def get_url(cls, request):
         return reverse("site_action", args=(cls.name, ))
 
 
@@ -43,14 +43,14 @@ class UserAction(BaseAction):
         return super(UserAction, cls).has_action()
 
     @classmethod
-    def get_url(cls, user):
+    def get_url(cls, request, user):
         return reverse("user_action", args=(user.username, cls.name, ))
 
 
 class ContentAction(BaseAction):
 
     @classmethod
-    def get_url(cls, content):
+    def get_url(cls, request, content):
         content_type = ContentType.objects.get_for_model(content.__class__)
         return reverse("content_action", args=(content_type.id, content.id, cls.name, ))
 

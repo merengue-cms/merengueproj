@@ -20,7 +20,6 @@ class GetActionsNode(template.Node):
     def render(self, context):
         args, kwargs = get_args_and_kwargs(self.args, self.kwargs, context)
         scope = kwargs.get('scope')
-        # TODO: Support not yet implemented for content types
         for_content = kwargs.get('for', None)
         actions = []
         registered_actions = RegisteredAction.objects.actives()
@@ -31,7 +30,6 @@ class GetActionsNode(template.Node):
             elif for_content and scope == 'content' and issubclass(item_class, ContentAction):
                 actions.append(item_class)
             elif for_content and scope == 'user' and issubclass(item_class, UserAction):
-                item_class.set_user(for_content)
                 actions.append(item_class)
         context[self.as_var] = actions
         return u''
@@ -58,6 +56,7 @@ class ActionURLNode(template.Node):
 
     def render(self, context):
         context[self.variable_context] = None
+        request = context['request']
         if self.content_or_user is not None:
             content_or_user = self.content_or_user.resolve(context)
         else:
@@ -66,12 +65,11 @@ class ActionURLNode(template.Node):
         action_link = None
         if content_or_user:
             if action.has_action(content_or_user):
-                action_link = action.get_url(content_or_user)
+                action_link = action.get_url(request, content_or_user)
         else:
             if action.has_action():
-                action_link = action.get_url()
-        if action_link:
-            context[self.variable_context] = action_link
+                action_link = action.get_url(request)
+        context[self.variable_context] = action_link
         return ''
 
 
