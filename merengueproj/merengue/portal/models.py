@@ -20,17 +20,16 @@ class PortalLink(models.Model):
     name = models.CharField(verbose_name=_('name'), max_length=200)
     content = models.ForeignKey(BaseContent, verbose_name=_('Content'),
                                    blank=True, null=True)
-    external_url = models.URLField(verbose_name=_('url'), blank=True, null=True, verify_exists=False)
-    cached_url = models.URLField(verbose_name=_('url'), blank=True,
-                                 null=True, editable=False)
+    external_url = models.CharField(verbose_name=_('url'), max_length=200,
+                                    blank=True, null=True)
+    cached_url = models.CharField(verbose_name=_('url'), max_length=200,
+                                  blank=True, null=True, editable=False)
     order = models.IntegerField(_('order'), blank=True, null=True)
     category = models.CharField(_('category'), max_length=100, choices=CATEGORIES)
-
     slug = models.SlugField(verbose_name=_('slug'),
                             max_length=200,
                             blank=False,
                             null=False)
-
     image = models.ImageField(verbose_name=_('image'),
                               null=True, blank=True,
                               upload_to=LINK_MEDIA_PREFIX)
