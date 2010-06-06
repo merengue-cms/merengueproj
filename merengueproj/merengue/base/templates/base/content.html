@@ -65,11 +65,11 @@
     {% get_actions "content" for content as content_actions %}
     {% for action in content_actions %}
       {% action_url action content as action_link %}
-        {% if action_link %}
-        <li id="action-{{ action.name }}">
-          <a href="{{ action_link }}"><span>{% trans action.verbose_name %}</span></a>
-        </li>
-        {% endif %}
+      {% if action_link %}
+      <li id="action-{{ action.name }}">
+        <a href="{{ action_link }}"><span>{% trans action.verbose_name %}</span></a>
+      </li>
+      {% endif %}
     {% endfor %}
     {% content_admin_action content %}
     </ul>
