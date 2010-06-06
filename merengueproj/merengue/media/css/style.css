@@ -145,18 +145,18 @@ span.infomsg {
     padding-left: 20px;
 }
 
-/* Inplace edit form */
+/* ----- Inplace edit form ----- */
 
 span.inplace_view_editable_field {
     display: block;
 }
 
-/* document section */
+/* ----- document section ----- */
 .merengue-document #mce_0_tbl {
     clear:both;
 }
 
-/* section translation */
+/* ----- section translation ----- */
 #id_translation_tbl {
     width: 500px;
 }
@@ -167,4 +167,36 @@ span.inplace_view_editable_field {
     border: 1px solid #EFCB00;
     margin-bottom: 0.5em;
     background: #FDF7D3;
+}
+
+/* ----- Login ----- */
+#login {
+     width: 350px;
+     height: 250px;
+     margin: 100px auto;
+     border: 1px solid #cccccc;
+     background-color: #fff3dd;
+     padding: 20px;
+     /* border-radius */
+      -webkit-border-radius: 8px;
+      -moz-border-radius: 8px;
+      border-radius: 8px;
+}
+#login label {
+      text-align:right;
+      float: left;
+      width: 150px;
+      margin-right: 5px;
+      margin-top: ;      
+}
+
+#login p{
+       margin-bottom: 10px;
+}
+#login form{
+       margin-top: 150px;
+}
+
+.actionRow{
+     text-align: center;
 }

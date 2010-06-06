@@ -42,6 +42,7 @@
 </head>
 
 <body dir="ltr" {% block extrabodytag %}{% endblock %}>
+{% block page %}
 <div id="page-wrapper">
 
 <div id="container" class="theme-{{ theme }} {% block bodyextraclasses %}{% endblock %}">
@@ -121,7 +122,7 @@
 {% endif %}
 
 {% block contenttop %} {% endblock %}
-  
+
   <div id="contentwrapper">
   {% block contentwrapper %}
 
@@ -169,5 +170,6 @@
 {% block extrabody %}
 {% endblock %}
 </div>
+{% endblock %}
 </body>
 </html>

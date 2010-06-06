@@ -14,8 +14,8 @@ urlpatterns = patterns('',
     (r'^blocks/', include('merengue.block.urls')),
 
     # login and logout
-    url(r'^account/login/$', 'merengue.portal.views.try_login', name='login_form'),
-    url(r'^account/logout/$', 'merengue.portal.views.logout', name='logout'),
+    url(r'^login/$', 'merengue.portal.views.login', name="merengue_login"),
+    url(r'^logout/$', 'merengue.portal.views.logout', name="merengue_logout"),
 
     # base urls
     (r'^base/', include('merengue.base.urls')),
@@ -45,11 +45,8 @@ urlpatterns = patterns('',
     (r'^internal-links/', include('merengue.internallinks.urls')),
     (r'^threadedcomments/', include('threadedcomments.urls')),
     url(r'^invalidate/$', 'merengue.portal.views.invalidate_cache', name='invalidate_cache'),
-    url(r'^searchform/jsi18n/$', 'merengue.portal.views.searchform_jsi18n', name='searchform_jsi18n'),
     (r'^inplaceeditform/', include('inplaceeditform.urls')),
     (r'^reports/', include('autoreports.urls')),
-    (r'^ajax/autocomplete/tags/(?P<app_name>.*)/(?P<model>.*)/$',
-     'merengue.portal.views.ajax_autocomplete_tags'),
 )
 
 if settings.USE_GIS:

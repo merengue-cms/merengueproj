@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block page %}
+
+<script type="text/javascript">
+ jQuery(document).ready(function() {
+    jQuery('#id_username').focus()
+ });
+</script> 
+
+<div id="login">
+  <form method="post" action="{% url merengue_login %}">
+  {{ form.as_p }}
+  <p class="actionRow">
+  <input type="hidden" name="next" value="{{ next }}" />
+  <input type="submit" value="{% trans "Login" %}" />
+  </p>
+  </form>
+</div>
+{% endblock %}
