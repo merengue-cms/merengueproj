@@ -28,7 +28,7 @@ class CoreMenuBlock(Block):
 
 class NavigationBlock(Block):
     name = 'navigation'
-    default_place = 'footer'
+    default_place = 'leftsidebar'
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):
