@@ -32,6 +32,7 @@ class StandingOut(models.Model):
 
     class Meta:
         ordering = ('related_content_type', 'related_id', 'obj_content_type', 'id')
+        unique_together = (('obj_content_type', 'obj_id', 'related_content_type', 'related_id', 'standing_out_category'), )
 
     def __unicode__(self):
         if not self.related_content_type or not self.related_id:
