@@ -3,10 +3,11 @@
 <script language="javascript">
 ;(function($) {
     $(document).ready(function() {
+        var containers = $(".blockContainer:visible");
 
         function getBlocksOrder() {
             var order = [];
-            $(".blockContainer").each(function() {
+            containers.each(function() {
                 var orderList = [];
                 var place = $(this).children(".blockPlace").val();
                 $(this).children(".block").children(".blockOrder").each(function() {
@@ -33,14 +34,16 @@
                 divTools.css({"left": position.left - 20});
                 divTools.css({"top": position.top});
                 $(this).append(divTools);
-                $(this).hover(function() {
-                    $(this).children(".blockTools").toggle();
+                $(this).mouseenter(function() {
+                    $(this).children(".blockTools").stop(true, true).show();
+                }).mouseleave(function() {
+                    $(this).children(".blockTools").delay(1000).fadeOut();
                 });
             });
         }
 
         function enableDragging() {
-            $(".blockContainer").each(function() {
+            containers.each(function() {
                 if ($(this).children().length < 2) {
                     var child;
                     child = $("<div>");
@@ -49,13 +52,14 @@
                     $(this).append(child);
                 }
             });
-            if (!$(".blockContainer").hasClass("blockContainerBorder")) {
-                $(".blockContainer").addClass("blockContainerBorder");
-                $(".blockContainer").sortable({
+            if (!containers.hasClass("blockContainerBorder")) {
+                containers.addClass("blockContainerBorder");
+                containers.sortable({
                     connectWith: '.blockContainer',
-                    containment: 'document',
+                    parent: 'document',
                     opacity: 0.6,
                     revert: true,
+                    items: '.block',
                     start: function(event, ui) {
                         $(".block .blockTools").hide();
                     },
@@ -66,7 +70,7 @@
                         postNewOrder();
                     }
                 });
-                $(".blockContainer").disableSelection();
+                containers.disableSelection();
             } else {
                 disableDragging();
             }
@@ -74,9 +78,9 @@
         }
 
         function disableDragging() {
-            $(".blockContainer").sortable("destroy");
-            $(".blockContainer").removeClass("blockContainerBorder");
-            $(".blockContainer .blockDrag").remove();
+            containers.sortable("destroy");
+            containers.removeClass("blockContainerBorder");
+            containers.find(".blockDrag").remove();
         }
 
         function recalculatePosition(ui) {
