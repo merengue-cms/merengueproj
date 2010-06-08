@@ -59,6 +59,18 @@
   text-align: center;
 }
 
+.prevImg {
+	display: block;
+	float: left;
+	margin-top: 4px;
+	padding-right: 2px;
+}
+.nextImg {
+	display: block;
+	float: right;
+	margin-top: 4px;
+}
+
 #shadowbox_counter b,
 .screenShotTable .imagesNumber {
     font-weight: bold;
