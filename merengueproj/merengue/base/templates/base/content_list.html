@@ -18,7 +18,7 @@
   {% endblock %}
 
   {% block listing %}
-    <ul class="contentList">
+    <ul class="{% block listingclass %}contentList{% endblock %}">
     {% for content in content_list %}
       {% block itemdetail %}
        <li>
