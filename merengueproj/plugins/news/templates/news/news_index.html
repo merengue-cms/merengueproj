@@ -6,6 +6,9 @@
 
 {% block extrabreadcrumbs %}
   <span class="breadcrumbSeparator">→</span><a href="{% url news_index %}" title="{% trans "News" %}">{% inline_trans "News" %}</a>
+  {% if news_category %}
+    <span class="breadcrumbSeparator">→</span><a href="" title="{{ news_category }}">{{ news_category }}</a>
+  {% endif %}
 {% endblock %}
 
 {% block listtitle %}{% trans "News index" %}{% endblock %}

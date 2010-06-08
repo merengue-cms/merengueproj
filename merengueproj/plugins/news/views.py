@@ -11,7 +11,9 @@ from plugins.news.models import NewsItem, NewsCategory
 
 def news_index(request):
     news_list = get_news(request)
-    return content_list(request, news_list, template_name='news/news_index.html')
+    news_category_slug = request.GET.get('categories__slug', None)
+    news_category = news_category_slug and get_object_or_404(NewsCategory, slug=news_category_slug)
+    return content_list(request, news_list, template_name='news/news_index.html', extra_context={'news_category': news_category})
 
 
 def newsitem_view(request, newsitem_slug):
