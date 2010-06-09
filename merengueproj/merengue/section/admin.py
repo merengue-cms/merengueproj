@@ -13,7 +13,7 @@ from merengue.base.admin import BaseAdmin, BaseContentAdmin, RelatedModelAdmin, 
 from merengue.base.admin import set_field_read_only
 from merengue.section.fields import CSSValidatorField
 from merengue.section.forms import MenuAdminModelForm
-from merengue.section.models import (Menu, Section, AppSection,
+from merengue.section.models import (Menu, Section,
                                      BaseLink, AbsoluteLink, ContentLink, ViewletLink,
                                      Document, DocumentSection, CustomStyle,
                                      SectionRelatedContent)
@@ -369,37 +369,6 @@ class PortalMenuAdmin(MenuAdmin):
         return menu
 
 
-class AppSectionAdmin(BaseSectionAdmin):
-    list_display = ('name', 'slug', 'app_name')
-    prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
-    actions = []
-    actions_on_top = False
-    actions_on_bottom = False
-
-    def __init__(self, *args, **kwargs):
-        super(AppSectionAdmin, self).__init__(*args, **kwargs)
-        self.old_prepopulated_fields = self.prepopulated_fields
-        if 'batchadmin_checkbox' in self.list_display:
-            self.list_display.remove('batchadmin_checkbox')
-
-    def has_add_permission(self, request):
-        return False
-
-    def has_delete_permission(self, request, obj=None):
-        return False
-
-    def get_form(self, request, obj=None, **kwargs):
-        form = super(AppSectionAdmin, self).get_form(request, obj, **kwargs)
-        if obj:
-            if 'slug' in form.base_fields.keys():
-                form.base_fields.pop('slug')
-            if 'slug' in self.prepopulated_fields.keys():
-                self.prepopulated_fields.pop('slug')
-        else:
-            self.prepopulated_fields = self.old_prepopulated_fields
-        return form
-
-
 class DocumentSectionModelAdmin(BaseAdmin):
     ordering = ('position', )
     html_fields = ('body', )
@@ -415,7 +384,6 @@ class DocumentSectionRelatedModelAdmin(RelatedModelAdmin):
 
 def register(site):
     site.register(Section, SectionAdmin)
-    site.register(AppSection, AppSectionAdmin)
     site.register(Menu, PortalMenuAdmin)
     site.register_related(Document, DocumentRelatedModelAdmin, related_to=Section)
     site.register_related(CustomStyle, CustomStyleRelatedModelAdmin, related_to=Section)
