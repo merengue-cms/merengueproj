@@ -17,6 +17,11 @@ def check_themes():
             theme.update_from_fs(commit=False)
             theme.installed = True
             theme.save()
+        try:
+            Theme.objects.active()
+        except Theme.DoesNotExist:
+            # merengue theme will be the active by default if not exists
+            Theme.objects.filter(name='merengue').update(active=True)
     except:
         transaction.savepoint_rollback(sid)
         raise

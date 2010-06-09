@@ -6,6 +6,8 @@ from django.db import models
 from django.db.models import signals
 from django.utils.translation import ugettext_lazy as _
 
+from south.signals import post_migrate
+
 from merengue.theming import get_theme_path
 from merengue.theming.managers import ThemeManager
 
@@ -55,4 +57,11 @@ def check_for_duplicated_active_themes(sender, instance, **kwargs):
             theme.active = False
             theme.save()
 
+
+def check_for_themes(sender, **kwargs):
+    from merengue.theming.checker import check_themes
+    check_themes()
+
+
 signals.post_save.connect(check_for_duplicated_active_themes, sender=Theme)
+post_migrate.connect(check_for_themes)
