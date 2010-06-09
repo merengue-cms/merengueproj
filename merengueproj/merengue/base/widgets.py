@@ -5,6 +5,7 @@ import re
 from django import forms
 from django.conf import settings
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper, AdminDateWidget
+from django.core.urlresolvers import reverse, NoReverseMatch
 from django.forms.util import flatatt
 from django.forms.widgets import DateTimeInput
 from django.utils import datetime_safe
@@ -40,7 +41,7 @@ class CustomTinyMCE(TinyMCE):
               #'%smerengue/js/tiny_mce_internal_links/tiny_mce_internal_links.js' % settings.MEDIA_URL,
               #'%stinyimages/js/tiny_mce_file.js' % settings.MEDIA_URL,
               #'%sjs/tiny_mce_iframes/tiny_mce_iframes.js' % settings.MEDIA_URL,
-              #'%stinyimages/js/tinyimages.js' % settings.MEDIA_URL,
+              '%stinyimages/js/tinyimages.js' % settings.MEDIA_URL,
               #'%sjs/tiny_mce_preformatted_text/tiny_mce_preformatted_text.js' % settings.MEDIA_URL,
                 )
 
@@ -56,6 +57,10 @@ class CustomTinyMCE(TinyMCE):
         self.mce_settings['plugin_iframes_url'] = "/iframes/"
         self.mce_settings['plugin_file_url'] = "/tinyimages/file_upload/"
         self.mce_settings['file_browser_callback'] = "TinyImagesFileBrowser"
+        try:
+            self.mce_settings['tiny_images_base_url'] = reverse('tinyimage_list') + '../'
+        except NoReverseMatch:
+            pass
         self.mce_settings['urlconverter_callback'] = "customUrlConverter"
         content_css = settings.TINYMCE_EXTRA_MEDIA.get('css', [])
         content_js = settings.TINYMCE_EXTRA_MEDIA.get('css', [])
