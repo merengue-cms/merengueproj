@@ -324,21 +324,6 @@ class Section(BaseSection):
         return ('section_view', (self.slug, ))
 
 
-class AppSection(BaseSection):
-    objects = SectionManager()
-
-    @sections_permalink
-    def get_absolute_url(self):
-        return ('%s_index' % self.app_name, None, tuple())
-
-    @property
-    def app_name(self):
-        assert self.slug is not None
-        if self.slug not in settings.SECTION_MAP:
-            return 'ERROR-NO-REGISTRADO'
-        return settings.SECTION_MAP[self.slug]['app_name']
-
-
 class Document(BaseContent):
 
     search_form = models.CharField(
@@ -529,17 +514,18 @@ class CustomStyle(models.Model):
 
 
 def create_menus(sender, **kwargs):
-    created = kwargs.get('created', False)
-    instance = kwargs.get('instance')
+    if issubclass(sender, Section):
+        created = kwargs.get('created', False)
+        instance = kwargs.get('instance')
 
-    if created:
-        menu_name = 'Main menu of %s' % unicode(instance)
-        instance.main_menu = Menu.objects.create(**{'slug': defaultfilters.slugify(menu_name),
-                                                    get_fallback_fieldname('name'): menu_name})
-        instance.save()
+        if created:
+            menu_name = 'Main menu of %s' % unicode(instance)
+            instance.main_menu = Menu.objects.create(**{'slug': defaultfilters.slugify(menu_name),
+                                                        get_fallback_fieldname('name'): menu_name})
+            instance.save()
 
-post_save.connect(create_menus, sender=Section, dispatch_uid='SectionMenusSignalDispatcher')
-post_save.connect(create_menus, sender=AppSection, dispatch_uid='AppSectionMenusSignalDispatcher')
+
+post_save.connect(create_menus, dispatch_uid='SectionMenusSignalDispatcher')
 
 
 def handle_link_url_post_save(sender, instance, **kwargs):
