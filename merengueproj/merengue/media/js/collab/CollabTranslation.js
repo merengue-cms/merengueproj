@@ -13,6 +13,11 @@
 
             var boundTranslationForm = function() {
                 translation_zone.find('#collab-translation-edit-form').ajaxForm({
+                    beforeSerialize: function(form, options) {
+                        textarea_id = translation_zone.find('textarea').attr('id');
+                        if (typeof(textarea_id)!='undefined')
+                            tinyMCE.get(textarea_id).save();
+                    },
                     success: function(response, status) {
                         if (is_html) {
                             textarea_id = translation_zone.find('textarea').attr('id');
