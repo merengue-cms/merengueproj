@@ -12,6 +12,8 @@ class Migration:
         if db.backend_name == 'mysql':
             db.execute('DROP INDEX `content_id` ON `section_contentlink`')
             db.execute('CREATE INDEX `section_contentlink_content_id` ON `section_contentlink` (`content_id`)')
+        elif db.backend_name == 'sqlite3':
+            db.alter_column("section_contentlink", "content_id", models.ForeignKey(BaseContent))
         else:
             db.execute('ALTER TABLE "section_contentlink" DROP CONSTRAINT "section_contentlink_content_id_key"')
 

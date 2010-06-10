@@ -19,6 +19,8 @@ class Migration:
         # Creating unique_together for [slug] on BaseSection.
         if db.backend_name == 'mysql':
             db.execute('ALTER TABLE `section_basesection` ADD CONSTRAINT `section_basesection_slug_key` UNIQUE (`slug`)')
+        elif db.backend_name == 'sqlite3':
+            db.create_index('section_basesection', ['slug'], unique=True)
         else:
             db.execute('ALTER TABLE "section_basesection" ADD CONSTRAINT "section_basesection_slug_key" UNIQUE ("slug")')
     
