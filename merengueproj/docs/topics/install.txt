@@ -131,6 +131,12 @@ incompatible changes).
         $ $SRCDIR/merengueproj/bin/merengue-admin.py startproject myproject --develop
 
 
+Languages configuration
+-----------------------
+
+(( to be completed. Talk about LANGUAGES setting and transmeta fields ))
+
+
 Database installation and configuration
 ---------------------------------------
 
@@ -482,6 +488,12 @@ To deploying merengue, because Merengue is Django based, we recommend the readin
 of `Deploying Django`_ documentation.
 
 (( to be completed ))
+
+
+Ensure media is served by web server
+====================================
+
+(( to be completed. Talk about sync_plugins_media command ))
 
 
 Example Merengue configuration with nginx and WSGI

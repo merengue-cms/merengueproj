@@ -111,7 +111,12 @@ management interface.
 GIS integrated
 --------------
 
-(( to be completed ))
+Merengue is a GIS out-of-the-box if you install it with GIS support. Every
+managed content are geolocalized and you can edit position in admin view,
+viewing it in a map, or using the Django `GIS API`_ to implement whatever you
+want.
+
+.. _GIS API: http://geodjango.org/
 
 Out-of-the-box caching
 ----------------------
@@ -124,7 +129,14 @@ this integration you can forgot about queryset caching and invalidation.
 Theming
 -------
 
-(( to be completed. include two screenshots of a same view with different themes ))
+Merengue themes can define the look&feel of your website, uncoupling graphic
+design and template logic. With Merengue you can have same content with
+different appearance:
+
+.. image:: _images/themes.jpg
+
+But, ¿how it works? Merengue changes Django template and media loading logic
+including active theme searching on it.
 
 For example, next template will be render blocks located at ``leftsidebar``
 place in the rightsidebar zone. You only have to create this template as your
@@ -158,40 +170,48 @@ and half a WYSYWYG interface (for example to manage blocks layout).
 
 Merengue allow manager to creates any content
 
-(( to be completed ))
+.. image:: _images/content_creation.png
 
 * **Theme management**
 
-(( to be completed ))
+.. image:: _images/theme_management.png
 
 * **Visual block reordering**
 
-(( to be completed ))
+.. image:: _images/block_reordering.png
 
 * **Plugin management**
 
-(( to be completed ))
+.. image:: _images/plugin_management.png
 
 Some other cool features
 ------------------------
 
 * **Collaborative edition**
 
-(( to be completed ))
+Merengue document management include a collaborative edition tool that allows
+users work in a same document collaboratively:
+
+.. image:: _images/collaborative_edition.png
 
 * **Translation tools**
 
-(( to be completed. Transhette, inlinetrans, transmeta. Put a screenshot 
-   of inlinetrans and other from document section translation ))
+Merengue has several tools for translating both contents and language
+catalogs:
 
-* **South integrated**
+ - ``Transhette``: application based in `django-rosetta`_ to do `Django translation`_ via web.
+ - `django-inlinetrans`_: cool WYSYWYG translation application that allows translating every label in same view you see the untranslated text.
+ - `django-transmeta`_: application for model translation.
 
-(( to be completed ))
+* **Schema evolution**
 
-* **South integrated**
+Merengue integrates `South`_ out-of-the-box to have schema evolution.
 
-(( to be completed ))
-
+.. _django-rosetta: http://code.google.com/p/django-rosetta/
+.. _django-inlinetrans: http://code.google.com/p/django-inlinetrans/
+.. _django-transmeta: http://code.google.com/p/django-transmeta/
+.. _Django translation: http://docs.djangoproject.com/en/1.2/topics/i18n/#topics-i18n
+.. _South: http://south.aeracode.org/
 
 Philosophy
 ==========
