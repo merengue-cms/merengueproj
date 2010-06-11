@@ -56,6 +56,10 @@ strong {
     position: relative;
 }
 
+body div#content-zone {
+    width: auto;
+}
+
 /* ----- header ----- */
 #header {
     background: #2F2A12 url(/media/themes/yaco/img/header_back.gif) repeat-y left top;
@@ -360,4 +364,9 @@ div.contentFiles h2 {
 
 div.contentFiles ul {
     text-align: right;
+}
+
+/* calendar */
+.ui-datepicker .ui-datepicker-header {
+    height:25px;
 }
