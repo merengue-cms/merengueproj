@@ -125,7 +125,7 @@ ul {
     padding: 5px 0 5px 11px;
 }
 
-.ie #header-blocks li {
+.ie7 #header-blocks li {
     padding: 0px 0 0 11px;
 }
 
@@ -133,6 +133,10 @@ ul {
     padding: 7px 12px 7px 5px;
     font-size: 10pt;
     background: transparent url(/media/themes/merengue/img/right_menu_button.jpg) no-repeat right top;
+}
+
+.ie #portal-primary-links li a span {
+    line-height: 30px;
 }
 
 #header-blocks li a:hover {

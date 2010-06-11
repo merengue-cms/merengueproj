@@ -67,8 +67,12 @@
 }
 .nextImg {
 	display: block;
-	float: right;
+	float: left;
 	margin-top: 4px;
+}
+
+.screenShotTable .imagesNumber {
+    float: left;
 }
 
 #shadowbox_counter b,

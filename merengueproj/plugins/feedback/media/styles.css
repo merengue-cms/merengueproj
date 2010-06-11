@@ -107,6 +107,7 @@
 
 #feedback {
     width: 100%;
+    clear: both;
 }
 
 #feedback #firstcomment .actions {
