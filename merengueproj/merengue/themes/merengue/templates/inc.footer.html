@@ -1,6 +1,7 @@
 {% load i18n inlinetrans block_tags %}
 
-<div id="footer-left">&nbsp;
+<div id="inner-footer">
+<div id="footer-left" class="borderLeft">&nbsp;
 </div>
 <div id="footer-middle">
   <ul>
@@ -8,9 +9,13 @@
     <li>{% inline_trans "Merengue powered" %}</li>
   </ul>
 
-  {% render_blocks "footer" %}
 </div>
-<div id="footer-right">&nbsp;
+<div id="footer-right" class="borderRight">&nbsp;
+</div>
+<div style="clear: both; height: 1px;">&nbsp;</div>
+</div>
+<div id="outer-footer">
+  {% render_blocks "footer" %}
 </div>
 
 {% block rightfooter %}
