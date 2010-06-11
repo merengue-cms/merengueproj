@@ -38,7 +38,7 @@ class CustomTinyMCE(TinyMCE):
 
     class Media:
         js = (TINYMCE_JS,
-              #'%smerengue/js/tiny_mce_internal_links/tiny_mce_internal_links.js' % settings.MEDIA_URL,
+              '%smerengue/js/tiny_mce_internal_links/tiny_mce_internal_links.js' % settings.MEDIA_URL,
               #'%stinyimages/js/tiny_mce_file.js' % settings.MEDIA_URL,
               #'%sjs/tiny_mce_iframes/tiny_mce_iframes.js' % settings.MEDIA_URL,
               '%stinyimages/js/tinyimages.js' % settings.MEDIA_URL,
@@ -53,7 +53,11 @@ class CustomTinyMCE(TinyMCE):
         self.mce_settings['theme_advanced_buttons2'] = "styleselect,formatselect,fontselect,fontsizeselect,separator,forecolor,link,code,internal_links,iframes,image,file"
         self.mce_settings['theme_advanced_blockformats'] = 'h1,h2,h4,blockquote'
         self.mce_settings['plugins'] = "preview,paste,table,-internal_links,-iframes,-preformatted_text,-file"
-        self.mce_settings['plugin_internal_links_url'] = "/internal-links/"
+        self.mce_settings['plugin_internal_links_base_url'] = '%smerengue/js/tiny_mce_internal_links/' % settings.MEDIA_URL
+        try:
+            self.mce_settings['plugin_internal_links_url'] = reverse('internal_links_search')
+        except NoReverseMatch:
+            pass
         self.mce_settings['plugin_iframes_url'] = "/iframes/"
         self.mce_settings['plugin_file_url'] = "/tinyimages/file_upload/"
         self.mce_settings['file_browser_callback'] = "TinyImagesFileBrowser"
