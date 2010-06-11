@@ -89,7 +89,7 @@ MERENGUE_MIDDLEWARE_CLASSES = (
 # merengue usual middleware list. you can use this variable in your MIDDLEWARE_CLASSES project settings
 MIDDLEWARE_CLASSES = (
     'johnny.middleware.LocalStoreClearMiddleware', # this has to be first
-    'cmsutils.middleware.I18NUpdateCacheMiddleware',
+    #'cmsutils.middleware.I18NUpdateCacheMiddleware', # removed anonymous cache middleware
     'johnny.middleware.QueryCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -103,7 +103,7 @@ MIDDLEWARE_CLASSES = (
     #'django.middleware.gzip.GZipMiddleware',
     #'debug_toolbar.middleware.DebugToolbarMiddleware',
     'merengue.section.middleware.ResponseSectionMiddleware',
-    'cmsutils.middleware.I18NFetchFromCacheMiddleware', # this has to be last
+    #'cmsutils.middleware.I18NFetchFromCacheMiddleware', # this has to be last # removed anonymous cache middleware
 )
 
 # merengue status list for contents workflow.
