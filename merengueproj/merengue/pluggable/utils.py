@@ -109,6 +109,8 @@ def remove_from_installed_apps(plugin_name):
 
 def find_plugin_urls(plugin_name):
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    if not plugin_config:
+        return
     for url_prefix, urlconf in plugin_config.url_prefixes:
         plugin_url_re = r'^%s/' % url_prefix
         try:
@@ -150,6 +152,8 @@ def is_plugin_broken(plugin_name):
 def enable_plugin(plugin_name, register=True):
     from merengue.base.admin import register_app
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    if not plugin_config:
+        return
     add_to_installed_apps(plugin_name)
     if register:
         register_app(plugin_name)
@@ -252,41 +256,57 @@ def unregister_items(item_list):
 
 def register_plugin_actions(plugin_name):
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    if not plugin_config:
+        return
     register_items(plugin_config.get_actions())
 
 
 def unregister_plugin_actions(plugin_name):
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    if not plugin_config:
+        return
     unregister_items(plugin_config.get_actions())
 
 
 def register_plugin_blocks(plugin_name):
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    if not plugin_config:
+        return
     register_items(plugin_config.get_blocks())
 
 
 def unregister_plugin_blocks(plugin_name):
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    if not plugin_config:
+        return
     unregister_items(plugin_config.get_blocks())
 
 
 def register_plugin_viewlets(plugin_name):
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    if not plugin_config:
+        return
     register_items(plugin_config.get_viewlets())
 
 
 def unregister_plugin_viewlets(plugin_name):
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    if not plugin_config:
+        return
     unregister_items(plugin_config.get_viewlets())
 
 
 def register_plugin_post_actions(plugin_name):
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    if not plugin_config:
+        return
     plugin_config.post_actions()
 
 
 def register_plugin_section_models(plugin_name):
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    if not plugin_config:
+        return
     for model, admin_model in plugin_config.section_models():
         site_related = site.register_related(model, admin_model, related_to=Section)
         plugin_config.section_register_hook(site_related, model)
@@ -296,6 +316,8 @@ def register_plugin_section_models(plugin_name):
 
 def register_plugin_in_plugin_admin_site(plugin_name):
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    if not plugin_config:
+        return
     for model, admin_model in plugin_config.get_model_admins():
         site.plugin_site.register(model, admin_model)
         if issubclass(model, BaseContent):
@@ -304,12 +326,16 @@ def register_plugin_in_plugin_admin_site(plugin_name):
 
 def register_plugin_perms(plugin_name):
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    if not plugin_config:
+        return
     for perm in plugin_config.get_perms():
         register_permission(*perm)
 
 
 def unregister_plugin_perms(plugin_name):
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    if not plugin_config:
+        return
     for perm in plugin_config.get_perms():
         unregister_permission(perm[1])
 
