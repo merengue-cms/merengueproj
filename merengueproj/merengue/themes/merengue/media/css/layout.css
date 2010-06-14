@@ -377,7 +377,7 @@ body div#content-zone {
 
 /* error messages */
 div.errormessage, div#messagebox ul#info-list {
-	background: #FCF5CA;
+	background: #FCF5CA url(/media/themes/merengue/img/info_icon.jpg) no-repeat left center;
 	border: 3px solid white;
 	-webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
 	-moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
