@@ -155,6 +155,11 @@ body div#content-zone {
     color: #CCCCCC;
 }
 
+.blockBody .block {
+    width: auto;
+    padding: 0;
+    border: none;
+}
 
 /* ----- content wrapper ----- */
 div#contentwrapper {
