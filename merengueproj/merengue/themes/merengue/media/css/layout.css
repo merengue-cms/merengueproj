@@ -130,7 +130,7 @@ ul {
 }
 
 #portal-primary-links li a {
-    padding: 7px 12px 7px 5px;
+    padding: 8px 12px 7px 5px;
     font-size: 10pt;
     background: transparent url(/media/themes/merengue/img/right_menu_button.jpg) no-repeat right top;
 }
@@ -231,6 +231,9 @@ ul {
     margin: 0.4em;
 }
 
+#latestnews a {
+	font-size: 85%;
+}
 
 /* site actions */
 #site-actions ul li {
@@ -372,6 +375,15 @@ body div#content-zone {
 	border: 1px solid #EDE8E8;
 }
 
+/* error messages */
+div.errormessage, div#messagebox ul#info-list {
+	background: #FCF5CA;
+	border: 3px solid white;
+	-webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
 /* footer */
 #footer {
     font-size: 70%;
@@ -392,7 +404,8 @@ body div#content-zone {
     float: left;
     display: inline;
     border-top: 1px solid #f2e3b8;
-    width: 480px;
+    width: 525px;
+	margin-top: 10px;
 }
 
 #footer-middle ul {
