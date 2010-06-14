@@ -85,6 +85,8 @@ a.reference em { font-style: normal; }
 	font-size: 12px; 
 	line-height: 18px;
 }
+
+/* My Comment */
 #sidebar h3, #sidebar h4 { 
 	color: #917250; 
 	font-weight: 100;
@@ -274,7 +276,7 @@ dt .literal, table .literal { background:none; }
 .admonition .last { margin-bottom:0 !important; }
 .note, .admonition { 
 	padding-left:65px; 
-	background:url(docicons-note.png) .8em .8em no-repeat #FCF9E8;
+	background:url(docicons-note.png) .8em .8em no-repeat #FCF8DE;
 	border: 2px solid white;
 	-webkit-box-shadow: 0 1px 6px rgba(0,0,0,.2);
 	-moz-box-shadow: 0 1px 6px rgba(0,0,0,.2);
