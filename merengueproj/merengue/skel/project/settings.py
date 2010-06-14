@@ -70,7 +70,7 @@ MEDIA_URL = '/media/'
 ADMIN_MEDIA_PREFIX = '/admin_media/'
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'v$*k)ri8i*yv@yb2w!c)t#aj$o=na8u#855#wsve4!iw%u__hy'
+SECRET_KEY = ''
 
 MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + (
     # put here aditional middlewares
