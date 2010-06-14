@@ -403,7 +403,6 @@ body div#content-zone {
 	display: block;
 	float: left;
 	text-align: center;
-	width: 50%;
 	padding-top: 3px;
 	color: #E5C597;
 }
@@ -413,10 +412,15 @@ a#general-conditions {
     text-align: center
 }
 
-a#powered-by {
+li#powered-by {
+    float: right;
     background: transparent url(/media/themes/merengue/img/merengue_icon.jpg) no-repeat right center;
     padding-right: 20px;
     text-align: right;
+}
+
+li#copyright {
+    float: left;
 }
 
 #footer-right {
