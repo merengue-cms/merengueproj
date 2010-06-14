@@ -168,6 +168,9 @@ class BaseLinkInline(admin.TabularInline):
                data.get('viewletlink-0-viewlet', None) and data.get('contentlink-0-content', None) or \
                data.get('viewletlink-0-viewlet', None) and data.get('absolutelink-0-content', None):
                 raise ValidationError(_('Sorry you can not select two or more options simultaneously for this menu. Fulfill just one.'))
+            elif not data.get('contentlink-0-content', None) and not data.get('absolutelink-0-url', None) and \
+                 not data.get('viewletlink-0-viewlet', None):
+                raise ValidationError(_('Sorry you need to select one options for this menu. Fulfill just one.'))
         formset.save_new = save_new
         formset.clean = clean
         return formset
