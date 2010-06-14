@@ -385,18 +385,24 @@ body div#content-zone {
 
 #footer-middle {
     float: left;
-    display: block;
+    display: inline;
     border-top: 1px solid #f2e3b8;
     width: 480px;
 }
 
-#footer-middle a {
-    float: left;
-    display: block;
-    padding-top: 5px;
-    padding-right: 50px;
-    padding-left: 7px;
+#footer-middle ul {
+	display: block;
 }
+
+#footer-middle li {
+	display: block;
+	float: left;
+	text-align: center;
+	width: 50%;
+	padding-top: 3px;
+	color: #E5C597;
+}
+
 
 a#general-conditions {
     text-align: center
@@ -416,7 +422,6 @@ a#powered-by {
 
 #outer-footer {
     padding-top: 5px;
-    background: #f4f0e5;
     text-align: right;
 }
 
