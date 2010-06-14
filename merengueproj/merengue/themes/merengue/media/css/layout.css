@@ -393,6 +393,12 @@ div.errormessage, div#messagebox ul#info-list {
 	box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
 }
 
+/* slideshow */
+.simpleImgGallery2 {
+	background: #F4F0E5;
+	border: 1px solid #EDE8E8;
+}
+
 /* footer */
 #footer {
     font-size: 70%;
