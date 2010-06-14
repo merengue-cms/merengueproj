@@ -41,6 +41,10 @@ urlpatterns = patterns('',
     # collaborative views
     (r'^collab/', include('merengue.collab.urls')),
 
+    # searchforms
+    (r'^searchform/', include('searchform.urls')),
+    (r'^searchform_jsi18n/', include('searchform.jsi18n_urls')),
+
     # other
     (r'^internal-links/', include('merengue.internallinks.urls')),
     (r'^threadedcomments/', include('threadedcomments.urls')),

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load i18n pagination_tags content_tags list_utils rating_tags %}
+
+{% block pagetitle %}{% trans "Internal links" %}{% endblock %}
+
+{% block extrahead %}
+    <script src="{{ MEDIA_URL }}cmsutils/js/widgets/tiny_mce/tiny_mce_popup.js"></script>
+    <script src="{{ MEDIA_URL }}merengue/js/tiny_mce_internal_links/utils.js"></script>
+    {{ search_form.render_media|safe }}
+    <link href="{{ MEDIA_URL }}merengue/js/tiny_mce_internal_links/css/internal_links.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+    (function($) {
+        $(document).ready(function () {
+            $(".searchResultsItem a").click(function() {
+                if (typeof(window.opener.return_value_in)!='undefined') {
+                    window.opener.return_value_in.val($(this).attr('href'));
+                } else {
+                    insertLink($(this).attr('href'), $(this).text());
+                }
+                window.close();
+                return false;
+            });
+        });
+    })(jQuery);
+    </script>
+{% endblock %}
+
+{% block page %}
+<div class="touristservice">
+<div id="content" style="width=800px; margin: 0px auto; padding: 0px 10px;">
+
+<div id="search_form" class="advancedSearch">
+  <form action="." method="get">
+    {{ search_form }}
+  </form>
+</div>
+
+<br />
+
+<div class="searchResults">
+{% autopaginate object_list 10 %}
+{% paginate %}
+{% for item in object_list %}
+{% with item.get_absolute_url as item_url %}
+   <div class="searchResultsItem">
+    <span style="float:right">
+    </span>
+        <h3 class="contenttype contenttype-{% spaceless %}{{ item.get_class_name }}{% endspaceless %}">
+        <a href="{{ item.get_absolute_url }}">{{ item }}</a>
+        </h3>
+        <div class="searchResultsItemDescription">
+            <div class="searchResultsItemImage">
+            </div>
+        <div class="searchResultsItemInfo">
+        <ul>
+
+            {% if item.plain_description %}<li><p><strong>{% trans "Description" %}:</strong> {{ item.plain_description|truncatewords:20 }}</p></li>{% endif %}
+
+            {% if with_rating %}<li>{% ratingform item readonly %} </li>{% endif %}
+        </ul>
+        </div>
+        </div>
+  </div>
+{% endwith %}
+{% endfor %}
+{% paginate %}
+</div>
+</div>
+</div>
+{% endblock %}

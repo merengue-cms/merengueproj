@@ -45,7 +45,7 @@ tinymce.create('tinymce.plugins.InternalLinksPlugin', {
 	        ed.addCommand('mceInternalLink', function() {
 			var ed=tinyMCE.activeEditor;
 		        var internalLinksURL = ed.getParam("plugin_internal_links_url", null);
-		        var internalLinksWidth = ed.getParam("plugin_internal_links_width", "850");
+		        var internalLinksWidth = ed.getParam("plugin_internal_links_width", "650");
 		        var internalLinksHeight = ed.getParam("plugin_internal_links_height", "600");
       
 		        // Use a custom preview page
@@ -55,6 +55,7 @@ tinymce.create('tinymce.plugins.InternalLinksPlugin', {
 					width : internalLinksWidth,
 					height: internalLinksHeight,
 					movable: true,
+					scrollbars: true,
 					inline: true
 				});
 		        }
