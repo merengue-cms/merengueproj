@@ -64,18 +64,17 @@ ul {
 }
 
 #contentwrapper {
-    background: white url(/media/themes/merengue/img/content_top.jpg) no-repeat left top;
+    background: transparent url(/media/themes/merengue/img/content_top.jpg) no-repeat left top;
 }
 
 .borderLeft {
-    background: transparent url(/media/themes/merengue/img/border_left.jpg) repeat-y left top;
+    background: white url(/media/themes/merengue/img/border_left.jpg) repeat-y left top;
     margin-left: -1px;
-	padding-top: 10px;
 }
 
 .borderRight {
     padding: 10px 5px 0 5px;
-    background: transparent url(/media/themes/merengue/img/border_right.jpg) repeat-y right top;
+    background: transparent url(/media/themes/merengue/img/border_right.jpg) repeat-y top right;
 }
 
 #headerlogo {
@@ -370,15 +369,12 @@ body div#content-zone {
 
 /* footer */
 #footer {
-    font-size: 9pt;
-    background: none;
-}
-
-#inner-footer {
-    background: white url(/media/themes/merengue/img/content_bottom.jpg) no-repeat left bottom;
+    font-size: 70%;
+    background: transparent url(/media/themes/merengue/img/content_bottom.jpg) no-repeat left bottom;
     display: block;
     width: 100%;
     padding-bottom: 3px;
+	height: 35px;
 }
 
 #footer-left {
@@ -390,7 +386,6 @@ body div#content-zone {
 #footer-middle {
     float: left;
     display: block;
-    margin-top: 10px;
     border-top: 1px solid #f2e3b8;
     width: 480px;
 }
