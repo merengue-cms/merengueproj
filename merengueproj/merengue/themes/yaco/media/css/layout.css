@@ -84,6 +84,11 @@ body div#content-zone {
     padding-top: 1em;
 }
 
+#header-blocks #portal-primary-links {
+    border: none;
+    width: auto;
+}
+
 #header ul {
     margin-left: 3em;
 }
