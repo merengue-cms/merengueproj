@@ -266,6 +266,10 @@ body div#content-zone {
     font-size: 12px;
 }
 
+.contentList li {
+	border-bottom: 1px dotted #E5C597;
+	padding-top: 10px;
+}
 
 /*news*/
 .news-contentbody {
@@ -373,6 +377,10 @@ body div#content-zone {
 .ui-datepicker .ui-datepicker-header {
 	background: #F4F0E5;
 	border: 1px solid #EDE8E8;
+}
+
+.ui-datepicker th {
+	color: #CDA873;
 }
 
 /* error messages */
