@@ -490,6 +490,10 @@ class BaseAdmin(GenericAdmin, admin.ModelAdmin):
         extra_context = self._base_update_extra_context(extra_context)
         return super(BaseAdmin, self).history_view(request, object_id, extra_context)
 
+    def delete_view(self, request, object_id, extra_context=None):
+        extra_context = self._base_update_extra_context(extra_context)
+        return super(BaseAdmin, self).delete_view(request, object_id, extra_context)
+
 
 class BaseCategoryAdmin(BaseAdmin):
     ordering = (get_fallback_fieldname('name'), )
