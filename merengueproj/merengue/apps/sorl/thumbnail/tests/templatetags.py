@@ -1,7 +1,4 @@
-import unittest
 import os
-import time
-from PIL import Image
 from django.conf import settings
 from django.template import Template, Context, TemplateSyntaxError
 from sorl.thumbnail.tests.classes import BaseTest, RELATIVE_PIC_NAME

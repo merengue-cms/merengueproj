@@ -4,7 +4,8 @@ from tempfile import mkstemp
 from shutil import copyfile
 from subprocess import Popen, PIPE
 
-from PIL import Image, ImageFilter
+import Image
+import ImageFilter
 
 from sorl.thumbnail import defaults
 from sorl.thumbnail.processors import get_valid_options, dynamic_import
@@ -13,7 +14,6 @@ from sorl.thumbnail.processors import get_valid_options, dynamic_import
 class ThumbnailException(Exception):
     # Stop Django templates from choking if something goes wrong.
     silent_variable_failure = True
-
 
 class Thumbnail(object):
     def __init__(self, source, requested_size, opts=None, quality=85,
@@ -166,7 +166,7 @@ class Thumbnail(object):
     def _convert_imagemagick(self, filename):
         tmp = mkstemp('.png')[1]
         if 'crop' in self.opts or 'autocrop' in self.opts:
-            x,y = [d*3 for d in self.requested_size]
+            x, y = [d*3 for d in self.requested_size]
         else:
             x,y = self.requested_size
         try:

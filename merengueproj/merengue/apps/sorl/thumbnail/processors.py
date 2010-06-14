@@ -1,4 +1,6 @@
-from PIL import Image, ImageFilter, ImageChops
+import Image
+import ImageFilter
+import ImageChops
 
 
 def dynamic_import(names):
@@ -22,14 +24,13 @@ def get_valid_options(processors):
                                   if opt not in valid_options])
     return valid_options
 
-
 def colorspace(im, requested_size, opts):
     if 'bw' in opts and im.mode != "L":
         im = im.convert("L")
     elif im.mode not in ("L", "RGB"):
         im = im.convert("RGB")
     return im
-colorspace.valid_options = ('bw',)
+colorspace.valid_options = ('bw', )
 
 
 def autocrop(im, requested_size, opts):
@@ -46,7 +47,7 @@ def autocrop(im, requested_size, opts):
 autocrop.valid_options = ('autocrop',)
 
 
-def scale_and_crop(im, requested_size, opts):
+def scale_and_crop(im,requested_size,opts):
     x, y   = [float(v) for v in im.size]
     xr, yr = [float(v) for v in requested_size]
 

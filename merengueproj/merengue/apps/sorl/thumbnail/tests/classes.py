@@ -1,8 +1,7 @@
-import unittest
 import os
 import time
 
-from PIL import Image
+import Image
 from django.conf import settings
 
 from sorl.thumbnail.base import Thumbnail

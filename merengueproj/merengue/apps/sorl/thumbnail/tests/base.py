@@ -1,6 +1,6 @@
 import unittest
 import os
-from PIL import Image
+import Image
 from django.conf import settings
 from sorl.thumbnail.base import Thumbnail
 
@@ -8,6 +8,7 @@ try:
     set
 except NameError:
     from sets import Set as set     # For Python 2.3
+
 
 def get_default_settings():
     from sorl.thumbnail import defaults
@@ -27,6 +28,7 @@ PIC_SIZE = (800, 600)
 
 
 class ChangeSettings:
+
     def __init__(self):
         self.default_settings = DEFAULT_THUMBNAIL_SETTINGS.copy()
 
