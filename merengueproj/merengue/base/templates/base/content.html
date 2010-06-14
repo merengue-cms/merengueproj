@@ -1,12 +1,16 @@
 {% extends "base.html" %}
 
-{% load i18n content_tags action_tags block_tags media_tags %}
+{% load i18n content_tags action_tags block_tags media_tags map_tags %}
 
 {% block metatags %}
   {{ block.super }}
   {% if section %}
     <meta name="section" content="{{ section }}" />
   {% endif %}
+{% endblock %}
+
+{% block extrahead %}
+  {% google_map_media content=content %}
 {% endblock %}
 
 {% block cssstyles %}
@@ -107,6 +111,13 @@
     {% endblock %}
 
     {% block aftercontentbody %}
+    {% endblock %}
+
+    {% block contentmap %}
+       {% google_map content=content %}
+    {% endblock %}
+
+    {% block aftercontentmap %}
     {% endblock %}
 
     {% block aftercontentblocks %}

@@ -72,7 +72,6 @@ if settings.USE_GIS:
                         settings.DEFAULT_LONGITUDE + 1.0,
                         settings.DEFAULT_LATITUDE + 1.0)
 
-
     def write_markers(context, contents, areas, show_area_centroid=False, show_main_image=0):
         xml = render_to_string('base/markers.xml',
                                {'contents': contents,
@@ -89,7 +88,6 @@ if settings.USE_GIS:
             f.write(xml.encode('utf-8'))
             f.close()
         return '%s%s' % (settings.MEDIA_URL, file_path)
-
 
     def center_bounds(content, bounds):
         if not content.main_location:
@@ -109,7 +107,6 @@ if settings.USE_GIS:
             y0 = y1 - 2 * abs(dy1)
         return (x0, y0, x1, y1)
 
-
     class GoogleMapsNode(RenderWithArgsAndKwargsNode):
 
         def prepare_context(self, args, kwargs, context):
@@ -125,7 +122,7 @@ if settings.USE_GIS:
 
             content_areas = kwargs.get('content_areas', [])
             show_area_centroid = kwargs.get('show_area_centroid', False)
-            show_directions = kwargs.get('show_directions', True)
+            show_directions = kwargs.get('show_directions', False)
             travel_directions = kwargs.get('travel_directions', False)
             travel_directions_ajax_url = kwargs.get('travel_directions_ajax_url', '')
             colorify_areas = kwargs.get('colorify_areas', False)
@@ -194,19 +191,16 @@ if settings.USE_GIS:
                     'LANGUAGE_CODE': get_language(),
                     'request': context.get('request', None)}
 
-
     @register.tag
     def google_map(parser, token):
         args, kwargs, as_var = parse_args_kwargs_and_as_var(parser, token)
         return GoogleMapsNode(args, kwargs, 'base/google_map.html')
-
 
     def get_map_type(map_type=None):
         if map_type is None:
             return 'G_NORMAL_MAP'
         else:
             return 'G_%s_MAP' % map_type.upper()
-
 
     class GoogleMapsMediaNode(RenderWithArgsAndKwargsNode):
 
@@ -232,7 +226,6 @@ if settings.USE_GIS:
                     'LANGUAGE_CODE': get_language(),
                     'request': context.get('request', None)}
 
-
     @register.tag
     def google_map_media(parser, token):
         if len(token.split_contents()) == 1: # No parameters
@@ -242,11 +235,9 @@ if settings.USE_GIS:
             args, kwargs, as_var = parse_args_kwargs_and_as_var(parser, token)
         return GoogleMapsMediaNode(args, kwargs, 'base/google_map_media.html')
 
-
     @register.inclusion_tag('base/mini_google_map.html', takes_context=True)
     def mini_google_map(context, content, zoom=4, map_type=None):
         return mini_google_map_with_location(context, content, None, zoom, map_type)
-
 
     @register.inclusion_tag('base/mini_google_map.html', takes_context=True)
     def mini_google_map_with_location(context, content, location=None, zoom=4, map_type=None):
@@ -269,12 +260,10 @@ if settings.USE_GIS:
         'visit.visit',
         ]
 
-
     def _sort_content_types(x, y):
         newx = '%s.%s' % (x.app_label, x.model)
         newy = '%s.%s' % (y.app_label, y.model)
         return _sort_content_types_args(newx, newy)
-
 
     def _sort_content_types_args(x, y):
         if x not in CONTENT_TYPES_ORDER:
@@ -286,7 +275,6 @@ if settings.USE_GIS:
         else:
             pos_y=CONTENT_TYPES_ORDER.index(y)
         return cmp(pos_x, pos_y)
-
 
     def _get_content_types(args):
         if not args:
@@ -303,7 +291,6 @@ if settings.USE_GIS:
 
         return content_types
 
-
     class ProximityFilter(template.Node):
 
         def __init__(self, content_types):
@@ -317,7 +304,6 @@ if settings.USE_GIS:
             tpl = template.loader.get_template('base/map_filters.html')
             output = tpl.render(extra_context)
             return output
-
 
     def google_map_proximity_filter(parser, token):
         try:
@@ -337,11 +323,15 @@ if settings.USE_GIS:
 
     register.filter('localized', localized)
 else:
+
     class dummyNode(template.Node):
+
         def render(self, *args, **kwargs):
             return ''
+
     def dummy_tag(*args):
         return dummyNode()
+
     def dummy_filter(value, *args):
         return ''
 

@@ -176,7 +176,7 @@ if settings.USE_GIS:
             if self.map_icon:
                 return self.map_icon.url
             else:
-                return settings.MEDIA_URL + 'img/default_map_icon.jpg'
+                return settings.MEDIA_URL + 'merengue/img/map/default_map_icon.png'
 
         def get_icon_tag(self):
             return '<img src="%s" title="%s"/>' %(self.get_icon(), self._meta.verbose_name)
@@ -379,12 +379,6 @@ class BaseContent(BaseClass):
     def can_edit(self, user):
         from merengue.perms.utils import has_permission
         return has_permission(self, user, 'edit')
-
-    def get_icon(self):
-        if self.map_icon:
-            return super(BaseContent, self).get_icon()
-        else:
-            return settings.MEDIA_URL + 'img/' + self.get_class_name() + '_map_icon.jpg'
 
     def get_main_section(self):
         """ Get main section of a content """

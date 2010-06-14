@@ -1,0 +1,5 @@
+.googlemap-sidebar { display: none; }
+
+#googlemap {
+    height: 400px;
+}
