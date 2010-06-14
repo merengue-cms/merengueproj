@@ -50,6 +50,7 @@ ul {
 
 #header {
 	background: transparent url(/media/themes/merengue/img/header_bg.jpg) no-repeat center top;
+	margin-top: -15px;
 }
 
 /* ----- Useful class ----- */
@@ -216,7 +217,7 @@ ul {
 /* left-sidebar */
 #left-sidebar {
     float: left;
-    width: 244px;
+    width: 200px;
 }
 
 /* right-sidebar */
@@ -250,8 +251,7 @@ ul {
 /* Content */
 #content {
     float: left;
-    width: 470px;
-    padding: 0 10px;
+    width: 515px;
 }
 
 body div#content-zone {
@@ -353,6 +353,7 @@ body div#content-zone {
 
 /* calendar */
 #eventsCalendar .ui-datepicker {
+	border-color: #EDE8E8;
     width: 15em;
 	margin-left: -1.2em;
 }
@@ -365,6 +366,10 @@ body div#content-zone {
 #eventsCalendar .ui-datepicker select.ui-datepicker-month,
 #eventsCalendar .ui-datepicker select.ui-datepicker-year {
     width:40%;
+}
+.ui-datepicker .ui-datepicker-header {
+	background: #F4F0E5;
+	border: 1px solid #EDE8E8;
 }
 
 /* footer */
@@ -380,7 +385,7 @@ body div#content-zone {
 #footer-left {
     float: left;
     display: block;
-    width: 245px;
+    width: 200px;
 }
 
 #footer-middle {
