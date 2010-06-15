@@ -464,6 +464,23 @@ div.errormessage, div#messagebox ul#info-list {
 	border: 1px solid #EDE8E8;
 }
 
+/* event view */
+.eventIcon {
+	float: left;
+	padding-right: 10px;
+}
+
+.eventDates {
+    font-size: 80%;
+	line-height: 15px;
+	margin-bottom: 1em;
+	padding-top: 8px;	
+}
+
+.eventDates label{
+	color: #997B53;
+}
+
 /* footer */
 #footer {
     font-size: 70%;
