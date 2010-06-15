@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from merengue.pluggable import Plugin
 from merengue.registry import params
 
-from plugins.news.actions import PDFExport, NewsIndex, NewsRSS
+from plugins.news.actions import NewsIndex, NewsRSS
 from plugins.news.blocks import LatestNewsBlock
 from plugins.news.viewlets import LatestNewsViewlet, AllNewsViewlet
 
@@ -26,7 +26,7 @@ class PluginConfig(Plugin):
 
     @classmethod
     def get_actions(cls):
-        return [PDFExport, NewsIndex, NewsRSS]
+        return [NewsIndex, NewsRSS]
 
     @classmethod
     def get_blocks(cls):
