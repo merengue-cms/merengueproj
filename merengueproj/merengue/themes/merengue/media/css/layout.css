@@ -362,7 +362,7 @@ body div#content-zone {
     font-size: 12px;
 }
 #feedback h2{
-	border-bottom: 1px dotted;
+	border-bottom: 1px dotted #CCC;
 }
 
 #feedback #firstcomment .actions a {
@@ -376,6 +376,11 @@ body div#content-zone {
 .theme-merengue #feedback #firstcomment .commentinfo {
     background: #fcf9e3;
 }
+.commentinfo {
+	text-align: right;
+	font-style: italic;
+	color: #E5C597 !important;
+} 
 
 .theme-merengue #feedback .commentform form {
     border: 1px solid #EDE8E8;
