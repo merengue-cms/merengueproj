@@ -22,16 +22,16 @@
 
 {% block content %}
     {{ block.super }}
-    <h1>{% trans "Save/Restore configuration" %}</h1>
+    <h1>{% trans "Site configuration" %}</h1>
     <div id="content-main">
+        <h2>{% trans "Save/Restore configuration" %}</h2>
         <form enctype="multipart/form-data" method="post" action=".">
             <fieldset class="module">
               <h2>{% trans 'Upload saved configuration' %}</h2>
-              <div class="form-row"> {% trans 'Upload and restore a .zip file containing a saved Merengue configuration' %} </div>
+              <div class="form-row"> {% trans 'Upload and restore a .zip file containing a saved project configuration' %} </div>
               <div class="form-row">
-                
-                {{ form.as_div }}
-                <input type="submit" name="_submit" class="default" value="{% trans 'Submit config' %}" />
+                {{ form_configuration.as_div }}
+                <input type="submit" name="_submit_configuration" class="default" value="{% trans 'Submit config' %}" />
               </div>
             </fieldset>
         </form>
@@ -40,15 +40,39 @@
 
         <form method="get" action="save">
             <fieldset class="module">
-                <h2>{% trans 'Save actual configuration' %}</h2>
-                <div class="form-row"> {% trans 'Save actual Merengue configuration into a .zip file that can be restored' %} </div>
+                <h2>{% trans 'Save current configuration' %}</h2>
+                <div class="form-row"> {% trans 'Save current project configuration into a .zip file that can be restored' %} </div>
                 <div class="form-row">
-                <input type="submit" name="_save" class="default" value="{% trans 'Save actual config' %}" />
+                <input type="submit" name="_save" class="default" value="{% trans 'Save current config' %}" />
                 </div>
             </fieldset>
         </form>
-    </div>
+    <h2>{% trans "Backups configuration" %}</h2>
 
+    <form enctype="multipart/form-data" method="post" action=".">
+        <fieldset class="module">
+            <h2>{% trans 'Set database' %}</h2>
+            <div class="form-row"> {% trans 'Upload and restore a .zip file containing a saved project configuration' %} </div>
+            <div class="form-row">
+                {{ form_backup.as_div }}
+            <input type="submit" name="_submit_backup" class="default" value="{% trans 'Submit backup' %}" />
+            </div>
+        </fieldset>
+    </form>
+
+    <div class="module aligned"></div>
+
+    <form method="get" action="backup">
+        <fieldset class="module">
+            <h2>{% trans 'Save current backup' %}</h2>
+            <div class="form-row"> {% trans 'Save current backup configuration into a .zip file that can be restored' %} </div>
+            <div class="form-row">
+            <input type="submit" name="_save" class="default" value="{% trans 'Save current backup' %}" />
+            </div>
+        </fieldset>
+    </form>
+
+    </div>
 {% endblock %}
 
 

@@ -94,6 +94,16 @@ def save_config(overwrite=True, save_all=True):
     return buffer
 
 
+def save_backupdb(path_backup):
+    buffer = StringIO()
+    zip_config = zipfile.ZipFile(buffer, "w",
+                                     compression=zipfile.ZIP_DEFLATED)
+    f = file(path_backup)
+    zip_config.writestr(path_backup.split('/')[-1], f.read())
+    zip_config.close()
+    return buffer
+
+
 def add_models(zip_config, models_to_save):
     """
     Add models in tuple of tuples models_to_save

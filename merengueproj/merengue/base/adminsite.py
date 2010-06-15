@@ -16,7 +16,7 @@ from django.utils.functional import update_wrapper
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
 
-from merengue.base.adminforms import UploadConfigForm
+from merengue.base.adminforms import UploadConfigForm, BackupForm
 from merengue.base.models import BaseContent
 
 OBJECT_ID_PREFIX = 'base_object_id_'
@@ -72,6 +72,9 @@ class BaseAdminSite(DjangoAdminSite):
             url(r'^siteconfig/save/$',
                 self.admin_view(self.save_configuration),
                 name='save_configuration'),
+            url(r'^siteconfig/backup/$',
+                self.admin_view(self.save_backup),
+                name='save_backup'),
         )
         # related url definitions
         for model, model_admin in self._registry.iteritems():
@@ -158,26 +161,41 @@ class BaseAdminSite(DjangoAdminSite):
     def site_configuration(self, request):
         from merengue.base.utils import restore_config
         if request.method == 'POST':
-            form = UploadConfigForm(request.POST, request.FILES)
-            if form.is_valid():
-                restore_config(form.cleaned_data['zipfile'])
-                request.user.message_set.create(message=_('Settings saved successfully'))
-        else:
-            form = UploadConfigForm()
+            if request.POST.get('_submit_configuration', None):
+                form_configuration = UploadConfigForm(request.POST, request.FILES)
+                if form_configuration.is_valid():
+                    restore_config(form_configuration.cleaned_data['zipfile'])
+                    request.user.message_set.create(message=_('Settings saved successfully'))
+            elif request.POST.get('_submit_backup', None):
+                form_backup = BackupForm(request.POST, request.FILES)
+                if form_backup.is_valid():
+                    form_backup.save()
+                    request.user.message_set.create(message=_('Database created successfully'))
+        form_configuration = UploadConfigForm()
+        form_backup = BackupForm()
         return render_to_response('admin/siteconfig.html',
-                                      {'form': form},
+                                      {'form_configuration': form_configuration,
+                                       'form_backup': form_backup,
+                                      },
                                       context_instance=RequestContext(request))
 
     def save_configuration(self, request):
         from merengue.base.utils import save_config
-
         zip_name = datetime.now()
-
         response = HttpResponse(mimetype='application/x-zip-compressed')
         response['Content-Disposition'] = 'attachment; filename="%s.zip"' % zip_name.isoformat('-')
-
         buffer_zip = save_config()
+        response.write(buffer_zip.getvalue())
+        return response
 
+    def save_backup(self, request):
+        from cmsutils.backupdb_utils import do_backupdb
+        from merengue.base.utils import save_backupdb
+        zip_name = 'backup_%s' % datetime.now().isoformat('-')
+        response = HttpResponse(mimetype='application/x-zip-compressed')
+        response['Content-Disposition'] = 'attachment; filename="%s.zip"' % zip_name
+        path_backup = do_backupdb()
+        buffer_zip = save_backupdb(path_backup)
         response.write(buffer_zip.getvalue())
         return response
 
