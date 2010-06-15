@@ -140,9 +140,9 @@ span.errormsg {
 }
 
 span.infomsg {
-    background: transparent url(/media/merengue/img/info_icon.gif) no-repeat scroll 0 0;
-    color: green;
-    padding-left: 20px;
+    background: none;
+    color: #717171;
+    padding-left: 0;
 }
 
 /* ----- Inplace edit form ----- */
