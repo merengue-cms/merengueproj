@@ -1,0 +1,10 @@
+{% load i18n inlinetrans content_tags list_utils comparison %}
+{% for content in multiple %}
+<div class="merengueContentInfo">
+  <h4>
+    <a href="{{ content.get_absolute_url }}" alt="{{ content.name }}" title="{{ content.name }}" target="_blank">{{ content.name|truncatewords:6 }}</a>
+  </h4>
+  <div class="description">{{ content.description|safe }}</div>
+  <a class="moreinfo" href="{{ content.get_absolute_url }}" target="_blank">{% inline_trans "More Info" %}</a>
+</div>
+{% endfor %}

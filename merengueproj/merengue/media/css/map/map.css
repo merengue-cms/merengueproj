@@ -3,3 +3,30 @@
 #googlemap {
     height: 400px;
 }
+
+.merengueContentInfo {
+    font-size: 12px;
+}
+
+.merengueContentInfo h4 {
+    margin: 0px;
+    margin-right: 10px;
+    height: 1em;
+    line-height: 1em;
+    overflow: hidden;
+}
+
+.merengueContentInfo .description {
+    height: 6.5em;
+    overflow: hidden;
+}
+
+.merengueContentInfo p {
+    padding: 0px !important;
+    margin: 5px 0px;
+}
+
+.merengueContentInfo .moreinfo {
+    margin-top: 1em;
+    float: right;
+}

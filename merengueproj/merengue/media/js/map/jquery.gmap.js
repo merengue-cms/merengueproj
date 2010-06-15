@@ -164,14 +164,14 @@
                                 }
                                 google.maps.DownloadUrl(url, function (doc) {
                                         // Split the doc into pieces so we can create tabs
-                                        var parts = $.trim(doc).split(/<div class="andaluciaContentInfo"/g);
+                                        var parts = $.trim(doc).split(/<div class="merengueContentInfo"/g);
                                         var tabs = [];
                                         var counter = 1;
                                         var max_height = 120;
                                         for (var i = 0; i < parts.length; i += 1) {
                                             var text = parts[i];
                                             if (text !== "") {
-                                                text = '<div class="andaluciaContentInfo"' + text;
+                                                text = '<div class="merengueContentInfo"' + text;
                                                 tabs.push(new google.maps.InfoWindowTab("" + counter, text));
                                                 counter += 1;
                                                 start = text.indexOf('infoWindowHeight');
