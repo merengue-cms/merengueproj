@@ -120,6 +120,9 @@
             var cancelEdition = function() {
                 var body = section.find('.document-section-body');
                 var newbody = section.find('.new-document-section-body');
+                if (newbody.tinymce().isDirty() && !confirm(options.section_edit_cancel)) {
+                    return false;
+                }
                 newbody.tinymce().hide();
                 newbody.remove();
                 section.find('.document-section-edition').remove();
@@ -266,6 +269,7 @@
                 var section_move_url = config_div.find('.section-move-url').text();
                 var section_delete_message = config_div.find('.section-delete-message').text();
                 var document_id = config_div.find('.document_id').text();
+                var section_edit_cancel = config_div.find('.section-edit-cancel').text();
 
                 return {
                     section_insert_url: section_insert_url,
@@ -273,6 +277,7 @@
                     section_edit_url: section_edit_url,
                     section_move_url: section_move_url,
                     section_delete_message: section_delete_message,
+                    section_edit_cancel: section_edit_cancel,
                     document_id: document_id
                 }
             };
