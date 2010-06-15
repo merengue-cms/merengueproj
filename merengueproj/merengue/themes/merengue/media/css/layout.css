@@ -193,8 +193,7 @@ ul {
 	border-bottom: 0.1em dotted;
 }
 
-#content-actions li {
-	margin: 0 5px 0 0;
+#content-actions li, .button a {
 	display: inline;
 	font-size: 80%;
 	background: #f0e6d5;
@@ -216,6 +215,10 @@ ul {
 /* site actions */
 #site-actions ul li {
     display: inline;
+}
+
+#site-actions {
+	margin-left: 7px;
 }
 
 #site-actions li {
