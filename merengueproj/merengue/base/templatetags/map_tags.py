@@ -163,7 +163,7 @@ if settings.USE_GIS:
             else:
                 markers_url = None
 
-            if content and isinstance(content, LocatableContent):
+            if content and isinstance(content, LocatableContent) and content.has_location():
                 display_content = True
             elif not content:
                 display_content = False
