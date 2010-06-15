@@ -264,7 +264,7 @@ ul {
 }
 
 /* right-sidebar */
-.blockContainer h1 {
+#right-sidebar .blockContainer h1 {
 	background: transparent url(/media/themes/merengue/img/portlet_header.jpg) no-repeat center center;
 	height: 30px;
 	line-height: 32px;
@@ -272,6 +272,7 @@ ul {
 	color: white;
 	text-align: center;
 	margin: 12px 0 0 0;
+	text-shadow: 
 }
 
 #right-sidebar div.blockBody {
