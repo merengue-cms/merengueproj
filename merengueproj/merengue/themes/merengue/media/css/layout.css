@@ -362,7 +362,8 @@ body div#content-zone {
     font-size: 12px;
 }
 #feedback h2{
-	border-bottom: 1px dotted #CCC;
+	border-bottom: 1px dotted;
+	padding-bottom: 0.1em;
 }
 
 #feedback #firstcomment .actions a {
