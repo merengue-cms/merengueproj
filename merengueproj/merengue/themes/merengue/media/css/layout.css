@@ -473,20 +473,19 @@ a#general-conditions {
 }
 
 li#powered-by {
-    float: right;
     background: transparent url(/media/themes/merengue/img/merengue_icon.png) no-repeat right center;
     padding-right: 20px;
-    text-align: right;
-}
-
-li#copyright {
-    float: left;
 }
 
 #footer-right {
     float: right;
     display: block;
     width: 241px;
+}
+
+#outer-footer li {
+    display: inline;
+    margin-left: 1em;
 }
 
 #outer-footer {
