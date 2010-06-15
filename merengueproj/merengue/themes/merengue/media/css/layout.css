@@ -505,3 +505,14 @@ li#powered-by {
     padding-top: 5px;
     color: #E5C597;
 }
+
+
+/* Safari 3.0 and Chrome rules here */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  #portal-primary-links {
+    width: 39%;
+  }
+  #header-blocks ul li a span {
+    display: inline-block;
+  }
+}
