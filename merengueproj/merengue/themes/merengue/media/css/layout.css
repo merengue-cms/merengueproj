@@ -359,6 +359,9 @@ body div#content-zone {
 .comment p {
     font-size: 12px;
 }
+#feedback h2{
+	border-bottom: 1px dotted;
+}
 
 #feedback #firstcomment .actions a {
 	background: #F0E6D5 !important;
