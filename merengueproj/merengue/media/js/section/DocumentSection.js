@@ -84,6 +84,9 @@
             };
 
             var deleteSection = function() {
+                if (!confirm(options.section_delete_message)) {
+                    return false;
+                }
                 var url = options['section_delete_url'];
                 $.ajax({
                     url: url,
