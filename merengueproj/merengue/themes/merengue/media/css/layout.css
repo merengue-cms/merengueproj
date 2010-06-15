@@ -257,6 +257,12 @@ ul {
 }
 
 /* right-sidebar */
+.blockContainer h1 {
+	background: transparent url(/media/themes/merengue/img/portlet_header.jpg) no-repeat center center;
+	height: 32px;
+	width: 182px;
+}
+
 #right-sidebar {
     float:right;
     display: block;
