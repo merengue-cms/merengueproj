@@ -198,6 +198,11 @@ span.inplace_view_editable_field {
        margin-top: 150px;
 }
 
+input#id_username,
+input#id_password {
+    width: 155px;
+}
+
 .actionRow{
      text-align: center;
 }
