@@ -183,6 +183,7 @@ span.inplace_view_editable_field {
       border-radius: 8px;
 }
 #login label {
+	  color: #A17F59;
       text-align:right;
       float: left;
       width: 150px;
