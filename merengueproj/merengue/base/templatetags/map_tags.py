@@ -30,7 +30,7 @@ if settings.USE_GIS:
         """ gets map bounds. first try to get content bounds,
             last will get content_pois extent """
         borders = None
-        if isinstance(content, BaseContent):
+        if isinstance(content, BaseContent) and getattr(content, 'location', None):
             borders = content.location.borders
         elif isinstance(content, BaseLocation):
             borders = content.borders
