@@ -138,7 +138,8 @@ def _get_object_tools_in_route(route):
             base_url += '%s/' % (obj.id)
             obj_tool['base_url'] = base_url
             base_url += '%s/' % tool_name
-        res.append(obj_tool)
+        if obj_tool['tools']:
+            res.append(obj_tool)
     return res
 
 
