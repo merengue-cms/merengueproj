@@ -7,8 +7,9 @@
 
 body {
     font-family: arial;
+	color: #717171;
     background: #f4f0e5;
-	font: 11pt/14pt Arial, Helvetica, sans-seri;
+	font: 11pt/13pt Arial, Helvetica, sans-seri;
 }
 
 a {
@@ -272,6 +273,7 @@ ul {
 	color: white;
 	text-align: center;
 	margin: 12px 0 0 0;
+	font-size: 1.2em;
 	text-shadow: 1px 1px 0 #bf172d;
 }
 
