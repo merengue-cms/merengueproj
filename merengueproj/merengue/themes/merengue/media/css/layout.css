@@ -384,12 +384,6 @@ body div#content-zone {
 }
 
 /* error messages */
-span.infomsg {
-	background: none;
-	color:#717171;
-	padding-left: 0;
-}
-
 div.errormessage, div#messagebox ul#info-list {
 	color:#717171;
 	background: #FCF5CA url(/media/themes/merengue/img/info_icon.jpg) no-repeat 10px center;
@@ -448,7 +442,7 @@ a#general-conditions {
 
 li#powered-by {
     float: right;
-    background: transparent url(/media/themes/merengue/img/merengue_icon.jpg) no-repeat right center;
+    background: transparent url(/media/themes/merengue/img/merengue_icon.png) no-repeat right center;
     padding-right: 20px;
     text-align: right;
 }
@@ -465,9 +459,5 @@ li#copyright {
 
 #outer-footer {
     padding-top: 5px;
-    text-align: right;
-}
-
-#outer-footer ul li {
-    float: right;
+    color: #E5C597;
 }
