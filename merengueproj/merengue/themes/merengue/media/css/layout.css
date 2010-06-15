@@ -176,6 +176,7 @@ ul {
 
 #header-blocks ul li,
 #language-tools  ul li {
+    margin-bottom: 5px;
     display: inline-block;
 }
 
@@ -313,7 +314,8 @@ body div#content-zone {
 
 /* portal links */
 #portal-primary-links {
-    display: inline;
+    display: inline-block;
+    width: 40%;
 }
 
 #portal-secondary-links a {
