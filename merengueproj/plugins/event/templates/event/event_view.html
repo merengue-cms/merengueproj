@@ -5,11 +5,11 @@
 {% block pagetitle %}{{ content }}{% endblock %}
 
 {% block contentdescription %}
-  <div class="contentbody event-contentbody">
-    <img src="{{ THEME_MEDIA_URL }}img/event_icon.jpg"/>
-    <div class="event-dates">
-        {% trans "start date" %}: {{ content.start|date }} - {{ content.start|time }} <br/>
-        {% trans "end date" %}: {{ content.end|date }} - {{ content.end|time }} <br/>
+  <div class="contentbody eventContentbody">
+    <img class="eventIcon" src="{{ THEME_MEDIA_URL }}img/event_icon.jpg"/>
+    <div class="eventDates">
+        <label>{% trans "start date" %}</label>: {{ content.start|date }} - {{ content.start|time }} <br/>
+        <label>{% trans "end date" %}</label>: {{ content.end|date }} - {{ content.end|time }} <br/>
     </div>
   </div>
 {{ block.super }}
