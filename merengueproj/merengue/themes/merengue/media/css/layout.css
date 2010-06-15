@@ -321,9 +321,9 @@ body div#content-zone {
 	margin-top: 20px;
 }
 
-.contentDescription {
+/*.contentDescription {
     font-size: 12px;
-}
+}*/
 
 .contentList li {
 	border-bottom: 1px dotted #E5C597;
@@ -474,7 +474,8 @@ div.errormessage, div#messagebox ul#info-list {
     font-size: 80%;
 	line-height: 15px;
 	margin-bottom: 1em;
-	padding-top: 8px;	
+	padding-top: 8px;
+	color: #aaa;	
 }
 
 .eventDates label{
