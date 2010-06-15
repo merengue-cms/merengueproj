@@ -266,8 +266,22 @@ ul {
 /* right-sidebar */
 .blockContainer h1 {
 	background: transparent url(/media/themes/merengue/img/portlet_header.jpg) no-repeat center center;
-	height: 32px;
-	width: 182px;
+	height: 30px;
+	line-height: 32px;
+	width: 199px;
+	color: white;
+	text-align: center;
+	margin: 12px 0 0 0;
+}
+
+#right-sidebar div.blockBody {
+	background: #f9f4f4 url(/media/themes/merengue/img/portlet_bg.jpg) repeat-x center top;
+	border: 1px solid #ddd;
+	width: 197px;
+}
+
+#right-sidebar div.blockBody ul {
+	margin: 0.5em 0.2em 0.5em 0.4em;
 }
 
 #right-sidebar {
@@ -276,7 +290,7 @@ ul {
     width: 240px;
 }
 
-#right-sidebar div {
+#right-sidebar > div {
     margin: 0.4em;
 }
 
@@ -392,6 +406,7 @@ body div#content-zone {
 	width:	22%;
 	margin: 0 8px;
 	border: 1px solid #ede8e8;
+	padding-left: 5px;
 	/* border-radius */
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
@@ -405,9 +420,8 @@ body div#content-zone {
 
 /* calendar */
 #eventsCalendar .ui-datepicker {
-	border-color: #EDE8E8;
-    width: 15em;
-	margin-left: -1.2em;
+	border-color: white;
+    width: 190px;
 }
 
 #eventsCalendar .ui-datepicker .ui-datepicker-prev,
@@ -419,13 +433,18 @@ body div#content-zone {
 #eventsCalendar .ui-datepicker select.ui-datepicker-year {
     width:40%;
 }
-.ui-datepicker .ui-datepicker-header {
-	background: #F4F0E5;
-	border: 1px solid #EDE8E8;
+.ui-datepicker .ui-datepicker-header,
+.ui-datepicker .ui-datepicker-buttonpane button {
+	background: #F0E6D5;
+	border: 1px solid #D3D3D3;
 }
 
 .ui-datepicker th {
 	color: #CDA873;
+}
+.ui-datepicker .ui-datepicker-prev span, 
+.ui-datepicker .ui-datepicker-next span {
+	margin-top: -12px !important;
 }
 
 /* error messages */
