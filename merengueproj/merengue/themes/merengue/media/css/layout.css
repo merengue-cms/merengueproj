@@ -384,6 +384,12 @@ body div#content-zone {
 }
 
 /* error messages */
+span.infomsg {
+	background: none;
+	color:#717171;
+	padding-left: 0;
+}
+
 div.errormessage, div#messagebox ul#info-list {
 	color:#717171;
 	background: #FCF5CA url(/media/themes/merengue/img/info_icon.jpg) no-repeat 10px center;
