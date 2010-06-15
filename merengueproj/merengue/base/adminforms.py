@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.forms import BaseForm
 
-from cmsutils.backupdb_utils import set_backup
+from cmsutils.db_utils import set_backup
 
 
 class BaseConfigForm(BaseForm):

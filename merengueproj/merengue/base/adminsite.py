@@ -189,7 +189,7 @@ class BaseAdminSite(DjangoAdminSite):
         return response
 
     def save_backup(self, request):
-        from cmsutils.backupdb_utils import do_backupdb
+        from cmsutils.db_utils import do_backupdb
         from merengue.base.utils import save_backupdb
         zip_name = 'backup_%s' % datetime.now().isoformat('-')
         response = HttpResponse(mimetype='application/x-zip-compressed')
