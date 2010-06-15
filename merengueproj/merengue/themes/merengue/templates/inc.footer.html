@@ -4,10 +4,7 @@
 <div id="footer-left" class="borderLeft">&nbsp;
 </div>
 <div id="footer-middle">
-  <ul>
-    <li id="powered-by">{% inline_trans "Merengue powered" %}</li>
-    <li id="copyright">Copyright © Yaco 2009</li>
-  </ul>
+  {% render_blocks "footer" %}
 
 </div>
 <div id="footer-right" class="borderRight">&nbsp;
@@ -15,7 +12,11 @@
 <div style="clear: both; height: 1px;">&nbsp;</div>
 </div>
 <div id="outer-footer">
-  {% render_blocks "footer" %}
+  <ul>
+    <li id="powered-by">{% inline_trans "Merengue powered" %}</li>
+    <li id="copyright">Copyright © Yaco 2009</li>
+  </ul>
+
 </div>
 
 {% block rightfooter %}
