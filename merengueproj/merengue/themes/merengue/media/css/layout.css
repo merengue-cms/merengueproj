@@ -180,6 +180,13 @@ ul {
     display: inline-block;
 }
 
+/* IE8 hack */
+#header-blocks ul li,
+#language-tools  ul li,
+#header-blocks #portalmenu li {
+    padding-top /*\**/: 0 \9
+}
+
 *html #header-blocks ul li,
 *html #language-tools  ul li {
 	display: inline;
