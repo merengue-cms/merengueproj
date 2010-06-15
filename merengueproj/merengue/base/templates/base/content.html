@@ -36,24 +36,21 @@
   {% endblock %}
 {% endblock %}
 
-{% block contentleftsidebar %}
-    {% render_blocks "leftsidebar" for content %}
-    {% block extracontentleftsidebar %}
-    {% endblock %}
-{% endblock %}
-
 {% block leftsidebar %}
   {{ block.super }}
 {% endblock %}
 
-{% block contentrightsidebar %}
-  {% render_blocks "rightsidebar" for content %}
-  {% block extracontentrightsidebar %}
-  {% endblock %}
-{% endblock %}
-
 {% block rightsidebar %}
   {{ block.super }}
+{% endblock %}
+
+{% block extrarightsidebarblocks %}
+  {% render_blocks "rightsidebar" for content %}
+  {% if section %}
+    {% render_blocks "rightsidebar" for section %}
+  {% endif %}
+  {% block extracontentrightsidebar %}
+  {% endblock %}
 {% endblock %}
 
 {% block content %}
@@ -84,6 +81,9 @@
   <div id="content-zone">
     {% block beforecontentblocks %}
       {% render_blocks "beforecontent" for content %}
+      {% if section %}
+          {% render_blocks "beforecontent" for section %}
+      {% endif %}
       {% block extrabeforecontentblocks %}
       {% endblock %}
     {% endblock %}
@@ -114,7 +114,7 @@
     {% endblock %}
 
     {% block contentmap %}
-       {% if content %}{% google_map content=content %}{% endif %}
+       {% if 0 %}{% if content %}{% google_map content=content %}{% endif %}{% endif %}
     {% endblock %}
 
     {% block aftercontentmap %}
@@ -122,6 +122,9 @@
 
     {% block aftercontentblocks %}
       {% render_blocks "aftercontent" for content %}
+      {% if section %}
+          {% render_blocks "aftercontent" for section %}
+      {% endif %}
       {% block extraaftercontentblocks %}
       {% endblock %}
     {% endblock %}

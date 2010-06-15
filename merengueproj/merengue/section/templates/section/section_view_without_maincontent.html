@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load i18n content_tags inlinetrans %}
+{% load i18n content_tags inlinetrans block_tags %}
 
 {% block extrabreadcrumbs %}
     <span class="breadcrumbSeparator">→</span>
@@ -20,3 +20,14 @@
 </div>
     {% if admin_absolute_url %}{% inline_trans "You can edit in" %} <a href="{{ section.get_admin_absolute_url }}">{% inline_trans "here" %}</a> {% endif %}
 {% endblock %}
+
+{% block beforecontentblocks %}
+    {% render_blocks "beforecontent" for section %}
+    {{ block.super }}
+{% endblock %}
+
+{% block aftercontentblocks %}
+    {% render_blocks "aftercontent" for section %}
+    {{ block.super }}
+{% endblock %}
+

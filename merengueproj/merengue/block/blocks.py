@@ -43,6 +43,14 @@ class ContentBlock(BaseBlock):
         raise NotImplementedError()
 
 
+class SectionBlock(BaseBlock):
+    default_place = 'leftsidebar'
+
+    @classmethod
+    def render(cls, request, place, section, context, *args, **kwargs):
+        raise NotImplementedError()
+
+
 def registered_block(sender, **kwargs):
     if issubclass(sender, BaseBlock):
         registered_item = kwargs['registered_item']

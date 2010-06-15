@@ -31,7 +31,11 @@ class RealInstanceMixin(object):
         if self.check_attributes:
             for check_attribute in self.check_attributes:
                 if hasattr(self, check_attribute):
-                    return  getattr(self, check_attribute, self)
+                    child_self = getattr(self, check_attribute, self)
+                    if self == child_self:
+                        return  getattr(self, check_attribute, self)
+                    else:
+                        return child_self.real_instance
 
         # try looking in our cache
         if hasattr(self, '_real_instance'):
