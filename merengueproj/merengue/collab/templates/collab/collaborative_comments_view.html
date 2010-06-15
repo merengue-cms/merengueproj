@@ -9,7 +9,10 @@
   </div>
 
   <div class="collaborative-comments-main">
-    <h1>{% trans "Comments for" %}: {{ content }}</h1>
+    <div class="collaborative-comments-title">
+    <h1>{{ content }}</h1>
+    <h2>{% trans "Comments" %}</h2>
+    </div>
     <div class="collaborative-comments-folder-selector">
         <ul>
             <li class="collaborative-comments-list-folder selected"><a href="{% url ajax_list_comments ct.id content.id %}" target="#collaborative-comments-list-id" id="collaborative-comments-main-folder-trigger">{% trans "comments" %} (<span class="collaborative-comment-num-for-{{ ct.id }}-{{ content.id }}">0</span>)</a></li>  

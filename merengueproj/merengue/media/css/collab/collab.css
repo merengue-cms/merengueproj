@@ -33,9 +33,20 @@
     z-index: 20;
 }
 
-.collaborative-comments-main h1 {
-    padding: 0 20px 10px 40px;
+.collaborative-comments-main .collaborative-comments-title {
+    padding: 0px 40px 10px;
     border-bottom: 1px dotted #CCCCCC;
+}
+
+.collaborative-comments-main .collaborative-comments-title h1 {
+    line-height: 1.2em;
+    height: 1.2em;
+    overflow: hidden;
+    margin-bottom: 0px;
+}
+
+.collaborative-comments-main .collaborative-comments-title h2 {
+    margin: 0px;
 }
 
 .collaborative-comments-folder-selector {
@@ -44,7 +55,7 @@
     margin: 0px;
     position: absolute;
     width: 100%;
-    top: 80px;
+    top: 90px;
     height: 20px;
 }
 
@@ -92,7 +103,7 @@
     background: #E9EFF5;
     position: absolute;
     overflow: auto;
-    top: 101px;
+    top: 111px;
     left: 0px;
     bottom: 0px;
     right: 0px;

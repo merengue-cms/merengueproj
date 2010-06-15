@@ -7,6 +7,8 @@
             var main_zone = null;
             var recount_url = null;
             var recount_container = null;
+            var minimal_height = 300;
+            var initial_height = null;
  
             var initTrigger = function() {
                 trigger_link.click(initCollaborativeComments);
@@ -109,6 +111,12 @@
                     success: function(response){
                         folder.html(response).show();
                         setFolderActions(folder);
+                        fheight = folder.height() + folder.parent().position().top + 30;
+                        main_zone.css('height', initial_height);
+                        minitial = main_zone.height();
+                        if (fheight > minimal_height && fheight < minitial ) {
+                            main_zone.height(fheight);
+                        }
                     }});
                 return false;
             }
@@ -125,6 +133,8 @@
 
             var setMainZones = function() {
                 main_ui = $('body').find(".collaborative-comments-ui").eq(0);
+                main_zone = main_ui.find('.collaborative-comments-main');
+                initial_height = main_zone.css('height');
                 outer_zone = main_ui.find(".collaborative-comments-outer-zone");
                 recount_url = main_ui.find(".collaborative-comments-hidden-parameters #collaborative-comment-update-num-url").text();
                 recount_container = main_ui.find(".collaborative-comments-hidden-parameters #collaborative-comment-num-comments-container").text();
