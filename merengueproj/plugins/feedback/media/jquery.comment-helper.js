@@ -107,11 +107,15 @@
         };
 
         var hide_reply = function () {
-            $(this).hide();
             var action = $(this);
             var actions = $(this).parent();
             var container = $(this).parent().parent();
             var comment_url = action.attr('href');
+            var msg = container.find('.comment-discard-message:first').text();
+            if (msg && !confirm(msg)) {
+                return false;
+            }
+            $(this).hide();
             actions.children('.addReply').show();
             container.children('div.commentform').hide('slow', function(){$(this).empty()});
             return false;
@@ -144,6 +148,10 @@
             var delete_url = $(this).attr('href');
             var actions = $(this).parent();
             var container = $(this).parent().parent();
+            var msg = container.find('.comment-delete-message:first').text();
+            if (msg && !confirm(msg)) {
+                return false;
+            }
             postJSON({
                url: delete_url,
                error: function( XMLHttpRequest, textStatus, errorThrown) {
@@ -170,13 +178,15 @@
 
         $.fn.loadcomments = function (options) {
            var opts = $.extend({}, {}, options);
-            $('.comment a.publishComment').click(change_visibility);
-            $('.comment a.censureComment').click(change_visibility);
-            $('.comment a.deleteComment').click(delete_comment);
-            $('.comment a.hideReply').click(hide_reply);
-            $('.comment a.addReply').click(add_reply);
-            $('div#firstcomment a.hideReply').click(hide_reply);
-            $('div#firstcomment a.addReply').click(add_reply);
+            $('.comment').each(function() {
+                $(this).find('a.publishComment:first').click(change_visibility);
+                $(this).find('a.censureComment:first').click(change_visibility);
+                $(this).find('a.deleteComment:first').click(delete_comment);
+                $(this).find('a.hideReply:first').click(hide_reply);
+                $(this).find('a.addReply:first').click(add_reply);
+            });
+            $('div#firstcomment a.hideReply:first').click(hide_reply);
+            $('div#firstcomment a.addReply:first').click(add_reply);
            return this;
        }
 })(jQuery);
