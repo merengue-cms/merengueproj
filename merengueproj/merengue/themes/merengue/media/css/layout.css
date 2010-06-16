@@ -261,18 +261,43 @@ ul {
 
 /* left-sidebar */
 #left-sidebar {
-	background: white url(/media/themes/merengue/img/portlet_bg.jpg) repeat-x scroll center bottom;
+	background: white url(/media/themes/merengue/img/left_separator.jpg) repeat-x scroll left bottom;
     float: left;
     width: 16%;
-	margin-top: 0.5em;
-	margin-left: 0.5em;
+	padding: 2em 0 0.5em 0.2em;
+	border-bottom: 1px dotted #E5C597;
+}
+#left-sidebar > div {
+    margin-top: 1em;	
 }
 
-#left-sidebar h1,
-#right-sidebar h1 {
-    font-size: 1.3em;
-	margin-top: 0;
-	margin-bottom: 0.2em;
+#left-sidebar h1 {
+    font-size: 1.2em;
+	border-bottom: 1px dotted;
+	color: #E5C597;
+}
+
+#left-sidebar a {
+	color: #bfbfbf;
+}
+
+#left-sidebar a:hover{
+	color: #CEA670;
+}
+#navigation a, #coremenu a{
+	display:block;
+	min-height:16px;
+}
+
+.menu1 {
+	padding-left: 3px;
+}
+.menu1 > li {
+	padding-left: 6px;
+}
+
+.menu2 {
+	padding-left: 9px;
 }
 
 /* right-sidebar */
