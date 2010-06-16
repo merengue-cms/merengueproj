@@ -263,9 +263,30 @@ ul {
 #left-sidebar {
     float: left;
     width: 16%;
+	margin-top: 0.5em;
+	margin-left: 0.5em;
+}
+
+#left-sidebar h1,
+#right-sidebar h1 {
+    font-size: 1.3em;
 }
 
 /* right-sidebar */
+#right-sidebar {
+    margin-top: 29px;
+	background-color: #fff3dd;
+	min-height:300px;
+	width:	22%;
+	margin: 0 8px;
+	border: 1px solid #ede8e8;
+	padding: 4px 0 8px 4px;
+	/* border-radius */
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+}
+
 #right-sidebar .blockContainer h1 {
 	background: transparent url(/media/themes/merengue/img/portlet_header.jpg) no-repeat center center;
 	height: 30px;
@@ -291,7 +312,7 @@ ul {
 #right-sidebar {
     float:right;
     display: block;
-    width: 240px;
+    width: 22%;
 }
 
 #right-sidebar > div {
@@ -319,7 +340,7 @@ ul {
 /* Content */
 #content {
     float: right;
-	width: 58%;
+	width: 57%;
 	padding-bottom: 1.5em;
 	padding-right: 1em;
 }
@@ -405,31 +426,6 @@ body div#content-zone {
 
 .theme-merengue #feedback div.actions.public {
     padding: 0 0.3em 0.3em;
-}
-
-
-/* portlets */
-#left-sidebar {
-    margin-top: 11px;
-}
-
-#right-sidebar {
-    margin-top: 29px;
-	background-color: #fff3dd;
-	min-height:300px;
-	width:	22%;
-	margin: 0 8px;
-	border: 1px solid #ede8e8;
-	padding: 4px 0 8px 4px;
-	/* border-radius */
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
-	border-radius: 6px;
-}
- 
-#left-sidebar h1,
-#right-sidebar h1 {
-    font-size: 1.3em;
 }
 
 /* calendar */
