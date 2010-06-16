@@ -168,3 +168,9 @@ class PrincipalRoleRelation(models.Model):
             self.group = principal
 
     principal = property(get_principal, set_principal)
+
+    def __unicode__(self):
+        if self.content:
+            return "%s / %s / %s" % (self.user or self.group, self.role, self.content)
+        else:
+            return "%s / %s" % (self.user or self.group, self.role)
