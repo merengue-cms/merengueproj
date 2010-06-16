@@ -9,6 +9,8 @@ class FeedbackBlock(ContentBlock):
 
     @classmethod
     def render(cls, request, place, content, context, *args, **kwargs):
-        return cls.render_block(request, template_name='feedback/block_feedback.html',
-                                block_title=_('Feedback content'),
-                                context={'content': content})
+        if content.is_commentable():
+            return cls.render_block(request, template_name='feedback/block_feedback.html',
+                                    block_title=_('Feedback content'),
+                                    context={'content': content})
+        return ''
