@@ -123,7 +123,7 @@ ul {
 
 #header-blocks li {
     background: transparent url(/media/themes/merengue/img/left_menu_button.jpg) no-repeat left top;
-    padding: 5px 0 5px 11px;
+    padding: 6px 0 5px 11px;
 }
 
 .ie7 #header-blocks li {
@@ -147,7 +147,7 @@ ul {
 }
 
 #header-blocks #portalmenu li a {
-    padding: 7px 12px 7px 5px;
+    padding: 6px 12px 7px 5px;
     font-size: 10pt;
     background: transparent url(/media/themes/merengue/img/right_portal_menu_button.jpg) no-repeat right top;
 }
