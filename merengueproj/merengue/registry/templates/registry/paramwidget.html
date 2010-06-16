@@ -13,13 +13,13 @@
     </select>
   {% else %}
     {% ifequal param.get_type "Single" %}
-      <input {{ widget_attrs }} type="text" value="{{ param.value }}">
+      <input {{ widget_attrs }} type="text" value="{{ param.value|default_if_none:"" }}">
     {% endifequal %}
     {% ifequal param.get_type "List" %}
-       <textarea {{ widget_attrs }} >{{ param.get_value_display }}</textarea>
+       <textarea {{ widget_attrs }} >{{ param.get_value_display|default_if_none:"" }}</textarea>
     {% endifequal %}
     {% ifequal param.get_type "Text" %}
-       <textarea {{ widget_attrs }} >{{ param.get_value_display }}</textarea>
+       <textarea {{ widget_attrs }} >{{ param.get_value_display|default_if_none:"" }}</textarea>
     {% endifequal %}
   {% endif %}
 </div>
