@@ -297,10 +297,9 @@ ul {
     margin: 0.4em;
 }
 
-#latestnews a {
+.blockBody a {
 	font-size: 85%;
 }
-
 
 /* breadcrumbs */
 #breadcrumbs {
