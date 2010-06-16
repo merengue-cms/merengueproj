@@ -1,0 +1,164 @@
+.star-rating {
+    display: inline;
+    margin: 0px;
+    padding: 0px;
+    width: 14em;
+    height: 17px;
+    line-height: 17px;
+    position: relative;
+}
+
+.star-rating ol {
+    float: left;
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    width: 85px;
+    height: 17px;
+    position: absolute;
+    left: 50px;
+    top: 0px;
+    background: url(../img/stars.png) top left repeat-x;
+}
+
+.star-rating li {
+    padding: 0px;
+    margin: 0px;
+    /*\*/
+    float: left;
+    /* */
+}
+
+.star-rating li a {
+    display: block;
+    width: 17px;
+    height: 17px;
+    line-height: 17px;
+    text-decoration: none;
+    text-indent: -9000px;
+    z-index: 20;
+    position: absolute;
+    padding: 0px;
+    overflown: hidden;
+}
+
+.star-rating li a:hover {
+    background: url(../img/stars.png) left center;
+    z-index: 2;
+    left: 0px;
+    border: none;
+}
+
+*html .star-rating li a:hover {
+    background-image: none;
+}
+
+.star-rating a.star-1 {
+    left: 0px;
+}
+
+.star-rating a.star-1:hover {
+    width: 17px;
+}
+
+.star-rating a.star-2 {
+    left: 17px;
+}
+
+.star-rating a.star-2:hover {
+    width: 34px;
+}
+
+.star-rating a.star-3 {
+    left: 34px;
+}
+
+.star-rating a.star-3:hover {
+    width: 51px;
+}
+
+.star-rating a.star-4 {
+    left: 51px;
+}
+
+.star-rating a.star-4:hover {
+    width: 68px;
+}
+
+.star-rating a.star-5 {
+    left: 68px;
+}
+
+.star-rating a.star-5:hover {
+    width: 85px;
+}
+
+.star-rating li.current-rating {
+    background: url(../img/stars.png) left bottom;
+    position: absolute;
+    height: 17px;
+    display: block;
+    text-indent: -9000px;
+    z-index: 1;
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    min-height: 0;
+}
+
+.star-rating li.current-votes {
+    height: 17px;
+    width: 100px;
+    display: block;
+    margin: 0px;
+    padding: 0px;
+    border: none;
+}
+
+.star-rating a:active {
+    outline: none;
+}
+
+.star-rating input {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    text-indent: -9000px;
+    color: transparent;
+    width: 100%;
+    height: 17px;
+    background: none;
+    display: block;
+    z-index: 30;
+    position: absolute;
+    font-size: 1px;
+}
+
+.star-rating a:hover input {
+    cursor: pointer;
+}
+
+.star-rating a span {
+    display: none;
+    position: relative;
+    width: 200px;
+    left: 90px;
+    color: black;
+    text-indent: 0;
+    z-index: 30;
+    height: 17px;
+    line-height: 17px;
+}
+
+.star-rating a:hover span {
+    display: block;
+    color: #b357c7;
+}
+
+.star-rating .rating-feedback {
+    position: absolute;
+    left: 160px;
+    height: 17px;
+    width: 300px;
+    font-weight: bold;
+}
