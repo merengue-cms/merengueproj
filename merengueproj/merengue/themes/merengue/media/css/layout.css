@@ -319,7 +319,9 @@ ul {
 /* Content */
 #content {
     float: left;
-    width: 515px;
+    width: 690px;
+	padding-left: 2em;
+	padding-bottom: 1.5em;
 }
 
 body div#content-zone {
@@ -349,7 +351,8 @@ body div#content-zone {
 }
 
 #portal-secondary-links a {
-    padding-left: 10px;
+    padding-right: 1.5em;
+	font-size: 10pt;
 }
 
 
@@ -458,10 +461,13 @@ body div#content-zone {
 .ui-datepicker .ui-datepicker-next span {
 	margin-top: -12px !important;
 }
+
 .ui-state-highlight  {
-	background: #F37E78 !important;
-	border: 1px solid #B71A27;
-	color: white;
+	background: #fa9391 !important;
+	border: 1px solid #B71A27 !important;
+	color: white !important;
+	font-weight: bold !important;
+	text-align: center !important;
 }
 
 /* error messages */
@@ -500,7 +506,6 @@ div.errormessage, div#messagebox ul#info-list {
 
 /* footer */
 #footer {
-    font-size: 70%;
     background: transparent url(/media/themes/merengue/img/content_bottom.jpg) no-repeat left bottom;
     display: block;
     width: 100%;
@@ -556,8 +561,11 @@ li#powered-by {
 }
 
 #outer-footer {
-    padding-top: 5px;
+	float: right;	
+    padding-top: 8px;
+	padding-right: 4px;
     color: #E5C597;
+	font-size: 70%;
 }
 
 
