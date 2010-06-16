@@ -300,6 +300,10 @@ ul {
 .blockBody a {
 	font-size: 85%;
 }
+.blockBody li {
+	margin-bottom: 0.5em;
+	line-height: 12px;
+}
 
 /* breadcrumbs */
 #breadcrumbs {
@@ -321,10 +325,6 @@ body div#content-zone {
     width: auto;
 	margin-top: 20px;
 }
-
-/*.contentDescription {
-    font-size: 12px;
-}*/
 
 .contentList li {
 	border-bottom: 1px dotted #E5C597;
