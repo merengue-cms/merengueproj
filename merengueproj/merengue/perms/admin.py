@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import *
+from django.conf.urls.defaults import patterns
 from django.contrib import admin
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -121,8 +121,16 @@ class RoleAdmin(BaseAdmin):
         return super(RoleAdmin, self).render_change_form(request, context, add, change, form_url, obj)
 
 
+class PermissionAdmin(BaseAdmin):
+    pass
+
+
+class PrincipalRoleRelationAdmin(BaseAdmin):
+    pass
+
+
 def register(site):
     site.register(ObjectPermission, ObjectPermissionAdmin)
-    site.register(Permission)
+    site.register(Permission, PermissionAdmin)
     site.register(Role, RoleAdmin)
-    site.register(PrincipalRoleRelation)
+    site.register(PrincipalRoleRelation, PrincipalRoleRelationAdmin)
