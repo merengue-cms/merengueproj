@@ -262,7 +262,7 @@ ul {
 /* left-sidebar */
 #left-sidebar {
     float: left;
-    width: 200px;
+    width: 16%;
 }
 
 /* right-sidebar */
@@ -318,10 +318,10 @@ ul {
 } 
 /* Content */
 #content {
-    float: left;
-    width: 690px;
-	padding-left: 2em;
+    float: right;
+	min-width: 58%;
 	padding-bottom: 1.5em;
+	padding-right: 1em;
 }
 
 body div#content-zone {
