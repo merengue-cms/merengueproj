@@ -319,11 +319,10 @@ ul {
 /* Content */
 #content {
     float: right;
-	min-width: 58%;
+	width: 58%;
 	padding-bottom: 1.5em;
 	padding-right: 1em;
 }
-
 body div#content-zone {
     width: auto;
 	margin-top: 20px;
