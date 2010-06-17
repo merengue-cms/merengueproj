@@ -5,7 +5,6 @@ from django.template.loader import render_to_string
 
 from cmsutils.adminfilters import QueryStringManager
 from merengue.base.views import content_view, content_list
-from merengue.base.utils import copy_request
 from plugins.news.models import NewsItem, NewsCategory
 
 
@@ -39,9 +38,7 @@ def news_by_date(request, year, month, day):
 
 def get_news(request=None, limit=0):
     news = NewsItem.objects.published().order_by("-publish_date")
-    from copy import copy
-    request_copy = copy_request(request, ['set_language'], copy)
-    qsm = QueryStringManager(request, page_var='page')
+    qsm = QueryStringManager(request, page_var='page', ignore_params=('set_language', ))
     filters = qsm.get_filters()
     news = news.filter(**filters)
     if limit:
