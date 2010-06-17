@@ -318,8 +318,6 @@ class BaseContent(BaseClass):
             ("can_draft", "Can set as draft"),
             ("can_pending", "Can set as pending"),
             ("can_published", "Can set as published"),
-            ("can_change_main_image", "Can edit main image field"),
-            ("can_change_map_icon", "Can edit map icon field"),
         )
         ordering = (get_fallback_fieldname('name'), )
         #content_view_template = 'content_view.html' # default definition by BaseContentMeta metaclass

@@ -661,13 +661,6 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
                     form.base_fields['status'].initial = 'pending'
             else:
                 form.base_fields.pop('status')
-        if 'main_image' in keys and\
-           not request.user.has_perm('base.can_change_main_image'):
-            form.base_fields.pop('main_image')
-        if 'map_icon' in keys and\
-           not request.user.has_perm('base.can_change_map_icon'):
-            form.base_fields.pop('map_icon')
-
         return form
 
     def save_model(self, request, obj, form, change):
