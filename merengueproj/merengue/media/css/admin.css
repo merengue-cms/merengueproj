@@ -1,3 +1,24 @@
+/* ----- general styles ----- */
+#body{
+	font: 12px/19px Helvetica,sans-serif;
+}
+
+#header {
+	background: #E6D8C0 url(../img/admin/admin_logo.jpg) no-repeat scroll top left;
+	color: #917250;
+	height:62px;
+	border-bottom: 4px solid #BCB9AD;
+}
+
+#branding h1 { 
+    margin: 1.2em 0 0 12em;
+	color: #BF843B;
+}
+
+#user-tools {
+	padding: 2em 10px;
+}
+
 .object-tools {
     margin-bottom:0.5em;
     margin-top:0em;
