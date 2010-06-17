@@ -1,8 +1,10 @@
 /* ----- global styles ----- */
-
+html {
+	height:100%;
+}
 
 body {
-    font-size: 12pt;
+	font-size:11pt;
     font-family: arial;
 }
 
@@ -256,9 +258,7 @@ div#breadcrumbs a:hover {
 
 /* -----  sidebar ----- */
 .block {
-    border: 1px solid #54B848;
     padding: 1em;
-    width: 16em;
 }
 
 .block h1 {
@@ -379,4 +379,48 @@ div.contentFiles ul {
 /* calendar */
 .ui-datepicker .ui-datepicker-header {
     height:25px;
+}
+
+/* Features */
+
+#features img {
+	float:left;
+	padding-right: 1em;
+}
+/* Footer */
+#footer {
+	width: 65%;
+	border-top: 1px solid #62BB2E;
+	height: 0;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	padding-left: 0.5em;
+	margin-left: 3em;
+}
+
+#inner-footer {
+	width: 960px;
+	margin: auto;
+}
+
+#footer-left {
+    float: left;
+    display: inline;
+    width: 350px;
+    font-size: 11px;
+    margin-left: 10px;
+}
+
+#footer-middle {
+    float: left;
+    display: inline;
+    width: 450px;
+    font-size: 13px;
+    letter-spacing: 0;
+    font-weight: normal;
+}
+
+#footer-right {
+   float: right;	
 }
