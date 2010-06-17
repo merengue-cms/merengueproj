@@ -19,6 +19,10 @@
 	padding: 2em 10px;
 }
 
+.module-merengue h1 {
+	background: #E6D8C0 url(../img/admin/default-bg.gif) repeat-x top left;
+}
+
 .object-tools {
     margin-bottom:0.5em;
     margin-top:0em;
