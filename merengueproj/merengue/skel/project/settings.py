@@ -13,7 +13,7 @@ TEMPLATE_DEBUG = DEBUG
 DEBUG_TOOLBAR = DEBUG
 
 ADMINS = (
-    ('Manuel Saelices', 'msaelices@yaco.es'),
+    ('Your Name', 'youremail@yourdomain.org'),
 )
 
 MANAGERS = ADMINS
