@@ -37,6 +37,12 @@ def _calculate_route(context):
 def advanced_breadcrumbs(context):
     add = context.get('add', None)
     route = _calculate_route(context)
+    if not route:
+        route = [{'admin': None,
+                  'obj': context.get('original'),
+                  'opts': context.get('opts') or context.get('cl').opts,
+                  'site': None,
+                  'tool_name': None}]
     url_list = []
 
     if route:
