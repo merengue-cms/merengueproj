@@ -4,13 +4,17 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
+from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
+from django.contrib.auth.admin import GroupAdmin as DjangoGroupAdmin
+from django.contrib.auth.models import User, Group
 
 from merengue.base.admin import BaseAdmin
-
 from merengue.perms.models import ObjectPermission
 from merengue.perms.models import Permission
 from merengue.perms.models import PrincipalRoleRelation
 from merengue.perms.models import Role
+from merengue.perms.forms import UserChangeForm
+from merengue.perms.utils import add_role, remove_role
 
 
 class ObjectPermissionAdmin(admin.ModelAdmin):
@@ -121,6 +125,32 @@ class RoleAdmin(BaseAdmin):
         return super(RoleAdmin, self).render_change_form(request, context, add, change, form_url, obj)
 
 
+class UserAdmin(DjangoUserAdmin):
+    form = UserChangeForm
+    fieldsets = (
+        (None, {'fields': ('username', 'password')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
+        (_('Permissions'), {'fields': ('is_staff', 'is_active', 'is_superuser', 'user_permissions')}),
+        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
+        (_('Groups'), {'fields': ('groups', )}),
+        (_('Roles'), {'fields': ('roles', )}),
+    )
+
+    def save_model(self, request, obj, form, change):
+        super(UserAdmin, self).save_model(request, obj, form, change)
+        roles_id = request.POST.getlist('roles')
+        for role in Role.objects.all():
+            role = Role.objects.get(id=role.id)
+            if unicode(role.id) in roles_id:
+                add_role(obj, role)
+            else:
+                remove_role(obj, role)
+
+
+class GroupAdmin(DjangoGroupAdmin):
+    pass
+
+
 class PermissionAdmin(BaseAdmin):
     pass
 
@@ -134,3 +164,7 @@ def register(site):
     site.register(Permission, PermissionAdmin)
     site.register(Role, RoleAdmin)
     site.register(PrincipalRoleRelation, PrincipalRoleRelationAdmin)
+    site.unregister(User)
+    site.register(User, UserAdmin)
+    site.unregister(Group)
+    site.register(Group, GroupAdmin)
