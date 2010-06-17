@@ -19,15 +19,22 @@
 	padding: 2em 10px;
 }
 
-.module-merengue h1 {
+.module-merengue h1,
+.module h2, 
+.module caption, 
+.inline-group h2 {
 	background: #E6D8C0 url(../img/admin/default-bg.gif) repeat-x top left;
 }
 
 a:link, a:visited {
-	color: #CFA570;
+	color: #bf9460;
 }
 a:hover {
-	color: #917250;
+	color: #806446;
+}
+
+.row1 {
+	background: #f7f5f0;
 }
 
 /*---- other styles ----*/
