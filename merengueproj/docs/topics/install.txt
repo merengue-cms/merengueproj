@@ -153,7 +153,7 @@ in the configuration file ``myproject/settings.py``, created with
 Let's suppose that you were configuring a postgresql database with the
 following parameters:
 
-    .. code-block:: bash
+    .. code-block:: python
 
        DATABASE_ENGINE = 'postgresql_psycopg2'
        DATABASE_NAME = 'myproject'

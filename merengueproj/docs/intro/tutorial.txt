@@ -4,4 +4,158 @@
 Merengue tutorial
 =================
 
-(( to be completed ))
+Throughout this tutorial, we will:
+
+    * Develop a Merengue project.
+    * Learn a bit to use Merengue from manager point of view.
+
+Creating a project
+==================
+
+We will assume you have `Merengue installed`_ and you want to create a
+`www.merengueproject.org`_ website (see `sources`_ for a finished results).
+
+.. _sources: https://dev.merengueproject.org/browser/sites/merengueprojectorg
+.. _www.merengueproject.org: http://www.merengueproject.org
+.. _Merengue installed: http://docs.merengueproject.org/topics/install.html
+
+Let's start our project:
+
+.. code-block:: bash
+
+    $ merengue-admin.py startproject merengueprojectorg
+
+This command will create a ``merengueprojectorg`` directory.
+
+Change project settings
+=======================
+
+Project settings will be in ``merengueprojectorg/settings.py`` file.
+
+First of all you have to define your database connection (see `database setup`_
+in Django tutorial). Let's suppose you will use SQLite (you need `pysqlite`_ installed)
+
+.. _pysqlite: http://trac.edgewall.org/wiki/PySqlite
+.. _database setup: http://docs.djangoproject.com/en/1.2/intro/tutorial01/#database-setup
+
+.. code-block:: python
+
+       DATABASE_ENGINE = 'sqlite3'
+       DATABASE_NAME = 'merengueprojectorg.db'
+       DATABASE_USER = ''
+       DATABASE_PASSWORD = ''
+       DATABASE_HOST = ''
+       DATABASE_PORT = ''
+
+Other settings to define:
+
+.. code-block:: python
+
+       ADMINS = (
+           ('Your Name', 'youremail@yourdomain.org'), # put your name and email
+       )
+
+
+Build database
+==============
+
+.. code-block:: bash
+
+       $ python manage.py syncdb --migrate
+
+.. admonition:: Note
+
+    This command is executed by `django-south`_, and is equal to execute first
+    a ``python manage.py syncdb`` plus ``python manage.py migrate``
+    commands.
+
+If there is a problem with this command, please create a ticket in
+`Merengue trac`_, specifying your database engine and your Merengue version. To
+continue the tutorial without problems you can do this quick fix:
+
+  1. Remove ``merengueprojectorg.db`` file.
+  2. Remove south from the ``INSTALLED_APPS`` tuple in ``merengueprojectorg/merengue/settings.py`` file.
+  3. Run ``python manage.py syncdb``
+  4. Add south to the ``INSTALLED_APPS`` tuple again.
+  5. Run ``python manage.py syncdb``
+  6. Run ``python manage.py migrate --fake``
+
+.. _Merengue trac: http://dev.merengueproject.org/newticket
+.. _django-south: http://south.aeracode.org/
+
+Play with your new Merengue project
+===================================
+
+After project settings was defined and database was built, you can run
+development server and see the Merengue default theme:
+
+.. code-block:: bash
+
+       $ python manage.py runserver
+       Django version 1.1.2, using settings 'merengueprojectorg.settings'
+       Development server is running at http://127.0.0.1:8000/
+       Quit the server with CONTROL-C.
+
+You can now access to ``http://localhost:8000``, and you will see something
+like that:
+
+.. image:: _images/merengue_theme_in_new_project.png
+
+To more information about using Merengue, you can read `user guide`_
+
+.. _user guide: http://docs.merengueproject.org/topics/userguide/index.html
+
+Creating *merengueprojectorg* theme
+===================================
+
+In Merengue you can change look&feel by developing themes.
+
+First of all you have to create both a templates and a media directory for the
+``merengueprojectorg``:
+
+.. code-block:: bash
+
+    $ cd merengueprojectorg
+    $ mkdir templates/themes/merengueprojectorg
+    $ mkdir media/themes/merengueprojectorg
+
+Now in Merengue admin (enter with ``admin``/``admin`` in
+``http://localhost:8000/admin/``), you can see how Merengue has registered
+``merengueprojectorg`` as a new theme:
+
+.. image:: _images/merengueprojectorg_theme_in_admin.png
+
+If you activate ``merengueprojectorg`` theme you will see a blank theme
+(without CSS styles):
+
+.. image:: _images/merengueprojectorg_theme_recently_created.png
+
+You then need to add a stylesheet to defining look and feel. One of the ways
+accomplish that is create a ``base.html`` template in
+``templates/themes/merengueprojectorg/`` directory:
+
+.. code-block:: html+django
+
+    {% extends "base/layout.html" %}
+
+    {% block extrastyles %}
+      <link href="{{ THEME_MEDIA_URL }}css/layout.css" rel="stylesheet" type="text/css" />
+    {% endblock %}
+
+.. admonition:: Note
+
+    ``THEME_MEDIA_URL`` will be replaced for relative media location of active
+    theme in Merengue admin. It's better use this context variable that hardcode
+    ``/media/themes/merengueprojectorg/css/layout.css`` or
+    ``{{ MEDIA_URL }}themes/merengueprojectorg/css/layout.css``.
+
+Of course you need to create the ``layout.css`` CSS file, that will be in
+``media/themes/merengueprojectorg/css/`` directory.
+
+https://dev.merengueproject.org/changeset/1085
+https://dev.merengueproject.org/changeset/1087
+
+
+To more information about Merengue theming, you can read `working with themes`_
+
+.. _working with themes: http://docs.merengueproject.org/topics/themes/index.html
