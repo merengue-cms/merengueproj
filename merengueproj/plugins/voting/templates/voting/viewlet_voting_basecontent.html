@@ -1,0 +1,27 @@
+{% extends "viewlet.html" %}
+{% load pagination_tags voting_tags %}
+
+{% block viewletbody %}
+  <link href="{{ MEDIA_URL }}voting/css/voting.css" rel="stylesheet" type="text/css" />
+  {% if is_paginated %}
+    {% autopaginate news_list paginate_by %}
+  {% endif %}
+  {% block toppagination %}
+    {% paginate %}
+  {% endblock %}
+
+  <ul>
+  {% for content in votes_list %}
+    <li>
+        {% block itemdetail %}
+            <div class="voting">{% voting content 1 %}</div>
+            <a href="{{ content.get_absolute_url }}" title="{{ content }}">{{ content }}</a>
+        {% endblock %}
+    </li>
+  {% endfor %}
+  </ul>
+
+  {% block bottompagination %}
+    {% paginate %}
+  {% endblock %}
+{% endblock %}

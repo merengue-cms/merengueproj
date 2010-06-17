@@ -13,6 +13,7 @@ def voting(context, content, readonly=False):
         vote = None
         vote_value = 0
     return {'content': content,
+            'vote': vote,
             'vote_value': vote_value,
             'stars': get_vote_choices(),
             'user': context.get('user'),

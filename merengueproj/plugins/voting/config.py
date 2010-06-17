@@ -6,6 +6,7 @@ from merengue.registry import params
 from plugins.voting.admin import VoteAdmin
 from plugins.voting.models import Vote
 from plugins.voting.blocks import VotingBlock
+from plugins.voting.viewlets import BaseContentWithMoreVotes, BaseContentTopRated
 
 
 class PluginConfig(Plugin):
@@ -27,3 +28,7 @@ class PluginConfig(Plugin):
     @classmethod
     def get_model_admins(cls):
         return [(Vote, VoteAdmin)]
+
+    @classmethod
+    def get_viewlets(cls):
+        return [BaseContentWithMoreVotes, BaseContentTopRated]

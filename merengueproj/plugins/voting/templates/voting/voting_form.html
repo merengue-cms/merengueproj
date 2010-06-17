@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <form class="star-rating" method="post" action="{% url vote_object content.id %}">
- <span class="current-votes">{% blocktrans count score_info.num_votes as votes %}{{ votes }} vote{% plural %}{{ votes }} votes{% endblocktrans %}</span>
+ <span class="current-votes">{% blocktrans count vote.num_votes as votes %}{{ votes }} vote{% plural %}{{ votes }} votes{% endblocktrans %}</span>
   <ol>
     <li class="current-rating" style="width: {{ vote_value }}px;"><span class="current-score">{{ score_info.current_score|floatformat }}</span>/{{ score_info.num_stars }} {% trans "stars" %}</li>
     {% if not readonly %}
