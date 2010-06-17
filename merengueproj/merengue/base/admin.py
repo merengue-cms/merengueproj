@@ -1,6 +1,5 @@
 import datetime
 
-from django import forms
 from django import template
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
@@ -9,14 +8,11 @@ from django.db.models.related import RelatedObject
 from django.db.models.fields.related import ForeignKey
 from django.shortcuts import render_to_response
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin as UserAdminOriginal
-from django.contrib.auth.admin import GroupAdmin
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.admin.views.main import ChangeList, ERROR_FLAG
 from django.contrib.admin.options import IncorrectLookupParameters
 from django.contrib.admin.util import unquote, flatten_fieldsets
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.sites.admin import Site, SiteAdmin
 from django.forms.models import ModelForm, BaseInlineFormSet, \
                                 fields_for_model, save_instance, modelformset_factory
@@ -140,16 +136,6 @@ def autodiscover(admin_site=None):
 
 
 # Merengue Model Admins -----
-
-
-class UserCreationFormCust(UserCreationForm):
-    username = forms.RegexField(label=_("Username"), max_length=30, regex=r'[^/]+$',
-        error_message = _("This value must contain only letters, @, numbers and underscores."))
-
-
-class UserChangeFormCust(UserChangeForm):
-    username = forms.RegexField(label=_("Username"), max_length=30, regex=r'[^/]+$',
-        error_message = _("This value must contain only letters, @, numbers and underscores."))
 
 
 class ReverseAdminInline(admin.StackedInline):
@@ -991,28 +977,8 @@ class OrderableRelatedModelAdmin(RelatedModelAdmin):
         raise NotImplementedError('You have to override this method')
 
 
-class UserAdmin(BaseAdmin, UserAdminOriginal):
-    form = UserChangeFormCust
-    add_form = UserCreationFormCust
-    list_display = UserAdminOriginal.list_display + ('is_active', )
-    list_filter = UserAdminOriginal.list_filter + ('is_active', )
-
-    def __init__(self, model, admin_site):
-        super(UserAdmin, self).__init__(model, admin_site)
-
-    def add_view(self, request, form_url='', extra_context=None):
-        extra_context = self._base_update_extra_context(extra_context)
-        return super(BaseAdmin, self).add_view(request)
-
-    def change_view(self, request, object_id, extra_context=None):
-        return super(UserAdmin, self).change_view(request, object_id,
-                                                  extra_context={'is_user_change_view': True})
-
-
 def register(site):
     ## register admin models
-    site.register(User, UserAdmin)
-    site.register(Group, GroupAdmin)
     site.register(BaseContent, BaseContentViewAdmin)
     site.register(Site, SiteAdmin)
     register_related_base(site, BaseContent)

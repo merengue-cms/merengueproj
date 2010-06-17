@@ -8,7 +8,6 @@ from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.contrib.auth.admin import GroupAdmin as DjangoGroupAdmin
 from django.contrib.auth.models import User, Group
 
-from merengue.base.admin import BaseAdmin
 from merengue.perms.models import ObjectPermission
 from merengue.perms.models import Permission
 from merengue.perms.models import PrincipalRoleRelation
@@ -97,7 +96,7 @@ class ObjectPermissionAdmin(admin.ModelAdmin):
             return HttpResponseRedirect("../")
 
 
-class RoleAdmin(BaseAdmin):
+class RoleAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         super(RoleAdmin, self).save_model(request, obj, form, change)
@@ -136,6 +135,9 @@ class UserAdmin(DjangoUserAdmin):
         (_('Roles'), {'fields': ('roles', )}),
     )
 
+    list_display = DjangoUserAdmin.list_display + ('is_active', )
+    list_filter = DjangoUserAdmin.list_filter + ('is_active', )
+
     def save_model(self, request, obj, form, change):
         super(UserAdmin, self).save_model(request, obj, form, change)
         roles_id = request.POST.getlist('roles')
@@ -162,11 +164,11 @@ class GroupAdmin(DjangoGroupAdmin):
                 remove_role(obj, role)
 
 
-class PermissionAdmin(BaseAdmin):
+class PermissionAdmin(admin.ModelAdmin):
     pass
 
 
-class PrincipalRoleRelationAdmin(BaseAdmin):
+class PrincipalRoleRelationAdmin(admin.ModelAdmin):
     pass
 
 
@@ -175,7 +177,5 @@ def register(site):
     site.register(Permission, PermissionAdmin)
     site.register(Role, RoleAdmin)
     site.register(PrincipalRoleRelation, PrincipalRoleRelationAdmin)
-    site.unregister(User)
     site.register(User, UserAdmin)
-    site.unregister(Group)
     site.register(Group, GroupAdmin)
