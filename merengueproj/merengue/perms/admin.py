@@ -13,7 +13,7 @@ from merengue.perms.models import ObjectPermission
 from merengue.perms.models import Permission
 from merengue.perms.models import PrincipalRoleRelation
 from merengue.perms.models import Role
-from merengue.perms.forms import UserChangeForm
+from merengue.perms.forms import UserChangeForm, GroupForm
 from merengue.perms.utils import add_role, remove_role
 
 
@@ -148,7 +148,18 @@ class UserAdmin(DjangoUserAdmin):
 
 
 class GroupAdmin(DjangoGroupAdmin):
-    pass
+    form = GroupForm
+    add_form = GroupForm
+
+    def save_model(self, request, obj, form, change):
+        super(GroupAdmin, self).save_model(request, obj, form, change)
+        roles_id = request.POST.getlist('roles')
+        for role in Role.objects.all():
+            role = Role.objects.get(id=role.id)
+            if unicode(role.id) in roles_id:
+                add_role(obj, role)
+            else:
+                remove_role(obj, role)
 
 
 class PermissionAdmin(BaseAdmin):

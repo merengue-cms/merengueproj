@@ -19,3 +19,16 @@ class UserChangeForm(DjangoUserChangeForm):
     roles = forms.ModelMultipleChoiceField(queryset=Role.objects.all(),
                                            widget=FilteredSelectMultiple(_('Roles'), False),
                                            required=False)
+
+
+class GroupForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(GroupForm, self).__init__(*args, **kwargs)
+        group = kwargs.get('instance', None)
+        if group:
+            self.fields['roles'].initial = [role.id for role in get_global_roles(group)]
+
+    roles = forms.ModelMultipleChoiceField(queryset=Role.objects.all(),
+                                          widget=FilteredSelectMultiple(_('Roles'), False),
+                                          required=False)
