@@ -173,7 +173,7 @@ div#contentwrapper {
 
 div#contentwrapper a {
     color:#54B848;
-    text-decoration: underline;
+	border-bottom: 1px dotted;
 }
 
 div#contentwrapper a:hover {
@@ -382,11 +382,47 @@ div.contentFiles ul {
 }
 
 /* Features */
+.contentList li {
+	list-style: none;
+}
+
+.featureList li{
+	list-style: none;
+}
 
 #features img {
-	float:left;
 	padding-right: 1em;
 }
+.categoryFeatureList {
+	height: 32px;
+	padding: 3.5em 1.5em 0 6em;
+}
+
+.categoryFeatureList a {
+	border-bottom: 0.1em dotted;
+}
+
+ ul.featureList {
+	padding-left:2em;
+}
+.featureList a {
+	padding-top: 10px;
+	float:right;
+}
+
+.featureList li{
+	height:120px;
+    line-height:14px;
+    margin-top:0.5em;
+    width:23%;
+	background-color: #F2FFF0;
+	border: 1px dotted #62BB2E;
+}
+.contentList li {
+	margin: 0 0 0.5em 1em;
+	float: left;
+}
+
 /* Footer */
 #footer {
 	width: 65%;
