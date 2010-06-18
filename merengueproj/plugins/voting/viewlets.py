@@ -27,7 +27,7 @@ class BaseContentTopRated(Viewlet):
 
     @classmethod
     def render(cls, request):
-        votes_list = get_content_with_votes(request, limit=None, order_by='-vote__num_votes')
+        votes_list = get_content_with_votes(request, limit=None, order_by='-vote__vote')
         return cls.render_viewlet(request, template_name='voting/viewlet_voting_basecontent.html',
                                   context={'votes_list': votes_list})
 
@@ -38,6 +38,6 @@ class BaseContentWithMoreVotes(Viewlet):
 
     @classmethod
     def render(cls, request):
-        votes_list = get_content_with_votes(request, limit=None, order_by='-vote__num')
+        votes_list = get_content_with_votes(request, limit=None, order_by='-vote__num_votes')
         return cls.render_viewlet(request, template_name='voting/viewlet_voting_basecontent.html',
                                   context={'votes_list': votes_list})
