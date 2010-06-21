@@ -20,7 +20,8 @@ from merengue.multimedia.models import (Photo, Video, PanoramicView, Image3D,
 class BaseMultimediaContentRelatedModelAdmin(BaseContentAdmin, RelatedModelAdmin):
     list_filter = ('class_name', ) + BaseContentAdmin.list_filter
     inherit_actions = False
-    related_field = 'basecontent'
+    related_field = 'multimediarelation'
+    reverse_related_field = 'basecontent'
 
 
 class MultimediaAddContentRelatedModelAdmin(BaseMultimediaContentRelatedModelAdmin):

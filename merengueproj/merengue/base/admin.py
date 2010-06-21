@@ -760,6 +760,7 @@ class RelatedModelAdmin(BaseAdmin):
     """
     tool_name = None
     related_field = None
+    reverse_related_field = None # For m2m with through class
     one_to_one = False
 
     def __init__(self, *args, **kwargs):
@@ -839,7 +840,14 @@ class RelatedModelAdmin(BaseAdmin):
             # if related_field related foreign key (n elements)
             # we associate related object here
             manager = getattr(obj, field.get_accessor_name())
-            through_model = getattr(manager, 'through', None)
+            manager_reverse = None
+            if self.reverse_related_field:
+                reverse_field = opts.get_field_by_name(self.reverse_related_field)[0]
+                if isinstance(reverse_field, RelatedObject) and \
+                    not isinstance(field.field, models.OneToOneField):
+                    manager_reverse = getattr(self.basecontent, reverse_field.get_accessor_name())
+            through_model = getattr(manager, 'through', None) or \
+                            (self.reverse_related_field and getattr(manager_reverse, 'through', None))
             if through_model is None:
                 # we only know how handle many 2 many without intermediate models
                 manager.add(self.basecontent)
