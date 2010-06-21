@@ -173,6 +173,8 @@ div#contentwrapper {
 div#contentwrapper a {
     color:#54B848;
 	border-bottom: 1px dotted;
+	float: left;
+	margin-right: 1em;
 }
 
 div#contentwrapper a:hover {
@@ -259,9 +261,6 @@ div#breadcrumbs a:hover {
 }
 
 /* -----  sidebar ----- */
-.block {
-    padding: 1em;
-}
 
 .block h1 {
     margin-top: 0;
@@ -400,8 +399,19 @@ div#contentwrapper #somefeatures a {
 	list-style: none;
 }
 
+.featureList img {
+	margin-left: 2em;
+	margin-top: 0.5em;
+}
+div#contentwrapper .featureList a {
+	border-bottom: none;
+}
+
 .featureList li{
-	list-style: none;
+	height:120px;
+    line-height:14px;
+    margin-top:0.5em;
+    width:23%;
 }
 
 #features img {
@@ -443,7 +453,7 @@ a#features  {
 
 .categoryFeatureList {
 	height: 32px;
-	padding: 3.5em 1.5em 0 6em;
+	padding: 3.5em 1.5em 0 7em;
 }
 
 .categoryFeatureList a {
@@ -462,9 +472,10 @@ a#features  {
 	height:120px;
     line-height:14px;
     margin-top:0.5em;
-    width:23%;
+    width:14%;
 	background-color: #F2FFF0;
 	border: 1px dotted #62BB2E;
+	padding: 0.5em;
 }
 .contentList li {
 	margin: 0 0 0.5em 1em;
