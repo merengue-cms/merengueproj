@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from south.modelsinspector import add_introspection_rules
 from stdimage import StdImageField
 from stdimage.fields import StdImageFieldFile
+from stdfile.db.fields import RemovableFileField
 from tagging.fields import TagField
 from transmeta import TransMeta
 
@@ -214,7 +215,7 @@ class Photo(BaseMultimedia):
 class Video(BaseMultimedia):
     """ Video file """
 
-    file = models.FileField(verbose_name=_('video file'),
+    file = RemovableFileField(verbose_name=_('video file'),
                             upload_to=VIDEO_MEDIA_PREFIX,
                             blank=True, null=True, max_length=200)
     preview = StdImageField(verbose_name=_('preview image'),

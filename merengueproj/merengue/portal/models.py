@@ -4,6 +4,8 @@ from django.utils.translation import ugettext_lazy as _
 from transmeta import TransMeta
 
 from merengue.base.models import BaseContent
+from stdimage import StdImageField
+
 
 CATEGORIES = (
     ('primary', _('Primary link')),
@@ -30,9 +32,10 @@ class PortalLink(models.Model):
                             max_length=200,
                             blank=False,
                             null=False)
-    image = models.ImageField(verbose_name=_('image'),
+    image = StdImageField(verbose_name=_('icon'),
                               null=True, blank=True,
-                              upload_to=LINK_MEDIA_PREFIX)
+                              upload_to=LINK_MEDIA_PREFIX,
+                              help_text=_('The system don\'t resize the icon. You need to upload with the final size'))
 
     class Meta:
         verbose_name = _('portal link')
