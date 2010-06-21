@@ -4,8 +4,7 @@ html {
 }
 
 body {
-	font-size:11pt;
-    font-family: arial;
+	font: 13px/17px  Arial, sans-serif;
 }
 
 a {
@@ -382,6 +381,18 @@ div.contentFiles ul {
 }
 
 /* Features */
+div#contentwrapper #somefeatures a {
+	border-bottom:none;
+}
+
+#somefeatures a:hover {
+	text-decoration: none;
+}
+
+#features {
+	margin-left: 2em;
+}
+
 .contentList li {
 	list-style: none;
 }
@@ -392,7 +403,41 @@ div.contentFiles ul {
 
 #features img {
 	border:2px solid #62BB2E;
+	float: left;
+	margin-right: 1.5em;
+	margin-top: 0.5em;
 }
+
+#features .odd,
+#features .even {
+	margin-top: 2em;
+    float: left;
+    width: 390px;
+    height: 92px;
+	margin-right: 5em;
+	background-color: #EDFFEB;
+	padding: 0.5em;
+	border: 1px dotted #54B848;
+}
+
+#features h2 {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+a#features  {
+	border-bottom: none;
+}
+
+#features p {
+    line-height: 17px;	
+	margin-right: 0.5em;
+}
+
+.contentDescriptionIndex li {
+	line-height: 15px;
+}
+
 .categoryFeatureList {
 	height: 32px;
 	padding: 3.5em 1.5em 0 6em;
