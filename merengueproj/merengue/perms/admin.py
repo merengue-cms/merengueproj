@@ -59,7 +59,8 @@ class PermissionAdmin(admin.ModelAdmin):
                 permissions[perm].append((role, perm.objectpermission_set.filter(role=role, content=obj) and True or False))
 
 
-        context = {'admin_site': admin_site.name,
+        context = {'original': obj,
+                   'admin_site': admin_site.name,
                    'change': True,
                    'is_popup': False,
                    'save_as': False,
