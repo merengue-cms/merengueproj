@@ -24,7 +24,10 @@
     {% include "admin/object_tools.html" %}
     {% if not is_popup %}{% if change %}
     <li><a href="history/" class="historylink">{% trans "History" %}</a></li>
-    <li><a href="permissions/" class="historylink">{% trans "Permissions" %}</a></li>{% endif %}
+    {% if inside_basecontent %}
+      <li><a href="permissions/" class="historylink">{% trans "Permissions" %}</a></li>
+    {% endif %}
+    {% endif %}
   {% endif %}
 </ul>
 {% endblock %}

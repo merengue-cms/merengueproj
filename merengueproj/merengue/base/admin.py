@@ -248,7 +248,7 @@ def set_field_read_only(field, field_name, obj):
     field.required = False
 
 
-class BaseAdmin(GenericAdmin, PermissionAdmin):
+class BaseAdmin(GenericAdmin, admin.ModelAdmin):
     html_fields = ()
     autocomplete_fields = {}
     edit_related = ()
@@ -550,7 +550,7 @@ class StatusControlProvider(object):
         return options
 
 
-class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProvider):
+class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProvider, PermissionAdmin):
     change_list_template = "admin/basecontent/change_list.html"
     list_display = ('name', 'status', 'user_modification_date', 'last_editor')
     search_fields = ('name', )
@@ -719,6 +719,12 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
             'admin/%s/change_list.html' % app_label,
             'admin/change_list.html',
         ], context, context_instance=context_instance)
+
+    def _base_update_extra_context(self, extra_context=None):
+        extra_context = super(BaseContentAdmin, self)._base_update_extra_context(extra_context)
+
+        extra_context.update({'inside_basecontent': True})
+        return extra_context
 
 if settings.USE_GIS:
     BaseContentAdmin.list_display += ('google_minimap', )
