@@ -391,7 +391,7 @@ div.contentFiles ul {
 }
 
 #features img {
-	padding-right: 1em;
+	border:2px solid #62BB2E;
 }
 .categoryFeatureList {
 	height: 32px;
