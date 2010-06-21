@@ -202,7 +202,7 @@ class UserAdmin(DjangoUserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
-        (_('Permissions'), {'fields': ('is_staff', 'is_active', 'is_superuser', 'user_permissions')}),
+        (_('Permissions'), {'fields': ('is_staff', 'is_active', 'is_superuser')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
         (_('Groups'), {'fields': ('groups', )}),
         (_('Roles'), {'fields': ('roles', )}),
@@ -225,6 +225,7 @@ class UserAdmin(DjangoUserAdmin):
 class GroupAdmin(DjangoGroupAdmin):
     form = GroupForm
     add_form = GroupForm
+    exclude = ('permissions', )
 
     def save_model(self, request, obj, form, change):
         super(GroupAdmin, self).save_model(request, obj, form, change)
