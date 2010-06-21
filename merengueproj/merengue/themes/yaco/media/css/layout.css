@@ -185,7 +185,7 @@ div#content {
     background: white;
     margin-left: 10px;
     width: 65%;
-    padding: 0 20px 10px 20px;
+    padding: 0 1em 2.5em;
 }
 
 #content-title h1 {
@@ -231,8 +231,11 @@ li.linkAdmin a {
     background:transparent url(/media/themes/yaco/img/linkadmin_icon.png) no-repeat scroll right top;
 }
 
-.contentDescription {
-    color: #999999;
+
+
+.contentDescriptionIndex {
+	margin-left: 2em;
+	width: 85%;
 }
 
 /* ----- breadcrumbs ----- */
