@@ -6,10 +6,9 @@ JAVA=/usr/bin/java
 
 if [ `/bin/hostname` = "vostro200-2" ]
 then
-   SELENIUM=/var/lib/buildbot/selenium-remote-control/selenium-server-1.0.3/selenium-server.jar
+   SELENIUM=/usr/local/src/selenium-remote-control-1.0-beta-2/selenium-server-1.0-beta-2/selenium-server.jar
 else
-   SELENIUM=/var/lib/buildbot/selenium-remote-control/selenium-server-1.0.3/selenium-server.jar
-   #SELENIUM=/usr/local/src/selenium-remote-control-1.0.1/selenium-server-1.0.1/selenium-server.jar
+   SELENIUM=/usr/local/src/selenium-remote-control-1.0.1/selenium-server-1.0.1/selenium-server.jar
 fi
 
 # Arguments
@@ -19,8 +18,7 @@ shift
 HOST=$1
 shift
 
-export DISPLAY=:0.0
-export PATH=/var/lib/buildbot/firefox-3.0:$PATH
+export DISPLAY
 
 OUTPUT=0
 while [ "$1" != "" ]; do
@@ -37,8 +35,8 @@ while [ "$1" != "" ]; do
     chmod a+r $LOGFILE
 
     echo "You can see the output at this location:"
-    echo "http://buildbot.yaco.es/resultados-selenium/opimec/$SUITE/output.html"
-    echo "http://buildbot.yaco.es/resultados-selenium/opimec/$SUITE/selenium.log"
+    echo "http://buildbot.yaco.es/resultados-selenium/merengue/$SUITE/output.html"
+    echo "http://buildbot.yaco.es/resultados-selenium/merengue/$SUITE/selenium.log"
 
     shift
 done
