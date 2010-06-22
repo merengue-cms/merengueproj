@@ -2,10 +2,10 @@
 {% load i18n adminmedia %}
 
 {% block extrahead %}
-    {{ block.super }}
+
     <link href="{% admin_media_prefix %}css/base.css" type="text/css" rel="stylesheet">
     <link href="{% admin_media_prefix %}css/forms.css" type="text/css" rel="stylesheet">
-
+    {{ block.super }}
 {% endblock %}
 
 

@@ -24,7 +24,8 @@
 }
 
 .module-merengue h1,
-#content-related .module h2, 
+#content-related .module h2,
+.merengueadmin .module h2,
 .module caption, 
 .inline-group h2 {
 	background: #E6D8C0 url(../img/admin/default-bg.gif) repeat-x top left;
@@ -40,6 +41,12 @@ a:hover {
 .row1 {
 	background: #f7f5f0;
 }
+
+.button.default, input.default[type="submit"], .submit-row input.default {
+    border: 2px solid #917250;
+    background: #E6D8C0 url(../img/admin/default-bg.gif) repeat-x top left;
+}
+
 
 /*---- other styles ----*/
 .object-tools {
