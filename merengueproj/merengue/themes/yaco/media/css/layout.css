@@ -314,9 +314,8 @@ a#powered-by {
 }
 
 #footer {
-    padding-left: 3em;
+    margin-left: 3em;
     display: block;
-    color: #AAAAAA;
     font-size: 0.8em;
 	float: left;
 }
@@ -360,7 +359,7 @@ ul.menu_ul {
 .theme-yaco #feedback #firstcomment .actions,
 .theme-yaco #feedback .commentform,
 .theme-yaco #feedback #firstcomment .commentinfo {
-    background: #ddfdd9 none repeat scroll 0 0;
+    background: #e6fce3 none repeat scroll 0 0;
 }
 
 .theme-yaco #feedback h2,
