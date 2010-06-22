@@ -128,6 +128,19 @@ ul {
 
 .ie7 #header-blocks li {
     padding: 0px 0 0 11px;
+    display: block;
+    float: left;
+}
+
+.ie7 #header-blocks li a {
+    display: block;
+    padding-top: 0;
+    padding-bottom: 
+}
+
+.ie7 #header-blocks li a span {
+    display: block;
+    padding-right: 5px;
 }
 
 #portal-primary-links li a {
@@ -137,7 +150,7 @@ ul {
 }
 
 .ie #portal-primary-links li a span,
-.ie #header-blocks #portalmenu li a  {
+.ie #header-blocks #portalmenu li a span {
     line-height: 30px;
 }
 
@@ -176,10 +189,13 @@ ul {
     background: transparent url(/media/themes/merengue/img/right_actived_menu_button.jpg) no-repeat right top;
 }
 
-#header-blocks ul li,
-#language-tools  ul li {
+#header-blocks ul li {
     margin-bottom: 5px;
     display: inline-block;
+}
+
+#language-tools  ul li {
+    display: inline;
 }
 
 /* IE8 hack */
@@ -600,5 +616,8 @@ li#powered-by {
   }
   #header-blocks ul li a span {
     display: inline-block;
+  }
+  #header-blocks #portalmenu li a {
+    padding-top: 7px;
   }
 }
