@@ -225,7 +225,6 @@ class UserAdmin(DjangoUserAdmin):
 class GroupAdmin(DjangoGroupAdmin):
     form = GroupForm
     add_form = GroupForm
-    exclude = ('permissions', )
 
     def save_model(self, request, obj, form, change):
         super(GroupAdmin, self).save_model(request, obj, form, change)
