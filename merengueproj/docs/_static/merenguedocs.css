@@ -171,12 +171,12 @@ h2 {
 	margin-bottom:.6em; 
 	line-height:1.2em; 
 	color:#7A736C; 
+	border-bottom: 1px dotted;
 	}
 h3 { 
-	font-size:160%; 
+	font-size:150%;
 	padding-bottom:.2em; 
 	color:#917250; 
-	border-bottom: 1px dotted;
 	}
 h4 { font-size:125%; font-weight:bold; margin-top:1.5em; margin-bottom:3px; }
 div.figure { text-align: center; }
