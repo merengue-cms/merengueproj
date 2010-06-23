@@ -16,7 +16,7 @@ setup(
     name = "merengue",
     version = "0.5",
     install_requires = ['django==1.1.2', 'PIL', 'beautifulsoup'],
-    author = "Yaco Sistemas",
+    author = "Manuel Saelices",
     author_email = "msaelices@yaco.es",
     description = "Django-based CMS with steroids",
     url = "http://www.merengueproject.org/",
