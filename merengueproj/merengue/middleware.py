@@ -10,7 +10,6 @@ class LocaleMiddleware(object):
     def process_request(self, request):
         forced_lang = request.GET.get('set_language', None)
         if forced_lang:
-            get = request.GET.copy()
             translation.activate(forced_lang)
             request.LANGUAGE_CODE = translation.get_language()
 
