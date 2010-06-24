@@ -21,6 +21,19 @@ from django.utils.translation import ugettext_lazy as _
 from merengue.action.actions import UserAction
 
 
+class AdminAction(UserAction):
+    name = 'admin'
+    verbose_name = _('Admin site')
+
+    @classmethod
+    def get_url(cls, request, user):
+        return reverse('admin_index')
+
+    @classmethod
+    def has_action(cls, user):
+        return user.is_staff
+
+
 class LoginAction(UserAction):
     name = 'login'
     verbose_name = _('Login')
