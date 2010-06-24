@@ -180,6 +180,13 @@ command to get new plugins activated (and also get their models created if exist
     python manage.py migrate
 
 
+Media files in plugins
+======================
+
+(( to be completed. Talk about media conventions taken in Merengue,
+merengue.views.static.serve view and sync_plugins_media command ))
+
+
 Broken plugins
 ==============
 

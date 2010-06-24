@@ -135,8 +135,27 @@ incompatible changes).
 Languages configuration
 -----------------------
 
-(( to be completed. Talk about LANGUAGES setting and transmeta fields ))
+In Merengue, language configuration should be done before database creation,
+because data models are created with translatable fields (as much columns as 
+languages are configurated).
 
+The parameters to be configured are ``LANGUAGE_CODE`` and ``LANGUAGES``:
+
+    .. code-block:: python
+
+        LANGUAGE_CODE = 'es'
+
+        LANGUAGES = (
+            ('es', ugettext('Español')),
+            ('en', ugettext('English')),
+            ('fr', ugettext('Français')),
+        )
+
+.. admonition:: Deep into
+
+    See `django-transmeta`_ app for more information about translatable models.
+
+.. _`django-transmeta`: http://code.google.com/p/django-transmeta/
 
 Database installation and configuration
 ---------------------------------------
@@ -145,13 +164,13 @@ It's necessary configure the database changing ``DATABASE_*`` parameters
 in the configuration file ``myproject/settings.py``, created with
 ``merengue-admin.py``
 
-.. admonition:: postgresql as convention database
+.. admonition:: PostgreSQL as convention database
 
-    Next steps will consider postgresql as choiced database engine.
+    Next steps will consider PostgreSQL as choiced database engine.
     Other engines can be used, but you have to adapt instructions to the
     specific database engine commands.
 
-Let's suppose that you were configuring a postgresql database with the
+Let's suppose that you were configuring a PostgreSQL database with the
 following parameters:
 
     .. code-block:: python
@@ -174,7 +193,7 @@ Installing database and python dependencies: ``postgresql``, ``python-psycopg2``
 
         $ apt-get install postgresql
 
-* ``python-psycopg``: python interface to postgresql database.
+* ``python-psycopg``: python interface to PostgreSQL database.
 
     .. code-block:: bash
 
@@ -186,7 +205,7 @@ Creating the project database
 
 .. admonition:: Note
 
-    We suppose that your user has superadmin permissions in postgresql.
+    We suppose that your user has superadmin permissions in PostgreSQL.
 
 PostgreSQL database and user is created with these instructions:
 
@@ -204,14 +223,14 @@ the end):
         local myproject myprojectuser trust
         local test_myproject myprojectuser trust # necessary for tests
 
-Reload pg_hba.conf in postgresql server:
+Reload pg_hba.conf in PostgreSQL server:
     
     .. code-block:: bash
  
         $ /etc/init.d/postgresql-X.X reload
       
 
-Restart postgresql and check access with this command:
+Restart PostgreSQL and check access with this command:
 
     .. code-block:: bash
 
@@ -225,8 +244,8 @@ You need build merengue initial models with these two commands:
 
     .. code-block:: bash
 
-        $ ./manage.py syncdb
-        $ ./manage.py migrate
+        $ python manage.py syncdb
+        $ python manage.py migrate
 
 You can ignore the creation of superuser because a user named ``admin`` with
 ``admin`` password will be created automatically.
@@ -239,7 +258,7 @@ Go to our project directory. Test that django development server runs ok:
 
     .. code-block:: bash
 
-        $ ./manage.py runserver
+        $ python manage.py runserver
 
 Open the web browser and go to http://localhost:8000/admin/ and check
 that the admin web interface is running successfully.
@@ -461,7 +480,7 @@ south ``migrate`` command as follows:
 
     .. code-block:: bash
 
-        $ ./manage.py migrate
+        $ python manage.py migrate
 
 Also, we recommend you follow `changes`_ on merengue `skel project`_ because may
 be needed to reproduce some of these changes in your project.
@@ -477,7 +496,7 @@ You can make a database backup in SQL with the following command:
 
 .. code-block:: bash
 
-    $ ./manage.py backupdb
+    $ python manage.py backupdb
 
 
 ==================
@@ -487,20 +506,107 @@ Deploying Merengue
 To deploying merengue, because Merengue is Django based, we recommend the reading
 of `Deploying Django`_ documentation.
 
-(( to be completed ))
+Merengue recommended deployment configuration is using nginx with WSGI, but can be
+used with any other Django configurations.
 
+This section will talk about the specific consideration to be taken in a Merengue
+site deployment.
 
 Ensure media is served by web server
 ====================================
 
-(( to be completed. Talk about sync_plugins_media command ))
+To get plugins and apps more redistributable, Merengue plugins (and some
+Merengue apps) can contain media files included in a ``media`` directory inside
+each plugin directory. Merengue has implemented ``merengue.views.static.serve``
+view that virtualizes all media directory as was included in ``MEDIA_ROOT``. So,
+Django development server will works rightly.
+
+However, if you want to configure media files to get served by web server, you
+need to collect all media files below ``MEDIA_ROOT``. This is done with this
+command:
+
+.. code-block:: bash
+
+    $ python manage.py sync_plugins_media --link --all
+
+``--link`` option can be removed out if you want to copy media files (not
+symlink them).
+
+.. admonition:: Deep into
+
+    See `media files in plugins`_ for more information about this.
+
+.. _`media files in plugins`: http://docs.merengueproject.org/topics/plugins/index.html#media-files-in-plugins
 
 
 Example Merengue configuration with nginx and WSGI
 ==================================================
 
-(( to be completed ))
+In this section we will show demo.merengueproject.org configuration, that is
+based on ``nginx`` server with ``uWSGI`` module. See `Running uWSGI behind Nginx`_
+to deep into.
 
+.. _`Running uWSGI behind Nginx`: http://projects.unbit.it/uwsgi/wiki/RunOnNginx
+
+This is an example nginx configuration file::
+
+    http {
+        server {
+            listen       80;
+            server_name  demo.merengueprojectorg.org;
+
+            access_log  logs/demo.merengue.access.log main;
+
+            location /media/ {
+                alias /home/demomerengue/demomerengueprojectorg/media/;
+            }
+
+            location /admin_media/ {
+                alias /home/demomerengue/django_src/django/contrib/admin/media/;
+            }
+
+            location / {
+                uwsgi_pass unix:///home/demomerengue/sock/uwsgi.sock;
+                include uwsgi_params;
+                uwsgi_param UWSGI_SCRIPT wsgi;
+            }
+        }
+    }
+
+The ``include uwsgi_params`` line includes this file::
+
+    uwsgi_param  QUERY_STRING       $query_string;
+    uwsgi_param  REQUEST_METHOD     $request_method;
+    uwsgi_param  CONTENT_TYPE       $content_type;
+    uwsgi_param  CONTENT_LENGTH     $content_length;
+
+    uwsgi_param  REQUEST_URI        $request_uri;
+    uwsgi_param  PATH_INFO          $document_uri;
+    uwsgi_param  DOCUMENT_ROOT      $document_root;
+    uwsgi_param  SERVER_PROTOCOL    $server_protocol;
+
+    uwsgi_param  REMOTE_ADDR        $remote_addr;
+    uwsgi_param  REMOTE_PORT        $remote_port;
+    uwsgi_param  SERVER_PORT        $server_port;
+    uwsgi_param  SERVER_NAME        $server_name;
+
+Finally, for starting the uwsgi server, you need a script like this (see
+`demomerengue script`_ for a more complete example):
+
+.. _`demomerengue script`: http://dev.merengueproject.org/browser/sites/demomerengueprojectorg/conf/demo/scripts/demomerengue
+
+.. code-block:: bash
+
+    BASEDIR="/home/demomerengue"
+    PIDFILE="$BASEDIR/pid/demomerengue.pid"
+    VIRTUALENV=$BASEDIR/virtualenv/
+    SOCKET="$BASEDIR/sock/uwsgi.sock"
+    PROJECTNAME="demomerengueprojectorg"
+    LOGFILE="$BASEDIR/logs/demomerengue.uwsgi.log"
+
+    cd $BASEDIR
+    . $BASEDIR/virtualenv/bin/activate
+    $BASEDIR/bin/uwsgi -p 2 -C -M 4 -A 4 -m -s $SOCKET -H $VIRTUALENV $PROJECTNAME.wsgi --pythonpath $BASEDIR/$PROJECT/ --pidfile $PIDFILE -d $LOGFILE
 
 Configuring caching
 ===================
