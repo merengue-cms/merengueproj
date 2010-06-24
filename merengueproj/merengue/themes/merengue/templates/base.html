@@ -12,6 +12,39 @@
     <![endif]-->
 {% endblock %}
 
+{% block extrascripts %}
+<script type="text/javascript">
+  (function($) {
+    $(document).ready(function () {
+        $(function() {
+        if (jQuery.browser.msie && jQuery.browser.version <= 7) {
+            $("#portalmenu").addClass('IE7');
+        }
+        });
+          $('#portalmenu ul li').hover(
+          //Mouseover, fadeIn the hidden hover class
+          function() {
+              $(this).addClass('hover');
+              elwidth = $(this).width();
+              mleft = (elwidth-136)/2;
+              $(this).children('div').children('table').css("margin-left", mleft +"px");
+              $('#portalmenu ul li').hover(
+              function() {
+                  $(this).addClass('hover');
+              },
+              function(){
+                  $(this).removeClass('hover');
+              });
+          },
+          //Mouseout, fadeOut the hover class
+          function() {
+              $(this).removeClass('hover');
+          });
+
+    });
+  })(jQuery);
+</script>
+{% endblock %}
 {% block headerwrapper %}
   <div id="header">
     <div id="headerlogo">
