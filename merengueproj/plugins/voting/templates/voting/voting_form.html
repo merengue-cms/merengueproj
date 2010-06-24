@@ -1,5 +1,4 @@
 {% load i18n %}
-
 <form class="star-rating" method="post" action="{% url vote_object content.id %}">
  <span class="current-votes">{% blocktrans count vote.num_votes as votes %}{{ votes }} vote{% plural %}{{ votes }} votes{% endblocktrans %}</span>
   <ol>
@@ -7,7 +6,7 @@
     {% if not readonly %}
     {% for star in stars %}
         <li>
-            <a href="#" class="star-{{ forloop.counter }}" title="{{ star.1 }}">
+            <a href="#" class="star-{{ forloop.counter }} {% if can_vote %}can_vote{% endif %}" title="{{ star.1 }}">
                 <input name="vote" {% if not can_vote %}disabled="true" {% endif %}type="submit" value="{{ star.0 }}"/>
                 <span>
                     {% if can_vote %}
