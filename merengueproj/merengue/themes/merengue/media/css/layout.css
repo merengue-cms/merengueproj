@@ -7,9 +7,9 @@
 
 body {
     font-family: arial;
-	color: #717171;
+    color: #717171;
     background: #f4f0e5;
-	font: 11pt/13pt Arial, Helvetica, sans-seri;
+    font: 11pt/13pt Arial, Helvetica, sans-seri;
 }
 
 a {
@@ -284,13 +284,17 @@ ul {
 
 *html #header-blocks ul li,
 *html #language-tools  ul li {
-	display: inline;
+    display: inline;
 }
 
 #user-actions {
-	float:right;
-	margin: 0 7px 5px 0;
-	font-size: 10pt;
+    float:right;
+    margin: 0 7px 5px 0;
+    font-size: 10pt;
+}
+#user-actions li {
+    display: inline;
+    margin-right: 10px;
 }
 #user-actions a {
 	border-bottom: 0.1em dotted;
