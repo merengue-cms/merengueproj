@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 # Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
 #
 # This file is part of Merengue.
@@ -15,7 +16,6 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-# -*- encoding: utf-8 -*-
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.gis.geos import LinearRing
 from django.core.exceptions import ObjectDoesNotExist
