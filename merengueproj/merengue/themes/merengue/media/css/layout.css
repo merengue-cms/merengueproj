@@ -131,7 +131,7 @@ ul {
     display: block;
     float: left;
 }
-
+/*
 .ie7 #header-blocks li a {
     display: block;
     padding-top: 0;
@@ -141,7 +141,7 @@ ul {
 .ie7 #header-blocks li a span {
     display: block;
     padding-right: 5px;
-}
+}*/
 
 #portal-primary-links li a {
     padding: 7px 12px 7px 5px;
@@ -154,17 +154,94 @@ ul {
     line-height: 30px;
 }
 
-#header-blocks #portalmenu li {
+#header-blocks #portalmenu  .menu1 > li {
     background: transparent url(/media/themes/merengue/img/left_portal_menu_button.jpg) no-repeat left top;
-    padding: 8px 0 5px 11px;
+    padding: 8px 0 15px 11px;
+    position: relative;
 	height: 15px;
 }
 
-#header-blocks #portalmenu li a {
+#header-blocks #portalmenu .menu1 > li a {
     padding: 6px 12px 7px 5px;
     font-size: 10pt;
     background: transparent url(/media/themes/merengue/img/right_portal_menu_button.jpg) no-repeat right top;
 }
+
+.ie7 #header-blocks #portalmenu li a {
+    line-height: 17px;
+}
+
+#portalmenu ul li table {
+  position: absolute;
+  display: none;
+  top: 33px;
+  margin: 0;
+  width: 136px;
+  height: auto;
+  padding: 0 0 5px 0;
+  border-collapse: collapse;
+}
+
+#portalmenu ul li.hover table {
+  display: block;
+}
+
+#portalmenu ul li.hover table tr {
+  display: block;
+  width: 136px;
+}
+
+#portalmenu ul li.hover table {
+  z-index: 10;
+  background: transparent url(/media/themes/merengue/img/submenu_back_bottom.gif) no-repeat left bottom;
+}
+
+#portalmenu ul li.hover table tr.first,
+#portalmenu ul li.hover table tr.firstlast {
+  height: 32px;
+  background: transparent url(/media/themes/merengue/img/submenu_back_top.jpg) no-repeat left top;
+}
+
+#portalmenu ul li.hover table tr {
+  background: transparent url(/media/themes/merengue/img/submenu_back.gif) no-repeat left bottom;
+}
+
+#portalmenu ul li.hover table tr.last  {
+  background: transparent none no-repeat left bottom;
+}
+
+#portalmenu ul li.hover table tr.last td {
+  padding: 0 0 5px 0;
+}
+
+#portalmenu ul li.hover table tr td {
+  float: none;
+  margin: 0;
+  min-height: 25px;
+  padding-bottom: 8px;
+  display: block;
+  vertical-align: top;
+}
+
+#portalmenu ul li.hover table tr.first a,
+#portalmenu ul li.hover table tr.firstlast a {
+  padding-top: 9px;
+}
+
+#portalmenu ul li table tr td a {
+  position: relative;
+  text-transform: capitalize;
+  text-align: center !important;
+  font-size: 9pt;
+  float: none;
+  display: block;
+  line-height: 12px;
+  padding-bottom: 2px;
+  height: auto;
+  background: none !important;
+  border-bottom: 1px solid transparent;
+}
+
 
 #header-blocks li a:hover {
     text-decoration: none;
