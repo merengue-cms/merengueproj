@@ -4,4 +4,74 @@
 Merengue user guide
 ===================
 
-(( to be completed ))
+This document will guide you for using Merengue as admin of your site. We will
+try to show this approach without taking care of technical aspects, just seeing
+aspects of graphical configuration, and how Merengue works for the site admin.
+
+.. admonition:: Technical stuff
+    
+    We assume that you already have a Merengue instance working properly. If 
+    you don't, you should have to take a look `installing merengue`_ for more
+    information about this.
+
+.. _`installing merengue`: http://docs.merengueproject.org/topics/install.html
+
+
+Introduction to Merengue admin site
+===================================
+
+Once your Merengue site is active (we suppose in http://localhost:8000), you can
+access to your admin site in http://localhost:8000/admin, and you will see 
+something like this:
+
+.. image:: _images/merengue_admin_site.png
+
+This site provides you links to several areas where you can configure your site
+without writing any code, so you don't need any kind of programming knowledge
+to manage a Merengue site.
+
+It's sepparated by some blocks, in function of what you want to do. Those blocks
+are:
+
+* **Content management**. Those are links to manage your site's content. You can access from here to the *content*, the *sections*, *portal menus* and *portal links*
+
+* **Multimedia**. You can edit and delete your site's *photos*, *videos*, *audios*, *panoramic views* and *3D images* from this links.
+
+* **Site configuration**. If you want to configure how the site looks, you should use this options. Such as *blocks*, *plugins*, *themes*, *registry* and even *save and restore configuration* to do some backups.
+
+* **User management**. The last block is used to edit *users* privileges, *groups* and *roles*.
+
+
+Plugins
+=======
+
+Merengue works thanks to some external elements called *plugins*. Those plugins
+increase the functionality of your site, allowing you to customize your site
+in any way you want.
+
+You can access to the plugins configuration clicking **Plugins** in the main
+admin page, or going to the URL 
+http://localhost:8000/admin/pluggable/registeredplugin and you will see a menu like
+the next:
+
+.. image:: _images/merengue_plugin_configuration.png
+
+Installing plugins
+------------------
+
+If you are working on a clean Merengue installation, you will only have
+activated the **core** plugin. That plugin cannot be disabled because it's
+essential to the proper site's behaviour.
+
+Let's activate some plugins, for example the *voting* plugin. We just click in
+it's link to go to the configuration of that plugin.
+
+.. image:: _images/voting_plugin_configuration.png
+
+To active a plugin, first you should install it, so you have to check the 
+*Installed* element, save the form, and it will be activated. In some case you
+want to desactivate the plugin but not uninstalled it, you can uncheck the
+*Activate* checkbox.
+
+With this plugin for example, you will be able to allow users to vote some
+contents. 
