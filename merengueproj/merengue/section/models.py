@@ -197,7 +197,8 @@ class AbsoluteLink(BaseLink):
     url = models.CharField(
         verbose_name=_('url'),
         max_length=200,
-        )
+        help_text=_('The absolute urls have to write complety: Protocol, domain, query'),
+    )
 
     def get_absolute_url(self):
         return self.url

@@ -40,7 +40,8 @@ class PortalLink(models.Model):
     content = models.ForeignKey(BaseContent, verbose_name=_('Content'),
                                    blank=True, null=True)
     external_url = models.CharField(verbose_name=_('url'), max_length=200,
-                                    blank=True, null=True)
+                                    blank=True, null=True,
+                                    help_text=_('The absolute urls have to write complety: Protocol, domain, query'))
     cached_url = models.CharField(verbose_name=_('url'), max_length=200,
                                   blank=True, null=True, editable=False)
     order = models.IntegerField(_('order'), blank=True, null=True)

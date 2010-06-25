@@ -17,8 +17,6 @@
 
 from django.conf import settings
 from django.contrib import admin
-from django.forms.models import save_instance
-from django.forms.util import ValidationError
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
@@ -34,6 +32,7 @@ from merengue.section.models import (Menu, Section,
                                      BaseLink, AbsoluteLink, ContentLink, ViewletLink,
                                      Document, DocumentSection, CustomStyle,
                                      SectionRelatedContent)
+from merengue.section.formsets import BaseLinkInlineFormSet
 from merengue.section.widgets import SearchFormOptionsWidget
 
 
@@ -148,6 +147,8 @@ class DocumentRelatedModelAdmin(SectionContentAdmin, DocumentAdmin):
 
 class BaseLinkInline(admin.TabularInline):
 
+    formset = BaseLinkInlineFormSet
+
     def get_fieldsets(self, request, obj=None):
         if self.declared_fieldsets:
             return self.declared_fieldsets
@@ -166,30 +167,6 @@ class BaseLinkInline(admin.TabularInline):
                     return None
             except BaseLink.DoesNotExist:
                 pass
-
-        def save_new(formset_self, form, commit=True):
-            fk_attname = formset_self.fk.get_attname()
-            kwargs = {fk_attname: formset_self.instance.pk}
-            new_obj = formset_self.model(**kwargs)
-            if fk_attname == formset_self._pk_field.attname:
-                exclude = [formset_self._pk_field.name]
-            else:
-                exclude = []
-            if 'baselink_ptr' in form.cleaned_data and not form.cleaned_data['baselink_ptr']:
-                del(form.cleaned_data['baselink_ptr'])
-            return save_instance(form, new_obj, exclude=exclude, commit=commit)
-
-        def clean(formset_self):
-            data=formset_self.data
-            if data.get('contentlink-0-content', None) and data.get('absolutelink-0-url', None) or \
-               data.get('viewletlink-0-viewlet', None) and data.get('contentlink-0-content', None) or \
-               data.get('viewletlink-0-viewlet', None) and data.get('absolutelink-0-content', None):
-                raise ValidationError(_('Sorry you can not select two or more options simultaneously for this menu. Fulfill just one.'))
-            elif not data.get('contentlink-0-content', None) and not data.get('absolutelink-0-url', None) and \
-                 not data.get('viewletlink-0-viewlet', None):
-                raise ValidationError(_('Sorry you need to select one options for this menu. Fulfill just one.'))
-        formset.save_new = save_new
-        formset.clean = clean
         return formset
 
 
