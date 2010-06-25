@@ -285,7 +285,7 @@ file in the ``templates/themes/merengueprojectorg`` directory with this content:
       Django based CMS framework for perfectionists with deadlines
     </div>
 
-Finally, we add some CSS for the logo phrase:
+Finally, add some CSS for the logo phrase:
 
 .. code-block:: css
 
@@ -303,11 +303,27 @@ You should see now a page header with logo and phrase at right side:
 
 .. image:: _images/merengueprojectorg_theme_with_logo_and_phrase.png
 
+To see a finished version of `www.merengueproject.org`_ theme, you have to:
+
+ 1. Copy content of `merengueproject base.html template`_.
+ 2. Copy complete `merengueproject layout.css file`_.
+ 3. Copy all `images from merengueproject img directory`_.
+
+.. _`merengueproject base.html template`: https://dev.merengueproject.org/browser/sites/merengueprojectorg/templates/themes/merengueprojectorg/base.html
+.. _`merengueproject layout.css file`: https://dev.merengueproject.org/browser/sites/merengueprojectorg/media/themes/merengueprojectorg/css/layout.css
+.. _`images from merengueproject img directory`: https://dev.merengueproject.org/browser/sites/merengueprojectorg/media/themes/merengueprojectorg/img
+
 .. admonition:: Deep into
 
     For more information about Merengue theming, you can read `working with themes`_
 
 .. _working with themes: http://docs.merengueproject.org/topics/themes/index.html
+
+
+Customizing index page
+======================
+
+(( to be completed ))
 
 
 Creating a plugin
