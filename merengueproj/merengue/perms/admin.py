@@ -99,7 +99,7 @@ class PermissionAdmin(admin.ModelAdmin):
                                   context,
                                   context_instance=RequestContext(request))
 
-    def response_change(self, request):
+    def response_change(self, request, *args, **kwargs):
         """
         Determines the HttpResponse for the change_view stage.
         """
