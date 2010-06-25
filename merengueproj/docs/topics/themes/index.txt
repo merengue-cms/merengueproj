@@ -56,16 +56,28 @@ Let's take this example template, included maybe in one of the plugins templates
 
 This template extends a base template for layout rendering. By default, Django will looks for ``base.html`` in this directories:
 
-* Firstly, look into the project templates dir, i.e. ``merengueproj/templates/``.
+* Firstly, look into the project template directories, i.e. ``merengueproj/templates/``.
 * Secondly, look into the applications installed template dir, i.e. ``merengueproj/apps/foo/templates/``.
 
-Merengue overrides this behaviour, doing the first look into active theme directory. If you configures ``violet`` theme as active one, and example template was rendered, 
-merengue will look firstly a "base.html" in this directory:
+Merengue overrides this behaviour, doing the first look into active theme directory.
+
+So, when some part of the code tries to load a template (in a
+``render_to_response`` call or in a `extends`_ or `include`_ tag) the order of
+looking for that template was:
+
+ 1. Active theme templates directory.
+ 2. Project template directories.
+ 3. Applications templates directory.
+
+.. _`extends`: http://docs.djangoproject.com/en/1.1/ref/templates/builtins/#extends
+.. _`include`: http://docs.djangoproject.com/en/1.1/ref/templates/builtins/#include
+
+Then, if you configure ``violet`` theme as active one, and example template was rendered, 
+merengue will look firstly a ``base.html`` in this directory:
 
 .. code-block:: bash
 
     merengueproj/templates/themes/violet/
-
 
 Then, placing a ``base.html`` into your theme directory, you will get change layout page maintaining all event plugin functionality.
 
@@ -185,6 +197,13 @@ The way to solve these is add this CSS fragment into your CSS file:
     }
 
 This works because in ``base/layout.html`` we add a CSS class to ``#container`` div, with active theme.
+
+Creating a new theme step by step
+---------------------------------
+
+Please look the `Merengue tutorial`_ for learning to create a theme from scratch.
+
+.. _`Merengue tutorial`: http://docs.merengueproject.org/intro/tutorial.html#creating-merengueprojectorg-theme
 
 Internals
 ---------

@@ -155,10 +155,10 @@ to be placed in the ``rightsidebar`` zone. You only have to create this template
 
 .. admonition:: Django knowledge needed
 
-    Merengue uses the Django templates system. See `Django templates` to get more
+    Merengue uses the `Django templates system`_. See `Django templates` to get more
     information about Merengue templating.
 
-.. Django templates_: http://docs.djangoproject.com/en/1.1/topics/templates/
+.. _`Django templates system`: http://docs.djangoproject.com/en/1.1/topics/templates/
 
 Full featured management interface
 ----------------------------------

@@ -108,7 +108,7 @@ To more information about using Merengue, you can read `user guide`_
 Creating *merengueprojectorg* theme
 ===================================
 
-In Merengue you can change look&feel by developing themes.
+In Merengue you can change look and feel by developing themes.
 
 First of all you have to create both a templates and a media directory for the
 ``merengueprojectorg``:
@@ -118,6 +118,8 @@ First of all you have to create both a templates and a media directory for the
     $ cd merengueprojectorg
     $ mkdir templates/themes/merengueprojectorg
     $ mkdir media/themes/merengueprojectorg
+    $ mkdir media/themes/merengueprojectorg/img
+    $ mkdir media/themes/merengueprojectorg/css
 
 Now in Merengue admin (enter with ``admin``/``admin`` in
 ``http://localhost:8000/admin/``), you can see how Merengue has registered
@@ -132,7 +134,37 @@ If you activate ``merengueprojectorg`` theme you will see a blank theme
 
 You then need to add a stylesheet to defining look and feel. One of the ways
 accomplish that is create a ``base.html`` template in
-``templates/themes/merengueprojectorg/`` directory:
+``templates/themes/merengueprojectorg/`` directory. You can begin with a
+``hello world`` template:
+
+.. code-block:: html+django
+
+    <h1>Hello world!</h1>
+
+If you reload browser, you will se a big ``hello world`` greeting.
+
+But, why is this template loaded? Let's talk a little about Merengue theming
+internals... Merengue implements a new Django template loader, so when some
+part of the code tries to load a template (in a ``render_to_response`` call or
+in a `extends`_ or `include`_ tag) Merengue will look into the template
+directory of active theme.
+
+.. _`extends`: http://docs.djangoproject.com/en/1.1/ref/templates/builtins/#extends
+.. _`include`: http://docs.djangoproject.com/en/1.1/ref/templates/builtins/#include
+
+With this ``base.html`` template placed at ``merengueprojectorg`` theme, you are
+overriding `merengue/base/templates/base.html`_, that extends from
+`merengue/base/templates/base/layout.html`_.
+
+Why this double template inheritance? Because we usually need to reuse some of the
+Merengue layout stuff, and if this code was located in
+``merengue/base/templates/base.html`` we could not extends this template from our
+theme.
+
+.. _`merengue/base/templates/base.html`: https://dev.merengueproject.org/browser/trunk/merengueproj/merengue/base/templates/base.html
+.. _`merengue/base/templates/base/layout.html`: https://dev.merengueproject.org/browser/trunk/merengueproj/merengue/base/templates/base/layout.html
+
+Let's reuse Merengue base layout:
 
 .. code-block:: html+django
 
@@ -142,6 +174,8 @@ accomplish that is create a ``base.html`` template in
       <link href="{{ THEME_MEDIA_URL }}css/layout.css" rel="stylesheet" type="text/css" />
     {% endblock %}
 
+Now if you reload browser you will see again the Merengue default web layout.
+
 .. admonition:: Note
 
     ``THEME_MEDIA_URL`` will be replaced for relative media location of active
@@ -150,12 +184,133 @@ accomplish that is create a ``base.html`` template in
     ``{{ MEDIA_URL }}themes/merengueprojectorg/css/layout.css``.
 
 Of course you need to create the ``layout.css`` CSS file, that will be in
-``media/themes/merengueprojectorg/css/`` directory.
+``media/themes/merengueprojectorg/css/`` directory, to begin look and feel
+customization.
 
-https://dev.merengueproject.org/changeset/1085
-https://dev.merengueproject.org/changeset/1087
+First we will add `header_bg.jpg`_ and `header_logo.jpg`_ images into
+``media/themes/merengueprojectorg/img`` directory, to begin with the header
+layout.
 
+After this, we put some CSS in the ``layout.css`` file. There is the fragment
+in which we put header images and other stuff:
 
-To more information about Merengue theming, you can read `working with themes`_
+.. code-block:: css
+
+    html {
+        background-color: #BCB9AD;
+    }
+
+    body {
+        font: 12px Helvetica, sans-serif;
+        color: #717171;
+    }
+
+    a {
+        color: #cfa570;
+        text-decoration: none;
+    }
+
+    #container {
+        margin: 0 auto;
+        padding-bottom: 100px;
+        width: 960px;
+    }
+
+    #header {
+        background: url(/media/themes/merengueprojectorg/img/header_bg.jpg) no-repeat top center;
+    }
+
+    #headerlogo {
+        height: 98px;
+        background: url(/media/themes/merengueprojectorg/img/header_logo.jpg) no-repeat top left;
+    }
+
+    #content {
+        float: left;
+        width: 470px;
+        padding: 0 10px;
+    }
+
+    body div#content-zone {
+        width: auto;
+    }
+
+    /* more stuff below ... */
+
+.. _`header_bg.jpg`: https://dev.merengueproject.org/browser/sites/merengueprojectorg/media/themes/merengueprojectorg/img/header_bg.jpg
+.. _`header_logo.jpg`: https://dev.merengueproject.org/browser/sites/merengueprojectorg/media/themes/merengueprojectorg/img/header_logo.jpg
+
+If you done well and reload your browser, you should see a web page similar to
+this screenshot:
+
+.. image:: _images/merengueprojectorg_theme_with_logo.png
+
+.. admonition:: About media linking
+
+    All images in ``layout.css`` are linked with a hardcoded path
+    ``/media/themes/merengueprojectorg/img/``. This is because CSS are static
+    and served directly by web server. Merengue cannot replace any contextual
+    variable here.
+
+Next, we will add a ``Django based CMS framework for perfectionists with deadlines``
+phrase into header. If you take a look at `merengue/base/templates/base/layout.html`_
+template, you will see a fragment like this:
+
+.. code-block:: html+django
+
+    # more stuff ...
+
+    <div id="headerlogo">
+      {% block headerlogo %}
+        {% include "inc.headerlogo.html" %}
+      {% endblock %}
+    </div>
+
+    # more stuff ...
+
+So, you have two ways to include a text near the logo:
+
+ 1. Overriding the ``headerlogo`` block in out ``base.html`` template.
+ 2. Creating a ``inc.headerlogo.html`` template in the ``merengueprojectorg`` theme template directory.
+
+This time, we will do second choice. You have to create a ``inc.headerlogo.html``
+file in the ``templates/themes/merengueprojectorg`` directory with this content:
+
+.. code-block:: html+django
+
+    <a href="{% url website.views.index %}">
+      <img src="{{ THEME_MEDIA_URL }}img/header_logo.jpg"/>
+    </a>
+    <div class="logophrase">
+      Django based CMS framework for perfectionists with deadlines
+    </div>
+
+Finally, we add some CSS for the logo phrase:
+
+.. code-block:: css
+
+    .logophrase {
+        font-family: 'HelveticaNeue-UltraLight','Helvetica Neue UltraLight','Helvetica Neue',Arial,Helvetica,sans-serif;
+        font-weight: 100;
+        float: right;
+        font-size: 15px;
+        padding-top: 60px;
+        padding-right: 20px;
+        color: #b3a99d;
+    }
+
+You should see now a page header with logo and phrase at right side:
+
+.. image:: _images/merengueprojectorg_theme_with_logo_and_phrase.png
+
+.. admonition:: Deep into
+
+    For more information about Merengue theming, you can read `working with themes`_
 
 .. _working with themes: http://docs.merengueproject.org/topics/themes/index.html
+
+
+Creating a plugin
+=================
+
+(( to be completed ))

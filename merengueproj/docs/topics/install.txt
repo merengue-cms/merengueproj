@@ -139,7 +139,8 @@ In Merengue, language configuration should be done before database creation,
 because data models are created with translatable fields (as much columns as 
 languages are configurated).
 
-The parameters to be configured are ``LANGUAGE_CODE`` and ``LANGUAGES``:
+Then it's necessary to define ``LANGUAGE_CODE`` and ``LANGUAGES`` parameters
+in the configuration file ``myproject/settings.py``:
 
     .. code-block:: python
 
@@ -160,9 +161,8 @@ The parameters to be configured are ``LANGUAGE_CODE`` and ``LANGUAGES``:
 Database installation and configuration
 ---------------------------------------
 
-It's necessary configure the database changing ``DATABASE_*`` parameters
-in the configuration file ``myproject/settings.py``, created with
-``merengue-admin.py``
+You need to define your database connection, defining ``DATABASE_*`` parameters
+in the configuration file.
 
 .. admonition:: PostgreSQL as convention database
 
@@ -422,7 +422,7 @@ Create postgis template database:
         $ createdb -E UTF8 template_postgis
         $ createlang -d template_postgis plpgsql
 
-* In ubuntu > 10.04:
+* In ubuntu >= 10.04:
 
     .. code-block:: bash
 
@@ -460,6 +460,13 @@ Create postgis template database:
 
 Creating the project database
 -----------------------------
+
+.. admonition:: Note
+
+     If you have followed previous install instructions, you will need to
+     re-create database, because the same database will not work with GIS
+     enabled. Then, you need to delete previous database before continue
+     in this step.
 
 Database creation changes slightly because project database has to use
 ``template_postgis`` as database template (with all postgis extensions
