@@ -194,8 +194,9 @@ class BaseLink(models.Model, RealInstanceMixin):
 
 class AbsoluteLink(BaseLink):
 
-    url = models.URLField(
+    url = models.CharField(
         verbose_name=_('url'),
+        max_length=200,
         )
 
     def get_absolute_url(self):
