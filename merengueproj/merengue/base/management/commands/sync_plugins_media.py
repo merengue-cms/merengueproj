@@ -62,7 +62,7 @@ class Command(AppCommand, MerengueCommand):
         make_option('-l', '--link', action='store_true', dest='link',
             help="Create a symbolic link to each file instead of copying."),
     )
-    help = 'Collect media files of apps, Pinax and the project in a single media directory.'
+    help = 'Collect media files of apps, plugins and the project in a single media directory.'
     args = '[appname appname ...]'
 
     def handle(self, *app_labels, **options):
