@@ -4,10 +4,14 @@
 }
 
 #header {
-	background: #E6D8C0 url(../img/admin/admin_logo.jpg) no-repeat scroll top left;
-	color: #917250;
-	min-height:62px;
-	border-bottom: 4px solid #BCB9AD;
+    background: #E6D8C0;
+    color: #917250;
+    min-height:62px;
+    border-bottom: 4px solid #BCB9AD;
+}
+
+div#header img#merengue_logo {
+    float: left;
 }
 
 #branding h1 { 
