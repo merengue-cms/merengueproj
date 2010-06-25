@@ -18,11 +18,13 @@
 from merengue.base.admin import BaseAdmin, RelatedModelAdmin
 from merengue.base.models import BaseContent
 
+from plugins.voting.forms import VoteForm
 from plugins.voting.models import Vote
 
 
 class VoteAdmin(BaseAdmin):
-    pass
+
+    form = VoteForm
 
 
 class VoteRelatedModelAdmin(RelatedModelAdmin, VoteAdmin):
