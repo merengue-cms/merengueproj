@@ -146,7 +146,7 @@ If you reload browser, you will se a big ``hello world`` greeting.
 But, why is this template loaded? Let's talk a little about Merengue theming
 internals... Merengue implements a new Django template loader, so when some
 part of the code tries to load a template (in a ``render_to_response`` call or
-in a `extends`_ or `include`_ tag) Merengue will look into the template
+in a `extends`_ or `include`_ tag) Merengue will look first into the template
 directory of active theme.
 
 .. _`extends`: http://docs.djangoproject.com/en/1.1/ref/templates/builtins/#extends
