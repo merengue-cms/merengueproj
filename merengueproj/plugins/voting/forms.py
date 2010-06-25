@@ -34,3 +34,8 @@ class VoteForm(BaseAdminModelForm):
             vote_error.extend(vote_error_new)
             self._errors['vote'] = ErrorList(vote_error)
         return cleaned_data
+
+    def save(self, *args, **kwargs):
+        vote = super(VoteForm, self).save(*args, **kwargs)
+        vote.num_votes = self.cleaned_data['users'].count()
+        return vote

@@ -63,13 +63,14 @@ class VoteManager(models.Manager):
         except Vote.DoesNotExist:
             if vote != 0:
                 v = self.create(content=obj,
-                            num_votes=1, vote=vote)
+                                num_votes=1,
+                                vote=vote)
                 v.users.add(user)
 
 
 class Vote(models.Model):
     vote = models.FloatField()
-    num_votes = models.IntegerField(default=1)
+    num_votes = models.IntegerField(default=1, editable=False)
     content = models.ForeignKey(BaseContent)
     users = models.ManyToManyField(User,
                                   verbose_name=_('users'),
