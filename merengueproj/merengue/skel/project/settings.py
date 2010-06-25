@@ -71,6 +71,8 @@ USE_GIS = False
 
 if USE_GIS:
     INSTALLED_APPS += ('django.contrib.gis', 'merengue.places', )
+    if DATABASE_ENGINE == 'postgresql_psycopg2':
+        TEST_DB_CREATION_SUFFIX = 'WITH TEMPLATE template_postgis'
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"

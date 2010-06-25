@@ -204,6 +204,7 @@ def disable_plugin(plugin_name, unregister=True):
         unregister_plugin_viewlets(plugin_name)
         unregister_plugin_templatetags(plugin_name)
         unregister_plugin_section_models(plugin_name)
+        unregister_plugin_in_plugin_admin_site(plugin_name)
         unregister_plugin_perms(plugin_name)
     unregister_plugin_urls(plugin_name)
     # app_directories template loader loads app_template_dirs in
@@ -359,6 +360,14 @@ def unregister_plugin_perms(plugin_name):
 
 def unregister_plugin_section_models(plugin_name):
     pass
+
+
+def unregister_plugin_in_plugin_admin_site(plugin_name):
+    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    if not plugin_config:
+        return
+    for model, admin_model in plugin_config.get_model_admins():
+        site.plugin_site.unregister(model)
 
 
 def reload_app_directories_template_loader():
