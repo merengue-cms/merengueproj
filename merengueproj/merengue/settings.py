@@ -118,7 +118,7 @@ MIDDLEWARE_CLASSES = (
     'cmsutils.middleware.AutomatizedTestingMiddleware',
 ) + MERENGUE_MIDDLEWARE_CLASSES + (
     #'django.middleware.gzip.GZipMiddleware',
-    #'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'merengue.section.middleware.ResponseSectionMiddleware',
     #'cmsutils.middleware.I18NFetchFromCacheMiddleware', # this has to be last # removed anonymous cache middleware
 )

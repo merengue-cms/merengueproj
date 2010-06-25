@@ -22,12 +22,12 @@
 {% endblock %}
 
 {% block beforecontentblocks %}
-    {% render_blocks "beforecontent" for section %}
+    {% render_section_blocks "beforecontent" for section %}
     {{ block.super }}
 {% endblock %}
 
 {% block aftercontentblocks %}
-    {% render_blocks "aftercontent" for section %}
+    {% render_section_blocks "aftercontent" for section %}
     {{ block.super }}
 {% endblock %}
 

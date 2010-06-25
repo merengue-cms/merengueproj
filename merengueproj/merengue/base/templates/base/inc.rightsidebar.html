@@ -2,10 +2,10 @@
 {% block rightsidebarblocks %}
   {% render_blocks "rightsidebar" %}
   {% if content %}
-    {% render_blocks "rightsidebar" for content %}
+    {% render_content_blocks "rightsidebar" for content %}
   {% endif %}
   {% if section %}
-    {% render_blocks "rightsidebar" for section %}
+    {% render_section_blocks "rightsidebar" for section %}
   {% endif %}
   {% block extrarightsidebarblocks %}
   {% endblock %}

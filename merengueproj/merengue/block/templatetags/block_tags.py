@@ -29,9 +29,10 @@ register = template.Library()
 
 class RenderBlocksNode(template.Node):
 
-    def __init__(self, place, obj):
+    def __init__(self, place, obj, block_type='block'):
         self.place = place
         self.obj = obj
+        self.block_type = block_type
 
     def render(self, context):
         request = context.get('request', None)
@@ -44,39 +45,41 @@ class RenderBlocksNode(template.Node):
             for registered_block in registered_blocks:
                 if registered_block.print_block(self.place):
                     block = registered_block.get_registry_item_class()
-                    if issubclass(block, Block) and not obj:
+                    if self.block_type == 'block' and issubclass(block, Block):
                         rendered_blocks.append(block.render(request,
                                                             self.place,
                                                             context))
-                    elif issubclass(block, ContentBlock) and obj is not None and isinstance(obj, BaseContent):
-                        rendered_blocks.append(block.render(request,
-                                                            self.place,
-                                                            obj,
-                                                            context))
-                    elif issubclass(block, SectionBlock) and obj is not None and isinstance(obj, Section):
+                    elif self.block_type == 'contentblock' and issubclass(block, ContentBlock) and isinstance(obj, BaseContent):
                         rendered_blocks.append(block.render(request,
                                                             self.place,
                                                             obj,
                                                             context))
-            return "<div class='blockContainer'>%s" \
+                    elif self.block_type == 'sectionblock' and issubclass(block, SectionBlock) and isinstance(obj, Section):
+                        rendered_blocks.append(block.render(request,
+                                                            self.place,
+                                                            obj,
+                                                            context))
+            return "<div class='blockContainer %ss'>%s" \
                    "<input type=\"hidden\" class=\"blockPlace\" value=\"%s\">" \
                    "</div>" \
-                   % ('\n'.join(rendered_blocks), self.place)
+                   % (self.block_type, '\n'.join(rendered_blocks), self.place)
         except template.VariableDoesNotExist:
             return ''
 
 
 @register.tag(name='render_blocks')
-def do_render_blocks(parser, token):
+def do_render_blocks(parser, token, block_type='block'):
     """
     Usage::
       render_blocks "leftsidebar"
-      render_blocks "rightsidebar" for obj
     """
     bits = token.split_contents()
     tag_name = bits[0]
-    if len(bits) not in [2, 4]:
-        raise template.TemplateSyntaxError('"%r" tag requires at two or four '
+    if len(bits) != 2 and block_type == 'block':
+        raise template.TemplateSyntaxError('"%r" tag requires only two '
+                                           'arguments' % tag_name)
+    if len(bits) != 4 and block_type != 'block':
+        raise template.TemplateSyntaxError('"%r" tag requires at four '
                                            'arguments' % tag_name)
     if len(bits) == 4 and bits[2] != 'for':
         raise template.TemplateSyntaxError('"%r" statements should use the '
@@ -90,7 +93,25 @@ def do_render_blocks(parser, token):
     if not (place[0] == place[-1] and place[0] in ('"', "'")):
         raise (template.TemplateSyntaxError, "%r tag's argument should be in "
                                              "quotes" % tag_name)
-    return RenderBlocksNode(place[1:-1], obj)
+    return RenderBlocksNode(place[1:-1], obj, block_type)
+
+
+@register.tag(name='render_content_blocks')
+def do_render_content_blocks(parser, token):
+    """
+    Usage::
+      render_content_blocks "rightsidebar" for content
+    """
+    return do_render_blocks(parser, token, 'contentblock')
+
+
+@register.tag(name='render_section_blocks')
+def do_render_section_blocks(parser, token):
+    """
+    Usage::
+      render_section_blocks "rightsidebar" for section
+    """
+    return do_render_blocks(parser, token, 'sectionblock')
 
 
 @register.inclusion_tag('blocks/header.html', takes_context=True)
