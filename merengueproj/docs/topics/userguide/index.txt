@@ -75,3 +75,64 @@ want to desactivate the plugin but not uninstalled it, you can uncheck the
 
 With this plugin for example, you will be able to allow users to vote some
 contents. 
+
+.. admonition:: Technical stuff
+    
+    You can add more plugins to that list, or even develop your own plugin. 
+    Take a look to the `plugins documentation`_ for more information about this.
+
+.. _`plugins documentation`: http://docs.merengueproject.org/topics/plugins/index.html
+
+Themes
+======
+
+Merengue has the capability to abstract your information and elements of the
+site from the way you see the site itself. This abstraction is called *themes*
+and determines how a person see your site.
+
+Merengue comes with some default themes, you can change between them and choose
+the one you like the most. To do that, you can just click on **themes** in the
+main admin page, or can go to the URL http://localhost:8000/admin/theming/theme/
+and you will see a menu like the follow:
+
+.. image:: _images/theme_configuration.png
+
+If you want to activate some theme, you just only have to click on the theme
+that you want, and check *Activate* block. This action will disable the current
+theme, because you cannot have two differents themes activated at the same time.
+
+Content management
+==================
+
+Merengue is a Content Management System (CMS), and as such its main element
+are the contents, and you can build your site based on that contents. 
+
+Contents can be anything you want on your site: documents, news, forums, 
+articles, tutorials... that's your choice and it will depend of what kind
+of site are you developing.
+
+You have to notice that contents are highly related with *sections*. Think
+about sections as content containers, so first we have to know how to work
+with sections.
+
+Sections
+--------
+
+As we said before, sections are like content containers. So, the first step to
+create some content is create a section. We go the section menu (in http://localhost:8000/admin/section/section) and see a menu like the next one:
+
+.. image:: _images/sections_configuration.png
+
+In the upper right corner, you will se a button **Add section**. This button 
+will address to a form in wich we can configure some aspects of the section:
+
+.. image:: _images/add_section_form.png
+
+You can see that you have the possibility to input text for the different 
+languages that your site has. For example we can create a *Foo section*, and
+call it in differents ways for each language.
+
+Another important element is *Publication status*. This allows to configure some
+kind of workflow on this section. For example we want to set it to *published*.
+Once we have created our section, we can customize it and content for this
+concrete section.
