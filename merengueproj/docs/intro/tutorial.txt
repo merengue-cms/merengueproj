@@ -19,7 +19,7 @@ We will assume you have `Merengue installed`_ and you want to create a
 .. _www.merengueproject.org: http://www.merengueproject.org
 .. _Merengue installed: http://docs.merengueproject.org/topics/install.html
 
-Let's start our project:
+Let's start your project:
 
 .. code-block:: bash
 
@@ -158,13 +158,13 @@ overriding `merengue/base/templates/base.html`_, that extends from
 
 Why this double template inheritance? Because we usually need to reuse some of the
 Merengue layout stuff, and if this code was located in
-``merengue/base/templates/base.html`` we could not extends this template from our
+``merengue/base/templates/base.html`` we could not extends this template from your
 theme.
 
 .. _`merengue/base/templates/base.html`: https://dev.merengueproject.org/browser/trunk/merengueproj/merengue/base/templates/base.html
 .. _`merengue/base/templates/base/layout.html`: https://dev.merengueproject.org/browser/trunk/merengueproj/merengue/base/templates/base/layout.html
 
-Let's reuse Merengue base layout:
+Let's reuse Merengue base layout in your ``base.html`` template:
 
 .. code-block:: html+django
 
