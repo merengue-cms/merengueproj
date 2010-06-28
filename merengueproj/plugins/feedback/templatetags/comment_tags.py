@@ -19,6 +19,7 @@ from django import template
 from django.contrib.contenttypes.models import ContentType
 
 from plugins.feedback.forms import CaptchaFreeThreadedCommentForm
+from plugins.feedback.config import PluginConfig
 from threadedcomments.models import FreeThreadedComment
 
 
@@ -34,12 +35,20 @@ def content_comments(context, content):
         comments = FreeThreadedComment.objects.all_for_object(content_object=content, parent__isnull=True).order_by('date_submitted')
     else:
         comments = FreeThreadedComment.public.all_for_object(content_object=content, parent__isnull=True).order_by('date_submitted')
+    number_of_comments = PluginConfig.get_config().get('number_of_comments').get_value()
+    show_children = PluginConfig.get_config().get('show_children').get_value()
+    show_links = PluginConfig.get_config().get('show_links').get_value()
+    has_pagination = number_of_comments > 0
     return {'content': content,
             'MEDIA_URL': context['MEDIA_URL'],
             'request': context['request'],
             'comments': comments,
             'content_type_id': content_type.id,
             'form': context.get('form', None),
+            'number_of_comments': number_of_comments,
+            'has_pagination': has_pagination,
+            'show_children': show_children,
+            'show_links': show_links,
            }
 
 
@@ -95,7 +104,6 @@ def comments_media(context):
 
 @register.simple_tag
 def comment_admin_link(comment):
-
     link = '/admin/%s/%s/%d/%s' % (comment._meta.app_label,
                                     comment._meta.module_name, comment.id, '')
     return link

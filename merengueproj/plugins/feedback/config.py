@@ -14,8 +14,10 @@
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
+from django.utils.translation import ugettext_lazy as _
 
 from merengue.pluggable import Plugin
+from merengue.registry import params
 from plugins.feedback.blocks import FeedbackBlock
 
 
@@ -26,6 +28,12 @@ class PluginConfig(Plugin):
     url_prefixes = (
         ('feedback', 'plugins.feedback.urls'),
     )
+
+    config_params = [
+        params.Integer(name='number_of_comments', label=_('Number of comment for each content'), default=-1),
+        params.Bool(name='show_children', label=_('Show children'), default=True),
+        params.Bool(name='show_links', label=_('Show options bar'), default=True),
+    ]
 
     @classmethod
     def get_blocks(cls):

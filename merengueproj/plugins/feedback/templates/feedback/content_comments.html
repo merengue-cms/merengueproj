@@ -18,9 +18,16 @@
 
     <div class="commentform"></div>
     {% if comments %}
+        {% if has_pagination %}
+            {% autopaginate comments number_of_comments %}
+            {% paginate %}
+        {% endif %}
         {% for comment in comments %}
-            {% content_comment content comment 1 1 %}
+            {% content_comment content comment show_links show_children %}
         {% endfor %}
+        {% if has_pagination %}
+            {% paginate %}
+        {% endif %}
     {% endif %}
     <div class="commentresults" style="display:none"></div>
 </div>
