@@ -49,20 +49,7 @@
         </form>
     <h2>{% trans "Backups configuration" %}</h2>
 
-    <form enctype="multipart/form-data" method="post" action=".">
-        <fieldset class="module">
-            <h2>{% trans 'Set database' %}</h2>
-            <div class="form-row"> {% trans 'Upload and restore a .zip file containing a saved project configuration' %} </div>
-            <div class="form-row">
-                {{ form_backup.as_div }}
-            <input type="submit" name="_submit_backup" class="default" value="{% trans 'Submit backup' %}" />
-            </div>
-        </fieldset>
-    </form>
-
-    <div class="module aligned"></div>
-
-    <form method="get" action="backup">
+    <form method="get" action="backup" action=".">
         <fieldset class="module">
             <h2>{% trans 'Save current backup' %}</h2>
             <div class="form-row"> {% trans 'Save current backup configuration into a .zip file that can be restored' %} </div>
