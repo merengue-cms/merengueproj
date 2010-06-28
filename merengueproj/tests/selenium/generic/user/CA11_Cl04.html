@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>CA11_Cl04.html</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CA11_Cl04.html</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/cms/logout/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/admin/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_username</td>
+	<td>admin</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_password</td>
+	<td>admin</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Iniciar sesión']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Users</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Añadir usuario</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_username</td>
+	<td>CA11CL04</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_password1</td>
+	<td>1234</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_password2</td>
+	<td>1234</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_continue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_last_login_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_last_login_1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_date_joined_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_date_joined_1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_continue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Este campo es obligatorio.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Último inicio de sesión:</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Fecha</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Fecha de alta:</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Fecha</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_last_login_0</td>
+	<td>2022-11-09</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Ahora</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_date_joined_0</td>
+	<td>2022-11-09</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_date_joined_1</td>
+	<td>10:30:00</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_continue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Ahora</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_continue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Se modificó con éxito el usuario &quot;CA11CL04&quot;. Puede editarlo de nuevo abajo.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Borrar</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Sí, estoy seguro']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Terminar sesión</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
