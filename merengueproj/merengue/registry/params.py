@@ -58,6 +58,33 @@ class Single(Param):
     pass
 
 
+class Integer(Param):
+
+    def get_value(self):
+        return int(super(Integer, self).get_value())
+
+    def get_value_from_datadict(self, data, name):
+        val = super(Integer, self).get_value_from_datadict(data, name)
+        return int(val)
+
+
+class Bool(Param):
+
+    VAL_FALSE = ['false', 'none']
+
+    def get_value(self):
+        val = super(Bool, self).get_value()
+        if not val or (getattr(val, 'lower', None) and val.lower() in self.VAL_FALSE):
+            return False
+        return bool(val)
+
+    def get_value_from_datadict(self, data, name):
+        val = super(Bool, self).get_value_from_datadict(data, name)
+        if not val or (getattr(val, 'lower', None) and val.lower() in self.VAL_FALSE):
+            return False
+        return bool(val)
+
+
 class List(Param):
 
     def get_value_display(self):
