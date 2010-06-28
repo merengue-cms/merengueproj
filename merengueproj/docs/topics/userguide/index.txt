@@ -136,3 +136,55 @@ Another important element is *Publication status*. This allows to configure some
 kind of workflow on this section. For example we want to set it to *published*.
 Once we have created our section, we can customize it and content for this
 concrete section.
+
+Once we have created the *Foo section*, we can see a configuration form like the
+following:
+
+.. image:: _images/foo_section_configuration.png
+
+We can see in the upper right corner a button called **Section children** that is
+actually a drop-down menu, with the options *custom style*, *documents* and 
+*main menu*.
+
+.. admonition:: More options
+
+   If we add more plugins (for example *News*) we will have more options to add on
+   sections, like news, media...
+
+To begin editing some elements on the section, let's add a few menus to the section.
+If we click on *main menu*, the list of items is empty, wich is normal because we
+are working on a new section. Clicking on *Add menu*, the form displayed is the
+following:
+
+.. image:: _images/new_menu_item.png
+
+where we just add the options for the new menu item. We can add for example a link
+to the main page of Merengue project: http://www.merengueproject.org/, with the 
+title *Merengue project*, and linked to that URL. This way we create a child of 
+*Foo section* that will be displayed as a sub-element of that section on the menu.
+
+Content into sections
+---------------------
+
+The content type we can add to a section will depend of what plugins we have installed
+on our Merengue instance. For example, we can manage *documents*, the default content
+type that Merengue includes.
+
+If we access to the documents related with *Foo section*, we will se a screen like
+the following:
+
+.. image:: _images/documents_into_section.png
+
+So we have no elements linked with *Foo section*, wich is normal because that section
+have been just created and still not modified. If we want to create a new *document* 
+content, just click on the button *Add document*.
+
+This button will address us to a form very similar to the sections form. We can add
+the *title*, *description*, *publication status*, *tags*... For example, we can create
+a content called **Lorem ipsums** and publish it.
+
+This is the way to create content in Merengue. Remember that a content is allways 
+related to a section.
+
+
+
