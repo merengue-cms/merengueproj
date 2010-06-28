@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.utils.translation import ugettext_lazy as _
+
 from merengue.base.admin import BaseOrderableAdmin, set_field_read_only
 from merengue.registry import is_broken
 from merengue.registry.models import RegisteredItem
@@ -26,6 +28,13 @@ class RegisteredItemAdmin(BaseOrderableAdmin):
     list_filter = ('category', )
     change_form_template = 'admin/registry/change_form.html'
     sortablefield = 'order'
+
+    fieldsets = (
+        ('', {'fields': ('module', 'class_name', )}),
+        (_('Status'),
+            {'fields': ('active', 'order', 'config')}
+        ),
+    )
 
     def has_add_permission(self, request):
         return False

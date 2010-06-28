@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.utils.translation import ugettext_lazy as _
+
 from merengue.registry.admin import RegisteredItemAdmin
 from merengue.block.models import RegisteredBlock
 
@@ -24,6 +26,12 @@ class RegisteredBlockAdmin(RegisteredItemAdmin):
     list_display = RegisteredItemAdmin.list_display + ('placed_at', )
     list_filter = ('placed_at', )
     ordering = ('order', )
+
+    fieldsets = (
+        ('', {'fields': ('name', 'module', 'class_name', )}),
+        (_('Status'),
+            {'fields': ('placed_at', 'active', 'order', 'config')}
+        ))
 
     def has_add_permission(self, request):
         return False

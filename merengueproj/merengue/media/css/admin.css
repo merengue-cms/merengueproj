@@ -451,3 +451,8 @@ textarea#id_css_chunk {
 #changeform table {
     width: 100%;
 }
+
+div.module.form-row {
+    border: 0px;
+    border-bottom: 1px solid #EEEEEE;
+}

@@ -33,6 +33,12 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
                     'required_apps', 'required_plugins')
     ordering = ('broken', )
 
+    fieldsets = (
+        ('', {'fields': ('name', 'description', 'version', 'directory_name', 'module', 'class_name', 'required_apps', 'required_plugins')}),
+        (_('Status'),
+            {'fields': ('installed', 'active', 'order', 'config')},
+        ))
+
     def get_form(self, request, obj=None):
         form = super(RegisteredPluginAdmin, self).get_form(request, obj)
         if not obj.installed:
