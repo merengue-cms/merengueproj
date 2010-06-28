@@ -142,49 +142,83 @@ following:
 
 .. image:: _images/foo_section_configuration.png
 
-We can see in the upper right corner a button called **Section children** that is
-actually a drop-down menu, with the options *custom style*, *documents* and 
+We can see in the upper right corner a button called **Section children** that 
+is actually a drop-down menu, with the options *custom style*, *documents* and
 *main menu*.
 
 .. admonition:: More options
 
-   If we add more plugins (for example *News*) we will have more options to add on
-   sections, like news, media...
+   If we add more plugins (for example *News*) we will have more options to add 
+   on sections, like news, media...
 
-To begin editing some elements on the section, let's add a few menus to the section.
-If we click on *main menu*, the list of items is empty, wich is normal because we
-are working on a new section. Clicking on *Add menu*, the form displayed is the
-following:
+To begin editing some elements on the section, let's add a few menus to the 
+section. If we click on *main menu*, the list of items is empty, wich is normal 
+because we are working on a new section. Clicking on *Add menu*, the form 
+displayed is the following:
 
 .. image:: _images/new_menu_item.png
 
-where we just add the options for the new menu item. We can add for example a link
-to the main page of Merengue project: http://www.merengueproject.org/, with the 
-title *Merengue project*, and linked to that URL. This way we create a child of 
-*Foo section* that will be displayed as a sub-element of that section on the menu.
+where we just add the options for the new menu item. We can add for example a 
+link to the main page of Merengue project: http://www.merengueproject.org/, with
+the title *Merengue project*, and linked to that URL. This way we create a child
+of *Foo section* that will be displayed as a sub-element of that section on the 
+menu.
 
 Content into sections
 ---------------------
 
-The content type we can add to a section will depend of what plugins we have installed
-on our Merengue instance. For example, we can manage *documents*, the default content
-type that Merengue includes.
+The content type we can add to a section will depend of what plugins we have 
+installed on our Merengue instance. For example, we can manage *documents*, the 
+default content type that Merengue includes.
 
-If we access to the documents related with *Foo section*, we will se a screen like
-the following:
+If we access to the documents related with *Foo section*, we will se a screen 
+like the following:
 
 .. image:: _images/documents_into_section.png
 
-So we have no elements linked with *Foo section*, wich is normal because that section
-have been just created and still not modified. If we want to create a new *document* 
-content, just click on the button *Add document*.
+So we have no elements linked with *Foo section*, wich is normal because that 
+section have been just created and still not modified. If we want to create a 
+new *document* content, just click on the button *Add document*.
 
-This button will address us to a form very similar to the sections form. We can add
-the *title*, *description*, *publication status*, *tags*... For example, we can create
-a content called **Lorem ipsums** and publish it.
+This button will address us to a form very similar to the sections form. We can 
+add the *title*, *description*, *publication status*, *tags*... For example, we 
+can create a content called **Lorem ipsums** and publish it.
 
-This is the way to create content in Merengue. Remember that a content is allways 
-related to a section.
+This is the way to create content in Merengue. Remember that a content is 
+allways related to a section.
 
+Blocks concept
+==============
 
+Blocks are very important in Merengue. The defines (in some way) how a page is 
+displayed in your browser. Each one of them are related to a module, and can be 
+rearranged at will. On the URL 
+http://localhost:8000/admin/block/registeredblock/ we can see the blocks enabled
+on the site:
 
+.. image:: _images/blocks_list.png
+
+The column called **Placed at** is very important, because it says where the 
+block is displayed. For example the *Voting block* (added for the *Voting* 
+plugin) is placed before the content body.
+
+Let's suppose that we want to change the position of *Voting block*. There are 
+two ways to do that. The first one is on the configuration page of each 
+concrete block. We access to that page by clicking the block we want to edit
+on the list, and see a form like the following.
+
+.. image:: _images/single_block_configuration.png
+
+For example, we can change the field **Placed at** and move it to the right
+sidebar. If we go to the main page http://localhost:8000/ we will see the
+voting form on the right:
+
+.. image:: _images/main_page_voting_right.png
+
+The other way to do so is using the graphical interface. If you put the pointer
+above some block (for example *Vote content*) you will see a gren button. If
+you click it, the display will change to this:
+
+.. image:: _images/main_page_rearranging.png
+
+So you just have to drag and drop the blocks that you want to rearrange.
