@@ -34,6 +34,8 @@ div#header img#merengue_logo {
 .inline-group h2 {
 	background: #E6D8C0 url(../img/admin/default-bg.gif) repeat-x top left;
 }
+
+#changelist-filter h2,
 .module h2, 
 .module caption, 
 .inline-group h2 {
