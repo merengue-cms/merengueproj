@@ -52,8 +52,9 @@ a:hover {
 }
 
 .button.default, input.default[type="submit"], .submit-row input.default {
-    border: 2px solid #917250;
+    border: 1px solid #C49A6C;
     background: #E6D8C0 url(../img/admin/default-bg.gif) repeat-x top left;
+	color:#917250;
 }
 
 
