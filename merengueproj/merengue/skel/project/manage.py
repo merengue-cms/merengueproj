@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
 #
 # This file is part of Merengue.
@@ -15,7 +17,6 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-#!/usr/bin/env python
 import sys
 import os
 import site
