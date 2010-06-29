@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 # Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
 #
 # This file is part of Merengue.
@@ -15,7 +17,6 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-# -*- encoding: utf-8 -*-
 # Django settings for merengue project.
 
 from os import path
@@ -80,7 +81,7 @@ MEDIA_ROOT = path.join(BASEDIR, 'media/')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
-# Examples: "http://media.lawrence.com", "http://example.com/media/"
+# Examples: "http://media.lawrence.com", "http://example.com/meencodingdia/"
 MEDIA_URL = '/media/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
