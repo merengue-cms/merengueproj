@@ -28,12 +28,12 @@ from django.contrib.auth.models import User
 from south.modelsinspector import add_introspection_rules
 from stdimage import StdImageField
 from stdimage.fields import StdImageFieldFile
-from stdfile.db.fields import RemovableFileField
 from tagging.fields import TagField
 from transmeta import TransMeta
 
 from merengue.base.managers import WorkflowManager
 from merengue.multimedia.managers import MultimediaManager
+from merengue.multimedia.fields import VideoField
 
 PHOTO_MEDIA_PREFIX = 'fotos'
 VIDEO_MEDIA_PREFIX = 'videos'
@@ -231,10 +231,11 @@ class Photo(BaseMultimedia):
 
 class Video(BaseMultimedia):
     """ Video file """
+    file = VideoField(verbose_name=_('video file'), upload_to=VIDEO_MEDIA_PREFIX,
+                      max_width=480, max_height=360, codec='flv',
+                      duration_field='seconds', null=True, blank=True, max_length=200,
+                      help_text=_('The file will convert to flv format. It could lose a little of quality'))
 
-    file = RemovableFileField(verbose_name=_('video file'),
-                            upload_to=VIDEO_MEDIA_PREFIX,
-                            blank=True, null=True, max_length=200)
     preview = StdImageField(verbose_name=_('preview image'),
                             upload_to=VIDEO_MEDIA_PREFIX,
                             thumbnail_size=(200, 200),
