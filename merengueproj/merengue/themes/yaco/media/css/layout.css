@@ -263,10 +263,19 @@ div#breadcrumbs a:hover {
 }
 
 /* -----  sidebar ----- */
-#right-sidebar .block > div {
-    padding: 1em;
-    width: 16em;
+
+#right-sidebar h1 {
+	color: #999999;
+	margin-bottom: 3px;
+	font-size: 1.5em;
+}
+
+#right-sidebar .blockBody {
+    padding:0 0.5em 1.5em 1.5em;
+    width: 14em;
+	border-right: 1px dotted #aaa;
 	border-bottom: 1px dotted #aaa;
+	background: #eee;
 }
 
 /* ----- left sidebar ----- */
@@ -287,6 +296,10 @@ div#breadcrumbs a:hover {
 
 #standingout li {
 	margin-top: 0.5em;
+}
+
+.blockBody li{
+	padding-top: 0.5em;
 }
 
 /*---- footer ----*/
@@ -416,13 +429,26 @@ div.contentFiles ul {
     height:25px;
 }
 
+#eventsCalendar {
+	background-color: white;
+}
+
 /* ----- events view  ----- */
 .eventDates {
 	font-size: 90%;
 	margin-bottom: 1em;
 	color:#666;
+	padding-top:0.4em;
+	margin: 0 0 1em 3.5em;
+	padding:0.2em;
+	border-bottom: 1px dotted #ddd;
 }
 
 .eventDates label {
 	color: #54B848;
 } 
+
+.eventIcon {
+	float:left;
+	margin-right: 0.5em;
+}
