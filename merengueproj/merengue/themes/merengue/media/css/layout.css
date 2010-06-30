@@ -199,6 +199,7 @@ ul {
 #portalmenu ul li.hover table tr.first,
 #portalmenu ul li.hover table tr.firstlast {
   height: 32px;
+  padding-top: 5px;
   background: transparent url(/media/themes/merengue/img/submenu_back_top.jpg) no-repeat left top;
 }
 
