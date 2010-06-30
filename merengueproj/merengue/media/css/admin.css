@@ -56,9 +56,19 @@ a:hover {
 .button.default, input.default[type="submit"], .submit-row input.default {
     border: 1px solid #C49A6C;
     background: #E6D8C0 url(../img/admin/default-bg.gif) repeat-x top left;
+<<<<<<< .mine
+	color: #917250;
+=======
 	color:#917250;
+>>>>>>> .r1821
 }
 
+#changelist-filter h2,
+.module h2,
+.module caption,
+.inline-group h2 {
+	background: #E6D8C0 url(../img/admin/default-bg.gif) repeat-x top left;
+}
 
 /*---- other styles ----*/
 .object-tools {
