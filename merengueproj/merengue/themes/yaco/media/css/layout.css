@@ -130,9 +130,10 @@ body div#content-zone {
 
 #user-actions {
     position: absolute;
-    right: 100px;
+    right: 47px;
     display: block;
-    width: 20%;
+    width: 23%;
+	top: 30px;
 }
 
 #user-action a {
@@ -275,7 +276,7 @@ div#breadcrumbs a:hover {
     width: 14em;
 	border-right: 1px dotted #aaa;
 	border-bottom: 1px dotted #aaa;
-	background: #eee;
+	background: #f2f2f2;
 }
 
 /* ----- left sidebar ----- */
