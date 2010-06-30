@@ -20,7 +20,7 @@ from django import template
 register = template.Library()
 
 
-def customize_submit_row(context):
+def customize_submit_row(context, prefix=''):
     opts = context['opts']
     change = context['change']
     model_admin = context['model_admin']
@@ -42,5 +42,6 @@ def customize_submit_row(context):
                             not is_related_one_to_one_admin,
         'show_save_and_continue': not is_popup and context['has_change_permission'],
         'is_popup': is_popup,
-        'show_save': not is_related_one_to_one_admin}
+        'show_save': not is_related_one_to_one_admin,
+        'prefix': prefix}
 customize_submit_row = register.inclusion_tag('admin/customize_submit_line.html', takes_context=True)(customize_submit_row)

@@ -27,10 +27,9 @@ from django.contrib.auth.models import User, Group
 from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
 
-from merengue.perms.models import ObjectPermission
-from merengue.perms.models import Permission
-from merengue.perms.models import Role
-from merengue.perms.forms import UserChangeForm, GroupForm
+from merengue.perms.models import ObjectPermission, Permission, PrincipalRoleRelation, Role
+
+from merengue.perms.forms import UserChangeForm, GroupForm, PrincipalRoleRelationForm
 from merengue.perms.utils import add_role, remove_role
 
 
@@ -44,39 +43,84 @@ class PermissionAdmin(admin.ModelAdmin):
 
         return my_urls + urls
 
-    def change_roles_permissions(self, request, object_id, extra_context=None):
+    def _add_local_role(self, request):
+        prr_form = PrincipalRoleRelationForm(data=request.POST)
+        if prr_form.is_valid():
+            prr_form.save()
+        msg = _('The princial role relation was created successfully')
+        return (msg, '.')
 
+    def _update_role_permissions(self, request, obj):
+        selected = request.POST.getlist('selected_perm')
+        for obj_perm in ObjectPermission.objects.filter(content=obj):
+            role_perm = "%s_%s" % (obj_perm.role.id, obj_perm.permission.id)
+            if role_perm not in selected:
+                obj_perm.delete()
+        for role_perm in selected:
+            role_id, perm_id = role_perm.split('_')
+            role = Role.objects.get(id=role_id)
+            perm = Permission.objects.get(id=perm_id)
+            op, created = ObjectPermission.objects.get_or_create(role=role, permission=perm, content=obj)
+        msg = _('The role permissions were changed successfully.')
+        if '_roles_continue' in request.POST:
+            url_redirect = '.'
+        else:
+            url_redirect = '../'
+        return (msg, url_redirect)
+
+    def _update_role_users(self, request, obj):
+        selected = request.POST.getlist('selected_user')
+        for ppr in PrincipalRoleRelation.objects.filter(content=obj):
+            role_user = "%s_%s" % (ppr.role.id, ppr.user.id)
+            if role_user not in selected:
+                ppr.delete()
+        for role_user in selected:
+            role_id, user_id = role_user.split('_')
+            role = Role.objects.get(id=role_id)
+            user = User.objects.get(id=user_id)
+            ppr, created = PrincipalRoleRelation.objects.get_or_create(role=role,
+                                                                       user=user,
+                                                                       content=obj)
+        msg = _('The role users were changed successfully.')
+        if '_users_continue' in request.POST:
+            url_redirect = '.'
+        else:
+            url_redirect = '../'
+        return (msg, url_redirect)
+
+    def change_roles_permissions(self, request, object_id, extra_context=None):
         opts = self.model._meta
         admin_site = self.admin_site
         has_perm = request.user.has_perm(opts.app_label + '.' + opts.get_change_permission())
         obj = get_object_or_404(self.model, pk=object_id)
-
         if request.method == 'POST':
-            selected = request.POST.getlist('selected_perm')
-            for obj_perm in ObjectPermission.objects.filter(content=obj):
-                role_perm = "%s_%s" % (obj_perm.role.id, obj_perm.permission.id)
-                if role_perm not in selected:
-                    obj_perm.delete()
-
-            for role_perm in selected:
-                role_id, perm_id = role_perm.split('_')
-                role = Role.objects.get(id=role_id)
-                perm = Permission.objects.get(id=perm_id)
-                op, created = ObjectPermission.objects.get_or_create(role=role, permission=perm, content=obj)
-
-            return self.response_change(request)
-
+            if '_continue_role_relation' in request.POST:
+                msg, url_redirect = self._add_local_role(request)
+            elif '_roles_continue' in request.POST or '_roles_save' in request.POST:
+                msg, url_redirect = self._update_role_permissions(request, obj)
+            elif '_users_continue' in request.POST or '_users_save' in request.POST:
+                msg, url_redirect = self._update_role_users(request, obj)
+            return self.response_change(request, msg, url_redirect)
 
         roles = Role.objects.all()
-        permissions = {}
+        role_permissions = {}
 
         for perm in self.get_permissions(obj):
-            permissions[perm] = []
+            role_permissions[perm] = []
             for role in roles:
-                permissions[perm].append((role, perm.objectpermission_set.filter(role=role, content=obj) and True or False))
+                role_permissions[perm].append((role, perm.objectpermission_set.filter(role=role, content=obj) and True or False))
 
-
-        context = {'original': obj,
+        prr_form = PrincipalRoleRelationForm(initial={'content': obj.pk})
+        pprs = PrincipalRoleRelation.objects.filter(content=obj)
+        user_roles = {}
+        for ppr in pprs:
+            if not ppr.user in user_roles:
+                user_roles[ppr.user] = []
+            for role in roles:
+                user_rol = (role, ppr.user.principalrolerelation_set.filter(role=role) and True or False)
+                if not user_rol in user_roles[ppr.user]:
+                    user_roles[ppr.user].append(user_rol)
+        context = {'': obj,
                    'admin_site': admin_site.name,
                    'change': True,
                    'is_popup': False,
@@ -90,8 +134,11 @@ class PermissionAdmin(admin.ModelAdmin):
                    'root_path': '/%s' % admin_site.root_path,
                    'app_label': opts.app_label,
                    'has_change_permission': has_perm,
-                   'role_permissions': permissions,
-                   'roles': roles}
+                   'role_permissions': role_permissions,
+                   'roles': roles,
+                   'form_url': '.',
+                   'prr_form': prr_form,
+                   'user_roles': user_roles}
 
 
         template = 'admin/perms/objectpermission/role_permissions.html'
@@ -99,18 +146,19 @@ class PermissionAdmin(admin.ModelAdmin):
                                   context,
                                   context_instance=RequestContext(request))
 
-    def response_change(self, request, *args, **kwargs):
+    def response_change(self, request, msg=None, url_redirect=None, *args, **kwargs):
         """
         Determines the HttpResponse for the change_view stage.
         """
-
-        msg = _('The role permissions was changed successfully.')
-        if "_continue" in request.POST:
-            self.message_user(request, msg + ' ' + _("You may edit it again below."))
-            return HttpResponseRedirect(request.path)
-        else:
-            self.message_user(request, msg)
-            return HttpResponseRedirect("../")
+        if not msg:
+            msg = _('The role permissions was changed successfully.')
+        if not url_redirect:
+            if "_continue" in request.POST:
+                url_redirect = request.path
+            else:
+                url_redirect = '../'
+        self.message_user(request, msg + ' ' + _("You may edit it again below."))
+        return HttpResponseRedirect(url_redirect)
 
     def get_permissions(self, obj):
         models = obj._meta.parents.keys() + [obj.__class__]

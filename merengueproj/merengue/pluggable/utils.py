@@ -367,8 +367,7 @@ def unregister_plugin_in_plugin_admin_site(plugin_name):
     if not plugin_config:
         return
     else:
-        from merengue.pluggable.models import RegisteredPlugin
-        plugin = RegisteredPlugin.objects.get_by_item(plugin_config)
+        plugin = plugin_config.get_registered_item()
         if not plugin.installed:
             return
     for model, admin_model in plugin_config.get_model_admins():

@@ -21,8 +21,8 @@ from django.contrib.auth.forms import UserChangeForm as DjangoUserChangeForm
 from django.utils.translation import ugettext_lazy as _
 
 from django.contrib.admin.widgets import FilteredSelectMultiple
-from merengue.perms.models import Role
-from merengue.perms.utils import get_global_roles
+from merengue.perms.models import Role, PrincipalRoleRelation
+from merengue.perms.utils import get_global_roles, add_local_role
 
 
 class UserChangeForm(DjangoUserChangeForm):
@@ -49,3 +49,20 @@ class GroupForm(forms.ModelForm):
     roles = forms.ModelMultipleChoiceField(queryset=Role.objects.all(),
                                           widget=FilteredSelectMultiple(_('Roles'), False),
                                           required=False)
+
+
+class PrincipalRoleRelationForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(PrincipalRoleRelationForm, self).__init__(*args, **kwargs)
+        self.fields['content'].widget = forms.HiddenInput()
+        del self.fields['group']
+
+    class Meta:
+        model = PrincipalRoleRelation
+
+    def save(self):
+        obj = self.cleaned_data['content']
+        prinpipal = self.cleaned_data.get('user', self.cleaned_data.get('group', None))
+        role = self.cleaned_data['role']
+        add_local_role(obj, prinpipal, role)

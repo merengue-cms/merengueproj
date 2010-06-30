@@ -32,6 +32,7 @@
 </ul>
 {% endblock %}
 
+{% block content-main %}
 <div id="content-main">
 <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">{% block form_top %}{% endblock %}
 <div>
@@ -102,4 +103,5 @@
 
 </div>
 </form></div>
+{% endblock %}
 {% endblock %}
