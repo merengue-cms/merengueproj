@@ -23,4 +23,4 @@ encutils http://cssutils.googlecode.com/svn/trunk/src/encutils/
 genericforeignkey http://svnpub.yaco.es/djangoapps/genericforeignkey/trunk/genericforeignkey
 stdfile http://svnpub.yaco.es/djangoapps/stdfile/trunk/stdfile
 oembed http://django-oembed.googlecode.com/svn/trunk/oembed/
-
+ajax_select http://django-ajax-selects.googlecode.com/svn/trunk/ajax_select/
