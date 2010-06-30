@@ -280,15 +280,52 @@ it how we want.
 Portal links
 ------------
 
-((To be completed))
+Portal links are similar to `portal menus`_, and they works on a very similar
+way. 
+
+.. _`portal menus`: index.html#portal-menus 
+
+There are two differents kind of portal links: **primary links** and **secondary 
+links**. We can add any of them from the URL 
+http://localhost:8080/admin/portal/portallink/add/ . There we will see a form like
+the following:
+
+.. image:: _images/add_portal_link.png
+
+We are going to create two links: a primary link to GMail, and a secondary link
+to Wikipedia, to see what are the differences between them. In the following 
+image we can notice the difference between them:
+
+.. image:: _images/main_page_menus.png
+
+You can see that the all are blocks, so they can be rearranged at will. Semantically,
+**primary links** are links that simplify the navigation  of the site, linking to
+important places of the site (for example *News section*).
+
+In the other hand, **portal menus** are links related to a section. For example 
+categories on the news.
+
+And **secondary links** are links placed on the footer, not essentials but
+importants (like copyright, about, contact...)
+
+As you can see, create and manage those links is very easy, but is important to 
+know and notice the difference between them.
 
 Actions
 =======
 
-((To be completed))
+In Merengue we define **actions** as some events that an user trigger with a button.
+For example, if we activate the *Facebook* plugin, we will have a link on the content
+to share the content in Facebook. To click on that link is an action.
+
+You can see what actions you have on the system accessing the URL 
+http://localhost:8080/admin/registry/registereditem/?category=action. Those actions
+are provided by differents modules, as well as blocks and other stuff.
 
 Merengue permissions (not implemented yet)
 ==========================================
+
+(( to complete ))
 
 Maintenance tasks
 =================
@@ -299,5 +336,21 @@ admin user to do those tasks in a graphic way.
 Registry
 --------
 
+The registry is a page where you can see all the *registrable items* of the site,
+also showing the state of those items. You can see that list on the URL
+http://localhost:8080/admin/registry/registereditem/ allowing you to get a 
+general view of what is installed on the Merengue instance.
+
 Backups
 -------
+
+If we go to the  URL http://localhost:8080/admin/siteconfig/ we will see the 
+following page:
+
+.. image:: _images/backup_configuration.png
+
+We can do here 3 things:
+
+* First, we can restore a previous configuration backup
+* Create a configuration backup. This backup includes what elements are registred
+* Create a database backup. Is a full content backup, to prevent of data losing on your site
