@@ -419,7 +419,8 @@ div.contentFiles ul {
 /* ----- events view  ----- */
 .eventDates {
 	font-size: 90%;
-	margin-bottom: 0.5em;
+	margin-bottom: 1em;
+	color:#666;
 }
 
 .eventDates label {
