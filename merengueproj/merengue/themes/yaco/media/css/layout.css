@@ -2,7 +2,7 @@
 
 
 body {
-    font-size: 12pt;
+    font-size: 11pt;
     font-family: arial;
 }
 
@@ -411,7 +411,17 @@ div.contentFiles ul {
     text-align: right;
 }
 
-/* calendar */
+/* ----- calendar  ----- */
 .ui-datepicker .ui-datepicker-header {
     height:25px;
 }
+
+/* ----- events view  ----- */
+.eventDates {
+	font-size: 90%;
+	margin-bottom: 0.5em;
+}
+
+.eventDates label {
+	color: #54B848;
+} 
