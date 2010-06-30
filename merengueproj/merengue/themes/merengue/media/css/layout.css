@@ -400,6 +400,8 @@ ul {
 
 /* right-sidebar */
 #right-sidebar {
+	float:right;
+    display: block;
     margin-top: 29px;
 	background-color: #fff3dd;
 	min-height:300px;
@@ -433,12 +435,6 @@ ul {
 
 #right-sidebar div.blockBody ul {
 	margin: 0.5em 0.2em 0.5em 0.4em;
-}
-
-#right-sidebar {
-    float:right;
-    display: block;
-    width: 22%;
 }
 
 #right-sidebar > div {
