@@ -91,6 +91,7 @@ INSTALLED_APPS = (
     'johnny',
     'genericforeignkey',
     'oembed',
+    'ajax_select',
 ) + MERENGUE_APPS
 
 # merengue exclusive middlewares. you have to put at least these middleware in your project settings
@@ -208,6 +209,11 @@ DEBUG_TOOLBAR_PANELS = (
 DEBUG_TOOLBAR_EXCLUDED_URLS = (
     r'^/tinyimages/',
 )
+
+# ajax_select
+AJAX_LOOKUP_CHANNELS = {
+    'perms_user': ('merengue.perms.lookups', 'UserLookup'),
+}
 
 JQUERY_BASE_MEDIA = 'merengue/js/'
 

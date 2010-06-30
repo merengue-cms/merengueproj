@@ -62,6 +62,10 @@ urlpatterns = patterns('',
     (r'^searchform/', include('searchform.urls')),
     (r'^searchform_jsi18n/', include('searchform.jsi18n_urls')),
 
+    # ajax_select
+    (r'^ajax_select/', include('ajax_select.urls')),
+
+
     # other
     (r'^internal-links/', include('merengue.internallinks.urls')),
     (r'^threadedcomments/', include('threadedcomments.urls')),

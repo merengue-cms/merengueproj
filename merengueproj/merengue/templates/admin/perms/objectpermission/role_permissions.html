@@ -9,6 +9,11 @@
     {{ block.super }}
 {% endblock %}
 
+{% block extrahead %}
+    {{ block.super }}
+    {{ prr_form.media}}
+{% endblock %}
+
 {% block content-main %}
 <div id="content-main">
 <h2>{% trans "Update the permissions for each role for the content: " %}'{{ original }}'</h2>

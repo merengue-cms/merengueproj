@@ -120,7 +120,7 @@ class PermissionAdmin(admin.ModelAdmin):
                 user_rol = (role, ppr.user.principalrolerelation_set.filter(role=role) and True or False)
                 if not user_rol in user_roles[ppr.user]:
                     user_roles[ppr.user].append(user_rol)
-        context = {'': obj,
+        context = {'original': obj,
                    'admin_site': admin_site.name,
                    'change': True,
                    'is_popup': False,

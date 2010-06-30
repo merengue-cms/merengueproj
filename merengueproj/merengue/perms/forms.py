@@ -24,6 +24,8 @@ from django.contrib.admin.widgets import FilteredSelectMultiple
 from merengue.perms.models import Role, PrincipalRoleRelation
 from merengue.perms.utils import get_global_roles, add_local_role
 
+from ajax_select.fields import AutoCompleteSelectField
+
 
 class UserChangeForm(DjangoUserChangeForm):
 
@@ -56,10 +58,18 @@ class PrincipalRoleRelationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PrincipalRoleRelationForm, self).__init__(*args, **kwargs)
         self.fields['content'].widget = forms.HiddenInput()
+        self.fields['user'] = AutoCompleteSelectField('perms_user')
         del self.fields['group']
 
     class Meta:
         model = PrincipalRoleRelation
+
+    class Media:
+        css = {'all': ('merengue/css/ajaxautocompletion/jquery.autocomplete.css',
+                       'merengue/css/ajax_select/iconic.css')}
+
+        js = ('merengue/js/ajaxautocompletion/jquery.autocomplete.js',
+              'merengue/js/ajax_select/ajax_select.js')
 
     def save(self):
         obj = self.cleaned_data['content']
