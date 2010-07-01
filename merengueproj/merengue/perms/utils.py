@@ -373,6 +373,30 @@ def has_permission(obj, user, codename, roles=None):
     return False
 
 
+def has_permission_in_queryset(queryset, user, codename, roles=None):
+    """Checks whether the passed user has passed permission for passed object.
+
+    **Parameters:**
+
+    queryset
+        The queryset for which the permission should be checked.
+
+    codename
+        The permission's codename which should be checked.
+
+    user
+        The user for which the permission should be checked.
+
+    roles
+        If given these roles will be assigned to the user temporarily before
+        the permissions are checked.
+    """
+    for obj in queryset:
+        if not has_permission(obj, user, codename, roles):
+            return False
+    return True
+
+
 # Inheritance ################################################################
 
 

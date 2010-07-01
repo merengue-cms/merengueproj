@@ -56,6 +56,7 @@ from merengue.base.models import BaseContent, ContactInfo
 from merengue.base.widgets import (CustomTinyMCE, ReadOnlyWidget,
                                    RelatedBaseContentWidget)
 from merengue.perms.admin import PermissionAdmin
+from merengue.perms import utils as perms_api
 from genericforeignkey.admin import GenericAdmin
 
 # A flag to tell us if autodiscover is running.  autodiscover will set this to
@@ -314,7 +315,7 @@ class BaseAdmin(GenericAdmin, admin.ModelAdmin):
         self.basecontent = obj
         return obj
 
-    def get_form(self, request, obj=None):
+    def get_form(self, request, obj=None, **kwargs):
         form = super(BaseAdmin, self).get_form(request, obj)
         if hasattr(self, 'readonly_fields'):
             for field_name in self.readonly_fields:
@@ -510,23 +511,23 @@ class WorkflowBatchActionProvider(object):
     def set_as_draft(self, request, queryset):
         return self.change_state(request, queryset, 'draft',
                                  ugettext(u'Are you sure you want to set this items as draft?'),
-                                 'base.can_draft')
+                                 'can_draft')
     set_as_draft.short_description = _("Set as draft")
 
     def set_as_pending(self, request, queryset):
         return self.change_state(request, queryset, 'pending',
                                  ugettext(u'Are you sure you want to set this items as pending?'),
-                                 'base.can_pending')
+                                 'can_pending')
     set_as_pending.short_description = _("Set as pending")
 
     def set_as_published(self, request, queryset):
         return self.change_state(request, queryset, 'published',
                                  ugettext(u'Are you sure you want to set this items as published?'),
-                                 'base.can_publish')
+                                 'can_publish')
     set_as_published.short_description = _("Set as published")
 
     def change_state(self, request, queryset, state, confirm_msg, perm=None):
-        if (perm and not request.user.has_perm(perm)) or not self.has_change_permission(request):
+        if perm and not perms_api.has_permission_in_queryset(queryset, request.user, perm, None) or not self.has_change_permission(request):
             raise PermissionDenied
         selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
         if selected:
@@ -558,11 +559,11 @@ class StatusControlProvider(object):
             if not obj or user in obj.owners.all():
                 options=options.union([o for o in all_options if o[0] in ('draft', 'pending')])
         # Remember that superuser has all the perms
-        if user.has_perm('base.can_draft'):
+        if perms_api.has_permission(obj, user, 'can_draft'):
             options=options.union([o for o in all_options if o[0] == 'draft'])
-        if user.has_perm('base.can_pending'):
+        if perms_api.has_permission(obj, user, 'can_pending'):
             options=options.union([o for o in all_options if o[0] == 'pending'])
-        if user.has_perm('base.can_published'):
+        if perms_api.has_permission(obj, user, 'can_published'):
             options=options.union([o for o in all_options if o[0] == 'published'])
         return options
 
@@ -619,31 +620,10 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
         """
         Overrides Django admin behaviour to add ownership based access control
         """
-        has_change_perm = super(BaseContentAdmin, self).has_change_permission(request, obj)
-        if has_change_perm:
-            return True
-        if obj == None:
-            return self.has_add_permission(request)
-        elif hasattr(obj, 'can_edit'):
-            return obj.can_edit(request.user)
-        else:
-            return hasattr(obj, 'owners') and request.user in obj.owners.all()
+        return request.user.is_staff
 
     def has_change_permission_to_any(self, request):
         return super(BaseContentAdmin, self).has_change_permission(request, None)
-
-    def owner_is_needed(self, request):
-        return not self.has_change_permission_to_any(request)
-
-    def queryset(self, request):
-        """
-        Overrides Django admin queryset to add ownership based access control
-        """
-        qs = super(BaseContentAdmin, self).queryset(request)
-        if self.owner_is_needed(request):
-            # cannot edit all contents, only yours
-            qs = qs.filter(owners=request.user)
-        return qs
 
     def get_form(self, request, obj=None, **kwargs):
         """
@@ -651,8 +631,9 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
         """
         if not request.user.is_superuser:
             # we remove ownership selection
+            exclude = self.exclude or tuple()
             kwargs.update({
-                'exclude': ['owners'] + list(self.exclude) + kwargs.get("exclude", []),
+                'exclude': ['owners'] + list(exclude) + kwargs.get("exclude", []),
             })
         form = super(BaseContentAdmin, self).get_form(request, obj, **kwargs)
         keys = form.base_fields.keys()
@@ -678,9 +659,8 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
 
         super(BaseContentAdmin, self).save_model(request, obj, form, change)
 
-        if self.owner_is_needed(request):
-            # user automatically get owner of this object
-            obj.owners.add(request.user)
+        # user automatically get owner of this object
+        obj.owners.add(request.user)
 
     def formfield_for_dbfield(self, db_field, **kwargs):
         field = super(BaseContentAdmin, self).formfield_for_dbfield(db_field, **kwargs)

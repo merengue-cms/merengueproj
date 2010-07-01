@@ -331,11 +331,6 @@ class BaseContent(BaseClass):
         verbose_name = _('base content')
         verbose_name_plural = _('base contents')
         abstract = False
-        permissions = (
-            ("can_draft", "Can set as draft"),
-            ("can_pending", "Can set as pending"),
-            ("can_published", "Can set as published"),
-        )
         ordering = (get_fallback_fieldname('name'), )
         #content_view_template = 'content_view.html' # default definition by BaseContentMeta metaclass
 

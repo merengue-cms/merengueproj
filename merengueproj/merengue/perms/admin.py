@@ -45,10 +45,12 @@ class PermissionAdmin(admin.ModelAdmin):
 
     def _add_local_role(self, request):
         prr_form = PrincipalRoleRelationForm(data=request.POST)
+        url_redirect = None
         if prr_form.is_valid():
             prr_form.save()
+            url_redirect = None
         msg = _('The princial role relation was created successfully')
-        return (msg, '.')
+        return (msg, url_redirect, prr_form)
 
     def _update_role_permissions(self, request, obj):
         selected = request.POST.getlist('selected_perm')
@@ -93,14 +95,16 @@ class PermissionAdmin(admin.ModelAdmin):
         admin_site = self.admin_site
         has_perm = request.user.has_perm(opts.app_label + '.' + opts.get_change_permission())
         obj = get_object_or_404(self.model, pk=object_id)
+        prr_form = None
         if request.method == 'POST':
             if '_continue_role_relation' in request.POST:
-                msg, url_redirect = self._add_local_role(request)
+                msg, url_redirect, prr_form = self._add_local_role(request)
             elif '_roles_continue' in request.POST or '_roles_save' in request.POST:
                 msg, url_redirect = self._update_role_permissions(request, obj)
             elif '_users_continue' in request.POST or '_users_save' in request.POST:
                 msg, url_redirect = self._update_role_users(request, obj)
-            return self.response_change(request, msg, url_redirect)
+            if msg and url_redirect:
+                return self.response_change(request, msg, url_redirect)
 
         roles = Role.objects.all()
         role_permissions = {}
@@ -110,7 +114,7 @@ class PermissionAdmin(admin.ModelAdmin):
             for role in roles:
                 role_permissions[perm].append((role, perm.objectpermission_set.filter(role=role, content=obj) and True or False))
 
-        prr_form = PrincipalRoleRelationForm(initial={'content': obj.pk})
+        prr_form = prr_form or PrincipalRoleRelationForm(initial={'content': obj.pk})
         pprs = PrincipalRoleRelation.objects.filter(content=obj)
         user_roles = {}
         for ppr in pprs:

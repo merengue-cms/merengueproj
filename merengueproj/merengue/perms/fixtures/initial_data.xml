@@ -15,4 +15,19 @@
         <field type="CharField" name="codename">delete</field>
         <field type="BooleanField" name="builtin">True</field>
     </object>
+    <object pk="4" model="perms.permission">
+        <field type="CharField" name="name">Can set as draft</field>
+        <field type="CharField" name="codename">can_draft</field>
+        <field type="BooleanField" name="builtin">True</field>
+    </object>
+    <object pk="5" model="perms.permission">
+        <field type="CharField" name="name">Can set as pending</field>
+        <field type="CharField" name="codename">can_pending</field>
+        <field type="BooleanField" name="builtin">True</field>
+    </object>
+    <object pk="6" model="perms.permission">
+        <field type="CharField" name="name">Can set as published</field>
+        <field type="CharField" name="codename">can_published</field>
+        <field type="BooleanField" name="builtin">True</field>
+    </object>
 </django-objects>
