@@ -41,7 +41,7 @@ class LoginAction(UserAction):
     @classmethod
     def get_url(cls, request, user):
         login_url = reverse('merengue_login')
-        if request.get_full_path() != reverse('merengue_logout'): # to avoid automatic logout after login
+        if request.get_full_path() not in [reverse('merengue_logout'), reverse('admin:logout')]: # to avoid automatic logout after login
             login_url += '?next=%s' % request.get_full_path()
         return login_url
 
