@@ -692,7 +692,8 @@ li#powered-by {
 
 #cse input.gsc-search-button, input.gsc-search-button {
 	font-size: 80%;
-	background: #EFE6B2;
+	background: #E0E0E0;
+	color: #717171;
 	border: 1px solid white;
 	cursor: pointer;
 	padding: 0 5px;
@@ -700,16 +701,46 @@ li#powered-by {
     float:right;
 	margin-left: 5px;
 	/* box-shadow */
-	-webkit-box-shadow: 0 1px 1px rgba(89, 70, 49, 0.5);
-	-moz-box-shadow: 0 1px 1px rgba(89, 70, 49, 0.5);
-	box-shadow: 0 1px 1px rgba(89, 70, 49, 0.5);
+	-webkit-box-shadow: 0 1px 1px rgba(89, 70, 49, 0.4);
+	-moz-box-shadow: 0 1px 1px rgba(89, 70, 49, 0.4);
+	box-shadow: 0 1px 1px rgba(89, 70, 49, 0.4);
 	/* border-radius */
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
 }
 
+#cse {
+	padding:0.5em 0;
+}
 
+table.gsc-search-box td.gsc-input {
+	padding: 4px 2px 0 4px;
+}
+
+.cse .gsc-control-cse, .gsc-control-cse, .cse .gsc-webResult.gsc-result, .gsc-webResult.gsc-result {
+	border: none !important;
+}
+
+.gs-result .gs-title {
+	color: #CEA670;
+	text-decoration: none !important;
+}
+
+.gs-result .gs-title a, .gs-result .gs-title b {
+	color: #CEA670;
+	text-decoration: none;
+	font-size: 107%;
+}
+.gs-result .gs-title a:hover, .gs-result .gs-title b:hover {
+	color:#997b53;
+	text-decoration: underline !important;
+}
+
+.gs-result a.gs-visibleUrl, .gs-result .gs-visibleUrl {
+	color:#BFBFBF !important;
+	cursor:pointer;
+}
 
 /* Safari 3.0 and Chrome rules here */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
