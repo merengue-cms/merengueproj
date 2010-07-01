@@ -755,10 +755,6 @@ table.gsc-search-box td.gsc-input {
 	text-decoration: none !important;
 	color:#CEA670 !important;
 }
- .pagination img{
- 	padding: 0 5px;
- }
-
 
 /* Safari 3.0 and Chrome rules here */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
