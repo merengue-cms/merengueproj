@@ -742,6 +742,24 @@ table.gsc-search-box td.gsc-input {
 	cursor:pointer;
 }
 
+.gsc-results .gsc-cursor {
+	margin: 0.5em 0;
+}
+
+.gsc-results .gsc-cursor-box .gsc-cursor-current-page {
+	background: #F2EBD8;
+	padding: 1px 4px;
+}
+
+.gsc-results .gsc-cursor-box .gsc-cursor-page {
+	text-decoration: none !important;
+	color:#CEA670 !important;
+}
+ .pagination img{
+ 	padding: 0 5px;
+ }
+
+
 /* Safari 3.0 and Chrome rules here */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   #portal-primary-links {
