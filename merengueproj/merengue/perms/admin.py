@@ -150,10 +150,12 @@ class PermissionAdmin(admin.ModelAdmin):
                                   context,
                                   context_instance=RequestContext(request))
 
-    def response_change(self, request, msg=None, url_redirect=None, *args, **kwargs):
+    def response_change(self, request, *args, **kwargs):
         """
         Determines the HttpResponse for the change_view stage.
         """
+        msg = kwargs.get('msg', None)
+        url_redirect = kwargs.get('url_redirect', None)
         if not msg:
             msg = _('The role permissions was changed successfully.')
         if not url_redirect:
@@ -307,7 +309,6 @@ class GroupAdmin(DjangoGroupAdmin):
 
 
 def register(site):
-    site.register(ObjectPermission, ObjectPermissionAdmin)
     site.register(Permission, PermissionAdmin)
     site.register(Role, RoleAdmin)
     site.register(User, UserAdmin)
