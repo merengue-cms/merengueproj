@@ -758,14 +758,12 @@ table.gsc-search-box td.gsc-input {
 	text-align: center;
 }
 
-.pagination span {
-	padding: 0 0.3em;
-}
-
 .current {
 	color:#b38f60;
 	background: #F2EBD8;
-	padding: 1px 6px;
+	padding: 0 3px;
+	margin: 0 0.2em;
+	border: 1px dotted #E5D1B5;
 }
  .pagination img{
  	padding: 0 5px;
