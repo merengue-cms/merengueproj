@@ -1,9 +1,4 @@
 /* ----- global styles ----- */
-/* html {
-	background: -webkit-gradient(linear, left top, left bottom, from(#f4f0e5), to(#f2e0a9));
-	background: -moz-linear-gradient(top,  #f4f0e5,  #f2e0a9);
-	height:auto;
-} */
 
 body {
     font-family: arial;
@@ -755,6 +750,20 @@ table.gsc-search-box td.gsc-input {
 	text-decoration: none !important;
 	color:#CEA670 !important;
 }
+
+/*---- pagination ----*/
+.pagination {
+	margin: 0.5em 0;
+}
+
+.current {
+	color:#b38f60;
+	background: #F2EBD8;
+	padding: 1px 6px;
+}
+ .pagination img{
+ 	padding: 0 5px;
+ }
 
 /* Safari 3.0 and Chrome rules here */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
