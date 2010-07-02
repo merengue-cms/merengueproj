@@ -202,8 +202,8 @@ div#content {
 }
 
 div#content ul {
-    list-style-type: square;
-    margin: 0.4em 0 0.4em 2em;
+    list-style-type: none;
+    margin: 0.6em 0 0.8em 1em;
 }
 
 div#content ul#content-actions {
@@ -243,6 +243,10 @@ li.linkAdmin a {
     color: #999999;
 }
 
+.contentList li {
+	padding: 0.2em 0;
+}
+
 /* ----- breadcrumbs ----- */
 #breadcrumbs {
     margin-left:32px;
@@ -266,25 +270,19 @@ div#breadcrumbs a:hover {
 /* -----  sidebar ----- */
 
 #right-sidebar h1 {
-	color: #999999;
+	color: #AAA;
 	margin-bottom: 3px;
 	font-size: 1.5em;
 }
 
 #right-sidebar .blockBody {
-    padding:0 0.5em 1.5em 1.5em;
+    padding:0.2em 0.5em 1.5em 1.5em;
     width: 14em;
-	border-right: 1px dotted #aaa;
-	border-bottom: 1px dotted #aaa;
-	background: #f2f2f2;
+	border-right: 1px dotted #ccc;
+	border-bottom: 1px dotted #ccc;
+	background: #E6FCE3;
 }
 
-/* ----- left sidebar ----- */
-#left-sidebar {
-    display: none;
-}
-
-/* ----- right sidebar ----- */
 #right-sidebar {
     margin-left: 66%;
     padding: 0px 10px;
@@ -452,4 +450,43 @@ div.contentFiles ul {
 .eventIcon {
 	float:left;
 	margin-right: 0.5em;
+}
+
+/* ----- pagination  ----- */
+.prev {
+	display:block;
+	width:10px;
+	height:14px;
+	background:transparent url(/media/themes/yaco/img/paginator_previous.gif) no-repeat scroll left 4px;
+}
+.pagination img{
+	display: none;
+}
+.pagination {
+	width:100%;
+	display: block;
+	float: left;
+    margin: 1.5em 0;
+	font-size: 85%;
+}
+.page {
+	padding: 0 0.2em;
+	text-decoration: none !important;
+}
+.current {
+	color:#54B848;
+	background: #E6FCE3;
+	padding: 0 3px;
+	margin: 0 0.2em;
+	border: 1px dotted #54B848;
+}
+.pagination .current,
+.pagination a {
+	float:left;
+}
+.next {
+	display:block;
+	width:10px;
+	height:14px;
+	background:transparent url(/media/themes/yaco/img/paginator_next.gif) no-repeat scroll left 4px;
 }
