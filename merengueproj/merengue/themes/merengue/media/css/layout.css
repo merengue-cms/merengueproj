@@ -753,7 +753,13 @@ table.gsc-search-box td.gsc-input {
 
 /*---- pagination ----*/
 .pagination {
-	margin: 0.5em 0;
+	margin: 1.5em 0;
+	font-size: 75%;
+	text-align: center;
+}
+
+.pagination span {
+	padding: 0 0.3em;
 }
 
 .current {
