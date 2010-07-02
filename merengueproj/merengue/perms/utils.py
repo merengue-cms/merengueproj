@@ -322,6 +322,42 @@ def remove_permission(role, permission, obj=None):
     return True
 
 
+def has_global_permission(user, codename, roles=None):
+    """Checks whether the passed user has passed permission for passed object.
+
+    **Parameters:**
+
+    codename
+        The permission's codename which should be checked.
+
+    user
+        The user for which the permission should be checked.
+
+    roles
+        If given these roles will be assigned to the user temporarily before
+        the permissions are checked.
+    """
+
+    if roles is None:
+        roles = []
+
+    if user.is_superuser:
+        return True
+
+    if user.is_anonymous():
+        user = None
+    else:
+        roles.extend(get_roles(user))
+
+    p = ObjectPermission.objects.filter(
+        Q(content__isnull=True, role__in=roles, permission__codename=codename))
+
+    if p:
+        return True
+
+    return False
+
+
 def has_permission(obj, user, codename, roles=None):
     """Checks whether the passed user has passed permission for passed object.
 
@@ -340,11 +376,15 @@ def has_permission(obj, user, codename, roles=None):
         If given these roles will be assigned to the user temporarily before
         the permissions are checked.
     """
+
     if roles is None:
         roles = []
 
     if user.is_superuser:
         return True
+
+    if not obj:
+        return has_global_permission(user, codename, roles)
 
     if user.is_anonymous():
         user = None
@@ -358,7 +398,7 @@ def has_permission(obj, user, codename, roles=None):
             Q(content=obj, role__in=roles, permission__codename=codename) |
             Q(content__isnull=True, role__in=roles, permission__codename=codename))
 
-        if p.count() > 0:
+        if p:
             return True
 
         if is_inherited(obj, codename) == False:
@@ -476,6 +516,10 @@ def is_inherited(obj, codename):
         return True
     else:
         return False
+
+
+def can_manage_site(user):
+    return user.is_superuser
 
 
 def get_group(id):

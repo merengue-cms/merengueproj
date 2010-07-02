@@ -30,10 +30,16 @@ from django.contrib.contenttypes.models import ContentType
 from merengue.perms.models import ObjectPermission, Permission, PrincipalRoleRelation, Role
 
 from merengue.perms.forms import UserChangeForm, GroupForm, PrincipalRoleRelationForm
-from merengue.perms.utils import add_role, remove_role
+from merengue.perms.utils import add_role, remove_role, can_manage_site
 
 
 class PermissionAdmin(admin.ModelAdmin):
+
+    def has_change_permission(self, request, obj=None):
+        """
+        Overrides Django admin behaviour to add ownership based access control
+        """
+        return can_manage_site(request.user)
 
     def get_urls(self):
         urls = super(PermissionAdmin, self).get_urls()
@@ -187,7 +193,6 @@ class ObjectPermissionAdmin(PermissionAdmin):
         return my_urls + urls
 
     def change_roles_permissions(self, request):
-
         opts = self.model._meta
         admin_site = self.admin_site
         has_perm = request.user.has_perm(opts.app_label + '.' + opts.get_change_permission())
@@ -242,6 +247,12 @@ class ObjectPermissionAdmin(PermissionAdmin):
 
 class RoleAdmin(admin.ModelAdmin):
 
+    def has_change_permission(self, request, obj=None):
+        """
+        Overrides Django admin behaviour to add ownership based access control
+        """
+        return can_manage_site(request.user)
+
     def save_model(self, request, obj, form, change):
         super(RoleAdmin, self).save_model(request, obj, form, change)
         selected = request.POST.getlist('selected_perm')
@@ -282,6 +293,12 @@ class UserAdmin(DjangoUserAdmin):
     list_display = DjangoUserAdmin.list_display + ('is_active', )
     list_filter = DjangoUserAdmin.list_filter + ('is_active', )
 
+    def has_change_permission(self, request, obj=None):
+        """
+        Overrides Django admin behaviour to add ownership based access control
+        """
+        return can_manage_site(request.user)
+
     def save_model(self, request, obj, form, change):
         super(UserAdmin, self).save_model(request, obj, form, change)
         roles_id = request.POST.getlist('roles')
@@ -297,6 +314,12 @@ class GroupAdmin(DjangoGroupAdmin):
     form = GroupForm
     add_form = GroupForm
 
+    def has_change_permission(self, request, obj=None):
+        """
+        Overrides Django admin behaviour to add ownership based access control
+        """
+        return can_manage_site(request.user)
+
     def save_model(self, request, obj, form, change):
         super(GroupAdmin, self).save_model(request, obj, form, change)
         roles_id = request.POST.getlist('roles')
@@ -309,7 +332,7 @@ class GroupAdmin(DjangoGroupAdmin):
 
 
 def register(site):
-    site.register(Permission, PermissionAdmin)
+    site.register(ObjectPermission, ObjectPermissionAdmin)
     site.register(Role, RoleAdmin)
     site.register(User, UserAdmin)
     site.register(Group, GroupAdmin)

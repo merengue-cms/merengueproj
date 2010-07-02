@@ -19,11 +19,30 @@ from transmeta import get_fallback_fieldname
 
 from merengue.base.admin import BaseAdmin
 from merengue.portal.models import PortalLink
+from merengue.perms import utils as perms_api
 
 
 class PortalLinkAdmin(BaseAdmin):
     list_display = BaseAdmin.list_display + ('category', )
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
+
+    def has_add_permission(self, request):
+        """
+            Overrides Django admin behaviour to add ownership based access control
+        """
+        return perms_api.has_global_permission(request.user, 'manage_link')
+
+    def has_change_permission(self, request, obj=None):
+        """
+        Overrides Django admin behaviour to add ownership based access control
+        """
+        return self.has_add_permission(request)
+
+    def has_delete_permission(self, request, obj=None):
+        """
+        Overrides Django admin behaviour to add ownership based access control
+        """
+        return self.has_add_permission(request)
 
 
 def register(site):

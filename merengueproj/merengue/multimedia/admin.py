@@ -32,6 +32,7 @@ from merengue.base.models import BaseContent, MultimediaRelation
 from merengue.multimedia.forms import VideoCheckerModelForm
 from merengue.multimedia.models import (Photo, Video, PanoramicView, Image3D,
                                         File, Audio, BaseMultimedia)
+from merengue.perms import utils as perms_api
 
 
 class BaseMultimediaContentRelatedModelAdmin(BaseContentAdmin, RelatedModelAdmin):
@@ -39,6 +40,24 @@ class BaseMultimediaContentRelatedModelAdmin(BaseContentAdmin, RelatedModelAdmin
     inherit_actions = False
     related_field = 'multimediarelation'
     reverse_related_field = 'basecontent'
+
+    def has_add_permission(self, request):
+        """
+            Overrides Django admin behaviour to add ownership based access control
+        """
+        return perms_api.has_global_permission(request.user, 'manage_multimedia')
+
+    def has_change_permission(self, request, obj=None):
+        """
+        Overrides Django admin behaviour to add ownership based access control
+        """
+        return self.has_add_permission(request)
+
+    def has_delete_permission(self, request, obj=None):
+        """
+        Overrides Django admin behaviour to add ownership based access control
+        """
+        return self.has_add_permission(request)
 
 
 class MultimediaAddContentRelatedModelAdmin(BaseMultimediaContentRelatedModelAdmin):
@@ -112,6 +131,24 @@ class BaseMultimediaAdmin(BaseAdmin, WorkflowBatchActionProvider):
              'multiple': True,
              'multipleSeparator': " ",
              'size': 100}, }
+
+    def has_add_permission(self, request):
+        """
+            Overrides Django admin behaviour to add ownership based access control
+        """
+        return perms_api.has_global_permission(request.user, 'manage_multimedia')
+
+    def has_change_permission(self, request, obj=None):
+        """
+        Overrides Django admin behaviour to add ownership based access control
+        """
+        return self.has_add_permission(request)
+
+    def has_delete_permission(self, request, obj=None):
+        """
+        Overrides Django admin behaviour to add ownership based access control
+        """
+        return self.has_add_permission(request)
 
     def change_view(self, request, object_id, extra_context=None):
         extra_context = extra_context or {}
@@ -271,6 +308,24 @@ class RelatedBaseMultimediaAdmin(OrderableRelatedModelAdmin):
         return through_model.objects.get(
             content=self.basecontent, multimedia=obj,
         )
+
+    def has_add_permission(self, request):
+        """
+            Overrides Django admin behaviour to add ownership based access control
+        """
+        return perms_api.has_global_permission(request.user, 'manage_multimedia')
+
+    def has_change_permission(self, request, obj=None):
+        """
+        Overrides Django admin behaviour to add ownership based access control
+        """
+        return self.has_add_permission(request)
+
+    def has_delete_permission(self, request, obj=None):
+        """
+        Overrides Django admin behaviour to add ownership based access control
+        """
+        return self.has_add_permission(request)
 
 
 class RelatedPhotoAdmin(RelatedBaseMultimediaAdmin):

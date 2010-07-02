@@ -290,6 +290,24 @@ class BaseAdmin(GenericAdmin, admin.ModelAdmin):
                 trans_search_fields.append(f)
         self.search_fields = tuple(trans_search_fields)
 
+    def has_add_permission(self, request):
+        """
+            Overrides Django admin behaviour to add ownership based access control
+        """
+        return perms_api.has_global_permission(request.user, 'manage_portal')
+
+    def has_change_permission(self, request, obj=None):
+        """
+        Overrides Django admin behaviour to add ownership based access control
+        """
+        return self.has_add_permission(request)
+
+    def has_delete_permission(self, request, obj=None):
+        """
+        Overrides Django admin behaviour to add ownership based access control
+        """
+        return self.has_add_permission(request)
+
     def _get_base_content(self, request, object_id=None, model_admin=None):
         if not object_id:
             object_id = self.admin_site.base_object_ids.get(self.tool_name, None)
@@ -505,6 +523,24 @@ class BaseCategoryAdmin(BaseAdmin):
     search_fields = (get_fallback_fieldname('name'), )
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
 
+    def has_add_permission(self, request):
+        """
+            Overrides Django admin behaviour to add ownership based access control
+        """
+        return perms_api.has_global_permission(request.user, 'manage_category')
+
+    def has_change_permission(self, request, obj=None):
+        """
+        Overrides Django admin behaviour to add ownership based access control
+        """
+        return self.has_add_permission(request)
+
+    def has_delete_permission(self, request, obj=None):
+        """
+        Overrides Django admin behaviour to add ownership based access control
+        """
+        return self.has_add_permission(request)
+
 
 class WorkflowBatchActionProvider(object):
 
@@ -616,11 +652,27 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
                                        confirm_template='admin/basecontent/assign_owners.html')
     assign_owners.short_description = _("Assign owners")
 
+    def has_add_permission(self, request):
+        """
+            Overrides Django admin behaviour to add ownership based access control
+        """
+        return True
+
     def has_change_permission(self, request, obj=None):
         """
         Overrides Django admin behaviour to add ownership based access control
         """
-        return request.user.is_staff
+        if obj:
+            return perms_api.has_permission(obj, request.user, 'edit')
+        return True
+
+    def has_delete_permission(self, request, obj=None):
+        """
+        Overrides Django admin behaviour to add ownership based access control
+        """
+        if obj:
+            return perms_api.has_permission(obj, request.user, 'delete')
+        return True
 
     def has_change_permission_to_any(self, request):
         return super(BaseContentAdmin, self).has_change_permission(request, None)

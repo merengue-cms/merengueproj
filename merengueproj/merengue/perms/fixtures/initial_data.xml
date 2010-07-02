@@ -30,4 +30,39 @@
         <field type="CharField" name="codename">can_published</field>
         <field type="BooleanField" name="builtin">True</field>
     </object>
+    <object pk="7" model="perms.permission">
+        <field type="CharField" name="name">Manage section</field>
+        <field type="CharField" name="codename">manage_section</field>
+        <field type="BooleanField" name="builtin">True</field>
+    </object>
+    <object pk="8" model="perms.permission">
+        <field type="CharField" name="name">Manage menu portal</field>
+        <field type="CharField" name="codename">manage_menu</field>
+        <field type="BooleanField" name="builtin">True</field>
+    </object>
+    <object pk="9" model="perms.permission">
+        <field type="CharField" name="name">Manage link portal</field>
+        <field type="CharField" name="codename">manage_link</field>
+        <field type="BooleanField" name="builtin">True</field>
+    </object>
+    <object pk="10" model="perms.permission">
+        <field type="CharField" name="name">Manage multimedia</field>
+        <field type="CharField" name="codename">manage_multimedia</field>
+        <field type="BooleanField" name="builtin">True</field>
+    </object>
+    <object pk="11" model="perms.permission">
+        <field type="CharField" name="name">Manage plugin content</field>
+        <field type="CharField" name="codename">manage_plugin_content</field>
+        <field type="BooleanField" name="builtin">True</field>
+    </object>
+    <object pk="12" model="perms.permission">
+        <field type="CharField" name="name">Manage category</field>
+        <field type="CharField" name="codename">manage_category</field>
+        <field type="BooleanField" name="builtin">True</field>
+    </object>
+    <object pk="13" model="perms.permission">
+        <field type="CharField" name="name">Manage portal</field>
+        <field type="CharField" name="codename">manage_portal</field>
+        <field type="BooleanField" name="builtin">True</field>
+    </object>
 </django-objects>

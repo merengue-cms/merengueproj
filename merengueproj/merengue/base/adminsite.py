@@ -22,7 +22,7 @@ from django.contrib.admin import ModelAdmin
 from django.contrib.admin.sites import AdminSite as DjangoAdminSite
 from django.contrib.admin.sites import AlreadyRegistered
 from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db.models.base import ModelBase
@@ -30,6 +30,7 @@ from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.functional import update_wrapper
+from django.utils.text import capfirst
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
 
@@ -67,6 +68,45 @@ class BaseAdminSite(DjangoAdminSite):
         if not cacheable:
             inner = never_cache(inner)
         return update_wrapper(inner, view)
+
+    def app_index(self, request, app_label, extra_context=None):
+        user = request.user
+        app_dict = {}
+        for model, model_admin in self._registry.items():
+            if app_label == model._meta.app_label:
+                perms = {'add': True, 'change': True, 'delete': True}
+                model_dict = {
+                    'name': capfirst(model._meta.verbose_name_plural),
+                    'admin_url': '%s/' % model.__name__.lower(),
+                    'perms': perms,
+                }
+                if app_dict:
+                    app_dict['models'].append(model_dict),
+                else:
+                    # First time around, now that we know there's
+                    # something to display, add in the necessary meta
+                    # information.
+                    app_dict = {
+                        'name': app_label.title(),
+                        'app_url': '',
+                        'has_module_perms': True,
+                        'models': [model_dict],
+                    }
+        if not app_dict:
+            raise Http404('The requested admin page does not exist.')
+        # Sort the models alphabetically within each app.
+        app_dict['models'].sort(lambda x, y: cmp(x['name'], y['name']))
+        context = {
+            'title': _('%s administration') % capfirst(app_label),
+            'app_list': [app_dict],
+            'root_path': self.root_path,
+        }
+        context.update(extra_context or {})
+        context_instance = template.RequestContext(request, current_app=self.name)
+        return render_to_response(self.app_index_template or ('admin/%s/app_index.html' % app_label,
+            'admin/app_index.html'), context,
+            context_instance=context_instance,
+        )
 
     def get_urls(self):
         from django.conf.urls.defaults import patterns, url, include
@@ -176,6 +216,9 @@ class BaseAdminSite(DjangoAdminSite):
                                     model._meta.module_name, content.id))
 
     def site_configuration(self, request):
+        from merengue.perms import utils as perms_api
+        if not perms_api.can_manage_site(request.user):
+            raise PermissionDenied
         from merengue.base.utils import restore_config
         if request.method == 'POST':
             if request.POST.get('_submit_configuration', None):
@@ -335,21 +378,21 @@ class AdminSite(BaseAdminSite, RelatedModelRegistrable):
 
     def index(self, request, extra_context=None):
         extra_context = extra_context or {}
-
         app_dict = {}
         user = request.user
+        from merengue.perms import utils as perms_api
+        manage_plugin_content = perms_api.has_global_permission(user, 'manage_plugin_content')
         for model, model_admin in self.plugin_site._registry.items():
             app_label = model._meta.app_label
-            has_module_perms = user.has_module_perms(app_label)
 
             if app_label in app_dict:
                 continue
 
-            if has_module_perms:
+            if manage_plugin_content:
                 app_dict[app_label] = {
                     'name': app_label.title(),
                     'app_url': PLUGIN_ADMIN_PREFIX + '/' + app_label + '/',
-                    'has_module_perms': has_module_perms,
+                    'has_module_perms': manage_plugin_content,
                 }
 
         # Sort the apps alphabetically.

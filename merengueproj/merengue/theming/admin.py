@@ -16,6 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from merengue.base.admin import BaseAdmin, set_field_read_only
+from merengue.perms import utils as perms_api
 from merengue.theming.checker import check_themes
 from merengue.theming.models import Theme
 
@@ -32,6 +33,9 @@ class ThemeAdmin(BaseAdmin):
 
     def has_add_permission(self, request):
         return False
+
+    def has_change_permission(self, request, obj=None):
+        return perms_api.can_manage_site(request.user)
 
     def changelist_view(self, request, extra_context=None):
         check_themes()

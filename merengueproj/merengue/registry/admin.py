@@ -18,6 +18,7 @@
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.admin import BaseOrderableAdmin, set_field_read_only
+from merengue.perms import utils as perms_api
 from merengue.registry import is_broken
 from merengue.registry.models import RegisteredItem
 
@@ -35,6 +36,9 @@ class RegisteredItemAdmin(BaseOrderableAdmin):
             {'fields': ('active', 'order', 'config')}
         ),
     )
+
+    def has_change_permission(self, request, obj=None):
+        return perms_api.can_manage_site(request.user)
 
     def has_add_permission(self, request):
         return False

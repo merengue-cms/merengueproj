@@ -16,7 +16,13 @@
 
 {% block content-main %}
 <div id="content-main">
-<h2>{% trans "Update the permissions for each role for the content: " %}'{{ original }}'</h2>
+<h2>
+    {% if original %}
+        {% trans "Update the permissions for each role for the content: " %}'{{ original }}'
+    {% else %}
+        {% trans "Update the permissions for each role: " %}
+    {% endif %}
+</h2>
 <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">
 <div>
     <div id="changeform" class="module">
@@ -45,6 +51,7 @@
     <div class="module aligned"></div>
     {% customize_submit_row "roles_" %}
 </form>
+{% if original %}
 <h2>{% trans "Update the roles for each user for the content: " %}'{{ original }}'</h2>
 <p>{% trans "Autocomplete the user and select a role" %}</p>
 <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">
@@ -80,6 +87,7 @@
     <div class="module aligned"></div>
     {% customize_submit_row "users_" %}
 </form>
+{% endif %}
 </div>
 {% endblock %}
 

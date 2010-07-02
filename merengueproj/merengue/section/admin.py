@@ -34,6 +34,7 @@ from merengue.section.models import (Menu, Section,
                                      SectionRelatedContent)
 from merengue.section.formsets import BaseLinkInlineFormSet
 from merengue.section.widgets import SearchFormOptionsWidget
+from merengue.perms import utils as perms_api
 
 
 class BaseSectionAdmin(BaseOrderableAdmin):
@@ -44,6 +45,24 @@ class BaseSectionAdmin(BaseOrderableAdmin):
     html_fields = ()
     removed_fields = ('description', )
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
+
+    def has_add_permission(self, request):
+        """
+            Overrides Django admin behaviour to add ownership based access control
+        """
+        return perms_api.has_global_permission(request.user, 'manage_section')
+
+    def has_change_permission(self, request, obj=None):
+        """
+        Overrides Django admin behaviour to add ownership based access control
+        """
+        return self.has_add_permission(request)
+
+    def has_delete_permission(self, request, obj=None):
+        """
+        Overrides Django admin behaviour to add ownership based access control
+        """
+        return self.has_add_permission(request)
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(BaseSectionAdmin, self).get_form(request, obj, **kwargs)
@@ -239,6 +258,24 @@ class MenuAdmin(BaseAdmin):
     def __init__(self, *args, **kwargs):
         super(MenuAdmin, self).__init__(*args, **kwargs)
         self.old_inline_instances = [instance for instance in self.inline_instances]
+
+    def has_add_permission(self, request):
+        """
+            Overrides Django admin behaviour to add ownership based access control
+        """
+        return perms_api.has_global_permission(request.user, 'manage_menu')
+
+    def has_change_permission(self, request, obj=None):
+        """
+        Overrides Django admin behaviour to add ownership based access control
+        """
+        return self.has_add_permission(request)
+
+    def has_delete_permission(self, request, obj=None):
+        """
+        Overrides Django admin behaviour to add ownership based access control
+        """
+        return self.has_add_permission(request)
 
     def display_move_to(self, menu):
         hidden = u'<input type="hidden" class="thisMenu" name="next" value="%s" />' % menu.id
