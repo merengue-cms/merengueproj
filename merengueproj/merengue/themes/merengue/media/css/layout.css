@@ -347,7 +347,7 @@ ul {
 }
 
 /* portalmenu */
-#portalmenu {
+#header #portalmenu {
 	margin-right: 10em;
 	float: right;
 	text-align: right;
@@ -356,6 +356,20 @@ ul {
 }
 
 /* left-sidebar */
+#left-sidebar #portalmenu li.menu1 {
+    position: relative;
+    padding: 0.3em 0;
+}
+
+#left-sidebar #portalmenu li.menu1 a {
+    display: block;
+}
+
+#left-sidebar #portalmenu table {
+    top:0;
+    left: 90%;
+}
+
 #left-sidebar {
 	background: white url(/media/themes/merengue/img/left_separator.jpg) repeat-x scroll left bottom;
     float: left;
@@ -397,6 +411,20 @@ ul {
 }
 
 /* right-sidebar */
+#right-sidebar #portalmenu li.menu1 {
+    position: relative;
+    padding: 0.3em 0;
+}
+
+#right-sidebar #portalmenu li.menu1 a {
+    display: block;
+}
+
+#right-sidebar #portalmenu table {
+    top:0;
+    right: 98%;
+}
+
 #right-sidebar {
 	float:right;
     display: block;
