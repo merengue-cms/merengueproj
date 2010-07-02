@@ -272,7 +272,7 @@ class RoleAdmin(admin.ModelAdmin):
         else:
             if change:
                 for perm in Permission.objects.all():
-                    permissions.append((perm, perm.objectpermission_set.filter(role=obj) and True or False))
+                    permissions.append((perm, perm.objectpermission_set.filter(role=obj, content__isnull=True) and True or False))
             else:
                 permissions = [(perm, False) for perm in Permission.objects.all()]
         context['permissions'] = permissions

@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 #from django.db import connection
@@ -27,6 +27,7 @@ from django.utils.translation import ugettext
 from django.views.generic import list_detail
 
 from merengue.base.models import BaseContent
+from merengue.perms import utils as perms_api
 from tagging.models import TaggedItem
 
 
@@ -106,6 +107,9 @@ def public_view(request, app_label, model_name, content_id, content_slug):
 
 def content_view(request, content, template_name=None, extra_context=None):
     """ Generic view for a content detail page """
+    has_view = perms_api.has_permission(content, request.user, 'view')
+    if not has_view:
+        raise PermissionDenied
     if extra_context is None:
         extra_context = {}
     ctype = ContentType.objects.get_for_model(content)

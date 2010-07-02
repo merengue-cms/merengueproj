@@ -50,7 +50,7 @@ class PermissionComparisonNode(template.Node):
         self.nodelist_false = nodelist_false
 
     def render(self, context):
-        obj = context.get("obj")
+        obj = context.get("obj") or context.get("content")
         request = context.get("request")
         if obj:
             has_perm = merengue.perms.utils.has_permission(obj, request.user, self.permission)

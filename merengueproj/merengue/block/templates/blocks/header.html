@@ -1,4 +1,5 @@
-{% load i18n %}{% if is_staff %}
+{% load i18n permissions_tags %}
+{% ifhasperm manage_portal %}
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}merengue/css/render_blocks.css"/>
 <script language="javascript">
 ;(function($) {
@@ -111,4 +112,4 @@
     });
 })(jQuery);
 </script>
-{% endif %}
+{% endifhasperm %}
