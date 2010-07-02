@@ -347,7 +347,7 @@ ul {
 }
 
 /* portalmenu */
-#header #portalmenu {
+#portalmenu {
 	margin-right: 10em;
 	float: right;
 	text-align: right;
@@ -356,20 +356,6 @@ ul {
 }
 
 /* left-sidebar */
-#left-sidebar #portalmenu li.menu1 {
-    position: relative;
-    padding: 0.3em 0;
-}
-
-#left-sidebar #portalmenu li.menu1 a {
-    display: block;
-}
-
-#left-sidebar #portalmenu table {
-    top:0;
-    left: 90%;
-}
-
 #left-sidebar {
 	background: white url(/media/themes/merengue/img/left_separator.jpg) repeat-x scroll left bottom;
     float: left;
@@ -411,20 +397,6 @@ ul {
 }
 
 /* right-sidebar */
-#right-sidebar #portalmenu li.menu1 {
-    position: relative;
-    padding: 0.3em 0;
-}
-
-#right-sidebar #portalmenu li.menu1 a {
-    display: block;
-}
-
-#right-sidebar #portalmenu table {
-    top:0;
-    right: 98%;
-}
-
 #right-sidebar {
 	float:right;
     display: block;
@@ -614,7 +586,6 @@ body div#content-zone {
 }
 
 /* error messages */
-ul.errorlist,
 div.errormessage, div#messagebox ul#info-list {
 	color:#717171;
 	background: #FCF5CA url(/media/themes/merengue/img/info_icon.jpg) no-repeat 10px center;
@@ -622,12 +593,6 @@ div.errormessage, div#messagebox ul#info-list {
 	-webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
 	-moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
 	box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-}
-
-ul.errorlist,
-#feedback .commentform ul.errorlist {
-    padding: 1em 0 0.5em 2.5em;
-    margin-bottom: 0.5em;
 }
 
 /* slideshow */
