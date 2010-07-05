@@ -67,7 +67,10 @@
                 <tr>
                 <th>{% trans "Users"%}</th>
                 {% for role in roles %}
-                <th>{{ role }}</th>
+                    {% ifequal role.slug anonymous_role_slug %}
+                    {% else %}
+                        <th>{{ role }}</th>
+                    {% endifequal %}
                 {% endfor %}
                 </tr>
             </thead>
@@ -76,7 +79,10 @@
                     <tr class="{% cycle 'row1' 'row2' %}">
                         <td>{{ user }}</td>
                         {% for role, checked in roles %}
-                        <td><input type="checkbox" {% if checked %}checked="checked"{% endif %} class="action-select" value="{{ role.id}}_{{ user.id }}" name="selected_user" /></td>
+                            {% ifequal role.slug anonymous_role_slug %}
+                            {% else %}
+                                <td><input type="checkbox" {% if checked %}checked="checked"{% endif %} class="action-select" value="{{ role.id}}_{{ user.id }}" name="selected_user" /></td>
+                            {% endifequal %}
                         {% endfor %}
                     </tr>
                 {% endfor %}

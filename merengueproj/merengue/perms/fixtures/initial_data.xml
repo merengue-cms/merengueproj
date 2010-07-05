@@ -65,4 +65,8 @@
         <field type="CharField" name="codename">manage_portal</field>
         <field type="BooleanField" name="builtin">True</field>
     </object>
+    <object pk="1" model="perms.role">
+        <field type="CharField" name="name">Anonymous User</field>
+        <field type="CharField" name="slug">anonymous_user</field>
+    </object>
 </django-objects>

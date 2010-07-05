@@ -21,6 +21,7 @@ from django.contrib.auth.forms import UserChangeForm as DjangoUserChangeForm
 from django.utils.translation import ugettext_lazy as _
 
 from django.contrib.admin.widgets import FilteredSelectMultiple
+from merengue.perms import ANONYMOUS_ROLE_SLUG
 from merengue.perms.models import Role, PrincipalRoleRelation
 from merengue.perms.utils import get_global_roles, add_local_role
 
@@ -59,6 +60,8 @@ class PrincipalRoleRelationForm(forms.ModelForm):
         super(PrincipalRoleRelationForm, self).__init__(*args, **kwargs)
         self.fields['content'].widget = forms.HiddenInput()
         self.fields['user'] = AutoCompleteSelectField('perms_user')
+        self.fields['role'].queryset = self.fields['role'].queryset.exclude(slug=ANONYMOUS_ROLE_SLUG)
+
         del self.fields['group']
 
     class Meta:

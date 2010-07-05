@@ -23,6 +23,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist, ImproperlyConfigured
 
 # permissions imports
+from merengue.perms import ANONYMOUS_ROLE_SLUG
 from merengue.perms.models import ObjectPermission
 from merengue.perms.models import ObjectPermissionInheritanceBlock
 from merengue.perms.models import Permission
@@ -341,6 +342,8 @@ def has_global_permission(user, codename, roles=None):
     if roles is None:
         roles = []
 
+    roles.append(Role.objects.get(slug=ANONYMOUS_ROLE_SLUG))
+
     if user.is_superuser:
         return True
 
@@ -379,6 +382,8 @@ def has_permission(obj, user, codename, roles=None):
 
     if roles is None:
         roles = []
+
+    roles.append(Role.objects.get(slug=ANONYMOUS_ROLE_SLUG))
 
     if user.is_superuser:
         return True

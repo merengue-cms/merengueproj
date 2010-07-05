@@ -27,8 +27,8 @@ from django.contrib.auth.models import User, Group
 from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
 
+from merengue.perms import ANONYMOUS_ROLE_SLUG
 from merengue.perms.models import ObjectPermission, Permission, PrincipalRoleRelation, Role
-
 from merengue.perms.forms import UserChangeForm, GroupForm, PrincipalRoleRelationForm
 from merengue.perms.utils import add_role, remove_role, can_manage_site
 
@@ -121,7 +121,7 @@ class PermissionAdmin(admin.ModelAdmin):
                 role_permissions[perm].append((role, perm.objectpermission_set.filter(role=role, content=obj) and True or False))
 
         prr_form = prr_form or PrincipalRoleRelationForm(initial={'content': obj.pk})
-        pprs = PrincipalRoleRelation.objects.filter(content=obj)
+        pprs = PrincipalRoleRelation.objects.filter(content=obj).exclude(role__slug=ANONYMOUS_ROLE_SLUG)
         user_roles = {}
         for ppr in pprs:
             if not ppr.user in user_roles:
@@ -148,7 +148,8 @@ class PermissionAdmin(admin.ModelAdmin):
                    'roles': roles,
                    'form_url': '.',
                    'prr_form': prr_form,
-                   'user_roles': user_roles}
+                   'user_roles': user_roles,
+                   'anonymous_role_slug': ANONYMOUS_ROLE_SLUG, }
 
 
         template = 'admin/perms/objectpermission/role_permissions.html'
@@ -246,6 +247,8 @@ class ObjectPermissionAdmin(PermissionAdmin):
 
 
 class RoleAdmin(admin.ModelAdmin):
+
+    prepopulated_fields = {'slug': ('name', )}
 
     def has_change_permission(self, request, obj=None):
         """

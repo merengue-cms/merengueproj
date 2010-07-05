@@ -122,6 +122,8 @@ class Role(models.Model):
         The unique name of the role
     """
     name = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(verbose_name=_('slug'), max_length=200,
+                            db_index=True, unique=True)
 
     class Meta:
         ordering = ("name", )
