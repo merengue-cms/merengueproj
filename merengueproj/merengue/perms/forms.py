@@ -49,10 +49,6 @@ class GroupForm(forms.ModelForm):
         if group:
             self.fields['roles'].initial = [role.id for role in get_global_roles(group)]
 
-    roles = forms.ModelMultipleChoiceField(queryset=Role.objects.all(),
-                                          widget=FilteredSelectMultiple(_('Roles'), False),
-                                          required=False)
-
 
 class PrincipalRoleRelationForm(forms.ModelForm):
 

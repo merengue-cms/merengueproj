@@ -15,8 +15,10 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django import forms
 from django.conf.urls.defaults import patterns
 from django.contrib import admin
+from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -321,12 +323,20 @@ class UserAdmin(DjangoUserAdmin):
 class GroupAdmin(DjangoGroupAdmin):
     form = GroupForm
     add_form = GroupForm
+    exclude = ('permissions', )
 
     def has_change_permission(self, request, obj=None):
         """
         Overrides Django admin behaviour to add ownership based access control
         """
         return can_manage_site(request.user)
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(GroupAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields['roles'] = forms.ModelMultipleChoiceField(queryset=Role.objects.all(),
+                                                               widget=FilteredSelectMultiple(_('Roles'), False),
+                                                               required=False)
+        return form
 
     def save_model(self, request, obj, form, change):
         super(GroupAdmin, self).save_model(request, obj, form, change)
