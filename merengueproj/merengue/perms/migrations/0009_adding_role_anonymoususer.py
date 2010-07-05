@@ -22,16 +22,11 @@ from south.db import db
 from south.v2 import DataMigration
 from django.conf import settings
 from django.db import models
-from django.template.defaultfilters import slugify
 
 class Migration(DataMigration):
 
     def forwards(self, orm):
         "Write your forwards methods here."
-        roles = orm['perms.role'].objects.all()
-        for role in roles:
-            setattr(role, 'slug', slugify(getattr(role, 'name')))
-            role.save()
 
 
     def backwards(self, orm):
@@ -169,7 +164,7 @@ class Migration(DataMigration):
             'Meta': {'object_name': 'Role'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'unique': 'True'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'db_index': 'True', 'max_length': '200', 'unique': 'True', 'null': 'True', 'blank': 'True'})
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '200', 'unique': 'True', 'db_index': 'True'})
         },
         'places.location': {
             'Meta': {'object_name': 'Location'},

@@ -17,6 +17,7 @@
 
 from django.conf.urls.defaults import patterns
 from django.contrib import admin
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
@@ -97,6 +98,8 @@ class PermissionAdmin(admin.ModelAdmin):
         return (msg, url_redirect)
 
     def change_roles_permissions(self, request, object_id, extra_context=None):
+        if not can_manage_site(request.user):
+            raise PermissionDenied
         opts = self.model._meta
         admin_site = self.admin_site
         has_perm = request.user.has_perm(opts.app_label + '.' + opts.get_change_permission())
@@ -194,6 +197,8 @@ class ObjectPermissionAdmin(PermissionAdmin):
         return my_urls + urls
 
     def change_roles_permissions(self, request):
+        if not can_manage_site(request.user):
+            raise PermissionDenied
         opts = self.model._meta
         admin_site = self.admin_site
         has_perm = request.user.has_perm(opts.app_label + '.' + opts.get_change_permission())
