@@ -45,8 +45,9 @@
     <div class="module aligned"></div>
     {% customize_submit_row "roles_" %}
 </form>
-<h2>{% trans "Update the roles for each user for the content: " %}'{{ original }}'</h2>
-<p>{% trans "Autocomplete the user and select a role" %}</p>
+<h2>{% trans "User Roles" %} </h2>
+<p>{% trans "Update the roles for each user for the content: " %}'{{ original }}'</p>
+<p class="noteUser">{% trans "Autocomplete the user and select a role" %}</p>
 <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">
     {{ prr_form }}
     <input type="submit" value="{% trans 'Create' %}" name="_continue_role_relation"/>
