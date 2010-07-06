@@ -453,6 +453,12 @@ textarea#id_css_chunk {
 	line-height: 19px;
 }
 
+.noteUser {
+	font-style: italic;
+	margin: 0.2em 0 0.5em;
+	color: #aaa;
+}
+
 /* ----- plugin admin ----- */
 #plugin-changelist tr.broken {
     background-color: #dddddd;
