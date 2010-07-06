@@ -455,7 +455,7 @@ textarea#id_css_chunk {
 
 .noteUser {
 	font-style: italic;
-	margin: 0.2em 0 0.5em;
+	margin-bottom:0.5em;
 	color: #aaa;
 }
 
