@@ -10,6 +10,18 @@
     border-bottom: 4px solid #BCB9AD;
 }
 
+p {
+	color:#717171;
+}
+
+a:link, a:visited {
+	color: #bf9460;
+}
+a:hover {
+	color: #806446;
+}
+
+/* ----- header styles ----- */
 div#header img#merengue_logo {
     float: left;
 }
@@ -40,13 +52,6 @@ div#header img#merengue_logo {
 .module caption, 
 .inline-group h2 {
     background: #E6D8C0 url(../img/admin/default-bg.gif) repeat-x top left;	
-}
-
-a:link, a:visited {
-	color: #bf9460;
-}
-a:hover {
-	color: #806446;
 }
 
 .row1 {
@@ -441,6 +446,11 @@ div.css-validator-checkboxes div{
 
 textarea#id_css_chunk {
     display: inline !important;
+}
+
+#changeform th {
+	font-size: 13px;
+	line-height: 19px;
 }
 
 /* ----- plugin admin ----- */
