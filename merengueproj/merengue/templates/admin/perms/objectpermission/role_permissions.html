@@ -16,13 +16,7 @@
 
 {% block content-main %}
 <div id="content-main">
-<h2>
-    {% if original %}
-        {% trans "Update the permissions for each role for the content: " %}'{{ original }}'
-    {% else %}
-        {% trans "Update the permissions for each role: " %}
-    {% endif %}
-</h2>
+<p>{% trans "Update the permissions for each role for the content: " %}'{{ original }}'</p>
 <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">
 <div>
     <div id="changeform" class="module">
@@ -51,7 +45,6 @@
     <div class="module aligned"></div>
     {% customize_submit_row "roles_" %}
 </form>
-{% if original %}
 <h2>{% trans "Update the roles for each user for the content: " %}'{{ original }}'</h2>
 <p>{% trans "Autocomplete the user and select a role" %}</p>
 <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">
@@ -67,10 +60,7 @@
                 <tr>
                 <th>{% trans "Users"%}</th>
                 {% for role in roles %}
-                    {% ifequal role.slug anonymous_role_slug %}
-                    {% else %}
-                        <th>{{ role }}</th>
-                    {% endifequal %}
+                <th>{{ role }}</th>
                 {% endfor %}
                 </tr>
             </thead>
@@ -79,10 +69,7 @@
                     <tr class="{% cycle 'row1' 'row2' %}">
                         <td>{{ user }}</td>
                         {% for role, checked in roles %}
-                            {% ifequal role.slug anonymous_role_slug %}
-                            {% else %}
-                                <td><input type="checkbox" {% if checked %}checked="checked"{% endif %} class="action-select" value="{{ role.id}}_{{ user.id }}" name="selected_user" /></td>
-                            {% endifequal %}
+                        <td><input type="checkbox" {% if checked %}checked="checked"{% endif %} class="action-select" value="{{ role.id}}_{{ user.id }}" name="selected_user" /></td>
                         {% endfor %}
                     </tr>
                 {% endfor %}
@@ -93,7 +80,6 @@
     <div class="module aligned"></div>
     {% customize_submit_row "users_" %}
 </form>
-{% endif %}
 </div>
 {% endblock %}
 
