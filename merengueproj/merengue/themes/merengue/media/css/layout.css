@@ -158,6 +158,15 @@ ul {
 	height: 15px;
 }
 
+.ie7 #header-blocks #portalmenu {
+    margin-top: -30px;
+    position: relative;
+}
+
+.ie7 #header-blocks #portalmenu  .menu1 > li {
+    padding-top:  5px;
+}
+
 #header-blocks #portalmenu .menu1 > li a {
     padding: 6px 12px 7px 5px;
     font-size: 10pt;
@@ -347,11 +356,11 @@ ul {
 }
 
 /* portalmenu */
-#header #portalmenu {
+#header-blocks #portalmenu {
 	margin-right: 10em;
 	float: right;
 	text-align: right;
-	width: 32%;
+	width: 25%;
 	margin-bottom: 5px;
 }
 
@@ -515,7 +524,7 @@ body div#content-zone {
 /* portal links */
 #portal-primary-links {
     display: inline-block;
-    width: 40%;
+    width: 42%;
 }
 
 #portal-secondary-links a {
