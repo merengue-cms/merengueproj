@@ -158,6 +158,13 @@ ul {
 	height: 15px;
 }
 
+#header-blocks #portalmenu  .menu1 > li.haveChild {
+	background: transparent url(/media/themes/merengue/img/left_portal_menu_button_haveChild.jpg) no-repeat left top;
+    padding: 8px 0 15px 15px;
+    position: relative;
+	height: 15px;
+}
+
 .ie7 #header-blocks #portalmenu {
     margin-top: -30px;
     position: relative;
