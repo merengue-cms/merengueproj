@@ -1,0 +1,24 @@
+{% extends template_base %}
+
+{% load i18n %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}merengue/css/httperror.css" />
+{% endblock %}
+
+{% block content %}
+<div class="httperror {% block httperrorclass %}{% endblock %}">
+    <div class="httperror-header">
+        <div id="ups">{% trans "Ups!" %}</div>
+        <div class="httperror-title"> 
+            {% block httperrortitle %}
+            {% endblock %}
+        </div>
+    </div>
+    <div class="httperror-description">
+        {% block httperrordescription %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

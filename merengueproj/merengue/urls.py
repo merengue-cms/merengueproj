@@ -23,6 +23,8 @@ js_info_dict = {
         'packages': ('django.conf', ),
 }
 
+handler404 = 'merengue.perms.defaults.page_not_found'
+
 urlpatterns = patterns('',
     # actions
     (r'^actions/', include('merengue.action.urls')),

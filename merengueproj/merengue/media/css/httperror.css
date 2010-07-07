@@ -1,0 +1,43 @@
+div.httperror {
+    height: 384px;
+    position: relative;
+}
+
+div.httperror-500 {
+    background: url('/media/merengue/img/httperrors/500.png') no-repeat top left;
+} 
+
+div#content.content-500 {
+    float: none;
+    margin: 0 auto;
+}
+
+div.httperror-403 {
+    background: url('/media/merengue/img/httperrors/403.png') no-repeat top left;
+}
+
+div.httperror-404 {
+    background: url('/media/merengue/img/httperrors/404.png') no-repeat top left;
+}
+
+div.httperror div#ups {
+    font-size: 60px;
+    display: inline;
+    float: left;
+}
+
+div.httperror-title {
+    float: left;
+    width: 400px;
+}
+
+div.httperror-header {
+    padding-top: 5em;
+}
+
+div.httperror-description {
+    bottom: 100px;
+    position: absolute;
+    width: 300px;
+    left: 30px;
+}

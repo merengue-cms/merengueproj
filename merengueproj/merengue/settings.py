@@ -61,6 +61,11 @@ MERENGUE_APPS = (
     'merengue.collab',
 )
 
+CATCH_STATUS_CODE = {
+    403: '403.html',
+    404: '404.html',
+}
+
 # merengue usual installed apps. you can use this variable in your INSTALLED_APPS project settings
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -101,6 +106,7 @@ MERENGUE_MIDDLEWARE_CLASSES = (
     'merengue.section.middleware.DebugSectionMiddleware',
     'merengue.middleware.SimplifiedLayoutMiddleware',
     'merengue.middleware.LocaleMiddleware',
+    'merengue.perms.middleware.StatusCodeMiddleware',
     'merengue.pluggable.middleware.ActivePluginsMiddleware',
 )
 
