@@ -4,6 +4,7 @@ from django.conf.urls.defaults import *
 from django.conf import settings
 
 from merengue.base import admin
+from merengue.urls import *
 
 admin.autodiscover()
 

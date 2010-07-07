@@ -12,6 +12,7 @@ BASEDIR = path.dirname(path.abspath(__file__))
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 DEBUG_TOOLBAR = DEBUG
+HTTP_ERRORS_DEBUG = DEBUG
 
 ADMINS = (
     ('Your Name', 'youremail@yourdomain.org'),
