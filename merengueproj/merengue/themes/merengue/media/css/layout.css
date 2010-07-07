@@ -382,7 +382,8 @@ ul {
 #left-sidebar {
 	background: white url(/media/themes/merengue/img/left_separator.jpg) repeat-x scroll left bottom;
     float: left;
-    width: 16%;
+    width: 15%;
+	margin:0 8px;
 	padding: 2em 0 0.5em 0.2em;
 	border-bottom: 1px dotted #E5C597;
 }
