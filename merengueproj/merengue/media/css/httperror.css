@@ -32,7 +32,8 @@ div.httperror-title {
 }
 
 div.httperror-header {
-    padding-top: 5em;
+    padding: 3.5em 0 0 3.5em;
+	width: 100%;
 }
 
 div.httperror-description {
