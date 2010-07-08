@@ -7,12 +7,12 @@
 {% block content_title %}<h1>{% trans "Page not found" %}</h1>{% endblock %}
 
 {% block httperrortitle %}
-    {% trans "404 Error - The Page you are looking for is no longer available at this URL." %}
+    {% trans "404 Error - Sorry we can not find the page you are looking for." %}
 {% endblock %}
 
 {% block httperrorclass %}httperror-404{% endblock %}
 
 {% block httperrordescription %}
-    {% trans "Probably you found a bad link or mistyped the URL. We recommend you to" %}
-    {% trans 'return to <a href="/">home</a>' %}
+    <p>{% trans "You may have mistyped the URL or the page may have been removed from our system." %}</p>
+    <p>{% trans 'We recommend you toreturn to <a href="/">home</a>' %}</p>
 {% endblock %}
