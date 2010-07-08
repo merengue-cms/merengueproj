@@ -120,8 +120,6 @@ TINYMCE_EXTRA_MEDIA = {
    'css': [],
 }
 
-SEARCHBAR_MIN_RESULTS = 5
-
 LOGOUT_PROTECTED_URL_REDIRECTS = (
     #(r'^/regularexpresion/(.*)$', '/redirect_url'),
 )
