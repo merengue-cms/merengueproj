@@ -814,6 +814,12 @@ table.gsc-search-box td.gsc-input {
 	border: 1px dotted #CDA873;
 }
 
+.star-rating a:hover span {
+	color: #b38f60 !important;
+	margin-top: 3px;
+	margin-left: 3px;
+}
+
 .star-rating {
 	font-size: 13px;
 	padding:0.2em;
