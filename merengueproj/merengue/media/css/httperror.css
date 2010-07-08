@@ -1,6 +1,8 @@
 div.httperror {
     height: 384px;
     position: relative;
+	font-family: 'HelveticaNeue-UltraLight','Helvetica Neue UltraLight','Helvetica Neue',Arial,Helvetica,sans-serif;
+	font-weight: 100;
 }
 
 div.httperror-500 {
@@ -27,14 +29,16 @@ div.httperror div#ups {
 }
 
 div.httperror-title {
-    width: 400px;
+	font-size: 20px;
+	line-height: 1.2em;
+    width: 370px;
 	position: absolute;
-	top: 2.5em;
-	left: 190px;
+	top: 2em;
+	left: 182px;
 }
 
 div.httperror-header {
-    padding: 3.5em 0 0 3.5em;
+    padding: 3.5em 0 0 3em;
 	width: 100%;
 }
 
