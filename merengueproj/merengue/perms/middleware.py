@@ -26,8 +26,7 @@ def get_context(request):
     template_base = 'base.html'
     if is_admin:
         template_base = 'admin/%s' % template_base
-
-    return {'template_base': template_base}
+    return {'template_base': template_base, 'is_admin': is_admin}
 
 
 class StatusCodeMiddleware(object):
