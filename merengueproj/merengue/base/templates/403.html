@@ -7,12 +7,12 @@
 {% block content_title %}<h1>{% trans "Permission denied" %}</h1> {% endblock %}
 
 {% block httperrortitle %}
-    {% trans "403 Error - The Page you are looking for is no longer available at this URL." %}
+    {% trans "403 Error - Forbidden. Sorry but it seems that you are not allowed." %}
 {% endblock %}
 
 {% block httperrorclass %}httperror-403{% endblock %}
 
 {% block httperrordescription %}
-        {% trans "Probably you found a bad link or mistyped the URL. We recommend you to" %}
-        {% trans 'return to <a href="/">home</a>' %}
+        <p>{% trans "You tried to access a document for which you don't have privileges." %}</p>
+        <p>{% trans 'We recommend you to return to <a href="/">home</a>' %}</p>
 {% endblock %}
