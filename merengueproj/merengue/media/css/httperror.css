@@ -27,8 +27,10 @@ div.httperror div#ups {
 }
 
 div.httperror-title {
-    float: left;
     width: 400px;
+	position: absolute;
+	top: 2.5em;
+	left: 190px;
 }
 
 div.httperror-header {
