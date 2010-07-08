@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="httperror {% block httperrorclass %}{% endblock %}{% if is_admin %}httperror-admin{% endif %}">
+<div class="httperror {% block httperrorclass %}{% endblock %}{% if is_admin %} httperror-admin{% endif %}">
     <div class="httperror-header">
         <div id="ups">{% trans "Ups!" %}</div>
         <div class="httperror-title"> 
