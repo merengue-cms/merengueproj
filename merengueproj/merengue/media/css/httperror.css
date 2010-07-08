@@ -31,7 +31,7 @@ div.httperror div#ups {
     float: left;
 	padding-top: 0.3em;
 }
-
+	
 div.httperror-title {
 	font-size: 20px;
 	line-height: 1.2em;
@@ -45,10 +45,15 @@ div.httperror-header {
     padding: 3.5em 0 0 3em;
 	width: 100%;
 }
+.httperror-description p{
+	line-height: 1.2em;
+}
 
 div.httperror-description {
     bottom: 100px;
     position: absolute;
-    width: 300px;
+    width: 270px;
     left: 2.2em;
+	font-size: 15px;
+	letter-spacing: 0.5px;
 }
