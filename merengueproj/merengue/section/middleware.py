@@ -29,7 +29,9 @@ class RequestSectionMiddleware(object):
         section = None
         if request.path:
             path_list = request.path.split('/')
-            if path_list[1] == 'sections':
+            if path_list[1] == settings.MERENGUE_URLS_PREFIX and path_list[2] == 'sections':
+                section_position = 3
+            elif path_list[1] == 'sections':
                 section_position = 2
             else:
                 section_position = 1
