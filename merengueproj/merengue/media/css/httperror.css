@@ -29,15 +29,16 @@ div.httperror div#ups {
     font-size: 60px;
     display: inline;
     float: left;
+	padding-top: 0.3em;
 }
 
 div.httperror-title {
 	font-size: 20px;
 	line-height: 1.2em;
-    width: 390px;
+    width: 372px;
 	position: absolute;
-	top: 2em;
-	right: 0.7em;
+	top: 2.7em;
+	left: 8.5em;
 }
 
 div.httperror-header {
@@ -49,5 +50,5 @@ div.httperror-description {
     bottom: 100px;
     position: absolute;
     width: 300px;
-    left: 30px;
+    left: 2.2em;
 }
