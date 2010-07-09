@@ -19,10 +19,12 @@ from django.conf import settings
 
 from django.template import RequestContext
 from django.template.loader import render_to_string
+from django.core.urlresolvers import reverse
 
 
 def get_context(request):
-    is_admin = request.get_full_path().startswith('/admin/')
+    admin_prefix = reverse('admin_index')
+    is_admin = request.get_full_path().startswith(admin_prefix)
     template_base = 'base.html'
     if is_admin:
         template_base = 'admin/%s' % template_base
