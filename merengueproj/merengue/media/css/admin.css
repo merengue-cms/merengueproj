@@ -68,6 +68,12 @@ div#header img#merengue_logo {
 	color: #917250;
 }
 
+.button.default:active, input.default[type="submit"]:active {
+	border: 1px solid #C49A6C;
+    background: #E6D8C0 url(../img/admin/default-bg-reverse.gif) repeat-x top left;
+	color: #917250;
+} 
+
 #changelist-filter h2,
 .module h2,
 .module caption,
