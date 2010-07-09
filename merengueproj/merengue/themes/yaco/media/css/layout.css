@@ -452,6 +452,37 @@ div.contentFiles ul {
 	margin-right: 0.5em;
 }
 
+/*---- voting ----*/
+#voting h1 {
+	font-size: 1.5em;
+	margin-bottom: 0.2em;
+	margin-top:0;
+}
+
+.blockContainer div#voting  {
+	float:right;
+	margin: 0.2em 0 0 0.5em;
+	padding: 0.7em;
+	border: 1px dotted #54B848;
+}
+
+.star-rating a:hover span {
+	color: #b38f60 !important;
+	margin-top: 3px;
+	margin-left: 3px;
+	text-decoration: none;
+}
+
+.star-rating {
+	font-size: 13px;
+	padding:0.2em;
+}
+.star-rating ol {
+	left: 42px !important;
+	top:-2px !important;
+}
+
+
 /* ----- pagination  ----- */
 .prev {
 	display:block;
