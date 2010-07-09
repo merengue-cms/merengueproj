@@ -463,6 +463,12 @@ textarea#id_css_chunk {
 	color: #aaa;
 }
 
+.paginator a:hover {
+	background: #E6D8C0;
+	border-color: #BF9460;
+	color: #BF9460;
+}
+
 /* ----- plugin admin ----- */
 #plugin-changelist tr.broken {
     background-color: #dddddd;
