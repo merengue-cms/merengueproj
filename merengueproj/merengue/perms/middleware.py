@@ -21,6 +21,14 @@ from django.template import RequestContext
 from django.template.loader import render_to_string
 
 
+def get_context(request):
+    is_admin = request.get_full_path().startswith('/admin/')
+    template_base = 'base.html'
+    if is_admin:
+        template_base = 'admin/%s' % template_base
+    return {'template_base': template_base, 'is_admin': is_admin}
+
+
 class StatusCodeMiddleware(object):
     """This middleware autodiscovers the current section from the url"""
 
@@ -31,7 +39,9 @@ class StatusCodeMiddleware(object):
         template = settings.CATCH_STATUS_CODE.get(response.status_code, None)
         if not template:
             return response
-        content = render_to_string(template, {}, context_instance=RequestContext(request))
+        context = get_context(request)
+        content = render_to_string(template, context,
+                                             context_instance=RequestContext(request))
         response._headers['content-type'] = ('Content-Type', 'text/html; charset=utf-8')
         response.content = content
         return response
