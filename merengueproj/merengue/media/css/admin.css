@@ -47,6 +47,10 @@ div#header img#merengue_logo {
 	background: #E6D8C0 url(../img/admin/default-bg.gif) repeat-x top left;
 }
 
+#changelist-filter li.selected a {
+	color: #BF9460 !important;
+}
+
 #changelist-filter h2,
 .module h2, 
 .module caption, 
