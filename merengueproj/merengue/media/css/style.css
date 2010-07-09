@@ -6,7 +6,7 @@
 /* ----- Global styles ----- */
 
 body {
-   background-color: white;
+   background-color: #F4F0E5;
    font-family: Verdana, Arial, sans-serif;
    font-style: normal;
    font-variant: normal;
@@ -170,6 +170,7 @@ span.inplace_view_editable_field {
 }
 
 /* ----- Login ----- */
+
 #login {
      width: 350px;
      margin: 100px auto;
