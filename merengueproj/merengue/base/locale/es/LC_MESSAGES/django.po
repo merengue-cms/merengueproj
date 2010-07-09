@@ -386,7 +386,7 @@ msgstr "Seleccionar contenido"
 
 #: templates/404.html:4 templates/404.html.py:12
 msgid "Page not found"
-msgstr "Página no encuntrada"
+msgstr "Página no encontrada"
 
 #: templates/404.html:17
 msgid ""
