@@ -17,7 +17,9 @@
 
 from merengue.pluggable import Plugin
 
+from plugins.highlight.admin import HighlightAdmin
 from plugins.highlight.blocks import HighlightBlock
+from plugins.highlight.models import Highlight
 
 
 class PluginConfig(Plugin):
@@ -28,3 +30,9 @@ class PluginConfig(Plugin):
     @classmethod
     def get_blocks(cls):
         return [HighlightBlock]
+
+    @classmethod
+    def get_model_admins(cls):
+        return [
+            (Highlight, HighlightAdmin),
+        ]
