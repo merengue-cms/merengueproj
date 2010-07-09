@@ -18,6 +18,11 @@ div#content.content-500 {
     margin: 0 auto;
 }
 
+div#content.content-500 div.httperror-description {
+	bottom: 180px;
+	left: 3em;
+}
+
 div.httperror-403 {
     background: url('/media/merengue/img/httperrors/403.png') no-repeat top left;
 }
