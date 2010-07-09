@@ -24,6 +24,7 @@ div.httperror-403 {
 
 div.httperror-404 {
     background: url('/media/merengue/img/httperrors/404.png') no-repeat top left;
+	margin-left: 9em;
 }
 
 div.httperror div#ups {
