@@ -1,5 +1,7 @@
 /* ----- global styles ----- */
-
+html {
+	background: white;
+}
 
 body {
     font-size: 11pt;
