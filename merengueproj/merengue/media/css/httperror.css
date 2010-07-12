@@ -25,12 +25,10 @@ div#content.content-500 div.httperror-description {
 
 div.httperror-403 {
     background: url('/media/merengue/img/httperrors/403.png') no-repeat top left;
-	margin-left: 9em;
 }
 
 div.httperror-404 {
     background: url('/media/merengue/img/httperrors/404.png') no-repeat top left;
-	margin-left: 9em;
 }
 
 div.httperror div#ups {
