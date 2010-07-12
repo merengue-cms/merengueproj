@@ -502,3 +502,8 @@ div.module.form-row {
     border: 0px;
     border-bottom: 1px solid #EEEEEE;
 }
+
+.selector-add  {
+    background:url("../img/admin/selector-add.gif") no-repeat scroll center top transparent;
+    margin-bottom:2px;
+}
