@@ -475,6 +475,16 @@ textarea#id_css_chunk {
 	color: #BF9460;
 }
 
+.object-tools a.viewsitelink:hover, 
+.object-tools a.golink:hover {
+    background: #e6d8c0 url("../img/admin/tooltag-arrowright.gif") no-repeat right top;
+    padding-right:28px;
+}
+
+.object-tools li:hover {
+	background: transparent url("../img/admin/tool-left_over.gif") no-repeat;
+}
+
 /* ----- plugin admin ----- */
 #plugin-changelist tr.broken {
     background-color: #dddddd;
