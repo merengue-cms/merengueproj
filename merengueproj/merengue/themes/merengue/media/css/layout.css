@@ -821,11 +821,11 @@ table.gsc-search-box td.gsc-input {
 }
 
 .star-rating {
-	font-size: 13px;
+	font-size: 11px;
 	padding:0.2em;
 }
 .star-rating ol {
-	left: 42px !important;
+	left: 4em !important;
 	top:-2px !important;
 }
 
