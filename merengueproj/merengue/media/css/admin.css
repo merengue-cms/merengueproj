@@ -475,6 +475,16 @@ textarea#id_css_chunk {
 	color: #BF9460;
 }
 
+.selector-add  {
+    background:url("../img/admin/selector-add.gif") no-repeat scroll center top transparent;
+    margin-bottom:2px;
+}
+
+a.selector-chooseall {
+    background:url("../img/admin/selector-addall.gif") no-repeat scroll left center transparent;
+    width:7em;
+}
+
 /* ----- plugin admin ----- */
 #plugin-changelist tr.broken {
     background-color: #dddddd;
@@ -501,9 +511,4 @@ textarea#id_css_chunk {
 div.module.form-row {
     border: 0px;
     border-bottom: 1px solid #EEEEEE;
-}
-
-.selector-add  {
-    background:url("../img/admin/selector-add.gif") no-repeat scroll center top transparent;
-    margin-bottom:2px;
 }
