@@ -626,6 +626,12 @@ body div#content-zone {
 	margin-top: -12px !important;
 }
 
+#left-sidebar .ui-datepicker .ui-datepicker-title,
+#right-sidebar .ui-datepicker .ui-datepicker-title {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
 .ui-state-highlight  {
 	background: #fa9391 !important;
 	border: 1px solid #B71A27 !important;
