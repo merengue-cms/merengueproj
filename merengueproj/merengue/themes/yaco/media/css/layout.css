@@ -523,3 +523,10 @@ div.contentFiles ul {
 	height:14px;
 	background:transparent url(/media/themes/yaco/img/paginator_next.gif) no-repeat scroll left 4px;
 }
+
+/* ----- multimedi viewer  ----- */
+.simpleImgGallery2 {
+	border-style: dotted !important;
+	border-color: #54B848;
+}
+
