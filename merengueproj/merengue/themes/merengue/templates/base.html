@@ -28,17 +28,11 @@
               elwidth = $(this).width();
               mleft = (elwidth-136)/2;
               $(this).children('div').children('table').css("margin-left", mleft +"px");
-              $('#portalmenu ul li').hover(
-              function() {
-                  $(this).addClass('hover');
-              },
-              function(){
-                  $(this).removeClass('hover');
-              });
           },
           //Mouseout, fadeOut the hover class
           function() {
               $(this).removeClass('hover');
+              $(this).children('div').children('table').css("margin-left", 0 +"px");
           });
 
     });

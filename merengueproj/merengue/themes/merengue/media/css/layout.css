@@ -172,6 +172,7 @@ ul {
 
 .ie7 #header-blocks #portalmenu  .menu1 > li {
     padding-top:  5px;
+    margin-right: 5px;
 }
 
 #header-blocks #portalmenu .menu1 > li a {
