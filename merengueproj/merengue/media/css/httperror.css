@@ -31,8 +31,9 @@ div.httperror-404 {
     background: url('/media/merengue/img/httperrors/404.png') no-repeat top left;
 }
 
-div.httperror div#ups {
+div#ups {
     font-size: 60px;
+	height:50px;
     display: inline;
     float: left;
 	padding-top: 0.2em;
