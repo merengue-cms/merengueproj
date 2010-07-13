@@ -398,6 +398,10 @@ ul {
 	padding: 0.5em 0.3em;
 }
 
+#left-sidebar .block > div.blockTools {
+    background: transparent;
+}
+
 #left-sidebar > div {
     margin-top: 1em;	
 }
