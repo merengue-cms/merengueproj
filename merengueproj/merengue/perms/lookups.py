@@ -27,11 +27,14 @@ class UserLookup(object):
 
     def format_item(self, user):
         """ simple display of an object when it is displayed in the list of selected objects """
-        return unicode(user.get_full_name())
+        full_name = user.get_full_name()
+        if full_name:
+            return u"%s (%s)" % (full_name, user.username)
+        return user.username
 
     def format_result(self, user):
         """ a more verbose display, used in the search results display.  may contain html and multi-lines """
-        return u"%s %s (%s)" % (user.first_name, user.last_name, user.username)
+        return self.format_item(user)
 
     def get_objects(self, ids):
         """ given a list of ids, return the objects ordered as you would like them on the admin page.
