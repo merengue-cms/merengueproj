@@ -211,6 +211,7 @@ class AbsoluteLinkInline(BaseLinkInline):
     def formfield_for_dbfield(self, db_field, **kwargs):
         field = super(AbsoluteLinkInline, self).formfield_for_dbfield(db_field, **kwargs)
         if db_field.name == 'url':
+            field.label = "%s (%s)" % (unicode(field.label), unicode(field.help_text))
 
             def clean(value):
                 return value
