@@ -821,7 +821,7 @@ table.gsc-search-box td.gsc-input {
 .blockContainer div#voting  {
 	float:right;
 	margin: 0.2em 0 0 0.5em;
-	padding: 0.7em;
+	padding: 0.7em 0.7em 1em 0.7em;;
 	border: 1px dotted #CDA873;
 }
 
@@ -831,6 +831,10 @@ table.gsc-search-box td.gsc-input {
 	margin-left: 3px;
 }
 
+#voting .star-rating a span {
+    left: 17px;
+    bottom: -10px;
+}
 .star-rating {
 	font-size: 11px;
 	padding:0.2em;
