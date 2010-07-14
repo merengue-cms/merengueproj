@@ -1,0 +1,13 @@
+.. _ref-index:
+
+Merengue reference
+==================
+
+Merengue reference:
+
+.. toctree::
+   :maxdepth: 1
+
+   settings
+   errors
+   commands/merengue-admin

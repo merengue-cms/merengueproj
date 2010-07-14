@@ -1,0 +1,159 @@
+.. _topics-registry:
+
+=================
+Merengue registry
+=================
+
+.. highlightlang:: html+django
+
+
+Introduction
+============
+
+In any modern cms you usually have several components that will be registered
+and/or configured in every installed site. This registration and configurations
+parameters would be defined by superuser in merengue admin interface. All would
+be stored in database.
+
+Example use cases:
+
+* Registering plugins, with plugin options (see plugin development docs?).
+* Registering actions with configuration parameters (see actions docs?).
+* Storing user preferences.
+* Theme configuration (basic colors, etc.).
+
+
+Using registry
+==============
+
+Example use case
+----------------
+
+*Use case is*: imagine we wants to implement a plugin registering system, with
+plugins configurable by developers. This is the current Merengue `pluggable module`_.
+
+.. _`pluggable module`: https://dev.merengueproject.org/browser/trunk/merengueproj/merengue/pluggable/__init__.py
+
+Defining a registrable and configurable component
+-------------------------------------------------
+
+First step is defining a registrable component. This is a Python class that
+must inherits from ``merengue.registry.items.RegistrableItem`` class:
+
+.. code-block:: python
+
+    from merengue.registry.items import RegistrableItem
+
+    class Plugin(RegistrableItem):
+
+        @classmethod
+        def get_category(cls):
+            return 'plugin'
+
+The ``get_category`` method is needed, and say to Merengue what kind of objects
+you will register.
+
+With this example, you have created a base class for all plugins. A plugin
+developer could declare his plugin with this fragment:
+
+.. code-block:: python
+
+    from merengue.pluggable import Plugin
+
+    class PluginConfig(Plugin):
+        pass
+
+This is all you need to implement a registrable component.
+
+Now we will consider we have implemented all pluggable system. Now we will
+learn to use registry for registering and unregistering objects.
+
+How can I do plugin registering? With these sentences:
+
+.. code-block:: python
+
+    >>> from merengue.registry import register, is_registered
+    >>> from plugins.fooplugin.config import PluginConfig
+    >>> is_registered(PluginConfig)
+    False
+    >>> register(PluginConfig)
+    >>> is_registered(PluginConfig)
+    True
+
+.. admonition:: Plugin autoregistering
+
+    Note your first call to ``is_registered`` returns ``True``, this is
+    because Merengue has plugin autoregistering activated and you have
+    accessed to plugins admin view.
+
+This sentences will register plugin by default in a ``RegisteredItem`` model in
+database. The RegisteredItem model definition is in ``merengue.registry.models``
+module.
+
+.. admonition:: Note
+
+    Do not confusing RegisteredItem with RegistrableItem. The latter is not a
+    Django model but an registrable object. The first is a model that store all
+    ``RegistrableItem``s have been registered with ``merengue.registry.register``
+    function.
+
+You can access to registered object with these sentences:
+
+.. code-block:: python
+
+    >>> from merengue.registry.models import RegisteredItem
+    >>> RegisteredItem.objects.all().values()
+    [{'class_name': u'PluginConfig', 'category': u'plugin', 'config': u'', 'id': 5, 'module': u'plugins.fooplugin.config'}]
+    >>> RegisteredItem.objects.get_by_item(PluginConfig)
+    <RegisteredItem: PluginConfig>
+
+Configuring your registrable components
+---------------------------------------
+
+Let's look at this example:
+
+.. code-block:: python
+
+    from django.utils.translation import ugettext_lazy as _
+    from registry import params
+
+    class PluginConfig(Plugin):
+
+        config_params = [
+            params.Single(name='username', label=_('username'), default='pepe'),
+            params.List(name='friends', label=_('friends'),
+                        default=['antonio', 'juan'],
+                        choices=[('antonio', 'Antonio'),
+                                ('paco', 'Paco'),
+                                ('rosa', 'Rosa'),
+                                ('juan', 'Juan')]),
+            params.Single(name='season', label=_('season'),
+                        choices=[('spring', _('Spring')),
+                                ('summer', _('Summer')),
+                                ('autumn', _('Autumn')),
+                                ('winter', _('Winter'))]),
+        ]
+
+Automatically, with this configuration, you can access to registered item in
+admin and will see and configure all parameters of this component.
+
+(( to be completed. put a admin screenshot ))
+
+If plugin developer want to access this configuration (remember, the
+configuration you customize in admin, no the default config_params for plugin),
+he would use these sentences:
+
+.. code-block:: python
+
+    >>> from plugins.fooplugin.config import PluginConfig
+    >>> config = PluginConfig.get_config()
+    >>> print config['friends'].value
+    ['paco', 'juan']
+    >>> print config['friends'].choices
+    [('antonio', 'Antonio'), ('paco', 'Paco'), ('rosa', 'Rosa'), ('juan', 'Juan')]
+    >>> print config['friends'].default
+    ['antonio', 'juan']
+    >>> config['friends'].get_type()
+    'List'
+
+(( to be completed ))

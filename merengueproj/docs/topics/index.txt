@@ -16,3 +16,4 @@ Introductions to all the key parts of Merengue you'll need to know:
    blocks
    actions
    viewlets
+   registry

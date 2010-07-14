@@ -46,6 +46,9 @@ Topics
  * **Permissions:**
    :ref:`Permissions <topics-permissions>`
 
+ * **Registry:**
+   :ref:`Registry <topics-registry>`
+
 Reference
 =========
 
@@ -56,4 +59,4 @@ Reference
    :ref:`Errors reference <ref-errors>`
 
  * **merengue-admin.py:**
-   :ref:`Command reference <topics-commands-merengue-admin>`
+   :ref:`Command reference <ref-commands-merengue-admin>`

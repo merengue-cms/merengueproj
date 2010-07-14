@@ -1,4 +1,4 @@
-.. _topics-commands-merengue-admin:
+.. _ref-commands-merengue-admin:
 
 =================
 merengue-admin.py
@@ -100,11 +100,12 @@ This command is useful for deployment with a web server, because plugins can
 have their own media files. For development the view
 merengue.views.static.serve can be used.
 
-.. note::
-Based on the build_media management command from Pinax:
-http://github.com/pinax/pinax/blob/0f12c3a3a4ac396eeba734a52a285c7e2d7a7ea7/pinax/apps/staticfiles/management/commands/build_media.py
-which in turn is based on the collectmedia management command by Brian Beck:
-http://blog.brianbeck.com/post/50940622/collectmedia
+.. admonition:: Note
+
+    Based on the build_media management command from Pinax:
+    http://github.com/pinax/pinax/blob/0f12c3a3a4ac396eeba734a52a285c7e2d7a7ea7/pinax/apps/staticfiles/management/commands/build_media.py
+    which in turn is based on the collectmedia management command by Brian Beck:
+    http://blog.brianbeck.com/post/50940622/collectmedia
 
 -i, --interactive
 ~~~~~~~~~~~~~~~~~
