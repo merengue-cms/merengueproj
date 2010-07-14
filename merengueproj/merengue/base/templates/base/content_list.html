@@ -2,10 +2,6 @@
 
 {% load pagination_tags inlinetrans %}
 
-{% if is_paginated %}
-  {% autopaginate content_list paginate_by %}
-{% endif %}
-
 {% block content %}
   {% block listtitlewrapper %}
     <div id="content-title">
