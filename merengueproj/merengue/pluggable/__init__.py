@@ -21,7 +21,7 @@ from django.utils.translation import ugettext
 from south.signals import post_migrate
 
 from merengue.pluggable.models import RegisteredPlugin
-from merengue.pluggable.utils import get_plugin_config
+from merengue.pluggable.utils import get_plugin_config, validate_plugin
 from merengue.registry import register, is_registered
 from merengue.registry.items import RegistrableItem
 
@@ -70,10 +70,11 @@ class Plugin(RegistrableItem):
 def register_plugin(plugin_dir):
     plugin_config = get_plugin_config(plugin_dir)
     if plugin_config:
+        validate_plugin(plugin_config)
         if not is_registered(plugin_config):
             register(plugin_config)
         plugin = RegisteredPlugin.objects.get_by_item(plugin_config)
-        plugin.name = getattr(plugin_config, 'name', plugin_dir)
+        plugin.name = getattr(plugin_config, 'name')
         plugin.directory_name = plugin_dir
         plugin.description = getattr(plugin_config, 'description', '')
         plugin.version = getattr(plugin_config, 'version', '')

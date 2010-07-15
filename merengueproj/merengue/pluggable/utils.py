@@ -84,6 +84,11 @@ def get_plugin_config(plugin_dir, prepend_plugins_dir=True):
         return None
 
 
+def validate_plugin(plugin_config):
+    if not plugin_config.name:
+        raise ImproperlyConfigured('Plugin %s must have a defined "name" attribute' % plugin_config)
+
+
 def are_installed_models(plugin_mod):
     installed = True
     plugin_models = get_models(plugin_mod)
@@ -371,7 +376,10 @@ def unregister_plugin_in_plugin_admin_site(plugin_name):
         if not plugin.installed:
             return
     for model, admin_model in plugin_config.get_model_admins():
-        site.plugin_site.unregister(model)
+        try:
+            site.plugin_site.unregister(model)
+        except NotRegistered:
+            pass
 
 
 def reload_app_directories_template_loader():
