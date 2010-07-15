@@ -140,7 +140,7 @@ Let's look at this example:
         ]
 
 Automatically, with this configuration, you can access to registered item in
-admin and will see and configure all parameters of this component.
+admin and will see and configure all parameters of this component:
 
 .. image:: _images/registry_config.png
 
