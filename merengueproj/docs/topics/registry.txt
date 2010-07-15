@@ -61,12 +61,16 @@ developer could declare his plugin with this fragment:
     from merengue.pluggable import Plugin
 
     class PluginConfig(Plugin):
-        pass
+        name = 'fooplugin'
 
 This is all you need to implement a registrable component.
 
 Now we will consider we have implemented all pluggable system. Now we will
 learn to use registry for registering and unregistering objects.
+
+For testing previous code fragment, make a ``fooplugin`` directory into ``plugins``
+directory, with a ``__init__.py`` file inside it and a ``config.py`` file. In
+the last file, copy and paste previous code fragment.
 
 How can I do plugin registering? With these sentences:
 
@@ -115,10 +119,11 @@ Let's look at this example:
 .. code-block:: python
 
     from django.utils.translation import ugettext_lazy as _
-    from registry import params
+    from merengue.pluggable import Plugin
+    from merengue.registry import params
 
     class PluginConfig(Plugin):
-
+        name = 'fooplugin'
         config_params = [
             params.Single(name='username', label=_('username'), default='pepe'),
             params.List(name='friends', label=_('friends'),
@@ -137,7 +142,7 @@ Let's look at this example:
 Automatically, with this configuration, you can access to registered item in
 admin and will see and configure all parameters of this component.
 
-(( to be completed. put a admin screenshot ))
+.. image:: _images/registry_config.png
 
 If plugin developer want to access this configuration (remember, the
 configuration you customize in admin, no the default config_params for plugin),
