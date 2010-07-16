@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 
@@ -44,10 +45,23 @@ def is_broken(registered_item):
         return False
 
 
+def invalidate_registereditem():
+    from johnny import cache
+    from django.core.cache import cache as django_cache
+    from merengue.registry.models import RegisteredItem
+    query_cache_backend = cache.get_backend()(django_cache)
+    query_cache_backend.patch()
+    cache.invalidate(RegisteredItem._meta.db_table)
+
+
 def register(item_class, activate=False):
     """ Register a item in the registry """
     # all process will be in a unique transaction, we don't want to get
     # half committed
+    if settings.CACHE_BACKEND.startswith('johnny'):
+        invalidate_registereditem()
+
+
     sid = transaction.savepoint()
     try:
         if not issubclass(item_class, RegistrableItem):
