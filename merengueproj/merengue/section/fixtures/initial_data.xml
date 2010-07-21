@@ -48,8 +48,8 @@
     </object>
     <object pk="2" model="section.menu">
         <field type="CharField" name="name_es">Main menu of section</field>
-        <field type="CharField" name="name_en"><None></None></field>
-        <field type="CharField" name="name_fr"><None></None></field>
+        <field type="CharField" name="name_en">Main menu of section</field>
+        <field type="CharField" name="name_fr">Main menu of section</field>
         <field type="SlugField" name="slug">main-menu-of-section</field>
         <field to="section.menu" name="parent" rel="ManyToOneRel"><None></None></field>
         <field type="CharField" name="url"><None></None></field>
