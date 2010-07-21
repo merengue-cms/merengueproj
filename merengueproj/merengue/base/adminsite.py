@@ -219,7 +219,7 @@ class BaseAdminSite(DjangoAdminSite):
         from merengue.perms import utils as perms_api
         if not perms_api.can_manage_site(request.user):
             raise PermissionDenied
-        from merengue.base.utils import restore_config
+        from merengue.utils import restore_config
         if request.method == 'POST':
             if request.POST.get('_submit_configuration', None):
                 form_configuration = UploadConfigForm(request.POST, request.FILES)
@@ -240,7 +240,7 @@ class BaseAdminSite(DjangoAdminSite):
                                       context_instance=RequestContext(request))
 
     def save_configuration(self, request):
-        from merengue.base.utils import save_config
+        from merengue.utils import save_config
         zip_name = datetime.now()
         response = HttpResponse(mimetype='application/x-zip-compressed')
         response['Content-Disposition'] = 'attachment; filename="%s.zip"' % zip_name.isoformat('-')
@@ -250,7 +250,7 @@ class BaseAdminSite(DjangoAdminSite):
 
     def save_backup(self, request):
         from cmsutils.db_utils import do_backupdb
-        from merengue.base.utils import save_backupdb
+        from merengue.utils import save_backupdb
         zip_name = 'backup_%s' % datetime.now().isoformat('-')
         response = HttpResponse(mimetype='application/x-zip-compressed')
         response['Content-Disposition'] = 'attachment; filename="%s.zip"' % zip_name

@@ -24,7 +24,7 @@ from django.conf import settings
 from django.core.management.base import CommandError, LabelCommand
 
 from merengue.base.management.base import MerengueCommand
-from merengue.base.utils import save_config
+from merengue.utils import save_config
 
 
 class Command(LabelCommand, MerengueCommand):

@@ -22,12 +22,12 @@ from django.db import models
 from django.db.models import signals, permalink
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+from django.core.files.uploadedfile import UploadedFile
 from django.core.exceptions import ObjectDoesNotExist, SuspiciousOperation
 from django.contrib.auth.models import User
 
 from south.modelsinspector import add_introspection_rules
 from stdimage import StdImageField
-from stdimage.fields import StdImageFieldFile
 from tagging.fields import TagField
 from transmeta import TransMeta
 
@@ -131,13 +131,8 @@ class BaseMultimedia(models.Model):
 
     def _save_original_filename(self, file_field):
         """ save original filename. only to be called in subclasses """
-        # Before django [9766]
-        if not self.original_filename and file_field and \
-                isinstance(file_field, StdImageFieldFile):
+        if file_field and isinstance(file_field, UploadedFile):
             self.original_filename = file_field.name
-        # After django [9766]
-        #if file_field and isinstance(file_field, UploadedFile):
-        #    self.original_filename = file_field.name
 
     def get_content(self):
         provinces = self.province_set.all()

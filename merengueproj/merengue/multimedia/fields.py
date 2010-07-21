@@ -13,6 +13,8 @@ from django.db import models
 
 from stdfile.db.fields import RemovableFileField
 
+from merengue.utils import bin_exists
+
 
 class VideoException(Exception):
     pass
@@ -90,7 +92,7 @@ class AutoEncodeFieldFile(VideoFile, models.fields.files.FieldFile):
         ffmpeg_exit_status = pop.wait()
         if ffmpeg_exit_status != 0:
             raise VideoException(ffmpeg_exit_status)
-        if codec == 'flv':
+        if codec == 'flv' and bin_exists('yamdi'):
             # inject FLV metadata
             tempfd2, tempfilename2 = tempfile.mkstemp()
             os.close(tempfd2)

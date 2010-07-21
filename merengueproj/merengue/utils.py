@@ -25,13 +25,7 @@ from django.core.cache import cache
 from django.utils.cache import _generate_cache_header_key
 from django.utils.encoding import smart_str
 
-from merengue.action.models import RegisteredAction
 from django.core.management.base import CommandError
-from merengue.block.models import RegisteredBlock
-from merengue.pluggable.models import RegisteredPlugin
-from merengue.pluggable.utils import get_plugin_module_name
-from merengue.registry import RegisteredItem
-from merengue.theming.models import Theme
 
 from django.core import serializers
 from django.core.management.color import no_style
@@ -92,6 +86,11 @@ def invalidate_cache_for_path(request_path):
 
 
 def save_config(overwrite=True, save_all=True):
+    from merengue.registry import RegisteredItem
+    from merengue.action.models import RegisteredAction
+    from merengue.pluggable.models import RegisteredPlugin
+    from merengue.block.models import RegisteredBlock
+    from merengue.theming.models import Theme
     buffer = StringIO()
     zip_config = zipfile.ZipFile(buffer, "w",
                                      compression=zipfile.ZIP_DEFLATED)
@@ -140,6 +139,7 @@ def add_theme(zip_config):
     Add all data themes related. The save_config argument sets if
     all data is saved or only fixtures.
     """
+    from merengue.theming.models import Theme
     themes = Theme.objects.filter(active=True)
     for theme in themes:
         theme_path = theme.get_path()
@@ -152,6 +152,7 @@ def add_plugins(zip_config, save_all=False):
     Add all data plugins related. The save_config argument sets if
     all data is saved or only fixtures.
     """
+    from merengue.pluggable.models import RegisteredPlugin
     plugins = RegisteredPlugin.objects.filter(installed=True)
     for plugin in plugins:
         plugin_path = plugin.get_path()
@@ -182,6 +183,7 @@ def add_fixtures(zip_config, plugin, plugin_path, plugin_path_zip):
     """
     Backup fixtures into zip file
     """
+    from merengue.pluggable.utils import get_plugin_module_name
     # next two sentences is for avoiding problems with zipfile module
     # (encoding errors)
     plugin_path = smart_str(plugin_path)
@@ -233,6 +235,11 @@ def add_folder(zip_config, path_root, path_zip):
 
 
 def restore_config(zip_config):
+    from merengue.action.models import RegisteredAction
+    from merengue.block.models import RegisteredBlock
+    from merengue.registry import RegisteredItem
+    from merengue.pluggable.models import RegisteredPlugin
+    from merengue.theming.models import Theme
     config = get_config(zip_config)
     restore_all = (config.get("mode", "fixtures") == "all")
     version = config.get("version", "MERENGUE_VERSION")
@@ -310,3 +317,15 @@ def sequence_reset_sql(models):
     if sequence_sql:
         for line in sequence_sql:
             cursor.execute(line)
+
+
+def bin_exists(binary):
+    """ function to find a binary in the system """
+    bin_search_path = [path for path in os.environ['PATH'].split(os.pathsep)
+                       if os.path.isdir(path)]
+    mode = os.R_OK | os.X_OK
+    for path in bin_search_path:
+        pathbin = os.path.join(path, binary)
+        if os.access(pathbin, mode) == 1:
+            return True
+    return False
