@@ -201,7 +201,7 @@ Let's explain every part listed before:
 * ``__init__.py`` is a needed file (usually empty) that makes plugin to be a python module.
 * ``models.py`` is conventional Django app model file. See :ref:`base models <topics-models-base>` to get more info about base models you can extend of.
 * ``config.py`` is the configuration file for plugin. See :ref:`plugin configuration reference <topics-plugins-configuration>`.
-* ``blocks.py`` is blocks file, with the new visual blocks that are defined in plugin. See :ref:`actions reference <topics-blocks>`.
+* ``blocks.py`` is blocks file, with the new visual blocks that are defined in plugin. See :ref:`blocks reference <topics-blocks>`.
 * ``actions.py`` is portal actions file. See :ref:`actions reference <topics-actions>`.
 * ``views.py`` is conventional `Django views`_ file.
 * ``urls.py`` is conventional `Django urls`_ file. You can use it for control a URL namespace (i.e. all ``/fooplugin/.*`` urls).
