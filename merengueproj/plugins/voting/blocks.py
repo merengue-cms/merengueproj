@@ -30,7 +30,7 @@ class VotingBlock(ContentBlock):
     def render(cls, request, place, content, context, *args, **kwargs):
         from plugins.voting.config import PluginConfig
         plugin_config = PluginConfig.get_config()
-        readonly = plugin_config.get('readonly').get_value() != u'False'
+        readonly = plugin_config.get('readonly').get_value()
         return cls.render_block(request, template_name='voting/block_voting.html',
                                 block_title=_('Vote content'),
                                 context={'content': content,
