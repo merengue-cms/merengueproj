@@ -46,6 +46,7 @@ from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
 from cmsutils.forms.widgets import AJAXAutocompletionWidget
+from oembed.models import ProviderRule, StoredOEmbed
 from transmeta import (canonical_fieldname, get_all_translatable_fields,
                        get_real_fieldname_in_each_language,
                        get_fallback_fieldname)
@@ -1045,6 +1046,8 @@ def register(site):
     ## register admin models
     site.register(BaseContent, BaseContentViewAdmin)
     site.register(Site, SiteAdmin)
+    site.register(ProviderRule)
+    site.register(StoredOEmbed)
     register_related_base(site, BaseContent)
     if settings.USE_GIS:
         register_related_gis(site, BaseContent)

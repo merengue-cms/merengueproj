@@ -230,14 +230,14 @@ if(typeof Shadowbox == 'undefined'){
          *
          * @var     {Number}    initialHeight
          */
-        initialHeight:      300,
+        initialHeight:      400,
 
         /**
          * The initial width of Shadowbox (in pixels).
          *
          * @var     {Number}    initialWidth
          */
-        initialWidth:       400,
+        initialWidth:       650,
 
         /**
          * Enable keyboard control. Note: If you disable the keys, you may want
@@ -313,7 +313,7 @@ if(typeof Shadowbox == 'undefined'){
         skipSetup:          true,
         
         
-        minWidth: 400,
+        minWidth: 650,
 
         /**
          * Text messages to use for Shadowbox. These are provided so they may be
