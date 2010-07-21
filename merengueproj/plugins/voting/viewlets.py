@@ -20,7 +20,7 @@ from django.utils.translation import ugettext as _
 from cmsutils.adminfilters import QueryStringManager
 
 from merengue.base.models import BaseContent
-from merengue.base.utils import copy_request
+from merengue.utils import copy_request
 from merengue.viewlet.viewlets import Viewlet
 from plugins.voting.models import Vote
 

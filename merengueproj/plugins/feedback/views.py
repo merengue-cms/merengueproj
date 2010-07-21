@@ -24,7 +24,6 @@ from django.views.decorators.cache import never_cache
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
 
-from merengue.base.utils import invalidate_cache_for_path
 from threadedcomments.models import FreeThreadedComment
 from captcha.decorators import add_captcha
 
@@ -82,9 +81,6 @@ def content_comment_add(request, content_type, content_id, parent_id=None):
         if parent_id:
             new_comment.parent = get_object_or_404(FreeThreadedComment, id=int(parent_id))
         new_comment.save()
-
-        # invalidate content view for avoid anonymous cache issues (see ticket #2459)
-        invalidate_cache_for_path(content.public_link())
 
         if request.user and not request.user.is_anonymous():
             request.user.message_set.create(message=_("Your message has been posted successfully."))
