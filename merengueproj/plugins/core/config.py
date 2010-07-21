@@ -35,8 +35,8 @@ class PluginConfig(Plugin):
     )
 
     config_params = [
-        params.Single(name='home_initial_content',
-                      label=_('home initial content'), default='1')]
+        params.Integer(name='home_initial_content',
+                       label=_('home initial content'), default=1)]
 
     @classmethod
     def get_actions(cls):
