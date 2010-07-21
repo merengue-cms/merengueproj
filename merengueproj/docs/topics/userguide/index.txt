@@ -11,10 +11,8 @@ aspects of graphical configuration, and how Merengue works for the site admin.
 .. admonition:: Technical stuff
     
     We assume that you already have a Merengue instance working properly. If 
-    you don't, you should have to take a look `installing merengue`_ for more
+    you don't, you should have to take a look :ref:`installing merengue <topics-install>` for more
     information about this.
-
-.. _`installing merengue`: http://docs.merengueproject.org/topics/install.html
 
 
 Introduction to Merengue admin site
@@ -41,6 +39,7 @@ are:
 
 * **User management**. The last block is used to edit *users* privileges, *groups* and *roles*.
 
+.. _topics-userguide-plugins:
 
 Plugins
 =======
@@ -79,9 +78,8 @@ contents.
 .. admonition:: Technical stuff
     
     You can add more plugins to that list, or even develop your own plugin. 
-    Take a look to the `plugins documentation`_ for more information about this.
+    Take a look to the :ref:`plugins documentation <topics-plugins-index>` for more information about this.
 
-.. _`plugins documentation`: http://docs.merengueproject.org/topics/plugins/index.html
 
 Themes
 ======

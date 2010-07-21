@@ -12,12 +12,11 @@ Throughout this tutorial, we will:
 Creating a project
 ==================
 
-We will assume you have `Merengue installed`_ and you want to create a
+We will assume you have :ref:`Merengue installed <topics-install>` and you want to create a
 `www.merengueproject.org`_ website (see `sources`_ for a finished results).
 
 .. _sources: https://dev.merengueproject.org/browser/sites/merengueprojectorg
 .. _www.merengueproject.org: http://www.merengueproject.org
-.. _Merengue installed: http://docs.merengueproject.org/topics/install.html
 
 Let's start your project:
 
@@ -101,9 +100,10 @@ like that:
 
 .. image:: _images/merengue_theme_in_new_project.png
 
-To more information about using Merengue, you can read `user guide`_
+To more information about using Merengue, you can read :ref:`user guide <topics-userguide>`
 
-.. _user guide: http://docs.merengueproject.org/topics/userguide/index.html
+
+.. _intro-tutorial-theme:
 
 Creating *merengueprojectorg* theme
 ===================================
@@ -315,9 +315,7 @@ To see a finished version of `www.merengueproject.org`_ theme, you have to:
 
 .. admonition:: Deep into
 
-    For more information about Merengue theming, you can read `working with themes`_
-
-.. _working with themes: http://docs.merengueproject.org/topics/themes/index.html
+    For more information about Merengue theming, you can read :ref:`working with themes <topics-themes-index>`
 
 
 Customizing index page

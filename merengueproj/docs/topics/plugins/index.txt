@@ -12,7 +12,21 @@ Merengue Plugins
 Overview
 ========
 
-(( to be completed ))
+Merengue *plugins* are installable components that increase the functionality
+of your site. This new functionality improvement can be done in several ways:
+
+* New content types.
+* New visual blocks rendered.
+* New actions for content or site.
+* New permissions.
+* New views (listings, content detail view, etc.).
+
+.. admonition:: Django apps vs. Merengue plugins
+
+    There are two main differences between Django apps and Merengue plugins:
+
+      * Merengue plugins can be installed from admin site, without programming. Django apps usually needs (at least) change settings file, copy media, include URL namespace, etc.
+      * Merengue plugins are much more tightly integrated because CMS concepts and conventions that exists in Merengue (blocks, actions, viewlets, template layout, etc.) and has no sense in a web framework.
 
 .. _topics-plugins-installation:
 
@@ -28,9 +42,9 @@ Only three steps are needed to install a new plugin:
   * automatically, if you have :setting:`DETECT_BROKEN_PLUGINS` to ``True`` (by default), and you access to plugins admin view.
   * manually, if you execute ``mark_broken_plugins`` command.
 
-3. Activate it from plugins admin view. See `plugins documentation`_ in user guide.
+3. Activate it from plugins admin view. See :ref:`plugins documentation <topics-userguide-plugins>` in user guide.
 
-.. _`plugins documentation`: http://docs.merengueproject.org/topics/userguide/index.html#plugins
+.. _topics-plugins-media-files:
 
 Media files in plugins
 ----------------------
@@ -164,9 +178,12 @@ This is a conventional plugin tree:
      /plugins/
          |-- fooplugin/
          |   |-- __init__.py
+         |   |-- actions.py
+         |   |-- blocks.py
          |   |-- config.py
          |   |-- models.py
          |   |-- views.py
+         |   |-- viewlets.py
          |   |-- urls.py
          |   `-- templates/
          |       `-- fooplugin/
@@ -184,6 +201,7 @@ Let's explain every part listed before:
 * ``__init__.py`` is a needed file (usually empty) that makes plugin to be a python module.
 * ``models.py`` is conventional Django app model file. See :ref:`base models <topics-models-base>` to get more info about base models you can extend of.
 * ``config.py`` is the configuration file for plugin. See :ref:`plugin configuration reference <topics-plugins-configuration>`.
+* ``blocks.py`` is blocks file, with the new visual blocks that are defined in plugin. See :ref:`actions reference <topics-blocks>`.
 * ``actions.py`` is portal actions file. See :ref:`actions reference <topics-actions>`.
 * ``views.py`` is conventional `Django views`_ file.
 * ``urls.py`` is conventional `Django urls`_ file. You can use it for control a URL namespace (i.e. all ``/fooplugin/.*`` urls).

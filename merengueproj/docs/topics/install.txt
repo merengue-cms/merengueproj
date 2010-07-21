@@ -549,9 +549,7 @@ symlink them).
 
 .. admonition:: Deep into
 
-    See `media files in plugins`_ for more information about this.
-
-.. _`media files in plugins`: http://docs.merengueproject.org/topics/plugins/index.html#media-files-in-plugins
+    See :ref:`media files in plugins <topics-plugins-media-files>` for more information about this.
 
 
 Example Merengue configuration with nginx and WSGI

@@ -201,9 +201,7 @@ This works because in ``base/layout.html`` we add a CSS class to ``#container`` 
 Creating a new theme step by step
 ---------------------------------
 
-Please look the `Merengue tutorial`_ for learning to create a theme from scratch.
-
-.. _`Merengue tutorial`: http://docs.merengueproject.org/intro/tutorial.html#creating-merengueprojectorg-theme
+Please look the :ref:`Merengue tutorial <intro-tutorial-theme>` for learning to create a theme from scratch.
 
 Internals
 ---------

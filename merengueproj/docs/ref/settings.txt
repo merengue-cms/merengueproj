@@ -40,6 +40,9 @@ In this example, after migrate 'news' application Merengue will load
 
 .. _settings.FIXTURE_DIRS: http://docs.djangoproject.com/en/1.1/ref/settings/#fixture-dirs
 
+
+.. setting:: MERENGUE_URLS_PREFIX
+
 MERENGUE_URLS_PREFIX
 --------------------
 
@@ -55,6 +58,9 @@ In your project ``urls.py`` file, merengue URLs are included as follows:
     (r'^%s/' % settings.MERENGUE_URLS_PREFIX, include('merengue.urls')),
 
 You can override this settings if you prefer other prefix than ``cms``.
+
+
+.. setting:: CACHE_BACKEND
 
 CACHE_BACKEND
 -------------
@@ -76,6 +82,9 @@ backends in order to get it works with ``johnny-cache`` (see
 .. _Johnny Cache: http://packages.python.org/johnny-cache/
 .. _Johnny Cache backends: http://packages.python.org/johnny-cache/backends.html
 
+
+.. setting:: TINYMCE_EXTRA_MEDIA
+
 TINYMCE_EXTRA_MEDIA
 -------------------
 
@@ -95,6 +104,8 @@ You need include all media without ``MEDIA_URL`` prefix. This is an example:
     }
 
 
+.. setting:: DETECT_NEW_PLUGINS
+
 DETECT_NEW_PLUGINS
 ------------------
 
@@ -105,6 +116,8 @@ Detect automatically new plugins when manager access to plugins admin view.
 If ``DETECT_NEW_PLUGINS`` is ``False``, registration of new plugins is done
 executing ``register_new_plugins`` command.
 
+
+.. setting:: DETECT_BROKEN_PLUGINS
 
 DETECT_BROKEN_PLUGINS
 ---------------------
