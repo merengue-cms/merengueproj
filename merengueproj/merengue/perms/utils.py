@@ -21,6 +21,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist, ImproperlyConfigured
+from django.template import defaultfilters
 
 # permissions imports
 from merengue.perms import ANONYMOUS_ROLE_SLUG
@@ -621,7 +622,7 @@ def unregister_permission(codename):
     return True
 
 
-def register_role(name):
+def register_role(name, slug=None):
     """Registers a role with passed name to the framework. Returns the new
     role if the registration was successfully, otherwise False.
 
@@ -629,8 +630,12 @@ def register_role(name):
 
     name
         The unique role name.
+    slug
+        The role slug.
     """
-    role, created = Role.objects.get_or_create(name=name)
+    if slug is None:
+        slug = defaultfilters.slugify(name)
+    role, created = Role.objects.get_or_create(name=name, slug=slug)
     if created:
         return role
     return False
