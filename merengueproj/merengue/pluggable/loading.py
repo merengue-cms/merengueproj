@@ -46,6 +46,7 @@ class PluginState(object):
         try:
             if self.loaded:
                 return
+            from merengue.registry import invalidate_registereditem
             from merengue.pluggable.utils import (enable_plugin,
                                                   get_plugin_module_name)
             from merengue.pluggable.models import RegisteredPlugin
@@ -55,6 +56,8 @@ class PluginState(object):
                             for p in active_plugins]
             for plugin_name in plugin_names:
                 enable_plugin(plugin_name, register=True)
+            # invalidate any existing cache
+            invalidate_registereditem()
             self.loaded = True
         finally:
             self.write_lock.release()
