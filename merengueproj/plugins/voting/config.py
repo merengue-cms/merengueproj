@@ -35,7 +35,7 @@ class PluginConfig(Plugin):
     )
 
     config_params = [
-        params.Single(name='readonly', label=_('is readonly?'), default=False),
+        params.Bool(name='readonly', label=_('is readonly?'), default=False),
     ]
 
     @classmethod
