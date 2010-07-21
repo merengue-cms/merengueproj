@@ -322,10 +322,24 @@ You can see what actions you have on the system accessing the URL
 http://localhost:8080/admin/registry/registereditem/?category=action. Those actions
 are provided by differents modules, as well as blocks and other stuff.
 
-Merengue permissions (not implemented yet)
+Merengue permissions
 ==========================================
 
-(( to complete ))
+In Merengue we define permissions as the authorization that an user must have for he is able to do something.
+For example, if an user wants to edit some content, he need have the edit perm for this content.
+If an user wants to manage the sections he need the manage section perm.
+
+The permissions can be globals, you can see on the system accessing the URL 
+http://localhost:8080/admin/perms/objectpermission/.
+Or locals for each content, you can see in /permissions/ into each content 
+http://localhost:8080/admin/base/basecontent/1/permissions/.
+
+To associate permissions with user, we have **roles**. These definen a permission set.
+If you associate a role with an user, this user will every permission of the role. Also you can associate
+a role with a group, and every user of this group will every permission of the role.
+
+There is a special role: "Anonymous User". Every user will every permission of this role.
+
 
 Maintenance tasks
 =================
