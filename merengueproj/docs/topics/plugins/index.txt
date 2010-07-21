@@ -1,8 +1,8 @@
 .. _topics-plugins-index:
 
-===================
-Plugins development
-===================
+================
+Merengue Plugins
+================
 
 .. highlightlang:: html+django
 
@@ -14,14 +14,62 @@ Overview
 
 (( to be completed ))
 
+.. _topics-plugins-installation:
+
+
+Installing third party plugins
+==============================
+
+Only three steps are needed to install a new plugin:
+
+1. Placing decompressed plugin into the ``plugins`` directory (you will find it inside your Merengue project).
+
+2. Registering into Merengue. This can be done in two ways:
+  * automatically, if you have :setting:`DETECT_BROKEN_PLUGINS` to ``True`` (by default), and you access to plugins admin view.
+  * manually, if you execute ``mark_broken_plugins`` command.
+
+3. Activate it from plugins admin view. See `plugins documentation`_ in user guide.
+
+.. _`plugins documentation`: http://docs.merengueproject.org/topics/userguide/index.html#plugins
+
+Media files in plugins
+----------------------
+
+(( to be completed. Talk about media conventions taken in Merengue,
+merengue.views.static.serve view and sync_plugins_media command ))
+
+Broken plugins
+--------------
+
+Merengue detects broken plugins that are downloaded in ``plugins``directory.
+You can see it in plugins admin view:
+
+    .. image:: _images/broken_plugins.png
+
+Merengue broken plugin detection tries to avoid break entire system when you
+download a third party plugin. Broken plugin cannot be installed but if you
+have a broken plugin activated, the exception will break whole system.
+
+Plugins can be broken because one of this causes:
+
+* **Removed from file system:** some times ago, plugin was in file system,
+  and Merengue registered it, but later was deleted.
+
+* **Models are wrong:** models does not validate.
+ 
+* **Syntax error:** you have a syntax error in some code of the plugin. Merengue
+  tried to import plugin and a ``SyntaxError`` was raised.
+
+For detecting broken plugins you can execute ``mark_broken_plugins`` command, or
+set :setting:`DETECT_BROKEN_PLUGINS` to ``True`` (by default) and access to
+plugins admin view.
+
 .. _topics-plugins-configuration:
 
-
-Configuration
-=============
+Plugin configuration
+====================
 
 Plugin configuration is defined in a ``PluginConfig`` class in a ``config.py`` module inside your plugin directory. This class is readed when plugin is loaded in merengue.
-
 
 Example plugin config
 ---------------------
@@ -90,8 +138,8 @@ Method reference
 .. _topics-plugins-development:
 
 
-Development
-===========
+Plugin Development
+==================
 
 Writing a custom plugin
 -----------------------
@@ -152,7 +200,6 @@ You can see an `example plugin`_.
 
 .. _`example plugin`: http://tracpub.yaco.es/merengue/browser/trunk/merengueproj/plugins/news/
 
-
 Required plugins in a project
 -----------------------------
 
@@ -178,33 +225,3 @@ After changing ``REQUIRED_PLUGINS`` setting, you have to register plugin with th
 command to get new plugins activated (and also get their models created if exist)::
 
     python manage.py migrate
-
-
-Media files in plugins
-======================
-
-(( to be completed. Talk about media conventions taken in Merengue,
-merengue.views.static.serve view and sync_plugins_media command ))
-
-
-Broken plugins
-==============
-
-Merengue detects broken plugins that are downloaded in ``plugins``directory.
-You can see it in plugins admin view:
-
-    .. image:: _images/broken_plugins.png
-
-Merengue broken plugin detection tries to avoid break entire system when you
-download a third party plugin. Broken plugin cannot be installed but if you
-have a broken plugin activated, the exception will break whole system.
-
-Plugins can be broken because one of this causes:
-
-* **Removed from file system:** some times ago, plugin was in file system,
-  and Merengue registered it, but later was deleted.
-
-* **Models are wrong:** models does not validate.
- 
-* **Syntax error:** you have a syntax error in some code of the plugin. Merengue
-  tried to import plugin and a ``SyntaxError`` was raised.

@@ -94,4 +94,26 @@ You need include all media without ``MEDIA_URL`` prefix. This is an example:
         'css': ['themes/yourtheme/css/layout.css'],
     }
 
+
+DETECT_NEW_PLUGINS
+------------------
+
+Default: ``True``
+
+Detect automatically new plugins when manager access to plugins admin view.
+
+If ``DETECT_NEW_PLUGINS`` is ``False``, registration of new plugins is done
+executing ``register_new_plugins`` command.
+
+
+DETECT_BROKEN_PLUGINS
+---------------------
+
+Default: ``True``
+
+Detect automatically new plugins when manager access to plugins admin view.
+
+If ``DETECT_BROKEN_PLUGINS`` is ``False``, broken plugins detection is done
+executing ``mark_broken_plugins`` command.
+
 (( to be completed ))

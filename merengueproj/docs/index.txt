@@ -31,6 +31,7 @@ Topics
 
  * **Plugins:**
    :ref:`Overview <topics-plugins-overview>` |
+   :ref:`Installation <topics-plugins-installation>` |
    :ref:`Configuration <topics-plugins-configuration>` |
    :ref:`Development <topics-plugins-development>`
 
