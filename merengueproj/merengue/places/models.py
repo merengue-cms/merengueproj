@@ -25,7 +25,6 @@ from django.utils.translation import ugettext
 class BaseLocation(models.Model):
 
     main_location = models.PointField(verbose_name=_('main location'))
-    borders = models.PolygonField(verbose_name=_('borders'))
 
     class Meta:
         abstract = True
@@ -43,11 +42,6 @@ class BaseLocation(models.Model):
     def get_admin_absolute_url(self):
         content_type = ContentType.objects.get_for_model(self)
         return ('base.views.admin_link', [content_type.id, self.id, ''])
-
-    def get_bounds(self):
-        if self.borders:
-            return self.borders.extent
-        return None
 
 
 class Location(BaseLocation):

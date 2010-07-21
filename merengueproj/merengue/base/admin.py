@@ -1096,7 +1096,7 @@ if settings.USE_GIS:
             self.fieldsets = (
                 (self.title_first_fieldset, {'fields': ('address', 'postal_code', )}),
                 (title_fieldset,
-                    {'fields': ('main_location', 'borders', )}
+                    {'fields': ('main_location', )}
                 ),
             )
 

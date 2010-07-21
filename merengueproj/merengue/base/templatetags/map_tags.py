@@ -46,48 +46,40 @@ if settings.USE_GIS:
     def get_bounds(content, content_pois, content_areas):
         """ gets map bounds. first try to get content bounds,
             last will get content_pois extent """
-        borders = None
-        if isinstance(content, BaseContent) and getattr(content, 'location', None):
-            borders = content.location.borders
-        elif isinstance(content, BaseLocation):
-            borders = content.borders
-        if borders:
-            return borders.extent
-        else:
-            points = [c.main_location for c in content_pois if c.has_location()]
+        points = [c.main_location for c in content_pois if c.has_location()]
 
-            areas = []
-            for c in content_areas:
-                if hasattr(c, 'location'):
-                    if getattr(c.location, 'borders', None):
-                        areas.append(c.location.borders)
-                elif getattr(c, 'borders', None):
-                    areas.append(c.borders)
-            if points and areas:
-                mp = MultiPoint(points)
-                ap = MultiPolygon(areas)
-                return ap.simplify().union(mp).extent
-            elif len(points)>1:
-                mp = MultiPoint(points)
-                return mp.extent
-            elif points:
-                # if we have just one point expand the borders
-                # to avoid to much zoom
-                content = content_pois[0]
-            elif areas:
-                ap = MultiPolygon(areas)
-                return ap.extent
-            elif content and content.main_location:
-                return (content.main_location.x - 0.002,
-                        content.main_location.y - 0.002,
-                        content.main_location.x + 0.002,
-                        content.main_location.y + 0.002)
-            else:
-                # default bounding box to avoid google maps failures
-                return (settings.DEFAULT_LONGITUDE - 1.0,
-                        settings.DEFAULT_LATITUDE - 1.0,
-                        settings.DEFAULT_LONGITUDE + 1.0,
-                        settings.DEFAULT_LATITUDE + 1.0)
+        areas = []
+        for c in content_areas:
+            if hasattr(c, 'location'):
+                if getattr(c.location, 'borders', None):
+                    areas.append(c.location.borders)
+            elif getattr(c, 'borders', None):
+                areas.append(c.borders)
+        if points and areas:
+            mp = MultiPoint(points)
+            ap = MultiPolygon(areas)
+            return ap.simplify().union(mp).extent
+        elif len(points)>1:
+            mp = MultiPoint(points)
+            return mp.extent
+        elif points:
+            # if we have just one point expand the borders
+            # to avoid to much zoom
+            content = content_pois[0]
+        elif areas:
+            ap = MultiPolygon(areas)
+            return ap.extent
+        elif content and content.main_location:
+            return (content.main_location.x - 0.002,
+                    content.main_location.y - 0.002,
+                    content.main_location.x + 0.002,
+                    content.main_location.y + 0.002)
+        else:
+            # default bounding box to avoid google maps failures
+            return (settings.DEFAULT_LONGITUDE - 1.0,
+                    settings.DEFAULT_LATITUDE - 1.0,
+                    settings.DEFAULT_LONGITUDE + 1.0,
+                    settings.DEFAULT_LATITUDE + 1.0)
 
     def write_markers(context, contents, areas, show_area_centroid=False, show_main_image=0):
         xml = render_to_string('base/markers.xml',

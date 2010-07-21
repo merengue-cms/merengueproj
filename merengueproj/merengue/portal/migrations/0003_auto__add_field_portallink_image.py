@@ -137,7 +137,6 @@ class Migration(SchemaMigration):
         'places.location': {
             'Meta': {'object_name': 'Location'},
             'address': ('django.db.models.fields.CharField', [], {'max_length': '250', 'null': 'True', 'blank': 'True'}),
-            'borders': ('django.contrib.gis.db.models.fields.PolygonField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'main_location': ('django.contrib.gis.db.models.fields.PointField', [], {}),
             'postal_code': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'})
