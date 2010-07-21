@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-12 11:58+0200\n"
+"POT-Creation-Date: 2010-07-21 14:10+0200\n"
 "PO-Revision-Date: 2009-12-03 16:36\n"
 "Last-Translator: <lin@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,443 +16,529 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Translated-Using: django-transhette 0.1.SVN\n"
 
-#: admin.py:142 admin.py:147
-msgid "Username"
-msgstr "Usuario"
-
-#: admin.py:143 admin.py:148
-msgid "This value must contain only letters, @, numbers and underscores."
-msgstr "Este valor debe contener sólo letras, @, números y guiones bajos."
-
-#: admin.py:307 admin.py:599
+#: admin.py:331
 #, python-format
 msgid "%(name)s object with primary key %(key)r does not exist."
 msgstr "El objeto %(name)s con clave primaria %(key)r no existe"
 
-#: admin.py:344
+#: admin.py:368
 msgid "This field is required."
 msgstr "Este campo es obligatorio."
 
-#: admin.py:516
-#, python-format
-msgid "One or more %(fieldname)s in %(name)s: %(obj)s"
-msgstr "Uno o más %(fieldname)s en %(name)s: %(obj)s"
-
-#: admin.py:521
-#, python-format
-msgid "One or more %(fieldname)s in %(name)s:"
-msgstr "Uno o más %(fieldname)s en %(name)s:"
-
-#: admin.py:564 admin.py:621 admin.py:662
+#: admin.py:479
 msgid "Are you sure?"
 msgstr "¿Está seguro?"
 
-#: admin.py:614
-#, python-format
-msgid "The %(name)s \"%(obj)s\" was deleted successfully."
-msgstr "Se eliminó con éxito el %(name)s \"%(obj)s\"."
-
-#: admin.py:709
+#: admin.py:549
 msgid "Are you sure you want to set this items as draft?"
 msgstr "¿Está seguro de que quiere marcar este objeto como borrador?"
 
-#: admin.py:711
+#: admin.py:551
 msgid "Set as draft"
 msgstr "Marcado como borrador."
 
-#: admin.py:715
+#: admin.py:555
 msgid "Are you sure you want to set this items as pending?"
 msgstr "¿Está seguro de que quiere marcar este objeto como pendiente?"
 
-#: admin.py:717
+#: admin.py:557
 msgid "Set as pending"
 msgstr "Marcado como pendiente"
 
-#: admin.py:721
+#: admin.py:561
 msgid "Are you sure you want to set this items as published?"
 msgstr "¿Está seguro de que quiere marcar este objeto como publicado?"
 
-#: admin.py:723
+#: admin.py:563
 msgid "Set as published"
 msgstr "Marcado como publicado"
 
-#: admin.py:732
+#: admin.py:572
 #, python-format
 msgid "Changed to %s"
 msgstr "Cambiado a %s"
 
-#: admin.py:736
+#: admin.py:576
 #, python-format
 msgid "Successfully set %(number)d %(model_name)s as %(state)s."
 msgstr "%(number)d %(model_name)s marcado con éxito como %(state)s."
 
-#: admin.py:744
+#: admin.py:585
 #, python-format
 msgid "Change state of selected %(verbose_name_plural)s"
 msgstr "Cambiar estado de los %(verbose_name_plural)s seleccionados"
 
-#: admin.py:788
+#: admin.py:628
 msgid "Assigned owners"
 msgstr "Propietarios asignados"
 
-#: admin.py:807
+#: admin.py:647
 msgid "Are you sure you want to assign these owners to these contents?"
-msgstr "¿Está seguro de que quiere asignar estos propietarios a estos contenidos?"
+msgstr ""
+"¿Está seguro de que quiere asignar estos propietarios a estos contenidos?"
 
-#: admin.py:813
+#: admin.py:653
 msgid "Assign owners"
 msgstr "Propietarios asignados"
 
-#: admin.py:923
+#: admin.py:748
 msgid "Database error"
 msgstr "Error en la base de datos"
 
-#: admin.py:1158
-msgid "Click to Locate"
-msgstr "Haga click para localizar"
-
-#: admin.py:1161
-msgid "Location Maps"
-msgstr "Mapas de localización"
-
-#: admin.py:1234
-msgid "Address"
-msgstr "Dirección"
-
-#: adminsite.py:151
-msgid "Site administration"
-msgstr "Administración del sitio"
-
-#: adminsite.py:162
-msgid "Control Panel"
-msgstr "Panel de control"
-
-#: adminsite.py:301 templatetags/related_admin_tags.py:48
-msgid "Plugin administration"
-msgstr "Administración de plugins"
-
-#: forms.py:214 models.py:297
-msgid "owners"
-msgstr "propietarios"
-
-#: forms.py:348 forms.py:370
-msgid "Base contents"
-msgstr "Contenidos base"
-
-#: forms.py:354 forms.py:355 forms.py:373 forms.py:374
-msgid "Name"
-msgstr "Nombre"
-
-#: forms.py:356 forms.py:375
-msgid "which name"
-msgstr "con nombre"
-
-#: forms.py:390
-msgid "Base Content Quick Search Form"
-msgstr "Formulario de búsqueda rápida de contenido base"
-
-#: forms.py:394
-msgid "Base Content Advanced Search Form"
-msgstr "Formulario de búsqueda avanzada de contenido base"
-
-#: models.py:34
-msgid "Lowest"
-msgstr "Más bajo"
-
-#: models.py:35
-msgid "Very Low"
-msgstr "Muy bajo"
-
-#: models.py:36
-msgid "Low"
-msgstr "Bajo"
-
-#: models.py:37
-msgid "Medium"
-msgstr "Medio"
-
-#: models.py:38
-msgid "High"
-msgstr "Alto"
-
-#: models.py:39
-msgid "Very high"
-msgstr "Muy alto"
-
-#: models.py:40
-msgid "Super high"
-msgstr "Super alto"
-
-#: models.py:41
-msgid "Highest"
-msgstr "Más alto"
-
-#: models.py:46
-msgid "disabled"
-msgstr "No permitido"
-
-#: models.py:47
-msgid "allowed"
-msgstr "Permitido"
-
-#: models.py:52
-msgid "contact email"
-msgstr "email de contacto"
-
-#: models.py:54
-msgid "contact email2"
-msgstr "email2 de contacto"
-
-#: models.py:56
-msgid "url"
-msgstr "url"
-
-#: models.py:58
-msgid "phone"
-msgstr "teléfono"
-
-#: models.py:60
-msgid "phone2"
-msgstr "teléfono2"
-
-#: models.py:62
-msgid "fax"
-msgstr "fax"
-
-#: models.py:66 models.py:246
+#: admin.py:925 models.py:90 models.py:273
 msgid "contact info"
 msgstr "información de contacto"
 
-#: models.py:67
-msgid "contacts info"
-msgstr ""
+#: admin.py:1091
+msgid "Click to Locate"
+msgstr "Haga click para localizar"
 
-#: models.py:70
-msgid "Without contact email"
-msgstr "Sin email de contacto"
+#: admin.py:1094
+msgid "Location Maps"
+msgstr "Mapas de localización"
 
-#: models.py:75 models.py:96
-msgid "name"
-msgstr "nombre"
-
-#: models.py:76 models.py:97
-msgid "slug"
-msgstr "slug"
-
-#: models.py:80
-msgid "base category"
-msgstr "Categoría base"
-
-#: models.py:81
-msgid "base categories"
-msgstr "Categorías base"
-
-#: models.py:98 models.py:100
-msgid "description"
-msgstr "descripción"
-
-#: models.py:103
-msgid "Publication status"
-msgstr "Estado de la publicación"
-
-#: models.py:104
-msgid "Enter the current status"
-msgstr "Introduzca el nuevo estado"
-
-#: models.py:106
-msgid "main image"
-msgstr "imagen principal"
-
-#: models.py:118
-msgid "Without name"
-msgstr "Sin nombre"
-
-#: models.py:149
-msgid "map icon"
-msgstr "icono del mapa"
-
-#: models.py:151
-msgid "is autolocated"
-msgstr "es autolocalizado"
-
-#: models.py:153
+#: admin.py:1160 models.py:178
 msgid "location"
 msgstr "localización"
 
-#: models.py:190
+#: admin.py:1170
+msgid "Address"
+msgstr "Dirección"
+
+#: adminforms.py:28
+msgid "Select a .zip file:"
+msgstr ""
+
+#: adminforms.py:37
+msgid "Bad or too large .zip file"
+msgstr ""
+
+#: adminsite.py:100
+#, python-format
+msgid "%s administration"
+msgstr ""
+
+#: adminsite.py:228
+msgid "Settings saved successfully"
+msgstr ""
+
+#: adminsite.py:233
+msgid "Database created successfully"
+msgstr ""
+
+#: adminsite.py:266
+msgid "Site administration"
+msgstr "Administración del sitio"
+
+#: adminsite.py:277
+msgid "Control Panel"
+msgstr "Panel de control"
+
+#: adminsite.py:416 templatetags/related_admin_tags.py:71
+msgid "Plugin administration"
+msgstr "Administración de plugins"
+
+#: forms.py:352 models.py:324
+msgid "owners"
+msgstr "propietarios"
+
+#: forms.py:486 forms.py:508
+msgid "Base contents"
+msgstr "Contenidos base"
+
+#: forms.py:492 forms.py:493 forms.py:511 forms.py:512
+msgid "Name"
+msgstr "Nombre"
+
+#: forms.py:494 forms.py:513
+msgid "which name"
+msgstr "con nombre"
+
+#: forms.py:532
+msgid "Base Content Quick Search Form"
+msgstr "Formulario de búsqueda rápida de contenido base"
+
+#: forms.py:536
+msgid "Base Content Advanced Search Form"
+msgstr "Formulario de búsqueda avanzada de contenido base"
+
+#: models.py:58
+msgid "Lowest"
+msgstr "Más bajo"
+
+#: models.py:59
+msgid "Very Low"
+msgstr "Muy bajo"
+
+#: models.py:60
+msgid "Low"
+msgstr "Bajo"
+
+#: models.py:61
+msgid "Medium"
+msgstr "Medio"
+
+#: models.py:62
+msgid "High"
+msgstr "Alto"
+
+#: models.py:63
+msgid "Very high"
+msgstr "Muy alto"
+
+#: models.py:64
+msgid "Super high"
+msgstr "Super alto"
+
+#: models.py:65
+msgid "Highest"
+msgstr "Más alto"
+
+#: models.py:70
+msgid "disabled"
+msgstr "No permitido"
+
+#: models.py:71
+msgid "allowed"
+msgstr "Permitido"
+
+#: models.py:76
+msgid "contact email"
+msgstr "email de contacto"
+
+#: models.py:78
+msgid "contact email2"
+msgstr "email2 de contacto"
+
+#: models.py:80
+msgid "url"
+msgstr "url"
+
+#: models.py:82
+msgid "phone"
+msgstr "teléfono"
+
+#: models.py:84
+msgid "phone2"
+msgstr "teléfono2"
+
+#: models.py:86
+msgid "fax"
+msgstr "fax"
+
+#: models.py:91
+msgid "contacts info"
+msgstr ""
+
+#: models.py:94
+msgid "Without contact email"
+msgstr "Sin email de contacto"
+
+#: models.py:99 models.py:119
+msgid "name"
+msgstr "nombre"
+
+#: models.py:100 models.py:120
+msgid "slug"
+msgstr "slug"
+
+#: models.py:103
+msgid "base category"
+msgstr "Categoría base"
+
+#: models.py:104
+msgid "base categories"
+msgstr "Categorías base"
+
+#: models.py:121 models.py:123
+msgid "description"
+msgstr "descripción"
+
+#: models.py:126
+msgid "Publication status"
+msgstr "Estado de la publicación"
+
+#: models.py:127
+msgid "Enter the current status"
+msgstr "Introduzca el nuevo estado"
+
+#: models.py:129
+msgid "main image"
+msgstr "imagen principal"
+
+#: models.py:141
+msgid "Without name"
+msgstr "Sin nombre"
+
+#: models.py:176
+msgid "map icon"
+msgstr "icono del mapa"
+
+#: models.py:215
 msgid "Without location"
 msgstr "Sin localización"
 
-#: models.py:212
+#: models.py:237
 msgid "Thumbnail"
 msgstr "Imagen en miniatura"
 
-#: models.py:249
+#: models.py:276
 msgid "related items"
 msgstr "artículos relacionados"
 
-#: models.py:251
+#: models.py:278
 msgid "creation date"
 msgstr "fecha de creación"
 
-#: models.py:254 models.py:258
+#: models.py:281 models.py:285
 msgid "modification date"
 msgstr "fecha de modificación"
 
-#: models.py:266
+#: models.py:293
 msgid "Tags"
 msgstr "Etiquetas"
 
-#: models.py:269
+#: models.py:296
 msgid "meta description"
 msgstr "metadescripción"
 
-#: models.py:271
+#: models.py:298
 msgid "comments"
 msgstr "comentarios"
 
-#: models.py:272
+#: models.py:299
 msgid "Is that content commentable"
 msgstr ""
 
-#: models.py:277 models.py:433
+#: models.py:304 models.py:442
 msgid "multimedia"
 msgstr ""
 
-#: models.py:286
+#: models.py:313
 msgid "class name"
 msgstr "nombre de la clase"
 
-#: models.py:291
+#: models.py:318
 msgid "rank value"
 msgstr "valor del rango"
 
-#: models.py:304
+#: models.py:331
 msgid "base content"
 msgstr "contenido base"
 
-#: models.py:305
+#: models.py:332
 msgid "base contents"
 msgstr "contenidos base"
 
-#: models.py:431
+#: models.py:440
 msgid "content"
 msgstr "contenido"
 
-#: models.py:435
+#: models.py:444
 msgid "is featured"
 msgstr ""
 
-#: models.py:438
+#: models.py:447
 msgid "Order"
 msgstr "Orden"
 
-#: models.py:442
+#: models.py:451
 msgid "multimedia relation"
 msgstr "relación multimedia"
 
-#: models.py:443
+#: models.py:452
 msgid "multimedia relations"
 msgstr "relaciones multimedia"
 
-#: models.py:469
+#: models.py:478
 msgid "Human Order"
 msgstr "Orden humano"
 
-#: views.py:17
+#: views.py:35
 #, python-format
 msgid "%(result_count)d %(msg_results)s found"
 msgstr "%(result_count)d %(msg_results)s encontrado"
 
-#: views.py:18
+#: views.py:36
 msgid "results"
 msgstr "resultados"
 
-#: widgets.py:134
-msgid "View on map"
-msgstr "Ver en el mapa"
-
-#: widgets.py:223
+#: widgets.py:201
 msgid "Date:"
 msgstr "Fecha"
 
-#: widgets.py:223
+#: widgets.py:201
 msgid "Time:"
 msgstr "Hora"
 
-#: widgets.py:260
+#: widgets.py:222
+msgid "Remove"
+msgstr ""
+
+#: widgets.py:243
 msgid "Select content"
 msgstr "Seleccionar contenido"
 
-#: templates/404.html:4 templates/404.html.py:12
+#: widgets.py:273
+msgid "View on map"
+msgstr "Ver en el mapa"
+
+#: templates/403.html:5 templates/403.html.py:7
+msgid "Permission denied"
+msgstr ""
+
+#: templates/403.html:10
+msgid "403 Error - Forbidden. Sorry but it seems that you are not allowed."
+msgstr ""
+
+#: templates/403.html:16
+msgid "You tried to access a document for which you don't have privileges."
+msgstr ""
+
+#: templates/403.html:17
+msgid "We recommend you to return to <a href=\"/\">home</a>"
+msgstr ""
+
+#: templates/404.html:5 templates/404.html.py:7
 msgid "Page not found"
 msgstr "Página no encontrada"
 
-#: templates/404.html:17
+#: templates/404.html:10
+msgid "404 Error - Sorry we can not find the page you are looking for."
+msgstr ""
+
+#: templates/404.html:16
 msgid ""
-"404 Error - The Page you are looking for is no longer available at this URL."
-msgstr "Error 404 - La página que estaba buscando no está disponible en esta URL"
+"You may have mistyped the URL or the page may have been removed from our "
+"system."
+msgstr ""
 
-#: templates/404.html:20
-msgid "Probably you found a bad link or mistyped the URL. We recommend you to"
-msgstr "Probablemente haya encontrado un vínculo incorrecto o haya escrito mal la dirección. Le recomendamos"
+#: templates/404.html:17
+msgid "We recommend you to return to the <a href=\"/\">home</a>"
+msgstr ""
 
-#: templates/404.html:21 templates/500.html:130
-msgid "return to <a href=\"/\">home</a>"
-msgstr "regresar a <a href=\"/\">home</a>"
-
-#: templates/500.html:16 templates/500.html.py:121
+#: templates/500.html:20
 msgid "Server Error"
 msgstr "Error del servidor"
 
-#: templates/500.html:126
-msgid ""
-"500 Error - The server encountered an internal error or misconfiguration and "
-"was unable to complete your request."
-msgstr "Error 500 - El servidor ha encontrado un error interno o no está configurado y "
-"no ha sido posible completar su petición"
+#: templates/error_base.html:13
+msgid "Ups!"
+msgstr ""
 
-#: templates/500.html:129
-msgid "We recommend you to"
-msgstr "Le recomendamos"
+#: templates/inc.breadcrumbs.html:2 templatetags/related_admin_tags.py:67
+msgid "Home"
+msgstr ""
 
 #: templates/base/content_admin_action.html:4
+#: templates/base/content_admin_action.html:5
 msgid "Admin this content"
 msgstr "Administrar este contenido"
+
+#: templates/base/content_list.html:8
+msgid "Content listing"
+msgstr ""
+
+#: templates/base/content_related_items.html:4
+msgid "Related contents"
+msgstr ""
+
+#: templates/base/form_admin_django.html:3
+msgid "Please correct the errors below."
+msgstr ""
+
+#: templates/base/google_map.html:3
+msgid "Map"
+msgstr ""
+
+#: templates/base/google_map.html:8
+msgid "How to get there?"
+msgstr ""
+
+#: templates/base/google_map.html:10
+msgid "Origin address"
+msgstr ""
 
 #: templates/base/google_map.html:12
 msgid "See route"
 msgstr "Ver ruta"
 
-#: templates/base/inc.footer.html:7
+#: templates/base/google_map.html:20
+msgid "Calculate travel route"
+msgstr ""
+
+#: templates/base/inc.footer.html:7 templates/base/inc.footer.html.py:21
 msgid "Merengue powered"
 msgstr "Merengue powered"
+
+#: templates/base/inc.footer.html:23
+msgid "General conditions"
+msgstr ""
 
 #: templates/base/inc.languagetools.html:6
 #: templates/base/inc.languagetools.html:7
 msgid "Change language"
 msgstr "Cambiar lenguaje"
 
-#: templatetags/content_filters.py:13
+#: templatetags/content_filters.py:30
 msgid "yes,no,maybe"
 msgstr "si,no,quizás"
 
-#: templatetags/map_tags.py:315
+#: templatetags/map_tags.py:319
 msgid "What is there nearby?"
 msgstr "¿Qué hay cerca?"
 
-#: templatetags/related_admin_tags.py:44
-msgid "Home"
-msgstr ""
-
-#: templatetags/related_admin_tags.py:51 templatetags/related_admin_tags.py:54
+#: templatetags/related_admin_tags.py:74 templatetags/related_admin_tags.py:77
 msgid "opts"
 msgstr ""
 
-#: templatetags/related_admin_tags.py:62 templatetags/related_admin_tags.py:79
+#: templatetags/related_admin_tags.py:85
+#: templatetags/related_admin_tags.py:102
 msgid "Add"
 msgstr "Añadir"
 
-#: templatetags/related_admin_tags.py:71
+#: templatetags/related_admin_tags.py:94
 msgid "site"
 msgstr "sitio"
+
+#~ msgid "Username"
+#~ msgstr "Usuario"
+
+#~ msgid "This value must contain only letters, @, numbers and underscores."
+#~ msgstr "Este valor debe contener sólo letras, @, números y guiones bajos."
+
+#~ msgid "One or more %(fieldname)s in %(name)s: %(obj)s"
+#~ msgstr "Uno o más %(fieldname)s en %(name)s: %(obj)s"
+
+#~ msgid "One or more %(fieldname)s in %(name)s:"
+#~ msgstr "Uno o más %(fieldname)s en %(name)s:"
+
+#~ msgid "The %(name)s \"%(obj)s\" was deleted successfully."
+#~ msgstr "Se eliminó con éxito el %(name)s \"%(obj)s\"."
+
+#~ msgid "is autolocated"
+#~ msgstr "es autolocalizado"
+
+#~ msgid ""
+#~ "404 Error - The Page you are looking for is no longer available at this "
+#~ "URL."
+#~ msgstr ""
+#~ "Error 404 - La página que estaba buscando no está disponible en esta URL"
+
+#~ msgid ""
+#~ "Probably you found a bad link or mistyped the URL. We recommend you to"
+#~ msgstr ""
+#~ "Probablemente haya encontrado un vínculo incorrecto o haya escrito mal la "
+#~ "dirección. Le recomendamos"
+
+#~ msgid "return to <a href=\"/\">home</a>"
+#~ msgstr "regresar a <a href=\"/\">home</a>"
+
+#~ msgid ""
+#~ "500 Error - The server encountered an internal error or misconfiguration "
+#~ "and was unable to complete your request."
+#~ msgstr ""
+#~ "Error 500 - El servidor ha encontrado un error interno o no está "
+#~ "configurado y no ha sido posible completar su petición"
+
+#~ msgid "We recommend you to"
+#~ msgstr "Le recomendamos"
