@@ -5,7 +5,7 @@
 Merengue documentation
 ======================
 
-.. rubric:: Everything you need to know about Merengue.
+.. rubric:: Everything you need to know about Merengue CMS.
 
 
 Introduction
