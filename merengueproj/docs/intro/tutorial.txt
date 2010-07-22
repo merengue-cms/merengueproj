@@ -640,6 +640,63 @@ news items, etc. Let's check it:
     >>> BaseContent.objects.all().values('class_name', 'name_en')
     [{'class_name': u'feature', 'name_en': u'Skinnable'}, {'class_name': u'document', 'name_en': u'Welcome to Merengue'}]
 
-To enable this site in admin...
+To enable these models in Merengue admin site you need define a plugin admin,
+implementing ``get_model_admins`` method in ``config.py``:
+
+.. code-block:: python
+
+    from plugins.features.admin import FeatureAdmin, FeatureCategoryAdmin
+    from plugins.features.models import Feature, FeatureCategory
+
+    class PluginConfig(Plugin):
+        # stuff ...
+
+        @classmethod
+        def get_model_admins(cls):
+            return [(Feature, FeatureAdmin),
+                    (FeatureCategory, FeatureCategoryAdmin)]
+
+Both ``FeatureAdmin`` and ``FeatureCategoryAdmin`` are `Django model admins`_.
+
+.. _`Django model admins`: http://docs.djangoproject.com/en/1.2/ref/contrib/admin/#modeladmin-objects
+
+Of course, as you see, these ``ModelAdmin`` classes are defined in ``plugins.features.admin``
+module. This implies creates a ``admin.py`` file inside plugin with this content:
+
+.. code-block:: python
+
+    from merengue.base.admin import BaseContentAdmin, BaseCategoryAdmin
+    from plugins.features.models import Feature, FeatureCategory
+
+    class FeatureCategoryAdmin(BaseCategoryAdmin):
+        pass
+
+    class FeatureAdmin(BaseContentAdmin):
+        pass
+
+Both ``BaseCategoryAdmin`` and ``BaseContentAdmin`` are Django ``ModelAdmin``
+subclasses, but with extra features. So, you could make use of usual options,
+but also you have others. See `merengue.base.admin`_ module for more
+information.
+
+.. _`merengue.base.admin`: http://dev.merengueproject.org/browser/trunk/merengueproj/merengue/base/admin.py
+
+Now, if you access to admin site, you will see a ``Features`` plugin admin site:
+
+.. image:: _images/merengueproject_admin_with_features.png
+
+If you click, you will access both ``FeatureAdmin`` and ``FeatureCategoryAdmin``:
+
+.. image:: _images/merengueproject_features_admin.png
+
+Now you can add features in admin site.
+
+Rendering new blocks
+--------------------
+
+(( to be completed ))
+
+Implementing plugin views
+-------------------------
 
 (( to be completed ))
