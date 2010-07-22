@@ -58,7 +58,7 @@ copyright = 'Yaco Sistemas and contributors'
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = '0.2'
+version = '0.5'
 # The full version, including alpha/beta/rc tags.
 release = version
 # The next version to be released
