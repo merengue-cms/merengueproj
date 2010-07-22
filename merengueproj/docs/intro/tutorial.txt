@@ -494,9 +494,7 @@ The new template will be this (included comments to explain new fragments):
     {% block contentdescription %}
       {# put image with description #}
       <div class="contentDescriptionIndex">
-        <a id="player" toptions="width=515, height=505, type=flash, title=Demo de Merengue, effect=fade" href="">
-          <img alt="Demo de Merengue" src="{{ THEME_MEDIA_URL }}img/preview_merengue.jpg" />
-        </a>
+        <img alt="Merengue demo" src="{{ THEME_MEDIA_URL }}img/preview_merengue.jpg" />
         {{ content.description|safe }}
       </div>
     {% endblock %}
