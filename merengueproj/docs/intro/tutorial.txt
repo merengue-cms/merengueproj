@@ -7,6 +7,7 @@ Merengue tutorial
 Throughout this tutorial, we will:
 
     * Develop a Merengue project.
+    * Develop a Merengue plugin.
     * Learn a bit to use Merengue from manager point of view.
 
 Creating a project
