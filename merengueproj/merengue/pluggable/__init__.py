@@ -26,6 +26,7 @@ from merengue.pluggable.utils import get_plugin_config, validate_plugin
 from merengue.registry import register, is_registered
 from merengue.registry.items import RegistrableItem
 
+
 class Plugin(RegistrableItem):
     model = RegisteredPlugin
     url_prefixes = ()
@@ -107,11 +108,15 @@ def active_default_plugins(*args, **kwargs):
             plugin.active = True
             from merengue.section.models import Menu
             name_attr = get_fallback_fieldname('name')
-            attrs = {name_attr:'Portal menu', 'slug': 'portal_menu'}
-            portal_menu, created = Menu.objects.get_or_create(**attrs)
-            for lang_code, lang_text in settings.LANGUAGES:
-                setattr(portal_menu, 'name_%s' % lang_code, ugettext('portal menu'))
-            portal_menu.save()
+            attrs = {name_attr: 'Portal menu', 'slug': settings.MENU_PORTAL_SLUG}
+            try:
+                portal_menu = Menu.objects.get(slug=settings.MENU_PORTAL_SLUG)
+            except Menu.DoesNotExist:
+                # creating portal menu if does not exist
+                portal_menu = Menu.objects.create(**attrs)
+                for lang_code, lang_text in settings.LANGUAGES:
+                    setattr(portal_menu, 'name_%s' % lang_code, ugettext('portal menu'))
+                portal_menu.save()
             plugin.save()
 
 
