@@ -32,7 +32,7 @@ Example use case
 *Use case is*: imagine we wants to implement a plugin registering system, with
 plugins configurable by developers. This is the current Merengue `pluggable module`_.
 
-.. _`pluggable module`: https://dev.merengueproject.org/browser/trunk/merengueproj/merengue/pluggable/__init__.py
+.. _`pluggable module`: http://dev.merengueproject.org/browser/trunk/merengueproj/merengue/pluggable/__init__.py
 
 Defining a registrable and configurable component
 -------------------------------------------------
