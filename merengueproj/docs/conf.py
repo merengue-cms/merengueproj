@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
 #
 # This file is part of Merengue.
@@ -14,11 +15,8 @@
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
-
-# -*- coding: utf-8 -*-
 #
-# Django documentation build configuration file, created by
-# sphinx-quickstart on Thu Mar 27 09:06:53 2008.
+# Merengue documentation build configuration file, based on Django one
 #
 # This file is execfile()d with the current directory set to its containing dir.
 #
@@ -39,7 +37,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "_ext"))
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ["djangodocs"]
+extensions = ["merenguedocs"]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -114,7 +112,7 @@ html_last_updated_fmt = '%b %d, %Y'
 html_use_smartypants = True
 
 # HTML translator class for the builder
-html_translator_class = "djangodocs.DjangoHTMLTranslator"
+html_translator_class = "merenguedocs.DjangoHTMLTranslator"
 
 # Content template for the index page.
 #html_index = ''

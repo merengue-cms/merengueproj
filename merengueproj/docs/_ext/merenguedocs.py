@@ -14,9 +14,11 @@
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
+# 
+# Taked from djangodocs.py file
 
 """
-Sphinx plugins for Django documentation.
+Sphinx plugins for Merengue documentation.
 """
 
 import docutils.nodes
@@ -164,9 +166,9 @@ class DjangoHTMLTranslator(sphinx_htmlwriter.SmartyPantsHTMLTranslator):
     # that work and I think it'll require Sphinx 0.5 anyway.
     #
     version_text = {
-        'deprecated':       'Deprecated in Django %s',
-        'versionchanged':   'Changed in Django %s',
-        'versionadded':     'New in Django %s',
+        'deprecated':       'Deprecated in Merengue %s',
+        'versionchanged':   'Changed in Merengue %s',
+        'versionadded':     'New in Merengue %s',
     }
     
     def visit_versionmodified(self, node):
