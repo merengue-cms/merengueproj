@@ -210,7 +210,7 @@ Merengue uses `South`_ to implement schema evolution.
 .. _django-rosetta: http://code.google.com/p/django-rosetta/
 .. _django-inlinetrans: http://code.google.com/p/django-inlinetrans/
 .. _django-transmeta: http://code.google.com/p/django-transmeta/
-.. _Django translation: http://docs.djangoproject.com/en/1.2/topics/i18n/#topics-i18n
+.. _Django translation: http://docs.djangoproject.com/en/1.1/topics/i18n/#topics-i18n
 .. _South: http://south.aeracode.org/
 
 Philosophy

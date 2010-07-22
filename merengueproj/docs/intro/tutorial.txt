@@ -76,7 +76,7 @@ First of all you have to define your database connection (see `database setup`_
 in Django tutorial). Let's suppose you will use SQLite (you need `pysqlite`_ installed)
 
 .. _pysqlite: http://trac.edgewall.org/wiki/PySqlite
-.. _database setup: http://docs.djangoproject.com/en/1.2/intro/tutorial01/#database-setup
+.. _database setup: http://docs.djangoproject.com/en/1.1/intro/tutorial01/#database-setup
 
 .. code-block:: python
 
@@ -506,8 +506,142 @@ The new template will be this (included comments to explain new fragments):
     {% endblock %}
 
 
+Developing a plugin
+===================
+
+Merengue *plugins* are installable components for adding some functionality or
+changing existing Merengue features. See :ref:`Plugins documentation <topics-plugins-overview>`
+for more information.
+
+In this tutorial, we will implement a ``features`` plugin to:
+
+ * Add two new content types (Feature and FeatureCategory) that represent Merengue features with its categories.
+ * Implement a features blocks to show some features in home page.
+ * Implement a listing view for all features.
 
 Creating a plugin
-=================
+-----------------
+
+A plugin is a Django application with some restrictions:
+
+ * It have to be located in the project ``plugins`` directory.
+ * It need to have a plugin configuration file, named ``config.py`` with a ``PluginConfig`` class inside.
+
+So, to build the dummiest plugin possible we have to do:
+
+.. code-block:: bash
+
+    $ cd merengueprojectorg/plugins
+    $ mkdir features
+    $ touch features/__init__.py
+    $ touch features/models.py
+    $ touch features/config.py
+
+And write next code in ``plugins/features/config.py`` (plugin configuration
+file):
+
+.. code-block:: python
+
+    from merengue.pluggable import Plugin
+
+    class PluginConfig(Plugin):
+        name = 'Features'
+        description = 'Features Display Plugin'
+        version = '0.0.1'
+
+This fragment only set the plugin metadata, without changing functionality. Our
+``features`` plugin is for now a dummy plugin.
+
+With this data Merengue should recognize this python module as plugin:
+
+.. image:: _images/merengueprojectorg_with_features_plugin.png
+
+Creating plugin models
+----------------------
+
+Before installing plugin, we should create its models:
+
+.. code-block:: python
+
+    from django.db import models
+    from django.utils.translation import ugettext_lazy as _
+
+    from merengue.base.models import BaseContent, BaseCategory
+    from merengue.base.managers import BaseContentManager
+
+    class FeatureCategory(BaseCategory):
+        pass
+
+    class Feature(BaseContent):
+        icon = models.ImageField(verbose_name=_('icon'), upload_to='feature_icons',
+                                 null=True, blank=True)
+        show_in_home = models.BooleanField(verbose_name=_('show in home'),
+                                           null=False)
+        categories = models.ManyToManyField(FeatureCategory,
+                                            verbose_name=_('category'),
+                                            blank=True, null=True, db_index=True)
+
+        objects = BaseContentManager()
+
+``BaseCategory`` is the base model for all categorizations, and ``BaseContent``
+will be a non abstract model (see `Django model inheritance`_) for all managed
+contents. If your model inherits from ``BaseContent`` it will have all Merengue
+features referred to content management. ``BaseContentManager`` is a special
+manager with a lot of query features, like getting contents by workflow status.
+
+.. _`Django model inheritance`: http://docs.djangoproject.com/en/1.1/topics/db/models/#id5
+
+These models will be created automatically when you install the plugin in
+admin site. Please, do it. After that, let's check the tables created in our sqlite3
+database:
+
+.. code-block:: bash
+
+    $ python manage.py dbshell
+    sqlite> .tables feature
+    features_feature             features_featurecategory   
+    features_feature_categories
+
+We can know play with features and feature categories using the Django ORM as follows:
+
+.. code-block:: bash
+
+   $ python manage.py shell
+
+.. code-block:: python
+
+    >>> from plugins.features.models import Feature, FeatureCategory
+    >>> category = FeatureCategory.objects.create(name_en='Look and feel')
+    >>> feature = Feature.objects.create(name_en='Skinnable')
+    >>> feature.categories.add(category)
+    >>> Feature.objects.published()  # testing workflow
+    []
+    >>> feature.status
+    u'draft'
+    >>> feature.status = 'published'
+    >>> feature.save()
+    >>> Feature.objects.published()
+    [<Feature: Skinnable>]
+    >>> feature.name_es = 'Aspecto cambiable' # testing model translation
+    >>> feature.save()
+    >>> feature.name # 'name' attribute will retrieve name_en
+    'Skinnable'
+    >>> from django.utils.translation import activate
+    >>> activate('es')
+    >>> feature.name # 'name' attribute now get 'name_es'
+    'Aspecto cambiable'
+
+The features, as we said previously, will be managed contents, like documents,
+news items, etc. Let's check it:
+
+.. code-block:: python
+
+    >>> from merengue.base.models import BaseContent
+    >>> BaseContent.objects.all()
+    [<BaseContent: Skinnable>, <BaseContent: Welcome to Merengue>]
+    >>> BaseContent.objects.all().values('class_name', 'name_en')
+    [{'class_name': u'feature', 'name_en': u'Skinnable'}, {'class_name': u'document', 'name_en': u'Welcome to Merengue'}]
+
+To enable this site in admin...
 
 (( to be completed ))
