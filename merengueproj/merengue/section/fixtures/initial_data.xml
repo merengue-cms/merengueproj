@@ -15,13 +15,13 @@
         <field to="auth.permission" name="user_permissions" rel="ManyToManyRel"></field>
     </object>
     <object pk="1" model="base.basecontent">
-        <field type="CharField" name="name_es"> Welcome to Merengue </field>
-        <field type="CharField" name="name_en"> Welcome to Merengue </field>
-        <field type="CharField" name="name_fr"> Welcome to Merengue </field>
-        <field type="SlugField" name="slug"> welcome </field>
-        <field type="TextField" name="plain_description_fr"> </field>
-        <field type="TextField" name="plain_description_es"> </field>
-        <field type="TextField" name="plain_description_en"> </field>
+        <field type="CharField" name="name_es">Bienvenido a Merengue</field>
+        <field type="CharField" name="name_en">Welcome to Merengue</field>
+        <field type="CharField" name="name_fr">Bienvenue a Merengue</field>
+        <field type="SlugField" name="slug">welcome</field>
+        <field type="TextField" name="plain_description_fr"></field>
+        <field type="TextField" name="plain_description_es"></field>
+        <field type="TextField" name="plain_description_en"></field>
         <field type="TextField" name="description_fr">
         Merengue is a full-featured CMS useful for creating websites without writing a single line of code or customizing and extending with any of the plethora of existing Django applications.
         </field>
@@ -47,9 +47,9 @@
         <field to="auth.user" name="owners" rel="ManyToManyRel"> </field>
     </object>
     <object pk="2" model="section.menu">
-        <field type="CharField" name="name_es">Main menu of section</field>
+        <field type="CharField" name="name_es">Menu principal de sección</field>
         <field type="CharField" name="name_en">Main menu of section</field>
-        <field type="CharField" name="name_fr">Main menu of section</field>
+        <field type="CharField" name="name_fr">Menu principal de l'zone</field>
         <field type="SlugField" name="slug">main-menu-of-section</field>
         <field to="section.menu" name="parent" rel="ManyToOneRel"><None></None></field>
         <field type="CharField" name="url"><None></None></field>
@@ -61,7 +61,7 @@
     <object pk="1" model="section.basesection">
         <field type="CharField" name="name_es">Sección de prueba</field>
         <field type="CharField" name="name_en">Test section</field>
-        <field type="CharField" name="name_fr"><None></None></field>
+        <field type="CharField" name="name_fr">Zone d'essai</field>
         <field type="SlugField" name="slug">test-section</field>
         <field type="TextField" name="plain_description_es"><None></None></field>
         <field type="TextField" name="plain_description_en"><None></None></field>
