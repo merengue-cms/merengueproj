@@ -88,19 +88,23 @@ ul {
   margin-top: 15px;
   margin-right: 10px;
 }
-#language-tools  ul li a {
+#language-tools ul li a {
   display: block;
   width: 30px;
   height: 24px;
   float: left;
 }
 
-#language-tools  ul li a#es {
+#language-tools ul li a#es {
   background: transparent url(/media/themes/merengue/img/flag-es.gif) no-repeat left top;
 }
 
-#language-tools  ul li a#en {
+#language-tools ul li a#en {
   background: transparent url(/media/themes/merengue/img/flag-en.gif) no-repeat left top;
+}
+
+#language-tools ul li a#fr {
+  background: transparent url(/media/themes/merengue/img/flag-fr.gif) no-repeat left top;
 }
 
 #language-tools  ul li a:hover, 
