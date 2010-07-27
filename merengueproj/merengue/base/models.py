@@ -26,6 +26,7 @@ if settings.USE_GIS:
 else:
     from django.db import models
 from django.contrib.contenttypes.models import ContentType
+from django.core.cache import cache as django_cache
 from django.core.management import call_command
 from django.core.exceptions import ObjectDoesNotExist, SuspiciousOperation
 from django.db.models import signals, permalink
@@ -42,6 +43,7 @@ from django.contrib.auth.models import User
 
 from cmsutils.db.fields import AutoSlugField
 from cmsutils.signals import post_rebuild_db
+from johnny import cache
 if settings.USE_GIS:
     from south.introspection_plugins import geodjango
 from south.modelsinspector import add_introspection_rules
@@ -666,6 +668,9 @@ def handle_pre_migrate(sender, **kwargs):
     global post_save_receivers
     post_save_receivers = post_save.receivers
     post_save.receivers = []
+    # Unpatch cache backend to disable johnny cache. Johny does weird things. See #852
+    query_cache_backend = cache.get_backend()(django_cache)
+    query_cache_backend.unpatch()
 
 
 def handle_post_migrate(sender, **kwargs):
