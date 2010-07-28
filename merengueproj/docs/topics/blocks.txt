@@ -4,8 +4,18 @@
 Blocks
 ======
 
-Plugin tree
------------
+This section is about blocks in Merengue. Merengue blocks are components
+which can be located in several places and render a fragment with information
+(usually HTML). Blocks are defined inside plugins and registered when plugin
+is activated.
+
+The place of every block can be defined in admin site and you can even
+using the Merengue `block reordering interface`_ to change blocks location.
+
+.. _`block reordering interface`: http://www.merengueproject.org/features/visual-blocks-management/
+
+Plugin tree with blocks
+-----------------------
 
 We know the conventional plugin tree (see :ref:`plugin development reference
 <topics-plugins-development>`). Here we emphasize the files on which we are
