@@ -517,6 +517,13 @@ In this tutorial, we will implement a ``features`` plugin to:
  * Implement a features blocks to show some features in home page.
  * Implement a listing view for all features.
 
+.. admonition:: Note
+
+    If you want to inspect the finished ``features`` plugin, you can see
+    `features plugin code`_ in our Trac system.
+
+.. _`features plugin code`: http://dev.merengueproject.org/browser/sites/merengueprojectorg/plugins/features
+
 Creating a plugin
 -----------------
 
@@ -694,7 +701,121 @@ Now you can add features in admin site.
 Rendering new blocks
 --------------------
 
-(( to be completed ))
+This section is about creating new blocks with Merengue. The blocks in Merengue
+can be placed in several places and renders a fragment with information. See
+:ref:`Merengue blocks <topics-blocks>` for more information about blocks.
+
+We want to implement a ``features`` block to render some Merengue features (from
+``Feature`` model). This fragment is shown in next screenshot:
+
+.. image:: _images/merengueprojectorg_features_block.png
+
+To create a Merengue block you have to extends from ``merengue.block.blocks.Block``
+class and implement the ``render`` class method. You can see a possible ``features``
+block implementation:
+
+.. code-block:: python
+
+    from merengue.block.blocks import Block
+    from plugins.features.models import Feature
+
+    class FeatureBlock(Block):
+        name = 'mainfeatures'
+        default_place = 'homepage'
+
+        @classmethod
+        def render(cls, request, place, context):
+            features_list = Feature.objects.published().filter(show_in_home=True)
+            return cls.render_block(request, template_name='features/block_mainfeatures.html',
+                                    block_title='Some features',
+                                    context={'features_list': features_list})
+
+Usually blocks code live in a ``blocks.py`` file into your plugin directory.
+We will explain main lines:
+
+* ``name`` should be a name without spaces and special characters, and will identify block.
+* ``default_place`` is the default place to locate the block when you activate this. You can change this location in admin later.
+* ``render`` is a callback function that will be called when Merengue is rendering blocks in location defined for that block.
+
+Now only remains to create the ``features/block_mainfeatures.html`` template:
+
+.. code: bash
+
+    $ cd plugins/features
+    $ mkdir -p templates/features
+    $ touch templates/features/block_mainfeatures.html
+
+The content of this template was as follows:
+
+.. code-block:: html+django
+
+    {% extends "block.html" %}
+
+    {% block blocktitle %}
+      <h1>Merengue main features</h1>
+    {% endblock %}
+
+    {% block blockbody %}
+    <div id="features">
+      {% for feature in features_list %}
+        <div>
+          {% if feature.icon %}
+            <img src="{{ feature.icon.url }}"/>
+          {% endif %}
+          <h2 title="{{ feature }}"><a href="{{ feature.get_absolute_url }}">{{ feature }}</a></h2>
+          <div class="description">
+            {{ feature.description|safe|truncatewords_html:20 }}
+          </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endblock %}
+
+This template is self-explanatory. It is important to note that there is a base
+template for blocks (named ``block.html``) that should be used in your blocks
+in order to maintain similar look&feel, like it is done in the previous example.
+
+Now the ``features`` block is finished. Now you need to register it in the
+plugin to say Merengue that this block exists. This is done in the plugin
+config:
+
+.. code-block:: python
+
+    from plugins.features.blocks import FeatureBlock
+
+    class PluginConfig(Plugin):
+        # old stuff ...
+
+        @classmethod
+        def get_blocks(cls):
+            return [FeatureBlock]
+
+As ``features`` plugin is already installed and activated, the new block
+is not registered unless we deactivate and reactivate plugin again in admin.
+
+If you look in admin blocks after reactivate block, you will see a new block
+registered:
+
+.. image:: _images/merengueprojectorg_blocks_admin.png
+
+As you see, the block is placed by default in ``homepage`` place, because we
+defined this in our block. But you can change location if you want, and even
+using the Merengue `block reordering interface`_.
+
+.. _`block reordering interface`: http://www.merengueproject.org/features/visual-blocks-management/
+
+Now, you can create one or two features, adding text and also an icon if you want.
+You need to publish those features and mark the *show in home* flag in order to
+see them in our ``features`` block. After that, if you go to home page you will
+see something like this:
+
+.. image:: _images/merengueprojectorg_after_finishing_features_block.png
+
+.. admonition:: Note
+
+    You may note that block *Merengue main features* title is not shown in
+    homepage. This is because is hidden using CSS in ``merengueprojectorg``
+    theme.
 
 Implementing plugin views
 -------------------------

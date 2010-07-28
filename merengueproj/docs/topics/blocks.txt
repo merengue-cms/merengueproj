@@ -32,21 +32,18 @@ This is a ``blocks.py`` file code fragment:
 
 .. code-block:: python
 
-    from django.utils.translation import ugettext as _
-
-    from merengue.block.blocks import Block, ContentBlock
+    from merengue.block.blocks import Block
     from plugins.news.views import get_news
-
 
     class LatestNewsBlock(Block):
         name = 'latestnews'
         default_place = 'leftsidebar'
 
         @classmethod
-        def render(cls, request, place):
+        def render(cls, request, place, context):
             news_list = get_news(5)
             return cls.render_block(request, template_name='news/block_latest.html',
-                                    block_title=_('Latest news'),
+                                    block_title='Latest news',
                                     context={'news_list': news_list})
 
 * ``name`` is the block name.
@@ -57,11 +54,52 @@ This is a ``blocks.py`` file code fragment:
 * ``block_title`` is the block title.
 * ``context`` is a dictionary of values to render the template with.
 
+About block rendering
+---------------------
 
-How to render the block
------------------------
+In a Merengue block, ``render`` method is a callback function which will be
+called when Merengue is rendering blocks in location defined for that block.
 
-Now we must create a template for our block inside ``block_latest.html``:
+The block rendering is done in some base templates. For example, in
+`base/inc.leftsidebar.html`_ template, the blocks placed at ``leftsidebar`` are
+rendered, using this ``render_blocks`` templatetags as follows:
+
+.. code-block:: html+django
+
+  {% load block_tags %}
+
+  {% block leftsidebarblocks %}
+    {% render_blocks "leftsidebar" %}
+    {# more stuff #}
+  {% endblock %}
+
+This ``render_blocks`` templatetags will cause calling to ``render`` method
+with ``leftsidebar`` passed in ``place`` parameter. Also, request and context
+are passed by param, to be used in ``render`` method, if you want. Next
+example is self-explanatory:
+
+.. code-block:: python
+
+    from merengue.block.blocks import Block
+
+    class WhereIAmBlock(Block):
+        name = 'whereiam'
+        default_place = 'leftsidebar'
+
+        @classmethod
+        def render(cls, request, place, context):
+            if place in ['leftsidebar', 'rightsidebar']:
+                return 'I am in a side column'
+            else:
+                return 'I am in %s place' % place
+
+.. _`base/inc.leftsidebar.html`: http://dev.merengueproject.org/browser/trunk/merengueproj/merengue/base/templates/base/inc.leftsidebar.html
+
+Implementing the block template
+-------------------------------
+
+Let's back to ``LatestNewsBlock`` block. To finish block rendering we must
+create a template inside ``block_latest.html``:
 
 .. code-block:: html+django
 
@@ -76,8 +114,7 @@ Now we must create a template for our block inside ``block_latest.html``:
     {% endblock %}
 
 This template shows the title of the last published news. The number of news that is considered
-"last news" is specified in render function inside the ``blocks.py`` (five in this case).
-
+*last news* is specified in render function inside the ``blocks.py`` (five in this case).
 
 How to register the block
 -------------------------
@@ -90,9 +127,8 @@ Our ``LatestNewsBlock`` class must be referenced in the plugin configuration ins
     from plugins.news.blocks import LatestNewsBlock
     #some stuff
 
-
     class PluginConfig(Plugin):
-    #some stuff
+        #some stuff
 
         @classmethod
         def get_blocks(cls):
