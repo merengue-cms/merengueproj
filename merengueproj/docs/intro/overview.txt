@@ -286,7 +286,14 @@ Plugins are not renderers
 
 Developed plugins can do many things; they are not only place holding renderers.
 
-(( to be completed ))
+Plugins can:
+
+* Adding new content types.
+* Adding new visual blocks.
+* Adding new actions for content or site.
+* Register new permissions.
+* Register a URL namespace, usually to implement some views.
+
 
 This is just the surface
 ========================
