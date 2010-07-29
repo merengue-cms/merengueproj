@@ -522,6 +522,11 @@ ul {
   padding-bottom: 1.5em;
   padding-right: 1em;
 }
+
+.ie6 #content {
+  padding-right: 0em;
+}
+
 body div#content-zone {
   width: auto;
   margin-top: 20px;
