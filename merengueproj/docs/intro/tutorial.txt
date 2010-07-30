@@ -392,7 +392,7 @@ Comparing both screenshots, you can see some tasks to do:
 
    * Implement a ``features`` plugin, with:
 
-     * A `features listing`_, with a categorized listing of all Merengye features.
+     * A `features listing`_, with a categorized listing of all Merengue features.
      * A features block, to show some Merengue features in index page (such as *collaborative edition*, *geolocation*, etc.)
      * A plugin custom admin for adding features and categories in admin site.
 
