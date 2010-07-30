@@ -402,7 +402,8 @@ Comparing both screenshots, you can see some tasks to do:
 Non programming tasks
 =====================
 
-(( to be completed ))
+All the non programming tasks can be done in Merengue admin. For more
+information about how to do this, read :ref:`Merengue user guide <topics-userguide>`
 
 
 Customizing index page
@@ -820,4 +821,187 @@ see something like this:
 Implementing plugin views
 -------------------------
 
-(( to be completed ))
+Last thing you will do in ``feature`` plugin is a definition of two views:
+
+* A feature listing view. See it in `production site`_.
+* A features detail view, like `visual block management`_.
+
+.. _`production site`: http://www.merengueproject.org/features/
+.. _`visual block management`: http://www.merengueproject.org/features/visual-blocks-management/
+
+The first thing you would do is register a URL namespace for your plugin, adding
+a ``url_prefixes`` attribute in ``PluginConfig`` class like this:
+
+.. code-block:: python
+
+    from merengue.pluggable import Plugin
+    # ...
+
+    class PluginConfig(Plugin):
+        # ...
+        url_prefixes = (
+            ('features', 'plugins.features.urls'),
+        )
+        # ...
+
+Previous code will reserve a ``/features`` prefixes in URLs to be handled in
+our plugin, concretely in ``plugins.features.urls`` module. Of course you can
+add several URL namespaces in every plugin.
+
+Now of course if we access to development server, you will get an error,
+because ``urls`` module and views are not implemented.
+
+So, next thing to do is create an ``urls.py`` file inside your plugin, with a
+content as usual in every Django urls module:
+
+.. code-block:: python
+
+    from django.conf.urls.defaults import patterns, url
+
+    urlpatterns = patterns('plugins.features.views',
+        url(r'^$', 'features_index', name='features_index'),
+        url(r'^(?P<features_slug>[\w-]+)/$', 'features_view', name='features_view'),
+    )
+
+``features_index`` and ``features_view`` will be the listing and detail view of
+a Merengue feature. Again, you will get an error if you access to web server,
+because those views are not implemented. You need to create a ``views.py`` file
+with a content similar to this:
+
+.. code-block:: python
+
+    from django.shortcuts import get_object_or_404
+    from merengue.base.views import content_view, content_list
+    from plugins.features.models import Feature, FeatureCategory
+
+    def features_index(request):
+        categories_list = FeatureCategory.objects.all()
+        features = Feature.objects.published()
+        return content_list(request, features,
+                            template_name='features/features_index.html',
+                            paginate_by=12,
+                            extra_context={'categories_list': categories_list})
+
+    def features_view(request, features_slug):
+        features_view = get_object_or_404(Feature, slug=features_slug)
+        return content_view(request, features_view,
+                            template_name='features/features_view.html')
+
+These two views are usual from the Django world. The only thing to note is the
+use of ``content_list`` and ``content_view`` Merengue views, that helps to reuse
+code, although is optional.
+
+Last thing to do is implementing the ``features/features_index.html`` and
+``features/features_view.html`` templates. These two templates should be placed
+in a ``templates/features`` directory inside your plugin directory, and never in
+your theme, because define what you want to see (content) and not how you want
+to see (look and feel).
+
+The ``features/features_index.html`` content would be as follows:
+
+.. code-block:: html+django
+
+    {% extends "content_list.html" %}
+
+    {% load i18n inlinetrans %}
+
+    {% block extrabreadcrumbs %}
+      <span class="breadcrumbSeparator">→</span> <a href="{% url features_index %}" title="{% trans "Features" %}">{% inline_trans "Features" %}</a>
+    {% endblock %}
+
+    {% block listtitle %}{% trans "Features index" %}{% endblock %}
+
+    {% block listing %}
+    <ul class="contentList">
+      {% for feature in content_list %}
+      <li>
+        <a href="{{ feature.get_absolute_url }}" title="{{ feature }}">
+         {{ feature }}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endblock %}
+
+Some thing to say:
+
+* It extends a ``content_list.html`` template, that concerns about thins like pagination, and add useful blocks to override like ``listing`` or ``listtitle``. 
+
+* It uses ``inline_trans`` templatetag to translate labels, instead of Django ``trans`` one. This is because we can use the `inline WYSIWYG translation tool`_ that came with Merengue.
+
+* Again, the extended template is ``content_list.html`` and not ``base/content_list.html``, because we want to be overridable in themes.
+
+* We use ``get_absolute_url`` method that is implemented in ``BaseContent``.
+
+The resulting view if you access to ``/features/`` URL is something like this:
+
+.. image:: _images/merengueprojectorg_features_index.png
+
+If you click in any link to the feature you will see that it works, even if
+you do not say to Merengue what is the feature detail view. This is because
+``Feature`` model inherits from ``BaseContent`` that have a default
+implementation of the URL returned in ``get_absolute_url``.
+
+In fact, ``get_absolute_url`` will not return the final content detail URL. It
+will return a middle URL (something like ``/cms/base/public_redirect/features/feature/4/``)
+that do some checks and then redirect to the URL returned in the first of two
+methods implemented in the model:
+
+1. ``content.link_by_user(user)``
+2. ``content.public_link()``
+
+The first try is because sometimes you need different behaviour depending the
+user is seeing the content (check permissions, or some login like that). If
+first method is not implemented, Merengue will call the second one, that is
+implemented in ``BaseContent`` model. That is because you see a default page
+even if you have no implemented that method.
+
+But, as best Django practices say, we have to use ``features_view`` as our
+content link. In Merengue this means to implement a ``public_link`` method in
+``Feature`` model, instead of a ``get_absolute_url`` one:
+
+.. code-block:: python
+
+    from django.db.models import permalink
+
+    class Feature(BaseContent):
+        # ...
+
+        @permalink
+        def public_link(self):
+            return ('features_view', [self.slug])
+
+Now all the features links will try to call ``features_view`` view. Before
+finish, you need to implement the last template, ``features/features_view.html``:
+
+.. code-block:: html+django
+
+    {% extends "content_view.html" %}
+
+    {% load i18n inlinetrans action_tags %}
+
+    {% block beforecontentbreadcrumbs %}
+        <span class="breadcrumbSeparator">→</span><a href="{% url features_index %}" title="{% trans "Features" %}">{% inline_trans "Features" %}</a>
+    {% endblock %}
+
+    {% block contentbody %}
+      Categories: {{ content.categories.all|join:"," }}
+    {% endblock %}
+
+This template extends ``content_view.html`` that include some features like
+multimedia viewer (you can try to add some images or videos to the feature).
+
+The result view is like this:
+
+.. image:: _images/merengueprojectorg_features_view.png
+
+.. admonition:: Note
+
+    Some fragments of `templates in original features plugin`_ have been ommited
+    for readability reason.
+
+.. _`inline WYSIWYG translation tool`: http://www.merengueproject.org/features/inline-translation-tool/
+.. _`templates in original features plugin`: http://dev.merengueproject.org/browser/sites/merengueprojectorg/plugins/features/templates/features
+
+The tutorial ends here. At this point you should know how to start a Merengue
+project, design new themes, and develop your own plugins.
