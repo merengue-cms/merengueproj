@@ -944,7 +944,7 @@ implementation of the URL returned in ``get_absolute_url``.
 
 In fact, ``get_absolute_url`` will not return the final content detail URL. It
 will return a middle URL (something like ``/cms/base/public_redirect/features/feature/4/``)
-that do some checks and then redirect to the URL returned in the first of two
+that do some checks and then redirect to the URL returned in the first of these two
 methods implemented in the model:
 
 1. ``content.link_by_user(user)``
