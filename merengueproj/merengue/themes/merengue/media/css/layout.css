@@ -81,6 +81,17 @@ ul {
   margin-left: 25px;
 }
 
+.ie6 #headerlogo {
+  height: 41px;
+}
+
+.ie6 #headerlogo h1 {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: -10px;
+  height: 41px;
+}
+
 #language-tools {
   float: right;
   text-align: right;
@@ -132,17 +143,6 @@ ul {
   display: block;
   float: left;
 }
-/*
-.ie7 #header-blocks li a {
-  display: block;
-  padding-top: 0;
-  padding-bottom: 
-}
-
-.ie7 #header-blocks li a span {
-  display: block;
-  padding-right: 5px;
-}*/
 
 #portal-primary-links li a {
   padding: 7px 12px 7px 5px;
@@ -155,14 +155,14 @@ ul {
   line-height: 30px;
 }
 
-#header-blocks #portalmenu  .menu1 > li {
+#header-blocks #portalmenu  li.menu1 {
   background: transparent url(/media/themes/merengue/img/left_portal_menu_button.jpg) no-repeat left top;
   padding: 8px 0 15px 11px;
   position: relative;
   height: 15px;
 }
 
-#header-blocks #portalmenu  .menu1 > li.haveChild {
+#header-blocks #portalmenu  li.menu1.haveChild {
   background: transparent url(/media/themes/merengue/img/left_portal_menu_button_haveChild.jpg) no-repeat left top;
   padding: 8px 0 15px 15px;
   position: relative;
@@ -179,7 +179,7 @@ ul {
   margin-right: 5px;
 }
 
-#header-blocks #portalmenu .menu1 > li a {
+#header-blocks #portalmenu li.menu1 a {
   padding: 6px 12px 7px 5px;
   font-size: 10pt;
   background: transparent url(/media/themes/merengue/img/right_portal_menu_button.jpg) no-repeat right top;
