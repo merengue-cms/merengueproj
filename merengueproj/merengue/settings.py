@@ -61,7 +61,7 @@ MERENGUE_APPS = (
     'merengue.collab',
 )
 
-CATCH_STATUS_CODE = {
+HTTP_STATUS_CODE_TEMPLATES = {
     403: '403.html',
     404: '404.html',
 }
@@ -106,7 +106,7 @@ MERENGUE_MIDDLEWARE_CLASSES = (
     'merengue.section.middleware.DebugSectionMiddleware',
     'merengue.middleware.SimplifiedLayoutMiddleware',
     'merengue.middleware.LocaleMiddleware',
-    'merengue.perms.middleware.StatusCodeMiddleware',
+    'merengue.perms.middleware.HttpStatusCodeRendererMiddleware',
     'merengue.pluggable.middleware.ActivePluginsMiddleware',
 )
 

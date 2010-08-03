@@ -31,14 +31,14 @@ def get_context(request):
     return {'template_base': template_base, 'is_admin': is_admin}
 
 
-class StatusCodeMiddleware(object):
-    """This middleware autodiscovers the current section from the url"""
+class HttpStatusCodeRendererMiddleware(object):
+    """This middleware render a template when an error code (not 500) is found"""
 
     def process_response(self, request, response):
         if getattr(settings, 'HTTP_ERRORS_DEBUG', settings.DEBUG):
             return response
 
-        template = settings.CATCH_STATUS_CODE.get(response.status_code, None)
+        template = settings.HTTP_STATUS_CODE_TEMPLATES.get(response.status_code, None)
         if not template:
             return response
         context = get_context(request)
