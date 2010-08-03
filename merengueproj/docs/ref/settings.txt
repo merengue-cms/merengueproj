@@ -17,6 +17,19 @@ settings.
 
 .. _merengue/settings.py: http://tracpub.yaco.es/merengue/browser/trunk/merengueproj/merengue/settings.py
 
+
+.. setting:: CATCH_STATUS_CODE
+
+HTTP_STATUS_CODE_TEMPLATES
+--------------------------
+
+Default: {403: '403.html', 404: '404.html',}
+
+When a HTTP status code (not 500) is found in response, you may want to use an
+especific template to render. This is needed in example to catch all permission
+error code (403 error).
+
+
 .. setting:: SITE_FIXTURES
 
 SITE_FIXTURES
@@ -48,7 +61,10 @@ MERENGUE_URLS_PREFIX
 
 Default: ``cms``
 
-It will be the prefix for all URLs managed by merengue.
+It will be the prefix for all URLs managed by merengue. Those URLs are defined
+in `merengue/urls.py`_ file.
+
+.. _`merengue/urls.py`: http://dev.merengueproject.org/browser/trunk/merengueproj/merengue/urls.py
 
 In your project ``urls.py`` file, merengue URLs are included as follows:
 
@@ -104,6 +120,28 @@ You need include all media without ``MEDIA_URL`` prefix. This is an example:
     }
 
 
+.. setting:: PLUGINS_DIR
+
+PLUGINS_DIR
+-----------
+
+Default: ``plugins``
+
+This setting defines when Merengue will look the plugins.
+
+
+.. setting:: REQUIRED_PLUGINS
+
+REQUIRED_PLUGINS
+----------------
+
+Default: ``('core', )``
+
+A list with plugins required for the correct behaviour of your project. Those
+plugins will be installed and activated when database is created and synced in
+your project.
+
+
 .. setting:: DETECT_NEW_PLUGINS
 
 DETECT_NEW_PLUGINS
@@ -129,4 +167,23 @@ Detect automatically new plugins when manager access to plugins admin view.
 If ``DETECT_BROKEN_PLUGINS`` is ``False``, broken plugins detection is done
 executing ``mark_broken_plugins`` command.
 
-(( to be completed ))
+
+.. setting:: USE_GIS
+
+USE_GIS
+-------
+
+Default: ``False``
+
+Activate GIS in Merengue. This must be defined previously to database creation.
+
+
+.. setting:: MAP_FILTRABLE_MODELS
+
+MAP_FILTRABLE_MODELS
+--------------------
+
+Default: ``('base.basecontent',)``
+
+All models included will be displayed in a filter included in map view, when
+GIS is activated.
