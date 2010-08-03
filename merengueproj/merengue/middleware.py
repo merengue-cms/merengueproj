@@ -35,7 +35,7 @@ class HttpStatusCodeRendererMiddleware(object):
         context = get_context(request)
         content = render_to_string(template, context,
                                    context_instance=RequestContext(request))
-        response._headers['content-type'] = ('Content-Type', 'text/html; charset=utf-8')
+        response._headers['content-type'] = ('Content-Type', 'text/html; charset=%s' % settings.DEFAULT_CHARSET)
         response.content = content
         return response
 
