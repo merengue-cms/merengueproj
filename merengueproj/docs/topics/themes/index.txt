@@ -209,7 +209,7 @@ loader to change the order when searching for templates. This template loader
 will look into project database and will find the active theme. Then it will
 search the template first in ``templates/themes/the-active-theme`` and:
 
-* If template is found, then will be returned.
+* If the template is found, then will be returned.
 * Else, it will deletate to usual Django template loaders.
 
 The Merengue template loader will affect to all ``include`` and ``extends``
