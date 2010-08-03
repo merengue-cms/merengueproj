@@ -167,8 +167,6 @@ As schema, the templates mainly used in theme development are located in these p
      |    `-- ...
      `-- ...
 
-(( to be completed ))
-
 Overriding plugins CSS
 ----------------------
 
@@ -206,4 +204,14 @@ Please look the :ref:`Merengue tutorial <intro-tutorial-theme>` for learning to 
 Internals
 ---------
 
-(( to be completed ))
+Merengue prepends ``merengue.theming.loader.load_template_source`` template
+loader to change the order when searching for templates. This template loader
+will look into project database and will find the active theme. Then it will
+search the template first in ``templates/themes/the-active-theme`` and:
+
+* If template is found, then will be returned.
+* Else, it will deletate to usual Django template loaders.
+
+The Merengue template loader will affect to all ``include`` and ``extends``
+tags, and all ``render_to_response``, ``render_to_string`` and
+``loader.get_template`` calls.
