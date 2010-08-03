@@ -106,7 +106,7 @@ MERENGUE_MIDDLEWARE_CLASSES = (
     'merengue.section.middleware.DebugSectionMiddleware',
     'merengue.middleware.SimplifiedLayoutMiddleware',
     'merengue.middleware.LocaleMiddleware',
-    'merengue.perms.middleware.HttpStatusCodeRendererMiddleware',
+    'merengue.middleware.HttpStatusCodeRendererMiddleware',
     'merengue.pluggable.middleware.ActivePluginsMiddleware',
 )
 
