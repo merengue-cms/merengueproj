@@ -243,3 +243,6 @@ MERENGUE_URLS_PREFIX = 'cms'
 LOGIN_URL = MERENGUE_URLS_PREFIX + '/login/'
 LOGOUT_URL = MERENGUE_URLS_PREFIX + '/logout/'
 LOGIN_REDIRECT_URL = '/'
+
+# Merengue test runner
+TEST_RUNNER = 'merengue.test.run_tests'
