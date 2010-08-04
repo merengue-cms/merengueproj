@@ -8,24 +8,26 @@ Throughout this tutorial, we will:
 
     * Develop a Merengue project.
     * Develop a Merengue plugin.
-    * Learn a bit to use Merengue from manager point of view.
+    * Start managing content inside Merengue, regular editor work.
 
 Creating a project
 ==================
 
 We will assume you have :ref:`Merengue installed <topics-install>` and you want to create a
-`www.merengueproject.org`_ website (see `sources`_ for a finished result).
+`www.merengueproject.org`_ website (check out the `merengueprojectorg`_ directory in the
+repository for a working example).
 
-.. _sources: http://dev.merengueproject.org/browser/sites/merengueprojectorg
+.. _merengueprojectorg: http://dev.merengueproject.org/browser/sites/merengueprojectorg
 .. _www.merengueproject.org: http://www.merengueproject.org
 
-Let's start your project:
+Let's start the project:
 
 .. code-block:: bash
 
     $ merengue-admin.py startproject merengueprojectorg
 
-This command will create a ``merengueprojectorg`` directory, with this hierarchy::
+This command will create a ``merengueprojectorg`` directory, containing these files
+and directories::
 
     .
     |-- ...
@@ -52,17 +54,17 @@ This command will create a ``merengueprojectorg`` directory, with this hierarchy
         |   `-- yaco/
         `-- website/
 
-Here are a brief description of these directories:
+Here is a brief description of these files and directories:
 
  * ``settings.py``: project settings.
- * ``urls.py``: project root url resolvers file.
+ * ``urls.py``: project root url resolvers.
  * ``apps/``: for project specific Django applications. It comes with a skel ``website`` app.
- * ``fixtures/``: a empty directory for store project fixtures.
+ * ``fixtures/``: an empty directory that can hold project fixtures.
  * ``locale/``: directory for project translations.
  * ``media/``: multimedia root directory.
- * ``media/themes/``: root for all themes multimedia directories.
- * ``merengue/``: link to Merengue API.
- * ``plugins/``: plugins directory, with builtins plugins inside.
+ * ``media/themes/``: root for all themes directories, each one containing its multimedia files.
+ * ``merengue/``: symbolic link to Merengue API.
+ * ``plugins/``: plugins directory, with some preinstalled plugins already there.
  * ``templates/``: templates project directory.
  * ``templates/themes/``: specific templates for themes.
 
@@ -70,10 +72,12 @@ Here are a brief description of these directories:
 Change project settings
 =======================
 
-Project settings will be in ``merengueprojectorg/settings.py`` file.
+The Project settings are in the ``merengueprojectorg/settings.py`` file, which should be
+familiar for Django users.
 
 First of all you have to define your database connection (see `database setup`_
-in Django tutorial). Let's suppose you will use SQLite (you need `pysqlite`_ installed)
+in the Django tutorial). Let's suppose you use SQLite (you need `pysqlite`_ installed) for
+simplicity's sake.
 
 .. _pysqlite: http://trac.edgewall.org/wiki/PySqlite
 .. _database setup: http://docs.djangoproject.com/en/1.1/intro/tutorial01/#database-setup
@@ -87,7 +91,7 @@ in Django tutorial). Let's suppose you will use SQLite (you need `pysqlite`_ ins
        DATABASE_HOST = ''
        DATABASE_PORT = ''
 
-Other settings to define:
+Other settings you should define:
 
 .. code-block:: python
 
@@ -96,8 +100,8 @@ Other settings to define:
        )
 
 
-Build database
-==============
+Database bootstrap
+==================
 
 .. code-block:: bash
 
@@ -105,16 +109,15 @@ Build database
 
 .. admonition:: Note
 
-    This command is executed by `django-south`_, and is equal to execute first
-    a ``python manage.py syncdb`` plus ``python manage.py migrate``
-    commands.
+    This is a `django-south`_ command, and is equivalent to execute
+    ``python manage.py syncdb`` and then ``python manage.py migrate``.
 
 If there is a problem with this command, please create a ticket in
 `Merengue trac`_, specifying your database engine and your Merengue version. To
-continue the tutorial without problems you can do this quick fix:
+continue the tutorial without problems you can do a quick workaround:
 
-  1. Remove ``merengueprojectorg.db`` file.
-  2. Remove south from the ``INSTALLED_APPS`` tuple in ``merengueprojectorg/merengue/settings.py`` file.
+  1. Remove the ``merengueprojectorg.db`` file.
+  2. Remove south from the ``INSTALLED_APPS`` tuple in the ``merengueprojectorg/merengue/settings.py`` file.
   3. Run ``python manage.py syncdb``
   4. Add south to the ``INSTALLED_APPS`` tuple again.
   5. Run ``python manage.py syncdb``
@@ -127,8 +130,9 @@ continue the tutorial without problems you can do this quick fix:
 Play with your new Merengue project
 ===================================
 
-After project settings was defined and database was built, you can run
-development server and see the Merengue default theme:
+After the project settings were defined and the database was created, you can run
+a development server and see how the Merengue default theme looks like. We
+hope you like it!:
 
 .. code-block:: bash
 
@@ -137,24 +141,25 @@ development server and see the Merengue default theme:
        Development server is running at http://127.0.0.1:8000/
        Quit the server with CONTROL-C.
 
-You can now access to ``http://localhost:8000``, and you will see something
-like that:
+Now open you favourite web browser and point it to ``http://localhost:8000`` .
+You should see something like this:
 
 .. image:: _images/merengue_theme_in_new_project.png
 
-To more information about using Merengue, you can read :ref:`user guide <topics-userguide>`
+For more information about using Merengue, you can read our comprehensive
+:ref:`user guide <topics-userguide>`
 
 
 .. _intro-tutorial-theme:
 
 
-Creating *merengueprojectorg* theme
-===================================
+Creating the *merengueprojectorg* theme
+=======================================
 
-In Merengue you can change look and feel by developing themes.
+In Merengue the preferred way to change the look and feel is to create a theme.
 
 First of all you have to create both a templates and a media directory for the
-``merengueprojectorg``:
+``merengueprojectorg`` theme:
 
 .. code-block:: bash
 
@@ -164,47 +169,51 @@ First of all you have to create both a templates and a media directory for the
     $ mkdir media/themes/merengueprojectorg/img
     $ mkdir media/themes/merengueprojectorg/css
 
-Now in Merengue admin (enter with ``admin``/``admin`` in
-``http://localhost:8000/admin/``), you can see how Merengue has registered
-``merengueprojectorg`` as a new theme:
+If you go to the Merengue admin application (open ``http://localhost:8000/admin/``
+in your browser and use ``admin``/``admin`` as credentials), you will see that
+Merengue has registered ``merengueprojectorg`` as a new theme:
 
 .. image:: _images/merengueprojectorg_theme_in_admin.png
 
-If you activate ``merengueprojectorg`` theme you will see a blank theme
-(without CSS styles):
+If you activate the ``merengueprojectorg`` theme you will see a blank theme
+(without CSS styles) since we didn't put anything yet in the above directories:
 
 .. image:: _images/merengueprojectorg_theme_recently_created.png
 
-You then need to add a stylesheet to defining look and feel. One of the ways
-accomplish that is create a ``base.html`` template in
-``templates/themes/merengueprojectorg/`` directory. You can begin with a
-``hello world`` template:
+So You need to add stylesheets to define the look and feel. There are several
+ways to accomplish this but one of the easiest is to create a ``base.html``
+template in the ``templates/themes/merengueprojectorg/`` directory and then
+hook your stylesheets from there. But first we will see how this template
+works by writing our very own ``hello world`` template:
 
 .. code-block:: html+django
 
     <h1>Hello world!</h1>
 
-If you reload browser, you will se a big **Hello world!** greeting.
+If you reload browser, you will se a big **Hello world!** greeting. No tutorial
+is complete until there is a ``hello world`` example, right?
 
-But, why is this template loaded? Let's talk a little about Merengue theming
-internals... Merengue implements a new Django template loader, so when some
-part of the code tries to load a template (in a ``render_to_response`` call or
-in a `extends`_ or `include`_ tag) Merengue will look first into the template
-directory of active theme.
+But wait a second, how is this template loaded? Let's talk a little bit about
+Merengue theming internals... Merengue implements a new Django template loader,
+so when some part of the code tries to load a template (in a ``render_to_response``
+call or in a `extends`_ or `include`_ tag) Merengue will look first into the template
+directory of the current/active theme.
 
 .. _`extends`: http://docs.djangoproject.com/en/1.1/ref/templates/builtins/#extends
 .. _`include`: http://docs.djangoproject.com/en/1.1/ref/templates/builtins/#include
 
-With this ``base.html`` template placed at ``merengueprojectorg`` theme, you are
-overriding `merengue/base/templates/base.html`_, that extends from
-`merengue/base/templates/base/layout.html`_. This is the reason you see a huge
-*hello world* instead of normal Merengue layout.
+By placing the ``base.html`` template in the ``merengueprojectorg`` theme, you are
+overriding `merengue/base/templates/base.html`_, which extends itself from
+`merengue/base/templates/base/layout.html`_. That's the reason you see a huge
+*hello world* instead of normal Merengue layout. This pattern is repeated all over
+the development cycle of a theme so you better get used to it, huh?
 
-But, why this double template inheritance? Because we usually need to reuse some of the
-Merengue layout stuff, and if this code was located in
-``merengue/base/templates/base.html`` we could not extends this template from your
-theme. In fact, if you try to extends ``base.html`` inside your theme ``base.html``
-you will get an infinite recursion error.
+You may be thinking, why this double template inheritance? and I'm glad you asked
+that question. The answer is that we usually need to reuse some of the
+Merengue layout stuff, and if this code would have been located in
+``merengue/base/templates/base.html`` we could not have extended this template from
+your theme. In fact, if you try to extend ``base.html`` inside your theme ``base.html``
+template you will get a ``nice`` infinite recursion error.
 
 .. _`merengue/base/templates/base.html`: http://dev.merengueproject.org/browser/trunk/merengueproj/merengue/base/templates/base.html
 .. _`merengue/base/templates/base/layout.html`: http://dev.merengueproject.org/browser/trunk/merengueproj/merengue/base/templates/base/layout.html
@@ -223,21 +232,22 @@ Now if you reload browser you will see again the Merengue default web layout.
 
 .. admonition:: Note
 
-    ``THEME_MEDIA_URL`` will be replaced for relative media location of active
-    theme in Merengue admin. It's better use this context variable that hardcode
+    ``THEME_MEDIA_URL`` will be replaced for the relative media location of the active
+    theme in Merengue admin. Using this context variable instead of hardcoding
     ``/media/themes/merengueprojectorg/css/layout.css`` or
-    ``{{ MEDIA_URL }}themes/merengueprojectorg/css/layout.css``.
+    ``{{ MEDIA_URL }}themes/merengueprojectorg/css/layout.css`` is considered a best
+    practice.
 
 Of course you need to create the ``layout.css`` CSS file, that will be in
-``media/themes/merengueprojectorg/css/`` directory, to begin look and feel
+``media/themes/merengueprojectorg/css/`` directory, to begin the look and feel
 customization.
 
-First we will add `header_bg.jpg`_ and `header_logo.jpg`_ images into
-``media/themes/merengueprojectorg/img`` directory, to begin with the header
+First we will add a couple of images, `header_bg.jpg`_ and `header_logo.jpg`, into
+the ``media/themes/merengueprojectorg/img`` directory, to begin with the header
 layout.
 
-After this, we put some CSS in the ``layout.css`` file. There is the fragment
-in which we put header images and other stuff:
+After this, we'll write some CSS rules in the ``layout.css`` file. This is the fragment of
+this file in which we put header images and other related stuff:
 
 .. code-block:: css
 
@@ -262,12 +272,12 @@ in which we put header images and other stuff:
     }
 
     #header {
-        background: url(/media/themes/merengueprojectorg/img/header_bg.jpg) no-repeat top center;
+        background: url(../img/header_bg.jpg) no-repeat top center;
     }
 
     #headerlogo {
         height: 98px;
-        background: url(/media/themes/merengueprojectorg/img/header_logo.jpg) no-repeat top left;
+        background: url(../img/header_logo.jpg) no-repeat top left;
     }
 
     #content {
@@ -285,21 +295,15 @@ in which we put header images and other stuff:
 .. _`header_bg.jpg`: http://dev.merengueproject.org/browser/sites/merengueprojectorg/media/themes/merengueprojectorg/img/header_bg.jpg
 .. _`header_logo.jpg`: http://dev.merengueproject.org/browser/sites/merengueprojectorg/media/themes/merengueprojectorg/img/header_logo.jpg
 
-If you done well and reload your browser, you should see a web page similar to
+If you have done this well and reload your browser, you should see a page similar to
 this screenshot:
 
 .. image:: _images/merengueprojectorg_theme_with_logo.png
 
-.. admonition:: About media linking
-
-    All images in ``layout.css`` are linked with a hardcoded path
-    ``/media/themes/merengueprojectorg/img/``. This is because CSS are static
-    and served directly by web server. Merengue cannot replace any contextual
-    variable here.
-
 Next, we will add a ``Django based CMS framework for perfectionists with deadlines``
-phrase into header. If you take a look at `merengue/base/templates/base/layout.html`_
-template, you will see a fragment like this:
+phrase into header. Feel free to change the wording if you are not so perfectionist :-).
+If you take a look at `merengue/base/templates/base/layout.html`_
+template, you will find a fragment like this:
 
 .. code-block:: html+django
 
@@ -313,12 +317,12 @@ template, you will see a fragment like this:
 
     # more stuff ...
 
-So, you have two ways to include a text near the logo:
+So, there are two ways to include a text near the logo:
 
  1. Overriding the ``headerlogo`` block in our ``base.html`` template.
  2. Creating a ``inc.headerlogo.html`` template in the ``merengueprojectorg`` theme template directory.
 
-This time, we will do second choice. You have to create a ``inc.headerlogo.html``
+This time, we are going to go for the second choice. Create a ``inc.headerlogo.html``
 file in the ``templates/themes/merengueprojectorg`` directory with this content:
 
 .. code-block:: html+django
@@ -344,15 +348,15 @@ Finally, add some CSS for the logo phrase:
         color: #b3a99d;
     }
 
-You should see now a page header with logo and phrase at right side:
+You should see now a page header with a logo and a phrase to its right side:
 
 .. image:: _images/merengueprojectorg_theme_with_logo_and_phrase.png
 
-To see a finished version of `www.merengueproject.org`_ theme, you have to:
+To see a finished version of the `www.merengueproject.org`_ theme, you have to:
 
- 1. Copy content of `merengueproject base.html template`_.
- 2. Copy complete `merengueproject layout.css file`_.
- 3. Copy all `images from merengueproject img directory`_.
+ 1. Copy the content of the `merengueproject base.html template`_.
+ 2. Copy the complete `merengueproject layout.css file`_.
+ 3. Copy all the `images from merengueproject img directory`_.
 
 .. _`merengueproject base.html template`: http://dev.merengueproject.org/browser/sites/merengueprojectorg/templates/themes/merengueprojectorg/base.html
 .. _`merengueproject layout.css file`: http://dev.merengueproject.org/browser/sites/merengueprojectorg/media/themes/merengueprojectorg/css/layout.css
@@ -456,6 +460,7 @@ The template ``website/index.html`` have this default content:
 
 This template extends ``content_view.html``, the generic Merengue template used
 for contents detail view. This base template extends others, in this order:
+
   * ``content.html``
   * ``base/content.html``
   * ``base.html``
