@@ -18,7 +18,7 @@
 from django import http
 from django.template import RequestContext, loader
 
-from merengue.perms.middleware import get_context
+from merengue.middleware import get_context
 
 
 def page_not_found(request, template_name='404.html'):
