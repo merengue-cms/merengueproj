@@ -149,13 +149,42 @@ You can assign a role to an user globally (for all contents) or locally (to one 
     True # because is a global editor (for all contents)
 
 
-Admin interface
-===============
-
-(( to be completed ))
-
-
 Permissions in plugins
 ======================
+
+You can create permissions for your plugins defining the function get_perms in the config.py file. These permissions can be globals or related to models and content types.
+
+Bellow you can see how to define specific permissions for editing news:
+
+.. code-block:: python
+
+    from merengue.pluggable import Plugin
+    from plugins.news.models import NewsItem
+
+    class PluginConfig(Plugin):
+
+        @classmethod
+        def get_perms(cls):
+            return (
+                ('edit_newsitem', _('Edit news items'), [NewsItem, ]),)
+
+
+Bellow you can see how to define global permissions to rate any content:
+
+.. code-block:: python
+
+    from merengue.pluggable import Plugin
+
+    class PluginConfig(Plugin):
+
+        @classmethod
+        def get_perms(cls):
+            return (
+                ('vote', _('Vote content')),)
+
+
+
+Admin interface
+===============
 
 (( to be completed ))
