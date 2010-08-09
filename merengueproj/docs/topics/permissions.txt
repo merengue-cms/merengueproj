@@ -154,7 +154,7 @@ Permissions in plugins
 
 You can create permissions for your plugins defining the function get_perms in the config.py file. These permissions can be globals or related to models and content types.
 
-Bellow you can see how to define specific permissions for editing news:
+To define specific permissions, for example, to edit news:
 
 .. code-block:: python
 
@@ -169,7 +169,7 @@ Bellow you can see how to define specific permissions for editing news:
                 ('edit_newsitem', _('Edit news items'), [NewsItem, ]),)
 
 
-Bellow you can see how to define global permissions to rate any content:
+To define global permissions to vote any such content:
 
 .. code-block:: python
 
