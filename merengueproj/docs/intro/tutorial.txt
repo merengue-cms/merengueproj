@@ -367,8 +367,8 @@ To see a finished version of the `www.merengueproject.org`_ theme, you have to:
     For more information about Merengue theming, you can read :ref:`working with themes <topics-themes-index>`
 
 
-Analyzing work to do after finishing theme
-==========================================
+The theme is finished, what is next?
+====================================
 
 After finishing ``merengueprojectorg`` theme, you should get a index page like
 this:
@@ -379,46 +379,46 @@ However, `www.merengueproject.org`_ website looks different:
 
 .. image:: _images/merengueprojectorg_index.png
 
-Comparing both screenshots, you can see some tasks to do:
+By looking at each other you can see there is more work to do:
 
  * Non programming tasks (content managing):
 
    * Create portal links (*Demo*, *Documentation*, *Features*, etc.).
    * Disable navigation block.
-   * Change main content title and description.
+   * Change the main content title and description.
 
  * Programming tasks (python or templates):
 
    * Index page changes:
 
      * Remove breadcrumbs only for home page.
-     * Include a image in the left of main content.
+     * Include a image on the left hand side of the main content.
 
    * Implement a ``features`` plugin, with:
 
-     * A `features listing`_, with a categorized listing of all Merengue features.
-     * A features block, to show some Merengue features in index page (such as *collaborative edition*, *geolocation*, etc.)
-     * A plugin custom admin for adding features and categories in admin site.
+     * A `features list`_, with a categorized list of all Merengue features.
+     * A features block, to show some Merengue features in the index page (such as *collaborative edition*, *geolocation*, etc.)
+     * A customization of Merengue admin interface that let the user manage the features and categories from a Django admin site.
 
-.. _`features listing`: http://www.merengueproject.org/features/
+.. _`features list`: http://www.merengueproject.org/features/
 
 
 Non programming tasks
 =====================
 
-All the non programming tasks can be done in Merengue admin. For more
-information about how to do this, read :ref:`Merengue user guide <topics-userguide>`
+All the non programming tasks can be done in the Merengue admin interface. For more
+information about how to do this, read the :ref:`Merengue user guide <topics-userguide>`
 
 
-Customizing index page
-======================
+Customizing the index page
+==========================
 
-When a Merengue project is created in ``startproject`` command, a ``website``
-application is created inside ``apps``. This is a skel app thought for implement
-project specific views that not fit in any plugin. 
+When a Merengue project is created with the ``startproject`` command, a ``website``
+application is created inside the ``apps`` directory. This is a skel application which
+is useful for containing your specific project views that do not fit in any plugin.
 
-One example would be index page. In fact, ``website`` app come with a default
-index page view implemented, and included in root ``urls.py``, with this
+One example would be index page. In fact, the ``website`` app comes with a default
+index page view implemented, and included in the root ``urls.py``. This is the
 default implementation:
 
 .. code-block:: python
@@ -427,7 +427,7 @@ default implementation:
     from merengue.base.models import BaseContent
 
     def index(request):
-        """ Index page. You can override as you like """
+        """ Index page. You can override this as you like """
         core_config = CoreConfig().get_config()
         main_content_index = core_config['home_initial_content'].get_value()
         content = BaseContent.objects.get(pk=main_content_index)
@@ -435,16 +435,16 @@ default implementation:
                                   {'content': content},
                                   context_instance=RequestContext(request))
 
-By default, this implementation takes a initial content and show it, rendering
-a ``website/index.html``. We will explain this code fragment line by line:
+By default, this implementation takes an initial content and shows it, rendering
+a ``website/index.html`` template. Let's explain this code fragment line by line:
 
  * ``core_config = CoreConfig().get_config()``. Load ``plugins.core`` `configuration`_
- * ``main_content_index = core_config['home_initial_content'].get_value()``. Get the ID of the content that will be shown in index page.
+ * ``main_content_index = core_config['home_initial_content'].get_value()``. Get the ID of the content that will be shown in the index page.
  * ``content = BaseContent.objects.get(pk=main_content_index)``. Use ``BaseContent`` model (parent model of all managed contents) to get the content to be shown.
- * ``return render_to_response('website/index.html', ...``. Render template that will show the content.
+ * ``return render_to_response('website/index.html', ...``. Render the template that will show the content.
 
-This logic is the same we need for `www.merengueproject.org`_ index, but we
-need to change several things in template.
+We don't need to change anything in this view for the `www.merengueproject.org`_ index, but we
+need to change several things in the template.
 
 The template ``website/index.html`` have this default content:
 
@@ -459,7 +459,7 @@ The template ``website/index.html`` have this default content:
     {% endblock %}
 
 This template extends ``content_view.html``, the generic Merengue template used
-for contents detail view. This base template extends others, in this order:
+in contents detail views. This base template extends others, in the following order:
 
   * ``content.html``
   * ``base/content.html``
@@ -468,26 +468,26 @@ for contents detail view. This base template extends others, in this order:
 
 ``content.html`` and ``base.html`` are placeholders templates that only extends
 ``base/content.html`` and ``base/layout.html`` respectively. Why are only
-placeholders and have no own content? Because these will be likely overrided in
-active theme and those may want to extend from ``base/content.html`` or
-``base/layout.html`` (see infinite recursion problem described before).
+placeholders and have no own content? Because these will be likely overriden in
+the active theme and those custom templates may want to extend from ``base/content.html`` or
+``base/layout.html`` (see the infinite recursion problem described before).
 
-The only change in default index template respect ``base/content.html`` is the
-rendering of all visual blocks placed in ``homepage`` place. See
+The only change we need to do in the default index template ``base/content.html`` is the
+rendering of all visual blocks placed in a ``homepage`` place. See the
 :ref:`blocks documentation <topics-blocks>` for more information. The
-``aftercontentbody`` block is defined in ``base/content.html`` template and is
-rendering just after content data.
+``aftercontentbody`` block is defined in the ``base/content.html`` template and is
+rendered just after the content data.
 
 .. admonition:: Deep into
 
-    We recommend to read both ``base/content.html`` and ``base/layout.html`` in
+    We recommend you to read both ``base/content.html`` and ``base/layout.html`` in
     order to understand the Merengue layout, blocks, actions, etc.
 
 .. _`configuration`: http://dev.merengueproject.org/browser/trunk/merengueproj/plugins/core/config.py
 
-Now we need to remove breadcrumbs and put a image nearby main content text.
+Now we need to remove the breadcrumbs and put an image close to the main content text.
 
-The new template will be this (included comments to explain new fragments):
+The new template will be this (including comments to explain new fragments):
 
 .. code-block:: html+django
 
@@ -495,7 +495,7 @@ The new template will be this (included comments to explain new fragments):
 
     {% load block_tags %}
 
-    {% block breadcrumbswrapper %}{# remove breadcrumbs in homepage #}{% endblock %}
+    {% block breadcrumbswrapper %}{# remove breadcrumbs in the homepage #}{% endblock %}
 
     {% block contentdescription %}
       {# put image with description #}
