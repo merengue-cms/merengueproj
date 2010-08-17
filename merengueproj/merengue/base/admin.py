@@ -607,7 +607,7 @@ class StatusControlProvider(object):
 
 class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProvider, PermissionAdmin):
     change_list_template = "admin/basecontent/change_list.html"
-    list_display = ('name', 'status', 'user_modification_date', 'last_editor')
+    list_display = ('admin_absolute_url', 'status', 'user_modification_date', 'last_editor')
     search_fields = ('name', )
     date_hierarchy = 'creation_date'
     list_filter = ('status', 'user_modification_date', 'last_editor', )

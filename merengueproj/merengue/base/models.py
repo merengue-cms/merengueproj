@@ -336,6 +336,10 @@ class BaseContent(BaseClass):
         ordering = (get_fallback_fieldname('name'), )
         #content_view_template = 'content_view.html' # default definition by BaseContentMeta metaclass
 
+    def admin_absolute_url(self):
+        return '<a href="%s">%s</a>' % (self.get_admin_absolute_url(), self.name)
+    admin_absolute_url.allow_tags = True
+
     @classmethod
     def get_menu_name(cls):
         return u"%s_menu" % cls._meta.module_name
