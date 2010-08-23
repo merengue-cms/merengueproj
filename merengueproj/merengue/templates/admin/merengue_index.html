@@ -20,12 +20,18 @@
       <dl>
         <dt><a href="base/basecontent/" title="{% trans "Content" %}">{% trans "Content" %}</a></dt>
         <dd>{% trans "View, edit and delete your site's contents." %}</dd>
-        <dt><a href="section/section/" title="{% trans "Section" %}">{% trans "Section" %}</a></dt>
-        <dd>{% trans "View, edit and delete your site's sections." %}</dd>
-        <dt><a href="section/menu/" title="{% trans "Portal Menu" %}">{% trans "Portal Menu" %}</a></dt>
-        <dd>{% trans "View, edit and delete your site's menus." %}</dd>
-        <dt><a href="portal/portallink/" title="{% trans "Portal links" %}">{% trans "Portal links" %}</a></dt>
-        <dd>{% trans "View, edit and delete your site's primary and secondary links." %}</dd>
+        {% ifhasperm 'manage_section' %}
+          <dt><a href="section/section/" title="{% trans "Section" %}">{% trans "Section" %}</a></dt>
+          <dd>{% trans "View, edit and delete your site's sections." %}</dd>
+        {% endifhasperm %}
+        {% ifhasperm 'manage_menu' %}
+          <dt><a href="section/menu/" title="{% trans "Portal Menu" %}">{% trans "Portal Menu" %}</a></dt>
+          <dd>{% trans "View, edit and delete your site's menus." %}</dd>
+        {% endifhasperm %}
+        {% ifhasperm 'manage_link' %}
+          <dt><a href="portal/portallink/" title="{% trans "Portal links" %}">{% trans "Portal links" %}</a></dt>
+          <dd>{% trans "View, edit and delete your site's primary and secondary links." %}</dd>
+        {% endifhasperm %}
       </dl>
     </div>
     {% ifhasperm 'can_manage_site' %}
