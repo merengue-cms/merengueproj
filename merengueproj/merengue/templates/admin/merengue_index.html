@@ -46,6 +46,7 @@
       </dl>
     </div>
     {% endifhasperm %}
+    {% ifhasperm 'manage_multimedia' %}
     <div class="module-merengue" id="multimedia">
       <h1>{% trans "Multimedia" %}</h1>
       <p>{% trans "Manage your site's multimedia content" %}</p>
@@ -62,6 +63,7 @@
         <dd>{% trans "View, edit and delete your site's Images 3D." %}</dd>
       </dl>
     </div>
+    {% endifhasperm %}
     {% ifhasperm 'can_manage_site' %}
     <div class="module-merengue" id="usermanagement">
       <h1>{% trans "User management" %}</h1>
