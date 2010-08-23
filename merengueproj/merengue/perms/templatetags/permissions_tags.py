@@ -41,8 +41,9 @@ class PermissionComparisonNode(template.Node):
             parser.delete_first_token()
         else:
             nodelist_false = ""
+        val = parser.compile_filter(bits[1])
 
-        return cls(bits[1], nodelist_true, nodelist_false)
+        return cls(val, nodelist_true, nodelist_false)
 
     def __init__(self, permission, nodelist_true, nodelist_false):
         self.permission = permission
@@ -52,10 +53,12 @@ class PermissionComparisonNode(template.Node):
     def render(self, context):
         obj = context.get("obj") or context.get("content")
         request = context.get("request")
+        self.permission = self.permission.resolve(context, True)
         if obj:
             has_perm = merengue.perms.utils.has_permission(obj, request.user, self.permission)
         else:
             has_perm = merengue.perms.utils.has_global_permission(request.user, self.permission)
+
         if has_perm:
             return self.nodelist_true.render(context)
         else:
