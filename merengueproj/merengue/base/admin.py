@@ -608,6 +608,7 @@ class StatusControlProvider(object):
 class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProvider, PermissionAdmin):
     change_list_template = "admin/basecontent/change_list.html"
     list_display = ('admin_absolute_url', 'status', 'user_modification_date', 'last_editor')
+    list_display_for_select = ('name', 'status', 'user_modification_date', 'last_editor')
     search_fields = ('name', )
     date_hierarchy = 'creation_date'
     list_filter = ('status', 'user_modification_date', 'last_editor', )
@@ -734,15 +735,15 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
         extra_context = self._base_update_extra_context(extra_context)
         opts = self.model._meta
         app_label = opts.app_label
+        list_display = list(self.list_display_for_select)
 
-        list_display = list(self.list_display)
         try:
             list_display.remove('action_checkbox')
         except ValueError:
             pass
 
         try:
-            cl = ChangeList(request, self.model, list_display, self.list_display_links, self.select_list_filter,
+            cl = ChangeList(request, self.model, list_display, list_display[0], self.select_list_filter,
                 self.date_hierarchy, self.search_fields, self.list_select_related, self.list_per_page, self.list_editable, self)
         except IncorrectLookupParameters:
             if ERROR_FLAG in request.GET.keys():
