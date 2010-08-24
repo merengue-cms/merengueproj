@@ -33,6 +33,7 @@ from merengue.perms.models import Role
 
 MANAGE_SITE_PERMISION = 'manage_site'
 MANAGE_USER_PERMISION = 'manage_user'
+MANAGE_MULTIMEDIA_PERMISSION = 'manage_multimedia'
 
 # Roles ######################################################################
 
@@ -534,6 +535,10 @@ def can_manage_site(user):
 
 def can_manage_user(user):
     return has_global_permission(user, MANAGE_USER_PERMISION)
+
+
+def can_manage_multimedia(user):
+    return has_global_permission(user, MANAGE_MULTIMEDIA_PERMISSION)
 
 
 def get_group(id):

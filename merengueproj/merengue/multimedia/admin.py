@@ -45,7 +45,7 @@ class BaseMultimediaContentRelatedModelAdmin(BaseContentAdmin, RelatedModelAdmin
         """
             Overrides Django admin behaviour to add ownership based access control
         """
-        return perms_api.has_global_permission(request.user, 'manage_multimedia')
+        return perms_api.can_manage_multimedia(request.user)
 
     def has_change_permission(self, request, obj=None):
         """
@@ -136,7 +136,7 @@ class BaseMultimediaAdmin(BaseAdmin, WorkflowBatchActionProvider):
         """
             Overrides Django admin behaviour to add ownership based access control
         """
-        return perms_api.has_global_permission(request.user, 'manage_multimedia')
+        return perms_api.can_manage_multimedia(request.user)
 
     def has_change_permission(self, request, obj=None):
         """
@@ -313,7 +313,7 @@ class RelatedBaseMultimediaAdmin(OrderableRelatedModelAdmin):
         """
             Overrides Django admin behaviour to add ownership based access control
         """
-        return perms_api.has_global_permission(request.user, 'manage_multimedia')
+        return perms_api.can_manage_multimedia(request.user)
 
     def has_change_permission(self, request, obj=None):
         """
