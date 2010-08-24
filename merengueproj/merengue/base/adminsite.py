@@ -191,7 +191,6 @@ class BaseAdminSite(DjangoAdminSite):
 
     def admin_redirect(self, request, content_type_id, object_id):
         """ redirect to content admin page or content related admin page in his section """
-        print self.plugin_site.i_am_plugin_site
         try:
             content = ContentType.objects.get_for_id(content_type_id).get_object_for_this_type(id=object_id)
         except ObjectDoesNotExist:
@@ -213,7 +212,7 @@ class BaseAdminSite(DjangoAdminSite):
                         if model in admin_site._registry:
                             admin_prefix += admin_site.name + '/'
                             break
-                elif model in self.plugin_site._registry.keys():
+                elif getattr(self.plugin_site, 'i_am_plugin_site', False):
                     admin_prefix += PLUGIN_ADMIN_PREFIX + '/'
         return HttpResponseRedirect('%s%s/%s/%d/' % (admin_prefix, model._meta.app_label,
                                     model._meta.module_name, content.id))
