@@ -65,6 +65,16 @@
         <field type="CharField" name="codename">manage_portal</field>
         <field type="BooleanField" name="builtin">False</field>
     </object>
+    <object pk="14" model="perms.permission">
+        <field type="CharField" name="name">Manage site</field>
+        <field type="CharField" name="codename">manage_site</field>
+        <field type="BooleanField" name="builtin">False</field>
+    </object>
+    <object pk="15" model="perms.permission">
+        <field type="CharField" name="name">Manage user</field>
+        <field type="CharField" name="codename">manage_user</field>
+        <field type="BooleanField" name="builtin">False</field>
+    </object>
     <object pk="1" model="perms.objectpermission">
         <field to="perms.role" name="role" rel="ManyToOneRel">1</field>
         <field to="perms.permission" name="permission" rel="ManyToOneRel">1</field>

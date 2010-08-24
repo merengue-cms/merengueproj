@@ -34,7 +34,7 @@
         {% endifhasperm %}
       </dl>
     </div>
-    {% ifhasperm 'can_manage_site' %}
+    {% ifhasperm 'manage_site' %}
     <div class="module-merengue" id="sitebuilding">
       <h1>{% trans "Site configuration" %}</h1>
       <p>{% trans "Control how your site looks and feels." %}</p>
@@ -70,7 +70,7 @@
       </dl>
     </div>
     {% endifhasperm %}
-    {% ifhasperm 'can_manage_site' %}
+    {% ifhasperm 'manage_user' %}
     <div class="module-merengue" id="usermanagement">
       <h1>{% trans "User management" %}</h1>
       <p>{% trans "Manage your site's users, groups and access to site features." %}</p>

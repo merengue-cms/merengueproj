@@ -33,7 +33,7 @@ from django.contrib.contenttypes.models import ContentType
 from merengue.perms import ANONYMOUS_ROLE_SLUG
 from merengue.perms.models import ObjectPermission, Permission, PrincipalRoleRelation, Role
 from merengue.perms.forms import UserChangeForm, GroupForm, PrincipalRoleRelationForm
-from merengue.perms.utils import add_role, remove_role, can_manage_site
+from merengue.perms.utils import add_role, remove_role, can_manage_user
 
 
 class PermissionAdmin(admin.ModelAdmin):
@@ -42,7 +42,7 @@ class PermissionAdmin(admin.ModelAdmin):
         """
         Overrides Django admin behaviour to add ownership based access control
         """
-        return can_manage_site(request.user)
+        return can_manage_user(request.user)
 
     def get_urls(self):
         urls = super(PermissionAdmin, self).get_urls()
@@ -100,7 +100,7 @@ class PermissionAdmin(admin.ModelAdmin):
         return (msg, url_redirect)
 
     def change_roles_permissions(self, request, object_id, extra_context=None):
-        if not can_manage_site(request.user):
+        if not can_manage_user(request.user):
             raise PermissionDenied
         opts = self.model._meta
         admin_site = self.admin_site
@@ -199,7 +199,7 @@ class ObjectPermissionAdmin(PermissionAdmin):
         return my_urls + urls
 
     def change_roles_permissions(self, request):
-        if not can_manage_site(request.user):
+        if not can_manage_user(request.user):
             raise PermissionDenied
         opts = self.model._meta
         admin_site = self.admin_site
@@ -261,7 +261,7 @@ class RoleAdmin(admin.ModelAdmin):
         """
         Overrides Django admin behaviour to add ownership based access control
         """
-        return can_manage_site(request.user)
+        return can_manage_user(request.user)
 
     def save_model(self, request, obj, form, change):
         super(RoleAdmin, self).save_model(request, obj, form, change)
@@ -307,7 +307,7 @@ class UserAdmin(DjangoUserAdmin):
         """
         Overrides Django admin behaviour to add ownership based access control
         """
-        return can_manage_site(request.user)
+        return can_manage_user(request.user)
 
     def save_model(self, request, obj, form, change):
         super(UserAdmin, self).save_model(request, obj, form, change)
@@ -329,7 +329,7 @@ class GroupAdmin(DjangoGroupAdmin):
         """
         Overrides Django admin behaviour to add ownership based access control
         """
-        return can_manage_site(request.user)
+        return can_manage_user(request.user)
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(GroupAdmin, self).get_form(request, obj, **kwargs)

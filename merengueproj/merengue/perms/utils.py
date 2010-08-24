@@ -31,6 +31,9 @@ from merengue.perms.models import Permission
 from merengue.perms.models import PrincipalRoleRelation
 from merengue.perms.models import Role
 
+MANAGE_SITE_PERMISION = 'manage_site'
+MANAGE_USER_PERMISION = 'manage_user'
+
 # Roles ######################################################################
 
 
@@ -526,7 +529,11 @@ def is_inherited(obj, codename):
 
 
 def can_manage_site(user):
-    return user.is_superuser
+    return has_global_permission(user, MANAGE_SITE_PERMISION)
+
+
+def can_manage_user(user):
+    return has_global_permission(user, MANAGE_USER_PERMISION)
 
 
 def get_group(id):
