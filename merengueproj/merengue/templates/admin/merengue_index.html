@@ -87,7 +87,7 @@
     </div>
     {% endifhasperm %}
 {% if plugins %}
-    {% ifhasperm manage_plugin_content %}
+    {% ifhasperm 'manage_plugin_content' %}
     <div class="module-merengue" id="plugins">
       <h1>{% trans "Plugin administration" %}</h1>
       <p>{% trans "Manage your installed plugins." %}</p>
