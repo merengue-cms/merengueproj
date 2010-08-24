@@ -381,7 +381,7 @@ class AdminSite(BaseAdminSite, RelatedModelRegistrable):
         app_dict = {}
         user = request.user
         from merengue.perms import utils as perms_api
-        manage_plugin_content = perms_api.has_global_permission(user, 'manage_plugin_content')
+        manage_plugin_content = perms_api.can_manage_plugin_content(request.user)
         for model, model_admin in self.plugin_site._registry.items():
             app_label = model._meta.app_label
 
