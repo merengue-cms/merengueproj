@@ -16,6 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.contrib import admin
+from django.core.exceptions import PermissionDenied
 from django.contrib.admin.options import IncorrectLookupParameters
 from django.forms.util import ErrorList
 from django.http import HttpResponseRedirect
@@ -72,19 +73,20 @@ class MultimediaAddContentRelatedModelAdmin(BaseMultimediaContentRelatedModelAdm
     def associate_contents(self, request, queryset):
         selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
         if selected:
+            if not perms_api.has_permission_in_queryset(queryset, request.user, 'edit', None) or not self.has_change_permission(request):
+                    raise PermissionDenied
             if request.POST.get('post'):
-                if self.has_change_permission(request):
-                    multimedia = self.basecontent
-                    for content in queryset:
-                        mr = MultimediaRelation(content=content, multimedia=multimedia)
-                        mr.save(update_order=True)
-                        obj_log = ugettext(u"%(content)s content associated to %(multimedia)s") % {
-                            'content': content, 'multimedia': multimedia}
-                        self.log_change(request, content, obj_log)
-                    msg_data = {'number': len(queryset),
-                                'model_name': self.opts}
-                    msg = ugettext(u"Successfully associated %(number)d %(model_name)s.") % msg_data
-                    self.message_user(request, msg)
+                multimedia = self.basecontent
+                for content in queryset:
+                    mr = MultimediaRelation(content=content, multimedia=multimedia)
+                    mr.save(update_order=True)
+                    obj_log = ugettext(u"%(content)s content associated to %(multimedia)s") % {
+                        'content': content, 'multimedia': multimedia}
+                    self.log_change(request, content, obj_log)
+                msg_data = {'number': len(queryset),
+                            'model_name': self.opts}
+                msg = ugettext(u"Successfully associated %(number)d %(model_name)s.") % msg_data
+                self.message_user(request, msg)
                 return # end action
             extra_context = {'title': ugettext(u'Are you sure you want to associate these contents?'),
                              'action_submit': 'associate_contents'}
@@ -103,6 +105,8 @@ class MultimediaRemoveContentRelatedModelAdmin(BaseMultimediaContentRelatedModel
     def disassociate_contents(self, request, queryset):
         selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
         if selected:
+            if not perms_api.has_permission_in_queryset(queryset, request.user, 'edit', None) or not self.has_change_permission(request):
+                    raise PermissionDenied
             if request.POST.get('post'):
                 multimedia = self.basecontent
                 for content in queryset:
