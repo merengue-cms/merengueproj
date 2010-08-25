@@ -658,7 +658,7 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
         """
             Overrides Django admin behaviour to add ownership based access control
         """
-        return True
+        return perms_api.has_global_permission(request.user, 'edit')
 
     def has_change_permission(self, request, obj=None):
         """
