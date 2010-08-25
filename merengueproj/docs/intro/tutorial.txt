@@ -513,19 +513,19 @@ The new template will be this (including comments to explain new fragments):
 Developing a plugin
 ===================
 
-Merengue *plugins* are installable components for adding some functionality or
-changing existing Merengue features. See :ref:`Plugins documentation <topics-plugins-overview>`
+Merengue *plugins* are installable components that add some functionality or
+change existing Merengue features. See :ref:`Plugins documentation <topics-plugins-overview>`
 for more information.
 
-In this tutorial, we will implement a ``features`` plugin to:
+In this tutorial, we will implement a ``features`` plugin that:
 
- * Add two new content types (Feature and FeatureCategory) that represent Merengue features with its categories.
- * Implement a features blocks to show some features in home page.
- * Implement a listing view for all features.
+ * Adds two new content types (Feature and FeatureCategory) for Merengue features and their categories.
+ * Implements a features block to show some features in the home page.
+ * Implements a listing view to show all the features.
 
 .. admonition:: Note
 
-    If you want to inspect the finished ``features`` plugin, you can see
+    If you want to inspect the finished ``features`` plugin, you can browse
     `features plugin code`_ in our Trac system.
 
 .. _`features plugin code`: http://dev.merengueproject.org/browser/sites/merengueprojectorg/plugins/features
@@ -535,8 +535,8 @@ Creating a plugin
 
 A plugin is a Django application with some restrictions:
 
- * It have to be located in the project ``plugins`` directory.
- * It need to have a plugin configuration file, named ``config.py`` with a ``PluginConfig`` class inside.
+ * It must be located in the project's ``plugins`` directory.
+ * It must have a plugin configuration file, named ``config.py`` with a ``PluginConfig`` class inside.
 
 So, to build the dummiest plugin possible we have to do:
 
@@ -548,7 +548,7 @@ So, to build the dummiest plugin possible we have to do:
     $ touch features/models.py
     $ touch features/config.py
 
-And write next code in ``plugins/features/config.py`` (plugin configuration
+And write the following code in ``plugins/features/config.py`` (the plugin configuration
 file):
 
 .. code-block:: python
@@ -561,16 +561,16 @@ file):
         version = '0.0.1'
 
 This fragment only set the plugin metadata, without changing functionality. Our
-``features`` plugin is for now a dummy plugin.
+``features`` plugin is still a dummy plugin.
 
-With this data Merengue should recognize this python module as plugin:
+With this data Merengue should recognize this python module as a plugin:
 
 .. image:: _images/merengueprojectorg_with_features_plugin.png
 
 Creating plugin models
 ----------------------
 
-Before installing plugin, we should create its models:
+Before installing the plugin, we should create its models:
 
 .. code-block:: python
 
@@ -597,20 +597,20 @@ Before installing plugin, we should create its models:
 ``BaseCategory`` is the base model for all categorizations, and ``BaseContent``
 will be a non abstract model (see `Django model inheritance`_) for all managed
 contents. If your model inherits from ``BaseContent`` it will have all Merengue
-features referred to content management. ``BaseContentManager`` is a special
-manager with a lot of query features, like getting contents by workflow status.
+features related to content management for free. ``BaseContentManager`` is a special
+manager with a lot of cool query methods, like getting contents by workflow status.
 
 .. _`Django model inheritance`: http://docs.djangoproject.com/en/1.1/topics/db/models/#id5
 
 These models will be created automatically when you install the plugin in
-admin site. Please, do it. After that, let's check the tables created in our sqlite3
+admin site. Please, do it now before reading more. After that, let's check the tables created in our sqlite3
 database:
 
 .. code-block:: bash
 
     $ python manage.py dbshell
     sqlite> .tables feature
-    features_feature             features_featurecategory   
+    features_feature             features_featurecategory
     features_feature_categories
 
 We can know play with features and feature categories using the Django ORM as follows:
@@ -653,8 +653,8 @@ news items, etc. Let's check it:
     >>> BaseContent.objects.all().values('class_name', 'name_en')
     [{'class_name': u'feature', 'name_en': u'Skinnable'}, {'class_name': u'document', 'name_en': u'Welcome to Merengue'}]
 
-To enable these models in Merengue admin site you need define a plugin admin,
-implementing ``get_model_admins`` method in ``config.py``:
+To enable these models in Merengue admin site you need define a plugin admin section,
+implementing the ``get_model_admins`` method in ``config.py``:
 
 .. code-block:: python
 
@@ -673,8 +673,8 @@ Both ``FeatureAdmin`` and ``FeatureCategoryAdmin`` are `Django model admins`_.
 
 .. _`Django model admins`: http://docs.djangoproject.com/en/1.2/ref/contrib/admin/#modeladmin-objects
 
-Of course, as you see, these ``ModelAdmin`` classes are defined in ``plugins.features.admin``
-module. This implies creates a ``admin.py`` file inside plugin with this content:
+Of course, as you can see, these ``ModelAdmin`` classes are defined in ``plugins.features.admin``
+module. This implies there is an ``admin.py`` file inside the plugin package with this content:
 
 .. code-block:: python
 
@@ -688,21 +688,21 @@ module. This implies creates a ``admin.py`` file inside plugin with this content
         pass
 
 Both ``BaseCategoryAdmin`` and ``BaseContentAdmin`` are Django ``ModelAdmin``
-subclasses, but with extra features. So, you could make use of usual options,
-but also you have others. See `merengue.base.admin`_ module for more
+subclasses, but with extra features. You can customize the usual ModelAdmini
+options and many new ones.. See `merengue.base.admin`_ module for more
 information.
 
 .. _`merengue.base.admin`: http://dev.merengueproject.org/browser/trunk/merengueproj/merengue/base/admin.py
 
-Now, if you access to admin site, you will see a ``Features`` plugin admin site:
+Now, if you access the admin site, you will see a ``Features`` plugin admin site:
 
 .. image:: _images/merengueproject_admin_with_features.png
 
-If you click, you will access both ``FeatureAdmin`` and ``FeatureCategoryAdmin``:
+If you click on it, you will access both ``FeatureAdmin`` and ``FeatureCategoryAdmin``:
 
 .. image:: _images/merengueproject_features_admin.png
 
-Now you can add features in admin site.
+Now you can add features in the admin site.
 
 Rendering new blocks
 --------------------
