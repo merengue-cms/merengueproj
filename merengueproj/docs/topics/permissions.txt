@@ -22,12 +22,37 @@ instances.
 What is an permission?
 ----------------------
 
-(( to be completed ))
+Permissions are granted to roles (and only to roles) in order to allow something to users or groups which have these roles.
 
-How it works?
--------------
+What is an role?
+----------------
 
-(( to be completed ))
+Roles are used to grant permissions. Typical roles are Reader, Manager or Editor.
+
+What is a local role?
+---------------------
+
+Local roles are roles which are assigned to users and groups for a specific content objects.
+
+Users
+-----
+
+ * Users are actors which may need a permission to do something within the system.
+ * Users can be member of several groups.
+ * User can have several roles, directly or via a membership to a group (these are considered as global).
+ * User can have local roles, directly or via a membership to a group. That is roles for a specific object.
+ * Users have all roles of their groups - global and local ones.
+ * Users have all permissions of their roles - global and local ones.
+
+Groups
+------
+
+ * Groups combines users together.
+ * Groups can have roles (these are considered as global).
+ * Groups can have local roles, that is roles for a specific object.
+ * Groups has all permissions of their roles - global and local ones.
+ * Users of a Group have the group’s roles and permissions.
+
 
 Builtin permissions on merengue
 -------------------------------
@@ -61,31 +86,65 @@ Global permissions on merengue
 -------------------------------
 
     Manage section (``manage_section``)
-      If a user is member of a role with this permission, user will be able to edit, delete and add sections.
+      If user has this permission, user will be able to edit, delete and add sections.
 
     Manage link portal (``manage_link``)
-      If a user is member of a role with this permission, user will be able to edit, delete and add portal links.
+      If user has this permission, user will be able to edit, delete and add portal links.
 
     Manage menu portal (``manage_menu``)
-      If a user is member of a role with this permission, user will be able to edit, delete and add portal menus.
+      If user has this permission, user will be able to edit, delete and add portal menus.
 
     Manage multimedia (``manage_multimedia``)
-      If a user is member of a role with this permission, user will be able to edit, delete and add any multimedia content.
+      If user has this permission, user will be able to edit, delete and add any multimedia content.
 
     Manage plugin content (``manage_plugin_content``)
-      If a user is member of a role with this permission, user will be able to manage all contents from installed plugins.
+      If user has this permission, user will be able to manage all contents from installed plugins.
 
     Manage category (``manage_category``)
-      If a user is member of a role with this permission, user will be able to edit, delete and add catetories.
+      If user has this permission, user will be able to edit, delete and add categories.
 
     Manage portal (``manage_portal``)
-      If a user is member of a role with this permission, user will be able to move portlets in public views.
+      If user has this permission, user will be able to move portlets in public views and add sections to documents.
 
     Manage site (``manage_site``)
-      If a user is member of a role with this permission, user will be able to manage blocks, plugins, themes, registered items and save/restore configuration.
+      If user has this permission, user will be able to manage blocks, plugins, themes, registered items and save/restore configuration.
 
     Manage user (``manage_user``)
-      If a user is member of a role with this permission, user will be able to manage groups, users, roles and permissions.
+      If user has this permission, user will be able to manage groups, users, roles and permissions.
+
+
+Admin interface
+===============
+
+Creating a role and assigning user to role
+------------------------------------------
+
+(( to be completed ))
+
+Assigning role to group
+-----------------------
+
+(( to be completed ))
+
+Granting a permission to a content
+----------------------------------
+
+(( to be completed ))
+
+Granting a permission to all contents
+-------------------------------------
+
+(( to be completed ))
+
+Local roles
+-----------
+
+(( to be completed ))
+
+Manage all permissions
+----------------------
+
+(( to be completed ))
 
 
 Using the python API
@@ -135,7 +194,7 @@ Granting a permission to a content
     >>> grant_permission(editor, 'vote', content)
 
 Granting a permission to all contents
-----------------------------------
+-------------------------------------
 
 .. code-block:: python
 
@@ -169,7 +228,7 @@ Removing a permission to all contents
 Local roles
 -----------
 
-You can assign a role to an user globally (for all contents) or locally (to one content).
+You can assign a role to an user or a group, globally (for all contents) or locally (to one content).
 
 .. code-block:: python
 
@@ -219,9 +278,3 @@ To define global permissions to vote any such content:
             return (
                 ('vote', _('Vote content')),)
 
-
-
-Admin interface
-===============
-
-(( to be completed ))
