@@ -57,6 +57,36 @@ The builtin permissions in merengue are:
     Can set as published (``can_published``)
         If user has this permission in a content, user will can to change the content status to published.
 
+Global permissions on merengue
+-------------------------------
+
+    Manage section (``manage_section``)
+      If a user is member of a role with this permission, user will be able to edit, delete and add sections.
+
+    Manage link portal (``manage_link``)
+      If a user is member of a role with this permission, user will be able to edit, delete and add portal links.
+
+    Manage menu portal (``manage_menu``)
+      If a user is member of a role with this permission, user will be able to edit, delete and add portal menus.
+
+    Manage multimedia (``manage_multimedia``)
+      If a user is member of a role with this permission, user will be able to edit, delete and add any multimedia content.
+
+    Manage plugin content (``manage_plugin_content``)
+      If a user is member of a role with this permission, user will be able to manage all contents from installed plugins.
+
+    Manage category (``manage_category``)
+      If a user is member of a role with this permission, user will be able to edit, delete and add catetories.
+
+    Manage portal (``manage_portal``)
+      If a user is member of a role with this permission, user will be able to move portlets in public views.
+
+    Manage site (``manage_site``)
+      If a user is member of a role with this permission, user will be able to manage blocks, plugins, themes, registered items and save/restore configuration.
+
+    Manage user (``manage_user``)
+      If a user is member of a role with this permission, user will be able to manage groups, users, roles and permissions.
+
 
 Using the python API
 ====================
