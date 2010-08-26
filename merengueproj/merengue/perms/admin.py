@@ -81,7 +81,7 @@ class PermissionAdmin(admin.ModelAdmin):
 
     def _update_role_users(self, request, obj):
         selected = request.POST.getlist('selected_user')
-        for ppr in PrincipalRoleRelation.objects.filter(content=obj):
+        for ppr in PrincipalRoleRelation.objects.filter(content=obj, user__isnull=False):
             role_user = "%s_%s" % (ppr.role.id, ppr.user.id)
             if role_user not in selected:
                 ppr.delete()
@@ -94,6 +94,26 @@ class PermissionAdmin(admin.ModelAdmin):
                                                                        content=obj)
         msg = _('The role users were changed successfully.')
         if '_users_continue' in request.POST:
+            url_redirect = '.'
+        else:
+            url_redirect = '../'
+        return (msg, url_redirect)
+
+    def _update_role_groups(self, request, obj):
+        selected = request.POST.getlist('selected_group')
+        for ppr in PrincipalRoleRelation.objects.filter(content=obj, group__isnull=False):
+            role_group = "%s_%s" % (ppr.role.id, ppr.group.id)
+            if role_group not in selected:
+                ppr.delete()
+        for role_group in selected:
+            role_id, group_id = role_group.split('_')
+            role = Role.objects.get(id=role_id)
+            group = Group.objects.get(id=group_id)
+            ppr, created = PrincipalRoleRelation.objects.get_or_create(role=role,
+                                                                       group=group,
+                                                                       content=obj)
+        msg = _('The role groups were changed successfully.')
+        if '_groups_continue' in request.POST:
             url_redirect = '.'
         else:
             url_redirect = '../'
@@ -114,8 +134,10 @@ class PermissionAdmin(admin.ModelAdmin):
                 msg, url_redirect = self._update_role_permissions(request, obj)
             elif '_users_continue' in request.POST or '_users_save' in request.POST:
                 msg, url_redirect = self._update_role_users(request, obj)
+            elif '_groups_continue' in request.POST or '_groups_save' in request.POST:
+                msg, url_redirect = self._update_role_groups(request, obj)
             if msg and url_redirect:
-                return self.response_change(request, msg, url_redirect)
+                return self.response_change(request, msg, url_redirect=url_redirect)
 
         roles = Role.objects.all()
         role_permissions = {}
@@ -128,13 +150,21 @@ class PermissionAdmin(admin.ModelAdmin):
         prr_form = prr_form or PrincipalRoleRelationForm(initial={'content': obj.pk})
         pprs = PrincipalRoleRelation.objects.filter(content=obj).exclude(role__slug=ANONYMOUS_ROLE_SLUG)
         user_roles = {}
+        group_roles = {}
         for ppr in pprs:
-            if not ppr.user in user_roles:
+            if  ppr.user and not ppr.user in user_roles:
                 user_roles[ppr.user] = []
+            if  ppr.group and not ppr.group in group_roles:
+                group_roles[ppr.group] = []
             for role in roles:
-                user_rol = (role, ppr.user.principalrolerelation_set.filter(role=role) and True or False)
-                if not user_rol in user_roles[ppr.user]:
-                    user_roles[ppr.user].append(user_rol)
+                if ppr.user:
+                    user_rol = (role, ppr.user.principalrolerelation_set.filter(role=role) and True or False)
+                    if not user_rol in user_roles[ppr.user]:
+                        user_roles[ppr.user].append(user_rol)
+                if ppr.group:
+                    group_rol = (role, ppr.group.principalrolerelation_set.filter(role=role) and True or False)
+                    if not group_rol in group_roles[ppr.group]:
+                        group_roles[ppr.group].append(group_rol)
         context = {'original': obj,
                    'admin_site': admin_site.name,
                    'change': True,
@@ -154,6 +184,7 @@ class PermissionAdmin(admin.ModelAdmin):
                    'form_url': '.',
                    'prr_form': prr_form,
                    'user_roles': user_roles,
+                   'group_roles': group_roles,
                    'anonymous_role_slug': ANONYMOUS_ROLE_SLUG, }
 
 

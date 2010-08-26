@@ -52,9 +52,9 @@
     {% customize_submit_row "roles_" %}
 </form>
 {% if original %}
-<h2>{% trans "User Roles" %} </h2> 
-<p>{% trans "Update the roles for each user for the content: " %}'{{ original }}'</p> 
-<p class="noteUser">{% trans "Autocomplete the user and select a role" %}</p>
+<h2>{% trans "User and groups local roles" %} </h2>
+<p>{% trans "Create local roles for user or group for the content: " %}'{{ original }}'</p>
+<p class="noteUser">{% trans "Autocomplete the user or autocomplete the group and select a role" %}</p>
 <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">
     {{ prr_form }}
     <input type="submit" value="{% trans 'Create' %}" name="_continue_role_relation"/>
@@ -91,9 +91,46 @@
         </table>
     </div>
 </div>
+</div>
     <div class="module aligned"></div>
     {% customize_submit_row "users_" %}
 </form>
+
+<form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">
+<div>
+    <div id="changeform" class="module">
+        <table cellspacing="0">
+            <thead>
+                <tr>
+                <th>{% trans "Groups"%}</th>
+                {% for role in roles %}
+                    {% ifequal role.slug anonymous_role_slug %}
+                    {% else %}
+                        <th>{{ role }}</th>
+                    {% endifequal %}
+                {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for group, roles in group_roles.items %}
+                    <tr class="{% cycle 'row1' 'row2' %}">
+                        <td>{{ group }}</td>
+                        {% for role, checked in roles %}
+                            {% ifequal role.slug anonymous_role_slug %}
+                            {% else %}
+                                <td><input type="checkbox" {% if checked %}checked="checked"{% endif %} class="action-select" value="{{ role.id}}_{{ group.id }}" name="selected_group" /></td>
+                            {% endifequal %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+    <div class="module aligned"></div>
+    {% customize_submit_row "groups_" %}
+</form>
+
 {% endif %}
 </div>
 {% endblock %}

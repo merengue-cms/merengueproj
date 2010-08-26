@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.db.models import Q
 
 
@@ -41,3 +41,24 @@ class UserLookup(object):
             this is for displaying the currently selected items (in the case of a ManyToMany field)
         """
         return User.objects.filter(pk__in=ids).order_by('first_name', 'last_name')
+
+
+class GroupLookup(object):
+
+    def get_query(self, q, request):
+        """ return a query set. you also have access to request.user if needed """
+        return Group.objects.filter(name__istartswith=q)
+
+    def format_item(self, group):
+        """ simple display of an object when it is displayed in the list of selected objects """
+        return unicode(group.name)
+
+    def format_result(self, group):
+        """ a more verbose display, used in the search results display.  may contain html and multi-lines """
+        return self.format_item(group)
+
+    def get_objects(self, ids):
+        """ given a list of ids, return the objects ordered as you would like them on the admin page.
+            this is for displaying the currently selected items (in the case of a ManyToMany field)
+        """
+        return Group.objects.filter(pk__in=ids)

@@ -55,10 +55,9 @@ class PrincipalRoleRelationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PrincipalRoleRelationForm, self).__init__(*args, **kwargs)
         self.fields['content'].widget = forms.HiddenInput()
-        self.fields['user'] = AutoCompleteSelectField('perms_user')
+        self.fields['user'] = AutoCompleteSelectField('perms_user', required=False)
+        self.fields['group'] = AutoCompleteSelectField('perms_group', required=False)
         self.fields['role'].queryset = self.fields['role'].queryset.exclude(slug=ANONYMOUS_ROLE_SLUG)
-
-        del self.fields['group']
 
     class Meta:
         model = PrincipalRoleRelation
@@ -72,6 +71,16 @@ class PrincipalRoleRelationForm(forms.ModelForm):
 
     def save(self):
         obj = self.cleaned_data['content']
-        prinpipal = self.cleaned_data.get('user', self.cleaned_data.get('group', None))
+        principal = self.cleaned_data.get('user') or self.cleaned_data.get('group', None)
         role = self.cleaned_data['role']
-        add_local_role(obj, prinpipal, role)
+        #import ipdb; ipdb.set_trace()
+        add_local_role(obj, principal, role)
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        user = cleaned_data.get("user")
+        group = cleaned_data.get("group")
+
+        if not user and not group:
+            raise forms.ValidationError("User and group fields are empty, you must enter or user or group")
+        return cleaned_data
