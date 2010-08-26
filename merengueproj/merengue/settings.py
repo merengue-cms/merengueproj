@@ -246,3 +246,6 @@ LOGIN_REDIRECT_URL = '/'
 
 # Merengue test runner
 TEST_RUNNER = 'merengue.test.run_tests'
+
+# Merengue manage file
+MANAGE_FILE = 'manage.py'

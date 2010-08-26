@@ -41,7 +41,7 @@ def check_plugins():
         # tries to validate models and this register non valid meta information
         # (fields, m2m, etc.)
         process = subprocess.Popen(
-            [sys.executable, 'manage.py', "register_new_plugins"],
+            [sys.executable, settings.MANAGE_FILE, "register_new_plugins"],
             cwd=settings.BASEDIR, env=process_environ,
         )
         process.wait()
