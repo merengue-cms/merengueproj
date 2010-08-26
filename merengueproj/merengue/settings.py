@@ -219,7 +219,6 @@ DEBUG_TOOLBAR_EXCLUDED_URLS = (
 # ajax_select
 AJAX_LOOKUP_CHANNELS = {
     'perms_user': ('merengue.perms.lookups', 'UserLookup'),
-    'perms_group': ('merengue.perms.lookups', 'GroupLookup'),
 }
 
 JQUERY_BASE_MEDIA = 'merengue/js/'
@@ -250,3 +249,7 @@ TEST_RUNNER = 'merengue.test.run_tests'
 
 # Merengue manage file
 MANAGE_FILE = 'manage.py'
+
+# sys.executable
+# /usr/bin/python
+SYS_EXECUTABLE = None

@@ -35,13 +35,15 @@ def check_plugins():
         'DJANGO_SETTINGS_MODULE': os.environ['DJANGO_SETTINGS_MODULE'],
     }
 
+    sys_executable = settings.SYS_EXECUTABLE or sys.executable
+
     if settings.DETECT_NEW_PLUGINS:
         # now look for all plugins in filesystem and register them
         # we have to launch other process because broken plugin detection
         # tries to validate models and this register non valid meta information
         # (fields, m2m, etc.)
         process = subprocess.Popen(
-            [sys.executable, settings.MANAGE_FILE, "register_new_plugins"],
+            [sys_executable, settings.MANAGE_FILE, "register_new_plugins"],
             cwd=settings.BASEDIR, env=process_environ,
         )
         process.wait()
@@ -51,7 +53,7 @@ def check_plugins():
         # tries to validate models and this register non valid meta information
         # (fields, m2m, etc.)
         process = subprocess.Popen(
-            [sys.executable, settings.MANAGE_FILE, "mark_broken_plugins"],
+            [sys_executable, settings.MANAGE_FILE, "mark_broken_plugins"],
             cwd=settings.BASEDIR, env=process_environ,
         )
         process.wait()
