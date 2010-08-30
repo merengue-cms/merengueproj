@@ -116,35 +116,63 @@ Global permissions on merengue
 Admin interface
 ===============
 
+You can access to the permissions configuration clicking groups, users, roles or permissions in the main admin page in "User Management" portlet.
+
 Creating a role and assigning user to role
 ------------------------------------------
 
-(( to be completed ))
+To create a role, first you should click in "Roles" in the main admin page or go to the url http://localhost:8000/admin/perms/role/, then you click in "Add role" button. You fill the form with a name and mark the permissions for this role.
+
+.. image:: _images/add_role.png
+
+
+Finally, you must go a users admin page clicking "Users" in the main admin page or go to the url http://localhost:8000/admin/auth/user/, choose a user, add previously created role and save the form.
+
+.. image:: _images/assign_role_to_user.png
 
 Assigning role to group
 -----------------------
 
-(( to be completed ))
-
-Granting a permission to a content
-----------------------------------
-
-(( to be completed ))
+This step is same as above, except that the user is assigned in the group admin view. You must go a groups admin page clicking "Groups" in the main admin page or go to the url http://localhost:8000/admin/auth/group/, choose a group, add previously created role and save the form.
 
 Granting a permission to all contents
 -------------------------------------
 
-(( to be completed ))
+To guarantee a permission to all contents, you must assign a builin permission to a role. For example, if you want give edit permission for all contents to "editor" role, you must be assign the "edit" permission in role admin page.
+
+.. image:: _images/assign_edit_permission.png
+
+
+
+Granting a permission to a content
+----------------------------------
+
+To guarantee a permission to a content, you have to go content admin page and click in "Permissions" button. Note this button is only shown if content type is basecontent.
+
+The content permission admin page show a table with permissions and roles availables, you can assign permission to current content for a given role.
+
+.. image:: _images/assign_permission_content.png
+
 
 Local roles
 -----------
 
-(( to be completed ))
+To create a local role for a content, you have to go content admin page and click in "Permissions" button.
+With the form shown in the image, you can assign a local role a user or a group for current content. For example, you want that a user or a group has "editor" role only for "welcome" page. You just have to fill the user or group and role fields and click in "create" button. The user and group fields will be autocompleted.
+
+
+.. image:: _images/add_local_role.png
+
+When you've created local roles, you can modify assigning new roles.
+
+.. image:: _images/edit_local_role.png
 
 Manage all permissions
 ----------------------
 
-(( to be completed ))
+There is a admin view to edit all builtin and global permissions for each role. To access to this view, you have to click on "Permissions" in the main admin page or go to the url http://localhost:8000/admin/perms/objectpermission/
+
+.. image:: _images/global_permissions.png
 
 
 Using the python API
