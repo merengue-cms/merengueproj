@@ -338,6 +338,10 @@ a role with a group, and every user of this group will every permission of the r
 
 There is a special role: "Anonymous User". Every user will every permission of this role.
 
+.. admonition:: Deep into
+
+    For more information about Merengue permissions, you can read :ref:`working with permissions <topics-permissions>`
+
 
 Maintenance tasks
 =================
