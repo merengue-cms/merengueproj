@@ -35,6 +35,9 @@ urlpatterns = patterns('',
     # login and logout
     url(r'^login/$', 'merengue.portal.views.login', name="merengue_login"),
     url(r'^logout/$', 'merengue.portal.views.logout', name="merengue_logout"),
+    url(r'^password/reset/$', 'merengue.portal.views.password_reset', name="password_reset"),
+    url(r'^password/reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', 'merengue.portal.views.password_reset_confirm', name="password_reset_confirm"),
+    url(r'^password/reset/done/$', 'merengue.portal.views.password_reset_complete', name="password_reset_complete"),
 
     # base urls
     (r'^base/', include('merengue.base.urls')),

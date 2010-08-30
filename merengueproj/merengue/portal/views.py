@@ -17,8 +17,12 @@
 
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
+from django.core.urlresolvers import reverse
 from django.contrib.auth.views import logout as auth_logout
 from django.contrib.auth.views import login as auth_login
+from django.contrib.auth.views import password_reset as auth_password_reset
+from django.contrib.auth.views import password_reset_confirm as auth_password_reset_confirm
+from django.contrib.auth.views import password_reset_complete as auth_password_reset_complete
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
@@ -31,7 +35,7 @@ from cmsutils.log import send_info
 
 @never_cache
 def login(request, redirect_field_name='next'):
-    response = auth_login(request)
+    response = auth_login(request, redirect_field_name=redirect_field_name)
     if request.user.is_authenticated():
         send_info(request, _('Welcome %s') % request.user)
     return response
@@ -39,7 +43,24 @@ def login(request, redirect_field_name='next'):
 
 @never_cache
 def logout(request, template_name='registration/logged_out.html'):
-    return auth_logout(request)
+    return auth_logout(request, template_name=template_name)
+
+
+def password_reset(request, template_name='registration/password_reset.html',
+                            email_template_name='registration/password_reset_email.html'):
+    return auth_password_reset(request, template_name=template_name,
+                               email_template_name=email_template_name,
+                               post_reset_redirect=reverse('website.views.index'))
+
+
+def password_reset_confirm(request, uidb36=None, token=None, template_name='registration/password_reset_confirm.html'):
+    return auth_password_reset_confirm(request, uidb36, token, template_name=template_name,
+                                       post_reset_redirect=reverse('website.views.index'))
+
+
+def password_reset_complete(request, template_name='registration/password_reset.html'):
+    return auth_password_reset_complete(request, template_name=template_name,
+                                    post_reset_redirect=reverse('website.views.index'))
 
 
 @never_cache
