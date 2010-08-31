@@ -5,7 +5,7 @@ body {
 	line-height: 20px;
 	font-family:Arial,Helvetica,sans-serif;
 	background:url(merengue_bg.jpg) repeat #e6d8c0; 
-	color: #777777;
+	color: #777777 !important;
 	}
 #custom-doc { 
 	width:76.54em;
@@ -175,7 +175,8 @@ h2 {
 	}
 h3 { 
 	font-size:150%;
-	padding-bottom:.2em; 
+	padding-bottom:.1em;
+	padding-top:.5em; 
 	color:#917250; 
 	}
 h4 { font-size:125%; font-weight:bold; margin-top:1.5em; margin-bottom:3px; }
@@ -269,7 +270,7 @@ dt .literal, table .literal { background:none; }
 	}
 .admonition-title { 
 	font-weight:bold; 
-	letter-spacing: 0;
+	font-size: 15px;
 	margin-top:0 !important; 
 	margin-bottom:0 !important;
 	}
