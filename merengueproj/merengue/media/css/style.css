@@ -137,6 +137,8 @@ span.errormsg {
     background: transparent url(/media/merengue/img/icon_error.gif) no-repeat scroll 0 0;
     color: red;
     padding-left: 20px;
+    display: block;
+    line-height: 16px;
 }
 
 span.infomsg {
