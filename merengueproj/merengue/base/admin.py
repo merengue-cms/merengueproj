@@ -45,6 +45,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
+from autoreports.admin import ReportAdmin
 from cmsutils.forms.widgets import AJAXAutocompletionWidget
 from oembed.models import ProviderRule, StoredOEmbed
 from transmeta import (canonical_fieldname, get_all_translatable_fields,
@@ -267,7 +268,7 @@ def set_field_read_only(field, field_name, obj):
     field.required = False
 
 
-class BaseAdmin(GenericAdmin, admin.ModelAdmin):
+class BaseAdmin(GenericAdmin, ReportAdmin, admin.ModelAdmin):
     html_fields = ()
     autocomplete_fields = {}
     edit_related = ()
