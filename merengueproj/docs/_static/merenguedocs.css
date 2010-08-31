@@ -47,6 +47,7 @@ a {
 a img {
     border: none;
     float: right;
+	margin-top:-17px;
 }
 /* a:link, a:visited { color:#ffc757; } */
 #bd a:link, #bd a:visited { 
@@ -182,8 +183,7 @@ div.figure { text-align: center; }
 div.figure p.caption { font-size:1em; margin-top:0; margin-bottom:1.5em; color: #555;}
 hr { color:#ccc; background-color:#ccc; height:1px; border:0; }
 p { 
-	margin: 0.6em 0 0 0; 
-	letter-spacing: 0.5px;
+	margin: 0.6em 0 0 0;
 	}
 #yui-main div.yui-b img { max-width: 50em; margin-left: auto; margin-right: auto; margin-top: 10px; display: block; }
 caption { font-size:1em; font-weight:bold; margin-top:0.5em; margin-bottom:0.5em; margin-left: 2px; text-align: center; }
