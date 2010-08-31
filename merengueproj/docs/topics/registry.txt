@@ -17,8 +17,8 @@ be stored in database.
 
 Example use cases:
 
-* Registering plugins, with plugin options (see plugin development docs?).
-* Registering actions with configuration parameters (see actions docs?).
+* Registering plugins, with plugin options (see :ref:`plugin development docs <topics-plugins-overview>`).
+* Registering actions with configuration parameters (see :ref:`actions docs <topics-actions>`).
 * Storing user preferences.
 * Theme configuration (basic colors, etc.).
 
