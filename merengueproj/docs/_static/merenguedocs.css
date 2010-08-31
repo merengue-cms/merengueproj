@@ -5,7 +5,6 @@ body {
 	line-height: 20px;
 	font-family:Arial,Helvetica,sans-serif;
 	background:url(merengue_bg.jpg) repeat #e6d8c0; 
-	color: #777777 !important;
 	}
 #custom-doc { 
 	width:76.54em;
@@ -94,7 +93,9 @@ a.reference em { font-style: normal; }
 	}
 #sidebar a { color: white; }
 #sidebar ul ul { margin-top:0; margin-bottom:0; }
-#sidebar li { margin-top: 0.2em; margin-bottom: 0.2em; }
+#sidebar li {
+	margin-bottom: 0.2em; 
+	}
 
 /*** nav ***/
 div.nav { 
@@ -278,7 +279,7 @@ dt .literal, table .literal { background:none; }
 	}
 .admonition .last { margin-bottom:0 !important; }
 .note, .admonition { 
-	padding-left:65px; 
+	padding-left:69px; 
 	background:url(docicons-note.png) .8em .8em no-repeat #FCF8DE;
 	border: 2px solid white;
 	-webkit-box-shadow: 0 1px 6px rgba(0,0,0,.2);
