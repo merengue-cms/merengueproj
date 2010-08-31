@@ -23,9 +23,12 @@ from oembed.templatetags.oembed_tags import OEmbedNode
 register = template.Library()
 
 
+SLIDE_TYPES = ['photo', 'video', 'panoramicview', 'image3d', 'audio']
+
+
 @register.inclusion_tag('media_slide.html', takes_context=True)
 def media_slide(context, content):
-    multimedia = content.multimedia.published().order_by('multimediarelation__order')
+    multimedia = content.multimedia.published().filter(class_name__in=SLIDE_TYPES).order_by('multimediarelation__order')
     return {'multimedia_list': multimedia,
             'content': content,
             'street_view': True,
