@@ -171,7 +171,7 @@ h1 {
 	}
 h2 { 
 	font-size:180%; 
-	margin-bottom:.6em; 
+	margin:1em 0 .6em; 
 	line-height:1.2em; 
 	color:#7A736C; 
 	border-bottom: 1px dotted;
