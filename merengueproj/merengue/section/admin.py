@@ -255,10 +255,17 @@ class MenuAdmin(BaseAdmin):
     inherit_actions = False
     inlines = [AbsoluteLinkInline, ContentLinkInline, ViewletLinkInline]
     form = MenuAdminModelForm
+    menu_slug = None
 
     def __init__(self, *args, **kwargs):
         super(MenuAdmin, self).__init__(*args, **kwargs)
         self.old_inline_instances = [instance for instance in self.inline_instances]
+
+    def get_menu(self, request, *args, **kwargs):
+        return Menu.tree.get(slug=self.menu_slug or settings.MENU_PORTAL_SLUG)
+
+    def queryset(self, request):
+        return self.get_menu(request).get_descendants()
 
     def has_add_permission(self, request):
         """
@@ -331,23 +338,22 @@ class MenuAdmin(BaseAdmin):
         media.add_js([settings.MEDIA_URL + "merengue/js/section/OrderableMenuTree.js"])
         extra_context.update({'media': media.render(),
                               'moved_source': source})
-        return super(MenuAdmin, self).changelist_view(
-                                                        request, extra_context)
+        return super(MenuAdmin, self).changelist_view(request, extra_context)
 
 
 class BaseSectionMenuRelatedAdmin(MenuAdmin, RelatedModelAdmin):
     change_list_template = "admin/section/menu/change_list.html"
 
-    def get_menu(self, request, basecontent=None):
-        return super(BaseSectionMenuRelatedAdmin, self).queryset(request, basecontent).get()
-
     def get_section_docs(self, request):
         section = getattr(self.get_menu(request), self.related_field)
         return section.content_set.all()
 
+    def get_menu(self, request, *args, **kwargs):
+        basecontent = kwargs.pop('basecontent', None)
+        return RelatedModelAdmin.queryset(self, request, basecontent).get()
+
     def get_form(self, request, obj=None, **kwargs):
-        form = super(BaseSectionMenuRelatedAdmin, self).get_form(
-                                                    request, obj, **kwargs)
+        form = super(BaseSectionMenuRelatedAdmin, self).get_form(request, obj, **kwargs)
         if 'parent' in form.base_fields.keys():
             qs = form.base_fields['parent'].queryset
             qs = qs.filter(tree_id=self.get_menu(request).tree_id, level__gt=0)
@@ -357,6 +363,7 @@ class BaseSectionMenuRelatedAdmin(MenuAdmin, RelatedModelAdmin):
         return form
 
     def queryset(self, request, basecontent=None):
+        """ overrided to get the menu of the content section """
         menu = self.get_menu(request, basecontent)
         if not menu:
             return Menu.tree.get_empty_query_set()
@@ -367,7 +374,8 @@ class BaseSectionMenuRelatedAdmin(MenuAdmin, RelatedModelAdmin):
         if not obj.parent:
             obj.parent = self.get_menu(request)
         super(BaseSectionMenuRelatedAdmin, self).save_model(
-                                                request, obj, form, change)
+            request, obj, form, change,
+        )
 
 
 class MainMenuRelatedAdmin(BaseSectionMenuRelatedAdmin):
@@ -381,16 +389,15 @@ class PortalMenuAdmin(MenuAdmin):
     tool_label = _('portal menu')
     related_field = 'parent'
 
-    def queryset(self, request, basecontent=None):
-        basecontent = Menu.tree.get(slug=settings.MENU_PORTAL_SLUG)
-        return basecontent.get_descendants()
+    def get_menu(self, request):
+        """ overrided to get always the main portal menu """
+        return Menu.tree.get(slug=settings.MENU_PORTAL_SLUG)
 
     def get_form(self, request, obj=None, **kwargs):
-        form = super(PortalMenuAdmin, self).get_form(
-                                                    request, obj, **kwargs)
+        form = super(PortalMenuAdmin, self).get_form(request, obj, **kwargs)
         if 'parent' in form.base_fields.keys():
             qs = form.base_fields['parent'].queryset
-            root_menu = Menu.tree.get(slug=settings.MENU_PORTAL_SLUG)
+            root_menu = self.get_menu(request)
             descendants = root_menu.get_descendants()
             qs = descendants and qs.filter(pk__in=descendants.values('pk').query) or descendants
             form.base_fields['parent'].queryset = qs
