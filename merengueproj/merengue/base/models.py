@@ -26,7 +26,6 @@ if settings.USE_GIS:
 else:
     from django.db import models
 from django.contrib.contenttypes.models import ContentType
-from django.core.cache import cache as django_cache
 from django.core.management import call_command
 from django.core.exceptions import ObjectDoesNotExist, SuspiciousOperation
 from django.db.models import signals, permalink
@@ -43,7 +42,6 @@ from django.contrib.auth.models import User
 
 from cmsutils.db.fields import AutoSlugField
 from cmsutils.signals import post_rebuild_db
-from johnny import cache
 if settings.USE_GIS:
     from south.introspection_plugins import geodjango
 from south.modelsinspector import add_introspection_rules
@@ -666,27 +664,29 @@ add_introspection_rules(rules, ["^cmsutils\.db\.fields\.AutoSlugField"])
 # ----- south signals handling -----
 
 post_save_receivers = None
+cache_backend = None
 
 
 def handle_pre_migrate(sender, **kwargs):
-    global post_save_receivers
+    global post_save_receivers, cache_backend
     # remove post save receivers because we cannot to call create_menus signal
     post_save_receivers = post_save.receivers
     post_save.receivers = []
-    # Unpatch cache backend to disable johnny cache. Johny does weird things. See #852
-    query_cache_backend = cache.get_backend()(django_cache)
-    query_cache_backend.unpatch()
+    # use dummy cache backend because Johnny cache does weird things. See #852
+    cache_backend = settings.CACHE_BACKEND
+    settings.CACHE_BACKEND = 'dummy://'
 
 
 def handle_post_migrate(sender, **kwargs):
-    global post_save_receivers
+    global post_save_receivers, cache_backend
     # site fixtures loading after migration
     for app_name, fixtures in getattr(settings, 'SITE_FIXTURES', {}).items():
         if app_name == kwargs['app']: # only migrate
             for fixture in fixtures:
                 call_command('loaddata', fixture, verbosity=1)
-    # will set again saved receivers
+    # will set again saved receivers and cache backend
     post_save.receivers = post_save_receivers
+    settings.CACHE_BACKEND = cache_backend
 
 
 pre_migrate.connect(handle_pre_migrate)
