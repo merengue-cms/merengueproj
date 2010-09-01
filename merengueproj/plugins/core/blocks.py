@@ -73,11 +73,12 @@ class PortalMenuBlock(Block):
 class LinkBaseBlock(Block):
     """ Abstract base class for blocks that render portal links """
     category = None
+    template_name = 'core/block_portallinks.html'
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):
         links = PortalLink.objects.filter(category=cls.category)
-        return cls.render_block(request, template_name='core/block_portallinks.html',
+        return cls.render_block(request, template_name=cls.template_name,
                                 block_title=_('Portal links'),
                                 context={'links': links,
                                          'category': cls.category})
@@ -88,6 +89,7 @@ class PrimaryLinksBlock(LinkBaseBlock):
     name = 'primarylinks'
     default_place = 'header'
     category = 'primary'
+    template_name = 'core/block_primarylinks.html'
 
 
 class SecondaryLinksBlock(LinkBaseBlock):
@@ -95,3 +97,4 @@ class SecondaryLinksBlock(LinkBaseBlock):
     name = 'secondarylinks'
     default_place = 'footer'
     category = 'secondary'
+    template_name = 'core/block_secondarylinks.html'

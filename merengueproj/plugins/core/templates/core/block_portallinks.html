@@ -1,8 +1,12 @@
 {% load i18n inlinetrans %}
 
 <div id="portal-{{ category }}-links" class="block">
+  {% block portallinktitle %}
+  {% endblock %}
+  {% block portallinks %}
   <ul>
   {% for link in links %}
+    {% block portallink %}
     <li id="portal-link-{{ link.slug }}" class="{% if forloop.last %} last{% endif %}">
         <a href="{{ link.get_absolute_url }}" title="{{ link }}"><span>
             {% if link.image %}
@@ -12,8 +16,10 @@
             {% endif %}
         </span></a>
     </li>
+    {% endblock %}
   {% endfor %}
   </ul>
+  {% endblock %}
   <input type="hidden" value="{{ block.id }}" id="{{ block.name }}Order" class="blockOrder" />
 </div>
 
