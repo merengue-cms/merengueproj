@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-28 23:20+0200\n"
+"POT-Creation-Date: 2010-09-01 12:26+0200\n"
 "PO-Revision-Date: 2009-09-28 23:21\n"
 "Last-Translator: <lin@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Translated-Using: django-rosetta 0.4.RC2\n"
 
-#: actions.py:10
-msgid "Link at Facebook"
-msgstr "Enlazar en facebook"
+#: actions.py:27
+msgid "Share in Facebook"
+msgstr "Compartir facebook"
