@@ -71,7 +71,7 @@
         <field type="TextField" name="description_fr"><None></None></field>
         <field type="CharField" name="status">published</field>
         <field type="FileField" name="main_image"></field>
-        <field type="IntegerField" name="order"><None></None></field>
+        <field type="IntegerField" name="order">0</field>
         <field to="section.menu" name="main_menu" rel="OneToOneRel">2</field>
         <field to="base.basecontent" name="main_content" rel="ManyToOneRel">1</field>
         <field to="section.customstyle" name="customstyle" rel="ManyToOneRel"><None></None></field>
