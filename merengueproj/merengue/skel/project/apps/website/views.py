@@ -25,8 +25,8 @@ def index(request):
     """ Index page. You can override as you like """
     core_config = CoreConfig().get_config()
     main_content_index = core_config['home_initial_content'].get_value()
-    content = BaseContent.objects.get(pk=main_content_index)
-    return render_to_response([content.get_real_instance()._meta.content_view_template,
+    content = BaseContent.objects.get(pk=main_content_index).get_real_instance()
+    return render_to_response([content._meta.content_view_template,
                                'website/index.html'],
                               {'content': content},
                               context_instance=RequestContext(request))
