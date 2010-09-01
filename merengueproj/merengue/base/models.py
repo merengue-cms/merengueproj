@@ -670,6 +670,7 @@ post_save_receivers = None
 
 def handle_pre_migrate(sender, **kwargs):
     global post_save_receivers
+    # remove post save receivers because we cannot to call create_menus signal
     post_save_receivers = post_save.receivers
     post_save.receivers = []
     # Unpatch cache backend to disable johnny cache. Johny does weird things. See #852
@@ -679,12 +680,13 @@ def handle_pre_migrate(sender, **kwargs):
 
 def handle_post_migrate(sender, **kwargs):
     global post_save_receivers
-    post_save.receivers = post_save_receivers
     # site fixtures loading after migration
     for app_name, fixtures in getattr(settings, 'SITE_FIXTURES', {}).items():
         if app_name == kwargs['app']: # only migrate
             for fixture in fixtures:
                 call_command('loaddata', fixture, verbosity=1)
+    # will set again saved receivers
+    post_save.receivers = post_save_receivers
 
 
 pre_migrate.connect(handle_pre_migrate)
