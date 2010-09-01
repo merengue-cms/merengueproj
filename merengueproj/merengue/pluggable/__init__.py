@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
+
 from django.conf import settings
 from django.utils.translation import ugettext
 
@@ -22,7 +24,7 @@ from south.signals import post_migrate
 from transmeta import get_fallback_fieldname
 
 from merengue.pluggable.models import RegisteredPlugin
-from merengue.pluggable.utils import get_plugin_config, validate_plugin
+from merengue.pluggable.utils import get_plugin_config, validate_plugin, get_plugins_dir
 from merengue.registry import register, is_registered
 from merengue.registry.items import RegistrableItem
 
@@ -101,9 +103,12 @@ def active_default_plugins(*args, **kwargs):
     # The workaround is "collab" have to be the last application migrated
     if kwargs['app'] == 'collab':
         interactive = kwargs.get('interactive', None)
-        # register required plugins
-        for plugin_dir in settings.REQUIRED_PLUGINS:
+        # register existing plugins
+        for plugin_dir in os.listdir(os.path.join(settings.BASEDIR, get_plugins_dir())):
             plugin = register_plugin(plugin_dir)
+            # activate required plugins
+            if not plugin_dir in settings.REQUIRED_PLUGINS:
+                continue
             plugin.installed = True
             plugin.active = True
             from merengue.section.models import Menu
