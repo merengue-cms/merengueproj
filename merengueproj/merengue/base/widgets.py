@@ -67,7 +67,7 @@ class CustomTinyMCE(TinyMCE):
         self.mce_settings['width'] = '50%'
         self.mce_settings['height'] = '200px'
         self.mce_settings['theme_advanced_buttons1'] = "undo,redo,separator,cut,copy,paste,pasteword,separator,bold,italic,underline,separator,justifyleft,justifycenter,justifyright,separator,bullist,numlist,outdent,indent,separator,preformatted_text,tablecontrols"
-        self.mce_settings['theme_advanced_buttons2'] = "styleselect,formatselect,fontselect,fontsizeselect,separator,forecolor,link,code,internal_links,iframes,image,file"
+        self.mce_settings['theme_advanced_buttons2'] = "styleselect,formatselect,fontselect,fontsizeselect,separator,forecolor,link,code,internal_links,iframes,image,file,removeformat"
         self.mce_settings['theme_advanced_blockformats'] = 'h1,h2,h4,blockquote'
         self.mce_settings['plugins'] = "preview,paste,table,-internal_links,-iframes,-preformatted_text,-file"
         self.mce_settings['plugin_internal_links_base_url'] = '%smerengue/js/tiny_mce_internal_links/' % settings.MEDIA_URL
