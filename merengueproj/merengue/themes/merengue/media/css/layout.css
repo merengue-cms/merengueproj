@@ -502,7 +502,7 @@ ul {
   line-height: 12px;
 }
 
-/* breadcrumbs */
+/* ----- breadcrumbs ----- */
 #breadcrumbs {
   font-size: 10pt;
 }
@@ -512,12 +512,19 @@ ul {
   font-size: 0;
   padding: 8px 6px 0 4px;
 } 
-/* Content */
+
+/* ----- content ----- */
+
 #content {
   float: right;
   width: 57%;
   padding-bottom: 1.5em;
   padding-right: 1em;
+}
+
+#content ul {
+  list-style-type: square;
+  margin-left: 1.5em;
 }
 
 .ie6 #content {
