@@ -91,6 +91,7 @@ LOGIN_URL = '/account/login/'
 
 INSTALLED_APPS += (
     # put here your project django apps
+    'website',
 )
 
 SVNDIR = path.join(BASEDIR, 'apps')
