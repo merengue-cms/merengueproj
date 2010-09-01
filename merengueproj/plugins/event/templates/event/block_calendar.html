@@ -67,9 +67,9 @@
             onSelect: function(dateText, inst) {
                 var date, key;
                 var date_splitted = dateText.split('/');
-                date = new Date(parseInt(date_splitted[2]),
-                                parseInt(date_splitted[1]) - 1,
-                                parseInt(date_splitted[0]));
+                date = new Date(parseInt(date_splitted[2], 10),
+                                parseInt(date_splitted[1], 10) - 1,
+                                parseInt(date_splitted[0], 10));
                 key = date.getFullYear() +"-"+ (date.getMonth() + 1) +"-"+ date.getDate();
                 if (eventDate[key]) {
                     window.location = eventDate[key]['url'];
