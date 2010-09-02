@@ -23,7 +23,7 @@
     <div class="actions {% if censured %}censured{% else %}public{% endif %}">
         <a class="addReply" href="{% url comment_add_parent content_type_id,content.id,comment.id %}">{% inline_trans "Reply" %}</a>
         <a class="hideReply" href="#" style="display:none">{% inline_trans "Hide Reply" %}</a>
-        {% if moderation %} 
+        {% if is_moderated %} 
               <a class="publishComment"
                  href="{% url comment_change_visibity comment.id %}">{% inline_trans "Publish" %}</a>
               <a class="censureComment"

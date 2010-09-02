@@ -17,6 +17,7 @@
 
 from django import template
 from django.contrib.contenttypes.models import ContentType
+from django.db.models import Q
 
 from plugins.feedback.forms import CaptchaFreeThreadedCommentForm
 from plugins.feedback.config import PluginConfig
@@ -30,8 +31,8 @@ register = template.Library()
 def content_comments(context, content):
     # first level of comments
     content_type = ContentType.objects.get_for_model(content)
-    moderation = (context['request'] and context['request'].user and context['request'].user.is_staff)
-    if moderation:
+    is_moderated = (context['request'] and context['request'].user and context['request'].user.is_staff)
+    if is_moderated:
         comments = FreeThreadedComment.objects.all_for_object(content_object=content, parent__isnull=True).order_by('date_submitted')
     else:
         comments = FreeThreadedComment.public.all_for_object(content_object=content, parent__isnull=True).order_by('date_submitted')
@@ -55,18 +56,20 @@ def content_comments(context, content):
 @register.inclusion_tag('feedback/content_comment.html', takes_context=True)
 def content_comment(context, content, comment, show_links=True, show_children=False):
     content_type = ContentType.objects.get_for_model(content)
+    is_moderated = (context['request'] and context['request'].user and context['request'].user.is_staff)
     if show_children:
         children_comments = comment.children.all().order_by('date_submitted')
+        if not is_moderated:
+            children_comments = FreeThreadedComment.public.filter(Q(id__in=comment.children.all().values('id').query))
     else:
         children_comments = []
 
-    moderation = (context['request'] and context['request'].user and context['request'].user.is_staff)
     censured = not comment.is_public
 
     return {'content': content,
             'comment': comment,
             'censured': censured,
-            'moderation': moderation,
+            'is_moderated': is_moderated,
             'content_type_id': content_type.id,
             'MEDIA_URL': context['MEDIA_URL'],
             'request': context['request'],
