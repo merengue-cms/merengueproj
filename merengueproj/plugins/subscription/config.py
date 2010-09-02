@@ -17,6 +17,8 @@
 
 from merengue.pluggable import Plugin
 from plugins.subscription.actions import SubscriptionAction
+from plugins.subscription.admin import BaseSubscriptionAdmin
+from plugins.subscription.models import BaseSubscription
 
 
 class PluginConfig(Plugin):
@@ -31,3 +33,7 @@ class PluginConfig(Plugin):
     @classmethod
     def get_actions(cls):
         return [SubscriptionAction]
+
+    @classmethod
+    def get_model_admins(cls):
+        return [(BaseSubscription, BaseSubscriptionAdmin)]
