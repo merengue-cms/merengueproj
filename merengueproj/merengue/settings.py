@@ -253,3 +253,5 @@ MANAGE_FILE = 'manage.py'
 # sys.executable
 # /usr/bin/python
 SYS_EXECUTABLE = None
+
+JOHNNY_TABLE_BLACKLIST = ('south_migrationhistory', )
