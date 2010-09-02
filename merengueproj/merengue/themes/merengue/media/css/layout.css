@@ -189,6 +189,10 @@ ul {
   line-height: 17px;
 }
 
+div#coremenu ul.menu1 li a.menu1 {
+  font-size: 0.9em;
+}
+
 #portalmenu ul li table {
   position: absolute;
   display: none;
@@ -866,7 +870,7 @@ table.gsc-search-box td.gsc-input {
   text-align: center;
 }
 
-.current {
+.pagination .current {
   color: #b38f60;
   background: #F2EBD8;
   padding: 0 3px;
