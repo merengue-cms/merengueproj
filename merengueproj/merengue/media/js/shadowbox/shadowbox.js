@@ -230,7 +230,7 @@ if(typeof Shadowbox == 'undefined'){
          *
          * @var     {Number}    initialHeight
          */
-        initialHeight:      400,
+        initialHeight:      450,
 
         /**
          * The initial width of Shadowbox (in pixels).
@@ -313,7 +313,7 @@ if(typeof Shadowbox == 'undefined'){
         skipSetup:          true,
         
         
-        minWidth: 650,
+        minWidth: 700,
 
         /**
          * Text messages to use for Shadowbox. These are provided so they may be
