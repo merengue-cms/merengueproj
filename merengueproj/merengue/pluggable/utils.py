@@ -383,6 +383,9 @@ def unregister_plugin_in_plugin_admin_site(plugin_name):
 
 
 def reload_app_directories_template_loader():
+    """
+    This function reloads the template directories with new apps installed.
+    """
     from django.template import loader
     template_loader_app_directories = 'django.template.loaders.' \
                                       'app_directories.load_template_source'
