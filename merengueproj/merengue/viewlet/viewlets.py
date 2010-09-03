@@ -38,6 +38,7 @@ class Viewlet(RegistrableItem):
         viewlet_context = {
             'registered_viewlet': cls.get_registered_item(),
             'viewlet': cls,
+            'template_base': 'viewlet.html',
         }
         viewlet_context.update(context)
         return render_to_string(template_name, viewlet_context,
