@@ -125,10 +125,13 @@ def content_view(request, content, template_name=None, extra_context=None):
 def content_list(request, queryset, paginate_by=10, page=None,
                  template_name='content_list.html', extra_context=None):
     """ Generic view for a listing page """
+    extra_context = extra_context or {}
+    context = {'template_base': 'base.html'}
+    context.update(extra_context)
     return list_detail.object_list(request, queryset,
                                    template_name=template_name,
                                    allow_empty=True,
                                    paginate_by=paginate_by,
                                    page=page,
                                    template_object_name='content',
-                                   extra_context=extra_context)
+                                   extra_context=context)
