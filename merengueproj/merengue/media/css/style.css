@@ -208,3 +208,12 @@ input#id_password {
 .actionRow{
      text-align: center;
 }
+
+
+/* ----- feedback plugin ----- */
+
+#feedback .required label {
+  display: inline; 
+  padding-right: 8px;
+  background: transparent url(/media/merengue/img/required.gif) no-repeat right center;
+}

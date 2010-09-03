@@ -566,7 +566,8 @@ body div#content-zone {
 }
 
 
-/* comment form */
+/* ----- feedback plugin ----- */
+
 .comment {
   font-size: 12px; 
 }
@@ -598,12 +599,6 @@ body div#content-zone {
 
 .theme-merengue #feedback .commentform form {
   border: 1px solid #EDE8E8;
-}
-
-.theme-merengue #feedback .required label {
-  display: inline; 
-  padding-right: 8px;
-  background: transparent url(/media/merengue/img/required.gif) no-repeat right center;
 }
 
 .theme-merengue #feedback .required input {
