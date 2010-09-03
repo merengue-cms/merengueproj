@@ -678,8 +678,10 @@ def handle_pre_migrate(sender, **kwargs):
 
 
 def handle_post_migrate(sender, **kwargs):
+    from merengue.pluggable import enable_active_plugins
     global post_save_receivers, cache_backend
     # site fixtures loading after migration
+    enable_active_plugins()
     for app_name, fixtures in getattr(settings, 'SITE_FIXTURES', {}).items():
         if app_name == kwargs['app']: # only migrate
             for fixture in fixtures:
