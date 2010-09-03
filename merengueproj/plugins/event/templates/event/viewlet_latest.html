@@ -1,0 +1,25 @@
+{% extends "viewlet.html" %}
+{% load pagination_tags %}
+
+{% block viewletbody %}
+  {% if is_paginated %}
+    {% autopaginate news_list paginate_by %}
+  {% endif %}
+  {% block toppagination %}
+    {% paginate %}
+  {% endblock %}
+
+  <ul>
+  {% for event in event_list %}
+    <li>
+        {% block itemdetail %}
+            <a href="{{ event.get_absolute_url }}" title="{{ event }}">{{ event }}</a>
+        {% endblock %}
+    </li>
+  {% endfor %}
+  </ul>
+
+  {% block bottompagination %}
+    {% paginate %}
+  {% endblock %}
+{% endblock %}

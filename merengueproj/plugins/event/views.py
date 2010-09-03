@@ -23,6 +23,8 @@ from django.utils.simplejson import dumps
 
 from merengue.base.views import content_view, content_list
 
+from cmsutils.adminfilters import QueryStringManager
+
 from plugins.event.models import Event
 from plugins.event.utils import getEventsMonthYear
 
@@ -32,10 +34,14 @@ def event_view(request, event_slug):
     return content_view(request, event, 'event/event_view.html')
 
 
-def event_list(request, year, month, day):
-    date_day_start = datetime.datetime(int(year), int(month), int(day), 0, 0, 0)
-    date_day_end = datetime.datetime(int(year), int(month), int(day), 23, 59, 59)
-    events = Event.objects.filter(start__lt=date_day_end).filter(end__gt=date_day_start)
+def event_list(request, year=None, month=None, day=None):
+    filters = {}
+    date_day_start = None
+    if year and month and day:
+        date_day_start = datetime.datetime(int(year), int(month), int(day), 0, 0, 0)
+        date_day_end = datetime.datetime(int(year), int(month), int(day), 23, 59, 59)
+        filters = {'start__lt': date_day_end, 'end__gt': date_day_start}
+    events = get_events().filter(**filters)
     return content_list(request, events,
                         extra_context={'date': date_day_start},
                         template_name='event/event_list.html')
@@ -50,3 +56,14 @@ def events_calendar(request):
         events_dic = getEventsMonthYear(month, year)
         return HttpResponse(dumps(events_dic), mimetype=mimetype)
     return HttpResponseBadRequest(mimetype=mimetype)
+
+
+def get_events(request=None, limit=0):
+    events = Event.objects.published().order_by("-publish_date")
+    qsm = QueryStringManager(request, page_var='page', ignore_params=('set_language', ))
+    filters = qsm.get_filters()
+    events = events.filter(**filters)
+    if limit:
+        return events[:limit]
+    else:
+        return events
