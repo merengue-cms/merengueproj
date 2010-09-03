@@ -54,11 +54,11 @@ class RegisteredItemManager(models.Manager):
 
     def actives(self, ordered=False):
         """ Retrieves active items for site """
-        return self.get_query_set().actives()
+        return self.get_query_set().actives(ordered)
 
     def inactives(self, ordered=False):
         """ Retrieves inactive items for site """
-        return self.get_query_set().inactives()
+        return self.get_query_set().inactives(ordered)
 
     def get_by_item(self, item_class):
         """ obtain registered item passing by param a RegistrableItem """
