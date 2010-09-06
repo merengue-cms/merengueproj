@@ -80,9 +80,14 @@ div#header-links ul li {
    margin-right: 1em;
 }
 
+div#portal-primary-links {
+	float: left;
+	margin-left: 12%;
+}
+
 div#user-actions {
    position: absolute;
-   top: 1em;
+   top: 2em;
    right: 20px;
 }
 
@@ -107,6 +112,10 @@ div#language-tools ul {
 
 div#language-tools ul li {
    display: inline;
+}
+
+#site-branding h1 {
+	display: none;
 }
 
 div#breadcrumbs {
