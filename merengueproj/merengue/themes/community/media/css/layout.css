@@ -175,6 +175,7 @@ div#content {
 	width: 21%;
 	float: left;
     border-top: none;
+	margin: 10px 0;
 	border: 1px solid #BBBBFF;
 }
 
