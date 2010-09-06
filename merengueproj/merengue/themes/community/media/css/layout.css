@@ -129,8 +129,10 @@ div#container {
 }
 
 div#left-sidebar {
-   display: none;
+   float:left;
+   width: 13%;
 }
+
 
 div#contentwrapper {
    position: relative;
@@ -161,8 +163,9 @@ ul#content-actions {
 }
 
 div#right-sidebar {
-   margin-left: 70%;
+   float:left;
    padding: 0px 10px;
+   width: 17%;
 }
 
 div#right-sidebar div.block {
@@ -187,6 +190,10 @@ div#right-sidebar div.block div.blockBody {
 div#right-sidebar div.block div.blockBody ul {
    margin: 0px;
    padding-left: 30px;
+}
+
+div#eventsCalendar {
+	font-size: 100%;
 }
 
 div#footer {
