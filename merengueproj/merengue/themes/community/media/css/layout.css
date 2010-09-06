@@ -80,6 +80,14 @@ div#header-links ul li {
    margin-right: 1em;
 }
 
+#header-blocks div#googlesearch {
+	width: 21%;
+	margin: 5px 20px;
+	float: left;
+	padding-left: 10px;
+    background-color: #ABB1C1;
+}
+
 div#portal-primary-links {
 	float: left;
 	margin-left: 12%;
@@ -161,6 +169,22 @@ div#content {
    margin-left: 10px;
    width: 65%;
    padding: 10px 20px;
+}
+
+#content div#googlesearch {
+	width: 21%;
+	float: left;
+    border-top: none;
+	border: 1px solid #BBBBFF;
+}
+
+#content div#googlesearch h1 {
+	width: auto;
+	margin: 0;
+}
+
+#content div#googlesearch div.blockBody {
+	margin: 5px;
 }
 
 body div#content-zone { 
