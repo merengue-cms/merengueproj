@@ -1,6 +1,6 @@
 {% extends template_base %}
 
-{% load pagination_tags inlinetrans %}
+{% load pagination_tags inlinetrans content_tags %}
 
 {% block content %}
   {% block listtitlewrapper %}
@@ -19,8 +19,10 @@
       {% block itemdetail %}
        <li>
         <a href="{{ content.get_absolute_url }}" title="{{ content }}">
-         {% block itemtitle %}{{ content }}{% endblock %}
+         {% block itemtitle %}{% cutrender 100 %}{{ content }}{% endcutrender %}{% endblock %}
         </a>
+        {% block contentinfo %}
+        {% endblock %}
        </li>
       {% endblock %}
     {% endfor %}
