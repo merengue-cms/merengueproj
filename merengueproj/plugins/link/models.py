@@ -1,0 +1,54 @@
+# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+#
+# This file is part of Merengue.
+#
+# Merengue is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Merengue is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
+
+from django.db import models
+from django.db.models import permalink
+from django.utils.translation import ugettext_lazy as _
+
+from cmsutils.cache import CachingManager
+
+from merengue.base.managers import BaseContentManager
+from merengue.base.models import BaseCategory, BaseContent
+
+
+class LinkCategory(BaseCategory):
+
+    class Meta:
+        verbose_name = _('link category')
+        verbose_name_plural = _('link categories')
+
+    objects = CachingManager(cache_object_retrieval=True)
+
+
+class Link(BaseContent):
+
+    url_link = models.URLField(verbose_name=_('Url Link'))
+    portal_name = models.CharField(verbose_name=_('Portal name'), max_length=250, blank=True, null=True)
+    objects = BaseContentManager()
+
+    class Meta:
+        verbose_name = _('link')
+        verbose_name_plural = _('links')
+
+    @permalink
+    def public_link(self):
+        section = self.get_main_section()
+        if section is None:
+            return ('link_view', [self.slug])
+        else:
+            # go to news item inside section which created it
+            return ('link_view', [section.slug, self.id, self.slug])

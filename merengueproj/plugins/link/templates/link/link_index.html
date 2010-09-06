@@ -1,0 +1,19 @@
+{% extends "content_list.html" %}
+
+{% load i18n inlinetrans action_tags %}
+
+{% block pagetitle %}{% trans "Link index" %}{% endblock %}
+
+{% block extrabreadcrumbs %}
+  <span class="breadcrumbSeparator">→</span><a href="{% url link_index %}" title="{% trans "Links" %}">{% inline_trans "Links" %}</a>
+  {% if link_category %}
+    <span class="breadcrumbSeparator">→</span><a href="" title="{{ link_category }}">{{ link_category }}</a>
+  {% endif %}
+{% endblock %}
+
+{% block listtitle %}{% trans "Link index" %}{% endblock %}
+
+{% block contentinfo %}
+    <a href="{{ link.url_link }}" title="{% trans "View more" %}">{% trans "View more" %}{% if link.url_link %}:{{ link.portal_name }}{% endif %}</a>
+{% endblock %}
+
