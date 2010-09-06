@@ -85,6 +85,11 @@ div#portal-primary-links {
 	margin-left: 12%;
 }
 
+#portal-primary-links li {
+	list-style: square;
+	color: white;
+}
+
 div#user-actions {
    position: absolute;
    top: 2em;
