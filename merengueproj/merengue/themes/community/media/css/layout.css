@@ -219,6 +219,7 @@ ul#content-actions {
 
 ul#content-actions li {
    display: inline;
+   padding: 10px;
 }
 
 textarea {
