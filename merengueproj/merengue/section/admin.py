@@ -389,10 +389,6 @@ class PortalMenuAdmin(MenuAdmin):
     tool_label = _('portal menu')
     related_field = 'parent'
 
-    def get_menu(self, request):
-        """ overrided to get always the main portal menu """
-        return Menu.tree.get(slug=settings.MENU_PORTAL_SLUG)
-
     def get_form(self, request, obj=None, **kwargs):
         form = super(PortalMenuAdmin, self).get_form(request, obj, **kwargs)
         if 'parent' in form.base_fields.keys():
@@ -406,7 +402,7 @@ class PortalMenuAdmin(MenuAdmin):
     def save_form(self, request, form, change):
         menu = form.save(commit=False)
         if not getattr(menu, self.related_field, None):
-            basecontent = Menu.objects.get(slug=settings.MENU_PORTAL_SLUG)
+            basecontent = Menu.objects.get(slug=self.menu_slug or settings.MENU_PORTAL_SLUG)
             setattr(menu, self.related_field, basecontent)
         return menu
 
