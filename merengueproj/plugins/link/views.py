@@ -22,16 +22,16 @@ from merengue.base.views import content_view, content_list
 from plugins.link.models import Link, LinkCategory
 
 
-def link_index(request):
+def link_index(request, template_name='link/link_index.html'):
     link_list = get_links(request)
     link_category_slug = request.GET.get('categories__slug', None)
     link_category = link_category_slug and get_object_or_404(LinkCategory, slug=link_category_slug)
-    return content_list(request, link_list, template_name='link/link_index.html', extra_context={'link_category': link_category})
+    return content_list(request, link_list, template_name=template_name, extra_context={'link_category': link_category})
 
 
-def link_view(request, link_slug):
+def link_view(request, link_slug, template_name='link/link_view.html'):
     link = get_object_or_404(Link, slug=link_slug)
-    return content_view(request, link, 'link/link_view.html')
+    return content_view(request, link, template_name)
 
 
 def get_links(request=None, limit=0):
