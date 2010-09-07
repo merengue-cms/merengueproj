@@ -88,6 +88,28 @@ div#header-links ul li {
     background-color: #ABB1C1;
 }
 
+#header-blocks div#latestnews {
+	margin: 5px 20px;
+	float: left;
+	padding-left: 10px;
+	background-color: #ABB1C1;
+	position: relative;
+}
+
+#header-blocks ul#latestnews {
+	float: left;
+	position: absolute;
+	width: 120px;
+	padding-left: 0;
+}
+
+#header-blocks div#latestnews ul li {
+	float:left;
+	margin-right: 2em;
+	margin-bottom: 8px;
+	width: 60px;
+}
+
 div#portal-primary-links {
 	float: left;
 	margin-left: 12%;
