@@ -67,7 +67,15 @@ def menu_section_view(request, section_slug, menu_slug):
     try:
         menu = root_menu.get_descendants().get(slug=menu_slug)
     except Menu.DoesNotExist:
-        raise Http404
+        try:
+            if not section_slug:
+                # Other tree menu, different of menu portal slug
+                menu = Menu.tree.get(slug=menu_slug)
+                root_menu = menu.get_root()
+            else:
+                raise Http404
+        except Menu.DoesNotExist:
+            raise Http404
 
     link = menu.baselink.real_instance
     if isinstance(link, AbsoluteLink):
