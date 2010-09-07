@@ -18,7 +18,7 @@
     {% for content in content_list %}
       {% block itemdetail %}
        <li>
-        <a href="{% block contenturl %}{{ content.get_absolute_url }}{% endblock %}" title="{{ content }}">
+        <a href="{% block contenturl %}{{ content.get_absolute_url }}{% endblock %}" title="{{ content }}" class="contentLink">
          {% block itemtitle %}{% cutrender 100 %}{{ content }}{% endcutrender %}{% endblock %}
         </a>
         {% block contentinfo %}
