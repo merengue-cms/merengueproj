@@ -110,6 +110,14 @@ div#header-links ul li {
 	width: 60px;
 }
 
+#header-blocks div#standingout {
+	width: 21%;
+	margin: 5px 20px;
+	float: left;
+	padding-left: 10px;
+    background-color: #ABB1C1;
+}
+
 div#portal-primary-links {
 	float: left;
 	margin-left: 12%;
