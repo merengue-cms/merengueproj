@@ -79,11 +79,11 @@ def advanced_breadcrumbs(context):
                         }]
             if route[0]['obj']:
                 url_list += [{'label':route[0]['obj'],
-                            'url': "%s/%s" %(url_list[-1]['url'], route[0]['obj'].id),
+                            'url': "%s/%s/" %(url_list[-1]['url'], route[0]['obj'].id),
                             }]
             elif add:
                 url_list += [{'label': _('Add'),
-                            'url': "%s/add" %(url_list[-1]['url']),
+                            'url': "%s/add/" %(url_list[-1]['url']),
                             }]
             base_url = url_list[-1]['url']
 
