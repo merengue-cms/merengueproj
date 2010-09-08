@@ -200,6 +200,8 @@ class Photo(BaseMultimedia):
     def save(self, **kwargs):
         self._save_original_filename(self.image)
         super(Photo, self).save(**kwargs)
+        for multimedia_relation in self.multimediarelation_set.all():
+            multimedia_relation.save()
 
     def admin_thumbnail(self):
         file_access_failed = False
