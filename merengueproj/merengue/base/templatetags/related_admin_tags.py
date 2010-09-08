@@ -79,11 +79,11 @@ def advanced_breadcrumbs(context):
                         }]
             if route[0]['obj']:
                 url_list += [{'label':route[0]['obj'],
-                            'url': urlresolvers.reverse('admin:%s_%s_change' % (route[0]['opts'].app_label, route[0]['opts'].module_name), args=(route[0]['obj'].id, )),
+                            'url': "%s/%s" %(url_list[-1]['url'], route[0]['obj'].id),
                             }]
             elif add:
                 url_list += [{'label': _('Add'),
-                            'url': urlresolvers.reverse('admin:%s_%s_add' % (route[0]['opts'].app_label, route[0]['opts'].module_name)),
+                            'url': "%s/add" %(url_list[-1]['url']),
                             }]
             base_url = url_list[-1]['url']
 
