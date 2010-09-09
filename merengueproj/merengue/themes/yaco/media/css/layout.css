@@ -91,7 +91,8 @@ body div#content-zone {
     width: auto;
 }
 
-#header ul {
+#header ul,
+#header div#header-blocks {
     margin-left: 3em;
 }
 
@@ -99,12 +100,18 @@ body div#content-zone {
 #site-actions ul li,
 #language-tools ul li {
     display: inline;
+	margin-left 3em;
 }
 
 #header-blocks ul li {
     border-right: 2px solid #666666;
     font-weight: bold;
     padding: 0 0.5em;
+}
+
+#header div#googlesearch {
+	width: 21%;
+	float: left;
 }
 
 #user-actions a,
@@ -164,6 +171,7 @@ div#language-tools {
 #portalmenu {
 	display: inline;
 	margin-left: 2em;
+	float: right;
 }
 
 /* ----- content wrapper ----- */
