@@ -113,7 +113,7 @@ body div#content-zone {
 }
 
 div#language-tools {
-    margin: 1em;
+    margin-right: 3em;
 	float:right;
 }
 
@@ -127,11 +127,9 @@ div#language-tools {
 }
 
 #user-actions {
-    position: absolute;
-    right: 47px;
+	float: right;
     display: block;
     width: 26%;
-	top: 38px;
 }
 
 #user-action a {
@@ -274,7 +272,7 @@ div#breadcrumbs a:hover {
 }
 
 #right-sidebar .blockBody {
-    padding:0.2em 0.5em 1.5em 1.5em;
+    padding: 1.5em;
     width: 14em;
 	border-right: 1px dotted #ccc;
 	border-bottom: 1px dotted #ccc;
