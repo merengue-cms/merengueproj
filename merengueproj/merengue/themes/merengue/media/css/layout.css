@@ -468,13 +468,14 @@ div#coremenu ul.menu1 li a.menu1 {
   top: 0; 
   right: 98%; 
 } 
+
+/* div#right-sidebar .blockContainer > div */
          
-#right-sidebar .blockContainer > div {
+div#right-sidebar {
   float: right;
   display: block;
   margin-top: 29px;
   background-color: #fff3dd;
-  min-height: 300px;
   width:  22%;
   margin: 0 8px;
   border: 1px solid #ede8e8;
