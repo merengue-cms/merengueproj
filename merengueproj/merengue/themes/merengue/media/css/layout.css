@@ -397,7 +397,7 @@ div#coremenu ul.menu1 li a.menu1 {
 
 #left-sidebar .block > div {
   background: white url(/media/themes/merengue/img/left_separator.jpg) repeat-x scroll left bottom;
-  padding: 0.5em 0.3em;
+  padding: 1em 0.5em;
 }
 
 #left-sidebar .block > div.blockTools {
@@ -409,6 +409,7 @@ div#coremenu ul.menu1 li a.menu1 {
 }
 
 #left-sidebar h1 {
+  margin-bottom: 0;
   font-size: 1.2em;
   border-bottom: 1px dotted;
   color: #E5C597;
@@ -455,7 +456,7 @@ div#coremenu ul.menu1 li a.menu1 {
   right: 98%; 
 } 
          
-#right-sidebar {
+#right-sidebar .blockContainer > div {
   float: right;
   display: block;
   margin-top: 29px;
@@ -519,10 +520,10 @@ div#coremenu ul.menu1 li a.menu1 {
 /* ----- content ----- */
 
 #content {
-  float: right;
-  width: 57%;
+  float: left;
+  width: 56%;
   padding-bottom: 1.5em;
-  padding-right: 1em;
+  padding-left: 1em;
 }
 
 #content ul {
