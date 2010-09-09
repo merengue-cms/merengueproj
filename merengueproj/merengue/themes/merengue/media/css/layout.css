@@ -138,6 +138,19 @@ ul {
   padding: 6px 0 5px 11px;
 }
 
+#header-blocks div#googlesearch {
+	width: 28%;
+	float: right;
+	padding-left: 6px;
+	background: #F4F0E5;
+	border: 1px solid #EDE8E8;
+	margin-bottom: -2px;
+}
+
+#header-blocks div#googlesearch h1 {
+	margin-bottom: 0;
+}
+
 .ie7 #header-blocks li {
   padding: 0px 0 0 11px;
   display: block;
