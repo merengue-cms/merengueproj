@@ -112,12 +112,8 @@ body div#content-zone {
     color: #54B848;
 }
 
-#language-tools {
-    margin-top: 1em;
-}
-
-#language-tools ul {
-    padding: 0 7em;
+div#language-tools {
+    margin: 1em;
 	float:right;
 }
 
