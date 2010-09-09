@@ -478,6 +478,19 @@ div.contentFiles ul {
 	top:-2px !important;
 }
 
+/* ----- searcher  ----- */
+#content-zone div#googlesearch {
+	background: #f0f0f0;
+	width: 32%;
+	padding: 0 5px 5px;
+	border-bottom: 1px dotted #CCCCCC;
+	border-right: 1px dotted #CCCCCC;
+}
+
+#content-zone div#googlesearch h1 {
+	margin-bottom: 0;
+}
+
 
 /* ----- pagination  ----- */
 .prev {
@@ -518,7 +531,7 @@ div.contentFiles ul {
 	background:transparent url(/media/themes/yaco/img/paginator_next.gif) no-repeat scroll left 4px;
 }
 
-/* ----- multimedi viewer  ----- */
+/* ----- multimedia viewer  ----- */
 .simpleImgGallery2 {
 	border-style: dotted !important;
 	border-color: #54B848;
