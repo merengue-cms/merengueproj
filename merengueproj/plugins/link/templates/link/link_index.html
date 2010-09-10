@@ -14,6 +14,8 @@
 {% block listtitle %}{% trans "Link index" %}{% endblock %}
 
 {% block contentinfo %}
-    <a href="{{ content.url_link }}" title="{% trans "View more" %}" class="viewMore">{% trans "View more" %}{% if content.portal_name %}:{{ content.portal_name }}{% endif %}</a>
+    {% if content.portal_name %}<div class="portalName">{{ content.portal_name }}</div>{% endif %}
+    {{ block.super }}
+    <a href="{{ content.url_link }}" title="{% trans "View more" %}" class="viewMore">{% trans "View more" %}</a>
 {% endblock %}
 
