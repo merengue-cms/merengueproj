@@ -61,7 +61,10 @@ class Single(Param):
 class Integer(Param):
 
     def get_value(self):
-        return int(super(Integer, self).get_value())
+        value = super(Integer, self).get_value()
+        if not isinstance(value, int) and value.isdigit():
+            return int(value)
+        return value
 
     def get_value_from_datadict(self, data, name):
         val = super(Integer, self).get_value_from_datadict(data, name)
