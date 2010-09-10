@@ -8,14 +8,19 @@
 
 {% block blockbody %}
   <ul>
-    {% for standingout in standingouts %}
-        <li>
-            {% if standingout.obj.get_absolute_url %}
-                <a href="{{ standingout.obj.get_absolute_url }}">{{ standingout.obj }}</a>
-            {% else %}
-                {{ standingout.obj }}
-            {% endif %}
-        </li>
-    {% endfor %}
+    {% if standingouts %}
+        {% for standingout in standingouts %}
+            <li>
+                {% if standingout.obj.get_absolute_url %}
+                    <a href="{{ standingout.obj.get_absolute_url }}">{{ standingout.obj }}</a>
+                {% else %}
+                    {{ standingout.obj }}
+                {% endif %}
+            </li>
+        {% endfor %}
+        <li class="viewAll"><a href="{% url standingout_list %}">{% trans "View all" %}</a></li>
+    {% else %}
+        <li>{% trans "Without highlights" %}</li>
+    {% endif %}
   </ul>
 {% endblock %}

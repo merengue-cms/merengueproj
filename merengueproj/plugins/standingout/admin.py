@@ -17,15 +17,16 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.base.admin import BaseAdmin, BaseCategoryAdmin
+from merengue.base.admin import BaseOrderableAdmin, BaseCategoryAdmin
 from plugins.standingout.forms import StandingOutAdminModelForm
 from plugins.standingout.models import StandingOut, StandingOutCategory
 
 
-class StandingOutAdmin(BaseAdmin):
+class StandingOutAdmin(BaseOrderableAdmin):
     list_display = ('obj', 'related', 'standing_out_category')
-    list_filter = ordering = ('related_content_type', 'related_id', 'obj_content_type', 'id')
+    list_filter = ('related_content_type', 'related_id', 'obj_content_type', 'id')
     form = StandingOutAdminModelForm
+    sortablefield = 'order'
 
     def get_form(self, request, obj=None):
         self.fieldsets = None

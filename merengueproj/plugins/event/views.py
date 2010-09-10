@@ -25,13 +25,15 @@ from merengue.base.views import content_view, content_list
 
 from cmsutils.adminfilters import QueryStringManager
 
-from plugins.event.models import Event
+from plugins.event.models import Event, Category
 from plugins.event.utils import getEventsMonthYear
 
 
 def event_view(request, event_slug):
     event = get_object_or_404(Event, slug=event_slug)
-    return content_view(request, event, 'event/event_view.html')
+    event_category_slug = request.GET.get('categories__slug', None)
+    event_category = event_category_slug and get_object_or_404(Category, slug=event_category_slug)
+    return content_view(request, event, 'event/event_view.html', extra_context={'event_category': event_category})
 
 
 def event_list(request, year=None, month=None, day=None):

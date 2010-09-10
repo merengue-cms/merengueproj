@@ -38,6 +38,10 @@ class StandingOutBlock(Block):
                 if standingouts:
                     break
         standingouts = standingouts or StandingOut.objects.filter(related_content_type__isnull=True, related_id__isnull=True)
+        from plugins.standingout.config import PluginConfig
+        limit = PluginConfig.get_config().get('limit', None)
+        if limit:
+            standingouts = standingouts[:limit.get_value()]
         return cls.render_block(request, template_name='standingout/block_standingout.html',
                                 block_title=_('Search'),
                                 context={'standingouts': standingouts})

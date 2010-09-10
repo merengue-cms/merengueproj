@@ -14,8 +14,10 @@
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
+from django.utils.translation import ugettext_lazy as _
 
 from merengue.pluggable import Plugin
+from merengue.registry import params
 
 from plugins.standingout.admin import StandingOutAdmin, StandingOutCategoryAdmin
 from plugins.standingout.models import StandingOut, StandingOutCategory
@@ -26,6 +28,14 @@ class PluginConfig(Plugin):
     name = 'Standing out'
     description = 'Standing out plugin'
     version = '0.0.1a'
+
+    config_params = [
+        params.Integer(name='limit', label=_('limit for standingouts in block'), default='5'),
+    ]
+
+    url_prefixes = (
+        ('standingout', 'plugins.standingout.urls'),
+    )
 
     @classmethod
     def get_blocks(cls):

@@ -46,10 +46,15 @@ class StandingOut(models.Model):
 
     standing_out_category = models.ForeignKey(StandingOutCategory, verbose_name=_('standing out category'),
                                          null=True, blank=True)
+    # The order goes from 0 to n - 1
+    order = models.IntegerField(_("Order"), blank=True, null=True)
 
     class Meta:
-        ordering = ('related_content_type', 'related_id', 'obj_content_type', 'id')
+        ordering = ('order', )
         unique_together = (('obj_content_type', 'obj_id', 'related_content_type', 'related_id', 'standing_out_category'), )
+
+    def get_absolute_url(self):
+        return self.obj.get_absolute_url()
 
     def __unicode__(self):
         if not self.related_content_type or not self.related_id:

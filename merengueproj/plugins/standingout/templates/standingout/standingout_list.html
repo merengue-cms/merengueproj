@@ -1,0 +1,12 @@
+{% extends "content_list.html" %}
+
+{% load i18n inlinetrans action_tags %}
+
+{% block pagetitle %}{% trans "Highlights index" %}{% endblock %}
+
+{% block listtitle %}{% trans "Highlights index" %}{% endblock %}
+
+{% block extrabreadcrumbs %}
+  <span class="breadcrumbSeparator">→</span><a href="{% url standingout_list %}" title="{% trans "Highlights" %}">{% inline_trans "Highlights" %}</a>
+{% endblock %}
+
