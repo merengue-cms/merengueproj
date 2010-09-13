@@ -330,11 +330,16 @@ def register_plugin_section_models(plugin_name):
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
     if not plugin_config:
         return
+    register_plugin_section_models_in_admin_site(plugin_config, plugin_name, site)
+    register_plugin_section_models_in_admin_site(plugin_config, plugin_name, site.plugin_site)
+
+
+def register_plugin_section_models_in_admin_site(plugin_config, plugin_name, admin_site):
     for model, admin_model in plugin_config.section_models():
-        site_related = site.register_related(model, admin_model, related_to=Section)
+        site_related = admin_site.register_related(model, admin_model, related_to=Section)
         plugin_config.section_register_hook(site_related, model)
         if issubclass(model, BaseContent):
-            register_related_multimedia(site.plugin_site, BaseContent)
+            register_related_multimedia(admin_site, BaseContent)
 
 
 def register_plugin_in_plugin_admin_site(plugin_name):
@@ -440,3 +445,4 @@ def has_required_dependencies(plugin):
 
 from merengue.section.admin import register as register_section
 register_section(site)
+register_section(site.plugin_site)
