@@ -682,11 +682,13 @@ body div#content-zone {
 }
 
 #left-sidebar #eventsCalendar div {
-	font-size: 55%;
+	font-size: 75%;
 }
 
-#left-sidebar #eventsCalendar .ui-datepicker {
+#left-sidebar #eventsCalendar div.ui-datepicker {
 	width: 150px;
+	padding: 0 !important;
+	margin-left: 0;
 }
 
 /* error messages */
