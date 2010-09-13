@@ -162,6 +162,12 @@ the title *Merengue project*, and linked to that URL. This way we create a child
 of *Foo section* that will be displayed as a sub-element of that section on the 
 menu.
 
+Sections URLs
+-------------
+When we add a section with a slug ``my-section``, the URL ``/my-section/``
+will access to the section main page. This URL is a shortcut of the
+``/cms/sections/my-section/`` URL.
+
 Content into sections
 ---------------------
 

@@ -254,8 +254,6 @@ Here are some examples:
     >>> has_permission(newsitem, staff_user, 'vote')
     True
 
-(( to be completed. Follow with other philosophic principles ))
-
 Extensible data schema. Not hierarchical pages
 ----------------------------------------------
 

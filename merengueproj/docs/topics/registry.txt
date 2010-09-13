@@ -160,5 +160,3 @@ he would use these sentences:
     ['antonio', 'juan']
     >>> config['friends'].get_type()
     'List'
-
-(( to be completed ))
