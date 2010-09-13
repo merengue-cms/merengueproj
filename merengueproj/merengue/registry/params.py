@@ -60,17 +60,18 @@ class Single(Param):
 
 class Integer(Param):
 
-    def get_value(self):
-        value = super(Integer, self).get_value()
-        if not isinstance(value, int) and value.isdigit():
+    def get_parse_value(self, value):
+        if value is not None and not isinstance(value, int) and value.isdigit():
             return int(value)
         return value
 
+    def get_value(self):
+        value = super(Integer, self).get_value()
+        return self.get_parse_value(value)
+
     def get_value_from_datadict(self, data, name):
         value = super(Integer, self).get_value_from_datadict(data, name)
-        if not isinstance(value, int) and value.isdigit():
-            return int(value)
-        return value
+        return self.get_parse_value(value)
 
 
 class Bool(Param):
