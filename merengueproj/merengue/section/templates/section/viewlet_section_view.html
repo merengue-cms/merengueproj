@@ -2,6 +2,10 @@
 
 {% load i18n content_tags viewlet_tags %}
 
+{% block pagetitle %}
+    {{ menu }}
+{% endblock %}
+
 {% block extrabreadcrumbs %}
     {% for link, label in menu.get_breadcrumbs %}
         <span class="breadcrumbSeparator">→</span>
