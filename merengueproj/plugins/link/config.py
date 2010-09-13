@@ -17,7 +17,7 @@
 
 from merengue.pluggable import Plugin
 
-from plugins.link.admin import LinkAdmin, LinkCategoryAdmin
+from plugins.link.admin import LinkAdmin, LinkCategoryAdmin, LinkSectionAdmin
 from plugins.link.models import Link, LinkCategory
 from plugins.link.viewlets import LatestLinkViewlet, AllLinkViewlet
 
@@ -30,6 +30,10 @@ class PluginConfig(Plugin):
     url_prefixes = (
         ('link', 'plugins.link.urls'),
     )
+
+    @classmethod
+    def section_models(cls):
+        return [(Link, LinkSectionAdmin)]
 
     @classmethod
     def get_model_admins(cls):

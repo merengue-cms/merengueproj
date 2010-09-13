@@ -43,7 +43,7 @@ def event_list(request, year=None, month=None, day=None):
         date_day_start = datetime.datetime(int(year), int(month), int(day), 0, 0, 0)
         date_day_end = datetime.datetime(int(year), int(month), int(day), 23, 59, 59)
         filters = {'start__lt': date_day_end, 'end__gt': date_day_start}
-    events = get_events().filter(**filters)
+    events = get_events(request).filter(**filters)
     return content_list(request, events,
                         extra_context={'date': date_day_start},
                         template_name='event/event_list.html')

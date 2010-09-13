@@ -16,6 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from merengue.base.admin import BaseContentAdmin, BaseCategoryAdmin
+from merengue.section.admin import SectionContentAdmin
 from plugins.link.models import Link, LinkCategory
 
 
@@ -24,6 +25,10 @@ class LinkCategoryAdmin(BaseCategoryAdmin):
 
 
 class LinkAdmin(BaseContentAdmin):
+    pass
+
+
+class LinkSectionAdmin(LinkAdmin, SectionContentAdmin):
     pass
 
 
