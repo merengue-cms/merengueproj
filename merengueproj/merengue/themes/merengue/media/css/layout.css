@@ -681,6 +681,14 @@ body div#content-zone {
   text-align: center !important;
 }
 
+#left-sidebar #eventsCalendar div {
+	font-size: 55%;
+}
+
+#left-sidebar #eventsCalendar .ui-datepicker {
+	width: 150px;
+}
+
 /* error messages */
 div.errormessage, div#messagebox ul#info-list {
   color: #717171;
