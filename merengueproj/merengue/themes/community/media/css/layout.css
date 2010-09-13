@@ -93,7 +93,6 @@ div#header-links ul li {
 	float: left;
 	padding-left: 10px;
 	background-color: #ABB1C1;
-	position: relative;
 }
 
 #header-blocks ul#latestnews {
@@ -107,7 +106,6 @@ div#header-links ul li {
 	float:left;
 	margin-right: 2em;
 	margin-bottom: 8px;
-	width: 60px;
 }
 
 #header-blocks div#standingout {
