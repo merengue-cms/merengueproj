@@ -112,6 +112,17 @@ body div#content-zone {
 #header div#googlesearch {
 	width: 21%;
 	float: left;
+	margin-left: 2em;
+}
+
+#header div#latestnews {
+	width: 21%;
+	float: left;
+	margin-left: 2em;
+}
+
+#header div#latestnews h1 {
+	margin-bottom: 0;
 }
 
 #user-actions a,
