@@ -261,6 +261,7 @@ div#right-sidebar div.block div.blockBody ul {
 
 div#eventsCalendar {
 	font-size: 100%;
+	padding-left: 10px;
 }
 
 div#footer {
