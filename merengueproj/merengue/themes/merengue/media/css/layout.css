@@ -133,22 +133,9 @@ ul {
   display: inline;
 }
 
-#header-blocks li {
+#header-blocks #portal-primary-links li {
   background: transparent url(/media/themes/merengue/img/left_menu_button.jpg) no-repeat left top;
   padding: 6px 0 5px 11px;
-}
-
-#header-blocks div#googlesearch {
-	width: 28%;
-	float: right;
-	padding-left: 6px;
-	background: #F4F0E5;
-	border: 1px solid #EDE8E8;
-	margin-bottom: -2px;
-}
-
-#header-blocks div#googlesearch h1 {
-	margin-bottom: 0;
 }
 
 .ie7 #header-blocks li {
@@ -306,6 +293,29 @@ div#coremenu ul.menu1 li a.menu1 {
 
 #language-tools  ul li {
   display: inline;
+}
+
+#header-blocks div#googlesearch h1 {
+	margin-bottom: 0;
+}
+
+#header-blocks div#googlesearch {
+	width: 28%;
+	float: right;
+	padding-left: 6px;
+	background: #F4F0E5;
+	border: 1px solid #EDE8E8;
+	margin: 0 20px -2px 0;
+}
+
+
+#header-blocks div#latestnews {
+	float: right;
+	width: 28%;
+}
+
+#header-blocks #latestnews ul li {
+	display: block;
 }
 
 /* IE8 hack */
@@ -572,7 +582,7 @@ body div#content-zone {
 /* portal links */
 #portal-primary-links {
   display: inline-block;
-  width: 42%;
+  width: 29%;
 }
 
 #portal-secondary-links a {
