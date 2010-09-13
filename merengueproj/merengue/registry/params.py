@@ -67,8 +67,10 @@ class Integer(Param):
         return value
 
     def get_value_from_datadict(self, data, name):
-        val = super(Integer, self).get_value_from_datadict(data, name)
-        return int(val)
+        value = super(Integer, self).get_value_from_datadict(data, name)
+        if not isinstance(value, int) and value.isdigit():
+            return int(value)
+        return value
 
 
 class Bool(Param):
