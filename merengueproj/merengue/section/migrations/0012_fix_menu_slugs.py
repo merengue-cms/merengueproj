@@ -29,8 +29,10 @@ class Migration(DataMigration):
         "Write your forwards methods here."
         for menu in orm['section.Menu'].objects.all():
             if not menu.slug:
-                print '\tFixing menu "%s"' % menu.name_es
-                menu.slug = defaultfilters.slugify(menu.name_es)
+                name_attr = get_fallback_fieldname('name')
+                name = getattr(menu, name_attr)
+                print '\tFixing menu "%s"' % name
+                menu.slug = defaultfilters.slugify(name)
                 menu.save()
 
 
