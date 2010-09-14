@@ -6,6 +6,7 @@
 import django
 from django.core.exceptions import ImproperlyConfigured
 from django.core.cache import get_cache
+from django.core import signals
 from django.middleware import transaction as trans_middleware
 from django.db import transaction
 from johnny import cache, settings
