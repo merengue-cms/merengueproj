@@ -90,14 +90,13 @@ def validate_plugin(plugin_config):
 
 
 def are_installed_models(plugin_mod):
-    installed = True
     plugin_models = get_models(plugin_mod)
     tables = connection.introspection.table_names()
     seen_models = connection.introspection.installed_models(tables)
     for plugin_model in plugin_models:
         if not plugin_model in seen_models:
             return False
-    return installed
+    return True
 
 
 def install_models(plugin_mod):
