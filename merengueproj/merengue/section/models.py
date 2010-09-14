@@ -546,6 +546,8 @@ def create_menus(sender, **kwargs):
             menu_name = 'Main menu of %s' % unicode(instance)
             instance.main_menu = Menu.objects.create(**{'slug': defaultfilters.slugify(menu_name),
                                                         get_fallback_fieldname('name'): menu_name})
+            from merengue.utils import invalidate_johnny_cache
+            invalidate_johnny_cache(instance.__class__, True, BaseSection)
             instance.save()
 
 

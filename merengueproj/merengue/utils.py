@@ -300,3 +300,21 @@ def bin_exists(binary):
         if os.access(pathbin, mode) == 1:
             return True
     return False
+
+
+def invalidate_johnny_cache(model, invalidate_parent=False, parent_finish=None):
+    if 'johnny' in settings.INSTALLED_APPS:
+        from johnny import cache
+        from django.core.cache import cache as django_cache
+        query_cache_backend = cache.get_backend()(django_cache)
+        query_cache_backend.patch()
+        if parent_finish and not issubclass(model, parent_finish):
+            return
+        cache.invalidate(model._meta.db_table)
+        if not invalidate_parent:
+            return
+
+        for model_parent in model.__class__.__bases__:
+            if parent_finish and not issubclass(model, parent_finish):
+                continue
+            invalidate_johnny_cache(model_parent, invalidate_parent, parent_finish)

@@ -46,12 +46,9 @@ def is_broken(registered_item):
 
 
 def invalidate_registereditem():
-    from johnny import cache
-    from django.core.cache import cache as django_cache
+    from merengue.utils import invalidate_johnny_cache
     from merengue.registry.models import RegisteredItem
-    query_cache_backend = cache.get_backend()(django_cache)
-    query_cache_backend.patch()
-    cache.invalidate(RegisteredItem._meta.db_table)
+    invalidate_johnny_cache(RegisteredItem)
 
 
 def register(item_class, activate=False):
