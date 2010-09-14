@@ -314,7 +314,7 @@ def invalidate_johnny_cache(model, invalidate_parent=False, parent_finish=None):
         if not invalidate_parent:
             return
 
-        for model_parent in model.__class__.__bases__:
+        for model_parent in model.__bases__:
             if parent_finish and not issubclass(model, parent_finish):
                 continue
             invalidate_johnny_cache(model_parent, invalidate_parent, parent_finish)
