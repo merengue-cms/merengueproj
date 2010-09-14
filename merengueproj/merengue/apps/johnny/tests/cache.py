@@ -6,19 +6,28 @@
 from django.conf import settings
 from django.db import connection
 from johnny import middleware
+from johnny import settings as johnny_settings
 import base
+
+try:
+    any
+except NameError:
+    def any(iterable):
+        for i in iterable:
+            if i: return True
+        return False
 
 # put tests in here to be included in the testing suite
 __all__ = ['MultiDbTest', 'SingleModelTest', 'MultiModelTest', 'TransactionSupportTest', 'BlackListTest']
 
 def _pre_setup(self):
-    self.saved_DISABLE_SETTING = getattr(settings, 'DISABLE_QUERYSET_CACHE', False)
-    settings.DISABLE_QUERYSET_CACHE = False
+    self.saved_DISABLE_SETTING = getattr(johnny_settings, 'DISABLE_QUERYSET_CACHE', False)
+    johnny_settings.DISABLE_QUERYSET_CACHE = False
     self.middleware = middleware.QueryCacheMiddleware()
 
 def _post_teardown(self):
     self.middleware.unpatch()
-    settings.DISABLE_QUERYSET_CACHE = self.saved_DISABLE_SETTING
+    johnny_settings.DISABLE_QUERYSET_CACHE = self.saved_DISABLE_SETTING
 
 class QueryCacheBase(base.JohnnyTestCase):
     def _pre_setup(self):
@@ -61,11 +70,11 @@ class BlackListTest(QueryCacheBase):
     fixtures = base.johnny_fixtures
 
     def test_basic_blacklist(self):
-        from johnny import cache
+        from johnny import cache, settings
         from testapp.models import Genre, Book
-        q = message_queue()
-        old = cache.blacklist
-        cache.blacklist = set(['testapp_genre'])
+        q = base.message_queue()
+        old = johnny_settings.BLACKLIST
+        johnny_settings.BLACKLIST = set(['testapp_genre'])
         connection.queries = []
         Book.objects.get(id=1)
         Book.objects.get(id=1)
@@ -73,7 +82,7 @@ class BlackListTest(QueryCacheBase):
         list(Genre.objects.all())
         list(Genre.objects.all())
         self.failUnless(not any((q.get_nowait(), q.get_nowait())))
-        cache.blacklist = old
+        johnny_settings.BLACKLIST = old
 
 
 class MultiDbTest(TransactionQueryCacheBase):
@@ -140,7 +149,11 @@ class MultiDbTest(TransactionQueryCacheBase):
         if len(getattr(settings, "DATABASES", [])) <= 1:
             print "\n  Skipping multi databases"
             return
+        if settings.DATABASE_ENGINE == 'sqlite3':
+            print "\n  Skipping test requiring multiple threads."
+            return
         from Queue import Queue as queue
+
         q = queue()
         other = lambda x: self._run_threaded(x, q)
 
@@ -207,6 +220,9 @@ class MultiDbTest(TransactionQueryCacheBase):
         """tests savepoints for multiple db's"""
         if len(getattr(settings, "DATABASES", [])) <= 1:
             print "\n  Skipping multi databases"
+            return
+        if settings.DATABASE_ENGINE == 'sqlite3':
+            print "\n  Skipping test requiring multiple threads."
             return
 
         from Queue import Queue as queue
@@ -337,7 +353,7 @@ class SingleModelTest(QueryCacheBase):
         Genre(title='Science Fact', slug='scifact').save()
         count = Genre.objects.count()
         Genre.objects.get(title='Fantasy')
-        q = message_queue()
+        q = base.message_queue()
         Genre.objects.filter(title__startswith='Science').delete()
         # this should not be cached
         Genre.objects.get(title='Fantasy')
@@ -359,6 +375,19 @@ class SingleModelTest(QueryCacheBase):
         books = Genre.objects.filter(id__in=[])
         count = books.count()
         self.failUnless(count == 0)
+
+    def test_aggregate_annotation(self):
+        """Test aggregating an annotation """
+        from django.db.models import Count
+        from django.db.models import Sum
+        from testapp.models import Book
+        from django.core.paginator import Paginator
+        author_count = Book.objects.annotate(author_count=Count('authors')).aggregate(Sum('author_count'))
+        self.assertEquals(author_count['author_count__sum'],2)
+        # also test using the paginator, although this shouldn't be a big issue..
+        books = Book.objects.all().annotate(num_authors=Count('authors'))
+        paginator = Paginator(books, 25)
+        list_page = paginator.page(1)
 
     def test_queryset_laziness(self):
         """This test exists to model the laziness of our queries;  the
@@ -440,7 +469,7 @@ class MultiModelTest(QueryCacheBase):
         from Queue import Queue as queue
         from testapp.models import Book, Genre, Publisher
         from johnny.cache import invalidate
-        q = message_queue()
+        q = base.message_queue()
         b = Book.objects.get(id=1)
         invalidate(Book)
         b = Book.objects.get(id=1)
@@ -506,6 +535,34 @@ class MultiModelTest(QueryCacheBase):
         p1.books.clear()
         self.failUnless(b.authors.all().count() == 0)
 
+    def test_subselect_support(self):
+        """Test that subselects are handled properly."""
+        from django import db
+        db.reset_queries()
+        from testapp.models import Book, Person, PersonType
+        author_types = PersonType.objects.filter(title='Author')
+        author_people = Person.objects.filter(person_types__in=author_types)
+        written_books = Book.objects.filter(authors__in=author_people)
+        q = base.message_queue()
+        self.failUnless(len(db.connection.queries) == 0)
+        count = written_books.count()
+        self.failUnless(q.get() == False)
+        # execute the query again, this time it's cached
+        self.failUnless(written_books.count() == count)
+        self.failUnless(q.get() == True)
+        # change the person type of 'Author' to something else
+        pt = PersonType.objects.get(title='Author')
+        pt.title = 'NonAuthor'
+        pt.save()
+        self.failUnless(PersonType.objects.filter(title='Author').count() == 0)
+        q.clear()
+        db.reset_queries()
+        # now execute the same query;  the result should be diff and it should be
+        # a cache miss
+        new_count = written_books.count()
+        self.failUnless(new_count != count)
+        self.failUnless(q.get() == False)
+
 
 class TransactionSupportTest(TransactionQueryCacheBase):
     fixtures = base.johnny_fixtures
@@ -545,6 +602,9 @@ class TransactionSupportTest(TransactionQueryCacheBase):
         from django.db import transaction
         from testapp.models import Genre, Publisher
         from johnny import cache
+        if settings.DATABASE_ENGINE == 'sqlite3':
+            print "\n  Skipping test requiring multiple threads."
+            return
 
         self.failUnless(transaction.is_managed() == False)
         self.failUnless(transaction.is_dirty() == False)
@@ -593,6 +653,9 @@ class TransactionSupportTest(TransactionQueryCacheBase):
         from django.db import transaction
         from testapp.models import Genre, Publisher
         from johnny import cache
+        if settings.DATABASE_ENGINE == 'sqlite3':
+            print "\n  Skipping test requiring multiple threads."
+            return
 
         self.failUnless(transaction.is_managed() == False)
         self.failUnless(transaction.is_dirty() == False)

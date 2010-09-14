@@ -4,6 +4,8 @@
 """Johnny's main caching functionality."""
 
 import sys
+import re
+
 try:
     from functools import wraps
 except ImportError:
@@ -17,15 +19,20 @@ try:
 except ImportError:
     from md5 import md5
 
-from django.conf import settings
 import localstore
 import signals
+from johnny import settings
 from transaction import TransactionManager
 
+try:
+    any
+except NameError:
+    def any(iterable):
+        for i in iterable:
+            if i: return True
+        return False
+
 local = localstore.LocalStore()
-blacklist = getattr(settings, 'MAN_IN_BLACKLIST',
-            getattr(settings, 'JOHNNY_TABLE_BLACKLIST', []))
-blacklist = set(blacklist)
 
 def blacklist_match(*tables):
     """Returns True if a set of tables is in the blacklist, False otherwise."""
@@ -34,14 +41,14 @@ def blacklist_match(*tables):
     # should have relatively few tables involved, and I don't imagine that
     # blacklists would grow very vast.  The fastest i've been able to come
     # up with is to pre-create a blacklist set and use intersect.
-    return bool(blacklist.intersection(tables))
+    return bool(settings.BLACKLIST.intersection(tables))
 
 def get_backend():
     """Get's a QueryCacheBackend class for the current version of django."""
     import django
     if django.VERSION[:2] == (1, 1):
         return QueryCacheBackend11
-    if django.VERSION[:2] == (1, 2):
+    if django.VERSION[:2] in ((1, 2), (1, 3)):
         return QueryCacheBackend
     raise ImproperlyConfigured("QueryCacheMiddleware cannot patch your version of django.")
 
@@ -58,6 +65,69 @@ def invalidate(*tables, **kwargs):
     if backend._patched:
         for t in map(resolve, tables):
             backend.keyhandler.invalidate_table(t, db)
+
+def get_tables_for_query(query):
+    """Takes a Django 'query' object and returns all tables that will be used in
+    that query as a list.  Note that where clauses can have their own querysets
+    with their own dependent queries, etc."""
+    from django.db.models.sql.where import WhereNode
+    from django.db.models.query import QuerySet
+    tables = list(query.tables)
+
+    def get_tables(where_node, tables):
+        for child in where_node.children:
+            if isinstance(child, WhereNode) and child.children:
+                tables = get_tables(child, tables)
+                continue
+            for item in child:
+                if isinstance(item, QuerySet):
+                    tables += get_tables_for_query(item.query)
+        return tables
+
+    if query.where and query.where.children and isinstance(query.where.children[0], WhereNode):
+        where_node = query.where.children[0]
+        tables = get_tables(where_node, tables)
+
+    return list(set(tables))
+
+def get_tables_for_query11(query):
+    """Takes a django BaseQuery object and tries to return all tables that will
+    be used in that query as a list.  Unfortunately, the where clauses give us
+    "QueryWrapper" instead of "QuerySet" objects, so we have to parse SQL once
+    we get down to a certain layer to get the tables we are using.  This is
+    meant for use in Django 1.1.x only!  Later versions can use the above."""
+    from django.db.models.sql.where import WhereNode
+    from django.db.models.query_utils import QueryWrapper
+    def parse_tables_from_sql(sql):
+        """This attempts to parse tables out of sql.  Django's SQL compiler is
+        highly regular and always uses extended SQL forms like 'INNER JOIN'
+        instead of ','.  This probably needs a lot of testing for different
+        backends and is not guaranteed to work on a custom backend."""
+        table_re = re.compile(r'(?:FROM|JOIN) `(?P<table>\w+)`')
+        return table_re.findall(sql)
+
+    tables = list(query.tables)
+    if query.where and query.where.children and isinstance(query.where.children[0], WhereNode):
+        where_node = query.where.children[0]
+        for child in where_node.children:
+            for item in child:
+                if isinstance(item, QueryWrapper):
+                    tables += parse_tables_from_sql(item.data[0])
+    return list(set(tables))
+
+from functools import wraps
+
+def timer(func):
+    import time
+    times = []
+    @wraps(func)
+    def foo(*args, **kwargs):
+        t0 = time.time()
+        ret = func(*args, **kwargs)
+        times.append(time.time() - t0)
+        print "%d runs, %0.6f avg" % (len(times), sum(times)/float(len(times)))
+        return ret
+    return foo
 
 # The KeyGen is used only to generate keys.  Some of these keys will be used
 # directly in the cache, while others are only general purpose functions to
@@ -90,15 +160,24 @@ class KeyGen(object):
             db = db[0:68] + self.gen_key(db[68:])
         return '%s_%s_multi_%s' % (self.prefix, db, self.gen_key(*values))
 
+    @staticmethod
+    def _convert(x):
+        if isinstance(x, unicode):
+            return x.encode('utf-8')
+        return str(x)
+
+    @staticmethod
+    def _recursive_convert(x, key):
+        for item in x:
+            if isinstance(item, (tuple, list)):
+                KeyGen._recursive_convert(item, key)
+            else:
+                key.update(KeyGen._convert(item))
+
     def gen_key(self, *values):
         """Generate a key from one or more values."""
-        def convert(x):
-            if isinstance(x, unicode):
-                return x.encode('utf-8')
-            return str(x)
         key = md5()
-        for v in values:
-            key.update(convert(v))
+        KeyGen._recursive_convert(values, key)
         return key.hexdigest()
 
 class KeyHandler(object):
@@ -174,7 +253,7 @@ class QueryCacheBackend(object):
     __shared_state = {}
     def __init__(self, cache_backend=None, keyhandler=None, keygen=None):
         self.__dict__ = self.__shared_state
-        self.prefix = getattr(settings, 'JOHNNY_MIDDLEWARE_KEY_PREFIX', 'jc')
+        self.prefix = settings.MIDDLEWARE_KEY_PREFIX
         if keyhandler: self.kh_class = keyhandler
         if keygen: self.kg_class = keygen
         if not cache_backend and not hasattr(self, 'cache_backend'):
@@ -219,18 +298,19 @@ class QueryCacheBackend(object):
             key, val = None, None
             # check the blacklist for any of the involved tables;  if it's not
             # there, then look for the value in the cache.
-            if not blacklist_match(*cls.query.tables):
-                gen_key = self.keyhandler.get_generation(*cls.query.tables, **{'db':db})
+            tables = get_tables_for_query(cls.query)
+            if tables and not blacklist_match(*tables):
+                gen_key = self.keyhandler.get_generation(*tables, **{'db':db})
                 key = self.keyhandler.sql_key(gen_key, sql, params, cls.get_ordering(), result_type, db)
                 val = self.cache_backend.get(key, None, db)
 
             if val is not None:
-                signals.qc_hit.send(sender=cls, tables=cls.query.tables,
+                signals.qc_hit.send(sender=cls, tables=tables,
                         query=(sql, params, cls.query.ordering_aliases),
                         size=len(val), key=key)
                 return val
 
-            signals.qc_miss.send(sender=cls, tables=cls.query.tables,
+            signals.qc_miss.send(sender=cls, tables=tables,
                     query=(sql, params, cls.query.ordering_aliases),
                     key=key)
 
@@ -349,25 +429,26 @@ class QueryCacheBackend11(QueryCacheBackend):
                     return
 
             val, key = None, None
+            tables = get_tables_for_query11(cls)
             # check the blacklist for any of the involved tables;  if it's not
             # there, then look for the value in the cache.
-            if cls.tables and not blacklist_match(*cls.tables):
-                gen_key = self.keyhandler.get_generation(*cls.tables)
+            if tables and not blacklist_match(*tables):
+                gen_key = self.keyhandler.get_generation(*tables)
                 key = self.keyhandler.sql_key(gen_key, sql, params,
                         cls.ordering_aliases, result_type)
                 val = self.cache_backend.get(key, None)
 
                 if val is not None:
-                    signals.qc_hit.send(sender=cls, tables=cls.tables,
+                    signals.qc_hit.send(sender=cls, tables=tables,
                             query=(sql, params, cls.ordering_aliases),
                             size=len(val), key=key)
                     return val
 
             # we didn't find the value in the cache, so execute the query
             result = original(cls, result_type)
-            if cls.tables and not sql.startswith('UPDATE') and not sql.startswith('DELETE'):
+            if tables and not sql.startswith('UPDATE') and not sql.startswith('DELETE'):
                 # I think we should always be sending a signal here if we miss..
-                signals.qc_miss.send(sender=cls, tables=cls.tables,
+                signals.qc_miss.send(sender=cls, tables=tables,
                         query=(sql, params, cls.ordering_aliases),
                         key=key)
                 if hasattr(result, '__iter__'):
@@ -376,9 +457,9 @@ class QueryCacheBackend11(QueryCacheBackend):
                 # blacklisted, in which case we just don't care.
                 if key is not None:
                     self.cache_backend.set(key, result)
-            elif cls.tables and sql.startswith('UPDATE'):
+            elif tables and sql.startswith('UPDATE'):
                 # issue #1 in bitbucket, not invalidating on update
-                for table in cls.tables:
+                for table in tables:
                     self.keyhandler.invalidate_table(table)
             return result
         return newfun
