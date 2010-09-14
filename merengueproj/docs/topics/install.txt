@@ -42,14 +42,20 @@ install in a ubuntu/debian based distribution.
 Some python packages are installed using easy_install, for use that
 you need to have installed python-setuptools
 
-Dependencies: ``python-imaging``, ``python-beautifulsoup``
+Dependencies: ``south``, ``python-imaging``, ``python-beautifulsoup``
+
+* ``south``: Django database schema migrator.
+
+    .. code-block:: bash
+
+        $ sudo easy_install south
 
 * ``python-imaging``: adds image processing capabilities to your Python
   interpreter. For model data fields.
 
     .. code-block:: bash
 
-        $ apt-get install python-imaging
+        $ sudo apt-get install python-imaging
 
 * ``python-beautifulsoup``: a Python HTML/XML parser designed for quick
   turnaround projects like screen-scraping. For text field HTML
@@ -57,7 +63,7 @@ Dependencies: ``python-imaging``, ``python-beautifulsoup``
 
     .. code-block:: bash
 
-        $ apt-get install python-beautifulsoup
+        $ sudo apt-get install python-beautifulsoup
 
 * ``ffmpeg``: FFmpeg is a complete, cross-platform solution to record,
     convert and stream audio and video.
@@ -65,7 +71,7 @@ Dependencies: ``python-imaging``, ``python-beautifulsoup``
 
     .. code-block:: bash
 
-        $ apt-get install ffmpeg libavcodec-unstripped-52 libavdevice-unstripped-52 libavformat-unstripped-52 libavutil-unstripped-49 libpostproc-unstripped-51 libswscale-unstripped-0 yamdi
+        $ sudo apt-get install ffmpeg libavcodec-unstripped-52 libavdevice-unstripped-52 libavformat-unstripped-52 libavutil-unstripped-49 libpostproc-unstripped-51 libswscale-unstripped-0 yamdi
 
 
 Other recommended dependencies
