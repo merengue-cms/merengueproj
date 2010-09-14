@@ -19,70 +19,51 @@
 from south.db import db
 from django.db import models
 from merengue.collab.models import *
+from merengue.base.utils import (south_trans_data, add_south_trans_fields,
+                                 add_south_trans_column, delete_south_trans_column)
+
 
 class Migration:
-    
+
     def forwards(self, orm):
-        
-        # Adding field 'CollabCommentRevisorStatusType.label_fr'
-        db.add_column('collab_collabcommentrevisorstatustype', 'label_fr', orm['collab.CollabCommentRevisorStatusType:label_fr'])
-        
-        # Adding field 'CollabCommentRevisorStatusType.label_en'
-        db.add_column('collab_collabcommentrevisorstatustype', 'label_en', orm['collab.CollabCommentRevisorStatusType:label_en'])
-        
-        # Adding field 'CollabCommentUserType.label_es'
-        db.rename_column('collab_collabcommentusertype', 'label', 'label_es')
-        
-        # Adding field 'CollabCommentUserType.label_fr'
-        db.add_column('collab_collabcommentusertype', 'label_fr', orm['collab.CollabCommentUserType:label_fr'])
-        
-        # Adding field 'CollabCommentRevisorStatusType.reason_fr'
-        db.add_column('collab_collabcommentrevisorstatustype', 'reason_fr', orm['collab.CollabCommentRevisorStatusType:reason_fr'])
-        
-        # Adding field 'CollabCommentRevisorStatusType.reason_en'
-        db.add_column('collab_collabcommentrevisorstatustype', 'reason_en', orm['collab.CollabCommentRevisorStatusType:reason_en'])
-        
-        # Adding field 'CollabCommentUserType.label_en'
-        db.add_column('collab_collabcommentusertype', 'label_en', orm['collab.CollabCommentUserType:label_en'])
-        
-        # Adding field 'CollabCommentRevisorStatusType.label_es'
-        db.rename_column('collab_collabcommentrevisorstatustype', 'label', 'label_es')
-        
-        # Adding field 'CollabCommentRevisorStatusType.reason_es'
-        db.rename_column('collab_collabcommentrevisorstatustype', 'reason', 'reason_es')
-        
-    
-    
+
+        add_south_trans_column(
+            table='collab_collabcommentusertype',
+            model_name='collab.CollabCommentUserType',
+            field_name='label',
+            orm=orm,
+        )
+
+        add_south_trans_column(
+            table='collab_collabcommentrevisorstatustype',
+            model_name='collab.CollabCommentRevisorStatusType',
+            field_name='label',
+            orm=orm,
+        )
+
+
+        add_south_trans_column(
+            table='collab_collabcommentrevisorstatustype',
+            model_name='collab.CollabCommentRevisorStatusType',
+            field_name='reason',
+            orm=orm,
+        )
+
+
     def backwards(self, orm):
-        
-        # Deleting field 'CollabCommentRevisorStatusType.label_fr'
-        db.delete_column('collab_collabcommentrevisorstatustype', 'label_fr')
-        
-        # Deleting field 'CollabCommentRevisorStatusType.label_en'
-        db.delete_column('collab_collabcommentrevisorstatustype', 'label_en')
-        
-        # Deleting field 'CollabCommentUserType.label_es'
-        db.rename_column('collab_collabcommentusertype', 'label_es', 'label')
-        
-        # Deleting field 'CollabCommentUserType.label_fr'
-        db.delete_column('collab_collabcommentusertype', 'label_fr')
-        
-        # Deleting field 'CollabCommentRevisorStatusType.reason_fr'
-        db.delete_column('collab_collabcommentrevisorstatustype', 'reason_fr')
-        
-        # Deleting field 'CollabCommentRevisorStatusType.reason_en'
-        db.delete_column('collab_collabcommentrevisorstatustype', 'reason_en')
-        
-        # Deleting field 'CollabCommentUserType.label_en'
-        db.delete_column('collab_collabcommentusertype', 'label_en')
-        
-        # Deleting field 'CollabCommentRevisorStatusType.label_es'
-        db.rename_column('collab_collabcommentrevisorstatustype', 'label_es', 'label')
-        
-        # Deleting field 'CollabCommentRevisorStatusType.reason_es'
-        db.rename_column('collab_collabcommentrevisorstatustype', 'reason_es', 'reason')
-        
-    
+        delete_south_trans_column(
+            table='collab_collabcommentrevisorstatustype',
+            field_name='reason',
+        )
+        delete_south_trans_column(
+            table='collab_collabcommentrevisorstatustype',
+            field_name='label',
+        )
+        delete_south_trans_column(
+            table='collab_collabcommentusertype',
+            field_name='label',
+        )
+
     models = {
         'auth.group': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -135,13 +116,7 @@ class Migration:
         'collab.collabcommentrevisorstatustype': {
             'decorator': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'label_en': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'label_es': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'label_fr': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
-            'reason_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'reason_es': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'reason_fr': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'result': ('django.db.models.fields.CharField', [], {'default': "'just'", 'max_length': '30'})
         },
         'collab.collabcommentusertype': {
@@ -159,5 +134,11 @@ class Migration:
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         }
     }
-    
+    add_south_trans_fields(models, {
+        'collab.collabcommentrevisorstatustype': {
+            'label': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
+            'reason': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+        },
+    })
+
     complete_apps = ['collab']

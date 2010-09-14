@@ -21,6 +21,7 @@ from south.db import db
 from django.db import models
 from django.conf import settings
 from merengue.base.models import *
+from merengue.base.utils import south_trans_data, add_south_trans_fields
 
 class Migration:
     
@@ -46,19 +47,10 @@ class Migration:
             ('fax', orm['base.ContactInfo:fax']),
         ))
         db.send_create_signal('base', ['ContactInfo'])
-        
+
         # Adding model 'BaseContent'
         data = (('id', orm['base.BaseContent:id']),
-                ('name_fr', orm['base.BaseContent:name_fr']),
-                ('name_es', orm['base.BaseContent:name_es']),
-                ('name_en', orm['base.BaseContent:name_en']),
                 ('slug', orm['base.BaseContent:slug']),
-                ('plain_description_fr', orm['base.BaseContent:plain_description_fr']),
-                ('plain_description_es', orm['base.BaseContent:plain_description_es']),
-                ('plain_description_en', orm['base.BaseContent:plain_description_en']),
-                ('description_fr', orm['base.BaseContent:description_fr']),
-                ('description_en', orm['base.BaseContent:description_en']),
-                ('description_es', orm['base.BaseContent:description_es']),
                 ('status', orm['base.BaseContent:status']),
                 ('main_image', orm['base.BaseContent:main_image']),
                 ('contact_info', orm['base.BaseContent:contact_info']),
@@ -74,9 +66,15 @@ class Migration:
                         ('is_autolocated', orm['base.BaseContent:is_autolocated']),
                         ('location', orm['base.BaseContent:location']))
             data = data + gis_data
+        data = data + south_trans_data(
+            orm=orm,
+            trans_data={
+                'base.BaseContent': ('name', 'description', 'plain_description', ),
+            },
+        )
         db.create_table('base_basecontent', data)
         db.send_create_signal('base', ['BaseContent'])
-        
+
         # Adding model 'MultimediaRelation'
         db.create_table('base_multimediarelation', (
             ('id', orm['base.MultimediaRelation:id']),
@@ -86,50 +84,49 @@ class Migration:
             ('order', orm['base.MultimediaRelation:order']),
         ))
         db.send_create_signal('base', ['MultimediaRelation'])
-        
+
         # Adding ManyToManyField 'BaseContent.owners'
         db.create_table('base_basecontent_owners', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('basecontent', models.ForeignKey(orm.BaseContent, null=False)),
             ('user', models.ForeignKey(orm['auth.User'], null=False))
         ))
-        
+
         # Adding ManyToManyField 'BaseContent.related_items'
         db.create_table('base_basecontent_related_items', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('from_basecontent', models.ForeignKey(orm.BaseContent, null=False)),
             ('to_basecontent', models.ForeignKey(orm.BaseContent, null=False))
         ))
-        
+
         # Creating unique_together for [content, multimedia] on MultimediaRelation.
         db.create_unique('base_multimediarelation', ['content_id', 'multimedia_id'])
-        
-    
-    
+
+
     def backwards(self, orm):
-        
+
         # Deleting unique_together for [content, multimedia] on MultimediaRelation.
         db.delete_unique('base_multimediarelation', ['content_id', 'multimedia_id'])
-        
+
         # Deleting model 'ContactInfo'
         db.delete_table('base_contactinfo')
-        
+
         # Deleting model 'BaseContent'
         db.delete_table('base_basecontent')
-        
+
         # Deleting model 'MultimediaRelation'
         db.delete_table('base_multimediarelation')
-        
+
         # Dropping ManyToManyField 'BaseContent.owners'
         db.delete_table('base_basecontent_owners')
-        
+
         # Dropping ManyToManyField 'BaseContent.related_items'
         db.delete_table('base_basecontent_related_items')
-        
+
         if settings.USE_GIS:
             # Deleting model 'Location'
             db.delete_table('places_location')
-    
+
     models = {
         'auth.group': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -162,9 +159,6 @@ class Migration:
             'class_name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'db_index': 'True'}),
             'contact_info': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['base.ContactInfo']", 'null': 'True', 'blank': 'True'}),
             'creation_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'null': 'True', 'blank': 'True'}),
-            'description_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'description_es': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'description_fr': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_autolocated': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
             'last_editor': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'last_edited_content'", 'blank': 'True', 'null': 'True', 'to': "orm['auth.User']"}),
@@ -173,13 +167,7 @@ class Migration:
             'map_icon': ('stdimage.fields.StdImageField', ["_('map icon')"], {'null': 'True', 'blank': 'True'}),
             'modification_date': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'null': 'True', 'blank': 'True'}),
             'multimedia': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['multimedia.BaseMultimedia']", 'blank': 'True'}),
-            'name_en': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200', 'db_index': 'True', 'null': 'True', 'blank': 'True'}),
-            'name_fr': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'owners': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'}),
-            'plain_description_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'plain_description_es': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'plain_description_fr': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'rank': ('django.db.models.fields.FloatField', [], {'default': '100.0', 'db_index': 'True'}),
             'related_items': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['base.BaseContent']", 'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '200', 'db_index': 'True'}),
@@ -229,6 +217,13 @@ class Migration:
             'postal_code': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'})
         }
     }
+    add_south_trans_fields(models, {
+        'base.basecontent': {
+            'name': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'plain_description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+        },
+    })
 
     if not settings.USE_GIS:
         del models['places.location']

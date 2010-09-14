@@ -28,7 +28,6 @@ class Migration:
         db.create_table('collab_collabcommentusertype', (
             ('id', orm['collab.CollabCommentUserType:id']),
             ('name', orm['collab.CollabCommentUserType:name']),
-            ('label', orm['collab.CollabCommentUserType:label']),
         ))
         db.send_create_signal('collab', ['CollabCommentUserType'])
         
@@ -52,7 +51,6 @@ class Migration:
         db.create_table('collab_collabcommentrevisorstatustype', (
             ('id', orm['collab.CollabCommentRevisorStatusType:id']),
             ('name', orm['collab.CollabCommentRevisorStatusType:name']),
-            ('label', orm['collab.CollabCommentRevisorStatusType:label']),
             ('decorator', orm['collab.CollabCommentRevisorStatusType:decorator']),
             ('result', orm['collab.CollabCommentRevisorStatusType:result']),
             ('reason', orm['collab.CollabCommentRevisorStatusType:reason']),
@@ -140,14 +138,12 @@ class Migration:
         'collab.collabcommentrevisorstatustype': {
             'decorator': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
             'reason': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'result': ('django.db.models.fields.CharField', [], {'default': "'just'", 'max_length': '30'})
         },
         'collab.collabcommentusertype': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '20'})
         },
         'contenttypes.contenttype': {
