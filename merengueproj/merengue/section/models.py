@@ -121,7 +121,7 @@ class Menu(models.Model):
             self.update_url()
         return self.url
 
-    def update_url(self):
+    def update_url(self, commit=True):
         try:
             menus_ancestors = [menu.slug for menu in self.get_ancestors()][1:] # first is a dummy root menu and we discard it
             ancestors_path = menus_ancestors and '/%s' % '/'.join(menus_ancestors) or ''
@@ -132,7 +132,8 @@ class Menu(models.Model):
                 self.url = reverse('menu_view', args=(ancestors_path, self.slug))
         except BaseLink.DoesNotExist:
             self.url = ''
-        self.save()
+        if commit:
+            self.save()
         return self.url
 
     def is_published(self):
@@ -569,3 +570,12 @@ def handle_link_url_post_save(sender, instance, **kwargs):
             link.menu.update_url()
 
 post_save.connect(handle_link_url_post_save)
+
+
+def handle_menu_url_post_save(sender, instance, **kwargs):
+    url = instance.url
+    instance.update_url(commit=False)
+    if instance and url != instance.url:
+        instance.save()
+
+post_save.connect(handle_menu_url_post_save, sender=Menu)
