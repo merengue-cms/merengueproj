@@ -36,6 +36,7 @@ from django.views.decorators.cache import never_cache
 
 from merengue.base.adminforms import UploadConfigForm, BackupForm
 from merengue.base.models import BaseContent
+from merengue.utils import get_all_parents
 
 OBJECT_ID_PREFIX = 'base_object_id_'
 MODEL_ADMIN_PREFIX = 'base_model_admin_'
@@ -207,7 +208,11 @@ class BaseAdminSite(DjangoAdminSite):
                     # we have to redirect to the content related section
                     section = related_sections.get().real_instance
                     admin_prefix += 'section/section/%s/' % section.id
-                    section_sites = self.related_admin_sites[section.__class__]
+                    parents = get_all_parents(section.__class__)
+                    section_sites = {}
+                    [section_sites.update(self.related_admin_sites.get(parent, {})) for parent in parents]
+                    section_sites.update(self.related_admin_sites[section.__class__])
+                    #section_sites = self.related_admin_sites[section.__class__]
                     for admin_site in section_sites.values():
                         if model in admin_site._registry:
                             admin_prefix += admin_site.name + '/'

@@ -302,6 +302,15 @@ def bin_exists(binary):
     return False
 
 
+def get_all_parents(model, parents=None):
+    parents = parents or ()
+    parents_level_1 = model.__bases__
+    for pl1 in parents_level_1:
+        parents += get_all_parents(pl1, parents)
+        parents += parents_level_1
+    return parents
+
+
 def invalidate_johnny_cache(model, invalidate_parent=False, parent_finish=None):
     if 'johnny' in settings.INSTALLED_APPS:
         from johnny import cache
