@@ -4,6 +4,10 @@
 
 {% block pagetitle %}{{ content }}{% endblock %}
 
+{% block beforecontentbreadcrumbs %}
+  <span class="breadcrumbSeparator">→</span><a href="{% url event_list %}" title="{% trans "Event" %}">{% inline_trans "Event" %}</a>
+{% endblock %}
+
 {% block contentdescription %}
   <div class="contentbody eventContentbody">
     <img class="eventIcon" src="{{ THEME_MEDIA_URL }}img/event_icon.jpg"/>
