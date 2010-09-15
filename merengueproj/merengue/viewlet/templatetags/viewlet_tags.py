@@ -33,7 +33,7 @@ class RenderViewletNode(template.Node):
     def render(self, context):
         request = context.get('request', None)
         try:
-            if self.registered_vielet is not None:
+            if self.registered_viewlet is not None:
                 viewlet = self.registered_viewlet.resolve(context).get_registry_item_class()
             else:
                 viewlet = None
