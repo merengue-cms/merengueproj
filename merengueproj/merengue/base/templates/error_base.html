@@ -9,6 +9,7 @@
 
 {% block content %}
 <div class="httperror {% block httperrorclass %}{% endblock %}{% if is_admin %} httperror-admin{% endif %}">
+    {% block httperrorheader %}
     <div class="httperror-header">
         <div id="ups">{% trans "Ups!" %}</div>
         <div class="httperror-title"> 
@@ -16,6 +17,7 @@
             {% endblock %}
         </div>
     </div>
+    {% endblock %}
     <div class="httperror-description">
         {% block httperrordescription %}
         {% endblock %}
