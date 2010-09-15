@@ -5,6 +5,7 @@
 {% block pagetitle %}{{ content }}{% endblock %}
 
 {% block beforecontentbreadcrumbs %}
+  {{ block.super }}
   <span class="breadcrumbSeparator">→</span><a href="{% url news_index %}" title="{% trans "News" %}">{% inline_trans "News" %}</a>
 {% endblock %}
 

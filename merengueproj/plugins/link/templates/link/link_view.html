@@ -5,10 +5,12 @@
 {% block pagetitle %}{{ content }}{% endblock %}
 
 {% block beforecontentbreadcrumbs %}
+  {{ block.super }}
   <span class="breadcrumbSeparator">→</span><a href="{% url link_index %}" title="{% trans "Links" %}">{% inline_trans "Links" %}</a>
 {% endblock %}
 
 {% block contentdescription %}
+    {{ block.super }}
     <a href="{{ content.url_link }}" title="{% trans "View more" %}">{% trans "View more" %}{% if content.portal_name %}:{{ content.portal_name }}{% endif %}</a>
     {{ block.super }}
 {% endblock %}
