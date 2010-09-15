@@ -28,6 +28,10 @@ div#headerlogo {
    font-weight: bold;
 }
 
+#header div#portalmenu {
+	display: inline-block;
+}
+
 div#site-actions {
    position: absolute;
    left: 0px;
@@ -232,7 +236,7 @@ ul#content-actions {
 div#right-sidebar {
    float:left;
    padding: 0px 10px;
-   width: 17%;
+   width: 19%;
 }
 
 div#right-sidebar div.block {
