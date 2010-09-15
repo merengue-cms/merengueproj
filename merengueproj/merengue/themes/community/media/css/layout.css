@@ -89,7 +89,12 @@ div#header-links ul li {
 	margin: 5px 20px;
 	float: left;
 	padding-left: 10px;
+	padding-bottom: 10px;
     background-color: #ABB1C1;
+}
+
+#header-blocks div#googlesearch h1 {
+	margin: 0;
 }
 
 #header-blocks div#latestnews {
@@ -97,6 +102,7 @@ div#header-links ul li {
 	float: left;
 	padding-left: 10px;
 	background-color: #ABB1C1;
+	width: 21%;
 }
 
 #header-blocks ul#latestnews {
@@ -109,7 +115,15 @@ div#header-links ul li {
 #header-blocks div#latestnews ul li {
 	float:left;
 	margin-right: 2em;
-	margin-bottom: 8px;
+}
+
+#header-blocks div#latestnews ul {
+	margin: 0;
+	padding-left: 15px;
+}
+
+#header-blocks div#latestnews h1 {
+	margin: 0;
 }
 
 #header-blocks div#standingout {
