@@ -86,10 +86,12 @@ ul {
 }
 
 .ie6 #headerlogo h1 {
-  display: inline;
+  display: block;
+  float: left;
+  clear: both;
   margin-top: 0;
-  margin-bottom: -10px;
-  height: 41px;
+  margin-bottom: -15px;
+  height: 51px;
 }
 
 #language-tools {
@@ -99,6 +101,7 @@ ul {
   margin-top: 15px;
   margin-right: 10px;
 }
+
 #language-tools ul li a {
   display: block;
   width: 30px;
@@ -686,7 +689,11 @@ body div#content-zone {
 }
 
 #left-sidebar #eventsCalendar div {
-	font-size: 75%;
+	font-size: 90%;
+}
+
+#left-sidebar .ui-datepicker .ui-datepicker-title select {
+    font-size: 1.3em;
 }
 
 #left-sidebar #eventsCalendar div.ui-datepicker {
