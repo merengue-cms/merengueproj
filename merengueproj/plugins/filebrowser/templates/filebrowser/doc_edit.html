@@ -1,0 +1,42 @@
+{% extends "filebrowser/base.html" %}
+{% load i18n filebrowser_tags %}
+
+{% block pagetitle %}{% trans "Edit document" %}{% endblock %}
+
+{% block extrabreadcrumbs %}
+  {{ block.super }}
+  {% if object.slug %}
+  <span class="breadcrumbSeparator">→</span>
+    <a href="{% filebrowser_url webfs.views.viewdoc repository_name=repository.name,doc_slug=object.slug %}">{{ object.title }}</a>
+  <span class="breadcrumbSeparator">→</span><a href=".">{% trans "Edit document" %}</a>
+  {% else %}
+  <span class="breadcrumbSeparator">→</span><a href=".">{% trans "Add document" %}</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+{% ifequal mode "add" %}
+  <div id="content-title">
+      <h1 title="{% trans "Add Document" %}">{% trans "Add Document" %}</h1>
+  </div>
+  <div class="object-buttons">
+    {% if path %}
+    <a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=path %}">    <img src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" /> {% trans "Back to content" %}</a><span>&nbsp;</span>
+    {% else %}
+    <a href="{% filebrowser_url filebrowser_root_listing repository_name=repository.name %}">    <img src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" /> {% trans "Back to content" %}</a><span>&nbsp;</span>
+    {% endif %}
+  </div>
+{% else %}
+  <div id="content-title">
+      <h1 title="{% trans "Edit Document" %}">{% trans "Edit Document" %}</h1>
+  </div>
+  <div class="object-buttons">
+    <a href="{% filebrowser_url webfs.views.viewdoc repository_name=repository.name,doc_slug=doc_slug %}"><img src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" />{% trans "Back to content" %}</a><span>&nbsp;</span>
+  </div>
+{% endifequal %}
+
+<form action="." method="post" enctype="multipart/form-data">
+  {{ form|safe }}
+  <input type="submit" class="submit" value="{{ form.button_label }}" />
+</form>
+{% endblock %}

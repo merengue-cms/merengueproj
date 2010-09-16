@@ -1,0 +1,53 @@
+{% extends "filebrowser/base.html" %}
+{% load i18n filebrowser_tags %}
+
+{% block pagetitle %}{% trans "Rename" %}{% endblock %}
+
+{% block extrabreadcrumbs %}
+  {{ block.super }}
+  <span class="breadcrumbSeparator">→</span>{% trans "Confirm rename" %}
+{% endblock %}
+
+{% block content %}
+<div id="content-title">
+    <h1 title="{% trans "Rename" %}">{% trans "Rename" %}</h1>
+</div>
+<div class="object-buttons">
+{% if path %}
+  <a href="{% filebrowser_url webfs_dir_listing repository_name=repository.name,path=path %}"><img alt="{% trans 'Edit Undo' %}" src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" />{% trans "Back to content" %}</a><span>&nbsp;</span>
+{% else %}
+  <a href="{% filebrowser_url webfs_root_listing repository_name=repository.name %}"><img alt="{% trans 'Edit Undo' %}" src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" />{% trans "Back to content" %}</a><span>&nbsp;</span>
+{% endif %}
+</div>
+
+<div id="content-main">
+  <h1>{% trans "Rename these elements" %}</h1>
+  <form action="{% filebrowser_url webfs.views.action repository_name=repository.name,path=path %}" method="post" enctype="multipart/form-data">
+  <div>
+    {% for d in dirs %}
+    <div class="spacing">
+      <img alt="{% trans 'folder' %}" src="/site_media/img/folder.png"/> <input name="dir_{{ forloop.counter }}" type="text" value="{{ d.title }}" />
+      <input name="olddir_{{ forloop.counter }}" type="hidden" value="{{ d.id }}" />
+    </div>
+    {% endfor %}
+    {% for f in files %}
+    <div class="spacing">
+      <img alt="{% trans 'file' %}" src="/site_media/img/text-x-generic.png"/> <input name="file_{{ forloop.counter }}" type="text" value="{{ f.title }}" />
+      <input name="oldfile_{{ forloop.counter }}" type="hidden" value="{{ f.id }}" />
+    </div>
+    {% endfor %}
+    {% for d in docs %}
+    <div class="spacing">
+      <img alt="{% trans 'file' %}" src="/site_media/img/text-x-generic.png"/> <input name="doc_{{ forloop.counter }}" type="text" value="{{ d.title }}" />
+      <input name="olddoc_{{ forloop.counter }}" type="hidden" value="{{ d.id }}" />
+    </div>
+    {% endfor %}
+
+  </div>
+    <div class="submit-row">
+      <input name="rename" type="submit" value="{% trans 'Rename' %}" class="rename-button" />
+    </div>
+ </form>
+</div>
+
+{% endblock %}

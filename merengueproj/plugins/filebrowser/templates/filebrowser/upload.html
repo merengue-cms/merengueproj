@@ -1,0 +1,50 @@
+{% extends "filebrowser/base.html" %}
+{% load i18n filebrowser_tags %}
+
+{% block pagetitle %}{% trans "Upload file" %}{% endblock %}
+
+{% block titlepage %}{% trans "Upload file" %}{% endblock %}
+
+{% block extrascripts %}
+    <script src="{{ MEDIA_URL }}filebrowser/js/multifile.js" language="javascript" type="text/javascript"></script>
+{% endblock %}
+
+{% block extrabreadcrumbs %}
+  {{ block.super }}
+  <span class="breadcrumbSeparator">→</span><a href=".">{% trans "Upload" %}</a>
+{% endblock %}
+
+{% block content %}
+<div id="content-title">
+    <h1 title="{% trans "Upload files" %}">{% trans "Upload files" %}</h1>
+</div>
+<div class="object-buttons">
+{% if path %}
+  <a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=path %}"><img src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" />{% trans "Back to content" %}</a><span>&nbsp;</span>
+{% else %}
+  <a href="{% filebrowser_url filebrowser_root_listing repository_name=repository.name %}"><img src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" />{% trans "Back to content" %}</a><span>&nbsp;</span>
+{% endif %}
+</div>
+
+<div id="content-main">
+
+<!-- This is the form -->
+<form enctype="multipart/form-data" action="." method="post">
+    <div class="form-row">
+        <label for="name">{% trans "File to upload" %}</label>
+        <input id="file_element" type="file" name="file_1" >
+    </div>
+    <div class="submit-row">
+        <div id="files_list"></div>
+        <input type="submit" class="submit upload-button spacing" value="{% trans 'Upload' %}" id="subir" name="subir" class="default" />
+    </div>
+</form>
+
+<script>
+    var multi_selector = new MultiSelector(document.getElementById('files_list'), 100 );
+    multi_selector.addElement(document.getElementById('file_element'));
+</script>
+
+</div>
+
+{% endblock %}

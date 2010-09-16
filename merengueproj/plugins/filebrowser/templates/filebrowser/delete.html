@@ -1,0 +1,55 @@
+{% extends "filebrowser/base.html" %}
+{% load i18n filebrowser_tags %}
+
+{% block pagetitle %}{% trans "Confirm delete" %}{% endblock %}
+
+{% block extrabreadcrumbs %}
+  {{ block.super }}
+  <span class="breadcrumbSeparator">→</span>{% trans "Confirm delete" %}
+{% endblock %}
+
+{% block content %}
+<div id="content-title">
+    <h1 title="{% trans "Delete confirmation" %}">{% trans "Delete confirmation" %}</h1>
+</div>
+<div class="object-buttons">
+{% if path %}
+  <a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=path %}">
+    <img src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" />{% trans "Back to content" %}
+  </a><span>&nbsp;</span>
+{% else %}
+  <a href="{% filebrowser_url filebrowser_root_listing repository_name=repository.name %}">
+    <img src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" />{% trans "Back to content" %}
+  </a><span>&nbsp;</span>
+{% endif %}
+</div>
+
+<div id="content-main">
+  <h1>{% trans "Are you sure to delete these elements?" %}</h1>
+  <form action="." method="post" enctype="multipart/form-data">
+  <div>
+    {% for d in dirs %}
+    <div class="spacing">
+      <label for="dir_{{ forloop.counter }}"><img src="{{ MEDIA_URL }}filebrowser/img/folder.png"/> {{ d.title }}</label>
+      <input name="dir_{{ forloop.counter }}" type="hidden" value="{{ d.id }}" />
+    </div>
+    {% endfor %}
+    {% for f in files %}
+    <div class="spacing">
+      <label for="file_{{ forloop.counter }}"><img src="{{ MEDIA_URL }}filebrowser/img/text-x-generic.png"/> {{ f.title }}</label>
+      <input name="file_{{ forloop.counter }}" type="hidden" value="{{ f.id }}" />
+    </div>
+    {% endfor %}
+    {% for d in docs %}
+    <div class="spacing">
+      <label for="doc_{{ forloop.counter }}"><img src="{{ MEDIA_URL }}filebrowser/img/text-x-generic.png"/> {{ d.title }}</label>
+      <input name="doc_{{ forloop.counter }}" type="hidden" value="{{ d.id }}" />
+    </div>
+    {% endfor %}
+
+    <div class="submit-row">
+      <input name="delete" class="delete-button" type="submit" value="{% trans "Delete" %}" class="default" />
+    </div>
+  </div>
+</div>
+{% endblock %}

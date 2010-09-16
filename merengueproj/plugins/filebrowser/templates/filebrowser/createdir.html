@@ -1,0 +1,40 @@
+{% extends "filebrowser/base.html" %}
+{% load i18n filebrowser_tags %}
+
+{% block pagetitle %}{% trans "Create folder" %}{% endblock %}
+
+{% block extrabreadcrumbs %}
+  {{ block.super }}
+  <span class="breadcrumbSeparator">→</span><a href=".">{% trans "Create folder" %}</a>
+{% endblock %}
+
+{% block content %}
+<div id="content-title">
+    <h1 title="{% trans "Create folder" %}">{% trans "Create folder" %}</h1>
+</div>
+<div class="object-buttons">
+{% if path %}
+    <a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=path %}">
+        <img src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" /> {% trans "Cancel" %}
+    </a><span>&nbsp;</span>
+{% else %}
+    <a href="{% filebrowser_url filebrowser_root_listing repository_name=repository.name %}">
+        <img src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" /> {% trans "Cancel" %}
+    </a><span>&nbsp;</span>
+{% endif %}
+</div>
+
+<div id="content-main">
+  {% if errornote %}
+   <p class="errornote">
+    {{ errornote }}
+   </p>
+  {% endif %}
+  <form action="." method="post">
+      <label for="dirname" class="required">{% trans "New folder name" %}</label>
+      <input name="dirname" type="text" value="" />
+      <input type="submit" class="submit" value="Crear" class="cretaefolder-button" />
+  </form>
+</div>
+
+{% endblock %}

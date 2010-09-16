@@ -1,0 +1,53 @@
+h3 {
+    margin-top: 2em;
+    color: #999;
+    border-bottom: 1px solid #999;
+    padding-left: 20px;
+    clear: left;
+}
+
+form.document-form {
+    display: none;
+}
+
+div.file {
+    float: left;
+    width: 175px;
+    margin-bottom: 2em;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+div.file img {
+    float: left;
+    padding-right: 10px;
+}
+
+div.file a {
+    display: block;
+}
+
+div.addlink {
+    clear: left;
+    margin-left: 20px;
+}
+
+div.file button {
+  border: 1px solid #999;
+  text-decoration: none;
+  font-size: 10px;
+  margin-left: 3px;
+}
+
+div.image {
+    float: left;
+    margin: 2em;
+    text-align: center;
+    width: 300px;
+    height: 310px;
+    background-color: #dddddd;
+}
+
+div.image p {
+   text-align: center !important;
+}
