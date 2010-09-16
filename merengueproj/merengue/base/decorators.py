@@ -21,6 +21,7 @@ except ImportError:
     from django.utils.functional import update_wrapper  # Python 2.3, 2.4 fallback.
 
 from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.utils.http import urlquote
@@ -29,6 +30,7 @@ try:
     from django.contrib.auth.decorators import _CheckLogin
 except ImportError:
     # Django 1.2 has no _CheckLogin decorator. We copied a old version (from Django 1.1 code)
+
     class _CheckLogin(object):
         """
         Class that checks that the user passes the given test, redirecting to
@@ -40,6 +42,7 @@ except ImportError:
         _CheckLogin object is used as a method decorator, the view function
         is properly bound to its instance.
         """
+
         def __init__(self, view_func, test_func, login_url=None, redirect_field_name=REDIRECT_FIELD_NAME):
             if not login_url:
                 from django.conf import settings
@@ -49,9 +52,9 @@ except ImportError:
             self.login_url = login_url
             self.redirect_field_name = redirect_field_name
 
-            # We can't blindly apply update_wrapper because it udpates __dict__ and 
-            # if the view function is already a _CheckLogin object then 
-            # self.test_func and friends will get stomped. However, we also can't 
+            # We can't blindly apply update_wrapper because it udpates __dict__ and
+            # if the view function is already a _CheckLogin object then
+            # self.test_func and friends will get stomped. However, we also can't
             # *not* update the wrapper's dict because then view function attributes
             # don't get updated into the wrapper. So we need to split the
             # difference: don't let update_wrapper update __dict__, but then update
@@ -120,3 +123,12 @@ class _ExtraCheckLogin(_CheckLogin):
         path = urlquote(request.get_full_path())
         tup = self.login_url, self.redirect_field_name, path
         return HttpResponseRedirect('%s?%s=%s' % tup)
+
+
+def login_required_or_permission_denied(view_func):
+
+    def _decorator(request, *args, **kwargs):
+        if not request.user.is_authenticated():
+            raise PermissionDenied
+        return view_func(request, *args, **kwargs)
+    return _decorator
