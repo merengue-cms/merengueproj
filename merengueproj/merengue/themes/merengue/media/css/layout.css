@@ -305,7 +305,9 @@ div#coremenu ul.menu1 li a.menu1 {
 	padding-left: 6px;
 	background: #F4F0E5;
 	border: 1px solid #EDE8E8;
+/*
 	margin: 0 20px -2px 0;
+*/
 }
 
 
@@ -315,7 +317,11 @@ div#coremenu ul.menu1 li a.menu1 {
 }
 
 #header-blocks #latestnews ul li {
-	display: block;
+	display: inline;
+}
+
+#header-blocks #latestnews h1 {
+	margin-bottom: 0;
 }
 
 /* IE8 hack */
