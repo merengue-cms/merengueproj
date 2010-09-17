@@ -36,12 +36,14 @@
          {% for d in dirs %}
             <tr class="{% cycle row1,row2 %}">
               <td><input type="checkbox" name="dir_{{ forloop.counter }}" id="dir_{{ forloop.counter }}" value="{{ d.name }}" /></td>
-              <td><label for="dir_{{ forloop.counter }}"><img alt="{% trans "folder" %}" src="{{ MEDIA_URL }}filebrowser/img/folder.png"/></label> 
-              {% if d.path %}
-              <a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=d.path %}">{{ d.name|inline_truncate:40 }}</a>
-              {% else %}
-              <a href="{% filebrowser_url filebrowser_root_listing repository_name=repository.name %}">{{ d.name|inline_truncate:40 }}</a>
-              {% endif %}
+              <td>
+              	<label for="dir_{{ forloop.counter }}"><img alt="{% trans "folder" %}" src="{{ MEDIA_URL }}filebrowser/img/folder.png"/> 
+	              {% if d.path %}
+	              <a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=d.path %}">{{ d.name|inline_truncate:40 }}</a>
+	              {% else %}
+	              <a href="{% filebrowser_url filebrowser_root_listing repository_name=repository.name %}">{{ d.name|inline_truncate:40 }}</a>
+	              {% endif %}
+			  </label>
               </td>
               <td>{{ d.childnumber }} Elementos</td>
               <td colspan="2">{{ d.modificated|date:"d/m/Y" }}</td>
@@ -50,7 +52,11 @@
          {% for f in files %}
             <tr class="{% cycle row1,row2 %}">
               <td><input type="checkbox" name="file_{{ forloop.counter }}" id="file_{{ forloop.counter }}" value="{{ f.name }}" /></td>
-              <td><label for="file_{{ forloop.counter }}"><img alt="{% trans "file" %}" src="{{ MEDIA_URL }}filebrowser/img/text-x-generic.png"/></label> <a href="{% filebrowser_url filebrowser_download repository_name=repository.name,path=f.path %}">{{ f.name|inline_truncate:40 }}</a></td>
+              <td>
+              	<label for="file_{{ forloop.counter }}"><img alt="{% trans "file" %}" src="{{ MEDIA_URL }}filebrowser/img/text-x-generic.png"/>
+			   		<a href="{% filebrowser_url filebrowser_download repository_name=repository.name,path=f.path %}">{{ f.name|inline_truncate:40 }}</a>
+			  	</label>
+			  </td>
               <td>{{ f.size|filesizeformat }}</td>
               <td colspan="2">{{ f.modificated|date:"d/m/Y" }}</td>
             </tr>
@@ -58,18 +64,22 @@
          {% for doc in documents %}
             <tr class="{% cycle row1,row2 %}">
               <td><input type="checkbox" name="doc_{{ forloop.counter }}" id="doc_{{ forloop.counter }}" value="{{ doc.slug }}" /></td>
-              <td><label for="doc_{{ forloop.counter }}"><img alt="{% trans "document" %}" src="/site_media/img/text-x-generic.png"/></label> <a href="{% filebrowser_url filebrowser_viewdoc repository_name=repository.name,doc_slug=doc.slug %}">{{ doc.title|inline_truncate:40 }}</a></td>
+              <td>
+              	<label for="doc_{{ forloop.counter }}"><img alt="{% trans "document" %}" src="/site_media/img/text-x-generic.png"/>
+				 <a href="{% filebrowser_url filebrowser_viewdoc repository_name=repository.name,doc_slug=doc.slug %}">{{ doc.title|inline_truncate:40 }}</a>
+		   		</label>
+		   	  </td>
               <td>{{ doc.get_size|filesizeformat }}</td>
               <td colspan="2">{{ doc.modification_date|date:"d/m/Y" }}</td>
             </tr>
          {% endfor %}
         </tbody>
     </table>
-  <div>
+  <div class="action-buttons">
     {% if edit_permission %}
         <input type="submit" name="renameform" class="rename-button" value="{% trans "Rename" %}" />
         <input type="submit" name="deleteform" class="delete-button" value="{% trans "Delete" %}" />
-        {% trans "Select one or more files or folders and click the desired button" %}
+        <p>{% trans "Select one or more files or folders and click the desired button" %}</p>
     {% endif %}
   </div>
 </form>
