@@ -420,10 +420,14 @@ class DocumentSectionRelatedModelAdmin(RelatedModelAdmin):
     related_field = 'document'
 
 
-def register(site):
-    site.register(Section, SectionAdmin)
-    site.register(Menu, PortalMenuAdmin)
+def register_related(site):
     site.register_related(Document, DocumentRelatedModelAdmin, related_to=Section)
     site.register_related(CustomStyle, CustomStyleRelatedModelAdmin, related_to=Section)
     site.register_related(Menu, MainMenuRelatedAdmin, related_to=Section)
     site.register_related(DocumentSection, DocumentSectionRelatedModelAdmin, related_to=Document)
+
+
+def register(site):
+    site.register(Section, SectionAdmin)
+    site.register(Menu, PortalMenuAdmin)
+    register_related(site)
