@@ -40,11 +40,8 @@ from django.utils.importlib import import_module
 
 from merengue import registry
 from merengue.base.adminsite import site
-from merengue.base.models import BaseContent
-from merengue.multimedia.admin import register_related_multimedia
 from merengue.registry.items import (NotRegistered as NotRegisteredItem,
                                      AlreadyRegistered as AlreadyRegisteredItem)
-from merengue.section.admin import register_related as register_related_section
 from merengue.section.models import Section
 from merengue.perms.utils import register_permission, unregister_permission
 
@@ -331,7 +328,6 @@ def register_plugin_section_models(plugin_name):
     if not plugin_config:
         return
     register_plugin_section_models_in_admin_site(plugin_config, plugin_name, site)
-    register_plugin_section_models_in_admin_site(plugin_config, plugin_name, site.get_plugin_site(plugin_name))
 
 
 def register_plugin_section_models_in_admin_site(plugin_config, plugin_name, admin_site):
@@ -340,10 +336,6 @@ def register_plugin_section_models_in_admin_site(plugin_config, plugin_name, adm
     for model, admin_model in plugin_config.section_models():
         site_related = admin_site.register_related(model, admin_model, related_to=Section)
         plugin_config.section_register_hook(site_related, model)
-        if issubclass(model, BaseContent):
-            register_related_multimedia(admin_site, BaseContent)
-        elif issubclass(model, Section):
-            register_related_section(admin_site)
 
 
 def register_plugin_in_plugin_admin_site(plugin_name):
@@ -356,10 +348,6 @@ def register_plugin_in_plugin_admin_site(plugin_name):
     plugin_site = site.register_plugin_site(plugin_name)
     for model, admin_model in plugin_config.get_model_admins():
         plugin_site.register(model, admin_model)
-        if issubclass(model, BaseContent):
-            register_related_multimedia(plugin_site, BaseContent)
-        elif issubclass(model, Section):
-            register_related_section(plugin_site)
 
 
 def register_plugin_perms(plugin_name):

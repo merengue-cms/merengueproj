@@ -447,6 +447,7 @@ class PluginAdminSite(BaseAdminSite, RelatedModelRegistrable):
         plugin_name = self.prefix.split('.')[1:]
         self.plugin_name = plugin_name and plugin_name[0] or ''
         super(PluginAdminSite, self).__init__(*args, **kwargs)
+        self.related_admin_sites = self.main_site.related_admin_sites
 
     def index(self, request):
         return super(BaseAdminSite, self).index(request,
