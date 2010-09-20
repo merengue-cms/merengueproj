@@ -7,7 +7,7 @@
 <div class="breadcrumbs">
 {% if inplugin %}
 <a href="../../">{% trans "Home" %}</a> &rsaquo; 
-<a href="../">{% trans "Plugin administration" %}</a>
+<a href="../">{{ plugin_name|title }} {% trans "plugin administration" %}</a>
 {% else %}
 <a href="../">{% trans "Home" %}</a>
 {% endif %}

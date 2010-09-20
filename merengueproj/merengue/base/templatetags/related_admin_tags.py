@@ -68,7 +68,7 @@ def advanced_breadcrumbs(context):
                         'url': urlresolvers.reverse('admin:index'),
                         }]
             if getattr(route[0]['site'], 'i_am_plugin_site', False):
-                url_list += [{'label': _('Plugin administration'),
+                url_list += [{'label': _('%(plugin_name)s plugin') % {'plugin_name': route[0]['site'].plugin_name.title()},
                             'url': url_list[0]['url'] + route[0]['site'].prefix + '/',
                             }]
             url_list += [{'label': _(route[0]['opts'].app_label.title()),

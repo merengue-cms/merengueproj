@@ -330,10 +330,12 @@ def register_plugin_section_models(plugin_name):
     if not plugin_config:
         return
     register_plugin_section_models_in_admin_site(plugin_config, plugin_name, site)
-    register_plugin_section_models_in_admin_site(plugin_config, plugin_name, site.plugin_site)
+    register_plugin_section_models_in_admin_site(plugin_config, plugin_name, site.get_plugin_site(plugin_name))
 
 
 def register_plugin_section_models_in_admin_site(plugin_config, plugin_name, admin_site):
+    if not admin_site:
+        return
     for model, admin_model in plugin_config.section_models():
         site_related = admin_site.register_related(model, admin_model, related_to=Section)
         plugin_config.section_register_hook(site_related, model)
@@ -345,10 +347,14 @@ def register_plugin_in_plugin_admin_site(plugin_name):
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
     if not plugin_config:
         return
+    model_admins = plugin_config.get_model_admins()
+    if not model_admins:
+        return
+    plugin_site = site.register_plugin_site(plugin_name)
     for model, admin_model in plugin_config.get_model_admins():
-        site.plugin_site.register(model, admin_model)
+        plugin_site.register(model, admin_model)
         if issubclass(model, BaseContent):
-            register_related_multimedia(site.plugin_site, BaseContent)
+            register_related_multimedia(plugin_site, BaseContent)
 
 
 def register_plugin_perms(plugin_name):
@@ -379,11 +385,7 @@ def unregister_plugin_in_plugin_admin_site(plugin_name):
         plugin = plugin_config.get_registered_item()
         if not plugin.installed:
             return
-    for model, admin_model in plugin_config.get_model_admins():
-        try:
-            site.plugin_site.unregister(model)
-        except NotRegistered:
-            pass
+    site.unregister_plugin_site(plugin_name)
 
 
 def reload_app_directories_template_loader():
@@ -444,4 +446,5 @@ def has_required_dependencies(plugin):
 
 from merengue.section.admin import register as register_section
 register_section(site)
-register_section(site.plugin_site)
+for plugin_site in site.get_plugin_sites():
+    register_section(plugin_site)

@@ -40,7 +40,6 @@ from merengue.utils import get_all_parents
 
 OBJECT_ID_PREFIX = 'base_object_id_'
 MODEL_ADMIN_PREFIX = 'base_model_admin_'
-PLUGIN_ADMIN_PREFIX = 'plugin_admin'
 
 
 class BaseAdminSite(DjangoAdminSite):
@@ -217,8 +216,8 @@ class BaseAdminSite(DjangoAdminSite):
                         if model in admin_site._registry:
                             admin_prefix += admin_site.name + '/'
                             break
-                elif getattr(self.plugin_site, 'i_am_plugin_site', False):
-                    admin_prefix += PLUGIN_ADMIN_PREFIX + '/'
+                elif getattr(self, 'get_plugin_site_prefix_for_model', False):
+                    admin_prefix += self.get_plugin_site_prefix_for_model(model) + '/'
         return HttpResponseRedirect('%s%s/%s/%d/' % (admin_prefix, model._meta.app_label,
                                     model._meta.module_name, content.id))
 
@@ -368,7 +367,7 @@ class AdminSite(BaseAdminSite, RelatedModelRegistrable):
 
     def __init__(self, *args, **kwargs):
         super(AdminSite, self).__init__(*args, **kwargs)
-        self.plugin_site = PluginAdminSite(main_admin_site=self)
+        self._plugin_sites = {}
 
     def get_urls(self):
         from django.conf.urls.defaults import patterns, url, include
@@ -376,12 +375,13 @@ class AdminSite(BaseAdminSite, RelatedModelRegistrable):
         urlpatterns = super(AdminSite, self).get_urls()
 
         # custom url definitions
-        custom_patterns = patterns('',
-            url('^' + PLUGIN_ADMIN_PREFIX + '/',
-                include(self.plugin_site.urls),
-            ),
-        )
-        return custom_patterns + urlpatterns
+        for plugin_name, plugin_site in self._plugin_sites.items():
+            urlpatterns += patterns('',
+                url('^%s/' % plugin_name,
+                    include(plugin_site.urls),
+                ),
+            )
+        return urlpatterns
 
     def index(self, request, extra_context=None):
         extra_context = extra_context or {}
@@ -389,16 +389,17 @@ class AdminSite(BaseAdminSite, RelatedModelRegistrable):
         user = request.user
         from merengue.perms import utils as perms_api
         manage_plugin_content = perms_api.can_manage_plugin_content(request.user)
-        for model, model_admin in self.plugin_site._registry.items():
-            app_label = model._meta.app_label
+        for plugin_name, site in self._plugin_sites.items():
+            app_label = plugin_name
 
             if app_label in app_dict:
                 continue
 
             if manage_plugin_content:
+                name = app_label.split('.')[1:]
                 app_dict[app_label] = {
-                    'name': app_label.title(),
-                    'app_url': PLUGIN_ADMIN_PREFIX + '/' + app_label + '/',
+                    'name': name and name[0].title() or '',
+                    'app_url': app_label + '/',
                     'has_module_perms': manage_plugin_content,
                 }
 
@@ -410,20 +411,51 @@ class AdminSite(BaseAdminSite, RelatedModelRegistrable):
             {'plugins': app_dict})
         return super(AdminSite, self).index(request, extra_context)
 
+    def register_plugin_site(self, plugin_name):
+        if plugin_name in self._plugin_sites.keys():
+            return self._plugin_sites[plugin_name]
+        plugin_site = PluginAdminSite(main_admin_site=self, plugin_name=plugin_name)
+        self._plugin_sites[plugin_name]=plugin_site
+        return plugin_site
+
+    def unregister_plugin_site(self, plugin_name):
+        if not plugin_name in self._plugin_sites.keys():
+            return
+        del(self._plugin_sites[plugin_name])
+
+    def get_plugin_site(self, plugin_name):
+        if plugin_name in self._plugin_sites.keys():
+            return self._plugin_sites[plugin_name]
+        return None
+
+    def get_plugin_sites(self):
+        return self._plugin_sites.values()
+
+    def get_plugin_site_prefix_for_model(self, model):
+        for plugin_name, plugin_site in self._plugin_sites.items():
+            if model in plugin_site._registry:
+                return plugin_name
+        return None
+
 
 class PluginAdminSite(BaseAdminSite, RelatedModelRegistrable):
 
     def __init__(self, *args, **kwargs):
         self.main_site = kwargs.pop('main_admin_site', None)
         self.i_am_plugin_site = True
-        self.prefix = PLUGIN_ADMIN_PREFIX
+        self.prefix = kwargs.pop('plugin_name', '')
+        plugin_name = self.prefix.split('.')[1:]
+        self.plugin_name = plugin_name and plugin_name[0] or ''
         super(PluginAdminSite, self).__init__(*args, **kwargs)
 
     def index(self, request):
-        return super(BaseAdminSite, self).index(request, {'title': _('Plugin administration'), 'inplugin': True})
+        return super(BaseAdminSite, self).index(request,
+                                                {'title': _('%(plugin_name)s plugin administration') % {'plugin_name': self.plugin_name},
+                                                 'inplugin': True,
+                                                 'plugin_name': self.plugin_name})
 
     def app_index(self, request, app_label, extra_context=None):
-        return super(PluginAdminSite, self).app_index(request, app_label, {'inplugin': True})
+        return super(PluginAdminSite, self).app_index(request, app_label, {'inplugin': True, 'plugin_name': self.plugin_name})
 
 
 class RelatedAdminSite(BaseAdminSite):
