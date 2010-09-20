@@ -446,5 +446,3 @@ def has_required_dependencies(plugin):
 
 from merengue.section.admin import register as register_section
 register_section(site)
-for plugin_site in site.get_plugin_sites():
-    register_section(plugin_site)
