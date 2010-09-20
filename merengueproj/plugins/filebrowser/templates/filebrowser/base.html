@@ -10,7 +10,7 @@
 
 {% block extrabreadcrumbs %}
     {{ block.super }}
-    <span class="breadcrumbSeparator">→</span><a href="{% filebrowser_url filebrowser_root_listing repository_name=repository.name %}">{% trans "Document repository" %}</a>
+    <span class="breadcrumbSeparator">→</span><a href="{% filebrowser_url filebrowser_root_listing repository.name %}">{% trans "Document repository" %}</a>
     {% if parents %}
       {% for p in parents %}
         <span class="breadcrumbSeparator">→</span><a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=p.path %}/">{{ p.dirname }}</a>

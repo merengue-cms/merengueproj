@@ -16,7 +16,7 @@
 {% if path %}
   <a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=path %}"><img alt="{% trans 'Edit Undo' %}" src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" />{% trans "Back to content" %}</a><span>&nbsp;</span>
 {% else %}
-  <a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name %}"><img alt="{% trans 'Edit Undo' %}" src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" />{% trans "Back to content" %}</a><span>&nbsp;</span>
+  <a href="{% filebrowser_url filebrowser_root_listing repository_name=repository.name %}"><img alt="{% trans 'Edit Undo' %}" src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" />{% trans "Back to content" %}</a><span>&nbsp;</span>
 {% endif %}
 </div>
 

@@ -104,12 +104,13 @@ class Repository(models.Model):
         for i, elem in enumerate(elems):
             oldfile = os.path.join(basepath, old_elems[i])
             newfile = os.path.join(basepath, elem['id'])
-            if os.path.exists(oldfile):
-                shutil.move(oldfile, newfile)
-            else:
-                doc = self.document_set.get(slug=old_elems[i])
-                doc.title = elem['title']
-                doc.save()
+            if oldfile != newfile:
+                if os.path.exists(oldfile):
+                    shutil.move(oldfile, newfile)
+                else:
+                    doc = self.document_set.get(slug=old_elems[i])
+                    doc.title = elem['title']
+                    doc.save()
 
     def delete_elems(self, path, elems):
         basepath = self.get_absolute_path(path)
