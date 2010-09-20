@@ -279,7 +279,7 @@ $.fn.extend({
 				}
 
 				if (parent == op) break; // break if we are already at the offestParent
-			} while ((parent = parent.parentNode) && (parent.tagName.toLowerCase() != 'body' || parent.tagName.toLowerCase() != 'html'));
+			} while ((parent = parent.parentNode) && (parent.tagName.toLowerCase() != 'body' && parent.tagName.toLowerCase() != 'html'));
 		}
 		
 		var returnValue = handleOffsetReturn(elem, options, x, y, sl, st);
