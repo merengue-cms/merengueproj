@@ -1,0 +1,13 @@
+{% extends "content_list.html" %}
+
+{% load i18n inlinetrans %}
+
+{% block listingclass %}{{ block.super }} forumList {% endblock %}
+
+{% block pagetitle %}{% trans "Forums" %}{% endblock %}
+
+{% block extrabreadcrumbs %}
+  <span class="breadcrumbSeparator">→</span> {% inline_trans "Forums" %}
+{% endblock %}
+
+{% block listtitle %}{% trans "Forums" %}{% endblock %}

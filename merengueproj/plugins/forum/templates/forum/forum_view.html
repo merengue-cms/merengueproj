@@ -1,0 +1,28 @@
+{% extends "content_view.html" %}
+{% load pagination_tags i18n inlinetrans content_tags %}
+
+{% block extrabreadcrumbs %}
+    <span class="breadcrumbSeparator">→</span>
+    <a href="{% url forum_index %}" title="{% trans "Forums" %}">{% inline_trans "Forums" %}</a>
+    <span class="breadcrumbSeparator">→</span>
+    <a href="." title="{{ content }}">{% cutrender %}{{ content }}{% endcutrender %}</a>
+{% endblock %}
+
+
+{% block aftercontentmap %}
+{% autopaginate thread_list paginate_threads_by %}
+{% paginate %}
+<ul class="contentList threadList">
+{% for thread in thread_list %}
+   <li>
+    <a href="{{ thread.get_absolute_url }}" title="{{ thread }}" class="contentLink">
+     {% cutrender 100 %}{{ thread }}{% endcutrender %}
+    </a>
+    {{ thread.description|striptags }}
+   </li>
+{% endfor %}
+</ul>
+
+{% paginate %}
+
+{% endblock %}
