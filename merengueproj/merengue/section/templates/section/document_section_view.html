@@ -4,6 +4,7 @@
   <div class="document-section-config" style="display: none;">
     <span class="document-section-id">{{ document_section.id }}</span>
   </div>
+  {% ifcanedit user content %}
   <div class="document-section-actions-menu">
      <div class="document-section-actions-icons">
      <a href="#" class="document-section-actions-trigger">
@@ -11,25 +12,28 @@
           alt="{% trans "Document section actions" %}"
           title="{% trans "Document section actions" %}" />
      </a>
-     {% ifcanedit user content %}
      <span class="document-section-move-trigger">
      <img src="{{ MEDIA_URL }}merengue/img/draggable.png"
           alt="{% trans "Drag and drop to reorder sections" %}"
           title="{% trans "Drag and drop to reorder sections" %}" />
      </span>
-     {% endifcanedit %}
      </div>
   <div class="document-section-actions">
     <ul>
-      <li>{% collaborative_comments document_section %}</li>
-    {% ifcanedit user content %}
       <li><a href="#" class="document-section-edit">{% trans "Edit document section" %}</a></li>
       <li><a href="#" class="document-section-insert">{% trans "Insert document section" %}</a></li>
       <li><a href="#" class="document-section-delete">{% trans "Delete document section" %}</a></li>
       <li>{% collaborative_translation document_section "body" 1 %}</li>
-    {% endifcanedit %}
     </ul>
   </div>
+  </div>
+  {% endifcanedit %}
+  <div class="document-section-comments">
+     <div class="document-section-comments-wrap1">
+     <div class="document-section-comments-wrap2">
+       {% collaborative_comments document_section %}
+     </div>
+     </div>
   </div>
 
   <div class="document-section-body{% ifcanedit user content %} document-section-body-editable" title="{% trans "Double click to edit" %}"{% endifcanedit %}">

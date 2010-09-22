@@ -110,8 +110,23 @@
     background: url(/media/merengue/img/section/section_insert.png) no-repeat center left;
 }
 
+.document-section-comments-wrap1 {
+    float: left;
+    background: url(/media/merengue/img/section/section_comment2.gif) no-repeat top right;
+    margin-right: 1em;
+}
+
+.document-section-comments-wrap2 {
+    float: left;
+    height: 24px;
+    background: url(/media/merengue/img/section/section_comment1.gif) no-repeat top left;
+    text-align: center;
+    padding: 0px 8px;
+    font-size: 12px;
+    line-height: 18px;
+}
+
 .collab-comment-trigger {
-    background: url(/media/merengue/img/section/section_comment.png) no-repeat center left;
 }
 
 .collab-translation-trigger a {

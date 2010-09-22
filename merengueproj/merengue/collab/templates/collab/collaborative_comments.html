@@ -4,7 +4,7 @@
 {% ifequal content.document.commentable "allowed" %}
 <div class="collab-comment-trigger">
   <a href="{% url ajax_admin_comments ct.id content.id %}">
-    {% trans "Comments" %} (<span class="collaborative-comment-num-for-{{ ct.id }}-{{ content.id }}">{{ num_comments }}</span>)
+    <span class="collaborative-comment-num-for-{{ ct.id }}-{{ content.id }}">{{ num_comments }}</span>
   </a>
 </div>
 {% endifequal %}
