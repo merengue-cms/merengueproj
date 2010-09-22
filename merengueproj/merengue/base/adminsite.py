@@ -448,6 +448,8 @@ class PluginAdminSite(BaseAdminSite, RelatedModelRegistrable):
         self.plugin_name = plugin_name and plugin_name[0] or ''
         super(PluginAdminSite, self).__init__(*args, **kwargs)
         self.related_admin_sites = self.main_site.related_admin_sites
+        main_admin = reverse('admin:index')
+        self.root_path = '%s%s/' % (main_admin, self.prefix)
 
     def index(self, request):
         return super(BaseAdminSite, self).index(request,
