@@ -10,8 +10,8 @@
 
 <div class="object-buttons">
 {% if edit_permission %}
-  <a href="{% filebrowser_url filebrowser_createdir repository_name=repository.name,path=path %}"><img alt="{% trans "folder" %}" src="{{ MEDIA_URL }}filebrowser/img/folder-new.png" />{% trans "Create folder" %}</a><span>&nbsp;</span>
-  <a href="{% filebrowser_url filebrowser_upload repository_name=repository.name,path=path %}"><img alt="{% trans "file" %}" src="{{ MEDIA_URL }}filebrowser/img/go-up.png" />{% trans "Upload file" %}</a><span>&nbsp;</span>
+  <a href="{% filebrowser_url filebrowser_createdir repository_name=repository.name,path=path %}"><img alt="{% trans "folder" %}" src="{{ MEDIA_URL }}filebrowser/img/folder-new.png" />{% trans "Create folder" %}</a>
+  <a href="{% filebrowser_url filebrowser_upload repository_name=repository.name,path=path %}"><img alt="{% trans "file" %}" src="{{ MEDIA_URL }}filebrowser/img/go-up.png" />{% trans "Upload file" %}</a>
 {% endif %}
 </div>
 
