@@ -35,7 +35,7 @@
   </div>
 {% endifequal %}
 
-<form action="." method="post" enctype="multipart/form-data">
+<form class="filebrowserForm"  action="." method="post" enctype="multipart/form-data">
   {{ form|safe }}
   <input type="submit" class="submit" value="{{ form.button_label }}" />
 </form>

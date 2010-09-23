@@ -22,7 +22,7 @@
 
 <div id="content-main">
   <h2 class="element-action">{% trans "Rename these elements" %}</h2>
-  <form action="{% filebrowser_url filebrowser_action repository_name=repository.name,path=path %}" method="post" enctype="multipart/form-data">
+  <form class="filebrowserForm" action="{% filebrowser_url filebrowser_action repository_name=repository.name,path=path %}" method="post" enctype="multipart/form-data">
   <div>
     {% for d in dirs %}
     <div class="spacing">

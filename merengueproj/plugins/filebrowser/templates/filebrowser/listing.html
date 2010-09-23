@@ -21,7 +21,7 @@
   </p>
 {% endif %}
 
-<form action="{% filebrowser_url filebrowser_action repository_name=repository.name,path=path %}" method="post" enctype="multipart/form-data">
+<form class="filebrowserForm" action="{% filebrowser_url filebrowser_action repository_name=repository.name,path=path %}" method="post" enctype="multipart/form-data">
     <table id="webfs-table" title="{% trans "This table contains a list of objects" %}">
         <thead>
             <tr>

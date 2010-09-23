@@ -31,7 +31,7 @@
 <div id="webfs-document-view">
 {{ document.content|safe }}
 
-<form id="removeattachmentform" action="" method="post" style="display:none">
+<form id="removeattachmentform"  action="" method="post" style="display:none">
 <!-- empty form to be filled for ajax request and csrf middleware -->
 </form>
 
@@ -57,7 +57,7 @@
   <button id="filebtn" onclick="javascript:showForm('file')">{% trans "New file" %}</button>
 </div>
 
-<form class="document-form" id="fileform" method="post" action="." enctype="multipart/form-data">
+<form class="document-form filebrowserForm" id="fileform" method="post" action="." enctype="multipart/form-data">
   <input id="file" name="file" type="file">
   <input type="submit" class="submitButton" id="addfile" name="addfile" value="{% trans 'Add file' %}"/>
   <button type="button" onclick="javascript:hideForm('file')">{% trans "Cancel" %}</button>
@@ -88,7 +88,7 @@
   <button id="imagebtn" onclick="javascript:showForm('image')">{% trans "New image" %}</button>
 </div>
 
-<form class="document-form" id="imageform" method="post" action="." enctype="multipart/form-data">
+<form class="document-form filebrowserForm" id="imageform" method="post" action="." enctype="multipart/form-data">
   <input id="image" name="image" type="file">
   <input type="submit" class="submitbutton" id="addimage" name="addimage" value="{% trans 'Add image' %}"/>
   <button type="button" onclick="javascript:hideForm('image')">{% trans "Cancel" %}</button>
