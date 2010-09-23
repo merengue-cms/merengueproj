@@ -312,3 +312,29 @@ textarea {
    border: 1px solid black;
    width: 100%;
 }
+
+
+/* voting */
+#voting {
+    float: right;
+    margin: 0 0 0 1em;
+    height: 45px;
+    border: 1px solid;
+    padding: 0.5em 0.5em 0;
+}
+
+#voting h1 {
+    display: none;
+    visibility: hidden;
+}
+
+#voting form {
+    padding-right: 100px;
+}
+
+#voting .star-rating a span {
+    left: 0;
+    top: 20px;
+}
+
+/* end voting */
