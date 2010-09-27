@@ -90,7 +90,6 @@ def get_tables_for_query(query):
 
     return list(set(tables))
 
-from functools import wraps
 
 def timer(func):
     import time
