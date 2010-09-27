@@ -257,6 +257,7 @@ div#right-sidebar div.block {
    margin-bottom: 10px;
 }
 
+div#left-sidebar div.block h1,
 div#right-sidebar div.block h1 {
    font-size: 1.5em;
    color: #334477;
@@ -280,6 +281,11 @@ div#right-sidebar div.block div.blockBody ul {
 div#eventsCalendar {
 	font-size: 100%;
 	padding-left: 10px;
+}
+
+div#left-sidebar .ui-datepicker,
+div#right-sidebar .ui-datepicker {
+    width: auto !important;
 }
 
 div#footer {
