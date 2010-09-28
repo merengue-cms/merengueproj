@@ -23,7 +23,7 @@ from plugins.event.views import get_events
 
 class LatestEventViewlet(Viewlet):
     name = 'latestevents'
-    label = _('Latest news')
+    label = _('Latest events')
 
     @classmethod
     def render(cls, request):
