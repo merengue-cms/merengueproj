@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-28 12:29+0200\n"
+"POT-Creation-Date: 2010-09-28 12:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: actions.py:27
-msgid "Share in Facebook"
+#: models.py:14
+msgid "Forum"
+msgstr ""
+
+#: models.py:15 templates/forum/forum_list.html:7
+#: templates/forum/forum_list.html.py:13 templates/forum/forum_view.html:6
+msgid "Forums"
+msgstr ""
+
+#: models.py:34
+msgid "Thread"
+msgstr ""
+
+#: models.py:35
+msgid "Threads"
 msgstr ""

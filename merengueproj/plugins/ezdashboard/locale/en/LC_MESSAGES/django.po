@@ -16,6 +16,38 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: actions.py:27
-msgid "Share in Facebook"
+#: config.py:34
+msgid "EzWeb theme"
+msgstr ""
+
+#: config.py:35
+msgid "EzWeb base URL"
+msgstr ""
+
+#: config.py:37
+msgid "EzWeb iframe CSS style"
+msgstr ""
+
+#: config.py:39
+msgid "EzWeb iframe CSS class"
+msgstr ""
+
+#: config.py:41
+msgid "EzWeb iframe width"
+msgstr ""
+
+#: config.py:43
+msgid "EzWeb iframe height"
+msgstr ""
+
+#: config.py:45
+msgid "EzWeb lite"
+msgstr ""
+
+#: templates/ezdashboard/dashboard.html:7
+msgid "Dashboard"
+msgstr ""
+
+#: templates/ezdashboard/dashboard.html:16
+msgid "Your browser does not support iframes"
 msgstr ""

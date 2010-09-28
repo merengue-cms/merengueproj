@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-12 13:04+0100\n"
+"POT-Creation-Date: 2010-09-28 12:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,87 +16,55 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: actions.py:11 templates/news/news_index.html:5
-#: templates/news/news_index.html.py:12
+#: actions.py:27
 msgid "News index"
 msgstr ""
 
-#: actions.py:20
+#: actions.py:36
 msgid "News rss"
 msgstr ""
 
-#: actions.py:29
-msgid "Export to PDF"
-msgstr ""
-
-#: actions.py:31
-msgid "username"
-msgstr ""
-
-#: actions.py:32
-msgid "bestfriend"
-msgstr ""
-
-#: actions.py:34
-msgid "friends"
-msgstr ""
-
-#: actions.py:36
-msgid "more friends"
-msgstr ""
-
-#: actions.py:42
-msgid "season"
-msgstr ""
-
-#: actions.py:43
-msgid "Spring"
-msgstr ""
-
-#: actions.py:44
-msgid "Summer"
-msgstr ""
-
-#: actions.py:45
-msgid "Autumn"
-msgstr ""
-
-#: actions.py:46
-msgid "Winter"
-msgstr ""
-
-#: blocks.py:15
+#: blocks.py:32 viewlets.py:26
 msgid "Latest news"
 msgstr ""
 
-#: blocks.py:26
+#: blocks.py:43
 msgid "News comments"
 msgstr ""
 
-#: models.py:16
+#: config.py:37
+msgid "limit for templatetags"
+msgstr ""
+
+#: models.py:34
 msgid "news category"
 msgstr ""
 
-#: models.py:17
+#: models.py:35
 msgid "news categories"
 msgstr ""
 
-#: models.py:25
+#: models.py:45
 msgid "category"
 msgstr ""
 
-#: models.py:27
+#: models.py:47
 msgid "body"
 msgstr ""
 
-#: templates/news/block_newscomments.html:6
-msgid "Comments for this news item:"
+#: viewlets.py:37
+msgid "All news"
 msgstr ""
 
-#: templates/news/block_newscomments.html:11
-msgid "Add a new comment:"
-msgstr ""
-
-#: templates/news/news_index.html:8 templates/news/newsitem_view.html:8
+#: templates/news/news_index.html:5 templates/news/news_index.html.py:8
+#: templates/news/news_index.html:14 templates/news/newsitem_view.html:9
 msgid "News"
+msgstr ""
+
+#: templates/news/newsitem_by_category.html:14
+msgid "No Image"
+msgstr ""
+
+#: templates/news/newsitem_by_category.html:24
+msgid "read more"
 msgstr ""

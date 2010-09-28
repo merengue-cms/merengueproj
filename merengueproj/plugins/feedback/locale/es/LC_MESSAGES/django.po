@@ -2,96 +2,61 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-28 23:03+0200\n"
-"PO-Revision-Date: 2009-09-28 23:04\n"
-"Last-Translator: <lin@yaco.es>\n"
+"POT-Creation-Date: 2010-09-28 12:30+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Translated-Using: django-rosetta 0.4.RC2\n"
 
-#: blocks.py:13
+#: blocks.py:31
 msgid "Feedback content"
-msgstr "Comentarios al contenido"
-
-#: views.py:73
-msgid "Your message has been posted successfully."
-msgstr "Tu mensaje se ha enviado correctamente."
-
-#: templates/feedback/content_comment.html:4
-#: templates/feedback/content_comment.html:6
-#: templates/feedback/content_comment.html:8
-msgid "said"
-msgstr "dijo"
-
-#: templates/feedback/content_comment.html:10
-msgid "link to here"
-msgstr "enlace"
-
-#: templates/feedback/content_comment.html:14
-msgid "Send by"
-msgstr "Enviado por"
-
-#: templates/feedback/content_comment.html:14
-msgid "on"
-msgstr "en"
-
-#: templates/feedback/content_comment.html:22
-#: templates/feedback/content_comments.html:13
-msgid "Reply"
-msgstr "Responder"
-
-#: templates/feedback/content_comment.html:23
-#: templates/feedback/content_comments.html:15
-msgid "Hide Reply"
-msgstr "Ocultar respuesta"
-
-#: templates/feedback/content_comment.html:26
-msgid "Publish"
-msgstr "Publicar"
-
-#: templates/feedback/content_comment.html:28
-msgid "Censure"
-msgstr "Censurar"
-
-#: templates/feedback/content_comment.html:30
-msgid "Delete"
 msgstr ""
 
-#: templates/feedback/content_comment.html:32
-msgid "Edit"
-msgstr "Modificar"
+#: config.py:33
+msgid "Number of comment for each content"
+msgstr ""
+
+#: config.py:34
+msgid "Show children"
+msgstr ""
+
+#: config.py:35
+msgid "Show options bar"
+msgstr ""
+
+#: views.py:86
+msgid "Your message has been posted successfully."
+msgstr ""
+
+#: templates/feedback/content_comment.html:3
+msgid "Are you sure you want to delete this comment?"
+msgstr ""
+
+#: templates/feedback/content_comment.html:4
+#: templates/feedback/content_comments.html:8
+msgid "Are you sure you want to discard this comment form?"
+msgstr ""
 
 #: templates/feedback/content_comment_add.html:10
 msgid "Submit Comment"
-msgstr "Enviar comentario"
+msgstr ""
 
 #: templates/feedback/content_comment_preview.html:4
-#: templates/feedback/content_comment_preview.html:13
+#: templates/feedback/content_comment_preview.html:16
 msgid "Send comment to"
-msgstr "Enviar comentario a"
+msgstr ""
 
-#: templates/feedback/content_comment_preview.html:8
-msgid "Send comment"
-msgstr "Enviar comentario"
-
-#: templates/feedback/content_comment_preview.html:15
-msgid "Return to"
-msgstr "Volver a"
-
-#: templates/feedback/content_comments.html:5
-msgid "Comments on this content"
-msgstr "Comentarios de este contenido"
-
-#: templates/feedback/content_comments.html:9
+#: templates/feedback/content_comments.html:10
 msgid "An error has occurred, try again"
-msgstr "A ocurrido un error, inténtelo de nuevo"
+msgstr ""
 
 #: templates/feedback/feedback_index.html:5
 msgid "Feedback index"
@@ -100,8 +65,3 @@ msgstr ""
 #: templates/feedback/feedback_index.html:8
 msgid "Feedback"
 msgstr ""
-
-#: templates/feedback/feedback_index.html:12
-#, fuzzy
-msgid "Feedback Index"
-msgstr "Comentarios al contenido"

@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-12 19:48+0100\n"
+"POT-Creation-Date: 2010-09-28 12:32+0200\n"
 "PO-Revision-Date: 2009-11-12 19:50\n"
 "Last-Translator: <dev@merengueproject.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,53 +16,44 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Translated-Using: django-rosetta 0.4.RC2\n"
 
-#: admin.py:123 admin.py:164
+#: admin.py:145 admin.py:186
 msgid "Database error"
 msgstr "Error de la base de datos"
 
-#: blocks.py:15
+#: blocks.py:32
 msgid "Latest video"
 msgstr "Últimos vídeos"
 
-#: models.py:10
+#: models.py:27
 msgid "duration"
 msgstr "duración"
 
-#: models.py:11
+#: models.py:28
 msgid "clip id"
 msgstr ""
 
-#: models.py:12 models.py:26
+#: models.py:29 models.py:43
 msgid "channel"
 msgstr "canal"
 
-#: models.py:25
+#: models.py:42
 msgid "In hours"
 msgstr "a las"
 
-#: models.py:29
+#: models.py:46
 msgid "video"
 msgstr "vídeo"
 
-#: templates/tv/block_latest.html:9
-msgid "min"
-msgstr ""
-
-#: templates/tv/channel_view.html:14 templates/tv/tv_index.html:11
-#: templates/tv/tv_index.html.py:18
+#: templates/tv/channel_view.html:14
 msgid "Channels"
 msgstr "Canales"
 
-#: templates/tv/tv_index.html:33
-msgid "Channel"
-msgstr "Canal"
-
-#: templates/tv/video_view.html:7 templates/tv/video_view.html.py:12
+#: templates/tv/video_view.html:7
 msgid "Streaming live"
 msgstr ""
 
 #: templates/tv/admin/tv/schedule/day_view.html:10
-#: templates/tv/admin/tv/schedule/week_view.html:23
+#: templates/tv/admin/tv/schedule/week_view.html:24
 msgid "Week view"
 msgstr "Ver semana"
 
@@ -73,3 +64,6 @@ msgstr "Ver todas las horas"
 #: templates/tv/admin/tv/schedule/day_view.html:16
 msgid "Only show videos"
 msgstr "Mostar sólo vídeos"
+
+#~ msgid "Channel"
+#~ msgstr "Canal"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-28 12:12+0200\n"
+"POT-Creation-Date: 2010-09-28 12:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,55 +16,58 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: actions.py:27
-msgid "News index"
+#: actions.py:28
+msgid "Subscription"
 msgstr ""
 
-#: actions.py:36
-msgid "News rss"
+#: models.py:30
+msgid "content"
 msgstr ""
 
-#: blocks.py:32 viewlets.py:26
-msgid "Latest news"
+#: models.py:32
+msgid "Type of Subscription"
 msgstr ""
 
-#: blocks.py:43
-msgid "News comments"
+#: models.py:38
+msgid "subscribable"
 msgstr ""
 
-#: config.py:37
-msgid "limit for templatetags"
+#: models.py:39
+msgid "subscribables"
 msgstr ""
 
-#: models.py:34
-msgid "news category"
+#: models.py:43
+msgid "first name"
 msgstr ""
 
-#: models.py:35
-msgid "news categories"
+#: models.py:44
+msgid "last name"
 msgstr ""
 
 #: models.py:45
-msgid "category"
+msgid "e-mail address"
+msgstr ""
+
+#: models.py:46
+msgid "phone"
 msgstr ""
 
 #: models.py:47
-msgid "body"
+msgid "comments or suggestions"
 msgstr ""
 
-#: viewlets.py:37
-msgid "All news"
+#: models.py:50
+msgid "base subscription"
 msgstr ""
 
-#: templates/news/news_index.html:5 templates/news/news_index.html.py:8
-#: templates/news/news_index.html:14 templates/news/newsitem_view.html:9
-msgid "News"
+#: models.py:51
+msgid "base subscriptions"
 msgstr ""
 
-#: templates/news/newsitem_by_category.html:14
-msgid "No Image"
+#: views.py:44
+msgid "Request send successfully"
 msgstr ""
 
-#: templates/news/newsitem_by_category.html:24
-msgid "read more"
+#: templates/subscription/subscription_form.html:30
+msgid "submit"
 msgstr ""

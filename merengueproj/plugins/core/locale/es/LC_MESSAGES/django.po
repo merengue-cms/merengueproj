@@ -16,6 +16,34 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: actions.py:27
-msgid "Share in Facebook"
+#: actions.py:26
+msgid "Admin site"
+msgstr ""
+
+#: actions.py:39
+msgid "Login"
+msgstr ""
+
+#: actions.py:55
+msgid "Logout"
+msgstr ""
+
+#: blocks.py:40
+msgid "Menu"
+msgstr ""
+
+#: blocks.py:56
+msgid "Navigation"
+msgstr ""
+
+#: blocks.py:69
+msgid "Portal Menu"
+msgstr ""
+
+#: blocks.py:82
+msgid "Portal links"
+msgstr ""
+
+#: config.py:39
+msgid "home initial content"
 msgstr ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-28 12:29+0200\n"
+"POT-Creation-Date: 2010-09-28 12:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,26 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: actions.py:27
-msgid "Share in Facebook"
+#: blocks.py:32
+msgid "Chunks"
+msgstr ""
+
+#: models.py:36
+msgid "key"
+msgstr ""
+
+#: models.py:40
+msgid "content"
+msgstr ""
+
+#: models.py:41
+msgid "url patterns"
+msgstr ""
+
+#: models.py:50
+msgid "chunk"
+msgstr ""
+
+#: models.py:51
+msgid "chunks"
 msgstr ""

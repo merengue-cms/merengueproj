@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-28 12:29+0200\n"
+"POT-Creation-Date: 2010-09-28 12:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,26 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: actions.py:27
-msgid "Share in Facebook"
+#: blocks.py:31
+msgid "Search"
+msgstr ""
+
+#: config.py:32
+msgid "Custom search control"
+msgstr ""
+
+#: config.py:33
+msgid "language"
+msgstr ""
+
+#: config.py:34
+msgid "Search result content (element's id of DOM)"
+msgstr ""
+
+#: config.py:35
+msgid "Search form content (element's id of DOM)"
+msgstr ""
+
+#: templates/googlesearch/block_googlesearch.html:6
+msgid "Loading"
 msgstr ""
