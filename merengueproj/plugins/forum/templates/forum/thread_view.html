@@ -1,0 +1,12 @@
+{% extends "content_view.html" %}
+
+{% load pagination_tags i18n inlinetrans content_tags %}
+
+{% block extrabreadcrumbs %}
+    <span class="breadcrumbSeparator">→</span>
+    <a href="{% url forum_index %}" title="{% trans "Forums" %}">{% inline_trans "Forums" %}</a>
+    <span class="breadcrumbSeparator">→</span>
+    <a href="{{ content.forum.get_absolute_url }}" title="{{ content.forum }}">{% cutrender %}{{ content.forum }}{% endcutrender %}</a>
+    <span class="breadcrumbSeparator">→</span>
+    <a href="." title="{{ content }}">{% cutrender %}{{ content }}{% endcutrender %}</a>
+{% endblock %}

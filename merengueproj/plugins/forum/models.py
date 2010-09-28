@@ -33,6 +33,7 @@ class Thread(BaseContent):
     class Meta:
         verbose_name = _('Thread')
         verbose_name_plural = _('Threads')
+        content_view_template = 'forum/thread_view.html'
 
     @permalink
     def public_link(self):
