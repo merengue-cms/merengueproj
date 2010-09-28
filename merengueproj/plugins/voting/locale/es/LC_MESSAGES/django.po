@@ -18,64 +18,64 @@ msgstr ""
 
 #: blocks.py:35
 msgid "Vote content"
-msgstr ""
+msgstr "votar contenido"
 
 #: config.py:38
 msgid "is readonly?"
-msgstr ""
+msgstr "¿Es solo lectura?"
 
 #: forms.py:32
 #, python-format
 msgid "The vote have to be Between %(min_score)s and %(max_score)s"
-msgstr ""
+msgstr "El voto tiene que estar entre %(min_score)s y %(max_score)s"
 
 #: models.py:26
 msgid "Very bad"
-msgstr ""
+msgstr "Muy mal"
 
 #: models.py:26
 msgid "Bad"
-msgstr ""
+msgstr "mal"
 
 #: models.py:26
 msgid "OK"
-msgstr ""
+msgstr "Bien"
 
 #: models.py:26
 msgid "Good"
-msgstr ""
+msgstr "Bueno"
 
 #: models.py:26
 msgid "Very good"
-msgstr ""
+msgstr "Muy bueno"
 
 #: models.py:76
 msgid "users"
-msgstr ""
+msgstr "usuarios"
 
 #: viewlets.py:43
 msgid "Content top rated"
-msgstr ""
+msgstr "Contenidos mejor valorados"
 
 #: viewlets.py:54
 msgid "Content with more votes"
-msgstr ""
+msgstr "Contenidos con mas votos"
 
 #: templates/voting/voting_form.html:3
 #, python-format
 msgid "%(votes)s vote"
-msgid_plural "%(votes)s votes"
+msgid_plural "%(votes)s votos"
 msgstr[0] ""
 msgstr[1] ""
 
 #: templates/voting/voting_form.html:5
 msgid "stars"
-msgstr ""
+msgstr "estrellas"
 
 #: templates/voting/voting_form.html:16
 msgid "You have voted"
-msgstr ""
+msgstr "Usted a votado"
 
 #: templates/voting/voting_form.html:18
 msgid "Sign in to rate"
-msgstr ""
+msgstr "Loguese para votar"
