@@ -3,6 +3,7 @@
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}merengue/css/render_blocks.css"/>
 <script language="javascript">
 ;(function($) {
+  if (!$.browser.msie || $.browser.version != '6.0') {
     $(document).ready(function() {
         var containers = $(".blockContainer:visible");
 
@@ -61,6 +62,8 @@
                     opacity: 0.6,
                     revert: true,
                     items: '.block',
+                    helper: 'clone',
+                    tolerance: 'pointer',
                     start: function(event, ui) {
                         $(".block .blockTools").hide();
                     },
@@ -110,6 +113,7 @@
 
         initDragging();
     });
+  }
 })(jQuery);
 </script>
 {% endifhasperm %}
