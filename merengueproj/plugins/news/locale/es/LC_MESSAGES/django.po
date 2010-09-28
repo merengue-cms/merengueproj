@@ -18,7 +18,7 @@ msgstr ""
 
 #: actions.py:27
 msgid "News index"
-msgstr "Indicd de noticias"
+msgstr "Indice de noticias"
 
 #: actions.py:36
 msgid "News rss"

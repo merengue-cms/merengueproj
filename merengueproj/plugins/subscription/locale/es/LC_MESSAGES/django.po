@@ -18,15 +18,15 @@ msgstr ""
 
 #: actions.py:28
 msgid "Subscription"
-msgstr ""
+msgstr "Subscripción"
 
 #: models.py:30
 msgid "content"
-msgstr ""
+msgstr "Contenido"
 
 #: models.py:32
 msgid "Type of Subscription"
-msgstr ""
+msgstr "Tipo de subscripcion"
 
 #: models.py:38
 msgid "subscribable"
@@ -38,23 +38,23 @@ msgstr ""
 
 #: models.py:43
 msgid "first name"
-msgstr ""
+msgstr "Nombre"
 
 #: models.py:44
 msgid "last name"
-msgstr ""
+msgstr "Apellidos"
 
 #: models.py:45
 msgid "e-mail address"
-msgstr ""
+msgstr "Dirección de e-mail"
 
 #: models.py:46
 msgid "phone"
-msgstr ""
+msgstr "teléfono"
 
 #: models.py:47
 msgid "comments or suggestions"
-msgstr ""
+msgstr "Comentarios o sugerencias"
 
 #: models.py:50
 msgid "base subscription"
@@ -66,8 +66,8 @@ msgstr ""
 
 #: views.py:44
 msgid "Request send successfully"
-msgstr ""
+msgstr "Petición enviada con exito"
 
 #: templates/subscription/subscription_form.html:30
 msgid "submit"
-msgstr ""
+msgstr "enviar"

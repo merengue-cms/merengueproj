@@ -18,15 +18,15 @@ msgstr ""
 
 #: admin.py:35
 msgid "Basic Options"
-msgstr ""
+msgstr "Opciones básicas"
 
 #: admin.py:37
 msgid "Advanced Options"
-msgstr ""
+msgstr "Opciones avanzadas"
 
 #: blocks.py:46
 msgid "Search"
-msgstr ""
+msgstr "Buscar"
 
 #: config.py:33
 msgid "limit for standingouts in block"
@@ -47,11 +47,11 @@ msgstr ""
 #: forms.py:46
 #, python-format
 msgid "There was a object with the same fields pk=%s"
-msgstr ""
+msgstr "Hay un objeto con el mismo campo pk=%s"
 
 #: models.py:28
 msgid "context variable"
-msgstr ""
+msgstr "Variable de contexto"
 
 #: models.py:31
 msgid "standingout category"
@@ -83,16 +83,16 @@ msgstr ""
 
 #: models.py:50
 msgid "Order"
-msgstr ""
+msgstr "Orden"
 
 #: templates/standingout/block_standingout.html:6
 #: templates/standingout/standingout_list.html:10
 msgid "Highlights"
-msgstr ""
+msgstr "Destacados"
 
 #: templates/standingout/block_standingout.html:21
 msgid "View all"
-msgstr ""
+msgstr "Ver todos"
 
 #: templates/standingout/block_standingout.html:23
 msgid "Without highlights"
