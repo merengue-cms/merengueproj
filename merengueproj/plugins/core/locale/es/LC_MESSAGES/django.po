@@ -18,15 +18,15 @@ msgstr ""
 
 #: actions.py:26
 msgid "Admin site"
-msgstr ""
+msgstr "Administrar sitio"
 
 #: actions.py:39
 msgid "Login"
-msgstr ""
+msgstr "Entrar"
 
 #: actions.py:55
 msgid "Logout"
-msgstr ""
+msgstr "Salir"
 
 #: blocks.py:40
 msgid "Menu"
@@ -34,7 +34,7 @@ msgstr ""
 
 #: blocks.py:56
 msgid "Navigation"
-msgstr ""
+msgstr "Navegación"
 
 #: blocks.py:69
 msgid "Portal Menu"

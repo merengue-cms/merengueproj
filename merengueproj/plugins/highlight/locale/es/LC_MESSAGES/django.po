@@ -18,12 +18,12 @@ msgstr ""
 
 #: blocks.py:32
 msgid "Highlight"
-msgstr ""
+msgstr "Destacados"
 
 #: models.py:25
 msgid "weight to decide ordering"
-msgstr ""
+msgstr "Relevancia para decidir el orden"
 
 #: models.py:26
 msgid "related content"
-msgstr ""
+msgstr "Contenidos relacionados"

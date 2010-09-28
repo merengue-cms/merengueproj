@@ -18,24 +18,24 @@ msgstr ""
 
 #: blocks.py:31
 msgid "Search"
-msgstr ""
+msgstr "Buscar"
 
 #: config.py:32
 msgid "Custom search control"
-msgstr ""
+msgstr "Controles de búsqueda personalizada"
 
 #: config.py:33
 msgid "language"
-msgstr ""
+msgstr "idioma"
 
 #: config.py:34
 msgid "Search result content (element's id of DOM)"
-msgstr ""
+msgstr "Resultados de la búsqueda (element's id of DOM)"
 
 #: config.py:35
 msgid "Search form content (element's id of DOM)"
-msgstr ""
+msgstr "Formulario de busqueda (element's id of DOM)"
 
 #: templates/googlesearch/block_googlesearch.html:6
 msgid "Loading"
-msgstr ""
+msgstr "Cargando"

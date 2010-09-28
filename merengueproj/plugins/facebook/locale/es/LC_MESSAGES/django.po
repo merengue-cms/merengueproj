@@ -18,4 +18,4 @@ msgstr ""
 
 #: actions.py:27
 msgid "Share in Facebook"
-msgstr ""
+msgstr "Compartir en Facebook"

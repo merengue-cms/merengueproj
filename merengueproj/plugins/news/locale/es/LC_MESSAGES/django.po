@@ -18,19 +18,19 @@ msgstr ""
 
 #: actions.py:27
 msgid "News index"
-msgstr ""
+msgstr "Indicd de noticias"
 
 #: actions.py:36
 msgid "News rss"
-msgstr ""
+msgstr "Rss de noticias"
 
 #: blocks.py:32 viewlets.py:26
 msgid "Latest news"
-msgstr ""
+msgstr "Últimas noticias"
 
 #: blocks.py:43
 msgid "News comments"
-msgstr ""
+msgstr "Comentarios de la noticia"
 
 #: config.py:37
 msgid "limit for templatetags"
@@ -38,33 +38,33 @@ msgstr ""
 
 #: models.py:34
 msgid "news category"
-msgstr ""
+msgstr "Categoría de la noticia"
 
 #: models.py:35
 msgid "news categories"
-msgstr ""
+msgstr "Categorías de la noticia"
 
 #: models.py:45
 msgid "category"
-msgstr ""
+msgstr "categoría"
 
 #: models.py:47
 msgid "body"
-msgstr ""
+msgstr "cuerpo de texto"
 
 #: viewlets.py:37
 msgid "All news"
-msgstr ""
+msgstr "Todas las noticias"
 
 #: templates/news/news_index.html:5 templates/news/news_index.html.py:8
 #: templates/news/news_index.html:14 templates/news/newsitem_view.html:9
 msgid "News"
-msgstr ""
+msgstr "Noticia"
 
 #: templates/news/newsitem_by_category.html:14
 msgid "No Image"
-msgstr ""
+msgstr "Sin imagen"
 
 #: templates/news/newsitem_by_category.html:24
 msgid "read more"
-msgstr ""
+msgstr "leer más"

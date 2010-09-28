@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-28 12:26+0200\n"
+"POT-Creation-Date: 2010-09-28 12:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,60 +18,60 @@ msgstr ""
 
 #: blocks.py:38
 msgid "Events calendar"
-msgstr ""
+msgstr "Calendario de eventos"
 
 #: models.py:33 models.py:47
 msgid "category"
-msgstr ""
+msgstr "Categoría"
 
 #: models.py:34
 msgid "categories"
-msgstr ""
+msgstr "Categorias"
 
 #: models.py:42
 msgid "Start date"
-msgstr ""
+msgstr "Fecha de inicio"
 
 #: models.py:44
 msgid "End date"
-msgstr ""
+msgstr "Fecha final"
 
 #: models.py:53
 msgid "event"
-msgstr ""
+msgstr "evento"
 
 #: models.py:54
 msgid "events"
-msgstr ""
+msgstr "eventos"
 
 #: viewlets.py:26
-msgid "Latest news"
-msgstr ""
+msgid "Latest events"
+msgstr "Úlitmos eventos"
 
 #: viewlets.py:37
 msgid "All events"
-msgstr ""
+msgstr "Todos los eventos"
 
 #: templates/event/block_calendar.html:23
 msgid "Loading..."
-msgstr ""
+msgstr "Cargando"
 
 #: templates/event/event_list.html:5 templates/event/event_list.html.py:7
 msgid "Events index"
-msgstr ""
+msgstr "Listado de eventos"
 
 #: templates/event/event_list.html:5 templates/event/event_list.html.py:7
 msgid "For every date"
-msgstr ""
+msgstr "Para cualquier fecha"
 
 #: templates/event/event_list.html:10 templates/event/event_view.html:8
 msgid "Event"
-msgstr ""
+msgstr "evento"
 
 #: templates/event/event_view.html:15
 msgid "start date"
-msgstr ""
+msgstr "fecha de inicio"
 
 #: templates/event/event_view.html:16
 msgid "end date"
-msgstr ""
+msgstr "fecha final"

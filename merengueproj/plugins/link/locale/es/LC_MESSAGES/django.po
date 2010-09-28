@@ -18,45 +18,45 @@ msgstr ""
 
 #: models.py:31
 msgid "link category"
-msgstr ""
+msgstr "Categoría de enlace"
 
 #: models.py:32
 msgid "link categories"
-msgstr ""
+msgstr "Categorías de enlaces"
 
 #: models.py:39
 msgid "Url Link"
-msgstr ""
+msgstr "Url del enlace"
 
 #: models.py:40
 msgid "Portal name"
-msgstr ""
+msgstr "Nombre del portal"
 
 #: models.py:44
 msgid "link"
-msgstr ""
+msgstr "enlace"
 
 #: models.py:45
 msgid "links"
-msgstr ""
+msgstr "Enlaces"
 
 #: viewlets.py:26
 msgid "Latest link"
-msgstr ""
+msgstr "Últimos enlaces"
 
 #: viewlets.py:37
 msgid "All link"
-msgstr ""
+msgstr "Todos los enlaces"
 
 #: templates/link/link_index.html:5 templates/link/link_index.html.py:14
 msgid "Link index"
-msgstr ""
+msgstr "Indice de enlaces"
 
 #: templates/link/link_index.html:8 templates/link/link_view.html:9
 msgid "Links"
-msgstr ""
+msgstr "Enlaces"
 
 #: templates/link/link_index.html:19 templates/link/link_view.html:14
 #: templates/link/viewlet_latest.html:17
 msgid "View more"
-msgstr ""
+msgstr "Ver más"

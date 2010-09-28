@@ -18,12 +18,12 @@ msgstr ""
 
 #: models.py:14
 msgid "Forum"
-msgstr ""
+msgstr "Foro"
 
 #: models.py:15 templates/forum/forum_list.html:7
 #: templates/forum/forum_list.html.py:13 templates/forum/forum_view.html:6
 msgid "Forums"
-msgstr ""
+msgstr "Foros"
 
 #: models.py:34
 msgid "Thread"

@@ -18,7 +18,7 @@ msgstr ""
 
 #: config.py:34
 msgid "EzWeb theme"
-msgstr ""
+msgstr "Tema de EzWeb"
 
 #: config.py:35
 msgid "EzWeb base URL"
@@ -50,4 +50,4 @@ msgstr ""
 
 #: templates/ezdashboard/dashboard.html:16
 msgid "Your browser does not support iframes"
-msgstr ""
+msgstr "Su navegador no sopota iframes"
