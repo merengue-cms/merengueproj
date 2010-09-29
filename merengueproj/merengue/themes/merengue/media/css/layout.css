@@ -17,6 +17,7 @@ a:hover {
   text-decoration: none;
 }
 
+
 h1, h2, h3, h4 {
   font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
 }
@@ -129,6 +130,7 @@ ul {
 #header-blocks {
   padding-top: 28px;
   padding-left: 10px;
+  min-height: 70px;
 }
 
 #header-blocks ul {
@@ -401,6 +403,7 @@ div#coremenu ul.menu1 li a.menu1 {
   float: right;
   text-align: right;
   margin-bottom: 5px;
+  list-style: none;
 }
 
 /* left-sidebar */
@@ -920,6 +923,16 @@ table.gsc-search-box td.gsc-input {
 
 .pagination img {
    padding: 0 5px;
+}
+
+/* docuemnts repository */
+
+#content #content-main div {
+	margin-left: 1.5em;
+}
+
+#content div.object-buttons a {
+	background-color: red;
 }
 
 /* Safari 3.0 and Chrome rules here */
