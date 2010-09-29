@@ -130,7 +130,7 @@ ul {
 #header-blocks {
   padding-top: 28px;
   padding-left: 10px;
-  min-height: 70px;
+  padding-bottom: 21px;
 }
 
 #header-blocks ul {
