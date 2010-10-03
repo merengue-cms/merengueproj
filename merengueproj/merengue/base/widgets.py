@@ -150,7 +150,7 @@ class AdminDateOfDateTimeWidget(AdminDateWidget):
 class TranslatableInputDateWidget(DateTimeInput):
 
     class Media:
-        js = ('/jsi18n/',
+        js = ('/%s/jsi18n/' % settings.MERENGUE_URLS_PREFIX,
               '%smerengue/js/dates_l10n/dates_l10n.js' % settings.MEDIA_URL,
               '%sjs/core.js' % settings.ADMIN_MEDIA_PREFIX,
               '%sjs/calendar.js' % settings.ADMIN_MEDIA_PREFIX,
