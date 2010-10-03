@@ -33,14 +33,16 @@ def subscription_form(request, basecontent_slug):
         return HttpResponseRedirect(content.get_absolute_url())
     subscribable = subscribable[0]
     app_label, module_name = subscribable.class_name.split('.')
-    content_type = ContentType.objects.get(app_label=app_label, model= module_name)
+    content_type = ContentType.objects.get(app_label=app_label, model=module_name)
     model_class = content_type.model_class()
     data = None
     if request.POST:
         data = request.POST
     form = model_class.class_form()(data)
     if form.is_valid():
-        form.save()
+        subscription = form.save(commit=False)
+        subscription.subscribable = subscribable
+        subscription.save()
         send_info(request, _('Request send successfully'))
         url_redirect = content.get_absolute_url()
         invalidate_cache_for_path(url_redirect)

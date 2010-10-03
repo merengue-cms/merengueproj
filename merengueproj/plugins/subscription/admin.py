@@ -46,7 +46,7 @@ class SubscribableAdmin(RelatedModelAdmin):
 
 
 class BaseSubscriptionAdmin(BaseAdmin):
-    pass
+    list_filter = ('subscribable', )
 
 
 def register(site):
