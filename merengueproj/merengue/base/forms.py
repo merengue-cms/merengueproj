@@ -352,7 +352,7 @@ class AdminBaseContentOwnersForm(forms.Form):
     owners = forms.ModelMultipleChoiceField(User.objects.all(), widget=FilteredSelectMultiple(_('owners'), False))
 
     class Media:
-        js = ("/jsi18n/",
+        js = ('/%s/jsi18n/' % settings.MERENGUE_URLS_PREFIX,
               settings.ADMIN_MEDIA_PREFIX + "js/core.js",
               settings.ADMIN_MEDIA_PREFIX + "js/SelectBox.js",
               settings.ADMIN_MEDIA_PREFIX + "js/SelectFilter2.js",
