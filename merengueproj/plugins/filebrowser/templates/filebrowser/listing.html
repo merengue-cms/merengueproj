@@ -3,6 +3,19 @@
 
 {% block pagetitle %}{% trans "Listing" %}{% endblock %}
 
+{% block parentextrabreadcrumbs %}
+
+{% endblock %}
+
+{% block extrabreadcrumbs %}
+    <span class="breadcrumbSeparator">→</span>{% if parents %}<a href="{% filebrowser_url filebrowser_root_listing repository.name %}">{% trans "Document repository" %}</a>{% else %}{% trans "Document repository" %}{% endif %}
+    {% if parents %}
+      {% for p in parents %}
+        <span class="breadcrumbSeparator">→</span>{% if not forloop.last %}<a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=p.path %}/">{{ p.dirname }}</a>{% else %} {{ p.dirname }} {% endif %}
+      {% endfor %}
+    {% endif %}
+{% endblock %}
+
 {% block content %}
 <div id="content-title">
     <h1 title="{% trans "Document repository" %}">{% trans "Document repository" %}</h1>

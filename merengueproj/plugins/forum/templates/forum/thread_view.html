@@ -8,5 +8,5 @@
     <span class="breadcrumbSeparator">→</span>
     <a href="{{ content.forum.get_absolute_url }}" title="{{ content.forum }}">{% cutrender %}{{ content.forum }}{% endcutrender %}</a>
     <span class="breadcrumbSeparator">→</span>
-    <a href="." title="{{ content }}">{% cutrender %}{{ content }}{% endcutrender %}</a>
+    {% cutrender %}{{ content }}{% endcutrender %}
 {% endblock %}

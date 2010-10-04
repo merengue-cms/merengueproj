@@ -5,7 +5,7 @@
     <span class="breadcrumbSeparator">→</span>
     <a href="{% url forum_index %}" title="{% trans "Forums" %}">{% inline_trans "Forums" %}</a>
     <span class="breadcrumbSeparator">→</span>
-    <a href="." title="{{ content }}">{% cutrender %}{{ content }}{% endcutrender %}</a>
+    {% cutrender %}{{ content }}{% endcutrender %}
 {% endblock %}
 
 
