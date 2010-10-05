@@ -1,0 +1,9 @@
+{% extends "block.html" %}
+
+{% block blockbody %}
+  <ul>
+  {% for banner in banners %}
+    <li><a href="{{ banner.url_link }}" title="{{ banner }}"><img src="{{ MEDIA_URL }}{{ banner.image }}" title="{{ banner.portal_name }}" alt="{{ banner.portal_name }}"></a></li>
+  {% endfor %}
+  </ul>
+{% endblock %}

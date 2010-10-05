@@ -1,0 +1,26 @@
+{% extends "viewlet.html" %}
+{% load i18n pagination_tags %}
+
+{% block viewletbody %}
+  {% if is_paginated %}
+    {% autopaginate banner_list paginate_by %}
+  {% endif %}
+  {% block toppagination %}
+    {% paginate %}
+  {% endblock %}
+
+  <ul>
+  {% for link in link_list %}
+    <li>
+        {% block itemdetail %}
+            <a href="{{ link.get_absolute_url }}" title="{{ link }}">{{ link }}</a>
+            <a href="{{ link.url_link }}" title="{% trans "View more" %}">{% trans "View more" %}{% if link.portal_name %}:{{ link.portal_name }}{% endif %}</a>
+        {% endblock %}
+    </li>
+  {% endfor %}
+  </ul>
+
+  {% block bottompagination %}
+    {% paginate %}
+  {% endblock %}
+{% endblock %}
