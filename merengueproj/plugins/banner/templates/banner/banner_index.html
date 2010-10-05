@@ -2,20 +2,21 @@
 
 {% load i18n inlinetrans action_tags %}
 
-{% block pagetitle %}{% trans "Link index" %}{% endblock %}
+{% block pagetitle %}{% trans "Banner history" %}{% endblock %}
 
 {% block extrabreadcrumbs %}
-  <span class="breadcrumbSeparator">→</span><a href="{% url link_index %}" title="{% trans "Links" %}">{% inline_trans "Links" %}</a>
-  {% if link_category %}
-    <span class="breadcrumbSeparator">→</span><a href="" title="{{ link_category }}">{{ link_category }}</a>
-  {% endif %}
+  <span class="breadcrumbSeparator">→</span>{% inline_trans "Banners" %}
 {% endblock %}
 
-{% block listtitle %}{% trans "Link index" %}{% endblock %}
+{% block listtitle %}{% trans "Banner history" %}{% endblock %}
 
-{% block contentinfo %}
-    {% if content.portal_name %}<div class="portalName">{{ content.portal_name }}</div>{% endif %}
-    {{ block.super }}
-    <a href="{{ content.url_link }}" title="{% trans "View more" %}" class="viewMore">{% trans "View more" %}</a>
+{% block listingclass %}contentList bannerList{% endblock %}
+
+{% block itemdetail %}
+    <li>
+        <a href="{% block contenturl %}{{ content.url_link }}{% endblock %}" title="{{ content }}" class="contentLink">
+            <img src="{{ MEDIA_URL }}{{ content.image }}" title="{{ content.portal_name }}" alt="{{ content.portal_name }}"/>
+        </a>
+    </li>
 {% endblock %}
 

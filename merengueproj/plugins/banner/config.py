@@ -35,6 +35,10 @@ class PluginConfig(Plugin):
         params.Single(name='limit', label=_('limit for banner block'), default='3'),
     ]
 
+    url_prefixes = (
+        ('banners', 'plugins.banner.urls'),
+    )
+
     @classmethod
     def section_models(cls):
         return [(Banner, BannerSectionAdmin)]

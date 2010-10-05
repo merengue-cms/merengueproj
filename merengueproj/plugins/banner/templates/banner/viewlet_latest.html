@@ -10,11 +10,11 @@
   {% endblock %}
 
   <ul>
-  {% for link in link_list %}
+  {% for banner in banner_list %}
     <li>
         {% block itemdetail %}
-            <a href="{{ link.get_absolute_url }}" title="{{ link }}">{{ link }}</a>
-            <a href="{{ link.url_link }}" title="{% trans "View more" %}">{% trans "View more" %}{% if link.portal_name %}:{{ link.portal_name }}{% endif %}</a>
+            <a href="{{ banner.get_absolute_url }}" title="{{ banner }}">{{ banner }}</a>
+            <a href="{{ banner.url_link }}" title="{% trans "View more" %}">{% trans "View more" %}{% if banner.portal_name %}:{{ banner.portal_name }}{% endif %}</a>
         {% endblock %}
     </li>
   {% endfor %}
