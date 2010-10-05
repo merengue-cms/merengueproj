@@ -23,3 +23,8 @@ class PluginConfig(Plugin):
     def get_model_admins(cls):
         return [(Forum, ForumAdmin),
                 (ForumCategory, ForumCategoryAdmin)]
+
+    @classmethod
+    def get_perms(cls):
+        return (
+            ('Moderate forum', 'moderate_forum', [Forum]), )

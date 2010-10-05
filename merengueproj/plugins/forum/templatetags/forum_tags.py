@@ -17,13 +17,16 @@
 
 from django import template
 
+from merengue.perms.utils import has_permission
 
 register = template.Library()
 
 
 @register.inclusion_tag('forum/thread_comment.html', takes_context=True)
 def thread_comment(context, comment):
-    is_moderated = (context['request'] and context['request'].user and context['request'].user.is_staff)
+    is_moderated = context['request'] and\
+                   context['request'].user and\
+                   (context['request'].user.is_superuser or has_permission(comment.thread.forum, context['request'].user, 'moderate_forum'))
     is_auth = (context['request'] and context['request'].user and context['request'].user.is_authenticated())
     children_comments = comment.children.all().order_by('date_submitted')
     if not is_moderated:
