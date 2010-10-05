@@ -18,16 +18,15 @@
   {% regroup content_list by category as category_list %}
 
     {% for category in category_list %}
-    <table class="forumCategory">
-    <tr><th>{{ category.grouper.name }}</th>
+    <table class="forumTable forumCategory">
+    <tr><th class="categoryName">{{ category.grouper.name }}</th>
         <th>{% inline_trans "Threads" %}</th>
         <th>{% inline_trans "Messages" %}</th>
-        <th>{% inline_trans "Last message" %}</th></tr>
+        <th class="lastMessage">{% inline_trans "Last message" %}</th></tr>
     {% for forum in category.list %}
        <tr>
-         <td> 
+         <td class="forumName"> 
            <a href="{{ forum.get_absolute_url }}" title="{{ forum }}" class="contentLink">{% cutrender 100 %}{{ forum }}{% endcutrender %}</a>
-           <br />
            {{ forum.description|safe }}
          </td>
          <td>
@@ -36,7 +35,7 @@
          <td>
            {{ forum.get_all_comments.count }}
          </td>
-         <td>
+         <td class="lastMessage">
            {% with forum.get_last_comment as comment %}
            {% if comment %}
            <a href="{{ comment.thread.get_absolute_url }}#comment-{{ comment.id }}">{{ comment.title }}</a><br />

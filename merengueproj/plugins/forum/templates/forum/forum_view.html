@@ -12,15 +12,15 @@
 {% block aftercontentmap %}
 {% autopaginate thread_list paginate_threads_by %}
 {% paginate %}
-<table class="threadList">
+<table class="forumTable threadList">
 <tr>
-  <th>{% inline_trans "Thread" %}</th>
+  <th class="forumName">{% inline_trans "Thread" %}</th>
   <th>{% inline_trans "Messages" %}</th>
-  <th>{% inline_trans "Last message" %}</th>
+  <th class="lastMessage">{% inline_trans "Last message" %}</th>
 </tr>
 {% for thread in thread_list %}
    <tr>
-    <td>
+    <td class="forumName">
     <a href="{{ thread.get_absolute_url }}" title="{{ thread }}" class="contentLink">
      {% cutrender 100 %}{{ thread }}{% endcutrender %}
     </a>
@@ -28,7 +28,7 @@
     <td>
       {{ thread.forumthreadcomment_set.count }}
     </td>
-    <td>
+    <td class="lastMessage">
       {% with thread.get_last_comment as comment %}
       {% if comment %}
       <a href="{{ comment.thread.get_absolute_url }}#comment-{{ comment.id }}">{{ comment.title }}</a><br />
