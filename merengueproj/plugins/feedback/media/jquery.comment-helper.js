@@ -58,11 +58,11 @@
                         comment_body.children('.commentform').empty();
                         comment_body.children('div.comment:last').find('a.addReply').show();
                         comment_body.children('div.comment:last').show('slow');
-                        comment_body.find('.comment a.hideReply').click(hide_reply);
-                        comment_body.find('.comment a.addReply').click(add_reply);
-                        comment_body.find('.comment a.publishComment').click(change_visibility);
-                        comment_body.find('.comment a.censureComment').click(change_visibility);
-                        comment_body.find('.comment a.deleteComment').click(delete_comment);
+                        comment_body.find('.comment a.hideReply').unbind('click').click(hide_reply);
+                        comment_body.find('.comment a.addReply').unbind('click').click(add_reply);
+                        comment_body.find('.comment a.publishComment').unbind('click').click(change_visibility);
+                        comment_body.find('.comment a.censureComment').unbind('click').click(change_visibility);
+                        comment_body.find('.comment a.deleteComment').unbind('click').click(delete_comment);
                     }
                     comment_body.children('.actions').find('.hideReply').hide();
                     comment_body.children('.actions').find('.addReply').show();
