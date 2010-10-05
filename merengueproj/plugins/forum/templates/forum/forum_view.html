@@ -12,17 +12,35 @@
 {% block aftercontentmap %}
 {% autopaginate thread_list paginate_threads_by %}
 {% paginate %}
-<ul class="contentList threadList">
+<table class="threadList">
+<tr>
+  <th>{% inline_trans "Thread" %}</th>
+  <th>{% inline_trans "Messages" %}</th>
+  <th>{% inline_trans "Last message" %}</th>
+</tr>
 {% for thread in thread_list %}
-   <li>
+   <tr>
+    <td>
     <a href="{{ thread.get_absolute_url }}" title="{{ thread }}" class="contentLink">
      {% cutrender 100 %}{{ thread }}{% endcutrender %}
     </a>
-    {{ thread.description|striptags }}
-   </li>
+    </td>
+    <td>
+      {{ thread.forumthreadcomment_set.count }}
+    </td>
+    <td>
+      {% with thread.get_last_comment as comment %}
+      {% if comment %}
+      {{ comment.title }}<br />
+      {{ comment.date_submitted }} {% inline_trans "by" %} {{ comment.user.get_full_name }}
+      {% endif %}
+      {% endwith %}
+    </td>
+   </tr>
 {% endfor %}
-</ul>
+</table>
 
+  
 {% paginate %}
 
 {% endblock %}

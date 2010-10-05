@@ -1,0 +1,12 @@
+{% load i18n %}
+<form method="POST"
+    {% if parent_id %} action="{% url forum_child_comment_add thread.forum.slug,thread.slug,parent_id %}"
+    {% else %} action="{% url forum_comment_add thread.forum.slug,thread.slug %}" 
+    {% endif %}>
+    <ul>
+        {{ form.as_ul_required }}
+    </ul>
+    <div class="submitline">
+       <input class="submit" type="submit" value="{% trans "Submit Comment" %}"/>
+    </div>
+</form>

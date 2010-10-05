@@ -10,4 +10,42 @@
   <span class="breadcrumbSeparator">→</span> {% inline_trans "Forums" %}
 {% endblock %}
 
-{% block listtitle %}{% trans "Forums" %}{% endblock %}
+{% block listtitle %}{% inline_trans "Forums" %}{% endblock %}
+
+{% load pagination_tags inlinetrans content_tags %}
+
+{% block listing %}
+  {% regroup content_list by category as category_list %}
+
+    {% for category in category_list %}
+    <table class="forumCategory">
+    <tr><th>{{ category.grouper.name }}</th>
+        <th>{% inline_trans "Threads" %}</th>
+        <th>{% inline_trans "Messages" %}</th>
+        <th>{% inline_trans "Last message" %}</th></tr>
+    {% for forum in category.list %}
+       <tr>
+         <td> 
+           <a href="{{ forum.get_absolute_url }}" title="{{ forum }}" class="contentLink">{% cutrender 100 %}{{ forum }}{% endcutrender %}</a>
+           <br />
+           {{ forum.description|safe }}
+         </td>
+         <td>
+           {{ forum.thread_set.count }}
+         </td>
+         <td>
+           {{ forum.get_all_comments.count }}
+         </td>
+         <td>
+           {% with forum.get_last_comment as comment %}
+           {% if comment %}
+           {{ comment.title }}<br />
+           {{ comment.date_submitted }} {% inline_trans "by" %} {{ comment.user.get_full_name }}
+           {% endif %}
+           {% endwith %}
+         </td>
+       </tr>
+    {% endfor %}
+    </table>
+    {% endfor %}
+{% endblock %}

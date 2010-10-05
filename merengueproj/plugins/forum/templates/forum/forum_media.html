@@ -1,0 +1,12 @@
+<script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/jquery-ui-1.8.dragdrop.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}feedback/jquery.comment-helper.js"></script>
+<link href="{{ MEDIA_URL }}forum/styles.css" rel="stylesheet" type="text/css"/>
+
+
+<script type="text/javascript">
+(function($) {
+    $(document).ready(function(){
+        $(document).loadcomments();
+    });
+})(jQuery);
+</script>
