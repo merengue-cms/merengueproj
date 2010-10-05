@@ -26,12 +26,14 @@
     <div id="comment-error" style="display:none">
        {% trans "An error has occurred, try again" %}
     </div>
+    {% if can_comment %}
     <div id="firstactions" class="actions ">
         <a class="addReply"
            href="{% url forum_comment_add content.forum.slug,content.slug %}">{% inline_trans "Reply" %}</a>
         <a  style="display:none" class="hideReply"
            href="#">{% inline_trans "Hide Reply" %}</a>
     </div>
+    {% endif %}
 
     <div class="commentform"></div>
       {% for comment in comments %}

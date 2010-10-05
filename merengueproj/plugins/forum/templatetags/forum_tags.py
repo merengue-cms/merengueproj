@@ -24,6 +24,7 @@ register = template.Library()
 @register.inclusion_tag('forum/thread_comment.html', takes_context=True)
 def thread_comment(context, comment):
     is_moderated = (context['request'] and context['request'].user and context['request'].user.is_staff)
+    is_auth = (context['request'] and context['request'].user and context['request'].user.is_authenticated())
     children_comments = comment.children.all().order_by('date_submitted')
     if not is_moderated:
         children_comments = children_comments.filter(banned=False)
@@ -31,6 +32,7 @@ def thread_comment(context, comment):
     return {'thread': comment.thread,
             'comment': comment,
             'is_moderated': is_moderated,
+            'actions': (is_moderated or not comment.thread.closed) and is_auth,
             'MEDIA_URL': context['MEDIA_URL'],
             'request': context['request'],
             'children_comments': children_comments,

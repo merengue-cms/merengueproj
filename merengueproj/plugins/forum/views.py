@@ -32,10 +32,12 @@ def forum_view(request, forum_slug, original_context=None):
 def thread_view(request, forum_slug, thread_slug, original_context=None):
     thread = get_object_or_404(Thread, slug=thread_slug)
     is_moderated = request.user and request.user.is_staff
+    is_auth = request.user and request.user.is_authenticated()
     comments = thread.forumthreadcomment_set.all().order_by('date_submitted')
     if not is_moderated:
         comments = comments.filter(banned=False)
-    return content_view(request, thread, extra_context={'comments': comments})
+    return content_view(request, thread, extra_context={'comments': comments,
+                                                        'can_comment': not thread.closed and is_auth})
 
 
 @add_captcha(CaptchaForumThreadCommentForm)
@@ -89,10 +91,12 @@ def forum_comment_add(request, forum_slug, thread_slug, parent_id=None):
             request.user.message_set.create(message=_("Your message has been posted successfully."))
         if request.is_ajax():
             moderation = request.user and request.user.is_staff
+            is_auth = request.user and request.user.is_authenticated()
             return render_to_response('forum/thread_comment.html',
                                       {'thread': thread,
                                        'parent_id': parent_id,
                                        'is_moderated': moderation,
+                                       'actions': (moderation or not thread.closed) and is_auth,
                                        'comment': new_comment},
                                        context_instance=RequestContext(request))
         else:

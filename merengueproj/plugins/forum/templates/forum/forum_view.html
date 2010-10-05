@@ -31,8 +31,8 @@
     <td>
       {% with thread.get_last_comment as comment %}
       {% if comment %}
-      {{ comment.title }}<br />
-      {{ comment.date_submitted }} {% inline_trans "by" %} {{ comment.user.get_full_name }}
+      <a href="{{ comment.thread.get_absolute_url }}#comment-{{ comment.id }}">{{ comment.title }}</a><br />
+      {{ comment.date_submitted }} {% inline_trans "by" %} {{ comment.user.get_full_name|default:comment.user.username }}
       {% endif %}
       {% endwith %}
     </td>
