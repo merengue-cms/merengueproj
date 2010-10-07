@@ -49,6 +49,7 @@ class Thread(BaseContent):
 
     forum = models.ForeignKey(Forum)
     closed = models.BooleanField(_('closed'), default=False)
+    user = models.ForeignKey(User, editable=False)
 
     objects = BaseContentManager()
 

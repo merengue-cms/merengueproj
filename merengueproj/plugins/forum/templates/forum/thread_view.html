@@ -1,6 +1,6 @@
 {% extends "content_view.html" %}
 
-{% load pagination_tags i18n inlinetrans content_tags forum_tags comment_tags %}
+{% load pagination_tags i18n inlinetrans content_tags forum_tags comment_tags datefilters %}
 
 {% block extrahead %}
   {{ block.super }}
@@ -15,6 +15,14 @@
     <span class="breadcrumbSeparator">→</span>
     {% cutrender %}{{ content }}{% endcutrender %}
 {% endblock %}
+
+{% block contenttitle %}
+    <div id="content-title" class="threadTitle">
+      <h1 title="{{ content.name }}">{% cutrender %}{{ content }}{% endcutrender %}
+        <span class="threadMetaData">{{ content.creation_date|transdate }} {{ content.creation_date|date:"H:i:s" }} {% trans "by" %} {{ content.user.get_full_name|default:content.user.username }}</span>
+      </h1>
+    </div>
+{% endblock contenttitle %}
 
 {% block contentbody %}
 

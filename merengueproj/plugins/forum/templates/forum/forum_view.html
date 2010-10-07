@@ -1,5 +1,5 @@
 {% extends "content_view.html" %}
-{% load pagination_tags i18n inlinetrans content_tags %}
+{% load pagination_tags i18n inlinetrans content_tags datefilters %}
 
 {% block extrabreadcrumbs %}
     <span class="breadcrumbSeparator">→</span>
@@ -32,7 +32,7 @@
       {% with thread.get_last_comment as comment %}
       {% if comment %}
       <a href="{{ comment.thread.get_absolute_url }}#comment-{{ comment.id }}">{{ comment.title }}</a><br />
-      {{ comment.date_submitted }} {% inline_trans "by" %} {{ comment.user.get_full_name|default:comment.user.username }}
+      {{ comment.date_submitted|transdate }} {% inline_trans "by" %} {{ comment.user.get_full_name|default:comment.user.username }}
       {% endif %}
       {% endwith %}
     </td>

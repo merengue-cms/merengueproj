@@ -30,6 +30,8 @@ class ThreadRelatedAdmin(RelatedModelAdmin):
         return form
 
     def save_form(self, request, form, change):
+        if not change:
+            form.instance.user = request.user
         if not self.related_field in form.base_fields.keys():
             form.cleaned_data[self.related_field] = self.basecontent
         return super(RelatedModelAdmin, self).save_form(request, form, change)

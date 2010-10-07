@@ -1,6 +1,6 @@
 {% extends "content_list.html" %}
 
-{% load i18n inlinetrans %}
+{% load i18n inlinetrans datefilters %}
 
 {% block listingclass %}{{ block.super }} forumList {% endblock %}
 
@@ -39,7 +39,7 @@
            {% with forum.get_last_comment as comment %}
            {% if comment %}
            <a href="{{ comment.thread.get_absolute_url }}#comment-{{ comment.id }}">{{ comment.title }}</a><br />
-           {{ comment.date_submitted }} {% inline_trans "by" %} {{ comment.user.get_full_name|default:comment.user.username }}
+           {{ comment.date_submitted|transdate }} {% inline_trans "by" %} {{ comment.user.get_full_name|default:comment.user.username }}
            {% endif %}
            {% endwith %}
          </td>
