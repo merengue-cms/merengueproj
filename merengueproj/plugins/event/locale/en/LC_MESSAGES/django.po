@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-28 12:59+0200\n"
+"POT-Creation-Date: 2010-10-07 10:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -52,7 +52,7 @@ msgstr ""
 msgid "All events"
 msgstr ""
 
-#: templates/event/block_calendar.html:23
+#: templates/event/block_calendar.html:24
 msgid "Loading..."
 msgstr ""
 
@@ -74,4 +74,12 @@ msgstr ""
 
 #: templates/event/event_view.html:16
 msgid "end date"
+msgstr ""
+
+#: templates/event/range_dates.html:6
+msgid "From"
+msgstr ""
+
+#: templates/event/range_dates.html:6
+msgid "To"
 msgstr ""

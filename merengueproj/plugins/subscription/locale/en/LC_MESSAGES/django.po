@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-28 12:32+0200\n"
+"POT-Creation-Date: 2010-10-07 10:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,55 +16,66 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: actions.py:28
+#: actions.py:28 templates/subscription/subscription_form.html:18
+#: templates/subscription/subscription_form.html:23
 msgid "Subscription"
 msgstr ""
 
-#: models.py:30
+#: models.py:31
 msgid "content"
 msgstr ""
 
-#: models.py:32
+#: models.py:33
 msgid "Type of Subscription"
 msgstr ""
 
-#: models.py:38
+#: models.py:39 models.py:52
 msgid "subscribable"
 msgstr ""
 
-#: models.py:39
+#: models.py:40
 msgid "subscribables"
 msgstr ""
 
 #: models.py:43
-msgid "first name"
-msgstr ""
-
-#: models.py:44
-msgid "last name"
-msgstr ""
-
-#: models.py:45
-msgid "e-mail address"
-msgstr ""
-
-#: models.py:46
-msgid "phone"
+#, python-format
+msgid "Subscribable for %s"
 msgstr ""
 
 #: models.py:47
-msgid "comments or suggestions"
+msgid "first name"
+msgstr ""
+
+#: models.py:48
+msgid "last name"
+msgstr ""
+
+#: models.py:49
+msgid "e-mail address"
 msgstr ""
 
 #: models.py:50
-msgid "base subscription"
+msgid "phone"
 msgstr ""
 
 #: models.py:51
+msgid "comments or suggestions"
+msgstr ""
+
+#: models.py:55
+msgid "base subscription"
+msgstr ""
+
+#: models.py:56
 msgid "base subscriptions"
 msgstr ""
 
-#: views.py:44
+#: models.py:59
+#, python-format
+msgid "Subscription of %s"
+msgstr ""
+
+#: views.py:46
 msgid "Request send successfully"
 msgstr ""
 
