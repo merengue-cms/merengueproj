@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-05 16:20+0200\n"
+"POT-Creation-Date: 2010-10-07 10:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: blocks.py:37 models.py:41
+#: blocks.py:35 models.py:40
 msgid "banners"
 msgstr ""
 
@@ -24,24 +24,24 @@ msgstr ""
 msgid "limit for banner block"
 msgstr ""
 
-#: models.py:32
+#: models.py:31
 msgid "Url Link"
 msgstr ""
 
-#: models.py:33
+#: models.py:32
 msgid "Portal name"
 msgstr ""
 
-#: models.py:34
+#: models.py:33
 msgid "image"
 msgstr ""
 
-#: models.py:36
+#: models.py:35
 msgid ""
 "The system don't resize the icon. You need to upload with the final size"
 msgstr ""
 
-#: models.py:40
+#: models.py:39
 msgid "banner"
 msgstr ""
 
@@ -49,15 +49,18 @@ msgstr ""
 msgid "All Banners"
 msgstr ""
 
-#: templates/banner/banner_index.html:5 templates/banner/banner_index.html:14
-msgid "Link index"
+#: templates/banner/banner_index.html:5 templates/banner/banner_index.html:11
+msgid "Banner history"
 msgstr ""
 
 #: templates/banner/banner_index.html:8
-msgid "Links"
+msgid "Banners"
 msgstr ""
 
-#: templates/banner/banner_index.html:19
+#: templates/banner/block_banner.html:9
+msgid "History banner"
+msgstr ""
+
 #: templates/banner/viewlet_latest.html:17
 msgid "View more"
 msgstr ""
