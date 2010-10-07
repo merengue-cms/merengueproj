@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-04-12 11:58+0200\n"
-"PO-Revision-Date: 2010-05-06 13:11\n"
+"PO-Revision-Date: 2010-10-05 10:10\n"
 "Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,12 +18,12 @@ msgstr ""
 
 #: models.py:13
 msgid "name"
-msgstr ""
+msgstr "nombre"
 
 #: models.py:14
 msgid "description"
-msgstr ""
+msgstr "descripción"
 
 #: models.py:17
 msgid "directory name"
-msgstr "nombre de directorio"
+msgstr "directorio"
