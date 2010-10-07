@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-28 12:30+0200\n"
+"POT-Creation-Date: 2010-10-07 10:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,6 +45,50 @@ msgstr ""
 msgid "Are you sure you want to discard this comment form?"
 msgstr ""
 
+#: templates/feedback/content_comment.html:6
+#: templates/feedback/content_comment.html:8
+#: templates/feedback/content_comment.html:10
+msgid "said"
+msgstr ""
+
+#: templates/feedback/content_comment.html:12
+msgid "link to here"
+msgstr ""
+
+#: templates/feedback/content_comment.html:16
+msgid "Send by"
+msgstr ""
+
+#: templates/feedback/content_comment.html:16
+msgid "on"
+msgstr ""
+
+#: templates/feedback/content_comment.html:24
+#: templates/feedback/content_comments.html:14
+msgid "Reply"
+msgstr ""
+
+#: templates/feedback/content_comment.html:25
+#: templates/feedback/content_comments.html:16
+msgid "Hide Reply"
+msgstr ""
+
+#: templates/feedback/content_comment.html:28
+msgid "Publish"
+msgstr ""
+
+#: templates/feedback/content_comment.html:30
+msgid "Censure"
+msgstr ""
+
+#: templates/feedback/content_comment.html:32
+msgid "Delete"
+msgstr ""
+
+#: templates/feedback/content_comment.html:34
+msgid "Edit"
+msgstr ""
+
 #: templates/feedback/content_comment_add.html:10
 msgid "Submit Comment"
 msgstr ""
@@ -52,6 +96,18 @@ msgstr ""
 #: templates/feedback/content_comment_preview.html:4
 #: templates/feedback/content_comment_preview.html:16
 msgid "Send comment to"
+msgstr ""
+
+#: templates/feedback/content_comment_preview.html:11
+msgid "Send comment"
+msgstr ""
+
+#: templates/feedback/content_comment_preview.html:18
+msgid "Return to"
+msgstr ""
+
+#: templates/feedback/content_comments.html:5
+msgid "Comments on this content"
 msgstr ""
 
 #: templates/feedback/content_comments.html:10
@@ -64,4 +120,8 @@ msgstr ""
 
 #: templates/feedback/feedback_index.html:8
 msgid "Feedback"
+msgstr ""
+
+#: templates/feedback/feedback_index.html:12
+msgid "Feedback Index"
 msgstr ""
