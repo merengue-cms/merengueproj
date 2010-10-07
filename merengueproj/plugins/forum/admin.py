@@ -22,8 +22,22 @@ class ThreadRelatedAdmin(RelatedModelAdmin):
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
     related_field = 'forum'
 
-    def remove_related_field_from_form(self, form):
-        pass
+    def get_form(self, request, obj=None, **kwargs):
+        if obj:
+            form = super(RelatedModelAdmin, self).get_form(request, obj, **kwargs)
+        else:
+            form = super(ThreadRelatedAdmin, self).get_form(request, obj, **kwargs)
+        return form
+
+    def save_form(self, request, form, change):
+        if not self.related_field in form.base_fields.keys():
+            form.cleaned_data[self.related_field] = self.basecontent
+        return super(RelatedModelAdmin, self).save_form(request, form, change)
+
+    def response_change(self, request, obj):
+        if '_continue' in request.POST.keys():
+            request.path = request.path + '../../../../../%s/thread/forum/thread/%s/' % (obj.forum.id, obj.id)
+        return super(ThreadRelatedAdmin, self).response_change(request, obj)
 
 
 class ForumThreadCommentRelatedAdmin(RelatedModelAdmin):
