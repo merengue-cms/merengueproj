@@ -77,6 +77,7 @@ urlpatterns = patterns('',
     url(r'^invalidate/$', 'merengue.portal.views.invalidate_cache', name='invalidate_cache'),
     (r'^inplaceeditform/', include('inplaceeditform.urls')),
     (r'^reports/', include('autoreports.urls')),
+    (r'^captcha/', include('captcha.urls')),
 )
 
 if settings.USE_GIS:
