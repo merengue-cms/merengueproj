@@ -95,7 +95,7 @@ def admin_link(request, content_type, content_id, url=''):
         content = ContentType.objects.get_for_id(content_type).get_object_for_this_type(id=content_id)
     except ObjectDoesNotExist:
         raise Http404
-    return HttpResponseRedirect(reverse('admin:admin_redirect', args=(content_type, content_id, )))
+    return HttpResponseRedirect(reverse('admin:admin_redirect', args=(content_type, content_id, )) + url)
 
 
 def public_view(request, app_label, model_name, content_id, content_slug):
