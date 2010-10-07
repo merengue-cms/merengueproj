@@ -69,6 +69,11 @@ class Thread(BaseContent):
         comments = ForumThreadComment.objects.filter(thread=self).order_by('-date_submitted')
         return comments and comments[0] or None
 
+    @permalink
+    def get_admin_absolute_url(self):
+        parent_content_type = ContentType.objects.get_for_model(self.forum)
+        return ('merengue.base.views.admin_link', [parent_content_type.id, self.forum.id, 'thread/forum/thread/%s/' % self.id])
+
 
 class ForumThreadComment(models.Model):
 
