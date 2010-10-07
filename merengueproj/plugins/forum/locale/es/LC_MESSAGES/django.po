@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-10-07 10:57+0200\n"
-"PO-Revision-Date: 2010-10-04 17:06\n"
+"PO-Revision-Date: 2010-10-07 13:46\n"
 "Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,11 +18,11 @@ msgstr ""
 
 #: models.py:16
 msgid "Forum category"
-msgstr ""
+msgstr "Categoría de foro"
 
 #: models.py:17
 msgid "Forum categories"
-msgstr ""
+msgstr "Categorías de foro"
 
 #: models.py:27
 msgid "Forum"
@@ -36,7 +36,7 @@ msgstr "Foros"
 
 #: models.py:51
 msgid "closed"
-msgstr ""
+msgstr "cerrado"
 
 #: models.py:56 templates/forum/forum_view.html:17
 msgid "Thread"
@@ -48,23 +48,23 @@ msgstr "Hilos"
 
 #: models.py:81
 msgid "comment"
-msgstr ""
+msgstr "comentario"
 
 #: models.py:84
 msgid "banned"
-msgstr ""
+msgstr "prohibido"
 
 #: models.py:85
 msgid "date/time submitted"
-msgstr ""
+msgstr "fecha/hora de envio"
 
 #: models.py:86
 msgid "date/time modified"
-msgstr ""
+msgstr "fecha/hora modificado"
 
 #: models.py:87
 msgid "IP address"
-msgstr ""
+msgstr "dirección IP"
 
 #: models.py:91
 msgid "Forum Thread Comment"
@@ -76,73 +76,73 @@ msgstr ""
 
 #: views.py:92
 msgid "Your message has been posted successfully."
-msgstr ""
+msgstr "Tu mensaje ha sido posteado satisfactoriamente."
 
 #: templates/forum/forum_comment_add.html:10
 msgid "Submit Comment"
-msgstr ""
+msgstr "Enviar comentario"
 
 #: templates/forum/forum_comment_preview.html:4
 #: templates/forum/forum_comment_preview.html:16
 msgid "Send comment to"
-msgstr ""
+msgstr "Enviar comentario a"
 
 #: templates/forum/forum_comment_preview.html:11
 msgid "Send comment"
-msgstr ""
+msgstr "Enviar comentario"
 
 #: templates/forum/forum_comment_preview.html:18
 msgid "Return to"
-msgstr ""
+msgstr "Volver a"
 
 #: templates/forum/forum_list.html:24 templates/forum/forum_view.html:18
 #: templates/forum/thread_view.html:22
 msgid "Messages"
-msgstr ""
+msgstr "Mensajes"
 
 #: templates/forum/forum_list.html:25 templates/forum/forum_view.html:19
 msgid "Last message"
-msgstr ""
+msgstr "Último mensaje"
 
 #: templates/forum/forum_list.html:42 templates/forum/forum_view.html:35
 msgid "by"
-msgstr ""
+msgstr "por"
 
 #: templates/forum/thread_comment.html:3
 msgid "Are you sure you want to delete this comment?"
-msgstr ""
+msgstr "¿Estás seguro que quieres eliminar este comentario?"
 
 #: templates/forum/thread_comment.html:4 templates/forum/thread_view.html:25
 msgid "Are you sure you want to discard this comment form?"
-msgstr ""
+msgstr "¿Estás seguro que quieres descartar este formulario de comentario?"
 
 #: templates/forum/thread_comment.html:7
 msgid "link to here"
-msgstr ""
+msgstr "enlace aquí"
 
 #: templates/forum/thread_comment.html:10
 msgid "Send by"
-msgstr ""
+msgstr "Enviado por"
 
 #: templates/forum/thread_comment.html:10
 msgid "on"
-msgstr ""
+msgstr "el"
 
 #: templates/forum/thread_comment.html:19 templates/forum/thread_view.html:32
 msgid "Reply"
-msgstr ""
+msgstr "Responder"
 
 #: templates/forum/thread_comment.html:20 templates/forum/thread_view.html:34
 msgid "Hide Reply"
-msgstr ""
+msgstr "Ocultar respuesta"
 
 #: templates/forum/thread_comment.html:24
 msgid "Publish"
-msgstr ""
+msgstr "Publicado"
 
 #: templates/forum/thread_comment.html:26
 msgid "Censure"
-msgstr ""
+msgstr "Censurar"
 
 #: templates/forum/thread_comment.html:28
 msgid "Delete"
@@ -154,4 +154,4 @@ msgstr ""
 
 #: templates/forum/thread_view.html:27
 msgid "An error has occurred, try again"
-msgstr ""
+msgstr "Ha ocurrido un error, pruebe de nuevo"
