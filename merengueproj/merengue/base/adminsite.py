@@ -120,7 +120,7 @@ class BaseAdminSite(DjangoAdminSite):
             url(r'^control_panel/$',
                 self.admin_view(self.control_panel),
                 name='control_panel'),
-            url(r'^admin_redirect/(?P<content_type_id>\d+)/(?P<object_id>.+)/$',
+            url(r'^admin_redirect/(?P<content_type_id>\d+)/(?P<object_id>\d+)/(?P<extra_url>.*)$',
                 self.admin_view(self.admin_redirect),
                 name='admin_redirect'),
             url(r'^siteconfig/$',
@@ -189,7 +189,7 @@ class BaseAdminSite(DjangoAdminSite):
             # Instantiate the admin class to save in the registry
             self._registry[model] = admin_class(model, self)
 
-    def admin_redirect(self, request, content_type_id, object_id):
+    def admin_redirect(self, request, content_type_id, object_id, extra_url=''):
         """ redirect to content admin page or content related admin page in his section """
         try:
             content = ContentType.objects.get_for_id(content_type_id).get_object_for_this_type(id=object_id)
@@ -220,8 +220,8 @@ class BaseAdminSite(DjangoAdminSite):
                     plugin_prefix = self.get_plugin_site_prefix_for_model(model)
                     if plugin_prefix:
                         admin_prefix += self.get_plugin_site_prefix_for_model(model) + '/'
-        return HttpResponseRedirect('%s%s/%s/%d/' % (admin_prefix, model._meta.app_label,
-                                    model._meta.module_name, content.id))
+        return HttpResponseRedirect('%s%s/%s/%d/%s' % (admin_prefix, model._meta.app_label,
+                                    model._meta.module_name, content.id, extra_url))
 
     def site_configuration(self, request):
         from merengue.perms import utils as perms_api
