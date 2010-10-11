@@ -25,6 +25,7 @@ class NewsCategoryAdmin(BaseCategoryAdmin):
 
 
 class NewsItemAdmin(BaseContentAdmin):
+    list_display = BaseContentAdmin.list_display + ('publish_date', )
     list_filter = BaseContentAdmin.list_filter + ('categories', )
     html_fields = BaseContentAdmin.html_fields + ('body', )
 
