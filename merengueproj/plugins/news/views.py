@@ -25,16 +25,19 @@ from merengue.base.views import content_view, content_list
 from plugins.news.models import NewsItem, NewsCategory
 
 
-def news_index(request):
-    news_list = get_news(request)
+def news_index(request, queryset=None, extra_context=None):
+    news_list = get_news(request, queryset=queryset)
     news_category_slug = request.GET.get('categories__slug', None)
     news_category = news_category_slug and get_object_or_404(NewsCategory, slug=news_category_slug)
-    return content_list(request, news_list, template_name='news/news_index.html', extra_context={'news_category': news_category})
+    context = {'news_category': news_category}
+    extra_context = extra_context or {}
+    context.update(extra_context)
+    return content_list(request, news_list, template_name='news/news_index.html', extra_context=context)
 
 
-def newsitem_view(request, newsitem_slug):
+def newsitem_view(request, newsitem_slug, extra_context=None):
     newsitem = get_object_or_404(NewsItem, slug=newsitem_slug)
-    return content_view(request, newsitem, 'news/newsitem_view.html')
+    return content_view(request, newsitem, 'news/newsitem_view.html', extra_context=extra_context)
 
 
 def newsitem_by_category_view(request, newscategory_slug):
@@ -53,8 +56,9 @@ def news_by_date(request, year, month, day):
     return content_list(request, news, template_name='news/news_index.html')
 
 
-def get_news(request=None, limit=0):
-    news = NewsItem.objects.published().order_by("-publish_date")
+def get_news(request=None, limit=0, queryset=None):
+    queryset = queryset or NewsItem.objects.published()
+    news = queryset.order_by("-publish_date")
     qsm = QueryStringManager(request, page_var='page', ignore_params=('set_language', ))
     filters = qsm.get_filters()
     news = news.filter(**filters)
