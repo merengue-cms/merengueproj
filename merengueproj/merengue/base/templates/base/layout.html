@@ -109,15 +109,6 @@
   </div>
   {% endblock headerwrapper %}
 
-  {% block breadcrumbswrapper %}
-    <div id="breadcrumbs">
-      {% block breadcrumbs %}
-        {% include "inc.breadcrumbs.html" %}
-        {% block extrabreadcrumbs %}
-        {% endblock %}
-      {% endblock %}
-    </div>
-  {% endblock %}
 
 {% endif %}
 
@@ -127,11 +118,13 @@
   {% block contentwrapper %}
 
   {% if not request.HIDE_MENU %}
+    {% block leftsidebarwrapper %}
     <div id="left-sidebar">
       {% block leftsidebar %}
         {% include "inc.leftsidebar.html" %}
       {% endblock %}
     </div>
+    {% endblock %}
   {% endif %}
 
   <div id="content" class="{% block contentclass %}withsidebar{% endblock %}">
@@ -145,11 +138,13 @@
   </div>
 
   {% if not request.HIDE_MENU %}
+    {% block rightsidebarwrapper %}
     <div id="right-sidebar">
       {% block rightsidebar %}
         {% include "inc.rightsidebar.html" %}
       {% endblock %}
     </div>
+    {% endblock %}
   {% endif %}
     <div class="visualClear"></div>
 
