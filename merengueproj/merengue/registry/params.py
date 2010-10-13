@@ -61,7 +61,7 @@ class Single(Param):
 class Integer(Param):
 
     def get_parsed_value(self, value):
-        if value is not None and not isinstance(value, int) and value.isdigit():
+        if value is not None and not isinstance(value, int):
             return int(value)
         return value
 
