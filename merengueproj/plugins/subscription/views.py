@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -43,7 +44,13 @@ def subscription_form(request, basecontent_slug):
         subscription = form.save(commit=False)
         subscription.subscribable = subscribable
         subscription.save()
-        send_info(request, _('Request send successfully'))
+        subscriber_listing_url = reverse('subscriber_listing', args=(basecontent_slug, ))
+        send_info(
+            request,
+            _('Request send successfully. See <a href="%(subscriber_listing)s">suscriber list</a>') % {
+                'subscriber_listing': subscriber_listing_url,
+            },
+        )
         url_redirect = content.get_absolute_url()
         invalidate_cache_for_path(url_redirect)
         return HttpResponseRedirect(url_redirect)
