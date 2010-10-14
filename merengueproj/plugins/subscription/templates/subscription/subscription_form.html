@@ -18,13 +18,11 @@
   <a href="." title="{{ content }}">{% inline_trans "Subscription" %}</a>
 {% endblock %}
 
-{% block contenttitle %}
-  <div id="content-title">
-    <h1>{% inline_trans "Subscription" %}</h1>
-  </div>
-{% endblock %}
-
 {% block content %}
+<div id="content-title">
+  <h1>{% inline_trans "Subscription" %}</h1>
+</div>
+
 <form action="." method="POST">
     {{ form }}
     <input type="submit" value="{% trans 'submit' %}"/>

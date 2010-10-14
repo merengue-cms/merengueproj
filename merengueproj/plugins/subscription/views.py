@@ -52,3 +52,14 @@ def subscription_form(request, basecontent_slug):
                                'content': content,
                               },
                               context_instance=RequestContext(request))
+
+
+def subscriber_listing(request, basecontent_slug):
+    content = BaseContent.objects.get(slug=basecontent_slug)
+    subscribable = content.subscribable_set.actives()
+    if not subscribable:
+        return HttpResponseRedirect(content.get_absolute_url())
+    subscribers = subscribable[0].basesubscription_set.all().order_by('last_name', 'first_name')
+    return render_to_response('subscription/subscriber_listing.html',
+                              {'subscribers': subscribers, 'content': content},
+                              context_instance=RequestContext(request))
