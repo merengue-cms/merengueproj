@@ -33,7 +33,7 @@ class Command(LabelCommand, MerengueCommand):
         make_option('-d', '--develop', action='store_true', dest='develop',
             help="For development of Merengue's core, symlink instead of copy."),
     )
-    help = "Creates a Django project directory structure for the given project name in the current directory."
+    help = "Creates a Merengue project directory structure for the given project name in the current directory."
     args = "[projectname]"
     label = 'project name'
     requires_model_validation = False
