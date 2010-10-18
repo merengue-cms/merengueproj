@@ -1,7 +1,7 @@
 {% extends "filebrowser/base.html" %}
 {% load i18n filebrowser_tags %}
 
-{% block pagetitle %}{% trans "Edit document" %}{% endblock %}
+{% block pagetitle %}{{ block.super }} - {% trans "Edit document" %}{% endblock %}
 
 {% block extrabreadcrumbs %}
   {{ block.super }}

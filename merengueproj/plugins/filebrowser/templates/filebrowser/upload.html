@@ -1,7 +1,7 @@
 {% extends "filebrowser/base.html" %}
 {% load i18n filebrowser_tags %}
 
-{% block pagetitle %}{% trans "Upload file" %}{% endblock %}
+{% block pagetitle %}{{ block.super }} - {% trans "Upload file" %}{% endblock %}
 
 {% block titlepage %}{% trans "Upload file" %}{% endblock %}
 

@@ -1,7 +1,7 @@
 {% extends "filebrowser/base.html" %}
 {% load i18n truncate_filter filebrowser_tags %}
 
-{% block pagetitle %}{% trans "Listing" %}{% endblock %}
+{% block pagetitle %}{{ block.super }} - {% trans "Listing" %}{% endblock %}
 
 {% block parentextrabreadcrumbs %}
 

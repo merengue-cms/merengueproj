@@ -10,7 +10,7 @@
 
 {% endblock %}
 
-{% block pagetitle %}{% trans "Document detail" %}{% endblock %}
+{% block pagetitle %}{{ block.super }} - {% trans "Document detail" %}{% endblock %}
 
 {% block extrabreadcrumbs %}
   {{ block.super }}
