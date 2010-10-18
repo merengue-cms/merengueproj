@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-07-21 14:10+0200\n"
-"PO-Revision-Date: 2010-10-05 10:17\n"
+"PO-Revision-Date: 2010-10-11 11:48\n"
 "Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -311,7 +311,7 @@ msgstr "es esto contenido comentable"
 
 #: models.py:304 models.py:442
 msgid "multimedia"
-msgstr ""
+msgstr "multimedia"
 
 #: models.py:313
 msgid "class name"
