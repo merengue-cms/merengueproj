@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-10-07 10:57+0200\n"
-"PO-Revision-Date: 2010-10-07 13:46\n"
+"PO-Revision-Date: 2010-10-11 11:42\n"
 "Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -52,7 +52,7 @@ msgstr "comentario"
 
 #: models.py:84
 msgid "banned"
-msgstr "prohibido"
+msgstr "baneado"
 
 #: models.py:85
 msgid "date/time submitted"
@@ -68,11 +68,11 @@ msgstr "dirección IP"
 
 #: models.py:91
 msgid "Forum Thread Comment"
-msgstr ""
+msgstr "Comentario del Hilo"
 
 #: models.py:92
 msgid "Forum Thread Comments"
-msgstr ""
+msgstr "Comentarios del Hilo"
 
 #: views.py:92
 msgid "Your message has been posted successfully."
@@ -146,11 +146,11 @@ msgstr "Censurar"
 
 #: templates/forum/thread_comment.html:28
 msgid "Delete"
-msgstr ""
+msgstr "Eliminar"
 
 #: templates/forum/thread_comment.html:30
 msgid "Edit"
-msgstr ""
+msgstr "Editar"
 
 #: templates/forum/thread_view.html:27
 msgid "An error has occurred, try again"

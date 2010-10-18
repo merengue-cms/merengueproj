@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-10-07 10:57+0200\n"
-"PO-Revision-Date: 2010-10-04 11:59\n"
+"PO-Revision-Date: 2010-10-11 11:38\n"
 "Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr "Categoría"
 
 #: models.py:34
 msgid "categories"
-msgstr "Categorias"
+msgstr "Categorías"
 
 #: models.py:42
 msgid "Start date"
@@ -46,7 +46,7 @@ msgstr "eventos"
 
 #: viewlets.py:26
 msgid "Latest events"
-msgstr "Úlitmos eventos"
+msgstr "Últimos eventos"
 
 #: viewlets.py:37
 msgid "All events"
@@ -66,7 +66,7 @@ msgstr "Para cualquier fecha"
 
 #: templates/event/event_list.html:10 templates/event/event_view.html:8
 msgid "Event"
-msgstr "evento"
+msgstr "Evento"
 
 #: templates/event/event_view.html:15
 msgid "start date"
@@ -78,8 +78,8 @@ msgstr "fecha final"
 
 #: templates/event/range_dates.html:6
 msgid "From"
-msgstr ""
+msgstr "De"
 
 #: templates/event/range_dates.html:6
 msgid "To"
-msgstr ""
+msgstr "A"

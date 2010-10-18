@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-10-07 10:56+0200\n"
-"PO-Revision-Date: 2010-10-07 12:33\n"
+"PO-Revision-Date: 2010-10-11 11:36\n"
 "Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: blocks.py:35 models.py:40
 msgid "banners"
-msgstr ""
+msgstr "banners"
 
 #: config.py:35
 msgid "limit for banner block"
@@ -42,7 +42,7 @@ msgstr "El sistema no cambia el tamaño. Necesitas subir una con el tamaño fina
 
 #: models.py:39
 msgid "banner"
-msgstr ""
+msgstr "banner"
 
 #: viewlets.py:26
 msgid "All Banners"
@@ -54,11 +54,11 @@ msgstr "Historia de banner"
 
 #: templates/banner/banner_index.html:8
 msgid "Banners"
-msgstr ""
+msgstr "Banners"
 
 #: templates/banner/block_banner.html:9
 msgid "History banner"
-msgstr "Historia de banner"
+msgstr "Historial de banner"
 
 #: templates/banner/viewlet_latest.html:17
 msgid "View more"
