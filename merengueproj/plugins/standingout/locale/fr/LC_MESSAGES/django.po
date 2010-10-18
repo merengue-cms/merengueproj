@@ -1,0 +1,104 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin.py:35
+msgid "Basic Options"
+msgstr ""
+
+#: admin.py:37
+msgid "Advanced Options"
+msgstr ""
+
+#: blocks.py:46
+msgid "Search"
+msgstr ""
+
+#: config.py:33
+msgid "limit for standingouts in block"
+msgstr ""
+
+#: forms.py:30
+msgid ""
+"If you select the option in field standing out category you have to select a "
+"option in related field"
+msgstr ""
+
+#: forms.py:35
+msgid ""
+"If you select the option in field related you have to select a option in "
+"standing out category field"
+msgstr ""
+
+#: forms.py:46
+#, python-format
+msgid "There was a object with the same fields pk=%s"
+msgstr ""
+
+#: models.py:28
+msgid "context variable"
+msgstr ""
+
+#: models.py:31
+msgid "standingout category"
+msgstr ""
+
+#: models.py:32
+msgid "standingout categories"
+msgstr ""
+
+#: models.py:37
+msgid "obj content type"
+msgstr ""
+
+#: models.py:39
+msgid "object id"
+msgstr ""
+
+#: models.py:42
+msgid "related content type"
+msgstr ""
+
+#: models.py:44
+msgid "related object id"
+msgstr ""
+
+#: models.py:47
+msgid "standing out category"
+msgstr ""
+
+#: models.py:50
+msgid "Order"
+msgstr ""
+
+#: templates/standingout/block_standingout.html:6
+#: templates/standingout/standingout_list.html:10
+msgid "Highlights"
+msgstr ""
+
+#: templates/standingout/block_standingout.html:21
+msgid "View all"
+msgstr ""
+
+#: templates/standingout/block_standingout.html:23
+msgid "Without highlights"
+msgstr ""
+
+#: templates/standingout/standingout_list.html:5
+#: templates/standingout/standingout_list.html:7
+msgid "Highlights index"
+msgstr ""

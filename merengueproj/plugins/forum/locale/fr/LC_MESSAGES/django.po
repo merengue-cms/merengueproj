@@ -1,0 +1,157 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: models.py:16
+msgid "Forum category"
+msgstr ""
+
+#: models.py:17
+msgid "Forum categories"
+msgstr ""
+
+#: models.py:27
+msgid "Forum"
+msgstr ""
+
+#: models.py:28 templates/forum/forum_list.html:7
+#: templates/forum/forum_list.html.py:10 templates/forum/forum_list.html:13
+#: templates/forum/forum_view.html:6 templates/forum/thread_view.html:12
+msgid "Forums"
+msgstr ""
+
+#: models.py:51
+msgid "closed"
+msgstr ""
+
+#: models.py:56 templates/forum/forum_view.html:17
+msgid "Thread"
+msgstr ""
+
+#: models.py:57 templates/forum/forum_list.html:23
+msgid "Threads"
+msgstr ""
+
+#: models.py:81
+msgid "comment"
+msgstr ""
+
+#: models.py:84
+msgid "banned"
+msgstr ""
+
+#: models.py:85
+msgid "date/time submitted"
+msgstr ""
+
+#: models.py:86
+msgid "date/time modified"
+msgstr ""
+
+#: models.py:87
+msgid "IP address"
+msgstr ""
+
+#: models.py:91
+msgid "Forum Thread Comment"
+msgstr ""
+
+#: models.py:92
+msgid "Forum Thread Comments"
+msgstr ""
+
+#: views.py:92
+msgid "Your message has been posted successfully."
+msgstr ""
+
+#: templates/forum/forum_comment_add.html:10
+msgid "Submit Comment"
+msgstr ""
+
+#: templates/forum/forum_comment_preview.html:4
+#: templates/forum/forum_comment_preview.html:16
+msgid "Send comment to"
+msgstr ""
+
+#: templates/forum/forum_comment_preview.html:11
+msgid "Send comment"
+msgstr ""
+
+#: templates/forum/forum_comment_preview.html:18
+msgid "Return to"
+msgstr ""
+
+#: templates/forum/forum_list.html:24 templates/forum/forum_view.html:18
+#: templates/forum/thread_view.html:22
+msgid "Messages"
+msgstr ""
+
+#: templates/forum/forum_list.html:25 templates/forum/forum_view.html:19
+msgid "Last message"
+msgstr ""
+
+#: templates/forum/forum_list.html:42 templates/forum/forum_view.html:35
+msgid "by"
+msgstr ""
+
+#: templates/forum/thread_comment.html:3
+msgid "Are you sure you want to delete this comment?"
+msgstr ""
+
+#: templates/forum/thread_comment.html:4 templates/forum/thread_view.html:25
+msgid "Are you sure you want to discard this comment form?"
+msgstr ""
+
+#: templates/forum/thread_comment.html:7
+msgid "link to here"
+msgstr ""
+
+#: templates/forum/thread_comment.html:10
+msgid "Send by"
+msgstr ""
+
+#: templates/forum/thread_comment.html:10
+msgid "on"
+msgstr ""
+
+#: templates/forum/thread_comment.html:19 templates/forum/thread_view.html:32
+msgid "Reply"
+msgstr ""
+
+#: templates/forum/thread_comment.html:20 templates/forum/thread_view.html:34
+msgid "Hide Reply"
+msgstr ""
+
+#: templates/forum/thread_comment.html:24
+msgid "Publish"
+msgstr ""
+
+#: templates/forum/thread_comment.html:26
+msgid "Censure"
+msgstr ""
+
+#: templates/forum/thread_comment.html:28
+msgid "Delete"
+msgstr ""
+
+#: templates/forum/thread_comment.html:30
+msgid "Edit"
+msgstr ""
+
+#: templates/forum/thread_view.html:27
+msgid "An error has occurred, try again"
+msgstr ""

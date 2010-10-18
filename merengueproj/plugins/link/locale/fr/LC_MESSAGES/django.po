@@ -1,0 +1,62 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: models.py:31
+msgid "link category"
+msgstr ""
+
+#: models.py:32
+msgid "link categories"
+msgstr ""
+
+#: models.py:39
+msgid "Url Link"
+msgstr ""
+
+#: models.py:40
+msgid "Portal name"
+msgstr ""
+
+#: models.py:44
+msgid "link"
+msgstr ""
+
+#: models.py:45
+msgid "links"
+msgstr ""
+
+#: viewlets.py:26
+msgid "Latest link"
+msgstr ""
+
+#: viewlets.py:37
+msgid "All link"
+msgstr ""
+
+#: templates/link/link_index.html:5 templates/link/link_index.html.py:14
+msgid "Link index"
+msgstr ""
+
+#: templates/link/link_index.html:8 templates/link/link_view.html:9
+msgid "Links"
+msgstr ""
+
+#: templates/link/link_index.html:19 templates/link/link_view.html:14
+#: templates/link/viewlet_latest.html:17
+msgid "View more"
+msgstr ""

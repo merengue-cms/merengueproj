@@ -1,0 +1,127 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: blocks.py:31
+msgid "Feedback content"
+msgstr ""
+
+#: config.py:33
+msgid "Number of comment for each content"
+msgstr ""
+
+#: config.py:34
+msgid "Show children"
+msgstr ""
+
+#: config.py:35
+msgid "Show options bar"
+msgstr ""
+
+#: views.py:86
+msgid "Your message has been posted successfully."
+msgstr ""
+
+#: templates/feedback/content_comment.html:3
+msgid "Are you sure you want to delete this comment?"
+msgstr ""
+
+#: templates/feedback/content_comment.html:4
+#: templates/feedback/content_comments.html:8
+msgid "Are you sure you want to discard this comment form?"
+msgstr ""
+
+#: templates/feedback/content_comment.html:6
+#: templates/feedback/content_comment.html:8
+#: templates/feedback/content_comment.html:10
+msgid "said"
+msgstr ""
+
+#: templates/feedback/content_comment.html:12
+msgid "link to here"
+msgstr ""
+
+#: templates/feedback/content_comment.html:16
+msgid "Send by"
+msgstr ""
+
+#: templates/feedback/content_comment.html:16
+msgid "on"
+msgstr ""
+
+#: templates/feedback/content_comment.html:24
+#: templates/feedback/content_comments.html:14
+msgid "Reply"
+msgstr ""
+
+#: templates/feedback/content_comment.html:25
+#: templates/feedback/content_comments.html:16
+msgid "Hide Reply"
+msgstr ""
+
+#: templates/feedback/content_comment.html:28
+msgid "Publish"
+msgstr ""
+
+#: templates/feedback/content_comment.html:30
+msgid "Censure"
+msgstr ""
+
+#: templates/feedback/content_comment.html:32
+msgid "Delete"
+msgstr ""
+
+#: templates/feedback/content_comment.html:34
+msgid "Edit"
+msgstr ""
+
+#: templates/feedback/content_comment_add.html:10
+msgid "Submit Comment"
+msgstr ""
+
+#: templates/feedback/content_comment_preview.html:4
+#: templates/feedback/content_comment_preview.html:16
+msgid "Send comment to"
+msgstr ""
+
+#: templates/feedback/content_comment_preview.html:11
+msgid "Send comment"
+msgstr ""
+
+#: templates/feedback/content_comment_preview.html:18
+msgid "Return to"
+msgstr ""
+
+#: templates/feedback/content_comments.html:5
+msgid "Comments on this content"
+msgstr ""
+
+#: templates/feedback/content_comments.html:10
+msgid "An error has occurred, try again"
+msgstr ""
+
+#: templates/feedback/feedback_index.html:5
+msgid "Feedback index"
+msgstr ""
+
+#: templates/feedback/feedback_index.html:8
+msgid "Feedback"
+msgstr ""
+
+#: templates/feedback/feedback_index.html:12
+msgid "Feedback Index"
+msgstr ""

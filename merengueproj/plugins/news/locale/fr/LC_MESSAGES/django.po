@@ -1,0 +1,70 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: actions.py:27
+msgid "News index"
+msgstr ""
+
+#: actions.py:36
+msgid "News rss"
+msgstr ""
+
+#: blocks.py:32 viewlets.py:26
+msgid "Latest news"
+msgstr ""
+
+#: blocks.py:43
+msgid "News comments"
+msgstr ""
+
+#: config.py:37
+msgid "limit for templatetags"
+msgstr ""
+
+#: models.py:34
+msgid "news category"
+msgstr ""
+
+#: models.py:35
+msgid "news categories"
+msgstr ""
+
+#: models.py:45
+msgid "category"
+msgstr ""
+
+#: models.py:47
+msgid "body"
+msgstr ""
+
+#: viewlets.py:37
+msgid "All news"
+msgstr ""
+
+#: templates/news/news_index.html:5 templates/news/news_index.html.py:8
+#: templates/news/news_index.html:14 templates/news/newsitem_view.html:9
+msgid "News"
+msgstr ""
+
+#: templates/news/newsitem_by_category.html:14
+msgid "No Image"
+msgstr ""
+
+#: templates/news/newsitem_by_category.html:24
+msgid "read more"
+msgstr ""

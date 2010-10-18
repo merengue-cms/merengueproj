@@ -1,0 +1,85 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: blocks.py:38
+msgid "Events calendar"
+msgstr ""
+
+#: models.py:33 models.py:47
+msgid "category"
+msgstr ""
+
+#: models.py:34
+msgid "categories"
+msgstr ""
+
+#: models.py:42
+msgid "Start date"
+msgstr ""
+
+#: models.py:44
+msgid "End date"
+msgstr ""
+
+#: models.py:53
+msgid "event"
+msgstr ""
+
+#: models.py:54
+msgid "events"
+msgstr ""
+
+#: viewlets.py:26
+msgid "Latest events"
+msgstr ""
+
+#: viewlets.py:37
+msgid "All events"
+msgstr ""
+
+#: templates/event/block_calendar.html:24
+msgid "Loading..."
+msgstr ""
+
+#: templates/event/event_list.html:5 templates/event/event_list.html.py:7
+msgid "Events index"
+msgstr ""
+
+#: templates/event/event_list.html:5 templates/event/event_list.html.py:7
+msgid "For every date"
+msgstr ""
+
+#: templates/event/event_list.html:10 templates/event/event_view.html:8
+msgid "Event"
+msgstr ""
+
+#: templates/event/event_view.html:15
+msgid "start date"
+msgstr ""
+
+#: templates/event/event_view.html:16
+msgid "end date"
+msgstr ""
+
+#: templates/event/range_dates.html:6
+msgid "From"
+msgstr ""
+
+#: templates/event/range_dates.html:6
+msgid "To"
+msgstr ""
