@@ -7,5 +7,5 @@
      {{ MEDIA_URL }}merengue/img/multimedia/previews/audio_preview.jpg
    {% endif %}
 {% endblock %}
-{% block fullview %}{% url multimedia.views.audio_xml multimedia.id %}{% endblock %}
+{% block fullview %}{% url merengue.multimedia.views.audio_xml multimedia.id %}{% endblock %}
 {% block extraoptions %}type=external{% endblock %}
