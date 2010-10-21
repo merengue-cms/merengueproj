@@ -45,7 +45,7 @@ class RoleTestCase(TestCase):
         self.group = Group.objects.create(name="brights")
 
         self.page_1 = BaseContent.objects.create(slug="page-1", name_en="Page 1")
-        self.page_2 = BaseContent.objects.create(slug="page-1", name_en="Page 2")
+        self.page_2 = BaseContent.objects.create(slug="page-2", name_en="Page 2")
 
     def test_getter(self):
         """
@@ -315,7 +315,7 @@ class PermissionTestCase(TestCase):
         self.user.save()
 
         self.page_1 = BaseContent.objects.create(slug="page-1", name_en="Page 1")
-        self.page_2 = BaseContent.objects.create(slug="page-1", name_en="Page 2")
+        self.page_2 = BaseContent.objects.create(slug="page-2", name_en="Page 2")
 
         self.permission = merengue.perms.utils.register_permission("View permission", "view_perm")
 
