@@ -24,3 +24,4 @@ genericforeignkey http://svnpub.yaco.es/djangoapps/genericforeignkey/trunk/gener
 stdfile http://svnpub.yaco.es/djangoapps/stdfile/trunk/stdfile
 oembed http://django-oembed.googlecode.com/svn/trunk/oembed/
 ajax_select http://django-ajax-selects.googlecode.com/svn/trunk/ajax_select/
+oot http://svnpub.yaco.es/djangoapps/oot/trunk/oot
