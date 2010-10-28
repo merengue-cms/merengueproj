@@ -94,6 +94,7 @@ INSTALLED_APPS = (
     'threadedcomments',
     'autoreports',
     'johnny',
+    'oot',
     'genericforeignkey',
     'oembed',
     'ajax_select',
