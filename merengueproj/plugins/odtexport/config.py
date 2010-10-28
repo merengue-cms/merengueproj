@@ -23,8 +23,8 @@ from plugins.odtexport.models import OpenOfficeTemplate
 
 
 class PluginConfig(Plugin):
-    name = 'OpenOfficeExport'
-    description = 'OpenOffice Exporter'
+    name = 'OpenOffice Export'
+    description = 'ODT Exporter'
     version = '0.0.2'
 
     url_prefixes = (

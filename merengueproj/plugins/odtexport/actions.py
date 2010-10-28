@@ -25,8 +25,8 @@ from oot.views import render_writer_template
 
 
 class ExportODT(ContentAction):
-    name = 'odtexportaction'
-    verbose_name = _('ODT export')
+    name = 'exportodt'
+    verbose_name = _('Export ODT')
 
     @classmethod
     def get_response(cls, request, content):
@@ -36,11 +36,14 @@ class ExportODT(ContentAction):
 
     @classmethod
     def has_action(cls, content):
-        return get_odt_template_id(content.__class__) != 0
+        return content and get_odt_template_id(content.__class__) != 0
 
 
 def get_odt_template_id(content_class):
     for parent_class in content_class.mro():
+        meta = getattr(parent_class, '_meta', None)
+        if not meta or meta.abstract:
+            continue
         content_type = ContentType.objects.get_for_model(parent_class)
         try:
             template = OpenOfficeTemplate.objects.get(content_type=content_type)
