@@ -3,8 +3,22 @@
 	font: 12px/19px Helvetica,sans-serif;
 }
 
+#header {
+    background: #E6D8C0;
+    color: #917250;
+    min-height:62px;
+    border-bottom: 4px solid #BCB9AD;
+}
+
 p {
 	color:#717171;
+}
+
+a:link, a:visited {
+	color: #bf9460;
+}
+a:hover {
+	color: #806446;
 }
 
 /* ----- header styles ----- */
@@ -25,6 +39,48 @@ div#header img#merengue_logo {
 	padding: 2em 10px;
 }
 
+.module-merengue h1,
+#content-related .module h2,
+.merengueadmin .module h2,
+.module caption, 
+.inline-group h2 {
+	background: #E6D8C0 url(../img/default-bg.gif) repeat-x top left;
+}
+
+#changelist-filter li.selected a {
+	color: #BF9460 !important;
+}
+
+#changelist-filter h2,
+.module h2, 
+.module caption, 
+.inline-group h2 {
+    background: #E6D8C0 url(../img/default-bg.gif) repeat-x top left;	
+}
+
+.row1 {
+	background: #f7f5f0;
+}
+
+.button.default, input.default[type="submit"], .submit-row input.default {
+    border: 1px solid #C49A6C;
+    background: #E6D8C0 url(../img/default-bg.gif) repeat-x top left;
+	color: #917250;
+}
+
+.button.default:active, input.default[type="submit"]:active {
+	border: 1px solid #C49A6C;
+    background: #E6D8C0 url(../img/default-bg-reverse.gif) repeat-x top left;
+	color: #917250;
+} 
+
+#changelist-filter h2,
+.module h2,
+.module caption,
+.inline-group h2 {
+	background: #E6D8C0 url(../img/default-bg.gif) repeat-x top left;
+}
+
 /*---- other styles ----*/
 .object-tools {
     margin-bottom:0.5em;
@@ -33,6 +89,14 @@ div#header img#merengue_logo {
 
 .object-tools li {
     margin-bottom: 0.5em;
+}
+
+.object-tools li.selected {
+   background:transparent url(../img/tool-left_over.gif) no-repeat scroll 0 0 !important;
+}
+
+.object-tools li.selected a {
+   background: #5B80B2 url(../img/tool-right_over.gif) no-repeat scroll top right !important;
 }
 
 .object-subtools {
@@ -73,7 +137,7 @@ div#header img#merengue_logo {
 
 .object-tools li.selected span.selected-with-subtools {
     padding-bottom: 9px;
-    background: white url(/media/img/subtools-arrow-down.gif) no-repeat bottom center;
+    background: white;
 }
 
 .object-subtools ul li.selected {
@@ -270,7 +334,7 @@ a.internalLinkUrl {
     display: block;
     float: left;
     margin: 0px 1em;
-    background: url(../js/tiny_mce_internal_links/images/internal_link.gif) no-repeat top left;
+    background: url(/media/merengue/js/tiny_mce_internal_links/images/internal_link.gif) no-repeat top left;
     width: 20px;
     height: 20px;
 }
@@ -326,7 +390,7 @@ ul.object-tools li.din_selected a {
 
 ul.object-tools li.parent:hover a.din_smart_trigger,
 ul.object-tools li.din_selected a.din_smart_trigger {
-    background: #5b80b2 url(../img/admin/smart-tool-trigger.gif) no-repeat top right !important;
+    background: #5b80b2 url(../img/smart-tool-trigger.gif) no-repeat top right !important;
     float: left;
     width: 20px;
     padding: 0px;
@@ -336,7 +400,7 @@ ul.object-tools li.din_selected a.din_smart_trigger {
 
 ul.object-tools li.parent:hover a.din_smart_trigger_open,
 ul.object-tools li.din_selected a.din_smart_trigger_open {
-    background-image: url(../img/admin/smart-tool-trigger-up.gif) !important;
+    background-image: url(../img/smart-tool-trigger-up.gif) !important;
 }
 
 ul.object-tools li.parent:hover span {
@@ -353,11 +417,11 @@ ul.object-tools li.parent span {
 }
 
 ul.object-tools li.parent a.din_smart_trigger {
-    background: #999999 url(../img/admin/gray-smart-tool-trigger.gif) no-repeat top right !important;
+    background: #999999 url(../img/gray-smart-tool-trigger.gif) no-repeat top right !important;
 }
 
 ul.object-tools li.parent a.din_smart_trigger_open {
-    background: #999999 url(../img/admin/gray-smart-tool-trigger-up.gif) no-repeat top right !important;
+    background: #999999 url(../img/gray-smart-tool-trigger-up.gif) no-repeat top right !important;
 }
 
 
@@ -411,6 +475,16 @@ textarea#id_css_chunk {
 	color: #BF9460;
 }
 
+.selector-add  {
+    background:url("../img/selector-add.gif") no-repeat scroll center top transparent;
+    margin-bottom:2px;
+}
+
+a.selector-chooseall {
+    background:url("../img/selector-addall.gif") no-repeat scroll left center transparent;
+    width:7em;
+}
+
 /* ----- plugin admin ----- */
 #plugin-changelist tr.broken {
     background-color: #dddddd;
@@ -421,7 +495,7 @@ textarea#id_css_chunk {
 }
 
 #plugin-changelist tr.broken th {
-    background: transparent url(../img/admin/broken_plugin.gif) no-repeat left center !important;
+    background: transparent url(../img/broken_plugin.gif) no-repeat left center !important;
     padding-left: 18px;
 }
 
