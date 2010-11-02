@@ -15,6 +15,11 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from os import path
+
+from django.contrib.contenttypes.models import ContentType
+
+from merengue.base.models import BaseContent
 from merengue.pluggable import Plugin
 
 from plugins.odtexport.actions import ExportODT
@@ -38,3 +43,17 @@ class PluginConfig(Plugin):
     @classmethod
     def get_model_admins(cls):
         return [(OpenOfficeTemplate, OpenOfficeTemplateAdmin)]
+
+    @classmethod
+    def hook_post_register(self):
+        odt_path = path.join('media', 'oot', 'base.odt')
+        try:
+            OpenOfficeTemplate.objects.get(
+                title='BaseContent-template', template=odt_path,
+                content_type=ContentType.objects.get_for_model(BaseContent),
+                )
+        except OpenOfficeTemplate.DoesNotExist:
+            OpenOfficeTemplate.objects.create(
+                title='BaseContent-template', template=odt_path,
+                content_type=ContentType.objects.get_for_model(BaseContent),
+                )
