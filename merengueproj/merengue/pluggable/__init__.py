@@ -67,6 +67,10 @@ class Plugin(RegistrableItem):
     def get_perms(cls):
         return [] # to override in plugins
 
+    @classmethod
+    def hook_post_register(cls):
+        pass
+
 
 def register_plugin(plugin_dir):
     plugin_config = get_plugin_config(plugin_dir)

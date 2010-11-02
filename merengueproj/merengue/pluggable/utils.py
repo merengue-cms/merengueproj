@@ -321,6 +321,7 @@ def register_plugin_post_actions(plugin_name):
     if not plugin_config:
         return
     plugin_config.post_actions()
+    plugin_config.hook_post_register()
 
 
 def register_plugin_section_models(plugin_name):
