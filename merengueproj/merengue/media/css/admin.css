@@ -12,11 +12,6 @@ div#header img#merengue_logo {
     float: left;
 }
 
-#branding h1 { 
-    margin: 1.2em 0 0 11em;
-	color: #BF843B;
-}
-
 .login #container {
     width: 30em;
 }
@@ -403,12 +398,6 @@ textarea#id_css_chunk {
 	font-style: italic;
 	margin-bottom:0.5em;
 	color: #aaa;
-}
-
-.paginator a:hover {
-	background: #E6D8C0;
-	border-color: #BF9460;
-	color: #BF9460;
 }
 
 /* ----- plugin admin ----- */
