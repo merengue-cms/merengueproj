@@ -15,8 +15,11 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
+import shutil
 from os import path
 
+from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 
 from merengue.base.models import BaseContent
@@ -46,14 +49,20 @@ class PluginConfig(Plugin):
 
     @classmethod
     def hook_post_register(self):
-        odt_path = path.join('media', 'oot', 'base.odt')
+        odt_path = path.join('oot', 'base.odt')
         try:
-            OpenOfficeTemplate.objects.get(
-                title='BaseContent-template', template=odt_path,
-                content_type=ContentType.objects.get_for_model(BaseContent),
-                )
+            OpenOfficeTemplate.objects.get(title='BaseContent-template')
         except OpenOfficeTemplate.DoesNotExist:
             OpenOfficeTemplate.objects.create(
                 title='BaseContent-template', template=odt_path,
                 content_type=ContentType.objects.get_for_model(BaseContent),
                 )
+            src = path.join(settings.BASEDIR, settings.PLUGINS_DIR,
+                            'odtexport', odt_path)
+            dest = path.join(settings.MEDIA_ROOT, 'oot', 'base.odt')
+            dest_dir = path.split(dest)[0]
+            if path.exists(src):
+                if not path.exists(dest_dir):
+                    os.mkdir(dest_dir)
+                if not path.exists(dest):
+                    shutil.copyfile(src, dest)
