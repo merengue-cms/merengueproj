@@ -58,7 +58,7 @@ class PluginConfig(Plugin):
                 content_type=ContentType.objects.get_for_model(BaseContent),
                 )
             src = path.join(settings.BASEDIR, settings.PLUGINS_DIR,
-                            'odtexport', odt_path)
+                            'odtexport', 'media', odt_path)
             dest = path.join(settings.MEDIA_ROOT, 'oot', 'base.odt')
             dest_dir = path.split(dest)[0]
             if path.exists(src):
