@@ -59,6 +59,7 @@ MERENGUE_APPS = (
     'merengue.portal',
     'merengue.internallinks',
     'merengue.collab',
+    'merengue.collection',
 )
 
 HTTP_STATUS_CODE_TEMPLATES = {

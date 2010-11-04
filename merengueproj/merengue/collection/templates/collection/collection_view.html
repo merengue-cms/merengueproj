@@ -1,0 +1,34 @@
+{% extends "content_view.html" %}
+{% load pagination_tags collection_tags %}
+
+{% block contentbody %}
+{% with content.get_items as items %}
+  {% if items %}
+    {% if content.group_by %}
+      {% with items|collectionsort:content as newitems %}
+      {% autopaginate newitems 2 %}
+      {% paginate %}
+      {% regroup newitems by name as grouped %}
+      {% for group in grouped %}
+      <h2>{{ group.grouper }}</h2>
+      <ul class="contentList collection-{{ collection.slug }} collectionGrouped collection-{{ collection.slug }}-groupedby-{{ content.groupby }}">
+        {% for item in group.list %}
+          {% collection_item content item %}
+        {% endfor %}
+      </ul>
+      {% endfor %}
+      {% paginate %}
+      {% endwith %}
+    {% else %}
+      {% autopaginate items 2 %}
+      {% paginate %}
+      <ul class="contentList collection-{{ collection.slug }}">
+        {% for item in items %}
+          {% collection_item content item %}
+        {% endfor %}
+      </ul>
+      {% paginate %}
+    {% endif %}
+  {% endif %}
+{% endwith %}
+{% endblock contentbody %}
