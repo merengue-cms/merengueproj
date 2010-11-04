@@ -1,0 +1,4 @@
+{% load oot_templates %}
+{% for image in content.multimedia.photos %}
+{% render_image image.photo.image.url %}
+{% endfor %}
