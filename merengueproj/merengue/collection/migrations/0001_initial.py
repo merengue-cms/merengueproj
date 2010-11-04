@@ -113,7 +113,6 @@ class Migration(SchemaMigration):
             'description_fr': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_editor': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'last_edited_content'", 'null': 'True', 'to': "orm['auth.User']"}),
-            'location': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['places.Location']", 'null': 'True', 'blank': 'True'}),
             'main_image': ('stdimage.fields.StdImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'map_icon': ('stdimage.fields.StdImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'meta_desc': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
@@ -202,13 +201,6 @@ class Migration(SchemaMigration):
             'status': ('django.db.models.fields.CharField', [], {'default': "'draft'", 'max_length': '20', 'db_index': 'True'}),
             'tags': ('tagging.fields.TagField', [], {'default': "''"}),
         },
-        'places.location': {
-            'Meta': {'object_name': 'Location'},
-            'address': ('django.db.models.fields.CharField', [], {'max_length': '250', 'null': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'main_location': ('django.contrib.gis.db.models.fields.PointField', [], {}),
-            'postal_code': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-        }
     }
 
     complete_apps = ['collection']
