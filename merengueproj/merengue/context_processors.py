@@ -63,6 +63,10 @@ def merengue_urls_prefix(request):
     return {'MERENGUE_URLS_PREFIX': settings.MERENGUE_URLS_PREFIX}
 
 
+def is_homepage(request):
+    return {'is_homepage': request.get_full_path() == '/'}
+
+
 def all_context(request):
     """
     Add all template context
@@ -73,5 +77,6 @@ def all_context(request):
     context.update(expire_time_cached(request))
     context.update(coming_from_buildbot(request))
     context.update(merengue_urls_prefix(request))
+    context.update(is_homepage(request))
     # add here more context dict to the request
     return context
