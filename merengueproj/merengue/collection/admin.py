@@ -5,8 +5,10 @@ from django.utils.translation import ugettext_lazy as _
 from transmeta import get_real_fieldname_in_each_language
 
 from merengue.base.admin import BaseContentAdmin
+from merengue.section.admin import SectionContentAdmin
 
 from merengue.base.models import BaseContent
+from merengue.section.models import Section
 from merengue.collection.models import (Collection, IncludeCollectionFilter,
                                         ExcludeCollectionFilter,
                                         CollectionDisplayField)
@@ -47,7 +49,7 @@ class CollectionAdmin(BaseContentAdmin):
     def get_form(self, request, obj=None, **kwargs):
         form = super(CollectionAdmin, self).get_form(request, obj, **kwargs)
         if 'content_types' in form.base_fields:
-            main_models = BaseContent.__subclasses__()
+            main_models = BaseContent.__subclasses__() + [Section] + Section.__subclasses__()
             types_id = []
             for m in main_models:
                 types_id.append(ContentType.objects.get_for_model(m).id)
@@ -55,5 +57,15 @@ class CollectionAdmin(BaseContentAdmin):
         return form
 
 
+class CollectionRelatedModelAdmin(SectionContentAdmin, CollectionAdmin):
+    tool_name = 'collections'
+    tool_label = _('collections')
+
+
+def register_related(site):
+    site.register_related(Collection, CollectionRelatedModelAdmin, related_to=Section)
+
+
 def register(site):
     site.register(Collection, CollectionAdmin)
+    register_related(site)

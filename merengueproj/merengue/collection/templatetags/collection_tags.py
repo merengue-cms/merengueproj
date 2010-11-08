@@ -1,5 +1,6 @@
-from django.template import Variable, Library
+from django.template import TemplateSyntaxError, Variable, Library
 from django.template.defaultfilters import dictsort
+from django.template.defaulttags import RegroupNode
 from django.db import models
 
 from transmeta import get_real_fieldname, fallback_language
@@ -37,6 +38,9 @@ def collection_item(context, collection, item):
 
 def collectionsort(value, collection):
 
+    if not collection.group_by and not collection.order_by:
+        return value
+
     def sort_func(x, y):
         first = cmp(Variable(collection.group_by).resolve(x),
                     Variable(collection.group_by).resolve(y))
@@ -48,11 +52,46 @@ def collectionsort(value, collection):
             return -second
         return second
 
-    if not collection.order_by:
+    if not collection.order_by and collection.group_by:
         return dictsort(value, collection.group_by)
+
+    if not collection.group_by:
+        return dictsort(value, collection.order_by)
 
     result = list(value)
     result.sort(sort_func)
     return result
 collectionsort.is_safe = False
 register.filter(collectionsort)
+
+
+class CollectionRegroupNode(RegroupNode):
+
+    def __init__(self, target, collection, var_name, parser):
+        self.target, self.collection = target, collection
+        self.var_name = var_name
+        self.parser = parser
+
+    def render(self, context):
+        collection = self.collection.resolve(context, True)
+        self.expression = self.parser.compile_filter(collection.group_by)
+        return super(CollectionRegroupNode, self).render(context)
+
+
+def collectionregroup(parser, token):
+    firstbits = token.contents.split(None, 3)
+    if len(firstbits) != 4:
+        raise TemplateSyntaxError("'regroup' tag takes five arguments")
+    target = parser.compile_filter(firstbits[1])
+    if firstbits[2] != 'in':
+        raise TemplateSyntaxError("second argument to 'regroup' tag must be 'in'")
+    lastbits_reversed = firstbits[3][::-1].split(None, 2)
+    if lastbits_reversed[1][::-1] != 'as':
+        raise TemplateSyntaxError("next-to-last argument to 'regroup' tag must"
+                                  " be 'as'")
+
+    collection = parser.compile_filter(lastbits_reversed[2][::-1])
+
+    var_name = lastbits_reversed[0][::-1]
+    return CollectionRegroupNode(target, collection, var_name, parser)
+collectionregroup = register.tag(collectionregroup)

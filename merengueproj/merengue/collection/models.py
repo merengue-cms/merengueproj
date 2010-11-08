@@ -6,6 +6,21 @@ from django.utils.translation import ugettext_lazy as _
 from merengue.base.models import BaseContent
 
 
+class CollectionIterator(object):
+
+    def __init__(self, items=None):
+        items = items or []
+        self.items = items
+
+    def add_item(self, item):
+        self.items.append(item)
+
+    def __iter__(self):
+        for i in self.items:
+            i.content_type_name = i._meta.verbose_name
+            yield i
+
+
 class Collection(BaseContent):
     content_types = models.ManyToManyField(
         ContentType,
@@ -64,17 +79,13 @@ class Collection(BaseContent):
                 query = query.exclude(**f)
             except FieldError:
                 continue
-        if self.order_by:
-            try:
-                query = query.order_by(self.order_by)
-            except FieldError:
-                pass
         return query
 
     def _get_items_from_multiple_sources(self, content_types):
-        # Not implemented yet
-        from django.db.models.query import QuerySet
-        return QuerySet()
+        results = []
+        for ct in content_types:
+            results += list(self._get_items_from_one_source(ct))
+        return results
 
     def _get_items_from_basecontent(self, content_types):
         classes = [ct.model for ct in content_types]
@@ -84,12 +95,14 @@ class Collection(BaseContent):
     def get_items(self):
         content_types = self.content_types.all()
         if content_types.count() == 1:
-            return self._get_items_from_one_source(content_types[0])
+            items = self._get_items_from_one_source(content_types[0])
         else:
             for ct in content_types:
                 if not issubclass(ct.model_class(), BaseContent):
-                    return self._get_items_from_multiple_sources(content_types)
-            return self._get_items_from_basecontent(content_types)
+                    items = self._get_items_from_multiple_sources(content_types)
+                    return CollectionIterator(list(items))
+            items = self._get_items_from_basecontent(content_types)
+        return CollectionIterator(list(items))
 
 
 class CollectionFilter(models.Model):

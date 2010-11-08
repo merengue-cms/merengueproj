@@ -2,13 +2,12 @@
 {% load pagination_tags collection_tags %}
 
 {% block contentbody %}
-{% with content.get_items as items %}
+{% with content.get_items|collectionsort:content as items %}
   {% if items %}
+    {% autopaginate items 2 %}
+    {% paginate %}
     {% if content.group_by %}
-      {% with items|collectionsort:content as newitems %}
-      {% autopaginate newitems 2 %}
-      {% paginate %}
-      {% regroup newitems by name as grouped %}
+      {% collectionregroup items in content as grouped %}
       {% for group in grouped %}
       <h2>{{ group.grouper }}</h2>
       <ul class="contentList collection-{{ collection.slug }} collectionGrouped collection-{{ collection.slug }}-groupedby-{{ content.groupby }}">
@@ -17,18 +16,14 @@
         {% endfor %}
       </ul>
       {% endfor %}
-      {% paginate %}
-      {% endwith %}
     {% else %}
-      {% autopaginate items 2 %}
-      {% paginate %}
       <ul class="contentList collection-{{ collection.slug }}">
         {% for item in items %}
           {% collection_item content item %}
         {% endfor %}
       </ul>
-      {% paginate %}
     {% endif %}
+    {% paginate %}
   {% endif %}
 {% endwith %}
 {% endblock contentbody %}
