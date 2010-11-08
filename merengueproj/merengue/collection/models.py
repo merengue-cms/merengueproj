@@ -6,17 +6,10 @@ from django.utils.translation import ugettext_lazy as _
 from merengue.base.models import BaseContent
 
 
-class CollectionIterator(object):
-
-    def __init__(self, items=None):
-        items = items or []
-        self.items = items
-
-    def add_item(self, item):
-        self.items.append(item)
+class CollectionIterator(list):
 
     def __iter__(self):
-        for i in self.items:
+        for i in super(CollectionIterator, self).__iter__():
             i.content_type_name = i._meta.verbose_name
             yield i
 
