@@ -526,8 +526,8 @@ class BaseAdmin(GenericAdmin, ReportAdmin, admin.ModelAdmin):
             return update_wrapper(wrapper, view)
 
         info = self.model._meta.app_label, self.model._meta.module_name
-
-        urlpatterns = patterns('',
+        urlpatterns = super(BaseAdmin, self).get_urls()
+        urlpatterns = urlpatterns + patterns('',
             url(r'^$',
                 wrap(self.changelist_view),
                 name='%s_%s_changelist' % info),
