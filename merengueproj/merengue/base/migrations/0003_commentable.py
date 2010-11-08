@@ -71,8 +71,8 @@ class Migration:
             'commentable': ('django.db.models.fields.CharField', [], {'default': "'allowed'", 'max_length': '20'}),
             'contact_info': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['base.ContactInfo']", 'null': 'True', 'blank': 'True'}),
             'creation_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'null': 'True', 'blank': 'True'}),
-            'description_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'description_es': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            
+            
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_autolocated': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
             'last_editor': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'last_edited_content'", 'null': 'True', 'to': "orm['auth.User']"}),
@@ -82,11 +82,11 @@ class Migration:
             'metadesc': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'modification_date': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'null': 'True', 'blank': 'True'}),
             'multimedia': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['multimedia.BaseMultimedia']", 'blank': 'True'}),
-            'name_en': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            
             'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200', 'db_index': 'True'}),
             'owners': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'}),
-            'plain_description_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'plain_description_es': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            
+            
             'rank': ('django.db.models.fields.FloatField', [], {'default': '100.0', 'db_index': 'True'}),
             'related_items': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['base.BaseContent']", 'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '200', 'db_index': 'True'}),

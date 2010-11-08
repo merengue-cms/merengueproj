@@ -67,7 +67,7 @@ class Migration:
             'class_name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'db_index': 'True'}),
             'contact_info': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['base.ContactInfo']", 'null': 'True', 'blank': 'True'}),
             'creation_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'null': 'True', 'blank': 'True'}),
-            'description_es': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_autolocated': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
             'last_editor': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'last_edited_content'", 'blank': 'True', 'null': 'True', 'to': "orm['auth.User']"}),
@@ -78,7 +78,7 @@ class Migration:
             'multimedia': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['multimedia.BaseMultimedia']", 'blank': 'True'}),
             'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200', 'db_index': 'True'}),
             'owners': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'}),
-            'plain_description_es': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            
             'rank': ('django.db.models.fields.FloatField', [], {'default': '100.0', 'db_index': 'True'}),
             'related_items': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['base.BaseContent']", 'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '200', 'db_index': 'True'}),
@@ -115,7 +115,7 @@ class Migration:
         },
         'multimedia.photo': {
             'basemultimedia_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['multimedia.BaseMultimedia']", 'unique': 'True', 'primary_key': 'True'}),
-            'caption_es': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
+            
             'image': ('stdimage.fields.StdImageField', [], {'max_length': '200', 'thumbnail_size': '(200,200)'}),
             'plone_uid': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '100', 'null': 'True', 'blank': 'True'})
         },
@@ -138,7 +138,7 @@ class Migration:
         },
         'section.basesection': {
             'customstyle': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['section.CustomStyle']", 'null': 'True', 'blank': 'True'}),
-            'description_es': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'interest_menu': ('django.db.models.fields.related.OneToOneField', [], {'blank': 'True', 'related_name': "'interest_menu_section'", 'unique': 'True', 'null': 'True', 'to': "orm['section.Menu']"}),
             'interest_menu_template': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
@@ -148,7 +148,7 @@ class Migration:
             'main_menu_template': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200', 'db_index': 'True'}),
             'order': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'plain_description_es': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            
             'related_content': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['base.BaseContent']"}),
             'secondary_menu': ('django.db.models.fields.related.OneToOneField', [], {'blank': 'True', 'related_name': "'secondary_menu_section'", 'unique': 'True', 'null': 'True', 'to': "orm['section.Menu']"}),
             'secondary_menu_template': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
@@ -186,12 +186,12 @@ class Migration:
             'floatimage': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
             'permanent': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
             'photo': ('stdimage.fields.StdImageField', [], {'null': 'True', 'thumbnail_size': '(200,200)', 'blank': 'True'}),
-            'photo_description_es': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            
             'search_form': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'search_form_filters': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'})
         },
         'section.documentsection': {
-            'body_es': ('django.db.models.fields.TextField', [], {}),
+            
             'document': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'sections'", 'to': "orm['section.Document']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'position': ('django.db.models.fields.IntegerField', [], {})
