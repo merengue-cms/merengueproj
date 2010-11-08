@@ -121,9 +121,6 @@ class Migration:
         },
         'collab.collabcommentusertype': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'label_en': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'label_es': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'label_fr': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '20'})
         },
         'contenttypes.contenttype': {
@@ -138,6 +135,9 @@ class Migration:
         'collab.collabcommentrevisorstatustype': {
             'label': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'reason': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+        },
+        'collab.collabcommentusertype': {
+            'label': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
         },
     })
 

@@ -21,23 +21,28 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 from django.conf import settings
+from merengue.base.utils import south_trans_data, add_south_trans_fields
+
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
-        # Adding model 'PortalLink'
-        db.create_table('portal_portallink', (
+        fields = (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name_es', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('name_en', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
-            ('name_fr', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
             ('content', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['base.BaseContent'], null=True, blank=True)),
             ('external_url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
             ('cached_url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
             ('order', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
             ('category', self.gf('django.db.models.fields.CharField')(max_length=100)),
-        ))
+        )
+        fields += south_trans_data(
+            orm=orm,
+            trans_data={
+                'portal.portallink': ('name', ),
+            },
+        )
+        # Adding model 'PortalLink'
+        db.create_table('portal_portallink', fields)
         db.send_create_signal('portal', ['PortalLink'])
 
 
@@ -159,12 +164,14 @@ class Migration(SchemaMigration):
             'content': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['base.BaseContent']", 'null': 'True', 'blank': 'True'}),
             'external_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name_en': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'name_fr': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'order': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'})
         }
     }
+    add_south_trans_fields(models, {
+        'portal.portallink': {
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
+        }
+    })
 
     if not settings.USE_GIS:
         del models['places.location']

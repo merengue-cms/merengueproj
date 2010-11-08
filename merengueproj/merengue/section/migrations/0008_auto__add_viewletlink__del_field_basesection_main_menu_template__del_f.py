@@ -21,6 +21,9 @@ from django.conf import settings
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
+from merengue.base.utils import (south_trans_data, add_south_trans_fields,
+                                 add_south_trans_column, delete_south_trans_column)
+
 
 class Migration(SchemaMigration):
 
@@ -40,14 +43,10 @@ class Migration(SchemaMigration):
         # Deleting field 'basesection.interest_menu_template'
         db.delete_column('section_basesection', 'interest_menu_template')
 
-        # Deleting field 'document.photo_description_es'
-        db.delete_column('section_document', 'photo_description_es')
-
-        # Deleting field 'document.photo_description_en'
-        db.delete_column('section_document', 'photo_description_en')
-
-        # Deleting field 'document.photo_description_fr'
-        db.delete_column('section_document', 'photo_description_fr')
+        delete_south_trans_column(
+            table='section_document',
+            field_name='photo_description',
+        )
 
         # Deleting field 'customstyle.searcher_right_arrow'
         db.delete_column('section_customstyle', 'searcher_right_arrow')
