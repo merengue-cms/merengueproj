@@ -133,11 +133,11 @@ class Migration:
     }
     add_south_trans_fields(models, {
         'collab.collabcommentrevisorstatustype': {
-            'label': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
+            'label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'reason': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
         },
         'collab.collabcommentusertype': {
-            'label': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
+            'label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
         },
     })
 
