@@ -38,6 +38,7 @@ from django.forms.widgets import Media
 from django.http import HttpResponseRedirect, Http404
 from django.utils.datastructures import SortedDict
 from django.utils.encoding import force_unicode
+from django.utils.functional import update_wrapper
 from django.utils.html import escape
 from django.utils.importlib import import_module
 from django.utils.text import capfirst
@@ -277,6 +278,7 @@ class BaseAdmin(GenericAdmin, ReportAdmin, admin.ModelAdmin):
     list_per_page = 50
     inherit_actions = True
     form = BaseAdminModelForm
+    basecontent = None
 
     def __init__(self, model, admin_site):
         super(BaseAdmin, self).__init__(model, admin_site)
@@ -310,12 +312,8 @@ class BaseAdmin(GenericAdmin, ReportAdmin, admin.ModelAdmin):
         """
         return self.has_add_permission(request)
 
-    def _get_base_content(self, request, object_id=None, model_admin=None):
-        if not object_id:
-            object_id = self.admin_site.base_object_ids.get(self.tool_name, None)
-        if not model_admin:
-            model_admin = self.admin_site.base_tools_model_admins.get(self.tool_name, None)
-        model = model_admin.model
+    def _get_base_content(self, request, object_id):
+        model = self.model
         opts = model._meta
 
         try:
@@ -326,13 +324,12 @@ class BaseAdmin(GenericAdmin, ReportAdmin, admin.ModelAdmin):
             # to determine whether a given object exists.
             obj = None
 
-        if not model_admin.has_change_permission(request, obj):
+        if not self.has_change_permission(request, obj):
             raise PermissionDenied
 
         if obj is None:
             raise Http404(_('%(name)s object with primary key %(key)r does not exist.') % {'name': force_unicode(opts.verbose_name), 'key': escape(object_id)})
 
-        self.basecontent = obj
         return obj
 
     def get_form(self, request, obj=None, **kwargs):
@@ -519,6 +516,60 @@ class BaseAdmin(GenericAdmin, ReportAdmin, admin.ModelAdmin):
         extra_context = self._base_update_extra_context(extra_context)
         return super(BaseAdmin, self).delete_view(request, object_id, extra_context)
 
+    def get_urls(self):
+        from django.conf.urls.defaults import patterns, url
+
+        def wrap(view):
+
+            def wrapper(*args, **kwargs):
+                return self.admin_site.admin_view(view)(*args, **kwargs)
+            return update_wrapper(wrapper, view)
+
+        info = self.model._meta.app_label, self.model._meta.module_name
+
+        urlpatterns = patterns('',
+            url(r'^$',
+                wrap(self.changelist_view),
+                name='%s_%s_changelist' % info),
+            url(r'^add/$',
+                wrap(self.add_view),
+                name='%s_%s_add' % info),
+            url(r'^([^/]+)/history/$',
+                wrap(self.history_view),
+                name='%s_%s_history' % info),
+            url(r'^([^/]+)/delete/$',
+                wrap(self.delete_view),
+                name='%s_%s_delete' % info),
+            url(r'^(.+)/$',
+                wrap(self.parse_path), )
+        )
+        return urlpatterns
+
+    def parse_path(self, request, pathstr, extra_context=None, basecontent=None):
+        extra_context = extra_context or {}
+        path = pathstr.split('/')
+        if len(path) == 1:
+            return self.change_view(request, path[0], extra_context)
+        object_id = path[0]
+        basecontent = self._get_base_content(request, object_id)
+        tool_name = path[1]
+        for cl in self.model.__mro__:
+            tool = self.admin_site.tools.get(cl, {}).get(tool_name, None)
+            if tool:
+                pathstr = '/'.join(path[2:])
+                if pathstr:
+                    pathstr += '/'
+                tool.basecontent = basecontent
+                visited = getattr(request, '__visited__', [])
+                visited = [(self, basecontent)] + visited
+                setattr(request, '__visited__', visited)
+                for pattern in tool.urls:
+                    resolved = pattern.resolve(pathstr)
+                    if resolved:
+                        callback, args, kwargs = resolved
+                        return callback(request, *args, **kwargs)
+        raise Http404
+
 
 class BaseCategoryAdmin(BaseAdmin):
     ordering = (get_fallback_fieldname('name'), )
@@ -595,14 +646,14 @@ class StatusControlProvider(object):
 
         if hasattr(obj, 'owners'):
             if not obj or user in obj.owners.all():
-                options=options.union([o for o in all_options if o[0] in ('draft', 'pending')])
+                options = options.union([o for o in all_options if o[0] in ('draft', 'pending')])
         # Remember that superuser has all the perms
         if perms_api.has_permission(obj, user, 'can_draft'):
-            options=options.union([o for o in all_options if o[0] == 'draft'])
+            options = options.union([o for o in all_options if o[0] == 'draft'])
         if perms_api.has_permission(obj, user, 'can_pending'):
-            options=options.union([o for o in all_options if o[0] == 'pending'])
+            options = options.union([o for o in all_options if o[0] == 'pending'])
         if perms_api.has_permission(obj, user, 'can_published'):
-            options=options.union([o for o in all_options if o[0] == 'published'])
+            options = options.union([o for o in all_options if o[0] == 'published'])
         return options
 
 
@@ -623,6 +674,15 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
                                     'multiple': True,
                                     'multipleSeparator': " ",
                                     'size': 100}, }
+
+    def get_urls(self):
+        from django.conf.urls.defaults import patterns
+        urls = super(BaseContentAdmin, self).get_urls()
+        # override objectpermissions root path
+        my_urls = patterns('',
+            (r'^([^/]+)/permissions/$', self.admin_site.admin_view(self.change_roles_permissions)))
+
+        return my_urls + urls
 
     def add_owners(self, request, queryset, owners):
         if self.has_change_permission(request):
@@ -750,7 +810,7 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
             if ERROR_FLAG in request.GET.keys():
                 return render_to_response('admin/invalid_setup.html', {'title': _('Database error')})
             return HttpResponseRedirect(request.path + '?' + ERROR_FLAG + '=1')
-        cl.formset=None
+        cl.formset = None
         cl.params.update({'for_select': 1})
         context = {
             'title': cl.title,
@@ -811,26 +871,29 @@ class RelatedModelAdmin(BaseAdmin):
       >>> site.register_related(Page, PageRelatedAdmin, related_to=Book)
     """
     tool_name = None
+    tool_label = None
     related_field = None
-    reverse_related_field = None # For m2m with through class
+    reverse_related_field = None  # For m2m with through class
     one_to_one = False
 
     def __init__(self, *args, **kwargs):
         super(RelatedModelAdmin, self).__init__(*args, **kwargs)
         if not self.tool_name:
-            pass
+            self.tool_name = self.model._meta.module_name
+        if not self.tool_label:
+            self.tool_label = self.model._meta.verbose_name_plural
         if not self.related_field:
             pass
         for inline in self.inline_instances:
-            inline.admin_model = self # for allow retrieving basecontent object
+            inline.admin_model = self  # for allow retrieving basecontent object
 
     def _update_extra_context(self, request, extra_context=None):
         extra_context = extra_context or {}
-        basecontent = self._get_base_content(request)
-        basecontent_type_id = ContentType.objects.get_for_model(basecontent).id
+        #basecontent = self._get_base_content(request)
+        basecontent_type_id = ContentType.objects.get_for_model(self.basecontent).id
         extra_context.update({'related_admin_site': self.admin_site,
-                              'basecontent': basecontent,
-                              'basecontent_opts': basecontent._meta,
+                              'basecontent': self.basecontent,
+                              'basecontent_opts': self.basecontent._meta,
                               'basecontent_type_id': basecontent_type_id,
                               'inside_basecontent': True,
                               'selected': self.tool_name})
