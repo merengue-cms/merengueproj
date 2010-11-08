@@ -103,7 +103,7 @@ class Migration(SchemaMigration):
             'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'}),
         },
         'base.basecontent': {
-            'Meta': {'ordering': "('name_es',)", 'object_name': 'BaseContent'},
+            'Meta': {'object_name': 'BaseContent'},
             'class_name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'db_index': 'True'}),
             'commentable': ('django.db.models.fields.CharField', [], {'default': "'allowed'", 'max_length': '20'}),
             'contact_info': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['base.ContactInfo']", 'null': 'True', 'blank': 'True'}),
@@ -118,7 +118,7 @@ class Migration(SchemaMigration):
             'modification_date': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'null': 'True', 'blank': 'True'}),
             'multimedia': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['multimedia.BaseMultimedia']", 'symmetrical': 'False', 'through': "'MultimediaRelation'", 'blank': 'True'}),
             
-            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200', 'db_index': 'True'}),
+            
             'owners': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'contents_owned'", 'null': 'True', 'symmetrical': 'False', 'to': "orm['auth.User']"}),
             
             
@@ -148,7 +148,7 @@ class Migration(SchemaMigration):
             'order': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
         },
         'collection.collection': {
-            'Meta': {'ordering': "('name_es',)", 'object_name': 'Collection', '_ormbases': ['base.BaseContent']},
+            'Meta': {'object_name': 'Collection', '_ormbases': ['base.BaseContent']},
             'basecontent_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['base.BaseContent']", 'unique': 'True', 'primary_key': 'True'}),
             'content_types': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['contenttypes.ContentType']", 'symmetrical': 'False'}),
             'group_by': ('django.db.models.fields.CharField', [], {'max_length': '250', 'null': 'True', 'blank': 'True'}),

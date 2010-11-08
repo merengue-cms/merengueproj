@@ -83,7 +83,7 @@ class Migration(SchemaMigration):
             'modification_date': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'null': 'True', 'blank': 'True'}),
             'multimedia': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['multimedia.BaseMultimedia']", 'through': "'MultimediaRelation'", 'blank': 'True'}),
             
-            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200', 'db_index': 'True'}),
+            
             'owners': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'contents_owned'", 'null': 'True', 'to': "orm['auth.User']"}),
             
             
@@ -146,8 +146,8 @@ class Migration(SchemaMigration):
             'external_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'name_en': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            
+            
             'order': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '200', 'db_index': 'True'})
         }

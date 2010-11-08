@@ -82,7 +82,7 @@ class Migration(SchemaMigration):
             'modification_date': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'null': 'True', 'blank': 'True'}),
             'multimedia': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['multimedia.BaseMultimedia']", 'through': "'MultimediaRelation'", 'blank': 'True'}),
             
-            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200', 'db_index': 'True'}),
+            
             'owners': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'contents_owned'", 'blank': 'True', 'null': 'True', 'to': "orm['auth.User']"}),
             
             

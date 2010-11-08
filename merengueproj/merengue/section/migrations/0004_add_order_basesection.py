@@ -76,7 +76,7 @@ class Migration:
             'map_icon': ('stdimage.fields.StdImageField', ["_('map icon')"], {'null': 'True', 'blank': 'True'}),
             'modification_date': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'null': 'True', 'blank': 'True'}),
             'multimedia': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['multimedia.BaseMultimedia']", 'blank': 'True'}),
-            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200', 'db_index': 'True'}),
+            
             'owners': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'}),
             
             'rank': ('django.db.models.fields.FloatField', [], {'default': '100.0', 'db_index': 'True'}),
@@ -146,7 +146,7 @@ class Migration:
             'main_image': ('stdimage.fields.StdImageField', ["_('main image')"], {'editable': 'True', 'null': 'True', 'thumbnail_size': '(200,200)', 'blank': 'True'}),
             'main_menu': ('django.db.models.fields.related.OneToOneField', [], {'blank': 'True', 'related_name': "'main_menu_section'", 'unique': 'True', 'null': 'True', 'to': "orm['section.Menu']"}),
             'main_menu_template': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200', 'db_index': 'True'}),
+            
             'order': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             
             'related_content': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['base.BaseContent']"}),
@@ -200,7 +200,7 @@ class Migration:
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'level': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'lft': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
-            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            
             'parent': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'child_set'", 'blank': 'True', 'null': 'True', 'to': "orm['section.Menu']"}),
             'rght': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '200', 'db_index': 'True'}),

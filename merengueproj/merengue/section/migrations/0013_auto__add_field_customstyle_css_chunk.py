@@ -83,7 +83,7 @@ class Migration(SchemaMigration):
             'modification_date': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'null': 'True', 'blank': 'True'}),
             'multimedia': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['multimedia.BaseMultimedia']", 'through': "'MultimediaRelation'", 'blank': 'True'}),
             
-            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200', 'db_index': 'True'}),
+            
             'owners': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'contents_owned'", 'blank': 'True', 'null': 'True', 'to': "orm['auth.User']"}),
             
             
@@ -172,7 +172,7 @@ class Migration(SchemaMigration):
             'main_image': ('stdimage.fields.StdImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'main_menu': ('django.db.models.fields.related.OneToOneField', [], {'blank': 'True', 'related_name': "'main_menu_section'", 'unique': 'True', 'null': 'True', 'to': "orm['section.Menu']"}),
             
-            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200', 'db_index': 'True'}),
+            
             'order': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             
             
@@ -210,8 +210,8 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'level': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'lft': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
-            'name_en': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            
+            
             'parent': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'child_set'", 'blank': 'True', 'null': 'True', 'to': "orm['section.Menu']"}),
             'rght': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '200', 'db_index': 'True'}),
