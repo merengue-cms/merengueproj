@@ -15,26 +15,17 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from merengue.pluggable import Plugin
 
-from plugins.oldbrowser.models import OldBrowser
-from plugins.oldbrowser.admin import OldBrowserAdmin
-from plugins.oldbrowser.blocks import OldBrowserBlock
+from django.utils.translation import ugettext as _
+
+from merengue.block.blocks import Block
 
 
-class PluginConfig(Plugin):
-    name = 'Old Browser'
-    description = 'Notify old browser plugin'
-    version = '0.0.1'
+class OldBrowserBlock(Block):
+    name = 'oldbrowser'
+    default_place = 'beforecontent'
 
     @classmethod
-    def get_actions(cls):
-        return []
-
-    @classmethod
-    def get_model_admins(cls):
-        return [(OldBrowser, OldBrowserAdmin)]
-
-    @classmethod
-    def get_blocks(cls):
-        return [OldBrowserBlock]
+    def render(cls, request, place, context, *args, **kwargs):
+        return cls.render_block(request, template_name='oldbrowser/block_oldbrowser.html',
+                                block_title=_('Old Browser'), context={})
