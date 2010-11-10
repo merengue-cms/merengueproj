@@ -98,9 +98,8 @@ class Migration:
         },
         'multimedia.photo': {
             'basemultimedia_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['multimedia.BaseMultimedia']", 'unique': 'True', 'primary_key': 'True'}),
-            'caption_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'caption_es': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'caption_fr': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            
+            
             'image': ('StdImageField', [], {'max_length': '200', 'thumbnail_size': '(200,200)'}),
             'plone_uid': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '100', 'null': 'True', 'blank': 'True'}),
         },

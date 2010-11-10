@@ -219,7 +219,7 @@ class Migration:
     }
     add_south_trans_fields(models, {
         'base.basecontent': {
-            'name': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '200'}),
             'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'plain_description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
         },

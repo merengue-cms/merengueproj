@@ -237,6 +237,10 @@ MENU_PORTAL_SLUG = 'portal_menu'
 #    ...}
 SITE_FIXTURES = {}
 
+SERIALIZATION_MODULES = {
+    "xml": "merengue.xml_serializer",
+}
+
 # Prefix for all merengue URLs
 MERENGUE_URLS_PREFIX = 'cms'
 
