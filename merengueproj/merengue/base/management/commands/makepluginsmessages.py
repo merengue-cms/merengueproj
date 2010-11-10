@@ -37,6 +37,6 @@ class Command(MerengueCommand):
                         os.mkdir(os.path.join(dirname, plugin_dir, 'locale', lang))
                         print 'Creating translation folder for %s language' %(name)
                 os.chdir(os.path.join(dirname, plugin_dir)) #change current directory to make plugin messages
-                call_command('makemessages', all=True) #call makemessages command to search new translations
+                call_command('inline_makemessages', all=True) #call makemessages command to search new translations
             else:
                 print '%s isn\'t a plugin or it doesn\'t have a \"locale\" directory.' %(plugin_dir)
