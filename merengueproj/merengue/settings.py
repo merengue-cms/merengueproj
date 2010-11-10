@@ -17,13 +17,13 @@
 
 from os import path
 
-ugettext = lambda s: s # dummy ugettext function, as said on django docs
+ugettext = lambda s: s  # dummy ugettext function, as said on django docs
 
 MERENGUEDIR = path.dirname(path.abspath(__file__))
 
 # List  of  callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'merengue.theming.loader.load_template_source', # for enabling theme support in Merengue
+    'merengue.theming.loader.load_template_source',  # for enabling theme support in Merengue
     'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
 #     'django.template.loaders.eggs.load_template_source',
@@ -58,8 +58,8 @@ MERENGUE_APPS = (
     'merengue.viewlet',
     'merengue.portal',
     'merengue.internallinks',
-    'merengue.collab',
     'merengue.collection',
+    'merengue.collab',  # Please, keep this application in last place cause it's used to know when activate plugins after migration
 )
 
 HTTP_STATUS_CODE_TEMPLATES = {
@@ -114,7 +114,7 @@ MERENGUE_MIDDLEWARE_CLASSES = (
 
 # merengue usual middleware list. you can use this variable in your MIDDLEWARE_CLASSES project settings
 MIDDLEWARE_CLASSES = (
-    'johnny.middleware.LocalStoreClearMiddleware', # this has to be first
+    'johnny.middleware.LocalStoreClearMiddleware',  # this has to be first
     #'cmsutils.middleware.I18NUpdateCacheMiddleware', # removed anonymous cache middleware
     'johnny.middleware.QueryCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -156,7 +156,7 @@ SESSION_ENGINE = 'merengue.backends.db'
 
 # cache default settings
 CACHE_BACKEND = 'johnny.backends.locmem:///'
-CACHE_MIDDLEWARE_SECONDS = 3600*24
+CACHE_MIDDLEWARE_SECONDS = 3600 * 24
 CACHE_MIDDLEWARE_KEY_PREFIX = 'merengue'
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 JOHNNY_MIDDLEWARE_KEY_PREFIX = 'merengue'
@@ -172,7 +172,7 @@ DEFAULT_LONGITUDE = -5.753321
 PAGE_VARIABLE = 'page'
 
 # Default merengue options for tinyMCE
-TINYMCE_MEDIA = None # set to something like: MEDIA_URL + "cmsutils/js/widgets/tiny_mce/"
+TINYMCE_MEDIA = None  # set to something like: MEDIA_URL + "cmsutils/js/widgets/tiny_mce/"
 EXTRA_MCE = {
     'theme_advanced_buttons1': 'bold,italic,copy,paste,pasteword,underline,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,outdent,indent',
 }
