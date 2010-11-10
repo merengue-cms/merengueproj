@@ -2,7 +2,7 @@
 {% load pagination_tags collection_tags %}
 
 {% block contentbody %}
-{% with content.get_items|collectionsort:content as items %}
+  {% collectionitems content as items %}
   {% if items %}
     {% autopaginate items 20 %}
     {% paginate %}
@@ -25,5 +25,4 @@
     {% endif %}
     {% paginate %}
   {% endif %}
-{% endwith %}
 {% endblock contentbody %}

@@ -6,14 +6,6 @@ from django.utils.translation import ugettext_lazy as _
 from merengue.base.models import BaseContent
 
 
-class CollectionIterator(list):
-
-    def __iter__(self):
-        for i in super(CollectionIterator, self).__iter__():
-            i.content_type_name = i._meta.verbose_name
-            yield i
-
-
 class Collection(BaseContent):
     content_types = models.ManyToManyField(
         ContentType,
@@ -77,7 +69,7 @@ class Collection(BaseContent):
     def _get_items_from_multiple_sources(self, content_types):
         results = []
         for ct in content_types:
-            results += list(self._get_items_from_one_source(ct))
+            results.append(self._get_items_from_one_source(ct))
         return results
 
     def _get_items_from_basecontent(self, content_types):
@@ -93,9 +85,9 @@ class Collection(BaseContent):
             for ct in content_types:
                 if not issubclass(ct.model_class(), BaseContent):
                     items = self._get_items_from_multiple_sources(content_types)
-                    return CollectionIterator(list(items))
+                    return items
             items = self._get_items_from_basecontent(content_types)
-        return CollectionIterator(list(items))
+        return items
 
 
 class CollectionFilter(models.Model):
