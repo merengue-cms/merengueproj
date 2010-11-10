@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 
 {% load i18n %}
-
+{% block extrastyles %}
+{{ block.super }}
+<link href="{{ MEDIA_URL }}oldbrowser/oldbrowser.css" rel="stylesheet" type="text/css" />
+{% endblock %}
 {% block content %}
 <p>
   {% blocktrans %}
