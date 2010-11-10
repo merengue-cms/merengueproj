@@ -27,6 +27,10 @@ class PluginConfig(Plugin):
     description = 'Notify old browser plugin'
     version = '0.0.1'
 
+    url_prefixes = (
+        ('oldbrowser', 'plugins.oldbrowser.urls'),
+    )
+
     @classmethod
     def get_actions(cls):
         return []

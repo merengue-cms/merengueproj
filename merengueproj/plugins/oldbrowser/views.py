@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <dgarcia@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas <precio@yaco.es>
 #
 # This file is part of Merengue.
 #
@@ -15,17 +15,14 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-
-from django.utils.translation import ugettext as _
-
-from merengue.block.blocks import Block
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 
 
-class OldBrowserBlock(Block):
-    name = 'oldbrowser'
-    default_place = 'header'
+def browser_info(request):
 
-    @classmethod
-    def render(cls, request, place, context, *args, **kwargs):
-        return cls.render_block(request, template_name='oldbrowser/block_oldbrowser.html',
-                                block_title=_('Old Browser'), context={})
+    user_agent = request.META['HTTP_USER_AGENT']
+
+    return render_to_response('oldbrowser/browser_info.html',
+                              {'user_agent': user_agent,
+                               }, context_instance=RequestContext(request))

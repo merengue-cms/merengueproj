@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+<p>
+  {% blocktrans %}
+  Your current browser has the following user agent identifier:
+
+  <pre>{{ user_agent }}</pre>
+
+  If you consider it as a old browser, add it on the admin site.
+  {% endblocktrans %}
+</p>
+{% endblock %}

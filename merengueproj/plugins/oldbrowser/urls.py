@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <dgarcia@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas <precio@yaco.es>
 #
 # This file is part of Merengue.
 #
@@ -15,17 +15,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.conf.urls.defaults import patterns, url
 
-from django.utils.translation import ugettext as _
-
-from merengue.block.blocks import Block
-
-
-class OldBrowserBlock(Block):
-    name = 'oldbrowser'
-    default_place = 'header'
-
-    @classmethod
-    def render(cls, request, place, context, *args, **kwargs):
-        return cls.render_block(request, template_name='oldbrowser/block_oldbrowser.html',
-                                block_title=_('Old Browser'), context={})
+urlpatterns = patterns('plugins.oldbrowser.views',
+    url(r'^browserinfo$', 'browser_info', name='browser_info'),
+)
