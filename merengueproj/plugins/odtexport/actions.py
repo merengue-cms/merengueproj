@@ -16,7 +16,6 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.contrib.contenttypes.models import ContentType
-from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.action.actions import ContentAction
@@ -35,7 +34,7 @@ class ExportODT(ContentAction):
         object_id = content.id
 
         response = render_writer_template(request, template_id, object_id)
-        content_disp = 'attachment;filename="%s.odt"' % slugify(content.name)
+        content_disp = 'attachment;filename="%s.odt"' % content.slug
         response['Content-Disposition'] = content_disp
         return response
 
