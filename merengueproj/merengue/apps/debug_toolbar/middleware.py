@@ -46,7 +46,7 @@ class DebugToolbarMiddleware(object):
         # this is difficult to get right: a previous middleware might have
         # changed request.urlconf, so we need to pick that up instead.
         original_urlconf = getattr(request, 'urlconf', settings.ROOT_URLCONF)
-        debug_toolbar.urls.urlpatterns += patterns('',
+        debug_toolbar.urls.urlpatterns = debug_toolbar.urls.base_urls + patterns('',
             ('', include(original_urlconf)),
         )
         request.urlconf = 'debug_toolbar.urls'
