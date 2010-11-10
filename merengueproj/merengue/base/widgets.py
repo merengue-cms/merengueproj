@@ -53,6 +53,9 @@ class ReadOnlyWidget(forms.Widget):
 
 class CustomTinyMCE(TinyMCE):
 
+    to_add = {}
+    new_settings = []
+
     class Media:
         js = (TINYMCE_JS,
               '%smerengue/js/tiny_mce_internal_links/tiny_mce_internal_links.js' % settings.MEDIA_URL,
@@ -95,6 +98,32 @@ class CustomTinyMCE(TinyMCE):
         self.mce_settings['content_css'] = content_css
         self.mce_settings['content_js'] = content_js
         self.mce_settings['extended_valid_elements'] = "hr[class|width|size|noshade],font[face|size|color|style],iframe[src|width|height|id|class|frameborder|border|marginwidth|marginheight|leftmargin|topmargin|allowtransparency|style],span[class|align|style],-table[border=0|cellspacing|cellpadding|width|height|class|align|summary|style|dir|id|lang|bgcolor|background|bordercolor],-tr[id|lang|dir|class|rowspan|width|height|align|valign|style|bgcolor|background|bordercolor],tbody[id|class],thead[id|class],tfoot[id|class],-td[id|lang|dir|class|colspan|rowspan|width|height|align|valign|style|bgcolor|background|bordercolor|scope],-th[id|lang|dir|class|colspan|rowspan|width|height|align|valign|style|scope],caption[id|lang|dir|class|style]"
+
+        self.extend_settings()
+
+    def extend_settings(self):
+        for key, value in self.to_add.items():
+            setting = self.mce_settings.get(key, None)
+            if setting:
+                value = [setting] + value
+            self.mce_settings[key] = ','.join(value)
+
+        for setting in self.new_settings:
+            self.mce_settings.update(setting)
+
+    @classmethod
+    def contribute_adding_to_setting(cls, setting_key, setting_value):
+        setting_list = cls.to_add.get(setting_key, [])
+        setting_list.append(setting_value)
+        cls.to_add[setting_key] = setting_list
+
+    @classmethod
+    def contribute_adding_new_setting(cls, setting_key, setting_value):
+        cls.new_settings.append({setting_key: setting_value})
+
+    @classmethod
+    def contribute_js(cls, js_url):
+        cls.Media.js += (js_url, )
 
     def render(self, name, value, attrs=None):
         urlconverter_callback = """<script type="text/javascript">
