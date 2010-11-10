@@ -61,7 +61,10 @@ def get_news(request=None, limit=0, queryset=None):
     news = queryset.order_by("-publish_date")
     qsm = QueryStringManager(request, page_var='page', ignore_params=('set_language', ))
     filters = qsm.get_filters()
-    news = news.filter(**filters)
+    try:
+        news = news.filter(**filters)
+    except:
+        pass
     if limit:
         return news[:limit]
     else:
