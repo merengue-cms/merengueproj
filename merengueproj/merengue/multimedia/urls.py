@@ -24,4 +24,5 @@ admin.autodiscover()
 urlpatterns = patterns('merengue.multimedia.views',
 #    url(r'^videos/(?P<video_id>[\w-]+)/(?P<width>\d+)x(?P<height>\d+)/video.xml$', 'video_xml', name='video_xml'),
     url(r'^videos/(?P<video_id>[\w-]+)/video.xml$', 'video_xml', name='video_xml'),
+    url(r'^audios/(?P<audio_id>[\w-]+)/audio.xml$', 'audio_xml', name='audio_xml'),
 )

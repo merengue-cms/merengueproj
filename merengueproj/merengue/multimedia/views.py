@@ -17,7 +17,7 @@
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
-from merengue.multimedia.models import Video
+from merengue.multimedia.models import Video, Audio
 
 
 def video_xml(request, video_id, height=None, width=None):
@@ -38,5 +38,16 @@ def video_xml(request, video_id, height=None, width=None):
 
     return render_to_response('multimedia/video.xml',
                               {'video_info': video_info},
+                              context_instance=RequestContext(request),
+                              mimetype="application/xml")
+
+
+def audio_xml(request, audio_id, height=None, width=None):
+    """ Prepare xml for flvplayer """
+
+    audioitem = get_object_or_404(Audio, id=audio_id)
+
+    return render_to_response('multimedia/audio.xml',
+                              {'audio': audioitem.audio},
                               context_instance=RequestContext(request),
                               mimetype="application/xml")
