@@ -269,7 +269,63 @@ def set_field_read_only(field, field_name, obj):
     field.required = False
 
 
-class BaseAdmin(GenericAdmin, ReportAdmin, admin.ModelAdmin):
+class RelatedURLsModelAdmin(admin.ModelAdmin):
+
+    def get_urls(self):
+        from django.conf.urls.defaults import patterns, url
+
+        def wrap(view):
+
+            def wrapper(*args, **kwargs):
+                return self.admin_site.admin_view(view)(*args, **kwargs)
+            return update_wrapper(wrapper, view)
+
+        info = self.model._meta.app_label, self.model._meta.module_name
+        urlpatterns = patterns('',
+            url(r'^$',
+                wrap(self.changelist_view),
+                name='%s_%s_changelist' % info),
+            url(r'^add/$',
+                wrap(self.add_view),
+                name='%s_%s_add' % info),
+            url(r'^([^/]+)/history/$',
+                wrap(self.history_view),
+                name='%s_%s_history' % info),
+            url(r'^([^/]+)/delete/$',
+                wrap(self.delete_view),
+                name='%s_%s_delete' % info),
+            url(r'^(.+)/$',
+                wrap(self.parse_path), )
+        )
+        return urlpatterns
+
+    def parse_path(self, request, pathstr, extra_context=None, basecontent=None):
+        extra_context = extra_context or {}
+        path = pathstr.split('/')
+        if len(path) == 1:
+            return self.change_view(request, path[0], extra_context)
+        object_id = path[0]
+        basecontent = self._get_base_content(request, object_id)
+        tool_name = path[1]
+        for cl in self.model.__mro__:
+            tool = self.admin_site.tools.get(cl, {}).get(tool_name, None)
+            if tool:
+                pathstr = '/'.join(path[2:])
+                if pathstr:
+                    pathstr += '/'
+                tool.basecontent = basecontent
+                visited = getattr(request, '__visited__', [])
+                visited = [(self, basecontent)] + visited
+                setattr(request, '__visited__', visited)
+                for pattern in tool.urls:
+                    resolved = pattern.resolve(pathstr)
+                    if resolved:
+                        callback, args, kwargs = resolved
+                        return callback(request, *args, **kwargs)
+        raise Http404
+
+
+class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
     html_fields = ()
     autocomplete_fields = {}
     edit_related = ()
@@ -515,60 +571,6 @@ class BaseAdmin(GenericAdmin, ReportAdmin, admin.ModelAdmin):
     def delete_view(self, request, object_id, extra_context=None):
         extra_context = self._base_update_extra_context(extra_context)
         return super(BaseAdmin, self).delete_view(request, object_id, extra_context)
-
-    def get_urls(self):
-        from django.conf.urls.defaults import patterns, url
-
-        def wrap(view):
-
-            def wrapper(*args, **kwargs):
-                return self.admin_site.admin_view(view)(*args, **kwargs)
-            return update_wrapper(wrapper, view)
-
-        info = self.model._meta.app_label, self.model._meta.module_name
-        urlpatterns = super(BaseAdmin, self).get_urls()
-        urlpatterns = urlpatterns + patterns('',
-            url(r'^$',
-                wrap(self.changelist_view),
-                name='%s_%s_changelist' % info),
-            url(r'^add/$',
-                wrap(self.add_view),
-                name='%s_%s_add' % info),
-            url(r'^([^/]+)/history/$',
-                wrap(self.history_view),
-                name='%s_%s_history' % info),
-            url(r'^([^/]+)/delete/$',
-                wrap(self.delete_view),
-                name='%s_%s_delete' % info),
-            url(r'^(.+)/$',
-                wrap(self.parse_path), )
-        )
-        return urlpatterns
-
-    def parse_path(self, request, pathstr, extra_context=None, basecontent=None):
-        extra_context = extra_context or {}
-        path = pathstr.split('/')
-        if len(path) == 1:
-            return self.change_view(request, path[0], extra_context)
-        object_id = path[0]
-        basecontent = self._get_base_content(request, object_id)
-        tool_name = path[1]
-        for cl in self.model.__mro__:
-            tool = self.admin_site.tools.get(cl, {}).get(tool_name, None)
-            if tool:
-                pathstr = '/'.join(path[2:])
-                if pathstr:
-                    pathstr += '/'
-                tool.basecontent = basecontent
-                visited = getattr(request, '__visited__', [])
-                visited = [(self, basecontent)] + visited
-                setattr(request, '__visited__', visited)
-                for pattern in tool.urls:
-                    resolved = pattern.resolve(pathstr)
-                    if resolved:
-                        callback, args, kwargs = resolved
-                        return callback(request, *args, **kwargs)
-        raise Http404
 
 
 class BaseCategoryAdmin(BaseAdmin):
