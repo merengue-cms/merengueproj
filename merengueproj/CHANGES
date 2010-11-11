@@ -1,0 +1,15 @@
+Version 0.5.1
+=============
+
+Note: Changes from 0.5.1-rc1 version
+
+* Better south integration with translation system, that allows to migrate all translated models with all possible languages setting.
+
+* Fixed a lot of bugs like:
+ * Avoid URL patterns grown every 404 request when have debug toolbar installed.
+ * Fix audio player.
+ * Error in URL parsing when accessing document inside sections.
+ * Error with negative numbers in integer registry params.
+ * Blocks placed in "home" and "beforecontent" position dissappears in home page.
+ * Make facebook share link (from facebook plugin) works behind virtual hosts.
+ * Highlight plugin does not show related content images.
