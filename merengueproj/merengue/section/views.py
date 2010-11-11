@@ -52,7 +52,7 @@ def content_section_view(request, section_slug, content_id, content_slug):
 
 
 def document_section_view(request, section_slug, document_id, document_slug):
-    document = get_object_or_404(Document, id=document_id)
+    document = get_object_or_404(Document, pk=document_id)
     template_name = getattr(document._meta, 'content_view_template')
     return content_view(request, document, template_name=template_name)
 
@@ -191,24 +191,25 @@ def save_menu_order(request):
 
 def section_dispatcher(request, url):
     parts = url.strip('/').split('/')
+    kwargs = dict(section_slug=parts[0])
     func = None
 
     if len(parts) == 1:
         func = section_view
     elif len(parts) == 4 and parts[1] == 'contents':
         func = content_section_view
-        del parts[1]
-    elif len(parts) == 3 and parts[1] == 'doc':
+        kwargs.update({'content_id': parts[2], 'content_slug': parts[3]})
+    elif len(parts) == 4 and parts[1] == 'doc':
         func = document_section_view
-        del parts[1]
+        kwargs.update({'document_id': parts[2], 'document_slug': parts[3]})
     elif len(parts) >= 2:
         func = menu_section_view
-        parts = [parts[0], parts[-1]]
+        kwargs.update({'menu_slug': parts[-1]})
     elif not url.startswith('/sections'):
         return HttpResponseRedirect('/sections%s' %url)
     else:
         raise Http404
-    return func(request, *parts)
+    return func(request, **kwargs)
 
 
 @login_required
