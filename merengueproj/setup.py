@@ -31,7 +31,7 @@ for dirpath, dirnames, filenames in os.walk('.'):
 
 setup(
     name = "merengue",
-    version = "0.5.1-rc1",
+    version = "0.5.1",
     install_requires = ['django==1.1.2', 'PIL', 'beautifulsoup', 'south==0.7.2'],
     author = "Manuel Saelices",
     author_email = "msaelices@yaco.es",
