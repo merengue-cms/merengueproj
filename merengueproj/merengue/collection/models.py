@@ -6,6 +6,24 @@ from django.utils.translation import ugettext_lazy as _
 from merengue.base.models import BaseContent
 
 
+FILTER_OPERATORS = (
+    ('exact', _('Exact (case-sensitive)')),
+    ('iexact', _('Exact (case-insensitive)')),
+    ('contains', _('Contains (case-sensitive)')),
+    ('icontains', _('Contains (case-insensitive)')),
+    ('startswith', _('Starts with (case-sensitive)')),
+    ('istartswith', _('Starts with (case-insensitive)')),
+    ('endswith', _('Ends with (case-sensitive)')),
+    ('iendswith', _('Ends with (case-insensitive)')),
+    ('lt', _('Less than')),
+    ('lte', _('Less than or equal')),
+    ('gt', _('Greater than')),
+    ('gte', _('Greater than or equal')),
+    ('in', _('In (coma separated list)')),
+    ('isnull', _('Is null')),
+)
+
+
 class Collection(BaseContent):
     content_types = models.ManyToManyField(
         ContentType,
@@ -98,6 +116,7 @@ class CollectionFilter(models.Model):
     filter_operator = models.CharField(
         max_length=100,
         verbose_name=_(u'Filter operator'),
+        choices=FILTER_OPERATORS,
         )
     filter_value = models.CharField(
         max_length=250,
@@ -113,8 +132,16 @@ class CollectionFilter(models.Model):
                                self.filter_value)
 
     def as_dict(self):
+        value = self.filter_value
+        try:
+            if self.filter_operator == 'in':
+                value = value.split(',')
+            elif self.filter_operator == 'isnull':
+                value = (value.lower() == 'true')
+        except:
+            pass
         return {'%s__%s' % (self.filter_field,
-                            self.filter_operator): self.filter_value}
+                            self.filter_operator): value}
 
 
 class IncludeCollectionFilter(CollectionFilter):

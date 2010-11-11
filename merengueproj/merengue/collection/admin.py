@@ -1,5 +1,8 @@
+from django import forms
+from django.conf import settings
 from django.contrib import admin
 from django.contrib.contenttypes.models import ContentType
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 from transmeta import get_real_fieldname_in_each_language
@@ -12,10 +15,24 @@ from merengue.section.models import Section
 from merengue.collection.models import (Collection, IncludeCollectionFilter,
                                         ExcludeCollectionFilter,
                                         CollectionDisplayField)
+from merengue.collection.utils import get_common_fields_no_language, get_common_fields
 
 
 class CollectionFilterInline(admin.TabularInline):
-    pass
+
+    def get_default_fields(self, obj):
+        if not obj:
+            return []
+        return [('', '----------')] + [(i, i) for i in get_common_fields(obj)]
+
+    def get_formset(self, request, obj=None, **kwargs):
+        formset = super(CollectionFilterInline, self).get_formset(request, obj, **kwargs)
+        form = formset.form
+        default_fields = self.get_default_fields(obj)
+        for i in ('filter_field', 'field_name'):
+            if i in form.base_fields:
+                form.base_fields[i].widget = forms.Select(choices=default_fields)
+        return formset
 
 
 class ExcludeCollectionFilterInline(CollectionFilterInline):
@@ -26,8 +43,13 @@ class IncludeCollectionFilterInline(CollectionFilterInline):
     model = IncludeCollectionFilter
 
 
-class CollectionDisplayFieldInline(admin.TabularInline):
+class CollectionDisplayFieldInline(CollectionFilterInline):
     model = CollectionDisplayField
+
+    def get_default_fields(self, obj):
+        if not obj:
+            return []
+        return [('', '----------')] + [(i, i) for i in get_common_fields_no_language(obj)]
 
 
 class CollectionAdmin(BaseContentAdmin):
@@ -46,6 +68,18 @@ class CollectionAdmin(BaseContentAdmin):
     inlines = [IncludeCollectionFilterInline, ExcludeCollectionFilterInline,
                CollectionDisplayFieldInline]
 
+    def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
+        media = context.get('media')
+        media += mark_safe(forms.Media(js=['%smerengue/js/collection/SelectBox.js' % settings.MEDIA_URL,
+                                           '%smerengue/js/collection/jquery.collection-admin.js' % settings.MEDIA_URL]))
+        context.update({'media': media})
+        return super(CollectionAdmin, self).render_change_form(request, context, add, change, form_url, obj)
+
+    def get_default_fields(self, obj):
+        if not obj:
+            return []
+        return [('', '----------')] + [(i, i) for i in get_common_fields_no_language(obj)]
+
     def get_form(self, request, obj=None, **kwargs):
         form = super(CollectionAdmin, self).get_form(request, obj, **kwargs)
         if 'content_types' in form.base_fields:
@@ -54,6 +88,10 @@ class CollectionAdmin(BaseContentAdmin):
             for m in main_models:
                 types_id.append(ContentType.objects.get_for_model(m).id)
             form.base_fields['content_types'].queryset = form.base_fields['content_types'].queryset.filter(id__in=types_id)
+        default_fields = self.get_default_fields(obj)
+        for i in ('group_by', 'order_by'):
+            if i in form.base_fields:
+                form.base_fields[i].widget = forms.Select(choices=default_fields)
         return form
 
 

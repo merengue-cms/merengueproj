@@ -78,7 +78,7 @@ class CollectionItemsNode(Node):
                 queryset = self._filter_by_multiple_filters(queryset, filters)
                 result += list(queryset)
         else:
-            result = self._filter_by_multiple_filters(queryset, filters)
+            result = self._filter_by_multiple_filters(items, filters)
         return result
 
     def __init__(self, collection, var_name):

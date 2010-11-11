@@ -70,6 +70,8 @@ urlpatterns = patterns('',
     # ajax_select
     (r'^ajax_select/', include('ajax_select.urls')),
 
+    # collections
+    (r'^collection/', include('merengue.collection.urls')),
 
     # other
     (r'^internal-links/', include('merengue.internallinks.urls')),
