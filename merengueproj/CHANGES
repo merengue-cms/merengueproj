@@ -1,3 +1,34 @@
+Version 0.6.0-alpha1 (2541 revision)
+====================================
+
+* Huge speed up on related admin registration.
+
+* Allow to extends Merengue TinyMCE editor settings in apps and plugins.
+
+* Content collections, which are lists of managed contents with configurable filters, search form and listing options.
+
+* Theme support in Merengue admin site.
+
+* Post register hook to plugins, to allow developers to execute tasks after installing plugin.
+
+* Included language catalogs in all apps and plugins. Also included compiled .mo files.
+
+* New plugins:
+ * oot: ODT conversion of managed contents.
+ * banner: banner management plugin.
+ * oldbrowser: a plugin that makes easy to notify to users that their browser is too old.
+
+* Several improvements in forum plugin:
+ * Grouping forums into categories.
+ * Show last comment in forum list and forum view.
+ * Do not allow anonymous users.
+ * Allow to close a thread so no new comments could be added.
+ * Allow to move a thread from one forum to another one.
+ * Allow different users to moderate different forums.
+
+* Implemented a subscribers listing in subscription plugin.
+
+
 Version 0.5.1
 =============
 
