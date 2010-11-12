@@ -91,3 +91,7 @@
 #administrator-menu ul.level2 li {
     font-size: 0.9em;
 }
+
+div#content.colMSMerengueIndex {
+    margin-right: auto !important;
+}
