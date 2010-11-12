@@ -20,3 +20,7 @@
 {% block title %}
     {% trans "Search Wizard" %}  | {% trans 'Merengue site admin' %}
 {% endblock %}
+
+{% block submit %}
+    <input type="submit" name="__report_wizard" class="default" value="{% trans "Create searcher" %}"/>
+{% endblock %}
