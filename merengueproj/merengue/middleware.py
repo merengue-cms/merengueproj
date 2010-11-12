@@ -106,8 +106,9 @@ class RemoveRandomAjaxParameter(object):
 def get_context(request):
     admin_prefix = reverse('admin_index')
     is_admin = request.get_full_path().startswith(admin_prefix)
-    # TODO: refactor to avoid hardcode "base.html" and "admin/base.html"
-    template_base = 'base.html'
-    if is_admin:
-        template_base = 'admin/%s' % template_base
+    # TODO: refactor to avoid hardcode "base.html" and "admin/base_site.html"
+    if not is_admin:
+        template_base = 'base.html'
+    else:
+        template_base = 'admin/base_site.html'
     return {'template_base': template_base, 'is_admin': is_admin}
