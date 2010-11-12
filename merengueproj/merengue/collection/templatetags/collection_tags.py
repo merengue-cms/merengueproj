@@ -51,7 +51,8 @@ class CollectionItemsNode(Node):
     def _get_items(self, collection, context):
         items = collection.get_items()
         request = context.get('request', None)
-        if request:
+        ignore_filters = request and request.GET.get('__ignore_filters', None)
+        if request and not ignore_filters:
             result = self._filter_by_request(request, items)
         elif isinstance(items, list):
             result = []
