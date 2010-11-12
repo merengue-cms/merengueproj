@@ -1,0 +1,15 @@
+{% extends "block.html" %}
+{% load i18n %}
+
+
+{% block blockbody %}
+  {% for form_search in forms_search %}
+    {{ form_search.media }}
+    <form action="{% url search_is_valid form_search.report.id %}">
+        {{ form_search }}
+        <input name="__path" type="hidden" value="{{ request.path }}"/>
+        <input name="__searcher" type="hidden" value="{{ form_search.report.id }}"/>
+        <input name="__send_searcher" type="submit" value="{% trans 'Send' %}"/>
+    </form>
+  {% endfor %}
+{% endblock %}
