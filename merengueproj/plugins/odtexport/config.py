@@ -39,6 +39,8 @@ class PluginConfig(Plugin):
         ('odtexport', 'plugins.odtexport.urls'),
     )
 
+    required_apps = ('oot', )
+
     @classmethod
     def get_actions(cls):
         return [ExportODT]
