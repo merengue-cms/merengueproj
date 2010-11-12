@@ -9,7 +9,7 @@
         {{ form_search }}
         <input name="__path" type="hidden" value="{{ request.path }}"/>
         <input name="__searcher" type="hidden" value="{{ form_search.report.id }}"/>
-        <input name="__send_searcher" type="submit" value="{% trans 'Send' %}"/>
+        <input name="__send_searcher" type="submit" value="{% trans 'Filter' %}"/>
     </form>
   {% endfor %}
 {% endblock %}
