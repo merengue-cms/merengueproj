@@ -29,6 +29,14 @@ class Searcher(BaseReport):
         verbose_name=_(u'Collections'),
     )
 
+    @classmethod
+    def get_colums_wizard(cls):
+        return {'fields': True,
+                'filter': True,
+                'display': False,
+                'help_text': True,
+                'advanced_options': True}
+
     class Meta:
         verbose_name = _('searcher')
         verbose_name_plural = _('searchers')
