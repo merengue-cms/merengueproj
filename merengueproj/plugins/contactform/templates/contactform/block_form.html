@@ -1,0 +1,17 @@
+{% extends "block.html" %}
+
+{% block blockbody %}
+    <form method="POST" action="{% url contact_form_submit content.slug contact_form.id %}">
+        <fieldset>
+            <legend>{{ contact_form.title }}</legend>
+            <p>
+            {{ contact_form.description }}
+            </p>
+            {{ form.as_p }}
+            <input type="submit" value="{{ contact_form.submit_msg }}"/>
+            {% if contact_form.reset_button %}
+                <input type="reset" value="{{ contact_form.reset_msg }}"/>
+            {% endif %}
+        </fieldset>
+    </form>
+{% endblock %}
