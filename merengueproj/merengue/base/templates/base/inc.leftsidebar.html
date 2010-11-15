@@ -1,13 +1,6 @@
 {% load block_tags %}
 {% block leftsidebarblocks %}
-  {% render_blocks "leftsidebar" %}
-  {% if content %}
-    {% render_content_blocks "leftsidebar" for content %}
-  {% endif %}
-  {% if section %}
-    {% render_section_blocks "leftsidebar" for section %}
-  {% endif %}
-
+  {% render_all_blocks "leftsidebar" %}
   {% block extraleftsidebarblocks %}
   {% endblock %}
 {% endblock %}

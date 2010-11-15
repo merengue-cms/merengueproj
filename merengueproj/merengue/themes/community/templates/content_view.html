@@ -3,6 +3,5 @@
 {% load block_tags %}
 
 {% block rightsidebar %}
-  {% render_content_blocks "leftsidebar" for content %}
-  {{ block.super }}
+  {% render_all_blocks "leftsidebar" %}
 {% endblock %}

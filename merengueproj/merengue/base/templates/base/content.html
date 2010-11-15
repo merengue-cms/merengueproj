@@ -40,19 +40,6 @@
   {{ block.super }}
 {% endblock %}
 
-{% block rightsidebar %}
-  {{ block.super }}
-{% endblock %}
-
-{% block extrarightsidebarblocks %}
-  {% render_content_blocks "rightsidebar" for content %}
-  {% if section %}
-    {% render_content_blocks "rightsidebar" for section %}
-  {% endif %}
-  {% block extracontentrightsidebar %}
-  {% endblock %}
-{% endblock %}
-
 {% block content %}
 
   {% block contenttitle %}
@@ -80,11 +67,7 @@
   {% block contentzone %}
   <div id="content-zone">
     {% block beforecontentblocks %}
-      {% render_blocks "beforecontent" %}
-      {% render_content_blocks "beforecontent" for content %}
-      {% if section %}
-          {% render_section_blocks "beforecontent" for section %}
-      {% endif %}
+      {% render_all_blocks "beforecontent" %}
       {% block extrabeforecontentblocks %}
       {% endblock %}
     {% endblock %}
@@ -122,18 +105,14 @@
     {% endblock %}
 
     {% block aftercontentblocks %}
-      {% render_blocks "aftercontent" %}
-      {% render_content_blocks "aftercontent" for content %}
-      {% if section %}
-          {% render_section_blocks "aftercontent" for section %}
-      {% endif %}
+      {% render_all_blocks "aftercontent" %}
       {% block extraaftercontentblocks %}
       {% endblock %}
     {% endblock %}
 
     {% block contentfooter %}
       {% if is_homepage %}
-         {% render_blocks "homepage" %}
+         {% render_all_blocks "homepage" %}
       {% endif %}
     {% endblock %}
   </div>
