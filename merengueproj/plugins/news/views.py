@@ -16,23 +16,31 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404
 from django.template import RequestContext
 from django.template.loader import render_to_string
 
 from cmsutils.adminfilters import QueryStringManager
 from merengue.base.views import content_view, content_list
+from merengue.collection.models import Collection
 from plugins.news.models import NewsItem, NewsCategory
 
 
+NEWS_COLLECTION_SLUG = 'news_collection'
+
+
 def news_index(request, queryset=None, extra_context=None):
-    news_list = get_news(request, queryset=queryset)
-    news_category_slug = request.GET.get('categories__slug', None)
-    news_category = news_category_slug and get_object_or_404(NewsCategory, slug=news_category_slug)
-    context = {'news_category': news_category}
-    extra_context = extra_context or {}
-    context.update(extra_context)
-    return content_list(request, news_list, template_name='news/news_index.html', extra_context=context)
+    (news_collection, created) = Collection.objects.get_or_create(slug=NEWS_COLLECTION_SLUG)
+    if created:
+        news_collection.name_es = 'Noticias'
+        news_collection.name_en = 'News'
+        news_collection.include_filters.create(filter_field='status',
+                                               filter_operator='exact',
+                                               filter_value='published')
+        news_collection.content_types.add(ContentType.objects.get_for_model(NewsItem))
+        news_collection.save()
+    return content_view(request, news_collection, extra_context=extra_context)
 
 
 def newsitem_view(request, newsitem_slug, extra_context=None):
