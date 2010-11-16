@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% load inlinetrans i18n content_tags %}
+
+{% block pagetitle %}
+    {{ menu }}
+{% endblock %}
+
+{% block breadcrumbs %}
+  {% for link, label in menu.get_breadcrumbs %}
+    <span class="breadcrumbSeparator">→</span>
+    <a href="{{ link }}" title="{{ label }}">{% cutrender %}{{ label }}{% endcutrender %}</a>
+  {% endfor %}
+  <span class="breadcrumbSeparator">→</span>
+  <a href="{{ menu.get_absolute_url }}" title="{{ menu }}">{% cutrender %}{{ menu }}{% endcutrender %}</a>
+{% endblock %}
+
+{% block content %}
+  <h1>{% inline_trans "This menu does not link to any target" %}</h1>
+{% endblock %}
+

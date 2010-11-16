@@ -25,7 +25,7 @@ from django.utils.translation import get_language_from_request
 
 from searchform.registry import search_form_registry
 from merengue.section.models import BaseSection, Document, Section, \
-                                    DocumentSection
+                                    DocumentSection, BaseLink
 
 from merengue.base.views import content_view
 from merengue.section.models import AbsoluteLink, ContentLink, ViewletLink, Menu
@@ -77,7 +77,11 @@ def menu_section_view(request, section_slug, menu_slug):
         except Menu.DoesNotExist:
             raise Http404
 
-    link = menu.baselink.real_instance
+    try:
+        link = menu.baselink.real_instance
+    except BaseLink.DoesNotExist:
+        return render_to_response('section/menu_link_not_exists.html',
+            {'menu': menu}, context_instance=RequestContext(request))
     if isinstance(link, AbsoluteLink):
         return HttpResponseRedirect(link.url)
     else:
