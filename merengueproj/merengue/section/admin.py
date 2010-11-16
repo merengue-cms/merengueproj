@@ -26,6 +26,7 @@ from transmeta import get_fallback_fieldname
 from merengue.base.admin import BaseAdmin, BaseContentAdmin, RelatedModelAdmin, \
                                 BaseOrderableAdmin, OrderableRelatedModelAdmin
 from merengue.base.admin import set_field_read_only
+from merengue.base.widgets import RelatedFieldWidgetWrapperWithoutAdding
 from merengue.section.fields import CSSValidatorField
 from merengue.section.forms import MenuAdminModelForm
 from merengue.section.models import (Menu, Section,
@@ -237,6 +238,14 @@ class ContentLinkInline(BaseLinkInline):
                 qs = qs.filter(basesection=admin_model.basecontent)
             form.base_fields['content'].queryset = qs
         return formset
+
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        formfield = super(ContentLinkInline, self).formfield_for_dbfield(db_field, **kwargs)
+        if db_field.name == 'content':
+            formfield.widget = RelatedFieldWidgetWrapperWithoutAdding(
+                formfield.widget.widget, db_field.rel, self.admin_site,
+            )
+        return formfield
 
 
 class ViewletLinkInline(BaseLinkInline):
