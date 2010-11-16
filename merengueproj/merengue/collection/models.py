@@ -1,3 +1,4 @@
+from django.contrib.admin.helpers import normalize_dictionary
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import FieldError
 from django.db import models
@@ -57,13 +58,13 @@ class Collection(BaseContent):
     def get_exclude_filters(self):
         result = []
         for f in self.exclude_filters.all():
-            result.append(f.as_dict())
+            result.append(normalize_dictionary(f.as_dict()))
         return result
 
     def get_include_filters(self):
         result = []
         for f in self.include_filters.all():
-            result.append(f.as_dict())
+            result.append(normalize_dictionary(f.as_dict()))
         return result
 
     def _get_items_from_one_source(self, ct):
