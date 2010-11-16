@@ -211,7 +211,7 @@ class BaseAdminSite(DjangoAdminSite):
                     plugin_prefix = self.get_plugin_site_prefix_for_model(model)
                     if plugin_prefix:
                         admin_prefix += self.get_plugin_site_prefix_for_model(model) + '/'
-                        admin_prefix += '%s/%s/' % (model._meta.app_label, model._meta.module_name)
+                    admin_prefix += '%s/%s/' % (model._meta.app_label, model._meta.module_name)
         else:
             admin_prefix += '%s/%s/' % (model._meta.app_label, model._meta.module_name)
         return HttpResponseRedirect('%s%d/%s' % (admin_prefix, content.id, extra_url))
