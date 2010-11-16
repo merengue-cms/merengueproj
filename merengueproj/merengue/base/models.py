@@ -118,7 +118,7 @@ class Base(models.Model):
     __metaclass__ = TransMeta
     name = models.CharField(verbose_name=_('name'), max_length=200, db_index=True)
     slug = models.SlugField(verbose_name=_('slug'), max_length=200, db_index=True, unique=True)
-    plain_description = models.TextField(verbose_name=_('description'),
+    plain_description = models.TextField(verbose_name=_('plain text description'),
                                          null=True, blank=True, editable=False)
     description = models.TextField(verbose_name=_('description'),
                                    null=True, blank=True)
