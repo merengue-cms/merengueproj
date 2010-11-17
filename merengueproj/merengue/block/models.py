@@ -29,7 +29,8 @@ PLACES = (('all', _('All')),
           ('homepage', _('Home page')),
           ('aftercontent', _('After content body')),
           ('header', _('Header')),
-          ('footer', _('Footer')))
+          ('footer', _('Footer')),
+          ('meta', _('Meta-information, links, js...')))
 
 
 class RegisteredBlock(RegisteredItem):
