@@ -15,12 +15,12 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from autoreports.forms import ReportFilterForm
 from autoreports.models import modelform_factory
 
 from django.utils.translation import ugettext as _
 
 from merengue.block.blocks import ContentBlock
+from plugins.smartsearch.forms import SearcherForm
 
 
 class SearchBlock(ContentBlock):
@@ -33,7 +33,7 @@ class SearchBlock(ContentBlock):
         forms_search = []
         for search in searchers:
             form_search_class = modelform_factory(model=search.content_type.model_class(),
-                                                  form=ReportFilterForm)
+                                                  form=SearcherForm)
             data = None
             if request.GET.get('__searcher'):
                 data = request.GET

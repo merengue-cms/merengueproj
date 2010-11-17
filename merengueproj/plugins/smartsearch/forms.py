@@ -14,8 +14,10 @@
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
+from django.conf import settings
+from django.core.urlresolvers import reverse
 
-from autoreports.forms import FormAdminDjango
+from autoreports.forms import FormAdminDjango, ReportFilterForm
 from merengue.base.forms import BaseAdminModelForm
 
 
@@ -27,3 +29,13 @@ class SearcherRelatedCollectionModelAdminForm(BaseAdminModelForm, FormAdminDjang
     class Meta:
         exclude = ('content_type', 'report_filter_fields',
                    'report_display_fields', 'advanced_options')
+
+
+class SearcherForm(ReportFilterForm):
+
+    class Media:
+        js = (reverse("django.views.i18n.javascript_catalog"),
+              settings.ADMIN_MEDIA_PREFIX + "js/core.js",
+             )
+        css = {'all': (settings.ADMIN_MEDIA_PREFIX + 'css/forms.css',
+                      )}
