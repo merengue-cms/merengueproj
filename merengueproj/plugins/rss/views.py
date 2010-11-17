@@ -59,12 +59,16 @@ def rss_views(request):
             item_date = item.modification_date
         else:
             item_date = datetime.now()
+        templates = {'title': ['rss/%s/title.html' % item.class_name,
+                               'rss/items/title.html'],
+                     'description': ['rss/%s/description.html' % item.class_name,
+                               'rss/items/description.html'],
+                    }
         f.add_item(
-            title=render_to_string('rss/items/title.html',
-                                   {'item': item}),
+            title=render_to_string(templates['title'], {'item': item}),
             link=u'%s%s' % (link_prefix, item.public_link()),
             pubdate=item_date,
-            description=render_to_string('rss/items/description.html',
+            description=render_to_string(templates['description'],
                                          {'item': item}),
         )
 
