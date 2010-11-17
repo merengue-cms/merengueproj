@@ -7,7 +7,7 @@
             <p>
             {{ contact_form.description|safe }}
             </p>
-            <table>{{ form.as_table }}</table>
+            <table>{{ form }}</table>
             <input class="button" type="submit" value="{{ contact_form.submit_msg }}"/>
             {% if contact_form.reset_button %}
                 <input class="button" type="reset" value="{{ contact_form.reset_msg }}"/>
