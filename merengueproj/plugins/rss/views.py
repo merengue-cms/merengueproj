@@ -17,8 +17,9 @@
 
 from datetime import datetime
 
-from django.http import HttpResponse
 from django.db.models import Q
+from django.contrib.sites.models import Site
+from django.http import HttpResponse
 from django.utils import feedgenerator
 from django.template.loader import render_to_string
 from merengue.base.models import BaseContent
@@ -38,9 +39,9 @@ def rss_views(request):
     else:
         classnames = [x for x in contenttypes]
         for classname in classnames:
-            query = query | Q(class_name=classname)
-            results = BaseContent.objects.filter(status='published').filter(
-                query).order_by('modification_date')[::-1]
+            query = query | Q(class_name=classname.lower())
+        results = BaseContent.objects.filter(status='published').filter(
+            query).order_by('modification_date')[::-1]
 
     f = feedgenerator.Rss201rev2Feed(
         title=render_to_string('rss/title.html'),
@@ -52,6 +53,7 @@ def rss_views(request):
     )
     limit = PluginConfig.get_config().get('limit', None)
     results = results[:int(limit.get_value())]
+    link_prefix = 'http://%s' % Site.objects.all()[0].domain
     for item in results:
         if 'modification_date' in item.__dict__:
             item_date = item.modification_date
@@ -60,8 +62,7 @@ def rss_views(request):
         f.add_item(
             title=render_to_string('rss/items/title.html',
                                    {'item': item}),
-            link=render_to_string('rss/items/link.html',
-                                  {'item': item}),
+            link=u'%s%s' % (link_prefix, item.public_link()),
             pubdate=item_date,
             description=render_to_string('rss/items/description.html',
                                          {'item': item}),

@@ -34,8 +34,8 @@ def get_children_classes(content_type):
     return result
 
 
-def get_all_children_classes(content_type):
-    return get_children_classes(content_type)
+def get_all_children_classes(content_type=BaseContent):
+    return [(x.__name__, x.__name__) for x in get_children_classes(content_type)]
 
 
 class PluginConfig(Plugin):
@@ -47,13 +47,10 @@ class PluginConfig(Plugin):
         ('rss', 'plugins.rss.urls'),
     )
 
-    content_choices = [(x.__name__, x.__name__)
-                       for x in get_all_children_classes(BaseContent)]
-
     config_params = [
         params.List(name="contenttypes",
                     label=_("Content types that whant to be syndicated"),
-                    choices=content_choices),
+                    choices=get_all_children_classes),
         params.Single(name="limit",
                       label=_("number of elements to show at the feed"),
                       default=10),
