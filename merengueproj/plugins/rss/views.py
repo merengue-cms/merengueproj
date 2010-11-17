@@ -18,10 +18,10 @@
 from datetime import datetime
 
 from django.http import HttpResponse
+from django.db.models import Q
 from django.utils import feedgenerator
 from django.template.loader import render_to_string
 from merengue.base.models import BaseContent
-from merengue.section.models import BaseSection
 
 from plugins.rss.config import PluginConfig
 
@@ -31,12 +31,16 @@ def rss_views(request):
     contenttypes = PluginConfig.get_config().get(
         'contenttypes', []).get_value()
 
+    query = Q(status='published')
     if not contenttypes:
-        contenttypes = [BaseContent, BaseSection]
-
-    results = []
-    for contenttype in contenttypes:
-        results += contenttype.objects.filter(status='published')
+        results = BaseContent.objects.filter(
+            query).order_by('modification_date')[::-1]
+    else:
+        classnames = [x.__name__ for x in contenttypes]
+        for classname in classnames:
+            query = query | Q(class_name=classname)
+            results = BaseContent.objects.filter(
+                query).order_by('modification_date')[::-1]
 
     f = feedgenerator.Rss201rev2Feed(
         title=render_to_string('rss/title.html'),
@@ -49,12 +53,16 @@ def rss_views(request):
     limit = PluginConfig.get_config().get('limit', None)
     results = results[:int(limit.get_value())]
     for item in results:
+        if 'modification_date' in item.__dict__:
+            item_date = item.modification_date
+        else:
+            item_date = datetime.now()
         f.add_item(
             title=render_to_string('rss/items/title.html',
                                    {'item': item}),
             link=render_to_string('rss/items/link.html',
                                   {'item': item}),
-            pubdate=datetime.now(),
+            pubdate=item_date,
             description=render_to_string('rss/items/description.html',
                                          {'item': item}),
         )

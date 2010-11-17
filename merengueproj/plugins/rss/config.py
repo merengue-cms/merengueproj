@@ -21,6 +21,7 @@ from merengue.pluggable import Plugin
 from merengue.registry import params
 
 from plugins.rss.actions import GenerateRSS
+from plugins.rss.blocks import RSSGlobalFeed
 
 
 class PluginConfig(Plugin):
@@ -47,3 +48,7 @@ class PluginConfig(Plugin):
     @classmethod
     def get_model_admins(cls):
         return []
+
+    @classmethod
+    def get_blocks(cls):
+        return [RSSGlobalFeed, ]
