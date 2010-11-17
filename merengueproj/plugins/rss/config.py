@@ -17,11 +17,25 @@
 
 from django.utils.translation import ugettext_lazy as _
 
+from merengue.base.models import BaseContent
 from merengue.pluggable import Plugin
 from merengue.registry import params
 
 from plugins.rss.actions import GenerateRSS
 from plugins.rss.blocks import RSSGlobalFeed
+
+
+def get_children_classes(content_type):
+    subclasses = content_type.__subclasses__()
+    result = []
+    for subclass in subclasses:
+        result += get_children_classes(subclass)
+        result += [subclass]
+    return result
+
+
+def get_all_children_classes(content_type):
+    return get_children_classes(content_type)
 
 
 class PluginConfig(Plugin):
@@ -33,9 +47,13 @@ class PluginConfig(Plugin):
         ('rss', 'plugins.rss.urls'),
     )
 
+    content_choices = [(x.__name__, x.__name__)
+                       for x in get_all_children_classes(BaseContent)]
+
     config_params = [
         params.List(name="contenttypes",
-                    label=_("Content types that whant to be syndicated")),
+                    label=_("Content types that whant to be syndicated"),
+                    choices=content_choices),
         params.Single(name="limit",
                       label=_("number of elements to show at the feed"),
                       default=10),

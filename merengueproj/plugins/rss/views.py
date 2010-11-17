@@ -31,15 +31,15 @@ def rss_views(request):
     contenttypes = PluginConfig.get_config().get(
         'contenttypes', []).get_value()
 
-    query = Q(status='published')
+    query = Q()
     if not contenttypes:
         results = BaseContent.objects.filter(
-            query).order_by('modification_date')[::-1]
+            status='published').order_by('modification_date')[::-1]
     else:
-        classnames = [x.__name__ for x in contenttypes]
+        classnames = [x for x in contenttypes]
         for classname in classnames:
             query = query | Q(class_name=classname)
-            results = BaseContent.objects.filter(
+            results = BaseContent.objects.filter(status='published').filter(
                 query).order_by('modification_date')[::-1]
 
     f = feedgenerator.Rss201rev2Feed(
