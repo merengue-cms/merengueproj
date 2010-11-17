@@ -29,20 +29,8 @@ from plugins.contactform.models import (ContactForm, ContactFormOpt,
 
 class ContactFormAdmin(BaseAdmin):
 
-    exclude = ('content', 'opts')
+    exclude = ('content',)
 
-    #fieldsets = (
-    #       ('', {
-    #           'fields': ('title', 'description', )
-    #       }),
-    #       (_('Email config'), {
-    #           'fields': ('email', 'subject', 'subject_fixed')
-    #       }),
-    #       (_('Form config'), {
-    #           'classes': ('collapse',),
-    #           'fields': ('submit_msg', 'reset_msg', 'reset_button')
-    #       }),
-    #)
     html_fields = ('description', )
 
 
