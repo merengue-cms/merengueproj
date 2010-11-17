@@ -15,12 +15,9 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf import settings
+
 from django.http import HttpResponseRedirect
-from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
-from django.template.loader import render_to_string
-from django.template import RequestContext
 from django.utils.translation import ugettext as _
 
 from merengue.base.models import BaseContent
@@ -35,31 +32,7 @@ def contact_form_submit(request, content_slug, contact_form_id):
     if request.method == 'POST':
         form = contact_form.get_form(request.POST)
         if form.is_valid():
-            data = form.cleaned_data
-            if contact_form.subject_fixed:
-                subject = contact_form.subject
-            else:
-                subject = data['subject']
-
-            opts = {}
-            for opt in contact_form.opts.all():
-                opts[opt.label] = data.get('option_%s' % opt.id, _('Unset'))
-
-            context = dict(opts=opts, content=content,
-                           contact_form=contact_form)
-            msg = render_to_string('contactform/email.html', context,
-                                       context_instance=RequestContext(request))
-
-            if request.user.is_authenticated():
-                from_mail = request.user.email
-            else:
-                from_mail = settings.DEFAULT_FROM_EMAIL
-
-            to_mail = contact_form.email
-
-            send_mail(subject, msg, from_mail,
-                      [to_mail], fail_silently=False)
-
+            form.save(request, content, contact_form)
             request.session['form_msg'] = _('Form was sended correctly')
         else:
             # Errors in session because we're redirecting

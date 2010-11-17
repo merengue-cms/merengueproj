@@ -17,8 +17,8 @@
 
 from merengue.pluggable import Plugin
 
-from plugins.contactform.models import ContactForm, ContactFormOpt
-from plugins.contactform.admin import ContactFormAdmin
+from plugins.contactform.models import ContactForm, SentContactForm
+from plugins.contactform.admin import ContactFormAdmin, SentContactFormAdmin
 from plugins.contactform.blocks import ContactFormBlock
 
 
@@ -37,4 +37,4 @@ class PluginConfig(Plugin):
 
     @classmethod
     def get_model_admins(cls):
-        return [(ContactForm, ContactFormAdmin),]
+        return [(ContactForm, ContactFormAdmin), (SentContactForm, SentContactFormAdmin)]

@@ -26,6 +26,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from transmeta import TransMeta
 
+from cmsutils.db.fields import JSONField
 from merengue.base.models import BaseContent
 
 
@@ -35,29 +36,8 @@ FIELD_TYPE_CHOICES = (
     ('date', _('Date')),
     ('datetime', _('Datetime')),
     ('checkbox', _('Checkbox')),
-    ('select', _('Select')),
+    #('select', _('Select')),
 )
-
-
-class ContactFormOpt(models.Model):
-
-    __metaclass__ = TransMeta
-
-    label = models.CharField(verbose_name=_('label'), max_length=200)
-    field_type = models.CharField(verbose_name=_('type'), max_length=20,
-                                choices=FIELD_TYPE_CHOICES)
-    help_text = models.TextField(verbose_name=_('help text'), blank=True)
-    order = models.IntegerField(verbose_name=_('order'), blank=True,
-                                null=True)
-
-    class Meta:
-        translate = ('label', 'help_text')
-        verbose_name = _('Configurable field')
-        verbose_name_plural = _('Configurable fields')
-        ordering = ('order', )
-
-    def __unicode__(self):
-        return self.label
 
 
 class ContactForm(models.Model):
@@ -81,11 +61,6 @@ class ContactForm(models.Model):
                                      related_name='contact_form',
                                      blank=True, null=True)
 
-    opts = models.ManyToManyField(ContactFormOpt,
-                                  verbose_name=_('option'),
-                                  related_name='contact_forms',
-                                  blank=True, null=True)
-
     def __unicode__(self):
         return self.title
 
@@ -96,6 +71,7 @@ class ContactForm(models.Model):
         verbose_name_plural = _('Contact Forms')
 
     def get_form(self, *args, **kwargs):
+        from plugins.contactform.forms import ContactFormForm
         from django import forms
         from django.utils.translation import ugettext as _
 
@@ -110,11 +86,13 @@ class ContactForm(models.Model):
             'checkbox': forms.BooleanField,
         }
 
-        f = forms.Form(*args, **kwargs)
+        f = ContactFormForm(*args, **kwargs)
         index = 0
 
         if not self.subject_fixed:
-            f.fields.insert(index, 'subject', forms.CharField(label=_('Subject')))
+            f.fields.insert(index, 'subject',
+                            forms.CharField(label=_('Subject'),
+                                            initial=self.subject))
             index += 1
 
         for opt in self.opts.all():
@@ -128,7 +106,42 @@ class ContactForm(models.Model):
             f.fields.insert(index, 'option_%s' % opt.id,
                             Field(label=opt.label,
                                   help_text=help_text,
-                                  required=False))
+                                  required=opt.required))
             index += 1
 
         return f
+
+
+class ContactFormOpt(models.Model):
+
+    __metaclass__ = TransMeta
+
+    label = models.CharField(verbose_name=_('label'), max_length=200)
+    field_type = models.CharField(verbose_name=_('type'), max_length=20,
+                                choices=FIELD_TYPE_CHOICES)
+    help_text = models.TextField(verbose_name=_('help text'), blank=True)
+    order = models.IntegerField(verbose_name=_('order'), blank=True,
+                                null=True)
+    required = models.BooleanField(verbose_name=_('required'))
+
+    contact_form = models.ForeignKey(ContactForm,
+                                  verbose_name=_('contact form'),
+                                  related_name='opts')
+
+    class Meta:
+        translate = ('label', 'help_text')
+        verbose_name = _('Configurable field')
+        verbose_name_plural = _('Configurable fields')
+        ordering = ('order', )
+
+    def __unicode__(self):
+        return self.label
+
+
+class SentContactForm(models.Model):
+
+    contact_form = models.ForeignKey(ContactForm, verbose_name=_(u'contact form'))
+    sent_msg = JSONField(verbose_name=_(u'response'))
+
+    def __unicode__(self):
+        return self.contact_form.title

@@ -5,7 +5,7 @@
         <fieldset>
             <legend>{{ contact_form.title }}</legend>
             <p>
-            {{ contact_form.description }}
+            {{ contact_form.description|safe }}
             </p>
             {{ form.as_p }}
             <input type="submit" value="{{ contact_form.submit_msg }}"/>

@@ -15,15 +15,16 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf import settings
+from django.contrib import admin
+from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.admin import (RelatedModelAdmin, BaseAdmin,
-                                 BaseOrderableAdmin,
-                                 OrderableRelatedModelAdmin)
+                                 BaseOrderableAdmin)
 from merengue.base.models import BaseContent
 
-from plugins.contactform.models import ContactForm, ContactFormOpt
+from plugins.contactform.models import (ContactForm, ContactFormOpt,
+                                        SentContactForm)
 
 
 class ContactFormAdmin(BaseAdmin):
@@ -42,14 +43,38 @@ class ContactFormAdmin(BaseAdmin):
     #           'fields': ('submit_msg', 'reset_msg', 'reset_button')
     #       }),
     #)
+    html_fields = ('description', )
 
 
-class ContactFormRelatedContactFormOptAdmin(ContactFormAdmin, OrderableRelatedModelAdmin):
+class ContactFormOptAdmin(BaseOrderableAdmin, BaseAdmin):
+
+    sortablefield = 'order'
+    html_fields = ('help_text', )
+
+
+class SentContactFormAdmin(BaseAdmin):
+    pass
+
+
+class ContactFormRelatedContactFormOptAdmin(ContactFormOptAdmin,
+                                            RelatedModelAdmin):
     tool_name = 'contact_form_opt'
     tool_label = _('contact form option')
     one_to_one = False
-    related_field = 'contact_forms'
-    html_fields = tuple('description_%s' % lang_code for lang_code, lang_text in settings.LANGUAGES)
+    related_field = 'contact_form'
+
+
+class ContactFormRelatedSentContactFormAdmin(SentContactFormAdmin, RelatedModelAdmin):
+    tool_name = 'contact_form'
+    tool_label = _('sent contact form')
+    one_to_one = False
+    related_field = 'contact_form'
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return super(ContactFormRelatedSentContactFormAdmin, self).has_add_permission(request)
 
 
 class BaseContentRelatedContactFormAdmin(ContactFormAdmin, RelatedModelAdmin):
@@ -57,6 +82,18 @@ class BaseContentRelatedContactFormAdmin(ContactFormAdmin, RelatedModelAdmin):
     tool_label = _('contact form')
     one_to_one = False
     related_field = 'content'
+    filter_or_exclude = 'filter'
+
+    def queryset(self, request, basecontent=None):
+        base_qs = super(RelatedModelAdmin, self).queryset(request)
+        if basecontent is None:
+            # we override our related content
+            basecontent = self.basecontent
+        filter_exclude = {self.related_field: basecontent}
+        if self.filter_or_exclude == 'filter':
+            return base_qs.filter(**filter_exclude)
+        else:
+            return base_qs.exclude(**filter_exclude)
 
     def save_form(self, request, form, change):
         return super(RelatedModelAdmin, self).save_form(request, form, change)
@@ -66,7 +103,69 @@ class BaseContentRelatedContactFormAdmin(ContactFormAdmin, RelatedModelAdmin):
         getattr(obj, self.related_field).add(self.basecontent)
 
 
+class BaseContentRelatedAssociatedContactFormAdmin(BaseContentRelatedContactFormAdmin):
+    tool_name = 'associated_contactform_related'
+    tool_label = _('associated contact form related')
+    related_field = 'content'
+    filter_or_exclude = 'exclude'
+
+    actions = ContactFormAdmin.actions + ['associated_contactform_related']
+
+    def associated_contactform_related(self, request, queryset):
+        selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
+        if selected:
+            if request.POST.get('post', False):
+                for obj in queryset:
+                    obj.content.add(self.basecontent)
+                msg = ugettext(u"Successfully associated")
+                self.message_user(request, msg)
+            else:
+                extra_context = {'title': ugettext(u'Are you sure you want to associate this items?'),
+                                 'action_submit': 'associated_contactform_related'}
+                return self.confirm_action(request, queryset, extra_context)
+    associated_contactform_related.short_description = _("Associated contact form related")
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return super(BaseContentRelatedAssociatedContactFormAdmin, self).has_add_permission(request)
+
+
+class BaseContentRelatedDisassociatedContactFormAdmin(BaseContentRelatedContactFormAdmin):
+    tool_name = 'disassociated_contactform_related'
+    tool_label = _('disassociated contact form related')
+    related_field = 'content'
+    filter_or_exclude = 'filter'
+
+    actions = ContactFormAdmin.actions + ['disassociated_contactform_related']
+
+    def disassociated_contactform_related(self, request, queryset):
+        selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
+        if selected:
+            if request.POST.get('post', False):
+                for obj in queryset:
+                    obj.content.remove(self.basecontent)
+                msg = ugettext(u"Successfully disassociated")
+                self.message_user(request, msg)
+            else:
+                extra_context = {'title': ugettext(u'Are you sure you want to disassociate this items?'),
+                                 'action_submit': 'disassociated_contactform_related'}
+                return self.confirm_action(request, queryset, extra_context)
+    disassociated_contactform_related.short_description = _("Disassociated contact form related")
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return super(BaseContentRelatedDisassociatedContactFormAdmin, self).has_add_permission(request)
+
+
 def register(site):
     """ Merengue ServiceRequest registration callback """
     site.register_related(ContactForm, BaseContentRelatedContactFormAdmin, related_to=BaseContent)
     site.register_related(ContactFormOpt, ContactFormRelatedContactFormOptAdmin, related_to=ContactForm)
+    site.register_related(SentContactForm, ContactFormRelatedSentContactFormAdmin, related_to=ContactForm)
+
+    site.register_related(ContactForm, BaseContentRelatedAssociatedContactFormAdmin, related_to=BaseContent)
+    site.register_related(ContactForm, BaseContentRelatedDisassociatedContactFormAdmin, related_to=BaseContent)

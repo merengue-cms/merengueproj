@@ -20,6 +20,8 @@ from django.utils.translation import ugettext as _
 from cmsutils.log import send_info
 from merengue.block.blocks import ContentBlock
 
+from plugins.contactform.models import ContactForm
+
 
 class ContactFormBlock(ContentBlock):
     name = 'contactform'
@@ -29,7 +31,7 @@ class ContactFormBlock(ContentBlock):
     def render(cls, request, place, content, context, *args, **kwargs):
 
         try:
-            contact_form = content.contact_form.all()[0]
+            contact_form = ContactForm.objects.filter(content=content)[0]
         except IndexError:
             return ''
 
