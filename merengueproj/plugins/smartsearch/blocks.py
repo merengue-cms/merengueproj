@@ -21,6 +21,7 @@ from django.utils.translation import ugettext as _
 
 from merengue.block.blocks import ContentBlock
 from plugins.smartsearch.forms import SearcherForm
+from merengue.collection.models import Collection
 
 
 class SearchBlock(ContentBlock):
@@ -29,6 +30,8 @@ class SearchBlock(ContentBlock):
 
     @classmethod
     def render(cls, request, place, content, context, *args, **kwargs):
+        if not isinstance(content, Collection):
+            return ''
         searchers = content.searcher_set.all()
         forms_search = []
         for search in searchers:
