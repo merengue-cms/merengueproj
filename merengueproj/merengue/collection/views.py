@@ -33,7 +33,6 @@ def get_collection_fields(request):
     content_type_ids = request.GET.get('content_types', None)
     if not content_type_ids:
         return HttpResponse(simplejson.dumps(result), mimetype='text/plain')
-    print content_type_ids.split(',')
     content_types = ContentType.objects.filter(id__in=content_type_ids.split(','))
     fields = get_common_fields_for_cts(content_types)
     result['fields'] = [''] + list(fields)

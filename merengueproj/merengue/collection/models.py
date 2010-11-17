@@ -72,7 +72,17 @@ class Collection(BaseContent):
         query = model.objects.all()
         return self._filter_query(query)
 
+    def _reduce_to_section(self, query):
+        try:
+            query = query.filter(basesection__in=self.basesection_set.all())
+        except FieldError:
+            pass
+        return query
+
     def _filter_query(self, query):
+        if self.basesection_set.all():
+            query = self._reduce_to_section(query)
+
         for f in self.get_include_filters():
             try:
                 query = query.filter(**f)
@@ -122,6 +132,7 @@ class CollectionFilter(models.Model):
     filter_value = models.CharField(
         max_length=250,
         verbose_name=_(u'Filter value'),
+        blank=True,
         )
 
     class Meta:
