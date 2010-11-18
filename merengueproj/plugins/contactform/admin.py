@@ -20,7 +20,7 @@ from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.admin import (RelatedModelAdmin, BaseAdmin,
-                                 BaseOrderableAdmin)
+                                 BaseOrderableAdmin, BaseContentAdmin)
 from merengue.base.models import BaseContent
 
 from plugins.contactform.models import (ContactForm, ContactFormOpt,
@@ -72,6 +72,9 @@ class BaseContentRelatedContactFormAdmin(ContactFormAdmin, RelatedModelAdmin):
     related_field = 'content'
     filter_or_exclude = 'filter'
 
+
+class ContactFormRelatedBaseContentAdmin(RelatedModelAdmin):
+
     def queryset(self, request, basecontent=None):
         base_qs = super(RelatedModelAdmin, self).queryset(request)
         if basecontent is None:
@@ -87,31 +90,31 @@ class BaseContentRelatedContactFormAdmin(ContactFormAdmin, RelatedModelAdmin):
         return super(RelatedModelAdmin, self).save_form(request, form, change)
 
     def save_model(self, request, obj, form, change):
-        super(BaseContentRelatedContactFormAdmin, self).save_model(request, obj, form, change)
+        super(ContactFormRelatedBaseContentAdmin, self).save_model(request, obj, form, change)
         getattr(obj, self.related_field).add(self.basecontent)
 
 
-class BaseContentRelatedAssociatedContactFormAdmin(BaseContentRelatedContactFormAdmin):
-    tool_name = 'associated_contactform_related'
-    tool_label = _('associated contact form related')
-    related_field = 'content'
+class BaseContentRelatedAssociatedContactFormAdmin(ContactFormRelatedBaseContentAdmin):
+    tool_name = 'associated_content_related'
+    tool_label = _('associated content related')
+    related_field = 'contact_form'
     filter_or_exclude = 'exclude'
 
-    actions = ContactFormAdmin.actions + ['associated_contactform_related']
+    actions = BaseContentAdmin.actions + ['associated_content_related']
 
-    def associated_contactform_related(self, request, queryset):
+    def associated_content_related(self, request, queryset):
         selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
         if selected:
             if request.POST.get('post', False):
                 for obj in queryset:
-                    obj.content.add(self.basecontent)
+                    obj.contact_form.add(self.basecontent)
                 msg = ugettext(u"Successfully associated")
                 self.message_user(request, msg)
             else:
                 extra_context = {'title': ugettext(u'Are you sure you want to associate this items?'),
-                                 'action_submit': 'associated_contactform_related'}
+                                 'action_submit': 'associated_content_related'}
                 return self.confirm_action(request, queryset, extra_context)
-    associated_contactform_related.short_description = _("Associated contact form related")
+    associated_content_related.short_description = _("Associated content related")
 
     def has_add_permission(self, request):
         return False
@@ -120,27 +123,27 @@ class BaseContentRelatedAssociatedContactFormAdmin(BaseContentRelatedContactForm
         return super(BaseContentRelatedAssociatedContactFormAdmin, self).has_add_permission(request)
 
 
-class BaseContentRelatedDisassociatedContactFormAdmin(BaseContentRelatedContactFormAdmin):
-    tool_name = 'disassociated_contactform_related'
-    tool_label = _('disassociated contact form related')
-    related_field = 'content'
+class BaseContentRelatedDisassociatedContactFormAdmin(ContactFormRelatedBaseContentAdmin):
+    tool_name = 'disassociated_content_related'
+    tool_label = _('disassociated content related')
+    related_field = 'contact_form'
     filter_or_exclude = 'filter'
 
-    actions = ContactFormAdmin.actions + ['disassociated_contactform_related']
+    actions = ContactFormAdmin.actions + ['disassociated_content_related']
 
-    def disassociated_contactform_related(self, request, queryset):
+    def disassociated_content_related(self, request, queryset):
         selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
         if selected:
             if request.POST.get('post', False):
                 for obj in queryset:
-                    obj.content.remove(self.basecontent)
+                    obj.contact_form.remove(self.basecontent)
                 msg = ugettext(u"Successfully disassociated")
                 self.message_user(request, msg)
             else:
                 extra_context = {'title': ugettext(u'Are you sure you want to disassociate this items?'),
-                                 'action_submit': 'disassociated_contactform_related'}
+                                 'action_submit': 'disassociated_content_related'}
                 return self.confirm_action(request, queryset, extra_context)
-    disassociated_contactform_related.short_description = _("Disassociated contact form related")
+    disassociated_content_related.short_description = _("Disassociated content related")
 
     def has_add_permission(self, request):
         return False
@@ -155,5 +158,5 @@ def register(site):
     site.register_related(ContactFormOpt, ContactFormRelatedContactFormOptAdmin, related_to=ContactForm)
     site.register_related(SentContactForm, ContactFormRelatedSentContactFormAdmin, related_to=ContactForm)
 
-    site.register_related(ContactForm, BaseContentRelatedAssociatedContactFormAdmin, related_to=BaseContent)
-    site.register_related(ContactForm, BaseContentRelatedDisassociatedContactFormAdmin, related_to=BaseContent)
+    site.register_related(BaseContent, BaseContentRelatedAssociatedContactFormAdmin, related_to=ContactForm)
+    site.register_related(BaseContent, BaseContentRelatedDisassociatedContactFormAdmin, related_to=ContactForm)
