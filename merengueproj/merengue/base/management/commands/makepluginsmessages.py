@@ -16,6 +16,8 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
+from optparse import make_option
+
 from django.conf import settings
 from django.core.management import call_command
 
@@ -26,17 +28,29 @@ from merengue.pluggable.utils import get_plugins_dir
 class Command(MerengueCommand):
     help = "Generate translation for plugins"
 
+    option_list = MerengueCommand.option_list + (
+        make_option('-p', '--plugin', default=None, dest='plugin',
+                    help='Directory plugin'),
+                   )
+
+    def makepluginmessages(self, dirname, plugin_dir):
+        if os.path.isdir(os.path.join(dirname, plugin_dir)) and os.path.isdir(os.path.join(dirname, plugin_dir, 'locale')):
+            print 'Making messages for plugin %s' % plugin_dir
+            langtrans = os.listdir(os.path.join(dirname, plugin_dir, 'locale'))
+            for lang, name in settings.LANGUAGES:
+                if lang not in langtrans:
+                    os.mkdir(os.path.join(dirname, plugin_dir, 'locale', lang))
+                    print 'Creating translation folder for %s language' %(name)
+            os.chdir(os.path.join(dirname, plugin_dir)) #change current directory to make plugin messages
+            call_command('inline_makemessages', all=True) #call makemessages command to search new translations
+        else:
+            print '%s isn\'t a plugin or it doesn\'t have a \"locale\" directory.' %(plugin_dir)
+
     def handle(self, **options):
         dirname = os.path.join(settings.BASEDIR, get_plugins_dir())
-        for plugin_dir in os.listdir(dirname):
-            if os.path.isdir(os.path.join(dirname, plugin_dir)) and os.path.isdir(os.path.join(dirname, plugin_dir, 'locale')):
-                print 'Making messages for plugin %s' % plugin_dir
-                langtrans = os.listdir(os.path.join(dirname, plugin_dir, 'locale'))
-                for lang, name in settings.LANGUAGES:
-                    if lang not in langtrans:
-                        os.mkdir(os.path.join(dirname, plugin_dir, 'locale', lang))
-                        print 'Creating translation folder for %s language' %(name)
-                os.chdir(os.path.join(dirname, plugin_dir)) #change current directory to make plugin messages
-                call_command('inline_makemessages', all=True) #call makemessages command to search new translations
-            else:
-                print '%s isn\'t a plugin or it doesn\'t have a \"locale\" directory.' %(plugin_dir)
+        plugin_dir = options.get('plugin', None)
+        if plugin_dir:
+            self.makepluginmessages(dirname, plugin_dir)
+        else:
+            for plugin_dir in os.listdir(dirname):
+                self.makepluginmessages(dirname, plugin_dir)
