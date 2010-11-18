@@ -29,6 +29,8 @@ from transmeta import TransMeta
 from cmsutils.db.fields import JSONField
 from merengue.base.models import BaseContent
 
+from plugins.contactform import fields as custom_fields
+
 
 FIELD_TYPE_CHOICES = (
     ('text', _('Text')),
@@ -74,15 +76,11 @@ class ContactForm(models.Model):
         from plugins.contactform.forms import ContactFormForm
         from django import forms
         from django.utils.translation import ugettext as _
-
-        class TextAreaField(forms.CharField):
-            widget = forms.widgets.Textarea
-
         fields = {
             'text': forms.CharField,
-            'textarea': TextAreaField,
-            'date': forms.DateField,
-            'datetime': forms.DateTimeField,
+            'textarea': custom_fields.TextAreaField,
+            'date': custom_fields.DateField,
+            'datetime': custom_fields.DateTimeField,
             'checkbox': forms.BooleanField,
         }
 
@@ -98,10 +96,6 @@ class ContactForm(models.Model):
         for opt in self.opts.all():
             Field = fields[opt.field_type]
             help_text = opt.help_text
-
-            # Adding date format to help_text
-            if opt.field_type in ['date', 'datetime']:
-                help_text += _('<br/>format: (%s)') % Field.widget.format
 
             f.fields.insert(index, 'option_%s' % opt.id,
                             Field(label=opt.label,

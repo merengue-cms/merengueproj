@@ -1,6 +1,17 @@
 {% extends "block.html" %}
 
 {% block blockbody %}
+    <script type="text/javascript" src="{% url admin:jsi18n %}"></script>
+    <script type="text/javascript" src="{{ admin_media }}js/core.js"></script>
+    {{ form.media }}
+    <style>
+        .calendarbox, .clockbox {
+            background: white;
+            border: 1px solid black;
+            padding: 10px;
+        }
+    </style>
+
     <form id="contactform" method="POST" action="{% url contact_form_submit content.slug contact_form.id %}">
         <fieldset>
             <legend>{{ contact_form.title }}</legend>

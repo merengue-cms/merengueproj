@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.conf import settings
 from django.utils.translation import ugettext as _
 
 from cmsutils.log import send_info
@@ -48,6 +49,7 @@ class ContactFormBlock(ContentBlock):
 
         context = dict(content=content,
                        contact_form=contact_form,
+                       admin_media=settings.ADMIN_MEDIA_PREFIX,
                        form=form)
         return cls.render_block(request, template_name='contactform/block_form.html',
                                 block_title=_('Form'),
