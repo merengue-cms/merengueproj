@@ -4,12 +4,12 @@
 Contact form sended from content: "{{ name }}" by "{{ user }} ({{ username }})"
 {% endblocktrans %}
 
-{{ contact_form.title }}
+{{ contact_form.title|safe }}
 ========================
 
-{{ contact_form.description }}
+{{ contact_form.description|striptags }}
 
 ------------------------
 {% for opt, optv in opts.items %}
-{{ opt }}: {{ optv }}
+{{ opt|safe }}: {{ optv|safe }}
 {% endfor %}

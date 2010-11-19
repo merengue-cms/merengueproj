@@ -29,7 +29,7 @@ from plugins.contactform.models import (ContactForm, ContactFormOpt,
 
 class ContactFormAdmin(BaseAdmin):
 
-    exclude = ('content',)
+    exclude = ('content', )
 
     html_fields = ('description', )
 
@@ -71,6 +71,13 @@ class BaseContentRelatedContactFormAdmin(ContactFormAdmin, RelatedModelAdmin):
     one_to_one = False
     related_field = 'content'
     filter_or_exclude = 'filter'
+
+    def save_form(self, request, form, change):
+        return super(RelatedModelAdmin, self).save_form(request, form, change)
+
+    def save_model(self, request, obj, form, change):
+        super(BaseContentRelatedContactFormAdmin, self).save_model(request, obj, form, change)
+        getattr(obj, self.related_field).add(self.basecontent)
 
 
 class ContactFormRelatedBaseContentAdmin(RelatedModelAdmin):
