@@ -27,5 +27,5 @@ class GenerateRSS(SiteAction):
     verbose_name = _('Generate RSS feed')
 
     @classmethod
-    def get_response(cls, request, context):
-        return HttpResponseRedirect(reverse('rss_view'))
+    def get_response(cls, request):
+        return HttpResponseRedirect(reverse('rss_views'))
