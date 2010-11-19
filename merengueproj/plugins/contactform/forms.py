@@ -19,6 +19,7 @@
 import datetime
 
 from django.core.mail import send_mail
+from django.core.serializers.json import DateTimeAwareJSONEncoder
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils import simplejson
@@ -50,12 +51,9 @@ class ContactFormForm(forms.Form):
             sentopts = opts.copy()
             sentopts[u'subject'] = subject
             sentopts[u'user'] = request.user.username
-            for key, value in sentopts.items():
-                if isinstance(value, datetime.datetime) or\
-                   isinstance(value, datetime.date):
-                    sentopts[key] = value.ctime()
             sent = SentContactForm(contact_form=contact_form,
-                                   sent_msg=simplejson.dumps(sentopts))
+                                   sent_msg=simplejson.dumps(sentopts,
+                                       cls=DateTimeAwareJSONEncoder))
             sent.save()
 
             context = dict(opts=opts, content=content,
