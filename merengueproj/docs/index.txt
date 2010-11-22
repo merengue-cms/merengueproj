@@ -53,6 +53,9 @@ Topics
 Reference
 =========
 
+ * **Merengue data model**
+   Merengue :ref:`data models <ref-datamodels>`
+
  * **Merengue settings:**
    Merengue :ref:`specific settings <ref-settings>`
 
