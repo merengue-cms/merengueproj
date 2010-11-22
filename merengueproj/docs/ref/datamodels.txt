@@ -1,0 +1,89 @@
+.. _ref-datamodels:
+
+====================
+Merengue data models
+====================
+
+
+Managed data models
+===================
+
+Here's a list of all base models used in Merengue (plugins models not included)
+
+BaseContent
+-----------
+
+(( to be completed ))
+
+BaseCategory
+------------
+
+(( to be completed ))
+
+BaseMultimedia
+--------------
+
+(( to be completed ))
+
+Diagram
+-------
+
+Please see also the `base models diagram`_.
+
+.. _base models diagram: ../_static/basecontent_models.png
+
+
+Section models
+==============
+
+Section
+-------
+
+(( to be completed ))
+
+Diagram
+-------
+
+Please see also the `section models diagram`_.
+
+.. _section models diagram: ../_static/section_models.png
+
+
+Multimedia models
+=================
+
+(( to be completed ))
+
+Diagram
+-------
+
+Please see also the `multimedia models diagram`_.
+
+.. _multimedia models diagram: ../_static/multimedia_models.png
+
+
+Permission models
+=================
+
+(( to be completed ))
+
+Diagram
+-------
+
+Please see also the `permission models diagram`_.
+
+.. _permission models diagram: ../_static/permission_models.png
+
+
+Registry models
+===============
+
+(( to be completed ))
+
+Diagram
+-------
+
+Please see also the `registry models diagram`_.
+
+.. _registry models diagram: ../_static/registry_models.png
+
