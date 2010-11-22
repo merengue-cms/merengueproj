@@ -4,10 +4,12 @@
 {% block blocktitle %}
 {% endblock %}
 {% block blockbody %}
+{% ifoldbrowser %}
 <link href="{{ MEDIA_URL }}oldbrowser/oldbrowser.css" rel="stylesheet" type="text/css" />
     <div id="oldbrowser">
         <p>
             {% oldbrowser %}. <a href="{% url browser_info %}">{% trans "More information" %}</a>
         </p>
     </div>
+{% endifoldbrowser %}
 {% endblock %}
