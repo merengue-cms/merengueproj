@@ -79,4 +79,4 @@ class Vote(models.Model):
     objects = VoteManager()
 
     def __unicode__(self):
-        return u"%s --> %s" %(self.content, self.vote)
+        return u"%s --> %s" % (self.content, self.vote)
