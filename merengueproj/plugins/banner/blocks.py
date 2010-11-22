@@ -23,7 +23,7 @@ from plugins.banner.views import get_banners
 
 class BannerBlock(Block):
     name = 'banner'
-    default_place = 'rigthsidebar'
+    default_place = 'rightsidebar'
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):
