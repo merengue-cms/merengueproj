@@ -51,9 +51,9 @@ class PluginConfig(Plugin):
         params.List(name="contenttypes",
                     label=_("Content types that whant to be syndicated"),
                     choices=get_all_children_classes),
-        params.Single(name="limit",
-                      label=_("number of elements to show at the feed"),
-                      default=10),
+        params.Integer(name="limit",
+                       label=_("number of elements to show at the feed"),
+                       default=10),
     ]
 
     @classmethod
