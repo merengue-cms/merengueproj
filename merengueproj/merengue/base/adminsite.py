@@ -203,18 +203,31 @@ class BaseAdminSite(DjangoAdminSite):
                 if related_sections.count() == 1:
                     # we have to redirect to the content related section
                     section = related_sections.get().real_instance
-                    admin_prefix += 'section/section/%s/' % section.id
-                    tool = self.related_registry.get(section.__class__, {}).get(real_content.__class__, None)
+                    admin_prefix += '%s%s/' % (self.get_prefix_for_model(section.__class__), section.id)
+                    tool = self.get_tool_for_model(section.__class__, real_content.__class__)
                     if tool:
                         admin_prefix += '%s/' % tool[0].tool_name
-                elif getattr(self, 'get_plugin_site_prefix_for_model', False):
-                    plugin_prefix = self.get_plugin_site_prefix_for_model(model)
-                    if plugin_prefix:
-                        admin_prefix += self.get_plugin_site_prefix_for_model(model) + '/'
-                    admin_prefix += '%s/%s/' % (model._meta.app_label, model._meta.module_name)
+                else:
+                    admin_prefix += self.get_prefix_for_model(model)
         else:
-            admin_prefix += '%s/%s/' % (model._meta.app_label, model._meta.module_name)
+            admin_prefix += self.get_prefix_for_model(model)
         return HttpResponseRedirect('%s%d/%s' % (admin_prefix, content.id, extra_url))
+
+    def get_tool_for_model(self, model, managed_model):
+        for klass in model.mro():
+            tool = self.related_registry.get(klass, {}).get(managed_model, None)
+            if tool:
+                return tool
+        return None
+
+    def get_prefix_for_model(self, model):
+        admin_prefix = ''
+        if getattr(self, 'get_plugin_site_prefix_for_model', False):
+            plugin_prefix = self.get_plugin_site_prefix_for_model(model)
+            if plugin_prefix:
+                admin_prefix += self.get_plugin_site_prefix_for_model(model) + '/'
+        admin_prefix += '%s/%s/' % (model._meta.app_label, model._meta.module_name)
+        return admin_prefix
 
     def site_configuration(self, request):
         from merengue.perms import utils as perms_api
