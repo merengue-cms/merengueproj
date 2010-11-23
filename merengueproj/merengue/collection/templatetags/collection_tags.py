@@ -110,7 +110,10 @@ class CollectionItemsNode(Node):
             return ''
 
         if not collection.group_by:
-            context.update({self.var_name: dictsort(items, collection.order_by)})
+            result = dictsort(items, collection.order_by)
+            if collection.reverse_order:
+                result.reverse()
+            context.update({self.var_name: result})
             return ''
 
         result = list(items)
