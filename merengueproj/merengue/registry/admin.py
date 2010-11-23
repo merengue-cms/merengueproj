@@ -33,7 +33,7 @@ class RegisteredItemAdmin(BaseOrderableAdmin):
     fieldsets = (
         ('', {'fields': ('module', 'class_name', )}),
         (_('Status'),
-            {'fields': ('active', 'order', 'config')}
+            {'fields': ('active', 'order', 'config', )}
         ),
     )
 

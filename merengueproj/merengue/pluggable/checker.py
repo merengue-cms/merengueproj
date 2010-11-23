@@ -21,8 +21,9 @@ import subprocess
 
 from django.conf import settings
 
+from merengue.pluggable.exceptions import BrokenPlugin
 from merengue.pluggable.loading import load_plugins
-from merengue.pluggable.utils import is_plugin_broken, get_plugin_module_name
+from merengue.pluggable.utils import check_plugin_broken, get_plugin_module_name
 
 
 def check_plugins():
@@ -71,8 +72,11 @@ def mark_broken_plugins():
     cleaned_items = []
     for registered_item in RegisteredPlugin.objects.inactives():
         plugin_name = get_plugin_module_name(registered_item.directory_name)
-        if is_plugin_broken(plugin_name):
+        try:
+            check_plugin_broken(plugin_name)
+        except BrokenPlugin, e:
             registered_item.broken = True
+            registered_item.set_traceback(e.exc_type, e.exc_value, e.traceback)
             registered_item.save()
         else:
             cleaned_items.append(registered_item)

@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+import traceback
+
 from django.db import models
 from django.utils.importlib import import_module
 from django.utils.translation import ugettext_lazy as _
@@ -32,6 +34,8 @@ class RegisteredItem(models.Model):
     active = models.BooleanField(default=False)
     broken = models.BooleanField(default=False, editable=False)
     order = models.IntegerField(_("Order"), blank=True, null=True)
+    traceback = models.TextField(_("Error traceback"), default='', editable=False,
+                                 help_text=_("Error traceback on broken item"))
     config = ConfigField()
 
     objects = RegisteredItemManager()
@@ -70,6 +74,15 @@ class RegisteredItem(models.Model):
             self.active = False
             if commit:
                 self.save()
+
+    def set_traceback(self, exc_type, exc_value, tb):
+        formatted_exception = []
+        formatted_exception.append('Exception Type: %s' % exc_type)
+        formatted_exception.append('Exception Value: %s' % exc_value)
+        formatted_exception.append('Traceback:')
+        traceback_frames = traceback.extract_tb(tb)
+        formatted_exception += traceback.format_list(traceback_frames)
+        self.traceback = '<br/>'.join(formatted_exception)
 
 
 # ----- adding south rules to help introspection -----

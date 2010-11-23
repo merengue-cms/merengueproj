@@ -16,13 +16,13 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 # -*- coding: utf-8 -*-
+
 import os
 import sys
 try:
     from cStringIO import StringIO
 except ImportError:
     from StringIO import StringIO
-
 
 from django import templatetags
 from django.conf import settings
@@ -44,6 +44,7 @@ from merengue.registry.items import (NotRegistered as NotRegisteredItem,
                                      AlreadyRegistered as AlreadyRegisteredItem)
 from merengue.section.models import Section
 from merengue.perms.utils import register_permission, unregister_permission
+from merengue.pluggable.exceptions import BrokenPlugin
 
 
 def install_plugin(instance, app_name):
@@ -67,6 +68,13 @@ def get_plugins_dir():
     return plugins_dir
 
 
+def get_plugin_directories():
+    """ get all plugins directories """
+    plugins_path = os.path.join(settings.BASEDIR, get_plugins_dir())
+    return [d for d in os.listdir(plugins_path) if os.path.isdir(os.path.join(plugins_path, d)) and
+                                                   not d.startswith('.')]
+
+
 def get_plugin_module_name(plugin_dir):
     return '%s.%s' % (get_plugins_dir(), plugin_dir)
 
@@ -79,6 +87,10 @@ def get_plugin_config(plugin_dir, prepend_plugins_dir=True):
             plugin_modname = '%s.config' % plugin_dir
         return getattr(import_module(plugin_modname), 'PluginConfig')
     except (ImportError, TypeError, ValueError):
+        # only will raise exception in debug mode
+        # this prevents broke the whole portal when registering a broken plugin
+        if settings.DEBUG:
+            raise
         return None
 
 
@@ -146,9 +158,10 @@ def find_plugin_urls(plugin_name):
         yield (index, plugin_url)
 
 
-def is_plugin_broken(plugin_name):
-    """ Returns if plugin is broken (not exist in file system) """
-    if get_plugin_config(plugin_name, prepend_plugins_dir=False):
+def check_plugin_broken(plugin_name):
+    """ Check if plugin is broken (i.e. not exist in file system) and raises an exception """
+    try:
+        get_plugin_config(plugin_name, prepend_plugins_dir=False)
         try:
             # try to import plugin modules (if exists) to validate those models
             models_modname = '%s.models' % plugin_name
@@ -162,10 +175,9 @@ def is_plugin_broken(plugin_name):
             # usually means models module does not exists. Don't worry about that
             pass
         except (TypeError, FieldError, SyntaxError): # some validation error when importing models
-            return True
-        return False
-    else:
-        return True
+            raise BrokenPlugin(plugin_name, *sys.exc_info())
+    except Exception:
+        raise BrokenPlugin(plugin_name, *sys.exc_info())
 
 
 def enable_plugin(plugin_name, register=True):

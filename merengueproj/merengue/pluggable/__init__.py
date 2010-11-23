@@ -99,6 +99,13 @@ def enable_active_plugins():
         enable_plugin(get_plugin_module_name(plugin_registered.directory_name))
 
 
+def register_all_plugins():
+    from merengue.pluggable.utils import (get_plugin_directories,
+                                          get_plugin_module_name)
+    for plugin_dir in get_plugin_directories():
+        register_plugin(plugin_dir)
+
+
 def active_default_plugins(*args, **kwargs):
     # Only want to run this signal after all application was migrated, but
     # south have not a "post all migrations" signal.
