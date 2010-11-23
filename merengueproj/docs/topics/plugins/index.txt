@@ -58,7 +58,7 @@ Broken plugins
 Merengue detects broken plugins that are downloaded in ``plugins``directory.
 You can see it in plugins admin view:
 
-    .. image:: _images/broken_plugins.png
+.. image:: _images/broken_plugins.png
 
 Merengue broken plugin detection tries to avoid break entire system when you
 download a third party plugin. Broken plugin cannot be installed but if you
@@ -77,6 +77,11 @@ Plugins can be broken because one of this causes:
 For detecting broken plugins you can execute ``mark_broken_plugins`` command, or
 set :setting:`DETECT_BROKEN_PLUGINS` to ``True`` (by default) and access to
 plugins admin view.
+
+To debug broken plugins you have to click into the broken plugin admin edit
+change form. In this view Merengue will show the error traceback:
+
+.. image:: _images/broken_plugins_debug.png
 
 .. _topics-plugins-configuration:
 
