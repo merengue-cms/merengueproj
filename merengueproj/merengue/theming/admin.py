@@ -21,18 +21,20 @@ from merengue.perms import utils as perms_api
 from merengue.theming.checker import check_themes
 from merengue.theming.models import Theme
 
+
 def admin_thumbnail(instance):
-    if instance.preview:            
-        return u'<a href="%s"><img src="%s" alt="panoramic view" /></a>' % \
+    if instance.preview:
+        return u'<a href="%s"><img src="%s" alt="Theme screenshot" /></a>' % \
                     (instance.preview, instance.preview)
-    return self
-    
+    return instance
+
 admin_thumbnail.short_description = _('Thumbnail')
 admin_thumbnail.allow_tags = True
 
+
 class ThemeAdmin(BaseAdmin):
     readonly_fields = ('name', 'description', 'directory_name', 'installed')
-    list_display = ('name', admin_thumbnail)
+    list_display = ('name', 'active', 'directory_name', admin_thumbnail, )
 
     def get_form(self, request, obj=None):
         form = super(ThemeAdmin, self).get_form(request, obj)
