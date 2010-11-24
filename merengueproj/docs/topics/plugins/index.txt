@@ -222,14 +222,107 @@ Plugin possibilities
 A developer can do a lot of things when developing a new Plugin:
 
 
-* **Defining new blocks**, implementing the ``get_blocks(cls)`` class method in the ``PluginConfig`` class.
-* **Defining new actions**, implementing the ``get_actions(cls)`` class method in the ``PluginConfig`` class.
-* **Creates new models**, implementing those models in the plugin ``models.py`` file.
-* **Defining a plugin custom admin site**, implementing the ``get_model_admins(cls)`` class method in the ``PluginConfig`` class.
-* **Defining new permissions**, implementing the ``get_perms(cls)`` class method in the ``PluginConfig`` class.
-* **Defining new viewlets**, implementing the ``get_viewlets(cls)`` class method in the ``PluginConfig`` class.
-* **Defining new middlewares**, implementing the ``get_middlewares(cls)`` class method in the ``PluginConfig`` class.
-* **Anything you want after plugin activation**, implementing the ``hook_post_register(cls)`` class method in the ``PluginConfig`` class.
+* **Defining new blocks**, implementing the ``get_blocks(cls)`` class method in the ``PluginConfig`` class. Example:
+
+.. code-block:: python
+
+    from plugins.fooplugin.blocks import FooBlock
+
+    class PluginConfig(Plugin):
+        # stuff ...
+
+        @classmethod
+        def get_blocks(cls):
+            return [FooBlock, ]
+
+* **Defining new actions**, implementing the ``get_actions(cls)`` class method in the ``PluginConfig`` class. Example:
+
+.. code-block:: python
+
+    from plugins.fooplugin.actions import FooAction
+
+    class PluginConfig(Plugin):
+        # stuff ...
+
+        @classmethod
+        def get_actions(cls):
+            return [FooAction, ]
+
+* **Creates new models**, implementing those models in the plugin ``models.py`` file. Example:
+
+.. code-block:: python
+
+    from merengue.base.models import BaseContent
+
+    class FooContent(BaseContent):
+        new_field = models.CharField(max_length=100)
+        # stuff ...
+
+* **Defining a plugin custom admin site**, implementing the ``get_model_admins(cls)`` class method in the ``PluginConfig`` class. Example:
+
+.. code-block:: python
+
+    from plugins.fooplugin.admin import FooContentAdmin, FooCategoryAdmin
+    from plugins.fooplugin.models import FooContent, FooCategory
+
+    class PluginConfig(Plugin):
+        # stuff ...
+
+        @classmethod
+        def get_model_admins(cls):
+            return [(FooContent, FooContentAdmin),
+                    (FooCategory, FooCategoryAdmin)]
+
+* **Defining new permissions**, implementing the ``get_perms(cls)`` class method in the ``PluginConfig`` class. Example:
+
+.. code-block:: python
+
+    from plugins.forum.models import FooContent
+
+    class PluginConfig(Plugin):
+        # stuff ...
+
+        @classmethod
+        def get_perms(cls):
+            return [('Vote foo', 'vote_foo', [FooContent]), ), ]
+
+* **Defining new viewlets**, implementing the ``get_viewlets(cls)`` class method in the ``PluginConfig`` class. Example:
+
+.. code-block:: python
+
+    from plugins.fooplugin.viewlets import FooViewlet1, FooViewlet2
+
+    class PluginConfig(Plugin):
+        # stuff ...
+
+        @classmethod
+        def get_viewlets(cls):
+            return [FooViewlet1, FooViewlet2]
+
+* **Defining new middlewares**, implementing the ``get_middlewares(cls)`` class method in the ``PluginConfig`` class. Example:
+
+.. code-block:: python
+
+    from plugins.fooplugin.middleware import FooMiddleware
+
+    class PluginConfig(Plugin):
+        # stuff ...
+
+        @classmethod
+        def get_middlewares(cls):
+            return [FooMiddleware, ]
+
+* **Anything you want after plugin activation**, implementing the ``hook_post_register(cls)`` class method in the ``PluginConfig`` class. Example:
+
+    from django.core.mail import send_mail
+
+    class PluginConfig(Plugin):
+        # stuff ...
+
+        @classmethod
+        def hook_post_register(cls):
+            send_mail('Foo plugin enabled', 'The foo plugin has been enabled.', 'from@example.com',
+                      'admin@example.com', fail_silently=True)
 
 Example plugins
 ---------------
