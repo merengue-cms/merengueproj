@@ -214,7 +214,7 @@ if settings.USE_GIS:
             else:
                 return _('Without location')
         google_minimap.allow_tags = True
-
+#@FIXME: Duplicate code. multimedia/models.py line 205
         def admin_thumbnail(self):
             if not self.main_image:
                 return ''

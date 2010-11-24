@@ -262,3 +262,6 @@ MANAGE_FILE = 'manage.py'
 SYS_EXECUTABLE = None
 
 JOHNNY_TABLE_BLACKLIST = ('south_migrationhistory', )
+
+#Themes settings
+DEFAULT_THEME_PREVIEW = 'merengue/img/preview_merengue.png'

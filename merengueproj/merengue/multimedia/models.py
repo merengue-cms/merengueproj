@@ -202,7 +202,7 @@ class Photo(BaseMultimedia):
         super(Photo, self).save(**kwargs)
         for multimedia_relation in self.multimediarelation_set.all():
             multimedia_relation.save()
-
+#@FIXME: Duplicate code. base/models.py line 219
     def admin_thumbnail(self):
         file_access_failed = False
         try:
@@ -253,7 +253,7 @@ class Video(BaseMultimedia):
     def save(self, **kwargs):
         self._save_original_filename(self.file)
         super(Video, self).save(**kwargs)
-
+#@FIXME: Duplicate code. line 292
     def admin_thumbnail(self):
         if self.preview:
             thumb_url = self.preview.thumbnail.url()
@@ -289,7 +289,7 @@ class PanoramicView(BaseMultimedia):
     def save(self, **kwargs):
         self._save_original_filename(self.preview)
         super(PanoramicView, self).save(**kwargs)
-
+#@FIXME: Duplicate code. line 256
     def admin_thumbnail(self):
         if self.preview:
             thumb_url = self.preview.thumbnail.url()
