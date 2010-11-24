@@ -304,14 +304,12 @@ A developer can do a lot of things when developing a new Plugin:
 
 .. code-block:: python
 
-    from plugins.fooplugin.middleware import FooMiddleware
-
     class PluginConfig(Plugin):
         # stuff ...
 
         @classmethod
         def get_middlewares(cls):
-            return [FooMiddleware, ]
+            return ['plugins.fooplugin.middleware.FooMiddleware', ]
 
 .. _`Django middleware reference`: http://docs.djangoproject.com/en/1.1/topics/http/middleware/
 
