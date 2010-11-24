@@ -314,6 +314,8 @@ A developer can do a lot of things when developing a new Plugin:
 
 * **Anything you want after plugin activation**, implementing the ``hook_post_register(cls)`` class method in the ``PluginConfig`` class. Example:
 
+.. code-block:: python
+
     from django.core.mail import send_mail
 
     class PluginConfig(Plugin):
