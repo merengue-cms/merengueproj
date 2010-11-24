@@ -31,14 +31,13 @@ from merengue.theming.managers import ThemeManager
 
 class Theme(models.Model):
     """
-    Merengue theme model store info abouth the installed themes.     
+    Merengue theme model store info abouth the installed themes.
     """
     name = models.CharField(_('name'), max_length=100)
     description = models.TextField(_('description'))
     installed = models.BooleanField(default=False)
     active = models.BooleanField(default=False)
     directory_name = models.CharField(_('directory name'), max_length=100)
-       
 
     class Meta:
         db_table = 'themes_theme'
@@ -48,29 +47,28 @@ class Theme(models.Model):
     def preview(self):
         """
         Returns the theme screenshot or default preview png.
-        
-        Default image could be changed in settings.py by redefining the 
+
+        Default image could be changed in settings.py by redefining the
         DEFAULT_THEME_PREVIEW constant.
-        
+
         File should be called screenshot.png
-        Screenshot should be placed to media/themes/%theme_name%/img/ 
+        Screenshot should be placed to media/themes/%theme_name%/img/
         """
-        
+
         #@FIXME: Unhardcode the filename if neccessary.
         screenshot = os.path.join(self.get_media_path(), 'img/screenshot.png')
         if os.path.isfile(screenshot):
             return '%simg/screenshot.png' % (self.get_theme_media_url())
         return settings.MEDIA_URL + settings.DEFAULT_THEME_PREVIEW
-        
+
     preview = property(preview)
 
     def __unicode__(self):
         return self.name
 
     def get_media_path(self):
-        return os.path.join(settings.MEDIA_ROOT, 'themes/', 
-                                                    self.directory_name)
-        
+        return os.path.join(settings.MEDIA_ROOT, 'themes/',
+                            self.directory_name)
 
     def get_path(self):
         """ get theme template path """
@@ -107,7 +105,6 @@ def check_for_duplicated_active_themes(sender, instance, **kwargs):
             theme.save()
 
 
-#@FIXME: Probably unnecessary function
 def check_for_themes(sender, **kwargs):
     from merengue.theming.checker import check_themes
     check_themes()
