@@ -214,8 +214,9 @@ if settings.USE_GIS:
             else:
                 return _('Without location')
         google_minimap.allow_tags = True
-#@FIXME: Duplicate code. multimedia/models.py line 205
+
         def admin_thumbnail(self):
+            #@FIXME: Duplicate code. multimedia/models.py line 205
             if not self.main_image:
                 return ''
             file_access_failed = False
@@ -331,8 +332,8 @@ class BaseContent(BaseClass):
         verbose_name = _('base content')
         verbose_name_plural = _('base contents')
         abstract = False
-        ordering = (get_fallback_fieldname('name'), )
         #content_view_template = 'content_view.html' # default definition by BaseContentMeta metaclass
+        ordering = (get_fallback_fieldname('name'), )
 
     def admin_absolute_url(self):
         return '<a href="%s">%s</a>' % (self.get_admin_absolute_url(), self.name)
