@@ -47,6 +47,9 @@ Topics
  * **Permissions:**
    :ref:`Permissions <topics-permissions>`
 
+ * **Viewlets:**
+   :ref:`Viewlets <topics-viewlets>`
+
  * **Registry:**
    :ref:`Registry <topics-registry>`
 

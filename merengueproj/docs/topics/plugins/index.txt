@@ -83,17 +83,85 @@ change form. In this view Merengue will show the error traceback:
 
 .. image:: _images/broken_plugins_debug.png
 
+.. _topics-plugins-customization:
+
+Plugin customization
+====================
+
+Some plugins have some customization parameters, which appears in plugin admin view.
+See :ref:`registry configuration params <topics-registry-configuration-params>`
+for more details.
+
+.. _topics-plugins-development:
+
+
+Plugin Development
+==================
+
+Writing a custom plugin
+-----------------------
+
+To write a merengue custom plugin, you need to create an Django application with several conventions:
+
+* A defined directory layout.
+* Write a configuration file.
+* Extend some components.
+* Extend some base models.
+
+
+Plugin tree
+-----------
+
+All plugins will be placed below ``plugins`` merengue directory.
+
+This is a conventional plugin tree:
+
+.. code-block:: python
+
+     /plugins/
+         |-- fooplugin/
+         |   |-- __init__.py
+         |   |-- actions.py
+         |   |-- blocks.py
+         |   |-- config.py
+         |   |-- models.py
+         |   |-- views.py
+         |   |-- viewlets.py
+         |   |-- urls.py
+         |   `-- templates/
+         |       `-- fooplugin/
+         |   `-- media/
+         |       `-- fooplugin/
+         |
+         ...
+
+.. admonition:: Note
+
+    Only ``__init__.py`` and ``config.py`` files are mandatory.
+
+Let's explain every part listed before:
+
+* ``__init__.py`` is a needed file (usually empty) that makes plugin to be a python module.
+* ``models.py`` is conventional Django app model file. See :ref:`base models <topics-models-base>` to get more info about base models you can extend of.
+* ``config.py`` is the configuration file for plugin. See :ref:`plugin configuration reference <topics-plugins-configuration>`.
+* ``blocks.py`` is blocks file, with the new visual blocks that are defined in plugin.
+* ``actions.py`` is actions file.
+* ``views.py`` is conventional `Django views`_ file.
+* ``urls.py`` is conventional `Django urls`_ file. You can use it for controlling a URL namespace (i.e. all ``/fooplugin/.*`` urls).
+* ``templates/fooplugin/`` is a directory for ``fooplugin`` template namespace.
+* ``media/fooplugin/`` is a directory for media resources like icons, css, etc.
+
+.. _`Django views`: http://docs.djangoproject.com/en/dev/topics/http/views/#topics-http-views
+.. _`Django URLs`: http://docs.djangoproject.com/en/dev/topics/http/urls/#topics-http-urls
+
 .. _topics-plugins-configuration:
 
 Plugin configuration
-====================
+--------------------
 
 Plugin configuration is defined in a ``PluginConfig`` class in a ``config.py`` module inside your plugin directory. This class is readed when plugin is loaded in merengue.
 
-Example plugin config
----------------------
-
-This is a ``config.py`` file code fragment:
+This is a ``config.py`` file code fragment example:
 
 .. code-block:: python
 
@@ -149,80 +217,13 @@ system will perform a operation like this:
       (r'^fooplugin/', include('plugins.fooplugin.urls')),
     )
 
-Method reference
-----------------
-
-(( to be completed ))
-
-.. _topics-plugins-development:
-
-
-Plugin Development
-==================
-
-Writing a custom plugin
------------------------
-
-To write a merengue custom plugin, you need to create an Django application with several conventions:
-
-* A defined directory layout.
-* Write a configuration file.
-* Extend some components.
-* Extend some base models.
-
-
-Plugin tree
------------
-
-All plugins will be placed below ``plugins`` merengue directory.
-
-This is a conventional plugin tree:
-
-.. code-block:: python
-
-     /plugins/
-         |-- fooplugin/
-         |   |-- __init__.py
-         |   |-- actions.py
-         |   |-- blocks.py
-         |   |-- config.py
-         |   |-- models.py
-         |   |-- views.py
-         |   |-- viewlets.py
-         |   |-- urls.py
-         |   `-- templates/
-         |       `-- fooplugin/
-         |   `-- media/
-         |       `-- fooplugin/
-         |
-         ...
-
-.. admonition:: Note
-
-    Only ``__init__.py`` and ``config.py`` files are mandatory.
-
-Let's explain every part listed before:
-
-* ``__init__.py`` is a needed file (usually empty) that makes plugin to be a python module.
-* ``models.py`` is conventional Django app model file. See :ref:`base models <topics-models-base>` to get more info about base models you can extend of.
-* ``config.py`` is the configuration file for plugin. See :ref:`plugin configuration reference <topics-plugins-configuration>`.
-* ``blocks.py`` is blocks file, with the new visual blocks that are defined in plugin. See :ref:`blocks reference <topics-blocks>`.
-* ``actions.py`` is portal actions file. See :ref:`actions reference <topics-actions>`.
-* ``views.py`` is conventional `Django views`_ file.
-* ``urls.py`` is conventional `Django urls`_ file. You can use it for control a URL namespace (i.e. all ``/fooplugin/.*`` urls).
-* ``templates/fooplugin/`` is a directory for ``fooplugin`` template namespace.
-* ``media/fooplugin/`` is a directory for media resources like icons, css, etc.
-
-.. _`Django views`: http://docs.djangoproject.com/en/dev/topics/http/views/#topics-http-views
-.. _`Django URLs`: http://docs.djangoproject.com/en/dev/topics/http/urls/#topics-http-urls
-
 Plugin possibilities
 --------------------
 
 A developer can do a lot of things when developing a new Plugin:
 
 
-* **Defining new blocks**, implementing the ``get_blocks(cls)`` class method in the ``PluginConfig`` class. Example:
+* **Defining new blocks**, implementing the ``get_blocks(cls)`` class method in the ``PluginConfig`` class. See :ref:`blocks reference <topics-blocks>`. Example:
 
 .. code-block:: python
 
@@ -235,7 +236,7 @@ A developer can do a lot of things when developing a new Plugin:
         def get_blocks(cls):
             return [FooBlock, ]
 
-* **Defining new actions**, implementing the ``get_actions(cls)`` class method in the ``PluginConfig`` class. Example:
+* **Defining new actions**, implementing the ``get_actions(cls)`` class method in the ``PluginConfig`` class. See :ref:`actions reference <topics-actions>`. Example:
 
 .. code-block:: python
 
@@ -273,7 +274,7 @@ A developer can do a lot of things when developing a new Plugin:
             return [(FooContent, FooContentAdmin),
                     (FooCategory, FooCategoryAdmin)]
 
-* **Defining new permissions**, implementing the ``get_perms(cls)`` class method in the ``PluginConfig`` class. Example:
+* **Defining new permissions**, implementing the ``get_perms(cls)`` class method in the ``PluginConfig`` class. See :ref:`permissions reference <topics-permissions>`. Example:
 
 .. code-block:: python
 
@@ -286,7 +287,7 @@ A developer can do a lot of things when developing a new Plugin:
         def get_perms(cls):
             return [('Vote foo', 'vote_foo', [FooContent]), ), ]
 
-* **Defining new viewlets**, implementing the ``get_viewlets(cls)`` class method in the ``PluginConfig`` class. Example:
+* **Defining new viewlets**, implementing the ``get_viewlets(cls)`` class method in the ``PluginConfig`` class. See :ref:`viewlets reference <topics-viewlets>`. Example:
 
 .. code-block:: python
 
@@ -299,7 +300,7 @@ A developer can do a lot of things when developing a new Plugin:
         def get_viewlets(cls):
             return [FooViewlet1, FooViewlet2]
 
-* **Defining new middlewares**, implementing the ``get_middlewares(cls)`` class method in the ``PluginConfig`` class. Example:
+* **Defining new middlewares**, implementing the ``get_middlewares(cls)`` class method in the ``PluginConfig`` class. See `Django middleware reference`_. Example:
 
 .. code-block:: python
 
@@ -311,6 +312,8 @@ A developer can do a lot of things when developing a new Plugin:
         @classmethod
         def get_middlewares(cls):
             return [FooMiddleware, ]
+
+.. _`Django middleware reference`: http://docs.djangoproject.com/en/1.1/topics/http/middleware/
 
 * **Anything you want after plugin activation**, implementing the ``hook_post_register(cls)`` class method in the ``PluginConfig`` class. Example:
 

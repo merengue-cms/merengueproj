@@ -111,6 +111,8 @@ You can access to registered object with these sentences:
     >>> RegisteredItem.objects.get_by_item(PluginConfig)
     <RegisteredItem: PluginConfig>
 
+.. _topics-registry-configuration-params:
+
 Configuring your registrable components
 ---------------------------------------
 
