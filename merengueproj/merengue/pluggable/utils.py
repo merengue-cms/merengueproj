@@ -28,7 +28,7 @@ from django import templatetags
 from django.conf import settings
 from django.conf.urls.defaults import include, url
 from django.contrib.admin.sites import NotRegistered
-from django.core.exceptions import ImproperlyConfigured, FieldError
+from django.core.exceptions import ImproperlyConfigured, FieldError, MiddlewareNotUsed
 from django.core.management.color import no_style
 from django.core.management.sql import sql_all
 from django.core.management.validation import get_validation_errors
@@ -45,6 +45,21 @@ from merengue.registry.items import (NotRegistered as NotRegisteredItem,
 from merengue.section.models import Section
 from merengue.perms.utils import register_permission, unregister_permission
 from merengue.pluggable.exceptions import BrokenPlugin
+
+
+# ----- internal attributes and methods -----
+
+
+_plugin_middlewares_cache = {
+    'loaded_middlewares': [],
+    'request_middleware': [],
+    'view_middleware': [],
+    'response_middleware': [],
+    'exception_middleware': [],
+}
+
+
+# ----- public methods -----
 
 
 def install_plugin(instance, app_name):
@@ -190,6 +205,7 @@ def enable_plugin(plugin_name, register=True):
         register_app(plugin_name)
         register_plugin_actions(plugin_name)
         register_plugin_blocks(plugin_name)
+        register_plugin_middlewares(plugin_name)
         register_plugin_viewlets(plugin_name)
         register_plugin_templatetags(plugin_name)
         register_plugin_post_actions(plugin_name)
@@ -215,6 +231,7 @@ def disable_plugin(plugin_name, unregister=True):
             pass
         unregister_plugin_actions(plugin_name)
         unregister_plugin_blocks(plugin_name)
+        unregister_plugin_middlewares(plugin_name)
         unregister_plugin_viewlets(plugin_name)
         unregister_plugin_templatetags(plugin_name)
         unregister_plugin_section_models(plugin_name)
@@ -379,6 +396,22 @@ def unregister_plugin_perms(plugin_name):
         unregister_permission(perm[1])
 
 
+def register_plugin_middlewares(plugin_name):
+    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    if not plugin_config:
+        return
+    for middleware in plugin_config.get_middlewares():
+        register_middleware(middleware)
+
+
+def unregister_plugin_middlewares(plugin_name):
+    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    if not plugin_config:
+        return
+    for middleware in plugin_config.get_middlewares():
+        unregister_middleware(middleware)
+
+
 def unregister_plugin_section_models(plugin_name):
     pass
 
@@ -448,6 +481,71 @@ def has_required_dependencies(plugin):
         if not RegisteredPlugin.objects.filter(**filter_plugins):
             return False
     return True
+
+
+def register_middleware(middleware_path):
+    """
+    Load middleware into plugin middleware registry
+    """
+    global _plugin_middlewares_cache
+    if middleware_path in _plugin_middlewares_cache['loaded_middlewares']:
+        return # already registered
+    try:
+        dot = middleware_path.rindex('.')
+    except ValueError:
+        raise ImproperlyConfigured('%s isn\'t a middleware module' % middleware_path)
+    mw_module, mw_classname = middleware_path[:dot], middleware_path[dot+1:]
+    try:
+        mod = import_module(mw_module)
+    except ImportError, e:
+        raise ImproperlyConfigured('Error importing middleware %s: "%s"' % (mw_module, e))
+    try:
+        mw_class = getattr(mod, mw_classname)
+    except AttributeError:
+        raise ImproperlyConfigured('Middleware module "%s" does not define a "%s" class' % (mw_module, mw_classname))
+
+    try:
+        mw_instance = mw_class()
+    except MiddlewareNotUsed:
+        return
+
+    if hasattr(mw_instance, 'process_request'):
+        _plugin_middlewares_cache['request_middleware'].append(
+            (middleware_path, mw_instance.process_request),
+        )
+    if hasattr(mw_instance, 'process_view'):
+        _plugin_middlewares_cache['view_middleware'].append(
+            (middleware_path, mw_instance.process_view),
+        )
+    if hasattr(mw_instance, 'process_response'):
+        _plugin_middlewares_cache['response_middleware'].insert(
+            0, (middleware_path, mw_instance.process_response),
+        )
+    if hasattr(mw_instance, 'process_exception'):
+        _plugin_middlewares_cache['exception_middleware'].insert(
+            0, (middleware_path, mw_instance.process_exception),
+        )
+    _plugin_middlewares_cache['loaded_middlewares'].append(middleware_path)
+
+
+def unregister_middleware(middleware_path):
+    """
+    Unload middleware into plugin middleware registry
+    """
+    global _plugin_middlewares_cache
+    if middleware_path not in _plugin_middlewares_cache['loaded_middlewares']:
+        return # not registered
+    for midd_type in ('request_middleware', 'request_middleware',
+                      'response_middleware', 'exception_middleware', ):
+        for path, method in _plugin_middlewares_cache[midd_type]:
+            if middleware_path == path:
+                _plugin_middlewares_cache[midd_type].remove((path, method))
+    _plugin_middlewares_cache['loaded_middlewares'].remove(middleware_path)
+
+
+def get_plugins_middleware_methods(midd_type):
+    global _plugin_middlewares_cache
+    return (t[1] for t in _plugin_middlewares_cache[midd_type])
 
 
 from merengue.section.admin import register as register_section

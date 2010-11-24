@@ -44,6 +44,10 @@ class Plugin(RegistrableItem):
         return [] # to override in plugins
 
     @classmethod
+    def get_middlewares(cls):
+        return [] # to override in plugins
+
+    @classmethod
     def get_viewlets(cls):
         return [] # to override in plugins
 
@@ -100,8 +104,7 @@ def enable_active_plugins():
 
 
 def register_all_plugins():
-    from merengue.pluggable.utils import (get_plugin_directories,
-                                          get_plugin_module_name)
+    from merengue.pluggable.utils import get_plugin_directories
     for plugin_dir in get_plugin_directories():
         register_plugin(plugin_dir)
 
