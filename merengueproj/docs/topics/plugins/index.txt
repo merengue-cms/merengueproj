@@ -95,7 +95,7 @@ for more details.
 .. _topics-plugins-development:
 
 
-Plugin Development
+Plugin development
 ==================
 
 Writing a custom plugin
