@@ -216,12 +216,28 @@ Let's explain every part listed before:
 .. _`Django views`: http://docs.djangoproject.com/en/dev/topics/http/views/#topics-http-views
 .. _`Django URLs`: http://docs.djangoproject.com/en/dev/topics/http/urls/#topics-http-urls
 
-Example "news" plugin
----------------------
+Plugin possibilities
+--------------------
 
-You can see an `example plugin`_.
+A developer can do a lot of things when developing a new Plugin:
 
-.. _`example plugin`: http://tracpub.yaco.es/merengue/browser/trunk/merengueproj/plugins/news/
+
+* **Defining new blocks**, implementing the ``get_blocks(cls)`` class method in the ``PluginConfig`` class.
+* **Defining new actions**, implementing the ``get_actions(cls)`` class method in the ``PluginConfig`` class.
+* **Creates new models**, implementing those models in the plugin ``models.py`` file.
+* **Defining a plugin custom admin site**, implementing the ``get_model_admins(cls)`` class method in the ``PluginConfig`` class.
+* **Defining new permissions**, implementing the ``get_perms(cls)`` class method in the ``PluginConfig`` class.
+* **Defining new viewlets**, implementing the ``get_viewlets(cls)`` class method in the ``PluginConfig`` class.
+* **Defining new middlewares**, implementing the ``get_middlewares(cls)`` class method in the ``PluginConfig`` class.
+* **Anything you want after plugin activation**, implementing the ``hook_post_register(cls)`` class method in the ``PluginConfig`` class.
+
+Example plugins
+---------------
+
+In the Merengue `plugins directory`_ you can browse several plugins implemented, like the `news plugin`_.
+
+.. _`plugins directory`: http://tracpub.yaco.es/merengue/browser/trunk/merengueproj/plugins/
+.. _`news plugin`: http://tracpub.yaco.es/merengue/browser/trunk/merengueproj/plugins/news/
 
 Required plugins in a project
 -----------------------------
