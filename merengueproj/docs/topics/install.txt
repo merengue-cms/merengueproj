@@ -71,9 +71,7 @@ Dependencies: ``south``, ``python-imaging``, ``python-beautifulsoup``, ``python-
 
         $ sudo easy_install pexpect
 
-* ``ffmpeg``: FFmpeg is a complete, cross-platform solution to record,
-    convert and stream audio and video.
-    It includes libavcodec - the leading audio/video codec library. 
+* ``ffmpeg``: FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video. It includes libavcodec - the leading audio/video codec library. 
 
     .. code-block:: bash
 
