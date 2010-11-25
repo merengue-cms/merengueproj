@@ -1,7 +1,7 @@
-from django.contrib.admin.helpers import normalize_dictionary
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import FieldError
 from django.db import models
+from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.models import BaseContent
@@ -56,16 +56,12 @@ class Collection(BaseContent):
         content_view_template = 'collection/collection_view.html'
 
     def get_exclude_filters(self):
-        result = []
-        for f in self.exclude_filters.all():
-            result.append(normalize_dictionary(f.as_dict()))
-        return result
+        """@FIXME: Legacy code. Should be refactored"""
+        return self.exclude_filters.all()
 
     def get_include_filters(self):
-        result = []
-        for f in self.include_filters.all():
-            result.append(normalize_dictionary(f.as_dict()))
-        return result
+        """@FIXME: Legacy code. Should be refactored"""
+        return self.include_filters.all()
 
     def _get_items_from_one_source(self, ct):
         model = ct.model_class()
@@ -85,12 +81,12 @@ class Collection(BaseContent):
 
         for f in self.get_include_filters():
             try:
-                query = query.filter(**f)
+                query = query.filter(f.get_q_object())
             except FieldError:
                 continue
         for f in self.get_exclude_filters():
             try:
-                query = query.exclude(**f)
+                query = query.exclude(f.get_q_object())
             except FieldError:
                 continue
         return query
@@ -113,7 +109,8 @@ class Collection(BaseContent):
         else:
             for ct in content_types:
                 if not issubclass(ct.model_class(), BaseContent):
-                    items = self._get_items_from_multiple_sources(content_types)
+                    items = self._get_items_from_multiple_sources( \
+                                                                content_types)
                     return items
             items = self._get_items_from_basecontent(content_types)
         return items
@@ -138,22 +135,66 @@ class CollectionFilter(models.Model):
     class Meta:
         abstract = True
 
+    def _prepare_in_value(self):
+        """
+        Custom method that overrides the default behavior for the `in`
+        operator
+        """
+        return self.filter_value.split(',')
+
+    def _prepare_isnull_value(self):
+        """
+        Custom method that overrides the default behavior for the `isnull`
+        operator
+        """
+        return self.filter_value.lower() == 'true'
+
+    def _prepare_value(self):
+        """
+        The property that returns the actually prepared value of the filter.
+        """
+        custom_value_method_name = '_prepare_%s_value' % (self.filter_operator)
+        if hasattr(self, custom_value_method_name):
+            return getattr(self, custom_value_method_name)()
+        return self.filter_value
+
+    value = property(_prepare_value)
+
+    def _prepare_q_object(self, field=None, operator=None, value=None):
+        """
+        Create a simple Q object from the model object. Each statement could be
+        overrided by keword arguments.
+        """
+        field_lookup = {
+            '%s__%s' % (field or self.filter_field,
+                        operator or self.filter_operator): value or self.value,
+        }
+        return Q(**field_lookup)
+
+    def _get_isnull_q_object(self):
+        """
+        Custom method for `in` filter operator.
+        """
+        isnuul_q = self._prepare_q_object()
+        is_empty_q = Q(self._prepare_q_object(operator='exact', value=""))
+        if not self.value:
+            is_empty_q = ~is_empty_q
+        return isnuul_q | is_empty_q
+
+    def get_q_object(self):
+        """
+        Common method for creating Q object from the model. Call the custom
+        method that overrides the general behavior if exist.
+        """
+        custom_filter_method_name = '_get_%s_q_object' % (self.filter_operator)
+        if hasattr(self, custom_filter_method_name):
+            return getattr(self, custom_filter_method_name)()
+        return self._prepare_q_object()
+
     def __unicode__(self):
         return u'%s__%s=%s' % (self.filter_field,
                                self.filter_operator,
                                self.filter_value)
-
-    def as_dict(self):
-        value = self.filter_value
-        try:
-            if self.filter_operator == 'in':
-                value = value.split(',')
-            elif self.filter_operator == 'isnull':
-                value = (value.lower() == 'true')
-        except:
-            pass
-        return {'%s__%s' % (self.filter_field,
-                            self.filter_operator): value}
 
 
 class IncludeCollectionFilter(CollectionFilter):
