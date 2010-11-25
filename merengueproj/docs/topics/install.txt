@@ -42,7 +42,7 @@ install in a ubuntu/debian based distribution.
 Some python packages are installed using easy_install, for use that
 you need to have installed python-setuptools
 
-Dependencies: ``south``, ``python-imaging``, ``python-beautifulsoup``
+Dependencies: ``south``, ``python-imaging``, ``python-beautifulsoup``, ``python-pexpect``
 
 * ``south``: Django database schema migrator.
 
@@ -63,7 +63,13 @@ Dependencies: ``south``, ``python-imaging``, ``python-beautifulsoup``
 
     .. code-block:: bash
 
-        $ sudo apt-get install python-beautifulsoup
+        $ sudo easy_install BeautifulSoup
+
+* ``python-pexpect``: a python library to parse commands standard input.
+
+    .. code-block:: bash
+
+        $ sudo easy_install pexpect
 
 * ``ffmpeg``: FFmpeg is a complete, cross-platform solution to record,
     convert and stream audio and video.
