@@ -433,12 +433,14 @@ ul.dependencies li.fulfilled {
     list-style: none;
     background: transparent url(/admin_media/img/admin/icon-yes.gif) no-repeat left center !important;
     color: #44AD41;
+    padding-left: 15px;
 }
 
 ul.dependencies li.unfulfilled {
     list-style: none;
     background: transparent url(/admin_media/img/admin/icon-no.gif) no-repeat left center !important;
     color: #FF0000;
+    padding-left: 15px;
 }
 
 .row-holder {

@@ -35,7 +35,9 @@ class RequiredPluginsWidget(ConfigWidget):
                 filter_plugins.update({str(attr): value})
             plugin_props = ["%s: %s" % (k, v)
                             for k, v in properties.iteritems()]
-            plugin_text = u"%s (%s)" % (plugin, ', '.join(plugin_props))
+            plugin_text = unicode(plugin)
+            if plugin_props:
+                plugin_text += u" (%s)" % ', '.join(plugin_props)
             if RegisteredPlugin.objects.filter(**filter_plugins):
                 plugins_li.append(u"<li class='fulfilled'>%s</li>" \
                                   % plugin_text)
