@@ -29,7 +29,6 @@ class RedirectAdmin(BaseAdmin):
         """
         Overrides Django admin behaviour to add ownership based access control
         """
-
         user = request.user
         return has_global_permission(user, 'submit_redirects') or \
                                 has_global_permission(user, 'manage_redirects')
@@ -38,16 +37,16 @@ class RedirectAdmin(BaseAdmin):
         """
         Overrides Django admin behaviour to add ownership based access control
         """
-
         if obj and obj.is_active != bool(request.POST.get('is_active')):
             return has_global_permission(request.user, 'manage_redirects')
         return super(RedirectAdmin, self).has_change_permission(request, obj)
 
     def get_form(self, request, obj=None, **kwargs):
-        self.exclude = self.exclude or []
+        form = super(RedirectAdmin, self).get_form(request, obj, **kwargs)
         if not has_global_permission(request.user, 'manage_redirects'):
-            self.exclude.append('is_active')
-        return super(RedirectAdmin, self).get_form(request, obj, **kwargs)
+            # only redirects managers can activate a redirect
+            del form.base_fields['is_active']
+        return form
 
 
 def register(site):
