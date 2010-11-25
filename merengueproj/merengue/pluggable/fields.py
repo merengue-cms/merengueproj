@@ -16,12 +16,19 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from cmsutils.forms.fields import JSONFormField
+from merengue.pluggable.widgets import (RequiredPluginsWidget,
+                                       RequiredAppsWidget)
 
-from merengue.registry.widgets import ConfigWidget
 
-
-class ConfigFormField(JSONFormField):
+class RequiredPluginsFormField(JSONFormField):
 
     def __init__(self, *args, **kwargs):
-        super(ConfigFormField, self).__init__(*args, **kwargs)
-        self.widget = ConfigWidget()
+        super(RequiredPluginsFormField, self).__init__(*args, **kwargs)
+        self.widget = RequiredPluginsWidget()
+
+
+class RequiredAppsFormField(JSONFormField):
+
+    def __init__(self, *args, **kwargs):
+        super(RequiredAppsFormField, self).__init__(*args, **kwargs)
+        self.widget = RequiredAppsWidget()

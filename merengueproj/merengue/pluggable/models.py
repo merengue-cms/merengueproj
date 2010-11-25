@@ -25,7 +25,7 @@ from django.utils.translation import ugettext_lazy as _
 from merengue.pluggable.utils import (install_plugin, get_plugins_dir,
                                       get_plugin_module_name, disable_plugin)
 from merengue.pluggable.managers import PluginManager
-from merengue.registry.dbfields import RequiredPluginsField, RequiredAppsField
+from merengue.pluggable.dbfields import RequiredPluginsField, RequiredAppsField
 from merengue.registry.models import RegisteredItem
 
 
