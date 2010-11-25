@@ -30,12 +30,14 @@ from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.functional import update_wrapper
+from django.utils.safestring import mark_safe
 from django.utils.text import capfirst
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
 
 from merengue.base.adminforms import UploadConfigForm, BackupForm
 from merengue.base.models import BaseContent
+from merengue.perms import utils as perms_api
 
 OBJECT_ID_PREFIX = 'base_object_id_'
 MODEL_ADMIN_PREFIX = 'base_model_admin_'
@@ -230,7 +232,6 @@ class BaseAdminSite(DjangoAdminSite):
         return admin_prefix
 
     def site_configuration(self, request):
-        from merengue.perms import utils as perms_api
         if not perms_api.can_manage_site(request.user):
             raise PermissionDenied
         from merengue.utils import restore_config
@@ -339,7 +340,6 @@ class AdminSite(BaseAdminSite, RelatedModelRegistrable):
     def index(self, request, extra_context=None):
         extra_context = extra_context or {}
         app_dict = {}
-        from merengue.perms import utils as perms_api
         manage_plugin_content = perms_api.can_manage_plugin_content(request.user)
         for plugin_name, site in self._plugin_sites.items():
             app_label = plugin_name
@@ -405,10 +405,65 @@ class PluginAdminSite(BaseAdminSite, RelatedModelRegistrable):
         self.root_path = '%s%s/' % (main_admin, self.prefix)
 
     def index(self, request):
-        return super(BaseAdminSite, self).index(request,
-                                                {'title': _('%(plugin_name)s plugin administration') % {'plugin_name': self.plugin_name},
-                                                 'inplugin': True,
-                                                 'plugin_name': self.plugin_name})
+        """
+        Displays the main admin index page, which lists all of the installed
+        apps that have been registered in this site.
+
+        Code taken of django.contrib.admin.sites module. We have change the
+        permissions to see all models admins.
+        """
+        extra_context = {
+            'title': _('%(plugin_name)s plugin administration') % {'plugin_name': self.plugin_name},
+            'inplugin': True,
+            'plugin_name': self.plugin_name,
+        }
+        app_dict = {}
+        for model, model_admin in self._registry.items():
+            app_label = model._meta.app_label
+            # in plugin site admin
+            has_module_perms = perms_api.can_manage_plugin_content(request.user)
+
+            if has_module_perms:
+                perms = model_admin.get_model_perms(request)
+
+                # Check whether user has any perm for this module.
+                # If so, add the module to the model_list.
+                if True in perms.values():
+                    model_dict = {
+                        'name': capfirst(model._meta.verbose_name_plural),
+                        'admin_url': mark_safe('%s/%s/' % (app_label, model.__name__.lower())),
+                        'perms': perms,
+                    }
+                    if app_label in app_dict:
+                        app_dict[app_label]['models'].append(model_dict)
+                    else:
+                        app_dict[app_label] = {
+                            'name': app_label.title(),
+                            'app_url': app_label + '/',
+                            'has_module_perms': has_module_perms,
+                            'models': [model_dict],
+                        }
+
+        # Sort the apps alphabetically.
+        app_list = app_dict.values()
+        app_list.sort(lambda x, y: cmp(x['name'], y['name']))
+
+        # Sort the models alphabetically within each app.
+        for app in app_list:
+            app['models'].sort(lambda x, y: cmp(x['name'], y['name']))
+
+        context = {
+            'title': _('Site administration'),
+            'app_list': app_list,
+            'root_path': self.root_path,
+        }
+        context.update(extra_context or {})
+        context_instance = template.RequestContext(request, current_app=self.name)
+        return render_to_response(
+            self.index_template or 'admin/index.html', context,
+            context_instance=context_instance,
+        )
+    index = never_cache(index)
 
     def app_index(self, request, app_label, extra_context=None):
         return super(PluginAdminSite, self).app_index(request, app_label, {'inplugin': True, 'plugin_name': self.plugin_name})
