@@ -110,6 +110,7 @@ def register_all_plugins():
 
 
 def active_default_plugins(*args, **kwargs):
+    """ active default plugins and creates the portal menu in each language """
     # Only want to run this signal after all application was migrated, but
     # south have not a "post all migrations" signal.
     # The workaround is "collab" have to be the last application migrated
@@ -117,9 +118,7 @@ def active_default_plugins(*args, **kwargs):
         interactive = kwargs.get('interactive', None)
         # register required plugins
         for plugin_dir in settings.REQUIRED_PLUGINS:
-            plugin = register_plugin(plugin_dir)
-            plugin.installed = True
-            plugin.active = True
+            active_plugin_with_deps(plugin_dir)
             from merengue.section.models import Menu
             name_attr = get_fallback_fieldname('name')
             attrs = {name_attr: 'Portal menu', 'slug': settings.MENU_PORTAL_SLUG}
@@ -131,7 +130,17 @@ def active_default_plugins(*args, **kwargs):
                 for lang_code, lang_text in settings.LANGUAGES:
                     setattr(portal_menu, 'name_%s' % lang_code, ugettext('portal menu'))
                 portal_menu.save()
-            plugin.save()
+
+
+def active_plugin_with_deps(plugin_dir):
+    """ active plugins with its dependences """
+    registered_plugin = register_plugin(plugin_dir)
+    plugin = registered_plugin.get_registry_item_class()
+    for dep in getattr(plugin, 'required_plugins', []):
+        active_plugin_with_deps(dep)
+    registered_plugin.installed = True
+    registered_plugin.active = True
+    registered_plugin.save()
 
 
 post_migrate.connect(active_default_plugins)
