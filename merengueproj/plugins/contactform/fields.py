@@ -16,7 +16,17 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from django.conf import settings
+
+if settings.USE_GIS:
+    from django.contrib.gis.db import models
+else:
+    from django.db import models
+
 from django.contrib.admin import widgets
+from django.forms.util import ValidationError
+from django.forms.fields import email_re
+from django.utils.translation import ugettext as _
 from django import forms
 
 
@@ -30,3 +40,28 @@ class DateTimeField(forms.DateTimeField):
 
 class DateField(forms.DateField):
     widget = widgets.AdminDateWidget
+
+
+class MultiEmailField(forms.CharField):
+    widget = forms.widgets.Textarea
+
+    def clean(self, value):
+        super(MultiEmailField, self).clean(value)
+        if value:
+            emails = map(unicode.strip, value.split(','))
+        else:
+            return value
+
+        for email in emails:
+            if not email_re.match(email):
+                raise ValidationError(_("This is not a valid comma separated email list."))
+
+        return value
+
+
+class ModelMultiEmailField(models.TextField):
+
+    def formfield(self, **kwargs):
+        defaults = {'form_class': MultiEmailField}
+        defaults.update(kwargs)
+        return super(ModelMultiEmailField, self).formfield(**defaults)

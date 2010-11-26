@@ -49,8 +49,9 @@ class ContactForm(models.Model):
 
     title = models.CharField(verbose_name=_('name'), max_length=200)
     description = models.TextField(verbose_name=_('description'))
-    email = models.EmailField(verbose_name=_('email'),
-                              default=settings.DEFAULT_FROM_EMAIL)
+    email = custom_fields.ModelMultiEmailField(verbose_name=_('emails'),
+                                               default=settings.DEFAULT_FROM_EMAIL)
+    bcc = custom_fields.ModelMultiEmailField(verbose_name=_('bcc emails'), blank=True)
     subject = models.CharField(verbose_name=_('subject'), max_length=200)
     subject_fixed = models.BooleanField(verbose_name=_('fixed subject'))
     submit_msg = models.CharField(verbose_name=_('submit'), max_length=200)

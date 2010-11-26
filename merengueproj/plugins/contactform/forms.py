@@ -64,9 +64,15 @@ class ContactFormForm(forms.Form):
             msg = render_to_string('contactform/email.html', context,
                                    context_instance=RequestContext(request))
 
-            to_mail = contact_form.email
+            def mailstr_to_list(mailstr):
+                return map(unicode.strip, mailstr.split(','))
+
+            to_mail = mailstr_to_list(contact_form.email)
+            bcc_mail = mailstr_to_list(contact_form.bcc)
 
             attachs = [(f.name, f.read(), f.content_type) for f in files.values()]
-            email = EmailMessage(subject, msg, from_mail, [to_mail], attachments=attachs)
+            email = EmailMessage(subject, msg, from_mail,
+                                 to_mail, bcc=bcc_mail,
+                                 attachments=attachs)
 
             email.send()
