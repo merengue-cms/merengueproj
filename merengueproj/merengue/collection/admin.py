@@ -15,10 +15,17 @@ from merengue.section.models import Section
 from merengue.collection.models import (Collection, IncludeCollectionFilter,
                                         ExcludeCollectionFilter,
                                         CollectionDisplayField)
-from merengue.collection.utils import get_common_fields_no_language, get_common_fields
+from merengue.collection.utils import get_common_fields_no_language, \
+                                                            get_common_fields
+from merengue.collection.forms import CollectionFilterForm
 
 
 class CollectionFilterInline(admin.TabularInline):
+    """
+    Inline admin interface for editing queryset filters.
+    """
+
+    form = CollectionFilterForm
 
     def get_default_fields(self, obj):
         if not obj:
