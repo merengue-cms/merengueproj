@@ -42,6 +42,8 @@ class RegistrableItem(object):
     """ Base class for all registered objects """
 
     name = None # to be overriden in subclasses
+    verbose_name = None # to be overriden in subclasses
+    help_text = None # to be overriden in subclasses
     model = RegisteredItem # to be overriden in subclasses
     config_params = [] # configuration parameters, to be overriden
 
