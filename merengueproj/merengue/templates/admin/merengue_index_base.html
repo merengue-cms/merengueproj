@@ -17,75 +17,75 @@
 <div id="content-merengue">
     <div class="module-merengue" id="contentmanagement">
       <h1>{% trans "Content management" %}</h1>
-      <p>{% trans "Manage your site's content" %}</p>
+      <p>{% trans "Manage the site's content" %}</p>
       <dl>
-        <dt><a href="base/basecontent/" title="{% trans "Content" %}">{% trans "Content" %}</a></dt>
-        <dd>{% trans "View, edit and delete your site's contents." %}</dd>
         {% ifhasperm 'manage_section' %}
-          <dt><a href="section/section/" title="{% trans "Section" %}">{% trans "Section" %}</a></dt>
-          <dd>{% trans "View, edit and delete your site's sections." %}</dd>
+          <dt><a href="section/section/" title="{% trans "Section" %}">{% trans "Content tree" %}</a></dt>
+          <dd>{% trans "View, edit and delete the site's contents." %}</dd>
         {% endifhasperm %}
         {% ifhasperm 'manage_menu' %}
           <dt><a href="section/menu/" title="{% trans "Portal Menu" %}">{% trans "Portal Menu" %}</a></dt>
-          <dd>{% trans "View, edit and delete your site's menus." %}</dd>
+          <dd>{% trans "View, edit and delete the site's menus." %}</dd>
         {% endifhasperm %}
         {% ifhasperm 'manage_link' %}
           <dt><a href="portal/portallink/" title="{% trans "Portal links" %}">{% trans "Portal links" %}</a></dt>
-          <dd>{% trans "View, edit and delete your site's primary and secondary links." %}</dd>
+          <dd>{% trans "View, edit and delete the site's primary and secondary links." %}</dd>
         {% endifhasperm %}
+        <dt><a href="base/basecontent/" title="{% trans "Content" %}">{% trans "Browse content" %}</a></dt>
+        <dd>{% trans "Browse the site's contents." %}</dd>
       </dl>
     </div>
     {% ifhasperm 'manage_site' %}
     <div class="module-merengue" id="sitebuilding">
       <h1>{% trans "Site configuration" %}</h1>
-      <p>{% trans "Control how your site looks and feels." %}</p>
+      <p>{% trans "Control how the site looks and feels." %}</p>
       <dl>
         <dt><a href="block/registeredblock/" title="{% trans "Blocks" %}">{% trans "Blocks" %}</a></dt>
-        <dd>{% trans "View, edit and delete your site's blocks." %}</dd>
+        <dd>{% trans "View, edit and delete the site's blocks." %}</dd>
         <dt><a href="pluggable/registeredplugin/" title="{% trans "Plugins" %}">{% trans "Plugins" %}</a></dt>
-        <dd>{% trans "View, edit and delete your site's plugin." %}</dd>
+        <dd>{% trans "View, edit and delete the site's plugin." %}</dd>
         <dt><a href="theming/theme/" title="{% trans "Themes" %}">{% trans "Themes" %}</a></dt>
-        <dd>{% trans "View, edit and delete your site's themes." %}</dd>
+        <dd>{% trans "View, edit and delete the site's themes." %}</dd>
         <dt><a href="action/registeredaction/" title="{% trans "Actions" %}">{% trans "Actions" %}</a></dt>
-        <dd>{% trans "View, edit and delete your site's actions." %}</dd>
+        <dd>{% trans "View, edit and delete the site's actions." %}</dd>
         <dt><a href="registry/registereditem" title="{% trans "Registry" %}">{% trans "Registry" %}</a></dt>
         <dd>{% trans "Merengue registry" %}</dd>
         <dt><a href="siteconfig/" title="{% trans "Save/restore configuration" %}">{% trans "Save/restore configuration" %}</a></dt>
-        <dd>{% trans "Save/restore your site configuration (block, plugins, active theme, etc.)" %}</dd>
+        <dd>{% trans "Save/restore the site configuration (block, plugins, active theme, etc.)" %}</dd>
       </dl>
     </div>
     {% endifhasperm %}
     {% ifhasperm 'manage_multimedia' %}
     <div class="module-merengue" id="multimedia">
       <h1>{% trans "Multimedia" %}</h1>
-      <p>{% trans "Manage your site's multimedia content" %}</p>
+      <p>{% trans "Manage the site's multimedia content" %}</p>
       <dl>
         <dt><a href="multimedia/photo/" title="{% trans "Photos" %}">{% trans "Photos" %}</a></dt>
-        <dd>{% trans "View, edit and delete your site's photos." %}</dd>
+        <dd>{% trans "View, edit and delete the site's photos." %}</dd>
         <dt><a href="multimedia/video/" title="{% trans "Video" %}">{% trans "Video" %}</a></dt>
-        <dd>{% trans "View, edit and delete your site's videos." %}</dd>
+        <dd>{% trans "View, edit and delete the site's videos." %}</dd>
         <dt><a href="multimedia/audio/" title="{% trans "Audio" %}">{% trans "Audio" %}</a></dt>
-        <dd>{% trans "View, edit and delete your site's audios." %}</dd>
+        <dd>{% trans "View, edit and delete the site's audios." %}</dd>
         <dt><a href="multimedia/panoramicview/" title="{% trans "Panoramic views" %}">{% trans "Panoramic views" %}</a></dt>
-        <dd>{% trans "View, edit and delete your site's panoramic views." %}</dd>
+        <dd>{% trans "View, edit and delete the site's panoramic views." %}</dd>
         <dt><a href="multimedia/image3d/" title="{% trans "Images 3D" %}">{% trans "Images 3D" %}</a></dt>
-        <dd>{% trans "View, edit and delete your site's Images 3D." %}</dd>
+        <dd>{% trans "View, edit and delete the site's Images 3D." %}</dd>
       </dl>
     </div>
     {% endifhasperm %}
     {% ifhasperm 'manage_user' %}
     <div class="module-merengue" id="usermanagement">
       <h1>{% trans "User management" %}</h1>
-      <p>{% trans "Manage your site's users, groups and access to site features." %}</p>
+      <p>{% trans "Manage the site's users, groups and access to site features." %}</p>
       <dl>
         <dt><a href="auth/group" title="{% trans "Groups" %}">{% trans "Groups" %}</a></dt>
-        <dd>{% trans "View, edit and delete your site's groups." %}</dd>
+        <dd>{% trans "View, edit and delete the site's groups." %}</dd>
         <dt><a href="auth/user/" title="{% trans "Users" %}">{% trans "Users" %}</a></dt>
-        <dd>{% trans "View, edit and delete your site's users." %}</dd>
+        <dd>{% trans "View, edit and delete the site's users." %}</dd>
         <dt><a href="perms/role/" title="{% trans "Roles" %}">{% trans "Roles" %}</a></dt>
-        <dd>{% trans "View, edit and delete your site's roles." %}</dd>
+        <dd>{% trans "View, edit and delete the site's roles." %}</dd>
         <dt><a href="perms/objectpermission/" title="{% trans "Permissions" %}">{% trans "Permissions" %}</a></dt>
-        <dd>{% trans "View, edit and delete your site's role permissions." %}</dd>
+        <dd>{% trans "View, edit and delete the site's role permissions." %}</dd>
       </dl>
     </div>
     {% endifhasperm %}
