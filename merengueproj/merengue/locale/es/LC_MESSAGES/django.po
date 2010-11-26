@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-26 11:42+0100\n"
+"POT-Creation-Date: 2010-11-26 12:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -165,29 +165,29 @@ msgstr ""
 msgid "You don't have permission to edit anything."
 msgstr ""
 
-#: merengue/templates/admin/index.html.py:15
-#: merengue/templates/admin/merengue_index_base.html.py:118
-msgid "Control panel"
-msgstr ""
-
-#: merengue/templates/admin/index.html.py:35
+#: merengue/templates/admin/inc.recentactions.html.py:4
 msgid "Recent Actions"
 msgstr ""
 
-#: merengue/templates/admin/index.html.py:36
+#: merengue/templates/admin/inc.recentactions.html.py:5
 msgid "My Actions"
 msgstr ""
 
-#: merengue/templates/admin/index.html.py:40
+#: merengue/templates/admin/inc.recentactions.html.py:8
 msgid "None available"
 msgstr ""
 
-#: merengue/templates/admin/index.html.py:54
+#: merengue/templates/admin/inc.recentactions.html.py:22
 msgid "Unknown content"
 msgstr ""
 
+#: merengue/templates/admin/index.html.py:15
+#: merengue/templates/admin/merengue_index_base.html.py:118
+msgid "Django admin"
+msgstr ""
+
 #: merengue/templates/admin/merengue_index_base.html.py:19
-#: merengue/templates/admin/merengue_index_base.html.py:122
+#: merengue/templates/admin/merengue_index_base.html.py:121
 msgid "Content management"
 msgstr ""
 
@@ -355,7 +355,7 @@ msgid "View, edit and delete the site's Images 3D."
 msgstr ""
 
 #: merengue/templates/admin/merengue_index_base.html.py:82
-#: merengue/templates/admin/merengue_index_base.html.py:124
+#: merengue/templates/admin/merengue_index_base.html.py:123
 msgid "User management"
 msgstr ""
 
@@ -394,26 +394,22 @@ msgid "View, edit and delete the site's role permissions."
 msgstr ""
 
 #: merengue/templates/admin/merengue_index_base.html.py:99
-msgid "Plugin administration"
-msgstr ""
+msgid "Plugins administration"
+msgstr "Administración de plugins"
 
 #: merengue/templates/admin/merengue_index_base.html.py:100
 msgid "Manage your installed plugins."
 msgstr ""
 
 #: merengue/templates/admin/merengue_index_base.html.py:117
-msgid "My Account"
+msgid "Review list"
 msgstr ""
 
 #: merengue/templates/admin/merengue_index_base.html.py:119
-msgid "Create content"
-msgstr ""
-
-#: merengue/templates/admin/merengue_index_base.html.py:120
 msgid "Administer"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:123
+#: merengue/templates/admin/merengue_index_base.html.py:122
 msgid "Site building"
 msgstr ""
 
