@@ -1,5 +1,5 @@
 {% extends "admin/base_site.html" %}
-{% load i18n permissions_tags %}
+{% load i18n permissions_tags transhette_tags %}
 
 <link rel="stylesheet" type="text/css" href="{% load adminmedia %}{% admin_media_prefix %}css/dashboard.css" />
 
@@ -33,6 +33,10 @@
         {% endifhasperm %}
         <dt><a href="base/basecontent/" title="{% trans "Content" %}">{% trans "Browse content" %}</a></dt>
         <dd>{% trans "Browse the site's contents." %}</dd>
+        {% if_can_access_transhette %}
+          <dt><a href="{% url transhette-home %}" title="{% trans "Translate portal" %}">{% trans "Translate site" %}</a></dt>
+          <dd>{% trans "Translate the site messages." %}</dd>
+        {% endif_can_access_transhette %}
       </dl>
     </div>
     {% ifhasperm 'manage_site' %}
