@@ -116,9 +116,9 @@ class BaseAdminSite(DjangoAdminSite):
 
         # custom url definitions
         custom_patterns = patterns('',
-            url(r'^control_panel/$',
-                self.admin_view(self.control_panel),
-                name='control_panel'),
+            url(r'^django_admin/$',
+                self.admin_view(self.django_admin),
+                name='django_admin'),
             url(r'^admin_redirect/(?P<content_type_id>\d+)/(?P<object_id>\d+)/(?P<extra_url>.*)$',
                 self.admin_view(self.admin_redirect),
                 name='admin_redirect'),
@@ -287,9 +287,9 @@ class BaseAdminSite(DjangoAdminSite):
             context_instance=context_instance,
         )
 
-    def control_panel(self, request):
+    def django_admin(self, request):
         """ admin control panel. Similar to django admin index page """
-        return super(BaseAdminSite, self).index(request, {'title': _('Control Panel')})
+        return super(BaseAdminSite, self).index(request, {'title': _('Django admin')})
 
 
 class RelatedModelRegistrable(object):

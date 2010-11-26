@@ -114,9 +114,8 @@
   <div class="module" id="administrator-menu">
     <h2>{{ user.username }}</h2>
     <ul class="level1">
-      <li>{% trans 'My Account' %}</li>
-      <li><a href="{% url admin:control_panel %}">{% trans "Control panel" %}</a></li>
-        <li>{% trans 'Create content' %}</li>
+      <li>{% trans 'Review list' %}</li>
+      <li><a href="{% url admin:django_admin %}">{% trans "Django admin" %}</a></li>
         <li>{% trans 'Administer' %}
           <ul class="level2">
             <li>{% trans 'Content management' %}</li>
@@ -126,5 +125,8 @@
         </li>
     </ul>
   </div>
+
+  {% include "admin/inc.recentactions.html" %}
 </div>
+
 {% endblock %}
