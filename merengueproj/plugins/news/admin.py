@@ -21,10 +21,11 @@ from plugins.news.models import NewsItem, NewsCategory
 
 
 class NewsCategoryAdmin(BaseCategoryAdmin):
-    pass
+    """ Admin for news item category management """
 
 
 class NewsItemAdmin(BaseContentAdmin):
+    """ Admin for news item management """
     list_display = BaseContentAdmin.list_display + ('publish_date', )
     list_filter = BaseContentAdmin.list_filter + ('categories', )
     html_fields = BaseContentAdmin.html_fields + ('body', )
@@ -34,7 +35,7 @@ class NewsItemAdmin(BaseContentAdmin):
 
 
 class NewsItemSectionAdmin(NewsItemAdmin, SectionContentAdmin):
-    pass
+    """ Admin for news item management inside sections """
 
 
 def register(site):

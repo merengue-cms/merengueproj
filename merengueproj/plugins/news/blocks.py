@@ -15,7 +15,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext
+from django.utils.translation import ugettext_lazy as _
 
 from merengue.block.blocks import Block, ContentBlock
 from plugins.news.views import get_news
@@ -23,22 +24,26 @@ from plugins.news.views import get_news
 
 class LatestNewsBlock(Block):
     name = 'latestnews'
+    verbose_name = _('Latest news')
+    help_text = _('Block with last news items published')
     default_place = 'leftsidebar'
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):
         news_list = get_news(request, 5)
         return cls.render_block(request, template_name='news/block_latest.html',
-                                block_title=_('Latest news'),
+                                block_title=ugettext('Latest news'),
                                 context={'news_list': news_list})
 
 
 class NewsCommentsBlock(ContentBlock):
     name = 'newscomment'
+    verbose_name = _('Latest news')
+    help_text = _('Block with news items comments')
     default_place = 'aftercontent'
 
     @classmethod
     def render(cls, request, place, content, context, *args, **kwargs):
         return cls.render_block(request, template_name='news/block_newscomments.html',
-                                block_title=_('News comments'),
+                                block_title=ugettext('News comments'),
                                 context={'content': content})
