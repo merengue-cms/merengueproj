@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-26 11:07+0100\n"
+"POT-Creation-Date: 2010-11-26 11:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,7 +71,7 @@ msgid "History"
 msgstr ""
 
 #: merengue/templates/admin/change_form.html.py:28
-#: merengue/templates/admin/merengue_index_base.html.py:87
+#: merengue/templates/admin/merengue_index_base.html.py:91
 #: merengue/templates/admin/perms/objectpermission/role_permissions.html.py:32
 msgid "Permissions"
 msgstr ""
@@ -166,7 +166,7 @@ msgid "You don't have permission to edit anything."
 msgstr ""
 
 #: merengue/templates/admin/index.html.py:15
-#: merengue/templates/admin/merengue_index_base.html.py:114
+#: merengue/templates/admin/merengue_index_base.html.py:118
 msgid "Control panel"
 msgstr ""
 
@@ -187,7 +187,7 @@ msgid "Unknown content"
 msgstr ""
 
 #: merengue/templates/admin/merengue_index_base.html.py:19
-#: merengue/templates/admin/merengue_index_base.html.py:118
+#: merengue/templates/admin/merengue_index_base.html.py:122
 msgid "Content management"
 msgstr ""
 
@@ -235,173 +235,185 @@ msgstr ""
 msgid "Browse the site's contents."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:40
+#: merengue/templates/admin/merengue_index_base.html.py:37
+msgid "Translate portal"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:37
+msgid "Translate site"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:38
+msgid "Translate the site messages."
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:44
 #: merengue/templates/admin/siteconfig.html.py:25
 msgid "Site configuration"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:41
+#: merengue/templates/admin/merengue_index_base.html.py:45
 msgid "Control how the site looks and feels."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:43
+#: merengue/templates/admin/merengue_index_base.html.py:47
 msgid "Blocks"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:44
+#: merengue/templates/admin/merengue_index_base.html.py:48
 msgid "View, edit and delete the site's blocks."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:45
+#: merengue/templates/admin/merengue_index_base.html.py:49
 msgid "Plugins"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:46
+#: merengue/templates/admin/merengue_index_base.html.py:50
 msgid "View, edit and delete the site's plugin."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:47
+#: merengue/templates/admin/merengue_index_base.html.py:51
 msgid "Themes"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:48
+#: merengue/templates/admin/merengue_index_base.html.py:52
 msgid "View, edit and delete the site's themes."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:49
+#: merengue/templates/admin/merengue_index_base.html.py:53
 msgid "Actions"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:50
+#: merengue/templates/admin/merengue_index_base.html.py:54
 msgid "View, edit and delete the site's actions."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:51
+#: merengue/templates/admin/merengue_index_base.html.py:55
 msgid "Registry"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:52
+#: merengue/templates/admin/merengue_index_base.html.py:56
 msgid "Merengue registry"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:53
+#: merengue/templates/admin/merengue_index_base.html.py:57
 #: merengue/templates/admin/siteconfig.html.py:13
 msgid "Save/restore configuration"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:54
+#: merengue/templates/admin/merengue_index_base.html.py:58
 msgid ""
 "Save/restore the site configuration (block, plugins, active theme, etc.)"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:60
+#: merengue/templates/admin/merengue_index_base.html.py:64
 msgid "Multimedia"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:61
+#: merengue/templates/admin/merengue_index_base.html.py:65
 msgid "Manage the site's multimedia content"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:63
+#: merengue/templates/admin/merengue_index_base.html.py:67
 msgid "Photos"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:64
+#: merengue/templates/admin/merengue_index_base.html.py:68
 msgid "View, edit and delete the site's photos."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:65
+#: merengue/templates/admin/merengue_index_base.html.py:69
 msgid "Video"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:66
+#: merengue/templates/admin/merengue_index_base.html.py:70
 msgid "View, edit and delete the site's videos."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:67
+#: merengue/templates/admin/merengue_index_base.html.py:71
 msgid "Audio"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:68
+#: merengue/templates/admin/merengue_index_base.html.py:72
 msgid "View, edit and delete the site's audios."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:69
+#: merengue/templates/admin/merengue_index_base.html.py:73
 msgid "Panoramic views"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:70
+#: merengue/templates/admin/merengue_index_base.html.py:74
 msgid "View, edit and delete the site's panoramic views."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:71
+#: merengue/templates/admin/merengue_index_base.html.py:75
 msgid "Images 3D"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:72
+#: merengue/templates/admin/merengue_index_base.html.py:76
 msgid "View, edit and delete the site's Images 3D."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:78
-#: merengue/templates/admin/merengue_index_base.html.py:120
+#: merengue/templates/admin/merengue_index_base.html.py:82
+#: merengue/templates/admin/merengue_index_base.html.py:124
 msgid "User management"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:79
+#: merengue/templates/admin/merengue_index_base.html.py:83
 msgid "Manage the site's users, groups and access to site features."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:81
+#: merengue/templates/admin/merengue_index_base.html.py:85
 #: merengue/templates/admin/perms/objectpermission/role_permissions.html.py:108
 msgid "Groups"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:82
+#: merengue/templates/admin/merengue_index_base.html.py:86
 msgid "View, edit and delete the site's groups."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:83
+#: merengue/templates/admin/merengue_index_base.html.py:87
 #: merengue/templates/admin/perms/objectpermission/role_permissions.html.py:70
 msgid "Users"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:84
+#: merengue/templates/admin/merengue_index_base.html.py:88
 msgid "View, edit and delete the site's users."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:85
+#: merengue/templates/admin/merengue_index_base.html.py:89
 msgid "Roles"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:86
+#: merengue/templates/admin/merengue_index_base.html.py:90
 msgid "View, edit and delete the site's roles."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:88
+#: merengue/templates/admin/merengue_index_base.html.py:92
 msgid "View, edit and delete the site's role permissions."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:95
+#: merengue/templates/admin/merengue_index_base.html.py:99
 msgid "Plugin administration"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:96
+#: merengue/templates/admin/merengue_index_base.html.py:100
 msgid "Manage your installed plugins."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:113
+#: merengue/templates/admin/merengue_index_base.html.py:117
 msgid "My Account"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:115
+#: merengue/templates/admin/merengue_index_base.html.py:119
 msgid "Create content"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:116
+#: merengue/templates/admin/merengue_index_base.html.py:120
 msgid "Administer"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:119
+#: merengue/templates/admin/merengue_index_base.html.py:123
 msgid "Site building"
 msgstr ""
 
