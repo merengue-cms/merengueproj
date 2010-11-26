@@ -21,7 +21,7 @@ FILTER_OPERATORS = (
     ('gt', _('Greater than')),
     ('gte', _('Greater than or equal')),
     ('in', _('In (coma separated list)')),
-    ('isnull', _('Is null')),
+    ('isnull', _('Is empty')),
 )
 
 
@@ -165,9 +165,11 @@ class CollectionFilter(models.Model):
         Create a simple Q object from the model object. Each statement could be
         overrided by keword arguments.
         """
+        if value==None:
+            value = self.value
         field_lookup = {
             '%s__%s' % (field or self.filter_field,
-                        operator or self.filter_operator): value or self.value,
+                        operator or self.filter_operator): value,
         }
         return Q(**field_lookup)
 
@@ -176,9 +178,9 @@ class CollectionFilter(models.Model):
         Custom method for `in` filter operator.
         """
         isnuul_q = self._prepare_q_object()
-        is_empty_q = Q(self._prepare_q_object(operator='exact', value=""))
+        is_empty_q = self._prepare_q_object(operator='exact', value="")
         if not self.value:
-            is_empty_q = ~is_empty_q
+            return isnuul_q & ~is_empty_q
         return isnuul_q | is_empty_q
 
     def get_q_object(self):
