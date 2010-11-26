@@ -12,7 +12,7 @@
         }
     </style>
 
-    <form id="contactform" method="POST" action="{% url contact_form_submit content.slug contact_form.id %}">
+    <form id="contactform" method="POST" action="{% url contact_form_submit content.slug contact_form.id %}" enctype="multipart/form-data">
         <fieldset>
             <legend>{{ contact_form.title }}</legend>
             <p>

@@ -16,9 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import datetime
-
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 from django.core.serializers.json import DateTimeAwareJSONEncoder
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -40,8 +38,13 @@ class ContactFormForm(forms.Form):
                 subject = data['subject']
 
             opts = {}
+            files = {}
             for opt in contact_form.opts.all():
-                opts[opt.label] = data.get('option_%s' % opt.id, _('Unset'))
+                d = data.get('option_%s' % opt.id, _('Unset'))
+                if opt.field_type == 'file':
+                    files[opt.label] = d
+                else:
+                    opts[opt.label] = d
 
             if request.user.is_authenticated():
                 from_mail = request.user.email
@@ -63,5 +66,7 @@ class ContactFormForm(forms.Form):
 
             to_mail = contact_form.email
 
-            send_mail(subject, msg, from_mail,
-                      [to_mail], fail_silently=False)
+            attachs = [(f.name, f.read(), f.content_type) for f in files.values()]
+            email = EmailMessage(subject, msg, from_mail, [to_mail], attachments=attachs)
+
+            email.send()

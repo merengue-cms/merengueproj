@@ -30,7 +30,7 @@ def contact_form_submit(request, content_slug, contact_form_id):
                                      content__slug=content_slug)
 
     if request.method == 'POST':
-        form = contact_form.get_form(request.POST)
+        form = contact_form.get_form(request.POST, request.FILES)
         if form.is_valid():
             form.save(request, content, contact_form)
             request.session['form_msg'] = _('Form was sended correctly')
