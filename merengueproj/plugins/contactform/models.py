@@ -52,6 +52,9 @@ class ContactForm(models.Model):
     email = custom_fields.ModelMultiEmailField(verbose_name=_('emails'),
                                                default=settings.DEFAULT_FROM_EMAIL)
     bcc = custom_fields.ModelMultiEmailField(verbose_name=_('bcc emails'), blank=True)
+    redirect_to = models.CharField(verbose_name=_('redirect to'),
+                                   max_length=200,
+                                   blank=True)
     subject = models.CharField(verbose_name=_('subject'), max_length=200)
     subject_fixed = models.BooleanField(verbose_name=_('fixed subject'))
     submit_msg = models.CharField(verbose_name=_('submit'), max_length=200)

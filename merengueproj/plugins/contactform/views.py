@@ -42,4 +42,9 @@ def contact_form_submit(request, content_slug, contact_form_id):
             request.session['form_errors'] = err
             request.session['form_data'] = form.data
 
-    return HttpResponseRedirect(content.public_link())
+    if contact_form.redirect_to:
+        redirect = contact_form.redirect_to
+    else:
+        redirect = content.public_link()
+
+    return HttpResponseRedirect(redirect)
