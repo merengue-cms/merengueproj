@@ -264,5 +264,10 @@ SYS_EXECUTABLE = None
 
 JOHNNY_TABLE_BLACKLIST = ('south_migrationhistory', )
 
-#Themes settings
+# Themes settings
 DEFAULT_THEME_PREVIEW = 'merengue/img/preview_merengue.png'
+
+# Path for translation catalogs search
+LOCALE_PATHS = (
+    path.join(MERENGUEDIR, 'locale'),
+)
