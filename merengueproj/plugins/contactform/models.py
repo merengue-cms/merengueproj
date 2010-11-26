@@ -55,10 +55,13 @@ class ContactForm(models.Model):
     redirect_to = models.CharField(verbose_name=_('redirect to'),
                                    max_length=200,
                                    blank=True)
-    subject = models.CharField(verbose_name=_('subject'), max_length=200)
+    subject = models.CharField(verbose_name=_('subject'), max_length=200,
+                               default=_('Subject'))
     subject_fixed = models.BooleanField(verbose_name=_('fixed subject'))
-    submit_msg = models.CharField(verbose_name=_('submit'), max_length=200)
+    submit_msg = models.CharField(verbose_name=_('submit'), max_length=200,
+                                default=_('Send'))
     reset_msg = models.CharField(verbose_name=_('reset'), max_length=200,
+                                 default=_('Reset'),
                                  blank=True)
     reset_button = models.BooleanField(verbose_name=_('reset button'),
                                         default=False)
