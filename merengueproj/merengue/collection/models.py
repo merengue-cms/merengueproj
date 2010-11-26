@@ -177,11 +177,11 @@ class CollectionFilter(models.Model):
         """
         Custom method for `in` filter operator.
         """
-        isnuul_q = self._prepare_q_object()
+        isnull_q = self._prepare_q_object()
         is_empty_q = self._prepare_q_object(operator='exact', value="")
         if not self.value:
-            return isnuul_q & ~is_empty_q
-        return isnuul_q | is_empty_q
+            return isnull_q & ~is_empty_q
+        return isnull_q | is_empty_q
 
     def get_q_object(self):
         """
