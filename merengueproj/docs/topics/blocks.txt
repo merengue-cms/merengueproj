@@ -14,6 +14,23 @@ using the Merengue `block reordering interface`_ to change blocks location.
 
 .. _`block reordering interface`: http://www.merengueproject.org/features/visual-blocks-management/
 
+Block kinds
+-----------
+
+* **Basic blocks**: plain blocks which are thought to be render in every Merengue page. Some examples:
+
+  * The calendar block.
+
+  * The portal menu block.
+
+* **Content blocks**: blocks which will be rendered in every content view. Examples are:
+
+  * The feedback block, for content comments.
+
+  * The Open Document export block.
+
+* **Section blocks**: blocks to be render inside a section, like the section menu block.
+
 Plugin tree with blocks
 -----------------------
 
@@ -51,7 +68,7 @@ This is a ``blocks.py`` file code fragment:
 
         @classmethod
         def render(cls, request, place, context):
-            news_list = get_news(5)
+            news_list = get_news(request, 5)
             return cls.render_block(request, template_name='news/block_latest.html',
                                     block_title='Latest news',
                                     context={'news_list': news_list})
@@ -70,23 +87,43 @@ About block rendering
 In a Merengue block, ``render`` method is a callback function which will be
 called when Merengue is rendering blocks in location defined for that block.
 
+For rendering block you can use several templatetags like ``render_blocks``,
+``render_content_blocks``, ``render_section_blocks`` and ``render_all_blocks``.
+
 The block rendering is done in some base templates. For example, in
 `base/inc.leftsidebar.html`_ template, the blocks placed at ``leftsidebar`` are
-rendered, using this ``render_blocks`` templatetags as follows:
+rendered, using this ``render_all_blocks`` templatetags as follows:
 
 .. code-block:: html+django
 
   {% load block_tags %}
 
   {% block leftsidebarblocks %}
-    {% render_blocks "leftsidebar" %}
+    {% render_all_blocks "leftsidebar" %}
     {# more stuff #}
   {% endblock %}
 
-This ``render_blocks`` templatetags will cause calling to ``render`` method
-with ``leftsidebar`` passed in ``place`` parameter. Also, request and context
-are passed by param, to be used in ``render`` method, if you want. Next
-example is self-explanatory:
+This ``render_all_blocks`` templatetags will cause calling to ``render`` method
+with ``leftsidebar`` passed in ``place`` parameter. The ``render_all_blocks``
+method is in fact a shortcut of this HTML fragment:
+
+.. code-block:: html+django
+
+    {% render_blocks "leftsidebar" %}
+    {% if content %}
+        {% render_content_blocks "leftsidebar" for content %}
+    {% endif %}
+    {% if section %}
+        {% render_section_blocks "leftsidebar" for section %}
+    {% endif %}
+
+So, the first ``render_blocks`` call will render the plain blocks,
+``render_content_blocks`` call will render all content block and the
+``render_section_blocks`` will render all section blocks.
+
+Every ``render_*_blocks`` templatetag will call to the ``render`` method of
+every registered block. Also, request and context will be passed by param, to
+be used in ``render`` method, if you want. Next example is self-explanatory:
 
 .. code-block:: python
 
@@ -146,4 +183,3 @@ Our ``LatestNewsBlock`` class must be referenced in the plugin configuration ins
 
 * ``get_blocks`` is a classmethod that returns the specified blocks that we want to register.
 
-(( to be completed ))
