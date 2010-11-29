@@ -43,9 +43,9 @@ class RegisteredPlugin(RegisteredItem):
         plugin_config = self.get_plugin_config()
         if hasattr(plugin_config, 'screenshot'):
             return os.path.join(settings.MEDIA_URL, self.directory_name,
-                                                    plugin_config.screenshot)
+                                plugin_config.screenshot)
         return os.path.join(settings.MEDIA_URL,
-                                            settings.DEFAULT_PLUGIN_PREVIEW)
+                            settings.DEFAULT_PLUGIN_PREVIEW)
 
     screenshot = property(get_screenshot)
 
