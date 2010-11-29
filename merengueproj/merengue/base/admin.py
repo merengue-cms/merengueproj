@@ -735,6 +735,8 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
         """
         Overrides Django admin behaviour to add ownership based access control
         """
+        if obj and obj.no_deletable:
+            return False
         if obj:
             return perms_api.has_permission(obj, request.user, 'delete')
         return True
@@ -763,6 +765,9 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
                     form.base_fields['status'].initial = 'pending'
             else:
                 form.base_fields.pop('status')
+        if obj and getattr(obj, 'no_changeable', False):
+            # Prevent changes if some one forces a save submit
+            form.is_valid = lambda x: False
         return form
 
     def save_model(self, request, obj, form, change):

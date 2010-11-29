@@ -30,6 +30,7 @@ def customize_submit_row(context, prefix=''):
     is_related_one_to_one_admin = getattr(model_admin, 'one_to_one', False)
     current_body_field = context.get('current_body_field', False)
     return {
+        'no_save': context.get('original', None) and getattr(context['original'], 'no_changeable', False),
         'is_foreign_model': is_foreign_model,
         'current_body_field': current_body_field,
         'onclick_attrib': (opts.get_ordered_objects() and change

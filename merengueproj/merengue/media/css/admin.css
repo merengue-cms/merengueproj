@@ -257,6 +257,22 @@ form .aligned p.errornote{
     margin-left: 0em;
 }
 
+div.warning-message {
+    border: 1px solid blue;
+    margin: 1em 0px;
+    background: #cceeff;
+}
+
+div.warning-message ul {
+    margin: 0px;
+}
+
+div.warning-message ul li {
+    list-style-image: url("../img/info_icon.gif");
+    line-height: 16px;
+    margin: 1em 0px;
+}
+
 input.withInternalLinkUrl {
     float: left;
 }
