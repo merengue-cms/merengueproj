@@ -87,10 +87,29 @@ class CollectionAdmin(BaseContentAdmin):
             return []
         return [('', '----------')] + [(i, i) for i in get_common_fields_no_language(obj)]
 
+    def get_subclasses(self, cls_list, _seen=None):
+        ## {{{ http://code.activestate.com/recipes/576949/ (r3)
+        for cls in cls_list:
+            if not isinstance(cls, type):
+                raise TypeError('itersubclasses must be called with '
+                                'new-style classes, not %.100r' % cls)
+            if _seen is None:
+                _seen = set()
+            try:
+                subs = cls.__subclasses__()
+            except TypeError:  # fails only when cls is type
+                subs = cls.__subclasses__(cls)
+            for sub in subs:
+                if sub not in _seen:
+                    _seen.add(sub)
+                    yield sub
+                    for sub in self.get_subclasses([sub], _seen):
+                        yield sub
+
     def get_form(self, request, obj=None, **kwargs):
         form = super(CollectionAdmin, self).get_form(request, obj, **kwargs)
         if 'content_types' in form.base_fields:
-            main_models = BaseContent.__subclasses__() + [Section] + Section.__subclasses__()
+            main_models = self.get_subclasses([BaseContent, Section])
             types_id = []
             for m in main_models:
                 types_id.append(ContentType.objects.get_for_model(m).id)
