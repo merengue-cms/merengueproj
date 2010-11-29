@@ -23,21 +23,32 @@ from merengue.pluggable.checker import check_plugins
 from merengue.pluggable.models import RegisteredPlugin
 from merengue.pluggable.utils import has_required_dependencies
 from merengue.registry.admin import RegisteredItemAdmin
+from django.utils.safestring import mark_safe
 
 
 class RegisteredPluginAdmin(RegisteredItemAdmin):
+
+    def get_screenshot(self):
+        return mark_safe(u'<img src="%s" />' % (self.screenshot))
+    get_screenshot.allow_tags = True
+
+    change_form_template = 'admin/plugin/plugin_change_form.html'
     change_list_template = 'admin/plugin/plugin_change_list.html'
     readonly_fields = RegisteredItemAdmin.readonly_fields + ('name',
-        'description', 'version', 'timestamp', 'directory_name')
-    list_display = ('name', 'directory_name', 'installed', 'active',
-                    'required_apps', 'required_plugins')
+        'description', 'version', 'timestamp', 'directory_name', )
+    list_display = ('name', get_screenshot, )
     ordering = ('broken', )
 
     fieldsets = (
-        ('', {'fields': ('name', 'description', 'version', 'directory_name', 'module', 'class_name', 'required_apps', 'required_plugins')}),
+        ('',
+            {'fields': ('name', 'description', 'version', 'directory_name',
+                        'module', 'class_name', 'required_apps',
+                        'required_plugins', ), }
+        ),
         (_('Status'),
-            {'fields': ('installed', 'active', 'order', 'config')},
-        ))
+            {'fields': ('installed', 'active', 'order', 'config'), },
+        )
+    )
 
     def get_form(self, request, obj=None):
         form = super(RegisteredPluginAdmin, self).get_form(request, obj)
@@ -60,6 +71,8 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
             for field_name, field in form.base_fields.items():
                 set_field_read_only(field, field_name, obj)
 
+        form.after_related_objects = '121212'
+#        self.after_related_objects
         return form
 
     def save_form(self, request, form, change):

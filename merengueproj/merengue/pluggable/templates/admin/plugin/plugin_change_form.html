@@ -1,0 +1,96 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block after_related_objects %}
+    
+  <fieldset class="module aligned">
+      <div class="form-row">
+          <div class="field-box">
+              <img src="{{ original.screenshot }}" />              
+          </div>
+      </div>      
+  </fieldset>
+  
+              
+  {% if original.get_plugin_config.get_blocks %}
+  <fieldset class="module aligned">    
+        <h2>{% trans "New blocks" %}</h2>
+        {% for block in original.get_plugin_config.get_blocks %}
+        <div class="form-row">        
+          <div>
+            {{ block.name }}{% if block.help_text %}: {{ block.help_text }} {% endif %} 
+          </div>        
+        </div>
+      {% endfor %}
+  </fieldset>
+  {% endif %}
+  
+  {% if original.get_plugin_config.get_model_admins %}
+  <fieldset class="module aligned">    
+        <h2>{% trans "New Model Admins" %}</h2>
+        {% for model_admin in original.get_plugin_config.get_model_admins %}
+        <div class="form-row">        
+          <div>
+            {{ model_admin.1 }} 
+          </div>        
+        </div>
+      {% endfor %}
+  </fieldset>
+  {% endif %}
+  
+  {% if original.get_plugin_config.get_actions %}
+  <fieldset class="module aligned">    
+        <h2>{% trans "New Actions" %}</h2>
+        {% for action in original.get_plugin_config.get_actions %}
+        <div class="form-row">        
+          <div>
+            {{ action.name }}{% if action.help_text %}: {{ action.help_text }} {% endif %} 
+          </div>        
+        </div>
+      {% endfor %}
+  </fieldset>
+  {% endif %}
+  
+  {% if original.get_plugin_config.get_viewlets %}
+  <fieldset class="module aligned">    
+        <h2>{% trans "New Viewlets" %}</h2>
+        {% for viewlet in original.get_plugin_config.get_viewlets %}
+        <div class="form-row">        
+          <div>
+            {{ viewlet.label }} 
+          </div>        
+        </div>
+      {% endfor %}
+  </fieldset>
+  {% endif %}
+  
+  {% if original.get_plugin_config.get_middlewares %}
+  <fieldset class="module aligned">    
+        <h2>{% trans "New Middlewares" %}</h2>
+        {% for middleware in original.get_plugin_config.get_middlewares %}
+        <div class="form-row">        
+          <div>
+            {{ middleware }} 
+          </div>        
+        </div>
+      {% endfor %}
+  </fieldset>
+  {% endif %}
+  
+  {% if original.get_plugin_config.get_section_models %}
+  <fieldset class="module aligned">    
+        <h2>{% trans "New Section Models" %}</h2>
+        {% for section_model in original.get_plugin_config.get_section_models %}
+        <div class="form-row">        
+          <div>
+            {{ section_model.name }}{% if section_model.help_text %}: {{ section_model.help_text }} {% endif %} 
+          </div>        
+        </div>
+      {% endfor %}
+  </fieldset>
+  {% endif %}
+  
+{% endblock %}
+
+
+ 

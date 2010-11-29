@@ -271,3 +271,6 @@ DEFAULT_THEME_PREVIEW = 'merengue/img/preview_merengue.png'
 LOCALE_PATHS = (
     path.join(MERENGUEDIR, 'locale'),
 )
+
+# There real path would be  path.join(MEDIA_URL, DEFAULT_PLUGIN_PREVIEW)
+DEFAULT_PLUGIN_PREVIEW = path.join('merengue', 'img', 'preview_merengue.png')

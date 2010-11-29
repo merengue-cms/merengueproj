@@ -27,6 +27,7 @@ from merengue.pluggable.utils import (install_plugin, get_plugins_dir,
 from merengue.pluggable.managers import PluginManager
 from merengue.pluggable.dbfields import RequiredPluginsField, RequiredAppsField
 from merengue.registry.models import RegisteredItem
+from merengue.pluggable.utils import get_plugin_config
 
 
 class RegisteredPlugin(RegisteredItem):
@@ -39,10 +40,23 @@ class RegisteredPlugin(RegisteredItem):
     directory_name = models.CharField(_('directory name'), max_length=100,
                                       unique=True)
 
+    def get_screenshot(self):
+        plugin_config = self.get_plugin_config()
+        if hasattr(plugin_config, 'screenshot'):
+            return os.path.join(settings.MEDIA_URL, self.directory_name,
+                                                    plugin_config.screenshot)
+        return os.path.join(settings.MEDIA_URL,
+                                            settings.DEFAULT_PLUGIN_PREVIEW)
+
+    screenshot = property(get_screenshot)
+
     class Meta:
         db_table = 'plugins_registeredplugin'
 
     objects = PluginManager()
+
+    def get_plugin_config(self):
+        return get_plugin_config(self.directory_name)
 
     def __unicode__(self):
         return self.name
@@ -61,6 +75,7 @@ def install_plugin_signal(sender, instance, **kwargs):
     if instance.installed and instance.directory_name and not instance.broken:
         app_name = get_plugin_module_name(instance.directory_name)
         install_plugin(instance, app_name)
-    elif not instance.active and instance.directory_name: # Change this line will be fixes in #542
+        # Change this line will be fixes in #542
+    elif not instance.active and instance.directory_name:
         disable_plugin(get_plugin_module_name(instance.directory_name))
 signals.post_save.connect(install_plugin_signal, sender=RegisteredPlugin)
