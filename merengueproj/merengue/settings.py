@@ -264,13 +264,13 @@ SYS_EXECUTABLE = None
 
 JOHNNY_TABLE_BLACKLIST = ('south_migrationhistory', )
 
-# Themes settings
-DEFAULT_THEME_PREVIEW = 'merengue/img/preview_merengue.png'
-
 # Path for translation catalogs search
 LOCALE_PATHS = (
     path.join(MERENGUEDIR, 'locale'),
 )
 
-# There real path would be  path.join(MEDIA_URL, DEFAULT_PLUGIN_PREVIEW)
+# Theme default preview image. The real path would be path.join(MEDIA_URL, DEFAULT_PLUGIN_PREVIEW)
+DEFAULT_THEME_PREVIEW = 'merengue/img/preview_merengue.png'
+
+# Plugin default preview image. The real path would be path.join(MEDIA_URL, DEFAULT_PLUGIN_PREVIEW)
 DEFAULT_PLUGIN_PREVIEW = path.join('merengue', 'img', 'preview_merengue.png')
