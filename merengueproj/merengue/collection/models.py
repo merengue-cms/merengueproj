@@ -50,6 +50,11 @@ class Collection(BaseContent):
         verbose_name=_('Reverse order'),
         )
 
+    show_main_image = models.BooleanField(
+        default=True,
+        verbose_name=_('Show main_image of collection items'),
+        )
+
     class Meta:
         verbose_name = _(u'Collection')
         verbose_name_plural = _(u'Collections')
@@ -165,7 +170,7 @@ class CollectionFilter(models.Model):
         Create a simple Q object from the model object. Each statement could be
         overrided by keword arguments.
         """
-        if value==None:
+        if value == None:
             value = self.value
         field_lookup = {
             '%s__%s' % (field or self.filter_field,
@@ -232,6 +237,10 @@ class CollectionDisplayField(models.Model):
     safe = models.BooleanField(
         default=False,
         verbose_name=_(u'Safe html content'),
+        )
+    show_label = models.BooleanField(
+        default=True,
+        verbose_name=_(u'Show field label'),
         )
 
     def __unicode__(self):

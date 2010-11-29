@@ -35,6 +35,10 @@ def get_collection_fields(request):
         return HttpResponse(simplejson.dumps(result), mimetype='text/plain')
     content_types = ContentType.objects.filter(id__in=content_type_ids.split(','))
     fields = get_common_fields_for_cts(content_types)
-    result['fields'] = [''] + list(fields)
-    result['fields_no_lang'] = [''] + list(get_common_fields_no_language_from_fields(fields))
+    all_fields = [''] + list(fields) + ['content_type_name']
+    all_fields.sort()
+    all_fields_no_lang = [''] + list(get_common_fields_no_language_from_fields(fields)) + ['content_type_name']
+    all_fields_no_lang.sort()
+    result['fields'] = all_fields
+    result['fields_no_lang'] = all_fields_no_lang
     return HttpResponse(simplejson.dumps(result), mimetype='text/plain')
