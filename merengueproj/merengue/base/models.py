@@ -52,6 +52,7 @@ from tagging.fields import TagField
 
 from merengue.base.managers import BaseContentManager, WorkflowManager
 from merengue.multimedia.models import BaseMultimedia
+from merengue.utils import is_last_application
 
 
 PRIORITY_CHOICES = (
@@ -687,10 +688,12 @@ def handle_pre_migrate(sender, **kwargs):
 def handle_post_migrate(sender, **kwargs):
     from merengue.pluggable import enable_active_plugins
     global post_save_receivers, cache_backend
+    app = kwargs['app']
+    if is_last_application(app):
+        enable_active_plugins()
     # site fixtures loading after migration
-    enable_active_plugins()
     for app_name, fixtures in getattr(settings, 'SITE_FIXTURES', {}).items():
-        if app_name == kwargs['app']: # only migrate
+        if app_name == app: # only migrate
             for fixture in fixtures:
                 call_command('loaddata', fixture, verbosity=1)
     # will set again saved receivers and cache backend

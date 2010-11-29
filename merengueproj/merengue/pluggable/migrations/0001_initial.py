@@ -10,6 +10,7 @@ class Migration(SchemaMigration):
         db.create_table('plugins_registeredplugin', (
             ('registereditem_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['registry.RegisteredItem'], unique=True, primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('description', self.gf('django.db.models.fields.TextField')()),
             ('version', self.gf('django.db.models.fields.CharField')(max_length=25)),
             ('required_apps', self.gf('merengue.pluggable.dbfields.RequiredAppsField')()),
             ('required_plugins', self.gf('merengue.pluggable.dbfields.RequiredPluginsField')()),
