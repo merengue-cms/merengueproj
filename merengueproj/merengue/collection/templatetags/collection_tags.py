@@ -20,12 +20,22 @@ class CollectionIterator(list):
             yield i
 
 
+def _get_value(field, field_name, item):
+    value = getattr(item, field_name, None)
+    if not value:
+        return value
+    for vfilter in field.collectiondisplayfieldfilter_set.all().order_by('filter_order'):
+        filter_module_name, filter_module_function = vfilter.filter_module.rsplit('.', 1)
+        func = getattr(__import__(filter_module_name, {}, {}, True), filter_module_function, None)
+        value = func(value, *vfilter.filter_params.split(','))
+    return value
+
+
 @register.inclusion_tag('collection/collection_item.html', takes_context=True)
 def collection_item(context, collection, item):
     display_fields = collection.display_fields.all().order_by('field_order')
 
     fields = []
-    print item.content_type_name
     for df in display_fields:
         field_name = df.field_name
         if field_name == 'content_type_name':
@@ -44,7 +54,7 @@ def collection_item(context, collection, item):
         fields.append({'name': verbose_name,
                        'field_name': field_name,
                        'show_label': df.show_label,
-                       'value': getattr(item, field_name, None),
+                       'value': _get_value(df, field_name, item),
                        'safe': df.safe})
     return {
         'item': item,

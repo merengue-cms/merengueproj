@@ -7,17 +7,27 @@ from django.utils.translation import ugettext_lazy as _
 
 from transmeta import get_real_fieldname_in_each_language
 
-from merengue.base.admin import BaseContentAdmin
+from merengue.base.admin import (BaseContentAdmin, RelatedModelAdmin,
+                                 BaseOrderableAdmin)
 from merengue.section.admin import SectionContentAdmin
 
 from merengue.base.models import BaseContent
 from merengue.section.models import Section
 from merengue.collection.models import (Collection, IncludeCollectionFilter,
                                         ExcludeCollectionFilter,
-                                        CollectionDisplayField)
+                                        CollectionDisplayField,
+                                        CollectionDisplayFieldFilter)
 from merengue.collection.utils import get_common_fields_no_language, \
                                                             get_common_fields
 from merengue.collection.forms import CollectionFilterForm
+
+
+DEFAULT_FILTERS = (
+    ('', ''),
+    ('django.template.defaultfilters.truncatewords', _('Truncate words'), ),
+    ('django.template.defaultfilters.truncatewords_html', _('Truncate words HTML'), ),
+    ('cmsutils.templatetags.truncatechars', _('Truncate chars'), ),
+)
 
 
 class CollectionFilterInline(admin.TabularInline):
@@ -52,15 +62,6 @@ class IncludeCollectionFilterInline(CollectionFilterInline):
     model = IncludeCollectionFilter
 
 
-class CollectionDisplayFieldInline(CollectionFilterInline):
-    model = CollectionDisplayField
-
-    def get_default_fields(self, obj):
-        if not obj:
-            return []
-        return [('', '----------')] + [(i, i) for i in get_common_fields_no_language(obj)]
-
-
 class CollectionAdmin(BaseContentAdmin):
     fieldsets = (
         (_('Collection Basic Information'),
@@ -74,8 +75,7 @@ class CollectionAdmin(BaseContentAdmin):
             ),
         )
     filter_horizontal = BaseContentAdmin.filter_horizontal + ('content_types', )
-    inlines = [IncludeCollectionFilterInline, ExcludeCollectionFilterInline,
-               CollectionDisplayFieldInline]
+    inlines = [IncludeCollectionFilterInline, ExcludeCollectionFilterInline]
 
     def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
         media = context.get('media')
@@ -130,8 +130,57 @@ class CollectionRelatedModelAdmin(SectionContentAdmin, CollectionAdmin):
     tool_label = _('collections')
 
 
+class CollectionDisplayFieldFilterInline(admin.TabularInline):
+    model = CollectionDisplayFieldFilter
+
+    def get_formset(self, request, obj=None, **kwargs):
+        formset = super(CollectionDisplayFieldFilterInline, self).get_formset(request, obj, **kwargs)
+        form = formset.form
+        if 'filter_module' in form.base_fields:
+            form.base_fields['filter_module'].widget = forms.Select(choices=DEFAULT_FILTERS)
+        return formset
+
+
+class CollectionDisplayFieldAdmin(RelatedModelAdmin, BaseOrderableAdmin):
+    tool_name = 'display_fields'
+    tool_label = _('display fields')
+    related_field = 'collection'
+    sortablefield = 'field_order'
+    ordering = ('field_order', )
+    exclude = ('field_order', )
+    list_display = ('__unicode__', 'safe', 'show_label')
+
+    inlines = [CollectionDisplayFieldFilterInline]
+
+    def get_default_fields(self, obj):
+        if not obj:
+            return []
+        return [('', '----------')] + [(i, i) for i in get_common_fields_no_language(obj)]
+
+    def save_model(self, request, obj, form, change):
+        if not change:
+            fields = obj.collection.display_fields.all().order_by('-field_order')
+            if not fields:
+                obj.field_order = 0
+            else:
+                obj.field_order = fields[0].field_order + 1
+        obj.save()
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(CollectionDisplayFieldAdmin, self).get_form(request, obj, **kwargs)
+
+        default_fields = self.get_default_fields(self.basecontent)
+        default_fields += [('content_type_name', 'content_type_name')]
+        default_fields.sort()
+        for i in ('filter_field', 'field_name'):
+            if i in form.base_fields:
+                form.base_fields[i].widget = forms.Select(choices=default_fields)
+        return form
+
+
 def register_related(site):
     site.register_related(Collection, CollectionRelatedModelAdmin, related_to=Section)
+    site.register_related(CollectionDisplayField, CollectionDisplayFieldAdmin, related_to=Collection)
 
 
 def register(site):

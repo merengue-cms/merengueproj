@@ -17,8 +17,8 @@
   {% endif %}
   {% for field in fields %}
   <div class="itemCollectionField itemCollectionField-{{ field.field_name }}">
-    {% if field.show_label %}<span class="itemCollectionFielName">{{ field.name }}</span>{% endif %}
-    <span class="itemCollectionFielValue">{% if field.safe %}{{ field.value|safe }}{% else %}{{ field.value|striptags }}{% endif %}</span>
+    {% if field.show_label %}<span class="itemCollectionFieldName">{{ field.name }}</span>{% endif %}
+    <span class="itemCollectionFieldValue">{% if field.safe %}{{ field.value|safe }}{% else %}{{ field.value|striptags }}{% endif %}</span>
   </div>
   {% endfor %}
 </li>

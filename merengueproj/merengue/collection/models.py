@@ -245,3 +245,22 @@ class CollectionDisplayField(models.Model):
 
     def __unicode__(self):
         return self.field_name
+
+
+class CollectionDisplayFieldFilter(models.Model):
+    display_field = models.ForeignKey(CollectionDisplayField)
+
+    filter_module = models.CharField(
+        max_length=250,
+        verbose_name=_(u'Filter module'),
+        )
+
+    filter_params = models.CharField(
+        max_length=250,
+        verbose_name=_(u'Filter params'),
+        )
+
+    filter_order = models.IntegerField(
+        default=0,
+        verbose_name=_(u'Filter order'),
+        )
