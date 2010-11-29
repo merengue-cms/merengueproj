@@ -326,6 +326,10 @@ class BaseContent(BaseClass):
                                     null=True, blank=True,
                                     related_name='contents_owned')
 
+    # Structural contents
+    no_changeable = models.BooleanField(default=False)
+    no_deletable = models.BooleanField(default=False)
+
     objects = BaseContentManager()
 
     class Meta:
