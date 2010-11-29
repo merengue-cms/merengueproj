@@ -71,8 +71,6 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
             for field_name, field in form.base_fields.items():
                 set_field_read_only(field, field_name, obj)
 
-        form.after_related_objects = '121212'
-#        self.after_related_objects
         return form
 
     def save_form(self, request, form, change):
