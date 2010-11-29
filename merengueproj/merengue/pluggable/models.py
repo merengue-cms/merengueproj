@@ -31,6 +31,7 @@ from merengue.registry.models import RegisteredItem
 
 class RegisteredPlugin(RegisteredItem):
     name = models.CharField(_('name'), max_length=100)
+    description = models.TextField(_('description'))
     version = models.CharField(_('version'), max_length=25)
     required_apps = RequiredAppsField()
     required_plugins = RequiredPluginsField()
