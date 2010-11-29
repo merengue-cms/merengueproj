@@ -21,15 +21,19 @@ from django.utils.translation import ugettext
 from south.signals import post_migrate
 from transmeta import get_fallback_fieldname
 
-from merengue.pluggable.models import RegisteredPlugin
-from merengue.pluggable.utils import get_plugin_config, validate_plugin
 from merengue.registry import register, is_registered
 from merengue.registry.items import RegistrableItem
+from merengue.utils import is_last_application, classproperty
 
 
 class Plugin(RegistrableItem):
-    model = RegisteredPlugin
     url_prefixes = ()
+
+    @classproperty
+    @classmethod
+    def model(cls):
+        from merengue.pluggable.models import RegisteredPlugin
+        return RegisteredPlugin
 
     @classmethod
     def get_category(cls):
@@ -77,6 +81,8 @@ class Plugin(RegistrableItem):
 
 
 def register_plugin(plugin_dir):
+    from merengue.pluggable.models import RegisteredPlugin
+    from merengue.pluggable.utils import get_plugin_config, validate_plugin
     plugin_config = get_plugin_config(plugin_dir)
     if plugin_config:
         validate_plugin(plugin_config)
@@ -98,6 +104,7 @@ def register_plugin(plugin_dir):
 
 
 def enable_active_plugins():
+    from merengue.pluggable.models import RegisteredPlugin
     from merengue.pluggable.utils import enable_plugin, get_plugin_module_name
     for plugin_registered in RegisteredPlugin.objects.actives():
         enable_plugin(get_plugin_module_name(plugin_registered.directory_name))
@@ -114,7 +121,7 @@ def active_default_plugins(*args, **kwargs):
     # Only want to run this signal after all application was migrated, but
     # south have not a "post all migrations" signal.
     # The workaround is "collab" have to be the last application migrated
-    if kwargs['app'] == 'collab':
+    if is_last_application(kwargs['app']):
         interactive = kwargs.get('interactive', None)
         # register required plugins
         for plugin_dir in settings.REQUIRED_PLUGINS:
