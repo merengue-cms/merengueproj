@@ -173,8 +173,8 @@ class CollectionFilter(models.Model):
         if value == None:
             value = self.value
         field_lookup = {
-            '%s__%s' % (field or self.filter_field,
-                        operator or self.filter_operator): value,
+            str('%s__%s' % (field or self.filter_field,
+                        operator or self.filter_operator)): str(value),
         }
         return Q(**field_lookup)
 
