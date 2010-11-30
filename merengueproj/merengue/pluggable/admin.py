@@ -36,7 +36,7 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
     change_list_template = 'admin/plugin/plugin_change_list.html'
     readonly_fields = RegisteredItemAdmin.readonly_fields + ('name',
         'description', 'version', 'timestamp', 'directory_name', )
-    list_display = ('name', get_screenshot, )
+    list_display = ('name', 'directory_name', 'installed', 'active', get_screenshot, )
     ordering = ('broken', )
 
     fieldsets = (
