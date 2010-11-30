@@ -32,7 +32,7 @@ from merengue.section.forms import MenuAdminModelForm
 from merengue.section.models import (Menu, Section,
                                      BaseLink, AbsoluteLink, ContentLink, ViewletLink,
                                      Document, DocumentSection, CustomStyle,
-                                     SectionRelatedContent)
+                                     SectionRelatedContent, CustomStyleImage)
 from merengue.section.formsets import BaseLinkInlineFormSet
 from merengue.section.widgets import SearchFormOptionsWidget
 from merengue.perms import utils as perms_api
@@ -118,11 +118,16 @@ class SectionContentAdmin(OrderableRelatedModelAdmin):
         return through_model.objects.get(basesection=self.basecontent, basecontent=obj)
 
 
+class CustomStyleImageInline(admin.StackedInline):
+    model = CustomStyleImage
+
+
 class CustomStyleRelatedModelAdmin(RelatedModelAdmin):
     tool_name = 'style'
     tool_label = _('custom style')
     related_field = 'basesection'
     one_to_one = True
+    inlines = [CustomStyleImageInline]
 
     def formfield_for_dbfield(self, db_field, **kwargs):
         formfield = super(CustomStyleRelatedModelAdmin, self).formfield_for_dbfield(db_field, **kwargs)

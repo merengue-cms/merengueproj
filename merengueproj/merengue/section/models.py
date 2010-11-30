@@ -69,6 +69,7 @@ class RealInstanceMixin(object):
         # understanding.
         for field_name in field_names:
             try:
+                print self, field_name
                 obj = getattr(self, field_name)
                 if isinstance(obj, self.__class__):
                     self._real_instance = obj
@@ -535,6 +536,17 @@ class CustomStyle(models.Model):
 
     css_chunk = models.TextField(
         verbose_name=_('css chunk'),
+    )
+
+
+class CustomStyleImage(models.Model):
+    customstyle = models.ForeignKey(CustomStyle)
+
+    custom_css_image = models.ImageField(
+        verbose_name=('Custom CSS image'),
+        upload_to='section_images',
+        null=True,
+        blank=True,
     )
 
 
