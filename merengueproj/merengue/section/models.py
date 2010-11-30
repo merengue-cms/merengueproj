@@ -69,7 +69,6 @@ class RealInstanceMixin(object):
         # understanding.
         for field_name in field_names:
             try:
-                print self, field_name
                 obj = getattr(self, field_name)
                 if isinstance(obj, self.__class__):
                     self._real_instance = obj
