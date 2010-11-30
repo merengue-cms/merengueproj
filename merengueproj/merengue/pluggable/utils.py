@@ -62,16 +62,17 @@ _plugin_middlewares_cache = {
 # ----- public methods -----
 
 
-def install_plugin(instance, app_name):
+def install_plugin(registered_plugin):
+    app_name = get_plugin_module_name(registered_plugin.directory_name)
     app_mod = load_app(app_name)
     # Needed update installed apps in order
     # to get SQL command from merengue.pluggable
     add_to_installed_apps(app_name)
     if app_mod and not are_installed_models(app_mod):
         install_models(app_mod)
-        # Force instance saving after connection closes.
-        instance.save()
-    if instance.active:
+        # Force registered_plugin saving after connection closes.
+        registered_plugin.save()
+    if registered_plugin.active:
         enable_plugin(app_name)
     else:
         disable_plugin(app_name)

@@ -150,6 +150,7 @@ def active_default_plugins(*args, **kwargs):
 
 def active_plugin_with_deps(plugin_dir):
     """ active plugins with its dependences """
+    from merengue.pluggable.utils import install_plugin
     registered_plugin = register_plugin(plugin_dir)
     plugin = registered_plugin.get_registry_item_class()
     for dep in getattr(plugin, 'required_plugins', []):
@@ -157,6 +158,7 @@ def active_plugin_with_deps(plugin_dir):
     registered_plugin.installed = True
     registered_plugin.active = True
     registered_plugin.save()
+    install_plugin(registered_plugin)
 
 
 post_migrate.connect(active_default_plugins)

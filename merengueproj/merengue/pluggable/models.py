@@ -77,8 +77,7 @@ def install_plugin_signal(sender, instance, **kwargs):
     if not getattr(instance, 'id', None) and getattr(instance, 'pk', None):
         instance = instance._default_manager.get(pk=instance.pk)
     if instance.installed and instance.directory_name and not instance.broken:
-        app_name = get_plugin_module_name(instance.directory_name)
-        install_plugin(instance, app_name)
+        install_plugin(instance)
         # Change this line will be fixes in #542
     elif not instance.active and instance.directory_name:
         disable_plugin(get_plugin_module_name(instance.directory_name))
