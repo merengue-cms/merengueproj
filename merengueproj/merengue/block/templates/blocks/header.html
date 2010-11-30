@@ -56,7 +56,7 @@
             }
             var validContainers = containers.filter("." + containerType);
             validContainers.each(function() {
-                if ($(this).children().length < 2) {
+                if ($(this).children().length < 2 || $(this).height() == 0) {
                     var child;
                     child = $("<div>");
                     child.html("Drag here");
