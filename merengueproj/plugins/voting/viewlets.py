@@ -40,7 +40,7 @@ def get_content_with_votes(request=None, limit=0, order_by='id'):
 
 class BaseContentTopRated(Viewlet):
     name = 'basecontenttoprated'
-    label = _('Content top rated')
+    help_text = _('Content top rated')
 
     @classmethod
     def render(cls, request):
@@ -51,7 +51,7 @@ class BaseContentTopRated(Viewlet):
 
 class BaseContentWithMoreVotes(Viewlet):
     name = 'basecontentwithmorevotes'
-    label = _('Content with more votes')
+    help_text = _('Content with more votes')
 
     @classmethod
     def render(cls, request):

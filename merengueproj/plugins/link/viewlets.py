@@ -23,7 +23,7 @@ from plugins.link.views import get_links
 
 class LatestLinkViewlet(Viewlet):
     name = 'latestlink'
-    label = _('Latest link')
+    help_text = _('Latest link')
 
     @classmethod
     def render(cls, request):
@@ -34,7 +34,7 @@ class LatestLinkViewlet(Viewlet):
 
 class AllLinkViewlet(Viewlet):
     name = 'alllink'
-    label = _('All link')
+    help_text = _('All link')
 
     @classmethod
     def render(cls, request):

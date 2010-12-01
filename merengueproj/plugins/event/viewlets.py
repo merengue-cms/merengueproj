@@ -23,7 +23,7 @@ from plugins.event.views import get_events
 
 class LatestEventViewlet(Viewlet):
     name = 'latestevents'
-    label = _('Latest events')
+    help_text = _('Latest events')
 
     @classmethod
     def render(cls, request):
@@ -34,7 +34,7 @@ class LatestEventViewlet(Viewlet):
 
 class AllEventViewlet(Viewlet):
     name = 'allevent'
-    label = _('All events')
+    help_text = _('All events')
 
     @classmethod
     def render(cls, request):

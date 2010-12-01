@@ -23,7 +23,7 @@ from plugins.banner.views import get_banners
 
 class AllBannerViewlet(Viewlet):
     name = 'allbanner'
-    label = _('All Banners')
+    help_text = _('All Banners')
 
     @classmethod
     def render(cls, request):

@@ -23,7 +23,7 @@ from plugins.news.views import get_news
 
 class LatestNewsViewlet(Viewlet):
     name = 'latestnews'
-    label = _('Latest news')
+    help_text = _('Latest news')
 
     @classmethod
     def render(cls, request):
@@ -34,7 +34,7 @@ class LatestNewsViewlet(Viewlet):
 
 class AllNewsViewlet(Viewlet):
     name = 'allnews'
-    label = _('All news')
+    help_text = _('All news')
 
     @classmethod
     def render(cls, request):
