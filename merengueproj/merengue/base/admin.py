@@ -676,6 +676,7 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
                                     'multiple': True,
                                     'multipleSeparator': " ",
                                     'size': 100}, }
+    exclude = ('adquire_global_permissions', )
 
     def get_urls(self):
         from django.conf.urls.defaults import patterns
