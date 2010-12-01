@@ -196,7 +196,7 @@ msgstr "Sección"
 
 #: merengue/templates/admin/merengue_index_base.html.py:23
 msgid "Content tree"
-msgstr "Contenido árbol"
+msgstr "Árbol de contenidos"
 
 #: merengue/templates/admin/merengue_index_base.html.py:24
 msgid "View, edit and delete the site's contents."
@@ -204,7 +204,7 @@ msgstr "Ver, editar y eliminar los contenido del sitio"
 
 #: merengue/templates/admin/merengue_index_base.html.py:27
 msgid "Portal Menu"
-msgstr "Menú del Portal"
+msgstr "Menú del portal"
 
 #: merengue/templates/admin/merengue_index_base.html.py:28
 msgid "View, edit and delete the site's menus."
@@ -212,7 +212,7 @@ msgstr "Ver, editar y eliminar los menús del sitio."
 
 #: merengue/templates/admin/merengue_index_base.html.py:31
 msgid "Portal links"
-msgstr "Enlaces del Portal"
+msgstr "Enlaces del portal"
 
 #: merengue/templates/admin/merengue_index_base.html.py:32
 msgid "View, edit and delete the site's primary and secondary links."
@@ -224,7 +224,7 @@ msgstr "Contenido"
 
 #: merengue/templates/admin/merengue_index_base.html.py:34
 msgid "Browse content"
-msgstr "Navegar por le contenido"
+msgstr "Navegar por el contenido"
 
 #: merengue/templates/admin/merengue_index_base.html.py:35
 msgid "Browse the site's contents."
@@ -491,7 +491,7 @@ msgstr "Guardar la configuración de la actual copia de seguridad en un archivo 
 #: merengue/templates/admin/smart_relations_object_tool.html.py:6
 #, python-format
 msgid "%(model)s children"
-msgstr "%(model)s niño"
+msgstr "Hijos de %(model)s"
 
 #: merengue/templates/admin/basecontent/sortable_change_list.html.py:13
 msgid "Click and drag to reorder"
