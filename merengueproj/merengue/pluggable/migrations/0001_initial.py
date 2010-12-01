@@ -27,6 +27,7 @@ class Migration(SchemaMigration):
         'pluggable.registeredplugin': {
             'Meta': {'object_name': 'RegisteredPlugin', 'db_table': "'plugins_registeredplugin'", '_ormbases': ['registry.RegisteredItem']},
             'directory_name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'unique': 'True'}),
+            'description': ('django.db.models.fields.TextField', [], {}),
             'installed': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'registereditem_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['registry.RegisteredItem']", 'unique': 'True', 'primary_key': 'True'}),
