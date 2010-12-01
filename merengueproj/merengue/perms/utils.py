@@ -406,9 +406,10 @@ def has_permission(obj, user, codename, roles=None):
     ct = ContentType.objects.get_for_model(obj)
 
     while obj is not None:
-        p = ObjectPermission.objects.filter(
-            Q(content=obj, role__in=roles, permission__codename=codename) |
-            Q(content__isnull=True, role__in=roles, permission__codename=codename))
+        filters = Q(content=obj, role__in=roles, permission__codename=codename)
+        if obj.adquire_global_permissions:
+            filters |= Q(content__isnull=True, role__in=roles, permission__codename=codename)
+        p = ObjectPermission.objects.filter(filters)
 
         if p:
             return True
@@ -418,7 +419,6 @@ def has_permission(obj, user, codename, roles=None):
 
         try:
             obj = obj.get_parent_for_permissions()
-            ct = ContentType.objects.get_for_model(obj)
         except AttributeError:
             return False
 

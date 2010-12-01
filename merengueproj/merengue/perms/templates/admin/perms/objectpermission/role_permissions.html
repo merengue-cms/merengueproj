@@ -24,6 +24,16 @@
     {% endif %}
 </p>
 <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">
+{% if original %}
+<div>
+  <div id="changeform" class="module">
+    <div class="form-row">
+      {% trans "Should this content adquire global permissions?" %}
+      <input type="checkbox" name="adquire_global_permissions" {% if original.adquire_global_permissions %}checked="checked"{% endif %} class="action-select">
+    </div>
+  </div>
+</div>
+{% endif %}
 <div>
     <div id="changeform" class="module">
         <table cellspacing="0">

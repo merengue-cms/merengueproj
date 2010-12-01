@@ -291,6 +291,9 @@ class BaseContent(BaseClass):
                                     related_name='last_edited_content')
     last_editor.delete_cascade=False
 
+    # permission global
+    adquire_global_permissions = models.BooleanField(_('Adquire global permissions'), default=True)
+
     # tagging info
     tags = TagField(verbose_name=_('Tags'))
 

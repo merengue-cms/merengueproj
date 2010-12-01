@@ -136,6 +136,9 @@ class PermissionAdmin(admin.ModelAdmin):
                 msg, url_redirect = self._update_role_users(request, obj)
             elif '_groups_continue' in request.POST or '_groups_save' in request.POST:
                 msg, url_redirect = self._update_role_groups(request, obj)
+            # set if object should adquire global permissions
+            obj.adquire_global_permissions = request.POST.get('adquire_global_permissions', False)
+            obj.save()
             if msg and url_redirect:
                 return self.response_change(request, msg, url_redirect=url_redirect)
 
