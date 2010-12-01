@@ -24,7 +24,6 @@ from merengue.registry.signals import item_registered
 
 
 class Viewlet(RegistrableItem):
-    label = None # to be overriden in subclasses
     model = RegisteredViewlet
 
     @classmethod

@@ -26,12 +26,12 @@ from merengue.registry.admin import RegisteredItemAdmin
 from django.utils.safestring import mark_safe
 
 
+def get_screenshot(self):
+    return mark_safe(u'<img src="%s" />' % (self.screenshot))
+get_screenshot.allow_tags = True
+
+
 class RegisteredPluginAdmin(RegisteredItemAdmin):
-
-    def get_screenshot(self):
-        return mark_safe(u'<img src="%s" />' % (self.screenshot))
-    get_screenshot.allow_tags = True
-
     change_form_template = 'admin/plugin/plugin_change_form.html'
     change_list_template = 'admin/plugin/plugin_change_list.html'
     readonly_fields = RegisteredItemAdmin.readonly_fields + ('name',

@@ -98,6 +98,28 @@ def register_plugin(plugin_dir):
         plugin.required_plugins = getattr(plugin_config,
                                           'required_plugins',
                                           None)
+        plugin.meta_info = {}
+        if hasattr(plugin_config, 'screenshot'):
+            plugin.meta_info['screenshot'] = plugin_config.screenshot
+        plugin.meta_info['actions'] = []
+        for action in plugin_config.get_actions():
+            plugin.meta_info['actions'].append({'name': unicode(action.name), 'help_text': unicode(action.help_text)})
+        plugin.meta_info['blocks'] = []
+        for block in plugin_config.get_blocks():
+            plugin.meta_info['blocks'].append({'name': unicode(block.name), 'help_text': unicode(block.help_text)})
+        if plugin_config.get_model_admins():
+            plugin.meta_info['has_own_admin'] = True
+        else:
+            plugin.meta_info['has_own_admin'] = False
+        plugin.meta_info['middlewares'] = []
+        for middleware in plugin_config.get_middlewares():
+            plugin.meta_info['middlewares'].append(middleware)
+        plugin.meta_info['section_models'] = []
+        for model, admin in plugin_config.section_models():
+            plugin.meta_info['section_models'].append({'name': unicode(model._meta.verbose_name)})
+        plugin.meta_info['viewlets'] = []
+        for viewlet in plugin_config.get_viewlets():
+            plugin.meta_info['viewlets'].append({'name': unicode(viewlet.name), 'help_text': unicode(viewlet.help_text)})
         plugin.save()
         return plugin
     return None

@@ -24,6 +24,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from south.modelsinspector import add_introspection_rules
 
+from cmsutils.db.fields import JSONField
+
 from merengue.pluggable.managers import PluginManager
 from merengue.pluggable.dbfields import RequiredPluginsField, RequiredAppsField
 from merengue.registry.models import RegisteredItem
@@ -31,23 +33,22 @@ from merengue.registry.models import RegisteredItem
 
 class RegisteredPlugin(RegisteredItem):
     name = models.CharField(_('name'), max_length=100)
-    description = models.TextField(_('description'))
+    description = models.TextField(_('description'), default='')
     version = models.CharField(_('version'), max_length=25)
     required_apps = RequiredAppsField()
     required_plugins = RequiredPluginsField()
     installed = models.BooleanField(default=False)
     directory_name = models.CharField(_('directory name'), max_length=100,
                                       unique=True)
+    meta_info = JSONField(null=True)
 
-    def get_screenshot(self):
-        plugin_config = self.get_plugin_config()
-        if hasattr(plugin_config, 'screenshot'):
+    @property
+    def screenshot(self):
+        if 'screenshot' in self.meta_info:
             return os.path.join(settings.MEDIA_URL, self.directory_name,
-                                plugin_config.screenshot)
+                                self.meta_info['screenshot'])
         return os.path.join(settings.MEDIA_URL,
                             settings.DEFAULT_PLUGIN_PREVIEW)
-
-    screenshot = property(get_screenshot)
 
     class Meta:
         db_table = 'plugins_registeredplugin'
@@ -93,4 +94,13 @@ rules = [
   ),
 ]
 
+rules_jsonfield = [
+  (
+    (JSONField, ),
+    [],
+    {},
+  ),
+]
+
 add_introspection_rules(rules, ["^merengue\.pluggable"])
+add_introspection_rules(rules_jsonfield, ["^cmsutils"])
