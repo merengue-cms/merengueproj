@@ -1,3 +1,5 @@
+from copy import copy
+
 from django.core.exceptions import FieldError
 from django.db import models
 from django.template import TemplateSyntaxError, Variable, Library, Node
@@ -31,7 +33,6 @@ def _get_value(field, field_name, item):
     return value
 
 
-@register.inclusion_tag('collection/collection_item.html', takes_context=True)
 def collection_item(context, collection, item):
     display_fields = collection.display_fields.all().order_by('field_order')
 
@@ -56,11 +57,14 @@ def collection_item(context, collection, item):
                        'show_label': df.show_label,
                        'value': _get_value(df, field_name, item),
                        'safe': df.safe})
-    return {
+    context_copy = copy(context)
+    context_copy.update({
         'item': item,
         'collection': collection,
         'fields': fields,
-    }
+    })
+    return context_copy
+register.inclusion_tag('collection/collection_item.html', takes_context=True)(collection_item)
 
 
 class CollectionItemsNode(Node):

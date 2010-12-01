@@ -10,19 +10,25 @@
     {% endif %}
   {% endblock %}
   <div class="itemCollectionTitle">
-  {% if item.get_absolute_url %}
-  <a href="{{ item.get_absolute_url }}" title="{{ item }}" class="contentLink">
-     {% cutrender 100 %}{{ item }}{% endcutrender %}
-  </a>
-  {% else %}
-     {% cutrender 100 %}{{ item }}{% endcutrender %}
-  {% endif %}
+  {% block linkblock %}
+    {% if item.get_absolute_url %}
+    <a href="{{ item.get_absolute_url }}" title="{{ item }}" class="contentLink">
+        {% cutrender 100 %}{{ item }}{% endcutrender %}
+    </a>
+    {% else %}
+        {% cutrender 100 %}{{ item }}{% endcutrender %}
+    {% endif %}
+   {% endblock %}
   </div>
+  {% block fieldsblock %}
   {% for field in fields %}
   <div class="itemCollectionField itemCollectionField-{{ field.field_name }}">
+    {% block fieldblock %}
     {% if field.show_label %}<span class="itemCollectionFieldName">{{ field.name }}</span>{% endif %}
     <span class="itemCollectionFieldValue">{% if field.safe %}{{ field.value|safe }}{% else %}{{ field.value|striptags }}{% endif %}</span>
+    {% endblock %}
   </div>
   {% endfor %}
+  {% endblock %}
 {% endblock %}
 </li>
