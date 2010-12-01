@@ -44,7 +44,7 @@ class RegisteredPlugin(RegisteredItem):
 
     @property
     def screenshot(self):
-        if 'screenshot' in self.meta_info:
+        if self.meta_info and 'screenshot' in self.meta_info:
             return os.path.join(settings.MEDIA_URL, self.directory_name,
                                 self.meta_info['screenshot'])
         return os.path.join(settings.MEDIA_URL,
