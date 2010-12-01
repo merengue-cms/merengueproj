@@ -33,11 +33,11 @@ from merengue.pluggable.models import RegisteredPlugin
 _plugins_full_path_cache = {}
 
 
-def get_active_plugins_full_path():
-    active_plugins = RegisteredPlugin.objects.actives()
-    paths = dict([(p.directory_name, p.get_path()) for p in active_plugins])
+def get_plugins_full_path():
+    all_plugins = RegisteredPlugin.objects.all().order_by('-active')
+    paths = dict([(p.directory_name, p.get_path()) for p in all_plugins])
     return paths
-get_active_plugins_full_path = memoize(get_active_plugins_full_path, _plugins_full_path_cache, 1)
+get_plugins_full_path = memoize(get_plugins_full_path, _plugins_full_path_cache, 1)
 
 
 def serve(request, path, document_root=None, show_indexes=False):
@@ -61,8 +61,8 @@ def serve(request, path, document_root=None, show_indexes=False):
     path = posixpath.normpath(urllib.unquote(path))
     path = path.lstrip('/')
     plugin = None
-    enabled_plugins_paths = get_active_plugins_full_path()
-    enabled_plugins_names = enabled_plugins_paths.keys()
+    plugins_paths = get_plugins_full_path()
+    plugins_names = plugins_paths.keys()
     newpath = ''
     fallback_newpath = ''
     for part in path.split('/'):
@@ -74,7 +74,7 @@ def serve(request, path, document_root=None, show_indexes=False):
         if part in (os.curdir, os.pardir):
             # Strip '.' and '..' in path.
             continue
-        if not newpath and not plugin and part in enabled_plugins_names:
+        if not newpath and not plugin and part in plugins_names:
             # Plugins media dir must come first in the URL
             plugin = part
             fallback_newpath = os.path.join(newpath, part).replace('\\', '/')
@@ -85,7 +85,7 @@ def serve(request, path, document_root=None, show_indexes=False):
         return HttpResponseRedirect(newpath)
     # project media dir, standard django's static serve behavior
     if plugin:
-        fullpath = os.path.join(enabled_plugins_paths[plugin], 'media', newpath)
+        fullpath = os.path.join(plugins_paths[plugin], 'media', newpath)
         try:
             return _serve_path(request, newpath, fullpath, show_indexes)
         except Http404:
