@@ -54,7 +54,9 @@ class Command(AppCommand, MerengueCommand):
         make_option('-i', '--interactive', action='store_true', dest='interactive',
             help="Run in interactive mode, asking before modifying files and selecting from multiple sources."),
         make_option('-a', '--all', action='store_true', dest='all',
-            help="Traverse all enabled plugins."),
+            help="Traverse all plugins."),
+        make_option('-o', '--only-actives', action='store_true', dest='only_actives',
+            help="Traverse only actived plugins."),
         make_option('-e', '--exclude', action='append', default=exclude, dest='exclude', metavar='PATTERNS',
             help="A space-delimited list of glob-style patterns to ignore. Use multiple times to add more."),
         make_option('-n', '--dry-run', action='store_true', dest='dry_run',
@@ -77,12 +79,13 @@ class Command(AppCommand, MerengueCommand):
         print "\nCollecting media in %s" % media_root
 
         if app_labels:
-            plugin_list = RegisteredPlugin.objects.actives().filter(directory_name__in=app_labels)
+            plugin_list = RegisteredPlugin.objects.all().filter(directory_name__in=app_labels)
         else:
             if not options.get('all', False):
                 raise CommandError('Enter at least one appname or use the --all option')
-            plugin_list = RegisteredPlugin.objects.actives()
-        plugins_dirs = [p.get_path() for p in RegisteredPlugin.objects.actives()]
+            plugin_list = RegisteredPlugin.objects.all()
+            if options.get('only_actives', False):
+                plugin_list = plugin_list.actives()
 
         traversed_plugins = [p.directory_name for p in plugin_list]
         print "Traversing plugins: %s" % get_text_list(traversed_plugins, 'and')
