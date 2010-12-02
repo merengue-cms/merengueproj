@@ -174,7 +174,7 @@ class CollectionFilter(models.Model):
             value = self.value
         field_lookup = {
             str('%s__%s' % (field or self.filter_field,
-                        operator or self.filter_operator)): str(value),
+                        operator or self.filter_operator)): value,
         }
         return Q(**field_lookup)
 
