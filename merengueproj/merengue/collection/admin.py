@@ -46,8 +46,9 @@ class CollectionFilterInline(admin.TabularInline):
         formset = super(CollectionFilterInline, self).get_formset(request, obj, **kwargs)
         form = formset.form
         default_fields = self.get_default_fields(obj)
-        default_fields += [('content_type_name', 'content_type_name')]
-        default_fields.sort()
+        if default_fields:
+            default_fields += [('content_type_name', 'content_type_name')]
+            default_fields.sort()
         for i in ('filter_field', 'field_name'):
             if i in form.base_fields:
                 form.base_fields[i].widget = forms.Select(choices=default_fields)
@@ -117,8 +118,9 @@ class CollectionAdmin(BaseContentAdmin):
                 types_id.append(ContentType.objects.get_for_model(m).id)
             form.base_fields['content_types'].queryset = form.base_fields['content_types'].queryset.filter(id__in=types_id)
         default_fields = self.get_default_fields(obj)
-        default_fields += [('content_type_name', 'content_type_name')]
-        default_fields.sort()
+        if default_fields:
+            default_fields += [('content_type_name', 'content_type_name')]
+            default_fields.sort()
         for i in ('group_by', 'order_by'):
             if i in form.base_fields:
                 form.base_fields[i].widget = forms.Select(choices=default_fields)
@@ -170,8 +172,9 @@ class CollectionDisplayFieldAdmin(RelatedModelAdmin, BaseOrderableAdmin):
         form = super(CollectionDisplayFieldAdmin, self).get_form(request, obj, **kwargs)
 
         default_fields = self.get_default_fields(self.basecontent)
-        default_fields += [('content_type_name', 'content_type_name')]
-        default_fields.sort()
+        if default_fields:
+            default_fields += [('content_type_name', 'content_type_name')]
+            default_fields.sort()
         for i in ('filter_field', 'field_name'):
             if i in form.base_fields:
                 form.base_fields[i].widget = forms.Select(choices=default_fields)
