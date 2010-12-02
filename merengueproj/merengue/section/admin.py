@@ -237,20 +237,20 @@ class ContentLinkInline(BaseLinkInline):
             return formset
         form = formset.form
         if 'content' in form.base_fields.keys():
-            qs = form.base_fields['content'].queryset
+            formfield = form.base_fields['content']
+            qs = formfield.queryset
             admin_model = getattr(self, 'admin_model', None)
             if admin_model:
                 qs = qs.filter(basesection=admin_model.basecontent)
-            form.base_fields['content'].queryset = qs
-        return formset
-
-    def formfield_for_dbfield(self, db_field, **kwargs):
-        formfield = super(ContentLinkInline, self).formfield_for_dbfield(db_field, **kwargs)
-        if db_field.name == 'content':
+            formfield.queryset = qs
+            # change the widget to a wrapper
+            # note: formfield.wigdet is already a wrapper of formfield.widget.widget
             formfield.widget = RelatedFieldWidgetWrapperWithoutAdding(
-                formfield.widget.widget, db_field.rel, self.admin_site,
+                formfield.widget.widget, formfield.widget.rel, self.admin_site,
             )
-        return formfield
+            # limiting widget choices to new queryset
+            formfield.widget.widget.choices = formfield.choices
+        return formset
 
 
 class ViewletLinkInline(BaseLinkInline):
