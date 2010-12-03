@@ -205,10 +205,12 @@ class BaseAdminSite(DjangoAdminSite):
                 if related_sections.count() == 1:
                     # we have to redirect to the content related section
                     section = related_sections.get().real_instance
-                    admin_prefix += '%s%s/' % (self.get_prefix_for_model(section.__class__), section.id)
                     tool = self.get_tool_for_model(section.__class__, real_content.__class__)
                     if tool:
+                        admin_prefix += '%s%s/' % (self.get_prefix_for_model(section.__class__), section.id)
                         admin_prefix += '%s/' % tool[0].tool_name
+                    else:
+                        admin_prefix += self.get_prefix_for_model(model)
                 else:
                     admin_prefix += self.get_prefix_for_model(model)
         else:
