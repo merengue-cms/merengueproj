@@ -661,7 +661,7 @@ class StatusControlProvider(object):
 
 class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProvider, PermissionAdmin):
     change_list_template = "admin/basecontent/change_list.html"
-    list_display = ('admin_absolute_url', 'status', 'user_modification_date', 'last_editor')
+    list_display = ('status', 'user_modification_date', 'last_editor')
     list_display_for_select = ('name', 'status', 'user_modification_date', 'last_editor')
     search_fields = ('name', )
     date_hierarchy = 'creation_date'
@@ -852,6 +852,8 @@ if settings.USE_GIS:
 
 class BaseContentViewAdmin(BaseContentAdmin):
     """ An special admin to find and edit all site contents """
+
+    list_display = ('admin_absolute_url', ) + BaseContentAdmin.list_display
 
     def has_add_permission(self, request):
         return False
