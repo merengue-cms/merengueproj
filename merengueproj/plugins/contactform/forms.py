@@ -37,6 +37,14 @@ class ContactFormForm(forms.Form):
             else:
                 subject = data['subject']
 
+            if contact_form.sender_email:
+                from_mail = data['sender_email']
+            else:
+                if request.user.is_authenticated():
+                    from_mail = request.user.email
+                else:
+                    from_mail = settings.DEFAULT_FROM_EMAIL
+
             opts = {}
             files = {}
             for opt in contact_form.opts.all():
@@ -46,14 +54,10 @@ class ContactFormForm(forms.Form):
                 else:
                     opts[opt.label] = d
 
-            if request.user.is_authenticated():
-                from_mail = request.user.email
-            else:
-                from_mail = settings.DEFAULT_FROM_EMAIL
-
             sentopts = opts.copy()
             sentopts[u'subject'] = subject
             sentopts[u'user'] = request.user.username
+            sentopts[u'mailfrom'] = from_mail
             sent = SentContactForm(contact_form=contact_form,
                                    sent_msg=simplejson.dumps(sentopts,
                                        cls=DateTimeAwareJSONEncoder))

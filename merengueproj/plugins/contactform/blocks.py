@@ -36,7 +36,7 @@ class ContactFormBlock(ContentBlock):
         except IndexError:
             return ''
 
-        form = contact_form.get_form()
+        form = contact_form.get_form(request)
         errors = request.session.pop('form_errors', {})
         data = request.session.pop('form_data', {})
         msg = request.session.pop('form_msg', None)

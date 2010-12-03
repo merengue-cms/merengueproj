@@ -70,6 +70,8 @@ class ContactForm(models.Model):
                                      verbose_name=_('content'),
                                      related_name='contact_form',
                                      blank=True, null=True)
+    captcha = models.BooleanField(verbose_name=_('captcha'))
+    sender_email = models.BooleanField(verbose_name=_('sender email'))
 
     def __unicode__(self):
         return self.title
@@ -80,7 +82,7 @@ class ContactForm(models.Model):
         verbose_name = _('Contact Form')
         verbose_name_plural = _('Contact Forms')
 
-    def get_form(self, *args, **kwargs):
+    def get_form(self, request):
         from plugins.contactform.forms import ContactFormForm
         from django import forms
         from django.utils.translation import ugettext as _
@@ -93,8 +95,22 @@ class ContactForm(models.Model):
             'file': forms.FileField,
         }
 
-        f = ContactFormForm(*args, **kwargs)
+        if request.method == 'POST':
+            f = ContactFormForm(request.POST, request.FILES)
+        else:
+            f = ContactFormForm()
         index = 0
+
+        if self.sender_email:
+            initial = ''
+            if request.user.is_authenticated():
+                initial = request.user.email
+            sender_email = forms.EmailField(_('sender email'),
+                                    initial=initial)
+            if request.user.is_authenticated():
+                sender_email.widget = forms.HiddenInput()
+            f.fields.insert(index, 'sender_email', sender_email)
+            index += 1
 
         if not self.subject_fixed:
             f.fields.insert(index, 'subject',

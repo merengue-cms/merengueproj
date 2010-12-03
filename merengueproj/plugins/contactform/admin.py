@@ -71,6 +71,7 @@ class BaseContentRelatedContactFormAdmin(ContactFormAdmin, RelatedModelAdmin):
     one_to_one = False
     related_field = 'content'
     filter_or_exclude = 'filter'
+    related_field = 'basecontent'
 
     def save_form(self, request, form, change):
         return super(RelatedModelAdmin, self).save_form(request, form, change)
