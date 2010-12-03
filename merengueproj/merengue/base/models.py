@@ -40,7 +40,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 from django.contrib.auth.models import User
 
-from cmsutils.db.fields import AutoSlugField
+from cmsutils.db.fields import AutoSlugField, JSONField
 from cmsutils.signals import post_rebuild_db
 if settings.USE_GIS:
     from south.introspection_plugins import geodjango
@@ -335,6 +335,9 @@ class BaseContent(BaseClass):
                                         editable=False)
     no_deletable = models.BooleanField(default=False,
                                        editable=False)
+
+    # Structural fields
+    no_changeable_fields = JSONField(null=True)
 
     objects = BaseContentManager()
 
