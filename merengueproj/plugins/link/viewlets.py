@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from merengue.viewlet.viewlets import Viewlet
 from plugins.link.views import get_links
@@ -24,6 +24,7 @@ from plugins.link.views import get_links
 class LatestLinkViewlet(Viewlet):
     name = 'latestlink'
     help_text = _('Latest link')
+    verbose_name = _('Latest links')
 
     @classmethod
     def render(cls, request):
@@ -34,7 +35,8 @@ class LatestLinkViewlet(Viewlet):
 
 class AllLinkViewlet(Viewlet):
     name = 'alllink'
-    help_text = _('All link')
+    help_text = _('All links')
+    verbose_name = _('All links')
 
     @classmethod
     def render(cls, request):

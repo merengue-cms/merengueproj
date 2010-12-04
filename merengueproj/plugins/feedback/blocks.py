@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, ugettext_lazy
 
 from merengue.block.blocks import ContentBlock
 
@@ -23,6 +23,8 @@ from merengue.block.blocks import ContentBlock
 class FeedbackBlock(ContentBlock):
     name = 'feedback'
     default_place = 'aftercontent'
+    verbose_name = ugettext_lazy('Feedback block')
+    help_text = ugettext_lazy('The block represents the feedback widget')
 
     @classmethod
     def render(cls, request, place, content, context, *args, **kwargs):

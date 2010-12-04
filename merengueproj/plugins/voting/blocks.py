@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, ugettext_lazy
 
 from merengue.block.blocks import ContentBlock
 
@@ -25,6 +25,8 @@ from plugins.voting.utils import get_can_vote
 class VotingBlock(ContentBlock):
     name = 'voting'
     default_place = 'beforecontent'
+    help_text = ugettext_lazy('Block that provides the voting functionality')
+    verbose_name = ugettext_lazy('Voting block')
 
     @classmethod
     def render(cls, request, place, content, context, *args, **kwargs):

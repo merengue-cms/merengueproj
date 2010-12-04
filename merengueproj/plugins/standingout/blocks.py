@@ -16,7 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.contrib.contenttypes.models import ContentType
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, ugettext_lazy
 
 from merengue.block.blocks import Block
 from plugins.standingout.models import StandingOut, StandingOutCategory
@@ -25,6 +25,8 @@ from plugins.standingout.models import StandingOut, StandingOutCategory
 class StandingOutBlock(Block):
     name = 'standingout'
     default_place = 'rigthsidebar'
+    help_text = ugettext_lazy('Block with standing out by categories')
+    verbose_name = ugettext_lazy('Standing out block')
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):

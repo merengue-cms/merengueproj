@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from merengue.viewlet.viewlets import Viewlet
 from plugins.news.views import get_news
@@ -24,6 +24,7 @@ from plugins.news.views import get_news
 class LatestNewsViewlet(Viewlet):
     name = 'latestnews'
     help_text = _('Latest news')
+    verbose_name = _('Latest news block')
 
     @classmethod
     def render(cls, request):
@@ -35,6 +36,7 @@ class LatestNewsViewlet(Viewlet):
 class AllNewsViewlet(Viewlet):
     name = 'allnews'
     help_text = _('All news')
+    verbose_name = _('All news block')
 
     @classmethod
     def render(cls, request):

@@ -25,6 +25,7 @@ from merengue.action.actions import SiteAction
 class GenerateRSS(SiteAction):
     name = 'generaterss'
     verbose_name = _('Generate RSS feed')
+    help_text = _('Creates the rss feed')
 
     @classmethod
     def get_response(cls, request):

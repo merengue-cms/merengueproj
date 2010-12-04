@@ -16,7 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, ugettext_lazy
 
 from merengue.block.blocks import Block
 
@@ -24,6 +24,8 @@ from merengue.block.blocks import Block
 class OldBrowserBlock(Block):
     name = 'oldbrowser'
     default_place = 'header'
+    help_text = ugettext_lazy('Block emulates the old browser ')
+    verbose_name = ugettext_lazy('Old browser block')
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):

@@ -16,7 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf import settings
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, ugettext_lazy
 
 from merengue.block.blocks import Block
 from merengue.section.models import BaseSection, Menu
@@ -26,6 +26,8 @@ from merengue.portal.models import PortalLink
 class CoreMenuBlock(Block):
     name = 'coremenu'
     default_place = 'leftsidebar'
+    help_text = ugettext_lazy('Renders the Menu')
+    verbose_name = ugettext_lazy('Core Menu Block')
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):
@@ -46,6 +48,8 @@ class CoreMenuBlock(Block):
 class NavigationBlock(Block):
     name = 'navigation'
     default_place = 'leftsidebar'
+    help_text = ugettext_lazy('Renders the Navigation')
+    verbose_name = ugettext_lazy('Navigation Block')
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):
@@ -61,6 +65,8 @@ class NavigationBlock(Block):
 class PortalMenuBlock(Block):
     name = 'portalmenu'
     default_place = 'header'
+    help_text = ugettext_lazy('Renders the Portal Menu')
+    verbose_name = ugettext_lazy('Portal Menu Block')
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):
@@ -74,6 +80,8 @@ class LinkBaseBlock(Block):
     """ Abstract base class for blocks that render portal links """
     category = None
     template_name = 'core/block_portallinks.html'
+    help_text = ugettext_lazy('Abstract block that render portal links')
+    verbose_name = ugettext_lazy('Link Base Block')
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):
@@ -90,6 +98,8 @@ class PrimaryLinksBlock(LinkBaseBlock):
     default_place = 'header'
     category = 'primary'
     template_name = 'core/block_primarylinks.html'
+    help_text = ugettext_lazy('Block reporesents the Primary Links')
+    verbose_name = ugettext_lazy('Primary Links Block')
 
 
 class SecondaryLinksBlock(LinkBaseBlock):
@@ -98,3 +108,5 @@ class SecondaryLinksBlock(LinkBaseBlock):
     default_place = 'footer'
     category = 'secondary'
     template_name = 'core/block_secondarylinks.html'
+    help_text = ugettext_lazy('Block that renders secondary portal links')
+    verbose_name = ugettext_lazy('Link Base Block')

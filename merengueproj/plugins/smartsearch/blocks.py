@@ -17,7 +17,7 @@
 
 from autoreports.models import modelform_factory
 
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, ugettext_lazy
 
 from merengue.block.blocks import ContentBlock
 from plugins.smartsearch.forms import SearcherForm
@@ -27,6 +27,8 @@ from merengue.collection.models import Collection
 class SearchBlock(ContentBlock):
     name = 'searchform'
     default_place = 'aftercontent'
+    help_text = ugettext_lazy('Block represents search widget')
+    verbose_name = ugettext_lazy('Search block')
 
     @classmethod
     def render(cls, request, place, content, context, *args, **kwargs):

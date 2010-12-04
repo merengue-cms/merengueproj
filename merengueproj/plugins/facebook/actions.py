@@ -26,6 +26,7 @@ from merengue.action.actions import ContentAction
 class FacebookLink(ContentAction):
     name = 'facebooklink'
     verbose_name = _('Share in Facebook')
+    help_text = _('Facebook share widget')
 
     @classmethod
     def get_response(cls, request, content):

@@ -17,7 +17,7 @@
 
 from datetime import date
 
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, ugettext_lazy
 
 from merengue.block.blocks import Block
 
@@ -27,6 +27,8 @@ from plugins.event.utils import getEventsMonthYear
 class EventsCalendarBlock(Block):
     name = 'eventscalendar'
     default_place = 'rightsidebar'
+    help_text = ugettext_lazy('Block that renders calendar with events')
+    verbose_name = ugettext_lazy('Events Calendar Block')
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):

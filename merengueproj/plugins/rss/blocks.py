@@ -16,7 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.core.urlresolvers import reverse
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, ugettext_lazy
 
 from merengue.block.blocks import Block
 
@@ -24,6 +24,8 @@ from merengue.block.blocks import Block
 class RSSGlobalFeed(Block):
     name = 'RSSGlobalFeed'
     default_place = 'meta'
+    help_text = ugettext_lazy('Block represents global RSS feed')
+    verbose_name = ugettext_lazy('Global RSS feed block')
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):

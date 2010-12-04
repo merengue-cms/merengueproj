@@ -16,7 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf import settings
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, ugettext_lazy
 
 from cmsutils.log import send_info
 from merengue.block.blocks import ContentBlock
@@ -27,6 +27,8 @@ from plugins.contactform.models import ContactForm
 class ContactFormBlock(ContentBlock):
     name = 'contactform'
     default_place = 'aftercontent'
+    help_text = ugettext_lazy('Block with contact form')
+    verbose_name = ugettext_lazy('Contact Form Block')
 
     @classmethod
     def render(cls, request, place, content, context, *args, **kwargs):

@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, ugettext_lazy
 
 from merengue.block.blocks import Block
 from plugins.chunks.models import Chunk
@@ -24,6 +24,8 @@ from plugins.chunks.models import Chunk
 class ChunksBlock(Block):
     name = 'chunksblock'
     default_place = 'all'
+    help_text = ugettext_lazy('Chunks Block')
+    verbose_name = ugettext_lazy('Chunks Block')
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):

@@ -26,6 +26,7 @@ from merengue.action.actions import ContentAction
 class SubscriptionAction(ContentAction):
     name = 'subscriptionaction'
     verbose_name = _('Subscription')
+    help_text = _('The view provide subscription functionality')
 
     @classmethod
     def get_response(cls, request, content):

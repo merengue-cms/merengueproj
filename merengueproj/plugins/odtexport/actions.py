@@ -27,6 +27,7 @@ from oot.views import render_writer_template
 class ExportODT(ContentAction):
     name = 'exportodt'
     verbose_name = _('Export ODT')
+    help_text = _('Export ODT block')
 
     @classmethod
     def get_response(cls, request, content):

@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, ugettext_lazy
 
 from merengue.block.blocks import Block
 from plugins.tv.models import VideoStreaming
@@ -24,6 +24,8 @@ from plugins.tv.models import VideoStreaming
 class LatestVideoBlock(Block):
     name = 'latestVideo'
     default_place = 'rightsidebar'
+    help_text = ugettext_lazy('Block provides latest videos')
+    verbose_name = ugettext_lazy('Latest videos block')
 
     @classmethod
     def render(cls, request, channel, context, *args, **kwargs):

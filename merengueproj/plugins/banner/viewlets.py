@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from merengue.viewlet.viewlets import Viewlet
 from plugins.banner.views import get_banners
@@ -24,6 +24,7 @@ from plugins.banner.views import get_banners
 class AllBannerViewlet(Viewlet):
     name = 'allbanner'
     help_text = _('All Banners')
+    verbose_name = _('All banner block')
 
     @classmethod
     def render(cls, request):
