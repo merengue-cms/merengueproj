@@ -676,7 +676,7 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
                                     'multiple': True,
                                     'multipleSeparator': " ",
                                     'size': 100}, }
-    exclude = ('adquire_global_permissions', )
+    exclude = ('adquire_global_permissions', 'no_changeable_fields')
 
     def get_urls(self):
         from django.conf.urls.defaults import patterns
@@ -766,6 +766,11 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
                     form.base_fields['status'].initial = 'pending'
             else:
                 form.base_fields.pop('status')
+        if obj and obj.no_changeable_fields:
+            no_changeable_fields = obj.no_changeable_fields
+            for name in no_changeable_fields:
+                if name in form.base_fields:
+                    set_field_read_only(form.base_fields[name], name, obj)
         if obj and getattr(obj, 'no_changeable', False):
             # Prevent changes if some one forces a save submit
             form.is_valid = lambda x: False
