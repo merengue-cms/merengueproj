@@ -15,7 +15,10 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.utils.translation import ugettext_lazy as _
+
 from merengue.pluggable import Plugin
+from merengue.registry import params
 
 from plugins.contactform.models import ContactForm, SentContactForm
 from plugins.contactform.admin import ContactFormAdmin, SentContactFormAdmin
@@ -30,6 +33,11 @@ class PluginConfig(Plugin):
     url_prefixes = (
         ('contactform', 'plugins.contactform.urls'),
     )
+
+    config_params = [
+        params.Single(name='rpubk', label=_('recaptcha public key')),
+        params.Single(name='rprivk', label=_('recaptcha private key')),
+    ]
 
     @classmethod
     def get_blocks(cls):

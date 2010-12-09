@@ -31,20 +31,27 @@ def contact_form_submit(request, content_slug, contact_form_id):
 
     if request.method == 'POST':
         form = contact_form.get_form(request)
+
         if form.is_valid():
             form.save(request, content, contact_form)
             request.session['form_msg'] = _('Form was sended correctly')
         else:
-            # Errors in session because we're redirecting
-            err = form.errors
-            for k, vs in err.items():
-                err[k] = [unicode(v) for v in vs]
-            request.session['form_errors'] = err
-            request.session['form_data'] = form.data
+            errors_to_session(request, content, form)
 
     if contact_form.redirect_to:
         redirect = contact_form.redirect_to
     else:
         redirect = content.public_link()
 
+    return HttpResponseRedirect(redirect)
+
+
+def errors_to_session(request, content, form):
+    # Errors in session because we're redirecting
+    err = form.errors
+    for k, vs in err.items():
+        err[k] = [unicode(v) for v in vs]
+    request.session['form_errors'] = err
+    request.session['form_data'] = form.data
+    redirect = content.public_link()
     return HttpResponseRedirect(redirect)

@@ -128,6 +128,10 @@ class ContactForm(models.Model):
                                   required=opt.required))
             index += 1
 
+        if self.captcha and not request.user.is_authenticated():
+            captcha_field = custom_fields.CaptchaField(request.META['REMOTE_ADDR'])
+            f.fields.insert(index, 'captcha', captcha_field)
+
         return f
 
 

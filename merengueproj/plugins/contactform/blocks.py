@@ -53,6 +53,7 @@ class ContactFormBlock(ContentBlock):
                        contact_form=contact_form,
                        admin_media=settings.ADMIN_MEDIA_PREFIX,
                        form=form)
+
         return cls.render_block(request, template_name='contactform/block_form.html',
                                 block_title=_('Form'),
                                 context=context)

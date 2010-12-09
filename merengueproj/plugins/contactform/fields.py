@@ -29,6 +29,8 @@ from django.forms.fields import email_re
 from django.utils.translation import ugettext as _
 from django import forms
 
+from plugins.contactform.recaptcha.client import captcha
+
 
 class TextAreaField(forms.CharField):
     widget = forms.widgets.Textarea
@@ -65,3 +67,40 @@ class ModelMultiEmailField(models.TextField):
         defaults = {'form_class': MultiEmailField}
         defaults.update(kwargs)
         return super(ModelMultiEmailField, self).formfield(**defaults)
+
+
+class CaptchaWidget(forms.widgets.Widget):
+
+    def render(self, name, value, attrs=None):
+        from plugins.contactform.config import PluginConfig
+        pubkey = PluginConfig.get_config().get('rpubk', None)
+        if pubkey:
+            pubkey = pubkey.value
+        else:
+            pubkey = ''
+        return captcha.displayhtml(pubkey)
+
+    def value_from_datadict(self, data, files, name):
+        return (data['recaptcha_challenge_field'],
+                data['recaptcha_response_field'])
+
+
+class CaptchaField(forms.Field):
+    widget = CaptchaWidget
+
+    def __init__(self, client_addr, *args, **kwargs):
+        self.client_addr = client_addr
+        super(CaptchaField, self).__init__(*args, **kwargs)
+
+    def clean(self, value):
+        from plugins.contactform.config import PluginConfig
+        privkey = PluginConfig.get_config().get('rprivk', None)
+        if privkey:
+            privkey = privkey.value
+        else:
+            privkey = ''
+        challenge, response = value
+        recaptcha_response = captcha.submit(challenge, response,
+                                            privkey, self.client_addr)
+        if not recaptcha_response.is_valid:
+            raise ValidationError(_("The captcha was invalid, try again."))
