@@ -24,7 +24,8 @@ from merengue.base.admin import (RelatedModelAdmin, BaseAdmin,
 from merengue.base.models import BaseContent
 
 from plugins.contactform.models import (ContactForm, ContactFormOpt,
-                                        SentContactForm)
+                                        SentContactForm,
+                                        ContactFormSelectOpt)
 
 
 class ContactFormAdmin(BaseAdmin):
@@ -34,10 +35,19 @@ class ContactFormAdmin(BaseAdmin):
     html_fields = ('description', )
 
 
+class SelectInline(admin.TabularInline):
+    model = ContactFormSelectOpt
+    fk_name = "option"
+
+
 class ContactFormOptAdmin(BaseOrderableAdmin, BaseAdmin):
 
     sortablefield = 'order'
     html_fields = ('help_text', )
+
+    inlines = [
+        SelectInline,
+    ]
 
 
 class SentContactFormAdmin(BaseAdmin):

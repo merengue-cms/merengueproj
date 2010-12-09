@@ -32,6 +32,10 @@ from django import forms
 from plugins.contactform.recaptcha.client import captcha
 
 
+class RadioField(forms.ChoiceField):
+    widget = forms.widgets.RadioSelect
+
+
 class TextAreaField(forms.CharField):
     widget = forms.widgets.Textarea
 

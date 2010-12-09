@@ -38,7 +38,7 @@ FIELD_TYPE_CHOICES = (
     ('date', _('Date')),
     ('datetime', _('Datetime')),
     ('checkbox', _('Checkbox')),
-    #('select', _('Select')),
+    ('select', _('Select')),
     ('file', _('File')),
 )
 
@@ -92,6 +92,7 @@ class ContactForm(models.Model):
             'date': custom_fields.DateField,
             'datetime': custom_fields.DateTimeField,
             'checkbox': forms.BooleanField,
+            'select': custom_fields.RadioField,
             'file': forms.FileField,
         }
 
@@ -122,10 +123,20 @@ class ContactForm(models.Model):
             Field = fields[opt.field_type]
             help_text = opt.help_text
 
-            f.fields.insert(index, 'option_%s' % opt.id,
-                            Field(label=opt.label,
-                                  help_text=help_text,
-                                  required=opt.required))
+            if opt.field_type == 'select':
+                choices = []
+                for choice in opt.choices.all():
+                    choices.append((choice.label, choice.label))
+
+                field = Field(label=opt.label, help_text=help_text,
+                              required=opt.required, choices=choices)
+            else:
+                field = Field(label=opt.label,
+                              help_text=help_text,
+                              required=opt.required)
+
+            f.fields.insert(index, 'option_%s' % opt.id, field)
+
             index += 1
 
         if self.captcha and not request.user.is_authenticated():
@@ -156,6 +167,22 @@ class ContactFormOpt(models.Model):
         verbose_name = _('Configurable field')
         verbose_name_plural = _('Configurable fields')
         ordering = ('order', )
+
+    def __unicode__(self):
+        return self.label
+
+
+class ContactFormSelectOpt(models.Model):
+
+    __metaclass__ = TransMeta
+
+    label = models.CharField(verbose_name=_('label'), max_length=200)
+    option = models.ForeignKey(ContactFormOpt,
+                               verbose_name=_('select option'),
+                               related_name=_('choices'))
+
+    class Meta:
+        translate = ('label', )
 
     def __unicode__(self):
         return self.label
