@@ -56,11 +56,17 @@ class ContactFormForm(forms.Form):
 
             sentopts = opts.copy()
             sentopts[u'subject'] = subject
-            sentopts[u'user'] = request.user.username
+            if request.user.is_authenticated():
+                sentopts[u'user'] = request.user.username
+            else:
+                sentopts[u'user'] = 'Anonymous'
+
             sentopts[u'mailfrom'] = from_mail
             sent = SentContactForm(contact_form=contact_form,
                                    sent_msg=simplejson.dumps(sentopts,
-                                       cls=DateTimeAwareJSONEncoder))
+                                   cls=DateTimeAwareJSONEncoder))
+            if request.user.is_authenticated():
+                sent.sender = request.user
             sent.save()
 
             context = dict(opts=opts, content=content,
