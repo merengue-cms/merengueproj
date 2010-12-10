@@ -84,4 +84,8 @@
         <field type="CharField" name="name">Anonymous User</field>
         <field type="CharField" name="slug">anonymous_user</field>
     </object>
+    <object pk="2" model="perms.role">
+        <field type="CharField" name="name">Owner</field>
+        <field type="CharField" name="slug">owner</field>
+    </object>
 </django-objects>

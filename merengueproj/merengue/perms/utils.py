@@ -224,6 +224,9 @@ def get_roles(principal, obj=None):
     if obj is not None:
         roles.extend(get_local_roles(obj, principal))
 
+        if principal in obj.owners.all():
+            roles.extend([Role.objects.get(name=u'Owner')])
+
     if isinstance(principal, User):
         for group in principal.groups.all():
             if obj is not None:
