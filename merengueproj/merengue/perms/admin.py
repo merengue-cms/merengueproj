@@ -297,6 +297,21 @@ class RoleAdmin(admin.ModelAdmin):
         """
         return can_manage_user(request.user)
 
+    def has_delete_permission(self, request, obj=None):
+        if obj and (obj.name == u'Owner' or obj.name == u'Anonymous User'):
+            return False
+        else:
+            if request.method == 'POST' and \
+                   u'delete_selected' in request.POST[u'action']:
+                for key in request.POST.getlist('_selected_action'):
+                    try:
+                        role = Role.objects.get(id=int(key))
+                        if role.name == u'Owner' or role.name == u'Anonymous User':
+                            return False
+                    except Role.DoesNotExists:
+                        pass
+            return super(RoleAdmin, self).has_delete_permission(request, obj)
+
     def save_model(self, request, obj, form, change):
         super(RoleAdmin, self).save_model(request, obj, form, change)
         selected = request.POST.getlist('selected_perm')
