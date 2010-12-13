@@ -672,7 +672,7 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
     edit_related = ()
     html_fields = ('description', )
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
-    autocomplete_fields = {'tags': {'url': '/ajax/autocomplete/tags/base/basecontent/',
+    autocomplete_fields = {'tags': {'url': '/%s/base/ajax/autocomplete/tags/base/basecontent/' % settings.MERENGUE_URLS_PREFIX,
                                     'multiple': True,
                                     'multipleSeparator': " ",
                                     'size': 100}, }

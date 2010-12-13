@@ -20,15 +20,17 @@ from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 #from django.db import connection
 from django.db.models import get_model
-from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect, Http404
+from django.http import (HttpResponseRedirect, HttpResponsePermanentRedirect,
+                         Http404, HttpResponse)
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext
 from django.views.generic import list_detail
+from django.views.decorators.cache import never_cache
 
 from merengue.base.models import BaseContent
 from merengue.perms import utils as perms_api
-from tagging.models import TaggedItem
+from tagging.models import TaggedItem, Tag
 
 
 def _get_results_msg(count):
@@ -92,7 +94,7 @@ def public_link(request, app_label, model_name, content_id):
 def admin_link(request, content_type, content_id, url=''):
     """ Redirect to admin change page for an object """
     try:
-        content = ContentType.objects.get_for_id(content_type).get_object_for_this_type(id=content_id)
+        ContentType.objects.get_for_id(content_type).get_object_for_this_type(id=content_id)
     except ObjectDoesNotExist:
         raise Http404
     return HttpResponseRedirect(reverse('admin:admin_redirect', args=(content_type, content_id, url)))
@@ -135,3 +137,19 @@ def content_list(request, queryset, paginate_by=10, page=None,
                                    page=page,
                                    template_object_name='content',
                                    extra_context=context)
+
+
+@never_cache
+def ajax_autocomplete_tags(request, app_name, model):
+    cls = get_model(app_name, model)
+    query_string=request.GET.get("q", None)
+    limit = request.GET.get("limit", None)
+    tags = Tag.objects.usage_for_model(cls)
+
+    for subclass in cls.__subclasses__():
+        tags.extend(Tag.objects.usage_for_model(subclass))
+    if query_string:
+        tags = [t for t in tags if query_string in t.name]
+    if limit:
+        tags = tags[:int(limit)]
+    return HttpResponse("\n".join(["%s|%d" % (t.name, t.id) for t in tags]))
