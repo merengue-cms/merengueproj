@@ -51,8 +51,10 @@ class ContactForm(models.Model):
     title = models.CharField(verbose_name=_('name'), max_length=200)
     description = models.TextField(verbose_name=_('description'))
     email = custom_fields.ModelMultiEmailField(verbose_name=_('emails'),
-                                               default=settings.DEFAULT_FROM_EMAIL)
-    bcc = custom_fields.ModelMultiEmailField(verbose_name=_('bcc emails'), blank=True)
+                                               default=settings.DEFAULT_FROM_EMAIL,
+                                               help_text=_('comma separated email list'))
+    bcc = custom_fields.ModelMultiEmailField(verbose_name=_('bcc emails'), blank=True,
+                                               help_text=_('comma separated email list'))
     redirect_to = models.CharField(verbose_name=_('redirect to'),
                                    max_length=200,
                                    blank=True)
@@ -71,8 +73,8 @@ class ContactForm(models.Model):
                                      verbose_name=_('content'),
                                      related_name='contact_form',
                                      blank=True, null=True)
-    captcha = models.BooleanField(verbose_name=_('captcha'))
-    sender_email = models.BooleanField(verbose_name=_('sender email'))
+    captcha = models.BooleanField(verbose_name=_('captcha'), default=True)
+    sender_email = models.BooleanField(verbose_name=_('sender email'), default=True)
 
     def __unicode__(self):
         return self.title
@@ -109,8 +111,6 @@ class ContactForm(models.Model):
                 initial = request.user.email
             sender_email = forms.EmailField(_('sender email'),
                                     initial=initial)
-            if request.user.is_authenticated():
-                sender_email.widget = forms.HiddenInput()
             f.fields.insert(index, 'sender_email', sender_email)
             index += 1
 
@@ -127,7 +127,7 @@ class ContactForm(models.Model):
             if opt.field_type == 'select':
                 choices = []
                 for choice in opt.choices.all():
-                    choices.append((choice.label, choice.label))
+                    choices.append((choice.value, choice.label))
 
                 field = Field(label=opt.label, help_text=help_text,
                               required=opt.required, choices=choices)
@@ -178,6 +178,7 @@ class ContactFormSelectOpt(models.Model):
     __metaclass__ = TransMeta
 
     label = models.CharField(verbose_name=_('label'), max_length=200)
+    value = models.CharField(verbose_name=_('value'), max_length=200)
     option = models.ForeignKey(ContactFormOpt,
                                verbose_name=_('select option'),
                                related_name=_('choices'))
