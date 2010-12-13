@@ -337,7 +337,8 @@ class BaseContent(BaseClass):
                                        editable=False)
 
     # Structural fields
-    no_changeable_fields = JSONField(null=True)
+    no_changeable_fields = JSONField(null=True, blank=True,
+                                     editable=False)
 
     objects = BaseContentManager()
 

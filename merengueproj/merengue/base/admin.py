@@ -676,7 +676,7 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
                                     'multiple': True,
                                     'multipleSeparator': " ",
                                     'size': 100}, }
-    exclude = ('adquire_global_permissions', 'no_changeable_fields')
+    exclude = ('adquire_global_permissions', )
 
     def get_urls(self):
         from django.conf.urls.defaults import patterns
@@ -736,11 +736,21 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
         """
         Overrides Django admin behaviour to add ownership based access control
         """
-        if obj and obj.no_deletable:
-            return False
         if obj:
-            return perms_api.has_permission(obj, request.user, 'delete')
-        return True
+            if obj.no_deletable:
+                return False
+            else: # deletable
+                return perms_api.has_permission(obj, request.user, 'delete')
+        else: # obj = None
+            if request.method == 'POST' and \
+               request.POST.get('action', None) == u'delete_selected':
+                selected_objs = [BaseContent.objects.get(id=int(key))
+                                 for key in request.POST.getlist('_selected_action')]
+                for sel_obj in selected_objs:
+                    if not self.has_delete_permission(request, sel_obj):
+                        return False
+                return True
+        return False
 
     def has_change_permission_to_any(self, request):
         return super(BaseContentAdmin, self).has_change_permission(request, None)
