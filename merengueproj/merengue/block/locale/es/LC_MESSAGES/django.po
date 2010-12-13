@@ -47,3 +47,19 @@ msgstr "Cabecera"
 #: models.py:15
 msgid "Footer"
 msgstr "Pie de página"
+
+#: models.py:42
+msgid "showed in urls"
+msgstr "mostrado en urls"
+
+#: models.py:44
+msgid "block will <em>only</em> be visible in urls matching these regular expressions (one per line, using <a href='http://docs.python. org./library/re.html#regular-expression-syntax' title='python regular expressions'>python re syntax</a>). <br/> Please use relative paths. This field has preference over 'hidden in urls'."
+msgstr "el bloque será <em>sólo</em> mostrado en urls que se ajusten a estas expresiones regulares (una por línea, usando la <a href='http://docs.python.org./library/re.html#regular-expression-syntax' title='python regular expressions'>sintaxis de python re</a>). <br/> Por favor, use rutas relativas. Este campo tiene preferencia sobre 'oculto en urls'."
+
+#: models.py:51
+msgid "hidden in urls"
+msgstr "oculto en urls"
+
+#: models.py:53
+msgid "block will be hidden in urls matching these regular expressions (one per line, using <a href='http://docs.python.org/library/re.html#regular-expression-syntax' title='python regular expressions'>python re syntax</a>)."
+msgstr "el bloque será ocultado en urls que se ajusten a estas expresiones regulares (una por línea, usando la <a href='http://docs.python.org./library/re.html#regular-expression-syntax' title='python regular expressions'>sintaxis de python re</a>)."

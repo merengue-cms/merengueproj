@@ -30,7 +30,7 @@ class RegisteredBlockAdmin(RegisteredItemAdmin):
     fieldsets = (
         ('', {'fields': ('name', 'module', 'class_name', )}),
         (_('Status'),
-            {'fields': ('placed_at', 'active', 'order', 'config')}
+            {'fields': ('placed_at', 'active', 'showed_in_urls', 'hidden_in_urls', 'order', 'config')}
         ))
 
     def has_add_permission(self, request):

@@ -21,6 +21,8 @@ from django.utils.translation import ugettext_lazy as _
 from merengue.registry.managers import RegisteredItemManager
 from merengue.registry.models import RegisteredItem
 
+import re
+
 
 PLACES = (('all', _('All')),
           ('leftsidebar', _('Left sidebar')),
@@ -36,12 +38,46 @@ PLACES = (('all', _('All')),
 class RegisteredBlock(RegisteredItem):
     name = models.CharField(_('name'), max_length=100)
     placed_at = models.CharField(_('placed at'), max_length=100, choices=PLACES)
+    showed_in_urls = models.TextField(
+        _('showed in urls'),
+        blank=True,
+        help_text=_("""block will <em>only</em> be visible in urls matching these
+            regular expressions (one per line, using <a\
+            href='http://docs.python.org./library/re.html#regular-expression-syntax'
+            title='python regular expressions'>python re syntax</a>). <br/>
+            Please use relative paths.
+            This field has preference over 'hidden in urls'."""))
+    hidden_in_urls = models.TextField(
+        _('hidden in urls'),
+        blank=True,
+        help_text=_("""block will be hidden in urls matching these regular
+            expressions (one per line, using <a
+            href='http://docs.python.org/library/re.html#regular-expression-syntax'
+            title='python regular expressions'>python re syntax</a>)."""))
 
     objects = RegisteredItemManager()
+    
+    def show_in_url(self, url):
+        def _matches(url, exp):
+            for e in exp:
+                try:
+                    urlre = re.compile(e, re.IGNORECASE)
+                    if urlre.search(url):
+                        return True
+                except:
+                    continue
+            return False
+        
+        if self.showed_in_urls:
+            return _matches(url, self.showed_in_urls.split())
+        elif self.hidden_in_urls:
+            return not _matches(url, self.hidden_in_urls.split())
+        else:
+            return True        
 
-    def print_block(self, placed_at):
-        if self.placed_at == 'all' or placed_at == self.placed_at:
-            return True
+    def print_block(self, placed_at, url):
+        if self.show_in_url(url):
+            return self.placed_at in ['all', placed_at]
         return False
 
     def __unicode__(self):

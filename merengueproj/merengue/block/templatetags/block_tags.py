@@ -31,7 +31,7 @@ def _render_blocks(request, obj, place, block_type, context):
     rendered_blocks = []
     registered_blocks = RegisteredBlock.objects.actives(ordered=True)
     for registered_block in registered_blocks:
-        if registered_block.print_block(place):
+        if registered_block.print_block(place, request.get_full_path()):
             block = registered_block.get_registry_item_class()
             if block_type == 'block' and issubclass(block, Block):
                 rendered_blocks.append(block.render(request,
