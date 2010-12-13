@@ -274,3 +274,5 @@ DEFAULT_THEME_PREVIEW = 'merengue/img/preview_merengue.png'
 
 # Plugin default preview image. The real path would be path.join(MEDIA_URL, DEFAULT_PLUGIN_PREVIEW)
 DEFAULT_PLUGIN_PREVIEW = path.join('merengue', 'img', 'preview_merengue.png')
+
+STATIC_ROLES = [u'Anonymous User', u'Owner']

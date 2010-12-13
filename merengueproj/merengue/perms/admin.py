@@ -16,6 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django import forms
+from django.conf import settings
 from django.conf.urls.defaults import patterns
 from django.contrib import admin
 from django.contrib.admin.widgets import FilteredSelectMultiple
@@ -298,19 +299,20 @@ class RoleAdmin(admin.ModelAdmin):
         return can_manage_user(request.user)
 
     def has_delete_permission(self, request, obj=None):
-        if obj and (obj.name == u'Owner' or obj.name == u'Anonymous User'):
+        if obj and obj.name in settings.STATIC_ROLES:
             return False
+        elif obj:
+            return True
         else:
             if request.method == 'POST' and \
-                   u'delete_selected' in request.POST[u'action']:
-                for key in request.POST.getlist('_selected_action'):
-                    try:
-                        role = Role.objects.get(id=int(key))
-                        if role.name == u'Owner' or role.name == u'Anonymous User':
-                            return False
-                    except Role.DoesNotExists:
-                        pass
-            return super(RoleAdmin, self).has_delete_permission(request, obj)
+               request.POST.get('action', None) == u'delete_selected':
+                selected_objs = [Role.objects.get(id=int(key))
+                                 for key in request.POST.getlist('_selected_action')]
+                for sel_obj in selected_objs:
+                    if not self.has_delete_permission(request, sel_obj):
+                        return False
+                return True
+        return False
 
     def save_model(self, request, obj, form, change):
         super(RoleAdmin, self).save_model(request, obj, form, change)
