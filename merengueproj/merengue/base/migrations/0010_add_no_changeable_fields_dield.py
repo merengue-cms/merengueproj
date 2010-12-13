@@ -1,4 +1,5 @@
 # encoding: utf-8
+from django.conf import settings
 from south.db import db
 from south.v2 import SchemaMigration
 
@@ -7,13 +8,15 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
 
-        # Adding field 'BaseContent.no_changeable_fields'
-        db.add_column('base_basecontent', 'no_changeable_fields', self.gf('cmsutils.db.fields.JSONField')(null=True), keep_default=False)
+        if settings.USE_GIS:
+            # Adding field 'BaseContent.no_changeable_fields'
+            db.add_column('base_basecontent', 'no_changeable_fields', self.gf('cmsutils.db.fields.JSONField')(null=True), keep_default=False)
 
     def backwards(self, orm):
 
-        # Deleting field 'BaseContent.no_changeable_fields'
-        db.delete_column('base_basecontent', 'no_changeable_fields')
+        if settings.USE_GIS:
+            # Deleting field 'BaseContent.no_changeable_fields'
+            db.delete_column('base_basecontent', 'no_changeable_fields')
 
     models = {
         'auth.group': {
@@ -116,5 +119,9 @@ class Migration(SchemaMigration):
             'postal_code': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
         }
     }
+    if not settings.USE_GIS:
+        del models['places.location']
+        del models['base.basecontent']['location']
+        del models['base.basecontent']['map_icon']
 
     complete_apps = ['base']
