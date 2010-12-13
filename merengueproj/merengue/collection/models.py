@@ -86,12 +86,12 @@ class Collection(BaseContent):
 
         for f in self.get_include_filters():
             try:
-                query = query.filter(f.get_q_object())
+                query = f.filter_query(query)
             except FieldError:
                 continue
         for f in self.get_exclude_filters():
             try:
-                query = query.exclude(f.get_q_object())
+                query = f.filter_query(query)
             except FieldError:
                 continue
         return query
@@ -198,6 +198,19 @@ class CollectionFilter(models.Model):
             return getattr(self, custom_filter_method_name)()
         return self._prepare_q_object()
 
+    def _filter_isnull_query(self, query):
+        # Do no try to filter by __exact='' a non CharField
+        if query.model._meta.get_field(self.filter_field).get_internal_type() == 'CharField':
+            return query.filter(self.get_q_object)
+        else:
+            return query.filter(self._prepare_q_object())
+
+    def filter_query(self, query):
+        custom_filter_method_name = '_filter_%s_query' % (self.filter_operator)
+        if hasattr(self, custom_filter_method_name):
+            return getattr(self, custom_filter_method_name)(query)
+        return query.filter(self.get_q_object())
+
     def __unicode__(self):
         return u'%s__%s=%s' % (self.filter_field,
                                self.filter_operator,
@@ -218,6 +231,20 @@ class ExcludeCollectionFilter(CollectionFilter):
         related_name='exclude_filters',
         verbose_name=_(u'Collection'),
         )
+
+    def filter_query(self, query):
+        custom_filter_method_name = '_filter_%s_query' % (self.filter_operator)
+        if hasattr(self, custom_filter_method_name):
+            return getattr(self, custom_filter_method_name)(query)
+        return query.exclude(self.get_q_object())
+
+    def _filter_isnull_query(self, query):
+        # Do no try to filter by __exact='' a non CharField
+        if query.model._meta.get_field(self.filter_field).get_internal_type() == 'CharField':
+            return query.exclude(self.get_q_object())
+        else:
+            # Excluding a Q object whith isnull doesn't work as expected so we have to exclude by kwarg filter
+            return query.exclude(**{'%s__%s' % (self.filter_field, self.filter_operator): self.value})
 
 
 class CollectionDisplayField(models.Model):
