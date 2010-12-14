@@ -729,7 +729,21 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
         Overrides Django admin behaviour to add ownership based access control
         """
         if obj:
-            return perms_api.has_permission(obj, request.user, 'edit')
+            if obj.no_changeable:
+                return False
+            else: # changeable
+                return perms_api.has_permission(obj, request.user, 'edit')
+        else: # obj = None
+            if request.method == 'POST' and \
+               (request.POST.get('action', None) == u'set_as_pending' or \
+                request.POST.get('action', None) == u'set_as_published' or \
+                request.POST.get('action', None) == u'set_as_draft'):
+
+                selected_objs = [BaseContent.objects.get(id=int(key))
+                                 for key in request.POST.getlist('_selected_action')]
+                for sel_obj in selected_objs:
+                    if not self.has_change_permission(request, sel_obj):
+                        return False
         return True
 
     def has_delete_permission(self, request, obj=None):
