@@ -36,7 +36,7 @@ class UserChangeForm(DjangoUserChangeForm):
         if user:
             self.fields['roles'].initial = [role.id for role in get_global_roles(user)]
 
-    roles = forms.ModelMultipleChoiceField(queryset=Role.objects.exclude(name=u'Owner'),
+    roles = forms.ModelMultipleChoiceField(queryset=Role.objects.exclude(name=u'Anonymous User'),
                                            widget=FilteredSelectMultiple(_('Roles'), False),
                                            required=False)
 
