@@ -33,7 +33,7 @@ for dirpath, dirnames, filenames in os.walk('.'):
 setup(
     name = "merengue",
     version = "0.6.0-alpha1",
-    install_requires = ['django==1.1.2', 'PIL', 'beautifulsoup', 'south==0.7.2', 'pexpect',
+    install_requires = ['django==1.1.2', 'PIL', 'BeautifulSoup', 'south==0.7.2', 'pexpect',
                         'django-extensions==0.5', 'cssutils', 'django-tagging', 'django-pagination',
                         'template_utils', 'django-mptt', 'encutils', 'django-oembed',
                         'django-ajax-selects', 'django-threadedcomments==0.5.3',
