@@ -1,0 +1,11 @@
+{% extends "block.html" %}
+
+{% block blockbody %}
+  <ul style="padding: 0px; margin: 0px; text-align: center;">
+      {% for tag in taglist %}
+      <li style="font-size: {{ tag.count }}em; display: inline; line-height: 1em;">
+          <a href="{% url tag_view tag.name %}">{{ tag.tag_name }}</a>
+      </li>
+      {% endfor %}
+  </ul>
+{% endblock %}
