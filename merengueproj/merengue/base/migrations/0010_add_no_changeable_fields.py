@@ -7,16 +7,12 @@ from south.v2 import SchemaMigration
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-
-        if settings.USE_GIS:
-            # Adding field 'BaseContent.no_changeable_fields'
-            db.add_column('base_basecontent', 'no_changeable_fields', self.gf('cmsutils.db.fields.JSONField')(null=True), keep_default=False)
+        # Adding field 'BaseContent.no_changeable_fields'
+        db.add_column('base_basecontent', 'no_changeable_fields', self.gf('cmsutils.db.fields.JSONField')(null=True), keep_default=False)
 
     def backwards(self, orm):
-
-        if settings.USE_GIS:
-            # Deleting field 'BaseContent.no_changeable_fields'
-            db.delete_column('base_basecontent', 'no_changeable_fields')
+        # Deleting field 'BaseContent.no_changeable_fields'
+        db.delete_column('base_basecontent', 'no_changeable_fields')
 
     models = {
         'auth.group': {
