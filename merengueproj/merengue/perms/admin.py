@@ -35,6 +35,7 @@ from merengue.perms import ANONYMOUS_ROLE_SLUG
 from merengue.perms.models import ObjectPermission, Permission, PrincipalRoleRelation, Role
 from merengue.perms.forms import UserChangeForm, GroupForm, PrincipalRoleRelationForm
 from merengue.perms.utils import add_role, remove_role, can_manage_user
+from merengue.base.widgets import ReadOnlyWidget
 
 
 class PermissionAdmin(admin.ModelAdmin):
@@ -336,6 +337,11 @@ class RoleAdmin(admin.ModelAdmin):
                     permissions.append((perm, perm.objectpermission_set.filter(role=obj, content__isnull=True) and True or False))
             else:
                 permissions = [(perm, False) for perm in Permission.objects.all()]
+        if obj and obj.name in settings.STATIC_ROLES:
+            context['adminform'].form.fields['name'].widget = ReadOnlyWidget(
+                getattr(obj, 'name', ''), obj.name)
+            context['adminform'].form.fields['slug'].widget = ReadOnlyWidget(
+                getattr(obj, 'slug', ''), obj.slug)
         context['permissions'] = permissions
         return super(RoleAdmin, self).render_change_form(request, context, add, change, form_url, obj)
 
