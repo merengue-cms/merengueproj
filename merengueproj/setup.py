@@ -23,7 +23,8 @@ from setuptools import setup, find_packages
 data_files = []
 for dirpath, dirnames, filenames in os.walk('.'):
     for i, dirname in enumerate(dirnames):
-        if dirname.startswith('.'): del dirnames[i]
+        if dirname.startswith('.'):
+            del dirnames[i]
     if '__init__.py' in filenames:
         continue
     elif filenames:
@@ -32,8 +33,10 @@ for dirpath, dirnames, filenames in os.walk('.'):
 setup(
     name = "merengue",
     version = "0.6.0-alpha1",
-    install_requires = ['django==1.1.2', 'PIL', 'beautifulsoup',
-                        'south==0.7.2', 'pexpect',
+    install_requires = ['django==1.1.2', 'PIL', 'beautifulsoup', 'south==0.7.2', 'pexpect',
+                        'django-extensions==0.5', 'cssutils', 'django-tagging', 'django-pagination',
+                        'template_utils', 'django-mptt', 'encutils', 'django-oembed',
+                        'django-ajax-selects', 'django-threadedcomments==0.5.3',
                         'django-notification==0.2a1.dev4'],
     author = "Yaco Sistemas",
     author_email = "msaelices@yaco.es",
