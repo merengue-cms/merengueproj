@@ -253,6 +253,7 @@ class BaseContentMeta(TransMeta):
 
             class Meta:
                 content_view_template = 'myapp/mymodel_view.html'
+                content_view_function = 'myapp.mymodel_view'
     '''
 
     def __new__(cls, name, bases, attrs):
@@ -261,10 +262,16 @@ class BaseContentMeta(TransMeta):
             delattr(attrs['Meta'], 'content_view_template')
         else:
             content_view_template = 'content_view.html'
+        if 'Meta' in attrs and hasattr(attrs['Meta'], 'content_view_function'):
+            content_view_function = attrs['Meta'].content_view_function
+            delattr(attrs['Meta'], 'content_view_function')
+        else:
+            content_view_function = None
 
         new_class = super(BaseContentMeta, cls).__new__(cls, name, bases, attrs)
         if hasattr(new_class, '_meta'):
             new_class._meta.content_view_template = content_view_template
+            new_class._meta.content_view_function = content_view_function
         return new_class
 
 

@@ -24,6 +24,7 @@ from django.http import (HttpResponseRedirect, HttpResponsePermanentRedirect,
                          Http404, HttpResponse)
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.utils.importlib import import_module
 from django.utils.translation import ugettext
 from django.views.generic import list_detail
 from django.views.decorators.cache import never_cache
@@ -107,11 +108,8 @@ def public_view(request, app_label, model_name, content_id, content_slug):
     return content_view(request, content)
 
 
-def content_view(request, content, template_name=None, extra_context=None):
-    """ Generic view for a content detail page """
-    has_view = perms_api.has_permission(content, request.user, 'view')
-    if not has_view:
-        raise PermissionDenied
+def render_content(request, content, template_name=None, extra_context=None):
+    """ Overridable view for a content detail page """
     if extra_context is None:
         extra_context = {}
     ctype = ContentType.objects.get_for_model(content)
@@ -122,6 +120,18 @@ def content_view(request, content, template_name=None, extra_context=None):
         template_name = content._meta.content_view_template
     return render_to_response(template_name, context,
                               context_instance=RequestContext(request))
+
+
+def content_view(request, content, template_name=None, extra_context=None):
+    """ Generic view for a content detail page """
+    has_view = perms_api.has_permission(content, request.user, 'view')
+    if not has_view:
+        raise PermissionDenied
+    if content._meta.content_view_function is not None:
+        render_content_view = import_module(content._meta.content_view_function)
+    else:
+        render_content_view = render_content
+    return render_content_view(request, content, template_name, extra_context)
 
 
 def content_list(request, queryset, paginate_by=10, page=None,
