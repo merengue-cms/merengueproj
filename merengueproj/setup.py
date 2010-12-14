@@ -32,7 +32,9 @@ for dirpath, dirnames, filenames in os.walk('.'):
 setup(
     name = "merengue",
     version = "0.6.0-alpha1",
-    install_requires = ['django==1.1.2', 'PIL', 'beautifulsoup', 'south==0.7.2', 'pexpect'],
+    install_requires = ['django==1.1.2', 'PIL', 'beautifulsoup',
+                        'south==0.7.2', 'pexpect',
+                        'django-notification==0.2a1.dev4'],
     author = "Yaco Sistemas",
     author_email = "msaelices@yaco.es",
     description = "Django-based CMS with steroids",
