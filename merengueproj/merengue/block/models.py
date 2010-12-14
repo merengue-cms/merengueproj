@@ -38,7 +38,7 @@ PLACES = (('all', _('All')),
 class RegisteredBlock(RegisteredItem):
     name = models.CharField(_('name'), max_length=100)
     placed_at = models.CharField(_('placed at'), max_length=100, choices=PLACES)
-    showed_in_urls = models.TextField(
+    shown_in_urls = models.TextField(
         _('showed in urls'),
         blank=True,
         help_text=_("""block will <em>only</em> be visible in urls matching these
@@ -56,8 +56,9 @@ class RegisteredBlock(RegisteredItem):
             title='python regular expressions'>python re syntax</a>)."""))
 
     objects = RegisteredItemManager()
-    
+
     def show_in_url(self, url):
+
         def _matches(url, exp):
             for e in exp:
                 try:
@@ -67,13 +68,13 @@ class RegisteredBlock(RegisteredItem):
                 except:
                     continue
             return False
-        
-        if self.showed_in_urls:
-            return _matches(url, self.showed_in_urls.split())
+
+        if self.shown_in_urls:
+            return _matches(url, self.shown_in_urls.split())
         elif self.hidden_in_urls:
             return not _matches(url, self.hidden_in_urls.split())
         else:
-            return True        
+            return True
 
     def print_block(self, placed_at, url):
         if self.show_in_url(url):
