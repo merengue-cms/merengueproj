@@ -77,8 +77,8 @@ class RegisteredBlock(RegisteredItem):
             return True
 
     def print_block(self, placed_at, url):
-        if self.show_in_url(url):
-            return self.placed_at in ['all', placed_at]
+        if self.placed_at in ['all', placed_at]:
+            return self.show_in_url(url)
         return False
 
     def __unicode__(self):
