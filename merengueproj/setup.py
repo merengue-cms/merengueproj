@@ -37,7 +37,7 @@ setup(
                         'django-extensions==0.5', 'cssutils', 'django-tagging', 'django-pagination',
                         'template_utils', 'django-mptt', 'encutils', 'django-oembed',
                         'django-ajax-selects', 'django-threadedcomments==0.5.3',
-                        'django-notification==0.2a1.dev4'],
+                        'django-notification==0.1.5'],
     author = "Yaco Sistemas",
     author_email = "msaelices@yaco.es",
     description = "Django-based CMS with steroids",
