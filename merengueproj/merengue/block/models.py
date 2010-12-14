@@ -39,7 +39,7 @@ class RegisteredBlock(RegisteredItem):
     name = models.CharField(_('name'), max_length=100)
     placed_at = models.CharField(_('placed at'), max_length=100, choices=PLACES)
     shown_in_urls = models.TextField(
-        _('showed in urls'),
+        _('shown in urls'),
         blank=True,
         help_text=_("""block will <em>only</em> be visible in urls matching these
             regular expressions (one per line, using <a\
@@ -65,7 +65,7 @@ class RegisteredBlock(RegisteredItem):
                     urlre = re.compile(e, re.IGNORECASE)
                     if urlre.search(url):
                         return True
-                except:
+                except re.error, err:
                     continue
             return False
 

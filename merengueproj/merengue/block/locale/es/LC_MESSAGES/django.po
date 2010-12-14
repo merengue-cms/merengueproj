@@ -49,7 +49,7 @@ msgid "Footer"
 msgstr "Pie de página"
 
 #: models.py:42
-msgid "showed in urls"
+msgid "shown in urls"
 msgstr "mostrado en urls"
 
 #: models.py:44
