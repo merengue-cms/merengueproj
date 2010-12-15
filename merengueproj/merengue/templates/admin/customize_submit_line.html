@@ -1,12 +1,14 @@
 {% load i18n %}
-{% if not no_save %}
 <div class="submit-row" {% if is_popup %}style="overflow: auto;"{% endif %}>
+{% if not no_save %}
 {% if show_save %}<input type="submit" value="{% trans 'Save' %}" class="default" name="_{{ prefix }}save" {{ onclick_attrib }}/>{% endif %}
+{% endif %}
 {% if current_body_field %}
   {% if show_delete_link %}<p class="deletelink-box"><a href="../../delete/" class="deletelink">{% trans "Delete" %}</a></p>{% endif %}
 {% else %}
   {% if show_delete_link %}<p class="deletelink-box"><a href="delete/" class="deletelink">{% trans "Delete" %}</a></p>{% endif %}
 {% endif %}
+{% if not no_save %}
 {% if show_save_as_new %}<input type="submit" value="{% trans 'Save as new' %}" name="_{{ prefix }}saveasnew" {{ onclick_attrib }}/>{%endif%}
 {% if not is_foreign_model %}
   {% if show_save_and_add_another %}<input type="submit" value="{% trans 'Save and add another' %}" name="_{{ prefix }}addanother" {{ onclick_attrib }} />{% endif %}

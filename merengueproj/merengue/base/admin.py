@@ -729,9 +729,9 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
         Overrides Django admin behaviour to add ownership based access control
         """
         if obj:
-            if obj.no_changeable:
+            if request.method == 'POST' and obj.no_changeable:
                 return False
-            else: # changeable
+            else: # changeable or GET
                 return perms_api.has_permission(obj, request.user, 'edit')
         else: # obj = None
             if request.method == 'POST' and \
