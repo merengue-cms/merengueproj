@@ -58,6 +58,7 @@ class Collection(BaseContent):
     class Meta:
         verbose_name = _(u'Collection')
         verbose_name_plural = _(u'Collections')
+        content_view_function = 'merengue.collection.views.collection_view'
         content_view_template = 'collection/collection_view.html'
 
     def get_exclude_filters(self):
@@ -119,6 +120,23 @@ class Collection(BaseContent):
                     return items
             items = self._get_items_from_basecontent(content_types)
         return items
+
+    def get_first_parents_of_content_types(self):
+        content_types = self.content_types.all()
+        ct_len = len(content_types)
+        if ct_len == 0:
+            return None
+        elif ct_len == 1:
+            return content_types[0].model_class()
+        parents_first = None
+        for i in range(ct_len - 1):
+            parents_first = parents_first or content_types[i].model_class().mro()
+            parents_second = content_types[i + 1].model_class().mro()
+            for i, parent_first in enumerate(parents_first):
+                if parent_first in parents_second:
+                    parents_first = parents_first[i:]
+                    break
+        return parents_first and parents_first[0]
 
 
 class CollectionFilter(models.Model):

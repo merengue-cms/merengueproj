@@ -128,7 +128,9 @@ def content_view(request, content, template_name=None, extra_context=None):
     if not has_view:
         raise PermissionDenied
     if content._meta.content_view_function is not None:
-        render_content_view = import_module(content._meta.content_view_function)
+        func_path = content._meta.content_view_function
+        func_path_join = func_path.split('.')
+        render_content_view = getattr(import_module('.'.join(func_path_join[:-1])), func_path_join[-1])
     else:
         render_content_view = render_content
     return render_content_view(request, content, template_name, extra_context)

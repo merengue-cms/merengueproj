@@ -20,8 +20,17 @@ from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponse
 from django.utils import simplejson
 
+from merengue.base.views import render_content
 from merengue.collection.utils import (get_common_fields_for_cts,
                                        get_common_fields_no_language_from_fields)
+
+
+def collection_view(request, content, template_name=None, extra_context=None):
+    if template_name is None:
+        model_collection = content.get_first_parents_of_content_types()
+        template_name = ['%s/collection_view.html' % m._meta.module_name for m in model_collection.mro() if getattr(m, '_meta', None) and not m._meta.abstract]
+        template_name.append(content._meta.content_view_template)
+    return render_content(request, content, template_name, extra_context)
 
 
 @login_required
