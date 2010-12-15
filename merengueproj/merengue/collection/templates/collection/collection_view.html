@@ -12,14 +12,14 @@
       <h2>{{ group.grouper }}</h2>
       <ul class="contentList collection-{{ collection.slug }} collectionGrouped collection-{{ collection.slug }}-groupedby-{{ content.groupby }}">
         {% for item in group.list %}
-          {% collection_item content item %}
+          {% collectionitem content item %}
         {% endfor %}
       </ul>
       {% endfor %}
     {% else %}
       <ul class="contentList collection-{{ collection.slug }}">
         {% for item in items %}
-          {% collection_item content item %}
+          {% collectionitem content item %}
         {% endfor %}
       </ul>
     {% endif %}

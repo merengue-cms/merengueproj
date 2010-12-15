@@ -5,6 +5,7 @@ from django.db import models
 from django.template import TemplateSyntaxError, Variable, Library, Node
 from django.template.defaultfilters import dictsort
 from django.template.defaulttags import RegroupNode
+from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
 from cmsutils.adminfilters import QueryStringManager
@@ -33,38 +34,58 @@ def _get_value(field, field_name, item):
     return value
 
 
-def collection_item(context, collection, item):
-    display_fields = collection.display_fields.all().order_by('field_order')
+class CollectionItemNode(Node):
 
-    fields = []
-    for df in display_fields:
-        field_name = df.field_name
-        if field_name == 'content_type_name':
-            verbose_name = _('Content type name')
-        else:
-            try:
-                field = item._meta.get_field(field_name)
-                verbose_name = field.verbose_name
-            except models.FieldDoesNotExist:
+    def __init__(self, collection, item):
+        self.collection = collection
+        self.item = item
+
+    def render(self, context):
+        collection = self.collection.resolve(context)
+        item = self.item.resolve(context)
+        display_fields = collection.display_fields.all().order_by('field_order')
+
+        fields = []
+        for df in display_fields:
+            field_name = df.field_name
+            if field_name == 'content_type_name':
+                verbose_name = _('Content type name')
+            else:
                 try:
-                    lang = fallback_language()
-                    field = item._meta.get_field(get_real_fieldname(field_name, lang))
-                    verbose_name = field.verbose_name[:-len(lang) - 1]
-                except:
-                    continue
-        fields.append({'name': verbose_name,
-                       'field_name': field_name,
-                       'show_label': df.show_label,
-                       'value': _get_value(df, field_name, item),
-                       'safe': df.safe})
-    context_copy = copy(context)
-    context_copy.update({
-        'item': item,
-        'collection': collection,
-        'fields': fields,
-    })
-    return context_copy
-register.inclusion_tag('collection/collection_item.html', takes_context=True)(collection_item)
+                    field = item._meta.get_field(field_name)
+                    verbose_name = field.verbose_name
+                except models.FieldDoesNotExist:
+                    try:
+                        lang = fallback_language()
+                        field = item._meta.get_field(get_real_fieldname(field_name, lang))
+                        verbose_name = field.verbose_name[:-len(lang) - 1]
+                    except:
+                        continue
+            fields.append({'name': verbose_name,
+                        'field_name': field_name,
+                        'show_label': df.show_label,
+                        'value': _get_value(df, field_name, item),
+                        'safe': df.safe})
+        context_copy = copy(context)
+        context_copy.update({
+            'item': item,
+            'collection': collection,
+            'fields': fields,
+        })
+        model_collection = collection.get_first_parents_of_content_types()
+        template_name = ['%s/collection_item.html' % m._meta.module_name for m in model_collection.mro() if getattr(m, '_meta', None) and not m._meta.abstract]
+        template_name.append('collection/collection_item.html')
+        return render_to_string(template_name, context_copy)
+
+
+def collectionitem(parser, token):
+    firstbits = token.contents.split(None, 2)
+    if len(firstbits) != 3:
+        raise TemplateSyntaxError("'collectionitems' tag takes three arguments")
+    collection = parser.compile_filter(firstbits[1])
+    item = parser.compile_filter(firstbits[2])
+    return CollectionItemNode(collection, item)
+collectionitem = register.tag(collectionitem)
 
 
 class CollectionItemsNode(Node):
