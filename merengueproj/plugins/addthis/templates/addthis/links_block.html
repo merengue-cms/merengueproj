@@ -12,12 +12,15 @@ var addthis_config = {
 }
 </script>
 
-
+{% if services %}
 <div class="addthis_toolbox addthis_default_style ">
 <a href="http://www.addthis.com/bookmark.php?v=250&amp;username=merengue" class="addthis_button_compact">{% trans "Share" %}</a>
 <span class="addthis_separator">|</span>
-{% for service in services %}<a class="{{ service }}"></a>{% endfor %}
+{% for service in services %}<a class="addthis_button_{{ service }}"></a>{% endfor %}
 </div>
+{% else %}
+<a class="addthis_button"></a>
+{% endif %}
 
 <script type="text/javascript"
         src="http://s7.addthis.com/js/250/addthis_widget.js"></script>

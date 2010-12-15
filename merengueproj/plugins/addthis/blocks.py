@@ -29,17 +29,10 @@ class AddThisBlock(Block):
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):
         from plugins.addthis.config import PluginConfig
-        services_ids = []
         services = PluginConfig.get_config().get(
             'services', []).get_value()
-        if services:
-            services_ids = ['addthis_button_%s' % service
-                            for service in services]
-        else:
-            services_ids = ['addthis_button']
-        rendered = cls.render_block(
+        return cls.render_block(
             request, template_name='addthis/links_block.html',
             block_title=_('Share this'),
-            context={'services': services_ids},
+            context={'services': services},
             )
-        return rendered
