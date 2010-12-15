@@ -34,8 +34,7 @@ class SearcherRelatedCollectionAdmin(RelatedModelAdmin):
 
     def add_view(self, request, form_url='', extra_context=None):
         form_top_class = self.get_form(request)
-        content_types = self.basecontent.content_types.all()
-        content_type_model = self.get_first_parents_of_content_types(content_types)
+        content_type_model = self.basecontent.get_first_parents_of_content_types()
         content_type = ContentType.objects.get_for_model(content_type_model)
         extra_context = extra_context or {}
         context = {'model_admin': self,
@@ -60,22 +59,6 @@ class SearcherRelatedCollectionAdmin(RelatedModelAdmin):
         if isinstance(searcher, Searcher):
             searcher.collections.add(self.basecontent)
         return searcher
-
-    def get_first_parents_of_content_types(self, content_types):
-        ct_len = len(content_types)
-        if ct_len == 0:
-            return None
-        elif ct_len == 1:
-            return content_types[0].model_class()
-        parents_first = None
-        for i in range(ct_len - 1):
-            parents_first = parents_first or content_types[i].model_class().mro()
-            parents_second = content_types[i + 1].model_class().mro()
-            for i, parent_first in enumerate(parents_first):
-                if parent_first in parents_second:
-                    parents_first = parents_first[i:]
-                    break
-        return parents_first and parents_first[0]
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(SearcherRelatedCollectionAdmin, self).get_form(request, obj, **kwargs)
