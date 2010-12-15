@@ -40,6 +40,11 @@ class RegisteredItem(models.Model):
 
     objects = RegisteredItemManager()
 
+    class Meta:
+        verbose_name = _('registered item')
+        verbose_name_plural = _('registered items')
+        ordering = ('order', )
+
     def __unicode__(self):
         return self.class_name
 

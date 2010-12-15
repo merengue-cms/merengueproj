@@ -52,6 +52,9 @@ class RegisteredPlugin(RegisteredItem):
 
     class Meta:
         db_table = 'plugins_registeredplugin'
+        verbose_name = _('registered plugin')
+        verbose_name_plural = _('registered plugins')
+        ordering = ('order', )
 
     objects = PluginManager()
 
