@@ -1,4 +1,5 @@
 {% extends "block.html" %}
+{% load i18n %}
 
 {% block blocktitle %}
 {% endblock %}
@@ -11,11 +12,12 @@ var addthis_config = {
 }
 </script>
 
-<a href="http://www.addthis.com/bookmark.php?v=250"
-        class="addthis_button">
-  <img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif"
-       width="125" height="16" border="0" alt="Share" />
-</a>
+
+<div class="addthis_toolbox addthis_default_style ">
+<a href="http://www.addthis.com/bookmark.php?v=250&amp;username=merengue" class="addthis_button_compact">{% trans "Share" %}</a>
+<span class="addthis_separator">|</span>
+{% for service in services %}<a class="{{ service }}"></a>{% endfor %}
+</div>
 
 <script type="text/javascript"
         src="http://s7.addthis.com/js/250/addthis_widget.js"></script>

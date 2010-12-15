@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
 #
 # This file is part of Merengue.
@@ -15,15 +16,38 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.utils.translation import ugettext_lazy as _
+
 from merengue.pluggable import Plugin
+from merengue.registry import params
 
 from plugins.addthis.blocks import AddThisBlock
+
+
+DEFAULT_SERVICES = [
+    ('facebook', u'Facebook'),
+    ('twitter', u'Twitter'),
+    ('email', u'Email'),
+    ('print', _(u'Print')),
+    ('delicious', u'Delicious'),
+    ('googlebuzz', u'Google Buzz'),
+    ('meneame', u'Menéame'),
+    ('digg', u'Digg'),
+    ]
 
 
 class PluginConfig(Plugin):
     name = 'AddThis service'
     description = 'Plugin that includes a new block with AddThis service'
     version = '0.0.1a'
+
+    config_params = [
+        params.List(
+            name="services",
+            label=_("Services do you want to show on "),
+            choices=DEFAULT_SERVICES,
+        ),
+    ]
 
     @classmethod
     def get_blocks(cls):
