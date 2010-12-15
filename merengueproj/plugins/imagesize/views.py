@@ -21,8 +21,8 @@ from PIL import Image
 
 from django.conf import settings
 from django.http import HttpResponse
-from django.core.mail import EmailMessage
 from django.utils.translation import ugettext as _
+from notification import models as notification
 
 from plugins.imagesize.models import ImageSize
 
@@ -34,11 +34,17 @@ def imagesize(request):
 
 def notify():
     bigimages = {}
+    broken_dirs = {}
     for imagesize in ImageSize.objects.all():
         width = imagesize.max_width
         height = imagesize.max_height
         dirpath = os.path.join(settings.MEDIA_ROOT, imagesize.folder)
-        for path in os.listdir(dirpath):
+        try:
+            paths = os.listdir(dirpath)
+        except OSError:
+            broken_dirs[imagesize] = dirpath
+            continue
+        for path in paths:
             fullpath = os.path.join(dirpath, path)
             try:
                 img = Image.open(fullpath)
@@ -57,10 +63,9 @@ def notify():
         if imagesize.notified and imagesize.notified > timedelta:
             continue
 
-        to_mail = map(unicode.strip, imagesize.recipients.split(','))
-        subject = _('Images bigger than expected in %(folder)s') %\
+        subject = _("Images bigger than expected in '%(folder)s'") %\
                     dict(folder=imagesize.folder)
-        msg = _('''There are images bigger than expected in %(folder)s.
+        msg = _('''There are images bigger than expected in '%(folder)s'.
 The max size is setted to %(width)s x %(height)s.
 
 ''') % dict(folder=imagesize.folder,
@@ -68,8 +73,21 @@ The max size is setted to %(width)s x %(height)s.
            height=imagesize.max_height)
 
         msg += '\n'.join(' * ' + img for img in bigimages[imagesize])
-        email = EmailMessage(subject, msg, settings.DEFAULT_FROM_EMAIL,
-                             to_mail)
-        email.send()
+        context = dict(subject=subject, msg=msg)
+        notification.send(imagesize.recipients.all(), 'imagesize_images', context)
         imagesize.notified = datetime.datetime.now()
         imagesize.save()
+
+    if broken_dirs:
+        for imagesize, broken in broken_dirs.items():
+            if imagesize.notified and imagesize.notified > timedelta:
+                continue
+            subject = _("Can't open directory '%(folder)s'") %\
+                      dict(folder=imagesize.folder)
+            msg = _("Can't check image size in folder '%(folder)s'\n") %\
+                      dict(folder=imagesize.folder)
+            context = dict(subject=subject, msg=msg)
+            notification.send(imagesize.recipients.all(), 'imagesize_broken', context)
+
+            imagesize.notified = datetime.datetime.now()
+            imagesize.save()
