@@ -15,7 +15,15 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.contrib.contenttypes.models import ContentType
+from django.conf import settings
+
+from transmeta import get_real_fieldname
 from merengue.pluggable import Plugin
+from merengue.collection.models import (Collection, IncludeCollectionFilter,
+                                        CollectionDisplayField,
+                                        CollectionDisplayFieldFilter)
+
 
 from plugins.link.admin import LinkAdmin, LinkCategoryAdmin, LinkSectionAdmin
 from plugins.link.models import Link, LinkCategory
@@ -42,3 +50,36 @@ class PluginConfig(Plugin):
     @classmethod
     def get_viewlets(cls):
         return [LatestLinkViewlet, AllLinkViewlet]
+
+    @classmethod
+    def hook_post_register(cls):
+
+        def create_collection(slug, name, model, create_display_field=True, create_filter_field=True):
+            ct = ContentType.objects.get_for_model(model)
+            collection, created = Collection.objects.get_or_create(slug=slug)
+            if created:
+                collection = Collection(slug=slug,
+                                        status='published',
+                                        no_changeable_fields=['slug'],
+                                        no_deletable=True,
+                                        )
+                setattr(collection, get_real_fieldname('name', settings.LANGUAGE_CODE), name)
+                collection.save()
+
+                if create_filter_field:
+                    IncludeCollectionFilter.objects.create(collection=collection,
+                                                        filter_field='status',
+                                                        filter_operator='exact',
+                                                        filter_value='published')
+                if create_display_field:
+                    dfield = CollectionDisplayField.objects.create(field_name='description',
+                                                                safe=True,
+                                                                show_label=False,
+                                                                collection=collection)
+                    CollectionDisplayFieldFilter.objects.create(display_field=dfield,
+                                                                filter_module='django.template.defaultfilters.truncatewords_html',
+                                                                filter_params='15')
+                collection.content_types.add(ct)
+
+        create_collection('links', u'Links', Link,
+                          create_display_field=True, create_filter_field=True)

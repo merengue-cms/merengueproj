@@ -18,18 +18,18 @@
 from django.shortcuts import get_object_or_404
 
 from cmsutils.adminfilters import QueryStringManager
-from merengue.base.views import content_view, content_list
-from plugins.link.models import Link, LinkCategory
+from merengue.base.views import content_view
+from merengue.collection.models import Collection
+from plugins.link.models import Link
 
 
-def link_index(request, template_name='link/link_index.html', queryset=None, extra_context=None):
-    link_list = get_links(request, queryset=queryset)
-    link_category_slug = request.GET.get('categories__slug', None)
-    link_category = link_category_slug and get_object_or_404(LinkCategory, slug=link_category_slug)
-    context = {'link_category': link_category}
+LINK_COLLECTION_SLUG = 'links'
+
+
+def link_index(request, extra_context=None):
+    link_collection= Collection.objects.get(slug=LINK_COLLECTION_SLUG)
     extra_context = extra_context or {}
-    context.update(extra_context)
-    return content_list(request, link_list, template_name=template_name, extra_context=context)
+    return content_view(request, link_collection, extra_context=extra_context)
 
 
 def link_view(request, link_slug, template_name='link/link_view.html', extra_context=None):
