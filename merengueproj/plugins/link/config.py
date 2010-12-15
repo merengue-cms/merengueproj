@@ -17,6 +17,7 @@
 
 from django.contrib.contenttypes.models import ContentType
 from django.conf import settings
+from django.db import transaction
 
 from transmeta import get_real_fieldname
 from merengue.pluggable import Plugin
@@ -56,13 +57,14 @@ class PluginConfig(Plugin):
 
         def create_collection(slug, name, model, create_display_field=True, create_filter_field=True):
             ct = ContentType.objects.get_for_model(model)
+            sp = transaction.savepoint()
             collection, created = Collection.objects.get_or_create(slug=slug)
+            transaction.savepoint_rollback(sp)
+
             if created:
-                collection = Collection(slug=slug,
-                                        status='published',
-                                        no_changeable_fields=['slug'],
-                                        no_deletable=True,
-                                        )
+                collection.status = 'published'
+                collection.no_changeable_fields = ['slug']
+                collection.no_deletable = True
                 setattr(collection, get_real_fieldname('name', settings.LANGUAGE_CODE), name)
                 collection.save()
 
