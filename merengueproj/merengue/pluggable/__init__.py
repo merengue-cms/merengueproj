@@ -79,6 +79,10 @@ class Plugin(RegistrableItem):
     def hook_post_register(cls):
         pass
 
+    @classmethod
+    def get_notifications(cls):
+        return [] # to override in plugins
+
 
 def register_plugin(plugin_dir):
     from merengue.pluggable.models import RegisteredPlugin
@@ -120,6 +124,13 @@ def register_plugin(plugin_dir):
         plugin.meta_info['viewlets'] = []
         for viewlet in plugin_config.get_viewlets():
             plugin.meta_info['viewlets'].append({'name': unicode(viewlet.name), 'help_text': unicode(viewlet.help_text)})
+
+        if "notification" in settings.INSTALLED_APPS:
+            from notification.models import create_notice_type
+            for notification in plugin_config.get_notifications():
+                label, display, description = notification
+                create_notice_type(label, display, description)
+
         plugin.save()
         return plugin
     return None

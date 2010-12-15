@@ -73,6 +73,9 @@ urlpatterns = patterns('',
     # collections
     (r'^collection/', include('merengue.collection.urls')),
 
+    # notification
+    (r'^notification/', include('notification.urls')),
+
     # other
     (r'^internal-links/', include('merengue.internallinks.urls')),
     (r'^threadedcomments/', include('threadedcomments.urls')),

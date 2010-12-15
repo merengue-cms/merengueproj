@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.utils.translation import ugettext_noop as _
+
 from merengue.pluggable import Plugin
 
 from plugins.imagesize.models import ImageSize
@@ -33,3 +35,9 @@ class PluginConfig(Plugin):
     @classmethod
     def get_model_admins(cls):
         return [(ImageSize, ImageSizeAdmin)]
+
+    @classmethod
+    def get_notifications(cls):
+        _("Invitation Received"), _("you have received an invitation")
+        return [('imagesize_images', _('Images bigger thant expected'), _('Images bigger thant expected')),
+                ('imagesize_broken', _("Image directory doesn't exists"), _("Image directory doesn't exists"))]

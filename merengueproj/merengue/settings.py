@@ -99,6 +99,7 @@ INSTALLED_APPS = (
     'genericforeignkey',
     'oembed',
     'ajax_select',
+    'notification',
 ) + MERENGUE_APPS
 
 # merengue exclusive middlewares. you have to put at least these middleware in your project settings
