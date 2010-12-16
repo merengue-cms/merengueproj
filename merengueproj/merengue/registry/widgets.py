@@ -18,7 +18,6 @@
 from django.conf import settings
 from django.forms import widgets
 from django.forms.util import flatatt
-from django.template.loader import render_to_string
 from django.utils import simplejson as json
 from django.utils.html import linebreaks
 from django.utils.safestring import mark_safe
@@ -40,10 +39,7 @@ class ParamWidget(widgets.Widget):
         """ rendering function. note: value will be a config param instance """
         widget_attrs = self.build_attrs(attrs, name=name)
         flat_attrs = flatatt(widget_attrs)
-        return render_to_string('registry/paramwidget.html',
-                                {'param': value,
-                                 'name': name,
-                                 'widget_attrs': mark_safe(flat_attrs)})
+        return value.render(name, mark_safe(flat_attrs))
 
 
 class ConfigWidget(widgets.MultiWidget):
