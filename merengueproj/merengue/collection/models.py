@@ -218,7 +218,11 @@ class CollectionFilter(models.Model):
 
     def _filter_isnull_query(self, query):
         # Do no try to filter by __exact='' a non CharField
-        if query.model._meta.get_field(self.filter_field).get_internal_type() == 'CharField':
+        field = query.model._meta.get_field_by_name(self.filter_field)
+        field = field and field[0]
+        if not field:
+            return query
+        if hasattr(field, 'get_internal_type') and field.get_internal_type() == 'CharField':
             return query.filter(self.get_q_object)
         else:
             return query.filter(self._prepare_q_object())
@@ -258,7 +262,11 @@ class ExcludeCollectionFilter(CollectionFilter):
 
     def _filter_isnull_query(self, query):
         # Do no try to filter by __exact='' a non CharField
-        if query.model._meta.get_field(self.filter_field).get_internal_type() == 'CharField':
+        field = query.model._meta.get_field_by_name(self.filter_field)
+        field = field and field[0]
+        if not field:
+            return query
+        if hasattr(field, 'get_internal_type') and field.get_internal_type() == 'CharField':
             return query.exclude(self.get_q_object())
         else:
             # Excluding a Q object whith isnull doesn't work as expected so we have to exclude by kwarg filter
