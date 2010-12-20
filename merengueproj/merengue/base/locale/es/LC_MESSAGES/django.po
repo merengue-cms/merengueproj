@@ -70,7 +70,7 @@ msgstr "Cambiar estado de los %(verbose_name_plural)s seleccionados"
 
 #: admin.py:628
 msgid "Assigned owners"
-msgstr "Propietarios asignados"
+msgstr "Asignar propietarios"
 
 #: admin.py:647
 msgid "Are you sure you want to assign these owners to these contents?"
