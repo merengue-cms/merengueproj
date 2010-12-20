@@ -380,9 +380,6 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
             # to determine whether a given object exists.
             obj = None
 
-        if not self.has_change_permission(request, obj):
-            raise PermissionDenied
-
         if obj is None:
             raise Http404(_('%(name)s object with primary key %(key)r does not exist.') % {'name': force_unicode(opts.verbose_name), 'key': escape(object_id)})
 
