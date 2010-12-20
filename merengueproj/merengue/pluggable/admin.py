@@ -16,19 +16,23 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf import settings
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
 
 from merengue.base.admin import set_field_read_only
 from merengue.pluggable.checker import check_plugins
 from merengue.pluggable.models import RegisteredPlugin
 from merengue.pluggable.utils import has_required_dependencies
 from merengue.registry.admin import RegisteredItemAdmin
-from django.utils.safestring import mark_safe
 
 
-def get_screenshot(self):
-    return mark_safe(u'<img src="%s" />' % (self.screenshot))
-get_screenshot.allow_tags = True
+def screenshot_link(self):
+    if not self.screenshot:
+        return ugettext('None')
+    return mark_safe(u'<a href="%s" target="_blank">%s</a>' % (self.screenshot, ugettext('Screenshot')))
+screenshot_link.allow_tags = True
+screenshot_link.label = _('Screenshot')
 
 
 class RegisteredPluginAdmin(RegisteredItemAdmin):
@@ -36,7 +40,7 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
     change_list_template = 'admin/plugin/plugin_change_list.html'
     readonly_fields = RegisteredItemAdmin.readonly_fields + ('name',
         'description', 'version', 'timestamp', 'directory_name', )
-    list_display = ('name', 'directory_name', 'installed', 'active', get_screenshot, )
+    list_display = ('name', 'directory_name', 'installed', 'active', screenshot_link, )
     ordering = ('broken', )
 
     fieldsets = (

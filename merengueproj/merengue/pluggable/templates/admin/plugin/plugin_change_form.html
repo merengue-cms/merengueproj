@@ -3,9 +3,14 @@
 
 {% block after_related_objects %}
   <fieldset class="module aligned">
+      <h2>{% trans "Screenshot" %}</h2>
       <div class="form-row">
           <div class="field-box">
+            {% if original.screenshot %}
               <img src="{{ original.screenshot }}" />
+            {% else %}
+              {% trans "None" %}
+            {% endif %}
           </div>
       </div>
   </fieldset>

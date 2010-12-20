@@ -47,8 +47,7 @@ class RegisteredPlugin(RegisteredItem):
         if self.meta_info and 'screenshot' in self.meta_info:
             return os.path.join(settings.MEDIA_URL, self.directory_name,
                                 self.meta_info['screenshot'])
-        return os.path.join(settings.MEDIA_URL,
-                            settings.DEFAULT_PLUGIN_PREVIEW)
+        return None
 
     class Meta:
         db_table = 'plugins_registeredplugin'
