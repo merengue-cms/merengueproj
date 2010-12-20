@@ -325,6 +325,17 @@ class RoleAdmin(admin.ModelAdmin):
             if created:
                 op.save()
 
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(RoleAdmin, self).get_form(request, obj, **kwargs)
+        if obj and obj.name in settings.STATIC_ROLES:
+            form.base_fields['name'].widget = ReadOnlyWidget(
+                getattr(obj, 'name', ''), obj.name)
+            form.base_fields['name'].required = False
+            form.base_fields['slug'].widget = ReadOnlyWidget(
+                getattr(obj, 'slug', ''), obj.slug)
+            form.base_fields['slug'].required = False
+        return form
+
     def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
         permissions = []
         if request.method == 'POST':
@@ -337,11 +348,6 @@ class RoleAdmin(admin.ModelAdmin):
                     permissions.append((perm, perm.objectpermission_set.filter(role=obj, content__isnull=True) and True or False))
             else:
                 permissions = [(perm, False) for perm in Permission.objects.all()]
-        if obj and obj.name in settings.STATIC_ROLES:
-            context['adminform'].form.fields['name'].widget = ReadOnlyWidget(
-                getattr(obj, 'name', ''), obj.name)
-            context['adminform'].form.fields['slug'].widget = ReadOnlyWidget(
-                getattr(obj, 'slug', ''), obj.slug)
         context['permissions'] = permissions
         return super(RoleAdmin, self).render_change_form(request, context, add, change, form_url, obj)
 
