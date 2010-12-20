@@ -39,7 +39,7 @@ class ParamWidget(widgets.Widget):
         """ rendering function. note: value will be a config param instance """
         widget_attrs = self.build_attrs(attrs, name=name)
         flat_attrs = flatatt(widget_attrs)
-        return value.render(name, mark_safe(flat_attrs))
+        return self.param.render(name, mark_safe(flat_attrs))
 
 
 class ConfigWidget(widgets.MultiWidget):
