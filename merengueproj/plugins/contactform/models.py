@@ -39,6 +39,7 @@ FIELD_TYPE_CHOICES = (
     ('date', _('Date')),
     ('datetime', _('Datetime')),
     ('checkbox', _('Checkbox')),
+    ('radio', _('Radio')),
     ('select', _('Select')),
     ('file', _('File')),
 )
@@ -95,7 +96,8 @@ class ContactForm(models.Model):
             'date': custom_fields.DateField,
             'datetime': custom_fields.DateTimeField,
             'checkbox': forms.BooleanField,
-            'select': custom_fields.RadioField,
+            'select': forms.ChoiceField,
+            'radio': custom_fields.RadioField,
             'file': forms.FileField,
         }
 
