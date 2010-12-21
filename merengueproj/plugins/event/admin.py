@@ -41,7 +41,7 @@ class EventAdmin(BaseContentAdmin):
 
 
 class EventSectionAdmin(EventAdmin, SectionContentAdmin):
-        pass
+    manage_contents = True
 
 
 def register(site):

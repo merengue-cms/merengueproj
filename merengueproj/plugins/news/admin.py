@@ -36,6 +36,7 @@ class NewsItemAdmin(BaseContentAdmin):
 
 class NewsItemSectionAdmin(NewsItemAdmin, SectionContentAdmin):
     """ Admin for news item management inside sections """
+    manage_contents = True
 
 
 def register(site):
