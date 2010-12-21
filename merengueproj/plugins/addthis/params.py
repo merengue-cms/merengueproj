@@ -25,6 +25,9 @@ class AjaxListParam(params.List):
     def render(self, name, widget_attrs,
                template_name='addthis/ajax_list_params.html',
                extra_context=None):
+        # This extra check is needed in order to check if the plugin
+        # is actually installed, to try or not to try to render
+        # the template.
         if 'plugins.addthis' in settings.INSTALLED_APPS:
             return super(AjaxListParam, self).render(name, widget_attrs,
                                                      template_name,
