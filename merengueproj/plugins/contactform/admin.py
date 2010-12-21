@@ -81,7 +81,6 @@ class BaseContentRelatedContactFormAdmin(ContactFormAdmin, RelatedModelAdmin):
     one_to_one = False
     related_field = 'content'
     filter_or_exclude = 'filter'
-    related_field = 'content'
 
     def save_form(self, request, form, change):
         return super(RelatedModelAdmin, self).save_form(request, form, change)
@@ -115,7 +114,7 @@ class ContactFormRelatedBaseContentAdmin(RelatedModelAdmin):
 class BaseContentRelatedAssociatedContactFormAdmin(ContactFormRelatedBaseContentAdmin):
     tool_name = 'associated_content_related'
     tool_label = _('associated content related')
-    related_field = 'basecontent'
+    related_field = 'contact_form'
     filter_or_exclude = 'exclude'
 
     actions = BaseContentAdmin.actions + ['associated_content_related']
@@ -125,7 +124,7 @@ class BaseContentRelatedAssociatedContactFormAdmin(ContactFormRelatedBaseContent
         if selected:
             if request.POST.get('post', False):
                 for obj in queryset:
-                    obj.basecontent.add(self.basecontent)
+                    obj.contact_form.add(self.basecontent)
                 msg = ugettext(u"Successfully associated")
                 self.message_user(request, msg)
             else:
@@ -144,7 +143,7 @@ class BaseContentRelatedAssociatedContactFormAdmin(ContactFormRelatedBaseContent
 class BaseContentRelatedDisassociatedContactFormAdmin(ContactFormRelatedBaseContentAdmin):
     tool_name = 'disassociated_content_related'
     tool_label = _('disassociated content related')
-    related_field = 'basecontent'
+    related_field = 'contact_form'
     filter_or_exclude = 'filter'
 
     actions = ContactFormAdmin.actions + ['disassociated_content_related']
@@ -154,7 +153,7 @@ class BaseContentRelatedDisassociatedContactFormAdmin(ContactFormRelatedBaseCont
         if selected:
             if request.POST.get('post', False):
                 for obj in queryset:
-                    obj.basecontent.remove(self.basecontent)
+                    obj.contact_form.remove(self.basecontent)
                 msg = ugettext(u"Successfully disassociated")
                 self.message_user(request, msg)
             else:
