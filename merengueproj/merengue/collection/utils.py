@@ -1,15 +1,22 @@
 from django.conf import settings
 
+from merengue.base.models import BaseContent
+
 
 def get_common_fields_for_cts(content_types):
     result = set()
+    extrange = False
     for ct in content_types:
         model = ct.model_class()
+        if not issubclass(model, BaseContent):
+            extrange=True
         fields = set(model._meta.get_all_field_names())
         if not result:
             result = fields
         else:
             result = result.intersection(fields)
+    if not extrange:
+        result = result.intersection(set(BaseContent._meta.get_all_field_names()))
     return result
 
 
