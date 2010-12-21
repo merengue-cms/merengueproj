@@ -31,6 +31,8 @@
           <dt><a href="portal/portallink/" title="{% trans "Portal links" %}">{% trans "Portal links" %}</a></dt>
           <dd>{% trans "View, edit and delete the site's primary and secondary links." %}</dd>
         {% endifhasperm %}
+        <dt><a href="collection/collection/" title="{% trans "Collections" %}">{% trans "Collections" %}</a></dt>
+        <dd>{% trans "View, edit and delete the site's collections." %}</dd>
         <dt><a href="base/basecontent/" title="{% trans "Content" %}">{% trans "Browse content" %}</a></dt>
         <dd>{% trans "Browse the site's contents." %}</dd>
         {% if_can_access_transhette %}
