@@ -19,9 +19,10 @@
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.pluggable import Plugin
-from merengue.registry import params
+## from merengue.registry import params
 
 from plugins.addthis.blocks import AddThisBlock
+from plugins.addthis import params
 
 
 DEFAULT_SERVICES = [
@@ -42,7 +43,7 @@ class PluginConfig(Plugin):
     version = '0.0.1a'
 
     config_params = [
-        params.List(
+        params.AjaxListParam(
             name="services",
             label=_("Services do you want to show on "),
             choices=DEFAULT_SERVICES,

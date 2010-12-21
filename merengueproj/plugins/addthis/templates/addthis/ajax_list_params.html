@@ -1,0 +1,17 @@
+{% extends "registry/param_widget.html" %}
+{% load i18n smart_if %}
+
+{% block param_choices %}
+  <select {{ widget_attrs }} multiple="multiple">
+    {% for choice in param.choices %}
+      <option value="{{ choice.0 }}"
+         {% if choice.0 in param.get_value %}selected="selected"{% endif %}>
+         {{ choice.1 }}
+      </option>
+    {% endfor %}
+  </select>
+
+  <span class="ajax_button_container">
+    <input type="button" id="services_reload" value="{% trans "Reload services" %}"/>
+  </span>
+{% endblock %}
