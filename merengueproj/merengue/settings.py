@@ -26,7 +26,7 @@ TEMPLATE_LOADERS = (
     'merengue.theming.loader.load_template_source',  # for enabling theme support in Merengue
     'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
-#     'django.template.loaders.eggs.load_template_source',
+    'django.template.loaders.eggs.load_template_source',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
