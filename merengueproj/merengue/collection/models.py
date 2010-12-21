@@ -226,7 +226,7 @@ class CollectionFilter(models.Model):
         if not field:
             return query
         if hasattr(field, 'get_internal_type') and field.get_internal_type() == 'CharField':
-            return query.filter(self.get_q_object)
+            return query.filter(self.get_q_object())
         else:
             return query.filter(self._prepare_q_object())
 
