@@ -99,9 +99,17 @@ class ViewletLinkAdmin(BaseAdmin):
 
 class SectionAdmin(BaseSectionAdmin):
 
+    change_list_template = 'admin/section/section/change_list.html'
+
     def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
         context['change_form_section'] = True
         return super(SectionAdmin, self).render_change_form(request, context, add, change, form_url, obj)
+
+    def changelist_view(self, request, extra_context=None):
+        extra_context = extra_context or {}
+        section_tools = [val for key, val in self.admin_site.tools[self.model].items() if getattr(val, 'manage_contents', False)]
+        extra_context.update({'section_tools': section_tools})
+        return super(SectionAdmin, self).changelist_view(request, extra_context)
 
 
 class SectionContentAdmin(OrderableRelatedModelAdmin):
@@ -110,7 +118,7 @@ class SectionContentAdmin(OrderableRelatedModelAdmin):
 
     def custom_relate_content(self, request, obj, form, change):
         if not change:
-            section_relatedcontent_rel = SectionRelatedContent.objects.create(
+            SectionRelatedContent.objects.create(
                 basesection=self.basecontent,
                 basecontent=obj)
 
@@ -151,6 +159,7 @@ class DocumentAdmin(BaseContentAdmin):
 class DocumentRelatedModelAdmin(SectionContentAdmin, DocumentAdmin):
     tool_name = 'documents'
     tool_label = _('documents')
+    manage_contents = True
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(DocumentRelatedModelAdmin, self).get_form(request, obj, **kwargs)
@@ -221,7 +230,7 @@ class AbsoluteLinkInline(BaseLinkInline):
 
             def clean(value):
                 return value
-            field.clean=clean
+            field.clean = clean
         return field
 
 
@@ -264,7 +273,7 @@ class MenuAdmin(BaseAdmin):
     list_display = ('level', 'display_move_to', 'name', 'slug', )
     list_display_links = ('name', )
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
-    ordering=('lft', )
+    ordering = ('lft', )
     actions = []
     inherit_actions = False
     inlines = [AbsoluteLinkInline, ContentLinkInline, ViewletLinkInline]
@@ -310,7 +319,7 @@ class MenuAdmin(BaseAdmin):
             )
         options = u'<ul class="insertOptions hide">' + u''.join(options) + u'</ul>'
         return mark_safe('%s%s%s%s' % (hidden, init_move, cancel_move, options))
-    display_move_to.allow_tags=True
+    display_move_to.allow_tags = True
 
     def get_formsets(self, request, obj=None):
         self.inline_instances = []

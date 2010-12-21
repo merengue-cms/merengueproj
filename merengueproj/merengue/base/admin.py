@@ -35,7 +35,8 @@ from django.forms.models import ModelForm, BaseInlineFormSet, \
                                 fields_for_model, save_instance, modelformset_factory
 from django.forms.util import ValidationError
 from django.forms.widgets import Media
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, HttpResponse
+from django.utils import simplejson
 from django.utils.datastructures import SortedDict
 from django.utils.encoding import force_unicode
 from django.utils.functional import update_wrapper
@@ -406,7 +407,7 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
             if 'choices' in options:
                 choices = options.pop('choices')
                 field.widget = AJAXAutocompletionWidget(choices=choices, attrs=options)
-            elif 'url' in options: # Must have url or choices defined
+            elif 'url' in options:  # Must have url or choices defined
                 url = options.pop('url')
                 field.widget = AJAXAutocompletionWidget(url=url, attrs=options)
         elif db_fieldname in self.removed_fields:
@@ -686,7 +687,7 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
 
     def add_owners(self, request, queryset, owners):
         if self.has_change_permission(request):
-            selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
+            #selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
             n = queryset.count()
             obj_log = ugettext("Assigned owners")
             msg = "Successfully set owners for %d %s." % (n, self.opts.verbose_name)
@@ -728,9 +729,9 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
         if obj:
             if request.method == 'POST' and obj.no_changeable:
                 return False
-            else: # changeable or GET
+            else:  # changeable or GET
                 return perms_api.has_permission(obj, request.user, 'edit')
-        else: # obj = None
+        else:  # obj = None
             if request.method == 'POST' and \
                (request.POST.get('action', None) == u'set_as_pending' or \
                 request.POST.get('action', None) == u'set_as_published' or \
@@ -750,9 +751,9 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
         if obj:
             if obj.no_deletable:
                 return False
-            else: # deletable
+            else:  # deletable
                 return perms_api.has_permission(obj, request.user, 'delete')
-        else: # obj = None
+        else:  # obj = None
             if request.method == 'POST' and \
                request.POST.get('action', None) == u'delete_selected':
                 selected_objs = [BaseContent.objects.get(id=int(key))
@@ -911,6 +912,7 @@ class RelatedModelAdmin(BaseAdmin):
     related_field = None
     reverse_related_field = None  # For m2m with through class
     one_to_one = False
+    manage_contents = False
 
     def __init__(self, *args, **kwargs):
         super(RelatedModelAdmin, self).__init__(*args, **kwargs)
@@ -922,6 +924,24 @@ class RelatedModelAdmin(BaseAdmin):
             pass
         for inline in self.inline_instances:
             inline.admin_model = self  # for allow retrieving basecontent object
+
+    def get_urls(self):
+        from django.conf.urls.defaults import patterns, url
+
+        def wrap(view):
+
+            def wrapper(*args, **kwargs):
+                return self.admin_site.admin_view(view)(*args, **kwargs)
+            return update_wrapper(wrapper, view)
+
+        info = self.model._meta.app_label, self.model._meta.module_name
+        urlpatterns = patterns('',
+            url(r'^ajax/$',
+                wrap(self.ajax_changelist_view),
+                name='ajax_%s_%s_changelist' % info),
+        )
+        urlpatterns += super(RelatedModelAdmin, self).get_urls()
+        return urlpatterns
 
     def _update_extra_context(self, request, extra_context=None):
         extra_context = extra_context or {}
@@ -940,6 +960,15 @@ class RelatedModelAdmin(BaseAdmin):
         if obj:
             return obj[0]
         return None
+
+    def ajax_changelist_view(self, request):
+        if not self.has_change_permission(request, None):
+            raise PermissionDenied
+        contents = [{'name': unicode(i), 'url': i.get_admin_absolute_url()} for i in self.queryset(request)]
+        json_dict = simplejson.dumps({'contents': contents,
+                                      'size': len(contents),
+                                      'message': ugettext('No contents found')})
+        return HttpResponse(json_dict, mimetype='text/plain')
 
     def changelist_view(self, request, extra_context=None):
         extra_context = self._update_extra_context(request, extra_context)
@@ -1183,7 +1212,6 @@ if settings.USE_GIS:
     from merengue.base.widgets import (OpenLayersWidgetLatitudeLongitude,
                                    OpenLayersInlineLatitudeLongitude)
 
-
     GMAP = GoogleMap(key=settings.GOOGLE_MAPS_API_KEY)
 
     class LocationModelAdminMixin(object):
@@ -1216,7 +1244,7 @@ if settings.USE_GIS:
 
         def formfield_for_dbfield(self, db_field, **kwargs):
             if isinstance(db_field, geomodels.GeometryField):
-                request = kwargs.pop('request', None)
+                kwargs.pop('request', None)
                 # Setting the widget with the newly defined widget.
                 kwargs['widget'] = self.get_map_widget(db_field)
                 return db_field.formfield(**kwargs)

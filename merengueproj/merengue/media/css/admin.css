@@ -445,3 +445,58 @@ div.module.form-row {
     border: 0px;
     border-bottom: 1px solid #EEEEEE;
 }
+
+/* ---- section changelist ---- */
+.section-contents {
+    margin: 0px -5px;
+    background: white;
+    margin-bottom: -5px;
+}
+
+.section-contents .ajax-loading {
+    position: absolute;
+    padding-left: 20px;
+}
+
+.module .toolList {
+    margin: 0px;
+    margin-top: 10px;
+    padding: 0px;
+}
+
+.toolList li {
+    list-style-type: none;
+    padding-left: 50px;
+    line-height: 25px;
+}
+
+.contents-toggle {
+    width: 20px;
+    float: left;
+    display: block;
+    height: 10px;
+}
+
+.toolContentContainer {
+    padding: 0px;
+    margin: 0px;
+    margin-left: -50px;
+}
+
+.module .toolContentList {
+    margin: 0px;
+    padding: 0px;
+    padding-bottom: 10px;
+}
+
+.module .toolContentList li {
+    padding-left: 70px;
+    list-style-type: square;
+    list-style-position: inside;
+    color: #99aabb;
+}
+
+.nocontents {
+    margin-left: 2em;
+    color: #99aabb;
+}
