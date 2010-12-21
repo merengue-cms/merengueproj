@@ -20,6 +20,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
 
+from cmsutils.log import send_info
 from merengue.base.models import BaseContent
 from plugins.contactform.models import ContactForm
 
@@ -29,12 +30,13 @@ def contact_form_submit(request, content_slug, contact_form_id):
     contact_form = get_object_or_404(ContactForm, pk=contact_form_id,
                                      content__slug=content_slug)
 
+    msg = ''
     if request.method == 'POST':
         form = contact_form.get_form(request)
 
         if form.is_valid():
             form.save(request, content, contact_form)
-            request.session['form_msg'] = _('Form was sended correctly')
+            msg = contact_form.sent_msg
         else:
             errors_to_session(request, content, form)
 
@@ -42,6 +44,9 @@ def contact_form_submit(request, content_slug, contact_form_id):
         redirect = contact_form.redirect_to
     else:
         redirect = content.public_link()
+
+    if msg:
+        send_info(request, msg)
 
     return HttpResponseRedirect(redirect)
 

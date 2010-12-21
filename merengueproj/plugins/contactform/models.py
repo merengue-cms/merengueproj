@@ -50,7 +50,12 @@ class ContactForm(models.Model):
     __metaclass__ = TransMeta
 
     title = models.CharField(verbose_name=_('name'), max_length=200)
-    description = models.TextField(verbose_name=_('description'))
+    description = models.TextField(verbose_name=_('description'),
+                                   blank=True)
+    sent_msg = models.TextField(verbose_name=_('Sent message'),
+                                help_text=_('Message to show when the form is sent'),
+                                blank=True,
+                                default=_('The form was sent correctly'))
     email = custom_fields.ModelMultiEmailField(verbose_name=_('emails'),
                                                default=settings.DEFAULT_FROM_EMAIL,
                                                help_text=_('comma separated email list'))
@@ -82,7 +87,7 @@ class ContactForm(models.Model):
 
     class Meta:
         translate = ('title', 'description', 'subject', 'submit_msg',
-                     'reset_msg', )
+                     'reset_msg', 'sent_msg')
         verbose_name = _('Contact Form')
         verbose_name_plural = _('Contact Forms')
 

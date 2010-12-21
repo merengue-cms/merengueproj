@@ -18,7 +18,6 @@
 from django.conf import settings
 from django.utils.translation import ugettext as _, ugettext_lazy
 
-from cmsutils.log import send_info
 from merengue.block.blocks import ContentBlock
 
 from plugins.contactform.models import ContactForm
@@ -41,13 +40,10 @@ class ContactFormBlock(ContentBlock):
         form = contact_form.get_form(request)
         errors = request.session.pop('form_errors', {})
         data = request.session.pop('form_data', {})
-        msg = request.session.pop('form_msg', None)
         if data:
             form._errors = errors
             form.data = data
             form.is_bound = True
-        if msg:
-            send_info(request, msg)
 
         context = dict(content=content,
                        contact_form=contact_form,
