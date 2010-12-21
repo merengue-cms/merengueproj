@@ -20,4 +20,4 @@ from merengue.base.admin import BaseAdmin
 
 class ImageSizeAdmin(BaseAdmin):
 
-    pass
+    exclude = ('notified', )
