@@ -3,7 +3,6 @@
 # Apply this file:  svn propset svn:externals -F externals.txt .
 #
 
-cmsutils http://svnpub.yaco.es/cmsutils/trunk
 searchform http://svnpub.yaco.es/djangoapps/searchform/trunk/searchform
 transhette http://svnpub.yaco.es/djangoapps/transhette/trunk/transhette
 transmeta http://django-transmeta.googlecode.com/svn/trunk/transmeta
