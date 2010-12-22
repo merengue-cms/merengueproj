@@ -13,6 +13,31 @@ This document will get you up and running with Merengue.
     commands to your specific system.
 
 
+Previous dependencies
+=====================
+
+* ``python-setuptools``: To be able to install python packages.
+
+    .. code-block:: bash
+
+        $ sudo apt-get install python-setuptools
+
+* ``ffmpeg``: FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video. It includes libavcodec - the leading audio/video codec library. 
+
+    .. code-block:: bash
+
+        $ sudo apt-get install ffmpeg libavcodec-unstripped-52 libavdevice-unstripped-52 libavformat-unstripped-52 libavutil-unstripped-49 libpostproc-unstripped-51 libswscale-unstripped-0 yamdi
+
+Other recommended dependencies
+------------------------------
+
+* ``ipython``: a python shell with auto complete, help, etc.
+
+    .. code-block:: bash
+
+        $ apt-get install ipython
+
+
 Installing with easy_install
 ============================
 
@@ -33,61 +58,6 @@ Go to `project creation`_ section to continue.
 Manual installation
 ===================
 
-Installing dependencies
------------------------
-
-This documents describe which are the project dependencies and how to
-install in a ubuntu/debian based distribution.
-
-Some python packages are installed using easy_install, for use that
-you need to have installed python-setuptools
-
-Dependencies: ``south``, ``python-imaging``, ``python-beautifulsoup``, ``python-pexpect``
-
-* ``south``: Django database schema migrator.
-
-    .. code-block:: bash
-
-        $ sudo easy_install south
-
-* ``python-imaging``: adds image processing capabilities to your Python
-  interpreter. For model data fields.
-
-    .. code-block:: bash
-
-        $ sudo apt-get install python-imaging
-
-* ``python-beautifulsoup``: a Python HTML/XML parser designed for quick
-  turnaround projects like screen-scraping. For text field HTML
-  cleaning.
-
-    .. code-block:: bash
-
-        $ sudo easy_install BeautifulSoup
-
-* ``python-pexpect``: a python library to parse commands standard input.
-
-    .. code-block:: bash
-
-        $ sudo easy_install pexpect
-
-* ``ffmpeg``: FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video. It includes libavcodec - the leading audio/video codec library. 
-
-    .. code-block:: bash
-
-        $ sudo apt-get install ffmpeg libavcodec-unstripped-52 libavdevice-unstripped-52 libavformat-unstripped-52 libavutil-unstripped-49 libpostproc-unstripped-51 libswscale-unstripped-0 yamdi
-
-
-Other recommended dependencies
-------------------------------
-
-* ``ipython``: a python shell with auto complete, help, etc.
-
-    .. code-block:: bash
-
-        $ apt-get install ipython
-
-
 Installing Django
 -----------------
 
@@ -107,6 +77,31 @@ Test if you have the correct django version:
 
         $ python -c "import django; print django.VERSION"
         (1, 1, 1, 'final', 0)
+
+Installing python dependencies
+------------------------------
+
+Eggs. dependencies, to install with ``easy_install`` or ``pip install``:
+
+* ``south``
+* ``PIL``
+* ``pexpect``
+* ``BeautifulSoup``,
+* ``django-extensions==0.5``
+* ``cssutils``
+* ``django-tagging``
+* ``django-pagination``
+* ``template_utils``
+* ``django-mptt``
+* ``encutils``
+* ``django-oembed``
+* ``django-ajax-selects``
+* ``django-threadedcomments==0.5.3``
+* ``django-notification==0.1.5``
+* ``django-oot``
+* ``django-genericforeignkey``
+* ``django-stdfile``
+
 
 Installing merengue
 -------------------
