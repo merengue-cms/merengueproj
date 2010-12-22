@@ -12,6 +12,3 @@ inlinetrans http://django-inlinetrans.googlecode.com/svn/trunk/inlinetrans
 captcha http://svnpub.yaco.es/djangoapps/captcha/trunk/captcha
 tinyimages http://svnpub.yaco.es/djangoapps/tinyimages/trunk/tinyimages
 autoreports http://svnpub.yaco.es/djangoapps/autoreports/trunk/autoreports
-genericforeignkey http://svnpub.yaco.es/djangoapps/genericforeignkey/trunk/genericforeignkey
-stdfile http://svnpub.yaco.es/djangoapps/stdfile/trunk/stdfile
-oot http://svnpub.yaco.es/djangoapps/oot/trunk/oot
