@@ -231,37 +231,50 @@ We have to permit connections to database from local computer. Editing
 /etc/postgresql/X.X/main/pg_hba.conf adding the following line (not at
 the end):
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        local myproject myprojectuser trust
-        local test_myproject myprojectuser trust # necessary for tests
+    local myproject myprojectuser trust
+    local test_myproject myprojectuser trust # necessary for tests
 
 Reload pg_hba.conf in PostgreSQL server:
-    
-    .. code-block:: bash
+
+.. code-block:: bash
  
-        $ /etc/init.d/postgresql-X.X reload
-      
+    $ /etc/init.d/postgresql-X.X reload
 
 Restart PostgreSQL and check access with this command:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        $ psql myproject -U myprojectuser
-
+    $ psql myproject -U myprojectuser
 
 Building initial merengue models
 --------------------------------
 
 You need build merengue initial models with these two commands:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        $ python manage.py syncdb
-        $ python manage.py migrate
+    $ python manage.py syncdb
+    $ python manage.py migrate
 
 You can ignore the creation of superuser because a user named ``admin`` with
 ``admin`` password will be created automatically.
+
+
+Collecting media from installed Django applications
+---------------------------------------------------
+
+Some Django apps use media files that Merengue needs. For including those in
+the project you have to execute this command:
+
+.. code-block:: bash
+
+    $ python manage.py sync_apps_media --link
+
+.. admonition:: Note
+
+    You can remove ``--link`` option if you want that Merengue copy media files instead linking them.
 
 
 View the site
@@ -551,6 +564,13 @@ command:
 
 ``--link`` option can be removed out if you want to copy media files (not
 symlink them).
+
+Also, some Django apps include its own media files. You have to collect those
+media file also with this command:
+
+.. code-block:: bash
+
+    $ python manage.py sync_apps_media --link
 
 .. admonition:: Deep into
 
