@@ -4,10 +4,7 @@
 #
 
 searchform http://svnpub.yaco.es/djangoapps/searchform/trunk/searchform
-transhette http://svnpub.yaco.es/djangoapps/transhette/trunk/transhette
-transmeta http://django-transmeta.googlecode.com/svn/trunk/transmeta
 rating http://svnpub.yaco.es/djangoapps/rating/trunk/rating
-inlinetrans http://django-inlinetrans.googlecode.com/svn/trunk/inlinetrans
 captcha http://svnpub.yaco.es/djangoapps/captcha/trunk/captcha
 tinyimages http://svnpub.yaco.es/djangoapps/tinyimages/trunk/tinyimages
 autoreports http://svnpub.yaco.es/djangoapps/autoreports/trunk/autoreports
