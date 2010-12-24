@@ -62,6 +62,6 @@ class TagCloudViewlet(Viewlet):
 
     @classmethod
     def render(cls, request):
-        tag_cloud = cls.get_tag_cloud()
+        tag_cloud = cls.get_tag_cloud(request)
         return cls.render_viewlet(request, template_name='itags/viewlets/tagcloud.html',
                                   context={'taglist': tag_cloud})
