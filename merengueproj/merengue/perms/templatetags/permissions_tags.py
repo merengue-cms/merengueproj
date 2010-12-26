@@ -62,7 +62,9 @@ class PermissionComparisonNode(template.Node):
         if has_perm:
             return self.nodelist_true.render(context)
         else:
-            return self.nodelist_false
+            if self.nodelist_false:
+                return self.nodelist_false.render(context)
+            return ''
 
 
 @register.tag
