@@ -2,7 +2,9 @@
 {% load thumbnail media_tags %}
 {% block thumbnail %}
    {% if multimedia.video.preview %}
-     {% thumbnail multimedia.video.preview size %}
+     {% thumbnail multimedia.video.preview size as thumb %}
+     {{ thumb.url }}
+     {% endthumbnail %}
    {% else %}
      {{ MEDIA_URL }}merengue/img/multimedia/previews/video_preview.jpg
    {% endif %}

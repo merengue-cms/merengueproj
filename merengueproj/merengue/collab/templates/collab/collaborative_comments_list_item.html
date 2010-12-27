@@ -8,7 +8,11 @@
     </div>
     <h1>{{ comment.comment_user_type }}</h1>
     <div class="collaborative-comments-current-status">
-      {% if revision_status.type.decorator %}<img src="{% thumbnail revision_status.type.decorator 20x20 %}" />{% endif %}{{ revision_status|default:"" }}
+      {% if revision_status.type.decorator %}
+       {% thumbnail revision_status.type.decorator "20x20" as thumb %}
+        <img src="{{ thumb.url }}" />
+       {% endthumbnail %}
+      {% endif %}{{ revision_status|default:"" }}
     </div>
     <div class="collaborative-comments-item-comment">
       {% ifequal revision_status.type.result "replace" %}
@@ -28,7 +32,11 @@
         <div class="collaborative-comments-item-status-date">
           {{ status.revision_date }}
         </div>
-        {% if status.type.decorator %}<img src="{% thumbnail status.type.decorator 10x10 %}" />{% endif %}
+        {% if status.type.decorator %}
+         {% thumbnail status.type.decorator "10x10" as thumb %}
+          <img src="{{ thumb.url }}" />
+         {% endthumbnail %}
+        {% endif %}
         {{ status }}{% if status.short_comment %}:
         <div class="collaborative-comments-item-status-short-comment">
           {{ status.short_comment }}

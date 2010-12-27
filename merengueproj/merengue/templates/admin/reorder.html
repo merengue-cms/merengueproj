@@ -69,7 +69,9 @@
   {% for mr in multimediarelations %}
     <div class="multimedia" id="multimedia-{{ mr.id }}">
     {% if mr.get_image %}
-      <img src="{% thumbnail mr.get_image 100x100 crop %}" alt="image" />
+     {% thumbnail mr.get_image "100x100" crop="center" as thumb %}
+      <img src="{{ thumb.url }}" alt="image" />
+     {% endthumbnail %}
     {% else %}
       <img src="{{ MEDIA_URL }}merengue/img/image_not_available_{{ LANGUAGE_CODE }}.jpg" alt="image" />
     {% endif %}

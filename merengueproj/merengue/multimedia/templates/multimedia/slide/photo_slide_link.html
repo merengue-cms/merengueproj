@@ -1,6 +1,6 @@
 {% extends "multimedia/slide/basemultimedia_slide_link.html" %}
 {% load thumbnail %}
-{% block thumbnail %}{% thumbnail multimedia.photo.image size %}{% endblock %}
-{% block fullview %}{% thumbnail multimedia.photo.image 640x480 as thumb%}{% if thumb %}{{ thumb }}{% else %}{% if multimedia.photo.image %}{{ multimedia.photo.image.url }}{% endif %}{% endif %}{% endblock %}
+{% block thumbnail %}{% thumbnail multimedia.photo.image size as thumb %}{{ thumb.url }}{% endthumbnail %}{% endblock %}
+{% block fullview %}{% thumbnail multimedia.photo.image "640x480" as thumb %}{% if thumb %}{{ thumb.url }}{% else %}{% if multimedia.photo.image %}{{ multimedia.photo.image.url }}{% endif %}{% endif %}{% endthumbnail %}{% endblock %}
 {% block caption %}{{ multimedia.photo.caption|safe }}{% endblock %}
 {% block extraoptions %}{% endblock %}
