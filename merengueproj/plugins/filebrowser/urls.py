@@ -11,8 +11,8 @@ urlpatterns = patterns('plugins.filebrowser.views',
     url(r'^(?P<repository_name>[\w-]+)/action/(?P<path>.*)$', 'action', name='filebrowser_action'),
 
     # documents
-    url(r'^create/document/(?P<path>.*)$', 'createdoc', name='filebrowser_createdoc'),
-    url(ur'^view/document/(?P<doc_slug>[-ÑñáéíóúÁÉÍÓÚ\w]+)/$', 'viewdoc', name='filebrowser_viewdoc'),
-    url(ur'^edit/document/(?P<doc_slug>[-ÑñáéíóúÁÉÍÓÚ\w]+)/$', 'editdoc', name='filebrowser_editdoc'),
-    url(r'^remove/(?P<type>[-\w]+)/attachment/(?P<objId>[-\w]+)/$', 'remove_attachment', name='filebrowser_remove_attachment'),
+    url(r'^(?P<repository_name>[\w-]+)/create/document/(?P<path>.*)$', 'createdoc', name='filebrowser_createdoc'),
+    url(ur'^(?P<repository_name>[\w-]+)/view/document/(?P<doc_slug>[-ÑñáéíóúÁÉÍÓÚ\w]+)/$', 'viewdoc', name='filebrowser_viewdoc'),
+    url(ur'^(?P<repository_name>[\w-]+)/edit/document/(?P<doc_slug>[-ÑñáéíóúÁÉÍÓÚ\w]+)/$', 'editdoc', name='filebrowser_editdoc'),
+    url(r'^(?P<repository_name>[\w-]+)/remove/(?P<type>[-\w]+)/attachment/(?P<objId>[-\w]+)/$', 'remove_attachment', name='filebrowser_remove_attachment'),
 )

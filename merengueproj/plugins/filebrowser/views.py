@@ -13,7 +13,6 @@ from plugins.filebrowser.models import Repository, Document, FileDocument, Image
 from plugins.filebrowser.templatetags.filebrowser_tags import filebrowser_reverse
 
 from cmsutils.log import send_info, send_error
-from cmsutils.resourcemanager import require_resources
 
 
 FILEBROWSER_BASE_TEMPLATE = 'base.html'
@@ -250,46 +249,40 @@ def editdoc(request, repository_name, doc_slug,
                     doc_slug=doc_slug, parents=parents, url_prefix=url_prefix)
 
 
-@require_resources('js/jquery-1.2.6.pack.js', 'js/manage-attachments-docs.js',
-                   'js/jquery.form.js')
 @login_required_or_permission_denied
 def viewdoc(request, repository_name, doc_slug,
             base_template=FILEBROWSER_BASE_TEMPLATE, url_prefix=None):
-    if repository_name=='documents':
-        repository = get_object_or_404(Repository, name=repository_name)
-        document = get_object_or_404(Document, repository=repository,
-                                     slug=doc_slug)
-        file_field = None
-        if request.method == 'POST':
-            if 'addfile' in request.POST:
-                file_field = 'file'
-                model_class = FileDocument
-            elif 'addimage' in request.POST:
-                file_field = 'image'
-                model_class = ImageDocument
+    repository = get_object_or_404(Repository, name=repository_name)
+    document = get_object_or_404(Document, repository=repository,
+                                    slug=doc_slug)
+    file_field = None
+    if request.method == 'POST':
+        if 'addfile' in request.POST:
+            file_field = 'file'
+            model_class = FileDocument
+        elif 'addimage' in request.POST:
+            file_field = 'image'
+            model_class = ImageDocument
 
-        if file_field and file_field in request.FILES:
-            file = request.FILES[file_field]
-            instance = model_class()
-            instance.document = document
-            instance.file.save(file.name, file)
+    if file_field and file_field in request.FILES:
+        file = request.FILES[file_field]
+        instance = model_class()
+        instance.document = document
+        instance.file.save(file.name, file)
 
-        files = FileDocument.objects.filter(document=document)
-        images = ImageDocument.objects.filter(document=document)
-        parents = document.get_parents()
+    files = FileDocument.objects.filter(document=document)
+    images = ImageDocument.objects.filter(document=document)
+    parents = document.get_parents()
 
-        return render_to_response('filebrowser/document.html',
-                                  {'repository': repository,
-                                   'base_template': base_template,
-                                   'parents': parents,
-                                   'document': document,
-                                   'doc_files': files,
-                                   'doc_images': images,
-                                   'url_prefix': url_prefix},
-                                  context_instance = RequestContext(request))
-    else:
-        send_error(request, _("You don't have permission to do that."))
-        return HttpResponseRedirect('/')
+    return render_to_response('filebrowser/document.html',
+                                {'repository': repository,
+                                'base_template': base_template,
+                                'parents': parents,
+                                'document': document,
+                                'doc_files': files,
+                                'doc_images': images,
+                                'url_prefix': url_prefix},
+                                context_instance = RequestContext(request))
 
 
 @login_required_or_permission_denied

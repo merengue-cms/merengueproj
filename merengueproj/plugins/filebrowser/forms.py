@@ -9,7 +9,7 @@ from plugins.filebrowser.templatetags.filebrowser_tags import filebrowser_revers
 
 
 class DocMixin(WTForm, forms.ModelForm):
-    template = 'webfs/doc_edit.html'
+    template = 'filebrowser/doc_edit.html'
     button_label = _('Save')
 
     class Meta:
