@@ -46,7 +46,7 @@ msgstr "Encontrados %s contenidos"
 
 #: models.py:28
 msgid "portal link"
-msgstr "Buscador de contenidos"
+msgstr "enlace al portal"
 
 #: models.py:29
 msgid "portal links"
