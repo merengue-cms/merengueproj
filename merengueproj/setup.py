@@ -39,7 +39,7 @@ setup(
                         'django-ajax-selects', 'django-threadedcomments==0.5.3',
                         'django-notification==0.1.5', 'django-oot', 'django-genericforeignkey',
                         'django-stdfile', 'cmsutils', 'transhette', 'django-inlinetrans',
-                        'django-transmeta', ],
+                        'django-transmeta', 'sorl-thumbnail'],
     author = "Yaco Sistemas",
     author_email = "msaelices@yaco.es",
     description = "Django-based CMS with steroids",
