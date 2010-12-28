@@ -20,6 +20,11 @@ import ez_setup
 ez_setup.use_setuptools()
 from setuptools import setup, find_packages
 
+
+def read(*rnames):
+    return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
+
+
 data_files = []
 for dirpath, dirnames, filenames in os.walk('.'):
     for i, dirname in enumerate(dirnames):
@@ -43,6 +48,7 @@ setup(
     author = "Yaco Sistemas",
     author_email = "msaelices@yaco.es",
     description = "Django-based CMS with steroids",
+    long_description=(read('README') + '\n\n' + read('CHANGES')),
     url = "http://www.merengueproject.org/",
     #download_url = 'http://www.merengueproject.org/download/0.5/merengue-0.5.tar.gz',
     include_package_data = True,

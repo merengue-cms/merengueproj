@@ -1,5 +1,8 @@
+Changes
+=======
+
 Version 0.6.0-alpha2 (2842 revision)
-====================================
+------------------------------------
 
 * Removed external SVN dependences. Now Merengue has all these dependences as python eggs.
 
@@ -10,6 +13,7 @@ Version 0.6.0-alpha2 (2842 revision)
 * Make Merengue documentation compatible with Sphinx 1.0.
 
 * Several bug fixes related to:
+
  * Permissions system.
  * Administration broken links.
  * banners, oldbrowser and event plugin.
@@ -17,6 +21,7 @@ Version 0.6.0-alpha2 (2842 revision)
  * etc.
 
 * Improved usability in Merengue admin:
+
  * A content tree, for browsing all contents.
  * Improved visual block reordering.
 
@@ -39,6 +44,7 @@ Version 0.6.0-alpha2 (2842 revision)
 * When customizing a section CSS, you can upload new images to may customize the backgrounds.
 
 * New plugins:
+
  * contactform: to create forms, customizing fields, emails, behaviour, etc.
  * smartsearch: to include and manage search form, for example inside collections.
  * rss: to make feeds in your site, which are configurable.
@@ -49,7 +55,7 @@ Version 0.6.0-alpha2 (2842 revision)
 
 
 Version 0.6.0-alpha1 (2541 revision)
-====================================
+------------------------------------
 
 * Huge speed up on related admin registration.
 
@@ -64,11 +70,13 @@ Version 0.6.0-alpha1 (2541 revision)
 * Included language catalogs in all apps and plugins. Also included compiled .mo files.
 
 * New plugins:
+
  * oot: ODT conversion of managed contents.
  * banner: banner management plugin.
  * oldbrowser: a plugin that makes easy to notify to users that their browser is too old.
 
 * Several improvements in forum plugin:
+
  * Grouping forums into categories.
  * Show last comment in forum list and forum view.
  * Do not allow anonymous users.
@@ -80,13 +88,14 @@ Version 0.6.0-alpha1 (2541 revision)
 
 
 Version 0.5.1
-=============
+-------------
 
 Note: Changes from 0.5.1-rc1 version
 
 * Better south integration with translation system, that allows to migrate all translated models with all possible languages setting.
 
 * Fixed a lot of bugs like:
+
  * Avoid URL patterns grown every 404 request when have debug toolbar installed.
  * Fix audio player.
  * Error in URL parsing when accessing document inside sections.
