@@ -10,6 +10,8 @@ try:
 except ImportError:
     from StringIO import StringIO
 
+from stdimage.globals import DELETED
+
 
 class DelAdminFileWidget(AdminFileWidget):
     '''
@@ -19,7 +21,7 @@ class DelAdminFileWidget(AdminFileWidget):
 
     def render(self, name, value, attrs=None):
         input = super(forms.widgets.FileInput, self).render(name, value, attrs)
-        if value:
+        if value and value != DELETED:
             item = '<tr><td style="vertical-align: middle;">%s</td><td>%s</td>'
             output = []
             output.append('<table style="border-style: none;">')
@@ -46,4 +48,4 @@ class DelAdminFileWidget(AdminFileWidget):
         if not data.get('%s_delete' % name):
             return super(DelAdminFileWidget, self).value_from_datadict(data, files, name)
         else:
-            return '__deleted__'
+            return DELETED
