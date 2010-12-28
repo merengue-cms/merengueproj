@@ -19,11 +19,8 @@ from django import forms
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.admin.widgets import FilteredSelectMultiple
-from django.core.exceptions import FieldError
 from django.forms.forms import BoundField
 from django.forms.models import save_instance
-from django.http import HttpResponse, Http404
-from django.template import RequestContext, Template
 from django.template.loader import render_to_string
 from django.utils.datastructures import SortedDict
 from django.utils.encoding import force_unicode
@@ -33,12 +30,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import get_language
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.base.models import BaseContent
-from cmsutils.adminfilters import QueryStringManager
 from genericforeignkey.forms import GenericAdminModelForm
-from searchform.forms import SearchForm
-from searchform.registry import search_form_registry
-from searchform.terms import FreeTextSearchTerm, TextSearchTerm
 from transmeta import canonical_fieldname
 
 from threadedcomments.models import FreeThreadedComment
@@ -56,7 +48,8 @@ def _get_fieldsets(self):
                 if field_name in self.fields.keyOrder:
                     fieldset_dict['fields'].append(self[field_name])
             if not fieldset_dict['fields']:
-                # if there is no fields in this fieldset, we continue to next fieldset
+                # if there is no fields in this fieldset,
+                # we continue to next fieldset
                 continue
             yield fieldset_dict
 
@@ -73,7 +66,8 @@ def _get_tabs(self):
                     if field_name in self.fields.keyOrder:
                         fieldset_dict['fields'].append(self[field_name])
                 if not fieldset_dict['fields']:
-                    # if there is no fields in this fieldset, we continue to next fieldset
+                    # if there is no fields in this fieldset,
+                    # we continue to next fieldset
                     continue
                 tabs_dict['fieldsets'].append(fieldset_dict)
             yield tabs_dict
@@ -94,7 +88,10 @@ class FormAdminDjango(object):
     """
 
     def as_django_admin(self):
-        return render_to_string('base/form_admin_django.html', {'form': self, })
+        return render_to_string(
+            'base/form_admin_django.html',
+            {'form': self, },
+        )
 
 
 class FormRequiredFields(object):
@@ -102,7 +99,9 @@ class FormRequiredFields(object):
     required_css_class = 'required'
 
     def as_table_required(self):
-        "Returns this form rendered as HTML <tr>s -- excluding the <table></table>."
+        """
+        Returns form rendered as HTML <tr>s -- excluding the <table></table>.
+        """
         return self._html_output_required(
             normal_row = u'<tr%(html_class_attr)s><th>%(label)s</th><td>%(errors)s%(field)s%(help_text)s</td></tr>',
             error_row = u'<tr><td colspan="2">%s</td></tr>',
@@ -111,7 +110,9 @@ class FormRequiredFields(object):
             errors_on_separate_row = False)
 
     def as_ul_required(self):
-        "Returns this form rendered as HTML <li>s -- excluding the <ul></ul>."
+        """
+        Returns form rendered as HTML <li>s -- excluding the <ul></ul>.
+        """
         return self._html_output_required(
             normal_row = u'<li%(html_class_attr)s>%(errors)s%(label)s %(field)s%(help_text)s</li>',
             error_row = u'<li>%s</li>',
@@ -120,7 +121,9 @@ class FormRequiredFields(object):
             errors_on_separate_row = False)
 
     def as_p_required(self):
-        "Returns this form rendered as HTML <p>s."
+        """
+        Returns this form rendered as HTML <p>s.
+        """
         return self._html_output_required(
             normal_row = u'<p%(html_class_attr)s>%(label)s %(field)s%(help_text)s</p>',
             error_row = u'%s',
@@ -142,7 +145,9 @@ class FormRequiredFields(object):
         return ' '.join(extra_classes)
 
     def _html_output_required(self, normal_row, error_row, row_ender, help_text_html, errors_on_separate_row):
-        "Helper function for outputting HTML. Used by as_table(), as_ul(), as_p()."
+        """
+        Helper function for outputting HTML. Used by as_table(), as_ul(), as_p().
+        """
         top_errors = self.non_field_errors() # Errors that should be displayed above all fields.
         output, hidden_fields = [], []
 
@@ -255,7 +260,6 @@ class BaseForm(forms.Form, FormRequiredFields):
 
     def __init__(self, *args, **kwargs):
         super(BaseForm, self).__init__(*args, **kwargs)
-        instance=kwargs.get('instance', None)
         for name, field in self.fields.items():
             if name in self.two_columns_fields:
                 field.column_style = 'twoColumnsField'
@@ -362,176 +366,5 @@ class AdminBaseContentOwnersForm(forms.Form):
                       )}
 
 
-class TransTextSearchTerm(TextSearchTerm):
-
-    def _field_name_with_language(self, field_name):
-        return '%s_%s' % (field_name, get_language())
-
-    def bind(self, field_name):
-        return super(TransTextSearchTerm, self).bind(self._field_name_with_language(field_name))
-
-
-class BaseSearchForm(SearchForm):
-
-    extra_scripts = ('%sjs/searchlets.js' % settings.MEDIA_URL, )
-
-    @classmethod
-    def class_name(cls):
-        return cls.__name__.lower()
-
-    @classmethod
-    def content_name(cls):
-        class_name = cls.class_name
-        if 'quicksearchform' in class_name:
-            return class_name.split('quicksearchform')[0]
-        elif 'advancedsearchform' in class_name:
-            return class_name.split('advancedsearchform')[0]
-        return class_name
-
-    @classmethod
-    def title(cls):
-        return cls.content_name().capitalize()
-
-    # Search Interface
-    results_template = 'base/search_results_view.html'
-    base_results_template = 'section/base_section.html'
-    results_model = None
-
-    def get_selected_menu(self):
-        return "%s-searcher" % self.results_model._meta.module_name
-
-    def get_results_queryset(self, request):
-        return self.results_model.objects.published()
-
-    def get_select_related_fields(self):
-        # prefetch the location since we draw a mini google map for each hit
-        return ['location']
-
-    def filter_by_query_string(self, request, queryset, page_var='p',
-                               search_fields=[], none_if_empty=False,
-                               filter_processors=[]):
-        qsm = QueryStringManager(request, search_fields, page_var)
-        filters = qsm.get_filters()
-        excluders = qsm.get_excluders()
-        if filters or excluders:
-            try:
-                new_filters = dict(filters)
-                for processor in filter_processors:
-                    processor(new_filters)
-
-                queryset = queryset.filter(**new_filters)
-                queryset = queryset.exclude(**excluders)
-            except FieldError, e:
-                raise Http404
-        elif none_if_empty:
-            queryset = queryset.none()
-
-        return queryset, qsm
-
-    def search_results(self, request):
-        queryset = self.get_results_queryset(request)
-
-        filter_processors = self.get_filter_processors()
-        results, qsm = self.filter_by_query_string(request, queryset,
-                                                   none_if_empty=True,
-                                                   page_var=settings.PAGE_VARIABLE,
-                                                   filter_processors=filter_processors)
-
-        select_related_fields = self.get_select_related_fields()
-        if select_related_fields:
-            results = results.select_related(*select_related_fields).distinct()
-        else:
-            results = results.distinct()
-
-        self.set_qsm(qsm)
-
-        return results
-
-    def render_search_results_map(self, request):
-        results = self.search_results(request)
-        context = RequestContext(request, {'object_list': results})
-        template = Template("""
-        {% load i18n map_tags %}
-        <div class="contentMap">
-        {% google_map content_pois=object_list %}
-        {% if object_list|localized %}
-           {% google_map_proximity_filter %}
-        {% else %}
-           <p class="infomsg"><strong>{% trans "Sorry, there is no localized objects" %}</strong></p>
-        {% endif %}
-        </div>
-        """)
-        return HttpResponse(template.render(context))
-
-
-class QuickSearchForm(BaseSearchForm):
-    search_type = 'quick'
-    use_tabs = False
-
-
-class AdvancedSearchForm(BaseSearchForm):
-    search_type = 'advanced'
-    template = 'base/searchform.html'
-    use_tabs = True
-
-
-class BaseBaseContentSearchForm(object):
-
-    results_model = BaseContent
-    base_results_template = 'section/base_section.html'
-
-
-class BaseContentQuickSearchForm(BaseBaseContentSearchForm, QuickSearchForm):
-
-    title = _('Base contents')
-    break_navigation = True
-    template = 'base/basecontent_quick_search_form.html'
-
-    fields = SortedDict((
-            ('name',
-             FreeTextSearchTerm(_(u'Name'),
-                                _(u'Name'),
-                                _(u'which name'))),
-            )
-    )
-
-    def __init__(self, *args, **kwargs):
-        super(BaseContentQuickSearchForm, self).__init__(*args, **kwargs)
-        if 'features' in self.fields:
-            del self.fields['features'].filters['basecontent__class_name']
-        if 'handicapped_services' in self.fields:
-            del self.fields['handicapped_services'].filters['basecontent__class_name']
-
-
-class BaseContentAdvancedSearchForm(BaseBaseContentSearchForm, AdvancedSearchForm):
-
-    title = _('Base contents')
-    fields = SortedDict((
-            ('name',
-             TextSearchTerm(_(u'Name'),
-                            _(u'Name'),
-                            _(u'which name'))),
-        )
-    )
-
-    def __init__(self, *args, **kwargs):
-        super(BaseContentAdvancedSearchForm, self).__init__(*args, **kwargs)
-        if 'features' in self.fields:
-            del self.fields['features'].filters['basecontent__class_name']
-        if 'handicapped_services' in self.fields:
-            del self.fields['handicapped_services'].filters['basecontent__class_name']
-
-
 class BaseAdminModelForm(GenericAdminModelForm):
     pass
-
-
-def register_search_forms():
-    search_form_registry.register_form(
-        BaseContentQuickSearchForm,
-        name=_(u'Base Content Quick Search Form'),
-        )
-    search_form_registry.register_form(
-        BaseContentAdvancedSearchForm,
-        name=_(u'Base Content Advanced Search Form'),
-        )
