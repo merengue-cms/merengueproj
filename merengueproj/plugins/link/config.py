@@ -59,7 +59,7 @@ class PluginConfig(Plugin):
             ct = ContentType.objects.get_for_model(model)
             sp = transaction.savepoint()
             collection, created = Collection.objects.get_or_create(slug=slug)
-            transaction.savepoint_rollback(sp)
+            transaction.savepoint_commit(sp)
 
             if created:
                 collection.status = 'published'
