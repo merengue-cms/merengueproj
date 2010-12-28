@@ -56,7 +56,7 @@ class Command(AppCommand, MerengueCommand):
         make_option('-l', '--link', action='store_true', dest='link',
             help="Create a symbolic link to each file instead of copying."),
     )
-    help = 'Collect media files of apps, plugins and the project in a single media directory.'
+    help = 'Collect media files of apps in a single media directory.'
     args = '[appname appname ...]'
 
     def handle(self, *app_labels, **options):
@@ -73,7 +73,8 @@ class Command(AppCommand, MerengueCommand):
         if app_labels:
             apps = app_labels
         else:
-            apps = settings.INSTALLED_APPS
+            apps = [app for app in settings.INSTALLED_APPS \
+                    if not app.startswith('plugins.')]
 
         print "Traversing apps: %s" % get_text_list(apps, 'and')
         for app in apps:
