@@ -10,7 +10,9 @@
     {% with highlight.get_absolute_url as highlight_url %}
       <h1><a href="{{ highlight_url }}" title="{{ highlight }}">{{ highlight }}</a></h1>
       {% if highlight.related_content.main_image %}
-        <img src="{% thumbnail highlight.related_content.main_image 100x100 %}" alt="{{ highlight }}" class="floatImage"/>
+       {% thumbnail highlight.related_content.main_image "100x100" as thumb %}
+        <img src="{{ thumb.url }}" alt="{{ highlight }}" class="floatImage"/>
+       {% endthumbnail %}
       {% endif %}
       <p>{{ highlight.description|safe }}</p>
       <div class="visualClear"></div>

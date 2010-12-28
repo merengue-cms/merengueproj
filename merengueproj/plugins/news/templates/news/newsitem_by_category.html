@@ -4,10 +4,11 @@
 {% for news in news_list %}
     <li class="newsitem2{% if forloop.first %} first {% endif %}{% if forloop.last %} last {% endif %}">
         {% if news.main_image %}
-            {% thumbnail news.main_image 146x88 as thumb %}
+            {% thumbnail news.main_image "146x88" as thumb %}
             <div class="imageLeft" >
-              <img width="146px" height="88px" src="{{ thumb }}" />
+              <img width="146px" height="88px" src="{{ thumb.url }}" />
             </div>
+            {% endthumbnail %}
         {% else %}
            <div class="imageLeft noImage">
             <img width="146px" height="88px" src="{{ THEME_MEDIA_URL }}img/no_image.jpg" />
