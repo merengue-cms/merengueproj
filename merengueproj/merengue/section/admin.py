@@ -34,7 +34,6 @@ from merengue.section.models import (Menu, Section,
                                      Document, DocumentSection, CustomStyle,
                                      SectionRelatedContent, CustomStyleImage)
 from merengue.section.formsets import BaseLinkInlineFormSet
-from merengue.section.widgets import SearchFormOptionsWidget
 from merengue.perms import utils as perms_api
 
 
@@ -166,17 +165,6 @@ class DocumentRelatedModelAdmin(SectionContentAdmin, DocumentAdmin):
         if obj and obj.permanent and 'slug' in form.base_fields.keys():
             set_field_read_only(form.base_fields['slug'], 'slug', obj)
         return form
-
-    def formfield_for_dbfield(self, db_field, **kwargs):
-        if db_field.name == 'search_form':
-            from searchform.registry import search_form_registry
-            db_field._choices = search_form_registry.get_choices()
-
-        formfield = super(DocumentRelatedModelAdmin, self).formfield_for_dbfield(db_field, **kwargs)
-        if db_field.name == 'search_form_filters':
-            formfield.widget = SearchFormOptionsWidget()
-
-        return formfield
 
 
 class BaseLinkInline(admin.TabularInline):

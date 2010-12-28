@@ -15,8 +15,6 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-import md5
-
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
@@ -29,13 +27,10 @@ from django.utils.translation import ugettext_lazy as _
 
 import mptt
 
-from cmsutils.adminfilters import QueryStringManager
-
 from merengue.base.managers import WorkflowManager
 from merengue.base.models import Base, BaseContent
 from merengue.section.managers import SectionManager
 from merengue.viewlet.models import RegisteredViewlet
-from searchform.registry import search_form_registry
 from transmeta import TransMeta, get_fallback_fieldname
 
 
@@ -350,21 +345,6 @@ class Section(BaseSection):
 
 class Document(BaseContent):
 
-    search_form = models.CharField(
-        verbose_name=_('search form'),
-        max_length=200,
-        blank=True,
-        null=True,
-        editable=False, # until search form feature was completed
-    )
-
-    search_form_filters = models.TextField(
-        verbose_name=_('searcher options'),
-        blank=True,
-        null=True,
-        editable=False, # until search form feature was completed
-    )
-
     permanent = models.BooleanField(verbose_name=_('permanent'),
                                     help_text=_('make this document not erasable and its slug ummutable'),
                                     editable=False,
@@ -380,66 +360,6 @@ class Document(BaseContent):
 
     def __unicode__(self):
         return unicode(self.name)
-
-    def get_search_form(self):
-        if self.search_form:
-            form_class = search_form_registry.get_form_class(self.search_form)
-            qsm = QueryStringManager(None)
-            filters = dict([(f, []) for f in self.get_search_form_filters()])
-            for filter in filters:
-                options = self.get_search_form_filters_options(filter)
-                filters[filter] = options
-                if search_form_registry.can_select_multiple_options(
-                    self.search_form,
-                    filter,
-                    ):
-                    qsm.filters.setlist(filter + '__in', options)
-                else:
-                    qsm.filters[filter + '__exact'] = options[0]
-
-            form = form_class(query_string_manager=qsm)
-            for filter, options in filters.items():
-                field = form.fields[filter]
-                field.filters['id__in'] = options
-
-            return form
-
-    def get_search_form_filters(self):
-        if not self.search_form_filters:
-            return []
-        result = []
-        for filter_and_options in self.search_form_filters.split('\n'):
-            if filter_and_options:
-                result.append(filter_and_options.split(':')[0].strip())
-        return result
-
-    def get_search_form_filters_options(self, filter_name):
-        if not self.search_form_filters:
-            return []
-        for filter_and_options in self.search_form_filters.split('\n'):
-            if filter_and_options:
-                (name, options) = filter_and_options.split(':')
-                name=name.strip()
-                if name == filter_name:
-                    option_list = []
-                    for option in options.split(','):
-                        soption = option.strip()
-                        if soption.isdigit():
-                            option_list.append(int(soption))
-                        else:
-                            option_list.append(soption)
-                    return option_list
-        return []
-
-    def get_cache_key(self):
-        """ returns a cache key that identifies this document with search form
-            configuration set """
-        cache_key = ''
-        if self.related_section:
-            cache_key += self.related_section.slug
-        cache_key += self.search_form
-        cache_key += md5.md5(self.search_form_filters or '').hexdigest()
-        return cache_key
 
     @permalink
     def public_link(self):

@@ -23,7 +23,6 @@ from django.template import RequestContext
 from django.utils import simplejson
 from django.utils.translation import get_language_from_request
 
-from searchform.registry import search_form_registry
 from merengue.section.models import BaseSection, Document, Section, \
                                     DocumentSection, BaseLink
 
@@ -125,54 +124,6 @@ def section_custom_style(request, section_slug):
                               {'customstyle': section.customstyle},
                               context_instance=RequestContext(request),
                               mimetype='text/css')
-
-
-def _parse_search_form_filters(value):
-    filters={}
-    for filter_and_options in value.strip().split('\n'):
-        if filter_and_options:
-            (filter_name, options) = filter_and_options.split(':')
-            filter_name = filter_name.strip()
-            option_list=[]
-            for option in options.strip().split(','):
-                soption=option.strip()
-                if soption.isdigit():
-                    option_list.append(int(soption))
-                else:
-                    option_list.append(soption)
-            filters.update({filter_name: option_list})
-    return filters
-
-
-@login_required
-def get_search_filters_and_options(request):
-    search_form = request.GET.get('search_form', None)
-    widget_name = request.GET.get('widget_name', 'search_form_filters')
-    value = request.GET.get('value', '')
-    results = []
-    actual_filters = _parse_search_form_filters(value)
-    if search_form:
-        search_form_class = search_form_registry.get_form_class(search_form)
-        for filter in search_form_registry.get_filters(search_form):
-            options=[]
-            selected_options = actual_filters.get(filter, [])
-            for (option_value, option_name) in search_form_registry.get_filter_options(search_form, filter):
-                selected = option_value in selected_options
-                options.append({'name': option_name,
-                                'value': option_value,
-                                'selected': selected,
-                               })
-            results.append({
-                'label': search_form_class.fields[filter].label,
-                'name': filter,
-                'options': options,
-            })
-    return render_to_response('section/search_form_filters.html',
-                              {'filters': results,
-                               'widget_name': widget_name,
-                               'value': value,
-                              },
-                              context_instance=RequestContext(request))
 
 
 @login_required

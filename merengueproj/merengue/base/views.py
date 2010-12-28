@@ -39,31 +39,6 @@ def _get_results_msg(count):
     return result % {'result_count': count, 'msg_results': ugettext('results')}
 
 
-def search_results(request, search_form, original_context={}):
-    """ Generic view for searching results """
-    if request.is_ajax():
-        return search_form.render_search_results_map(request)
-
-    results = search_form.search_results(request)
-
-    result_msg = _get_results_msg(results.count())
-
-    extra_context = dict(
-        query_string=search_form.get_qsm().get_query_string(),
-        result_msg=result_msg,
-        search_form=search_form,
-        base_template=search_form.base_results_template,
-        menuselected=search_form.get_selected_menu(),
-        )
-
-    extra_context.update(original_context)
-    return list_detail.object_list(request, results,
-                                   template_name=search_form.results_template,
-                                   allow_empty=True,
-                                   extra_context=extra_context,
-                                   template_object_name='object')
-
-
 def public_link(request, app_label, model_name, content_id):
     """ Redirect to public page for an object """
     model = get_model(app_label, model_name)
