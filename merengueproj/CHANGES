@@ -1,3 +1,53 @@
+Version 0.6.0-alpha2 (2842 revision)
+====================================
+
+* Removed external SVN dependences. Now Merengue has all these dependences as python eggs.
+
+* Implemented a render_all_blocks templatetags, which is a shortcut to write less templating code.
+
+* Replaced plugins which render lists with customizable collections.
+
+* Make Merengue documentation compatible with Sphinx 1.0.
+
+* Several bug fixes related to:
+ * Permissions system.
+ * Administration broken links.
+ * banners, oldbrowser and event plugin.
+ * transhette application.
+ * etc.
+
+* Improved usability in Merengue admin:
+ * A content tree, for browsing all contents.
+ * Improved visual block reordering.
+
+* Themes can have a screenshot, for previewing before activating.
+
+* Plugins can define new middlewares.
+
+* A new "Owner" role, to may customize permissions for content owners. This role is assigned for a user when the context is a content owned by him.
+
+* Manager can disable global permissions adquisition for a content, for example to disable "View" permission in private contents.
+
+* Blocks showable or hiddeable by URLs in Merengue admin, using regular expressions.
+
+* Begin integration with django-notification.
+
+* Contents can be defined as permanents (no deletable, no changeable or some fields not changeables), when your logic relies on these contents.
+
+* Plugin introspection before installing it. In Merengue admin you will see what blocks will be created by a plugin, or what new content types, etc.
+
+* When customizing a section CSS, you can upload new images to may customize the backgrounds.
+
+* New plugins:
+ * contactform: to create forms, customizing fields, emails, behaviour, etc.
+ * smartsearch: to include and manage search form, for example inside collections.
+ * rss: to make feeds in your site, which are configurable.
+ * redirect: to configure HTTP redirections in your site.
+ * itag: tagging with i18n support.
+ * addthis: addthis.com integration.
+ * imagesize: notifications when size of uploaded images pass the configurables thresholds.
+
+
 Version 0.6.0-alpha1 (2541 revision)
 ====================================
 

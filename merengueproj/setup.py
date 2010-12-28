@@ -32,14 +32,14 @@ for dirpath, dirnames, filenames in os.walk('.'):
 
 setup(
     name = "merengue",
-    version = "0.6.0-alpha1",
+    version = "0.6.0-alpha2",
     install_requires = ['django==1.1.2', 'PIL', 'BeautifulSoup', 'south==0.7.2', 'pexpect',
                         'django-extensions==0.5', 'cssutils', 'django-tagging', 'django-pagination',
                         'template_utils', 'django-mptt', 'encutils', 'django-oembed',
                         'django-ajax-selects', 'django-threadedcomments==0.5.3',
                         'django-notification==0.1.5', 'django-oot', 'django-genericforeignkey',
                         'django-stdfile', 'cmsutils', 'transhette', 'django-inlinetrans',
-                        'django-transmeta', 'sorl-thumbnail'],
+                        'django-transmeta', 'sorl-thumbnail', 'searchform'],
     author = "Yaco Sistemas",
     author_email = "msaelices@yaco.es",
     description = "Django-based CMS with steroids",
