@@ -53,6 +53,9 @@ Topics
  * **Registry:**
    :ref:`Registry <topics-registry>`
 
+ * **Fixtures:**
+   :ref:`Fixtures in Merengue <topics-fixtures>`
+
 Reference
 =========
 

@@ -1,0 +1,111 @@
+.. _topics-fixtures:
+
+====================
+Fixtures in Merengue
+====================
+
+Fixtures are the best way to provide initial data to a your site, or save data
+after populate your database.
+
+.. note::
+
+    See `fixtures in Django`_ for more information.
+
+.. _`fixtures in Django`: http://docs.djangoproject.com/en/1.1/howto/initial-data/
+
+Site fixtures
+=============
+
+Django by default load all ``initial_data.*`` fixtures files placed in every
+application ``fixtures`` it found.
+
+Also, Merengue has a way to define explicit fixtures file to load, using the
+``SITE_FIXTURES`` setting, as this example:
+
+.. code-block:: python
+
+    SITE_FIXTURES = {
+        'section': ('initial_content.xml', ),
+        'fooapp': ('fooapp_content.xml', ),
+    }
+
+The format of this dict is ``'application_name': ('fixture1.format', 'fixture2.format')``.
+
+Data loading into your new site is done everytime you execute
+``python manage.py migrate`` command. The migrate command (implemented in
+`South`_ application) will migrate every installed application and Merengue
+will load every fixtures you define for that application. Those fixtures will
+be found in your ``FIXTURES_DIRS`` setting (by default in a ``fixtures``
+directory inside your Merengue project).
+
+.. _`South`: http://south.aeracode.org/
+
+
+Serialization internals
+=======================
+
+Merengue load initial data in your site using `Django serialization framework`_.
+By default Merengue uses the XML format to load data, overriding default Django
+XML serializer, adding these improvements:
+
+* Translations fields support.
+* Option for not overwrite objects previously loaded in your site.
+
+Translation fields support
+--------------------------
+
+You can understand the first improvement looking at this fixture fragment:
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="utf-8"?>
+    <django-objects version="1.0">
+      <object pk="1" model="base.basecontent">
+        <field type="SlugField" name="slug">welcome</field>
+        <field type="CharField" name="name_es">Bienvenido a Merengue</field>
+        <field type="CharField" name="name_en">Welcome to Merengue</field>
+        <field type="TextField" name="description_en">
+        Merengue is a full-featured CMS useful for creating websites without writing a single line of code or customizing and extending with any of the plethora of existing Django applications.
+        </field>
+        <field type="TextField" name="description_es">
+        Merengue is a full-featured CMS useful for creating websites without writing a single line of code or customizing and extending with any of the plethora of existing Django applications.
+        </field>
+        ...
+      </object>
+    </django-objects>
+
+As you see, the content have ``name`` and ``description`` data both for Spanish
+and English languages. But, what happens if you have configured your site in
+English and French? Django default XML serializer will fail. Merengue by
+default has translated data in the fixtures and is more robust to be
+independent of your site languages.
+
+Non overridable fixtures
+------------------------
+
+The second improvement is caused for this use case:
+
+1. The developer creates a new Merengue project.
+2. The developer creates the database schema and load the Merengue initial data (including a demo home page).
+3. The manager modify home page, and other contents.
+4. The webmaster upgrade to new Merengue version, executing ``migrate`` command.
+5. With default Django XML serializers, all manager changes will be lost.
+
+The Merengue XML serializer will omit translatable fields data in languages not
+configured in your site.
+
+If you want to allow manager edit in a data from fixtures, you can do it adding
+a ``overwrite="no"`` in every ``<object>`` XML element, like this:
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="utf-8"?>
+    <django-objects version="1.0">
+      <object pk="1" model="base.basecontent" overwrite="no">
+        <field type="SlugField" name="slug">welcome</field>
+        ...
+      </object>
+    </django-objects>
+
+With this mark, Merengue will not touch this object when loading fixtures if
+the object already exists.
