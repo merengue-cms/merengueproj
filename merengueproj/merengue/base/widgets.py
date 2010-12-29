@@ -20,6 +20,7 @@ import datetime
 import re
 
 from django import forms
+from django.db import models
 from django.conf import settings
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper, AdminDateWidget
 from django.core.urlresolvers import reverse, NoReverseMatch
@@ -37,15 +38,17 @@ from cmsutils.forms.widgets import TinyMCE, TINYMCE_JS
 class ReadOnlyWidget(forms.Widget):
 
     def __init__(self, original_value, display_value):
+        if display_value is None:
+            display_value = original_value or u''
+        if isinstance(original_value, models.Model):
+            original_value = original_value.pk
         self.original_value = original_value
         self.display_value = display_value
 
         super(ReadOnlyWidget, self).__init__()
 
     def render(self, name, value, attrs=None):
-        if self.display_value is not None:
-            return unicode(self.display_value)
-        return unicode(self.original_value)
+        return unicode(self.display_value)
 
     def value_from_datadict(self, data, files, name):
         return self.original_value
