@@ -3,13 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="" />
-<title>CA07_Cl01</title>
+<link rel="selenium.base" href="http://beta.merengue.yaco.es/" />
+<title>CA07_Cl01.html</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">CA07_Cl01</td></tr>
+<tr><td rowspan="1" colspan="3">CA07_Cl01.html</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -53,18 +53,23 @@
 </tr>
 <tr>
 	<td>addSelection</td>
-	<td>id_permissions_from</td>
-	<td>label=action | registered action | Can add registered action</td>
+	<td>id_roles_from</td>
+	<td>label=Anonymous User</td>
 </tr>
 <tr>
 	<td>addSelection</td>
-	<td>id_permissions_from</td>
-	<td>label=action | registered action | Can change registered action</td>
+	<td>id_roles_from</td>
+	<td>label=Owner</td>
 </tr>
 <tr>
 	<td>doubleClick</td>
-	<td>link=Agregar</td>
-	<td></td>
+	<td>id_roles_from</td>
+	<td>label=Anonymous User</td>
+</tr>
+<tr>
+	<td>doubleClick</td>
+	<td>id_roles_from</td>
+	<td>label=Owner</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -88,7 +93,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Terminar sesión</td>
+	<td>link=Deslogarse</td>
 	<td></td>
 </tr>
 
