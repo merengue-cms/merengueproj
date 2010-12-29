@@ -455,6 +455,8 @@ class CustomStyle(models.Model):
 
     css_chunk = models.TextField(
         verbose_name=_('css chunk'),
+        null=True,
+        blank=True,
     )
 
 
