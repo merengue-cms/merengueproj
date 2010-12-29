@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
