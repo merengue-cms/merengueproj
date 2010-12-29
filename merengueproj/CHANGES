@@ -1,6 +1,11 @@
 Changes
 =======
 
+Version 0.6.0-alpha3 (2844 revision)
+------------------------------------
+
+* Split dependences to an external requirements.txt file.
+
 Version 0.6.0-alpha2 (2842 revision)
 ------------------------------------
 

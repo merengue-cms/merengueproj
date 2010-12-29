@@ -16,6 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
+import re
 import ez_setup
 ez_setup.use_setuptools()
 from setuptools import setup, find_packages
@@ -23,6 +24,30 @@ from setuptools import setup, find_packages
 
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
+
+
+def parse_requirements(file_name):
+    requirements = []
+    for line in open(file_name, 'r').read().split('\n'):
+        if re.match(r'(\s*#)|(\s*$)', line):
+            continue
+        if re.match(r'\s*-e\s+', line):
+            requirements.append(re.sub(r'\s*-e\s+.*#egg=(.*)$', r'\1', line))
+        elif re.match(r'\s*-f\s+', line):
+            pass
+        else:
+            requirements.append(line)
+
+    return requirements
+
+
+def parse_dependency_links(file_name):
+    dependency_links = []
+    for line in open(file_name, 'r').read().split('\n'):
+        if re.match(r'\s*-[ef]\s+', line):
+            dependency_links.append(re.sub(r'\s*-[ef]\s+', '', line))
+
+    return dependency_links
 
 
 data_files = []
@@ -35,16 +60,12 @@ for dirpath, dirnames, filenames in os.walk('.'):
     elif filenames:
         data_files.append([dirpath, [os.path.join(dirpath, f) for f in filenames]])
 
+
 setup(
     name = "merengue",
-    version = "0.6.0-alpha2",
-    install_requires = ['django==1.1.2', 'PIL', 'BeautifulSoup', 'south==0.7.2', 'pexpect',
-                        'django-extensions==0.5', 'cssutils', 'django-tagging', 'django-pagination',
-                        'template_utils', 'django-mptt', 'encutils', 'django-oembed',
-                        'django-ajax-selects', 'django-threadedcomments==0.5.3',
-                        'django-notification==0.1.5', 'django-oot', 'django-genericforeignkey',
-                        'django-stdfile', 'cmsutils', 'transhette', 'django-inlinetrans',
-                        'django-transmeta', 'sorl-thumbnail', 'searchform'],
+    version = "0.6.0-alpha3",
+    install_requires = parse_requirements('requirements.txt'),
+    dependency_links = parse_dependency_links('requirements.txt'),
     author = "Yaco Sistemas",
     author_email = "msaelices@yaco.es",
     description = "Django-based CMS with steroids",
