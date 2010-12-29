@@ -104,8 +104,7 @@ FIXTURE_DIRS = (
 
 SITE_FIXTURES = {
     # Site fixtures that will be loaded after data migration. Syntax:
-    # 'app_name': ('fixture1', 'fixture2', ...),
-    'section': ('initial_content.xml', ),
+    # 'app_name': ('fixture1', 'fixture2', ...)
 }
 
 BUILDBOT_IP = '192.168.11.209'

@@ -2,9 +2,9 @@
 <django-objects version="1.0">
     <object pk="1" model="auth.user">
         <field type="CharField" name="username">admin</field>
-        <field type="CharField" name="first_name">John</field>
-        <field type="CharField" name="last_name">Smith</field>
-        <field type="CharField" name="email">foo@foodomain.org</field>
+        <field type="CharField" name="first_name">Manuel</field>
+        <field type="CharField" name="last_name">Saelices</field>
+        <field type="CharField" name="email">msaelices@yaco.es</field>
         <field type="CharField" name="password">sha1$df35a$580c7250101375108e1630eec7ef933f8ac76004</field>
         <field type="BooleanField" name="is_staff">True</field>
         <field type="BooleanField" name="is_active">True</field>
