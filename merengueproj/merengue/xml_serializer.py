@@ -21,7 +21,28 @@ class Serializer(xml_serializer.Serializer):
 class Deserializer(xml_serializer.Deserializer):
     """
     Deserialize XML.
+
+    Like Django XML deserializer, with these improvements:
+      * Translations fields support.
+      * Option for not overwrite objects previously loaded in your site.
     """
+
+    def next(self):
+        for event, node in self.event_stream:
+            if event == "START_ELEMENT" and node.nodeName == "object":
+                if node.hasAttribute("overwrite") and \
+                   node.getAttribute("overwrite") == 'no':
+                    Model = self._get_model_from_node(node, "model")
+                    pk = node.getAttribute("pk")
+                    if not pk:
+                        raise base.DeserializationError("<object> node is missing the 'pk' attribute")
+                    if Model._base_manager.filter(pk=Model._meta.pk.to_python(pk)):
+                        # if object is found we will not overwrite it
+                        # because is marked as non overridable
+                        continue
+                self.event_stream.expandNode(node)
+                return self._handle_object(node)
+        raise StopIteration
 
     def _handle_object(self, node):
         """
@@ -32,7 +53,7 @@ class Deserializer(xml_serializer.Deserializer):
         Model = self._get_model_from_node(node, "model")
 
         # Start building a data dictionary from the object.  If the node is
-        # missing the pk attribute, bail.
+        # missing the pk attribute, fail.
         pk = node.getAttribute("pk")
         if not pk:
             raise base.DeserializationError("<object> node is missing the 'pk' attribute")
