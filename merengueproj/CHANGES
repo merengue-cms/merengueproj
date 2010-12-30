@@ -1,6 +1,12 @@
 Changes
 =======
 
+Version 0.6.0-beta1 (XXXX revision)
+-----------------------------------
+
+* A lot of bugfixes.
+* Support of HTML emails in contactform plugin.
+
 Version 0.6.0-alpha3 (2844 revision)
 ------------------------------------
 
