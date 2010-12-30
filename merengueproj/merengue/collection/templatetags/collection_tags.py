@@ -1,15 +1,12 @@
 from copy import copy
 
 from django.core.exceptions import FieldError
-from django.db import models
 from django.template import TemplateSyntaxError, Variable, Library, Node
 from django.template.defaultfilters import dictsort
 from django.template.defaulttags import RegroupNode
 from django.template.loader import render_to_string
-from django.utils.translation import ugettext_lazy as _
 
 from cmsutils.adminfilters import QueryStringManager
-from transmeta import get_real_fieldname, fallback_language
 
 
 register = Library()
@@ -21,17 +18,6 @@ class CollectionIterator(list):
         for i in super(CollectionIterator, self).__iter__():
             i.content_type_name = i._meta.verbose_name
             yield i
-
-
-def _get_value(field, field_name, item):
-    value = getattr(item, field_name, None)
-    if not value:
-        return value
-    for vfilter in field.collectiondisplayfieldfilter_set.all().order_by('filter_order'):
-        filter_module_name, filter_module_function = vfilter.filter_module.rsplit('.', 1)
-        func = getattr(__import__(filter_module_name, {}, {}, True), filter_module_function, None)
-        value = func(value, *vfilter.filter_params.split(','))
-    return value
 
 
 class CollectionItemNode(Node):
@@ -47,25 +33,9 @@ class CollectionItemNode(Node):
 
         fields = []
         for df in display_fields:
-            field_name = df.field_name
-            if field_name == 'content_type_name':
-                verbose_name = _('Content type name')
-            else:
-                try:
-                    field = item._meta.get_field(field_name)
-                    verbose_name = field.verbose_name
-                except models.FieldDoesNotExist:
-                    try:
-                        lang = fallback_language()
-                        field = item._meta.get_field(get_real_fieldname(field_name, lang))
-                        verbose_name = field.verbose_name[:-len(lang) - 1]
-                    except:
-                        continue
-            fields.append({'name': verbose_name,
-                        'field_name': field_name,
-                        'show_label': df.show_label,
-                        'value': _get_value(df, field_name, item),
-                        'safe': df.safe})
+            display_data = collection.get_displayfield_data(df, item)
+            if display_data is not None:
+                fields.append(display_data)
         context_copy = copy(context)
         context_copy.update({
             'item': item,

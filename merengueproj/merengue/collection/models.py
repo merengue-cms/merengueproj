@@ -2,7 +2,10 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import FieldError
 from django.db import models
 from django.db.models import Q
+from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
+
+from transmeta import get_real_fieldname, fallback_language
 
 from merengue.base.models import BaseContent
 
@@ -23,6 +26,17 @@ FILTER_OPERATORS = (
     ('in', _('In (coma separated list)')),
     ('isnull', _('Is empty')),
 )
+
+
+def _get_value(field, field_name, item):
+    value = getattr(item, field_name, None)
+    if not value:
+        return value
+    for vfilter in field.collectiondisplayfieldfilter_set.all().order_by('filter_order'):
+        filter_module_name, filter_module_function = vfilter.filter_module.rsplit('.', 1)
+        func = getattr(__import__(filter_module_name, {}, {}, True), filter_module_function, None)
+        value = func(value, *vfilter.filter_params.split(','))
+    return value
 
 
 class Collection(BaseContent):
@@ -137,6 +151,35 @@ class Collection(BaseContent):
                     parents_first = parents_first[i:]
                     break
         return parents_first and parents_first[0]
+
+    def get_displayfield_data(self, display_field, item):
+        """
+        returns dictionary with data that will be processed by collection view
+        to display an item as defined in display_field option.
+        This method may be overriden in Collection subclasses.
+        """
+        field_name = display_field.field_name
+        if field_name == 'content_type_name':
+            verbose_name = ugettext('Content type name')
+        else:
+            try:
+                field = item._meta.get_field(field_name)
+                verbose_name = field.verbose_name
+            except models.FieldDoesNotExist:
+                try:
+                    lang = fallback_language()
+                    field = item._meta.get_field(get_real_fieldname(field_name, lang))
+                    verbose_name = field.verbose_name[:-len(lang) - 1]
+                except:
+                    return None
+        return {
+            'name': verbose_name,
+            'field_name': field_name,
+            'show_label': display_field.show_label,
+            'value': _get_value(display_field, field_name, item),
+            'type': field.get_internal_type(),
+            'safe': display_field.safe,
+        }
 
 
 class CollectionFilter(models.Model):

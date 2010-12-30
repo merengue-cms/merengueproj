@@ -25,7 +25,13 @@
   <div class="itemCollectionField itemCollectionField-{{ field.field_name }}">
     {% block fieldblock %}
     {% if field.show_label %}<span class="itemCollectionFieldName">{{ field.name }}</span>{% endif %}
-    <span class="itemCollectionFieldValue">{% if field.safe %}{{ field.value|safe }}{% else %}{{ field.value|striptags }}{% endif %}</span>
+      <span class="itemCollectionFieldValue">
+      {% ifequal field.type "DateTimeField" %}
+        {{ field.value|date }}
+      {% else %}
+        {% if field.safe %}{{ field.value|safe }}{% else %}{{ field.value|striptags }}{% endif %}
+      {% endifequal %}
+      </span>
     {% endblock %}
   </div>
   {% endfor %}
