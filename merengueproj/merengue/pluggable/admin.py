@@ -27,20 +27,12 @@ from merengue.pluggable.utils import has_required_dependencies
 from merengue.registry.admin import RegisteredItemAdmin
 
 
-def screenshot_link(self):
-    if not self.screenshot:
-        return ugettext('None')
-    return mark_safe(u'<a href="%s" target="_blank">%s</a>' % (self.screenshot, ugettext('Screenshot')))
-screenshot_link.allow_tags = True
-screenshot_link.label = _('Screenshot')
-
-
 class RegisteredPluginAdmin(RegisteredItemAdmin):
     change_form_template = 'admin/plugin/plugin_change_form.html'
     change_list_template = 'admin/plugin/plugin_change_list.html'
     readonly_fields = RegisteredItemAdmin.readonly_fields + ('name',
         'description', 'version', 'timestamp', 'directory_name', )
-    list_display = ('name', 'directory_name', 'installed', 'active', screenshot_link, )
+    list_display = ('name', 'directory_name', 'installed', 'active', 'screenshot_link', )
 
     fieldsets = (
         ('',
@@ -87,6 +79,13 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
 
     def has_add_permission(self, request):
         return False
+
+    def screenshot_link(self, obj):
+        if not obj.screenshot:
+            return ugettext('None')
+        return mark_safe(u'<a href="%s" target="_blank">%s</a>' % (obj.screenshot, ugettext('Screenshot')))
+    screenshot_link.allow_tags = True
+    screenshot_link.label = _('Screenshot')
 
     def changelist_view(self, request, extra_context=None):
         check_plugins()
