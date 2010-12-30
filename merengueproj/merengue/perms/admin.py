@@ -142,7 +142,7 @@ class PermissionAdmin(admin.ModelAdmin):
             obj.adquire_global_permissions = request.POST.get('adquire_global_permissions', False)
             obj.save()
             if msg and url_redirect:
-                return self.response_change(request, msg, url_redirect=url_redirect)
+                return self.response_change_permissions(request, msg, url_redirect=url_redirect)
 
         roles = Role.objects.all()
         role_permissions = {}
@@ -198,7 +198,7 @@ class PermissionAdmin(admin.ModelAdmin):
                                   context,
                                   context_instance=RequestContext(request))
 
-    def response_change(self, request, *args, **kwargs):
+    def response_change_permissions(self, request, *args, **kwargs):
         """
         Determines the HttpResponse for the change_view stage.
         """
@@ -254,7 +254,7 @@ class ObjectPermissionAdmin(PermissionAdmin):
                 perm = Permission.objects.get(id=perm_id)
                 op, created = ObjectPermission.objects.get_or_create(role=role, permission=perm, content=None)
 
-            return self.response_change(request)
+            return self.response_change_permissions(request)
 
 
         roles = Role.objects.all()
