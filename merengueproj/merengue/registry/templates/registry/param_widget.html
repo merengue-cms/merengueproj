@@ -12,7 +12,7 @@
     {% else %}
     {% block param_container %}
       <input {{ widget_attrs }} type="text"
-                                value="{{ param.get_value|default_if_none:"" }}"/>
+                                value="{{ param.get_value_display|default_if_none:"" }}"/>
     {% endblock %}
     {% endif %}
 </div>

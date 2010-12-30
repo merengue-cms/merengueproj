@@ -49,7 +49,11 @@ class Param(object):
         return getattr(self, 'value', self.default)
 
     def get_value_display(self):
-        return self.get_value()
+        value = self.get_value()
+        if value == NOT_PROVIDED:
+            return None
+        else:
+            return value
 
     def get_value_from_datadict(self, data, name):
         return data.get(name)
