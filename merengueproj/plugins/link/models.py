@@ -46,9 +46,4 @@ class Link(BaseContent):
 
     @permalink
     def public_link(self):
-        section = self.get_main_section()
-        if section is None:
-            return ('link_view', [self.slug])
-        else:
-            # go to news item inside section which created it
-            return ('link_view', [section.slug, self.id, self.slug])
+        return ('link_view', [self.slug])
