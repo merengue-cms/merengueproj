@@ -1,6 +1,7 @@
 {% extends "viewlet.html" %}
 
 {% block viewletbody %}
+  {% if taglist %}
   <ul style="padding: 0px; margin: 0px; text-align: center;">
       {% for tag in taglist %}
       <li style="font-size: {{ tag.count }}em; display: inline; line-height: 1em;">
@@ -8,4 +9,5 @@
       </li>
       {% endfor %}
   </ul>
+  {% endif %}
 {% endblock %}

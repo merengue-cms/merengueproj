@@ -54,7 +54,10 @@ class TagCloudViewlet(Viewlet):
             except ITag.DoesNotExist:
                 continue
 
-        max_item_count = tag_cloud and tag_cloud[0].item_count or 0 # the first element is always the biggest
+        if not tag_cloud or tag_cloud[0].item_count == 0:
+            return None
+
+        max_item_count = tag_cloud[0].item_count # the first element is always the biggest
         for t in tag_cloud:
             t.count = (float(t.item_count) / max_item_count) + 1
         tag_cloud.sort(key=attrgetter('tag_name'))
