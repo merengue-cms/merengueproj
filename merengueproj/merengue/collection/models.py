@@ -2,6 +2,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import FieldError
 from django.db import models
 from django.db.models import Q
+from django.utils.importlib import import_module
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
@@ -34,7 +35,7 @@ def _get_value(field, field_name, item):
         return value
     for vfilter in field.collectiondisplayfieldfilter_set.all().order_by('filter_order'):
         filter_module_name, filter_module_function = vfilter.filter_module.rsplit('.', 1)
-        func = getattr(__import__(filter_module_name, {}, {}, True), filter_module_function, None)
+        func = getattr(import_module(filter_module_name), filter_module_function, None)
         value = func(value, *vfilter.filter_params.split(','))
     return value
 

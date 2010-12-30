@@ -26,7 +26,7 @@ DEFAULT_FILTERS = (
     ('', ''),
     ('django.template.defaultfilters.truncatewords', _('Truncate words'), ),
     ('django.template.defaultfilters.truncatewords_html', _('Truncate words HTML'), ),
-    ('cmsutils.templatetags.truncatechars', _('Truncate chars'), ),
+    ('cmsutils.templatetags.stringfilters.truncatechars', _('Truncate chars'), ),
 )
 
 
