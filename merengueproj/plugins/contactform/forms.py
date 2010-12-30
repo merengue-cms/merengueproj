@@ -15,8 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMultiAlternatives
 from django.core.serializers.json import DateTimeAwareJSONEncoder
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -71,8 +70,8 @@ class ContactFormForm(forms.Form):
 
             context = dict(opts=opts, content=content,
                            contact_form=contact_form)
-            msg = render_to_string('contactform/email.html', context,
-                                   context_instance=RequestContext(request))
+            html_content = render_to_string('contactform/email.html', context,
+                context_instance=RequestContext(request))
 
             def mailstr_to_list(mailstr):
                 return map(unicode.strip, mailstr.split(','))
@@ -81,8 +80,9 @@ class ContactFormForm(forms.Form):
             bcc_mail = mailstr_to_list(contact_form.bcc)
 
             attachs = [(f.name, f.read(), f.content_type) for f in files.values()]
-            email = EmailMessage(subject, msg, from_mail,
+            email = EmailMultiAlternatives(subject, '', from_mail,
                                  to_mail, bcc=bcc_mail,
                                  attachments=attachs)
+            email.attach_alternative(html_content, "text/html")
 
             email.send()
