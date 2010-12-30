@@ -35,8 +35,8 @@ class PluginConfig(Plugin):
     )
 
     config_params = [
-        params.Single(name='rpubk', label=_('recaptcha public key')),
-        params.Single(name='rprivk', label=_('recaptcha private key')),
+        params.Single(name='rpubk', label=_('recaptcha public key'), default='6LegA8ASAAAAAF9AhuaPUPYb94p3vE4IkHOxfgAi'),
+        params.Single(name='rprivk', label=_('recaptcha private key'), default='6LegA8ASAAAAAAI-nxu0DcCdDCQIzuWCNbKOXPw3'),
     ]
 
     @classmethod
