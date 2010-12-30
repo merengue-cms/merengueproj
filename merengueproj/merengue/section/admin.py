@@ -135,6 +135,7 @@ class CustomStyleRelatedModelAdmin(RelatedModelAdmin):
     related_field = 'basesection'
     one_to_one = True
     inlines = [CustomStyleImageInline]
+    change_form_template = 'admin/section/customstyle/change_form.html'
 
     def formfield_for_dbfield(self, db_field, **kwargs):
         formfield = super(CustomStyleRelatedModelAdmin, self).formfield_for_dbfield(db_field, **kwargs)
