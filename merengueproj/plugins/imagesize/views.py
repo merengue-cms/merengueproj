@@ -17,7 +17,7 @@
 
 import os
 import datetime
-from PIL import Image
+import Image
 
 from django.conf import settings
 from django.http import HttpResponse
