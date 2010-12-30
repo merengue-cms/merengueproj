@@ -17,10 +17,7 @@
 
 from django.conf import settings
 
-if settings.USE_GIS:
-    from django.contrib.gis.db import models
-else:
-    from django.db import models
+from django.db import models
 
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
@@ -35,7 +32,7 @@ from plugins.contactform import fields as custom_fields
 
 FIELD_TYPE_CHOICES = (
     ('text', _('Text')),
-    ('textarea', _('Text araea')),
+    ('textarea', _('Text area')),
     ('date', _('Date')),
     ('datetime', _('Datetime')),
     ('checkbox', _('Checkbox')),
