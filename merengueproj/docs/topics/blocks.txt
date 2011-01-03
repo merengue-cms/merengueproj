@@ -163,6 +163,57 @@ create a template inside ``block_latest.html``:
 This template shows the title of the last published news. The number of news that is considered
 *last news* is specified in render function inside the ``blocks.py`` (five in this case).
 
+Showing and hiding blocks
+--------------------------
+
+From Merengue v0.6, block rendering can be controlled using two additional parameters in the block configuration:
+
+* ``Shown in urls``
+* ``Hidden in urls``
+
+These parameters are used to decide wether to render or not the block. If both
+are empty, the block will always be rendered in its place. Otherwise, the block 
+will be shown or hidden if the current url is found within the specified values.
+
+``hiden in urls`` does only take effect if ``shown in urls`` is *not set*.
+
+Both parameters accept a list of regular expressions, written one per line with
+the standard `python regular expression syntax <http://docs.python.org/library/re.html#regular-expression-syntax/>`_
+and no quotes.
+
+For example:
+
+``shown in urls``
+
+.. code-block:: python
+
+  news/
+
+would show the block only in urls with *news/* in it. This means the block won't
+be displayed in any other place (such as the homepage).
+
+The regular expressions are matched towards the site relative url, so leave out
+the http and domain part. Nonetheless, make sure you provide complete 
+expressions in order to avoid undesired matches.
+
+For example:
+
+``hiden in urls``
+
+.. code-block:: python
+
+  /$
+
+will hide the block in all urls ending with a / character. If you want to hide 
+the block in your home page, you should write:
+
+``hiden in urls``
+
+.. code-block:: python
+
+  ^/$
+
+
 How to register the block
 -------------------------
 
