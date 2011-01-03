@@ -24,6 +24,7 @@ from plugins.subscription.models import Subscribable, BaseSubscription
 
 class SubscribableAdmin(RelatedModelAdmin):
     related_field = 'content'
+    change_form_template = 'admin/subscription/subscribable/change_form.html'
 
     def formfield_for_dbfield(self, db_field, **kwargs):
         field = super(SubscribableAdmin, self).formfield_for_dbfield(db_field, **kwargs)
