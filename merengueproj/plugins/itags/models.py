@@ -35,6 +35,12 @@ class ITag(Tag):
         verbose_name_plural = _('Internazionalized Tags')
 
 
+def create_itag(sender, instance, **kwargs):
+    # ensure that tag.name is the itag.tag_name to avoid integrity errors
+    # because tag.name is unique (see #1201).
+    instance.name = instance.tag_name
+
+
 def create_itag_from_tag(sender, instance, **kwargs):
 
     try:
@@ -50,4 +56,5 @@ def create_itag_from_tag(sender, instance, **kwargs):
             setattr(itag, get_fallback_fieldname('tag_name'), instance.name)
         itag.save_base(raw=True)
 
+models.signals.pre_save.connect(create_itag, sender=ITag)
 models.signals.post_save.connect(create_itag_from_tag, sender=Tag)
