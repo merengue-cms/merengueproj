@@ -199,6 +199,7 @@ class SentContactForm(models.Model):
     contact_form = models.ForeignKey(ContactForm, verbose_name=_(u'contact form'))
     sender = models.ForeignKey(User, verbose_name=_('sender'), blank=True, null=True)
     sent_msg = JSONField(verbose_name=_(u'response'))
+    sent_date = models.DateTimeField(verbose_name=_('sent date'), auto_now_add=True)
 
     def __unicode__(self):
         return self.contact_form.title

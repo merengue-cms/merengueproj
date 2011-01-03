@@ -51,7 +51,7 @@ class ContactFormOptAdmin(BaseOrderableAdmin, BaseAdmin):
 
 
 class SentContactFormAdmin(BaseAdmin):
-    pass
+    list_display = ('contact_form', 'sent_date')
 
 
 class ContactFormRelatedContactFormOptAdmin(ContactFormOptAdmin,
