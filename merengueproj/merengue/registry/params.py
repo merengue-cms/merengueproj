@@ -58,6 +58,11 @@ class Param(object):
     def get_value_from_datadict(self, data, name):
         return data.get(name)
 
+    def is_valid(self, value):
+        """ returns if value is valid in this kind of param,
+            to implement form validation """
+        return True
+
     def render(self, name, widget_attrs,
                template_name='registry/param_widget.html',
                extra_context=None):
@@ -86,6 +91,9 @@ class Integer(Param):
         value = super(Integer, self).get_value_from_datadict(data, name)
         return self.get_parsed_value(value)
 
+    def is_valid(self, value):
+        return isinstance(value, int)
+
 
 class Bool(Param):
 
@@ -102,6 +110,9 @@ class Bool(Param):
         if not val or (getattr(val, 'lower', None) and val.lower() in self.VAL_FALSE):
             return False
         return bool(val)
+
+    def is_valid(self, value):
+        return isinstance(value, bool)
 
     def render(self, name, widget_attrs,
                template_name='registry/bool_widget.html',

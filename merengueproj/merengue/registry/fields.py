@@ -15,6 +15,9 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.forms import ValidationError
+from django.utils.translation import ugettext as _
+
 from cmsutils.forms.fields import JSONFormField
 
 from merengue.registry.widgets import ConfigWidget
@@ -25,3 +28,14 @@ class ConfigFormField(JSONFormField):
     def __init__(self, *args, **kwargs):
         super(ConfigFormField, self).__init__(*args, **kwargs)
         self.widget = ConfigWidget()
+
+    def set_config(self, config):
+        self.config = config
+        self.widget.add_config_widgets(config)
+
+    def clean(self, value):
+        value = super(ConfigFormField, self).clean(value)
+        for name, param in self.config.items():
+            if not param.is_valid(value.get(name, None)):
+                raise ValidationError(_('Error in "%(name)s" field') % {'name': param.label})
+        return value
