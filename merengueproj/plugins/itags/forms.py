@@ -8,6 +8,7 @@ from transmeta import get_fallback_fieldname
 class ITagForm(forms.ModelForm):
 
     def clean(self):
+        # validate uniqueness of tag names (see #1201)
         cleaned_data = super(ITagForm, self).clean()
         tag_name_field = get_fallback_fieldname('tag_name')
         tag_name = cleaned_data.get(tag_name_field)
