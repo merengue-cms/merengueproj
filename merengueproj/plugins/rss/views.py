@@ -22,7 +22,9 @@ from django.contrib.sites.models import Site
 from django.http import HttpResponse
 from django.utils import feedgenerator
 from django.template.loader import render_to_string
+
 from merengue.base.models import BaseContent
+from merengue.registry.params import NOT_PROVIDED
 
 from plugins.rss.config import PluginConfig
 
@@ -33,7 +35,7 @@ def rss_views(request):
         'contenttypes', []).get_value()
 
     query = Q()
-    if not contenttypes:
+    if not contenttypes or contenttypes == NOT_PROVIDED:
         results = BaseContent.objects.filter(
             status='published').order_by('modification_date')[::-1]
     else:
