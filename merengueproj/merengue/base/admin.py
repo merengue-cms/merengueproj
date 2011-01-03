@@ -577,21 +577,25 @@ class BaseCategoryAdmin(BaseAdmin):
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
 
     def has_add_permission(self, request):
-        """
-            Overrides Django admin behaviour to add ownership based access control
-        """
         return perms_api.has_global_permission(request.user, 'manage_category')
 
     def has_change_permission(self, request, obj=None):
-        """
-        Overrides Django admin behaviour to add ownership based access control
-        """
         return self.has_add_permission(request)
 
     def has_delete_permission(self, request, obj=None):
-        """
-        Overrides Django admin behaviour to add ownership based access control
-        """
+        return self.has_add_permission(request)
+
+
+class PluginAdmin(BaseAdmin):
+    """ This is a class to be overriden by plugin modeladmins """
+
+    def has_add_permission(self, request):
+        return perms_api.can_manage_plugin_content(request.user)
+
+    def has_change_permission(self, request, obj=None):
+        return self.has_add_permission(request)
+
+    def has_delete_permission(self, request, obj=None):
         return self.has_add_permission(request)
 
 
@@ -635,7 +639,7 @@ class WorkflowBatchActionProvider(object):
                 extra_context = {'title': confirm_msg,
                                  'action_submit': 'set_as_%s' % state}
                 return self.confirm_action(request, queryset, extra_context)
-    change_state.short_description = _(u"Change state of selected %(verbose_name_plural)s")
+    change_state.short_description = _(u"Change state of selected % (verbose_name_plural)s")
 
 
 class StatusControlProvider(object):
