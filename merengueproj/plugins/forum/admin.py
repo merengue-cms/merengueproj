@@ -38,7 +38,10 @@ class ThreadRelatedAdmin(RelatedModelAdmin):
 
     def response_change(self, request, obj):
         if '_continue' in request.POST.keys():
-            request.path = request.path + '../../../../../%s/thread/forum/thread/%s/' % (obj.forum.id, obj.id)
+            # we need change request.path because manager may change the forum
+            # of this thread, and then you have to redirect to the new
+            # forum->thread related admin (see #997)
+            request.path = obj.get_admin_absolute_url()
         return super(ThreadRelatedAdmin, self).response_change(request, obj)
 
 
