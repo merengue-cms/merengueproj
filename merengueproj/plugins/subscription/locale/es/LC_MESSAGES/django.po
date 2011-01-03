@@ -92,5 +92,9 @@ msgstr ""
 msgid "submit"
 msgstr "enviar"
 
+#: forms.py:14
+msgid "End date should be greater than start date."
+msgstr "La fecha de finalización debe ser posterior a la de inicio."
+
 #~ msgid "Request send successfully"
 #~ msgstr "Petición enviada con exito"
