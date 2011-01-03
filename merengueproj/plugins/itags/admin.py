@@ -16,12 +16,14 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.contrib import admin
+from plugins.itags.forms import ITagForm
 from plugins.itags.models import ITag
 
 
 class ITagAdmin(admin.ModelAdmin):
     """ Admin for tag management """
     exclude = ('name', )
+    form = ITagForm
 
 
 def register(site):
