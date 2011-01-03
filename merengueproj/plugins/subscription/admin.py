@@ -17,7 +17,7 @@
 
 from django import forms
 
-from merengue.base.admin import BaseAdmin, RelatedModelAdmin
+from merengue.base.admin import PluginAdmin, RelatedModelAdmin
 from merengue.base.models import BaseContent
 from plugins.subscription.models import Subscribable, BaseSubscription
 from plugins.subscription.forms import SubscribableAdminForm
@@ -48,7 +48,7 @@ class SubscribableAdmin(RelatedModelAdmin):
         return l
 
 
-class BaseSubscriptionAdmin(BaseAdmin):
+class BaseSubscriptionAdmin(PluginAdmin):
     list_filter = ('subscribable', )
 
 

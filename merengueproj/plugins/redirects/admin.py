@@ -15,12 +15,12 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from merengue.base.admin import BaseAdmin
+from merengue.base.admin import PluginAdmin
 from plugins.redirects.models import Redirect
 from merengue.perms.utils import has_global_permission
 
 
-class RedirectAdmin(BaseAdmin):
+class RedirectAdmin(PluginAdmin):
     """
     ModelAdmin for Redirect plugin.
     """

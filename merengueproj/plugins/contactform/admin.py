@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.base.admin import (RelatedModelAdmin, BaseAdmin,
+from merengue.base.admin import (RelatedModelAdmin, BaseAdmin, PluginAdmin,
                                  BaseOrderableAdmin, BaseContentAdmin)
 from merengue.base.models import BaseContent
 
@@ -28,10 +28,8 @@ from plugins.contactform.models import (ContactForm, ContactFormOpt,
                                         ContactFormSelectOpt)
 
 
-class ContactFormAdmin(BaseAdmin):
-
+class ContactFormAdmin(PluginAdmin):
     exclude = ('content', )
-
     html_fields = ('description', )
 
 

@@ -15,12 +15,12 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from merengue.base.admin import BaseContentAdmin
+from merengue.base.admin import BaseContentAdmin, PluginAdmin
 from merengue.section.admin import SectionContentAdmin
 from plugins.banner.models import Banner
 
 
-class BannerAdmin(BaseContentAdmin):
+class BannerAdmin(PluginAdmin, BaseContentAdmin):
     pass
 
 

@@ -15,11 +15,11 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from merengue.base.admin import BaseAdmin
+from merengue.base.admin import PluginAdmin
 from plugins.oldbrowser.models import OldBrowser
 
 
-class OldBrowserAdmin(BaseAdmin):
+class OldBrowserAdmin(PluginAdmin):
     pass
 
 

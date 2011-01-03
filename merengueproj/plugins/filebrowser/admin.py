@@ -1,13 +1,13 @@
-from merengue.base.admin import BaseAdmin
+from merengue.base.admin import PluginAdmin
 
 from plugins.filebrowser.models import Repository, Document
 
 
-class RepositoryModelAdmin(BaseAdmin):
+class RepositoryModelAdmin(PluginAdmin):
     ordering = ('name', )
 
 
-class DocumentModelAdmin(BaseAdmin):
+class DocumentModelAdmin(PluginAdmin):
     ordering = ('id', )
 
 

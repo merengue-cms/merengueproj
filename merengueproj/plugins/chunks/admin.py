@@ -20,7 +20,7 @@ from models import Chunk
 
 from cmsutils.forms.widgets import TinyMCE
 
-from merengue.base.admin import BaseAdmin
+from merengue.base.admin import PluginAdmin
 from plugins.chunks.forms.forms import ChunkAdminModelForm
 
 
@@ -39,7 +39,7 @@ class TransTinyMCEWidget(TinyMCE):
         return TinyMCE.render(self, field_name, value, attrs)
 
 
-class ChunkAdmin(BaseAdmin):
+class ChunkAdmin(PluginAdmin):
     list_display = ('key', )
     search_fields = ('key', 'content')
     form = ChunkAdminModelForm
