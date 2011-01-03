@@ -321,7 +321,7 @@ class ExcludeCollectionFilter(CollectionFilter):
             return query.exclude(self.get_q_object())
         else:
             # Excluding a Q object whith isnull doesn't work as expected so we have to exclude by kwarg filter
-            return query.exclude(**{'%s__%s' % (self.filter_field, self.filter_operator): self.value})
+            return query.exclude(**{'%s__%s' % (str(self.filter_field), str(self.filter_operator)): self.value})
 
 
 class CollectionDisplayField(models.Model):
