@@ -49,7 +49,7 @@ class BaseSubscription(models.Model):
     email = models.EmailField(_('e-mail address'))
     phone = models.CharField(_('phone'), max_length=30)
     suggestions = models.TextField(_('comments or suggestions'), null=True, blank=True)
-    subscribable = models.ForeignKey(Subscribable, verbose_name=_('subscribable'), editable=False)
+    subscribable = models.ForeignKey(Subscribable, verbose_name=_('subscribable'))
 
     class Meta:
         verbose_name = _('base subscription')
@@ -60,4 +60,7 @@ class BaseSubscription(models.Model):
 
     @classmethod
     def class_form(cls):
-        return modelform_factory(cls)
+        form = modelform_factory(cls)
+        # subscribable object is automatically defined
+        del form.base_fields['subscribable']
+        return form
