@@ -65,7 +65,7 @@ class ConfigWidget(widgets.MultiWidget):
         value = dict()
         for v in value_list:
             value.update(v)
-        return json.dumps(value)
+        return value
 
     def render(self, name, value, attrs=None):
         """ rendering function. note: value will be a config param instance """
