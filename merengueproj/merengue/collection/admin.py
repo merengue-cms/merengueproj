@@ -37,21 +37,20 @@ class CollectionFilterInline(admin.TabularInline):
 
     form = CollectionFilterForm
 
-    def get_default_fields(self, obj):
+    def get_default_fields(self, obj, request):
         if not obj:
-            return []
+            return [('', '----------')] + [(i, i) for (k, i) in request.POST.items() if k.endswith('filter_field')]
         return [('', '----------')] + [(i, i) for i in get_common_fields(obj)]
 
     def get_formset(self, request, obj=None, **kwargs):
         formset = super(CollectionFilterInline, self).get_formset(request, obj, **kwargs)
         form = formset.form
-        default_fields = self.get_default_fields(obj)
+        default_fields = self.get_default_fields(obj, request)
         if default_fields:
             default_fields += [('content_type_name', 'content_type_name')]
             default_fields.sort()
-        for i in ('filter_field', 'field_name'):
-            if i in form.base_fields:
-                form.base_fields[i].widget = forms.Select(choices=default_fields)
+        if 'filter_field' in form.base_fields:
+            form.base_fields['filter_field'].widget = forms.Select(choices=default_fields)
         return formset
 
 
@@ -85,9 +84,9 @@ class CollectionAdmin(BaseContentAdmin):
         context.update({'media': media})
         return super(CollectionAdmin, self).render_change_form(request, context, add, change, form_url, obj)
 
-    def get_default_fields(self, obj):
+    def get_default_fields(self, obj, request):
         if not obj:
-            return []
+            return [('', '----------')] + [(i, i) for (k, i) in request.POST.items() if k.endswith('_by')]
         return [('', '----------')] + [(i, i) for i in get_common_fields_no_language(obj)]
 
     def get_subclasses(self, cls_list, _seen=None):
@@ -118,7 +117,7 @@ class CollectionAdmin(BaseContentAdmin):
                 if not m._meta.abstract:
                     types_id.append(ContentType.objects.get_for_model(m).id)
             form.base_fields['content_types'].queryset = form.base_fields['content_types'].queryset.filter(id__in=types_id)
-        default_fields = self.get_default_fields(obj)
+        default_fields = self.get_default_fields(obj, request)
         if default_fields:
             default_fields += [('content_type_name', 'content_type_name')]
             default_fields.sort()
@@ -176,9 +175,8 @@ class CollectionDisplayFieldAdmin(RelatedModelAdmin, BaseOrderableAdmin):
         if default_fields:
             default_fields += [('content_type_name', 'content_type_name')]
             default_fields.sort()
-        for i in ('filter_field', 'field_name'):
-            if i in form.base_fields:
-                form.base_fields[i].widget = forms.Select(choices=default_fields)
+        if 'field_name' in form.base_fields:
+            form.base_fields['field_name'].widget = forms.Select(choices=default_fields)
         return form
 
 
