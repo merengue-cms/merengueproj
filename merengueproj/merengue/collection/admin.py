@@ -19,7 +19,7 @@ from merengue.collection.models import (Collection, IncludeCollectionFilter,
                                         CollectionDisplayFieldFilter)
 from merengue.collection.utils import get_common_fields_no_language, \
                                                             get_common_fields
-from merengue.collection.forms import CollectionFilterForm
+from merengue.collection.forms import CollectionFilterForm, CollectionDisplayFilterForm
 
 
 DEFAULT_FILTERS = (
@@ -134,6 +134,7 @@ class CollectionRelatedModelAdmin(SectionContentAdmin, CollectionAdmin):
 
 class CollectionDisplayFieldFilterInline(admin.TabularInline):
     model = CollectionDisplayFieldFilter
+    form = CollectionDisplayFilterForm
 
     def get_formset(self, request, obj=None, **kwargs):
         formset = super(CollectionDisplayFieldFilterInline, self).get_formset(request, obj, **kwargs)

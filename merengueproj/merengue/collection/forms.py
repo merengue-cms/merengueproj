@@ -16,6 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django import forms
+from django.utils.importlib import import_module
 
 
 class CollectionFilterForm(forms.ModelForm):
@@ -32,4 +33,21 @@ class CollectionFilterForm(forms.ModelForm):
             cdata.get('filter_value') not in self.ISNULL_VALID_CHOICES:
             raise forms.ValidationError("Value should be 'true' or 'false'")
 
+        return self.cleaned_data
+
+
+class CollectionDisplayFilterForm(forms.ModelForm):
+
+    def clean(self):
+        module = self.cleaned_data.get('filter_module')
+        params = self.cleaned_data.get('filter_params')
+        filter_module_name, filter_module_function = module.rsplit('.', 1)
+        func = getattr(import_module(filter_module_name), filter_module_function, None)
+        value = ''
+        if params:
+            params = params.split(',')
+            try:
+                value = func(value, *params)
+            except Exception, e:
+                raise forms.ValidationError(e)
         return self.cleaned_data
