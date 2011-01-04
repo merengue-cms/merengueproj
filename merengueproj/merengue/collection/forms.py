@@ -41,6 +41,8 @@ class CollectionDisplayFilterForm(forms.ModelForm):
     def clean(self):
         module = self.cleaned_data.get('filter_module')
         params = self.cleaned_data.get('filter_params')
+        if not module or not params:
+            return self.cleaned_data
         filter_module_name, filter_module_function = module.rsplit('.', 1)
         func = getattr(import_module(filter_module_name), filter_module_function, None)
         value = ''
