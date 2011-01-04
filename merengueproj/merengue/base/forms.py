@@ -367,4 +367,16 @@ class AdminBaseContentOwnersForm(forms.Form):
 
 
 class BaseAdminModelForm(GenericAdminModelForm):
-    pass
+    
+    def clean_tags(self):
+        import re
+        value = self.cleaned_data.get('tags', None)
+        if not value:
+            return value
+        value = value.strip()
+        value = re.sub(' +',' ', value)
+        pt = re.compile('[\w\- ]', flags=re.UNICODE)
+        check = re.sub(pt, '', value)
+        if check:
+            raise forms.ValidationError(_('The following chars are not allowed in tags: %(char_list)s') % {'char_list': ' '.join(set(check))})
+        return value
