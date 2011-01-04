@@ -168,6 +168,44 @@ def do_render_all_blocks(parser, token):
     return RenderAllBlocksNode(place[1:-1])
 
 
+class RenderSingleBlockNode(template.Node):
+
+    def __init__(self, block):
+        self.block = block
+
+    def render(self, context):
+        request = context.get('request', None)
+        if not self.block:
+            return ''
+        try:
+            obj = None
+            place = ''
+            return self.block.render(request, obj, place, context)
+        except template.VariableDoesNotExist:
+            return ''
+
+
+@register.tag(name='render_single_block')
+def do_render_single_block(parser, token):
+    """
+    Usage::
+      {% render_single_block "plugins.news.blocks.NewsBlock" %}
+    """
+    bits = token.split_contents()
+    tag_name = bits[0]
+    if len(bits) != 2:
+        raise template.TemplateSyntaxError('"%r" tag requires only two '
+                                           'arguments' % tag_name)
+    splitted_block_name = bits[1][1:-1].split('.')
+    module = '.'.join(splitted_block_name[:-1])
+    classname = splitted_block_name[-1]
+    try:
+        block = RegisteredBlock.objects.get(module=module, class_name=classname).get_registry_item_class()
+    except RegisteredBlock.DoesNotExist:
+        block = None
+    return RenderSingleBlockNode(block)
+
+
 @register.inclusion_tag('blocks/header.html', takes_context=True)
 def render_blocks_media(context):
     return {'request': context.get('request'),
