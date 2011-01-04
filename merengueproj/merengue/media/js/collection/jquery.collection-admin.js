@@ -59,7 +59,7 @@ var Collection = null;
             }
             
             var replace_filter_value_widget_handler = function(event) {
-              var element = $(event.originalTarget);
+              var element = $(this);
               replace_filter_value_widget(element);
             }
             
