@@ -25,6 +25,9 @@ class ITagAdmin(admin.ModelAdmin):
     exclude = ('name', )
     form = ITagForm
 
+    def has_add_permission(self, request):
+        return False
+
 
 def register(site):
     """ Merengue admin registration callback """
