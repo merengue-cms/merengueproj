@@ -30,7 +30,9 @@ class LatestNewsBlock(Block):
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):
-        news_list = get_news(request, 5)
+        from plugins.news.config import PluginConfig
+        number_news = PluginConfig.get_config().get('limit', []).get_value()
+        news_list = get_news(request, number_news)
         return cls.render_block(request, template_name='news/block_latest.html',
                                 block_title=ugettext('Latest news'),
                                 context={'news_list': news_list})
