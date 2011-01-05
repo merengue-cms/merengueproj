@@ -18,7 +18,6 @@
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
-from django.utils.translation import ugettext as _
 
 from cmsutils.log import send_info
 from merengue.base.models import BaseContent
@@ -43,6 +42,8 @@ def contact_form_submit(request, content_slug, contact_form_id):
     if contact_form.redirect_to:
         redirect = contact_form.redirect_to
     else:
+        if hasattr(content, 'get_real_instance'):
+            content = content.get_real_instance()
         redirect = content.public_link()
 
     if msg:
