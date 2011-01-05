@@ -1,7 +1,6 @@
 # python libraries
 PIL
 BeautifulSoup
-pexpect
 encutils
 
 # Django
