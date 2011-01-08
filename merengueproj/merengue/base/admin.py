@@ -48,7 +48,7 @@ from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
 from autoreports.admin import ReportAdmin
-from cmsutils.forms.widgets import AJAXAutocompletionWidget
+from cmsutils.forms.widgets import AJAXAutocompletionWidget, ReadOnlyWidget
 from oembed.models import ProviderRule, StoredOEmbed
 from transmeta import (canonical_fieldname, get_all_translatable_fields,
                        get_real_fieldname_in_each_language,
@@ -57,8 +57,7 @@ from transmeta import (canonical_fieldname, get_all_translatable_fields,
 from merengue.base.adminsite import site
 from merengue.base.forms import AdminBaseContentOwnersForm, BaseAdminModelForm
 from merengue.base.models import BaseContent, ContactInfo
-from merengue.base.widgets import (CustomTinyMCE, ReadOnlyWidget,
-                                   RelatedBaseContentWidget)
+from merengue.base.widgets import CustomTinyMCE, RelatedBaseContentWidget
 from merengue.perms.admin import PermissionAdmin
 from merengue.perms import utils as perms_api
 from genericforeignkey.admin import GenericAdmin
