@@ -110,8 +110,10 @@ class StdImageField(ImageField):
             - filenamedst: full path of image to save the resize image
         '''
         WIDTH, HEIGHT = 0, 1
-        import Image
-        import ImageOps
+        try:
+            from PIL import Image, ImageOps
+        except ImportError:
+            import Image, ImageOps
         img = Image.open(filename)
         filenamedst = filenamedst or filename
         if img.size[WIDTH] > size['width'] or img.size[HEIGHT] > size['height']:
