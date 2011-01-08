@@ -20,7 +20,7 @@ import datetime
 try:
     from PIL import Image
 except ImportError:
-    import Image
+    import Image  # pyflakes:ignore
 
 from django.conf import settings
 from django.http import HttpResponse
