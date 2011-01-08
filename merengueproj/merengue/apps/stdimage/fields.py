@@ -113,7 +113,8 @@ class StdImageField(ImageField):
         try:
             from PIL import Image, ImageOps
         except ImportError:
-            import Image, ImageOps
+            import Image  # pyflakes:ignore
+            import ImageOps  # pyflakes:ignore
         img = Image.open(filename)
         filenamedst = filenamedst or filename
         if img.size[WIDTH] > size['width'] or img.size[HEIGHT] > size['height']:
