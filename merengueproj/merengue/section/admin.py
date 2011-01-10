@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -26,14 +26,14 @@ from transmeta import get_fallback_fieldname
 from merengue.base.admin import BaseAdmin, BaseContentAdmin, RelatedModelAdmin, \
                                 BaseOrderableAdmin, OrderableRelatedModelAdmin
 from merengue.base.admin import set_field_read_only
+from merengue.base.widgets import RelatedFieldWidgetWrapperWithoutAdding
 from merengue.section.fields import CSSValidatorField
 from merengue.section.forms import MenuAdminModelForm
 from merengue.section.models import (Menu, Section,
                                      BaseLink, AbsoluteLink, ContentLink, ViewletLink,
                                      Document, DocumentSection, CustomStyle,
-                                     SectionRelatedContent)
+                                     SectionRelatedContent, CustomStyleImage)
 from merengue.section.formsets import BaseLinkInlineFormSet
-from merengue.section.widgets import SearchFormOptionsWidget
 from merengue.perms import utils as perms_api
 
 
@@ -98,9 +98,17 @@ class ViewletLinkAdmin(BaseAdmin):
 
 class SectionAdmin(BaseSectionAdmin):
 
+    change_list_template = 'admin/section/section/change_list.html'
+
     def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
         context['change_form_section'] = True
         return super(SectionAdmin, self).render_change_form(request, context, add, change, form_url, obj)
+
+    def changelist_view(self, request, extra_context=None):
+        extra_context = extra_context or {}
+        section_tools = [val for key, val in self.admin_site.tools[self.model].items() if getattr(val, 'manage_contents', False)]
+        extra_context.update({'section_tools': section_tools})
+        return super(SectionAdmin, self).changelist_view(request, extra_context)
 
 
 class SectionContentAdmin(OrderableRelatedModelAdmin):
@@ -109,7 +117,7 @@ class SectionContentAdmin(OrderableRelatedModelAdmin):
 
     def custom_relate_content(self, request, obj, form, change):
         if not change:
-            section_relatedcontent_rel = SectionRelatedContent.objects.create(
+            SectionRelatedContent.objects.create(
                 basesection=self.basecontent,
                 basecontent=obj)
 
@@ -117,16 +125,23 @@ class SectionContentAdmin(OrderableRelatedModelAdmin):
         return through_model.objects.get(basesection=self.basecontent, basecontent=obj)
 
 
+class CustomStyleImageInline(admin.StackedInline):
+    model = CustomStyleImage
+
+
 class CustomStyleRelatedModelAdmin(RelatedModelAdmin):
     tool_name = 'style'
     tool_label = _('custom style')
     related_field = 'basesection'
     one_to_one = True
+    inlines = [CustomStyleImageInline]
+    change_form_template = 'admin/section/customstyle/change_form.html'
 
     def formfield_for_dbfield(self, db_field, **kwargs):
         formfield = super(CustomStyleRelatedModelAdmin, self).formfield_for_dbfield(db_field, **kwargs)
         if db_field.name == 'css_chunk':
-            formfield = CSSValidatorField(db_field.name, kwargs['request'])
+            required = not db_field.null
+            formfield = CSSValidatorField(db_field.name, kwargs['request'], required=required)
             formfield.help_text = _('Custom style for the section. You can use the variables $media_url and $theme_url')
         return formfield
 
@@ -145,23 +160,13 @@ class DocumentAdmin(BaseContentAdmin):
 class DocumentRelatedModelAdmin(SectionContentAdmin, DocumentAdmin):
     tool_name = 'documents'
     tool_label = _('documents')
+    manage_contents = True
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(DocumentRelatedModelAdmin, self).get_form(request, obj, **kwargs)
         if obj and obj.permanent and 'slug' in form.base_fields.keys():
             set_field_read_only(form.base_fields['slug'], 'slug', obj)
         return form
-
-    def formfield_for_dbfield(self, db_field, **kwargs):
-        if db_field.name == 'search_form':
-            from searchform.registry import search_form_registry
-            db_field._choices = search_form_registry.get_choices()
-
-        formfield = super(DocumentRelatedModelAdmin, self).formfield_for_dbfield(db_field, **kwargs)
-        if db_field.name == 'search_form_filters':
-            formfield.widget = SearchFormOptionsWidget()
-
-        return formfield
 
 
 class BaseLinkInline(admin.TabularInline):
@@ -215,7 +220,7 @@ class AbsoluteLinkInline(BaseLinkInline):
 
             def clean(value):
                 return value
-            field.clean=clean
+            field.clean = clean
         return field
 
 
@@ -231,11 +236,19 @@ class ContentLinkInline(BaseLinkInline):
             return formset
         form = formset.form
         if 'content' in form.base_fields.keys():
-            qs = form.base_fields['content'].queryset
+            formfield = form.base_fields['content']
+            qs = formfield.queryset
             admin_model = getattr(self, 'admin_model', None)
             if admin_model:
                 qs = qs.filter(basesection=admin_model.basecontent)
-            form.base_fields['content'].queryset = qs
+            formfield.queryset = qs
+            # change the widget to a wrapper
+            # note: formfield.wigdet is already a wrapper of formfield.widget.widget
+            formfield.widget = RelatedFieldWidgetWrapperWithoutAdding(
+                formfield.widget.widget, formfield.widget.rel, self.admin_site,
+            )
+            # limiting widget choices to new queryset
+            formfield.widget.widget.choices = formfield.choices
         return formset
 
 
@@ -250,7 +263,7 @@ class MenuAdmin(BaseAdmin):
     list_display = ('level', 'display_move_to', 'name', 'slug', )
     list_display_links = ('name', )
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
-    ordering=('lft', )
+    ordering = ('lft', )
     actions = []
     inherit_actions = False
     inlines = [AbsoluteLinkInline, ContentLinkInline, ViewletLinkInline]
@@ -296,7 +309,7 @@ class MenuAdmin(BaseAdmin):
             )
         options = u'<ul class="insertOptions hide">' + u''.join(options) + u'</ul>'
         return mark_safe('%s%s%s%s' % (hidden, init_move, cancel_move, options))
-    display_move_to.allow_tags=True
+    display_move_to.allow_tags = True
 
     def get_formsets(self, request, obj=None):
         self.inline_instances = []

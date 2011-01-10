@@ -34,6 +34,17 @@
 
 {% block content-main %}
 <div id="content-main">
+{% if original.no_deletable or original.no_changeable %}
+  <div class="warning-message">
+  <ul>
+  {% if original.no_deletable %}
+    <li>{% trans "This content is set as 'no_deletable' so you can not delete it from the system" %}</li>
+  {% endif %}
+  {% if original.no_changeable %}
+    <li>{% trans "This content is set as 'no_changeable' so you can not alter any of its data" %}</li>
+  {% endif %}
+</div>
+{% endif %}
 <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">{% block form_top %}{% endblock %}
 <div>
 {% if is_popup %}<input type="hidden" name="_popup" value="1" />{% endif %}

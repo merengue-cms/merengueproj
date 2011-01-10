@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -24,4 +24,5 @@ urlpatterns = patterns('merengue.base.views',
     (r'^admin_redirect/(?P<content_type>\d+)/(?P<content_id>\d+)/(?P<url>.*)$', 'admin_link'),
     (r'^public_redirect/(?P<app_label>\w+)/(?P<model_name>\w+)/(?P<content_id>\d+)/$', 'public_link'),
     (r'^view/(?P<app_label>\w+)/(?P<model_name>\w+)/(?P<content_id>\d+)/(?P<content_slug>[\w-]+)/$', 'public_view'),
+    (r'^ajax/autocomplete/tags/(?P<app_name>.*)/(?P<model>.*)/$', 'ajax_autocomplete_tags'),
 )

@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-VERSION = (0, 5, 1, 'rc', 1)
+VERSION = (0, 6, 0, 'beta', 1)
 
 
 def get_version():

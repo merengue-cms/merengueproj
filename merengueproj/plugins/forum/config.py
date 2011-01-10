@@ -1,7 +1,7 @@
 from merengue.pluggable import Plugin
 
-from plugins.forum.models import Forum
-from plugins.forum.admin import ForumAdmin
+from plugins.forum.models import Forum, ForumCategory
+from plugins.forum.admin import ForumAdmin, ForumCategoryAdmin
 
 
 class PluginConfig(Plugin):
@@ -15,9 +15,16 @@ class PluginConfig(Plugin):
     url_prefixes = (
         ('forum', 'plugins.forum.urls'),
     )
+
     required_plugins = {'feedback': {},
                         }
 
     @classmethod
     def get_model_admins(cls):
-        return [(Forum, ForumAdmin)]
+        return [(Forum, ForumAdmin),
+                (ForumCategory, ForumCategoryAdmin)]
+
+    @classmethod
+    def get_perms(cls):
+        return (
+            ('Moderate forum', 'moderate_forum', [Forum]), )

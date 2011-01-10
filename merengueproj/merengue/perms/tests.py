@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -45,7 +45,7 @@ class RoleTestCase(TestCase):
         self.group = Group.objects.create(name="brights")
 
         self.page_1 = BaseContent.objects.create(slug="page-1", name_en="Page 1")
-        self.page_2 = BaseContent.objects.create(slug="page-1", name_en="Page 2")
+        self.page_2 = BaseContent.objects.create(slug="page-2", name_en="Page 2")
 
     def test_getter(self):
         """
@@ -315,7 +315,7 @@ class PermissionTestCase(TestCase):
         self.user.save()
 
         self.page_1 = BaseContent.objects.create(slug="page-1", name_en="Page 1")
-        self.page_2 = BaseContent.objects.create(slug="page-1", name_en="Page 2")
+        self.page_2 = BaseContent.objects.create(slug="page-2", name_en="Page 2")
 
         self.permission = merengue.perms.utils.register_permission("View permission", "view_perm")
 
@@ -393,7 +393,7 @@ class PermissionTestCase(TestCase):
         result = merengue.perms.utils.grant_permission(self.role_1, self.permission, self.page_1)
         self.assertEqual(result, True)
 
-        # Add global perimission
+        # Add global permission
         result = merengue.perms.utils.grant_permission(self.role_1, self.permission)
         self.assertEqual(result, True)
 
@@ -427,9 +427,18 @@ class PermissionTestCase(TestCase):
         result = merengue.perms.utils.has_permission(self.page_2, self.user, "view_perm")
         self.assertEqual(result, False)
 
-        # Add global perimission
+        # Add global permission
         result = merengue.perms.utils.grant_permission(self.role_1, self.permission)
         self.assertEqual(result, True)
+
+        result = merengue.perms.utils.has_permission(self.page_1, self.user, "view_perm")
+        self.assertEqual(result, True)
+
+        # Non inherited permissions
+        self.page_1.adquire_global_permissions = False
+        self.page_1.save()
+        result = merengue.perms.utils.has_permission(self.page_1, self.user, "view_perm")
+        self.assertEqual(result, False)
 
         # Add individual permission
         result = merengue.perms.utils.grant_permission(self.role_1, self.permission, self.page_1)
@@ -445,6 +454,12 @@ class PermissionTestCase(TestCase):
         result = merengue.perms.utils.remove_permission(self.role_1, self.permission, self.page_1)
         self.assertEqual(result, True)
 
+        result = merengue.perms.utils.has_permission(self.page_1, self.user, "view_perm")
+        self.assertEqual(result, False)
+
+        # Inherited permissions
+        self.page_1.adquire_global_permissions = True
+        self.page_1.save()
         result = merengue.perms.utils.has_permission(self.page_1, self.user, "view_perm")
         self.assertEqual(result, True)
 

@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from merengue.viewlet.viewlets import Viewlet
 from plugins.link.views import get_links
@@ -23,7 +23,8 @@ from plugins.link.views import get_links
 
 class LatestLinkViewlet(Viewlet):
     name = 'latestlink'
-    label = _('Latest link')
+    help_text = _('Latest link')
+    verbose_name = _('Latest links')
 
     @classmethod
     def render(cls, request):
@@ -34,7 +35,8 @@ class LatestLinkViewlet(Viewlet):
 
 class AllLinkViewlet(Viewlet):
     name = 'alllink'
-    label = _('All link')
+    help_text = _('All links')
+    verbose_name = _('All links')
 
     @classmethod
     def render(cls, request):

@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -16,26 +16,60 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
+import re
 import ez_setup
 ez_setup.use_setuptools()
 from setuptools import setup, find_packages
 
+
+def read(*rnames):
+    return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
+
+
+def parse_requirements(file_name):
+    requirements = []
+    for line in open(file_name, 'r').read().split('\n'):
+        if re.match(r'(\s*#)|(\s*$)', line):
+            continue
+        if re.match(r'\s*-e\s+', line):
+            requirements.append(re.sub(r'\s*-e\s+.*#egg=(.*)$', r'\1', line))
+        elif re.match(r'\s*-f\s+', line):
+            pass
+        else:
+            requirements.append(line)
+
+    return requirements
+
+
+def parse_dependency_links(file_name):
+    dependency_links = []
+    for line in open(file_name, 'r').read().split('\n'):
+        if re.match(r'\s*-[ef]\s+', line):
+            dependency_links.append(re.sub(r'\s*-[ef]\s+', '', line))
+
+    return dependency_links
+
+
 data_files = []
 for dirpath, dirnames, filenames in os.walk('.'):
     for i, dirname in enumerate(dirnames):
-        if dirname.startswith('.'): del dirnames[i]
+        if dirname.startswith('.'):
+            del dirnames[i]
     if '__init__.py' in filenames:
         continue
     elif filenames:
         data_files.append([dirpath, [os.path.join(dirpath, f) for f in filenames]])
 
+
 setup(
     name = "merengue",
-    version = "0.5.1-rc1",
-    install_requires = ['django==1.1.2', 'PIL', 'beautifulsoup', 'south==0.7.2'],
-    author = "Manuel Saelices",
+    version = "0.6.0-beta1",
+    install_requires = parse_requirements('requirements.txt'),
+    dependency_links = parse_dependency_links('requirements.txt'),
+    author = "Yaco Sistemas",
     author_email = "msaelices@yaco.es",
     description = "Django-based CMS with steroids",
+    long_description=(read('README') + '\n\n' + read('CHANGES')),
     url = "http://www.merengueproject.org/",
     #download_url = 'http://www.merengueproject.org/download/0.5/merengue-0.5.tar.gz',
     include_package_data = True,

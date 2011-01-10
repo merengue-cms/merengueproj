@@ -47,11 +47,20 @@ Topics
  * **Permissions:**
    :ref:`Permissions <topics-permissions>`
 
+ * **Viewlets:**
+   :ref:`Viewlets <topics-viewlets>`
+
  * **Registry:**
    :ref:`Registry <topics-registry>`
 
+ * **Fixtures:**
+   :ref:`Fixtures in Merengue <topics-fixtures>`
+
 Reference
 =========
+
+ * **Merengue data model**
+   Merengue :ref:`data models <ref-datamodels>`
 
  * **Merengue settings:**
    Merengue :ref:`specific settings <ref-settings>`

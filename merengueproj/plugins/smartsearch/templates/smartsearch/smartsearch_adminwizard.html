@@ -1,0 +1,26 @@
+{% extends "autoreports/autoreports_adminwizard.html" %}
+
+{% load i18n related_admin_tags %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <link href="{{ MEDIA_URL }}smartsearch/admin_smartsearch.css" type="text/css" rel="stylesheet">
+{% endblock %}
+
+{% block breadcrumbs %}{% if not is_popup %}
+<div class="breadcrumbs">
+    {% advanced_breadcrumbs %}
+</div>
+{% endif %}{% endblock %}
+
+{% block contenttitle %}
+    <h1>{% trans "Search Wizard" %}</h1>
+{% endblock %}
+
+{% block title %}
+    {% trans "Search Wizard" %}  | {% trans 'Merengue site admin' %}
+{% endblock %}
+
+{% block submit %}
+    <input type="submit" name="__report_wizard" class="default" value="{% trans "Create searcher" %}"/>
+{% endblock %}

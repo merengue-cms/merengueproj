@@ -1,6 +1,6 @@
 {% load mptt_tags smart_if %}
 {% if menu %}
-<ul class="menu_ul menu1">
+<ul class="menu_ul menu1 {% block menuclass %}{% endblock %}">
     {% for node, structure in menu.get_descendants|tree_info %}
         {% if structure.new_level and node.level > 1 %}
           <div class="iefix">

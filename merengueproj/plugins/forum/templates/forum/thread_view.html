@@ -1,6 +1,11 @@
 {% extends "content_view.html" %}
 
-{% load pagination_tags i18n inlinetrans content_tags %}
+{% load pagination_tags i18n inlinetrans content_tags forum_tags comment_tags datefilters %}
+
+{% block extrahead %}
+  {{ block.super }}
+  {% comments_media %}
+{% endblock extrahead %}
 
 {% block extrabreadcrumbs %}
     <span class="breadcrumbSeparator">→</span>
@@ -8,5 +13,42 @@
     <span class="breadcrumbSeparator">→</span>
     <a href="{{ content.forum.get_absolute_url }}" title="{{ content.forum }}">{% cutrender %}{{ content.forum }}{% endcutrender %}</a>
     <span class="breadcrumbSeparator">→</span>
-    <a href="." title="{{ content }}">{% cutrender %}{{ content }}{% endcutrender %}</a>
+    {% cutrender %}{{ content }}{% endcutrender %}
 {% endblock %}
+
+{% block contenttitle %}
+    <div id="content-title" class="threadTitle">
+      <h1 title="{{ content.name }}">{% cutrender %}{{ content }}{% endcutrender %}
+        <span class="threadMetaData">{{ content.creation_date|transdate }} {{ content.creation_date|date:"H:i:s" }} {% trans "by" %} {{ content.user.get_full_name|default:content.user.username }}</span>
+      </h1>
+    </div>
+{% endblock contenttitle %}
+
+{% block contentbody %}
+
+<div id="feedback">
+<h2 id="forum-comment-header">{% inline_trans "Messages" %}:</h2>
+
+<div id="firstcomment">
+    <div class="comment-discard-message" style="display: none;">{% trans "Are you sure you want to discard this comment form?" %}</div>
+    <div id="comment-error" style="display:none">
+       {% trans "An error has occurred, try again" %}
+    </div>
+    {% if can_comment %}
+    <div id="firstactions" class="actions ">
+        <a class="addReply"
+           href="{% url forum_comment_add content.forum.slug,content.slug %}">{% inline_trans "Reply" %}</a>
+        <a  style="display:none" class="hideReply"
+           href="#">{% inline_trans "Hide Reply" %}</a>
+    </div>
+    {% endif %}
+
+    <div class="commentform"></div>
+      {% for comment in comments %}
+        {% thread_comment comment %}
+      {% endfor %}
+    <div class="commentresults" style="display:none"></div>
+</div>
+<div class="visualClass"></div>
+</div>
+{% endblock contentbody %}

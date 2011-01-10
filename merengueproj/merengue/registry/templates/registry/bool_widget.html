@@ -1,0 +1,6 @@
+{% extends "registry/param_widget.html" %}
+{% load i18n %}
+
+{% block param_container %}
+<input {{ widget_attrs }} type="checkbox" {% if param.get_value %}checked="checked"{% endif %}/>
+{% endblock %}

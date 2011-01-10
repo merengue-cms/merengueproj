@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -30,6 +30,9 @@ from merengue.theming.managers import ThemeManager
 
 
 class Theme(models.Model):
+    """
+    Merengue theme model store info abouth the installed themes.
+    """
     name = models.CharField(_('name'), max_length=100)
     description = models.TextField(_('description'))
     installed = models.BooleanField(default=False)
@@ -41,14 +44,40 @@ class Theme(models.Model):
 
     objects = ThemeManager()
 
+    def preview(self):
+        """
+        Returns the theme screenshot or default preview png.
+
+        Default image could be changed in settings.py by redefining the
+        DEFAULT_THEME_PREVIEW constant.
+
+        File should be called screenshot.png
+        Screenshot should be placed to media/themes/%theme_name%/img/
+        """
+
+        #@FIXME: Unhardcode the filename if neccessary.
+        screenshot = os.path.join(self.get_media_path(), 'img/screenshot.png')
+        if os.path.isfile(screenshot):
+            return '%simg/screenshot.png' % (self.get_theme_media_url())
+        return settings.MEDIA_URL + settings.DEFAULT_THEME_PREVIEW
+
+    preview = property(preview)
+
     def __unicode__(self):
         return self.name
+
+    def get_media_path(self):
+        return os.path.join(settings.MEDIA_ROOT, 'themes/',
+                            self.directory_name)
 
     def get_path(self):
         """ get theme template path """
         return get_theme_path(self.directory_name)
 
     def get_theme_media_url(self):
+        """
+        Return a relative media url.
+        """
         return '%sthemes/%s/' % (settings.MEDIA_URL, self.directory_name)
 
     def update_from_fs(self, commit=True):
@@ -57,8 +86,9 @@ class Theme(models.Model):
         if os.path.isfile(theme_info_file):
             config = ConfigParser.ConfigParser()
             config.read(theme_info_file)
-            theme_name = config.get(ConfigParser.DEFAULTSECT, 'name', self.directory_name)
-            theme_description = config.get(ConfigParser.DEFAULTSECT, 'description', '')
+            default = ConfigParser.DEFAULTSECT
+            theme_name = config.get(default, 'name', self.directory_name)
+            theme_description = config.get(default, 'description', '')
         else:
             theme_name = self.directory_name
             theme_description = ''

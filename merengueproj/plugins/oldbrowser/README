@@ -1,0 +1,24 @@
+This plugin adds a Model to add browsers to notify that is old.
+
+To show the message you can use the templatetag oldbrowser:
+
+{% load oldbrowser_tags %}
+
+<div id="oldbrowser">
+    <p>
+        {% oldbrowser %}
+    </p>
+</div>
+
+Or you can use the ifoldbrowser templatetag:
+
+{% load oldbrowser_tags %}
+
+{% ifoldbrowser %}
+    ({{ bad_user_agent }}) your browser is too old, update it.
+{% else %}
+    Everything is ok.
+{% endifoldbrowser %}
+
+In model you can put regular expresion, so you can detect multiple old
+browsers in one.

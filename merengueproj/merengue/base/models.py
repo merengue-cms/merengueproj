@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -40,7 +40,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 from django.contrib.auth.models import User
 
-from cmsutils.db.fields import AutoSlugField
+from cmsutils.db.fields import AutoSlugField, JSONField
 from cmsutils.signals import post_rebuild_db
 if settings.USE_GIS:
     from south.introspection_plugins import geodjango
@@ -52,6 +52,7 @@ from tagging.fields import TagField
 
 from merengue.base.managers import BaseContentManager, WorkflowManager
 from merengue.multimedia.models import BaseMultimedia
+from merengue.utils import is_last_application
 
 
 PRIORITY_CHOICES = (
@@ -118,7 +119,7 @@ class Base(models.Model):
     __metaclass__ = TransMeta
     name = models.CharField(verbose_name=_('name'), max_length=200, db_index=True)
     slug = models.SlugField(verbose_name=_('slug'), max_length=200, db_index=True, unique=True)
-    plain_description = models.TextField(verbose_name=_('description'),
+    plain_description = models.TextField(verbose_name=_('plain text description'),
                                          null=True, blank=True, editable=False)
     description = models.TextField(verbose_name=_('description'),
                                    null=True, blank=True)
@@ -216,6 +217,7 @@ if settings.USE_GIS:
         google_minimap.allow_tags = True
 
         def admin_thumbnail(self):
+            #@FIXME: Duplicate code. multimedia/models.py line 205
             if not self.main_image:
                 return ''
             file_access_failed = False
@@ -251,6 +253,7 @@ class BaseContentMeta(TransMeta):
 
             class Meta:
                 content_view_template = 'myapp/mymodel_view.html'
+                content_view_function = 'myapp.mymodel_view'
     '''
 
     def __new__(cls, name, bases, attrs):
@@ -259,10 +262,16 @@ class BaseContentMeta(TransMeta):
             delattr(attrs['Meta'], 'content_view_template')
         else:
             content_view_template = 'content_view.html'
+        if 'Meta' in attrs and hasattr(attrs['Meta'], 'content_view_function'):
+            content_view_function = attrs['Meta'].content_view_function
+            delattr(attrs['Meta'], 'content_view_function')
+        else:
+            content_view_function = None
 
         new_class = super(BaseContentMeta, cls).__new__(cls, name, bases, attrs)
         if hasattr(new_class, '_meta'):
             new_class._meta.content_view_template = content_view_template
+            new_class._meta.content_view_function = content_view_function
         return new_class
 
 
@@ -288,6 +297,9 @@ class BaseContent(BaseClass):
     last_editor = models.ForeignKey(User, null=True, blank=True, editable=False,
                                     related_name='last_edited_content')
     last_editor.delete_cascade=False
+
+    # permission global
+    adquire_global_permissions = models.BooleanField(_('Adquire global permissions'), default=True)
 
     # tagging info
     tags = TagField(verbose_name=_('Tags'))
@@ -325,14 +337,24 @@ class BaseContent(BaseClass):
                                     null=True, blank=True,
                                     related_name='contents_owned')
 
+    # Structural contents
+    no_changeable = models.BooleanField(default=False,
+                                        editable=False)
+    no_deletable = models.BooleanField(default=False,
+                                       editable=False)
+
+    # Structural fields
+    no_changeable_fields = JSONField(null=True, blank=True,
+                                     editable=False)
+
     objects = BaseContentManager()
 
     class Meta:
         verbose_name = _('base content')
         verbose_name_plural = _('base contents')
         abstract = False
-        ordering = (get_fallback_fieldname('name'), )
         #content_view_template = 'content_view.html' # default definition by BaseContentMeta metaclass
+        ordering = (get_fallback_fieldname('name'), )
 
     def admin_absolute_url(self):
         return '<a href="%s">%s</a>' % (self.get_admin_absolute_url(), self.name)
@@ -680,10 +702,12 @@ def handle_pre_migrate(sender, **kwargs):
 def handle_post_migrate(sender, **kwargs):
     from merengue.pluggable import enable_active_plugins
     global post_save_receivers, cache_backend
+    app = kwargs['app']
+    if is_last_application(app):
+        enable_active_plugins()
     # site fixtures loading after migration
-    enable_active_plugins()
     for app_name, fixtures in getattr(settings, 'SITE_FIXTURES', {}).items():
-        if app_name == kwargs['app']: # only migrate
+        if app_name == app: # only migrate
             for fixture in fixtures:
                 call_command('loaddata', fixture, verbosity=1)
     # will set again saved receivers and cache backend

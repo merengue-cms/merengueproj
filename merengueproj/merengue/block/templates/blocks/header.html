@@ -45,8 +45,18 @@
         }
 
         function enableDragging() {
-            containers.each(function() {
-                if ($(this).children().length < 2) {
+            var container = $(this).parents(".blockContainer")[0];
+            var containerType = "blocks";
+            var validCSSClasses = ["contentblocks", "sectionblocks"];
+            for (var i=0; i<validCSSClasses.length; i++) {
+                if (container.hasClass(validCSSClasses[i])) {
+                    containerType = validCSSClasses[i];
+                    break;
+                }
+            }
+            var validContainers = containers.filter("." + containerType);
+            validContainers.each(function() {
+                if ($(this).children().length < 2 || $(this).height() == 0) {
                     var child;
                     child = $("<div>");
                     child.html("Drag here");
@@ -54,9 +64,9 @@
                     $(this).append(child);
                 }
             });
-            if (!containers.hasClass("blockContainerBorder")) {
-                containers.addClass("blockContainerBorder");
-                containers.sortable({
+            if (!validContainers.hasClass("blockContainerBorder")) {
+                validContainers.addClass("blockContainerBorder");
+                validContainers.sortable({
                     connectWith: '.blockContainer',
                     parent: 'document',
                     opacity: 0.6,
@@ -74,7 +84,7 @@
                         postNewOrder();
                     }
                 });
-                containers.disableSelection();
+                validContainers.disableSelection();
             } else {
                 disableDragging();
             }

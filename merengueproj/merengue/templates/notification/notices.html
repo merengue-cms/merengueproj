@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<table>
+    <caption>{% trans "Notices" %}</caption>
+    <thead>
+        <tr>
+            <th>{% trans "Type" %}</th>
+            <th>{% trans "Message" %}</th>
+            <th>{% trans "Date of the Notice" %}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for notice in notices %}
+            {% if notice.is_unseen %}
+                <tr class="unseen_notice">
+            {% else %}
+                <tr class="notice">
+            {% endif %}
+                <td class="notice_type">[{% trans notice.notice_type.display %}]</td>
+                <td class="notice_message">{{ notice.message|safe }}</td>
+                <td class="notice_time">{{ notice.added|timesince }} {% trans "ago" %}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

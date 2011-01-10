@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -30,28 +30,29 @@ from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.functional import update_wrapper
+from django.utils.safestring import mark_safe
 from django.utils.text import capfirst
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
 
 from merengue.base.adminforms import UploadConfigForm, BackupForm
 from merengue.base.models import BaseContent
-from merengue.utils import get_all_parents
+from merengue.perms import utils as perms_api
 
 OBJECT_ID_PREFIX = 'base_object_id_'
 MODEL_ADMIN_PREFIX = 'base_model_admin_'
 
 
 class BaseAdminSite(DjangoAdminSite):
-    related_admin_sites = None
     base_model_admins = None
 
     def __init__(self, *args, **kwargs):
         self.apps_registered = []
-        self.related_admin_sites = {}
         self.base_model_admins = {}
         self.base_object_ids = {}
         self.base_tools_model_admins = {}
+        self.related_registry = {}
+        self.tools = {}
         super(BaseAdminSite, self).__init__(*args, **kwargs)
 
     def admin_view(self, view, cacheable=False):
@@ -70,7 +71,6 @@ class BaseAdminSite(DjangoAdminSite):
         return update_wrapper(inner, view)
 
     def app_index(self, request, app_label, extra_context=None):
-        user = request.user
         app_dict = {}
         for model, model_admin in self._registry.items():
             if app_label == model._meta.app_label:
@@ -109,18 +109,17 @@ class BaseAdminSite(DjangoAdminSite):
         )
 
     def get_urls(self):
-        from django.conf.urls.defaults import patterns, url, include
-        from django.template.defaultfilters import slugify
+        from django.conf.urls.defaults import patterns, url
 
         urlpatterns = super(BaseAdminSite, self).get_urls()
-        related_urlpatterns = []
+        #related_urlpatterns = []
 
         # custom url definitions
         custom_patterns = patterns('',
-            url(r'^control_panel/$',
-                self.admin_view(self.control_panel),
-                name='control_panel'),
-            url(r'^admin_redirect/(?P<content_type_id>\d+)/(?P<object_id>.+)/$',
+            url(r'^django_admin/$',
+                self.admin_view(self.django_admin),
+                name='django_admin'),
+            url(r'^admin_redirect/(?P<content_type_id>\d+)/(?P<object_id>\d+)/(?P<extra_url>.*)$',
                 self.admin_view(self.admin_redirect),
                 name='admin_redirect'),
             url(r'^siteconfig/$',
@@ -133,21 +132,21 @@ class BaseAdminSite(DjangoAdminSite):
                 self.admin_view(self.save_backup),
                 name='save_backup'),
         )
-        # related url definitions
-        for model, model_admin in self._registry.iteritems():
-            for key in self.related_admin_sites.keys():
-                if issubclass(model, key):
-                    for tool_name, related_admin_site in self.related_admin_sites[key].items():
-                        related_admin_site.base_model_admins[model] = model_admin
-                        related_urlpatterns += patterns('',
-                            url(r'^%(app)s/%(model)s/(?P<%(pref)s%(tname)s>\d+)/%(tname)s/' % ({'app': model._meta.app_label,
-                                                                                                'model': model._meta.module_name,
-                                                                                                'pref': OBJECT_ID_PREFIX,
-                                                                                                'tname': slugify(tool_name),
-                                                                                               }),
-                                include(related_admin_site.urls), {'%s%s' % (MODEL_ADMIN_PREFIX, slugify(tool_name)): model_admin}))
+        #for model, model_admin in self._registry.iteritems():
+            #for key in self.related_admin_sites.keys():
+                #if issubclass(model, key):
+                    #for tool_name, related_admin_site in self.related_admin_sites[key].items():
+                        #related_admin_site.base_model_admins[model] = model_admin
+                        #related_urlpatterns += patterns('',
+                            #url(r'^%(app)s/%(model)s/(?P<%(pref)s%(tname)s>\d+)/%(tname)s/' % ({'app': model._meta.app_label,
+                                                                                                #'model': model._meta.module_name,
+                                                                                                #'pref': OBJECT_ID_PREFIX,
+                                                                                                #'tname': slugify(tool_name),
+                                                                                               #}),
+                                #include(related_admin_site.urls), {'%s%s' % (MODEL_ADMIN_PREFIX, slugify(tool_name)): model_admin}))
 
-        return custom_patterns + related_urlpatterns + urlpatterns
+        #return custom_patterns + related_urlpatterns + urlpatterns
+        return custom_patterns + urlpatterns
 
     def register(self, model_or_iterable, admin_class=None, **options):
         """
@@ -189,7 +188,7 @@ class BaseAdminSite(DjangoAdminSite):
             # Instantiate the admin class to save in the registry
             self._registry[model] = admin_class(model, self)
 
-    def admin_redirect(self, request, content_type_id, object_id):
+    def admin_redirect(self, request, content_type_id, object_id, extra_url=''):
         """ redirect to content admin page or content related admin page in his section """
         try:
             content = ContentType.objects.get_for_id(content_type_id).get_object_for_this_type(id=object_id)
@@ -206,23 +205,35 @@ class BaseAdminSite(DjangoAdminSite):
                 if related_sections.count() == 1:
                     # we have to redirect to the content related section
                     section = related_sections.get().real_instance
-                    admin_prefix += 'section/section/%s/' % section.id
-                    parents = get_all_parents(section.__class__)
-                    section_sites = {}
-                    [section_sites.update(self.related_admin_sites.get(parent, {})) for parent in parents]
-                    section_sites.update(self.related_admin_sites[section.__class__])
-                    #section_sites = self.related_admin_sites[section.__class__]
-                    for admin_site in section_sites.values():
-                        if model in admin_site._registry:
-                            admin_prefix += admin_site.name + '/'
-                            break
-                elif getattr(self, 'get_plugin_site_prefix_for_model', False):
-                    admin_prefix += self.get_plugin_site_prefix_for_model(model) + '/'
-        return HttpResponseRedirect('%s%s/%s/%d/' % (admin_prefix, model._meta.app_label,
-                                    model._meta.module_name, content.id))
+                    tool = self.get_tool_for_model(section.__class__, real_content.__class__)
+                    if tool:
+                        admin_prefix += '%s%s/' % (self.get_prefix_for_model(section.__class__), section.id)
+                        admin_prefix += '%s/' % tool[0].tool_name
+                    else:
+                        admin_prefix += self.get_prefix_for_model(model)
+                else:
+                    admin_prefix += self.get_prefix_for_model(model)
+        else:
+            admin_prefix += self.get_prefix_for_model(model)
+        return HttpResponseRedirect('%s%d/%s' % (admin_prefix, content.id, extra_url))
+
+    def get_tool_for_model(self, model, managed_model):
+        for klass in model.mro():
+            tool = self.related_registry.get(klass, {}).get(managed_model, None)
+            if tool:
+                return tool
+        return None
+
+    def get_prefix_for_model(self, model):
+        admin_prefix = ''
+        if getattr(self, 'get_plugin_site_prefix_for_model', False):
+            plugin_prefix = self.get_plugin_site_prefix_for_model(model)
+            if plugin_prefix:
+                admin_prefix += self.get_plugin_site_prefix_for_model(model) + '/'
+        admin_prefix += '%s/%s/' % (model._meta.app_label, model._meta.module_name)
+        return admin_prefix
 
     def site_configuration(self, request):
-        from merengue.perms import utils as perms_api
         if not perms_api.can_manage_site(request.user):
             raise PermissionDenied
         from merengue.utils import restore_config
@@ -278,89 +289,34 @@ class BaseAdminSite(DjangoAdminSite):
             context_instance=context_instance,
         )
 
-    def control_panel(self, request):
+    def django_admin(self, request):
         """ admin control panel. Similar to django admin index page """
-        return super(BaseAdminSite, self).index(request, {'title': _('Control Panel')})
-
-    def _register_related(self, model_or_iterable, admin_class=None, related_to=None, **options):
-        from merengue.base.admin import RelatedModelAdmin
-        if not admin_class:
-            raise Exception('Need a subclass of RelatedModelAdmin to register a related model admin' % admin_class.__name__)
-        if not issubclass(admin_class, RelatedModelAdmin):
-            raise Exception('%s modeladmin must be a subclass of RelatedModelAdmin' % admin_class.__name__)
-        tool_name = admin_class and (getattr(admin_class, 'tool_name', None) or getattr(model_or_iterable._meta, 'module_name', None))
-        if not tool_name:
-            raise Exception('Can not register %s modeladmin without a tool_name' % admin_class.__name__)
-        tool_label = getattr(admin_class, 'tool_label', None) or getattr(model_or_iterable._meta, 'verbose_name', None)
-
-        if not related_to in self.related_admin_sites.keys():
-            self.related_admin_sites[related_to] = {}
-        if not tool_name in self.related_admin_sites[related_to].keys():
-            self.related_admin_sites[related_to][tool_name] = RelatedAdminSite(
-                name=tool_name,
-                tool_label=tool_label)
-        elif tool_name != self.related_admin_sites[related_to][tool_name].name:
-            raise AlreadyRegistered('The related tool %s is already registered for model %s' %\
-                                    (tool_name, related_to.__name__))
-        related_admin_site = self.related_admin_sites[related_to][tool_name]
-        related_admin_site.register(model_or_iterable, admin_class, **options)
-        return related_admin_site
-
-    def _get_admin_site_for_model(self, related_to, admin_sites_returned=None, branch=None):
-        admin_sites_returned = admin_sites_returned or []
-        branch = branch or []
-
-        for model in self._registry.keys():
-            if related_to == model or issubclass(model, related_to):
-                admin_sites_returned.append(self)
-                break
-
-        for related_to_model, related_admin_site in self.related_admin_sites.items():
-            for related_admin_site_tool_name, related_admin_site_value in related_admin_site.items():
-                is_in_branch = False
-                for model_branch in branch:
-                    if model_branch == related_to or issubclass(related_to, model_branch) or issubclass(related_to, model_branch):
-                        is_in_branch = True
-                        break
-
-                if not is_in_branch:
-                    admin_sites_returned.extend(related_admin_site_value._get_admin_site_for_model(related_to, admin_sites_returned, branch + [related_to]))
-
-        return admin_sites_returned
+        return super(BaseAdminSite, self).index(request, {'title': _('Django admin')})
 
 
 class RelatedModelRegistrable(object):
 
-    steps = {}
-
-    def set_steps(self, model_or_iterable, admin_class, related_to, **options):
-        if related_to and not related_to in self.steps.keys():
-            self.steps[related_to] = {}
-            self.steps[related_to] = {}
-        if model_or_iterable not in self.steps[related_to].keys():
-            self.steps[related_to][model_or_iterable] = {}
-        self.steps[related_to][model_or_iterable][admin_class] = options
-
     def register_related(self, model_or_iterable, admin_class=None, related_to=None, **options):
-        self.set_steps(model_or_iterable, admin_class, related_to, **options)
+        if not model_or_iterable or not admin_class or not related_to:
+            return
+        tool_name = admin_class and (getattr(admin_class, 'tool_name', None) or getattr(model_or_iterable._meta, 'module_name', None))
+        if not tool_name:
+            raise Exception('Can not register %s modeladmin without a tool_name' % admin_class.__name__)
 
-        # Register model_or_iterable in every admin site which contains at related_to
-        admin_sites = list(set(self._get_admin_site_for_model(related_to)))
-        for admin_site in admin_sites:
-            admin_site._register_related(model_or_iterable=model_or_iterable, admin_class=admin_class,
-                                                related_to=related_to, **options)
+        model_tools = self.tools.get(related_to, {})
 
+        if tool_name in model_tools and admin_class != model_tools[tool_name].__class__:
+            raise Exception('Already registered a modeladmin with %s as tool_name' % tool_name)
 
-        # Register the admin site related with model_or_iterable in every admin site of model_or_iterable
-        admin_sites = list(set(self._get_admin_site_for_model(model_or_iterable)))
-        for model_to, admin_site_attrs in self.steps.items():
-            if not issubclass(model_or_iterable, model_to):
-                continue
-            for model, admin_models in admin_site_attrs.items():
-                for admin_class, options in admin_models.items():
-                    for admin_site in admin_sites:
-                        admin_site._register_related(model_or_iterable=model, admin_class=admin_class,
-                                                related_to=model_to, **options)
+        model_admin = model_tools.get(tool_name, admin_class(model_or_iterable, self))
+        model_tools[tool_name]=model_admin
+        base_model_registry = self.related_registry.get(related_to, {})
+        related_modeladmins = base_model_registry.get(model_or_iterable, [])
+        if model_admin not in related_modeladmins:
+            related_modeladmins += [model_admin]
+        base_model_registry[model_or_iterable] = related_modeladmins
+        self.related_registry[related_to] = base_model_registry
+        self.tools[related_to]=model_tools
 
 
 class AdminSite(BaseAdminSite, RelatedModelRegistrable):
@@ -386,8 +342,6 @@ class AdminSite(BaseAdminSite, RelatedModelRegistrable):
     def index(self, request, extra_context=None):
         extra_context = extra_context or {}
         app_dict = {}
-        user = request.user
-        from merengue.perms import utils as perms_api
         manage_plugin_content = perms_api.can_manage_plugin_content(request.user)
         for plugin_name, site in self._plugin_sites.items():
             app_label = plugin_name
@@ -447,32 +401,75 @@ class PluginAdminSite(BaseAdminSite, RelatedModelRegistrable):
         plugin_name = self.prefix.split('.')[1:]
         self.plugin_name = plugin_name and plugin_name[0] or ''
         super(PluginAdminSite, self).__init__(*args, **kwargs)
-        self.related_admin_sites = self.main_site.related_admin_sites
         main_admin = reverse('admin:index')
+        self.related_registry = self.main_site.related_registry
+        self.tools = self.main_site.tools
         self.root_path = '%s%s/' % (main_admin, self.prefix)
 
     def index(self, request):
-        return super(BaseAdminSite, self).index(request,
-                                                {'title': _('%(plugin_name)s plugin administration') % {'plugin_name': self.plugin_name},
-                                                 'inplugin': True,
-                                                 'plugin_name': self.plugin_name})
+        """
+        Displays the main admin index page, which lists all of the installed
+        apps that have been registered in this site.
+
+        Code taken of django.contrib.admin.sites module. We have change the
+        permissions to see all models admins.
+        """
+        extra_context = {
+            'title': _('%(plugin_name)s plugin administration') % {'plugin_name': self.plugin_name},
+            'inplugin': True,
+            'plugin_name': self.plugin_name,
+        }
+        app_dict = {}
+        for model, model_admin in self._registry.items():
+            app_label = model._meta.app_label
+            # in plugin site admin
+            has_module_perms = perms_api.can_manage_plugin_content(request.user)
+
+            if has_module_perms:
+                perms = model_admin.get_model_perms(request)
+
+                # Check whether user has any perm for this module.
+                # If so, add the module to the model_list.
+                if True in perms.values():
+                    model_dict = {
+                        'name': capfirst(model._meta.verbose_name_plural),
+                        'admin_url': mark_safe('%s/%s/' % (app_label, model.__name__.lower())),
+                        'perms': perms,
+                    }
+                    if app_label in app_dict:
+                        app_dict[app_label]['models'].append(model_dict)
+                    else:
+                        app_dict[app_label] = {
+                            'name': app_label.title(),
+                            'app_url': app_label + '/',
+                            'has_module_perms': has_module_perms,
+                            'models': [model_dict],
+                        }
+
+        # Sort the apps alphabetically.
+        app_list = app_dict.values()
+        app_list.sort(lambda x, y: cmp(x['name'], y['name']))
+
+        # Sort the models alphabetically within each app.
+        for app in app_list:
+            app['models'].sort(lambda x, y: cmp(x['name'], y['name']))
+
+        context = {
+            'title': _('Site administration'),
+            'app_list': app_list,
+            'root_path': self.root_path,
+        }
+        context.update(extra_context or {})
+        context_instance = template.RequestContext(request, current_app=self.name)
+        return render_to_response(
+            self.index_template or 'admin/index.html', context,
+            context_instance=context_instance,
+        )
+    index = never_cache(index)
 
     def app_index(self, request, app_label, extra_context=None):
         return super(PluginAdminSite, self).app_index(request, app_label, {'inplugin': True, 'plugin_name': self.plugin_name})
 
-
-class RelatedAdminSite(BaseAdminSite):
-
-    def __init__(self, name=None, app_name='admin', tool_label=None):
-        super(RelatedAdminSite, self).__init__(name, app_name)
-        self.tool_label = tool_label
-
-    def register(self, model_or_iterable, admin_class=None, **options):
-        super(RelatedAdminSite, self).register(model_or_iterable, admin_class, **options)
-        model_admin = self._registry[model_or_iterable]
-        if not model_admin.tool_name:
-            # we set tool_name as admin site one, a good default value if tool_name was not defined in ModelAdmin class
-            model_admin.tool_name = self.name
 
 # This global object represents the default admin site, for the common case.
 # You can instantiate AdminSite in your own code to create a custom admin site.

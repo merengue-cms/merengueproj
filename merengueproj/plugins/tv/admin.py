@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -29,7 +29,7 @@ from django.utils.encoding import smart_str
 from django.utils.translation import ugettext as _
 from django.utils.dates import WEEKDAYS, MONTHS
 
-from merengue.base.admin import BaseAdmin
+from merengue.base.admin import PluginAdmin
 from merengue.multimedia.admin import BaseMultimediaAdmin, VideoAdmin
 from plugins.tv.models import Channel, Schedule, VideoStreaming
 
@@ -37,11 +37,11 @@ from plugins.tv.models import Channel, Schedule, VideoStreaming
 WEEK_HOURS_DELTA = datetime.timedelta(minutes=30)
 
 
-class ChannelAdmin(BaseAdmin):
+class ChannelAdmin(PluginAdmin):
     pass
 
 
-class ScheduleAdmin(BaseAdmin):
+class ScheduleAdmin(PluginAdmin):
     week_view_template = 'tv/admin/tv/schedule/week_view.html'
     day_view_template = 'tv/admin/tv/schedule/day_view.html'
     list_display = ('get_video_name', 'broadcast_date', 'get_weekday', 'get_start_seconds', 'get_end_seconds')

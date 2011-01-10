@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -62,7 +62,9 @@ class PermissionComparisonNode(template.Node):
         if has_perm:
             return self.nodelist_true.render(context)
         else:
-            return self.nodelist_false
+            if self.nodelist_false:
+                return self.nodelist_false.render(context)
+            return ''
 
 
 @register.tag

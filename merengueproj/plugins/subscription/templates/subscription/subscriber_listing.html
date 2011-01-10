@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% load i18n inlinetrans pagination_tags %}
+
+{% block extrabreadcrumbs %}
+  <span class="breadcrumbSeparator">→</span>
+  <a href="{{ content.get_absolute_url }}" title="{{ content }}">{{ content }}</a>
+  <span class="breadcrumbSeparator">→</span>
+  <a href="." title="{% trans "Subscriber listing" %}">{% inline_trans "Subscriber listing" %}</a>
+{% endblock %}
+
+{% block content %}
+  <div id="content-title">
+    <h1>{% inline_trans "Subscriber listing" %}</h1>
+  </div>
+
+  {% if is_paginated %}
+    {% autopaginate subscribers paginate_by %}
+  {% endif %}
+
+  <ul>
+  {% for subscriber in subscribers %}
+  <li>{{ subscriber.last_name }}, {{ subscriber.first_name }}</li>
+  {% endfor %}
+  </ul>
+
+  {% paginate %}
+{% endblock %}

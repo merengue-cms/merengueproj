@@ -1,0 +1,40 @@
+{% load content_tags %}
+
+<li class="itemCollection itemCollection-{{ item.content_type_name }}">
+{% block itemCollection %}
+  {% block imageblock %}
+    {% if collection.show_main_image and item.main_image %}
+    <div class="itemCollectionImage">
+      <img src="{{ item.main_image.thumbnail.url }}" alt="{{ item }}" />
+    </div>
+    {% endif %}
+  {% endblock %}
+  <div class="itemCollectionTitle">
+  {% block linkblock %}
+    {% if item.get_absolute_url %}
+    <a href="{{ item.get_absolute_url }}" title="{{ item }}" class="contentLink">
+        {% cutrender 100 %}{{ item }}{% endcutrender %}
+    </a>
+    {% else %}
+        {% cutrender 100 %}{{ item }}{% endcutrender %}
+    {% endif %}
+   {% endblock %}
+  </div>
+  {% block fieldsblock %}
+  {% for field in fields %}
+  <div class="itemCollectionField itemCollectionField-{{ field.field_name }}">
+    {% block fieldblock %}
+    {% if field.show_label %}<span class="itemCollectionFieldName">{{ field.name }}</span>{% endif %}
+      <span class="itemCollectionFieldValue">
+      {% ifequal field.type "DateTimeField" %}
+        {{ field.value|date }}
+      {% else %}
+        {% if field.safe %}{{ field.value|safe }}{% else %}{{ field.value|striptags }}{% endif %}
+      {% endifequal %}
+      </span>
+    {% endblock %}
+  </div>
+  {% endfor %}
+  {% endblock %}
+{% endblock %}
+</li>

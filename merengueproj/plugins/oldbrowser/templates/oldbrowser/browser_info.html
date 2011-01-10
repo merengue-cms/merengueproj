@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% block extrastyles %}
+{{ block.super }}
+<link href="{{ MEDIA_URL }}oldbrowser/oldbrowser.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block content %}
+<p>
+  {% blocktrans %}
+  Your current browser has the following user agent identifier:
+
+  <pre>{{ user_agent }}</pre>
+
+  If you consider it as a old browser, add it on the admin site.
+  {% endblocktrans %}
+</p>
+{% endblock %}

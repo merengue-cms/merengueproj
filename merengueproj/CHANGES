@@ -1,0 +1,151 @@
+Changes
+=======
+
+Version 0.6.0-beta1 (2921 revision)
+-----------------------------------
+
+* A lot of bugfixes:
+
+ * Section custom CSS validation error fixed.
+ * More robust tagcloud and tag validation for itag plugin.
+ * Several bugfixes to transhette.
+ * Removed several "permissions" button in admin which don't worked.
+ * Registry params validation support (for plugins, actions, etc.).
+ * Included recaptcha keys to get captcha plugin works out-of-the-box.
+ * Support both for PIL 1.1.6 and 1.1.7 (have incompatible import sentences).
+ * Better date support in collections.
+ * Fixed some errors with truncatechars filter in collections.
+ * Errors in autoreports link in plugins admin.
+ * Fixes stdimage validation for non required fields.
+ * Fixed wrong user message when editing contents.
+ * Fixed 404 error when adding link into sections.
+ * Fixed error editing threads of a forum in forum plugin.
+ * Better validation in some parts of subscription plugin.
+ * Improved permission handling for plugin managers.
+ * Fixed some web layout errors.
+ * More robust handling of "empty" filters and other validation issues in collections.
+ * Fixed errors in feed info in rss plugin.
+
+* Support of HTML emails in contactform plugin.
+
+* Non overwritable fixtures support.
+
+* Completed spanish translations.
+
+* Added sent date column in forms sents admin in contactform plugin.
+
+* Read only fields works with foreign key fields.
+
+* Complete documentation of:
+
+ * Merengue fixtures.
+ * Block hiding/showing by URL regex.
+ * Install instructions and python dependences.
+
+Version 0.6.0-alpha3 (2844 revision)
+------------------------------------
+
+* Split dependences to an external requirements.txt file.
+
+Version 0.6.0-alpha2 (2842 revision)
+------------------------------------
+
+* Removed external SVN dependences. Now Merengue has all these dependences as python eggs.
+
+* Implemented a render_all_blocks templatetags, which is a shortcut to write less templating code.
+
+* Replaced plugins which render lists with customizable collections.
+
+* Make Merengue documentation compatible with Sphinx 1.0.
+
+* Several bug fixes related to:
+
+ * Permissions system.
+ * Administration broken links.
+ * banners, oldbrowser and event plugin.
+ * transhette application.
+ * etc.
+
+* Improved usability in Merengue admin:
+
+ * A content tree, for browsing all contents.
+ * Improved visual block reordering.
+
+* Themes can have a screenshot, for previewing before activating.
+
+* Plugins can define new middlewares.
+
+* A new "Owner" role, to may customize permissions for content owners. This role is assigned for a user when the context is a content owned by him.
+
+* Manager can disable global permissions adquisition for a content, for example to disable "View" permission in private contents.
+
+* Blocks showable or hiddeable by URLs in Merengue admin, using regular expressions.
+
+* Begin integration with django-notification.
+
+* Contents can be defined as permanents (no deletable, no changeable or some fields not changeables), when your logic relies on these contents.
+
+* Plugin introspection before installing it. In Merengue admin you will see what blocks will be created by a plugin, or what new content types, etc.
+
+* When customizing a section CSS, you can upload new images to may customize the backgrounds.
+
+* New plugins:
+
+ * contactform: to create forms, customizing fields, emails, behaviour, etc.
+ * smartsearch: to include and manage search form, for example inside collections.
+ * rss: to make feeds in your site, which are configurable.
+ * redirect: to configure HTTP redirections in your site.
+ * itag: tagging with i18n support.
+ * addthis: addthis.com integration.
+ * imagesize: notifications when size of uploaded images pass the configurables thresholds.
+
+
+Version 0.6.0-alpha1 (2541 revision)
+------------------------------------
+
+* Huge speed up on related admin registration.
+
+* Allow to extends Merengue TinyMCE editor settings in apps and plugins.
+
+* Content collections, which are lists of managed contents with configurable filters, search form and listing options.
+
+* Theme support in Merengue admin site.
+
+* Post register hook to plugins, to allow developers to execute tasks after installing plugin.
+
+* Included language catalogs in all apps and plugins. Also included compiled .mo files.
+
+* New plugins:
+
+ * oot: ODT conversion of managed contents.
+ * banner: banner management plugin.
+ * oldbrowser: a plugin that makes easy to notify to users that their browser is too old.
+
+* Several improvements in forum plugin:
+
+ * Grouping forums into categories.
+ * Show last comment in forum list and forum view.
+ * Do not allow anonymous users.
+ * Allow to close a thread so no new comments could be added.
+ * Allow to move a thread from one forum to another one.
+ * Allow different users to moderate different forums.
+
+* Implemented a subscribers listing in subscription plugin.
+
+
+Version 0.5.1
+-------------
+
+Note: Changes from 0.5.1-rc1 version
+
+* Better south integration with translation system, that allows to migrate all translated models with all possible languages setting.
+
+* Fixed a lot of bugs like:
+
+ * Avoid URL patterns grown every 404 request when have debug toolbar installed.
+ * Fix audio player.
+ * Error in URL parsing when accessing document inside sections.
+ * Error with negative numbers in integer registry params.
+ * Blocks placed in "home" and "beforecontent" position dissappears in home page.
+ * Make facebook share link (from facebook plugin) works behind virtual hosts.
+ * Highlight plugin does not show related content images.

@@ -1,12 +1,25 @@
+import datetime
+
+from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models import permalink
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.base.models import BaseContent
+from merengue.base.models import BaseContent, BaseCategory
 from merengue.base.managers import BaseContentManager
 
 
+class ForumCategory(BaseCategory):
+
+    class Meta:
+        verbose_name = _('Forum category')
+        verbose_name_plural = _('Forum categories')
+
+
 class Forum(BaseContent):
+
+    category = models.ForeignKey(ForumCategory)
 
     objects = BaseContentManager()
 
@@ -23,10 +36,20 @@ class Forum(BaseContent):
         self.commentable = 'disabled'
         super(Forum, self).save(*args, **kwargs)
 
+    def get_all_comments(self):
+        comments = ForumThreadComment.objects.filter(thread__in=[i['id'] for i in self.thread_set.all().values('id')]).order_by('-date_submitted')
+        return comments
+
+    def get_last_comment(self):
+        comments = self.get_all_comments()
+        return comments and comments[0] or None
+
 
 class Thread(BaseContent):
 
     forum = models.ForeignKey(Forum)
+    closed = models.BooleanField(_('closed'), default=False)
+    user = models.ForeignKey(User, editable=False)
 
     objects = BaseContentManager()
 
@@ -40,5 +63,45 @@ class Thread(BaseContent):
         return ('thread_view', [self.forum.slug, self.slug])
 
     def save(self, *args, **kwargs):
-        self.commentable = 'allowed'
+        self.commentable = 'disabled'
         super(Thread, self).save(*args, **kwargs)
+
+    def get_last_comment(self):
+        comments = ForumThreadComment.objects.filter(thread=self).order_by('-date_submitted')
+        return comments and comments[0] or None
+
+    @permalink
+    def get_admin_absolute_url(self):
+        parent_content_type = ContentType.objects.get_for_model(self.forum)
+        return ('merengue.base.views.admin_link', [parent_content_type.id, self.forum.id, 'thread/%s/' % self.id])
+
+
+class ForumThreadComment(models.Model):
+
+    thread = models.ForeignKey(Thread)
+    parent = models.ForeignKey('self', null=True, blank=True, default=None, related_name='children')
+    user = models.ForeignKey(User)
+
+    # Content Fields
+    title = models.CharField(max_length=255)
+    comment = models.TextField(_('comment'))
+
+    # Meta Fields
+    banned = models.BooleanField(_('banned'), default=False)
+    date_submitted = models.DateTimeField(_('date/time submitted'), default=datetime.datetime.now)
+    date_modified = models.DateTimeField(_('date/time modified'), default=datetime.datetime.now)
+    ip_address = models.CharField(_('IP address'), max_length=150, null=True, blank=True)
+
+    class Meta:
+        ordering = ('-date_submitted', )
+        verbose_name = _("Forum Thread Comment")
+        verbose_name_plural = _("Forum Thread Comments")
+        get_latest_by = "date_submitted"
+
+    def is_public(self):
+        return not self.banned
+
+    @permalink
+    def get_admin_absolute_url(self):
+        content_type = ContentType.objects.get_for_model(self)
+        return ('merengue.base.views.admin_link', [content_type.id, self.id, ''])

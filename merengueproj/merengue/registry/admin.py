@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -33,7 +33,7 @@ class RegisteredItemAdmin(BaseOrderableAdmin):
     fieldsets = (
         ('', {'fields': ('module', 'class_name', )}),
         (_('Status'),
-            {'fields': ('active', 'order', 'config')}
+            {'fields': ('active', 'order', 'config', )}
         ),
     )
 
@@ -57,7 +57,7 @@ class RegisteredItemAdmin(BaseOrderableAdmin):
         if not broken_item and 'config' in form.base_fields.keys():
             config = obj.get_registry_item_class().get_config()
             config_field = form.base_fields['config']
-            config_field.widget.add_config_widgets(config)
+            config_field.set_config(config)
         return form
 
     def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):

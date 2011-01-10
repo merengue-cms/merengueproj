@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <django-objects version="1.0">
-    <object pk="1" model="auth.user">
+    <object pk="1" model="auth.user" overwrite="no">
         <field type="CharField" name="username">admin</field>
-        <field type="CharField" name="first_name">Manuel</field>
-        <field type="CharField" name="last_name">Saelices</field>
-        <field type="CharField" name="email">msaelices@yaco.es</field>
+        <field type="CharField" name="first_name">John</field>
+        <field type="CharField" name="last_name">Smith</field>
+        <field type="CharField" name="email">foo@foodomain.org</field>
         <field type="CharField" name="password">sha1$df35a$580c7250101375108e1630eec7ef933f8ac76004</field>
         <field type="BooleanField" name="is_staff">True</field>
         <field type="BooleanField" name="is_active">True</field>
@@ -14,17 +14,12 @@
         <field to="auth.group" name="groups" rel="ManyToManyRel"></field>
         <field to="auth.permission" name="user_permissions" rel="ManyToManyRel"></field>
     </object>
-    <object pk="1" model="base.basecontent">
+    <object pk="1" model="base.basecontent" overwrite="no">
         <field type="CharField" name="name_es">Bienvenido a Merengue</field>
         <field type="CharField" name="name_en">Welcome to Merengue</field>
-        <field type="CharField" name="name_fr">Bienvenue a Merengue</field>
         <field type="SlugField" name="slug">welcome</field>
-        <field type="TextField" name="plain_description_fr"></field>
         <field type="TextField" name="plain_description_es"></field>
         <field type="TextField" name="plain_description_en"></field>
-        <field type="TextField" name="description_fr">
-        Merengue is a full-featured CMS useful for creating websites without writing a single line of code or customizing and extending with any of the plethora of existing Django applications.
-        </field>
         <field type="TextField" name="description_en">
         Merengue is a full-featured CMS useful for creating websites without writing a single line of code or customizing and extending with any of the plethora of existing Django applications.
         </field>
@@ -46,10 +41,9 @@
         <field to="base.basecontent" name="related_items" rel="ManyToManyRel"> </field>
         <field to="auth.user" name="owners" rel="ManyToManyRel"> </field>
     </object>
-    <object pk="2" model="section.menu">
+    <object pk="2" model="section.menu" overwrite="no">
         <field type="CharField" name="name_es">Menu principal de sección</field>
         <field type="CharField" name="name_en">Main menu of section</field>
-        <field type="CharField" name="name_fr">Menu principal de l'zone</field>
         <field type="SlugField" name="slug">main-menu-of-section</field>
         <field to="section.menu" name="parent" rel="ManyToOneRel"><None></None></field>
         <field type="CharField" name="url"><None></None></field>
@@ -58,17 +52,14 @@
         <field type="PositiveIntegerField" name="tree_id">2</field>
         <field type="PositiveIntegerField" name="level">0</field>
     </object>
-    <object pk="1" model="section.basesection">
+    <object pk="1" model="section.basesection" overwrite="no">
         <field type="CharField" name="name_es">Sección de prueba</field>
         <field type="CharField" name="name_en">Test section</field>
-        <field type="CharField" name="name_fr">Zone d'essai</field>
         <field type="SlugField" name="slug">test-section</field>
         <field type="TextField" name="plain_description_es"><None></None></field>
         <field type="TextField" name="plain_description_en"><None></None></field>
-        <field type="TextField" name="plain_description_fr"><None></None></field>
         <field type="TextField" name="description_es"><None></None></field>
         <field type="TextField" name="description_en"><None></None></field>
-        <field type="TextField" name="description_fr"><None></None></field>
         <field type="CharField" name="status">published</field>
         <field type="FileField" name="main_image"></field>
         <field type="IntegerField" name="order">0</field>
@@ -83,25 +74,23 @@
     </object>
     <object pk="1" model="section.section">
     </object>
-    <object pk="1" model="section.document">
+    <object pk="1" model="section.document" overwrite="no">
         <field type="CharField" name="search_form"><None></None></field>
         <field type="TextField" name="search_form_filters"><None></None></field>
         <field type="BooleanField" name="permanent">False</field>
         <field to="base.basecontent" name="related_items" rel="ManyToManyRel"></field>
         <field to="auth.user" name="owners" rel="ManyToManyRel"></field>
     </object>
-    <object pk="3" model="section.documentsection">
+    <object pk="3" model="section.documentsection" overwrite="no">
         <field to="section.document" name="document" rel="ManyToOneRel">1</field>
         <field type="IntegerField" name="position">0</field>
         <field type="TextField" name="body_es"></field>
         <field type="TextField" name="body_en">&lt;h2&gt;Nexts steps:&lt;/h2&gt;&lt;ul&gt;&lt;li&gt;&lt;a href="../../../../../login/?next=/"&gt;Log in&lt;/a&gt; as administrator user (username is &lt;em&gt;admin&lt;/em&gt; and password is &lt;em&gt;admin&lt;/em&gt;).&lt;/li&gt;&lt;li&gt;Go to the &lt;a href="../../../../../../admin/"&gt;admin site&lt;/a&gt;, and click in the &lt;a href="../../../../../../admin/section/section/"&gt;sections link&lt;/a&gt;, to add some sections to your site. If you publish these sections, you will see them in the &lt;em&gt;navigation block &lt;/em&gt;(placed by default in the left column).&lt;/li&gt;&lt;li&gt;In every section, you can:&lt;ul&gt;&lt;li&gt;Add documents inside. Look for the &lt;em&gt;"Section children"&lt;/em&gt; link inside your section to see the content types you can add.&lt;/li&gt;&lt;li&gt;Add a hierarchical section menu, with links to the contents inside your section or external links.&lt;/li&gt;&lt;li&gt;After adding some contents into your section, you can choose the &lt;em&gt;main content&lt;/em&gt; of this section (the first content you will see when you access the section).&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;You can also try some plugins, going to the &lt;a href="../../../../../../admin/pluggable/registeredplugin/"&gt;plugins link&lt;/a&gt; inside the admin site. Let's see some examples:&lt;ul&gt;&lt;li&gt;If you install the &lt;em&gt;events&lt;/em&gt; plugin you will have:&lt;ul&gt;&lt;li&gt;An event calendar block placed by default on the right sidebar.&lt;/li&gt;&lt;li&gt;An events custom admin, that you will see in the admin site (look for &lt;em&gt;"Events"&lt;/em&gt; link).&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;The &lt;em&gt;voting&lt;/em&gt; plugin will add a &lt;em&gt;"vote content&lt;/em&gt;" block for every existing content.&lt;/li&gt;&lt;li&gt;The &lt;em&gt;facebook&lt;/em&gt; plugin will add a &lt;em&gt;"Share in facebook"&lt;/em&gt; action in every visited content.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;Try &lt;a href="/admin/theming/theme/"&gt;other themes&lt;/a&gt;. &lt;/li&gt;&lt;/ul&gt;</field>
-        <field type="TextField" name="body_fr"><None></None></field>
     </object>
-    <object pk="2" model="section.documentsection">
+    <object pk="2" model="section.documentsection" overwrite="no">
         <field to="section.document" name="document" rel="ManyToOneRel">1</field>
         <field type="IntegerField" name="position">1</field>
         <field type="TextField" name="body_es"></field>
         <field type="TextField" name="body_en">&lt;h2&gt;To get further&lt;/h2&gt;&lt;p&gt;Please go to &lt;a href="http://docs.merengueproject.org/"&gt;Merengue documentation&lt;/a&gt; to learn more about Merengue, from a developer and content manager point of view.&lt;/p&gt;</field>
-        <field type="TextField" name="body_fr"></field>
     </object>
 </django-objects>

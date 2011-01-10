@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -20,6 +20,7 @@ import datetime
 import re
 
 from django import forms
+from django.db import models
 from django.conf import settings
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper, AdminDateWidget
 from django.core.urlresolvers import reverse, NoReverseMatch
@@ -37,21 +38,26 @@ from cmsutils.forms.widgets import TinyMCE, TINYMCE_JS
 class ReadOnlyWidget(forms.Widget):
 
     def __init__(self, original_value, display_value):
+        if display_value is None:
+            display_value = original_value or u''
+        if isinstance(original_value, models.Model):
+            original_value = original_value.pk
         self.original_value = original_value
         self.display_value = display_value
 
         super(ReadOnlyWidget, self).__init__()
 
     def render(self, name, value, attrs=None):
-        if self.display_value is not None:
-            return unicode(self.display_value)
-        return unicode(self.original_value)
+        return unicode(self.display_value)
 
     def value_from_datadict(self, data, files, name):
         return self.original_value
 
 
 class CustomTinyMCE(TinyMCE):
+
+    to_add = {}
+    new_settings = []
 
     class Media:
         js = (TINYMCE_JS,
@@ -66,8 +72,13 @@ class CustomTinyMCE(TinyMCE):
         super(CustomTinyMCE, self).__init__(*args, **kwargs)
         self.mce_settings['width'] = '50%'
         self.mce_settings['height'] = '200px'
-        self.mce_settings['theme_advanced_buttons1'] = "undo,redo,separator,cut,copy,paste,pasteword,separator,bold,italic,underline,separator,justifyleft,justifycenter,justifyright,separator,bullist,numlist,outdent,indent,separator,preformatted_text,tablecontrols"
-        self.mce_settings['theme_advanced_buttons2'] = "styleselect,formatselect,fontselect,fontsizeselect,separator,forecolor,link,code,internal_links,iframes,image,file,removeformat"
+        self.mce_settings['theme_advanced_buttons1'] = """undo,redo,separator,cut,copy,paste,pasteword,separator,
+                                                         bold,italic,underline,separator,
+                                                         justifyleft,justifycenter,justifyright,justifyfull,separator,
+                                                         bullist,numlist,outdent,indent,separator,
+                                                         preformatted_text,tablecontrols"""
+        self.mce_settings['theme_advanced_buttons2'] = """styleselect,formatselect,fontselect,fontsizeselect,separator,
+                                                          forecolor,link,code,internal_links,iframes,image,file,removeformat"""
         self.mce_settings['theme_advanced_blockformats'] = 'h1,h2,h4,blockquote'
         self.mce_settings['plugins'] = "preview,paste,table,-internal_links,-iframes,-preformatted_text,-file"
         self.mce_settings['plugin_internal_links_base_url'] = '%smerengue/js/tiny_mce_internal_links/' % settings.MEDIA_URL
@@ -90,6 +101,32 @@ class CustomTinyMCE(TinyMCE):
         self.mce_settings['content_css'] = content_css
         self.mce_settings['content_js'] = content_js
         self.mce_settings['extended_valid_elements'] = "hr[class|width|size|noshade],font[face|size|color|style],iframe[src|width|height|id|class|frameborder|border|marginwidth|marginheight|leftmargin|topmargin|allowtransparency|style],span[class|align|style],-table[border=0|cellspacing|cellpadding|width|height|class|align|summary|style|dir|id|lang|bgcolor|background|bordercolor],-tr[id|lang|dir|class|rowspan|width|height|align|valign|style|bgcolor|background|bordercolor],tbody[id|class],thead[id|class],tfoot[id|class],-td[id|lang|dir|class|colspan|rowspan|width|height|align|valign|style|bgcolor|background|bordercolor|scope],-th[id|lang|dir|class|colspan|rowspan|width|height|align|valign|style|scope],caption[id|lang|dir|class|style]"
+
+        self.extend_settings()
+
+    def extend_settings(self):
+        for key, value in self.to_add.items():
+            setting = self.mce_settings.get(key, None)
+            if setting:
+                value = [setting] + value
+            self.mce_settings[key] = ','.join(value)
+
+        for setting in self.new_settings:
+            self.mce_settings.update(setting)
+
+    @classmethod
+    def contribute_adding_to_setting(cls, setting_key, setting_value):
+        setting_list = cls.to_add.get(setting_key, [])
+        setting_list.append(setting_value)
+        cls.to_add[setting_key] = setting_list
+
+    @classmethod
+    def contribute_adding_new_setting(cls, setting_key, setting_value):
+        cls.new_settings.append({setting_key: setting_value})
+
+    @classmethod
+    def contribute_js(cls, js_url):
+        cls.Media.js += (js_url, )
 
     def render(self, name, value, attrs=None):
         urlconverter_callback = """<script type="text/javascript">
@@ -150,7 +187,7 @@ class AdminDateOfDateTimeWidget(AdminDateWidget):
 class TranslatableInputDateWidget(DateTimeInput):
 
     class Media:
-        js = ('/jsi18n/',
+        js = ('/%s/jsi18n/' % settings.MERENGUE_URLS_PREFIX,
               '%smerengue/js/dates_l10n/dates_l10n.js' % settings.MEDIA_URL,
               '%sjs/core.js' % settings.ADMIN_MEDIA_PREFIX,
               '%sjs/calendar.js' % settings.ADMIN_MEDIA_PREFIX,

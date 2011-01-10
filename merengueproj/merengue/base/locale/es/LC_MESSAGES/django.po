@@ -2,14 +2,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-07-21 14:10+0200\n"
-"PO-Revision-Date: 2009-12-03 16:36\n"
-"Last-Translator: <lin@yaco.es>\n"
+"PO-Revision-Date: 2010-10-11 11:48\n"
+"Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -70,12 +70,11 @@ msgstr "Cambiar estado de los %(verbose_name_plural)s seleccionados"
 
 #: admin.py:628
 msgid "Assigned owners"
-msgstr "Propietarios asignados"
+msgstr "Asignar propietarios"
 
 #: admin.py:647
 msgid "Are you sure you want to assign these owners to these contents?"
-msgstr ""
-"¿Está seguro de que quiere asignar estos propietarios a estos contenidos?"
+msgstr "¿Está seguro de que quiere asignar estos propietarios a estos contenidos?"
 
 #: admin.py:653
 msgid "Assign owners"
@@ -107,28 +106,28 @@ msgstr "Dirección"
 
 #: adminforms.py:28
 msgid "Select a .zip file:"
-msgstr ""
+msgstr "Seleccione un archivo .zip:"
 
 #: adminforms.py:37
 msgid "Bad or too large .zip file"
-msgstr ""
+msgstr "Archivo .zip corrupto o demasiado pesado"
 
 #: adminsite.py:100
 #, python-format
 msgid "%s administration"
-msgstr ""
+msgstr "%s administración"
 
 #: adminsite.py:228
 msgid "Settings saved successfully"
-msgstr ""
+msgstr "Configuración guardada con éxito"
 
 #: adminsite.py:233
 msgid "Database created successfully"
-msgstr ""
+msgstr "Base de datos creada con éxito"
 
 #: adminsite.py:266
 msgid "Site administration"
-msgstr "Administración del sitio"
+msgstr "Administración"
 
 #: adminsite.py:277
 msgid "Control Panel"
@@ -136,7 +135,7 @@ msgstr "Panel de control"
 
 #: adminsite.py:416 templatetags/related_admin_tags.py:71
 msgid "Plugin administration"
-msgstr "Administración de plugins"
+msgstr "Plugin de administración"
 
 #: forms.py:352 models.py:324
 msgid "owners"
@@ -152,7 +151,7 @@ msgstr "Nombre"
 
 #: forms.py:494 forms.py:513
 msgid "which name"
-msgstr "con nombre"
+msgstr "cuyo nombre"
 
 #: forms.py:532
 msgid "Base Content Quick Search Form"
@@ -196,11 +195,11 @@ msgstr "Más alto"
 
 #: models.py:70
 msgid "disabled"
-msgstr "No permitido"
+msgstr "no permitido"
 
 #: models.py:71
 msgid "allowed"
-msgstr "Permitido"
+msgstr "permitido"
 
 #: models.py:76
 msgid "contact email"
@@ -228,7 +227,7 @@ msgstr "fax"
 
 #: models.py:91
 msgid "contacts info"
-msgstr ""
+msgstr "información de contactos"
 
 #: models.py:94
 msgid "Without contact email"
@@ -256,11 +255,11 @@ msgstr "descripción"
 
 #: models.py:126
 msgid "Publication status"
-msgstr "Estado de la publicación"
+msgstr "Estado de publicación"
 
 #: models.py:127
 msgid "Enter the current status"
-msgstr "Introduzca el nuevo estado"
+msgstr "Introduce el estado actual"
 
 #: models.py:129
 msgid "main image"
@@ -308,11 +307,11 @@ msgstr "comentarios"
 
 #: models.py:299
 msgid "Is that content commentable"
-msgstr ""
+msgstr "es esto contenido comentable"
 
 #: models.py:304 models.py:442
 msgid "multimedia"
-msgstr ""
+msgstr "multimedia"
 
 #: models.py:313
 msgid "class name"
@@ -336,7 +335,7 @@ msgstr "contenido"
 
 #: models.py:444
 msgid "is featured"
-msgstr ""
+msgstr "es destacado"
 
 #: models.py:447
 msgid "Order"
@@ -373,7 +372,7 @@ msgstr "Hora"
 
 #: widgets.py:222
 msgid "Remove"
-msgstr ""
+msgstr "Borrar"
 
 #: widgets.py:243
 msgid "Select content"
@@ -385,19 +384,19 @@ msgstr "Ver en el mapa"
 
 #: templates/403.html:5 templates/403.html.py:7
 msgid "Permission denied"
-msgstr ""
+msgstr "Permiso denegado"
 
 #: templates/403.html:10
 msgid "403 Error - Forbidden. Sorry but it seems that you are not allowed."
-msgstr ""
+msgstr "Error 403 - Prohibido. Lo sentimos, pero parece que no está permitido."
 
 #: templates/403.html:16
 msgid "You tried to access a document for which you don't have privileges."
-msgstr ""
+msgstr "Ha intentado acceder a un documento para el que no tiene privilegios."
 
 #: templates/403.html:17
 msgid "We recommend you to return to <a href=\"/\">home</a>"
-msgstr ""
+msgstr "Le recomendamos volver al <a href=\"/\"> inicio </a>"
 
 #: templates/404.html:5 templates/404.html.py:7
 msgid "Page not found"
@@ -405,17 +404,15 @@ msgstr "Página no encontrada"
 
 #: templates/404.html:10
 msgid "404 Error - Sorry we can not find the page you are looking for."
-msgstr ""
+msgstr "Error 400 - Lo sentimos no podemos encontrar la página que busca."
 
 #: templates/404.html:16
-msgid ""
-"You may have mistyped the URL or the page may have been removed from our "
-"system."
-msgstr ""
+msgid "You may have mistyped the URL or the page may have been removed from our system."
+msgstr "Es posible que hayas escrito mal la dirección o la página puede haber sido eliminada de nuestro sistema."
 
 #: templates/404.html:17
 msgid "We recommend you to return to the <a href=\"/\">home</a>"
-msgstr ""
+msgstr "Le recomendamos volver a <a href=\"/\"> inicio </a>"
 
 #: templates/500.html:20
 msgid "Server Error"
@@ -427,7 +424,7 @@ msgstr ""
 
 #: templates/inc.breadcrumbs.html:2 templatetags/related_admin_tags.py:67
 msgid "Home"
-msgstr ""
+msgstr "Inicio"
 
 #: templates/base/content_admin_action.html:4
 #: templates/base/content_admin_action.html:5
@@ -436,27 +433,27 @@ msgstr "Administrar este contenido"
 
 #: templates/base/content_list.html:8
 msgid "Content listing"
-msgstr ""
+msgstr "LIstado de contenido"
 
 #: templates/base/content_related_items.html:4
 msgid "Related contents"
-msgstr ""
+msgstr "Contenidos relacionados"
 
 #: templates/base/form_admin_django.html:3
 msgid "Please correct the errors below."
-msgstr ""
+msgstr "Por favor corrija los siguientes errores."
 
 #: templates/base/google_map.html:3
 msgid "Map"
-msgstr ""
+msgstr "Mapa"
 
 #: templates/base/google_map.html:8
 msgid "How to get there?"
-msgstr ""
+msgstr "¿Cómo llegar?"
 
 #: templates/base/google_map.html:10
 msgid "Origin address"
-msgstr ""
+msgstr "DIrección de origen"
 
 #: templates/base/google_map.html:12
 msgid "See route"
@@ -464,7 +461,7 @@ msgstr "Ver ruta"
 
 #: templates/base/google_map.html:20
 msgid "Calculate travel route"
-msgstr ""
+msgstr "Calcular la ruta de viaje"
 
 #: templates/base/inc.footer.html:7 templates/base/inc.footer.html.py:21
 msgid "Merengue powered"
@@ -472,7 +469,7 @@ msgstr "Merengue powered"
 
 #: templates/base/inc.footer.html:23
 msgid "General conditions"
-msgstr ""
+msgstr "Condiciones generales"
 
 #: templates/base/inc.languagetools.html:6
 #: templates/base/inc.languagetools.html:7
@@ -489,7 +486,7 @@ msgstr "¿Qué hay cerca?"
 
 #: templatetags/related_admin_tags.py:74 templatetags/related_admin_tags.py:77
 msgid "opts"
-msgstr ""
+msgstr "opcs"
 
 #: templatetags/related_admin_tags.py:85
 #: templatetags/related_admin_tags.py:102
@@ -518,27 +515,17 @@ msgstr "sitio"
 #~ msgid "is autolocated"
 #~ msgstr "es autolocalizado"
 
-#~ msgid ""
-#~ "404 Error - The Page you are looking for is no longer available at this "
-#~ "URL."
-#~ msgstr ""
-#~ "Error 404 - La página que estaba buscando no está disponible en esta URL"
+#~ msgid "404 Error - The Page you are looking for is no longer available at this URL."
+#~ msgstr "Error 404 - La página que estaba buscando no está disponible en esta URL"
 
-#~ msgid ""
-#~ "Probably you found a bad link or mistyped the URL. We recommend you to"
-#~ msgstr ""
-#~ "Probablemente haya encontrado un vínculo incorrecto o haya escrito mal la "
-#~ "dirección. Le recomendamos"
+#~ msgid "Probably you found a bad link or mistyped the URL. We recommend you to"
+#~ msgstr "Probablemente haya encontrado un vínculo incorrecto o haya escrito mal la dirección. Le recomendamos"
 
 #~ msgid "return to <a href=\"/\">home</a>"
-#~ msgstr "regresar a <a href=\"/\">home</a>"
+#~ msgstr "regresar a <a href=\"/\">inicio</a>"
 
-#~ msgid ""
-#~ "500 Error - The server encountered an internal error or misconfiguration "
-#~ "and was unable to complete your request."
-#~ msgstr ""
-#~ "Error 500 - El servidor ha encontrado un error interno o no está "
-#~ "configurado y no ha sido posible completar su petición"
+#~ msgid "500 Error - The server encountered an internal error or misconfiguration and was unable to complete your request."
+#~ msgstr "Error 500 - El servidor ha encontrado un error interno o no está configurado y no ha sido posible completar su petición"
 
 #~ msgid "We recommend you to"
 #~ msgstr "Le recomendamos"

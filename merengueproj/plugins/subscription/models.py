@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -18,6 +18,7 @@
 from django.db import models
 from django.forms.models import modelform_factory
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
 
 from merengue.base.models import BaseContent
 from plugins.subscription.managers import SubscribableManager
@@ -38,6 +39,9 @@ class Subscribable(models.Model):
         verbose_name = _('subscribable')
         verbose_name_plural = _('subscribables')
 
+    def __unicode__(self):
+        return ugettext('Subscribable for %s') % self.content
+
 
 class BaseSubscription(models.Model):
     first_name = models.CharField(_('first name'), max_length=30)
@@ -45,11 +49,18 @@ class BaseSubscription(models.Model):
     email = models.EmailField(_('e-mail address'))
     phone = models.CharField(_('phone'), max_length=30)
     suggestions = models.TextField(_('comments or suggestions'), null=True, blank=True)
+    subscribable = models.ForeignKey(Subscribable, verbose_name=_('subscribable'))
 
     class Meta:
         verbose_name = _('base subscription')
         verbose_name_plural = _('base subscriptions')
 
+    def __unicode__(self):
+        return ugettext('Subscription of %s') % self.email
+
     @classmethod
     def class_form(cls):
-        return modelform_factory(cls)
+        form = modelform_factory(cls)
+        # subscribable object is automatically defined
+        del form.base_fields['subscribable']
+        return form

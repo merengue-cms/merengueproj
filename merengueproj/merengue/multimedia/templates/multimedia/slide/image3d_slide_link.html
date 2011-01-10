@@ -2,7 +2,9 @@
 {% load thumbnail %}
 {% block thumbnail %}
    {% if multimedia.image3d.preview %}
-     {% thumbnail multimedia.image3d.preview size %}
+     {% thumbnail multimedia.image3d.preview size as thumb %}
+     {{ thumb.url }}
+     {% endthumbnail %}
    {% else %}
      {{ MEDIA_URL }}merengue/img/multimedia/previews/image3d_preview.jpg
    {% endif %}

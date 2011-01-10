@@ -26,10 +26,6 @@
     });
   })(jQuery);
 </script>
-{% block extrahead %}
-{{ block.super }}
-<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}merengue/css/admin.css" />
-{% endblock %}
 
 {% if request.testing %}
 <script type="text/javascript">
@@ -38,6 +34,8 @@
     }
 </script>
 {% endif %}
+
+{% block extrahead %}{% endblock %}
 </head>
 {% load i18n transhette_tags %}
 
@@ -49,7 +47,9 @@
     {% if not is_popup %}
     <!-- Header -->
     <div id="header">
+        {% block headerlogo %}
         <a href="/"><img id="merengue_logo" src="{{ MEDIA_URL }}merengue/img/admin/admin_logo.jpg" alt="{% trans "Merengue logo" %}" title="{% trans "Merengue logo" %}" /></a>
+        {% endblock %}
         <div id="branding">
         {% block branding %}{% endblock %}
         </div>
@@ -85,8 +85,8 @@
             <a href="{{ root_path }}logout/">
           {% endif %}
             {% trans 'Log out' %}</a>
-          </div>
         {% endblock %}
+        </div>
         {% endif %}
         {% block nav-global %}{% endblock %}
     </div>
@@ -99,6 +99,7 @@
         {% endif %}
 
     <!-- Content -->
+    {% block contentwrapper %}
     <div id="content" class="{% block coltype %}colM{% endblock %}">
         {% block pretitle %}{% endblock %}
         {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
@@ -109,6 +110,7 @@
         {% block sidebar %}{% endblock %}
         <br class="clear" />
     </div>
+    {% endblock %}
     <!-- END Content -->
 
     {% block footer %}<div id="footer"></div>{% endblock %}

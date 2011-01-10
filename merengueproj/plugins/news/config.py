@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -34,7 +34,11 @@ class PluginConfig(Plugin):
     version = '0.0.1a'
 
     config_params = [
-        params.Single(name='limit', label=_('limit for templatetags'), default='3'),
+        params.PositiveInteger(
+            name='limit',
+            label=_('number of news for the "Latest news" block'),
+            default=3,
+        ),
     ]
 
     url_prefixes = (

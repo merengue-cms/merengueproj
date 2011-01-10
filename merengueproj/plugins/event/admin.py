@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -41,7 +41,7 @@ class EventAdmin(BaseContentAdmin):
 
 
 class EventSectionAdmin(EventAdmin, SectionContentAdmin):
-        pass
+    manage_contents = True
 
 
 def register(site):

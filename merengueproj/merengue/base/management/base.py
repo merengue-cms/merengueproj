@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -114,21 +114,6 @@ def copy_merengue_dirs(style, name, merengue_root, top_dir, symlink, remove_if_e
         copy_dir(os.path.join(merengue_root, 'media'), merengue_media_dir, name, remove_if_exists, style)
     else:
         make_symlink(os.path.join('..', 'merengue', 'media'), merengue_media_dir, remove_if_exists)
-
-    # Symlink apps' media
-    apps_dir = os.path.join(merengue_root, 'apps')
-    for app in os.listdir(apps_dir):
-        if app.startswith('.'):
-            continue # we ignore hidden directories
-        dest = os.path.join(top_dir, 'media', app)
-        app_media_dir = os.path.join(apps_dir, app, 'media')
-        if os.path.isdir(app_media_dir):
-            if not symlink_possible:
-                message = "Linking is not supported by this platform (%s), copying apps/%s/media instead."
-                sys.stderr.write(style.NOTICE(message % (sys.platform, app)))
-                copy_dir(app_media_dir, dest, name, remove_if_exists, style)
-            else:
-                make_symlink(os.path.join('..', 'merengue', 'apps', app, 'media'), dest, remove_if_exists)
 
     # Copy or symlink default themes' media and templates
     themes_dir = os.path.join(merengue_root, 'themes')

@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -16,6 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 # -*- coding: utf-8 -*-
+
 import os
 import sys
 try:
@@ -23,12 +24,11 @@ try:
 except ImportError:
     from StringIO import StringIO
 
-
 from django import templatetags
 from django.conf import settings
 from django.conf.urls.defaults import include, url
 from django.contrib.admin.sites import NotRegistered
-from django.core.exceptions import ImproperlyConfigured, FieldError
+from django.core.exceptions import ImproperlyConfigured, FieldError, MiddlewareNotUsed
 from django.core.management.color import no_style
 from django.core.management.sql import sql_all
 from django.core.management.validation import get_validation_errors
@@ -44,18 +44,35 @@ from merengue.registry.items import (NotRegistered as NotRegisteredItem,
                                      AlreadyRegistered as AlreadyRegisteredItem)
 from merengue.section.models import Section
 from merengue.perms.utils import register_permission, unregister_permission
+from merengue.pluggable.exceptions import BrokenPlugin
 
 
-def install_plugin(instance, app_name):
+# ----- internal attributes and methods -----
+
+
+_plugin_middlewares_cache = {
+    'loaded_middlewares': [],
+    'request_middleware': [],
+    'view_middleware': [],
+    'response_middleware': [],
+    'exception_middleware': [],
+}
+
+
+# ----- public methods -----
+
+
+def install_plugin(registered_plugin):
+    app_name = get_plugin_module_name(registered_plugin.directory_name)
     app_mod = load_app(app_name)
     # Needed update installed apps in order
     # to get SQL command from merengue.pluggable
     add_to_installed_apps(app_name)
     if app_mod and not are_installed_models(app_mod):
         install_models(app_mod)
-        # Force instance saving after connection closes.
-        instance.save()
-    if instance.active:
+        # Force registered_plugin saving after connection closes.
+        registered_plugin.save()
+    if registered_plugin.active:
         enable_plugin(app_name)
     else:
         disable_plugin(app_name)
@@ -65,6 +82,13 @@ def get_plugins_dir():
     """Return plugins directory (settings.PLUGINS_DIR)."""
     plugins_dir = getattr(settings, 'PLUGINS_DIR', 'plugins')
     return plugins_dir
+
+
+def get_plugin_directories():
+    """ get all plugins directories """
+    plugins_path = os.path.join(settings.BASEDIR, get_plugins_dir())
+    return [d for d in os.listdir(plugins_path) if os.path.isdir(os.path.join(plugins_path, d)) and
+                                                   not d.startswith('.')]
 
 
 def get_plugin_module_name(plugin_dir):
@@ -79,6 +103,10 @@ def get_plugin_config(plugin_dir, prepend_plugins_dir=True):
             plugin_modname = '%s.config' % plugin_dir
         return getattr(import_module(plugin_modname), 'PluginConfig')
     except (ImportError, TypeError, ValueError):
+        # only will raise exception in debug mode
+        # this prevents broke the whole portal when registering a broken plugin
+        if settings.DEBUG:
+            raise
         return None
 
 
@@ -146,9 +174,10 @@ def find_plugin_urls(plugin_name):
         yield (index, plugin_url)
 
 
-def is_plugin_broken(plugin_name):
-    """ Returns if plugin is broken (not exist in file system) """
-    if get_plugin_config(plugin_name, prepend_plugins_dir=False):
+def check_plugin_broken(plugin_name):
+    """ Check if plugin is broken (i.e. not exist in file system) and raises an exception """
+    try:
+        get_plugin_config(plugin_name, prepend_plugins_dir=False)
         try:
             # try to import plugin modules (if exists) to validate those models
             models_modname = '%s.models' % plugin_name
@@ -162,10 +191,9 @@ def is_plugin_broken(plugin_name):
             # usually means models module does not exists. Don't worry about that
             pass
         except (TypeError, FieldError, SyntaxError): # some validation error when importing models
-            return True
-        return False
-    else:
-        return True
+            raise BrokenPlugin(plugin_name, *sys.exc_info())
+    except Exception:
+        raise BrokenPlugin(plugin_name, *sys.exc_info())
 
 
 def enable_plugin(plugin_name, register=True):
@@ -178,6 +206,7 @@ def enable_plugin(plugin_name, register=True):
         register_app(plugin_name)
         register_plugin_actions(plugin_name)
         register_plugin_blocks(plugin_name)
+        register_plugin_middlewares(plugin_name)
         register_plugin_viewlets(plugin_name)
         register_plugin_templatetags(plugin_name)
         register_plugin_post_actions(plugin_name)
@@ -203,6 +232,7 @@ def disable_plugin(plugin_name, unregister=True):
             pass
         unregister_plugin_actions(plugin_name)
         unregister_plugin_blocks(plugin_name)
+        unregister_plugin_middlewares(plugin_name)
         unregister_plugin_viewlets(plugin_name)
         unregister_plugin_templatetags(plugin_name)
         unregister_plugin_section_models(plugin_name)
@@ -321,6 +351,7 @@ def register_plugin_post_actions(plugin_name):
     if not plugin_config:
         return
     plugin_config.post_actions()
+    plugin_config.hook_post_register()
 
 
 def register_plugin_section_models(plugin_name):
@@ -364,6 +395,22 @@ def unregister_plugin_perms(plugin_name):
         return
     for perm in plugin_config.get_perms():
         unregister_permission(perm[1])
+
+
+def register_plugin_middlewares(plugin_name):
+    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    if not plugin_config:
+        return
+    for middleware in plugin_config.get_middlewares():
+        register_middleware(middleware)
+
+
+def unregister_plugin_middlewares(plugin_name):
+    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    if not plugin_config:
+        return
+    for middleware in plugin_config.get_middlewares():
+        unregister_middleware(middleware)
 
 
 def unregister_plugin_section_models(plugin_name):
@@ -435,6 +482,71 @@ def has_required_dependencies(plugin):
         if not RegisteredPlugin.objects.filter(**filter_plugins):
             return False
     return True
+
+
+def register_middleware(middleware_path):
+    """
+    Load middleware into plugin middleware registry
+    """
+    global _plugin_middlewares_cache
+    if middleware_path in _plugin_middlewares_cache['loaded_middlewares']:
+        return # already registered
+    try:
+        dot = middleware_path.rindex('.')
+    except ValueError:
+        raise ImproperlyConfigured('%s isn\'t a middleware module' % middleware_path)
+    mw_module, mw_classname = middleware_path[:dot], middleware_path[dot+1:]
+    try:
+        mod = import_module(mw_module)
+    except ImportError, e:
+        raise ImproperlyConfigured('Error importing middleware %s: "%s"' % (mw_module, e))
+    try:
+        mw_class = getattr(mod, mw_classname)
+    except AttributeError:
+        raise ImproperlyConfigured('Middleware module "%s" does not define a "%s" class' % (mw_module, mw_classname))
+
+    try:
+        mw_instance = mw_class()
+    except MiddlewareNotUsed:
+        return
+
+    if hasattr(mw_instance, 'process_request'):
+        _plugin_middlewares_cache['request_middleware'].append(
+            (middleware_path, mw_instance.process_request),
+        )
+    if hasattr(mw_instance, 'process_view'):
+        _plugin_middlewares_cache['view_middleware'].append(
+            (middleware_path, mw_instance.process_view),
+        )
+    if hasattr(mw_instance, 'process_response'):
+        _plugin_middlewares_cache['response_middleware'].insert(
+            0, (middleware_path, mw_instance.process_response),
+        )
+    if hasattr(mw_instance, 'process_exception'):
+        _plugin_middlewares_cache['exception_middleware'].insert(
+            0, (middleware_path, mw_instance.process_exception),
+        )
+    _plugin_middlewares_cache['loaded_middlewares'].append(middleware_path)
+
+
+def unregister_middleware(middleware_path):
+    """
+    Unload middleware into plugin middleware registry
+    """
+    global _plugin_middlewares_cache
+    if middleware_path not in _plugin_middlewares_cache['loaded_middlewares']:
+        return # not registered
+    for midd_type in ('request_middleware', 'request_middleware',
+                      'response_middleware', 'exception_middleware', ):
+        for path, method in _plugin_middlewares_cache[midd_type]:
+            if middleware_path == path:
+                _plugin_middlewares_cache[midd_type].remove((path, method))
+    _plugin_middlewares_cache['loaded_middlewares'].remove(middleware_path)
+
+
+def get_plugins_middleware_methods(midd_type):
+    global _plugin_middlewares_cache
+    return (t[1] for t in _plugin_middlewares_cache[midd_type])
 
 
 from merengue.section.admin import register as register_section

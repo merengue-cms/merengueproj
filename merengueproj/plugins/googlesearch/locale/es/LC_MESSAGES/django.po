@@ -3,18 +3,18 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-28 12:31+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2010-10-07 10:56+0200\n"
+"PO-Revision-Date: 2010-10-05 10:55\n"
+"Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Translated-Using: django-transhette 0.1.SVN\n"
 
 #: blocks.py:31
 msgid "Search"
@@ -22,7 +22,7 @@ msgstr "Buscar"
 
 #: config.py:32
 msgid "Custom search control"
-msgstr "Controles de búsqueda personalizada"
+msgstr "Control de búsqueda avanzada"
 
 #: config.py:33
 msgid "language"

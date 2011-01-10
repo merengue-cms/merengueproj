@@ -1,0 +1,65 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-07 10:56+0200\n"
+"PO-Revision-Date: 2010-10-11 11:36\n"
+"Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Translated-Using: django-transhette 0.1.SVN\n"
+
+#: blocks.py:35 models.py:40
+msgid "banners"
+msgstr "banners"
+
+#: config.py:35
+msgid "limit for banner block"
+msgstr "limitar el banner al bloque"
+
+#: models.py:31
+msgid "Url Link"
+msgstr "Enlace Url"
+
+#: models.py:32
+msgid "Portal name"
+msgstr "Nombre del portal"
+
+#: models.py:33
+msgid "image"
+msgstr "imagen"
+
+#: models.py:35
+msgid "The system don't resize the icon. You need to upload with the final size"
+msgstr "El sistema no cambia el tamaño. Necesitas subir una con el tamaño final"
+
+#: models.py:39
+msgid "banner"
+msgstr "banner"
+
+#: viewlets.py:26
+msgid "All Banners"
+msgstr "Todos los banners"
+
+#: templates/banner/banner_index.html:5 templates/banner/banner_index.html:11
+msgid "Banner history"
+msgstr "Historia de banner"
+
+#: templates/banner/banner_index.html:8
+msgid "Banners"
+msgstr "Banners"
+
+#: templates/banner/block_banner.html:9
+msgid "History banner"
+msgstr "Historial de banner"
+
+#: templates/banner/viewlet_latest.html:17
+msgid "View more"
+msgstr "Ver más"

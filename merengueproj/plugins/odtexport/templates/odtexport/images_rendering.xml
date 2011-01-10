@@ -1,0 +1,4 @@
+{% load oot_templates %}{% for image in content.multimedia.photos %}
+<text:p text:style-name="P5">{% render_image image.photo.image.url %}</text:p>
+<text:p text:style-name="Horizontal_20_Line"><text:span text:style-name="T3"/></text:p>
+{% endfor %}

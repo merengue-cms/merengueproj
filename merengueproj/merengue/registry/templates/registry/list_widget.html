@@ -1,0 +1,19 @@
+{% extends "registry/param_widget.html" %}
+{% load i18n smart_if %}
+
+{% block param_choices %}
+  <select {{ widget_attrs }} multiple="multiple">
+    {% for choice in param.choices %}
+      <option value="{{ choice.0 }}"
+         {% if choice.0 in param.get_value %}selected="selected"{% endif %}>
+         {{ choice.1 }}
+      </option>
+    {% endfor %}
+  </select>
+{% endblock %}
+
+{% block param_container %}
+  <textarea {{ widget_attrs }} >
+    {{ param.get_value_display|default_if_none:"" }}
+  </textarea>
+{% endblock %}

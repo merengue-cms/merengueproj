@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -24,7 +24,6 @@ from merengue.registry.signals import item_registered
 
 
 class Viewlet(RegistrableItem):
-    label = None # to be overriden in subclasses
     model = RegisteredViewlet
 
     @classmethod

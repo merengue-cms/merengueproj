@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -23,9 +23,8 @@ from django.template import RequestContext
 from django.utils import simplejson
 from django.utils.translation import get_language_from_request
 
-from searchform.registry import search_form_registry
 from merengue.section.models import BaseSection, Document, Section, \
-                                    DocumentSection
+                                    DocumentSection, BaseLink
 
 from merengue.base.views import content_view
 from merengue.section.models import AbsoluteLink, ContentLink, ViewletLink, Menu
@@ -52,7 +51,7 @@ def content_section_view(request, section_slug, content_id, content_slug):
 
 
 def document_section_view(request, section_slug, document_id, document_slug):
-    document = get_object_or_404(Document, id=document_id)
+    document = get_object_or_404(Document, pk=document_id)
     template_name = getattr(document._meta, 'content_view_template')
     return content_view(request, document, template_name=template_name)
 
@@ -77,7 +76,11 @@ def menu_section_view(request, section_slug, menu_slug):
         except Menu.DoesNotExist:
             raise Http404
 
-    link = menu.baselink.real_instance
+    try:
+        link = menu.baselink.real_instance
+    except BaseLink.DoesNotExist:
+        return render_to_response('section/menu_link_not_exists.html',
+            {'menu': menu}, context_instance=RequestContext(request))
     if isinstance(link, AbsoluteLink):
         return HttpResponseRedirect(link.url)
     else:
@@ -123,54 +126,6 @@ def section_custom_style(request, section_slug):
                               mimetype='text/css')
 
 
-def _parse_search_form_filters(value):
-    filters={}
-    for filter_and_options in value.strip().split('\n'):
-        if filter_and_options:
-            (filter_name, options) = filter_and_options.split(':')
-            filter_name = filter_name.strip()
-            option_list=[]
-            for option in options.strip().split(','):
-                soption=option.strip()
-                if soption.isdigit():
-                    option_list.append(int(soption))
-                else:
-                    option_list.append(soption)
-            filters.update({filter_name: option_list})
-    return filters
-
-
-@login_required
-def get_search_filters_and_options(request):
-    search_form = request.GET.get('search_form', None)
-    widget_name = request.GET.get('widget_name', 'search_form_filters')
-    value = request.GET.get('value', '')
-    results = []
-    actual_filters = _parse_search_form_filters(value)
-    if search_form:
-        search_form_class = search_form_registry.get_form_class(search_form)
-        for filter in search_form_registry.get_filters(search_form):
-            options=[]
-            selected_options = actual_filters.get(filter, [])
-            for (option_value, option_name) in search_form_registry.get_filter_options(search_form, filter):
-                selected = option_value in selected_options
-                options.append({'name': option_name,
-                                'value': option_value,
-                                'selected': selected,
-                               })
-            results.append({
-                'label': search_form_class.fields[filter].label,
-                'name': filter,
-                'options': options,
-            })
-    return render_to_response('section/search_form_filters.html',
-                              {'filters': results,
-                               'widget_name': widget_name,
-                               'value': value,
-                              },
-                              context_instance=RequestContext(request))
-
-
 @login_required
 def save_menu_order(request):
     for key in request.GET.keys():
@@ -191,24 +146,25 @@ def save_menu_order(request):
 
 def section_dispatcher(request, url):
     parts = url.strip('/').split('/')
+    kwargs = dict(section_slug=parts[0])
     func = None
 
     if len(parts) == 1:
         func = section_view
     elif len(parts) == 4 and parts[1] == 'contents':
         func = content_section_view
-        del parts[1]
-    elif len(parts) == 3 and parts[1] == 'doc':
+        kwargs.update({'content_id': parts[2], 'content_slug': parts[3]})
+    elif len(parts) == 4 and parts[1] == 'doc':
         func = document_section_view
-        del parts[1]
+        kwargs.update({'document_id': parts[2], 'document_slug': parts[3]})
     elif len(parts) >= 2:
         func = menu_section_view
-        parts = [parts[0], parts[-1]]
+        kwargs.update({'menu_slug': parts[-1]})
     elif not url.startswith('/sections'):
         return HttpResponseRedirect('/sections%s' %url)
     else:
         raise Http404
-    return func(request, *parts)
+    return func(request, **kwargs)
 
 
 @login_required

@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -15,7 +15,10 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.forms.util import ErrorList
+import popen2
+import time
+
+from django.forms.util import ErrorList, ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.forms import BaseAdminModelForm
@@ -23,9 +26,30 @@ from merengue.base.forms import BaseAdminModelForm
 
 class VideoCheckerModelForm(BaseAdminModelForm):
 
+    def clean_file(self):
+        value = self.cleaned_data.get('file', None)
+        if not value or not value[0]:
+            return value
+        content = value[0]
+        ffmpeg = "ffmpeg -i - -f null -"
+        pop = popen2.Popen3(ffmpeg, capturestderr=False)
+        chunks = content.chunks()
+        time.sleep(1)
+        while pop.poll() == -1:
+            try:
+                chunk = chunks.next()
+                pop.tochild.write(chunk)
+            except (StopIteration, IOError):
+                pop.tochild.close()
+                pop.fromchild.close()
+        ffmpeg_exit_status = pop.wait()
+        if ffmpeg_exit_status != 0:
+            raise ValidationError(_('The file is not a video file or has a format not supported'))
+        return value
+
     def clean(self):
         super(VideoCheckerModelForm, self).clean()
-        file_cleaned_data, deleted_file = self.cleaned_data.get('file', None)
+        file_cleaned_data, deleted_file = self.cleaned_data.get('file', [None, None])
         url_cleaned_data = self.cleaned_data.get('external_url', None)
         old_file = self.instance and self.instance.file
         if not old_file and not url_cleaned_data and not file_cleaned_data:

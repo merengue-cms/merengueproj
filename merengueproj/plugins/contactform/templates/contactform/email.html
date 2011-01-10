@@ -1,0 +1,17 @@
+{% load i18n %}
+
+{% blocktrans with content.name as name and request.user.get_full_name as user and request.user.username as username %}
+Contact form sended from content: "{{ name }}" by "{{ user }} ({{ username }})"
+{% endblocktrans %}
+
+<h1>{{ contact_form.title|safe }}</h1>
+
+{{ contact_form.description|safe }}
+
+<br/>
+
+<ul>
+{% for opt, optv in opts.items %}
+ <li>{{ opt|safe }}: {{ optv|safe }}</li>
+{% endfor %}
+</ul>

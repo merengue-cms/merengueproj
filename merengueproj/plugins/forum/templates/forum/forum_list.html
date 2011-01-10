@@ -1,6 +1,6 @@
 {% extends "content_list.html" %}
 
-{% load i18n inlinetrans %}
+{% load i18n inlinetrans datefilters %}
 
 {% block listingclass %}{{ block.super }} forumList {% endblock %}
 
@@ -10,4 +10,41 @@
   <span class="breadcrumbSeparator">→</span> {% inline_trans "Forums" %}
 {% endblock %}
 
-{% block listtitle %}{% trans "Forums" %}{% endblock %}
+{% block listtitle %}{% inline_trans "Forums" %}{% endblock %}
+
+{% load pagination_tags inlinetrans content_tags %}
+
+{% block listing %}
+  {% regroup content_list by category as category_list %}
+
+    {% for category in category_list %}
+    <table class="forumTable forumCategory">
+    <tr><th class="categoryName">{{ category.grouper.name }}</th>
+        <th>{% inline_trans "Threads" %}</th>
+        <th>{% inline_trans "Messages" %}</th>
+        <th class="lastMessage">{% inline_trans "Last message" %}</th></tr>
+    {% for forum in category.list %}
+       <tr>
+         <td class="forumName"> 
+           <a href="{{ forum.get_absolute_url }}" title="{{ forum }}" class="contentLink">{% cutrender 100 %}{{ forum }}{% endcutrender %}</a>
+           {{ forum.description|safe }}
+         </td>
+         <td>
+           {{ forum.thread_set.count }}
+         </td>
+         <td>
+           {{ forum.get_all_comments.count }}
+         </td>
+         <td class="lastMessage">
+           {% with forum.get_last_comment as comment %}
+           {% if comment %}
+           <a href="{{ comment.thread.get_absolute_url }}#comment-{{ comment.id }}">{{ comment.title }}</a><br />
+           {{ comment.date_submitted|transdate }} {% inline_trans "by" %} {{ comment.user.get_full_name|default:comment.user.username }}
+           {% endif %}
+           {% endwith %}
+         </td>
+       </tr>
+    {% endfor %}
+    </table>
+    {% endfor %}
+{% endblock %}

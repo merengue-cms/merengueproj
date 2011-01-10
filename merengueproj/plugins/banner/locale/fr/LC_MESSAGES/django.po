@@ -1,0 +1,66 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-07 10:56+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: blocks.py:35 models.py:40
+msgid "banners"
+msgstr ""
+
+#: config.py:35
+msgid "limit for banner block"
+msgstr ""
+
+#: models.py:31
+msgid "Url Link"
+msgstr ""
+
+#: models.py:32
+msgid "Portal name"
+msgstr ""
+
+#: models.py:33
+msgid "image"
+msgstr ""
+
+#: models.py:35
+msgid ""
+"The system don't resize the icon. You need to upload with the final size"
+msgstr ""
+
+#: models.py:39
+msgid "banner"
+msgstr ""
+
+#: viewlets.py:26
+msgid "All Banners"
+msgstr ""
+
+#: templates/banner/banner_index.html:5 templates/banner/banner_index.html:11
+msgid "Banner history"
+msgstr ""
+
+#: templates/banner/banner_index.html:8
+msgid "Banners"
+msgstr ""
+
+#: templates/banner/block_banner.html:9
+msgid "History banner"
+msgstr ""
+
+#: templates/banner/viewlet_latest.html:17
+msgid "View more"
+msgstr ""

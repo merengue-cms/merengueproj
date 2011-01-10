@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -20,4 +20,5 @@ from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('plugins.subscription.views',
     url(r'^(?P<basecontent_slug>[\w-]+)/$', 'subscription_form', name='subscription_form'),
+    url(r'^(?P<basecontent_slug>[\w-]+)/subscribers/$', 'subscriber_listing', name='subscriber_listing'),
 )

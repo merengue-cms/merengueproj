@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.contrib.sites.models import Site
 from django.http import HttpResponseRedirect
 from django.utils.http import urlquote
 from django.utils.translation import ugettext_lazy as _
@@ -25,8 +26,9 @@ from merengue.action.actions import ContentAction
 class FacebookLink(ContentAction):
     name = 'facebooklink'
     verbose_name = _('Share in Facebook')
+    help_text = _('Facebook share widget')
 
     @classmethod
     def get_response(cls, request, content):
-        request_url = 'http://%s%s' % (request.get_host(), content.public_link())
+        request_url = 'http://%s%s' % (Site.objects.get_current().domain, content.public_link())
         return HttpResponseRedirect('http://www.facebook.com/share.php?u=%s' % urlquote(request_url))

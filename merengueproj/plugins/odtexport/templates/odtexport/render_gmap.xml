@@ -1,0 +1,4 @@
+{% load oot_templates %}
+
+
+{% render_image gmap_url %}

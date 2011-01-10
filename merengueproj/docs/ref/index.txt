@@ -8,6 +8,7 @@ Merengue reference:
 .. toctree::
    :maxdepth: 1
 
+   datamodels
    settings
    errors
    commands/merengue-admin

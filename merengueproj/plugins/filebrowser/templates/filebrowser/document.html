@@ -1,16 +1,13 @@
 {% extends "filebrowser/base.html" %}
 {% load i18n thumbnail truncate_filter filebrowser_tags %}
 
-{% block extrahead %}
-<style type="text/css" media="all">
-<!--
-
--->
-</style>
-
+{% block extrascripts %}
+  <script type="text/javascript" src="{{ MEDIA_URL }}filebrowser/js/multifile.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}filebrowser/js/manage-attachments-docs.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}filebrowser/js/jquery.form.js"></script>
 {% endblock %}
 
-{% block pagetitle %}{% trans "Document detail" %}{% endblock %}
+{% block pagetitle %}{{ block.super }} - {% trans "Document detail" %}{% endblock %}
 
 {% block extrabreadcrumbs %}
   {{ block.super }}
@@ -24,7 +21,7 @@
 
 <div class="object-buttons">
 {% if user.is_superuser %}
-<a href="{% filebrowser_url webfs.views.editdoc repository_name=repository.name,doc_slug=document.slug %}"><img src="{{ MEDIA_URL }}filebrowser/img/document-text-editor.png" /> {% trans "Edit" %}</a><span>&nbsp;</span>
+<a href="{% filebrowser_url plugins.filebrowser.views.editdoc repository_name=repository.name,doc_slug=document.slug %}"><img src="{{ MEDIA_URL }}filebrowser/img/document-text-editor.png" /> {% trans "Edit" %}</a><span>&nbsp;</span>
 {% endif %}
 </div>
 
@@ -39,20 +36,18 @@
 {% for file in doc_files %}
   <div class="file" id="file-{{file.id}}">
     <div>
-    <img alt="{% trans file %}" src="/site_media/img/file.png" />
+    <img alt="{% trans file %}" src="{{ MEDIA_URL }}filebrowser/img/file.png" />
     <a href="{{ file.file.url }}">{{ file.file.name|inline_truncate:18 }}</a>
     <span>{{ file.file.size|filesizeformat }}
     </div>
-    {# {% if perms.webfs.delete_filedocument %} #}
     {% if request.user.is_superuser %}
     <div>
-      <button onclick="javascript:removeAttachment('{% filebrowser_url webfs.views.root repository_name=repository.name %}', 'file', {{file.id}})">{% trans "Remove" %}</button></span>
+      <button onclick="javascript:removeAttachment('{% filebrowser_url plugins.filebrowser.views.root repository_name=repository.name %}', 'file', {{file.id}})">{% trans "Remove" %}</button></span>
     </div>
     {% endif %}
   </div>
 {% endfor %}
 
-{% if perms.webfs.add_filedocument %}
 <div class="addlink">
   <button id="filebtn" onclick="javascript:showForm('file')">{% trans "New file" %}</button>
 </div>
@@ -62,28 +57,25 @@
   <input type="submit" class="submitButton" id="addfile" name="addfile" value="{% trans 'Add file' %}"/>
   <button type="button" onclick="javascript:hideForm('file')">{% trans "Cancel" %}</button>
 </form>
-{% endif %}
 
 <h2>{% trans "Images" %}</h2>
 {% for image in doc_images %}
   <div class="image" id="image-{{image.id}}">
     <p>
-    {% thumbnail image.file 250x250 as image_thumbnail %}
+    {% thumbnail image.file "250x250" as image_thumbnail %}
     <a href="{{ image.file.url }}">
-      <img alt="{{ image.file.name }}" src="{{ image_thumbnail.absolute_url }}" />
+      <img alt="{{ image.file.name }}" src="{{ image_thumbnail.url }}" />
     </a>
+    {% endthumbnail %}
     </p>
     <p>
     <span>{{ image.file.size|filesizeformat }}
-        {% if perms.webfs.delete_imagedocument %}
-        <button onclick="javascript:removeAttachment('{% filebrowser_url webfs.views.root repository_name=repository.name %}', 'image', {{image.id}})">{% trans "Remove" %}</button>
+        <button onclick="javascript:removeAttachment('{% filebrowser_url plugins.filebrowser.views.root repository_name=repository.name %}', 'image', {{image.id}})">{% trans "Remove" %}</button>
     </span>
-    {% endif %}
     </p>
   </div>
 {% endfor %}
 
-{% if perms.webfs.add_imagedocument %}
 <div class="addlink">
   <button id="imagebtn" onclick="javascript:showForm('image')">{% trans "New image" %}</button>
 </div>
@@ -94,5 +86,4 @@
   <button type="button" onclick="javascript:hideForm('image')">{% trans "Cancel" %}</button>
 </form>
 </div>
-{% endif %}
 {% endblock %}

@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -79,4 +79,4 @@ class Vote(models.Model):
     objects = VoteManager()
 
     def __unicode__(self):
-        return u"%s --> %s" %(self.content, self.vote)
+        return u"%s --> %s" % (self.content, self.vote)

@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -22,27 +22,44 @@ from django.db import models
 from django.db.models import signals
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.pluggable.utils import (install_plugin, get_plugins_dir,
-                                      get_plugin_module_name, disable_plugin)
+from south.modelsinspector import add_introspection_rules
+
+from cmsutils.db.fields import JSONField
+
 from merengue.pluggable.managers import PluginManager
-from merengue.registry.dbfields import RequiredPluginsField, RequiredAppsField
+from merengue.pluggable.dbfields import RequiredPluginsField, RequiredAppsField
 from merengue.registry.models import RegisteredItem
 
 
 class RegisteredPlugin(RegisteredItem):
     name = models.CharField(_('name'), max_length=100)
-    description = models.TextField(_('description'))
+    description = models.TextField(_('description'), default='')
     version = models.CharField(_('version'), max_length=25)
     required_apps = RequiredAppsField()
     required_plugins = RequiredPluginsField()
     installed = models.BooleanField(default=False)
     directory_name = models.CharField(_('directory name'), max_length=100,
                                       unique=True)
+    meta_info = JSONField(null=True)
+
+    @property
+    def screenshot(self):
+        if self.meta_info and 'screenshot' in self.meta_info:
+            return os.path.join(settings.MEDIA_URL, self.directory_name,
+                                self.meta_info['screenshot'])
+        return None
 
     class Meta:
         db_table = 'plugins_registeredplugin'
+        verbose_name = _('registered plugin')
+        verbose_name_plural = _('registered plugins')
+        ordering = ('order', )
 
     objects = PluginManager()
+
+    def get_plugin_config(self):
+        from merengue.pluggable.utils import get_plugin_config
+        return get_plugin_config(self.directory_name)
 
     def __unicode__(self):
         return self.name
@@ -50,17 +67,42 @@ class RegisteredPlugin(RegisteredItem):
     def get_path(self):
         """Full absolute path to the plugin root, including
         settings.PLUGINS_DIR."""
+        from merengue.pluggable.utils import get_plugins_dir
         basedir = settings.BASEDIR
         plugins_dir = get_plugins_dir()
         return os.path.join(basedir, plugins_dir, self.directory_name)
 
 
 def install_plugin_signal(sender, instance, **kwargs):
+    from merengue.pluggable.utils import (install_plugin,
+                                          get_plugin_module_name,
+                                          disable_plugin)
     if not getattr(instance, 'id', None) and getattr(instance, 'pk', None):
         instance = instance._default_manager.get(pk=instance.pk)
     if instance.installed and instance.directory_name and not instance.broken:
-        app_name = get_plugin_module_name(instance.directory_name)
-        install_plugin(instance, app_name)
-    elif not instance.active and instance.directory_name: # Change this line will be fixes in #542
+        install_plugin(instance)
+        # Change this line will be fixes in #542
+    elif not instance.active and instance.directory_name:
         disable_plugin(get_plugin_module_name(instance.directory_name))
 signals.post_save.connect(install_plugin_signal, sender=RegisteredPlugin)
+
+# ----- adding south rules to help introspection -----
+
+rules = [
+  (
+    (RequiredAppsField, RequiredPluginsField),
+    [],
+    {},
+  ),
+]
+
+rules_jsonfield = [
+  (
+    (JSONField, ),
+    [],
+    {},
+  ),
+]
+
+add_introspection_rules(rules, ["^merengue\.pluggable"])
+add_introspection_rules(rules_jsonfield, ["^cmsutils"])

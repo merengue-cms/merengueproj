@@ -3,7 +3,7 @@
 
 {% block viewletbody %}
   {% if is_paginated %}
-    {% autopaginate news_list paginate_by %}
+    {% autopaginate event_list paginate_by %}
   {% endif %}
   {% block toppagination %}
     {% paginate %}

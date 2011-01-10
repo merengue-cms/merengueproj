@@ -1,0 +1,632 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-11-26 12:22+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: merengue/templates/admin/app_index.html.py:9
+#: merengue/templates/admin/app_index.html.py:12
+#: merengue/templates/admin/base.html.py:94
+#: merengue/templates/admin/delete_confirmation_various.html.py:6
+#: merengue/templates/admin/index.html.py:13
+#: merengue/templates/admin/index.html.py:15
+#: merengue/templates/admin/siteconfig.html.py:18
+#: merengue/templates/registration/password_reset_confirm.html.py:4
+msgid "Home"
+msgstr ""
+
+#: merengue/templates/admin/app_index.html.py:10
+#: merengue/templates/admin/index.html.py:13
+msgid "plugin administration"
+msgstr ""
+
+#: merengue/templates/admin/base.html.py:51
+#: merengue/templates/admin/base_site.html.py:11
+msgid "Merengue logo"
+msgstr ""
+
+#: merengue/templates/admin/base.html.py:57
+msgid "Welcome,"
+msgstr ""
+
+#: merengue/templates/admin/base.html.py:63
+msgid "Change language"
+msgstr ""
+
+#: merengue/templates/admin/base.html.py:72
+msgid "Documentation"
+msgstr ""
+
+#: merengue/templates/admin/base.html.py:80
+msgid "Change password"
+msgstr ""
+
+#: merengue/templates/admin/base.html.py:87
+msgid "Log out"
+msgstr ""
+
+#: merengue/templates/admin/base_site.html.py:4
+msgid "Merengue site admin"
+msgstr ""
+
+#: merengue/templates/admin/base_site.html.py:15
+msgid "Merengue administration"
+msgstr ""
+
+#: merengue/templates/admin/change_form.html.py:26
+#: merengue/templates/admin/object_history.html.py:7
+msgid "History"
+msgstr ""
+
+#: merengue/templates/admin/change_form.html.py:28
+#: merengue/templates/admin/merengue_index_base.html.py:91
+#: merengue/templates/admin/perms/objectpermission/role_permissions.html.py:32
+msgid "Permissions"
+msgstr ""
+
+#: merengue/templates/admin/change_form.html.py:49
+#: merengue/templates/admin/change_list.html.py:57
+msgid "Please correct the error below."
+msgid_plural "Please correct the errors below."
+msgstr[0] ""
+msgstr[1] ""
+
+#: merengue/templates/admin/change_list.html.py:49
+#, python-format
+msgid "Add %(name)s"
+msgstr ""
+
+#: merengue/templates/admin/change_list.html.py:68
+#: merengue/templates/admin/logentry/change_list.html.py:7
+#: merengue/templates/admin/multimedia/photo/change_list.html.py:7
+msgid "Filter"
+msgstr ""
+
+#: merengue/templates/admin/confirm_action.html.py:28
+#: merengue/templates/admin/delete_confirmation.html.py:25
+#: merengue/templates/admin/delete_confirmation_various.html.py:31
+#: merengue/templates/admin/basecontent/assign_owners.html.py:40
+msgid "Yes, I'm sure"
+msgstr ""
+
+#: merengue/templates/admin/customize_submit_line.html.py:3
+#: merengue/templates/admin/reorder.html.py:60
+msgid "Save"
+msgstr ""
+
+#: merengue/templates/admin/customize_submit_line.html.py:5
+#: merengue/templates/admin/customize_submit_line.html.py:7
+#: merengue/templates/admin/delete_confirmation.html.py:7
+#: merengue/templates/admin/delete_confirmation_various.html.py:8
+msgid "Delete"
+msgstr ""
+
+#: merengue/templates/admin/customize_submit_line.html.py:9
+msgid "Save as new"
+msgstr ""
+
+#: merengue/templates/admin/customize_submit_line.html.py:11
+msgid "Save and add another"
+msgstr ""
+
+#: merengue/templates/admin/customize_submit_line.html.py:13
+#: merengue/templates/admin/reorder.html.py:61
+msgid "Save and continue editing"
+msgstr ""
+
+#: merengue/templates/admin/delete_confirmation.html.py:13
+#: merengue/templates/admin/delete_confirmation_various.html.py:14
+#, python-format
+msgid ""
+"Deleting the %(object_name)s '%(escaped_object)s' would result in deleting "
+"related objects, but your account doesn't have permission to delete the "
+"following types of objects:"
+msgstr ""
+
+#: merengue/templates/admin/delete_confirmation.html.py:20
+#: merengue/templates/admin/delete_confirmation_various.html.py:21
+#, python-format
+msgid ""
+"Are you sure you want to delete the %(object_name)s \"%(escaped_object)s\"? "
+"All of the following related items will be deleted:"
+msgstr ""
+
+#: merengue/templates/admin/inc.content_index.html.py:7
+#, python-format
+msgid "Models available in the %(name)s application."
+msgstr ""
+
+#: merengue/templates/admin/inc.content_index.html.py:8
+#, python-format
+msgid "%(name)s"
+msgstr ""
+
+#: merengue/templates/admin/inc.content_index.html.py:18
+msgid "Add"
+msgstr ""
+
+#: merengue/templates/admin/inc.content_index.html.py:24
+msgid "Change"
+msgstr ""
+
+#: merengue/templates/admin/inc.content_index.html.py:34
+msgid "You don't have permission to edit anything."
+msgstr ""
+
+#: merengue/templates/admin/inc.recentactions.html.py:4
+msgid "Recent Actions"
+msgstr ""
+
+#: merengue/templates/admin/inc.recentactions.html.py:5
+msgid "My Actions"
+msgstr ""
+
+#: merengue/templates/admin/inc.recentactions.html.py:8
+msgid "None available"
+msgstr ""
+
+#: merengue/templates/admin/inc.recentactions.html.py:22
+msgid "Unknown content"
+msgstr ""
+
+#: merengue/templates/admin/index.html.py:15
+#: merengue/templates/admin/merengue_index_base.html.py:118
+msgid "Django admin"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:19
+#: merengue/templates/admin/merengue_index_base.html.py:121
+msgid "Content management"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:20
+msgid "Manage the site's content"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:23
+msgid "Section"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:23
+msgid "Content tree"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:24
+msgid "View, edit and delete the site's contents."
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:27
+msgid "Portal Menu"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:28
+msgid "View, edit and delete the site's menus."
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:31
+msgid "Portal links"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:32
+msgid "View, edit and delete the site's primary and secondary links."
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:34
+msgid "Content"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:34
+msgid "Browse content"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:35
+msgid "Browse the site's contents."
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:37
+msgid "Translate portal"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:37
+msgid "Translate site"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:38
+msgid "Translate the site messages."
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:44
+#: merengue/templates/admin/siteconfig.html.py:25
+msgid "Site configuration"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:45
+msgid "Control how the site looks and feels."
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:47
+msgid "Blocks"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:48
+msgid "View, edit and delete the site's blocks."
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:49
+msgid "Plugins"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:50
+msgid "View, edit and delete the site's plugin."
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:51
+msgid "Themes"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:52
+msgid "View, edit and delete the site's themes."
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:53
+msgid "Actions"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:54
+msgid "View, edit and delete the site's actions."
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:55
+msgid "Registry"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:56
+msgid "Merengue registry"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:57
+#: merengue/templates/admin/siteconfig.html.py:13
+msgid "Save/restore configuration"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:58
+msgid ""
+"Save/restore the site configuration (block, plugins, active theme, etc.)"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:64
+msgid "Multimedia"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:65
+msgid "Manage the site's multimedia content"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:67
+msgid "Photos"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:68
+msgid "View, edit and delete the site's photos."
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:69
+msgid "Video"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:70
+msgid "View, edit and delete the site's videos."
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:71
+msgid "Audio"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:72
+msgid "View, edit and delete the site's audios."
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:73
+msgid "Panoramic views"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:74
+msgid "View, edit and delete the site's panoramic views."
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:75
+msgid "Images 3D"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:76
+msgid "View, edit and delete the site's Images 3D."
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:82
+#: merengue/templates/admin/merengue_index_base.html.py:123
+msgid "User management"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:83
+msgid "Manage the site's users, groups and access to site features."
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:85
+#: merengue/templates/admin/perms/objectpermission/role_permissions.html.py:108
+msgid "Groups"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:86
+msgid "View, edit and delete the site's groups."
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:87
+#: merengue/templates/admin/perms/objectpermission/role_permissions.html.py:70
+msgid "Users"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:88
+msgid "View, edit and delete the site's users."
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:89
+msgid "Roles"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:90
+msgid "View, edit and delete the site's roles."
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:92
+msgid "View, edit and delete the site's role permissions."
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:99
+msgid "Plugins administration"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:100
+msgid "Manage your installed plugins."
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:117
+msgid "Review list"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:119
+msgid "Administer"
+msgstr ""
+
+#: merengue/templates/admin/merengue_index_base.html.py:122
+msgid "Site building"
+msgstr ""
+
+#: merengue/templates/admin/mini_google_map.html.py:15
+msgid "Autolocalizated"
+msgstr ""
+
+#: merengue/templates/admin/mini_google_map.html.py:17
+msgid "Localizated"
+msgstr ""
+
+#: merengue/templates/admin/mini_google_map.html.py:19
+msgid "View map"
+msgstr ""
+
+#: merengue/templates/admin/object_history.html.py:19
+msgid "Date/time"
+msgstr ""
+
+#: merengue/templates/admin/object_history.html.py:20
+msgid "User"
+msgstr ""
+
+#: merengue/templates/admin/object_history.html.py:21
+msgid "Action"
+msgstr ""
+
+#: merengue/templates/admin/object_history.html.py:27
+msgid "DATETIME_FORMAT"
+msgstr ""
+
+#: merengue/templates/admin/object_history.html.py:35
+msgid ""
+"This object doesn't have a change history. It probably wasn't added via this "
+"admin site."
+msgstr ""
+
+#: merengue/templates/admin/object_tools.html.py:3
+msgid "View on site"
+msgstr ""
+
+#: merengue/templates/admin/siteconfig.html.py:19
+msgid "Save / Restore config"
+msgstr ""
+
+#: merengue/templates/admin/siteconfig.html.py:27
+msgid "Save/Restore configuration"
+msgstr ""
+
+#: merengue/templates/admin/siteconfig.html.py:30
+msgid "Upload saved configuration"
+msgstr ""
+
+#: merengue/templates/admin/siteconfig.html.py:31
+msgid "Upload and restore a .zip file containing a saved project configuration"
+msgstr ""
+
+#: merengue/templates/admin/siteconfig.html.py:34
+msgid "Submit config"
+msgstr ""
+
+#: merengue/templates/admin/siteconfig.html.py:43
+msgid "Save current configuration"
+msgstr ""
+
+#: merengue/templates/admin/siteconfig.html.py:44
+msgid ""
+"Save current project configuration into a .zip file that can be restored"
+msgstr ""
+
+#: merengue/templates/admin/siteconfig.html.py:46
+msgid "Save current config"
+msgstr ""
+
+#: merengue/templates/admin/siteconfig.html.py:50
+msgid "Backups configuration"
+msgstr ""
+
+#: merengue/templates/admin/siteconfig.html.py:54
+#: merengue/templates/admin/siteconfig.html.py:57
+msgid "Save current backup"
+msgstr ""
+
+#: merengue/templates/admin/siteconfig.html.py:55
+msgid "Save current backup configuration into a .zip file that can be restored"
+msgstr ""
+
+#: merengue/templates/admin/smart_relations_object_tool.html.py:6
+#, python-format
+msgid "%(model)s children"
+msgstr ""
+
+#: merengue/templates/admin/basecontent/sortable_change_list.html.py:13
+msgid "Click and drag to reorder"
+msgstr ""
+
+#: merengue/templates/admin/logentry/change_list.html.py:9
+msgid "By status"
+msgstr ""
+
+#: merengue/templates/admin/multimedia/photo/change_list.html.py:9
+msgid "By content class name"
+msgstr ""
+
+#: merengue/templates/admin/perms/objectpermission/role_permissions.html.py:21
+msgid "Update the permissions for each role for the content: "
+msgstr ""
+
+#: merengue/templates/admin/perms/objectpermission/role_permissions.html.py:23
+msgid "Update the permissions for each role: "
+msgstr ""
+
+#: merengue/templates/admin/perms/objectpermission/role_permissions.html.py:55
+msgid "User and groups local roles"
+msgstr ""
+
+#: merengue/templates/admin/perms/objectpermission/role_permissions.html.py:56
+msgid "Create local roles for user or group for the content: "
+msgstr ""
+
+#: merengue/templates/admin/perms/objectpermission/role_permissions.html.py:57
+msgid "Autocomplete the user or autocomplete the group and select a role"
+msgstr ""
+
+#: merengue/templates/admin/perms/objectpermission/role_permissions.html.py:60
+msgid "Create"
+msgstr ""
+
+#: merengue/templates/admin/perms/role/change_form.html.py:14
+msgid "New Role"
+msgstr ""
+
+#: merengue/templates/registration/logged_out.html.py:8
+msgid "Thanks for your visit"
+msgstr ""
+
+#: merengue/templates/registration/logged_out.html.py:12
+msgid "Log in again"
+msgstr ""
+
+#: merengue/templates/registration/login.html.py:16
+msgid "Login"
+msgstr ""
+
+#: merengue/templates/registration/login.html.py:19
+#: merengue/templates/registration/password_reset.html.py:5
+#: merengue/templates/registration/password_reset.html.py:16
+msgid "Reset password"
+msgstr ""
+
+#: merengue/templates/registration/password_reset.html.py:11
+#: merengue/templates/registration/password_reset.html.py:21
+msgid "Reset Password"
+msgstr ""
+
+#: merengue/templates/registration/password_reset_confirm.html.py:4
+msgid "Password reset confirmation"
+msgstr ""
+
+#: merengue/templates/registration/password_reset_confirm.html.py:6
+msgid "Password reset"
+msgstr ""
+
+#: merengue/templates/registration/password_reset_confirm.html.py:12
+msgid "Enter new password"
+msgstr ""
+
+#: merengue/templates/registration/password_reset_confirm.html.py:14
+msgid ""
+"Please enter your new password twice so we can verify you typed it in "
+"correctly."
+msgstr ""
+
+#: merengue/templates/registration/password_reset_confirm.html.py:18
+msgid "New password:"
+msgstr ""
+
+#: merengue/templates/registration/password_reset_confirm.html.py:20
+msgid "Confirm password:"
+msgstr ""
+
+#: merengue/templates/registration/password_reset_confirm.html.py:21
+msgid "Change my password"
+msgstr ""
+
+#: merengue/templates/registration/password_reset_confirm.html.py:26
+msgid "Password reset unsuccessful"
+msgstr ""
+
+#: merengue/templates/registration/password_reset_confirm.html.py:28
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a new password reset."
+msgstr ""
+
+#: merengue/templates/registration/password_reset_email.html.py:2
+msgid "You're receiving this e-mail because you requested a password reset"
+msgstr ""
+
+#: merengue/templates/registration/password_reset_email.html.py:3
+#, python-format
+msgid "for your user account at %(site_name)s"
+msgstr ""
+
+#: merengue/templates/registration/password_reset_email.html.py:5
+msgid "Please go to the following page and choose a new password:"
+msgstr ""
+
+#: merengue/templates/registration/password_reset_email.html.py:9
+msgid "Your username, in case you've forgotten:"
+msgstr ""
+
+#: merengue/templates/registration/password_reset_email.html.py:11
+msgid "Thanks for using our site!"
+msgstr ""
+
+#: merengue/templates/registration/password_reset_email.html.py:13
+#, python-format
+msgid "The %(site_name)s team"
+msgstr ""

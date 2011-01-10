@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -52,6 +52,18 @@ class StandingOut(models.Model):
     class Meta:
         ordering = ('order', )
         unique_together = (('obj_content_type', 'obj_id', 'related_content_type', 'related_id', 'standing_out_category'), )
+
+    @property
+    def name(self):
+        return self.obj.name
+
+    @property
+    def description(self):
+        return self.obj.description
+
+    @property
+    def main_image(self):
+        return self.obj.main_image
 
     def get_absolute_url(self):
         return self.obj.get_absolute_url()

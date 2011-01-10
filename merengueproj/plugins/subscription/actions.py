@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -26,6 +26,7 @@ from merengue.action.actions import ContentAction
 class SubscriptionAction(ContentAction):
     name = 'subscriptionaction'
     verbose_name = _('Subscription')
+    help_text = _('The view provide subscription functionality')
 
     @classmethod
     def get_response(cls, request, content):

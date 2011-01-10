@@ -1,24 +1,10 @@
 /* ----- general styles ----- */
 #body{
-	font: 12px/19px Helvetica,sans-serif;
-}
-
-#header {
-    background: #E6D8C0;
-    color: #917250;
-    min-height:62px;
-    border-bottom: 4px solid #BCB9AD;
+    font: 12px/19px Helvetica,sans-serif;
 }
 
 p {
-	color:#717171;
-}
-
-a:link, a:visited {
-	color: #bf9460;
-}
-a:hover {
-	color: #806446;
+    color:#717171;
 }
 
 /* ----- header styles ----- */
@@ -26,59 +12,12 @@ div#header img#merengue_logo {
     float: left;
 }
 
-#branding h1 { 
-    margin: 1.2em 0 0 11em;
-	color: #BF843B;
-}
-
 .login #container {
     width: 30em;
 }
 
 #user-tools {
-	padding: 2em 10px;
-}
-
-.module-merengue h1,
-#content-related .module h2,
-.merengueadmin .module h2,
-.module caption, 
-.inline-group h2 {
-	background: #E6D8C0 url(../img/admin/default-bg.gif) repeat-x top left;
-}
-
-#changelist-filter li.selected a {
-	color: #BF9460 !important;
-}
-
-#changelist-filter h2,
-.module h2, 
-.module caption, 
-.inline-group h2 {
-    background: #E6D8C0 url(../img/admin/default-bg.gif) repeat-x top left;	
-}
-
-.row1 {
-	background: #f7f5f0;
-}
-
-.button.default, input.default[type="submit"], .submit-row input.default {
-    border: 1px solid #C49A6C;
-    background: #E6D8C0 url(../img/admin/default-bg.gif) repeat-x top left;
-	color: #917250;
-}
-
-.button.default:active, input.default[type="submit"]:active {
-	border: 1px solid #C49A6C;
-    background: #E6D8C0 url(../img/admin/default-bg-reverse.gif) repeat-x top left;
-	color: #917250;
-} 
-
-#changelist-filter h2,
-.module h2,
-.module caption,
-.inline-group h2 {
-	background: #E6D8C0 url(../img/admin/default-bg.gif) repeat-x top left;
+    padding: 2em 10px 1em 10px;
 }
 
 /*---- other styles ----*/
@@ -89,14 +28,6 @@ div#header img#merengue_logo {
 
 .object-tools li {
     margin-bottom: 0.5em;
-}
-
-.object-tools li.selected {
-   background:transparent url(../img/admin/tool-left_over.gif) no-repeat scroll 0 0 !important;
-}
-
-.object-tools li.selected a {
-   background: #5B80B2 url(../img/admin/tool-right_over.gif) no-repeat scroll top right !important;
 }
 
 .object-subtools {
@@ -326,6 +257,23 @@ form .aligned p.errornote{
     margin-left: 0em;
 }
 
+div.warning-message { 
+    border: 1px solid blue;
+    margin: 1em 0px;
+    background: #cceeff;
+    font-weight: bold;
+} 
+
+div.warning-message ul {
+    margin: 0px;
+}
+
+div.warning-message ul li {
+    list-style-image: url("../img/info_icon.gif");
+    line-height: 16px;
+    margin: 1em 0px;
+}
+
 input.withInternalLinkUrl {
     float: left;
 }
@@ -433,12 +381,14 @@ ul.dependencies li.fulfilled {
     list-style: none;
     background: transparent url(/admin_media/img/admin/icon-yes.gif) no-repeat left center !important;
     color: #44AD41;
+    padding-left: 15px;
 }
 
 ul.dependencies li.unfulfilled {
     list-style: none;
     background: transparent url(/admin_media/img/admin/icon-no.gif) no-repeat left center !important;
     color: #FF0000;
+    padding-left: 15px;
 }
 
 .row-holder {
@@ -469,22 +419,6 @@ textarea#id_css_chunk {
 	color: #aaa;
 }
 
-.paginator a:hover {
-	background: #E6D8C0;
-	border-color: #BF9460;
-	color: #BF9460;
-}
-
-.selector-add  {
-    background:url("../img/admin/selector-add.gif") no-repeat scroll center top transparent;
-    margin-bottom:2px;
-}
-
-a.selector-chooseall {
-    background:url("../img/admin/selector-addall.gif") no-repeat scroll left center transparent;
-    width:7em;
-}
-
 /* ----- plugin admin ----- */
 #plugin-changelist tr.broken {
     background-color: #dddddd;
@@ -511,4 +445,59 @@ a.selector-chooseall {
 div.module.form-row {
     border: 0px;
     border-bottom: 1px solid #EEEEEE;
+}
+
+/* ---- section changelist ---- */
+.section-contents {
+    margin: 0px -5px;
+    background: white;
+    margin-bottom: -5px;
+}
+
+.section-contents .ajax-loading {
+    position: absolute;
+    padding-left: 20px;
+}
+
+.module .toolList {
+    margin: 0px;
+    margin-top: 10px;
+    padding: 0px;
+}
+
+.toolList li {
+    list-style-type: none;
+    padding-left: 50px;
+    line-height: 25px;
+}
+
+.contents-toggle {
+    width: 20px;
+    float: left;
+    display: block;
+    height: 10px;
+}
+
+.toolContentContainer {
+    padding: 0px;
+    margin: 0px;
+    margin-left: -50px;
+}
+
+.module .toolContentList {
+    margin: 0px;
+    padding: 0px;
+    padding-bottom: 10px;
+}
+
+.module .toolContentList li {
+    padding-left: 70px;
+    list-style-type: square;
+    list-style-position: inside;
+    color: #99aabb;
+}
+
+.nocontents {
+    margin-left: 2em;
+    color: #99aabb;
 }

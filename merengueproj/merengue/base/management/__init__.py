@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -65,7 +65,7 @@ class ManagementUtility(django_management.ManagementUtility):
         """
         usage = ['', "Type '%s help <subcommand>' for help on a specific subcommand." % self.prog_name, '']
         usage.append('Available merengue commands:')
-        commands = get_commands().keys()
+        commands = get_commands(self.only_merengue_commands).keys()
         commands.sort()
         for cmd in commands:
             usage.append('  %s' % cmd)

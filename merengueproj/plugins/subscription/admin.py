@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -17,13 +17,16 @@
 
 from django import forms
 
-from merengue.base.admin import BaseAdmin, RelatedModelAdmin
+from merengue.base.admin import PluginAdmin, RelatedModelAdmin
 from merengue.base.models import BaseContent
 from plugins.subscription.models import Subscribable, BaseSubscription
+from plugins.subscription.forms import SubscribableAdminForm
 
 
 class SubscribableAdmin(RelatedModelAdmin):
     related_field = 'content'
+    change_form_template = 'admin/subscription/subscribable/change_form.html'
+    form = SubscribableAdminForm
 
     def formfield_for_dbfield(self, db_field, **kwargs):
         field = super(SubscribableAdmin, self).formfield_for_dbfield(db_field, **kwargs)
@@ -45,8 +48,8 @@ class SubscribableAdmin(RelatedModelAdmin):
         return l
 
 
-class BaseSubscriptionAdmin(BaseAdmin):
-    pass
+class BaseSubscriptionAdmin(PluginAdmin):
+    list_filter = ('subscribable', )
 
 
 def register(site):

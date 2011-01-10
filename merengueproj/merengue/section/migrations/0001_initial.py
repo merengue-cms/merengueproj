@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -24,7 +24,7 @@ from merengue.base.utils import south_trans_data, add_south_trans_fields
 
 
 class Migration:
-    
+
     def forwards(self, orm):
         fields = (
             ('id', orm['section.BaseSection:id']),
@@ -43,7 +43,7 @@ class Migration:
         fields += south_trans_data(
             orm=orm,
             trans_data={
-                'base.BaseContent': ('name', 'description', 'plain_description', ),
+                'section.basesection': ('name', 'description', 'plain_description', ),
             },
         )
         # Adding model 'BaseSection'
@@ -56,7 +56,7 @@ class Migration:
             ('content', orm['section.ContentLink:content']),
         ))
         db.send_create_signal('section', ['ContentLink'])
-        
+
         fields = (
             ('id', orm['section.Menu:id']),
             ('slug', orm['section.Menu:slug']),
@@ -76,13 +76,13 @@ class Migration:
         # Adding model 'Menu'
         db.create_table('section_menu', fields)
         db.send_create_signal('section', ['Menu'])
-        
+
         # Adding model 'AppSection'
         db.create_table('section_appsection', (
             ('basesection_ptr', orm['section.AppSection:basesection_ptr']),
         ))
         db.send_create_signal('section', ['AppSection'])
-        
+
         fields = (
             ('basecontent_ptr', orm['section.Document:basecontent_ptr']),
             ('photo', orm['section.Document:photo']),
@@ -131,7 +131,7 @@ class Migration:
             ('menu', orm['section.BaseLink:menu']),
         ))
         db.send_create_signal('section', ['BaseLink'])
-        
+
         # Adding model 'CustomStyle'
         db.create_table('section_customstyle', (
             ('id', orm['section.CustomStyle:id']),
@@ -148,37 +148,37 @@ class Migration:
             ('content_head_background', orm['section.CustomStyle:content_head_background']),
         ))
         db.send_create_signal('section', ['CustomStyle'])
-        
+
         # Adding ManyToManyField 'Carousel.class_name'
         db.create_table('section_carousel_class_name', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('carousel', models.ForeignKey(orm.Carousel, null=False)),
             ('contenttype', models.ForeignKey(orm['contenttypes.ContentType'], null=False))
         ))
-        
+
         # Adding ManyToManyField 'Carousel.photo_list'
         db.create_table('section_carousel_photo_list', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('carousel', models.ForeignKey(orm.Carousel, null=False)),
             ('photo', models.ForeignKey(orm['multimedia.Photo'], null=False))
         ))
-        
+
         # Adding ManyToManyField 'Document.videos'
         db.create_table('section_document_videos', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('document', models.ForeignKey(orm.Document, null=False)),
             ('video', models.ForeignKey(orm['multimedia.Video'], null=False))
         ))
-        
+
         # Adding ManyToManyField 'BaseSection.related_content'
         db.create_table('section_basesection_related_content', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('basesection', models.ForeignKey(orm.BaseSection, null=False)),
             ('basecontent', models.ForeignKey(orm['base.BaseContent'], null=False))
         ))
-        
-    
-    
+
+
+
     def backwards(self, orm):
         
         # Deleting model 'BaseSection'
@@ -396,23 +396,23 @@ class Migration:
     }
     add_south_trans_fields(models, {
         'base.basecontent': {
-            'name': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '200'}),
             'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'plain_description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
         },
         'multimedia.photo': {
-            'caption': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'caption': ('django.db.models.fields.TextField', [], {}),
         },
         'section.basesection': {
             'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '200'}),
             'plain_description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
         },
         'section.document': {
             'photo_description': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
         },
         'section.menu': {
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
         },
     })
 

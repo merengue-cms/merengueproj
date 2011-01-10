@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -121,9 +121,6 @@ class Migration:
         },
         'collab.collabcommentusertype': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'label_en': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'label_es': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'label_fr': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '20'})
         },
         'contenttypes.contenttype': {
@@ -136,8 +133,11 @@ class Migration:
     }
     add_south_trans_fields(models, {
         'collab.collabcommentrevisorstatustype': {
-            'label': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
+            'label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'reason': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+        },
+        'collab.collabcommentusertype': {
+            'label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
         },
     })
 

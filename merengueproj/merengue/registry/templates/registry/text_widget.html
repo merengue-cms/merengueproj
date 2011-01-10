@@ -1,0 +1,8 @@
+{% extends "registry/param_widget.html" %}
+{% load i18n %}
+
+{% block param_container %}
+  <textarea {{ widget_attrs }} >
+    {{ param.get_value_display|default_if_none:"" }}
+  </textarea>
+{% endblock %}

@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -18,24 +18,28 @@
 from django.shortcuts import get_object_or_404
 
 from cmsutils.adminfilters import QueryStringManager
-from merengue.base.views import content_view, content_list
-from plugins.link.models import Link, LinkCategory
+from merengue.base.views import content_view
+from merengue.collection.models import Collection
+from plugins.link.models import Link
 
 
-def link_index(request, template_name='link/link_index.html'):
-    link_list = get_links(request)
-    link_category_slug = request.GET.get('categories__slug', None)
-    link_category = link_category_slug and get_object_or_404(LinkCategory, slug=link_category_slug)
-    return content_list(request, link_list, template_name=template_name, extra_context={'link_category': link_category})
+LINK_COLLECTION_SLUG = 'links'
 
 
-def link_view(request, link_slug, template_name='link/link_view.html'):
+def link_index(request, extra_context=None):
+    link_collection= Collection.objects.get(slug=LINK_COLLECTION_SLUG)
+    extra_context = extra_context or {}
+    return content_view(request, link_collection, extra_context=extra_context)
+
+
+def link_view(request, link_slug, template_name='link/link_view.html', extra_context=None):
     link = get_object_or_404(Link, slug=link_slug)
-    return content_view(request, link, template_name)
+    return content_view(request, link, template_name, extra_context=None)
 
 
-def get_links(request=None, limit=0):
-    links = Link.objects.published()
+def get_links(request=None, limit=0, queryset=None):
+    queryset = queryset or Link.objects.published()
+    links = queryset
     qsm = QueryStringManager(request, page_var='page', ignore_params=('set_language', ))
     filters = qsm.get_filters()
     links = links.filter(**filters)

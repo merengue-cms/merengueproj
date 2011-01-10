@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -32,6 +32,17 @@ from django.core.management.color import no_style
 from django.db import connection, transaction
 from django.db.models import get_models
 from django.db.models.loading import load_app
+
+
+class classproperty(property):
+    """ decorator to allow define python property on class methods """
+
+    def __get__(self, obj, type_):
+        return self.fget.__get__(None, type_)()
+
+    def __set__(self, obj, value):
+        cls = type(obj)
+        return self.fset.__get__(None, cls)(value)
 
 
 def copy_request(request, delete_list, copy=None):
@@ -327,3 +338,9 @@ def invalidate_johnny_cache(model, invalidate_parent=False, parent_finish=None):
             if parent_finish and not issubclass(model, parent_finish):
                 continue
             invalidate_johnny_cache(model_parent, invalidate_parent, parent_finish)
+
+
+def is_last_application(app):
+    """ returns Merengue last application """
+    last_app = settings.MERENGUE_APPS[-1].split('.')[1]
+    return app == last_app

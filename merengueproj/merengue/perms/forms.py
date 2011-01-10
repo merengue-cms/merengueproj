@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -36,7 +36,7 @@ class UserChangeForm(DjangoUserChangeForm):
         if user:
             self.fields['roles'].initial = [role.id for role in get_global_roles(user)]
 
-    roles = forms.ModelMultipleChoiceField(queryset=Role.objects.all(),
+    roles = forms.ModelMultipleChoiceField(queryset=Role.objects.exclude(name=u'Anonymous User'),
                                            widget=FilteredSelectMultiple(_('Roles'), False),
                                            required=False)
 

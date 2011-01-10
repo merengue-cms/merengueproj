@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -15,17 +15,13 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from merengue.base.admin import BaseAdmin
+from threadedcomments.admin import FreeThreadedCommentAdmin
 from threadedcomments.models import FreeThreadedComment
-
-
-class FeedbackAdmin(BaseAdmin):
-    pass
 
 
 def register(site):
     """ Merengue admin registration callback """
-    site.register(FreeThreadedComment, FeedbackAdmin)
+    site.register(FreeThreadedComment, FreeThreadedCommentAdmin)
 
 
 def unregister(site):

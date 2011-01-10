@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -15,15 +15,26 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.utils.translation import ugettext_lazy as _
 from merengue.base.admin import BaseAdmin, set_field_read_only
 from merengue.perms import utils as perms_api
 from merengue.theming.checker import check_themes
 from merengue.theming.models import Theme
 
 
+def admin_thumbnail(instance):
+    if instance.preview:
+        return u'<a href="%s"><img src="%s" alt="Theme screenshot" /></a>' % \
+                    (instance.preview, instance.preview)
+    return instance
+
+admin_thumbnail.short_description = _('Thumbnail')
+admin_thumbnail.allow_tags = True
+
+
 class ThemeAdmin(BaseAdmin):
     readonly_fields = ('name', 'description', 'directory_name', 'installed')
-    list_display = ('name', 'directory_name', 'installed', 'active')
+    list_display = ('name', 'active', 'directory_name', admin_thumbnail, )
 
     def get_form(self, request, obj=None):
         form = super(ThemeAdmin, self).get_form(request, obj)

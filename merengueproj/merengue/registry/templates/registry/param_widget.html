@@ -1,0 +1,18 @@
+{% load i18n smart_if %}
+<div class="config_params_container">
+  <label for="config_params_{{ param.name }}">{{ param.label|capfirst }}</label>
+    {% if param.choices %}
+      {% block param_choices %}
+        <select {{ widget_attrs }}>
+          {% for choice in param.choices %}
+             <option value="{{ choice.0 }}" {% if choice.0 = param.get_value %}selected="selected"{% endif %}>{{ choice.1 }}</option>
+          {% endfor %}
+        </select>
+      {% endblock %}
+    {% else %}
+    {% block param_container %}
+      <input {{ widget_attrs }} type="text"
+                                value="{{ param.get_value_display|default_if_none:"" }}"/>
+    {% endblock %}
+    {% endif %}
+</div>

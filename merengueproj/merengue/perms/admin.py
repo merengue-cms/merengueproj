@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -16,6 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django import forms
+from django.conf import settings
 from django.conf.urls.defaults import patterns
 from django.contrib import admin
 from django.contrib.admin.widgets import FilteredSelectMultiple
@@ -34,6 +35,7 @@ from merengue.perms import ANONYMOUS_ROLE_SLUG
 from merengue.perms.models import ObjectPermission, Permission, PrincipalRoleRelation, Role
 from merengue.perms.forms import UserChangeForm, GroupForm, PrincipalRoleRelationForm
 from merengue.perms.utils import add_role, remove_role, can_manage_user
+from merengue.base.widgets import ReadOnlyWidget
 
 
 class PermissionAdmin(admin.ModelAdmin):
@@ -136,8 +138,11 @@ class PermissionAdmin(admin.ModelAdmin):
                 msg, url_redirect = self._update_role_users(request, obj)
             elif '_groups_continue' in request.POST or '_groups_save' in request.POST:
                 msg, url_redirect = self._update_role_groups(request, obj)
+            # set if object should adquire global permissions
+            obj.adquire_global_permissions = request.POST.get('adquire_global_permissions', False)
+            obj.save()
             if msg and url_redirect:
-                return self.response_change(request, msg, url_redirect=url_redirect)
+                return self.response_change_permissions(request, msg, url_redirect=url_redirect)
 
         roles = Role.objects.all()
         role_permissions = {}
@@ -193,7 +198,7 @@ class PermissionAdmin(admin.ModelAdmin):
                                   context,
                                   context_instance=RequestContext(request))
 
-    def response_change(self, request, *args, **kwargs):
+    def response_change_permissions(self, request, *args, **kwargs):
         """
         Determines the HttpResponse for the change_view stage.
         """
@@ -249,7 +254,7 @@ class ObjectPermissionAdmin(PermissionAdmin):
                 perm = Permission.objects.get(id=perm_id)
                 op, created = ObjectPermission.objects.get_or_create(role=role, permission=perm, content=None)
 
-            return self.response_change(request)
+            return self.response_change_permissions(request)
 
 
         roles = Role.objects.all()
@@ -294,6 +299,22 @@ class RoleAdmin(admin.ModelAdmin):
         """
         return can_manage_user(request.user)
 
+    def has_delete_permission(self, request, obj=None):
+        if obj and obj.name in settings.STATIC_ROLES:
+            return False
+        elif obj:
+            return True
+        else:
+            if request.method == 'POST' and \
+               request.POST.get('action', None) == u'delete_selected':
+                selected_objs = [Role.objects.get(id=int(key))
+                                 for key in request.POST.getlist('_selected_action')]
+                for sel_obj in selected_objs:
+                    if not self.has_delete_permission(request, sel_obj):
+                        return False
+                return True
+        return False
+
     def save_model(self, request, obj, form, change):
         super(RoleAdmin, self).save_model(request, obj, form, change)
         selected = request.POST.getlist('selected_perm')
@@ -303,6 +324,17 @@ class RoleAdmin(admin.ModelAdmin):
             op, created = ObjectPermission.objects.get_or_create(role=obj, permission=perm, content=None)
             if created:
                 op.save()
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(RoleAdmin, self).get_form(request, obj, **kwargs)
+        if obj and obj.name in settings.STATIC_ROLES:
+            form.base_fields['name'].widget = ReadOnlyWidget(
+                getattr(obj, 'name', ''), obj.name)
+            form.base_fields['name'].required = False
+            form.base_fields['slug'].widget = ReadOnlyWidget(
+                getattr(obj, 'slug', ''), obj.slug)
+            form.base_fields['slug'].required = False
+        return form
 
     def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
         permissions = []

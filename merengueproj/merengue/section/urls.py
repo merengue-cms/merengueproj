@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -18,7 +18,6 @@
 from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('merengue.section.views',
-    url(r'ajax/get_search_filters_and_options/$', 'get_search_filters_and_options', name='get_search_filters_and_options'),
     url(r'ajax/save_menu_order/$', 'save_menu_order', name='save_menu_order'),
     url(r'ajax/insert_section/$', 'insert_document_section_after', name='insert_document_section_after'),
     url(r'ajax/delete_section/$', 'document_section_delete', name='document_section_delete'),

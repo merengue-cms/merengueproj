@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -21,6 +21,9 @@ from django.conf import settings
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
+from merengue.base.utils import (south_trans_data, add_south_trans_fields,
+                                 add_south_trans_column, delete_south_trans_column)
+
 
 class Migration(SchemaMigration):
 
@@ -40,14 +43,10 @@ class Migration(SchemaMigration):
         # Deleting field 'basesection.interest_menu_template'
         db.delete_column('section_basesection', 'interest_menu_template')
 
-        # Deleting field 'document.photo_description_es'
-        db.delete_column('section_document', 'photo_description_es')
-
-        # Deleting field 'document.photo_description_en'
-        db.delete_column('section_document', 'photo_description_en')
-
-        # Deleting field 'document.photo_description_fr'
-        db.delete_column('section_document', 'photo_description_fr')
+        delete_south_trans_column(
+            table='section_document',
+            field_name='photo_description',
+        )
 
         # Deleting field 'customstyle.searcher_right_arrow'
         db.delete_column('section_customstyle', 'searcher_right_arrow')
@@ -99,15 +98,6 @@ class Migration(SchemaMigration):
 
         # Adding field 'basesection.interest_menu_template'
         db.add_column('section_basesection', 'interest_menu_template', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True), keep_default=False)
-
-        # Adding field 'document.photo_description_es'
-        db.add_column('section_document', 'photo_description_es', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True), keep_default=False)
-
-        # Adding field 'document.photo_description_en'
-        db.add_column('section_document', 'photo_description_en', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True), keep_default=False)
-
-        # Adding field 'document.photo_description_fr'
-        db.add_column('section_document', 'photo_description_fr', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True), keep_default=False)
 
         # Adding field 'customstyle.searcher_right_arrow'
         db.add_column('section_customstyle', 'searcher_right_arrow', self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True), keep_default=False)
@@ -179,9 +169,8 @@ class Migration(SchemaMigration):
             'commentable': ('django.db.models.fields.CharField', [], {'default': "'allowed'", 'max_length': '20'}),
             'contact_info': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['base.ContactInfo']", 'null': 'True', 'blank': 'True'}),
             'creation_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'null': 'True', 'blank': 'True'}),
-            'description_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'description_es': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'description_fr': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            
+            
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_autolocated': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
             'last_editor': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'last_edited_content'", 'blank': 'True', 'null': 'True', 'to': "orm['auth.User']"}),
@@ -191,13 +180,11 @@ class Migration(SchemaMigration):
             'meta_desc': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'modification_date': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'null': 'True', 'blank': 'True'}),
             'multimedia': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['multimedia.BaseMultimedia']", 'through': "'MultimediaRelation'", 'blank': 'True'}),
-            'name_en': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200', 'db_index': 'True'}),
-            'name_fr': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            
+            
             'owners': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'contents_owned'", 'blank': 'True', 'null': 'True', 'to': "orm['auth.User']"}),
-            'plain_description_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'plain_description_es': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'plain_description_fr': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            
+            
             'rank': ('django.db.models.fields.FloatField', [], {'default': '100.0', 'db_index': 'True'}),
             'related_items': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['base.BaseContent']", 'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '200', 'unique': 'True', 'db_index': 'True'}),
@@ -245,9 +232,8 @@ class Migration(SchemaMigration):
         'multimedia.photo': {
             'Meta': {'object_name': 'Photo', '_ormbases': ['multimedia.BaseMultimedia']},
             'basemultimedia_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['multimedia.BaseMultimedia']", 'unique': 'True', 'primary_key': 'True'}),
-            'caption_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'caption_es': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'caption_fr': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            
+            
             'image': ('stdimage.fields.StdImageField', [], {'max_length': '200'}),
             'plone_uid': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '100', 'null': 'True', 'blank': 'True'})
         },
@@ -285,20 +271,17 @@ class Migration(SchemaMigration):
         'section.basesection': {
             'Meta': {'object_name': 'BaseSection'},
             'customstyle': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['section.CustomStyle']", 'null': 'True', 'blank': 'True'}),
-            'description_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'description_es': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'description_fr': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            
+            
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'main_content': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'section_main_content'", 'blank': 'True', 'null': 'True', 'to': "orm['base.BaseContent']"}),
             'main_image': ('stdimage.fields.StdImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'main_menu': ('django.db.models.fields.related.OneToOneField', [], {'blank': 'True', 'related_name': "'main_menu_section'", 'unique': 'True', 'null': 'True', 'to': "orm['section.Menu']"}),
-            'name_en': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200', 'db_index': 'True'}),
-            'name_fr': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            
+            
             'order': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'plain_description_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'plain_description_es': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'plain_description_fr': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            
+            
             'related_content': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['base.BaseContent']", 'through': "'SectionRelatedContent'"}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '200', 'unique': 'True', 'db_index': 'True'}),
             'status': ('django.db.models.fields.CharField', [], {'default': "'draft'", 'max_length': '20', 'db_index': 'True'})
@@ -332,9 +315,8 @@ class Migration(SchemaMigration):
         },
         'section.documentsection': {
             'Meta': {'object_name': 'DocumentSection'},
-            'body_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'body_es': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'body_fr': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            
+            
             'document': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'sections'", 'to': "orm['section.Document']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'position': ('django.db.models.fields.IntegerField', [], {})
@@ -344,9 +326,8 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'level': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'lft': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
-            'name_en': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'name_fr': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            
+            
             'parent': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'child_set'", 'blank': 'True', 'null': 'True', 'to': "orm['section.Menu']"}),
             'rght': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '200', 'db_index': 'True'}),

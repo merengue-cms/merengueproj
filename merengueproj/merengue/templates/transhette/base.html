@@ -1,0 +1,38 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block title %}Transhette - {% block pagetitle %}{% endblock %}{% endblock %}
+
+
+{% block extrahead %}
+  <style type="text/css" media="screen">
+    {% include 'transhette/css/transhette.css' %}
+  </style>
+  {{block.super}}
+{% endblock %}
+
+{% block userlinks %}
+{{block.super}}
+  <div id="transhette-tools" style="float: right; font-size: 11px; padding-right: 10px;">
+    <p>
+      <span>
+        <a href="{% url transhette-restart-server %}">
+          {% trans "Restart web server" %}
+        </a> /
+        <a href="{% url transhette-update-file %}">
+          {% trans "Update a file" %}
+        </a>
+      </span>
+    </p>
+  </div>
+{% endblock %}
+
+{% block breadcrumbs %}
+{% block breadcumbs %}
+{% endblock %}
+{% endblock %}
+
+
+{% block content %}
+   {% block main %}{% endblock %}
+{% endblock %}

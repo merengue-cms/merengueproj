@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -29,23 +29,29 @@ from plugins.event.models import Event, Category
 from plugins.event.utils import getEventsMonthYear
 
 
-def event_view(request, event_slug):
+def event_view(request, event_slug, extra_context=None):
     event = get_object_or_404(Event, slug=event_slug)
     event_category_slug = request.GET.get('categories__slug', None)
     event_category = event_category_slug and get_object_or_404(Category, slug=event_category_slug)
-    return content_view(request, event, 'event/event_view.html', extra_context={'event_category': event_category})
+    context = {'event_category': event_category}
+    extra_context = extra_context or {}
+    context.update(extra_context)
+    return content_view(request, event, 'event/event_view.html', extra_context=context)
 
 
-def event_list(request, year=None, month=None, day=None):
+def event_list(request, year=None, month=None, day=None, queryset=None, extra_context=None):
     filters = {}
     date_day_start = None
     if year and month and day:
         date_day_start = datetime.datetime(int(year), int(month), int(day), 0, 0, 0)
         date_day_end = datetime.datetime(int(year), int(month), int(day), 23, 59, 59)
         filters = {'start__lt': date_day_end, 'end__gt': date_day_start}
-    events = get_events(request).filter(**filters)
+    events = get_events(request, queryset=queryset).filter(**filters)
+    context = {'date': date_day_start}
+    extra_context = extra_context or {}
+    context.update(extra_context)
     return content_list(request, events,
-                        extra_context={'date': date_day_start},
+                        extra_context=context,
                         template_name='event/event_list.html')
 
 
@@ -60,8 +66,9 @@ def events_calendar(request):
     return HttpResponseBadRequest(mimetype=mimetype)
 
 
-def get_events(request=None, limit=0):
-    events = Event.objects.published().order_by("-publish_date")
+def get_events(request=None, limit=0, queryset=None):
+    queryset = queryset or Event.objects.published()
+    events = queryset.order_by("-publish_date")
     qsm = QueryStringManager(request, page_var='page', ignore_params=('set_language', ))
     filters = qsm.get_filters()
     events = events.filter(**filters)

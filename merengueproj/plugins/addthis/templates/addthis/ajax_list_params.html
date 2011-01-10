@@ -1,0 +1,40 @@
+{% extends "registry/param_widget.html" %}
+{% load i18n smart_if %}
+
+{% block param_choices %}
+  <select {{ widget_attrs }} multiple="multiple" class="services">
+    {% for choice in param.choices %}
+      <option value="{{ choice.0 }}"
+         {% if choice.0 in param.get_value %}selected="selected"{% endif %}>
+         {{ choice.1 }}
+      </option>
+    {% endfor %}
+  </select>
+  <script type="text/javascript">
+    var request = function() {
+      $.getJSON(
+        'http://cache.addthiscdn.com/services/v1/sharing.en.jsonp#jsonpcallback=?',
+        function(data) {
+          $(".services").html('');
+          var html = "";
+          $.each(data.data, function(i,item){
+            html += '<option value="' + item.code  + '">' + item.name + '</option>';
+          });
+          $(".services").html(html);
+        }
+      );
+    };
+    (function ($) {
+      $(document).ready(function () {
+        request();
+        $("#services_reload").click(function() {
+           request()
+        });
+      });
+    }(jQuery));
+  </script>
+
+  <span class="ajax_button_container">
+    <input type="button" id="services_reload" value="{% trans "Reload services" %}"/>
+  </span>
+{% endblock %}

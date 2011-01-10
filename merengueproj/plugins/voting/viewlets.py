@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from cmsutils.adminfilters import QueryStringManager
 
@@ -40,7 +40,8 @@ def get_content_with_votes(request=None, limit=0, order_by='id'):
 
 class BaseContentTopRated(Viewlet):
     name = 'basecontenttoprated'
-    label = _('Content top rated')
+    help_text = _('Content top rated')
+    verbose_name = _('Top rated content')
 
     @classmethod
     def render(cls, request):
@@ -51,7 +52,8 @@ class BaseContentTopRated(Viewlet):
 
 class BaseContentWithMoreVotes(Viewlet):
     name = 'basecontentwithmorevotes'
-    label = _('Content with more votes')
+    help_text = _('Content that contains more votes')
+    verbose_name = _('More votes content')
 
     @classmethod
     def render(cls, request):

@@ -4,8 +4,16 @@
 
 {% block form_top %}
   {% if is_broken %}
-  <p class="errornote">
+  <div class="errornote">
     <strong>{% trans "This item is broken. You cannot edit this object until problem was fixed" %}</strong>
-  </p>
+    <p><strong>{% trans "Traceback error" %}</strong><br/>
+      {{ original.traceback|safe }}
+    </p>
+  </div>
+  {% endif %}
+{% endblock %}
+
+{% block after_field_sets %}
+  {% if is_broken %}
   {% endif %}
 {% endblock %}

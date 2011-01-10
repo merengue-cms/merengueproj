@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -53,7 +53,7 @@ class Permission(models.Model):
         ordering = ('name', )
 
     def __unicode__(self):
-        return "%s (%s)" % (self.name, self.codename)
+        return u"%s (%s)" % (self.name, self.codename)
 
 
 class ObjectPermission(models.Model):
@@ -76,7 +76,7 @@ class ObjectPermission(models.Model):
     content = models.ForeignKey(BaseContent, blank=True, null=True)
 
     def __unicode__(self):
-        return "%s / %s / %s" % (self.permission.name, self.role, self.content)
+        return u"%s / %s / %s" % (self.permission.name, self.role, self.content)
 
     def get_principal(self):
         """Returns the principal.
@@ -109,7 +109,7 @@ class ObjectPermissionInheritanceBlock(models.Model):
     content = models.ForeignKey(BaseContent)
 
     def __unicode__(self):
-        return "%s / %s" % (self.permission, self.content)
+        return u"%s / %s" % (self.permission, self.content)
 
 
 class Role(models.Model):
@@ -190,6 +190,6 @@ class PrincipalRoleRelation(models.Model):
 
     def __unicode__(self):
         if self.content:
-            return "%s / %s / %s" % (self.user or self.group, self.role, self.content)
+            return u"%s / %s / %s" % (self.user or self.group, self.role, self.content)
         else:
-            return "%s / %s" % (self.user or self.group, self.role)
+            return u"%s / %s" % (self.user or self.group, self.role)

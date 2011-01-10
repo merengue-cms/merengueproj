@@ -2,19 +2,19 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-04-12 11:57+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2010-10-05 10:23\n"
+"Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Translated-Using: django-transhette 0.1.SVN\n"
 
 #: models.py:8
 msgid "All"
@@ -47,3 +47,19 @@ msgstr "Cabecera"
 #: models.py:15
 msgid "Footer"
 msgstr "Pie de página"
+
+#: models.py:42
+msgid "shown in urls"
+msgstr "mostrado en urls"
+
+#: models.py:44
+msgid "block will <em>only</em> be visible in urls matching these regular expressions (one per line, using <a href='http://docs.python. org./library/re.html#regular-expression-syntax' title='python regular expressions'>python re syntax</a>). <br/> Please use relative paths. This field has preference over 'hidden in urls'."
+msgstr "el bloque será <em>sólo</em> mostrado en urls que se ajusten a estas expresiones regulares (una por línea, usando la <a href='http://docs.python.org./library/re.html#regular-expression-syntax' title='python regular expressions'>sintaxis de python re</a>). <br/> Por favor, use rutas relativas. Este campo tiene preferencia sobre 'oculto en urls'."
+
+#: models.py:51
+msgid "hidden in urls"
+msgstr "oculto en urls"
+
+#: models.py:53
+msgid "block will be hidden in urls matching these regular expressions (one per line, using <a href='http://docs.python.org/library/re.html#regular-expression-syntax' title='python regular expressions'>python re syntax</a>)."
+msgstr "el bloque será ocultado en urls que se ajusten a estas expresiones regulares (una por línea, usando la <a href='http://docs.python.org./library/re.html#regular-expression-syntax' title='python regular expressions'>sintaxis de python re</a>)."

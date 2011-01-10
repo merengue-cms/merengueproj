@@ -1,0 +1,28 @@
+{% extends "block.html" %}
+
+{% block blockbody %}
+    <script type="text/javascript" src="{% url contact_form_jsi18n %}"></script>
+    <script type="text/javascript" src="{{ admin_media }}js/core.js"></script>
+    {{ form.media }}
+    <style>
+        .calendarbox, .clockbox {
+            background: white;
+            border: 1px solid black;
+            padding: 10px;
+        }
+    </style>
+
+    <form id="contactform" method="POST" action="{% url contact_form_submit content.slug contact_form.id %}" enctype="multipart/form-data">
+        <fieldset>
+            <legend>{{ contact_form.title }}</legend>
+            <p>
+            {{ contact_form.description|safe }}
+            </p>
+            <table>{{ form }}</table>
+            <input class="button" type="submit" value="{{ contact_form.submit_msg }}"/>
+            {% if contact_form.reset_button %}
+                <input class="button" type="reset" value="{{ contact_form.reset_msg }}"/>
+            {% endif %}
+        </fieldset>
+    </form>
+{% endblock %}

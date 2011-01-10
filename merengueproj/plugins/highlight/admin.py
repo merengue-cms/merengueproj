@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -17,11 +17,11 @@
 
 from transmeta import get_fallback_fieldname
 
-from merengue.base.admin import BaseAdmin
+from merengue.base.admin import PluginAdmin
 from plugins.highlight.models import Highlight
 
 
-class HighlightAdmin(BaseAdmin):
+class HighlightAdmin(PluginAdmin):
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
     html_fields = ('description', )
 

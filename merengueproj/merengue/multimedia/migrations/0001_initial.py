@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -19,22 +19,28 @@
 from south.db import db
 from django.db import models
 from merengue.multimedia.models import *
+from merengue.base.utils import south_trans_data, add_south_trans_fields
+
 
 class Migration:
-    
+
     def forwards(self, orm):
-        
+
         # Adding model 'Photo'
-        db.create_table('multimedia_photo', (
+        fields = (
             ('basemultimedia_ptr', orm['multimedia.Photo:basemultimedia_ptr']),
             ('image', orm['multimedia.Photo:image']),
-            ('caption_fr', orm['multimedia.Photo:caption_fr']),
-            ('caption_es', orm['multimedia.Photo:caption_es']),
-            ('caption_en', orm['multimedia.Photo:caption_en']),
             ('plone_uid', orm['multimedia.Photo:plone_uid']),
-        ))
+        )
+        fields += south_trans_data(
+            orm=orm,
+            trans_data={
+                'multimedia.photo': ('caption', ),
+            },
+        )
+        db.create_table('multimedia_photo', fields)
         db.send_create_signal('multimedia', ['Photo'])
-        
+
         # Adding model 'PanoramicView'
         db.create_table('multimedia_panoramicview', (
             ('basemultimedia_ptr', orm['multimedia.PanoramicView:basemultimedia_ptr']),
@@ -42,7 +48,7 @@ class Migration:
             ('external_url', orm['multimedia.PanoramicView:external_url']),
         ))
         db.send_create_signal('multimedia', ['PanoramicView'])
-        
+
         # Adding model 'BaseMultimedia'
         db.create_table('multimedia_basemultimedia', (
             ('id', orm['multimedia.BaseMultimedia:id']),
@@ -56,7 +62,7 @@ class Migration:
             ('authors', orm['multimedia.BaseMultimedia:authors']),
         ))
         db.send_create_signal('multimedia', ['BaseMultimedia'])
-        
+
         # Adding model 'Video'
         db.create_table('multimedia_video', (
             ('basemultimedia_ptr', orm['multimedia.Video:basemultimedia_ptr']),
@@ -66,45 +72,43 @@ class Migration:
             ('plone_uid', orm['multimedia.Video:plone_uid']),
         ))
         db.send_create_signal('multimedia', ['Video'])
-        
+
         # Adding model 'Audio'
         db.create_table('multimedia_audio', (
             ('basemultimedia_ptr', orm['multimedia.Audio:basemultimedia_ptr']),
             ('file', orm['multimedia.Audio:file']),
         ))
         db.send_create_signal('multimedia', ['Audio'])
-        
+
         # Adding model 'Image3D'
         db.create_table('multimedia_image3d', (
             ('basemultimedia_ptr', orm['multimedia.Image3D:basemultimedia_ptr']),
             ('file', orm['multimedia.Image3D:file']),
         ))
         db.send_create_signal('multimedia', ['Image3D'])
-        
-    
-    
+
+
     def backwards(self, orm):
-        
+
         # Deleting model 'Photo'
         db.delete_table('multimedia_photo')
-        
+
         # Deleting model 'PanoramicView'
         db.delete_table('multimedia_panoramicview')
-        
+
         # Deleting model 'BaseMultimedia'
         db.delete_table('multimedia_basemultimedia')
-        
+
         # Deleting model 'Video'
         db.delete_table('multimedia_video')
-        
+
         # Deleting model 'Audio'
         db.delete_table('multimedia_audio')
-        
+
         # Deleting model 'Image3D'
         db.delete_table('multimedia_image3d')
-        
-    
-    
+
+
     models = {
         'auth.group': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -166,9 +170,6 @@ class Migration:
         },
         'multimedia.photo': {
             'basemultimedia_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['multimedia.BaseMultimedia']", 'unique': 'True', 'primary_key': 'True'}),
-            'caption_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'caption_es': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'caption_fr': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'image': ('StdImageField', [], {'max_length': '200', 'thumbnail_size': '(200,200)'}),
             'plone_uid': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '100', 'null': 'True', 'blank': 'True'})
         },
@@ -180,5 +181,9 @@ class Migration:
             'preview': ('StdImageField', [], {'null': 'True', 'thumbnail_size': '(200,200)', 'blank': 'True'})
         }
     }
-    
+    add_south_trans_fields(models, {
+        'multimedia.photo': {
+            'caption': ('django.db.models.fields.TextField', [], {}),
+        }
+    })
     complete_apps = ['multimedia']

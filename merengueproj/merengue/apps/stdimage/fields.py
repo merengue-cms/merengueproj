@@ -9,6 +9,8 @@ from forms import StdImageFormField
 import os
 import shutil
 
+from stdimage.globals import DELETED
+
 
 def _get_thumbnail_filename(filename):
     '''
@@ -108,7 +110,11 @@ class StdImageField(ImageField):
             - filenamedst: full path of image to save the resize image
         '''
         WIDTH, HEIGHT = 0, 1
-        import Image, ImageOps
+        try:
+            from PIL import Image, ImageOps
+        except ImportError:
+            import Image  # pyflakes:ignore
+            import ImageOps  # pyflakes:ignore
         img = Image.open(filename)
         filenamedst = filenamedst or filename
         if img.size[WIDTH] > size['width'] or img.size[HEIGHT] > size['height']:
@@ -199,7 +205,7 @@ class StdImageField(ImageField):
             Overwrite save_form_data to delete images if "delete" checkbox
             is selected
         '''
-        if data == '__deleted__':
+        if data == DELETED:
             filename = getattr(instance, self.name).path
             if os.path.exists(filename):
                 os.remove(filename)

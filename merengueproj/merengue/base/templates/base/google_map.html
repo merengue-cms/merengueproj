@@ -62,7 +62,9 @@
           <span class="cluster_text">{{ content.get_cluster_text }}</span>
           <span class="cluster_icon_name">{{ content.get_cluster_icon_name }}</span>
           {% if show_main_image %}
-              <span class="iconImage">{% thumbnail content.main_image 40x40 %}</span>
+            {% thumbnail content.main_image "40x40" as content_thumb %}
+              <span class="iconImage">{{ content_thumb.url }}</span>
+            {% endthumbnail %}
           {% else %}
               <span class="iconImage">{{ content.get_icon }}</span>
           {% endif %}
@@ -80,7 +82,9 @@
             <span class="title">{{ content.name }}</span>
 
           {% if show_main_image %}
-              <span class="iconImage">{% thumbnail content.main_image 40x40 %}</span>
+            {% thumbnail content.main_image "40x40" as content_thumb %}
+              <span class="iconImage">{{ content_thumb.url }}</span>
+            {% endthumbnail %}
           {% else %}
               <span class="iconImage">{{ content.get_icon }}</span>
           {% endif %}

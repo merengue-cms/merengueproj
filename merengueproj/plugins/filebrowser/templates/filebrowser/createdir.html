@@ -1,11 +1,11 @@
 {% extends "filebrowser/base.html" %}
 {% load i18n filebrowser_tags %}
 
-{% block pagetitle %}{% trans "Create folder" %}{% endblock %}
+{% block pagetitle %}{{ block.super }} - {% trans "Create folder" %}{% endblock %}
 
 {% block extrabreadcrumbs %}
   {{ block.super }}
-  <span class="breadcrumbSeparator">→</span><a href=".">{% trans "Create folder" %}</a>
+  <span class="breadcrumbSeparator">→</span>{% trans "Create folder" %}
 {% endblock %}
 
 {% block content %}

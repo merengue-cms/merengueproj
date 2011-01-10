@@ -1,0 +1,28 @@
+{% extends "block.html" %}
+{% load i18n %}
+
+{% block blocktitle %}
+{% endblock %}
+
+{% block blockbody %}
+<!-- ADDTHIS BUTTON BEGIN -->
+<script type="text/javascript">
+var addthis_config = {
+     username: "merengue"
+}
+</script>
+
+{% if services %}
+<div class="addthis_toolbox addthis_default_style ">
+<a href="http://www.addthis.com/bookmark.php?v=250&amp;username=merengue" class="addthis_button_compact">{% trans "Share" %}</a>
+<span class="addthis_separator">|</span>
+{% for service in services %}<a class="addthis_button_{{ service }}"></a>{% endfor %}
+</div>
+{% else %}
+<a class="addthis_button"></a>
+{% endif %}
+
+<script type="text/javascript"
+        src="http://s7.addthis.com/js/250/addthis_widget.js"></script>
+<!-- ADDTHIS BUTTON END -->
+{% endblock %}

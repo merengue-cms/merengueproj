@@ -1,0 +1,30 @@
+# python libraries
+PIL
+BeautifulSoup
+encutils
+
+# Django
+django==1.1.2
+
+# Django applications
+south==0.7.2
+django-extensions==0.5
+cssutils
+django-tagging
+django-pagination
+template_utils
+django-mptt
+django-oembed
+django-ajax-selects
+django-threadedcomments==0.5.3
+django-notification==0.1.5
+django-oot
+django-genericforeignkey
+django-stdfile
+cmsutils
+transhette
+django-inlinetrans
+django-transmeta
+sorl-thumbnail
+searchform
+django-autoreports

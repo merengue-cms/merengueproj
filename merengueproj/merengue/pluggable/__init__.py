@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -21,15 +21,19 @@ from django.utils.translation import ugettext
 from south.signals import post_migrate
 from transmeta import get_fallback_fieldname
 
-from merengue.pluggable.models import RegisteredPlugin
-from merengue.pluggable.utils import get_plugin_config, validate_plugin
 from merengue.registry import register, is_registered
 from merengue.registry.items import RegistrableItem
+from merengue.utils import is_last_application, classproperty
 
 
 class Plugin(RegistrableItem):
-    model = RegisteredPlugin
     url_prefixes = ()
+
+    @classproperty
+    @classmethod
+    def model(cls):
+        from merengue.pluggable.models import RegisteredPlugin
+        return RegisteredPlugin
 
     @classmethod
     def get_category(cls):
@@ -41,6 +45,10 @@ class Plugin(RegistrableItem):
 
     @classmethod
     def get_blocks(cls):
+        return [] # to override in plugins
+
+    @classmethod
+    def get_middlewares(cls):
         return [] # to override in plugins
 
     @classmethod
@@ -67,8 +75,18 @@ class Plugin(RegistrableItem):
     def get_perms(cls):
         return [] # to override in plugins
 
+    @classmethod
+    def hook_post_register(cls):
+        pass
+
+    @classmethod
+    def get_notifications(cls):
+        return [] # to override in plugins
+
 
 def register_plugin(plugin_dir):
+    from merengue.pluggable.models import RegisteredPlugin
+    from merengue.pluggable.utils import get_plugin_config, validate_plugin
     plugin_config = get_plugin_config(plugin_dir)
     if plugin_config:
         validate_plugin(plugin_config)
@@ -84,28 +102,72 @@ def register_plugin(plugin_dir):
         plugin.required_plugins = getattr(plugin_config,
                                           'required_plugins',
                                           None)
+        plugin.meta_info = {}
+        if hasattr(plugin_config, 'screenshot'):
+            plugin.meta_info['screenshot'] = plugin_config.screenshot
+        plugin.meta_info['actions'] = []
+        for action in plugin_config.get_actions():
+            plugin.meta_info['actions'].append({'name': unicode(action.name), 'help_text': unicode(action.help_text)})
+        plugin.meta_info['blocks'] = []
+        for block in plugin_config.get_blocks():
+            plugin.meta_info['blocks'].append({'name': unicode(block.name), 'help_text': unicode(block.help_text)})
+        if plugin_config.get_model_admins():
+            plugin.meta_info['has_own_admin'] = True
+        else:
+            plugin.meta_info['has_own_admin'] = False
+        plugin.meta_info['middlewares'] = []
+        for middleware in plugin_config.get_middlewares():
+            plugin.meta_info['middlewares'].append(middleware)
+        plugin.meta_info['section_models'] = []
+        for model, admin in plugin_config.section_models():
+            plugin.meta_info['section_models'].append({'name': unicode(model._meta.verbose_name)})
+        plugin.meta_info['viewlets'] = []
+        for viewlet in plugin_config.get_viewlets():
+            plugin.meta_info['viewlets'].append({'name': unicode(viewlet.name), 'help_text': unicode(viewlet.help_text)})
+
+        if "notification" in settings.INSTALLED_APPS:
+            from notification.models import create_notice_type
+            for notification in plugin_config.get_notifications():
+                label, display, description = notification
+                create_notice_type(label, display, description)
+
         plugin.save()
         return plugin
     return None
 
 
 def enable_active_plugins():
+    from merengue.pluggable.models import RegisteredPlugin
     from merengue.pluggable.utils import enable_plugin, get_plugin_module_name
     for plugin_registered in RegisteredPlugin.objects.actives():
         enable_plugin(get_plugin_module_name(plugin_registered.directory_name))
 
 
+def register_all_plugins(verbose=False):
+    from merengue.pluggable.utils import get_plugin_directories, get_plugin_config
+    for plugin_dir in get_plugin_directories():
+        if verbose:
+            plugin_config = get_plugin_config(plugin_dir)
+            if plugin_config:
+                if not is_registered(plugin_config):
+                    print 'Registering new plugin %s...' % plugin_dir
+                else:
+                    print 'Re-registering plugin %s...' % plugin_dir
+            else:
+                print 'Error walking to plugin %s.' % plugin_dir
+        register_plugin(plugin_dir)
+
+
 def active_default_plugins(*args, **kwargs):
+    """ active default plugins and creates the portal menu in each language """
     # Only want to run this signal after all application was migrated, but
     # south have not a "post all migrations" signal.
     # The workaround is "collab" have to be the last application migrated
-    if kwargs['app'] == 'collab':
+    if is_last_application(kwargs['app']):
         interactive = kwargs.get('interactive', None)
         # register required plugins
         for plugin_dir in settings.REQUIRED_PLUGINS:
-            plugin = register_plugin(plugin_dir)
-            plugin.installed = True
-            plugin.active = True
+            active_plugin_with_deps(plugin_dir)
             from merengue.section.models import Menu
             name_attr = get_fallback_fieldname('name')
             attrs = {name_attr: 'Portal menu', 'slug': settings.MENU_PORTAL_SLUG}
@@ -117,7 +179,19 @@ def active_default_plugins(*args, **kwargs):
                 for lang_code, lang_text in settings.LANGUAGES:
                     setattr(portal_menu, 'name_%s' % lang_code, ugettext('portal menu'))
                 portal_menu.save()
-            plugin.save()
+
+
+def active_plugin_with_deps(plugin_dir):
+    """ active plugins with its dependences """
+    from merengue.pluggable.utils import install_plugin
+    registered_plugin = register_plugin(plugin_dir)
+    plugin = registered_plugin.get_registry_item_class()
+    for dep in getattr(plugin, 'required_plugins', []):
+        active_plugin_with_deps(dep)
+    registered_plugin.installed = True
+    registered_plugin.active = True
+    registered_plugin.save()
+    install_plugin(registered_plugin)
 
 
 post_migrate.connect(active_default_plugins)

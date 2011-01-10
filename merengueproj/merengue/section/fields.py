@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -47,7 +47,8 @@ class CSSValidatorField(fields.CharField):
         try:
             value_parse = parser.parseString(clean_value)
         except SyntaxErr, e:
-            raise ValidationError(_('Syntax Error %s' % e.msg.replace('\\n', '').replace('\\r', '')))
+            error_message = getattr(e, 'msg', e.message)
+            raise ValidationError(_('Syntax Error %s' % error_message.replace('\\n', '').replace('\\r', '')))
         if self.request.POST.get('%s_normalize' % self.name, None):
             clean_value = value_parse.cssText
         if self.request.POST.get('%s_show_all_errors' % self.name, None):

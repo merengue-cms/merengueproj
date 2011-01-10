@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -22,8 +22,14 @@ from merengue.theming.models import Theme
 
 
 def check_themes():
-    """ check themes found in file system and compare with registered one in database """
-    # all process will be in a unique transaction, we don't want to get self committed
+    """ 
+    check themes found in file system and compare with registered one in
+    database 
+    """
+    
+#    all process will be in a unique transaction, we don't want to get 
+#    self committed
+#@FIXME: Probably we should delete non-existing themes from database.
     sid = transaction.savepoint()
     try:
         # first disable all themes
@@ -33,7 +39,7 @@ def check_themes():
             theme, created = Theme.objects.get_or_create(directory_name=theme_dir)
             theme.update_from_fs(commit=False)
             theme.installed = True
-            theme.save()
+            theme.save()            
         try:
             Theme.objects.active()
         except Theme.DoesNotExist:

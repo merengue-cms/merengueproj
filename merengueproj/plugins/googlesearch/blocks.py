@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, ugettext_lazy
 
 from merengue.block.blocks import Block
 
@@ -23,6 +23,8 @@ from merengue.block.blocks import Block
 class GoogleSearchBlock(Block):
     name = 'googlesearch'
     default_place = 'leftsidebar'
+    verbose_name = ugettext_lazy('Google Search Block')
+    help_text = ugettext_lazy('The block represents the google search widget')
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):

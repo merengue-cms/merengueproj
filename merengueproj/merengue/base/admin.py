@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -35,9 +35,11 @@ from django.forms.models import ModelForm, BaseInlineFormSet, \
                                 fields_for_model, save_instance, modelformset_factory
 from django.forms.util import ValidationError
 from django.forms.widgets import Media
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, HttpResponse
+from django.utils import simplejson
 from django.utils.datastructures import SortedDict
 from django.utils.encoding import force_unicode
+from django.utils.functional import update_wrapper
 from django.utils.html import escape
 from django.utils.importlib import import_module
 from django.utils.text import capfirst
@@ -46,7 +48,7 @@ from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
 from autoreports.admin import ReportAdmin
-from cmsutils.forms.widgets import AJAXAutocompletionWidget
+from cmsutils.forms.widgets import AJAXAutocompletionWidget, ReadOnlyWidget
 from oembed.models import ProviderRule, StoredOEmbed
 from transmeta import (canonical_fieldname, get_all_translatable_fields,
                        get_real_fieldname_in_each_language,
@@ -55,8 +57,7 @@ from transmeta import (canonical_fieldname, get_all_translatable_fields,
 from merengue.base.adminsite import site
 from merengue.base.forms import AdminBaseContentOwnersForm, BaseAdminModelForm
 from merengue.base.models import BaseContent, ContactInfo
-from merengue.base.widgets import (CustomTinyMCE, ReadOnlyWidget,
-                                   RelatedBaseContentWidget)
+from merengue.base.widgets import CustomTinyMCE, RelatedBaseContentWidget
 from merengue.perms.admin import PermissionAdmin
 from merengue.perms import utils as perms_api
 from genericforeignkey.admin import GenericAdmin
@@ -268,7 +269,63 @@ def set_field_read_only(field, field_name, obj):
     field.required = False
 
 
-class BaseAdmin(GenericAdmin, ReportAdmin, admin.ModelAdmin):
+class RelatedURLsModelAdmin(admin.ModelAdmin):
+
+    def get_urls(self):
+        from django.conf.urls.defaults import patterns, url
+
+        def wrap(view):
+
+            def wrapper(*args, **kwargs):
+                return self.admin_site.admin_view(view)(*args, **kwargs)
+            return update_wrapper(wrapper, view)
+
+        info = self.model._meta.app_label, self.model._meta.module_name
+        urlpatterns = patterns('',
+            url(r'^$',
+                wrap(self.changelist_view),
+                name='%s_%s_changelist' % info),
+            url(r'^add/$',
+                wrap(self.add_view),
+                name='%s_%s_add' % info),
+            url(r'^([^/]+)/history/$',
+                wrap(self.history_view),
+                name='%s_%s_history' % info),
+            url(r'^([^/]+)/delete/$',
+                wrap(self.delete_view),
+                name='%s_%s_delete' % info),
+            url(r'^(.+)/$',
+                wrap(self.parse_path), )
+        )
+        return urlpatterns
+
+    def parse_path(self, request, pathstr, extra_context=None, basecontent=None):
+        extra_context = extra_context or {}
+        path = pathstr.split('/')
+        if len(path) == 1:
+            return self.change_view(request, path[0], extra_context)
+        object_id = path[0]
+        basecontent = self._get_base_content(request, object_id)
+        tool_name = path[1]
+        for cl in self.model.__mro__:
+            tool = self.admin_site.tools.get(cl, {}).get(tool_name, None)
+            if tool:
+                pathstr = '/'.join(path[2:])
+                if pathstr:
+                    pathstr += '/'
+                tool.basecontent = basecontent
+                visited = getattr(request, '__visited__', [])
+                visited = [(self, basecontent)] + visited
+                setattr(request, '__visited__', visited)
+                for pattern in tool.urls:
+                    resolved = pattern.resolve(pathstr)
+                    if resolved:
+                        callback, args, kwargs = resolved
+                        return callback(request, *args, **kwargs)
+        raise Http404
+
+
+class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
     html_fields = ()
     autocomplete_fields = {}
     edit_related = ()
@@ -277,6 +334,7 @@ class BaseAdmin(GenericAdmin, ReportAdmin, admin.ModelAdmin):
     list_per_page = 50
     inherit_actions = True
     form = BaseAdminModelForm
+    basecontent = None
 
     def __init__(self, model, admin_site):
         super(BaseAdmin, self).__init__(model, admin_site)
@@ -310,12 +368,8 @@ class BaseAdmin(GenericAdmin, ReportAdmin, admin.ModelAdmin):
         """
         return self.has_add_permission(request)
 
-    def _get_base_content(self, request, object_id=None, model_admin=None):
-        if not object_id:
-            object_id = self.admin_site.base_object_ids.get(self.tool_name, None)
-        if not model_admin:
-            model_admin = self.admin_site.base_tools_model_admins.get(self.tool_name, None)
-        model = model_admin.model
+    def _get_base_content(self, request, object_id):
+        model = self.model
         opts = model._meta
 
         try:
@@ -326,13 +380,9 @@ class BaseAdmin(GenericAdmin, ReportAdmin, admin.ModelAdmin):
             # to determine whether a given object exists.
             obj = None
 
-        if not model_admin.has_change_permission(request, obj):
-            raise PermissionDenied
-
         if obj is None:
             raise Http404(_('%(name)s object with primary key %(key)r does not exist.') % {'name': force_unicode(opts.verbose_name), 'key': escape(object_id)})
 
-        self.basecontent = obj
         return obj
 
     def get_form(self, request, obj=None, **kwargs):
@@ -356,7 +406,7 @@ class BaseAdmin(GenericAdmin, ReportAdmin, admin.ModelAdmin):
             if 'choices' in options:
                 choices = options.pop('choices')
                 field.widget = AJAXAutocompletionWidget(choices=choices, attrs=options)
-            elif 'url' in options: # Must have url or choices defined
+            elif 'url' in options:  # Must have url or choices defined
                 url = options.pop('url')
                 field.widget = AJAXAutocompletionWidget(url=url, attrs=options)
         elif db_fieldname in self.removed_fields:
@@ -526,21 +576,25 @@ class BaseCategoryAdmin(BaseAdmin):
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
 
     def has_add_permission(self, request):
-        """
-            Overrides Django admin behaviour to add ownership based access control
-        """
         return perms_api.has_global_permission(request.user, 'manage_category')
 
     def has_change_permission(self, request, obj=None):
-        """
-        Overrides Django admin behaviour to add ownership based access control
-        """
         return self.has_add_permission(request)
 
     def has_delete_permission(self, request, obj=None):
-        """
-        Overrides Django admin behaviour to add ownership based access control
-        """
+        return self.has_add_permission(request)
+
+
+class PluginAdmin(BaseAdmin):
+    """ This is a class to be overriden by plugin modeladmins """
+
+    def has_add_permission(self, request):
+        return perms_api.can_manage_plugin_content(request.user)
+
+    def has_change_permission(self, request, obj=None):
+        return self.has_add_permission(request)
+
+    def has_delete_permission(self, request, obj=None):
         return self.has_add_permission(request)
 
 
@@ -584,7 +638,7 @@ class WorkflowBatchActionProvider(object):
                 extra_context = {'title': confirm_msg,
                                  'action_submit': 'set_as_%s' % state}
                 return self.confirm_action(request, queryset, extra_context)
-    change_state.short_description = _(u"Change state of selected %(verbose_name_plural)s")
+    change_state.short_description = _(u"Change state of selected % (verbose_name_plural)s")
 
 
 class StatusControlProvider(object):
@@ -595,20 +649,20 @@ class StatusControlProvider(object):
 
         if hasattr(obj, 'owners'):
             if not obj or user in obj.owners.all():
-                options=options.union([o for o in all_options if o[0] in ('draft', 'pending')])
+                options = options.union([o for o in all_options if o[0] in ('draft', 'pending')])
         # Remember that superuser has all the perms
         if perms_api.has_permission(obj, user, 'can_draft'):
-            options=options.union([o for o in all_options if o[0] == 'draft'])
+            options = options.union([o for o in all_options if o[0] == 'draft'])
         if perms_api.has_permission(obj, user, 'can_pending'):
-            options=options.union([o for o in all_options if o[0] == 'pending'])
+            options = options.union([o for o in all_options if o[0] == 'pending'])
         if perms_api.has_permission(obj, user, 'can_published'):
-            options=options.union([o for o in all_options if o[0] == 'published'])
+            options = options.union([o for o in all_options if o[0] == 'published'])
         return options
 
 
 class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProvider, PermissionAdmin):
     change_list_template = "admin/basecontent/change_list.html"
-    list_display = ('admin_absolute_url', 'status', 'user_modification_date', 'last_editor')
+    list_display = ('__unicode__', 'status', 'user_modification_date', 'last_editor')
     list_display_for_select = ('name', 'status', 'user_modification_date', 'last_editor')
     search_fields = ('name', )
     date_hierarchy = 'creation_date'
@@ -619,14 +673,24 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
     edit_related = ()
     html_fields = ('description', )
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
-    autocomplete_fields = {'tags': {'url': '/ajax/autocomplete/tags/base/basecontent/',
+    autocomplete_fields = {'tags': {'url': '/%s/base/ajax/autocomplete/tags/base/basecontent/' % settings.MERENGUE_URLS_PREFIX,
                                     'multiple': True,
                                     'multipleSeparator': " ",
                                     'size': 100}, }
+    exclude = ('adquire_global_permissions', )
+
+    def get_urls(self):
+        from django.conf.urls.defaults import patterns
+        urls = super(BaseContentAdmin, self).get_urls()
+        # override objectpermissions root path
+        my_urls = patterns('',
+            (r'^([^/]+)/permissions/$', self.admin_site.admin_view(self.change_roles_permissions)))
+
+        return my_urls + urls
 
     def add_owners(self, request, queryset, owners):
         if self.has_change_permission(request):
-            selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
+            #selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
             n = queryset.count()
             obj_log = ugettext("Assigned owners")
             msg = "Successfully set owners for %d %s." % (n, self.opts.verbose_name)
@@ -666,7 +730,21 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
         Overrides Django admin behaviour to add ownership based access control
         """
         if obj:
-            return perms_api.has_permission(obj, request.user, 'edit')
+            if request.method == 'POST' and obj.no_changeable:
+                return False
+            else:  # changeable or GET
+                return perms_api.has_permission(obj, request.user, 'edit')
+        else:  # obj = None
+            if request.method == 'POST' and \
+               (request.POST.get('action', None) == u'set_as_pending' or \
+                request.POST.get('action', None) == u'set_as_published' or \
+                request.POST.get('action', None) == u'set_as_draft'):
+
+                selected_objs = [BaseContent.objects.get(id=int(key))
+                                 for key in request.POST.getlist('_selected_action')]
+                for sel_obj in selected_objs:
+                    if not self.has_change_permission(request, sel_obj):
+                        return False
         return True
 
     def has_delete_permission(self, request, obj=None):
@@ -674,8 +752,20 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
         Overrides Django admin behaviour to add ownership based access control
         """
         if obj:
-            return perms_api.has_permission(obj, request.user, 'delete')
-        return True
+            if obj.no_deletable:
+                return False
+            else:  # deletable
+                return perms_api.has_permission(obj, request.user, 'delete')
+        else:  # obj = None
+            if request.method == 'POST' and \
+               request.POST.get('action', None) == u'delete_selected':
+                selected_objs = [BaseContent.objects.get(id=int(key))
+                                 for key in request.POST.getlist('_selected_action')]
+                for sel_obj in selected_objs:
+                    if not self.has_delete_permission(request, sel_obj):
+                        return False
+                return True
+        return False
 
     def has_change_permission_to_any(self, request):
         return super(BaseContentAdmin, self).has_change_permission(request, None)
@@ -701,6 +791,14 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
                     form.base_fields['status'].initial = 'pending'
             else:
                 form.base_fields.pop('status')
+        if obj and obj.no_changeable_fields:
+            no_changeable_fields = obj.no_changeable_fields
+            for name in no_changeable_fields:
+                if name in form.base_fields:
+                    set_field_read_only(form.base_fields[name], name, obj)
+        if obj and getattr(obj, 'no_changeable', False):
+            # Prevent changes if some one forces a save submit
+            form.is_valid = lambda x: False
         return form
 
     def save_model(self, request, obj, form, change):
@@ -750,7 +848,7 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
             if ERROR_FLAG in request.GET.keys():
                 return render_to_response('admin/invalid_setup.html', {'title': _('Database error')})
             return HttpResponseRedirect(request.path + '?' + ERROR_FLAG + '=1')
-        cl.formset=None
+        cl.formset = None
         cl.params.update({'for_select': 1})
         context = {
             'title': cl.title,
@@ -785,6 +883,8 @@ if settings.USE_GIS:
 class BaseContentViewAdmin(BaseContentAdmin):
     """ An special admin to find and edit all site contents """
 
+    list_display = ('admin_absolute_url', ) + BaseContentAdmin.list_display[1:]
+
     def has_add_permission(self, request):
         return False
 
@@ -811,26 +911,48 @@ class RelatedModelAdmin(BaseAdmin):
       >>> site.register_related(Page, PageRelatedAdmin, related_to=Book)
     """
     tool_name = None
+    tool_label = None
     related_field = None
-    reverse_related_field = None # For m2m with through class
+    reverse_related_field = None  # For m2m with through class
     one_to_one = False
+    manage_contents = False
 
     def __init__(self, *args, **kwargs):
         super(RelatedModelAdmin, self).__init__(*args, **kwargs)
         if not self.tool_name:
-            pass
+            self.tool_name = self.model._meta.module_name
+        if not self.tool_label:
+            self.tool_label = self.model._meta.verbose_name_plural
         if not self.related_field:
             pass
         for inline in self.inline_instances:
-            inline.admin_model = self # for allow retrieving basecontent object
+            inline.admin_model = self  # for allow retrieving basecontent object
+
+    def get_urls(self):
+        from django.conf.urls.defaults import patterns, url
+
+        def wrap(view):
+
+            def wrapper(*args, **kwargs):
+                return self.admin_site.admin_view(view)(*args, **kwargs)
+            return update_wrapper(wrapper, view)
+
+        info = self.model._meta.app_label, self.model._meta.module_name
+        urlpatterns = patterns('',
+            url(r'^ajax/$',
+                wrap(self.ajax_changelist_view),
+                name='ajax_%s_%s_changelist' % info),
+        )
+        urlpatterns += super(RelatedModelAdmin, self).get_urls()
+        return urlpatterns
 
     def _update_extra_context(self, request, extra_context=None):
         extra_context = extra_context or {}
-        basecontent = self._get_base_content(request)
-        basecontent_type_id = ContentType.objects.get_for_model(basecontent).id
+        #basecontent = self._get_base_content(request)
+        basecontent_type_id = ContentType.objects.get_for_model(self.basecontent).id
         extra_context.update({'related_admin_site': self.admin_site,
-                              'basecontent': basecontent,
-                              'basecontent_opts': basecontent._meta,
+                              'basecontent': self.basecontent,
+                              'basecontent_opts': self.basecontent._meta,
                               'basecontent_type_id': basecontent_type_id,
                               'inside_basecontent': True,
                               'selected': self.tool_name})
@@ -841,6 +963,15 @@ class RelatedModelAdmin(BaseAdmin):
         if obj:
             return obj[0]
         return None
+
+    def ajax_changelist_view(self, request):
+        if not self.has_change_permission(request, None):
+            raise PermissionDenied
+        contents = [{'name': unicode(i), 'url': i.get_admin_absolute_url()} for i in self.queryset(request)]
+        json_dict = simplejson.dumps({'contents': contents,
+                                      'size': len(contents),
+                                      'message': ugettext('No contents found')})
+        return HttpResponse(json_dict, mimetype='text/plain')
 
     def changelist_view(self, request, extra_context=None):
         extra_context = self._update_extra_context(request, extra_context)
@@ -1084,7 +1215,6 @@ if settings.USE_GIS:
     from merengue.base.widgets import (OpenLayersWidgetLatitudeLongitude,
                                    OpenLayersInlineLatitudeLongitude)
 
-
     GMAP = GoogleMap(key=settings.GOOGLE_MAPS_API_KEY)
 
     class LocationModelAdminMixin(object):
@@ -1117,7 +1247,7 @@ if settings.USE_GIS:
 
         def formfield_for_dbfield(self, db_field, **kwargs):
             if isinstance(db_field, geomodels.GeometryField):
-                request = kwargs.pop('request', None)
+                kwargs.pop('request', None)
                 # Setting the widget with the newly defined widget.
                 kwargs['widget'] = self.get_map_widget(db_field)
                 return db_field.formfield(**kwargs)

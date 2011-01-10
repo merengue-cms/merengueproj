@@ -1,7 +1,7 @@
 {% extends "filebrowser/base.html" %}
 {% load i18n filebrowser_tags %}
 
-{% block pagetitle %}{% trans "Confirm delete" %}{% endblock %}
+{% block pagetitle %}{{ block.super }} - {% trans "Confirm delete" %}{% endblock %}
 
 {% block extrabreadcrumbs %}
   {{ block.super }}

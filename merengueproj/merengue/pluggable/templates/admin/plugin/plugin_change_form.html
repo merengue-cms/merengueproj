@@ -1,0 +1,95 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block after_related_objects %}
+  <fieldset class="module aligned">
+      <h2>{% trans "Screenshot" %}</h2>
+      <div class="form-row">
+          <div class="field-box">
+            {% if original.screenshot %}
+              <img src="{{ original.screenshot }}" />
+            {% else %}
+              {% trans "None" %}
+            {% endif %}
+          </div>
+      </div>
+  </fieldset>
+
+  {% if original.meta_info.blocks %}
+  <fieldset class="module aligned">
+        <h2>{% trans "New blocks" %}</h2>
+        {% for block in original.meta_info.blocks %}
+        <div class="form-row">
+          <div>
+            {{ block.name }}{% if block.help_text %}: {{ block.help_text }} {% endif %} 
+          </div>
+        </div>
+      {% endfor %}
+  </fieldset>
+  {% endif %}
+
+  <fieldset class="module aligned">
+        <h2>{% trans "Has own admin" %}</h2>
+        <div class="form-row">
+          <div>
+            {{ original.meta_info.has_own_admin|yesno:"Yes,No" }} 
+          </div>
+        </div>
+  </fieldset>
+
+  {% if original.meta_info.actions %}
+  <fieldset class="module aligned">
+        <h2>{% trans "New Actions" %}</h2>
+        {% for action in original.meta_info.actions %}
+        <div class="form-row">
+          <div>
+            {{ action.name }}{% if action.help_text %}: {{ action.help_text }} {% endif %} 
+          </div>
+        </div>
+      {% endfor %}
+  </fieldset>
+  {% endif %}
+  
+  {% if original.meta_info.viewlets %}
+  <fieldset class="module aligned">
+        <h2>{% trans "New Viewlets" %}</h2>
+        {% for viewlet in original.meta_info.viewlets %}
+        <div class="form-row">
+          <div>
+            {{ viewlet.name }}{% if viewlet.help_text %}: {{ viewlet.help_text }} {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+  </fieldset>
+  {% endif %}
+
+  {% if original.meta_info.middlewares %}
+  <fieldset class="module aligned">
+        <h2>{% trans "New Middlewares" %}</h2>
+        {% for middleware in original.meta_info.middlewares %}
+        <div class="form-row">
+          <div>
+            {{ middleware }}
+          </div>
+        </div>
+      {% endfor %}
+  </fieldset>
+  {% endif %}
+  
+  {% if original.meta_info.section_models %}
+  <fieldset class="module aligned">
+        <h2>{% trans "New content types addable in a section" %}</h2>
+        {% for model in original.meta_info.section_models %}
+        <div class="form-row">
+          <div>
+            {{ model.name }}
+          </div>
+        </div>
+      {% endfor %}
+  </fieldset>
+  {% endif %}
+  
+{% endblock %}
+
+
+ 

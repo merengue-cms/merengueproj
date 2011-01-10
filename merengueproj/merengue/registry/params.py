@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.template.loader import render_to_string
 from django.utils.datastructures import SortedDict
 from django.utils.encoding import smart_str
 
@@ -48,10 +49,27 @@ class Param(object):
         return getattr(self, 'value', self.default)
 
     def get_value_display(self):
-        return self.get_value()
+        value = self.get_value()
+        if value == NOT_PROVIDED:
+            return None
+        else:
+            return value
 
     def get_value_from_datadict(self, data, name):
         return data.get(name)
+
+    def is_valid(self, value):
+        """ returns if value is valid in this kind of param,
+            to implement form validation """
+        return True
+
+    def render(self, name, widget_attrs,
+               template_name='registry/param_widget.html',
+               extra_context=None):
+        # This method is to be implemented on children classes
+        context = {'param': self, 'name': name, 'widget_attrs': widget_attrs}
+        context.update(extra_context or {})
+        return render_to_string(template_name, context)
 
 
 class Single(Param):
@@ -61,7 +79,7 @@ class Single(Param):
 class Integer(Param):
 
     def get_parsed_value(self, value):
-        if value is not None and not isinstance(value, int) and value.isdigit():
+        if value is not None and not isinstance(value, int) and value.strip('-').isdigit():
             return int(value)
         return value
 
@@ -72,6 +90,15 @@ class Integer(Param):
     def get_value_from_datadict(self, data, name):
         value = super(Integer, self).get_value_from_datadict(data, name)
         return self.get_parsed_value(value)
+
+    def is_valid(self, value):
+        return isinstance(value, int)
+
+
+class PositiveInteger(Integer):
+
+    def is_valid(self, value):
+        return isinstance(value, int) and value >= 0
 
 
 class Bool(Param):
@@ -90,6 +117,15 @@ class Bool(Param):
             return False
         return bool(val)
 
+    def is_valid(self, value):
+        return isinstance(value, bool)
+
+    def render(self, name, widget_attrs,
+               template_name='registry/bool_widget.html',
+               extra_context=None):
+        return super(Bool, self).render(name, widget_attrs,
+                                        template_name, extra_context)
+
 
 class List(Param):
 
@@ -106,9 +142,28 @@ class List(Param):
         value = [v for v in value if v.strip()]
         return value
 
+    def render(self, name, widget_attrs,
+               template_name='registry/list_widget.html',
+               extra_context=None):
+        return super(List, self).render(name, widget_attrs,
+                                        template_name, extra_context)
+
+
+class Content(PositiveInteger):
+
+    def is_valid(self, value):
+        from merengue.base.models import BaseContent  # import here to avoid circular imports
+        return super(Content, self).is_valid(value) and \
+               BaseContent.objects.filter(id=value)
+
 
 class Text(Param):
-    pass
+
+    def render(self, name, widget_attrs,
+               template_name='registry/text_widget.html',
+               extra_context=None):
+        return super(Text, self).render(name, widget_attrs,
+                                        template_name, extra_context)
 
 
 class ConfigDict(SortedDict):

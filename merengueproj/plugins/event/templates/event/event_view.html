@@ -8,7 +8,7 @@
   <span class="breadcrumbSeparator">→</span><a href="{% url event_list %}" title="{% trans "Event" %}">{% inline_trans "Event" %}</a>
 {% endblock %}
 
-{% block contentdescription %}
+{% block extrabeforecontentblocks %}
   <div class="contentbody eventContentbody">
     <img class="eventIcon" src="{{ THEME_MEDIA_URL }}img/event_icon.jpg"/>
     <div class="eventDates">

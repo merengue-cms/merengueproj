@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -17,16 +17,16 @@
 
 from os import path
 
-ugettext = lambda s: s # dummy ugettext function, as said on django docs
+ugettext = lambda s: s  # dummy ugettext function, as said on django docs
 
 MERENGUEDIR = path.dirname(path.abspath(__file__))
 
 # List  of  callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'merengue.theming.loader.load_template_source', # for enabling theme support in Merengue
+    'merengue.theming.loader.load_template_source',  # for enabling theme support in Merengue
     'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
-#     'django.template.loaders.eggs.load_template_source',
+    'django.template.loaders.eggs.load_template_source',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -58,7 +58,8 @@ MERENGUE_APPS = (
     'merengue.viewlet',
     'merengue.portal',
     'merengue.internallinks',
-    'merengue.collab',
+    'merengue.collection',
+    'merengue.collab',  # Please, keep this application in last place cause it's used to know when activate plugins after migration
 )
 
 HTTP_STATUS_CODE_TEMPLATES = {
@@ -94,9 +95,11 @@ INSTALLED_APPS = (
     'threadedcomments',
     'autoreports',
     'johnny',
+    'oot',
     'genericforeignkey',
     'oembed',
     'ajax_select',
+    'notification',
 ) + MERENGUE_APPS
 
 # merengue exclusive middlewares. you have to put at least these middleware in your project settings
@@ -112,7 +115,7 @@ MERENGUE_MIDDLEWARE_CLASSES = (
 
 # merengue usual middleware list. you can use this variable in your MIDDLEWARE_CLASSES project settings
 MIDDLEWARE_CLASSES = (
-    'johnny.middleware.LocalStoreClearMiddleware', # this has to be first
+    'johnny.middleware.LocalStoreClearMiddleware',  # this has to be first
     #'cmsutils.middleware.I18NUpdateCacheMiddleware', # removed anonymous cache middleware
     'johnny.middleware.QueryCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -127,6 +130,7 @@ MIDDLEWARE_CLASSES = (
     #'django.middleware.gzip.GZipMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'merengue.section.middleware.ResponseSectionMiddleware',
+    'merengue.pluggable.middleware.PluginMiddlewaresProxy',
     #'cmsutils.middleware.I18NFetchFromCacheMiddleware', # this has to be last # removed anonymous cache middleware
 )
 
@@ -154,7 +158,7 @@ SESSION_ENGINE = 'merengue.backends.db'
 
 # cache default settings
 CACHE_BACKEND = 'johnny.backends.locmem:///'
-CACHE_MIDDLEWARE_SECONDS = 3600*24
+CACHE_MIDDLEWARE_SECONDS = 3600 * 24
 CACHE_MIDDLEWARE_KEY_PREFIX = 'merengue'
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 JOHNNY_MIDDLEWARE_KEY_PREFIX = 'merengue'
@@ -170,7 +174,7 @@ DEFAULT_LONGITUDE = -5.753321
 PAGE_VARIABLE = 'page'
 
 # Default merengue options for tinyMCE
-TINYMCE_MEDIA = None # set to something like: MEDIA_URL + "cmsutils/js/widgets/tiny_mce/"
+TINYMCE_MEDIA = None  # set to something like: MEDIA_URL + "cmsutils/js/widgets/tiny_mce/"
 EXTRA_MCE = {
     'theme_advanced_buttons1': 'bold,italic,copy,paste,pasteword,underline,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,outdent,indent',
 }
@@ -237,6 +241,10 @@ MENU_PORTAL_SLUG = 'portal_menu'
 #    ...}
 SITE_FIXTURES = {}
 
+SERIALIZATION_MODULES = {
+    "xml": "merengue.xml_serializer",
+}
+
 # Prefix for all merengue URLs
 MERENGUE_URLS_PREFIX = 'cms'
 
@@ -256,3 +264,13 @@ MANAGE_FILE = 'manage.py'
 SYS_EXECUTABLE = None
 
 JOHNNY_TABLE_BLACKLIST = ('south_migrationhistory', )
+
+# Path for translation catalogs search
+LOCALE_PATHS = (
+    path.join(MERENGUEDIR, 'locale'),
+)
+
+# Theme default preview image. The real path would be path.join(MEDIA_URL, DEFAULT_PLUGIN_PREVIEW)
+DEFAULT_THEME_PREVIEW = 'merengue/img/preview_merengue.png'
+
+STATIC_ROLES = [u'Anonymous User', u'Owner']

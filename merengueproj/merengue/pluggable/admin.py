@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -16,7 +16,9 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf import settings
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
 
 from merengue.base.admin import set_field_read_only
 from merengue.pluggable.checker import check_plugins
@@ -26,18 +28,22 @@ from merengue.registry.admin import RegisteredItemAdmin
 
 
 class RegisteredPluginAdmin(RegisteredItemAdmin):
+    change_form_template = 'admin/plugin/plugin_change_form.html'
     change_list_template = 'admin/plugin/plugin_change_list.html'
     readonly_fields = RegisteredItemAdmin.readonly_fields + ('name',
-        'description', 'version', 'timestamp', 'directory_name')
-    list_display = ('name', 'directory_name', 'installed', 'active',
-                    'required_apps', 'required_plugins')
-    ordering = ('broken', )
+        'description', 'version', 'timestamp', 'directory_name', )
+    list_display = ('name', 'directory_name', 'installed', 'active', 'screenshot_link', )
 
     fieldsets = (
-        ('', {'fields': ('name', 'description', 'version', 'directory_name', 'module', 'class_name', 'required_apps', 'required_plugins')}),
+        ('',
+            {'fields': ('name', 'description', 'version', 'directory_name',
+                        'module', 'class_name', 'required_apps',
+                        'required_plugins', ), }
+        ),
         (_('Status'),
-            {'fields': ('installed', 'active', 'order', 'config')},
-        ))
+            {'fields': ('installed', 'active', 'order', 'config'), },
+        )
+    )
 
     def get_form(self, request, obj=None):
         form = super(RegisteredPluginAdmin, self).get_form(request, obj)
@@ -73,6 +79,13 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
 
     def has_add_permission(self, request):
         return False
+
+    def screenshot_link(self, obj):
+        if not obj.screenshot:
+            return ugettext('None')
+        return mark_safe(u'<a href="%s" target="_blank">%s</a>' % (obj.screenshot, ugettext('Screenshot')))
+    screenshot_link.allow_tags = True
+    screenshot_link.label = _('Screenshot')
 
     def changelist_view(self, request, extra_context=None):
         check_plugins()

@@ -1,0 +1,515 @@
+@import url('../../../../merengue/css/admin.css');
+
+/* ----- general styles ----- */
+#body{
+	font: 12px/19px Helvetica,sans-serif;
+}
+
+#header {
+    background: #E6D8C0;
+    color: #917250;
+    min-height:62px;
+    border-bottom: 4px solid #BCB9AD;
+}
+
+p {
+	color:#717171;
+}
+
+a:link, a:visited {
+	color: #bf9460;
+}
+a:hover {
+	color: #806446;
+}
+
+/* ----- header styles ----- */
+div#header img#merengue_logo {
+    float: left;
+}
+
+#branding h1 { 
+    margin: 1.2em 0 0 11em;
+	color: #BF843B;
+}
+
+.login #container {
+    width: 30em;
+}
+
+.module-merengue h1,
+#content-related .module h2,
+.merengueadmin .module h2,
+.module caption, 
+.inline-group h2 {
+	background: #E6D8C0 url(../img/default-bg.gif) repeat-x top left;
+}
+
+#changelist-filter li.selected a {
+	color: #BF9460 !important;
+}
+
+#changelist-filter h2,
+.module h2, 
+.module caption, 
+.inline-group h2 {
+    background: #E6D8C0 url(../img/default-bg.gif) repeat-x top left;	
+}
+
+.row1 {
+	background: #f7f5f0;
+}
+
+.button.default, input.default[type="submit"], .submit-row input.default {
+    border: 1px solid #C49A6C;
+    background: #E6D8C0 url(../img/default-bg.gif) repeat-x top left;
+	color: #917250;
+}
+
+.button.default:active, input.default[type="submit"]:active {
+	border: 1px solid #C49A6C;
+    background: #E6D8C0 url(../img/default-bg-reverse.gif) repeat-x top left;
+	color: #917250;
+} 
+
+#changelist-filter h2,
+.module h2,
+.module caption,
+.inline-group h2 {
+	background: #E6D8C0 url(../img/default-bg.gif) repeat-x top left;
+}
+
+/*---- other styles ----*/
+.object-tools {
+    margin-bottom:0.5em;
+    margin-top:0em;
+}
+
+.object-tools li {
+    margin-bottom: 0.5em;
+}
+
+.object-tools li.selected {
+   background:transparent url(../img/tool-left_over.gif) no-repeat scroll 0 0 !important;
+}
+
+.object-tools li.selected a {
+   background: #5B80B2 url(../img/tool-right_over.gif) no-repeat scroll top right !important;
+}
+
+.object-subtools {
+   clear: both;
+   margin-top: 7px;
+   margin-bottom: 1em;
+   float: right;
+   width: 100%;
+}
+
+.object-subtools ul {
+   list-style-type: none;
+   margin: 0px;
+   padding: 0px;
+   float: right;
+   background-color: #999999;
+}
+
+.object-subtools ul li {
+   float: left;
+   list-style-type: none;
+   display: block;
+   padding: 2px 5px;
+   border-left: 1px solid white;
+}
+
+.object-subtools-bigger ul li a {
+   padding: 0px 60px;
+}
+
+.object-subtools ul li a {
+   color: white;
+}
+
+.object-tools li.selected span {
+    float: left;
+}
+
+.object-tools li.selected span.selected-with-subtools {
+    padding-bottom: 9px;
+    background: white;
+}
+
+.object-subtools ul li.selected {
+   background-color: #5b80b2;
+}
+
+div.mini-googlemap {
+   height: 150px;
+   width: 200px;
+}
+
+.gmnoprint span {
+   visibility: hidden;
+}
+
+.calendarbox .calendarnav-next-month,
+.calendarbox .calendarnav-previous-month {
+   position: absolute;
+   top: 0px;
+   font-weight: bold;
+   font-size: 12px;
+   padding-top: 1px;
+   padding-bottom: 2px;
+}
+
+.calendarbox .calendarnav-previous-month {
+   left: 17px;
+}
+
+.calendarbox .calendarnav-next-month {
+   right: 17px;
+}
+
+.calendarbox .calendarnav-next-month,
+.calendarbox .calendarnav-previous-month,
+.calendarbox .calendarnav-previous,
+.calendarbox .calendarnav-next {
+   background: #c9dbed url(/admin_media/img/admin/default-bg.gif) repeat-x left bottom;
+   color: white;
+   padding-left: 0px;
+   padding-right: 0px;
+   text-align: center;
+   height: 15px;
+   width: 16px;
+}
+
+.calendarbox .calendarnav-next-month:hover,
+.calendarbox .calendarnav-previous-month:hover,
+.calendarbox .calendarnav-previous:hover,
+.calendarbox .calendarnav-next:hover {
+   background: none;
+   background-color: #003366;
+}
+
+.module {
+    clear:both;
+}
+
+.object-subtools {
+    padding-top:0;
+}
+
+a.fadeingooglemap {
+    color: #5b80b2;
+}
+
+a.fadeingooglemap:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.hide {
+    display: none;
+}
+
+#img_ajax_loader{
+    height:16px;
+}
+
+a.ajax_geolocation{
+    color:white;
+    text-decoration: underline;
+
+}
+
+#id_input_ajax{
+    font-size:9px;
+    height:1.2em;
+    width:40em;
+}
+
+.view_on_map {
+    margin-left: 1em;
+}
+
+#global-languageselector{
+    display: inline;
+    padding-left: 0px;
+}
+
+#global-languageselector li a {
+   background: url(/media/img/separador_drcha.gif) no-repeat center right;
+   padding: 10px 15px;
+}
+
+ul#global-languageselector li.currentLangItem {
+   border: 2px solid #FFA500;
+   top: 1px;
+   padding: 0px 0px 0px 2px;
+}
+
+#global-languageselector li form,
+#global-languageselector li form input,
+#global-languageselector li {
+   display: inline;
+   padding: 0px;
+   margin: 0px;
+   background: none;
+}
+
+#global-languageselector li {
+   position: relative;
+   padding-left: 1px;
+}
+
+form.languageform {
+   display: inline;
+}
+
+form.languageform input {
+   border: none;
+}
+
+span.span15 {
+   padding-left: 15px;
+}
+
+span.span50 {
+   padding-left: 50px;
+}
+
+img.plusMenu:hover,
+img.minusMenu:hover {
+   cursor: pointer;
+}
+
+tr.selected-row {
+    background: #ffff99;
+}
+
+ul.insertOptions {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+
+ul.insertOptions li {
+    margin: 0px;
+    padding: 0px;
+    display: inline;
+    margin-right: 2em;
+}
+
+div.search_form_filter_options_container {
+   margin-left: 10em;
+}
+
+div.search_form_filter_container {
+   margin-right: 1em;
+   margin-bottom: 1em;
+   float: left;
+}
+
+div.search_form_filter_container select {
+   height: 200px;
+}
+
+div.search_form_filter_container label {
+   float: none;
+   display: block;
+   margin-bottom: 0.5em;
+   width: auto;
+}
+
+form .aligned p.errornote{
+    margin-left: 0em;
+}
+
+input.withInternalLinkUrl {
+    float: left;
+}
+
+a.internalLinkUrl {
+    display: block;
+    float: left;
+    margin: 0px 1em;
+    background: url(/media/merengue/js/tiny_mce_internal_links/images/internal_link.gif) no-repeat top left;
+    width: 20px;
+    height: 20px;
+}
+
+div.config_params_debug_container,
+div.config_params_container {
+    float: left;
+    margin-right: 1em;
+    margin-left: 1em;
+}
+
+div.config_params_debug_container {
+    border-left: 1px solid gray;
+    padding-left: 2em;
+}
+
+div.config_params_debug_container label,
+div.config_params_container label {
+    display: block;
+    float: none;
+    margin-bottom: 0.5em;
+    width: auto;
+}
+
+div.smart_relations_object_tool_container {
+    float: left;
+    position: relative;
+}
+
+ul.smart_relations_object_tool {
+    display: inline;
+    margin: 0px; 
+    padding: 0px;
+}
+
+ul.din_smart_relations_object_tool {
+    display: block;
+    float: left;
+    position: absolute;
+    z-index: 9999;
+    top: 20px;
+}
+
+ul.din_smart_relations_object_tool li {
+    display: block;
+    float: none;
+    white-space: nowrap;
+}
+
+ul.object-tools li.din_selected a {
+    background-image: none !important;
+}
+
+ul.object-tools li.parent:hover a.din_smart_trigger,
+ul.object-tools li.din_selected a.din_smart_trigger {
+    background: #5b80b2 url(../img/smart-tool-trigger.gif) no-repeat top right !important;
+    float: left;
+    width: 20px;
+    padding: 0px;
+    height: 16px;
+    margin-left: 2px;
+}
+
+ul.object-tools li.parent:hover a.din_smart_trigger_open,
+ul.object-tools li.din_selected a.din_smart_trigger_open {
+    background-image: url(../img/smart-tool-trigger-up.gif) !important;
+}
+
+ul.object-tools li.parent:hover span {
+    background-color: #5b80b2;
+}
+
+ul.object-tools li.parent span {
+    width: 50px;
+    float: left;
+    height: 14px;
+    background-color: #999999;
+    padding: 0.1em;
+    color: white;
+}
+
+ul.object-tools li.parent a.din_smart_trigger {
+    background: #999999 url(../img/gray-smart-tool-trigger.gif) no-repeat top right !important;
+}
+
+ul.object-tools li.parent a.din_smart_trigger_open {
+    background: #999999 url(../img/gray-smart-tool-trigger-up.gif) no-repeat top right !important;
+}
+
+
+ul.dependencies {
+    padding-left: 15px;
+}
+
+ul.dependencies li.fulfilled {
+    list-style: none;
+    background: transparent url(/admin_media/img/admin/icon-yes.gif) no-repeat left center !important;
+    color: #44AD41;
+    padding-left: 15px;
+}
+
+ul.dependencies li.unfulfilled {
+    list-style: none;
+    background: transparent url(/admin_media/img/admin/icon-no.gif) no-repeat left center !important;
+    color: #FF0000;
+    padding-left: 15px;
+}
+
+.row-holder {
+    background-color: #f0ffff;
+    border: 1px dashed #999999;
+}
+
+div.css-validator-checkboxes {
+    display: inline;
+}
+
+div.css-validator-checkboxes div{
+    display: inline;
+}
+
+textarea#id_css_chunk {
+    display: inline !important;
+}
+
+#changeform th {
+	font-size: 13px;
+	line-height: 19px;
+}
+
+.noteUser {
+	font-style: italic;
+	margin-bottom:0.5em;
+	color: #aaa;
+}
+
+.paginator a:hover {
+	background: #E6D8C0;
+	border-color: #BF9460;
+	color: #BF9460;
+}
+
+.selector-add  {
+    background:url("../img/selector-add.gif") no-repeat scroll center top transparent;
+    margin-bottom:2px;
+}
+
+a.selector-chooseall {
+    background:url("../img/selector-addall.gif") no-repeat scroll left center transparent;
+    width:7em;
+}
+
+/* ----- plugin admin ----- */
+#plugin-changelist tr.broken {
+    background-color: #dddddd;
+}
+
+#plugin-changelist tr.broken {
+    font-style: italic;
+}
+
+#plugin-changelist tr.broken th {
+    background: transparent url(../img/broken_plugin.gif) no-repeat left center !important;
+    padding-left: 18px;
+}
+
+#plugin-changelist tr.broken a {
+    color: #54556f;
+    font-style: italic;
+}
+
+#changeform table {
+    width: 100%;
+}
+
+div.module.form-row {
+    border: 0px;
+    border-bottom: 1px solid #EEEEEE;
+}
+

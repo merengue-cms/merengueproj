@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -27,4 +27,4 @@ class RegisteredViewlet(RegisteredItem):
     objects = RegisteredItemManager()
 
     def __unicode__(self):
-        return u'%s (%s)' % (self.get_registry_item_class().label, self.name)
+        return u'%s (%s)' % (self.get_registry_item_class().help_text or self.name, self.name)

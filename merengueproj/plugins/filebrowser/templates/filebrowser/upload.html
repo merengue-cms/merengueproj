@@ -1,7 +1,7 @@
 {% extends "filebrowser/base.html" %}
 {% load i18n filebrowser_tags %}
 
-{% block pagetitle %}{% trans "Upload file" %}{% endblock %}
+{% block pagetitle %}{{ block.super }} - {% trans "Upload file" %}{% endblock %}
 
 {% block titlepage %}{% trans "Upload file" %}{% endblock %}
 
@@ -11,7 +11,7 @@
 
 {% block extrabreadcrumbs %}
   {{ block.super }}
-  <span class="breadcrumbSeparator">→</span><a href=".">{% trans "Upload" %}</a>
+  <span class="breadcrumbSeparator">→</span>{% trans "Upload" %}
 {% endblock %}
 
 {% block content %}

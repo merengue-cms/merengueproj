@@ -1,0 +1,28 @@
+{% extends "content_view.html" %}
+{% load pagination_tags collection_tags %}
+
+{% block contentbody %}
+  {% collectionitems content as items %}
+  {% if items %}
+    {% autopaginate items 20 %}
+    {% paginate %}
+    {% if content.group_by %}
+      {% collectionregroup items in content as grouped %}
+      {% for group in grouped %}
+      <h2>{{ group.grouper }}</h2>
+      <ul class="contentList collection-{{ collection.slug }} collectionGrouped collection-{{ collection.slug }}-groupedby-{{ content.groupby }}">
+        {% for item in group.list %}
+          {% collectionitem content item %}
+        {% endfor %}
+      </ul>
+      {% endfor %}
+    {% else %}
+      <ul class="contentList collection-{{ collection.slug }}">
+        {% for item in items %}
+          {% collectionitem content item %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% paginate %}
+  {% endif %}
+{% endblock contentbody %}

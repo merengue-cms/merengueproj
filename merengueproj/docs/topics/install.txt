@@ -13,6 +13,31 @@ This document will get you up and running with Merengue.
     commands to your specific system.
 
 
+Previous dependencies
+=====================
+
+* ``python-setuptools``: To be able to install python packages.
+
+.. code-block:: bash
+
+    $ sudo apt-get install python-setuptools
+
+* ``ffmpeg``: FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video. It includes libavcodec - the leading audio/video codec library. 
+
+.. code-block:: bash
+
+    $ sudo apt-get install ffmpeg libavcodec-unstripped-52 libavdevice-unstripped-52 libavformat-unstripped-52 libavutil-unstripped-49 libpostproc-unstripped-51 libswscale-unstripped-0 yamdi
+
+Other recommended dependencies
+------------------------------
+
+* ``ipython``: a python shell with auto complete, help, etc.
+
+.. code-block:: bash
+
+    $ apt-get install ipython
+
+
 Installing with easy_install
 ============================
 
@@ -21,9 +46,9 @@ installed automatically.
 
 The command is this:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        $ sudo easy_install merengue
+    $ sudo easy_install merengue
 
 Go to `project creation`_ section to continue.
 
@@ -33,88 +58,57 @@ Go to `project creation`_ section to continue.
 Manual installation
 ===================
 
-Installing dependencies
------------------------
-
-This documents describe which are the project dependencies and how to
-install in a ubuntu/debian based distribution.
-
-Some python packages are installed using easy_install, for use that
-you need to have installed python-setuptools
-
-Dependencies: ``south``, ``python-imaging``, ``python-beautifulsoup``
-
-* ``south``: Django database schema migrator.
-
-    .. code-block:: bash
-
-        $ sudo easy_install south
-
-* ``python-imaging``: adds image processing capabilities to your Python
-  interpreter. For model data fields.
-
-    .. code-block:: bash
-
-        $ sudo apt-get install python-imaging
-
-* ``python-beautifulsoup``: a Python HTML/XML parser designed for quick
-  turnaround projects like screen-scraping. For text field HTML
-  cleaning.
-
-    .. code-block:: bash
-
-        $ sudo apt-get install python-beautifulsoup
-
-* ``ffmpeg``: FFmpeg is a complete, cross-platform solution to record,
-    convert and stream audio and video.
-    It includes libavcodec - the leading audio/video codec library. 
-
-    .. code-block:: bash
-
-        $ sudo apt-get install ffmpeg libavcodec-unstripped-52 libavdevice-unstripped-52 libavformat-unstripped-52 libavutil-unstripped-49 libpostproc-unstripped-51 libswscale-unstripped-0 yamdi
-
-
-Other recommended dependencies
-------------------------------
-
-* ``ipython``: a python shell with auto complete, help, etc.
-
-    .. code-block:: bash
-
-        $ apt-get install ipython
-
-
 Installing Django
 -----------------
 
 Merengue use Django 1.1.1 version (latest official version). You can install
 it with these instructions:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        $ wget http://www.djangoproject.com/download/1.1.1/tarball/
-        $ tar xzvf Django-1.1.1.tar.gz
-        $ cd Django-1.1.1
-        $ sudo python setup.py install
+    $ wget http://www.djangoproject.com/download/1.1.1/tarball/
+    $ tar xzvf Django-1.1.1.tar.gz
+    $ cd Django-1.1.1
+    $ sudo python setup.py install
 
 Test if you have the correct django version:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        $ python -c "import django; print django.VERSION"
-        (1, 1, 1, 'final', 0)
+    $ python -c "import django; print django.VERSION"
+    (1, 1, 1, 'final', 0)
+
+Downloading merengue
+--------------------
+
+Download the Merengue source from tarball or subversion code:
+
+.. code-block:: bash
+
+    $ svn checkout https://svnpub.yaco.es/merengue/trunk/merengueproj
+    $ cd merengueproj
+
+Installing python dependencies
+------------------------------
+
+You need fullfill some python eggs dependencies, defined in `requirements.txt`_
+file. You may install every egg with ``easy_install`` or use ``pip`` with
+this command:
+
+.. code-block:: bash
+
+    $ sudo pip install -r requirements.txt
+
+.. _`requirements.txt`: http://dev.merengueproject.org/browser/trunk/merengueproj/requirements.txt
 
 Installing merengue
 -------------------
 
-Download the Merengue source from subversion or tarball, and install it using
-``setup.py`` script:
+The manual install process is executing ``setup.py`` script as follow:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        $ svn checkout https://svnpub.yaco.es/merengue/trunk/merengueproj
-        $ cd merengueproj
-        $ sudo python setup.py install
+    $ sudo python setup.py install
 
 
 Merengue project creation
@@ -134,16 +128,16 @@ incompatible changes).
 
 * Project creation in *production mode*:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        $ merengue-admin.py startproject myproject
+    $ merengue-admin.py startproject myproject
 
 
 * Project creation in *development mode*:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        $ merengue-admin.py startproject myproject --develop
+    $ merengue-admin.py startproject myproject --develop
 
 
 Languages configuration
@@ -232,37 +226,50 @@ We have to permit connections to database from local computer. Editing
 /etc/postgresql/X.X/main/pg_hba.conf adding the following line (not at
 the end):
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        local myproject myprojectuser trust
-        local test_myproject myprojectuser trust # necessary for tests
+    local myproject myprojectuser trust
+    local test_myproject myprojectuser trust # necessary for tests
 
 Reload pg_hba.conf in PostgreSQL server:
-    
-    .. code-block:: bash
+
+.. code-block:: bash
  
-        $ /etc/init.d/postgresql-X.X reload
-      
+    $ /etc/init.d/postgresql-X.X reload
 
 Restart PostgreSQL and check access with this command:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        $ psql myproject -U myprojectuser
-
+    $ psql myproject -U myprojectuser
 
 Building initial merengue models
 --------------------------------
 
 You need build merengue initial models with these two commands:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        $ python manage.py syncdb
-        $ python manage.py migrate
+    $ python manage.py syncdb
+    $ python manage.py migrate
 
 You can ignore the creation of superuser because a user named ``admin`` with
 ``admin`` password will be created automatically.
+
+
+Collecting media from installed Django applications
+---------------------------------------------------
+
+Some Django apps use media files that Merengue needs. For including those in
+the project you have to execute this command:
+
+.. code-block:: bash
+
+    $ python manage.py sync_apps_media --link
+
+.. admonition:: Note
+
+    You can remove ``--link`` option if you want that Merengue copy media files instead linking them.
 
 
 View the site
@@ -270,9 +277,9 @@ View the site
 
 Go to our project directory. Test that django development server runs ok:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        $ python manage.py runserver
+    $ python manage.py runserver
 
 Open the web browser and go to http://localhost:8000/admin/ and check
 that the admin web interface is running successfully.
@@ -302,9 +309,9 @@ Settings changes
 
 For use GIS it's necessary to change one line to your project ``settings.py``:
 
-    .. code-block:: python
+.. code-block:: python
 
-       USE_GIS = True
+    USE_GIS = True
 
 
 PostGIS dependencies
@@ -323,9 +330,9 @@ more dependencies:
 * ``geopy``: makes it easy for developers to locate the coordinates of
   addresses, cities, countries, and landmarks across the globe.
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        $ easy_install geopy
+    $ easy_install geopy
 
 
 GIS extensions install
@@ -333,17 +340,17 @@ GIS extensions install
 
 In Ubuntu 10.04, you could install all using packages over postgresql-8.4:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        $ sudo apt-get install binutils libgdal1-1.6.0 postgresql-8.4-postgis python-psycopg2 python-setuptools
-        $ export PG_CONFIG='/usr/lib/postgresql/8.4/bin/pg_config'
+    $ sudo apt-get install binutils libgdal1-1.6.0 postgresql-8.4-postgis python-psycopg2 python-setuptools
+    $ export PG_CONFIG='/usr/lib/postgresql/8.4/bin/pg_config'
 
 In Ubuntu > 8.04 < 10.04, you can install all using packages over postgresql-8.3:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        $ sudo apt-get install binutils libgdal1-1.5.0 postgresql-8.3-postgis python-psycopg2 python-setuptools
-        $ export PG_CONFIG='/usr/lib/postgresql/8.3/bin/pg_config'
+    $ sudo apt-get install binutils libgdal1-1.5.0 postgresql-8.3-postgis python-psycopg2 python-setuptools
+    $ export PG_CONFIG='/usr/lib/postgresql/8.3/bin/pg_config'
 
 
 .. admonition:: Note
@@ -358,62 +365,62 @@ compile:
 
 1. PostgreSQL source headers:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        $ sudo apt-get install postgresql-server-dev-X.X
-        $ export PG_CONFIG='/usr/lib/postgresql/X.X/bin/pg_config'
+    $ sudo apt-get install postgresql-server-dev-X.X
+    $ export PG_CONFIG='/usr/lib/postgresql/X.X/bin/pg_config'
 
 2. `GEOS`_ library:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-         $ cd resources
-         $ tar xjf geos-x.x.x.tar.bz2
-         $ cd geos-x.x.x
-         $ ./configure && make
-         $ sudo make install
+    $ cd resources
+    $ tar xjf geos-x.x.x.tar.bz2
+    $ cd geos-x.x.x
+    $ ./configure && make
+    $ sudo make install
 
 3. `PROJ.4`_ library:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-         $ cd resources
-         $ tar xzf proj-x.x.x.tar.gz
-         $ cd proj-x.x.x/nad
-         $ tar xzf ../../proj-datumgrid-x.x.tar.gz
-         $ cd ..
-         $ ./configure
-         $ make
-         $ sudo make install
-         $ cd ..
+    $ cd resources
+    $ tar xzf proj-x.x.x.tar.gz
+    $ cd proj-x.x.x/nad
+    $ tar xzf ../../proj-datumgrid-x.x.tar.gz
+    $ cd ..
+    $ ./configure
+    $ make
+    $ sudo make install
+    $ cd ..
 
 4. `PostGIS`_:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-         $ tar xzf postgis-x.x.x.tar.gz
-         $ cd postgis-x.x.x
-         $ ./configure --with-pgsql=$PG_CONFIG --datadir=`$PG_CONFIG --sharedir`
-         $ make
-         $ sudo make install
-         $ cd ..
+    $ tar xzf postgis-x.x.x.tar.gz
+    $ cd postgis-x.x.x
+    $ ./configure --with-pgsql=$PG_CONFIG --datadir=`$PG_CONFIG --sharedir`
+    $ make
+    $ sudo make install
+    $ cd ..
 
 5. `GDAL`_ library:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-         $ tar xzf gdal-x.x.x.tar.gz
-         $ cd gdal-x.x.x
-         $ ./configure
-         $ make # Go get some coffee, this takes a while.
-         $ sudo make install
-         $ cd ..
+    $ tar xzf gdal-x.x.x.tar.gz
+    $ cd gdal-x.x.x
+    $ ./configure
+    $ make # Go get some coffee, this takes a while.
+    $ sudo make install
+    $ cd ..
 
 6. Update all dynamic libraries:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        $ sudo ldconfig -v
+    $ sudo ldconfig -v
 
 .. admonition:: Note
 
@@ -431,30 +438,30 @@ Changes in database configuration
 
 Create postgis template database:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        $ createdb -E UTF8 template_postgis
-        $ createlang -d template_postgis plpgsql
+    $ createdb -E UTF8 template_postgis
+    $ createlang -d template_postgis plpgsql
 
 * In ubuntu >= 10.04:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-            $ PG_GIS_TEMPLATES=/usr/share/postgresql/8.4/contrib/
-            $ psql -d template_postgis -f $PG_GIS_TEMPLATES/postgis.sql
-            $ psql -d template_postgis -f $PG_GIS_TEMPLATES/spatial_ref_sys.sql
-            $ psql -d template_postgis -c "GRANT ALL ON geometry_columns TO PUBLIC;"
-            $ psql -d template_postgis -c "GRANT ALL ON spatial_ref_sys TO PUBLIC;"
+    $ PG_GIS_TEMPLATES=/usr/share/postgresql/8.4/contrib/
+    $ psql -d template_postgis -f $PG_GIS_TEMPLATES/postgis.sql
+    $ psql -d template_postgis -f $PG_GIS_TEMPLATES/spatial_ref_sys.sql
+    $ psql -d template_postgis -c "GRANT ALL ON geometry_columns TO PUBLIC;"
+    $ psql -d template_postgis -c "GRANT ALL ON spatial_ref_sys TO PUBLIC;"
 
 * In ubuntu > 8.04 < 10.04 (with postgres-8.3-postgis package)
 
-    .. code-block:: bash
+.. code-block:: bash
 
-            $ PG_GIS_TEMPLATES=/usr/share/postgresql-8.3-postgis/
-            $ psql -d template_postgis -f $PG_GIS_TEMPLATES/lwpostgis.sql
-            $ psql -d template_postgis -f $PG_GIS_TEMPLATES/spatial_ref_sys.sql
-            $ psql -d template_postgis -c "GRANT ALL ON geometry_columns TO PUBLIC;"
-            $ psql -d template_postgis -c "GRANT ALL ON spatial_ref_sys TO PUBLIC;"
+    $ PG_GIS_TEMPLATES=/usr/share/postgresql-8.3-postgis/
+    $ psql -d template_postgis -f $PG_GIS_TEMPLATES/lwpostgis.sql
+    $ psql -d template_postgis -f $PG_GIS_TEMPLATES/spatial_ref_sys.sql
+    $ psql -d template_postgis -c "GRANT ALL ON geometry_columns TO PUBLIC;"
+    $ psql -d template_postgis -c "GRANT ALL ON spatial_ref_sys TO PUBLIC;"
 
 .. admonition:: Note
 
@@ -464,13 +471,12 @@ Create postgis template database:
 
 * In other case:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        $ psql -d template_postgis -f `$PG_CONFIG --sharedir`/lwpostgis.sql
-        $ psql -d template_postgis -f `$PG_CONFIG --sharedir`/spatial_ref_sys.sql
-        $ psql -d template_postgis -c "GRANT ALL ON geometry_columns TO PUBLIC;"
-        $ psql -d template_postgis -c "GRANT ALL ON spatial_ref_sys TO PUBLIC;"
-
+    $ psql -d template_postgis -f `$PG_CONFIG --sharedir`/lwpostgis.sql
+    $ psql -d template_postgis -f `$PG_CONFIG --sharedir`/spatial_ref_sys.sql
+    $ psql -d template_postgis -c "GRANT ALL ON geometry_columns TO PUBLIC;"
+    $ psql -d template_postgis -c "GRANT ALL ON spatial_ref_sys TO PUBLIC;"
 
 Creating the project database
 -----------------------------
@@ -486,10 +492,10 @@ Database creation changes slightly because project database has to use
 ``template_postgis`` as database template (with all postgis extensions
 included).
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        $ createuser myproject
-        $ createdb -T template_postgis --owner=myproject myproject
+    $ createuser myproject
+    $ createdb -T template_postgis --owner=myproject myproject
 
 
 Upgrading merengue in development mode
@@ -499,9 +505,9 @@ If your merengue project is in development mode, when you update merengue code
 maybe models can change. For upgrading models after a code update, you can use
 south ``migrate`` command as follows:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        $ python manage.py migrate
+    $ python manage.py migrate
 
 Also, we recommend you follow `changes`_ on merengue `skel project`_ because may
 be needed to reproduce some of these changes in your project.
@@ -519,6 +525,10 @@ You can make a database backup in SQL with the following command:
 
     $ python manage.py backupdb
 
+.. note::
+
+    When using PostgreSQL as database backend, you need install ``pexpect``
+    python package.
 
 ==================
 Deploying Merengue
@@ -552,6 +562,13 @@ command:
 
 ``--link`` option can be removed out if you want to copy media files (not
 symlink them).
+
+Also, some Django apps include its own media files. You have to collect those
+media file also with this command:
+
+.. code-block:: bash
+
+    $ python manage.py sync_apps_media --link
 
 .. admonition:: Deep into
 

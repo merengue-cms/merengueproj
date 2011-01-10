@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -70,6 +70,11 @@ urlpatterns = patterns('',
     # ajax_select
     (r'^ajax_select/', include('ajax_select.urls')),
 
+    # collections
+    (r'^collection/', include('merengue.collection.urls')),
+
+    # notification
+    (r'^notification/', include('notification.urls')),
 
     # other
     (r'^internal-links/', include('merengue.internallinks.urls')),
@@ -77,6 +82,7 @@ urlpatterns = patterns('',
     url(r'^invalidate/$', 'merengue.portal.views.invalidate_cache', name='invalidate_cache'),
     (r'^inplaceeditform/', include('inplaceeditform.urls')),
     (r'^reports/', include('autoreports.urls')),
+    (r'^captcha/', include('captcha.urls')),
 )
 
 if settings.USE_GIS:

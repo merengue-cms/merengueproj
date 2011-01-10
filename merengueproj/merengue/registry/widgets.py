@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -18,7 +18,6 @@
 from django.conf import settings
 from django.forms import widgets
 from django.forms.util import flatatt
-from django.template.loader import render_to_string
 from django.utils import simplejson as json
 from django.utils.html import linebreaks
 from django.utils.safestring import mark_safe
@@ -40,10 +39,7 @@ class ParamWidget(widgets.Widget):
         """ rendering function. note: value will be a config param instance """
         widget_attrs = self.build_attrs(attrs, name=name)
         flat_attrs = flatatt(widget_attrs)
-        return render_to_string('registry/paramwidget.html',
-                                {'param': value,
-                                 'name': name,
-                                 'widget_attrs': mark_safe(flat_attrs)})
+        return self.param.render(name, mark_safe(flat_attrs))
 
 
 class ConfigWidget(widgets.MultiWidget):
@@ -69,7 +65,7 @@ class ConfigWidget(widgets.MultiWidget):
         value = dict()
         for v in value_list:
             value.update(v)
-        return json.dumps(value)
+        return value
 
     def render(self, name, value, attrs=None):
         """ rendering function. note: value will be a config param instance """

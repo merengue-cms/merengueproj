@@ -164,7 +164,7 @@ class Document(models.Model):
         super(Document, self).save()
         basedir = os.path.join(get_location(), str(self.id))
         if not os.path.exists(basedir):
-            os.mkdir(basedir)
+            os.makedirs(basedir)
 
     def delete(self):
         basedir = os.path.join(get_location(), str(self.id))

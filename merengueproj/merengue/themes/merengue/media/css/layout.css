@@ -925,14 +925,10 @@ table.gsc-search-box td.gsc-input {
    padding: 0 5px;
 }
 
-/* docuemnts repository */
+/* documents repository */
 
 #content #content-main div {
-	margin-left: 1.5em;
-}
-
-#content div.object-buttons a {
-	background-color: red;
+    margin-left: 1.5em;
 }
 
 /* Safari 3.0 and Chrome rules here */

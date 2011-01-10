@@ -1,0 +1,41 @@
+{% load inlinetrans forum_tags datefilters i18n %}
+<div id="comment-{{ comment.id }}" class="comment">
+    <div class="comment-delete-message" style="display: none;">{% trans "Are you sure you want to delete this comment?" %}</div>
+    <div class="comment-discard-message" style="display: none;">{% trans "Are you sure you want to discard this comment form?" %}</div>
+    <h3 {% if comment.banned %}class="censured"{% endif %}>
+        {{ comment.title }}
+        <a class="commentLink" href="#comment-{{ comment.id }}">{% inline_trans "link to here" %}</a>
+    </h3>
+    <div class="commentinfo {% if comment.banned %}censured{% endif %}">
+        {% inline_trans "Send by" %} {{ comment.user.get_full_name|default:comment.user.username }} {% inline_trans "on" %} {{ comment.date_submitted|transdate }} {{ comment.date_submitted|date:"H:i:s" }}
+    </div>
+    <div class="commentBody {% if comment.banned %}censured{% endif %}">
+        {{ comment.comment|striptags|urlize|linebreaks }}
+    </div>
+
+    {% if actions %}
+    <div class="actions {% if comment.banned %}censured{% else %}public{% endif %}">
+        {% if not comment.thread.closed %}
+        <a class="addReply" href="{% url forum_child_comment_add comment.thread.forum.slug,comment.thread.slug,comment.id %}">{% inline_trans "Reply" %}</a>
+        <a class="hideReply" href="#" style="display:none">{% inline_trans "Hide Reply" %}</a>
+        {% endif %}
+        {% if is_moderated %} 
+              <a class="publishComment"
+                 href="{% url forum_comment_change_visibity comment.id %}">{% inline_trans "Publish" %}</a>
+              <a class="censureComment"
+                 href="{% url forum_comment_change_visibity comment.id %}">{% inline_trans "Censure" %}</a>
+              <a class="deleteComment"
+                 href="{% url forum_comment_delete comment.id %}">{% inline_trans "Delete" %}</a>
+              <a class="editComment"
+                 href="{{ comment.get_admin_absolute_url }}">{% inline_trans "Edit" %}</a>
+
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <div class="commentform"></div>
+        {% for childcomment in children_comments %}
+            {% thread_comment childcomment %}
+        {% endfor %}
+    <div class="commentresults" style="display:none"></div>
+</div>

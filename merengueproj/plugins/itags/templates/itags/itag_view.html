@@ -1,0 +1,33 @@
+{% extends "content_list.html" %}
+
+{% load i18n inlinetrans action_tags content_tags content_filters %}
+
+{% block pagetitle %}{% trans "Tag" %}: {{ tag.tag_name }}{% endblock %}
+
+{% block extrabreadcrumbs %}
+  <span class="breadcrumbSeparator">→</span><a href="" title="{% trans "Tag" %}: {{ tag.tag_name }}">{% inline_trans "Tag" %}: {{ tag.tag_name }}</a>
+{% endblock %}
+
+{% block listtitle %}{% trans "Tag" %}: {{ tag.tag_name }}{% endblock %}
+
+{% block listing %}
+{% regroup content_list by content_type as grouped %}
+{% for item in grouped %}
+<h2>{{ item.grouper.model_class|basecontent_type }}</h2>
+    <ul class="{% block listingclass %}contentList{% endblock %}">
+    {% for tagged_content in item.list %}
+      {% with tagged_content.object as content %}
+      {% block itemdetail %}
+       <li>
+        <a href="{% block contenturl %}{{ content.get_absolute_url }}{% endblock %}" title="{{ content }}" class="contentLink">
+         {% block itemtitle %}{% cutrender 100 %}{{ content }}{% endcutrender %}{% endblock %}
+        </a>
+        {% block contentinfo %}
+        {% endblock %}
+       </li>
+      {% endblock %}
+      {% endwith %}
+    {% endfor %}
+    </ul>
+{% endfor %}
+{% endblock %}

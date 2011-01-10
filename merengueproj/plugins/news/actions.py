@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -25,6 +25,7 @@ from merengue.action.actions import SiteAction
 class NewsIndex(SiteAction):
     name = 'newsindex'
     verbose_name = _('News index')
+    help_text = _('Index page with all news items')
 
     @classmethod
     def get_response(cls, request):
@@ -33,7 +34,8 @@ class NewsIndex(SiteAction):
 
 class NewsRSS(SiteAction):
     name = 'newsrss'
-    verbose_name = _('News rss')
+    verbose_name = _('News RSS')
+    help_text = _('News RSS for all feeds')
 
     @classmethod
     def get_response(cls, request):

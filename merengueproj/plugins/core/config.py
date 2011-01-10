@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -35,7 +35,7 @@ class PluginConfig(Plugin):
     )
 
     config_params = [
-        params.Integer(name='home_initial_content',
+        params.Content(name='home_initial_content',
                        label=_('home initial content'), default=1)]
 
     @classmethod

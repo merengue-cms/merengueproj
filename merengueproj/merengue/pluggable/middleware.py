@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -22,6 +22,7 @@ from merengue.pluggable.loading import load_plugins, plugins_loaded
 
 
 class ActivePluginsMiddleware(object):
+    """ Middleware that enable active plugins in every request """
 
     def process_request(self, request):
         if request.get_full_path().startswith(settings.MEDIA_URL):
@@ -35,3 +36,34 @@ class ActivePluginsMiddleware(object):
                 translation.deactivate()
                 translation.activate(lang)
         return None
+
+
+class PluginMiddlewaresProxy(object):
+    """ Middleware that calls to all plugins middlewares """
+
+    def process_request(self, request):
+        from merengue.pluggable.utils import get_plugins_middleware_methods
+        for method in get_plugins_middleware_methods('request_middleware'):
+            response = method(request)
+            if response:
+                return response
+
+    def process_view(self, request, view_func, view_args, view_kwargs):
+        from merengue.pluggable.utils import get_plugins_middleware_methods
+        for method in get_plugins_middleware_methods('view_middleware'):
+            response = method(request, view_func, view_args, view_kwargs)
+            if response:
+                return response
+
+    def process_response(self, request, response):
+        from merengue.pluggable.utils import get_plugins_middleware_methods
+        for method in get_plugins_middleware_methods('response_middleware'):
+            response = method(request, response)
+        return response
+
+    def process_exception(self, request, exception):
+        from merengue.pluggable.utils import get_plugins_middleware_methods
+        for method in get_plugins_middleware_methods('exception_middleware'):
+            response = method(request)
+            if response:
+                return response

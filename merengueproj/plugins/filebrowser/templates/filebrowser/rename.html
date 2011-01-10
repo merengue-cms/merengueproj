@@ -1,7 +1,7 @@
 {% extends "filebrowser/base.html" %}
 {% load i18n filebrowser_tags %}
 
-{% block pagetitle %}{% trans "Rename" %}{% endblock %}
+{% block pagetitle %}{{ block.super }} - {% trans "Rename" %}{% endblock %}
 
 {% block extrabreadcrumbs %}
   {{ block.super }}

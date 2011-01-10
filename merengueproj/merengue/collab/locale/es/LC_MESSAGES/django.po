@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-04-12 12:00+0200\n"
-"PO-Revision-Date: 2010-05-06 14:09\n"
+"PO-Revision-Date: 2010-10-05 10:10\n"
 "Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr "traducción"
 
 #: models.py:12
 msgid "Just set status"
-msgstr ""
+msgstr "Sólo configurar estado"
 
 #: models.py:13
 msgid "Display an alternative comment in public view"
@@ -54,7 +54,7 @@ msgstr "resultado"
 
 #: models.py:56
 msgid "Select the resulting action this status trigger"
-msgstr ""
+msgstr "Seleccione la acción resultante de este estado"
 
 #: models.py:60
 msgid "reason"
@@ -86,7 +86,7 @@ msgstr "URL del usuario"
 
 #: models.py:110
 msgid "comment user type"
-msgstr ""
+msgstr "Tipo de comentario de usuario"
 
 #: models.py:114
 msgid "comment"
@@ -130,7 +130,7 @@ msgstr "Tu comentario ha sido añadido"
 
 #: views.py:76
 msgid "Your revisor status has been added"
-msgstr ""
+msgstr "Tu estado de revisor ha sido añadido"
 
 #: views.py:174
 msgid "Your translation has been saved"

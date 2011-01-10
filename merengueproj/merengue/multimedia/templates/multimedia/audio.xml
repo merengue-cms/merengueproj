@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <file>{{ audio.file.url }}</file>
+    <autostart>false</autostart>
+    <screencolor>0x666666</screencolor>
+    <volume>50</volume>
+    <image>{{ MEDIA_URL }}merengue/img/multimedia/previews/audio_preview.jpg</image>
+</config>
+

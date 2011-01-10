@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, ugettext_lazy
 
 from merengue.block.blocks import Block
 from plugins.highlight.models import Highlight
@@ -24,6 +24,8 @@ from plugins.highlight.models import Highlight
 class HighlightBlock(Block):
     name = 'highlight'
     default_place = 'homepage'
+    verbose_name = ugettext_lazy('Highlight Block')
+    help_text = ugettext_lazy('The block that highlights the item')
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):

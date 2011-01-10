@@ -1,0 +1,33 @@
+{% extends "admin/basecontent/sortable_change_list.html" %}
+{% load adminmedia admin_list i18n %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/section/jquery.extended-section-changelist.js"></script>
+{% endblock %}
+
+{% block content %}
+  <div class="section-configuration" style="display: none;">
+  <span class="ajax-loading"><img src="{{ MEDIA_URL }}merengue/img/ajax-loader-admin.gif" /> {% trans "Please wait, retrieving contents" %}</span>
+  <span class="tools-toggle">
+    <img class="plusMenu" src="{{ MEDIA_URL }}merengue/img/section/admin/plus.gif" />
+    <img class="minusMenu hide" src="{{ MEDIA_URL }}merengue/img/section/admin/minus.gif" />
+  </span>
+  <ul class="section-tools toolList">
+  {% for tool in section_tools|dictsort:"tool_label" %}
+  <li class="tool">
+  <div class="tool-configuration" style="display: none;">
+    <span class="tool-name">{{ tool.tool_name }}</span>
+  </div>
+  <span class="contents-toggle">
+    <img class="plusMenu" src="{{ MEDIA_URL }}merengue/img/section/admin/plus.gif" />
+    <img class="minusMenu hide" src="{{ MEDIA_URL }}merengue/img/section/admin/minus.gif" />
+  </span>
+    <a class="tool-main-link" href="">{{ tool.tool_label }}</a>
+  </li>
+  {% endfor %}
+  </ul>
+  </div>
+
+  {{ block.super }}
+{% endblock %}
