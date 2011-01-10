@@ -27,3 +27,4 @@ django-inlinetrans
 django-transmeta
 sorl-thumbnail
 searchform
+django-autoreports
