@@ -34,9 +34,11 @@ class PluginConfig(Plugin):
     version = '0.0.1a'
 
     config_params = [
-        params.Integer(
-            name='limit', label=_('number of news for the "Latest news" block'),
-            default=3),
+        params.PositiveInteger(
+            name='limit',
+            label=_('number of news for the "Latest news" block'),
+            default=3,
+        ),
     ]
 
     url_prefixes = (
