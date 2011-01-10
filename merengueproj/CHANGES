@@ -1,11 +1,46 @@
 Changes
 =======
 
-Version 0.6.0-beta1 (XXXX revision)
+Version 0.6.0-beta1 (2921 revision)
 -----------------------------------
 
-* A lot of bugfixes.
+* A lot of bugfixes:
+
+ * Section custom CSS validation error fixed.
+ * More robust tagcloud and tag validation for itag plugin.
+ * Several bugfixes to transhette.
+ * Removed several "permissions" button in admin which don't worked.
+ * Registry params validation support (for plugins, actions, etc.).
+ * Included recaptcha keys to get captcha plugin works out-of-the-box.
+ * Support both for PIL 1.1.6 and 1.1.7 (have incompatible import sentences).
+ * Better date support in collections.
+ * Fixed some errors with truncatechars filter in collections.
+ * Errors in autoreports link in plugins admin.
+ * Fixes stdimage validation for non required fields.
+ * Fixed wrong user message when editing contents.
+ * Fixed 404 error when adding link into sections.
+ * Fixed error editing threads of a forum in forum plugin.
+ * Better validation in some parts of subscription plugin.
+ * Improved permission handling for plugin managers.
+ * Fixed some web layout errors.
+ * More robust handling of "empty" filters and other validation issues in collections.
+ * Fixed errors in feed info in rss plugin.
+
 * Support of HTML emails in contactform plugin.
+
+* Non overwritable fixtures support.
+
+* Completed spanish translations.
+
+* Added sent date column in forms sents admin in contactform plugin.
+
+* Read only fields works with foreign key fields.
+
+* Complete documentation of:
+
+ * Merengue fixtures.
+ * Block hiding/showing by URL regex.
+ * Install instructions and python dependences.
 
 Version 0.6.0-alpha3 (2844 revision)
 ------------------------------------
