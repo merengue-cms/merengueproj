@@ -95,6 +95,12 @@ class Integer(Param):
         return isinstance(value, int)
 
 
+class PositiveInteger(Integer):
+
+    def is_valid(self, value):
+        return isinstance(value, int) and value >= 0
+
+
 class Bool(Param):
 
     VAL_FALSE = ['false', 'none']
@@ -141,6 +147,14 @@ class List(Param):
                extra_context=None):
         return super(List, self).render(name, widget_attrs,
                                         template_name, extra_context)
+
+
+class Content(PositiveInteger):
+
+    def is_valid(self, value):
+        from merengue.base.models import BaseContent  # import here to avoid circular imports
+        return super(Content, self).is_valid(value) and \
+               BaseContent.objects.filter(id=value)
 
 
 class Text(Param):
