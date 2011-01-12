@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas
+# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
 #
 # This file is part of Merengue.
 #
@@ -16,28 +16,27 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf import settings
-from django.utils.translation import ugettext as _, ugettext_lazy
+from django.utils.translation import ugettext as _
 
 from merengue.block.blocks import Block
 from merengue.section.models import BaseSection, Menu
 from merengue.portal.models import PortalLink
+from merengue.perms.utils import has_permission
 
 
 class CoreMenuBlock(Block):
     name = 'coremenu'
     default_place = 'leftsidebar'
-    help_text = ugettext_lazy('Renders the Menu')
-    verbose_name = ugettext_lazy('Core Menu Block')
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):
         section = request.section
         if not section:
-            return '' # renders nothing
+            return ''  # renders nothing
         main_menu = section.main_menu
         descendants = main_menu.get_descendants()
         if not request.section or not descendants:
-            return '' # renders nothing
+            return ''  # renders nothing
         return cls.render_block(request, template_name='core/block_menu.html',
                                 block_title=_('Menu'),
                                 context={'section': section,
@@ -48,14 +47,23 @@ class CoreMenuBlock(Block):
 class NavigationBlock(Block):
     name = 'navigation'
     default_place = 'leftsidebar'
-    help_text = ugettext_lazy('Renders the Navigation')
-    verbose_name = ugettext_lazy('Navigation Block')
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):
-        sections = BaseSection.objects.published()
+
+        def filter_sections(sections):
+            """
+            Generator that checks permissions for sections.
+            """
+            for section in sections:
+#                Not sure about the nuber of queries.
+                if has_permission(section.main_content, request.user, 'view'):
+                    yield section
+
+        sections = filter_sections(BaseSection.objects.published())
+
         if not sections:
-            return '' # renders nothing
+            return ''  # renders nothing
         return cls.render_block(request, template_name='core/block_navigation.html',
                                 block_title=_('Navigation'),
                                 context={'sections': sections,
@@ -65,8 +73,6 @@ class NavigationBlock(Block):
 class PortalMenuBlock(Block):
     name = 'portalmenu'
     default_place = 'header'
-    help_text = ugettext_lazy('Renders the Portal Menu')
-    verbose_name = ugettext_lazy('Portal Menu Block')
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):
@@ -80,8 +86,6 @@ class LinkBaseBlock(Block):
     """ Abstract base class for blocks that render portal links """
     category = None
     template_name = 'core/block_portallinks.html'
-    help_text = ugettext_lazy('Abstract block that render portal links')
-    verbose_name = ugettext_lazy('Link Base Block')
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):
@@ -98,8 +102,6 @@ class PrimaryLinksBlock(LinkBaseBlock):
     default_place = 'header'
     category = 'primary'
     template_name = 'core/block_primarylinks.html'
-    help_text = ugettext_lazy('Block reporesents the Primary Links')
-    verbose_name = ugettext_lazy('Primary Links Block')
 
 
 class SecondaryLinksBlock(LinkBaseBlock):
@@ -108,5 +110,3 @@ class SecondaryLinksBlock(LinkBaseBlock):
     default_place = 'footer'
     category = 'secondary'
     template_name = 'core/block_secondarylinks.html'
-    help_text = ugettext_lazy('Block that renders secondary portal links')
-    verbose_name = ugettext_lazy('Link Base Block')
