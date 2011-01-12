@@ -18,34 +18,27 @@
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.block.blocks import Block, ContentBlock
+from merengue.block.blocks import Block
+from merengue.registry.items import QuerySetItemProvider
 from plugins.news.views import get_news
 
 
-class LatestNewsBlock(Block):
+class LatestNewsBlock(QuerySetItemProvider, Block):
     name = 'latestnews'
     verbose_name = _('Latest news')
     help_text = _('Block with last news items published')
     default_place = 'leftsidebar'
 
     @classmethod
-    def render(cls, request, place, context, *args, **kwargs):
+    def get_contents(cls, request=None, context=None, section=None):
         from plugins.news.config import PluginConfig
         number_news = PluginConfig.get_config().get('limit', []).get_value()
         news_list = get_news(request, number_news)
+        return news_list
+
+    @classmethod
+    def render(cls, request, place, context, *args, **kwargs):
+        news_list = cls.get_queryset(request, context)
         return cls.render_block(request, template_name='news/block_latest.html',
                                 block_title=ugettext('Latest news'),
                                 context={'news_list': news_list})
-
-
-class NewsCommentsBlock(ContentBlock):
-    name = 'newscomment'
-    verbose_name = _('Latest news')
-    help_text = _('Block with news items comments')
-    default_place = 'aftercontent'
-
-    @classmethod
-    def render(cls, request, place, content, context, *args, **kwargs):
-        return cls.render_block(request, template_name='news/block_newscomments.html',
-                                block_title=ugettext('News comments'),
-                                context={'content': content})

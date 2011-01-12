@@ -24,6 +24,7 @@ from django.template.loader import render_to_string
 from cmsutils.adminfilters import QueryStringManager
 from merengue.base.views import content_view, content_list
 from merengue.collection.models import Collection
+from merengue.collection.views import collection_view
 from plugins.news.models import NewsItem, NewsCategory
 
 
@@ -40,7 +41,7 @@ def news_index(request, queryset=None, extra_context=None):
                                                filter_value='published')
         news_collection.content_types.add(ContentType.objects.get_for_model(NewsItem))
         news_collection.save()
-    return content_view(request, news_collection, extra_context=extra_context)
+    return collection_view(request, news_collection, extra_context=extra_context)
 
 
 def newsitem_view(request, newsitem_slug, extra_context=None):
