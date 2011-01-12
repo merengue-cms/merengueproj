@@ -70,6 +70,12 @@ class Collection(BaseContent):
         verbose_name=_('Show main_image of collection items'),
         )
 
+    filtering_section = models.BooleanField(
+        default=True,
+        verbose_name=_('Filtering section'),
+        help_text=_('If the collection is into a section, filter for the contents of this section'),
+        )
+
     class Meta:
         verbose_name = _(u'Collection')
         verbose_name_plural = _(u'Collections')
