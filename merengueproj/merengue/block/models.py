@@ -18,6 +18,8 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from merengue.base.models import BaseContent
+
 from merengue.registry.managers import RegisteredItemManager
 from merengue.registry.models import RegisteredItem
 
@@ -83,3 +85,14 @@ class RegisteredBlock(RegisteredItem):
 
     def __unicode__(self):
         return self.name
+
+
+class BlockContentRelation(models.Model):
+
+    block = models.ForeignKey(RegisteredBlock, verbose_name=_('related block'))
+    content = models.ForeignKey(BaseContent, verbose_name=_('related content'))
+    placed_at = models.CharField(_('placed at'), max_length=100, choices=PLACES)
+    order = models.IntegerField(_("Order"), blank=True, null=True)
+
+    def __unicode__(self):
+        return u'%s - %s' % (self.block.name, self.content.name)
