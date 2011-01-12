@@ -104,9 +104,18 @@ class SectionAdmin(BaseSectionAdmin):
         context['change_form_section'] = True
         return super(SectionAdmin, self).render_change_form(request, context, add, change, form_url, obj)
 
+    def get_section_tools(self, model, tools=None):
+        tools = tools or []
+        if model in self.admin_site.tools:
+            tools.extend([val for key, val in self.admin_site.tools[model].items() if getattr(val, 'manage_contents', False)])
+        else:
+            for parent in model._meta.parents:
+                tools.extend(self.get_section_tools(parent, tools))
+        return tools
+
     def changelist_view(self, request, extra_context=None):
         extra_context = extra_context or {}
-        section_tools = [val for key, val in self.admin_site.tools[self.model].items() if getattr(val, 'manage_contents', False)]
+        section_tools = self.get_section_tools(self.model)
         extra_context.update({'section_tools': section_tools})
         return super(SectionAdmin, self).changelist_view(request, extra_context)
 
