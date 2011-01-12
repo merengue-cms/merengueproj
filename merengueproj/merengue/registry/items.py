@@ -16,8 +16,10 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils.translation import ugettext_lazy as _
 
 from merengue.registry.models import RegisteredItem
+from merengue.registry import params
 from merengue.registry.params import ConfigDict
 
 # ---- Exception definitions ----
@@ -76,6 +78,43 @@ class RegistrableItem(object):
     @classmethod
     def get_extended_attrs(cls):
         return {}
+
+
+class ContentsItemProvider(object):
+
+    @classmethod
+    def get_contents(cls, request=None, context=None, section=None):
+        raise NotImplementedError()
+
+
+class QuerySetItemProvider(ContentsItemProvider):
+
+    config_params = [
+        params.Bool(
+            name='filtering_section',
+            label=_('If the collection is into a section, filter for the contents of this section'),
+            default=True,
+        ),
+    ]
+
+    @classmethod
+    def _get_section(cls, request, context):
+        return (request and getattr(request, 'section', None)) or (context and context.get('section', None))
+
+    @classmethod
+    def get_queryset(cls, request=None, context=None):
+        section = cls._get_section(request, context)
+        return cls.queryset(request, context, section)
+
+    @classmethod
+    def queryset(cls, request=None, context=None, section=None):
+        queryset = cls.get_contents(request, context, section)
+        if section and cls.get_config().get('filtering_section', False).get_value():
+            if not queryset.query.can_filter():
+                queryset = queryset.model.objects.filter(id__in=queryset.values('id').query)
+            queryset = queryset.filter(basesection=section)
+        return queryset
+
 
 """
 Example use::
