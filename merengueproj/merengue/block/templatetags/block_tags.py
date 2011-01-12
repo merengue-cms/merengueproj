@@ -47,6 +47,14 @@ def _render_blocks(request, obj, place, block_type, context):
                                                     place,
                                                     obj,
                                                     context))
+        if isinstance(obj, BaseContent) and \
+                registered_block.print_content_related_block(obj, place):
+            block = registered_block.get_registry_item_class()
+            rendered_blocks.append(block.render(request,
+                                                place,
+                                                obj,
+                                                context))
+
     return "<div class='blockContainer %ss'>%s" \
             "<input type=\"hidden\" class=\"blockPlace\" value=\"%s\">" \
             "</div>" \

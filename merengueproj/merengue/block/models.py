@@ -83,6 +83,14 @@ class RegisteredBlock(RegisteredItem):
             return self.show_in_url(url)
         return False
 
+    def print_content_related_block(self, content, place):
+        try:
+            BlockContentRelation.objects.get(block=self, content=content,
+                                             placed_at=place)
+        except BlockContentRelation.DoesNotExist:
+            return False
+        return True
+
     def __unicode__(self):
         return self.name
 
