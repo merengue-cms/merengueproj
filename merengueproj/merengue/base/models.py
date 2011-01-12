@@ -141,21 +141,24 @@ class Base(models.Model):
     def __unicode__(self):
         return self.name or ugettext('Without name')
 
+    def _prepare_plain_text(self, from_field, to_field):
+        original_text = getattr(self, from_field, None)
+        if original_text:
+            original_text = force_unicode(original_text)
+            text = re.sub('<br[^>]*>', u'\n', original_text)
+            text = unescape_entities(text)
+            text = strip_tags(text)
+            text = text.strip()
+            setattr(self, to_field, text)
+        else:
+            setattr(self, to_field, original_text)
+
     def save(self, *args, **kwargs):
         for lang in settings.LANGUAGES:
             field_name = 'description_%s' % lang[0]
             to_field = 'plain_description_%s' % lang[0]
+            self._prepare_plain_text(field_name, to_field)
 
-            original_text = getattr(self, field_name, None)
-            if original_text:
-                original_text = force_unicode(original_text)
-                text = re.sub('<br[^>]*>', u'\n', original_text)
-                text = unescape_entities(text)
-                text = strip_tags(text)
-                text = text.strip()
-                setattr(self, to_field, text)
-            else:
-                setattr(self, to_field, original_text)
         super(Base, self).save(*args, **kwargs)
 
     @permalink
@@ -293,6 +296,8 @@ class BaseContent(BaseClass):
     # this is handled in admin forms
     user_modification_date = models.DateTimeField(verbose_name=_('modification date'),
                                                   blank=True, null=True, editable=False)
+    cached_plain_text = models.TextField(verbose_name=_('cached plain text'),
+                                   null=True, blank=True)
 
     last_editor = models.ForeignKey(User, null=True, blank=True, editable=False,
                                     related_name='last_edited_content')
@@ -349,9 +354,24 @@ class BaseContent(BaseClass):
 
     objects = BaseContentManager()
 
+    def generate_plain_text(self):
+        return strip_tags(self.description)
+
+    def _plain_text(self):
+        if not self.cached_plain_text:
+            for lang in settings.LANGUAGES:
+                from_field = 'description_%s' % lang[0]
+                to_field = 'cached_plain_text_%s' % lang[0]
+                self._prepare_plain_text(from_field, to_field)
+            self.save()
+        return self.cached_plain_text
+
+    plain_text = property(_plain_text)
+
     class Meta:
         verbose_name = _('base content')
         verbose_name_plural = _('base contents')
+        translate = ('cached_plain_text', )
         abstract = False
         #content_view_template = 'content_view.html' # default definition by BaseContentMeta metaclass
         ordering = (get_fallback_fieldname('name'), )
