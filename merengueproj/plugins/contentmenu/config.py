@@ -18,6 +18,7 @@
 from merengue.pluggable import Plugin
 
 from plugins.contentmenu.admin import ContentGroupAdmin
+from plugins.contentmenu.blocks import ContentGroupLinksBlock
 from plugins.contentmenu.models import ContentGroup
 
 
@@ -25,6 +26,10 @@ class PluginConfig(Plugin):
     name = 'Content menu'
     description = 'Plugin to associate some contents between them'
     version = '0.0.1a'
+
+    @classmethod
+    def get_blocks(cls):
+        return [ContentGroupLinksBlock, ]
 
     @classmethod
     def get_model_admins(cls):
