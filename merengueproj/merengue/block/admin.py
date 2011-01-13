@@ -20,6 +20,7 @@ from django.utils.translation import ugettext_lazy as _
 from merengue.base.admin import RelatedModelAdmin
 from merengue.base.models import BaseContent
 from merengue.block.models import RegisteredBlock, BlockContentRelation
+from merengue.block.forms import BaseContentRelatedBlockForm
 from merengue.registry.admin import RegisteredItemAdmin
 
 
@@ -43,6 +44,7 @@ class BaseContentRelatedBlockAdmin(RelatedModelAdmin):
     tool_name = 'block_content_related'
     tool_label = _('block content related')
     related_field = 'content'
+    form = BaseContentRelatedBlockForm
 
 
 def register(site):

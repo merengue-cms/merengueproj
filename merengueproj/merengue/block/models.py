@@ -20,6 +20,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.models import BaseContent
 
+from merengue.registry.dbfields import ConfigField
 from merengue.registry.managers import RegisteredItemManager
 from merengue.registry.models import RegisteredItem
 
@@ -97,10 +98,14 @@ class RegisteredBlock(RegisteredItem):
 
 class BlockContentRelation(models.Model):
 
-    block = models.ForeignKey(RegisteredBlock, verbose_name=_('related block'))
-    content = models.ForeignKey(BaseContent, verbose_name=_('related content'))
-    placed_at = models.CharField(_('placed at'), max_length=100, choices=PLACES)
-    order = models.IntegerField(_("Order"), blank=True, null=True)
+    block = models.ForeignKey(RegisteredBlock, verbose_name=_(u'related block'))
+    content = models.ForeignKey(BaseContent, verbose_name=_(u'related content'))
+    placed_at = models.CharField(_(u'placed at'), max_length=100,
+                                 choices=PLACES)
+    order = models.IntegerField(_(u'Order'), blank=True, null=True)
+    config = ConfigField(
+        verbose_name=_(u'block specific configuration'), default={},
+        help_text=_(u'Fill this field to overwrite the block configuration'))
 
     def __unicode__(self):
         return u'%s - %s' % (self.block.name, self.content.name)
