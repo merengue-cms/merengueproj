@@ -20,10 +20,11 @@ from django.core import urlresolvers
 from django.shortcuts import get_object_or_404
 
 from plugins.microsite.models import MicroSite
+from merengue.section.views import section_view
 
 
 def microsite_view(request, microsite_slug):
-    return microsite_url(request, microsite_slug)
+    return section_view(request, microsite_slug)
 
 
 def microsite_url(request, microsite_slug, url):

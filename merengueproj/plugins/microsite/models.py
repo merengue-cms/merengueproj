@@ -23,8 +23,8 @@ from merengue.section.models import Section
 class MicroSite(Section):
 
     def content_public_link(self, section, content):
-        url_external = reverse(content._public_link_simply()[0],
-                               args=content._public_link_simply()[1])
+        url_external = reverse(content._public_link_without_section()[0],
+                               args=content._public_link_without_section()[1])
         if url_external and url_external[0] == '/':
             url_external = url_external[1:]
         return ('microsite_url', [section.slug, url_external])

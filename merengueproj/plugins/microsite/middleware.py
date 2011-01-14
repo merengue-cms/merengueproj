@@ -27,7 +27,7 @@ class ResponseMicrositeMiddleware(object):
         path_info = request.get_full_path()
         url_args = [item for item in path_info.split('/') if item]
         from plugins.microsite.config import PluginConfig
-        if url_args[0] == PluginConfig.url_prefixes[0][0]:
+        if len(url_args) > 1 and url_args[0] == PluginConfig.url_prefixes[0][0]:
             del url_args[0]
             url_new = '/'.join(url_args)
             url_new = '/%s/' % url_new
@@ -46,7 +46,9 @@ class ResponseMicrositeMiddleware(object):
             return response
 
     def microsite_dispatcher(self, request, url_args):
-        from plugins.microsite.views import microsite_url
-        if url_args:
+        from plugins.microsite.views import microsite_url, microsite_view
+        if len(url_args) > 1:
             return microsite_url(request, url_args[0], url_args[1:])
+        elif len(url_args) == 1:
+            return microsite_view(request, url_args[0])
         raise Http404
