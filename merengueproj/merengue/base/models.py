@@ -420,7 +420,11 @@ class BaseContent(BaseClass):
     def get_absolute_url(self):
         return ('merengue.base.views.public_link', [self._meta.app_label, self._meta.module_name, self.id])
 
-    def _public_link_simply(self):
+    @permalink
+    def public_link_without_section(self):
+        return self._public_link_without_section()
+
+    def _public_link_without_section(self):
         return ('merengue.base.views.public_view', [self._meta.app_label, self._meta.module_name, self.id, self.slug])
 
     @permalink
@@ -429,7 +433,7 @@ class BaseContent(BaseClass):
         if section:
             return section.real_instance.content_public_link(section, self)
         else:
-            return self._public_link_simply()
+            return self._public_link_without_section()
 
     def link_by_user(self, user):
         """ User dependent link. To override in subclasses, if needed """
