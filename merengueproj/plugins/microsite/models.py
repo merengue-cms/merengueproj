@@ -15,11 +15,19 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from merengue.section.models import Section
 
 
 class MicroSite(Section):
+
+    def content_public_link(self, section, content):
+        url_external = reverse(content._public_link_simply()[0],
+                               args=content._public_link_simply()[1])
+        if url_external and url_external[0] == '/':
+            url_external = url_external[1:]
+        return ('microsite_url', [section.slug, url_external])
 
     class Meta:
         verbose_name = _('microsite')

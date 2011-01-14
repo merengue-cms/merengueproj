@@ -17,17 +17,25 @@
 
 from django.conf import settings
 from django.http import Http404
+from django.http import HttpResponseRedirect
 
 
 class ResponseMicrositeMiddleware(object):
     """This middleware autodiscovers the current section from the url"""
 
     def process_response(self, request, response):
-        from plugins.microsite.views import microsite_dispatcher
+        path_info = request.get_full_path()
+        url_args = [item for item in path_info.split('/') if item]
+        from plugins.microsite.config import PluginConfig
+        if url_args[0] == PluginConfig.url_prefixes[0][0]:
+            del url_args[0]
+            url_new = '/'.join(url_args)
+            url_new = '/%s/' % url_new
+            return HttpResponseRedirect(url_new)
         if response.status_code != 404:
             return response # No need to check for a section for non-404 responses.
         try:
-            return microsite_dispatcher(request)
+            return self.microsite_dispatcher(request, url_args)
         # Return the original response if any errors happened. Because this
         # is a middleware, we can't assume the errors will be caught elsewhere.
         except Http404:
@@ -36,3 +44,9 @@ class ResponseMicrositeMiddleware(object):
             if settings.DEBUG:
                 raise
             return response
+
+    def microsite_dispatcher(self, request, url_args):
+        from plugins.microsite.views import microsite_url
+        if url_args:
+            return microsite_url(request, url_args[0], url_args[1:])
+        raise Http404

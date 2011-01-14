@@ -53,14 +53,17 @@ class NewsItem(BaseContent):
         content_view_template = 'news/newsitem_view.html'
         ordering = ('-publish_date', '-id')
 
+    def _public_link_simply(self):
+        return ('newsitem_view', [self.slug])
+
     @permalink
     def public_link(self):
         section = self.get_main_section()
         if section is None:
-            return ('newsitem_view', [self.slug])
+            return self._public_link_simply()
         else:
             # go to news item inside section which created it
-            return ('content_section_view', [section.slug, self.id, self.slug])
+            return section.real_instance.content_public_link(section, self)
 
 
 def set_publish_date(sender, instance, **kwargs):
