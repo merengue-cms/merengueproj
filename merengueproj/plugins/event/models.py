@@ -52,7 +52,7 @@ class Event(BaseContent):
         verbose_name = _('event')
         verbose_name_plural = _('events')
 
-    def _public_link_simply(self):
+    def _public_link_without_section(self):
         return ('event_view', [self.slug])
 
     def __unicode__(self):

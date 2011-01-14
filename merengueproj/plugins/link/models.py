@@ -43,5 +43,5 @@ class Link(BaseContent):
         verbose_name = _('link')
         verbose_name_plural = _('links')
 
-    def _public_link_simply(self):
+    def _public_link_without_section(self):
         return ('link_view', [self.slug])

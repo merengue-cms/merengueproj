@@ -52,7 +52,7 @@ class NewsItem(BaseContent):
         content_view_template = 'news/newsitem_view.html'
         ordering = ('-publish_date', '-id')
 
-    def _public_link_simply(self):
+    def _public_link_without_section(self):
         return ('newsitem_view', [self.slug])
 
 
