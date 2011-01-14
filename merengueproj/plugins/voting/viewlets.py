@@ -44,7 +44,7 @@ class BaseContentTopRated(Viewlet):
     verbose_name = _('Top rated content')
 
     @classmethod
-    def render(cls, request):
+    def render(cls, request, context):
         votes_list = get_content_with_votes(request, limit=None, order_by='-vote__vote')
         return cls.render_viewlet(request, template_name='voting/viewlet_voting_basecontent.html',
                                   context={'votes_list': votes_list})
@@ -56,7 +56,7 @@ class BaseContentWithMoreVotes(Viewlet):
     verbose_name = _('More votes content')
 
     @classmethod
-    def render(cls, request):
+    def render(cls, request, context):
         votes_list = get_content_with_votes(request, limit=None, order_by='-vote__num_votes')
         return cls.render_viewlet(request, template_name='voting/viewlet_voting_basecontent.html',
                                   context={'votes_list': votes_list})

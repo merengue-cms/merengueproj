@@ -27,7 +27,7 @@ class LatestLinkViewlet(Viewlet):
     verbose_name = _('Latest links')
 
     @classmethod
-    def render(cls, request):
+    def render(cls, request, context):
         link_list = get_links(request, 10)
         return cls.render_viewlet(request, template_name='link/viewlet_latest.html',
                                   context={'link_list': link_list})
@@ -39,7 +39,7 @@ class AllLinkViewlet(Viewlet):
     verbose_name = _('All links')
 
     @classmethod
-    def render(cls, request):
+    def render(cls, request, context):
         link_list = get_links(request)
         return cls.render_viewlet(request, template_name='link/viewlet_latest.html',
                                   context={'link_list': link_list,

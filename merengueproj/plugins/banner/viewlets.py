@@ -27,7 +27,7 @@ class AllBannerViewlet(Viewlet):
     verbose_name = _('All banner block')
 
     @classmethod
-    def render(cls, request):
+    def render(cls, request, context):
         banner_list = get_banners(request)
         return cls.render_viewlet(request, template_name='banner/viewlet_latest.html',
                                   context={'banner_list': banner_list,

@@ -27,7 +27,7 @@ class LatestEventViewlet(Viewlet):
     verbose_name = _('Latest Event')
 
     @classmethod
-    def render(cls, request):
+    def render(cls, request, context):
         event_list = get_events(request, 10)
         return cls.render_viewlet(request, template_name='event/viewlet_latest.html',
                                   context={'event_list': event_list})
@@ -39,7 +39,7 @@ class AllEventViewlet(Viewlet):
     verbose_name = _('All Events')
 
     @classmethod
-    def render(cls, request):
+    def render(cls, request, context):
         event_list = get_events(request)
         return cls.render_viewlet(request, template_name='event/viewlet_latest.html',
                                   context={'event_list': event_list,
