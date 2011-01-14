@@ -24,7 +24,7 @@ from django.conf import settings
 if settings.USE_GIS:
     from django.contrib.gis.db import models
 else:
-    from django.db import models
+    from django.db import models # pyflakes:ignore
 from django.contrib.contenttypes.models import ContentType
 from django.core.management import call_command
 from django.core.exceptions import ObjectDoesNotExist, SuspiciousOperation
@@ -43,7 +43,7 @@ from django.contrib.auth.models import User
 from cmsutils.db.fields import AutoSlugField, JSONField
 from cmsutils.signals import post_rebuild_db
 if settings.USE_GIS:
-    from south.introspection_plugins import geodjango
+    from south.introspection_plugins import geodjango # pyflakes:ignore
 from south.modelsinspector import add_introspection_rules
 from south.signals import pre_migrate, post_migrate
 from stdimage import StdImageField
@@ -420,13 +420,16 @@ class BaseContent(BaseClass):
     def get_absolute_url(self):
         return ('merengue.base.views.public_link', [self._meta.app_label, self._meta.module_name, self.id])
 
+    def _public_link_simply(self):
+        return ('merengue.base.views.public_view', [self._meta.app_label, self._meta.module_name, self.id, self.slug])
+
     @permalink
     def public_link(self):
         section = self.get_main_section()
         if section:
-            return ('content_section_view', [section.slug, self.id, self.slug])
+            return section.real_instance.content_public_link(section, self)
         else:
-            return ('merengue.base.views.public_view', [self._meta.app_label, self._meta.module_name, self.id, self.slug])
+            return self._public_link_simply()
 
     def link_by_user(self, user):
         """ User dependent link. To override in subclasses, if needed """

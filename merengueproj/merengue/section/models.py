@@ -305,6 +305,9 @@ class BaseSection(Base, RealInstanceMixin):
         content_type = ContentType.objects.get_for_model(self)
         return ('merengue.base.views.admin_link', [content_type.id, self.id, ''])
 
+    def content_public_link(self, section, content):
+        return ('content_section_view', [section.slug, content.id, content.slug])
+
     def has_custom_style(self):
         return bool(self.customstyle)
 

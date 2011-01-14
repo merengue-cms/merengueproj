@@ -44,7 +44,7 @@ class Viewlet(RegistrableItem):
                                 context_instance=RequestContext(request))
 
     @classmethod
-    def render(cls, request, context=None):
+    def render(cls, request, context):
         raise NotImplementedError('You have to override this method')
 
 
