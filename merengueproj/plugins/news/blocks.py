@@ -19,11 +19,11 @@ from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.block.blocks import Block
-from merengue.registry.items import QuerySetItemProvider
+from merengue.registry.items import BlockQuerySetItemProvider
 from plugins.news.views import get_news
 
 
-class LatestNewsBlock(QuerySetItemProvider, Block):
+class LatestNewsBlock(BlockQuerySetItemProvider, Block):
     name = 'latestnews'
     verbose_name = _('Latest news')
     help_text = _('Block with last news items published')

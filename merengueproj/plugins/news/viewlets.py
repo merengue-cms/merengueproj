@@ -19,28 +19,41 @@ from django.utils.translation import ugettext_lazy as _
 
 from merengue.viewlet.viewlets import Viewlet
 from plugins.news.views import get_news
+from merengue.registry.items import ViewLetQuerySetItemProvider
 
 
-class LatestNewsViewlet(Viewlet):
+class LatestNewsViewlet(ViewLetQuerySetItemProvider, Viewlet):
     name = 'latestnews'
     help_text = _('Latest news')
     verbose_name = _('Latest news block')
 
     @classmethod
-    def render(cls, request):
-        news_list = get_news(request, 10)
+    def get_contents(cls, request=None, context=None, section=None):
+        from plugins.news.config import PluginConfig
+        number_news = PluginConfig.get_config().get('limit', []).get_value()
+        news_list = get_news(request, number_news)
+        return news_list
+
+    @classmethod
+    def render(cls, request, context):
+        news_list = cls.get_queryset(request, context)
         return cls.render_viewlet(request, template_name='news/viewlet_latest.html',
                                   context={'news_list': news_list})
 
 
-class AllNewsViewlet(Viewlet):
+class AllNewsViewlet(ViewLetQuerySetItemProvider, Viewlet):
     name = 'allnews'
     help_text = _('All news')
     verbose_name = _('All news block')
 
     @classmethod
-    def render(cls, request):
+    def get_contents(cls, request=None, context=None, section=None):
         news_list = get_news(request)
+        return news_list
+
+    @classmethod
+    def render(cls, request, context):
+        news_list = cls.get_queryset(request, context)
         return cls.render_viewlet(request, template_name='news/viewlet_latest.html',
                                   context={'news_list': news_list,
                                            'is_paginated': True,
