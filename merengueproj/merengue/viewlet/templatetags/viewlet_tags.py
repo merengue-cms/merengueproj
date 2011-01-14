@@ -37,7 +37,7 @@ class RenderViewletNode(template.Node):
                 viewlet = self.registered_viewlet.resolve(context).get_registry_item_class()
             else:
                 viewlet = None
-            return viewlet.render(request)
+            return viewlet.render(request, context)
         except template.VariableDoesNotExist:
             return ''
         except PermissionDenied:

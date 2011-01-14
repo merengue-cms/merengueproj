@@ -116,6 +116,20 @@ class QuerySetItemProvider(ContentsItemProvider):
         return queryset
 
 
+class BlockQuerySetItemProvider(QuerySetItemProvider):
+    pass
+
+
+class ViewLetQuerySetItemProvider(QuerySetItemProvider):
+
+    @classmethod
+    def _get_section(cls, request, context):
+        menu = context.get('menu', None)
+        section = None
+        if menu:
+            section = menu.get_root().get_section()
+        return section or super(ViewLetQuerySetItemProvider, cls)._get_section(request, context)
+
 """
 Example use::
 
