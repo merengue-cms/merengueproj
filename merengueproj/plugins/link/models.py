@@ -16,7 +16,6 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.db import models
-from django.db.models import permalink
 from django.utils.translation import ugettext_lazy as _
 
 from cmsutils.cache import CachingManager
@@ -44,6 +43,5 @@ class Link(BaseContent):
         verbose_name = _('link')
         verbose_name_plural = _('links')
 
-    @permalink
-    def public_link(self):
+    def _public_link_simply(self):
         return ('link_view', [self.slug])

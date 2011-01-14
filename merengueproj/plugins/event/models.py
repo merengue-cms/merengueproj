@@ -18,7 +18,6 @@
 import datetime
 
 from django.db import models
-from django.db.models import permalink
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.models import BaseContent, BaseCategory
@@ -53,9 +52,8 @@ class Event(BaseContent):
         verbose_name = _('event')
         verbose_name_plural = _('events')
 
-    @permalink
-    def public_link(self):
-        return ('plugins.event.views.event_view', [self.slug])
+    def _public_link_simply(self):
+        return ('event_view', [self.slug])
 
     def __unicode__(self):
         return self.name or u''

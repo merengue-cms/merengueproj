@@ -18,7 +18,6 @@
 import datetime
 
 from django.db import models
-from django.db.models import permalink
 from django.db.models.signals import pre_save
 from django.utils.translation import ugettext_lazy as _
 
@@ -55,15 +54,6 @@ class NewsItem(BaseContent):
 
     def _public_link_simply(self):
         return ('newsitem_view', [self.slug])
-
-    @permalink
-    def public_link(self):
-        section = self.get_main_section()
-        if section is None:
-            return self._public_link_simply()
-        else:
-            # go to news item inside section which created it
-            return section.real_instance.content_public_link(section, self)
 
 
 def set_publish_date(sender, instance, **kwargs):
