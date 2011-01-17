@@ -327,7 +327,7 @@ class BaseSection(Base, RealInstanceMixin):
     def menu_public_link(self, ancestors_path, menu):
         return self._menu_public_link(ancestors_path, menu)
 
-    def _menu_public_link(self, section, ancestors_path, menu):
+    def _menu_public_link(self, ancestors_path, menu):
         return ('menu_section_view', (self.slug, ancestors_path, menu.slug))
 
     def has_custom_style(self):
