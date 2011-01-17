@@ -82,6 +82,11 @@ class CustomTinyMCE(TinyMCE):
         self.mce_settings['theme_advanced_blockformats'] = 'h1,h2,h4,blockquote'
         self.mce_settings['plugins'] = "preview,paste,table,-internal_links,-iframes,-preformatted_text,-file"
         self.mce_settings['plugin_internal_links_base_url'] = '%smerengue/js/tiny_mce_internal_links/' % settings.MEDIA_URL
+
+        self.mce_settings['theme_advanced_statusbar_location'] = "bottom"
+        self.mce_settings['theme_advanced_resizing'] = True
+        self.mce_settings['theme_advanced_resize_horizontal'] = True
+
         try:
             self.mce_settings['plugin_internal_links_url'] = reverse('internal_links_search')
         except NoReverseMatch:
