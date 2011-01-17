@@ -116,15 +116,26 @@ class Menu(models.Model):
             self.update_url()
         return self.url
 
+    @permalink
+    def menu_public_link_with_out_section(self, ancestors_path):
+        return self._menu_public_link_with_out_section(self, ancestors_path)
+
+    def _menu_public_link_with_out_section(self, ancestors_path):
+        return ('menu_view', (ancestors_path, self.slug))
+
+    @permalink
+    def public_link(self):
+        menus_ancestors = [menu.slug for menu in self.get_ancestors()][1:] # first is a dummy root menu and we discard it
+        ancestors_path = menus_ancestors and '/%s' % '/'.join(menus_ancestors) or ''
+        section = self.get_section()
+        if section:
+            return section.real_instance._menu_public_link(ancestors_path, self)
+        else:
+            return self._menu_public_link_with_out_section(ancestors_path)
+
     def update_url(self, commit=True):
         try:
-            menus_ancestors = [menu.slug for menu in self.get_ancestors()][1:] # first is a dummy root menu and we discard it
-            ancestors_path = menus_ancestors and '/%s' % '/'.join(menus_ancestors) or ''
-            section = self.get_section()
-            if section:
-                self.url = reverse('menu_section_view', args=(section.slug, ancestors_path, self.slug))
-            else:
-                self.url = reverse('menu_view', args=(ancestors_path, self.slug))
+            self.url = self.public_link()
         except BaseLink.DoesNotExist:
             self.url = ''
         if commit:
@@ -305,8 +316,19 @@ class BaseSection(Base, RealInstanceMixin):
         content_type = ContentType.objects.get_for_model(self)
         return ('merengue.base.views.admin_link', [content_type.id, self.id, ''])
 
+    @permalink
     def content_public_link(self, section, content):
+        return self._content_public_link(section, content)
+
+    def _content_public_link(self, section, content):
         return ('content_section_view', [section.slug, content.id, content.slug])
+
+    @permalink
+    def menu_public_link(self, ancestors_path, menu):
+        return self._menu_public_link(ancestors_path, menu)
+
+    def _menu_public_link(self, section, ancestors_path, menu):
+        return ('menu_section_view', (self.slug, ancestors_path, menu.slug))
 
     def has_custom_style(self):
         return bool(self.customstyle)
