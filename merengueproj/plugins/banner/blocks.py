@@ -29,8 +29,9 @@ class BannerBlock(BlockQuerySetItemProvider, Block):
     verbose_name = _('Banner Block')
     help_text = _('Block that represents a banner')
 
-    config_params = [
-        params.Single(name='limit', label=ugettext('limit for banner block'), default='3'),
+    config_params = BlockQuerySetItemProvider.config_params + [
+        params.Single(name='limit', label=ugettext('limit for banner block'),
+                      default='3'),
     ]
 
     @classmethod
