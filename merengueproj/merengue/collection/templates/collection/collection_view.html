@@ -19,7 +19,9 @@
     {% else %}
       <ul class="contentList collection-{{ collection.slug }}">
         {% for item in items %}
-          {% collectionitem content item %}
+          {% block itemdetail %}
+            {% collectionitem content item %}
+          {% endblock %}
         {% endfor %}
       </ul>
     {% endif %}

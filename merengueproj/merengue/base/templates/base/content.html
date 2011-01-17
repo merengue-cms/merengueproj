@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load i18n content_tags action_tags block_tags media_tags map_tags %}
+{% load i18n content_tags action_tags block_tags media_tags map_tags section_tags %}
 
 {% block metatags %}
   {{ block.super }}
@@ -25,10 +25,11 @@
   {% endblock %}
 
   {% block contentbreadcrumbs %}
-    {% if section %}
-      <span class="breadcrumbSeparator">→</span>
-      <a href="{{ section.get_absolute_url }}" title="{{ section }}">{% cutrender %}{{ section }}{% endcutrender %}</a>
-    {% endif %}
+    {% block sectionbreadcrumbs %}
+        {% if section and content %}
+            {% section_breadcrumbs_tag section content %}
+        {% endif %}
+    {% endblock %}
     <span class="breadcrumbSeparator">→</span>
     <a href="." title="{{ content }}">{% cutrender %}{{ content }}{% endcutrender %}</a>
   {% endblock %}

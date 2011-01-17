@@ -23,6 +23,7 @@ from django.db import models
 from django.db.models import permalink
 from django.db.models.signals import post_save
 from django.template import defaultfilters
+from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
 import mptt
@@ -332,6 +333,12 @@ class BaseSection(Base, RealInstanceMixin):
 
     def has_custom_style(self):
         return bool(self.customstyle)
+
+    def custom_breadcrumbs(self, section, content):
+        return render_to_string('section/breadcrumbs.html', {'section': section.real_instance})
+
+    def url_in_section(self, url):
+        return None
 
 
 def strip_section_prefix(link):

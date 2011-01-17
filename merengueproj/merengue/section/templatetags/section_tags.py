@@ -128,3 +128,47 @@ def get_static_main_menu(context, section, menu_tree):
             menu_tree.append(menu_child)
     except NoReverseMatch:
         pass
+
+
+class SectionBreadcrumbsNode(template.Node):
+
+    def __init__(self, section, content):
+        self.content = content
+        self.section = section
+
+    def render(self, context):
+        section = context.get(self.section, None)
+        content = context.get(self.content, None)
+        return section.custom_breadcrumbs(section, content)
+
+
+def section_breadcrumbs(parser, token):
+    try:
+        tag_name, section, content = token.split_contents()
+    except ValueError:
+        raise template.TemplateSyntaxError, "%r tag requires arguments" % token.contents.split()[0]
+    return SectionBreadcrumbsNode(section, content)
+
+register.tag('section_breadcrumbs_tag', section_breadcrumbs)
+
+
+class URLInSectionBreadcrumbsNode(template.Node):
+
+    def __init__(self, section, url):
+        self.url = url
+        self.section = section
+
+    def render(self, context):
+        section = context.get(self.section, None)
+        url = context.get(self.url, None)
+        return section.url_in_section(url)
+
+
+def url_in_section_breadcrumbs(parser, token):
+    try:
+        tag_name, section, url = token.split_contents()
+    except ValueError:
+        raise template.TemplateSyntaxError, "%r tag requires arguments" % token.contents.split()[0]
+    return URLInSectionBreadcrumbsNode(section, url)
+
+register.tag('url_in_section_breadcrumbs_tag', url_in_section_breadcrumbs)
