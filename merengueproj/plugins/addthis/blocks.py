@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
@@ -18,6 +19,19 @@
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.block.blocks import Block
+from plugins.addthis import params
+
+
+DEFAULT_SERVICES = [
+    ('facebook', u'Facebook'),
+    ('twitter', u'Twitter'),
+    ('email', u'Email'),
+    ('print', _(u'Print')),
+    ('delicious', u'Delicious'),
+    ('googlebuzz', u'Google Buzz'),
+    ('meneame', u'Menéame'),
+    ('digg', u'Digg'),
+    ]
 
 
 class AddThisBlock(Block):
@@ -26,10 +40,17 @@ class AddThisBlock(Block):
     help_text = _('Block that displays AddThis links')
     verbose_name = _('AddThis service block')
 
+    config_params = [
+        params.AjaxListParam(
+            name="services",
+            label=_("Services do you want to show on "),
+            choices=DEFAULT_SERVICES,
+        ),
+    ]
+
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):
-        from plugins.addthis.config import PluginConfig
-        services = PluginConfig.get_config().get(
+        services = cls.get_config().get(
             'services', []).get_value()
         return cls.render_block(
             request, template_name='addthis/links_block.html',
