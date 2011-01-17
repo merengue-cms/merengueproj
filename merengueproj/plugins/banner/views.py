@@ -15,18 +15,21 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from merengue.base.views import content_list
 from merengue.collection.models import Collection
-
+from merengue.collection.views import collection_view
 
 BANNER_COLLECTION_SLUG = 'banners'
 
 
 def banner_index(request, template_name='banner/banner_index.html'):
-    banner_list = get_banners(request)
-    return content_list(request, banner_list, template_name=template_name)
+    banner_list = get_collection_banner()
+    return collection_view(request, banner_list, template_name=template_name)
 
 
 def get_banners(request=None, limit=0):
+    return get_collection_banner().get_items(request.section)
+
+
+def get_collection_banner():
     return Collection.objects.get(
-        slug=BANNER_COLLECTION_SLUG).get_items(request.section)
+        slug=BANNER_COLLECTION_SLUG)

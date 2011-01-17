@@ -1,12 +1,8 @@
-{% extends "content_list.html" %}
+{% extends "collection/collection_view.html" %}
 
 {% load i18n inlinetrans action_tags %}
 
 {% block pagetitle %}{% trans "Banner history" %}{% endblock %}
-
-{% block extrabreadcrumbs %}
-  <span class="breadcrumbSeparator">→</span>{% inline_trans "Banners" %}
-{% endblock %}
 
 {% block listtitle %}{% trans "Banner history" %}{% endblock %}
 
