@@ -431,7 +431,7 @@ class BaseContent(BaseClass):
     def public_link(self):
         section = self.get_main_section()
         if section:
-            return section.real_instance.content_public_link(section, self)
+            return section.real_instance._content_public_link(section, self)
         else:
             return self._public_link_without_section()
 
