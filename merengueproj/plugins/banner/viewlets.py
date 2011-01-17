@@ -15,16 +15,29 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _, ugettext
 
 from merengue.viewlet.viewlets import Viewlet
+from merengue.registry import params
 from plugins.banner.views import get_banners
+from merengue.registry.items import ViewLetQuerySetItemProvider
 
 
-class AllBannerViewlet(Viewlet):
+class AllBannerViewlet(ViewLetQuerySetItemProvider, Viewlet):
     name = 'allbanner'
     help_text = _('All Banners')
     verbose_name = _('All banner block')
+
+    config_params = ViewLetQuerySetItemProvider.config_params + [
+        params.Single(name='limit', label=ugettext('limit for banner viewlet'),
+                      default='3'),
+    ]
+
+    @classmethod
+    def get_contents(cls, request=None, context=None, section=None):
+        number_banners = cls.get_config().get('limit', []).get_value()
+        banners_list = get_banners(request, number_banners)
+        return banners_list
 
     @classmethod
     def render(cls, request, context):
