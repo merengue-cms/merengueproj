@@ -129,7 +129,7 @@ class Collection(BaseContent):
         query = BaseContent.objects.filter(class_name__in=classes)
         return self._filter_query(query)
 
-    def get_items(self):
+    def get_items(self, section=None):
         content_types = self.content_types.all()
         if content_types.count() == 1:
             items = self._get_items_from_one_source(content_types[0])
@@ -140,6 +140,8 @@ class Collection(BaseContent):
                                                                 content_types)
                     return items
             items = self._get_items_from_basecontent(content_types)
+        if section and self.filtering_section:
+            items = items.filter(basesection=section)
         return items
 
     def get_first_parents_of_content_types(self):

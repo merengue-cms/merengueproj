@@ -63,16 +63,10 @@ class CollectionItemsNode(Node):
     def _get_section(self, request, context):
         return getattr(request, 'section', None) or context.get('section', None)
 
-    def _filter_for_section(self, collection, section, items):
-        if section and collection.filtering_section:
-            items = items.filter(basesection=section)
-        return items
-
     def _get_items(self, collection, context):
         request = context.get('request', None)
         section = self._get_section(request, context)
-        items = collection.get_items()
-        items = self._filter_for_section(collection, section, items)
+        items = collection.get_items(section)
         ignore_filters = request and request.GET.get('__ignore_filters', None)
         if request and not ignore_filters:
             result = self._filter_by_request(request, items)
