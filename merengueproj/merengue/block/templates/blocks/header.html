@@ -49,7 +49,7 @@
             var containerType = "blocks";
             var validCSSClasses = ["contentblocks", "sectionblocks"];
             for (var i=0; i<validCSSClasses.length; i++) {
-                if (container.hasClass(validCSSClasses[i])) {
+                if ($(container).hasClass(validCSSClasses[i])) {
                     containerType = validCSSClasses[i];
                     break;
                 }
