@@ -33,10 +33,11 @@ class ContentGroupLinksBlock(Block):
             filtered_contents = [[(child_cont.name, child_cont.public_link())
                                   for child_cont in cont.contents.all()]
                                  for cont in content_groups]
-
+            numchars = 15
             return cls.render_block(
                 request, template_name='contentmenu/contentlinks_block.html',
                 block_title=_('Content group links'),
-                context={'contents': filtered_contents})
+                context={'contents': filtered_contents,
+                         'numchars': numchars})
         else:
             return ''
