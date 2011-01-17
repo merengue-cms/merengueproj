@@ -22,12 +22,19 @@ from merengue.section.models import Section
 
 class MicroSite(Section):
 
-    def content_public_link(self, section, content):
+    def _content_public_link(self, section, content):
         url_external = reverse(content._public_link_without_section()[0],
                                args=content._public_link_without_section()[1])
         if url_external and url_external[0] == '/':
             url_external = url_external[1:]
         return ('microsite_url', [section.slug, url_external])
+
+    def _menu_public_link(self, ancestors_path, menu):
+        reverse_tuple = menu._menu_public_link_with_out_section(ancestors_path)
+        url_external = reverse(reverse_tuple[0], args=reverse_tuple[1])
+        if url_external and url_external[0] == '/':
+            url_external = url_external[1:]
+        return ('microsite_url', [self.slug, url_external])
 
     class Meta:
         verbose_name = _('microsite')
