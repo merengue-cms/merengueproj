@@ -15,11 +15,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.utils.translation import ugettext_lazy as _
-
 from merengue.collection.utils import create_normalize_collection
 from merengue.pluggable import Plugin
-from merengue.registry import params
 
 from plugins.banner.admin import BannerAdmin, BannerSectionAdmin
 from plugins.banner.blocks import BannerBlock
@@ -31,10 +28,6 @@ class PluginConfig(Plugin):
     name = 'Banner'
     description = 'Banner plugin'
     version = '0.0.1a'
-
-    config_params = [
-        params.Single(name='limit', label=_('limit for banner block'), default='3'),
-    ]
 
     url_prefixes = (
         ('banners', 'plugins.banner.urls'),

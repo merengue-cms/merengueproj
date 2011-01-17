@@ -15,24 +15,33 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.utils.translation import ugettext as _, ugettext_lazy
+from django.utils.translation import ugettext_lazy as _, ugettext
 
 from merengue.block.blocks import Block
+from merengue.registry import params
+from merengue.registry.items import BlockQuerySetItemProvider
 from plugins.banner.views import get_banners
 
 
-class BannerBlock(Block):
+class BannerBlock(BlockQuerySetItemProvider, Block):
     name = 'banner'
     default_place = 'rightsidebar'
-    verbose_name = ugettext_lazy('Banner Block')
-    help_text = ugettext_lazy('Block that represents a banner')
+    verbose_name = _('Banner Block')
+    help_text = _('Block that represents a banner')
+
+    config_params = [
+        params.Single(name='limit', label=ugettext('limit for banner block'), default='3'),
+    ]
+
+    @classmethod
+    def get_contents(cls, request=None, context=None, section=None):
+        number_news = cls.get_config().get('limit', []).get_value()
+        banners_list = get_banners(request, number_news)
+        return banners_list
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):
-        from plugins.banner.config import PluginConfig
-        limit = PluginConfig.get_config().get('limit', None)
-        limit = limit and limit.get_value()
-        banners = get_banners(request, limit)
+        banners = cls.get_queryset(request, context)
         return cls.render_block(request, template_name='banner/block_banner.html',
-                                block_title=_('banners'),
+                                block_title=ugettext('banners'),
                                 context={'banners': banners})
