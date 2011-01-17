@@ -1,7 +1,7 @@
 # encoding: utf-8
 from south.v2 import SchemaMigration
 from merengue.base.utils import (delete_south_trans_column,
-                                add_south_trans_column, add_south_trans_fields)
+                                 add_south_trans_column, add_south_trans_fields)
 
 
 class Migration(SchemaMigration):
@@ -119,7 +119,6 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Location'},
             'address': ('django.db.models.fields.CharField', [], {'max_length': '250', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'main_location': ('django.contrib.gis.db.models.fields.PointField', [], {}),
             'postal_code': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
         }
     }

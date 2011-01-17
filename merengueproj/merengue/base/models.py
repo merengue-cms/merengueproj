@@ -24,7 +24,7 @@ from django.conf import settings
 if settings.USE_GIS:
     from django.contrib.gis.db import models
 else:
-    from django.db import models # pyflakes:ignore
+    from django.db import models  # pyflakes:ignore
 from django.contrib.contenttypes.models import ContentType
 from django.core.management import call_command
 from django.core.exceptions import ObjectDoesNotExist, SuspiciousOperation
@@ -43,7 +43,7 @@ from django.contrib.auth.models import User
 from cmsutils.db.fields import AutoSlugField, JSONField
 from cmsutils.signals import post_rebuild_db
 if settings.USE_GIS:
-    from south.introspection_plugins import geodjango # pyflakes:ignore
+    from south.introspection_plugins import geodjango  # pyflakes:ignore
 from south.modelsinspector import add_introspection_rules
 from south.signals import pre_migrate, post_migrate
 from stdimage import StdImageField
