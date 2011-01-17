@@ -38,3 +38,6 @@ class Banner(BaseContent):
     class Meta:
         verbose_name = _('banner')
         verbose_name_plural = _('banners')
+
+    def get_absolute_url(self):
+        return self.url_link

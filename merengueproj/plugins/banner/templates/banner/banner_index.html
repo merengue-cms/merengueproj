@@ -10,8 +10,8 @@
 
 {% block itemdetail %}
     <li>
-        <a href="{% block contenturl %}{{ content.url_link }}{% endblock %}" title="{{ content }}" class="contentLink">
-            <img src="{{ MEDIA_URL }}{{ content.image }}" title="{{ content.portal_name }}" alt="{{ content.portal_name }}"/>
+        <a href="{% block contenturl %}{{ item.url_link }}{% endblock %}" title="{{ item }}" class="contentLink">
+            <img src="{{ MEDIA_URL }}{{ item.image }}" title="{{ item.portal_name }}" alt="{{ item.portal_name }}"/>
         </a>
     </li>
 {% endblock %}

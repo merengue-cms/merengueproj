@@ -1,0 +1,9 @@
+{% extends "section/breadcrumbs.html" %}
+{% load content_tags %}
+{% block content %}
+    {{ block.super }}
+    {% if verbose_name_model and url_model %}
+        <span class="breadcrumbSeparator">→</span>
+        <a href="{{ url_model }}" title="{{ verbose_name_model }}">{% cutrender %}{{ verbose_name_model }}{% endcutrender %}</a>
+    {% endif %}
+{% endblock %}

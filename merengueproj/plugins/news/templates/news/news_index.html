@@ -1,15 +1,8 @@
-{% extends "content_list.html" %}
+{% extends "collection/collection_view.html" %}
 
 {% load i18n inlinetrans action_tags %}
 
 {% block pagetitle %}{% trans "News" %}{% endblock %}
-
-{% block extrabreadcrumbs %}
-  <span class="breadcrumbSeparator">→</span><a href="{% url news_index %}" title="{% trans "News" %}">{% inline_trans "News" %}</a>
-  {% if news_category %}
-    <span class="breadcrumbSeparator">→</span><a href="" title="{{ news_category }}">{{ news_category }}</a>
-  {% endif %}
-{% endblock %}
 
 {% block listtitle %}{% trans "News" %}{% endblock %}
 

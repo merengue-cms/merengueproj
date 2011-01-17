@@ -31,7 +31,7 @@ from plugins.news.models import NewsItem, NewsCategory
 NEWS_COLLECTION_SLUG = 'news_collection'
 
 
-def news_index(request, queryset=None, extra_context=None):
+def news_index(request, queryset=None, extra_context=None, template_name='news/news_index.html'):
     (news_collection, created) = Collection.objects.get_or_create(slug=NEWS_COLLECTION_SLUG)
     if created:
         news_collection.name_es = 'Noticias'
@@ -41,7 +41,7 @@ def news_index(request, queryset=None, extra_context=None):
                                                filter_value='published')
         news_collection.content_types.add(ContentType.objects.get_for_model(NewsItem))
         news_collection.save()
-    return collection_view(request, news_collection, extra_context=extra_context)
+    return collection_view(request, news_collection, extra_context=extra_context, template_name=template_name)
 
 
 def newsitem_view(request, newsitem_slug, extra_context=None):
