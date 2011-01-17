@@ -15,9 +15,11 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from cmsutils.adminfilters import QueryStringManager
 from merengue.base.views import content_list
-from plugins.banner.models import Banner
+from merengue.collection.models import Collection
+
+
+BANNER_COLLECTION_SLUG = 'banners'
 
 
 def banner_index(request, template_name='banner/banner_index.html'):
@@ -26,11 +28,5 @@ def banner_index(request, template_name='banner/banner_index.html'):
 
 
 def get_banners(request=None, limit=0):
-    banners = Banner.objects.published()
-    qsm = QueryStringManager(request, page_var='page', ignore_params=('set_language', ))
-    filters = qsm.get_filters()
-    banners = banners.filter(**filters)
-    if limit:
-        return banners[:limit]
-    else:
-        return banners
+    return Collection.objects.get(
+        slug=BANNER_COLLECTION_SLUG).get_items(request.section)

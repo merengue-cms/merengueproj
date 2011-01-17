@@ -17,6 +17,7 @@
 
 from django.utils.translation import ugettext_lazy as _
 
+from merengue.collection.utils import create_normalize_collection
 from merengue.pluggable import Plugin
 from merengue.registry import params
 
@@ -54,3 +55,9 @@ class PluginConfig(Plugin):
     @classmethod
     def get_viewlets(cls):
         return [AllBannerViewlet]
+
+    @classmethod
+    def hook_post_register(cls):
+        create_normalize_collection('banners', u'Banners', Banner,
+                                    create_display_field=True,
+                                    create_filter_field=True)
