@@ -80,6 +80,11 @@ class RegistrableItem(object):
         return {}
 
 
+class ConfigParamItemProvider(object):
+
+    config_params = []
+
+
 class ContentsItemProvider(object):
 
     @classmethod
@@ -87,9 +92,9 @@ class ContentsItemProvider(object):
         raise NotImplementedError()
 
 
-class QuerySetItemProvider(ContentsItemProvider):
+class QuerySetItemProvider(ContentsItemProvider, ConfigParamItemProvider):
 
-    config_params = [
+    config_params = ConfigParamItemProvider.config_params + [
         params.Bool(
             name='filtering_section',
             label=_('If the collection is into a section, filter for the contents of this section'),
@@ -117,6 +122,10 @@ class QuerySetItemProvider(ContentsItemProvider):
 
 
 class BlockQuerySetItemProvider(QuerySetItemProvider):
+    pass
+
+
+class BlockConfigParamItemProvider(ConfigParamItemProvider):
     pass
 
 
