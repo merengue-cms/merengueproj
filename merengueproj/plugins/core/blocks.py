@@ -21,7 +21,6 @@ from django.utils.translation import ugettext as _
 from merengue.block.blocks import Block
 from merengue.section.models import BaseSection, Menu
 from merengue.portal.models import PortalLink
-from merengue.perms.utils import has_permission
 
 
 class CoreMenuBlock(Block):
@@ -54,18 +53,7 @@ class NavigationBlock(Block):
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):
-
-        def filter_sections(sections):
-            """
-            Generator that checks permissions for sections.
-            """
-            for section in sections:
-#                Not sure about the nuber of queries.
-                if has_permission(section.main_content, request.user, 'view'):
-                    yield section
-
-        sections = filter_sections(BaseSection.objects.published())
-
+        sections = BaseSection.objects.published()
         if not sections:
             return ''  # renders nothing
         return cls.render_block(request, template_name='core/block_navigation.html',
