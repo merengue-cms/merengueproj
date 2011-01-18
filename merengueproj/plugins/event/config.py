@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from merengue.collection.utils import create_normalize_collection
 from merengue.pluggable import Plugin
 
 from plugins.event.admin import EventAdmin, EventCategoryAdmin, EventSectionAdmin
@@ -47,3 +48,9 @@ class PluginConfig(Plugin):
     @classmethod
     def get_viewlets(cls):
         return [LatestEventViewlet, AllEventViewlet]
+
+    @classmethod
+    def hook_post_register(cls):
+        create_normalize_collection('event', u'Event', Event,
+                                    create_display_field=True,
+                                    create_filter_field=True)
