@@ -25,7 +25,7 @@ class BannerAdmin(PluginAdmin, BaseContentAdmin):
 
 
 class BannerSectionAdmin(BannerAdmin, SectionContentAdmin):
-    pass
+    manage_contents = True
 
 
 def register(site):

@@ -2,13 +2,16 @@
 
 {% load i18n inlinetrans datefilters %}
 
+{% block extrabreadcrumbs %}
+    {{ block.super }}
+    <span class="breadcrumbSeparator">→</span>
+    <a href="{% url forum_index %}" title="{% trans "Forums" %}">{% inline_trans "Forums" %}</a>    
+{% endblock %}
+
+
 {% block listingclass %}{{ block.super }} forumList {% endblock %}
 
 {% block pagetitle %}{% trans "Forums" %}{% endblock %}
-
-{% block extrabreadcrumbs %}
-  <span class="breadcrumbSeparator">→</span> {% inline_trans "Forums" %}
-{% endblock %}
 
 {% block listtitle %}{% inline_trans "Forums" %}{% endblock %}
 

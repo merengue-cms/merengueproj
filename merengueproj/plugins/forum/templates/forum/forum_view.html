@@ -1,14 +1,6 @@
 {% extends "content_view.html" %}
 {% load pagination_tags i18n inlinetrans content_tags datefilters %}
 
-{% block extrabreadcrumbs %}
-    <span class="breadcrumbSeparator">→</span>
-    <a href="{% url forum_index %}" title="{% trans "Forums" %}">{% inline_trans "Forums" %}</a>
-    <span class="breadcrumbSeparator">→</span>
-    {% cutrender %}{{ content }}{% endcutrender %}
-{% endblock %}
-
-
 {% block aftercontentmap %}
 {% autopaginate thread_list paginate_threads_by %}
 {% paginate %}

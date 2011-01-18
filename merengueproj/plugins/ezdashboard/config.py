@@ -45,7 +45,3 @@ class PluginConfig(Plugin):
         params.Single(name='lite', label=_('EzWeb lite'),
                       default=True),
     ]
-
-    #@classmethod
-    #def get_blocks(cls):
-        #return [LatestNewsBlock, NewsCommentsBlock]

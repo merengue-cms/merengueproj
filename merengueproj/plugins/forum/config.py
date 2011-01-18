@@ -1,7 +1,7 @@
 from merengue.pluggable import Plugin
 
 from plugins.forum.models import Forum, ForumCategory
-from plugins.forum.admin import ForumAdmin, ForumCategoryAdmin
+from plugins.forum.admin import ForumAdmin, ForumCategoryAdmin, ForumSectionAdmin
 
 
 class PluginConfig(Plugin):
@@ -18,6 +18,10 @@ class PluginConfig(Plugin):
 
     required_plugins = {'feedback': {},
                         }
+
+    @classmethod
+    def section_models(cls):
+        return [(Forum, ForumSectionAdmin)]
 
     @classmethod
     def get_model_admins(cls):

@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from merengue.base.admin import (BaseContentAdmin, RelatedModelAdmin,
                                  BaseCategoryAdmin)
+from merengue.section.admin import SectionContentAdmin
 
 from plugins.forum.models import Forum, ForumCategory, Thread, ForumThreadComment
 
@@ -14,6 +15,10 @@ class ForumCategoryAdmin(BaseCategoryAdmin):
 
 class ForumAdmin(BaseContentAdmin):
     removed_fields = ('map_icon', 'commentable', )
+
+
+class ForumSectionAdmin(ForumAdmin, SectionContentAdmin):
+    manage_contents = True
 
 
 class ThreadRelatedAdmin(RelatedModelAdmin):

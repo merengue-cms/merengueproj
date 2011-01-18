@@ -9,6 +9,7 @@ from captcha.decorators import add_captcha
 
 from merengue.base.views import content_list, content_view
 from merengue.perms.utils import has_permission
+from merengue.section.utils import get_section, filtering_in_section
 
 from plugins.forum.models import Forum, Thread, ForumThreadComment
 from plugins.forum.forms import CaptchaForumThreadCommentForm
@@ -17,8 +18,10 @@ from plugins.forum.forms import CaptchaForumThreadCommentForm
 PAGINATE_BY = 20
 
 
-def forum_index(request):
+def forum_index(request, extra_context={}):
+    section = get_section(request, extra_context)
     forum_list = Forum.objects.published()
+    forum_list = filtering_in_section(forum_list, section)
     return content_list(request, forum_list, template_name='forum/forum_list.html', paginate_by=PAGINATE_BY)
 
 

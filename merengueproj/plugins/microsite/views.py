@@ -41,6 +41,6 @@ def microsite_url(request, microsite_slug, url):
         extra_context = {'section': microsite, 'microsite': microsite}
         callback_kwargs = callback_kwargs or {}
         extra_context_kwargs = callback_kwargs.get('extra_context', {})
-        extra_context.update({'extra_context': extra_context_kwargs})
+        extra_context.update(extra_context_kwargs)
         callback_kwargs['extra_context'] = extra_context
     return callback(request, *callback_args, **callback_kwargs)

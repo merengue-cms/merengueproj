@@ -16,8 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.core.urlresolvers import reverse
-from django.template.loader import render_to_string, TemplateDoesNotExist
-from django.utils.importlib import import_module
+from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 from merengue.section.models import Section
 
@@ -41,23 +40,19 @@ class MicroSite(Section):
     def url_in_section(self, url):
         return '/%s%s' % (self.slug, url)
 
-    def custom_breadcrumbs(self, section, content):
-        try:
-            app_label = content._meta.app_label
-            module_name = content._meta.module_name
-            return render_to_string('%s/%s/section_breadcrumbs.html' % (app_label, module_name), {'section': section.real_instance})
-        except TemplateDoesNotExist:
-            try:
-                plugin_config_path = "%s.config" % '.'.join(content.__module__.split(".")[:-1])
-                plugin_config = import_module(plugin_config_path).PluginConfig
-                verbose_name_model = content._meta.verbose_name
-                url_model = "/%s/%s/" % (self.slug, plugin_config.url_prefixes[0][0])
-            except ImportError:
-                verbose_name_model = None
-                url_model = None
-            return render_to_string('microsite/breadcrumbs.html', {'section': section.real_instance,
-                                                                   'verbose_name_model': verbose_name_model,
-                                                                   'url_model': url_model})
+    def breadcrumbs(self, content=None):
+        if not content:
+            # breadcrumbs end here
+            return super(MicroSite, self).breadcrumbs()
+        url_section = super(MicroSite, self).breadcrumbs_items()
+        url_section.extend([(name, reverse("microsite_url", args=(self.slug, url))) \
+                            for name, url in content.breadcrumbs_items()])
+        if url_section:
+            url_section[-1] = (url_section[-1][0], '')
+        return render_to_string('microsite/breadcrumbs.html', {
+            'section': self,
+            'urls': url_section,
+        })
 
     class Meta:
         verbose_name = _('microsite')

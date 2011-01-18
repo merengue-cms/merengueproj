@@ -51,6 +51,8 @@ class NewsItem(BaseContent):
         translate = ('body', )
         content_view_template = 'news/newsitem_view.html'
         ordering = ('-publish_date', '-id')
+        verbose_name = _('news item')
+        verbose_name_plural = _('news')
 
     def _public_link_without_section(self):
         return ('newsitem_view', [self.slug])

@@ -28,8 +28,7 @@ class Forum(BaseContent):
         verbose_name_plural = _('Forums')
         content_view_template = 'forum/forum_view.html'
 
-    @permalink
-    def public_link(self):
+    def _public_link_without_section(self):
         return ('forum_view', [self.slug])
 
     def save(self, *args, **kwargs):
@@ -58,8 +57,10 @@ class Thread(BaseContent):
         verbose_name_plural = _('Threads')
         content_view_template = 'forum/thread_view.html'
 
-    @permalink
-    def public_link(self):
+    def get_main_section(self):
+        return self.forum.get_main_section()
+
+    def _public_link_without_section(self):
         return ('thread_view', [self.forum.slug, self.slug])
 
     def save(self, *args, **kwargs):
