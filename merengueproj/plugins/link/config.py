@@ -45,7 +45,7 @@ class PluginConfig(Plugin):
         return [LatestLinkViewlet, AllLinkViewlet]
 
     @classmethod
-    def hook_post_register(cls):
+    def post_install(cls):
         create_normalize_collection(
             'links', u'Links', Link,
             create_display_field=True, create_filter_field=True)

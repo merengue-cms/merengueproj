@@ -50,7 +50,7 @@ class PluginConfig(Plugin):
         return [(OpenOfficeTemplate, OpenOfficeTemplateAdmin)]
 
     @classmethod
-    def hook_post_register(cls):
+    def post_install(cls):
         odt_path = path.join('oot', 'base.odt')
         try:
             OpenOfficeTemplate.objects.get(title='BaseContent-template')

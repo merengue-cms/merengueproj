@@ -45,7 +45,7 @@ class PluginConfig(Plugin):
         return [BaseContentWithMoreVotes, BaseContentTopRated]
 
     @classmethod
-    def hook_post_register(cls):
+    def post_install(cls):
         create_normalize_collection(
             'votes', u'Votes', Vote,
             create_display_field=True, create_filter_field=True)

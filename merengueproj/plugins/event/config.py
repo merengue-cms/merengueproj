@@ -50,7 +50,7 @@ class PluginConfig(Plugin):
         return [LatestEventViewlet, AllEventViewlet]
 
     @classmethod
-    def hook_post_register(cls):
+    def post_install(cls):
         create_normalize_collection('event', u'Event', Event,
                                     create_display_field=True,
                                     create_filter_field=True)
