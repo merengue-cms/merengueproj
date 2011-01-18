@@ -15,10 +15,11 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _, ugettext
 
 from merengue.viewlet.viewlets import Viewlet
 from plugins.news.views import get_news
+from merengue.registry import params
 from merengue.registry.items import ViewLetQuerySetItemProvider
 
 
@@ -27,10 +28,14 @@ class LatestNewsViewlet(ViewLetQuerySetItemProvider, Viewlet):
     help_text = _('Latest news')
     verbose_name = _('Latest news block')
 
+    config_params = ViewLetQuerySetItemProvider.config_params + [
+        params.Single(name='limit', label=ugettext('limit for news viewlet'),
+                      default='3'),
+    ]
+
     @classmethod
     def get_contents(cls, request=None, context=None, section=None):
-        from plugins.news.config import PluginConfig
-        number_news = PluginConfig.get_config().get('limit', []).get_value()
+        number_news = cls.get_config().get('limit', []).get_value()
         news_list = get_news(request, number_news)
         return news_list
 

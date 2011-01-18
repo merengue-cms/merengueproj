@@ -19,6 +19,7 @@ from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.block.blocks import Block
+from merengue.registry import params
 from merengue.registry.items import BlockQuerySetItemProvider
 from plugins.news.views import get_news
 
@@ -29,10 +30,17 @@ class LatestNewsBlock(BlockQuerySetItemProvider, Block):
     help_text = _('Block with last news items published')
     default_place = 'leftsidebar'
 
+    config_params = BlockQuerySetItemProvider.config_params + [
+        params.PositiveInteger(
+            name='limit',
+            label=_('number of news for the "Latest news" block'),
+            default=3,
+        ),
+    ]
+
     @classmethod
     def get_contents(cls, request=None, context=None, section=None):
-        from plugins.news.config import PluginConfig
-        number_news = PluginConfig.get_config().get('limit', []).get_value()
+        number_news = cls.get_config().get('limit', []).get_value()
         news_list = get_news(request, number_news)
         return news_list
 

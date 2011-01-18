@@ -16,31 +16,21 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404
 from django.template import RequestContext
 from django.template.loader import render_to_string
 
-from cmsutils.adminfilters import QueryStringManager
-from merengue.base.views import content_view, content_list
+from merengue.base.views import content_view
 from merengue.collection.models import Collection
 from merengue.collection.views import collection_view
 from plugins.news.models import NewsItem, NewsCategory
 
 
-NEWS_COLLECTION_SLUG = 'news_collection'
+NEWS_COLLECTION_SLUG = 'news'
 
 
 def news_index(request, queryset=None, extra_context=None, template_name='news/news_index.html'):
-    (news_collection, created) = Collection.objects.get_or_create(slug=NEWS_COLLECTION_SLUG)
-    if created:
-        news_collection.name_es = 'Noticias'
-        news_collection.name_en = 'News'
-        news_collection.include_filters.create(filter_field='status',
-                                               filter_operator='exact',
-                                               filter_value='published')
-        news_collection.content_types.add(ContentType.objects.get_for_model(NewsItem))
-        news_collection.save()
+    news_collection = get_collection_news()
     return collection_view(request, news_collection, extra_context=extra_context, template_name=template_name)
 
 
@@ -61,28 +51,22 @@ def newsitem_by_category_view(request, newscategory_slug):
 
 
 def news_by_date(request, year, month, day):
-    news = get_news_by_date(request, year, month, day)
-    return content_list(request, news, template_name='news/news_index.html')
+    news_collection = get_collection_news()
+    extra_context = {'_filters_collection': dict(publish_date__year=year,
+                                             publish_date__month=month,
+                                             publish_date__day=day)}
+    return collection_view(request, news_collection, extra_context=extra_context,
+                           template_name='news/news_index.html')
 
 
-def get_news(request=None, limit=0, queryset=None):
-    queryset = queryset or NewsItem.objects.published()
-    news = queryset.order_by("-publish_date")
-    qsm = QueryStringManager(request, page_var='page', ignore_params=('set_language', ))
-    filters = qsm.get_filters()
-    try:
-        news = news.filter(**filters)
-    except:
-        pass
-    if limit:
-        return news[:limit]
-    else:
-        return news
+def get_news(request=None, limit=None):
+    collection = get_collection_news()
+    request_param = tuple()
+    if request and request.section:
+        request_param = (request.section, )
+    return collection.get_items(*request_param)
 
 
-def get_news_by_date(request, year, month, day):
-    news = get_news(request)
-    news = news.filter(publish_date__year=year,
-                       publish_date__month=month,
-                       publish_date__day=day)
-    return news
+def get_collection_news():
+    return Collection.objects.get(
+        slug=NEWS_COLLECTION_SLUG)

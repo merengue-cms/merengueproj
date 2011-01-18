@@ -15,10 +15,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.utils.translation import ugettext_lazy as _
-
+from merengue.collection.utils import create_normalize_collection
 from merengue.pluggable import Plugin
-from merengue.registry import params
 
 from plugins.news.actions import NewsIndex, NewsRSS
 from plugins.news.blocks import LatestNewsBlock
@@ -32,14 +30,6 @@ class PluginConfig(Plugin):
     name = 'News'
     description = 'News plugin'
     version = '0.0.1a'
-
-    config_params = [
-        params.PositiveInteger(
-            name='limit',
-            label=_('number of news for the "Latest news" block'),
-            default=3,
-        ),
-    ]
 
     url_prefixes = (
         ('news', 'plugins.news.urls'),
@@ -65,3 +55,9 @@ class PluginConfig(Plugin):
     def get_model_admins(cls):
         return [(NewsCategory, NewsCategoryAdmin),
                 (NewsItem, NewsItemAdmin)]
+
+    @classmethod
+    def post_install(cls):
+        create_normalize_collection('news', u'News', NewsItem,
+                                    create_display_field=True,
+                                    create_filter_field=True)
