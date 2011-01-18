@@ -349,17 +349,21 @@ def has_global_permission(user, codename, roles=None):
         the permissions are checked.
     """
 
-    if roles is None:
-        roles = []
-
-    roles.append(Role.objects.get(slug=ANONYMOUS_ROLE_SLUG))
-
     if user.is_superuser:
         return True
 
-    if user.is_anonymous():
-        user = None
-    else:
+    if roles is None:
+        roles = []
+
+    # we check first ANONYMOUS_ROLE_SLUG to reduce SQL sentences and improve
+    # cache hit percentage (next sentence is more susceptible to be cached)
+    p_anon = ObjectPermission.objects.filter(
+        Q(content__isnull=True, role=ANONYMOUS_ROLE_SLUG, permission__codename=codename))
+
+    if p_anon:
+        return True
+
+    if not user.is_anonymous():
         roles.extend(get_roles(user))
 
     p = ObjectPermission.objects.filter(
@@ -390,13 +394,13 @@ def has_permission(obj, user, codename, roles=None):
         the permissions are checked.
     """
 
+    if user.is_superuser:
+        return True
+
     if roles is None:
         roles = []
 
     roles.append(Role.objects.get(slug=ANONYMOUS_ROLE_SLUG))
-
-    if user.is_superuser:
-        return True
 
     if not obj:
         return has_global_permission(user, codename, roles)
