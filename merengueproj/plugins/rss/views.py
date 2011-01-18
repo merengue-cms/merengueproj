@@ -45,8 +45,10 @@ def rss_views(request):
         results = BaseContent.objects.filter(status='published').filter(
             query).order_by('modification_date')[::-1]
 
+    portal_title = PluginConfig.get_config().get(
+        'portal', '').get_value()
     f = feedgenerator.Rss201rev2Feed(
-        title=render_to_string('rss/title.html'),
+        title=portal_title,
         link=render_to_string('rss/link.html'),
         description=render_to_string('rss/description.html'),
         language=render_to_string('rss/language.html'),
