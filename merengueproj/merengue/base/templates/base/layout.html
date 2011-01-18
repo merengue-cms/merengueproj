@@ -1,4 +1,4 @@
-{% load i18n inlinetrans breadcrumbs messagebox svn block_tags %}
+{% load i18n inlinetrans breadcrumbs messagebox svn block_tags section_tags %}
 {% block doctype %}<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">{% endblock %}
 <html>
 <head>
@@ -118,6 +118,11 @@
       {% block breadcrumbs %}
         {% include "inc.breadcrumbs.html" %}
         {% block extrabreadcrumbs %}
+            {% block sectionbreadcrumbs %}
+                {% if section %}
+                    {% section_breadcrumbs_tag section %}
+                {% endif %}
+            {% endblock %}
         {% endblock %}
       {% endblock %}
     </div>

@@ -22,16 +22,12 @@
 
 {% block extrabreadcrumbs %}
   {% block beforecontentbreadcrumbs %}
+    {% block sectionbreadcrumbs %}
+        {% section_breadcrumbs_tag section content %}
+    {% endblock %}
   {% endblock %}
 
   {% block contentbreadcrumbs %}
-    {% block sectionbreadcrumbs %}
-        {% if section and content %}
-            {% section_breadcrumbs_tag section content %}
-        {% endif %}
-    {% endblock %}
-    <span class="breadcrumbSeparator">→</span>
-    <a href="." title="{{ content }}">{% cutrender %}{{ content }}{% endcutrender %}</a>
   {% endblock %}
   {% block aftercontentbreadcrumbs %}
   {% endblock %}

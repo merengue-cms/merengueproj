@@ -1,0 +1,8 @@
+{% load content_tags %}
+
+{% block content %}
+    {% for verbose_name, url in urls %}
+        <span class="breadcrumbSeparator">→</span>
+        <a href="{{ url }}" title="{{ verbose_name }}">{% cutrender %}{{ verbose_name }}{% endcutrender %}</a>
+    {% endfor %}
+{% endblock %}

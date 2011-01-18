@@ -25,6 +25,7 @@ if settings.USE_GIS:
     from django.contrib.gis.db import models
 else:
     from django.db import models  # pyflakes:ignore
+from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.core.management import call_command
 from django.core.exceptions import ObjectDoesNotExist, SuspiciousOperation
@@ -38,7 +39,6 @@ from django.utils.html import strip_tags
 from django.utils.text import unescape_entities
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
-from django.contrib.auth.models import User
 
 from cmsutils.db.fields import AutoSlugField, JSONField
 from cmsutils.signals import post_rebuild_db
@@ -475,6 +475,25 @@ class BaseContent(BaseClass):
 
     def is_commentable(self):
         return self.commentable == 'allowed'
+
+    def breadcrumbs_first_item(self):
+        from merengue.pluggable.utils import get_plugin_config
+        plugin_dir = self._meta.app_label
+        plugin_config = get_plugin_config(plugin_dir)
+        plugin_url = "/%s/" % plugin_config.url_prefixes[0][0]
+        return (self._meta.verbose_name_plural, plugin_url)
+
+    def breadcrumbs_items(self):
+        try:
+            urls = [self.breadcrumbs_first_item()]
+        except ImportError:
+            urls = []
+        urls.append((unicode(self), ''))
+        return urls
+
+    def breadcrumbs(self):
+        urls = self.breadcrumbs_items()
+        return render_to_string('base/breadcrumbs.html', {'urls': urls})
 
 
 def calculate_class_name(instance):

@@ -334,8 +334,14 @@ class BaseSection(Base, RealInstanceMixin):
     def has_custom_style(self):
         return bool(self.customstyle)
 
-    def custom_breadcrumbs(self, section, content):
-        return render_to_string('section/breadcrumbs.html', {'section': section.real_instance})
+    def breadcrumbs_items(self):
+        return [(unicode(self), self.get_absolute_url())]
+
+    def breadcrumbs(self, content=None):
+        urls = self.breadcrumbs_items()
+        if content:
+            urls.append((unicode(content), ''))
+        return render_to_string('section/breadcrumbs.html', {'urls': urls})
 
     def url_in_section(self, url):
         return None

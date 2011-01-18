@@ -22,6 +22,8 @@ from merengue.registry.models import RegisteredItem
 from merengue.registry import params
 from merengue.registry.params import ConfigDict
 
+from merengue.section.utils import get_section, filtering_in_section
+
 # ---- Exception definitions ----
 
 
@@ -104,7 +106,7 @@ class QuerySetItemProvider(ContentsItemProvider, ConfigParamItemProvider):
 
     @classmethod
     def _get_section(cls, request, context):
-        return (request and getattr(request, 'section', None)) or (context and context.get('section', None))
+        return get_section(request, context)
 
     @classmethod
     def get_queryset(cls, request=None, context=None):
@@ -115,9 +117,7 @@ class QuerySetItemProvider(ContentsItemProvider, ConfigParamItemProvider):
     def queryset(cls, request=None, context=None, section=None):
         queryset = cls.get_contents(request, context, section)
         if section and cls.get_config().get('filtering_section', False).get_value():
-            if not queryset.query.can_filter():
-                queryset = queryset.model.objects.filter(id__in=queryset.values('id').query)
-            queryset = queryset.filter(basesection=section)
+            queryset = filtering_in_section(queryset, section)
         return queryset
 
 

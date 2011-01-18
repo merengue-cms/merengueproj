@@ -132,21 +132,28 @@ def get_static_main_menu(context, section, menu_tree):
 
 class SectionBreadcrumbsNode(template.Node):
 
-    def __init__(self, section, content):
+    def __init__(self, section=None, content=None):
         self.content = content
         self.section = section
 
     def render(self, context):
-        section = context.get(self.section, None)
-        content = context.get(self.content, None)
-        return section.custom_breadcrumbs(section, content)
+        section = self.section and context.get(self.section, None)
+        content = self.content and context.get(self.content, None)
+        if section:
+            return section.real_instance.breadcrumbs(content)
+        else:
+            return content.get_real_instance().breadcrumbs()
 
 
 def section_breadcrumbs(parser, token):
     try:
         tag_name, section, content = token.split_contents()
     except ValueError:
-        raise template.TemplateSyntaxError, "%r tag requires arguments" % token.contents.split()[0]
+        try:
+            tag_name, section = token.split_contents()
+            content = None
+        except ValueError:
+            raise template.TemplateSyntaxError, "%r tag requires arguments" % token.contents.split()[0]
     return SectionBreadcrumbsNode(section, content)
 
 register.tag('section_breadcrumbs_tag', section_breadcrumbs)
@@ -154,21 +161,30 @@ register.tag('section_breadcrumbs_tag', section_breadcrumbs)
 
 class URLInSectionBreadcrumbsNode(template.Node):
 
-    def __init__(self, section, url):
+    def __init__(self, section, url, var_name=None):
         self.url = url
         self.section = section
+        self.var_name = var_name
 
     def render(self, context):
         section = context.get(self.section, None)
         url = context.get(self.url, None)
-        return section.url_in_section(url)
+        url_in_section = section.url_in_section(url)
+        if self.var_name:
+            context[self.var_name] = url_in_section
+            return ''
+        return url_in_section
 
 
 def url_in_section_breadcrumbs(parser, token):
     try:
         tag_name, section, url = token.split_contents()
+        var_name = None
     except ValueError:
-        raise template.TemplateSyntaxError, "%r tag requires arguments" % token.contents.split()[0]
-    return URLInSectionBreadcrumbsNode(section, url)
+        try:
+            tag_name, section, url, _as, var_name = token.split_contents()
+        except ValueError:
+            raise template.TemplateSyntaxError, "%r tag requires arguments" % token.contents.split()[0]
+    return URLInSectionBreadcrumbsNode(section, url, var_name)
 
 register.tag('url_in_section_breadcrumbs_tag', url_in_section_breadcrumbs)
