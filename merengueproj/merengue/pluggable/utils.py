@@ -22,7 +22,7 @@ import sys
 try:
     from cStringIO import StringIO
 except ImportError:
-    from StringIO import StringIO
+    from StringIO import StringIO  # pyflakes:ignore
 
 from django import templatetags
 from django.conf import settings
@@ -72,6 +72,9 @@ def install_plugin(registered_plugin):
         install_models(app_mod)
         # Force registered_plugin saving after connection closes.
         registered_plugin.save()
+        # Doing extra custom installation implemented in each plugin
+        plugin_config = get_plugin_config(app_name, prepend_plugins_dir=False)
+        plugin_config.post_install()
     if registered_plugin.active:
         enable_plugin(app_name)
     else:
@@ -351,7 +354,6 @@ def register_plugin_post_actions(plugin_name):
     if not plugin_config:
         return
     plugin_config.post_actions()
-    plugin_config.hook_post_register()
 
 
 def register_plugin_section_models(plugin_name):

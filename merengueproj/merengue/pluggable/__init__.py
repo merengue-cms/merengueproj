@@ -76,7 +76,7 @@ class Plugin(RegistrableItem):
         return [] # to override in plugins
 
     @classmethod
-    def hook_post_register(cls):
+    def post_install(cls):
         pass
 
     @classmethod
