@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas
+# Copyright (c) 2010 by Yaco Sistemas <msaelices@yaco.es>
 #
 # This file is part of Merengue.
 #
@@ -16,36 +16,20 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from merengue.pluggable import Plugin
-from merengue.collection.utils import create_normalize_collection
 
-from plugins.voting.admin import VoteAdmin
-from plugins.voting.models import Vote
-from plugins.voting.blocks import VotingBlock
-from plugins.voting.viewlets import BaseContentWithMoreVotes, BaseContentTopRated
+from plugins.tmtemplates.models import TMTemplate
+from plugins.tmtemplates.admin import TMTemplateAdmin
 
 
 class PluginConfig(Plugin):
-    name = 'Voting'
-    description = 'Voting plugin'
+    name = 'Tiny MCE Templates'
+    description = 'Tiny MCE Templates plugin'
     version = '0.0.1a'
+
     url_prefixes = (
-        ('voting', 'plugins.voting.urls'),
+        ('tmtemplates', 'plugins.tmtemplates.urls'),
     )
 
     @classmethod
-    def get_blocks(cls):
-        return [VotingBlock]
-
-    @classmethod
     def get_model_admins(cls):
-        return [(Vote, VoteAdmin)]
-
-    @classmethod
-    def get_viewlets(cls):
-        return [BaseContentWithMoreVotes, BaseContentTopRated]
-
-    @classmethod
-    def hook_post_register(cls):
-        create_normalize_collection(
-            'votes', u'Votes', Vote,
-            create_display_field=True, create_filter_field=True)
+        return [(TMTemplate, TMTemplateAdmin)]
