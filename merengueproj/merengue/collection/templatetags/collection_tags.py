@@ -70,6 +70,8 @@ class CollectionItemsNode(Node):
         ignore_filters = request and request.GET.get('__ignore_filters', None)
         if request and not ignore_filters:
             result = self._filter_by_request(request, items)
+        if context and not ignore_filters:
+            result = self._filter_by_context(request, items)
         elif isinstance(items, list):
             result = []
             for queryset in items:
@@ -86,9 +88,7 @@ class CollectionItemsNode(Node):
                 continue
         return queryset
 
-    def _filter_by_request(self, request, items):
-        qsm = QueryStringManager(request, page_var='page', ignore_params=('set_language', ))
-        filters = qsm.get_filters()
+    def _filter_by_filters(self, filters, items):
         if isinstance(items, list):
             result = []
             for queryset in items:
@@ -97,6 +97,15 @@ class CollectionItemsNode(Node):
         else:
             result = self._filter_by_multiple_filters(items, filters)
         return result
+
+    def _filter_by_request(self, request, items):
+        qsm = QueryStringManager(request, page_var='page', ignore_params=('set_language', ))
+        filters = qsm.get_filters()
+        return self._filter_by_filters(items, filters)
+
+    def _filter_by_context(self, context, items):
+        filters = context.get('_filters_collection')
+        return self._filter_by_filters(items, filters)
 
     def __init__(self, collection, var_name):
         self.collection = collection
