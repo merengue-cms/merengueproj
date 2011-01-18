@@ -171,6 +171,6 @@ class ConfigDict(SortedDict):
     def __init__(self, config_params, config_values):
         super(ConfigDict, self).__init__()
         for param in config_params:
-            if param.name in config_values:
+            if config_values and param.name in config_values:
                 param.value = config_values[param.name]
             self[param.name] = param
