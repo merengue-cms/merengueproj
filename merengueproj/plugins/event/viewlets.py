@@ -15,33 +15,61 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _, ugettext
 
+from merengue.registry import params
+from merengue.registry.items import ViewLetQuerySetItemProvider
 from merengue.viewlet.viewlets import Viewlet
 from plugins.event.views import get_events
 
 
-class LatestEventViewlet(Viewlet):
+class LatestEventViewlet(ViewLetQuerySetItemProvider, Viewlet):
     name = 'latestevents'
     help_text = _('Latest events')
     verbose_name = _('Latest Event')
 
+    config_params = ViewLetQuerySetItemProvider.config_params + [
+        params.Single(
+            name='limit',
+            label=ugettext('limit for event viewlet'),
+            default='10'),
+    ]
+
+    @classmethod
+    def get_contents(cls, request=None, context=None, section=None):
+        number_events = cls.get_config().get('limit', []).get_value()
+        event_list = get_events(request, number_events)
+        return event_list
+
     @classmethod
     def render(cls, request, context):
-        event_list = get_events(request, 10)
+        event_list = cls.get_queryset(request, context)
         return cls.render_viewlet(request, template_name='event/viewlet_latest.html',
                                   context={'event_list': event_list})
 
 
-class AllEventViewlet(Viewlet):
+class AllEventViewlet(ViewLetQuerySetItemProvider, Viewlet):
     name = 'allevent'
     help_text = _('All events')
     verbose_name = _('All Events')
 
+    config_params = ViewLetQuerySetItemProvider.config_params + [
+        params.Single(
+            name='page_elements',
+            label=ugettext('number of elements on a page'),
+            default='10'),
+    ]
+
+    @classmethod
+    def get_contents(cls, request=None, context=None, section=None):
+        event_list = get_events(request)
+        return event_list
+
     @classmethod
     def render(cls, request, context):
-        event_list = get_events(request)
+        per_page = cls.get_config().get('page_elements', []).get_value()
+        event_list = cls.get_queryset(request, context)
         return cls.render_viewlet(request, template_name='event/viewlet_latest.html',
                                   context={'event_list': event_list,
                                            'is_paginated': True,
-                                           'paginate_by': 10})
+                                           'paginate_by': int(per_page)})

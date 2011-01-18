@@ -17,18 +17,19 @@
 
 import datetime
 
-from django.core.urlresolvers import reverse
 from django.db.models import Q
+from django.core.urlresolvers import reverse
 
-from plugins.event.models import Event
 
-
-def getEventsMonthYear(month, year):
+def getEventsMonthYear(month, year, events):
     filters = (
         Q(start__month=month, start__year=year) |
         Q(end__month=month, end__year=year),
-    )
-    events = Event.objects.all().filter(*filters)
+        Q(status='published'),
+        )
+    if not events.query.can_filter():
+        events = events.model.objects.filter(id__in=events.values('id').query)
+    events.filter(*filters)
     events_dic = {}
     for event in (i for i in events if i.is_published()):
         event_date = event.start

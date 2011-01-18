@@ -20,21 +20,32 @@ from datetime import date
 from django.utils.translation import ugettext as _, ugettext_lazy
 
 from merengue.block.blocks import Block
+from merengue.registry.items import BlockQuerySetItemProvider
 
 from plugins.event.utils import getEventsMonthYear
+from plugins.event.views import get_events
 
 
-class EventsCalendarBlock(Block):
+class EventsCalendarBlock(BlockQuerySetItemProvider, Block):
     name = 'eventscalendar'
     default_place = 'rightsidebar'
     help_text = ugettext_lazy('Block that renders calendar with events')
     verbose_name = ugettext_lazy('Events Calendar Block')
 
     @classmethod
+    def get_contents(cls, request=None, context=None, section=None):
+        events = get_events(request)
+        if not events.query.can_filter():
+            events = events.model.objects.filter(id__in=events.values('id').query)
+
+        return events
+
+    @classmethod
     def render(cls, request, place, context, *args, **kwargs):
         current_month = date.today().month
         current_year = date.today().year
-        events_dic = getEventsMonthYear(current_month, current_year)
+        events = cls.get_queryset(request, context)
+        events_dic = getEventsMonthYear(current_month, current_year, events)
         return cls.render_block(request,
                                 template_name='event/block_calendar.html',
                                 block_title=_('Events calendar'),
