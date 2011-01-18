@@ -71,7 +71,7 @@ class CollectionItemsNode(Node):
         if request and not ignore_filters:
             result = self._filter_by_request(request, items)
         if context and not ignore_filters:
-            result = self._filter_by_context(request, items)
+            result = self._filter_by_context(context, items)
         elif isinstance(items, list):
             result = []
             for queryset in items:
@@ -88,7 +88,7 @@ class CollectionItemsNode(Node):
                 continue
         return queryset
 
-    def _filter_by_filters(self, filters, items):
+    def _filter_by_filters(self, items, filters):
         if isinstance(items, list):
             result = []
             for queryset in items:
@@ -104,7 +104,7 @@ class CollectionItemsNode(Node):
         return self._filter_by_filters(items, filters)
 
     def _filter_by_context(self, context, items):
-        filters = context.get('_filters_collection')
+        filters = context.get('_filters_collection', {})
         return self._filter_by_filters(items, filters)
 
     def __init__(self, collection, var_name):
