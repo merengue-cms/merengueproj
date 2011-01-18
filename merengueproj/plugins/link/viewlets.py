@@ -15,32 +15,52 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _, ugettext
 
+from merengue.registry import params
+from merengue.registry.items import ViewLetQuerySetItemProvider
 from merengue.viewlet.viewlets import Viewlet
 from plugins.link.views import get_links
 
 
-class LatestLinkViewlet(Viewlet):
+class LatestLinkViewlet(ViewLetQuerySetItemProvider, Viewlet):
     name = 'latestlink'
     help_text = _('Latest link')
     verbose_name = _('Latest links')
 
+    config_params = ViewLetQuerySetItemProvider.config_params + [
+        params.Single(
+            name='limit',
+            label=ugettext('limit for link viewlet'),
+            default='10'),
+    ]
+
+    @classmethod
+    def get_contents(cls, request=None, context=None, section=None):
+        number_links = cls.get_config().get('limit', []).get_value()
+        link_list = get_links(request, number_links)
+        return link_list
+
     @classmethod
     def render(cls, request, context):
-        link_list = get_links(request, 10)
+        link_list = cls.get_queryset(request, context)
         return cls.render_viewlet(request, template_name='link/viewlet_latest.html',
                                   context={'link_list': link_list})
 
 
-class AllLinkViewlet(Viewlet):
+class AllLinkViewlet(ViewLetQuerySetItemProvider, Viewlet):
     name = 'alllink'
     help_text = _('All links')
     verbose_name = _('All links')
 
     @classmethod
-    def render(cls, request, context):
+    def get_contents(cls, request=None, context=None, section=None):
         link_list = get_links(request)
+        return link_list
+
+    @classmethod
+    def render(cls, request, context):
+        link_list = cls.get_queryset(request, context)
         return cls.render_viewlet(request, template_name='link/viewlet_latest.html',
                                   context={'link_list': link_list,
                                            'is_paginated': True,

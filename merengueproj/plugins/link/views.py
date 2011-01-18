@@ -17,7 +17,6 @@
 
 from django.shortcuts import get_object_or_404
 
-from cmsutils.adminfilters import QueryStringManager
 from merengue.base.views import content_view
 from merengue.collection.models import Collection
 from plugins.link.models import Link
@@ -37,13 +36,17 @@ def link_view(request, link_slug, template_name='link/link_view.html', extra_con
     return content_view(request, link, template_name, extra_context=None)
 
 
-def get_links(request=None, limit=0, queryset=None):
-    queryset = queryset or Link.objects.published()
-    links = queryset
-    qsm = QueryStringManager(request, page_var='page', ignore_params=('set_language', ))
-    filters = qsm.get_filters()
-    links = links.filter(**filters)
-    if limit:
-        return links[:limit]
-    else:
-        return links
+def get_links(request=None, limit=None, queryset=None):
+    if queryset:
+        return queryset
+    collection = get_collection_link()
+    request_param = tuple()
+    if request and request.section:
+        request_param = (request.section, )
+    return collection.get_items(*request_param)[:limit]
+
+
+def get_collection_link():
+    return Collection.objects.get(
+        slug=LINK_COLLECTION_SLUG,
+        )
