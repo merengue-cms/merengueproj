@@ -41,7 +41,7 @@ class AllBannerViewlet(ViewLetQuerySetItemProvider, Viewlet):
 
     @classmethod
     def render(cls, request, context):
-        banner_list = get_banners(request)
+        banner_list = cls.get_queryset(request, context)
         return cls.render_viewlet(request, template_name='banner/viewlet_latest.html',
                                   context={'banner_list': banner_list,
                                            'is_paginated': True,
