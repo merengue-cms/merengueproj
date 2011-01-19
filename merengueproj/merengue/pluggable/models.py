@@ -73,18 +73,18 @@ class RegisteredPlugin(RegisteredItem):
         return os.path.join(basedir, plugins_dir, self.directory_name)
 
 
-def install_plugin_signal(sender, instance, **kwargs):
-    from merengue.pluggable.utils import (install_plugin,
-                                          get_plugin_module_name,
+def save_plugin_signal(sender, instance, **kwargs):
+    from merengue.pluggable.utils import (get_plugin_module_name,
+                                          enable_plugin,
                                           disable_plugin)
+    app_name = get_plugin_module_name(instance.directory_name)
     if not getattr(instance, 'id', None) and getattr(instance, 'pk', None):
         instance = instance._default_manager.get(pk=instance.pk)
     if instance.installed and instance.directory_name and not instance.broken:
-        install_plugin(instance)
-        # Change this line will be fixes in #542
+        enable_plugin(app_name)
     elif not instance.active and instance.directory_name:
-        disable_plugin(get_plugin_module_name(instance.directory_name))
-signals.post_save.connect(install_plugin_signal, sender=RegisteredPlugin)
+        disable_plugin(app_name)
+signals.post_save.connect(save_plugin_signal, sender=RegisteredPlugin)
 
 # ----- adding south rules to help introspection -----
 

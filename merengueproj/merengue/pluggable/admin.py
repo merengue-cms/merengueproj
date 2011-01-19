@@ -23,7 +23,7 @@ from django.utils.translation import ugettext
 from merengue.base.admin import set_field_read_only
 from merengue.pluggable.checker import check_plugins
 from merengue.pluggable.models import RegisteredPlugin
-from merengue.pluggable.utils import has_required_dependencies
+from merengue.pluggable.utils import has_required_dependencies, install_plugin
 from merengue.registry.admin import RegisteredItemAdmin
 
 
@@ -69,13 +69,18 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
         return form
 
     def save_form(self, request, form, change):
-        if 'installed' in form.changed_data:
-            if form.cleaned_data['installed'] == True:
+        change_installed_field = 'installed' in form.changed_data
+        is_installed = form.cleaned_data['installed'] == True
+        if change_installed_field:
+            if is_installed:
                 # it has no sense install a plugin without activate
                 form.cleaned_data['active'] = True
             else:
                 form.cleaned_data['active'] = False
-        return form.save(commit=False)
+        registered_plugin = form.save(commit=False)
+        if change_installed_field and is_installed:
+            install_plugin(registered_plugin)
+        return registered_plugin
 
     def has_add_permission(self, request):
         return False

@@ -72,11 +72,11 @@ def install_plugin(registered_plugin):
         install_models(app_mod)
         # Force registered_plugin saving after connection closes.
         registered_plugin.save()
+    if registered_plugin.active:
+        enable_plugin(app_name)
         # Doing extra custom installation implemented in each plugin
         plugin_config = get_plugin_config(app_name, prepend_plugins_dir=False)
         plugin_config.post_install()
-    if registered_plugin.active:
-        enable_plugin(app_name)
     else:
         disable_plugin(app_name)
 
