@@ -1,5 +1,6 @@
 from copy import copy
 
+from django.db.models import Q
 from django.core.exceptions import FieldError
 from django.template import TemplateSyntaxError, Variable, Library, Node
 from django.template.defaultfilters import dictsort
@@ -81,11 +82,14 @@ class CollectionItemsNode(Node):
         return list(CollectionIterator(list(result)))
 
     def _filter_by_multiple_filters(self, queryset, filters):
-        for key, value in filters.items():
-            try:
-                queryset = queryset.filter(**{key: value})
-            except FieldError:
-                continue
+        if isinstance(filters, dict):
+            for key, value in filters.items():
+                try:
+                    queryset = queryset.filter(**{key: value})
+                except FieldError:
+                    continue
+        elif isinstance(filters, Q):
+            queryset = queryset.filter(filters)
         return queryset
 
     def _filter_by_filters(self, items, filters):
