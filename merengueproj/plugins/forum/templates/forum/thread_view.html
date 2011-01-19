@@ -7,15 +7,6 @@
   {% comments_media %}
 {% endblock extrahead %}
 
-{% block extrabreadcrumbs %}
-    <span class="breadcrumbSeparator">→</span>
-    <a href="{% url forum_index %}" title="{% trans "Forums" %}">{% inline_trans "Forums" %}</a>
-    <span class="breadcrumbSeparator">→</span>
-    <a href="{{ content.forum.get_absolute_url }}" title="{{ content.forum }}">{% cutrender %}{{ content.forum }}{% endcutrender %}</a>
-    <span class="breadcrumbSeparator">→</span>
-    {% cutrender %}{{ content }}{% endcutrender %}
-{% endblock %}
-
 {% block contenttitle %}
     <div id="content-title" class="threadTitle">
       <h1 title="{{ content.name }}">{% cutrender %}{{ content }}{% endcutrender %}

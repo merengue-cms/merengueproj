@@ -45,8 +45,10 @@ class MicroSite(Section):
             # breadcrumbs end here
             return super(MicroSite, self).breadcrumbs()
         url_section = super(MicroSite, self).breadcrumbs_items()
-        url_section.extend([(name, reverse("microsite_url", args=(self.slug, url))) \
-                            for name, url in content.breadcrumbs_items()])
+        for name, url in content.breadcrumbs_items():
+            if url and url[0] == '/':
+                url = url[1:]
+            url_section.append((name, reverse("microsite_url", args=(self.slug, url))))
         if url_section:
             url_section[-1] = (url_section[-1][0], '')
         return render_to_string('microsite/breadcrumbs.html', {

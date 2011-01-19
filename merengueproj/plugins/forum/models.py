@@ -39,6 +39,9 @@ class Forum(BaseContent):
         comments = ForumThreadComment.objects.filter(thread__in=[i['id'] for i in self.thread_set.all().values('id')]).order_by('-date_submitted')
         return comments
 
+    def breadcrumbs_last_item(self):
+        return (unicode(self), self.public_link_without_section())
+
     def get_last_comment(self):
         comments = self.get_all_comments()
         return comments and comments[0] or None
@@ -75,6 +78,15 @@ class Thread(BaseContent):
     def get_admin_absolute_url(self):
         parent_content_type = ContentType.objects.get_for_model(self.forum)
         return ('merengue.base.views.admin_link', [parent_content_type.id, self.forum.id, 'thread/%s/' % self.id])
+
+    def breadcrumbs_first_item(self):
+        return []
+
+    def breadcrumbs_items(self):
+        thread_breadcrumbs = super(Thread, self).breadcrumbs_items()
+        forum_breadcrumbs = self.forum.breadcrumbs_items()
+        forum_breadcrumbs.extend(thread_breadcrumbs)
+        return forum_breadcrumbs
 
 
 class ForumThreadComment(models.Model):
