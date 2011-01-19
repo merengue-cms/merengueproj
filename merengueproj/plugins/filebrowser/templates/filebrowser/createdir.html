@@ -13,15 +13,21 @@
     <h1 title="{% trans "Create folder" %}">{% trans "Create folder" %}</h1>
 </div>
 <div class="object-buttons">
-{% if path %}
-    <a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=path %}">
-        <img src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" /> {% trans "Cancel" %}
-    </a><span>&nbsp;</span>
-{% else %}
-    <a href="{% filebrowser_url filebrowser_root_listing repository_name=repository.name %}">
-        <img src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" /> {% trans "Cancel" %}
-    </a><span>&nbsp;</span>
-{% endif %}
+  {% block permission %}
+    <ul>
+      <li class="cancelEdit">
+  {% if path %}
+      <a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=path %}">
+        <span>{% trans "Cancel" %}</span>
+      </a>
+  {% else %}
+      <a href="{% filebrowser_url filebrowser_root_listing repository_name=repository.name %}">
+          <span>{% trans "Cancel" %}</span>
+      </a>
+  {% endif %}
+      </li>
+    </ul>
+  {% endblock %}
 </div>
 
 <div id="content-main">

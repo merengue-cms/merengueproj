@@ -65,9 +65,36 @@ div.object-buttons ul li a span {
     display: inline-block;
     line-height: 25px;
     padding-left: 30px;
-    background: transparent url(../img/go-up.png) no-repeat left top;
 }
 
 div.object-buttons ul li.createFolder a span {
-    background-image: url(../img/folder-new.png);
+    background: transparent url(../img/folder-new.png) no-repeat left top;
+}
+
+div.object-buttons ul li.createFile a span,
+div.object-buttons ul li.createDocument a span {
+    background: transparent url(../img/go-up.png) no-repeat left top;
+}
+
+div.object-buttons ul li.cancelEdit a span {
+    background: transparent url(../img/edit-undo.png) no-repeat left top;
+}
+div.object-buttons ul li.docEdit a span {
+    background: transparent url(../img/document-text-editor.png) no-repeat left top;
+}
+
+table#webfs-table label {
+    padding-left: 18px;
+}
+
+table#webfs-table label.folder {
+    background: transparent url(../img/folder.png) no-repeat left top;
+}
+
+table#webfs-table label.file {
+    background: transparent url(../img/file.png) no-repeat left top;
+}
+
+table#webfs-table label.document {
+    background: transparent url(../img/text-x-generic.png) no-repeat left top;
 }

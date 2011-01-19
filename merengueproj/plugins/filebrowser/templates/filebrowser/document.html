@@ -21,7 +21,10 @@
 
 <div class="object-buttons">
 {% if user.is_superuser %}
-<a href="{% filebrowser_url plugins.filebrowser.views.editdoc repository_name=repository.name,doc_slug=document.slug %}"><img src="{{ MEDIA_URL }}filebrowser/img/document-text-editor.png" /> {% trans "Edit" %}</a><span>&nbsp;</span>
+<ul><li class="docEdit">
+<a href="{% filebrowser_url plugins.filebrowser.views.editdoc repository_name=repository.name,doc_slug=document.slug %}"><span>{% trans "Edit" %}</span></a>
+</li>
+</ul>
 {% endif %}
 </div>
 
