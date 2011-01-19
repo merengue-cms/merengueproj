@@ -22,8 +22,9 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404
 from django.utils.simplejson import dumps
 
-from merengue.base.views import content_view, content_list
+from merengue.base.views import content_view
 from merengue.collection.models import Collection
+from merengue.collection.views import collection_view
 
 from plugins.event.models import Event, Category
 from plugins.event.utils import getEventsMonthYear
@@ -32,7 +33,7 @@ from plugins.event.utils import getEventsMonthYear
 EVENT_COLLECTION_SLUG = 'event'
 
 
-def event_view(request, event_slug, extra_context=None):
+def event_view(request, event_slug, extra_context=None, template_name='event/event_view.html'):
     event = get_object_or_404(Event, slug=event_slug)
     event_category_slug = request.GET.get('categories__slug', None)
     event_category = event_category_slug and get_object_or_404(Category, slug=event_category_slug)
@@ -42,12 +43,13 @@ def event_view(request, event_slug, extra_context=None):
     return content_view(request, event, 'event/event_view.html', extra_context=context)
 
 
-def event_list(request, year=None, month=None, day=None, queryset=None, extra_context=None):
+def event_list(request, year=None, month=None, day=None, queryset=None,
+               extra_context=None,
+               template_name='event/event_list.html'):
     filters = {}
     date_day_start = None
-    events = get_events(request, queryset=queryset)
-    if not events.query.can_filter():
-        events = events.model.objects.filter(id__in=events.values('id').query)
+    event_collection = get_collection_event()
+
     if year and month and day:
         date_day_start = datetime.datetime(int(year), int(month), int(day), 0, 0, 0)
         date_day_end = datetime.datetime(int(year), int(month), int(day), 23, 59, 59)
@@ -56,14 +58,11 @@ def event_list(request, year=None, month=None, day=None, queryset=None, extra_co
     else:
         today = datetime.datetime.now()
         filters = Q(start__gte=today) | Q(end__gte=today)
-    events = events.filter(filters)
 
-    context = {'date': date_day_start}
+    context = {'date': date_day_start, '_filters_collection': filters}
     extra_context = extra_context or {}
     context.update(extra_context)
-    return content_list(request, events,
-                        extra_context=context,
-                        template_name='event/event_list.html')
+    return collection_view(request, event_collection, extra_context=context, template_name=template_name)
 
 
 def events_calendar(request):

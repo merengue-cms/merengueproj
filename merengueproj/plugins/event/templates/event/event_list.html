@@ -1,4 +1,4 @@
-{% extends "content_list.html" %}
+{% extends "collection/collection_view.html" %}
 
 {% load i18n inlinetrans action_tags %}
 
@@ -6,9 +6,3 @@
 
 {% block listtitle %}{% trans "Events index" %} - {% if date %}{{ date|date }}{% else %}{% trans "For every date" %}{% endif %}{% endblock %}
 
-{% block extrabreadcrumbs %}
-  <span class="breadcrumbSeparator">→</span><a href="{% url event_list %}" title="{% trans "Event" %}">{% inline_trans "Event" %}</a>
-  {% if event_category %}
-    <span class="breadcrumbSeparator">→</span><a href="" title="{{ event_category }}">{{ event_category }}</a>
-  {% endif %}
-{% endblock %}
