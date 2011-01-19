@@ -18,6 +18,7 @@
 from django.shortcuts import get_object_or_404
 
 from merengue.base.views import content_list
+from merengue.section.models import Section
 from plugins.itags.models import ITag
 from tagging.models import TaggedItem
 
@@ -28,6 +29,14 @@ def tag_view(request, tag_name):
     queryset = TaggedItem.objects.filter(tag=itag.tag_ptr)
     if model:
         queryset = queryset.filter(content_type__model=model)
+    section_id = request.GET.get('section', None)
+    if section_id:
+        try:
+            section = Section.objects.get(id=section_id)
+            content_ids = [i['id'] for i in section.related_content.values('id')]
+            queryset = queryset.filter(object_id__in=content_ids)
+        except Section.DoesNotExist:
+            pass
     return content_list(request, queryset,
                         template_name='itags/itag_view.html',
                         extra_context={'tag': itag},

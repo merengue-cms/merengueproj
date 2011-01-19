@@ -17,38 +17,60 @@
 
 from operator import attrgetter
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _, ugettext
 
 from merengue.viewlet.viewlets import Viewlet
+from merengue.registry import params
+from merengue.registry.items import ViewLetQuerySetItemProvider
 
 from plugins.itags.models import ITag
 from tagging.models import Tag, TaggedItem
 
 
-class TagCloudViewlet(Viewlet):
+class TagCloudViewlet(ViewLetQuerySetItemProvider, Viewlet):
     name = 'tagcloud'
     help_text = _('Tag cloud')
     verbose_name = _('Tag cloud block')
 
+    config_params = ViewLetQuerySetItemProvider.config_params + [
+        params.Single(
+            name='max_tags_in_cloud',
+            label=ugettext('Max number of tags in cloud'),
+            default='20',
+        ),
+    ]
+
     @classmethod
-    def get_tag_cloud(cls, request):
-        from plugins.itags.config import PluginConfig
+    def get_tag_cloud(cls, request, context, limit=20, filter_section=None):
+        section = filter_section and cls._get_section(request, context)
         dbparams = {'tag_table': Tag._meta.db_table,
                     'tag_id_field': Tag._meta.pk.name,
                     'item_table': TaggedItem._meta.db_table,
-                    'item_id_field': 'tag_id'}
-        taglist = Tag.objects.extra(select={
-            'item_count': '''SELECT COUNT(*) FROM %(item_table)s
-             WHERE %(tag_table)s.%(tag_id_field)s=%(item_table)s.%(item_id_field)s''' % dbparams,
-            }).order_by('-item_count')
+                    'item_id_field': 'tag_id',
+                    'content_id_field': 'object_id',
+                   }
+        if section:
+            content_ids = [str(i['id']) for i in section.related_content.values('id')]
+
+            dbparams.update({'content_ids': '(%s)' % ','.join(content_ids)})
+            taglist = Tag.objects.extra(select={
+                'item_count': '''SELECT COUNT(*) FROM %(item_table)s
+                 WHERE %(tag_table)s.%(tag_id_field)s=%(item_table)s.%(item_id_field)s AND
+                       %(item_table)s.%(content_id_field)s in %(content_ids)s''' % dbparams,
+                }).order_by('-item_count')
+        else:
+            taglist = Tag.objects.extra(select={
+                'item_count': '''SELECT COUNT(*) FROM %(item_table)s
+                 WHERE %(tag_table)s.%(tag_id_field)s=%(item_table)s.%(item_id_field)s''' % dbparams,
+                }).order_by('-item_count')
 
         tag_cloud = []
         for tag in taglist:
-            limit = PluginConfig.get_config().get('max_tags_in_cloud', None)
-            limit = limit and int(limit.value) or 20
             if len(tag_cloud) >= limit:
                 break
             try:
+                if not tag.item_count:
+                    continue
                 tag.itag.item_count = tag.item_count
                 tag_cloud.append(tag.itag)
             except ITag.DoesNotExist:
@@ -57,7 +79,7 @@ class TagCloudViewlet(Viewlet):
         if not tag_cloud or tag_cloud[0].item_count == 0:
             return None
 
-        max_item_count = tag_cloud[0].item_count # the first element is always the biggest
+        max_item_count = tag_cloud[0].item_count  # the first element is always the biggest
         for t in tag_cloud:
             t.count = (float(t.item_count) / max_item_count) + 1
         tag_cloud.sort(key=attrgetter('tag_name'))
@@ -65,6 +87,9 @@ class TagCloudViewlet(Viewlet):
 
     @classmethod
     def render(cls, request, context):
-        tag_cloud = cls.get_tag_cloud(request)
+        limit = cls.get_config().get('max_tags_in_cloud', []).get_value()
+        filter_section = cls.get_config().get('filtering_section', False).get_value()
+        tag_cloud = cls.get_tag_cloud(request, context, limit, filter_section)
         return cls.render_viewlet(request, template_name='itags/viewlets/tagcloud.html',
-                                  context={'taglist': tag_cloud})
+                                  context={'taglist': tag_cloud,
+                                           'filter_section': filter_section})

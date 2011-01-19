@@ -19,18 +19,31 @@ from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.block.blocks import Block
+from merengue.registry import params
+from merengue.registry.items import BlockQuerySetItemProvider
 from plugins.itags.viewlets import TagCloudViewlet
 
 
-class TagCloudBlock(Block):
+class TagCloudBlock(BlockQuerySetItemProvider, Block):
     name = 'tagcloud'
     verbose_name = _('Tag cloud')
     help_text = _('Block with a tag cloud')
     default_place = 'leftsidebar'
 
+    config_params = BlockQuerySetItemProvider.config_params + [
+        params.PositiveInteger(
+            name='max_tags_in_cloud',
+            label=_('Max number of tags in cloud'),
+            default=20,
+        ),
+    ]
+
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):
-        tag_cloud = TagCloudViewlet.get_tag_cloud(request)
+        limit = cls.get_config().get('max_tags_in_cloud', []).get_value()
+        filter_section = cls.get_config().get('filtering_section', False).get_value()
+        tag_cloud = TagCloudViewlet.get_tag_cloud(request, context, limit, filter_section)
         return cls.render_block(request, template_name='itags/blocks/tagcloud.html',
                                 block_title=ugettext('Tag cloud'),
-                                context={'taglist': tag_cloud})
+                                context={'taglist': tag_cloud,
+                                         'filter_section': filter_section})

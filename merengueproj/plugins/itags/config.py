@@ -34,7 +34,6 @@ class PluginConfig(Plugin):
 
     config_params = [
         params.Single(name='main_language', label=_('Main language for tags'), default=settings.LANGUAGE_CODE),
-        params.Single(name='max_tags_in_cloud', label=_('Max number of tags in cloud block/viewlet'), default=20),
     ]
 
     url_prefixes = (
