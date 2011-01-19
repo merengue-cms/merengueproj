@@ -51,3 +51,23 @@ div.image {
 div.image p {
    text-align: center !important;
 }
+
+div.object-buttons {
+    margin: 1em 0;
+}
+
+div.object-buttons ul li {
+    display: inline-block;
+    margin-right: 0.5em;
+}
+
+div.object-buttons ul li a span {
+    display: inline-block;
+    line-height: 25px;
+    padding-left: 30px;
+    background: transparent url(../img/go-up.png) no-repeat left top;
+}
+
+div.object-buttons ul li.createFolder a span {
+    background-image: url(../img/folder-new.png);
+}

@@ -23,9 +23,13 @@
 
 <div class="object-buttons">
 {% if edit_permission %}
-  <a href="{% filebrowser_url filebrowser_createdir repository_name=repository.name,path=path %}"><img alt="{% trans "folder" %}" src="{{ MEDIA_URL }}filebrowser/img/folder-new.png" />{% trans "Create folder" %}</a>
-  <a href="{% filebrowser_url filebrowser_upload repository_name=repository.name,path=path %}"><img alt="{% trans "file" %}" src="{{ MEDIA_URL }}filebrowser/img/go-up.png" />{% trans "Upload file" %}</a>
-  <a href="{% filebrowser_url filebrowser_createdoc repository_name=repository.name,path=path %}"><img alt="{% trans "file" %}" src="{{ MEDIA_URL }}filebrowser/img/go-up.png" />{% trans "Create document" %}</a>
+  {% block permission %}
+  <ul>
+    <li class="createFolder"><a href="{% filebrowser_url filebrowser_createdir repository_name=repository.name,path=path %}"><span>{% trans "Create folder" %}</span></a></li>
+    <li class="createFile"><a href="{% filebrowser_url filebrowser_upload repository_name=repository.name,path=path %}"><span>{% trans "Upload file" %}</span></a></li>
+    <li class="createDocument"><a href="{% filebrowser_url filebrowser_createdoc repository_name=repository.name,path=path %}"><span>{% trans "Create document" %}</span></a></li>
+  </ul>
+  {% endblock %}
 {% endif %}
 </div>
 
