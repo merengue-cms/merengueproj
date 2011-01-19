@@ -19,18 +19,18 @@ from django.utils.translation import ugettext as _, ugettext_lazy
 
 from merengue.block.blocks import ContentBlock
 from merengue.registry import params
-from merengue.registry.items import BlockConfigParamItemProvider
+from merengue.registry.items import BlockSectionFilterItemProvider
 
 from plugins.voting.utils import get_can_vote
 
 
-class VotingBlock(BlockConfigParamItemProvider, ContentBlock):
+class VotingBlock(BlockSectionFilterItemProvider, ContentBlock):
     name = 'voting'
     default_place = 'beforecontent'
     help_text = ugettext_lazy('Block that provides the voting functionality')
     verbose_name = ugettext_lazy('Voting block')
 
-    config_params = BlockConfigParamItemProvider.config_params + [
+    config_params = BlockSectionFilterItemProvider.config_params + [
         params.Bool(name='readonly', label=_('is readonly?'),
                     default=False),
     ]

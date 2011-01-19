@@ -20,12 +20,10 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import Template, RequestContext
 
 from merengue.base.models import BaseContent
-from merengue.collection.models import Collection
 
 from plugins.voting.models import Vote
 
 RATING_TEMPLATE = Template('{% load voting_tags %}{% voting obj %}')
-VOTES_COLLECTION_SLUG = 'votes'
 
 
 def vote_object(request, object_id):
@@ -56,15 +54,3 @@ def vote_object(request, object_id):
 
     except ObjectDoesNotExist:
         raise Http404
-
-
-def get_votes(request=None, limit=0):
-    collection = get_collection_votes()
-    request_param = tuple()
-    if request and request.section:
-        request_param = (request.section, )
-    return collection.get_items(*request_param)[:limit]
-
-
-def get_collection_votes():
-    return Collection.objects.get(slug=VOTES_COLLECTION_SLUG)

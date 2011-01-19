@@ -22,41 +22,51 @@ from cmsutils.adminfilters import QueryStringManager
 from merengue.base.models import BaseContent
 from merengue.utils import copy_request
 from merengue.viewlet.viewlets import Viewlet
+from merengue.registry.items import ViewLetQuerySetItemProvider
+
 from plugins.voting.models import Vote
 
 
-def get_content_with_votes(request=None, limit=0, order_by='id'):
-    votes = Vote.objects.all()
-    contents = BaseContent.objects.published().filter(vote__in=votes)
-    from copy import copy
-    request_copy = copy_request(request, ['set_language'], copy)
-    qsm = QueryStringManager(request, page_var='page')
-    filters = qsm.get_filters()
-    contents = contents.filter(**filters).distinct().select_related('votes').order_by(order_by)
-    if limit:
-        return contents[:limit]
-    return contents
+class BaseVotinViewlet(ViewLetQuerySetItemProvider, Viewlet):
+
+    @classmethod
+    def get_contents(cls, request=None, context=None, section=None):
+        votes = Vote.objects.all()
+        contents = BaseContent.objects.published().filter(vote__in=votes)
+        return contents
+
+    @classmethod
+    def get_content_with_votes(cls, request=None, context=None, limit=0, order_by='id'):
+        contents = cls.get_queryset(request, context)
+        from copy import copy
+        request_copy = copy_request(request, ['set_language'], copy)
+        qsm = QueryStringManager(request, page_var='page')
+        filters = qsm.get_filters()
+        contents = contents.filter(**filters).distinct().select_related('votes').order_by(order_by)
+        if limit:
+            return contents[:limit]
+        return contents
 
 
-class BaseContentTopRated(Viewlet):
+class BaseContentTopRated(BaseVotinViewlet):
     name = 'basecontenttoprated'
     help_text = _('Content top rated')
     verbose_name = _('Top rated content')
 
     @classmethod
     def render(cls, request, context):
-        votes_list = get_content_with_votes(request, limit=None, order_by='-vote__vote')
+        votes_list = cls.get_content_with_votes(request, context, limit=None, order_by='-vote__vote')
         return cls.render_viewlet(request, template_name='voting/viewlet_voting_basecontent.html',
                                   context={'votes_list': votes_list})
 
 
-class BaseContentWithMoreVotes(Viewlet):
+class BaseContentWithMoreVotes(BaseVotinViewlet):
     name = 'basecontentwithmorevotes'
     help_text = _('Content that contains more votes')
     verbose_name = _('More votes content')
 
     @classmethod
     def render(cls, request, context):
-        votes_list = get_content_with_votes(request, limit=None, order_by='-vote__num_votes')
+        votes_list = cls.get_content_with_votes(request, context, limit=None, order_by='-vote__num_votes')
         return cls.render_viewlet(request, template_name='voting/viewlet_voting_basecontent.html',
                                   context={'votes_list': votes_list})

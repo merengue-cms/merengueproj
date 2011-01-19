@@ -16,7 +16,6 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from merengue.pluggable import Plugin
-from merengue.collection.utils import create_normalize_collection
 
 from plugins.voting.admin import VoteAdmin
 from plugins.voting.models import Vote
@@ -43,9 +42,3 @@ class PluginConfig(Plugin):
     @classmethod
     def get_viewlets(cls):
         return [BaseContentWithMoreVotes, BaseContentTopRated]
-
-    @classmethod
-    def post_install(cls):
-        create_normalize_collection(
-            'votes', u'Votes', Vote,
-            create_display_field=True, create_filter_field=True)
