@@ -483,12 +483,20 @@ class BaseContent(BaseClass):
         plugin_url = "/%s/" % plugin_config.url_prefixes[0][0]
         return (self._meta.verbose_name_plural, plugin_url)
 
+    def breadcrumbs_last_item(self):
+        return (unicode(self), '')
+
     def breadcrumbs_items(self):
+        urls = []
         try:
-            urls = [self.breadcrumbs_first_item()]
+            first_item = self.breadcrumbs_first_item()
+            if first_item:
+                urls.append(first_item)
         except ImportError:
             urls = []
-        urls.append((unicode(self), ''))
+        last_item = self.breadcrumbs_last_item()
+        if last_item:
+            urls.append(last_item)
         return urls
 
     def breadcrumbs(self):
