@@ -80,7 +80,11 @@ class Integer(Param):
 
     def get_parsed_value(self, value):
         if value is not None and not isinstance(value, int) and value.strip('-').isdigit():
-            return int(value)
+            try:
+                return int(value)
+            except ValueError:
+                # return value if any error happends that will get validated
+                pass
         return value
 
     def get_value(self):
