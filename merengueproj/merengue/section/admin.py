@@ -123,6 +123,7 @@ class SectionAdmin(BaseSectionAdmin):
 class SectionContentAdmin(OrderableRelatedModelAdmin):
     related_field = 'basesection'
     sortablefield = 'order'
+    manage_contents = True
 
     def custom_relate_content(self, request, obj, form, change):
         if not change:
