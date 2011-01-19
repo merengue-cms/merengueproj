@@ -358,7 +358,7 @@ def has_global_permission(user, codename, roles=None):
     # we check first ANONYMOUS_ROLE_SLUG to reduce SQL sentences and improve
     # cache hit percentage (next sentence is more susceptible to be cached)
     p_anon = ObjectPermission.objects.filter(
-        Q(content__isnull=True, role=ANONYMOUS_ROLE_SLUG, permission__codename=codename))
+        Q(content__isnull=True, role__slug=ANONYMOUS_ROLE_SLUG, permission__codename=codename))
 
     if p_anon:
         return True
