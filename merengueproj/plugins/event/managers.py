@@ -33,13 +33,13 @@ class EventManager(ActiveManager, BaseContentManager):
         super(EventManager, self).__init__(from_date='publish_date', to_date='expire_date')
 
     def actives(self):
-        return super(EventManager, self).actives().filter(end__gte=datetime.now(), status='published')
+        return super(EventManager, self).actives().filter(end__gte=datetime.now())
 
     def actives_in_date(self, onedate):
-        return super(EventManager, self).actives().filter(end__gte=onedate, status='published')
+        return super(EventManager, self).actives().filter(end__gte=onedate)
 
     def actives_in_range(self, start, end):
-        return super(EventManager, self).actives().filter(Q(end__lte=start, end__gte=end), status='published')
+        return super(EventManager, self).actives().filter(Q(end__lte=start, end__gte=end))
 
     def allpublished(self):
         return self.filter(status='published')
