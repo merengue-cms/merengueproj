@@ -6,14 +6,17 @@
   <link href="{{ MEDIA_URL }}filebrowser/css/filebrowser.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 
-{% block pagetitle %}{% trans "Document repository" %}{% endblock %}
+{% block pagetitle %}{% trans "Document repository" %} {% endblock %}
 
 {% block extrabreadcrumbs %}
-    {{ block.super }}
-    <span class="breadcrumbSeparator">→</span><a href="{% filebrowser_url filebrowser_root_listing repository.name %}">{% trans "Document repository" %}</a>
-    {% if parents %}
-      {% for p in parents %}
-        <span class="breadcrumbSeparator">→</span><a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=p.path %}/">{{ p.dirname }}</a>
-      {% endfor %}
+    {{ block.super }} 
+    <span class="breadcrumbSeparator">→</span><a href="{% filebrowser_url filebrowser_repositories %}">{% trans "Repository List" %}</a>
+    {% if repository %}
+        <span class="breadcrumbSeparator">→</span><a href="{% filebrowser_url filebrowser_root_listing repository.name %}">{% trans "Document repository" %}</a>
+        {% if parents %}
+        {% for p in parents %}
+            <span class="breadcrumbSeparator">→</span><a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=p.path %}/">{{ p.dirname }}</a>
+        {% endfor %}
+        {% endif %}
     {% endif %}
 {% endblock %}

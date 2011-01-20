@@ -8,10 +8,15 @@
 {% endblock %}
 
 {% block extrabreadcrumbs %}
-    <span class="breadcrumbSeparator">→</span>{% if parents %}<a href="{% filebrowser_url filebrowser_root_listing repository.name %}">{% trans "Document repository" %}</a>{% else %}{% trans "Document repository" %}{% endif %}
+    {% if section %}
+        {{ section.breadcrumbs }}
+    {% endif %}
+    <span class="breadcrumbSeparator">→</span><a href="{% filebrowser_url filebrowser_repositories %}">{% trans "Repository List" %}</a>
+    <span class="breadcrumbSeparator">→</span>{% if parents %}<a href="{% filebrowser_url filebrowser_root_listing repository.name %}">{% trans "Document repository" %}</a>{% else %}<a href="">{{ repository.name  }}</a>{% endif %}
     {% if parents %}
       {% for p in parents %}
-        <span class="breadcrumbSeparator">→</span>{% if not forloop.last %}<a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=p.path %}/">{{ p.dirname }}</a>{% else %} {{ p.dirname }} {% endif %}
+        <span class="breadcrumbSeparator">→</span>
+        <a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=p.path %}/">{{ p.dirname }}</a>
       {% endfor %}
     {% endif %}
 {% endblock %}

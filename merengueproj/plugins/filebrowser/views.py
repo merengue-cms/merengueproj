@@ -7,6 +7,8 @@ from django.utils import simplejson
 from django.utils.translation import ugettext as _
 
 from merengue.base.decorators import login_required_or_permission_denied
+from merengue.base.views import content_list
+from merengue.section.utils import get_section
 
 from plugins.filebrowser.forms import EditDocForm, AddDocForm
 from plugins.filebrowser.models import Repository, Document, FileDocument, ImageDocument
@@ -16,6 +18,21 @@ from cmsutils.log import send_info, send_error
 
 
 FILEBROWSER_BASE_TEMPLATE = 'base.html'
+
+
+@login_required_or_permission_denied
+def repositories(request, extra_context=None):
+    filters = {}
+    section = get_section(request, extra_context)
+    if section:
+        filters['section'] = section
+    repository_list = Repository.objects.filter(**filters)
+    context = {'base_template': 'content_list.html'}
+    extra_context = extra_context or {}
+    context.update(extra_context)
+    return content_list(request, repository_list,
+                        extra_context=context,
+                        template_name='filebrowser/repository_list.html')
 
 
 @login_required_or_permission_denied
@@ -80,7 +97,7 @@ def createdir(request, repository_name, path='',
         repository.create_dir(join(path, dirname))
         message = _('Folder created successfully')
         request.user.message_set.create(message=message)
-        return HttpResponseRedirect(filebrowser_reverse("filebrowser_dir_listing",
+        return HttpResponseRedirect(filebrowser_reverse(request, "filebrowser_dir_listing",
                         kwargs={'repository_name': repository.name,
                                 'path': path},
                         url_prefix=url_prefix))
@@ -107,7 +124,7 @@ def upload(request, repository_name, path='',
                     fout.write(chunk)
                 fout.close()
         send_info(request, _('Files uploaded successfully'))
-        return HttpResponseRedirect(filebrowser_reverse("filebrowser_dir_listing",
+        return HttpResponseRedirect(filebrowser_reverse(request, "filebrowser_dir_listing",
                         kwargs={'repository_name': repository.name,
                                 'path': path},
                         url_prefix=url_prefix))
@@ -171,7 +188,7 @@ def action(request, repository_name, path,
                     old_elems.append(request.POST['olddoc_%s' % k[len('doc_'):]])
     if not elems:
         send_error(request, _("You didn't selected any element"))
-        return HttpResponseRedirect(filebrowser_reverse("filebrowser_dir_listing",
+        return HttpResponseRedirect(filebrowser_reverse(request, "filebrowser_dir_listing",
                         kwargs={'repository_name': repository.name,
                                 'path': path},
                         url_prefix=url_prefix))
@@ -208,14 +225,14 @@ def action(request, repository_name, path,
     elif action == 'rename':
         repository.rename_elems(path, elems, old_elems)
         request.user.message_set.create(message=_('Elements renamed successfully'))
-        return HttpResponseRedirect(filebrowser_reverse("filebrowser_dir_listing",
+        return HttpResponseRedirect(filebrowser_reverse(request, "filebrowser_dir_listing",
                         kwargs={'repository_name': repository.name,
                                 'path': path},
                         url_prefix=url_prefix))
     elif action == 'delete':
         repository.delete_elems(path, elems)
         request.user.message_set.create(message=_('Elements deleted successfully'))
-        return HttpResponseRedirect(filebrowser_reverse("filebrowser_dir_listing",
+        return HttpResponseRedirect(filebrowser_reverse(request, "filebrowser_dir_listing",
                         kwargs={'repository_name': repository.name,
                                 'path': path},
                         url_prefix=url_prefix))

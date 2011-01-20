@@ -1,0 +1,11 @@
+{% extends "filebrowser/base.html" %}
+
+{% load i18n inlinetrans %}
+
+{% block pagetitle %}{% trans "Repository List" %}{% endblock %}
+
+{% block listtitle %}{% inline_trans "Repository List" %}{% endblock %}
+
+{% block itemtitle %}
+    {{ content.name }}
+{% endblock %}

@@ -2,6 +2,7 @@
 from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('plugins.filebrowser.views',
+    url(r'^$', 'repositories', name='filebrowser_repositories'),
     url(r'^(?P<repository_name>[\w-]+)/$', 'root', name='filebrowser_root'),
     url(r'^(?P<repository_name>[\w-]+)/listing/$', 'listing', name='filebrowser_root_listing'),
     url(r'^(?P<repository_name>[\w-]+)/listing/(?P<path>.*)$', 'listing', name="filebrowser_dir_listing"),

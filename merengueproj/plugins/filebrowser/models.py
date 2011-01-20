@@ -3,11 +3,13 @@ import os
 import shutil
 
 from django.db import models
-
+from django.core.urlresolvers import reverse
 from django.utils.encoding import force_unicode, smart_str
 from django.utils.translation import ugettext_lazy as _
 
 from cmsutils.db.fields import AutoSlugField
+
+from merengue.section.models import BaseSection
 
 from plugins.filebrowser.managers import (RepositoryManager, DocumentManager,
                                           FileDocumentManager)
@@ -27,6 +29,7 @@ def get_upload_dir(instance, name):
 class Repository(models.Model):
     """ Repository model """
     name = models.SlugField(_(u'name'), max_length=200, unique=True)
+    section = models.ForeignKey(BaseSection, null=True, blank=True)
 
     objects = RepositoryManager()
 
@@ -37,6 +40,15 @@ class Repository(models.Model):
 
     def __unicode__(self):
         return u'Repository at %s' % self.get_root_path()
+
+    def get_absolute_url_with_out_section(self):
+        return reverse('filebrowser_root', args=(self.name, ))
+
+    def get_absolute_url(self):
+        url_with_out_section = self.get_absolute_url_with_out_section()
+        if self.section:
+            return self.section.real_instance.url_in_section(url_with_out_section)
+        return url_with_out_section
 
     def save(self, force_insert=False, force_update=False):
         super(Repository, self).save(force_insert, force_update)
