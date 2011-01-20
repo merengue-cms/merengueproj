@@ -21,7 +21,7 @@ from django.shortcuts import get_object_or_404
 
 
 from plugins.microsite.models import MicroSite
-from merengue.base.models import BaseContent
+from merengue.section.models import Document
 from merengue.section.views import section_view, content_section_view
 
 
@@ -49,5 +49,5 @@ def microsite_url(request, microsite_slug, url):
 
 
 def document_micosite_view(request, section_slug, content_slug):
-    content = get_object_or_404(BaseContent, slug=content_slug)
+    content = get_object_or_404(Document, slug=content_slug)
     return content_section_view(request, section_slug, content.id, content_slug)
