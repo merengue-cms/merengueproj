@@ -19,4 +19,6 @@ from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('merengue.block.views',
     url(r'order/ajax/', 'blocks_reorder', name='blocks_reorder'),
+    url(r'config/ajax/(?P<block_id>\d+)$', 'generate_blocks_configuration',
+        name='generate_blocks_configuration'),
 )

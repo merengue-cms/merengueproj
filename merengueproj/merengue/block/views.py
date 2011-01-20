@@ -16,8 +16,10 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.http import HttpResponse, HttpResponseBadRequest
+from django.utils.importlib import import_module
 from django.utils.simplejson import dumps
 
+from merengue.block.forms import BlockConfigForm
 from merengue.block.models import RegisteredBlock
 
 
@@ -37,3 +39,18 @@ def blocks_reorder(request):
                 block.save()
         return HttpResponse(dumps(True), mimetype=mimetype)
     return HttpResponseBadRequest(mimetype=mimetype)
+
+
+def generate_blocks_configuration(request, block_id):
+    try:
+        reg_block = RegisteredBlock.objects.get(id=block_id)
+        block = getattr(import_module(reg_block.module), reg_block.class_name)
+        form = BlockConfigForm()
+        form.fields['config'].set_config(block.get_config())
+        result = form.as_django_admin()
+        result = result.replace('<fieldset class="module aligned">', '')
+        result = result.replace('</fieldset>', '')
+    except RegisteredBlock.DoesNotExist:
+        result = ''
+
+    return HttpResponse(result, mimetype='text/html')
