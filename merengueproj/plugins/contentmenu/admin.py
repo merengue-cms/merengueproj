@@ -15,19 +15,40 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from merengue.base.admin import BaseAdmin
+from merengue.base.admin import BaseAdmin, RelatedModelAdmin
 from merengue.base.forms import BaseAdminModelForm
+
+from merengue.section.models import Section
 
 from plugins.contentmenu.models import ContentGroup
 
 
 class ContentGroupAdmin(BaseAdmin):
     form = BaseAdminModelForm
+    filter_horizontal = ('contents', )
+
+
+class ContentGroupSectionAdmin(ContentGroupAdmin, RelatedModelAdmin):
+
+    def get_form(self, request, obj=None, **kwargs):
+        class_form = super(ContentGroupSectionAdmin, self).get_form(request, obj=None, **kwargs)
+        base_qs = class_form.base_fields['contents'].queryset
+        class_form.base_fields['contents'].queryset = base_qs.filter(basesection=self.basecontent)
+        return class_form
+
+    def queryset(self, request, basecontent=None):
+        base_qs = super(RelatedModelAdmin, self).queryset(request)
+        if basecontent is None:
+            # we override our related content
+            basecontent = self.basecontent
+        return base_qs.filter(contents__basesection=basecontent)
 
 
 def register(site):
     """ Merengue admin registration callback """
     site.register(ContentGroup, ContentGroupAdmin)
+    site.register_related(ContentGroup, ContentGroupSectionAdmin,
+                          related_to=Section)
 
 
 def unregister(site):
