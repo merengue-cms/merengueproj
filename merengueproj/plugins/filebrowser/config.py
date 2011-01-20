@@ -21,7 +21,7 @@ from merengue.pluggable import Plugin
 from merengue.registry import params
 
 from plugins.filebrowser.models import Repository, Document
-from plugins.filebrowser.admin import RepositoryModelAdmin, DocumentModelAdmin
+from plugins.filebrowser.admin import RepositoryModelAdmin, DocumentModelAdmin, RepositorySectionModelAdmin
 
 
 class PluginConfig(Plugin):
@@ -43,3 +43,7 @@ class PluginConfig(Plugin):
     def get_model_admins(cls):
         return [(Repository, RepositoryModelAdmin),
                 (Document, DocumentModelAdmin)]
+
+    @classmethod
+    def section_models(cls):
+        return [(Repository, RepositorySectionModelAdmin)]
