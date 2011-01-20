@@ -169,7 +169,7 @@ class URLInSectionBreadcrumbsNode(template.Node):
     def render(self, context):
         section = context.get(self.section, None)
         url = context.get(self.url, None)
-        url_in_section = section.url_in_section(url)
+        url_in_section = section.real_instance.url_in_section(url)
         if self.var_name:
             context[self.var_name] = url_in_section
             return ''
