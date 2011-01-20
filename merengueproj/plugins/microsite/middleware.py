@@ -46,9 +46,13 @@ class ResponseMicrositeMiddleware(object):
             return response
 
     def microsite_dispatcher(self, request, url_args):
-        from plugins.microsite.views import microsite_url, microsite_view
-        if len(url_args) > 1:
+        from plugins.microsite.views import microsite_url, microsite_view, document_micosite_view
+        from plugins.microsite.urls import PREFIX_DOC
+        url_args_len = len(url_args)
+        if url_args_len == 3 and url_args[1] == PREFIX_DOC:
+            return document_micosite_view(request, url_args[0], url_args[2])
+        if url_args_len > 1:
             return microsite_url(request, url_args[0], url_args[1:])
-        elif len(url_args) == 1:
+        elif url_args_len == 1:
             return microsite_view(request, url_args[0])
         raise Http404
