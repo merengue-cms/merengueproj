@@ -72,6 +72,9 @@ class ContactFormRelatedSentContactFormAdmin(SentContactFormAdmin, RelatedModelA
     def has_change_permission(self, request, obj=None):
         return super(ContactFormRelatedSentContactFormAdmin, self).has_add_permission(request)
 
+    def has_delete_permission(self, request, obj=None):
+        return super(SentContactFormAdmin, self).has_add_permission(request)
+
 
 class BaseContentRelatedContactFormAdmin(ContactFormAdmin, RelatedModelAdmin):
     tool_name = 'contact_form'
