@@ -18,15 +18,20 @@
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext as _, ugettext_lazy
 
+from merengue.registry import params
 from merengue.block.blocks import Block
 from plugins.standingout.models import StandingOut, StandingOutCategory
 
 
 class StandingOutBlock(Block):
     name = 'standingout'
-    default_place = 'rigthsidebar'
+    default_place = 'rightsidebar'
     help_text = ugettext_lazy('Block with standing out by categories')
     verbose_name = ugettext_lazy('Standing out block')
+
+    config_params = [
+        params.Integer(name='limit', label=_('limit for standingouts in block'), default='5'),
+    ]
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):
@@ -40,8 +45,7 @@ class StandingOutBlock(Block):
                 if standingouts:
                     break
         standingouts = standingouts or StandingOut.objects.filter(related_content_type__isnull=True, related_id__isnull=True)
-        from plugins.standingout.config import PluginConfig
-        limit = PluginConfig.get_config().get('limit', None)
+        limit = cls.get_config().get('limit', None)
         if limit:
             standingouts = standingouts[:limit.get_value()]
         return cls.render_block(request, template_name='standingout/block_standingout.html',

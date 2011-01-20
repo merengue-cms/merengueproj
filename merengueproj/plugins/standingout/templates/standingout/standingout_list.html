@@ -7,6 +7,7 @@
 {% block listtitle %}{% trans "Highlights index" %}{% endblock %}
 
 {% block extrabreadcrumbs %}
-  <span class="breadcrumbSeparator">→</span>{% inline_trans "Highlights" %}
+  {{ section.breadcrumbs }}
+  <span class="breadcrumbSeparator">→</span><a href="">{% inline_trans "Highlights" %}</a>
 {% endblock %}
 

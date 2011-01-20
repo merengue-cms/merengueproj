@@ -14,12 +14,12 @@
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
-from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
 from merengue.pluggable import Plugin
-from merengue.registry import params
+from transmeta import get_real_fieldname
 
-from plugins.standingout.admin import StandingOutAdmin, StandingOutCategoryAdmin
+from plugins.standingout.admin import StandingOutAdmin, StandingOutCategoryAdmin, StandingSectionOutAdmin
 from plugins.standingout.models import StandingOut, StandingOutCategory
 from plugins.standingout.blocks import StandingOutBlock
 
@@ -28,10 +28,6 @@ class PluginConfig(Plugin):
     name = 'Standing out'
     description = 'Standing out plugin'
     version = '0.0.1a'
-
-    config_params = [
-        params.Integer(name='limit', label=_('limit for standingouts in block'), default='5'),
-    ]
 
     url_prefixes = (
         ('standingout', 'plugins.standingout.urls'),
@@ -43,8 +39,18 @@ class PluginConfig(Plugin):
 
     @classmethod
     def section_models(cls):
-        return []
+        return [(StandingOut, StandingSectionOutAdmin)]
+
+    @classmethod
+    def post_install(cls):
+        soc_section = StandingOutCategory(context_variable='section', slug='section')
+        setattr(soc_section, get_real_fieldname('name', settings.LANGUAGE_CODE), 'section')
+        soc_section.save()
+        soc_content = StandingOutCategory(context_variable='content', slug='content')
+        setattr(soc_content, get_real_fieldname('name', settings.LANGUAGE_CODE), 'content')
+        soc_content.save()
 
     @classmethod
     def get_model_admins(cls):
-        return [(StandingOut, StandingOutAdmin), (StandingOutCategory, StandingOutCategoryAdmin)]
+        return [(StandingOut, StandingOutAdmin),
+                (StandingOutCategory, StandingOutCategoryAdmin)]
