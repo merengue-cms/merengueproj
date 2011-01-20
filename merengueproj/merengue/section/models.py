@@ -325,6 +325,13 @@ class BaseSection(Base, RealInstanceMixin):
         return ('content_section_view', [section.slug, content.id, content.slug])
 
     @permalink
+    def document_public_link(self, section, content):
+        return self._document_public_link(section, content)
+
+    def _document_public_link(self, section, content):
+        return ('document_section_view', [section.slug, content.id, content.slug])
+
+    @permalink
     def menu_public_link(self, ancestors_path, menu):
         return self._menu_public_link(ancestors_path, menu)
 
@@ -401,7 +408,8 @@ class Document(BaseContent):
 
     @permalink
     def public_link(self):
-        return ('document_section_view', [self.get_main_section().slug, self.id, self.slug])
+        section = self.get_main_section()
+        return section.real_instance._document_public_link(section, self)
 
 
 class DocumentSection(models.Model):
