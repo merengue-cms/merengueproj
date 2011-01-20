@@ -1,8 +1,20 @@
+body {
+    background: white !important;
+    background-image: none !important;
+    padding: 1em 2em;
+}
+
 a { color: #336699 !important; }
 a:hover { color: #666666 !important; }
 
+#djDebug { display: none; }
+
 .searchResults {
     clear: both;
+}
+
+ul.operators {
+    list-style-type: none;
 }
 
 ul#search-sections {
@@ -33,7 +45,9 @@ ul#search-sections li.selected {
 }
 
 #content {
-    width: 600px;
+    float: none;
+    width: 100%;
+    padding: 0px;
 }
 
 .searchResultsItem {
