@@ -16,10 +16,17 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf import settings
+from django.core.cache import get_cache
 from django.test.simple import run_tests as django_run_tests
+from johnny import cache
 
 
 def run_tests(test_labels, verbosity=1, interactive=True, extra_tests=[]):
     # Disable Johnny cache backend because it does weird things. See #852
+    cache_backend = get_cache(settings.CACHE_BACKEND)
+    query_cache_backend = cache.get_backend()(cache_backend)
+    query_cache_backend.unpatch()
+    query_cache_backend.flush_query_cache()
     settings.CACHE_BACKEND = 'dummy://'
+
     return django_run_tests(test_labels, verbosity, interactive, extra_tests)
