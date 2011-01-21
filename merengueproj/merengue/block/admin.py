@@ -50,4 +50,4 @@ class BaseContentRelatedBlockAdmin(RelatedModelAdmin):
 def register(site):
     site.register(RegisteredBlock, RegisteredBlockAdmin)
     site.register_related(BlockContentRelation, BaseContentRelatedBlockAdmin,
-                          BaseContent)
+                          related_to=BaseContent)

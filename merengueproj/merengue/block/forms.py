@@ -16,14 +16,16 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django import forms
+from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 from django.utils.importlib import import_module
 
 from autoreports.forms import FormAdminDjango
 
 from merengue.base.forms import BaseAdminModelForm
-from merengue.registry.fields import ConfigFormField
 from merengue.block.models import RegisteredBlock
+from merengue.registry.fields import ConfigFormField
+from merengue.registry.params import ConfigDict
 
 
 class BaseContentRelatedBlockForm(BaseAdminModelForm):
@@ -33,9 +35,16 @@ class BaseContentRelatedBlockForm(BaseAdminModelForm):
         if args:
             block_id = args[0]['block']
             reg_block = RegisteredBlock.objects.get(id=block_id)
+        else:
+            try:
+                reg_block = self.instance.block
+            except ObjectDoesNotExist:
+                reg_block = None
+        if reg_block:
             block = getattr(import_module(reg_block.module),
                             reg_block.class_name)
-            self.fields['config'].set_config(block.get_config())
+            self.fields['config'].set_config(ConfigDict(block.config_params,
+                                                        self.instance.config))
 
     class Media:
         js = (
