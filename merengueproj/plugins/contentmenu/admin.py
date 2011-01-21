@@ -27,6 +27,12 @@ class ContentGroupAdmin(BaseAdmin):
     form = BaseAdminModelForm
     filter_horizontal = ('contents', )
 
+    def get_form(self, request, obj=None, **kwargs):
+        class_form = super(ContentGroupAdmin, self).get_form(request, obj=None, **kwargs)
+        base_qs = class_form.base_fields['contents'].queryset
+        class_form.base_fields['contents'].queryset = base_qs.filter(status='published')
+        return class_form
+
 
 class ContentGroupSectionAdmin(ContentGroupAdmin, RelatedModelAdmin):
 
@@ -38,10 +44,7 @@ class ContentGroupSectionAdmin(ContentGroupAdmin, RelatedModelAdmin):
 
     def queryset(self, request, basecontent=None):
         base_qs = super(RelatedModelAdmin, self).queryset(request)
-        if basecontent is None:
-            # we override our related content
-            basecontent = self.basecontent
-        return base_qs.filter(contents__basesection=basecontent)
+        return base_qs
 
 
 def register(site):
