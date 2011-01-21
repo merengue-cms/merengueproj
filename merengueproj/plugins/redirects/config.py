@@ -15,7 +15,9 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.contrib.auth.models import User, Group
 from merengue.pluggable import Plugin
+from merengue.registry import params
 from plugins.redirects.models import Redirect
 from plugins.redirects.admin import RedirectAdmin
 from django.utils.translation import ugettext as _
@@ -28,6 +30,18 @@ class PluginConfig(Plugin):
     name = 'Redirects'
     description = 'Redirects Plugin'
     version = '0.0.1'
+
+    config_params = [
+        params.Single(name='review_title',
+                      label=_('title for reviewing task'),
+                      default=_('Review this redirection')),
+        params.List(name="review_users",
+                    label=_("Users by default to have redirects reviewed"),
+                    choices=[(u.id, u.username) for u in User.objects.all()]),
+        params.List(name="review_groups",
+                    label=_("User groups by default to have redirects reviewed"),
+                    choices=[(g.id, g.name) for g in Group.objects.all()]),
+    ]
 
     @classmethod
     def get_middlewares(cls):

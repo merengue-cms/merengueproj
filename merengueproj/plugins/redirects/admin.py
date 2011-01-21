@@ -48,6 +48,13 @@ class RedirectAdmin(PluginAdmin):
             del form.base_fields['is_active']
         return form
 
+    def save_model(self, request, obj, form, change):
+        from plugins.redirects.utils import create_redirect_review_task
+        saved = super(RedirectAdmin, self).save_model(request, obj, form, change)
+        if not change:
+            create_redirect_review_task(request.user, obj)
+        return saved
+
 
 def register(site):
     """ Merengue admin registration callback """
