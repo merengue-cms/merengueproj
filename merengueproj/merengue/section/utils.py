@@ -17,7 +17,8 @@
 
 
 def get_section(request=None, context=None):
-    return (request and getattr(request, 'section', None)) or (context and context.get('section', None))
+    section = (request and getattr(request, 'section', None)) or (context and context.get('section', None))
+    return section and section.real_instance
 
 
 def filtering_in_section(queryset, section=None):

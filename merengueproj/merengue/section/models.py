@@ -351,7 +351,7 @@ class BaseSection(Base, RealInstanceMixin):
         return render_to_string('section/breadcrumbs.html', {'urls': urls})
 
     def url_in_section(self, url):
-        return None
+        return url
 
 
 def strip_section_prefix(link):

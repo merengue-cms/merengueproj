@@ -20,7 +20,6 @@
 
     $(document).ready(function () {
         config_content = $(".form-row.config").html();
-        update_block_config();
         $(".block #id_block").change(function(){
             update_block_config();
         });
