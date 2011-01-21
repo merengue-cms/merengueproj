@@ -67,14 +67,14 @@ Manual installation
 Installing Django
 -----------------
 
-Merengue use Django 1.1.1 version (latest official version). You can install
+Merengue uses Django 1.1.2. You can install
 it with these instructions:
 
 .. code-block:: bash
 
-    $ wget http://www.djangoproject.com/download/1.1.1/tarball/
-    $ tar xzvf Django-1.1.1.tar.gz
-    $ cd Django-1.1.1
+    $ wget http://www.djangoproject.com/download/1.1.2/tarball/
+    $ tar xzvf Django-1.1.2.tar.gz
+    $ cd Django-1.1.2
     $ sudo python setup.py install
 
 Test if you have the correct django version:
@@ -82,7 +82,7 @@ Test if you have the correct django version:
 .. code-block:: bash
 
     $ python -c "import django; print django.VERSION"
-    (1, 1, 1, 'final', 0)
+    (1, 1, 2, 'final', 0)
 
 Downloading merengue
 --------------------
