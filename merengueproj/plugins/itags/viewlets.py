@@ -52,12 +52,15 @@ class TagCloudViewlet(ViewLetQuerySetItemProvider, Viewlet):
         if section:
             content_ids = [str(i['id']) for i in section.related_content.values('id')]
 
-            dbparams.update({'content_ids': '(%s)' % ','.join(content_ids)})
-            taglist = Tag.objects.extra(select={
-                'item_count': '''SELECT COUNT(*) FROM %(item_table)s
-                 WHERE %(tag_table)s.%(tag_id_field)s=%(item_table)s.%(item_id_field)s AND
-                       %(item_table)s.%(content_id_field)s in %(content_ids)s''' % dbparams,
-                }).order_by('-item_count')
+            if not content_ids:
+                taglist = []
+            else:
+                dbparams.update({'content_ids': '(%s)' % ','.join(content_ids)})
+                taglist = Tag.objects.extra(select={
+                    'item_count': '''SELECT COUNT(*) FROM %(item_table)s
+                     WHERE %(tag_table)s.%(tag_id_field)s=%(item_table)s.%(item_id_field)s AND
+                           %(item_table)s.%(content_id_field)s in %(content_ids)s''' % dbparams,
+                    }).order_by('-item_count')
         else:
             taglist = Tag.objects.extra(select={
                 'item_count': '''SELECT COUNT(*) FROM %(item_table)s
