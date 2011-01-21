@@ -31,7 +31,6 @@ class EventCategoryAdmin(BaseCategoryAdmin):
 
 class EventAdmin(BaseContentAdmin):
     ordering = (get_fallback_fieldname('name'), )
-    search_fields = ('name', )
     exclude = ('expire_date', )
     list_display = ('name', 'start', 'end', 'status', 'user_modification_date',
                     'last_editor')
