@@ -1,6 +1,26 @@
 Changes
 =======
 
+Version 0.6.0-final
+-------------------
+
+* Several bugfixes:
+
+ * Fixed new error in params validation.
+ * Unit tests execution fixed when memcached is used as caching backend.
+ * Javascript error when moving blocks.
+ * Deferred PIL import in captcha to the moment of create first captcha thumbnail, to avoid syncdb errors.
+ * Improved validation in integerparams.
+ * Fixed installing of django-inlinetrans with PIP.
+ * Now all users with "manage_portal" permission can move blocks.
+ * Allow deleting sent forms in contactform plugin.
+ * Fixes searching in admin ``browse contents`` view.
+
+* Speed up Merengue permission checking.
+
+* Delete view in Merengue admin not take care about Merengue permissions in objects which are deleted in cascade.
+
+
 Version 0.6.0-beta1 (2921 revision)
 -----------------------------------
 
