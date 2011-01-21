@@ -70,6 +70,9 @@ urlpatterns = patterns('',
     # ajax_select
     (r'^ajax_select/', include('ajax_select.urls')),
 
+   # genericforeignkey
+    (r'^genericforeignkey/', include('genericforeignkey.urls')),
+
     # collections
     (r'^collection/', include('merengue.collection.urls')),
 
