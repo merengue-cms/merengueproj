@@ -478,7 +478,7 @@ class PermissionTestCase(TestCase):
         result = merengue.perms.utils.has_permission(self.page_1, creator, "view_perm")
         self.assertEqual(result, False)
 
-        owner = merengue.perms.utils.register_role("Owner")
+        owner = Role.objects.get(name="Owner")
         merengue.perms.utils.grant_permission(owner, "view_perm", self.page_1)
 
         result = merengue.perms.utils.has_permission(self.page_1, creator, "view_perm", [owner])
