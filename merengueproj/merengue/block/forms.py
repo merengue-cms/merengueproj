@@ -17,20 +17,25 @@
 
 from django import forms
 from django.conf import settings
+from django.utils.importlib import import_module
 
 from autoreports.forms import FormAdminDjango
-#from cmsutils.forms.fields import JSONFormField
 
 from merengue.base.forms import BaseAdminModelForm
 from merengue.registry.fields import ConfigFormField
-from merengue.registry.widgets import ConfigWidget
+from merengue.block.models import RegisteredBlock
 
 
 class BaseContentRelatedBlockForm(BaseAdminModelForm):
 
     def __init__(self, *args, **kwargs):
         super(BaseContentRelatedBlockForm, self).__init__(*args, **kwargs)
-        self.fields['config'].widget = ConfigWidget()
+        if args:
+            block_id = args[0]['block']
+            reg_block = RegisteredBlock.objects.get(id=block_id)
+            block = getattr(import_module(reg_block.module),
+                            reg_block.class_name)
+            self.fields['config'].set_config(block.get_config())
 
     class Media:
         js = (

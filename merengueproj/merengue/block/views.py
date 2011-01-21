@@ -50,6 +50,11 @@ def generate_blocks_configuration(request, block_id):
         result = form.as_django_admin()
         result = result.replace('<fieldset class="module aligned">', '')
         result = result.replace('</fieldset>', '')
+        result = result.replace('<div class="form-row">', '')
+        result = result[::-1].replace('>vid/<', '', 1)[::-1]
+        # previous replace just removes the last </div> ocurrence
+        result = result.replace('Config:', 'Block specific configuration:')
+        result += '<p class="help">Fill this field to overwrite the block configuration</p>'
     except RegisteredBlock.DoesNotExist:
         result = ''
 
