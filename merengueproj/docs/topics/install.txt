@@ -16,6 +16,12 @@ This document will get you up and running with Merengue.
 Previous dependencies
 =====================
 
+* ``python 2.5+``: The python programming language.
+
+.. code-block:: bash
+
+    $ sudo apt-get install python2.5
+
 * ``python-setuptools``: To be able to install python packages.
 
 .. code-block:: bash
