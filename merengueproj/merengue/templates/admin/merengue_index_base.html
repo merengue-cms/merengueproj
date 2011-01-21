@@ -95,6 +95,27 @@
       </dl>
     </div>
     {% endifhasperm %}
+    <div class="module-merengue" id="review">
+        <h1>{% trans "Review tasks" %}</h1>
+        {% ifhasperm 'manage_review' %}
+            <p>{% trans "Manage the user's review tasks" %}</p>
+            <dl>
+                <dt><a href="review/reviewtask/" title="{% trans "Review tasks" %}">
+                    {% trans "Review tasks" %}
+                </a></dt>
+                <dd>{% trans "View, edit and delete review tasks." %}</dd>
+            </dl>
+        {% else %}
+            <p>{% trans "See and manage my tasks" %}</p>
+            <dl>
+                <dt><a href="review/reviewtask/" title="{% trans "Review tasks" %}">
+                    {% trans "My tasks" %}
+                </a></dt>
+                <dd>{% trans "View and edit my review tasks." %}</dd>
+            </dl>
+        {% endifhasperm %}
+    </div>
+    
 {% if plugins %}
     {% ifhasperm 'manage_plugin_content' %}
     <div class="module-merengue" id="plugins">
@@ -108,6 +129,7 @@
     </div>
     {% endifhasperm %}
 {% endif %}
+
 </div>
 {% endblock %}
 </div> <!--- end content-merengue -->
