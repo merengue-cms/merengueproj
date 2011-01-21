@@ -6,6 +6,9 @@
     {{ menu }}
 {% endblock %}
 
+{% block sectionbreadcrumbs %}
+{% endblock %}
+
 {% block contentbreadcrumbs %}
     {% for link, label in menu.get_breadcrumbs %}
         <span class="breadcrumbSeparator">→</span>
