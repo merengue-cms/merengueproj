@@ -48,6 +48,6 @@ def microsite_url(request, microsite_slug, url):
     return callback(request, *callback_args, **callback_kwargs)
 
 
-def document_micosite_view(request, microsite_slug, doc_slug):
+def document_microsite_view(request, microsite_slug, doc_slug):
     doc = get_object_or_404(Document, slug=doc_slug)
     return content_section_view(request, microsite_slug, doc.id, doc_slug)

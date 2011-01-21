@@ -31,7 +31,7 @@ class MicroSite(Section):
         return ('microsite_url', [section.slug, url_external])
 
     def _document_public_link(self, section, content):
-        return ('document_micosite_view', [section.slug, content.slug])
+        return ('document_microsite_view', [section.slug, content.slug])
 
     def _menu_public_link(self, ancestors_path, menu):
         reverse_tuple = menu._menu_public_link_with_out_section(ancestors_path)

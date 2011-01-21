@@ -21,6 +21,6 @@ PREFIX_DOC = 'info'
 
 urlpatterns = patterns('plugins.microsite.views',
     url(r'^(?P<microsite_slug>[\w-]+)/$', 'microsite_view', name='microsite_view'),
-    url(r'^(?P<microsite_slug>[\w-]+)/%s/(?P<doc_slug>[\w-]+)/$' % PREFIX_DOC, 'document_micosite_view', name='document_micosite_view'),
+    url(r'^(?P<microsite_slug>[\w-]+)/%s/(?P<doc_slug>[\w-]+)/$' % PREFIX_DOC, 'document_microsite_view', name='document_microsite_view'),
     url(r'^(?P<microsite_slug>[\w-]+)/(?P<url>.*)$', 'microsite_url', name='microsite_url'),
 )
