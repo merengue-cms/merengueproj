@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+{% load i18n pagination_tags %}
+<html>
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    {% if LANGUAGE_CODE %}
+        <meta http-equiv="content-language" content="{{ LANGUAGE_CODE }}">
+    {% endif %}
+        <script type="text/javascript" src="/media/merengue/js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="{{ MEDIA_URL }}genericforeignkey/js/content_type_object.js"></script>
+    </head>
+    <body>
+        {% autopaginate objs 20 %}
+        {% paginate %}
+        {% if objs %}
+            <table>
+                <tr>
+                    <th>{% trans "XX" %}</th>
+                </tr>
+                {% for obj in objs %}
+                    <tr>
+                        <td>
+                            <a href="{{ obj.pk }}/" onclick="javascript:opener.dismissRelatedLookupPopup(window, '{{ obj.pk }}'); return false;"> {{ obj }} </a>
+                        </td> 
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            {% trans "No objects of this content type" %}
+        {% endif %}
+    </body>
+</html>
