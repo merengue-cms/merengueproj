@@ -55,6 +55,7 @@ from transmeta import (canonical_fieldname, get_all_translatable_fields,
                        get_fallback_fieldname)
 
 from merengue.base.adminsite import site
+from merengue.base.admin_utils import get_deleted_contents
 from merengue.base.forms import AdminBaseContentOwnersForm, BaseAdminModelForm
 from merengue.base.models import BaseContent, ContactInfo
 from merengue.base.widgets import CustomTinyMCE, RelatedBaseContentWidget
@@ -829,6 +830,59 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
             request.GET = get
             return self.select_changelist_view(request, extra_context)
         return super(BaseContentAdmin, self).changelist_view(request, extra_context)
+
+    def delete_view(self, request, object_id, extra_context=None):
+        """
+        Override (or semi-duplicated) Django one to handle Merengue permissions
+        """
+        opts = self.model._meta
+        app_label = opts.app_label
+
+        obj = self.get_object(request, unquote(object_id))
+
+        if not self.has_delete_permission(request, obj):
+            raise PermissionDenied
+
+        if obj is None:
+            raise Http404(_('%(name)s object with primary key %(key)r does not exist.') % {'name': force_unicode(opts.verbose_name), 'key': escape(object_id)})
+
+        # Populate deleted_objects, a data structure of all related objects that
+        # will also be deleted.
+        (deleted_objects, objects_without_delete_perm, perms_needed) = get_deleted_contents((obj, ), opts, request.user, self.admin_site)
+
+        # perms_needed
+
+        if request.POST: # The user has already confirmed the deletion.
+            if perms_needed or objects_without_delete_perm:
+                raise PermissionDenied
+            obj_display = force_unicode(obj)
+            self.log_deletion(request, obj, obj_display)
+            obj.delete()
+
+            self.message_user(request, _('The %(name)s "%(obj)s" was deleted successfully.') % {'name': force_unicode(opts.verbose_name), 'obj': force_unicode(obj_display)})
+
+            if not self.has_change_permission(request, None):
+                return HttpResponseRedirect("../../../../")
+            return HttpResponseRedirect("../../")
+
+        context = {
+            "title": _("Are you sure?"),
+            "object_name": force_unicode(opts.verbose_name),
+            "object": obj,
+            "deleted_objects": deleted_objects,
+            "objects_without_delete_perm": objects_without_delete_perm,
+            "perms_lacking": perms_needed,
+            "opts": opts,
+            "root_path": self.admin_site.root_path,
+            "app_label": app_label,
+        }
+        context.update(extra_context or {})
+        context_instance = template.RequestContext(request, current_app=self.admin_site.name)
+        return render_to_response(self.delete_confirmation_template or [
+            "admin/%s/%s/delete_confirmation.html" % (app_label, opts.object_name.lower()),
+            "admin/%s/delete_confirmation.html" % app_label,
+            "admin/delete_confirmation.html",
+        ], context, context_instance=context_instance)
 
     def select_changelist_view(self, request, extra_context=None):
         extra_context = self._base_update_extra_context(extra_context)
