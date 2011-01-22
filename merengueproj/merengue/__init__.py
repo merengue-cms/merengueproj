@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-VERSION = (0, 6, 0, 'beta', 1)
+VERSION = (0, 6, 0, 'rc', 1)
 
 
 def get_version():
