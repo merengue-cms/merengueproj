@@ -363,7 +363,11 @@ class Document(BaseContent):
 
     @permalink
     def public_link(self):
-        return ('document_section_view', [self.get_main_section().slug, self.id, self.slug])
+        section = self.get_main_section()
+        if section:
+            return ('document_section_view', [section.slug, self.id, self.slug])
+        else:
+            return ('merengue.base.views.public_view', [self._meta.app_label, self._meta.module_name, self.id, self.slug])
 
 
 class DocumentSection(models.Model):

@@ -451,5 +451,6 @@ def register_related(site):
 
 def register(site):
     site.register(Section, SectionAdmin)
+    site.register(Document, DocumentAdmin)
     site.register(Menu, PortalMenuAdmin)
     register_related(site)
