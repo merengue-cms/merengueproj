@@ -1,8 +1,8 @@
 Changes
 =======
 
-Version 0.6.0-final
--------------------
+Version 0.6.0-rc1
+-----------------
 
 * Several bugfixes:
 
@@ -20,6 +20,7 @@ Version 0.6.0-final
 
 * Delete view in Merengue admin not take care about Merengue permissions in objects which are deleted in cascade.
 
+* Refactored and fixed all selenium tests.
 
 Version 0.6.0-beta1 (2921 revision)
 -----------------------------------
