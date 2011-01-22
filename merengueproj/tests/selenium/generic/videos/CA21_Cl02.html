@@ -43,7 +43,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Añadir vídeo</td>
+	<td>link=Add video</td>
 	<td></td>
 </tr>
 <tr>
@@ -53,7 +53,7 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>id_file</td>
+	<td>id_file_0</td>
 	<td>${TEST_DATA_DIR}/test-video-flv.flv</td>
 </tr>
 <tr>
@@ -79,7 +79,7 @@
 <tr>
 	<td>select</td>
 	<td>action</td>
-	<td>label=Eliminar videos seleccionado/s</td>
+	<td>label=Delete selected videos</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -93,12 +93,7 @@
 </tr>
 <tr>
 	<td>verifyTextPresent</td>
-	<td>exact:¿Está seguro de que quiere borrar los vídeo seleccionados? Los siguientes objetos y sus elementos relacionados serán eliminados:</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyTextPresent</td>
-	<td>Vídeo: nuevo</td>
+	<td>Video: nuevo</td>
 	<td></td>
 </tr>
 <tr>
@@ -108,12 +103,12 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@value="Yes, I'm sure"]</td>
+	<td>//input[@value=&quot;Yes, I'm sure&quot;]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyTextPresent</td>
-	<td>Eliminado/s 1 vídeo satisfactoriamente.</td>
+	<td>Successfully deleted 1 video.</td>
 	<td></td>
 </tr>
 <tr>
@@ -121,7 +116,6 @@
 	<td>link=Log out</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>
