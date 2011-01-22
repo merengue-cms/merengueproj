@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="http://beta.merengue.yaco.es/" />
+<link rel="selenium.base" href="" />
 <title>CA12_Cl02.html</title>
 </head>
 <body>
@@ -33,7 +33,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@value='Iniciar sesión']</td>
+	<td>//input[@value='Log in']</td>
 	<td></td>
 </tr>
 <tr>
@@ -43,7 +43,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Añadir usuario</td>
+	<td>link=Add user</td>
 	<td></td>
 </tr>
 <tr>
@@ -68,7 +68,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Usuarios</td>
+	<td>link=Users</td>
 	<td></td>
 </tr>
 <tr>
@@ -78,7 +78,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@value='Buscar']</td>
+	<td>//input[@value='Search']</td>
 	<td></td>
 </tr>
 <tr>
@@ -89,7 +89,7 @@
 <tr>
 	<td>select</td>
 	<td>action</td>
-	<td>label=Eliminar usuarios seleccionado/s</td>
+	<td>label=Delete selected users</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -98,30 +98,29 @@
 </tr>
 <tr>
 	<td>verifyTextPresent</td>
-	<td>exact:¿Está seguro de que quiere borrar los usuario seleccionados? Los siguientes objetos y sus elementos relacionados serán eliminados:</td>
+	<td>exact:Are you sure?</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyTextPresent</td>
-	<td>exact:Usuario: nuevousuario</td>
+	<td>exact:User: nuevousuario</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@value='Sí, estoy seguro']</td>
+	<td>//input[@value=&quot;Yes, I'm sure&quot;]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyTextPresent</td>
-	<td>Eliminado/s 1 usuario satisfactoriamente.</td>
+	<td>Successfully deleted</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Deslogarse</td>
+	<td>link=Log out</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>
