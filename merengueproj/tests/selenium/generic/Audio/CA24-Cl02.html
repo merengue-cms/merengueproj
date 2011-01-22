@@ -79,7 +79,7 @@
 <tr>
 	<td>select</td>
 	<td>action</td>
-	<td>label=Eliminar audio files seleccionado/s</td>
+	<td>label=Delete selected audio files</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -88,12 +88,7 @@
 </tr>
 <tr>
 	<td>verifyTextPresent</td>
-	<td>exact:¿Está seguro?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyTextPresent</td>
-	<td>exact:¿Está seguro de que quiere borrar los audio file seleccionados? Los siguientes objetos y sus elementos relacionados serán eliminados:</td>
+	<td>exact:Are you sure?</td>
 	<td></td>
 </tr>
 <tr>
@@ -103,15 +98,14 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@value='Sí, estoy seguro']</td>
+	<td>//input[@value=&quot;Yes, I'm sure&quot;]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Deslogarse</td>
+	<td>link=Log out</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>
