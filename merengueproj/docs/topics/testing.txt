@@ -1,0 +1,55 @@
+.. _topics-testing:
+
+===================
+Testing in Merengue
+===================
+
+There are two kinds of tests in Merengue:
+
+* Unit tests, see `testing in Django`_ for more information.
+
+* Selenium tests, using the `Selenium web application testing system`_.
+
+.. _`testing in Django`: http://docs.djangoproject.com/en/1.1/topics/testing/
+.. _`Selenium web application testing system`: http://seleniumhq.org/
+
+
+Unit tests
+==========
+
+Unit tests are executed using the ``manage.py`` Django utility located inside
+every Merengue project, like this:
+
+.. code-block:: bash
+
+    $ python manage.py test
+
+This will try to execute all tests in every application installed in the
+Merengue project.
+
+You can also launch test for only one application appending the application in
+command line, as follows:
+
+.. code-block:: bash
+
+    $ python manage.py test perms
+
+
+Selenium tests
+==============
+
+Selenium tests are very useful because they tests all application layers (from
+database to user interface).
+
+These are the steps for installing and executing the Merengue
+`Selenium tests suites`_:
+
+1. Installing the selenium IDE Firefox plugin, in the `download page`_.
+2. Launch Selenium IDE in Options menu.
+3. Load a needed Selenium Core extension for loading global variables, located in ``merengueproj/tests/selenium/extensions/user-extensions.js.global``. This is done in ``Options`` menu in Selenium IDE.
+4. Change the ``merengueproj/tests/selenium/generic/variables.html`` file, setting the ``TEST_DATA_DIR`` variable, which have to point to the absolute path to ``merengueproj/tests/selenium/test-data`` directory.
+5. Open any test suite (``suite.html`` file) located in the subdirectories of ``merengueproj/tests/selenium/generic`` directory.
+6. Execute it.
+
+.. _`download page`: http://seleniumhq.org/download/
+.. _`Selenium tests suites`: http://dev.merengueproject.org/browser/trunk/merengueproj/tests/selenium/generic
