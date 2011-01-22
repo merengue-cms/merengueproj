@@ -409,6 +409,8 @@ class Document(BaseContent):
     @permalink
     def public_link(self):
         section = self.get_main_section()
+        if not section:
+            return self._public_link_without_section()
         return section.real_instance._document_public_link(section, self)
 
 
