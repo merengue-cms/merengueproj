@@ -22,7 +22,7 @@ import sys
 try:
     from cStringIO import StringIO
 except ImportError:
-    from StringIO import StringIO
+    from StringIO import StringIO  # pyflakes:ignore
 
 from django import templatetags
 from django.conf import settings
@@ -131,7 +131,7 @@ def install_models(plugin_mod):
     sql_commands = sql_all(plugin_mod, style)
     for sql_command in sql_commands:
         cursor.execute(sql_command)
-    transaction.commit_unless_managed()
+    transaction.commit()
 
 
 def add_to_installed_apps(plugin_name):

@@ -121,8 +121,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    # TransactionMiddleware is incompatible with johnny-cache
-    #'django.middleware.transaction.TransactionMiddleware',
+    'johnny.middleware.CommittingTransactionMiddleware',
     'pagination.middleware.PaginationMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'cmsutils.middleware.AutomatizedTestingMiddleware',
