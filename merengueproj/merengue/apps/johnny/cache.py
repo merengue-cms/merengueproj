@@ -90,6 +90,32 @@ def get_tables_for_query(query):
 
     return list(set(tables))
 
+def get_tables_for_query11(query):
+    """Takes a django BaseQuery object and tries to return all tables that will
+    be used in that query as a list.  Unfortunately, the where clauses give us
+    "QueryWrapper" instead of "QuerySet" objects, so we have to parse SQL once
+    we get down to a certain layer to get the tables we are using.  This is
+    meant for use in Django 1.1.x only!  Later versions can use the above."""
+    from django.db.models.sql.where import WhereNode
+    from django.db.models.query_utils import QueryWrapper
+    def parse_tables_from_sql(sql):
+        """This attempts to parse tables out of sql.  Django's SQL compiler is
+        highly regular and always uses extended SQL forms like 'INNER JOIN'
+        instead of ','.  This probably needs a lot of testing for different
+        backends and is not guaranteed to work on a custom backend."""
+        table_re = re.compile(r'(?:FROM|JOIN) `(?P<table>\w+)`')
+        return table_re.findall(sql)
+
+    tables = list(query.tables)
+    if query.where and query.where.children and isinstance(query.where.children[0], WhereNode):
+        where_node = query.where.children[0]
+        for child in where_node.children:
+            for item in child:
+                if isinstance(item, QueryWrapper):
+                    tables += parse_tables_from_sql(item.data[0])
+    return list(set(tables))
+
+from functools import wraps
 
 def timer(func):
     import time
@@ -403,7 +429,7 @@ class QueryCacheBackend11(QueryCacheBackend):
                     return
 
             val, key = None, None
-            tables = get_tables_for_query(cls)
+            tables = get_tables_for_query11(cls)
             # check the blacklist for any of the involved tables;  if it's not
             # there, then look for the value in the cache.
             if tables and not blacklist_match(*tables):
