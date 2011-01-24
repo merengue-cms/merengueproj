@@ -74,6 +74,8 @@ COMMENTABLE_CHOICES = (
 
 
 class ContactInfo(models.Model):
+    name = models.CharField(verbose_name=_('name'), max_length=200,
+                            blank=True, null=True)
     contact_email = models.EmailField(verbose_name=_('contact email'),
                                      max_length=200, blank=True, null=True)
     contact_email2 = models.EmailField(verbose_name=_('contact email2'),
