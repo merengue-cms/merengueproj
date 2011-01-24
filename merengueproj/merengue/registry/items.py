@@ -107,6 +107,21 @@ class QuerySetItemProvider(ContentsItemProvider, SectionFilterItemProvider):
         return get_section(request, context)
 
     @classmethod
+    def get_queryset(cls, request=None, context=None):
+        section = cls._get_section(request, context)
+        return cls.queryset(request, context, section)
+
+    @classmethod
+    def queryset(cls, request=None, context=None, section=None):
+        queryset = cls.get_contents(request, context, section)
+        if section and cls.get_config().get('filtering_section', False).get_value():
+            queryset = filtering_in_section(queryset, section)
+        return queryset
+
+
+class BlockQuerySetItemProvider(QuerySetItemProvider):
+
+    @classmethod
     def get_queryset(cls, request=None, context=None,
                      block_content_relation=None):
         section = cls._get_section(request, context)
@@ -120,10 +135,6 @@ class QuerySetItemProvider(ContentsItemProvider, SectionFilterItemProvider):
         if section and cls.get_config().get('filtering_section', False).get_value():
             queryset = filtering_in_section(queryset, section)
         return queryset
-
-
-class BlockQuerySetItemProvider(QuerySetItemProvider):
-    pass
 
 
 class BlockSectionFilterItemProvider(SectionFilterItemProvider):
