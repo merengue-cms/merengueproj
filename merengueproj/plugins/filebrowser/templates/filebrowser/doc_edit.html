@@ -26,7 +26,7 @@
         {% if path %}
         <a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=path %}">    <span>{% trans "Back to content" %}</span></a>
         {% else %}
-        <a href="{% filebrowser_url filebrowser_root_listing repository_name=repository.name %}"></span>{% trans "Back to content" %}</span></a>
+        <a href="{% filebrowser_url filebrowser_root_listing repository_name=repository.name %}"><span>{% trans "Back to content" %}</span></a>
         {% endif %}
       </li>
     </ul>
