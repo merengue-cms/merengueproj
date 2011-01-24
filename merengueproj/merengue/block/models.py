@@ -107,6 +107,12 @@ class BlockContentRelation(models.Model):
     config = ConfigField(
         verbose_name=_(u'block specific configuration'), default={},
         help_text=_(u'Fill this field to overwrite the block configuration'))
+    overwrite_if_place = models.BooleanField(
+        verbose_name=_('overwrite generic block if the place is the same'),
+        default=True)
+    overwrite_allways = models.BooleanField(
+        verbose_name=_('overwrite generic block if is present on the content'),
+        default=False)
 
     def __unicode__(self):
         return u'%s - %s' % (self.block.name, self.content.name)
