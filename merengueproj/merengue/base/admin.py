@@ -927,7 +927,7 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
     def _base_update_extra_context(self, extra_context=None):
         extra_context = super(BaseContentAdmin, self)._base_update_extra_context(extra_context)
 
-        extra_context.update({'inside_basecontent': True})
+        extra_context.update({'with_permissions': True})
         return extra_context
 
 if settings.USE_GIS:
