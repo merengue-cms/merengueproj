@@ -20,8 +20,16 @@ from django.utils.datastructures import SortedDict
 from django.utils.encoding import smart_str
 
 
+class NotProvidedMeta(type):
+
+    def __nonzero__(self):
+        # we ensure when some param have not been defined (get a NOT_PROVIDED value)
+        # evaluate to False, to avoid some logic errors. See #1307 ticket.
+        return False
+
+
 class NOT_PROVIDED:
-    pass
+    __metaclass__ = NotProvidedMeta
 
 
 class Param(object):
