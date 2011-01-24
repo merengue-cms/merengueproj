@@ -4,7 +4,7 @@ BeautifulSoup
 encutils
 
 # Django
-django==1.1.2
+django==1.1.3
 
 # Django applications
 south==0.7.2
