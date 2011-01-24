@@ -33,7 +33,8 @@ class EventsCalendarBlock(BlockQuerySetItemProvider, Block):
     verbose_name = ugettext_lazy('Events Calendar Block')
 
     @classmethod
-    def get_contents(cls, request=None, context=None, section=None):
+    def get_contents(cls, request=None, context=None, section=None,
+                     block_content_relation=None):
         events = get_events(request)
         if not events.query.can_filter():
             events = events.model.objects.filter(id__in=events.values('id').query)
