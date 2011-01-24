@@ -20,7 +20,6 @@ from django.template.loader import render_to_string
 
 from merengue.block.models import RegisteredBlock
 from merengue.registry.items import RegistrableItem
-from merengue.registry.params import ConfigDict
 from merengue.registry.signals import item_registered
 
 
@@ -43,15 +42,6 @@ class BaseBlock(RegistrableItem):
         block_context.update(context)
         return render_to_string(template_name, block_context,
                                 context_instance=RequestContext(request))
-
-    @classmethod
-    def get_config(cls, block_content_relation=None):
-        registered_item = cls.get_registered_item()
-        if block_content_relation:
-            config = block_content_relation.config
-        else:
-            config = registered_item.get_config()
-        return ConfigDict(cls.config_params, config)
 
 
 class Block(BaseBlock):

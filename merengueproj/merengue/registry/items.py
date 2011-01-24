@@ -64,9 +64,22 @@ class RegistrableItem(object):
         return 'registryitem'
 
     @classmethod
+    def _config_dict(cls, config):
+        return ConfigDict(cls.config_params, config)
+
+    @classmethod
     def get_config(cls):
         registered_item = cls.get_registered_item()
-        return ConfigDict(cls.config_params, registered_item.get_config())
+        return cls._config_dict(registered_item.get_config())
+
+    @classmethod
+    def get_first_active_config(cls, *args):
+        """ get a list of config field objects and returns first config with filled data """
+        registered_item = cls.get_registered_item()
+        for config in args:
+            if config:
+                return cls._config_dict(config)
+        return cls.get_config()
 
     @classmethod
     def get_registered_item(cls):

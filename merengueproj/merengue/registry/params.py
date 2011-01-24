@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+import copy
+
 from django.template.loader import render_to_string
 from django.utils.datastructures import SortedDict
 from django.utils.encoding import smart_str
@@ -183,6 +185,7 @@ class ConfigDict(SortedDict):
     def __init__(self, config_params, config_values):
         super(ConfigDict, self).__init__()
         for param in config_params:
+            param = copy.copy(param)
             if config_values and param.name in config_values:
                 param.value = config_values[param.name]
             self[param.name] = param

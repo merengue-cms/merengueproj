@@ -22,7 +22,6 @@ from merengue.base.models import BaseContent
 from merengue.section.models import Section
 from merengue.block.blocks import Block, ContentBlock, SectionBlock
 from merengue.block.models import RegisteredBlock, BlockContentRelation
-from merengue.registry.params import ConfigDict
 
 
 register = template.Library()
@@ -36,8 +35,6 @@ def _render_blocks_queryset(blocks, request, obj, place, block_type, context):
         if registered_block.print_block(place, request.get_full_path()) or \
                 block_content_relation:
             block = registered_block.get_registry_item_class()
-            if block_content_relation:  # rewrite block config with the one of the relation
-                ConfigDict(block.config_params, block_content_relation.config)
             if block_type == 'block' and issubclass(block, Block):
                 rendered_blocks.append(block.render(request,
                                                     place,
