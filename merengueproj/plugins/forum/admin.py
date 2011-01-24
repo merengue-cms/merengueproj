@@ -16,7 +16,7 @@ class ForumAdmin(BaseContentAdmin):
     removed_fields = ('map_icon', 'commentable', )
 
 
-class ThreadRelatedAdmin(RelatedModelAdmin):
+class ThreadRelatedAdmin(BaseContentAdmin, RelatedModelAdmin):
     html_fields = ('description', )
     removed_fields = ('map_icon', 'commentable', )
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
