@@ -96,7 +96,7 @@ def createdir(request, repository_name, path='',
                                       context_instance=RequestContext(request))
         repository.create_dir(join(path, dirname))
         message = _('Folder created successfully')
-        request.user.message_set.create(message=message)
+        send_info(request, message)
         return HttpResponseRedirect(filebrowser_reverse(request, "filebrowser_dir_listing",
                         kwargs={'repository_name': repository.name,
                                 'path': path},
@@ -224,14 +224,14 @@ def action(request, repository_name, path,
                                   context_instance = RequestContext(request))
     elif action == 'rename':
         repository.rename_elems(path, elems, old_elems)
-        request.user.message_set.create(message=_('Elements renamed successfully'))
+        send_info(request, _('Elements renamed successfully'))
         return HttpResponseRedirect(filebrowser_reverse(request, "filebrowser_dir_listing",
                         kwargs={'repository_name': repository.name,
                                 'path': path},
                         url_prefix=url_prefix))
     elif action == 'delete':
         repository.delete_elems(path, elems)
-        request.user.message_set.create(message=_('Elements deleted successfully'))
+        send_info(request, _('Elements deleted successfully'))
         return HttpResponseRedirect(filebrowser_reverse(request, "filebrowser_dir_listing",
                         kwargs={'repository_name': repository.name,
                                 'path': path},
