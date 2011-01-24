@@ -16,6 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django import template
+from django.db.models import Q
 from django.conf import settings
 
 from merengue.base.models import BaseContent
@@ -58,7 +59,16 @@ def _render_blocks_queryset(blocks, request, obj, place, block_type, context):
 def _render_blocks(request, obj, place, block_type, context):
     rendered_blocks = []
     content = context.get('content')
-    registered_blocks = RegisteredBlock.objects.actives(ordered=True)
+    content_related_blocks = BlockContentRelation.objects.filter(
+        content=content)
+    filter_filters = Q(placed_at=place) | Q(placed_at='all')
+    exclude_filters = Q(blockcontentrelation__in=content_related_blocks.filter(
+            placed_at=place, overwrite_if_place=True)) | Q(
+        blockcontentrelation__in=content_related_blocks.filter(
+                    overwrite_allways=True),
+        )
+    registered_blocks = RegisteredBlock.objects.exclude(exclude_filters).filter(
+        filter_filters).actives(ordered=True)
     static_content_blocks = RegisteredBlock.objects.filter(
         blockcontentrelation__in=BlockContentRelation.objects.filter(
             content=content, placed_at=place))
