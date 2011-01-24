@@ -69,10 +69,12 @@ class CollectionItemsNode(Node):
         section = self._get_section(request, context)
         items = collection.get_items(section)
         ignore_filters = request and request.GET.get('__ignore_filters', None)
-        if request and not ignore_filters:
-            result = self._filter_by_request(request, items)
-        if context and not ignore_filters:
-            result = self._filter_by_context(context, items)
+        if not ignore_filters:
+            if request:
+                items = self._filter_by_request(request, items)
+            if context:
+                items = self._filter_by_context(context, items)
+            result = items
         elif isinstance(items, list):
             result = []
             for queryset in items:
