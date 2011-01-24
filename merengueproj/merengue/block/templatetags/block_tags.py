@@ -21,39 +21,57 @@ from django.conf import settings
 from merengue.base.models import BaseContent
 from merengue.section.models import Section
 from merengue.block.blocks import Block, ContentBlock, SectionBlock
-from merengue.block.models import RegisteredBlock
+from merengue.block.models import RegisteredBlock, BlockContentRelation
+from merengue.registry.params import ConfigDict
 
 
 register = template.Library()
 
 
-def _render_blocks(request, obj, place, block_type, context):
+def _render_blocks_queryset(blocks, request, obj, place, block_type, context):
     rendered_blocks = []
-    registered_blocks = RegisteredBlock.objects.actives(ordered=True)
-    for registered_block in registered_blocks:
-        if registered_block.print_block(place, request.get_full_path()):
+    for registered_block in blocks:
+        block_content_relation = registered_block.get_content_related_block(
+           obj, place)
+        if registered_block.print_block(place, request.get_full_path()) or \
+                block_content_relation:
             block = registered_block.get_registry_item_class()
+            if block_content_relation:  # rewrite block config with the one of the relation
+                ConfigDict(block.config_params, block_content_relation.config)
             if block_type == 'block' and issubclass(block, Block):
                 rendered_blocks.append(block.render(request,
                                                     place,
-                                                    context))
+                                                    context,
+                                                    block_content_relation))
             elif block_type == 'contentblock' and issubclass(block, ContentBlock) and isinstance(obj, BaseContent):
                 rendered_blocks.append(block.render(request,
                                                     place,
                                                     obj,
-                                                    context))
+                                                    context,
+                                                    block_content_relation))
             elif block_type == 'sectionblock' and issubclass(block, SectionBlock) and isinstance(obj, Section):
                 rendered_blocks.append(block.render(request,
                                                     place,
                                                     obj,
-                                                    context))
-        if isinstance(obj, BaseContent) and \
-                registered_block.print_content_related_block(obj, place):
-            block = registered_block.get_registry_item_class()
-            rendered_blocks.append(block.render(request,
-                                                place,
-                                                obj,
-                                                context))
+                                                    context,
+                                                    block_content_relation))
+    return rendered_blocks
+
+
+def _render_blocks(request, obj, place, block_type, context):
+    rendered_blocks = []
+    content = context.get('content')
+    registered_blocks = RegisteredBlock.objects.actives(ordered=True)
+    static_content_blocks = RegisteredBlock.objects.filter(
+        blockcontentrelation__in=BlockContentRelation.objects.filter(
+            content=content, placed_at=place))
+
+    # first we get the rendered blocks of those that are "generic"
+    rendered_blocks = _render_blocks_queryset(registered_blocks, request, obj,
+                                              place, block_type, context)
+    # then we get the blocks related with the content
+    rendered_blocks += _render_blocks_queryset(static_content_blocks, request,
+                                               content, place, block_type, context)
 
     return "<div class='blockContainer %ss'>%s" \
             "<input type=\"hidden\" class=\"blockPlace\" value=\"%s\">" \
