@@ -43,7 +43,7 @@
     {{ errornote }}
   </p>
 {% endif %}
-
+{% if dirs or files or documents %}
 <form class="filebrowserForm" action="{% filebrowser_url filebrowser_action repository_name=repository.name,path=path %}" method="post" enctype="multipart/form-data">
     <table id="webfs-table" title="{% trans "This table contains a list of objects" %}">
         <thead>
@@ -106,4 +106,10 @@
     {% endif %}
   </div>
 </form>
+{% else %}
+<div class="action-buttons">
+<p class="noContent">{% trans "The current directory is empty." %}</p>
+</div>
+{% endif %}
+
 {% endblock %}
