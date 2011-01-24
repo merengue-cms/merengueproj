@@ -1,6 +1,25 @@
 Changes
 =======
 
+Version 0.6.0-final
+-------------------
+
+* Changed Django dependence to 1.1.3 version, because a security issue, fixed on that version.
+
+* Fixed some Postgresql database locks while creating the models when some plugins are installed.
+
+* A little speed up for Postgresql backend, using ``autocommit`` option by default.
+
+* Other minor bugfixes:
+
+ * Error when accessing document without sections (after delete it).
+ * Error when creating a searcher in a collection and you search for something on public view.
+ * Manager cannot assign permissions to thread objects inside a forum.
+ * Ensure NOT_PROVIDED value (got by the not defined config params) evaluates to False to avoid some errors.
+ * Fixed web layout in the restart server confirmation page in transhette.
+
+* Added ``name`` field to contact information.
+
 Version 0.6.0-rc1
 -----------------
 
