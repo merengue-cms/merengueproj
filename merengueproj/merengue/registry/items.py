@@ -107,13 +107,16 @@ class QuerySetItemProvider(ContentsItemProvider, SectionFilterItemProvider):
         return get_section(request, context)
 
     @classmethod
-    def get_queryset(cls, request=None, context=None):
+    def get_queryset(cls, request=None, context=None,
+                     block_content_relation=None):
         section = cls._get_section(request, context)
-        return cls.queryset(request, context, section)
+        return cls.queryset(request, context, section, block_content_relation)
 
     @classmethod
-    def queryset(cls, request=None, context=None, section=None):
-        queryset = cls.get_contents(request, context, section)
+    def queryset(cls, request=None, context=None, section=None,
+                 block_content_relation=None):
+        queryset = cls.get_contents(request, context, section,
+                                    block_content_relation)
         if section and cls.get_config().get('filtering_section', False).get_value():
             queryset = filtering_in_section(queryset, section)
         return queryset
