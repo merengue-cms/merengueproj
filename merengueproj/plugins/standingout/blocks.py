@@ -34,7 +34,8 @@ class StandingOutBlock(Block):
     ]
 
     @classmethod
-    def render(cls, request, place, context, *args, **kwargs):
+    def render(cls, request, place, context, block_content_relation=None,
+               *args, **kwargs):
         standingout_categories = StandingOutCategory.objects.all()
         standingouts = None
         for standingout_category in standingout_categories:
@@ -45,7 +46,7 @@ class StandingOutBlock(Block):
                 if standingouts:
                     break
         standingouts = standingouts or StandingOut.objects.filter(related_content_type__isnull=True, related_id__isnull=True)
-        limit = cls.get_config().get('limit', None)
+        limit = cls.get_config(block_content_relation).get('limit', None)
         if limit:
             standingouts = standingouts[:limit.get_value()]
         return cls.render_block(request, template_name='standingout/block_standingout.html',

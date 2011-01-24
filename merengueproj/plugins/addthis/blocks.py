@@ -49,8 +49,9 @@ class AddThisBlock(Block):
     ]
 
     @classmethod
-    def render(cls, request, place, context, *args, **kwargs):
-        services = cls.get_config().get(
+    def render(cls, request, place, context, block_content_relation=None,
+               *args, **kwargs):
+        services = cls.get_config(block_content_relation).get(
             'services', []).get_value()
         return cls.render_block(
             request, template_name='addthis/links_block.html',

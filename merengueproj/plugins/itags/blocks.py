@@ -39,9 +39,11 @@ class TagCloudBlock(BlockQuerySetItemProvider, Block):
     ]
 
     @classmethod
-    def render(cls, request, place, context, *args, **kwargs):
-        limit = cls.get_config().get('max_tags_in_cloud', []).get_value()
-        filter_section = cls.get_config().get('filtering_section', False).get_value()
+    def render(cls, request, place, context, block_content_relation=None,
+               *args, **kwargs):
+        config = cls.get_config(block_content_relation)
+        limit = config.get('max_tags_in_cloud', []).get_value()
+        filter_section = config.get('filtering_section', False).get_value()
         tag_cloud = TagCloudViewlet.get_tag_cloud(request, context, limit, filter_section)
         return cls.render_block(request, template_name='itags/blocks/tagcloud.html',
                                 block_title=ugettext('Tag cloud'),
