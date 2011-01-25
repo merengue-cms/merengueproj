@@ -24,7 +24,7 @@ from plugins.contentmenu.models import ContentGroup
 
 class ContentGroupLinksBlock(Block):
     name = 'contentgrouplinks'
-    default_place = 'beforecontent'
+    default_place = 'aftercontenttitle'
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):

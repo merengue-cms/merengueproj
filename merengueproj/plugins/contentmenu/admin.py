@@ -42,6 +42,9 @@ class ContentGroupSectionAdmin(ContentGroupAdmin, RelatedModelAdmin):
         class_form.base_fields['contents'].queryset = base_qs.filter(basesection=self.basecontent)
         return class_form
 
+    def save_model(self, request, obj, form, change):
+        super(RelatedModelAdmin, self).save_model(request, obj, form, change)
+
     def queryset(self, request, basecontent=None):
         base_qs = super(RelatedModelAdmin, self).queryset(request)
         return base_qs
