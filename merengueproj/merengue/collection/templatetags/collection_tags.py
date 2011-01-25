@@ -8,6 +8,7 @@ from django.template.defaulttags import RegroupNode
 from django.template.loader import render_to_string
 
 from cmsutils.adminfilters import QueryStringManager
+from merengue.collection.models import FeedCollection
 
 
 register = Library()
@@ -23,14 +24,15 @@ class CollectionIterator(list):
 
 class CollectionItemNode(Node):
 
-    def __init__(self, collection, item):
+    def __init__(self, collection, item, listing=True):
         self.collection = collection
         self.item = item
+        self.listing = listing
 
     def render(self, context):
         collection = self.collection.resolve(context)
         item = self.item.resolve(context)
-        display_fields = collection.display_fields.all().order_by('field_order')
+        display_fields = collection.display_fields.filter(list_field=self.listing).order_by('field_order')
 
         fields = []
         for df in display_fields:
@@ -42,9 +44,12 @@ class CollectionItemNode(Node):
             'item': item,
             'collection': collection,
             'fields': fields,
+            'listing': self.listing,
         })
         model_collection = collection.get_first_parents_of_content_types()
-        template_name = ['%s/collection_item.html' % m._meta.module_name for m in model_collection.mro() if getattr(m, '_meta', None) and not m._meta.abstract]
+        template_name = []
+        if model_collection:
+            template_name += ['%s/collection_item.html' % m._meta.module_name for m in model_collection.mro() if getattr(m, '_meta', None) and not m._meta.abstract]
         template_name.append('collection/collection_item.html')
         return render_to_string(template_name, context_copy)
 
@@ -57,6 +62,16 @@ def collectionitem(parser, token):
     item = parser.compile_filter(firstbits[2])
     return CollectionItemNode(collection, item)
 collectionitem = register.tag(collectionitem)
+
+
+def fullitem(parser, token):
+    firstbits = token.contents.split(None, 2)
+    if len(firstbits) != 3:
+        raise TemplateSyntaxError("'fullitem' tag takes two arguments")
+    collection = parser.compile_filter(firstbits[1])
+    item = parser.compile_filter(firstbits[2])
+    return CollectionItemNode(collection, item, False)
+fullitem = register.tag(fullitem)
 
 
 class CollectionItemsNode(Node):
@@ -119,6 +134,9 @@ class CollectionItemsNode(Node):
 
     def render(self, context):
         collection = self.collection.resolve(context)
+        if (collection, FeedCollection):
+            context.update({self.var_name: collection.get_items()})
+            return ''
         items = self._get_items(collection, context)
         context.update({self.var_name: items})
 
@@ -177,7 +195,10 @@ class CollectionRegroupNode(RegroupNode):
 
     def render(self, context):
         collection = self.collection.resolve(context, True)
-        self.expression = self.parser.compile_filter(collection.group_by)
+        if (collection, FeedCollection):
+            self.expression = self.parser.compile_filter('group_field')
+        else:
+            self.expression = self.parser.compile_filter(collection.group_by)
         return super(CollectionRegroupNode, self).render(context)
 
 

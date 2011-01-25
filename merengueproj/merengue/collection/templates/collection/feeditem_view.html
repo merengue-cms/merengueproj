@@ -1,0 +1,8 @@
+{% extends "content_view.html" %}
+{% load pagination_tags collection_tags %}
+
+{% block contentbody %}
+<div class="feed-item-full-view">
+  {% fullitem collection item %}
+</div>
+{% endblock contentbody %}

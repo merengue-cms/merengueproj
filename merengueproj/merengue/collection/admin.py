@@ -16,7 +16,8 @@ from merengue.section.models import Section
 from merengue.collection.models import (Collection, IncludeCollectionFilter,
                                         ExcludeCollectionFilter,
                                         CollectionDisplayField,
-                                        CollectionDisplayFieldFilter)
+                                        CollectionDisplayFieldFilter,
+                                        FeedCollection, FeedItem)
 from merengue.collection.utils import get_common_fields_no_language, \
                                                             get_common_fields
 from merengue.collection.forms import CollectionFilterForm, CollectionDisplayFilterForm
@@ -76,6 +77,10 @@ class CollectionAdmin(BaseContentAdmin):
         )
     filter_horizontal = BaseContentAdmin.filter_horizontal + ('content_types', )
     inlines = [IncludeCollectionFilterInline, ExcludeCollectionFilterInline]
+
+    def queryset(self, request):
+        qs = super(CollectionAdmin, self).queryset(request)
+        return qs.filter(feedcollection__isnull=True)
 
     def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
         media = context.get('media')
@@ -155,6 +160,10 @@ class CollectionDisplayFieldAdmin(RelatedModelAdmin, BaseOrderableAdmin):
 
     inlines = [CollectionDisplayFieldFilterInline]
 
+    def queryset(self, request):
+        qs = super(CollectionDisplayFieldAdmin, self).queryset(request)
+        return qs.filter(list_field=True)
+
     def get_default_fields(self, obj):
         if not obj:
             return []
@@ -181,11 +190,98 @@ class CollectionDisplayFieldAdmin(RelatedModelAdmin, BaseOrderableAdmin):
         return form
 
 
+class FeedItemDisplayFieldAdmin(CollectionDisplayFieldAdmin):
+    tool_name = 'display_fields_in_item'
+    tool_label = _('full item fields')
+
+    def get_default_fields(self, obj):
+        if not obj:
+            return []
+        fields = []
+        items = obj.feeditem_set.all()
+        if items.count():
+            first = items[0].get_full_item(obj.detailed_link)
+            fields = first.keys()
+        return [('', '----------')] + [(i, i) for i in fields]
+
+    def queryset(self, request):
+        qs = super(CollectionDisplayFieldAdmin, self).queryset(request)
+        return qs.filter(list_field=False)
+
+    def save_model(self, request, obj, form, change):
+        obj.list_field = False
+        super(FeedItemDisplayFieldAdmin, self).save_model(request, obj, form, change)
+
+
+class FeedCollectionAdmin(CollectionAdmin):
+    fieldsets = (
+        (_('Collection Basic Information'),
+            {'fields': get_real_fieldname_in_each_language('name') +\
+                       ['slug', ] +\
+                       get_real_fieldname_in_each_language('description') +\
+                       ['status', 'tags', 'meta_desc', 'commentable', 'owners']},
+            ),
+        (_('Collection Configuration'),
+            {'fields': ('feed_url', 'expire_seconds', 'remove_items', )},
+            ),
+        )
+    change_form_inlines = [IncludeCollectionFilterInline, ExcludeCollectionFilterInline]
+    add_configuration_fields = ('feed_url', 'expire_seconds', 'remove_items', )
+    change_configuration_fields = ('feed_url', 'expire_seconds', 'remove_items', 'group_by', 'order_by', 'reverse_order')
+    item_fieldsets = (
+        (_('Single Item Configuration'),
+            {'fields': ('title_field', 'detailed_link', 'external_link', )},
+            ),
+        )
+
+    def queryset(self, request):
+        return super(CollectionAdmin, self).queryset(request)
+
+    def save_model(self, request, obj, form, change):
+        super(FeedCollectionAdmin, self).save_model(request, obj, form, change)
+        obj.perform_query(apply_options=True)
+
+    def add_view(self, *args, **kwargs):
+        self.inline_instances = []
+        self.fieldsets[1][1]['fields'] = self.add_configuration_fields
+        self.fieldsets = self.fieldsets[:2]
+        return super(FeedCollectionAdmin, self).add_view(*args, **kwargs)
+
+    def change_view(self, *args, **kwargs):
+        self.inline_instances = []
+        self.fieldsets[1][1]['fields'] = self.change_configuration_fields
+        self.fieldsets = self.fieldsets[:2] + self.item_fieldsets
+        for inline_class in self.change_form_inlines:
+            inline_instance = inline_class(self.model, self.admin_site)
+            self.inline_instances.append(inline_instance)
+        return super(FeedCollectionAdmin, self).change_view(*args, **kwargs)
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(FeedCollectionAdmin, self).get_form(request, obj, **kwargs)
+        default_fields = self.get_default_fields(obj, request)
+        if default_fields:
+            default_fields += [('content_type_name', 'content_type_name')]
+            default_fields.sort()
+        for i in ('group_by', 'order_by', 'title_field', 'detailed_link', 'external_link'):
+            if i in form.base_fields:
+                form.base_fields[i].widget = forms.Select(choices=default_fields)
+        return form
+
+
+class FeedItemAdmin(RelatedModelAdmin):
+    tool_name = 'items'
+    tool_label = _('feed items')
+    related_field = 'feed_collection'
+
+
 def register_related(site):
     site.register_related(Collection, CollectionRelatedModelAdmin, related_to=Section)
     site.register_related(CollectionDisplayField, CollectionDisplayFieldAdmin, related_to=Collection)
+    site.register_related(CollectionDisplayField, FeedItemDisplayFieldAdmin, related_to=FeedCollection)
+    site.register_related(FeedItem, FeedItemAdmin, related_to=FeedCollection)
 
 
 def register(site):
     site.register(Collection, CollectionAdmin)
+    site.register(FeedCollection, FeedCollectionAdmin)
     register_related(site)

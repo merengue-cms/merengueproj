@@ -7,7 +7,8 @@ from transmeta import get_real_fieldname
 from merengue.base.models import BaseContent
 from merengue.collection.models import (Collection, IncludeCollectionFilter,
                                         CollectionDisplayField,
-                                        CollectionDisplayFieldFilter)
+                                        CollectionDisplayFieldFilter,
+                                        FeedCollection)
 
 
 def get_common_fields_for_cts(content_types):
@@ -16,7 +17,7 @@ def get_common_fields_for_cts(content_types):
     for ct in content_types:
         model = ct.model_class()
         if not issubclass(model, BaseContent):
-            extrange=True
+            extrange = True
         fields = set(model._meta.get_all_field_names())
         if not result:
             result = fields
@@ -42,7 +43,17 @@ def get_common_fields_no_language(collection):
     return get_common_fields_no_language_from_fields(fields)
 
 
+def get_common_feed_fields(collection):
+    items = collection.feeditem_set.all()
+    if not items.count():
+        return []
+    first = items[0].get_real_item()
+    return first.keys()
+
+
 def get_common_fields(collection):
+    if isinstance(collection, FeedCollection):
+        return get_common_feed_fields(collection)
     return get_common_fields_for_cts(collection.content_types.all())
 
 

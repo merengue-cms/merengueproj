@@ -11,12 +11,14 @@
   {% endblock %}
   <div class="itemCollectionTitle">
   {% block linkblock %}
+    {% if listing %}
     {% if item.get_absolute_url %}
     <a href="{{ item.get_absolute_url }}" title="{{ item }}" class="contentLink">
         {% cutrender 100 %}{{ item }}{% endcutrender %}
     </a>
     {% else %}
         {% cutrender 100 %}{{ item }}{% endcutrender %}
+    {% endif %}
     {% endif %}
    {% endblock %}
   </div>

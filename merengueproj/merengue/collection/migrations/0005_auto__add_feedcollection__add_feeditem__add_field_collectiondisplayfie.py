@@ -3,20 +3,52 @@ import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
-from django.conf import settings
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
         
-        # Adding field 'Collection.filtering_section'
-        db.add_column('collection_collection', 'filtering_section', self.gf('django.db.models.fields.BooleanField')(default=True), keep_default=False)
+        # Adding model 'FeedCollection'
+        db.create_table('collection_feedcollection', (
+            ('collection_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['collection.Collection'], unique=True, primary_key=True)),
+            ('feed_url', self.gf('django.db.models.fields.URLField')(max_length=200)),
+            ('last_updated', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
+            ('expire_seconds', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('remove_items', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('title_field', self.gf('django.db.models.fields.CharField')(default='title', max_length=100, null=True, blank=True)),
+            ('detailed_link', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
+            ('external_link', self.gf('django.db.models.fields.CharField')(default='link', max_length=200, null=True, blank=True)),
+        ))
+        db.send_create_signal('collection', ['FeedCollection'])
+
+        # Adding model 'FeedItem'
+        db.create_table('collection_feeditem', (
+            ('basecontent_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['base.BaseContent'], unique=True, primary_key=True)),
+            ('feed_collection', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['collection.FeedCollection'])),
+            ('item_id', self.gf('django.db.models.fields.CharField')(max_length=200)),
+            ('item_cached', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('item_complete_cached', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('last_updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
+            ('excluded', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('order_field', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
+            ('group_field', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
+        ))
+        db.send_create_signal('collection', ['FeedItem'])
+
+        # Adding field 'CollectionDisplayField.list_field'
+        db.add_column('collection_collectiondisplayfield', 'list_field', self.gf('django.db.models.fields.BooleanField')(default=True), keep_default=False)
 
 
     def backwards(self, orm):
         
-        # Deleting field 'Collection.filtering_section'
-        db.delete_column('collection_collection', 'filtering_section')
+        # Deleting model 'FeedCollection'
+        db.delete_table('collection_feedcollection')
+
+        # Deleting model 'FeedItem'
+        db.delete_table('collection_feeditem')
+
+        # Deleting field 'CollectionDisplayField.list_field'
+        db.delete_column('collection_collectiondisplayfield', 'list_field')
 
 
     models = {
@@ -52,10 +84,16 @@ class Migration(SchemaMigration):
         'base.basecontent': {
             'Meta': {'ordering': "('name_es',)", 'object_name': 'BaseContent'},
             'adquire_global_permissions': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'cached_plain_text_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'cached_plain_text_es': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'cached_plain_text_fr': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'class_name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'db_index': 'True'}),
             'commentable': ('django.db.models.fields.CharField', [], {'default': "'allowed'", 'max_length': '20'}),
             'contact_info': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['base.ContactInfo']", 'null': 'True', 'blank': 'True'}),
             'creation_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'null': 'True', 'blank': 'True'}),
+            'description_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'description_es': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'description_fr': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_editor': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'last_edited_content'", 'null': 'True', 'to': "orm['auth.User']"}),
             'location': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['places.Location']", 'null': 'True', 'blank': 'True'}),
@@ -64,10 +102,16 @@ class Migration(SchemaMigration):
             'meta_desc': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'modification_date': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'null': 'True', 'blank': 'True'}),
             'multimedia': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['multimedia.BaseMultimedia']", 'symmetrical': 'False', 'through': "'MultimediaRelation'", 'blank': 'True'}),
+            'name_en': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200', 'db_index': 'True'}),
+            'name_fr': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'no_changeable': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'no_changeable_fields': ('cmsutils.db.fields.JSONField', [], {'null': 'True', 'blank': 'True'}),
             'no_deletable': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'owners': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'contents_owned'", 'null': 'True', 'symmetrical': 'False', 'to': "orm['auth.User']"}),
+            'plain_description_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'plain_description_es': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'plain_description_fr': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'rank': ('django.db.models.fields.FloatField', [], {'default': '100.0', 'db_index': 'True'}),
             'related_items': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': "orm['base.BaseContent']", 'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '200', 'db_index': 'True'}),
@@ -81,6 +125,7 @@ class Migration(SchemaMigration):
             'contact_email2': ('django.db.models.fields.EmailField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'fax': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'phone': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'phone2': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'url': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
@@ -109,6 +154,7 @@ class Migration(SchemaMigration):
             'field_name': ('django.db.models.fields.CharField', [], {'max_length': '250'}),
             'field_order': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'list_field': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'safe': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'show_label': ('django.db.models.fields.BooleanField', [], {'default': 'True'})
         },
@@ -127,6 +173,29 @@ class Migration(SchemaMigration):
             'filter_operator': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'filter_value': ('django.db.models.fields.CharField', [], {'max_length': '250', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
+        },
+        'collection.feedcollection': {
+            'Meta': {'ordering': "('name_es',)", 'object_name': 'FeedCollection', '_ormbases': ['collection.Collection']},
+            'collection_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['collection.Collection']", 'unique': 'True', 'primary_key': 'True'}),
+            'detailed_link': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'expire_seconds': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'external_link': ('django.db.models.fields.CharField', [], {'default': "'link'", 'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'feed_url': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
+            'last_updated': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'remove_items': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'title_field': ('django.db.models.fields.CharField', [], {'default': "'title'", 'max_length': '100', 'null': 'True', 'blank': 'True'})
+        },
+        'collection.feeditem': {
+            'Meta': {'ordering': "('name_es',)", 'object_name': 'FeedItem', '_ormbases': ['base.BaseContent']},
+            'basecontent_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['base.BaseContent']", 'unique': 'True', 'primary_key': 'True'}),
+            'excluded': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'feed_collection': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['collection.FeedCollection']"}),
+            'group_field': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'item_cached': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'item_complete_cached': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'item_id': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            'last_updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            'order_field': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
         },
         'collection.includecollectionfilter': {
             'Meta': {'object_name': 'IncludeCollectionFilter'},
@@ -163,10 +232,5 @@ class Migration(SchemaMigration):
             'postal_code': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'})
         }
     }
-
-    if not settings.USE_GIS:
-        del models['places.location']
-        del models['base.basecontent']['location']
-        del models['base.basecontent']['map_icon']
 
     complete_apps = ['collection']

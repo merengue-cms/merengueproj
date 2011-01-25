@@ -1,7 +1,16 @@
+import base64
+import datetime
+import feedparser
+try:
+    import cPickle as pickle
+except:
+    import pickle
+
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import FieldError
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, permalink
+from django.template import defaultfilters
 from django.utils.importlib import import_module
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
@@ -9,6 +18,7 @@ from django.utils.translation import ugettext_lazy as _
 from transmeta import get_real_fieldname, fallback_language
 
 from merengue.base.models import BaseContent
+from merengue.collection import filter_funcs
 
 
 FILTER_OPERATORS = (
@@ -191,6 +201,264 @@ class Collection(BaseContent):
             'safe': display_field.safe,
         }
 
+    @permalink
+    def get_admin_absolute_url(self):
+        content_type = ContentType.objects.get_for_model(self.get_real_instance())
+        return ('merengue.base.views.admin_link', [content_type.id, self.id, ''])
+
+
+class FeedItem(BaseContent):
+    feed_collection = models.ForeignKey('FeedCollection')
+
+    item_id = models.CharField(
+        verbose_name=_(u'Item id'),
+        max_length=200,
+        )
+
+    item_cached = models.TextField(
+        verbose_name=_(u'Feed summary cached'),
+        blank=True,
+        null=True)
+
+    item_complete_cached = models.TextField(
+        verbose_name=_(u'Feed detail cached'),
+        blank=True,
+        null=True)
+
+    last_updated = models.DateTimeField(
+        verbose_name=_(u'Last updated'),
+        auto_now=True,
+        editable=False,
+        )
+
+    excluded = models.BooleanField(
+        verbose_name=_(u'Excluded'),
+        default=False,
+        editable=False,
+        )
+
+    order_field = models.CharField(
+        verbose_name=_(u'Order field'),
+        max_length=200,
+        blank=True,
+        null=True,
+        )
+
+    group_field = models.CharField(
+        verbose_name=_(u'Group field'),
+        max_length=200,
+        blank=True,
+        null=True,
+        )
+
+    class Meta:
+        content_view_function = 'merengue.collection.views.feeditem_view'
+        content_view_template = 'collection/feeditem_view.html'
+
+    def get_real_item(self):
+        if hasattr(self, '_real_item'):
+            return self._real_item
+        if not self.item_cached:
+            real_item = None
+        else:
+            real_item = pickle.loads(base64.decodestring(self.item_cached))
+        self._real_item = real_item
+        return real_item
+
+    def get_full_item(self, field_name=None):
+        real_item = self.get_real_item()
+        if hasattr(self, '_full_item'):
+            return self._full_item
+        full_item = None
+        if not self.item_complete_cached and field_name:
+            url = getattr(real_item, field_name, None)
+            if not url:
+                return None
+            feed = feedparser.parse(url)
+            if feed.entries:
+                full_item = feed.entries[0]
+                self.item_complete_cached = base64.encodestring(pickle.dumps(full_item))
+                self.save()
+        elif self.item_complete_cached:
+            full_item = pickle.loads(base64.decodestring(self.item_complete_cached))
+        if not full_item:
+            full_item = real_item
+        self._full_item = full_item
+        return full_item
+
+    @permalink
+    def get_admin_absolute_url(self):
+        parent_content_type = ContentType.objects.get_for_model(self.feed_collection)
+        return ('merengue.base.views.admin_link', [parent_content_type.id, self.feed_collection.id, 'items/%s/' % self.id])
+
+
+def handle_feed_item_pre_save(sender, instance, **kwargs):
+    field_name = get_real_fieldname('name', fallback_language())
+    name = getattr(instance, field_name, None)
+    if not name:
+        return
+    slug = defaultfilters.slugify(name)
+    slug_num = slug
+    n = 2
+    filter_param = 'slug__exact'
+    filters = {filter_param: slug_num}
+    exclude = {}
+    if instance.basecontent_ptr:
+        exclude = {'id': instance.basecontent_ptr.id}
+    while BaseContent.objects.filter(**filters).exclude(**exclude).count():
+        slug_num = slug + u'-%s' % n
+        filters[filter_param] = slug_num
+        n += 1
+    instance.slug = slug_num
+models.signals.pre_save.connect(handle_feed_item_pre_save, sender=FeedItem)
+
+
+class FeedCollection(Collection):
+    feed_url = models.URLField(
+        verbose_name=_(u'URL of the feed'),
+        verify_exists=False,
+        )
+
+    last_updated = models.DateTimeField(
+        verbose_name=_(u'Last updated'),
+        blank=True,
+        null=True,
+        editable=False,
+        )
+
+    expire_seconds = models.IntegerField(
+        verbose_name=_(u'Seconds to expire cache'),
+        help_text=_(u'Seconds from last update to do a new query. 0 to never query again.'),
+        default=0,
+        )
+
+    remove_items = models.BooleanField(
+        verbose_name=_(u'Remove items'),
+        help_text=_(u'Remove old items when overwritting cache'),
+        default=False,
+        )
+
+    title_field = models.CharField(
+        verbose_name=_(u'Title field'),
+        max_length=100,
+        help_text=_(u'Field used for naming contents'),
+        default='title',
+        blank=True,
+        null=True,
+        )
+
+    detailed_link = models.CharField(
+        verbose_name=_(u'Detailed link'),
+        max_length=200,
+        help_text=_(u'Field that provides a link to a feed with the full content'),
+        blank=True,
+        null=True,
+        )
+
+    external_link = models.CharField(
+        verbose_name=_(u'External link'),
+        max_length=200,
+        help_text=_(u'Field that provides an external link to the full content'),
+        default='link',
+        blank=True,
+        null=True,
+        )
+
+    class Meta:
+        verbose_name = _(u'Feed collection')
+        verbose_name_plural = _(u'Feed collections')
+        content_view_function = 'merengue.collection.views.collection_view'
+        content_view_template = 'collection/collection_view.html'
+
+    def perform_query(self, apply_options=False, force_update=False):
+        now = datetime.datetime.now()
+        feed = {'entries': []}
+        if (force_update or not self.last_updated or
+            (self.expire_seconds and self.last_updated + datetime.timedelta(seconds=self.expire_seconds) > now)):
+            feed = feedparser.parse(self.feed_url)
+            self.last_updated = datetime.datetime.now()
+            if self.remove_items:
+                self.purge_items()
+            apply_options = True
+        if apply_options:
+            self.create_feed_items(feed)
+            self.save()
+
+    def purge_items(self):
+        for item in self.feeditem_set.all():
+            item.delete()
+
+    def make_single_item(self, feed_item, entry):
+        feed_item.item_cached = base64.encodestring(pickle.dumps(entry))
+        if self.order_by:
+            feed_item.order_field = getattr(entry, self.order_by, None)
+        else:
+            feed_item.order_field = None
+        if self.group_by:
+            feed_item.group_field = getattr(entry, self.group_by, None)
+        else:
+            feed_item.group_field = None
+        title_field = self.title_field or 'title'
+        field_name = get_real_fieldname('name', fallback_language())
+        setattr(feed_item, field_name, getattr(entry, title_field, getattr(entry, 'id', None)))
+        feed_item.excluded = self.is_excluded(entry)
+        feed_item.save()
+
+    def is_excluded(self, entry):
+        for f in self.get_include_filters():
+            operator_func = getattr(filter_funcs, '%s_func' % f.filter_operator, None)
+            print operator_func
+            if not operator_func:
+                continue
+            if not operator_func(getattr(entry, f.filter_field, None), f.filter_value):
+                return True
+        for f in self.get_exclude_filters():
+            operator_func = getattr(filter_funcs, '%s_func' % f.filter_operator, None)
+            print operator_func
+            if not operator_func:
+                continue
+            if operator_func(getattr(entry, f.filter_field, None), f.filter_value):
+                return True
+        return False
+
+    def create_feed_items(self, feed):
+        entries = feed['entries']
+        entries_ids = [i.id for i in entries]
+        for i in self.feeditem_set.exclude(item_id__in=entries_ids):
+            item = i.get_real_item()
+            self.make_single_item(i, item)
+        for entry in entries:
+            (item, created) = FeedItem.objects.get_or_create(
+                item_id=entry.id,
+                feed_collection=self)
+            item.item_complete_cached = None  # Expire details of item if any
+            self.make_single_item(item, entry)
+
+    def get_items(self, section=None):
+        self.perform_query()  # This only will have some effect if the cache has expired
+        return self.feeditem_set.filter(excluded=False).order_by('group_field', 'order_field')
+
+    def get_displayfield_data(self, display_field, item):
+        """
+        returns dictionary with data that will be processed by collection view
+        to display an item as defined in display_field option.
+        This method may be overriden in Collection subclasses.
+        """
+        field_name = display_field.field_name
+        if field_name == 'content_type_name':
+            verbose_name = ugettext('Content type name')
+        else:
+            verbose_name = ugettext(display_field.field_name)
+        if hasattr(item, 'get_real_item'):
+            item = item.get_real_item()
+        return {
+            'name': verbose_name,
+            'field_name': field_name,
+            'show_label': display_field.show_label,
+            'value': _get_value(display_field, field_name, item),
+            'safe': display_field.safe,
+        }
+
 
 class CollectionFilter(models.Model):
     filter_field = models.CharField(
@@ -353,6 +621,10 @@ class CollectionDisplayField(models.Model):
     show_label = models.BooleanField(
         default=True,
         verbose_name=_(u'Show field label'),
+        )
+    list_field = models.BooleanField(
+        default=True,
+        editable=False,
         )
 
     def __unicode__(self):
