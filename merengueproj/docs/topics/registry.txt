@@ -162,3 +162,55 @@ he would use these sentences:
     ['antonio', 'juan']
     >>> config['friends'].get_type()
     'List'
+
+If you register a registrable item, you also will save this configuration in
+database. See this example:
+
+    >>> class PersonItem(RegistrableItem):
+    ...     config_params = [
+    ...         params.Bool(name='is_human', default=True),
+    ...         params.Integer(name='age'),
+    ...         params.List(name='friends', choices=('Juan', 'Luis', 'Pepe'))
+    ...     ]
+    ...
+    >>> register(PersonItem)
+    >>> PersonItem.get_config()
+    {'is_human': <True, Bool>,
+    'age': <<class 'merengue.registry.params.NOT_PROVIDED'>, Integer>,
+    'friends': <<class 'merengue.registry.params.NOT_PROVIDED'>, List>}
+    >>> reg_item = PersonItem.get_registered_item()
+    >>> reg_item.config
+    {u'is_human': True}
+    >>> reg_item.config['age'] = 30
+    >>> reg_item.save()
+    >>> PersonItem.get_config()
+    {'is_human': <True, Bool>,
+    'age': <30, Integer>,
+    'friends': <<class 'merengue.registry.params.NOT_PROVIDED'>, List>}
+
+Merging configurations
+----------------------
+
+Sometimes a plugin developer want to override a default configuration with
+other configurations. This happens for example in block configuration, which
+may be overrided when I place a specific block for a specific content. In this
+case, block configuration was the merging of the global configuration and the
+specific configuration in that content. An example API use:
+
+.. code-block:: python
+
+    >>> PersonItem.get_config()
+    {'is_human': <True, Bool>,
+    'age': <<class 'merengue.registry.params.NOT_PROVIDED'>, Integer>,
+    'friends': <<class 'merengue.registry.params.NOT_PROVIDED'>, List>}
+    >>> PersonItem.get_merged_config(params.ConfigDict(config_params, {'is_human': False, 'age': 35}))
+    {'is_human': <False, Bool>,
+    'age': <35, Integer>,
+    'friends': <<class 'merengue.registry.params.NOT_PROVIDED'>, List>}
+    >>> PersonItem.get_merged_config(
+    ...     params.ConfigDict(config_params, {'age': 35}),
+    ...     params.ConfigDict(config_params, {'age': 15}),
+    ... )
+    {'is_human': <True, Bool>,
+    'age': <15, Integer>,
+    'friends': <<class 'merengue.registry.params.NOT_PROVIDED'>, List>}
