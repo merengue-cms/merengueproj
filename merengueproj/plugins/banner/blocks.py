@@ -37,7 +37,8 @@ class BannerBlock(BlockQuerySetItemProvider, Block):
     @classmethod
     def get_contents(cls, request=None, context=None, section=None,
                      block_content_relation=None):
-        number_news = cls.get_config(block_content_relation).get(
+        custom_config = getattr(block_content_relation, 'config', None)
+        number_news = cls.get_first_active_config(custom_config).get(
             'limit', []).get_value()
         banners_list = get_banners(request, number_news)
         return banners_list
