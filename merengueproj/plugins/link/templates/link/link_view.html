@@ -1,6 +1,6 @@
 {% extends "content_view.html" %}
 
-{% load i18n inlinetrans action_tags %}
+{% load i18n inlinetrans action_tags content_tags %}
 
 {% block pagetitle %}{{ content }}{% endblock %}
 
@@ -12,4 +12,10 @@
 {% block contentdescription %}
     {{ block.super }}
     <a href="{{ content.url_link }}" title="{% trans "View more" %}">{% trans "View more" %}{% if content.portal_name %}:{{ content.portal_name }}{% endif %}</a>
+{% endblock %}
+
+{% block contenttitle %}
+<div id="content-title" class="{{ content.class_name }}">
+    <h1 title="{{ content.name }}"><a href="{{ content.url_link }}" title="{{ content }}">{% cutrender %}{{ content }}{% endcutrender %}</a></h1>
+</div>
 {% endblock %}
