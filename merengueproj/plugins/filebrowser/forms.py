@@ -23,7 +23,7 @@ class DocMixin(WTForm, forms.ModelForm):
         super(DocMixin, self).__init__(request, *args, **kwargs)
 
     def next_url(self, instance):
-        return filebrowser_reverse('filebrowser_viewdoc',
+        return filebrowser_reverse(self.request, 'filebrowser_viewdoc',
             kwargs={'repository_name': instance.repository.name,
                     'doc_slug': instance.slug},
             url_prefix=self.url_prefix)

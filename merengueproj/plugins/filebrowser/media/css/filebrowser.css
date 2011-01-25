@@ -91,7 +91,9 @@ table#webfs-table label.folder {
     background: transparent url(../img/folder.png) no-repeat left top;
 }
 
+form label.file,
 table#webfs-table label.file {
+    padding-left: 18px;
     background: transparent url(../img/file.png) no-repeat left top;
 }
 

@@ -32,19 +32,19 @@
   <div>
     {% for d in dirs %}
     <div class="spacing">
-      <img alt="{% trans 'folder' %}" src="{{ MEDIA_URL }}filebrowser/img/folder.png"/> <input name="dir_{{ forloop.counter }}" type="text" value="{{ d.title }}" />
+      <label class="folder">{% trans 'folder' %}: </label><input name="dir_{{ forloop.counter }}" type="text" value="{{ d.title }}" />
       <input name="olddir_{{ forloop.counter }}" type="hidden" value="{{ d.id }}" />
     </div>
     {% endfor %}
     {% for f in files %}
     <div class="spacing">
-      <img alt="{% trans 'file' %}" src="{{ MEDIA_URL }}filebrowser/img/text-x-generic.png"/> <input name="file_{{ forloop.counter }}" type="text" value="{{ f.title }}" />
+      <label class="file">{% trans 'file' %}: </label> <input name="file_{{ forloop.counter }}" type="text" value="{{ f.title }}" />
       <input name="oldfile_{{ forloop.counter }}" type="hidden" value="{{ f.id }}" />
     </div>
     {% endfor %}
     {% for d in docs %}
     <div class="spacing">
-      <img alt="{% trans 'file' %}" src="{{ MEDIA_URL }}filebrowser/img/text-x-generic.png"/> <input name="doc_{{ forloop.counter }}" type="text" value="{{ d.title }}" />
+      <label class="document">{% trans 'file' %}: </label><input name="doc_{{ forloop.counter }}" type="text" value="{{ d.title }}" />
       <input name="olddoc_{{ forloop.counter }}" type="hidden" value="{{ d.id }}" />
     </div>
     {% endfor %}

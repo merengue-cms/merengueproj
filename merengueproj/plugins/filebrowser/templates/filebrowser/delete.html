@@ -36,19 +36,19 @@
   <div>
     {% for d in dirs %}
     <div class="spacing">
-      <label for="dir_{{ forloop.counter }}"><img src="{{ MEDIA_URL }}filebrowser/img/folder.png"/> {{ d.title }}</label>
+      <label for="dir_{{ forloop.counter }}" class="folder">{{ d.title }}</label>
       <input name="dir_{{ forloop.counter }}" type="hidden" value="{{ d.id }}" />
     </div>
     {% endfor %}
     {% for f in files %}
     <div class="spacing">
-      <label for="file_{{ forloop.counter }}"><img src="{{ MEDIA_URL }}filebrowser/img/text-x-generic.png"/> {{ f.title }}</label>
+      <label for="file_{{ forloop.counter }}" class="file">{{ f.title }}</label>
       <input name="file_{{ forloop.counter }}" type="hidden" value="{{ f.id }}" />
     </div>
     {% endfor %}
     {% for d in docs %}
     <div class="spacing">
-      <label for="doc_{{ forloop.counter }}"><img src="{{ MEDIA_URL }}filebrowser/img/text-x-generic.png"/> {{ d.title }}</label>
+      <label for="doc_{{ forloop.counter }}" class="document">{{ d.title }}</label>
       <input name="doc_{{ forloop.counter }}" type="hidden" value="{{ d.id }}" />
     </div>
     {% endfor %}
