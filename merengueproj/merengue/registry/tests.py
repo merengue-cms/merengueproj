@@ -16,26 +16,58 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-This file demonstrates two different styles of tests (one doctest and one
-unittest). These will both pass when you run "manage.py test".
-
-Replace these with more appropriate tests for your application.
+Tests for merengue.registry application
 """
 
-from django.test import TestCase
-
-
-class SimpleTest(TestCase):
-
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.failUnlessEqual(1 + 1, 2)
-
 __test__ = {"doctest": """
-Another way to test that 1 + 1 is equal to 2.
+>>> from merengue.registry import register
+>>> from merengue.registry.items import RegistrableItem
+>>> from merengue.registry import params
 
->>> 1 + 1 == 2
-True
+>>> config_params = [
+...    params.Bool(name='is_human', default=True),
+...    params.Integer(name='age'),
+...    params.List(name='friends', choices=('Juan', 'Luis', 'Pepe'))
+... ]
+>>> config_params
+[<True, Bool>, <<class 'merengue.registry.params.NOT_PROVIDED'>, Integer>, <<class 'merengue.registry.params.NOT_PROVIDED'>, List>]
+>>> config = params.ConfigDict(config_params, {'age': 25, 'friends': ('Juan', )})
+>>> config
+{'is_human': <True, Bool>, 'age': <25, Integer>, 'friends': <('Juan',), List>}
+>>> config.update(params.ConfigDict(config_params, {'age': 40}))
+>>> config
+{'is_human': <True, Bool>, 'age': <40, Integer>, 'friends': <('Juan',), List>}
+
+>>> class PersonItem(RegistrableItem):
+...     config_params = config_params
+...
+>>> register(PersonItem)
+>>> PersonItem.get_config()
+{'is_human': <True, Bool>, 'age': <<class 'merengue.registry.params.NOT_PROVIDED'>, Integer>, 'friends': <<class 'merengue.registry.params.NOT_PROVIDED'>, List>}
+
+# saving registered item in database should change the configuration
+>>> reg_item = PersonItem.get_registered_item()
+>>> reg_item.config
+{u'is_human': True}
+>>> reg_item.config['age'] = 30
+>>> reg_item.save()
+>>> PersonItem.get_config()
+{'is_human': <True, Bool>, 'age': <30, Integer>, 'friends': <<class 'merengue.registry.params.NOT_PROVIDED'>, List>}
+>>> del reg_item.config['age']
+>>> reg_item.save()
+>>> PersonItem.get_config()
+{'is_human': <True, Bool>, 'age': <<class 'merengue.registry.params.NOT_PROVIDED'>, Integer>, 'friends': <<class 'merengue.registry.params.NOT_PROVIDED'>, List>}
+
+# testing get_merged_config
+
+# note that 'age' param should not be updated (because is not provided)
+>>> PersonItem.get_merged_config(params.ConfigDict(config_params, {'is_human': False}))
+{'is_human': <False, Bool>, 'age': <<class 'merengue.registry.params.NOT_PROVIDED'>, Integer>, 'friends': <<class 'merengue.registry.params.NOT_PROVIDED'>, List>}
+>>> PersonItem.get_merged_config(params.ConfigDict(config_params, {'is_human': False}), params.ConfigDict(config_params, {'age': 20}))
+{'is_human': <True, Bool>, 'age': <20, Integer>, 'friends': <<class 'merengue.registry.params.NOT_PROVIDED'>, List>}
+
+# last dictionary should be which set the 'age' param
+>>> PersonItem.get_merged_config(params.ConfigDict(config_params, {'age': 10}), params.ConfigDict(config_params, {'age': 12}))
+{'is_human': <True, Bool>, 'age': <12, Integer>, 'friends': <<class 'merengue.registry.params.NOT_PROVIDED'>, List>}
+
 """}
