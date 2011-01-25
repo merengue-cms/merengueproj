@@ -15,14 +15,17 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+import copy
+
 from django.db import models
+from django.utils.importlib import import_module
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.models import BaseContent
-
 from merengue.registry.dbfields import ConfigField
 from merengue.registry.managers import RegisteredItemManager
 from merengue.registry.models import RegisteredItem
+from merengue.registry.params import ConfigDict
 
 import re
 
@@ -114,6 +117,12 @@ class BlockContentRelation(models.Model):
     overwrite_allways = models.BooleanField(
         verbose_name=_('overwrite generic block if is present on the actual page'),
         default=False)
+
+    def get_block_config_field(self):
+        block = getattr(import_module(self.block.module),
+                        self.block.class_name)
+        block_config_field = copy.copy(block.config_params)
+        return ConfigDict(block_config_field, self.config)
 
     def __unicode__(self):
         return u'%s - %s' % (self.block.name, self.content.name)
