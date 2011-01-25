@@ -1,0 +1,55 @@
+{% extends "block.html" %}
+
+{% load i18n inlinetrans html_tags stringfilters %}
+
+{% block blockbody %}
+<div id="contact-info">
+    {% if cont %}
+	<span>
+    <strong>{% inline_trans "Name" %}:</strong>
+    {{ contact_info.name }}
+    </span>
+    {% endif %}
+    {% if contact_info.phone %}
+    <span>
+    <strong>{% inline_trans "Phone" %}:</strong>
+    {{ contact_info.phone }}
+    </span>
+    {% endif %}
+
+    {% if contact_info.phone2 %}
+    <span>
+    <strong>{% inline_trans "Phone 2" %}:</strong>
+    {{ contact_info.phone2 }}
+    </span>
+    {% endif %}
+
+    {% if contact_info.fax %}
+    <span>
+    <strong>{% inline_trans "Fax" %}:</strong>
+    {{ contact_info.fax }}
+    </span>
+    {% endif %}
+
+    {% if contact_info.contact_email %}
+    <span>
+    <strong>{% inline_trans "Email" %}:</strong>
+    <a href="mailto:{{ contact_info.contact_email }}" title="{{ contact_info.contact_email }}">{{ contact_info.contact_email|truncatechars:42 }}</a>
+    </span>
+    {% endif %}
+
+    {% if contact_info.contact_email2 %}
+    <span>
+    <strong>{% inline_trans "Email 2" %}:</strong>
+    <a href="mailto:{{ contact_info.contact_email2 }}" title="{{ contact_info.contact_email2 }}" >{{ contact_info.contact_email2|truncatechars:42 }}</a>
+    </span>
+    {% endif %}
+
+    {% if contact_info.url %}
+    <span>
+    <strong>{% inline_trans "URL" %}:</strong>
+        {% urlize contact_info.url 42 hide_protocol="1" target="_blank",rel="nofollow" %}
+    </span>
+    {% endif %}
+</div>
+{% endblock %}

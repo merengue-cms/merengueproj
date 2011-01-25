@@ -23,7 +23,9 @@ from merengue.section.admin import DocumentRelatedModelAdmin
 from merengue.section.models import Document
 
 from plugins.core.actions import AdminAction, LoginAction, LogoutAction
-from plugins.core.blocks import CoreMenuBlock, NavigationBlock, PrimaryLinksBlock, SecondaryLinksBlock, PortalMenuBlock
+from plugins.core.blocks import (CoreMenuBlock, NavigationBlock,
+                                 PrimaryLinksBlock, SecondaryLinksBlock,
+                                 PortalMenuBlock, ContactInfoBlock)
 
 
 class PluginConfig(Plugin):
@@ -44,7 +46,8 @@ class PluginConfig(Plugin):
 
     @classmethod
     def get_blocks(cls):
-        return [CoreMenuBlock, NavigationBlock, PrimaryLinksBlock, SecondaryLinksBlock, PortalMenuBlock]
+        return [CoreMenuBlock, NavigationBlock, PrimaryLinksBlock,
+                SecondaryLinksBlock, PortalMenuBlock, ContactInfoBlock]
 
     @classmethod
     def section_models(cls):

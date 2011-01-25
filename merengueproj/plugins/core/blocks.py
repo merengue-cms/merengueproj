@@ -18,7 +18,7 @@
 from django.conf import settings
 from django.utils.translation import ugettext as _
 
-from merengue.block.blocks import Block
+from merengue.block.blocks import Block, ContentBlock
 from merengue.registry import params
 from merengue.section.models import BaseSection, Menu
 from merengue.portal.models import PortalLink
@@ -128,3 +128,18 @@ class SecondaryLinksBlock(LinkBaseBlock):
     template_name = 'core/block_secondarylinks.html'
     help_text = _('Block that renders secondary portal links')
     verbose_name = _('Link Base Block')
+
+
+class ContactInfoBlock(ContentBlock):
+    """ Block that renders basic contact info of the content """
+    name = 'contactinfo'
+    default_place = 'aftercontent'
+    help_text = _('Block with contact info')
+    verbose_name = _('Contact Info block')
+
+    @classmethod
+    def render(cls, request, place, content, context, *args, **kwargs):
+        return cls.render_block(
+            request, template_name='core/block_contact_info.html',
+            block_title=_('Contact info'),
+            context={'contact_info': content.contact_info})
