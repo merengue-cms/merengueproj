@@ -77,7 +77,7 @@ class ContactForm(models.Model):
                                      related_name='contact_form',
                                      blank=True, null=True)
     captcha = models.BooleanField(verbose_name=_('captcha'), default=True)
-    sender_email = models.BooleanField(verbose_name=_('sender email'), default=True)
+    sender_email = models.BooleanField(verbose_name=_('sender email'), default=False)
 
     def __unicode__(self):
         return self.title
