@@ -37,5 +37,5 @@ def replace_variables(value, arg=None):
 @register.filter
 def menu_less(value, min_level=None):
     if min_level:
-        return value-min_level
+        return value - min_level + 1
     return value
