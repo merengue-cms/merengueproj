@@ -20,7 +20,6 @@ from django.db.models import Q
 from django.conf import settings
 
 from merengue.base.models import BaseContent
-from merengue.section.models import Section
 from merengue.block.blocks import Block, ContentBlock, SectionBlock
 from merengue.block.models import RegisteredBlock, BlockContentRelation
 
@@ -28,56 +27,75 @@ from merengue.block.models import RegisteredBlock, BlockContentRelation
 register = template.Library()
 
 
-def _render_blocks_queryset(blocks, request, obj, place, block_type, context):
+def _print_block(block, place, block_type, related_to_content, request):
+    if related_to_content:  # always print block that is marked for that content
+        return True
+    if block_type == 'block' and issubclass(block, Block) or \
+       block_type == 'contentblock' and issubclass(block, ContentBlock) or \
+       block_type == 'sectionblock' and issubclass(block, SectionBlock):
+        return block.get_registered_item().print_block(place, request.get_full_path())
+    else:
+        return False
+
+
+def _render_blocks_queryset(blocks, request, obj, place, block_type, context, related_to_content=False):
     rendered_blocks = []
     for registered_block in blocks:
-        block_content_relation = registered_block.get_content_related_block(
-           obj, place)
-        if registered_block.print_block(place, request.get_full_path()) or \
-                block_content_relation:
-            block = registered_block.get_registry_item_class()
-            if block_type == 'block' and issubclass(block, Block):
-                rendered_blocks.append(block.render(request,
-                                                    place,
-                                                    context,
-                                                    block_content_relation))
-            elif block_type == 'contentblock' and issubclass(block, ContentBlock) and isinstance(obj, BaseContent):
-                rendered_blocks.append(block.render(request,
-                                                    place,
-                                                    obj,
-                                                    context,
-                                                    block_content_relation))
-            elif block_type == 'sectionblock' and issubclass(block, SectionBlock) and isinstance(obj, Section):
-                rendered_blocks.append(block.render(request,
-                                                    place,
-                                                    obj,
-                                                    context,
-                                                    block_content_relation))
+        block = registered_block.get_registry_item_class()
+        if not _print_block(block, place, block_type, related_to_content, request):
+            continue
+        # building render method arguments
+        render_args = [request, place]
+        if issubclass(block, ContentBlock) or issubclass(block, SectionBlock):
+            render_args.append(obj)
+        render_args.append(context)
+        if related_to_content:
+            block_content_relation = registered_block.get_content_related_block(
+                obj, place,
+            )
+            render_args.append(block_content_relation)
+        # append the block rendering to list
+        try:
+            rendered_blocks.append(block.render(*render_args))
+        except:
+            rendered_blocks.append(block.render(*render_args))
     return rendered_blocks
 
 
 def _render_blocks(request, obj, place, block_type, context):
-    rendered_blocks = []
-    content = context.get('content')
-    content_related_blocks = BlockContentRelation.objects.filter(
-        content=content)
+    # TODO: we shouldn't "imagine" there will be a "content" variable in
+    # context but we need that for excluding the duplicated registered_blocks
+    # see below. Should be better to have request.content (with a middleware)
+    page_content = context.get('content', None)
     place_filters = Q(placed_at=place) | Q(placed_at='all')
 
-    registered_blocks = RegisteredBlock.objects.filter(
-        place_filters).exclude(blockcontentrelation__in=content_related_blocks.filter(Q(
-            placed_at=place, overwrite_if_place=True) | Q(
-                overwrite_allways=True))).actives(ordered=True)
+    rendered_blocks = []
+    registered_blocks = RegisteredBlock.objects.filter(place_filters)
 
-    static_content_blocks = RegisteredBlock.objects.filter(
-        blockcontentrelation__in=BlockContentRelation.objects.filter(
-            content=content, placed_at=place))
+    if page_content and page_content.has_related_blocks:
+        content_related_blocks = BlockContentRelation.objects.filter(
+            content=page_content)
+        # removing from registered_blocks all the "repeated" blocks
+        # if defined as "repeated" in related block configuration
+        registered_blocks = registered_blocks.exclude(
+            blockcontentrelation__in=content_related_blocks.filter(Q(
+                placed_at=place, overwrite_if_place=True) | Q(
+                overwrite_allways=True)))
+
+    registered_blocks = registered_blocks.actives(ordered=True)
 
     # first we get the rendered blocks of those that are "generic"
     rendered_blocks = _render_blocks_queryset(registered_blocks, request, obj,
                                               place, block_type, context)
-    # then we get the blocks related with the content
-    rendered_blocks += _render_blocks_queryset(static_content_blocks, request,
-                                               content, place, block_type, context)
+    if obj and isinstance(obj, BaseContent) and obj.has_related_blocks:
+        # render the blocks related to the content.
+        # note that obj can be be different that page_content (can be None).
+        # obj is page_content when calling render_content_blocks templatetag
+        blocks_related_to_content = RegisteredBlock.objects.filter(
+            blockcontentrelation__in=BlockContentRelation.objects.filter(
+                content=obj, placed_at=place))
+        rendered_blocks += _render_blocks_queryset(blocks_related_to_content,
+            request, obj, place, 'contentblock', context, related_to_content=True)
 
     return "<div class='blockContainer %ss'>%s" \
             "<input type=\"hidden\" class=\"blockPlace\" value=\"%s\">" \

@@ -344,13 +344,17 @@ class BaseContent(BaseClass):
                                     null=True, blank=True,
                                     related_name='contents_owned')
 
-    # Structural contents
+    # structural contents
     no_changeable = models.BooleanField(default=False,
                                         editable=False)
     no_deletable = models.BooleanField(default=False,
                                        editable=False)
 
-    # Structural fields
+    # block control. cached value for controlling if content has special blocks attached
+    has_related_blocks = models.BooleanField(default=False, editable=False,
+                                             db_index=True)
+
+    # structural fields
     no_changeable_fields = JSONField(null=True, blank=True,
                                      editable=False)
 
