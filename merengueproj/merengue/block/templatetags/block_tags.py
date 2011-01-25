@@ -61,14 +61,13 @@ def _render_blocks(request, obj, place, block_type, context):
     content = context.get('content')
     content_related_blocks = BlockContentRelation.objects.filter(
         content=content)
-    filter_filters = Q(placed_at=place) | Q(placed_at='all')
-    exclude_filters = Q(blockcontentrelation__in=content_related_blocks.filter(
-            placed_at=place, overwrite_if_place=True)) | Q(
-        blockcontentrelation__in=content_related_blocks.filter(
-                    overwrite_allways=True),
-        )
-    registered_blocks = RegisteredBlock.objects.exclude(exclude_filters).filter(
-        filter_filters).actives(ordered=True)
+    place_filters = Q(placed_at=place) | Q(placed_at='all')
+
+    registered_blocks = RegisteredBlock.objects.filter(
+        place_filters).exclude(blockcontentrelation__in=content_related_blocks.filter(Q(
+            placed_at=place, overwrite_if_place=True) | Q(
+                overwrite_allways=True))).actives(ordered=True)
+
     static_content_blocks = RegisteredBlock.objects.filter(
         blockcontentrelation__in=BlockContentRelation.objects.filter(
             content=content, placed_at=place))

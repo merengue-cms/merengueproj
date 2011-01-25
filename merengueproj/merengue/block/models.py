@@ -111,7 +111,7 @@ class BlockContentRelation(models.Model):
         verbose_name=_('overwrite generic block if the place is the same'),
         default=True)
     overwrite_allways = models.BooleanField(
-        verbose_name=_('overwrite generic block if is present on the content'),
+        verbose_name=_('overwrite generic block if is present on the actual page'),
         default=False)
 
     def __unicode__(self):
