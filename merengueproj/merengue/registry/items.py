@@ -84,10 +84,13 @@ class RegistrableItem(object):
 
     @classmethod
     def get_registered_item(cls):
+        if hasattr(cls, '_cached_registered_item'):
+            return cls._cached_registered_item
         for registered_item in cls.model.objects.all():
             # note: we do not use get to use cache from caching manager
             if registered_item.module == cls.get_module() and \
                registered_item.class_name == cls.get_class_name():
+                cls._cached_registered_item = registered_item
                 return registered_item
         raise ObjectDoesNotExist
 
