@@ -1,26 +1,7 @@
 {% load mptt_tags smart_if %}
 {% if menu %}
-<ul class="menu_ul menu1 {% block menuclass %}{% endblock %}">
-    {% for node, structure in menu.get_descendants|tree_info %}
-        {% if structure.new_level and node.level > 1 %}
-          <div class="iefix">
-          <table><tbody>
-        {% endif %}
-          {% if node.level > 1 %}
-            <tr class="{% if structure.new_level %}first{% endif %}{% if structure.closed_levels %}last{% endif %}">
-              <td>
-                <a href="{{ node.get_absolute_url }}" class="item {% ifequal node menu_item %}selected{% endifequal %}{% if node in ancestors %}selectedAncestors{% endif %} {% if node.level - menu_item__level > 1 %} itemhidden {% endif %} menu{{node.level}}">{{ node.name }}</a>
-              </td>
-            </tr>
-          {% else %}
-            {% with node.get_absolute_url as node_url %}
-                <li id="{{ node.slug }}"
-                    class="item menu{{node.level}} {% if structure.new_level %}first{% endif %} {% ifequal node menu_item %}selected {% if node.level = 1%} current {% endif %}{% endifequal %}{% if node in ancestors %}selectedAncestors current{% endif %} {% if node.level - menu_item__level > 1 %} itemhidden {% endif %} {% if node.get_descendants %}haveChild{% endif %}">
-                    <a href="{{ node.get_absolute_url }}" class="item {% ifequal node menu_item %}selected{% endifequal %}{% if node in ancestors %}selectedAncestors{% endif %} {% if node.level - menu_item__level > 1 %} itemhidden {% endif %} menu{{node.level}}">{{ node.name }}</a>
-                {% if not node.get_descendants %}</li>{% endif %}
-            {% endwith %}
-          {% endif %}
-        {% for level in structure.closed_levels %}{% if level > 1 %}</tbody></table></div></li>{% endif %}{% endfor %}
+    {% for node, structure in menu_items|tree_info %}
+        {% include "section/inc.item_menu_tag.html" %}
     {% endfor %}
-    </ul>
 {% endif %}
+

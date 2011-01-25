@@ -16,6 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django import template
+from django.db.models import Q
 from django.core.urlresolvers import reverse, NoReverseMatch
 
 from django.utils.translation import ugettext_lazy as _
@@ -29,7 +30,7 @@ register = template.Library()
 
 
 @register.inclusion_tag('section/menu_tag.html', takes_context=True)
-def menu_tag(context, menu, descendants=None):
+def menu_tag(context, menu, descendants=None, max_num_level=-1):
     ancestors = []
     menu_item = None
     if descendants is None:
@@ -43,16 +44,35 @@ def menu_tag(context, menu, descendants=None):
             pass
     except IndexError:
         pass
+
+    if max_num_level != -1:
+        if not menu_item:
+            menu_item = menu
+        current_level = menu_item.level
+        if current_level == 0:
+            current_level = 1
+        min_level = current_level - (current_level -1) % max_num_level
+        max_level = min_level + max_num_level -1
+        descendants = menu.get_descendants().filter(Q(level__gte=min_level,
+                                                      level__lte=max_level) | \
+                                                    Q(level=menu_item.level + 1,
+                                                      parent=menu_item))
+    else:
+        min_level = None
+        max_level = None
     return {'menu': menu,
+            'menu_items': descendants,
             'user': context.get('user', None),
             'menu_item': menu_item,
             'menu_item__level': menu_item and menu_item.level or 1,
-            'ancestors': ancestors}
+            'ancestors': ancestors,
+            'min_level': min_level,
+            'max_lavel': max_level}
 
 
 @register.inclusion_tag('section/menu_portal_tag.html', takes_context=True)
-def menu_portal_tag(context, menu):
-    return menu_tag(context, menu)
+def menu_portal_tag(context, menu, max_num_level=-1):
+    return menu_tag(context, menu, None, max_num_level)
 
 
 @register.inclusion_tag('section/menu_sitemap_tag.html', takes_context=True)
