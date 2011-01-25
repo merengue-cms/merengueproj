@@ -98,11 +98,12 @@ class Theme(models.Model):
             self.save()
 
 
-def check_for_duplicated_active_themes(sender, instance, **kwargs):
+def post_save_handler(sender, instance, **kwargs):
     if instance.active:
         for theme in Theme.objects.filter(active=True).exclude(id=instance.id):
             theme.active = False
             theme.save()
+        Theme.objects.clear_cache()
 
 
 def check_for_themes(sender, **kwargs):
@@ -110,5 +111,5 @@ def check_for_themes(sender, **kwargs):
     check_themes()
 
 
-signals.post_save.connect(check_for_duplicated_active_themes, sender=Theme)
+signals.post_save.connect(post_save_handler, sender=Theme)
 post_migrate.connect(check_for_themes)

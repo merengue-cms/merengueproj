@@ -17,10 +17,19 @@
 
 from django.db import models
 
+_cached_active_theme = None
+
 
 class ThemeManager(models.Manager):
     """ Theme manager """
 
     def active(self):
         """ Retrieves active theme for site """
-        return self.get(active=True)
+        global _cached_active_theme
+        if _cached_active_theme is None:
+            _cached_active_theme = self.get(active=True)
+        return _cached_active_theme
+
+    def clear_cache(self):
+        global _cached_active_theme
+        _cached_active_theme = None
