@@ -30,10 +30,10 @@ register = template.Library()
 
 
 @register.inclusion_tag('section/menu_tag.html', takes_context=True)
-def menu_tag(context, menu, descendants=None, max_num_level=-1):
+def menu_tag(context, menu, max_num_level=-1, descendants=None):
     ancestors = []
     menu_item = None
-    if descendants is None:
+    if not descendants:
         descendants = menu.get_descendants()
     try:
         menuitem_slug = context['request'].META['PATH_INFO'].split('/')[-2]
@@ -75,7 +75,7 @@ def menu_tag(context, menu, descendants=None, max_num_level=-1):
 
 @register.inclusion_tag('section/menu_portal_tag.html', takes_context=True)
 def menu_portal_tag(context, menu, max_num_level=-1):
-    return menu_tag(context, menu, None, max_num_level)
+    return menu_tag(context, menu, max_num_level)
 
 
 @register.inclusion_tag('section/menu_sitemap_tag.html', takes_context=True)
