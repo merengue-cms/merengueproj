@@ -87,7 +87,6 @@ def menu_sitemap_tag(context, section, class_ul):
     if user.is_staff or section.status == 2:
         get_menu_iterative(context, section.main_menu, menu_tree)
         get_static_main_menu(context, section, menu_tree)
-        get_menu_agenda(context, section, menu_tree)
         new_context['menu_tree'] = menu_tree
     return new_context
 
@@ -113,21 +112,6 @@ def get_menu_iterative(context, menu, menu_tree):
                     menu_child['end_level'] = range(False)
                 menu_child['new_level'] = new_level
                 menu_tree.append(menu_child)
-
-
-def get_menu_agenda(context, section, menu_tree):
-    menu_child = {}
-    if (section.category_set.all() or section.categorygroup_set.all()):
-        try:
-            menu_child['name'] = _('Agenda')
-            menu_child['slug'] = 'agenda-%s' % section.slug
-            menu_child['url'] = section.get_agenda_url()
-            menu_child['deep'] = 0
-            menu_child['new_level'] = True
-            menu_child['end_level'] = range(True)
-            menu_tree.append(menu_child)
-        except NoReverseMatch:
-            pass
 
 
 def get_static_main_menu(context, section, menu_tree):

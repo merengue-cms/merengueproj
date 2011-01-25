@@ -309,10 +309,6 @@ class BaseSection(Base, RealInstanceMixin):
         return [(self.get_absolute_url(), unicode(self))]
 
     @permalink
-    def get_agenda_url(self):
-        return ("%s_agenda_view" %(self.app_name), [])
-
-    @permalink
     def get_admin_absolute_url(self):
         content_type = ContentType.objects.get_for_model(self)
         return ('merengue.base.views.admin_link', [content_type.id, self.id, ''])
