@@ -19,11 +19,26 @@ from django.conf import settings
 from django.utils.translation import ugettext as _
 
 from merengue.block.blocks import Block
+from merengue.registry import params
 from merengue.section.models import BaseSection, Menu
 from merengue.portal.models import PortalLink
 
 
-class CoreMenuBlock(Block):
+class BaseMenuBlock(object):
+
+    config_params = [
+        params.Integer(name='max_num_level',
+                       label=_('maximum number of levels to show'), default=-1)]
+
+    @classmethod
+    def get_max_level(cls):
+        max_value = cls.get_config().get('max_num_level', None)
+        if max_value:
+            return max_value.get_value()
+        return -1
+
+
+class CoreMenuBlock(BaseMenuBlock, Block):
     name = 'coremenu'
     default_place = 'leftsidebar'
     help_text = _('Renders the Menu')
@@ -42,10 +57,11 @@ class CoreMenuBlock(Block):
                                 block_title=_('Menu'),
                                 context={'section': section,
                                          'menu': main_menu,
-                                         'descendants': descendants})
+                                         'descendants': descendants,
+                                         'max_num_level': cls.get_max_level()})
 
 
-class NavigationBlock(Block):
+class NavigationBlock(BaseMenuBlock, Block):
     name = 'navigation'
     default_place = 'leftsidebar'
     help_text = _('Renders the Navigation')
@@ -59,10 +75,11 @@ class NavigationBlock(Block):
         return cls.render_block(request, template_name='core/block_navigation.html',
                                 block_title=_('Navigation'),
                                 context={'sections': sections,
-                                         'active_section': request.section})
+                                         'active_section': request.section,
+                                         'max_num_level': cls.get_max_level()})
 
 
-class PortalMenuBlock(Block):
+class PortalMenuBlock(BaseMenuBlock, Block):
     name = 'portalmenu'
     default_place = 'header'
     help_text = _('Renders the Portal Menu')
@@ -73,7 +90,8 @@ class PortalMenuBlock(Block):
         portal_menu = Menu.objects.get(slug=settings.MENU_PORTAL_SLUG)
         return cls.render_block(request, template_name='core/block_portal_menu.html',
                                 block_title=_('Portal Menu'),
-                                context={'portal_menu': portal_menu})
+                                context={'portal_menu': portal_menu,
+                                         'max_num_level': cls.get_max_level()})
 
 
 class LinkBaseBlock(Block):
