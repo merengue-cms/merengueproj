@@ -73,13 +73,14 @@ class RegistrableItem(object):
         return cls._config_dict(registered_item.get_config())
 
     @classmethod
-    def get_first_active_config(cls, *args):
-        """ get a list of config field objects and returns first config with filled data """
+    def get_merged_config(cls, *configs):
+        """ get a merged config with all config dicts passed by param """
         registered_item = cls.get_registered_item()
-        for config in args:
+        merged_config = cls.get_config()
+        for config in configs:
             if config:
-                return cls._config_dict(config)
-        return cls.get_config()
+                merged_config.update(config)
+        return merged_config
 
     @classmethod
     def get_registered_item(cls):

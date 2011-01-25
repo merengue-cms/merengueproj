@@ -189,3 +189,8 @@ class ConfigDict(SortedDict):
             if config_values and param.name in config_values:
                 param.value = config_values[param.name]
             self[param.name] = param
+
+    def update(self, d):
+        for k, v in d.iteritems():
+            if v.get_value() != NOT_PROVIDED:
+                self[k] = v
