@@ -25,10 +25,10 @@ from plugins.link.models import Link
 LINK_COLLECTION_SLUG = 'links'
 
 
-def link_index(request, extra_context=None):
+def link_index(request, extra_context=None, template_name='link/link_index.html'):
     link_collection = Collection.objects.get(slug=LINK_COLLECTION_SLUG)
     extra_context = extra_context or {}
-    return content_view(request, link_collection, extra_context=extra_context)
+    return content_view(request, link_collection, extra_context=extra_context, template_name=template_name)
 
 
 def link_view(request, link_slug, template_name='link/link_view.html', extra_context=None):

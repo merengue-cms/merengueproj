@@ -1,0 +1,21 @@
+{% extends "collection/collection_item.html" %}
+
+{% load content_tags i18n content_tags %}
+
+
+{% block linkblock %}
+    {% if item.url_link %}
+    <a href="{{ item.url_link }}" title="{{ item }}" class="contentLink">
+        {% cutrender 100 %}{{ item }}{% endcutrender %}
+    </a>
+    {% else %}
+        {% cutrender 100 %}{{ item }}{% endcutrender %}
+    {% endif %}
+{% endblock %}
+
+
+{% block fieldsblock %}
+    {{ block.super }}
+    {% if item.portal_name %}<div class="portalName">{{ item.portal_name }}</div>{% endif %}
+    <a href="{{ item.get_absolute_url }}" title="{% trans "View more" %}" class="viewMore">{% trans "View more" %}</a>
+{% endblock %}
