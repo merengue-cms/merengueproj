@@ -87,7 +87,7 @@ class Single(Param):
 class Integer(Param):
 
     def get_parsed_value(self, value):
-        if value is not None and not isinstance(value, int) and value.strip('-').isdigit():
+        if value is not None and isinstance(value, basestring) and value.strip('-').isdigit():
             try:
                 return int(value)
             except ValueError:
