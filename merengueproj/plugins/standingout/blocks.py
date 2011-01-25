@@ -46,7 +46,8 @@ class StandingOutBlock(Block):
                 if standingouts:
                     break
         standingouts = standingouts or StandingOut.objects.filter(related_content_type__isnull=True, related_id__isnull=True)
-        limit = cls.get_config(block_content_relation).get('limit', None)
+        custom_config = getattr(block_content_relation, 'config', None)
+        limit = cls.get_first_active_config(custom_config).get('limit', None)
         if limit:
             standingouts = standingouts[:limit.get_value()]
         return cls.render_block(request, template_name='standingout/block_standingout.html',

@@ -38,7 +38,8 @@ class VotingBlock(BlockSectionFilterItemProvider, ContentBlock):
     @classmethod
     def render(cls, request, place, content, context,
                block_content_relation=None, *args, **kwargs):
-        readonly = cls.get_config(block_content_relation).get(
+        custom_config = getattr(block_content_relation, 'config', None)
+        readonly = cls.get_first_active_config(custom_config).get(
             'readonly').get_value()
         return cls.render_block(request, template_name='voting/block_voting.html',
                                 block_title=_('Vote content'),
