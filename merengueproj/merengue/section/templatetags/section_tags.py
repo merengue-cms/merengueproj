@@ -48,10 +48,13 @@ def menu_tag(context, menu, descendants=None, max_num_level=-1):
     if max_num_level != -1:
         if not menu_item:
             menu_item = menu
-        current_level = menu_item.level
-        if current_level == 0:
-            current_level = 1
-        min_level = current_level - (current_level -1) % max_num_level
+            min_level = 1
+        else:
+            current_level = menu_item.level
+            if current_level == 0:
+                current_level = 1
+            min_level = current_level - (current_level -1) % max_num_level
+            menu = menu_item.get_ancestors().get(level=min_level -1)
         max_level = min_level + max_num_level -1
         descendants = menu.get_descendants().filter(Q(level__gte=min_level,
                                                       level__lte=max_level) | \
@@ -67,7 +70,7 @@ def menu_tag(context, menu, descendants=None, max_num_level=-1):
             'menu_item__level': menu_item and menu_item.level or 1,
             'ancestors': ancestors,
             'min_level': min_level,
-            'max_lavel': max_level}
+            'max_level': max_level}
 
 
 @register.inclusion_tag('section/menu_portal_tag.html', takes_context=True)
