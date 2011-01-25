@@ -38,7 +38,10 @@ class VotingBlock(BlockSectionFilterItemProvider, ContentBlock):
     @classmethod
     def render(cls, request, place, content, context,
                block_content_relation=None, *args, **kwargs):
-        custom_config = getattr(block_content_relation, 'config', None)
+        if block_content_relation:
+            custom_config = block_content_relation.get_block_config_field()
+        else:
+            custom_config = None
         readonly = cls.get_merged_config(custom_config).get(
             'readonly').get_value()
         return cls.render_block(request, template_name='voting/block_voting.html',

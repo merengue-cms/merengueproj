@@ -41,7 +41,10 @@ class TagCloudBlock(BlockQuerySetItemProvider, Block):
     @classmethod
     def render(cls, request, place, context, block_content_relation=None,
                *args, **kwargs):
-        custom_config = getattr(block_content_relation, 'config', None)
+        if block_content_relation:
+            custom_config = block_content_relation.get_block_config_field()
+        else:
+            custom_config = None
         config = cls.get_merged_config(custom_config)
         limit = config.get('max_tags_in_cloud', []).get_value()
         filter_section = config.get('filtering_section', False).get_value()

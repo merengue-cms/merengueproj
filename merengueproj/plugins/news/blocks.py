@@ -41,7 +41,10 @@ class LatestNewsBlock(BlockQuerySetItemProvider, Block):
     @classmethod
     def get_contents(cls, request=None, context=None, section=None,
                  block_content_relation=None):
-        custom_config = getattr(block_content_relation, 'config', None)
+        if block_content_relation:
+            custom_config = block_content_relation.get_block_config_field()
+        else:
+            custom_config = None
         number_news = cls.get_merged_config(custom_config).get(
             'limit', []).get_value()
         news_list = get_news(request, number_news)

@@ -46,7 +46,10 @@ class StandingOutBlock(Block):
                 if standingouts:
                     break
         standingouts = standingouts or StandingOut.objects.filter(related_content_type__isnull=True, related_id__isnull=True)
-        custom_config = getattr(block_content_relation, 'config', None)
+        if block_content_relation:
+            custom_config = block_content_relation.get_block_config_field()
+        else:
+            custom_config = None
         limit = cls.get_merged_config(custom_config).get('limit', None)
         if limit:
             standingouts = standingouts[:limit.get_value()]
