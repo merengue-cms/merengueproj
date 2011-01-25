@@ -30,6 +30,7 @@ import re
 PLACES = (('all', _('All')),
           ('leftsidebar', _('Left sidebar')),
           ('rightsidebar', _('Right sidebar')),
+          ('aftercontenttitle', _('After content title')),
           ('beforecontent', _('Before content body')),
           ('homepage', _('Home page')),
           ('aftercontent', _('After content body')),
