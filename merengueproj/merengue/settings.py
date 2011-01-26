@@ -118,6 +118,7 @@ MERENGUE_MIDDLEWARE_CLASSES = (
 
 PRE_MERENGUE_MIDDLEWARE_CLASSES = (
     'johnny.middleware.LocalStoreClearMiddleware',  # this has to be first
+    #'cmsutils.middleware.ProfileMiddleware', # remove comment if you want to profile your website
     #'cmsutils.middleware.I18NUpdateCacheMiddleware', # removed anonymous cache middleware
     'johnny.middleware.QueryCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -131,7 +132,7 @@ PRE_MERENGUE_MIDDLEWARE_CLASSES = (
 
 POST_MERENGUE_MIDDLEWARE_CLASSES = (
     #'django.middleware.gzip.GZipMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',  # remove comment if you want to activate django debug toolbar
     'merengue.section.middleware.ResponseSectionMiddleware',
     'merengue.pluggable.middleware.PluginMiddlewaresProxy',
     #'cmsutils.middleware.I18NFetchFromCacheMiddleware', # this has to be last # removed anonymous cache middleware
