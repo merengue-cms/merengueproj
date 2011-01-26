@@ -22,6 +22,21 @@
             return order.join(",");
         }
 
+        function getBlocksContentRelated() {
+            var order = [];
+            containers.each(function() {
+                var orderList = [];
+                var place = $(this).children(".blockPlace").val();
+                $(this).children(".block").children(".blockContentRelated").each(function() {
+                    var val = $(this).val();
+                    if (val) {
+                        order.push(val +"#"+ place);
+                    }
+                });
+            });
+            return order.join(",");
+        }
+
         function initDragging() {
             $(".block").each(function() {
                 var aTools, divTools, position;
@@ -107,10 +122,11 @@
 
         function postNewOrder() {
             var newOrder = getBlocksOrder();
+            var blockCntRltd = getBlocksContentRelated();
             $.ajax({
                 url: "{% url blocks_reorder %}",
                 type: "POST",
-                data: ({new_order : newOrder}),
+                data: ({new_order : newOrder, block_cnt_rltd: blockCntRltd}),
                 dataType: "json",
                 success: function(msg) {
                     // It's not necesary to alert the user

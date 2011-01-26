@@ -31,13 +31,15 @@ class BaseBlock(RegistrableItem):
         return 'block'
 
     @classmethod
-    def render_block(cls, request, template_name='block.html', block_title=None, context=None):
+    def render_block(cls, request, template_name='block.html', block_title=None,
+                     context=None, block_content_relation=None):
         if context is None:
             context = {}
         registered_block = cls.get_registered_item()
         block_context = {
             'block_title': block_title or registered_block.name,
             'block': registered_block,
+            'block_content_relation': block_content_relation,
         }
         block_context.update(context)
         return render_to_string(template_name, block_context,

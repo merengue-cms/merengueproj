@@ -8,4 +8,7 @@
  {% endblock %}
  </div>
  <input type="hidden" value="{{ block.id }}" id="{{ block.name }}Order" class="blockOrder" />
+ {% if block_content_relation %}
+ <input type="hidden" value="{{ block_content_relation.id }}" id="{{ block.name }}ContentRelated" class="blockContentRelated" />
+ {% endif %}
 </div>
