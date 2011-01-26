@@ -37,6 +37,9 @@ class Link(BaseContent):
 
     url_link = models.URLField(verbose_name=_('Url Link'))
     portal_name = models.CharField(verbose_name=_('Portal name'), max_length=250, blank=True, null=True)
+    categories = models.ManyToManyField(LinkCategory,
+                                        verbose_name=_('category'),
+                                        blank=True, null=True, db_index=True)
     objects = BaseContentManager()
 
     class Meta:
