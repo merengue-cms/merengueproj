@@ -202,7 +202,7 @@ if settings.USE_GIS:
                 return settings.MEDIA_URL + 'merengue/img/map/default_map_icon.png'
 
         def get_icon_tag(self):
-            return '<img src="%s" title="%s"/>' %(self.get_icon(), self._meta.verbose_name)
+            return '<img src="%s" title="%s"/>' % (self.get_icon(), self._meta.verbose_name)
         get_icon_tag.allow_tags = True
 
         def has_location(self):
@@ -299,11 +299,11 @@ class BaseContent(BaseClass):
     user_modification_date = models.DateTimeField(verbose_name=_('modification date'),
                                                   blank=True, null=True, editable=False)
     cached_plain_text = models.TextField(verbose_name=_('cached plain text'),
-                                   null=True, blank=True)
+                                   null=True, blank=True, editable=False)
 
     last_editor = models.ForeignKey(User, null=True, blank=True, editable=False,
                                     related_name='last_edited_content')
-    last_editor.delete_cascade=False
+    last_editor.delete_cascade = False
 
     # permission global
     adquire_global_permissions = models.BooleanField(_('Adquire global permissions'), default=True)
@@ -406,7 +406,7 @@ class BaseContent(BaseClass):
         try:
             main_image_field._rename_resize_image(instance=self)
         except OSError:
-            pass # this may fail if the image file does not exist
+            pass  # this may fail if the image file does not exist
 
         if object_update_again:
             non_pks = [f for f in self._meta.local_fields if not f.primary_key]
@@ -416,7 +416,7 @@ class BaseContent(BaseClass):
 
     def get_real_instance(self):
         """ get object child instance """
-        if hasattr(self, '_real_instance'): # try looking in our cache
+        if hasattr(self, '_real_instance'):  # try looking in our cache
             return self._real_instance
         real_instance = getattr(self, self.class_name, self)
         self._real_instance = real_instance
@@ -457,7 +457,7 @@ class BaseContent(BaseClass):
             return None
 
     def calculate_rank(self):
-        return 100.0 # default implementation
+        return 100.0  # default implementation
 
     def recalculate_main_image(self):
         """ main image will be first ordered multimedia relation with class "photo" """
@@ -559,7 +559,7 @@ class MultimediaRelation(models.Model):
 
     def _get_human_order(self):
         if self.order != None:
-            return self.order+1
+            return self.order + 1
         return ''
     _get_human_order.short_description = _('Human Order')
     human_order = property(_get_human_order)
@@ -579,7 +579,7 @@ class MultimediaRelation(models.Model):
     def get_next_multimedia(self):
         try:
             next = MultimediaRelation.objects.get(content=self.content,
-                                                  order=self.order+1)
+                                                  order=self.order + 1)
             return next
         except MultimediaRelation.DoesNotExist:
             return self
@@ -587,7 +587,7 @@ class MultimediaRelation(models.Model):
     def get_previous_multimedia(self):
         try:
             previous = MultimediaRelation.objects.get(content=self.content,
-                                                      order=self.order-1)
+                                                      order=self.order - 1)
             return previous
         except MultimediaRelation.DoesNotExist:
             return self
@@ -651,7 +651,7 @@ def _collect_sub_objects(self, seen_objs, parent=None, nullable=False):
         if seen_objs.add(self.__class__, pk_val, self,
                          parent, nullable):
             return
-    else: # For Django 1.1.2 or newer
+    else:  # For Django 1.1.2 or newer
         if seen_objs.add(self.__class__, pk_val, self,
                          type(parent), parent, nullable):
             return
@@ -767,7 +767,7 @@ def handle_post_migrate(sender, **kwargs):
         enable_active_plugins()
     # site fixtures loading after migration
     for app_name, fixtures in getattr(settings, 'SITE_FIXTURES', {}).items():
-        if app_name == app: # only migrate
+        if app_name == app:  # only migrate
             for fixture in fixtures:
                 call_command('loaddata', fixture, verbosity=1)
     # will set again saved receivers and cache backend
