@@ -16,6 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import signals
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.registry.models import RegisteredItem
@@ -45,11 +46,11 @@ class RegistryError(Exception):
 class RegistrableItem(object):
     """ Base class for all registered objects """
 
-    name = None # to be overriden in subclasses
-    verbose_name = None # to be overriden in subclasses
-    help_text = None # to be overriden in subclasses
-    model = RegisteredItem # to be overriden in subclasses
-    config_params = [] # configuration parameters, to be overriden
+    name = None  # to be overriden in subclasses
+    verbose_name = None  # to be overriden in subclasses
+    help_text = None  # to be overriden in subclasses
+    model = RegisteredItem  # to be overriden in subclasses
+    config_params = []  # configuration parameters, to be overriden
 
     @classmethod
     def get_class_name(cls):
@@ -75,7 +76,6 @@ class RegistrableItem(object):
     @classmethod
     def get_merged_config(cls, *configs):
         """ get a merged config with all config dicts passed by param """
-        registered_item = cls.get_registered_item()
         merged_config = cls.get_config()
         for config in configs:
             if config:
@@ -97,6 +97,11 @@ class RegistrableItem(object):
     @classmethod
     def get_extended_attrs(cls):
         return {}
+
+    @classmethod
+    def invalidate_cache(cls):
+        if hasattr(cls, '_cached_registered_item'):
+            del cls._cached_registered_item
 
 
 class SectionFilterItemProvider(object):
@@ -168,21 +173,11 @@ class ViewLetQuerySetItemProvider(QuerySetItemProvider):
             section = menu.get_root().get_section()
         return section or super(ViewLetQuerySetItemProvider, cls)._get_section(request, context)
 
-"""
-Example use::
 
-class Action(RegistrableItem):
-    model = RegisteredAction
+def post_save_handler(sender, instance, **kwargs):
+    if isinstance(instance, RegisteredItem):
+        # cache invalidation of registered item in a registrable intem
+        instance.get_registry_item_class().invalidate_cache()
 
-    @classmethod
-    def get_category(cls):
-        return 'action'
 
-class PDFExport(Action):
-    name = "pdfexport"
-
-    config_params = params.Single(name='pdfbin', default='/usr/bin/html2pdf')
-
->>> from merengue.pluggable.pdfexport.actions import PDFExport
->>> PDFExport.get_config()['pdfbin']
-"""
+signals.post_save.connect(post_save_handler)
