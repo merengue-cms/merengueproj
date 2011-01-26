@@ -51,5 +51,5 @@ class ContactFormBlock(ContentBlock):
                        form=form)
 
         return cls.render_block(request, template_name='contactform/block_form.html',
-                                block_title=_('Form'),
+                                block_title=_('Contact form'),
                                 context=context)

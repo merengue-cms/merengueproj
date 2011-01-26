@@ -42,7 +42,7 @@ class BannerBlock(BlockQuerySetItemProvider, Block):
         else:
             custom_config = None
         number_news = cls.get_merged_config(custom_config).get(
-            'limit', []).get_value()
+            'limit', []).get_value() or None
         banners_list = get_banners(request, number_news)
         return banners_list
 
