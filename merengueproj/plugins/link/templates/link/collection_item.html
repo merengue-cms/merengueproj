@@ -5,7 +5,7 @@
 
 {% block linkblock %}
     {% if item.url_link %}
-    <a href="{{ item.url_link }}" title="{{ item }}" class="contentLink">
+    <a href="{{ item.url_link }}" title="{{ item }}" class="contentLink externalLink">
         {% cutrender 100 %}{{ item }}{% endcutrender %}
     </a>
     {% else %}
