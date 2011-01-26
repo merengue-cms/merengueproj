@@ -39,7 +39,10 @@ Selenium tests
 ==============
 
 Selenium tests are very useful because they tests all application layers (from
-database to user interface).
+database to user interface). It came with a IDE to launch and records functional
+tests:
+
+.. image:: _images/selenium_tests.png
 
 These are the steps for installing and executing the Merengue
 `Selenium tests suites`_:

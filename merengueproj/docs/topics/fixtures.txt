@@ -51,6 +51,8 @@ XML serializer, adding these improvements:
 * Translations fields support.
 * Option for not overwrite objects previously loaded in your site.
 
+.. _`Django serialization framework`: http://docs.djangoproject.com/en/1.1/topics/serialization/#topics-serialization
+
 Translation fields support
 --------------------------
 
