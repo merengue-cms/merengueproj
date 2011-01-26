@@ -38,7 +38,7 @@ def _print_block(block, place, block_type, related_to_content, request):
         return False
 
 
-def _render_blocks_queryset(blocks, request, obj, place, block_type, context, related_to_content=False):
+def _render_blocks_list(blocks, request, obj, place, block_type, context, related_to_content=False):
     rendered_blocks = []
     for registered_block in blocks:
         block = registered_block.get_registry_item_class()
@@ -67,10 +67,9 @@ def _render_blocks(request, obj, place, block_type, context):
     # context but we need that for excluding the duplicated registered_blocks
     # see below. Should be better to have request.content (with a middleware)
     page_content = context.get('content', None)
-    place_filters = Q(placed_at=place) | Q(placed_at='all')
 
     rendered_blocks = []
-    registered_blocks = RegisteredBlock.objects.filter(place_filters)
+    registered_blocks = RegisteredBlock.objects.actives(ordered=True)
 
     if page_content and page_content.has_related_blocks:
         content_related_blocks = BlockContentRelation.objects.filter(
@@ -82,10 +81,8 @@ def _render_blocks(request, obj, place, block_type, context):
                 placed_at=place, overwrite_if_place=True) | Q(
                 overwrite_allways=True)))
 
-    registered_blocks = registered_blocks.actives(ordered=True)
-
     # first we get the rendered blocks of those that are "generic"
-    rendered_blocks = _render_blocks_queryset(registered_blocks, request, obj,
+    rendered_blocks = _render_blocks_list(registered_blocks, request, obj,
                                               place, block_type, context)
     if obj and isinstance(obj, BaseContent) and obj.has_related_blocks:
         # render the blocks related to the content.
@@ -94,7 +91,7 @@ def _render_blocks(request, obj, place, block_type, context):
         blocks_related_to_content = RegisteredBlock.objects.filter(
             blockcontentrelation__in=BlockContentRelation.objects.filter(
                 content=obj, placed_at=place))
-        rendered_blocks += _render_blocks_queryset(blocks_related_to_content,
+        rendered_blocks += _render_blocks_list(blocks_related_to_content,
             request, obj, place, 'contentblock', context, related_to_content=True)
 
     return "<div class='blockContainer %ss'>%s" \
