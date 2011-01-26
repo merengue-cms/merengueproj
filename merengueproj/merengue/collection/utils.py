@@ -13,7 +13,7 @@ from merengue.collection.models import (Collection, IncludeCollectionFilter,
 
 def get_common_fields_for_cts(content_types):
     result = set()
-    extrange = False
+    extrange = len(content_types) == 1
     for ct in content_types:
         model = ct.model_class()
         if not issubclass(model, BaseContent):
