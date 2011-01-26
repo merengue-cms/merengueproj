@@ -51,3 +51,8 @@ class PluginConfig(Plugin):
     @classmethod
     def get_blocks(cls):
         return [TagCloudBlock]
+
+    @classmethod
+    def post_install(cls):
+        from tagging.models import Tag
+        [i.save() for i in Tag.objects.all()]

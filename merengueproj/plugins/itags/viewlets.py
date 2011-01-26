@@ -33,7 +33,7 @@ class TagCloudViewlet(ViewLetQuerySetItemProvider, Viewlet):
     verbose_name = _('Tag cloud block')
 
     config_params = ViewLetQuerySetItemProvider.config_params + [
-        params.Single(
+        params.PositiveInteger(
             name='max_tags_in_cloud',
             label=ugettext('Max number of tags in cloud'),
             default='20',
