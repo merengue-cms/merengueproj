@@ -11,7 +11,7 @@
 
 {% block contentdescription %}
     {{ block.super }}
-    <a href="{{ content.url_link }}" title="{% trans "View more" %}">{% trans "View more" %}{% if content.portal_name %}:{{ content.portal_name }}{% endif %}</a>
+    <a href="{{ content.url_link }}" title="{% trans "External link" %}" class="externalLink">{% trans "External link" %}{% if content.portal_name %}:{{ content.portal_name }}{% endif %}</a>
 {% endblock %}
 
 {% block contenttitle %}
