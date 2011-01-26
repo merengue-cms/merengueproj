@@ -22,7 +22,8 @@ from django.utils import simplejson
 
 from merengue.base.views import render_content
 from merengue.collection.utils import (get_common_fields_for_cts,
-                                       get_common_fields_no_language_from_fields)
+                                       get_common_fields_no_language_from_fields,
+                                       get_render_item_template)
 
 
 def feeditem_view(request, content, template_name=None, extra_context=None):
@@ -41,13 +42,18 @@ def feeditem_view(request, content, template_name=None, extra_context=None):
 
 
 def collection_view(request, content, template_name=None, extra_context=None):
+    context = {}
+    if extra_context:
+        context.update(extra_context)
+    model_collection = content.get_first_parents_of_content_types()
     if template_name is None:
-        model_collection = content.get_first_parents_of_content_types()
         template_name = []
         if model_collection:
             template_name += ['%s/collection_view.html' % m._meta.module_name for m in model_collection.mro() if getattr(m, '_meta', None) and not m._meta.abstract]
         template_name.append(content._meta.content_view_template)
-    return render_content(request, content, template_name, extra_context)
+    render_item_template = get_render_item_template(model_collection)
+    context['render_item_template'] = render_item_template
+    return render_content(request, content, template_name, context)
 
 
 @login_required

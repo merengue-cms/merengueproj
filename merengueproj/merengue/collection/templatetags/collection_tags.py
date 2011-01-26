@@ -2,13 +2,13 @@ from copy import copy
 
 from django.db.models import Q
 from django.core.exceptions import FieldError
-from django.template import TemplateSyntaxError, Variable, Library, Node
+from django.template import TemplateSyntaxError, Variable, Library, Node, Context
 from django.template.defaultfilters import dictsort
 from django.template.defaulttags import RegroupNode
-from django.template.loader import render_to_string
 
 from cmsutils.adminfilters import QueryStringManager
 from merengue.collection.models import FeedCollection
+from merengue.collection.utils import get_render_item_template
 
 
 register = Library()
@@ -47,11 +47,11 @@ class CollectionItemNode(Node):
             'listing': self.listing,
         })
         model_collection = collection.get_first_parents_of_content_types()
-        template_name = []
-        if model_collection:
-            template_name += ['%s/collection_item.html' % m._meta.module_name for m in model_collection.mro() if getattr(m, '_meta', None) and not m._meta.abstract]
-        template_name.append('collection/collection_item.html')
-        return render_to_string(template_name, context_copy)
+        if 'render_item_template' in context:
+            template = context['render_item_template']
+        else:
+            template = get_render_item_template(model_collection)
+        return template.render(Context(context_copy))
 
 
 def collectionitem(parser, token):

@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.db import transaction
+from django.template import loader
 
 from transmeta import get_real_fieldname
 
@@ -87,3 +88,12 @@ def create_normalize_collection(slug, name, model, create_display_field=True,
                     filter_module='django.template.defaultfilters.truncatewords_html',
                     filter_params='15')
             collection.content_types.add(ct)
+
+
+def get_render_item_template(model_collection):
+    template_list = []
+    if model_collection:
+        template_list += ['%s/collection_item.html' % m._meta.module_name \
+                          for m in model_collection.mro() \
+                          if getattr(m, '_meta', None) and not m._meta.abstract]
+    return loader.select_template(template_list + ['collection/collection_item.html'])
