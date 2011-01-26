@@ -59,6 +59,9 @@ Topics
  * **Testing:**
    :ref:`Testing in Merengue <topics-testing>`
 
+ * **Profiling:**
+   :ref:`Profiling in Merengue <topics-profiling>`
+
 Reference
 =========
 

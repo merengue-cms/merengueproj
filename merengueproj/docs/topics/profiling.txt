@@ -1,0 +1,64 @@
+.. _topics-profiling:
+
+==================
+Profiling Merengue
+==================
+
+Django debug toolbar
+====================
+
+Merengue has a customized version of `Django debug toolbar`_ deactivated by default.
+
+You have to remove comments from `merengue/settings.py`_ to activate this toolbar:
+
+.. code-block:: python
+
+    POST_MERENGUE_MIDDLEWARE_CLASSES = (
+        # ... stuff
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+        # ... stuff
+
+Also, you have to make sure that ``DEBUG_TOOLBAR`` setting is enabled.
+
+You can activate specific debug toolbar panels setting ``DEBUG_TOOLBAR_PANELS``.
+
+.. _`Django debug toolbar`: http://rob.cogit8.org/blog/2008/Sep/19/introducing-django-debug-toolbar/
+
+
+Profiling middleware
+====================
+
+Merengue has ProfilingMiddleware deactivated by default. For using it, you have
+to install ``python-profiler``.
+
+For activating it is needed to remove comments from `merengue/settings.py`_ to
+activate middleware:
+
+.. code-block:: python
+
+    PRE_MERENGUE_MIDDLEWARE_CLASSES = (
+        # ... stuff
+        'cmsutils.middleware.ProfileMiddleware',
+        # ... stuff
+
+When you activate the middleware, with ``DEBUG`` set to ``True``, you only have
+to access to the page you want to profile, adding a ``HTTP`` ``profile`` ``GET`` parameter. For
+example, if your server is running in ``localhost:8000``, you have to point the browser to::
+
+    http://localhost:8000/?profile
+
+And you Merengue will show a page like this::
+
+    119364 function calls (110393 primitive calls) in 0.842 CPU seconds
+
+    Ordered by: internal time, call count
+
+    ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        4796    0.076    0.000    0.076    0.000 /tmp/venv2.6/lib/python2.6/posixpath.py:307(normpath)
+          11    0.075    0.007    0.076    0.007 /tmp/django_src_1.1.X/django/db/models/fields/related.py:759(db_type)
+        2398    0.042    0.000    0.191    0.000 /tmp/django_src_1.1.X/django/utils/_os.py:24(safe_join)
+          88    0.035    0.000    0.055    0.001 /tmp/django_src_1.1.X/django/template/debug.py:10(tokenize)
+          79    0.032    0.000    0.191    0.002 /tmp/django_src_1.1.X/django/template/loaders/app_directories.py:48(load_template_source)
+          ... # more stuff
+
+.. _`merengue/settings.py`: http://dev.merengueproject.org/browser/trunk/merengueproj/merengue/settings.py

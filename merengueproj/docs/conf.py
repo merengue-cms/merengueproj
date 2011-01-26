@@ -57,11 +57,11 @@ copyright = 'Yaco Sistemas and contributors'
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = '0.5'
+version = '0.6'
 # The full version, including alpha/beta/rc tags.
 release = version
 # The next version to be released
-django_next_version = '0.5'
+django_next_version = '0.7'
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
