@@ -1,6 +1,6 @@
 {% load i18n %}
 {% if content_files %}
-<div class="contentFiles">
+<div class="contentFiles {% block contentFilesExtraClass %}{% endblock %}">
 {% block contentfilestitle %}
   <h2>{% trans "Attached files" %}</h2>
 {% endblock %}

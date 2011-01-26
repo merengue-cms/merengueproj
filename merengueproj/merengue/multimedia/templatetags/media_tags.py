@@ -28,13 +28,16 @@ SLIDE_TYPES = ['photo', 'video', 'panoramicview', 'image3d', 'audio']
 
 @register.inclusion_tag('media_slide.html', takes_context=True)
 def media_slide(context, content):
-    multimedia = content.multimedia.published().filter(class_name__in=SLIDE_TYPES).order_by('multimediarelation__order')
-    return {'multimedia_list': multimedia,
+    return {'multimedia_list': _get_multimedia_slide_of_content(content),
             'content': content,
             'street_view': True,
             'MEDIA_URL': context['MEDIA_URL'],
             'request': context['request'],
             'LANGUAGE_CODE': context.get('LANGUAGE_CODE', 'es'), }
+
+
+def _get_multimedia_slide_of_content(content):
+    return content.multimedia.published().filter(class_name__in=SLIDE_TYPES).order_by('multimediarelation__order')
 
 
 @register.inclusion_tag('media_files.html', takes_context=True)
