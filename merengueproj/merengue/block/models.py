@@ -18,6 +18,7 @@
 import copy
 
 from django.db import models
+from django.db.models import signals
 from django.utils.importlib import import_module
 from django.utils.translation import ugettext_lazy as _
 
@@ -126,3 +127,24 @@ class BlockContentRelation(models.Model):
 
     def __unicode__(self):
         return u'%s - %s' % (self.block.name, self.content.name)
+
+
+def post_save_handler(sender, instance, **kwargs):
+    content = instance.content
+    if not content.has_related_blocks:
+        # we mark that base content has related blocks, for performance reason
+        content.has_related_blocks = True
+        content.save()
+
+
+def pre_delete_handler(sender, instance, **kwargs):
+    content = instance.content
+    other_content_blocks = BlockContentRelation.objects.filter(content=content).exclude(pk=instance.pk)
+    if not other_content_blocks:
+        # we unmark that base content has relateds block
+        content.has_related_blocks = False
+        content.save()
+
+
+signals.post_save.connect(post_save_handler, sender=BlockContentRelation)
+signals.pre_delete.connect(pre_delete_handler, sender=BlockContentRelation)
