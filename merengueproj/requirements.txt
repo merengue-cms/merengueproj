@@ -2,6 +2,7 @@
 PIL
 BeautifulSoup
 encutils
+feedparser
 
 # Django
 django==1.1.3
