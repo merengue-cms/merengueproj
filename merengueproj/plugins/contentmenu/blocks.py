@@ -28,12 +28,13 @@ class ContentGroupLinksBlock(Block):
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):
+        from plugins.contentmenu.config import PluginConfig
         content_groups = ContentGroup.objects.filter(contents=context['content'])
         if content_groups:
             filtered_contents = [[(child_cont.name, child_cont.public_link())
                                   for child_cont in cont.contents.all()]
                                  for cont in content_groups]
-            numchars = 15
+            numchars = PluginConfig.get_config().get('numchars', []).get_value()
             return cls.render_block(
                 request, template_name='contentmenu/contentlinks_block.html',
                 block_title=_('Content group links'),

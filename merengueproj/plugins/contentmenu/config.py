@@ -15,7 +15,10 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.utils.translation import ugettext_lazy as _
+
 from merengue.pluggable import Plugin
+from merengue.registry import params
 
 from plugins.contentmenu.admin import ContentGroupAdmin
 from plugins.contentmenu.blocks import ContentGroupLinksBlock
@@ -26,6 +29,14 @@ class PluginConfig(Plugin):
     name = 'Content menu'
     description = 'Plugin to associate some contents between them'
     version = '0.0.1a'
+
+    config_params = [
+        params.PositiveInteger(
+            name="numchars",
+            label=_("number of chars that should have the link as maximum"),
+            default=15,
+        ),
+    ]
 
     @classmethod
     def get_blocks(cls):
