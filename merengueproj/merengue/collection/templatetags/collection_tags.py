@@ -195,7 +195,7 @@ class CollectionRegroupNode(RegroupNode):
 
     def render(self, context):
         collection = self.collection.resolve(context, True)
-        if (collection, FeedCollection):
+        if isinstance(collection, FeedCollection):
             self.expression = self.parser.compile_filter('group_field')
         else:
             self.expression = self.parser.compile_filter(collection.group_by)
