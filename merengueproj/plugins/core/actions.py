@@ -18,7 +18,7 @@
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.action.actions import UserAction
+from merengue.action.actions import UserAction, SiteAction
 
 
 class AdminAction(UserAction):
@@ -41,7 +41,7 @@ class LoginAction(UserAction):
     @classmethod
     def get_url(cls, request, user):
         login_url = reverse('merengue_login')
-        if request.get_full_path() not in [reverse('merengue_logout'), reverse('admin:logout')]: # to avoid automatic logout after login
+        if request.get_full_path() not in [reverse('merengue_logout'), reverse('admin:logout')]:  # to avoid automatic logout after login
             login_url += '?next=%s' % request.get_full_path()
         return login_url
 
@@ -61,3 +61,8 @@ class LogoutAction(UserAction):
     @classmethod
     def has_action(cls, user):
         return user.is_authenticated()
+
+
+class PrintAction(SiteAction):
+    name = 'print'
+    verbose_name = _('Print')

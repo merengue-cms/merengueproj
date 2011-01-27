@@ -30,7 +30,11 @@
                 google.maps.Unload();
             });
         }
-
+		var print = $("#action-print a");
+		if(print.length > 0) {
+			print.attr("onClick", "javascript:print();");
+			print.attr("href", "");	
+		}
     });
     })(jQuery);
 </script>
