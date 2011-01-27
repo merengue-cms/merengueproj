@@ -91,7 +91,7 @@ Download the Merengue source from tarball or subversion code:
 
 .. code-block:: bash
 
-    $ svn checkout https://svnpub.yaco.es/merengue/trunk/merengueproj
+    $ svn checkout https://svn.merengueproject.org/trunk/merengueproj
     $ cd merengueproj
 
 Installing python dependencies
