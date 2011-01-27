@@ -34,7 +34,7 @@ class MicroSite(Section):
         return ('document_microsite_view', [section.slug, content.slug])
 
     def _menu_public_link(self, ancestors_path, menu):
-        reverse_tuple = menu._menu_public_link_with_out_section(ancestors_path)
+        reverse_tuple = menu._menu_public_link_without_section(ancestors_path)
         url_external = reverse(reverse_tuple[0], args=reverse_tuple[1])
         if url_external and url_external[0] == '/':
             url_external = url_external[1:]
