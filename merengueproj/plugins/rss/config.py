@@ -58,6 +58,11 @@ class PluginConfig(Plugin):
             label=_("number of elements to show at the feed"),
             default=10,
         ),
+        params.Single(
+            name="portal",
+            label=_("portal name that will be shown as RSS title"),
+            default="Merengue RSS"
+        ),
     ]
 
     @classmethod

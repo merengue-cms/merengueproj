@@ -29,9 +29,12 @@ class RSSGlobalFeed(Block):
 
     @classmethod
     def render(cls, request, place, context, *args, **kwargs):
-
+        from plugins.rss.config import PluginConfig
+        portal_title = PluginConfig.get_config().get(
+            'portal', '').get_value()
         feed_url = reverse('rss_views')
         return cls.render_block(
             request, template_name='rss/global_block.html',
             block_title=_('RSS'),
-            context={'feed_url': feed_url})
+            context={'feed_url': feed_url,
+                     'portal_title': portal_title})
