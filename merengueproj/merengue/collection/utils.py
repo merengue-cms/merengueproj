@@ -67,12 +67,12 @@ def create_normalize_collection(slug, name, model, create_display_field=True,
 
     if created:
         collection.status = 'published'
-        collection.no_changeable_fields = [
-            'slug', get_real_fieldname('name', settings.LANGUAGE_CODE)]
         collection.no_deletable = True
         setattr(collection,
                 get_real_fieldname('name', settings.LANGUAGE_CODE),
                 name)
+        collection.no_changeable_fields = [
+            'slug', 'name', get_real_fieldname('name', settings.LANGUAGE_CODE)]
         collection.save()
 
         if create_filter_field:
