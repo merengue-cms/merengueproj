@@ -374,7 +374,7 @@ class FeedCollection(Collection):
         now = datetime.datetime.now()
         feed = {'entries': []}
         if (force_update or not self.last_updated or
-            (self.expire_seconds and self.last_updated + datetime.timedelta(seconds=self.expire_seconds) > now)):
+            (self.expire_seconds and self.last_updated + datetime.timedelta(seconds=self.expire_seconds) < now)):
             feed = feedparser.parse(self.feed_url)
             self.last_updated = datetime.datetime.now()
             if self.remove_items:
@@ -407,14 +407,12 @@ class FeedCollection(Collection):
     def is_excluded(self, entry):
         for f in self.get_include_filters():
             operator_func = getattr(filter_funcs, '%s_func' % f.filter_operator, None)
-            print operator_func
             if not operator_func:
                 continue
             if not operator_func(getattr(entry, f.filter_field, None), f.filter_value):
                 return True
         for f in self.get_exclude_filters():
             operator_func = getattr(filter_funcs, '%s_func' % f.filter_operator, None)
-            print operator_func
             if not operator_func:
                 continue
             if operator_func(getattr(entry, f.filter_field, None), f.filter_value):
