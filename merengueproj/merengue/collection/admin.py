@@ -237,9 +237,11 @@ class FeedCollectionAdmin(CollectionAdmin):
     def queryset(self, request):
         return super(CollectionAdmin, self).queryset(request)
 
-    def save_model(self, request, obj, form, change):
-        super(FeedCollectionAdmin, self).save_model(request, obj, form, change)
-        obj.perform_query(apply_options=True)
+    def response_change(self, request, obj):
+        if obj:
+            obj.perform_query(apply_options=True)
+            obj.save()
+        return super(FeedCollectionAdmin, self).response_change(request, obj)
 
     def add_view(self, *args, **kwargs):
         self.inline_instances = []
