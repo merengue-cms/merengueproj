@@ -31,10 +31,15 @@ def blocks_reorder(request):
                 item_split = item.split("#")
                 element_id = int(item_split[0])
                 placed_at = item_split[1]
-                element = cls.objects.get(id=element_id)
-                element.order = order
-                element.placed_at = placed_at
-                element.save()
+                try:
+                    cls.objects.get(id=element_id,
+                                    placed_at=placed_at,
+                                    order=order)
+                except cls.DoesNotExist:
+                    element = cls.objects.get(id=element_id)
+                    element.order = order
+                    element.placed_at = placed_at
+                    element.save()
 
     mimetype = "application/json"
     if request.is_ajax() and request.POST and "new_order" in request.POST:
