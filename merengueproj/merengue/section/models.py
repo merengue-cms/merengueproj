@@ -119,20 +119,20 @@ class Menu(models.Model):
 
     @permalink
     def menu_public_link_with_out_section(self, ancestors_path):
-        return self._menu_public_link_with_out_section(self, ancestors_path)
+        return self._menu_public_link_without_section(self, ancestors_path)
 
-    def _menu_public_link_with_out_section(self, ancestors_path):
+    def _menu_public_link_without_section(self, ancestors_path):
         return ('menu_view', (ancestors_path, self.slug))
 
     @permalink
     def public_link(self):
-        menus_ancestors = [menu.slug for menu in self.get_ancestors()][1:] # first is a dummy root menu and we discard it
+        menus_ancestors = [menu.slug for menu in self.get_ancestors()][1:]  # first is a dummy root menu and we discard it
         ancestors_path = menus_ancestors and '/%s' % '/'.join(menus_ancestors) or ''
         section = self.get_section()
         if section:
             return section.real_instance._menu_public_link(ancestors_path, self)
         else:
-            return self._menu_public_link_with_out_section(ancestors_path)
+            return self._menu_public_link_without_section(ancestors_path)
 
     def update_url(self, commit=True):
         try:
@@ -261,8 +261,8 @@ class BaseSection(Base, RealInstanceMixin):
 
     main_content = models.ForeignKey(
         BaseContent,
-        null = True,
-        blank = True,
+        null=True,
+        blank=True,
         verbose_name=_('main content'),
         help_text=_('content selected here will be shown when entering the section'),
         related_name='section_main_content',
@@ -278,9 +278,9 @@ class BaseSection(Base, RealInstanceMixin):
 
     customstyle = models.ForeignKey(
         'CustomStyle',
-        null = True,
-        blank = True,
-        editable = False,
+        null=True,
+        blank=True,
+        editable=False,
         verbose_name=_('custom style'),
     )
     customstyle.delete_cascade = False
@@ -449,13 +449,12 @@ class DocumentSection(models.Model):
 
     def move_to(self, pos):
         try:
-            existing_position = DocumentSection.objects.get(document=self.document, position=pos)
+            DocumentSection.objects.get(document=self.document, position=pos)
         except DocumentSection.DoesNotExist:
             raise ValueError(_('Can not move to non existing position'))
 
-
         if pos > self.position:
-            for i in DocumentSection.objects.filter(document=self.document, position__in=range(self.position+1, pos+1)):
+            for i in DocumentSection.objects.filter(document=self.document, position__in=range(self.position + 1, pos + 1)):
                 i.position -= 1
                 i._flexisave()
         elif pos < self.position:
@@ -472,7 +471,7 @@ class DocumentSection(models.Model):
         if self.position == None:
             self.position = count
         elif self.position >= count:
-            self.position = count-1
+            self.position = count - 1
         try:
             existing_position = DocumentSection.objects.get(document=self.document, position=self.position)
             if existing_position.id != self.id:
