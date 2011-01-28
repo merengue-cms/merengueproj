@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+import copy
+
 from django import template
 from django.db.models import Q
 from django.core.urlresolvers import reverse, NoReverseMatch
@@ -53,9 +55,9 @@ def menu_tag(context, menu, max_num_level=-1, descendants=None):
             current_level = menu_item.level
             if current_level == 0:
                 current_level = 1
-            min_level = current_level - (current_level -1) % max_num_level
-            menu = menu_item.get_ancestors().get(level=min_level -1)
-        max_level = min_level + max_num_level -1
+            min_level = current_level - (current_level - 1) % max_num_level
+            menu = menu_item.get_ancestors().get(level=min_level - 1)
+        max_level = min_level + max_num_level - 1
         descendants = menu.get_descendants().filter(Q(level__gte=min_level,
                                                       level__lte=max_level) | \
                                                     Q(level=menu_item.level + 1,
@@ -63,14 +65,15 @@ def menu_tag(context, menu, max_num_level=-1, descendants=None):
     else:
         min_level = None
         max_level = None
-    return {'menu': menu,
+    context = copy.copy(context)
+    context.update({'menu': menu,
             'menu_items': descendants,
-            'user': context.get('user', None),
             'menu_item': menu_item,
             'menu_item__level': menu_item and menu_item.level or 1,
             'ancestors': ancestors,
             'min_level': min_level,
-            'max_level': max_level}
+            'max_level': max_level})
+    return context
 
 
 @register.inclusion_tag('section/menu_portal_tag.html', takes_context=True)
