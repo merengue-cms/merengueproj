@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+import copy
+
 from django import template
 from django.core.urlresolvers import reverse, NoReverseMatch
 
@@ -43,11 +45,14 @@ def menu_tag(context, menu, descendants=None):
             pass
     except IndexError:
         pass
-    return {'menu': menu,
-            'user': context.get('user', None),
-            'menu_item': menu_item,
-            'menu_item__level': menu_item and menu_item.level or 1,
-            'ancestors': ancestors}
+
+    context = copy.copy(context)
+    context.update({'menu': menu,
+                    'user': context.get('user', None),
+                    'menu_item': menu_item,
+                    'menu_item__level': menu_item and menu_item.level or 1,
+                    'ancestors': ancestors})
+    return context
 
 
 @register.inclusion_tag('section/menu_portal_tag.html', takes_context=True)
