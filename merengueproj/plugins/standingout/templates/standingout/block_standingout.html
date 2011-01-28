@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block blocktitle %}
-  <h1>{% trans "Highlights" %}</h1>
+  <h1>{% inline_trans "Highlights" %}</h1>
 {% endblock %}
 
 {% block blockbody %}
@@ -18,7 +18,7 @@
                 {% endif %}
             </li>
         {% endfor %}
-        <li class="viewAll"><a href="{% url standingout_list %}">{% trans "View all" %}</a></li>
+        <li class="viewAll"><a href="{% url standingout_list %}">{% inline_trans "View all" %}</a></li>
     {% else %}
         <li>{% trans "Without highlights" %}</li>
     {% endif %}
