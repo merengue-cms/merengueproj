@@ -1,5 +1,5 @@
 {% extends "filebrowser/base.html" %}
-{% load i18n filebrowser_tags %}
+{% load i18n inlinetrans filebrowser_tags %}
 
 {% block pagetitle %}{{ block.super }} - {% trans "Upload file" %}{% endblock %}
 
@@ -11,18 +11,18 @@
 
 {% block extrabreadcrumbs %}
   {{ block.super }}
-  <span class="breadcrumbSeparator">→</span>{% trans "Upload" %}
+  <span class="breadcrumbSeparator">→</span>{% inline_trans "Upload" %}
 {% endblock %}
 
 {% block content %}
 <div id="content-title">
-    <h1 title="{% trans "Upload files" %}">{% trans "Upload files" %}</h1>
+    <h1 title="{% trans "Upload files" %}">{% inline_trans "Upload files" %}</h1>
 </div>
 <div class="object-buttons">
 {% if path %}
-  <a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=path %}"><img src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" />{% trans "Back to content" %}</a><span>&nbsp;</span>
+  <a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=path %}"><img src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" />{% inline_trans "Back to content" %}</a><span>&nbsp;</span>
 {% else %}
-  <a href="{% filebrowser_url filebrowser_root_listing repository_name=repository.name %}"><img src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" />{% trans "Back to content" %}</a><span>&nbsp;</span>
+  <a href="{% filebrowser_url filebrowser_root_listing repository_name=repository.name %}"><img src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" />{% inline_trans "Back to content" %}</a><span>&nbsp;</span>
 {% endif %}
 </div>
 
@@ -31,7 +31,7 @@
 <!-- This is the form -->
 <form class="filebrowserForm" enctype="multipart/form-data" action="." method="post">
     <div class="form-row">
-        <label for="name">{% trans "File to upload" %}</label>
+        <label for="name">{% inline_trans "File to upload" %}</label>
         <input id="file_element" type="file" name="file_1" >
     </div>
     <div class="submit-row">

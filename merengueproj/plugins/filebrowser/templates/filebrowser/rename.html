@@ -1,5 +1,5 @@
 {% extends "filebrowser/base.html" %}
-{% load i18n filebrowser_tags %}
+{% load i18n inlinetrans filebrowser_tags %}
 
 {% block pagetitle %}{{ block.super }} - {% trans "Rename" %}{% endblock %}
 
@@ -10,18 +10,18 @@
 
 {% block content %}
 <div id="content-title">
-    <h1 title="{% trans "Rename" %}">{% trans "Rename" %}</h1>
+    <h1 title="{% trans "Rename" %}">{% inline_trans "Rename" %}</h1>
 </div>
 <div class="object-buttons">
 {% if path %}
-  <a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=path %}"><img alt="{% trans 'Edit Undo' %}" src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" />{% trans "Back to content" %}</a><span>&nbsp;</span>
+  <a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=path %}"><img alt="{% trans 'Edit Undo' %}" src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" />{% inline_trans "Back to content" %}</a><span>&nbsp;</span>
 {% else %}
-  <a href="{% filebrowser_url filebrowser_root_listing repository_name=repository.name %}"><img alt="{% trans 'Edit Undo' %}" src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" />{% trans "Back to content" %}</a><span>&nbsp;</span>
+  <a href="{% filebrowser_url filebrowser_root_listing repository_name=repository.name %}"><img alt="{% trans 'Edit Undo' %}" src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" />{% inline_trans "Back to content" %}</a><span>&nbsp;</span>
 {% endif %}
 </div>
 
 <div id="content-main">
-  <h2 class="element-action">{% trans "Rename these elements" %}</h2>
+  <h2 class="element-action">{% inline_trans "Rename these elements" %}</h2>
   <form class="filebrowserForm" action="{% filebrowser_url filebrowser_action repository_name=repository.name,path=path %}" method="post" enctype="multipart/form-data">
   <div>
     {% for d in dirs %}

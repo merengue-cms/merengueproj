@@ -1,5 +1,5 @@
 {% extends "filebrowser/base.html" %}
-{% load i18n truncate_filter filebrowser_tags %}
+{% load i18n inlinetrans truncate_filter filebrowser_tags %}
 
 {% block pagetitle %}{{ block.super }} - {% trans "Listing" %}{% endblock %}
 
@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block extrabreadcrumbs %}
-    <span class="breadcrumbSeparator">→</span>{% if parents %}<a href="{% filebrowser_url filebrowser_root_listing repository.name %}">{% trans "Document repository" %}</a>{% else %}{% trans "Document repository" %}{% endif %}
+    <span class="breadcrumbSeparator">→</span>{% if parents %}<a href="{% filebrowser_url filebrowser_root_listing repository.name %}">{% inline_trans "Document repository" %}</a>{% else %}{% inline_trans "Document repository" %}{% endif %}
     {% if parents %}
       {% for p in parents %}
         <span class="breadcrumbSeparator">→</span>{% if not forloop.last %}<a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=p.path %}/">{{ p.dirname }}</a>{% else %} {{ p.dirname }} {% endif %}
@@ -18,14 +18,14 @@
 
 {% block content %}
 <div id="content-title">
-    <h1 title="{% trans "Document repository" %}">{% trans "Document repository" %}</h1>
+    <h1 title="{% trans "Document repository" %}">{% inline_trans "Document repository" %}</h1>
 </div>
 
 <div class="object-buttons">
 {% if edit_permission %}
-  <a href="{% filebrowser_url filebrowser_createdir repository_name=repository.name,path=path %}"><img alt="{% trans "folder" %}" src="{{ MEDIA_URL }}filebrowser/img/folder-new.png" />{% trans "Create folder" %}</a>
-  <a href="{% filebrowser_url filebrowser_upload repository_name=repository.name,path=path %}"><img alt="{% trans "file" %}" src="{{ MEDIA_URL }}filebrowser/img/go-up.png" />{% trans "Upload file" %}</a>
-  <a href="{% filebrowser_url filebrowser_createdoc repository_name=repository.name,path=path %}"><img alt="{% trans "file" %}" src="{{ MEDIA_URL }}filebrowser/img/go-up.png" />{% trans "Create document" %}</a>
+  <a href="{% filebrowser_url filebrowser_createdir repository_name=repository.name,path=path %}"><img alt="{% trans "folder" %}" src="{{ MEDIA_URL }}filebrowser/img/folder-new.png" />{% inline_trans "Create folder" %}</a>
+  <a href="{% filebrowser_url filebrowser_upload repository_name=repository.name,path=path %}"><img alt="{% trans "file" %}" src="{{ MEDIA_URL }}filebrowser/img/go-up.png" />{% inline_trans "Upload file" %}</a>
+  <a href="{% filebrowser_url filebrowser_createdoc repository_name=repository.name,path=path %}"><img alt="{% trans "file" %}" src="{{ MEDIA_URL }}filebrowser/img/go-up.png" />{% inline_trans "Create document" %}</a>
 {% endif %}
 </div>
 
@@ -40,9 +40,9 @@
         <thead>
             <tr>
                 <th class="empty"></th>
-                <th class="name">{% trans "Name" %}</th>
-                <th class="size">{% trans "Size" %}</th>
-                <th class="modification-date" abbr="{% trans "Date" %}">{% trans "Modification date" %}</th>
+                <th class="name">{% inline_trans "Name" %}</th>
+                <th class="size">{% inline_trans "Size" %}</th>
+                <th class="modification-date" abbr="{% trans "Date" %}">{% inline_trans "Modification date" %}</th>
                 <th class="last-empty"></th>
             </tr>
         </thead>
@@ -93,7 +93,7 @@
     {% if edit_permission %}
         <input type="submit" name="renameform" class="rename-button" value="{% trans "Rename" %}" />
         <input type="submit" name="deleteform" class="delete-button" value="{% trans "Delete" %}" />
-        <p>{% trans "Select one or more files or folders and click the desired button" %}</p>
+        <p>{% inline_trans "Select one or more files or folders and click the desired button" %}</p>
     {% endif %}
   </div>
 </form>

@@ -11,11 +11,11 @@
   {% endif %}
 {% endblock %}
 
-{% block listtitle %}{% trans "Link index" %}{% endblock %}
+{% block listtitle %}{% inline_trans "Link index" %}{% endblock %}
 
 {% block contentinfo %}
     {% if content.portal_name %}<div class="portalName">{{ content.portal_name }}</div>{% endif %}
     {{ block.super }}
-    <a href="{{ content.url_link }}" title="{% trans "View more" %}" class="viewMore">{% trans "View more" %}</a>
+    <a href="{{ content.url_link }}" title="{% trans "View more" %}" class="viewMore">{% inline_trans "View more" %}</a>
 {% endblock %}
 

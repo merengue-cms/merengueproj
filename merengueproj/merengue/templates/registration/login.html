@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n inlinetrans %}
 {% block page %}
 
 <script type="text/javascript">
@@ -16,6 +16,6 @@
   <input type="submit" value="{% trans "Login" %}" />
   </p>
   </form>
-  <a class="resetPassword" href="{% url password_reset %}">{% trans  "Reset password" %}</a>
+  <a class="resetPassword" href="{% url password_reset %}">{% inline_trans  "Reset password" %}</a>
 </div>
 {% endblock %}

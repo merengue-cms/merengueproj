@@ -1,25 +1,25 @@
 {% extends "filebrowser/base.html" %}
-{% load i18n filebrowser_tags %}
+{% load i18n inlinetrans filebrowser_tags %}
 
 {% block pagetitle %}{{ block.super }} - {% trans "Create folder" %}{% endblock %}
 
 {% block extrabreadcrumbs %}
   {{ block.super }}
-  <span class="breadcrumbSeparator">→</span>{% trans "Create folder" %}
+  <span class="breadcrumbSeparator">→</span>{% inline_trans "Create folder" %}
 {% endblock %}
 
 {% block content %}
 <div id="content-title">
-    <h1 title="{% trans "Create folder" %}">{% trans "Create folder" %}</h1>
+    <h1 title="{% trans "Create folder" %}">{% inline_trans "Create folder" %}</h1>
 </div>
 <div class="object-buttons">
 {% if path %}
     <a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=path %}">
-        <img src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" /> {% trans "Cancel" %}
+        <img src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" /> {% inline_trans "Cancel" %}
     </a><span>&nbsp;</span>
 {% else %}
     <a href="{% filebrowser_url filebrowser_root_listing repository_name=repository.name %}">
-        <img src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" /> {% trans "Cancel" %}
+        <img src="{{ MEDIA_URL }}filebrowser/img/edit-undo.png" /> {% inline_trans "Cancel" %}
     </a><span>&nbsp;</span>
 {% endif %}
 </div>
@@ -31,7 +31,7 @@
    </p>
   {% endif %}
   <form class="filebrowserForm" action="." method="post">
-      <label for="dirname" class="required">{% trans "New folder name" %}</label>
+      <label for="dirname" class="required">{% inline_trans "New folder name" %}</label>
       <input name="dirname" type="text" value="" />
       <input type="submit" class="submit" value="Crear" class="cretaefolder-button" />
   </form>
