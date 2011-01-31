@@ -1,6 +1,21 @@
 Changes
 =======
 
+Version 0.6.1
+-------------
+
+* Fixed error when accessing to themes admin quick and advanced report.
+
+* Fixed printing params when some values are NOT_PROVIDED mark.
+
+* Fixed a previous merge in collection code.
+
+* Fixed some hardcoded properties in RSS plugins.
+
+* Passed parent context to menu tags, because could need it in developed themes.
+
+* Fixed another PIL import to get works with both 1.1.6 and 1.1.7 version.
+
 Version 0.6.0-final
 -------------------
 
