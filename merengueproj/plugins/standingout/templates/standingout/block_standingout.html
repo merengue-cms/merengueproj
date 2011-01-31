@@ -1,6 +1,6 @@
 {% extends "block.html" %}
 
-{% load i18n section_tags %}
+{% load i18n inlinetrans section_tags %}
 
 {% block blocktitle %}
   <h1>{% inline_trans "Highlights" %}</h1>
@@ -22,7 +22,7 @@
         {% url_in_section_breadcrumbs_tag section standingout_list_url as standingout_list_section %}
         <li class="viewAll"><a href="{{ standingout_list_section }}">{% inline_trans "View all" %}</a></li>
     {% else %}
-        <li>{% trans "Without highlights" %}</li>
+        <li>{% inline_trans "Without highlights" %}</li>
     {% endif %}
   </ul>
 {% endblock %}

@@ -1,10 +1,10 @@
 {% extends "section/breadcrumbs.html" %}
 
-{% load i18n section_tags %}
+{% load i18n inlinetrans section_tags %}
 
 {% block content %}
     {{ block.super }}
     <span class="breadcrumbSeparator">→</span>
     {% url news_index as news_index %}
-    <a href="{% url_in_section_breadcrumbs_tag section news_index %}" title="{% trans "News" %}">{% trans "News" %}</a>
+    <a href="{% url_in_section_breadcrumbs_tag section news_index %}" title="{% trans "News" %}">{% inline_trans "News" %}</a>
 {% endblock %}
