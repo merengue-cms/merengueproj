@@ -10,7 +10,7 @@
 {% block contenttitle %}
     <div id="content-title" class="threadTitle">
       <h1 title="{{ content.name }}">{% cutrender %}{{ content }}{% endcutrender %}
-        <span class="threadMetaData">{{ content.creation_date|transdate }} {{ content.creation_date|date:"H:i:s" }} {% trans "by" %} {{ content.user.get_full_name|default:content.user.username }}</span>
+        <span class="threadMetaData">{{ content.creation_date|transdate }} {{ content.creation_date|date:"H:i:s" }} {% inline_trans "by" %} {{ content.user.get_full_name|default:content.user.username }}</span>
       </h1>
     </div>
 {% endblock contenttitle %}
@@ -21,9 +21,9 @@
 <h2 id="forum-comment-header">{% inline_trans "Messages" %}:</h2>
 
 <div id="firstcomment">
-    <div class="comment-discard-message" style="display: none;">{% trans "Are you sure you want to discard this comment form?" %}</div>
+    <div class="comment-discard-message" style="display: none;">{% inline_trans "Are you sure you want to discard this comment form?" %}</div>
     <div id="comment-error" style="display:none">
-       {% trans "An error has occurred, try again" %}
+       {% inline_trans "An error has occurred, try again" %}
     </div>
     {% if can_comment %}
     <div id="firstactions" class="actions ">

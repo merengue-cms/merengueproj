@@ -1,7 +1,7 @@
 {% extends "filebrowser/base.html" %}
-{% load i18n truncate_filter filebrowser_tags %}
+{% load i18n inlinetrans truncate_filter filebrowser_tags %}
 
-{% block pagetitle %}{{ block.super }} - {% trans "Listing" %}{% endblock %}
+{% block pagetitle %}{{ block.super }} - {% inline_trans "Listing" %}{% endblock %}
 
 {% block parentextrabreadcrumbs %}
 
@@ -11,8 +11,8 @@
     {% if section %}
         {{ section.breadcrumbs }}
     {% endif %}
-    <span class="breadcrumbSeparator">→</span><a href="{% filebrowser_url filebrowser_repositories %}">{% trans "Repository List" %}</a>
-    <span class="breadcrumbSeparator">→</span>{% if parents %}<a href="{% filebrowser_url filebrowser_root_listing repository.name %}">{% trans "Document repository" %}</a>{% else %}<a href="">{{ repository.name  }}</a>{% endif %}
+    <span class="breadcrumbSeparator">→</span><a href="{% filebrowser_url filebrowser_repositories %}">{% inline_trans "Repository List" %}</a>
+    <span class="breadcrumbSeparator">→</span>{% if parents %}<a href="{% filebrowser_url filebrowser_root_listing repository.name %}">{% inline_trans "Document repository" %}</a>{% else %}<a href="">{{ repository.name  }}</a>{% endif %}
     {% if parents %}
       {% for p in parents %}
         <span class="breadcrumbSeparator">→</span>
@@ -23,16 +23,16 @@
 
 {% block content %}
 <div id="content-title">
-    <h1 title="{% trans "Document repository" %}">{% trans "Document repository" %}</h1>
+    <h1 title="{% trans "Document repository" %}">{% inline_trans "Document repository" %}</h1>
 </div>
 
 <div class="object-buttons">
 {% if edit_permission %}
   {% block permission %}
   <ul>
-    <li class="createFolder"><a href="{% filebrowser_url filebrowser_createdir repository_name=repository.name,path=path %}"><span>{% trans "Create folder" %}</span></a></li>
-    <li class="createFile"><a href="{% filebrowser_url filebrowser_upload repository_name=repository.name,path=path %}"><span>{% trans "Upload file" %}</span></a></li>
-    <li class="createDocument"><a href="{% filebrowser_url filebrowser_createdoc repository_name=repository.name,path=path %}"><span>{% trans "Create document" %}</span></a></li>
+    <li class="createFolder"><a href="{% filebrowser_url filebrowser_createdir repository_name=repository.name,path=path %}"><span>{% inline_trans "Create folder" %}</span></a></li>
+    <li class="createFile"><a href="{% filebrowser_url filebrowser_upload repository_name=repository.name,path=path %}"><span>{% inline_trans "Upload file" %}</span></a></li>
+    <li class="createDocument"><a href="{% filebrowser_url filebrowser_createdoc repository_name=repository.name,path=path %}"><span>{% inline_trans "Create document" %}</span></a></li>
   </ul>
   {% endblock %}
 {% endif %}
@@ -49,9 +49,9 @@
         <thead>
             <tr>
                 <th class="empty"></th>
-                <th class="name">{% trans "Name" %}</th>
-                <th class="size">{% trans "Size" %}</th>
-                <th class="modification-date" abbr="{% trans "Date" %}">{% trans "Modification date" %}</th>
+                <th class="name">{% inline_trans "Name" %}</th>
+                <th class="size">{% inline_trans "Size" %}</th>
+                <th class="modification-date" abbr="{% trans "Date" %}">{% inline_trans "Modification date" %}</th>
                 <th class="last-empty"></th>
             </tr>
         </thead>
@@ -102,13 +102,13 @@
     {% if edit_permission %}
         <input type="submit" name="renameform" class="rename-button" value="{% trans "Rename" %}" />
         <input type="submit" name="deleteform" class="delete-button" value="{% trans "Delete" %}" />
-        <p>{% trans "Select one or more files or folders and click the desired button" %}</p>
+        <p>{% inline_trans "Select one or more files or folders and click the desired button" %}</p>
     {% endif %}
   </div>
 </form>
 {% else %}
 <div class="action-buttons">
-<p class="noContent">{% trans "The current directory is empty." %}</p>
+<p class="noContent">{% inline_trans "The current directory is empty." %}</p>
 </div>
 {% endif %}
 

@@ -1,5 +1,5 @@
 {% extends "filebrowser/base.html" %}
-{% load i18n filebrowser_tags %}
+{% load i18n inlinetrans filebrowser_tags %}
 
 {% block pagetitle %}{{ block.super }} - {% trans "Edit document" %}{% endblock %}
 
@@ -8,25 +8,25 @@
   {% if object.slug %}
   <span class="breadcrumbSeparator">→</span>
     <a href="{% filebrowser_url filebrowser_viewdoc repository_name=repository.name,doc_slug=object.slug %}">{{ object.title }}</a>
-  <span class="breadcrumbSeparator">→</span><a href=".">{% trans "Edit document" %}</a>
+  <span class="breadcrumbSeparator">→</span><a href=".">{% inline_trans "Edit document" %}</a>
   {% else %}
-  <span class="breadcrumbSeparator">→</span><a href=".">{% trans "Add document" %}</a>
+  <span class="breadcrumbSeparator">→</span><a href=".">{% inline_trans "Add document" %}</a>
   {% endif %}
 {% endblock %}
 
 {% block content %}
 {% ifequal mode "add" %}
   <div id="content-title">
-      <h1 title="{% trans "Add Document" %}">{% trans "Add Document" %}</h1>
+      <h1 title="{% trans "Add Document" %}">{% inline_trans "Add Document" %}</h1>
   </div>
   <div class="object-buttons">
   {% block permission %}
     <ul>
       <li class="cancelEdit">
         {% if path %}
-        <a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=path %}">    <span>{% trans "Back to content" %}</span></a>
+        <a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=path %}">    <span>{% inline_trans "Back to content" %}</span></a>
         {% else %}
-        <a href="{% filebrowser_url filebrowser_root_listing repository_name=repository.name %}"><span>{% trans "Back to content" %}</span></a>
+        <a href="{% filebrowser_url filebrowser_root_listing repository_name=repository.name %}"><span>{% inline_trans "Back to content" %}</span></a>
         {% endif %}
       </li>
     </ul>
@@ -34,12 +34,12 @@
   </div>
 {% else %}
   <div id="content-title">
-      <h1 title="{% trans "Edit Document" %}">{% trans "Edit Document" %}</h1>
+      <h1 title="{% trans "Edit Document" %}">{% inline_trans "Edit Document" %}</h1>
   </div>
   <div class="object-buttons">
     <ul>
       <li class="cancelEdit">
-        <a href="{% filebrowser_url filebrowser_viewdoc repository_name=repository.name,doc_slug=doc_slug %}"><span>{% trans "Back to content" %}</span></a>
+        <a href="{% filebrowser_url filebrowser_viewdoc repository_name=repository.name,doc_slug=doc_slug %}"><span>{% inline_trans "Back to content" %}</span></a>
       </li>
     </ul>
   </div>

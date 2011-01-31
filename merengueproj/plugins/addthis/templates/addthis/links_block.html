@@ -1,5 +1,5 @@
 {% extends "block.html" %}
-{% load i18n %}
+{% load i18n inlinetrans %}
 
 {% block blocktitle %}
 {% endblock %}
@@ -14,7 +14,7 @@ var addthis_config = {
 
 {% if services %}
 <div class="addthis_toolbox addthis_default_style ">
-<a href="http://www.addthis.com/bookmark.php?v=250&amp;username=merengue" class="addthis_button_compact">{% trans "Share" %}</a>
+<a href="http://www.addthis.com/bookmark.php?v=250&amp;username=merengue" class="addthis_button_compact">{% inline_trans "Share" %}</a>
 <span class="addthis_separator">|</span>
 {% for service in services %}<a class="addthis_button_{{ service }}"></a>{% endfor %}
 </div>

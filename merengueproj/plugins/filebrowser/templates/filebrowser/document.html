@@ -1,5 +1,5 @@
 {% extends "filebrowser/base.html" %}
-{% load i18n thumbnail truncate_filter filebrowser_tags %}
+{% load i18n inlinetrans thumbnail truncate_filter filebrowser_tags %}
 
 {% block extrascripts %}
   <script type="text/javascript" src="{{ MEDIA_URL }}filebrowser/js/multifile.js"></script>
@@ -22,7 +22,7 @@
 <div class="object-buttons">
 {% if user.is_superuser %}
 <ul><li class="docEdit">
-<a href="{% filebrowser_url plugins.filebrowser.views.editdoc repository_name=repository.name,doc_slug=document.slug %}"><span>{% trans "Edit" %}</span></a>
+<a href="{% filebrowser_url plugins.filebrowser.views.editdoc repository_name=repository.name,doc_slug=document.slug %}"><span>{% inline_trans "Edit" %}</span></a>
 </li>
 </ul>
 {% endif %}
@@ -35,7 +35,7 @@
 <!-- empty form to be filled for ajax request and csrf middleware -->
 </form>
 
-<h2>{% trans "Files" %}</h2>
+<h2>{% inline_trans "Files" %}</h2>
 {% for file in doc_files %}
   <div class="file" id="file-{{file.id}}">
     <div>
@@ -45,23 +45,23 @@
     </div>
     {% if request.user.is_superuser %}
     <div>
-      <button onclick="javascript:removeAttachment('{% filebrowser_url plugins.filebrowser.views.root repository_name=repository.name %}', 'file', {{file.id}})">{% trans "Remove" %}</button></span>
+      <button onclick="javascript:removeAttachment('{% filebrowser_url plugins.filebrowser.views.root repository_name=repository.name %}', 'file', {{file.id}})">{% inline_trans "Remove" %}</button></span>
     </div>
     {% endif %}
   </div>
 {% endfor %}
 
 <div class="addlink">
-  <button id="filebtn" onclick="javascript:showForm('file')">{% trans "New file" %}</button>
+  <button id="filebtn" onclick="javascript:showForm('file')">{% inline_trans "New file" %}</button>
 </div>
 
 <form class="document-form filebrowserForm" id="fileform" method="post" action="." enctype="multipart/form-data">
   <input id="file" name="file" type="file">
   <input type="submit" class="submitButton" id="addfile" name="addfile" value="{% trans 'Add file' %}"/>
-  <button type="button" onclick="javascript:hideForm('file')">{% trans "Cancel" %}</button>
+  <button type="button" onclick="javascript:hideForm('file')">{% inline_trans "Cancel" %}</button>
 </form>
 
-<h2>{% trans "Images" %}</h2>
+<h2>{% inline_trans "Images" %}</h2>
 {% for image in doc_images %}
   <div class="image" id="image-{{image.id}}">
     <p>

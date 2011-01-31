@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n inlinetrans %}
 <form class="star-rating" method="post" action="{% url vote_object content.id %}">
  <span class="current-votes">{% blocktrans count vote.num_votes as votes %}{{ votes }} vote{% plural %}{{ votes }} votes{% endblocktrans %}</span>
   <ol>
@@ -13,9 +13,9 @@
                         {{ star.1 }}
                     {% else %}
                         {% if user.is_authenticated %}
-                            {% trans "You have voted" %}
+                            {% inline_trans "You have voted" %}
                         {% else %}
-                            {% trans "Sign in to rate" %}
+                            {% inline_trans "Sign in to rate" %}
                         {% endif %}
                     {% endif %}
                 </span>

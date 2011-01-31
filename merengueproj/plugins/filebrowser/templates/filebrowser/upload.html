@@ -1,9 +1,9 @@
 {% extends "filebrowser/base.html" %}
-{% load i18n filebrowser_tags %}
+{% load i18n inlinetrans filebrowser_tags %}
 
-{% block pagetitle %}{{ block.super }} - {% trans "Upload file" %}{% endblock %}
+{% block pagetitle %}{{ block.super }} - {% inline_trans "Upload file" %}{% endblock %}
 
-{% block titlepage %}{% trans "Upload file" %}{% endblock %}
+{% block titlepage %}{% inline_trans "Upload file" %}{% endblock %}
 
 {% block extrascripts %}
     <script src="{{ MEDIA_URL }}filebrowser/js/multifile.js" language="javascript" type="text/javascript"></script>
@@ -11,21 +11,21 @@
 
 {% block extrabreadcrumbs %}
   {{ block.super }}
-  <span class="breadcrumbSeparator">→</span><a href="">{% trans "Upload" %}</a>
+  <span class="breadcrumbSeparator">→</span><a href="">{% inline_trans "Upload" %}</a>
 {% endblock %}
 
 {% block content %}
 <div id="content-title">
-    <h1 title="{% trans "Upload files" %}">{% trans "Upload files" %}</h1>
+    <h1 title="{% trans "Upload files" %}">{% inline_trans "Upload files" %}</h1>
 </div>
 <div class="object-buttons">
   {% block permission %}
     <ul>
       <li class="cancelEdit">
       {% if path %}
-        <a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=path %}"><span>{% trans "Back to content" %}</span></a>
+        <a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=path %}"><span>{% inline_trans "Back to content" %}</span></a>
       {% else %}
-        <a href="{% filebrowser_url filebrowser_root_listing repository_name=repository.name %}"><span>{% trans "Back to content" %}</span></a>
+        <a href="{% filebrowser_url filebrowser_root_listing repository_name=repository.name %}"><span>{% inline_trans "Back to content" %}</span></a>
       {% endif %}
       </li>
     </ul>
@@ -37,7 +37,7 @@
 <!-- This is the form -->
 <form class="filebrowserForm" enctype="multipart/form-data" action="." method="post">
     <div class="form-row">
-        <label for="name" class="required file">{% trans "File to upload" %}</label>
+        <label for="name" class="required file">{% inline_trans "File to upload" %}</label>
         <input id="file_element" type="file" name="file_1" >
     </div>
     <div class="submit-row">
