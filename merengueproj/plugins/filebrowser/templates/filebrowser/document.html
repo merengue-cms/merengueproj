@@ -1,5 +1,5 @@
 {% extends "filebrowser/base.html" %}
-{% load i18n inlinetrans thumbnail truncate_filter filebrowser_tags %}
+{% load i18n thumbnail truncate_filter filebrowser_tags %}
 
 {% block extrascripts %}
   <script type="text/javascript" src="{{ MEDIA_URL }}filebrowser/js/multifile.js"></script>
@@ -21,7 +21,7 @@
 
 <div class="object-buttons">
 {% if user.is_superuser %}
-<a href="{% filebrowser_url plugins.filebrowser.views.editdoc repository_name=repository.name,doc_slug=document.slug %}"><img src="{{ MEDIA_URL }}filebrowser/img/document-text-editor.png" /> {% inline_trans "Edit" %}</a><span>&nbsp;</span>
+<a href="{% filebrowser_url plugins.filebrowser.views.editdoc repository_name=repository.name,doc_slug=document.slug %}"><img src="{{ MEDIA_URL }}filebrowser/img/document-text-editor.png" /> {% trans "Edit" %}</a><span>&nbsp;</span>
 {% endif %}
 </div>
 
@@ -32,7 +32,7 @@
 <!-- empty form to be filled for ajax request and csrf middleware -->
 </form>
 
-<h2>{% inline_trans "Files" %}</h2>
+<h2>{% trans "Files" %}</h2>
 {% for file in doc_files %}
   <div class="file" id="file-{{file.id}}">
     <div>
@@ -58,7 +58,7 @@
   <button type="button" onclick="javascript:hideForm('file')">{% trans "Cancel" %}</button>
 </form>
 
-<h2>{% inline_trans "Images" %}</h2>
+<h2>{% trans "Images" %}</h2>
 {% for image in doc_images %}
   <div class="image" id="image-{{image.id}}">
     <p>

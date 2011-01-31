@@ -12,7 +12,7 @@
         {% else %}
            <div class="imageLeft noImage">
             <img width="146px" height="88px" src="{{ THEME_MEDIA_URL }}img/no_image.jpg" />
-            <span class="noImageText">{% inline_trans "No Image" %}</span>
+            <span class="noImageText">{% trans "No Image" %}</span>
            </div>
         {% endif %}
         <h2><a href="{{ news.get_absolute_url }}" alt="{{ news.name }}" title="{{ news.name }}">{{ news.name }}</a></h2>

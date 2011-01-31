@@ -1,5 +1,5 @@
 {% extends "block.html" %}
-{% load oldbrowser_tags i18n inlinetrans %}
+{% load oldbrowser_tags i18n %}
 
 {% block blocktitle %}
 {% endblock %}
@@ -8,7 +8,7 @@
 <link href="{{ MEDIA_URL }}oldbrowser/oldbrowser.css" rel="stylesheet" type="text/css" />
     <div id="oldbrowser">
         <p>
-            {% oldbrowser %}. <a href="{% url browser_info %}">{% inline_trans "More information" %}</a>
+            {% oldbrowser %}. <a href="{% url browser_info %}">{% trans "More information" %}</a>
         </p>
     </div>
 {% endifoldbrowser %}

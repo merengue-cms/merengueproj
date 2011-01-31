@@ -11,5 +11,5 @@
 
 {% block contentdescription %}
     {{ block.super }}
-    <a href="{{ content.url_link }}" title="{% trans "View more" %}">{% inline_trans "View more" %}{% if content.portal_name %}:{{ content.portal_name }}{% endif %}</a>
+    <a href="{{ content.url_link }}" title="{% trans "View more" %}">{% trans "View more" %}{% if content.portal_name %}:{{ content.portal_name }}{% endif %}</a>
 {% endblock %}

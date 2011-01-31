@@ -1,5 +1,5 @@
 {% extends "viewlet.html" %}
-{% load i18n inlinetrans pagination_tags %}
+{% load i18n pagination_tags %}
 
 {% block viewletbody %}
   {% if is_paginated %}
@@ -14,7 +14,7 @@
     <li>
         {% block itemdetail %}
             <a href="{{ banner.get_absolute_url }}" title="{{ banner }}">{{ banner }}</a>
-            <a href="{{ banner.url_link }}" title="{% trans "View more" %}">{% inline_trans "View more" %}{% if banner.portal_name %}:{{ banner.portal_name }}{% endif %}</a>
+            <a href="{{ banner.url_link }}" title="{% trans "View more" %}">{% trans "View more" %}{% if banner.portal_name %}:{{ banner.portal_name }}{% endif %}</a>
         {% endblock %}
     </li>
   {% endfor %}
