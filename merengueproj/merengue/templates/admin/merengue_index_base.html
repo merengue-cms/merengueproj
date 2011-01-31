@@ -95,26 +95,6 @@
       </dl>
     </div>
     {% endifhasperm %}
-    <div class="module-merengue" id="review">
-        <h1>{% trans "Review tasks" %}</h1>
-        {% ifhasperm 'manage_review' %}
-            <p>{% trans "Manage the user's review tasks" %}</p>
-            <dl>
-                <dt><a href="review/reviewtask/" title="{% trans "Review tasks" %}">
-                    {% trans "Review tasks" %}
-                </a></dt>
-                <dd>{% trans "View, edit and delete review tasks." %}</dd>
-            </dl>
-        {% else %}
-            <p>{% trans "See and manage my tasks" %}</p>
-            <dl>
-                <dt><a href="review/reviewtask/" title="{% trans "Review tasks" %}">
-                    {% trans "My tasks" %}
-                </a></dt>
-                <dd>{% trans "View and edit my review tasks." %}</dd>
-            </dl>
-        {% endifhasperm %}
-    </div>
     
 {% if plugins %}
     {% ifhasperm 'manage_plugin_content' %}
@@ -138,7 +118,9 @@
   <div class="module" id="administrator-menu">
     <h2>{{ user.username }}</h2>
     <ul class="level1">
-      <li>{% trans 'Review list' %}</li>
+      {% ifhasperm 'manage_review' %}
+        <li><a href="review/reviewtask/">{% trans 'Review list' %}</a></li>
+      {% endifhasperm %}
       <li><a href="{% url admin:django_admin %}">{% trans "Django admin" %}</a></li>
     </ul>
   </div>
