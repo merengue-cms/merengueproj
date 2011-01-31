@@ -4,7 +4,7 @@
 {% block contentbody %}
   {% collectionitems content as items %}
   {% if items %}
-    {% autopaginate items 20 %}
+    {% autopaginate items 10 %}
     {% paginate %}
     {% if content.group_by %}
       {% collectionregroup items in content as grouped %}
