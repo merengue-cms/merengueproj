@@ -4,11 +4,14 @@ from django.utils.translation import ugettext as _
 from django.utils.safestring import mark_safe
 from django.conf import settings
 
-import Image
+try:
+    from PIL import Image
+except ImportError:
+    import Image  # pyflakes:ignore
 try:
     from cStringIO import StringIO
 except ImportError:
-    from StringIO import StringIO
+    from StringIO import StringIO   # pyflakes:ignore
 
 from stdimage.globals import DELETED
 
@@ -36,7 +39,7 @@ class DelAdminFileWidget(AdminFileWidget):
                     else:
                         file = StringIO(value['content'])
                 Image.open(file)
-                output.append(item % (_('Delete') + ':', '<input type="checkbox" name="%s_delete"/>' % name)) # split colon to force "Delete" that is already translated
+                output.append(item % (_('Delete') + ':', '<input type="checkbox" name="%s_delete"/>' % name))  # split colon to force "Delete" that is already translated
             except IOError:
                 pass
             output.append('</table>')
