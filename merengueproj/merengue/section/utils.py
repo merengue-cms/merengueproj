@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django import db
+
 
 def get_section(request=None, context=None):
     section = (request and getattr(request, 'section', None)) or (context and context.get('section', None))
@@ -25,6 +27,10 @@ def filtering_in_section(queryset, section=None):
     if not section:
         return queryset
     if not queryset.query.can_filter():
-        queryset = queryset.model.objects.filter(id__in=queryset.values('id').query)
+        if db.backend.DatabaseFeatures.allow_sliced_subqueries:
+            queryset = queryset.model.objects.filter(id__in=queryset.values('id').query)
+        else:
+            ids = [element.id for element in queryset]
+            queryset = queryset.model.objects.filter(id__in=ids)
     queryset = queryset.filter(basesection=section)
     return queryset
