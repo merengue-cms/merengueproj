@@ -30,6 +30,7 @@ def filtering_in_section(queryset, section=None):
         if db.backend.DatabaseFeatures.allow_sliced_subqueries:
             queryset = queryset.model.objects.filter(id__in=queryset.values('id').query)
         else:
+            # some backends like Mysql and Oracle does not support limit in subselects. See #1369
             ids = [element.id for element in queryset]
             queryset = queryset.model.objects.filter(id__in=ids)
     queryset = queryset.filter(basesection=section)
