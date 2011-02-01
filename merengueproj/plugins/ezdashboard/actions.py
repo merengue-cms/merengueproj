@@ -23,11 +23,11 @@ from merengue.action.actions import UserAction
 
 class DashboardAction(UserAction):
     name = 'ezweb'
-    verbose_name = _('dashdboard')
+    verbose_name = _('dashboard')
 
     @classmethod
     def get_url(cls, request, user):
-        return reverse('dashdboard')
+        return reverse('dashboard')
 
     @classmethod
     def has_action(cls, user):
