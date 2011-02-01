@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:9090/" />
+<title>CA36-Cl01</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CA36-Cl01</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/cms/logout/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Login</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_username</td>
+	<td>admin</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_password</td>
+	<td>admin</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Login']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Admin site</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Content tree</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Add section</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>selenium-test-section</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_slug</td>
+	<td>selenium-test-section</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_status</td>
+	<td>label=Publicado</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_continue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='content']/ul/div/li/a[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=documents</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Add document</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>doc-3-test</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_slug</td>
+	<td>doc-3-test</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_status</td>
+	<td>label=Publicado</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Add document</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>doc-2-test</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_slug</td>
+	<td>doc-2-test</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Add document</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>doc-1-test</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_slug</td>
+	<td>doc-1-test</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=selenium-test-section</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Section children</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=collections</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Add Collection</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>collection-test</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_slug</td>
+	<td>collection-test</td>
+</tr>
+<tr>
+	<td>addSelection</td>
+	<td>id_content_types_from</td>
+	<td>label=document</td>
+</tr>
+<tr>
+	<td>doubleClick</td>
+	<td>id_content_types_from</td>
+	<td>label=document</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id_filtering_section</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_continue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=View on site</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Welcome to Merengue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//ul[@id='content-actions']/li/a/span/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id_filtering_section</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_continue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=View on site</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextNotPresent</td>
+	<td>Welcome to Merengue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>doc-1-test</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//ul[@id='content-actions']/li/a/span/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_order_by</td>
+	<td>label=id</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_continue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=View on site</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyNotOrdered</td>
+	<td>link=doc-3-test</td>
+	<td>link=doc-2-test</td>
+</tr>
+<tr>
+	<td>verifyNotOrdered</td>
+	<td>link=doc-2-test</td>
+	<td>link=doc-1-test</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//ul[@id='content-actions']/li/a/span/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_order_by</td>
+	<td>value=</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_group_by</td>
+	<td>label=class_name</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_continue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=View on site</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>document</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//ul[@id='content-actions']/li/a/span/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_group_by</td>
+	<td>value=</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_include_filters-0-filter_field</td>
+	<td>label=slug</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_include_filters-0-filter_operator</td>
+	<td>label=Contains (case-sensitive)</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_include_filters-0-filter_value</td>
+	<td>2</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_continue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=View on site</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextNotPresent</td>
+	<td>doc-1-test</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextNotPresent</td>
+	<td>doc-3-test</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//ul[@id='content-actions']/li/a/span/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id_include_filters-0-DELETE</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_exclude_filters-0-filter_field</td>
+	<td>label=status</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_exclude_filters-0-filter_operator</td>
+	<td>label=Exact (case-sensitive)</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_exclude_filters-0-filter_value</td>
+	<td>published</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_continue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=View on site</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextNotPresent</td>
+	<td>doc-3-test</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//ul[@id='content-actions']/li/a/span/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value=&quot;Yes, I'm sure&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=selenium-test-section</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Section children</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=documents</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=doc-3-test</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value=&quot;Yes, I'm sure&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=doc-2-test</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value=&quot;Yes, I'm sure&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=doc-1-test</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value=&quot;Yes, I'm sure&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=selenium-test-section</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value=&quot;Yes, I'm sure&quot;]</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>
