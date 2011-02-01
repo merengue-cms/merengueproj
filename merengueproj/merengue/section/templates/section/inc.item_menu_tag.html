@@ -4,15 +4,17 @@
     <ul class="menu_ul menu{{node.level}}  menuDepth{{ node.level|menu_less:min_level }}">
 {% endif %}
 {% with node.get_absolute_url as node_url %}
-    <li id="{{ node.slug }}" class="item {% if structure.new_level %}first{% endif %} {% ifequal node menu_item %}selected{% endifequal %}{% if node in ancestors %}selectedAncestors{% endif %}">
+{% with node.get_descendants as node_descendants %}
+    <li id="{{ node.slug }}" class="item {% if structure.new_level %}first{% endif %} {% if node_descendants %}haveDescendants{% endif %} {% ifequal node menu_item %}selected{% endifequal %}{% if node in ancestors %}selectedAncestors{% endif %}">
         <a href="{{ node.get_absolute_url }}" class="item {% ifequal node menu_item %}selected{% endifequal %}{% if node in ancestors %}selectedAncestors{% endif %}  menu{{node.level}}">{{ node.name }}</a>
-    {% if not node.get_descendants %}
+    {% if not node_descendants %}
         </li>
     {% else %}
         {% if max_level %}
             </li>
         {% endif %}
     {% endif %}
+{% endwith %}
 {% endwith %}
 
 {% for level in structure.closed_levels %}
