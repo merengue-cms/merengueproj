@@ -35,7 +35,9 @@ class GoogleSearchBlock(Block):
     ]
 
     @classmethod
-    def render(cls, request, place, context, *args, **kwargs):
+    def render(cls, request, place, context, block_content_relation=None,
+               *args, **kwargs):
         return cls.render_block(request, template_name='googlesearch/block_googlesearch.html',
                                 block_title=_('Search'),
-                                context={'plugin_config': cls.get_config()})
+                                context={'plugin_config': cls.get_config()},
+                                block_content_relation=block_content_relation)

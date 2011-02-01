@@ -61,4 +61,5 @@ class AddThisBlock(Block):
             request, template_name='addthis/links_block.html',
             block_title=_('Share this'),
             context={'services': services},
+            block_content_relation=block_content_relation,
         )

@@ -52,4 +52,5 @@ class TagCloudBlock(BlockQuerySetItemProvider, Block):
         return cls.render_block(request, template_name='itags/blocks/tagcloud.html',
                                 block_title=ugettext('Tag cloud'),
                                 context={'taglist': tag_cloud,
-                                         'filter_section': filter_section})
+                                         'filter_section': filter_section},
+                                block_content_relation=block_content_relation)

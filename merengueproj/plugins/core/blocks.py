@@ -45,7 +45,8 @@ class CoreMenuBlock(BaseMenuBlock, Block):
     verbose_name = _('Core Menu Block')
 
     @classmethod
-    def render(cls, request, place, context, *args, **kwargs):
+    def render(cls, request, place, context, block_content_relation=None,
+               *args, **kwargs):
         section = request.section
         if not section:
             return ''  # renders nothing
@@ -58,7 +59,8 @@ class CoreMenuBlock(BaseMenuBlock, Block):
                                 context={'section': section,
                                          'menu': main_menu,
                                          'descendants': descendants,
-                                         'max_num_level': cls.get_max_level()})
+                                         'max_num_level': cls.get_max_level()},
+                                block_content_relation=block_content_relation)
 
 
 class NavigationBlock(BaseMenuBlock, Block):
@@ -68,7 +70,8 @@ class NavigationBlock(BaseMenuBlock, Block):
     verbose_name = _('Navigation Block')
 
     @classmethod
-    def render(cls, request, place, context, *args, **kwargs):
+    def render(cls, request, place, context, block_content_relation=None,
+               *args, **kwargs):
         sections = BaseSection.objects.published()
         if not sections:
             return ''  # renders nothing
@@ -76,7 +79,8 @@ class NavigationBlock(BaseMenuBlock, Block):
                                 block_title=_('Navigation'),
                                 context={'sections': sections,
                                          'active_section': request.section,
-                                         'max_num_level': cls.get_max_level()})
+                                         'max_num_level': cls.get_max_level()},
+                                block_content_relation=block_content_relation)
 
 
 class PortalMenuBlock(BaseMenuBlock, Block):
@@ -86,12 +90,14 @@ class PortalMenuBlock(BaseMenuBlock, Block):
     verbose_name = _('Portal Menu Block')
 
     @classmethod
-    def render(cls, request, place, context, *args, **kwargs):
+    def render(cls, request, place, context, block_content_relation=None,
+               *args, **kwargs):
         portal_menu = Menu.objects.get(slug=settings.MENU_PORTAL_SLUG)
         return cls.render_block(request, template_name='core/block_portal_menu.html',
                                 block_title=_('Portal Menu'),
                                 context={'portal_menu': portal_menu,
-                                         'max_num_level': cls.get_max_level()})
+                                         'max_num_level': cls.get_max_level()},
+                                block_content_relation=block_content_relation)
 
 
 class LinkBaseBlock(Block):
@@ -102,12 +108,14 @@ class LinkBaseBlock(Block):
     verbose_name = _('Link Base Block')
 
     @classmethod
-    def render(cls, request, place, context, *args, **kwargs):
+    def render(cls, request, place, context, block_content_relation=None,
+               *args, **kwargs):
         links = PortalLink.objects.filter(category=cls.category)
         return cls.render_block(request, template_name=cls.template_name,
                                 block_title=_('Portal links'),
                                 context={'links': links,
-                                         'category': cls.category})
+                                         'category': cls.category},
+                                block_content_relation=block_content_relation)
 
 
 class PrimaryLinksBlock(LinkBaseBlock):

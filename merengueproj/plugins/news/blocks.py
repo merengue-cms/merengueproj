@@ -56,4 +56,5 @@ class LatestNewsBlock(BlockQuerySetItemProvider, Block):
         news_list = cls.get_queryset(request, context)
         return cls.render_block(request, template_name='news/block_latest.html',
                                 block_title=ugettext('Latest news'),
-                                context={'news_list': news_list})
+                                context={'news_list': news_list},
+                                block_content_relation=block_content_relation)

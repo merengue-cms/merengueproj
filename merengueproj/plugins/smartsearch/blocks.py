@@ -31,7 +31,8 @@ class SearchBlock(ContentBlock):
     verbose_name = ugettext_lazy('Search block')
 
     @classmethod
-    def render(cls, request, place, content, context, *args, **kwargs):
+    def render(cls, request, place, content, context, block_content_relation=None,
+               *args, **kwargs):
         if not isinstance(content, Collection):
             return ''
         searchers = content.searcher_set.all()
@@ -48,4 +49,5 @@ class SearchBlock(ContentBlock):
             forms_search.append(form_search)
         return cls.render_block(request, template_name='smartsearch/block_search.html',
                                 block_title=_('Searchers'),
-                                context={'forms_search': forms_search})
+                                context={'forms_search': forms_search},
+                                block_content_relation=block_content_relation)

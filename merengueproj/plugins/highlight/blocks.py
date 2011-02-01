@@ -28,8 +28,10 @@ class HighlightBlock(Block):
     help_text = ugettext_lazy('The block that highlights the item')
 
     @classmethod
-    def render(cls, request, place, context, *args, **kwargs):
+    def render(cls, request, place, context, block_content_relation=None,
+               *args, **kwargs):
         highlight_items = Highlight.objects.published()
         return cls.render_block(request, template_name='highlight/block_highlight.html',
                                 block_title=_('Highlight'),
-                                context={'highlight_items': highlight_items})
+                                context={'highlight_items': highlight_items},
+                                block_content_relation=block_content_relation)

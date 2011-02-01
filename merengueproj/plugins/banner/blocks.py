@@ -47,8 +47,10 @@ class BannerBlock(BlockQuerySetItemProvider, Block):
         return banners_list
 
     @classmethod
-    def render(cls, request, place, context, *args, **kwargs):
+    def render(cls, request, place, context, block_content_relation=None,
+               *args, **kwargs):
         banners = cls.get_queryset(request, context)
         return cls.render_block(request, template_name='banner/block_banner.html',
                                 block_title=ugettext('banners'),
-                                context={'banners': banners})
+                                context={'banners': banners},
+                                block_content_relation=block_content_relation)

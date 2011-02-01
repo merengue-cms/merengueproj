@@ -49,4 +49,5 @@ class VotingBlock(BlockSectionFilterItemProvider, ContentBlock):
                                 context={'content': content,
                                          'can_vote': get_can_vote(content, request.user),
                                          'readonly': readonly,
-                                         })
+                                         },
+                                block_content_relation=block_content_relation)

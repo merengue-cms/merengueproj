@@ -42,7 +42,8 @@ class EventsCalendarBlock(BlockQuerySetItemProvider, Block):
         return events
 
     @classmethod
-    def render(cls, request, place, context, *args, **kwargs):
+    def render(cls, request, place, context, block_content_relation=None,
+               *args, **kwargs):
         current_month = date.today().month
         current_year = date.today().year
         events = cls.get_queryset(request, context)
@@ -50,4 +51,5 @@ class EventsCalendarBlock(BlockQuerySetItemProvider, Block):
         return cls.render_block(request,
                                 template_name='event/block_calendar.html',
                                 block_title=_('Events calendar'),
-                                context={'events_dic': events_dic})
+                                context={'events_dic': events_dic},
+                                block_content_relation=block_content_relation)

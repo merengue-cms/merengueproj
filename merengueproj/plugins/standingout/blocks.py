@@ -55,4 +55,5 @@ class StandingOutBlock(Block):
             standingouts = standingouts[:limit.get_value()]
         return cls.render_block(request, template_name='standingout/block_standingout.html',
                                 block_title=_('Search'),
-                                context={'standingouts': standingouts})
+                                context={'standingouts': standingouts},
+                                block_content_relation=block_content_relation)

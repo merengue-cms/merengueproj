@@ -28,6 +28,8 @@ class OldBrowserBlock(Block):
     verbose_name = ugettext_lazy('Old browser block')
 
     @classmethod
-    def render(cls, request, place, context, *args, **kwargs):
+    def render(cls, request, place, context, block_content_relation=None,
+               *args, **kwargs):
         return cls.render_block(request, template_name='oldbrowser/block_oldbrowser.html',
-                                block_title=_('Old Browser'), context={})
+                                block_title=_('Old Browser'), context={},
+                                block_content_relation=block_content_relation)
