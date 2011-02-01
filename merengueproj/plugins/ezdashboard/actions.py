@@ -21,13 +21,13 @@ from django.utils.translation import ugettext_lazy as _
 from merengue.action.actions import UserAction
 
 
-class dashboarAction(UserAction):
+class DashboardAction(UserAction):
     name = 'ezweb'
-    verbose_name = _('dashboard')
+    verbose_name = _('dashdboard')
 
     @classmethod
     def get_url(cls, request, user):
-        return reverse('dashboard')
+        return reverse('dashdboard')
 
     @classmethod
     def has_action(cls, user):

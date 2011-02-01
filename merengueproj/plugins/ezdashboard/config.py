@@ -20,7 +20,7 @@ from django.utils.translation import ugettext_lazy as _
 from merengue.pluggable import Plugin
 from merengue.registry import params
 
-from plugins.ezdashboard.actions import dashboarAction
+from plugins.ezdashboard.actions import DashboardAction
 
 
 class PluginConfig(Plugin):
@@ -50,4 +50,4 @@ class PluginConfig(Plugin):
 
     @classmethod
     def get_actions(cls):
-        return [dashboarAction, ]
+        return [DashboardAction, ]
