@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://192.168.11.214:9090/" />
+<title>CA15-Cl01</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CA15-Cl01</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/admin/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_username</td>
+	<td>admin</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_password</td>
+	<td>admin</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Iniciar sesión']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Plugins</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=News</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id_installed</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Inicio</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=News</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='content-main']/div/table/tbody/tr[1]/th/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Añadir news item</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>Noticia CA15-CL01</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_slug</td>
+	<td>noticia-ca15-cl01</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_status</td>
+	<td>label=Publicado</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_body_en</td>
+	<td>noticia-ca15-cl01</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Inicio</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Menú del Portal</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Añadir menú</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>Menu Portal CA15-Cl01 </td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_slug</td>
+	<td>menu-portal-ca15-cl01</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_absolutelink-0-url</td>
+	<td>http://www.google.es</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_continue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Menu Portal CA15-Cl01</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=Menu Portal CA15-Cl01</td>
+	<td>Menu Portal CA15-Cl01</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Menu Portal CA15-Cl01</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Google</td>
+	<td></td>
+</tr>
+<tr>
+	<td>goBackAndWait</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/admin/section/menu/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Menu Portal CA15-Cl01</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id_absolutelink-0-DELETE</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_continue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_contentlink-0-content</td>
+	<td>label=Noticia CA15-CL01</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_continue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Menu Portal CA15-Cl01</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Menu Portal CA15-Cl01</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Noticia CA15-CL01</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/admin/section/menu/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Menu Portal CA15-Cl01</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id_contentlink-0-DELETE</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_continue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_viewletlink-0-viewlet</td>
+	<td>label=Latest news (latestnews)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_continue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Ver en el sitio</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Noticia CA15-CL01</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/admin/section/menu/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Menu Portal CA15-Cl01</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Borrar</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Sí, estoy seguro']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Inicio</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=News</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/admin/plugins.news/news/newsitem/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Noticia CA15-CL01</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Borrar</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Sí, estoy seguro']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Inicio</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Plugins</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=News</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id_installed</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Deslogarse</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>
