@@ -165,33 +165,27 @@ ul {
 #portalmenu {
   margin-right: 10em;
   float: right;
-  text-align: center;
   margin-bottom: 5px;
   list-style: none;
 }
 
 #portalmenu  .menuDepth1 > li {
   background: transparent url(../img/left_portal_menu_button.jpg) no-repeat left top;
-  padding: 8px 0 15px 11px;
+  padding: 0px 0 25px 11px;
   position: relative;
   height: 15px;
+  line-height: 28px;
+}
+
+.ie7 #portalmenu  .menuDepth1 > li {
+  line-height: 27px;
 }
 
 #portalmenu .menuDepth1 > li.haveDescendants {
   background: transparent url(../img/left_portal_menu_button_haveChild.jpg) no-repeat left top;
-  padding: 8px 0 15px 15px;
+  padding: 0px 0 25px 15px;
   position: relative;
   height: 15px;
-}
-
-.ie7 #portalmenu {
-  margin-top: -30px;
-  position: relative;
-}
-
-.ie7 #portalmenu  .menuDepth1 > li {
-  padding-top:  5px;
-  margin-right: 5px;
 }
 
 #portalmenu .menuDepth1 > li > a {
@@ -200,9 +194,6 @@ ul {
   background: transparent url(../img/right_portal_menu_button.jpg) no-repeat right top;
 }
 
-.ie7 #portalmenu li a {
-  line-height: 17px;
-}
 
 div#coremenu ul.menu1 li a.menu1 {
   font-size: 0.9em;
@@ -212,11 +203,16 @@ div#coremenu ul.menu1 li a.menu1 {
   position: absolute;
   display: none; 
   top: 33px;
+  left: 0;
   margin: 0;
   width: 136px;
   height: auto;
   padding: 0 0 5px 0;
   border-collapse: collapse;
+}
+
+.ie7 #portalmenu ul li .menuDepth2 {
+  padding-bottom: 10px;
 }
 
 #portalmenu ul li.hover .menuDepth2 li {
@@ -226,18 +222,25 @@ div#coremenu ul.menu1 li a.menu1 {
 
 #portalmenu ul li.hover .menuDepth2 {
   z-index: 10;
-  display: block;
   background: transparent url(../img/submenu_back_bottom.gif) no-repeat left bottom;
 }
 
-#portalmenu ul li.hover .menuDepth2 .first,
-#portalmenu ul li.hover .menuDepth2 .firstlast {
+#portalmenu ul li.hover ul {
+  display: list-item;
+}
+
+#portalmenu ul li .menuDepth2 > li.first {
   padding-top: 12px;
   background: transparent url(../img/submenu_back_top.jpg) no-repeat left top;
 }
 
-#portalmenu ul li .menuDepth2 li {
-  height: 25px;
+#portalmenu ul li ul.menuDepth3 {
+  margin: 0.2em 0 0.3em 0;
+}
+
+#portalmenu ul li.hover .menuDepth3 li {
+  padding-left: 20px;
+  width: 114px;
 }
 
 #header-blocks li a:hover {
@@ -301,8 +304,7 @@ div#coremenu ul.menu1 li a.menu1 {
 
 /* IE8 hack */
 #header-blocks ul li,
-#language-tools  ul li,
-#header-blocks #portalmenu li {
+#language-tools  ul li {
   padding-top /*\**/: 0 \9
 }
 
