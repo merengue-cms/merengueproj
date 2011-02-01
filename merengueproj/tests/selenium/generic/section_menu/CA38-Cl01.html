@@ -1,0 +1,807 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://192.168.11.214:9090/" />
+<title>CA38-Cl01</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CA38-Cl01</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/cms/logout</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Login</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_username</td>
+	<td>admin</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_password</td>
+	<td>admin</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Login']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Admin site</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Content tree</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Add section</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>test-menu-section</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_slug</td>
+	<td>test-menu-section</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_status</td>
+	<td>label=Publicado</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_continue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='content']/ul/div/li/a[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=documents</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Add document</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>document-test-section</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_slug</td>
+	<td>document-test-section</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-menu-section</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_continue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='content']/ul/div/li/a[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=main menu</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Add menu</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>level 1 - item 1</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_slug</td>
+	<td>leve-1-item-1</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_contentlink-0-content</td>
+	<td>label=document-test-section</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_addanother</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>level 1 - item 2</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_slug</td>
+	<td>level-1-item-2</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_contentlink-0-content</td>
+	<td>label=document-test-section</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_addanother</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>level 2 - item 3</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_slug</td>
+	<td>level-2-item-3</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_parent</td>
+	<td>label=level 1 - item 1</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_contentlink-0-content</td>
+	<td>label=document-test-section</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_addanother</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>level 2 - item 4</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_parent</td>
+	<td>label=level 1 - item 1</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_contentlink-0-content</td>
+	<td>label=document-test-section</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_slug</td>
+	<td>level-2-item-4</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_addanother</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>level 2 - item 5</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_parent</td>
+	<td>label=level 1 - item 2</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_slug</td>
+	<td>level-2-item-5</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_contentlink-0-content</td>
+	<td>label=document-test-section</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_addanother</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>level 2 - item 6</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_parent</td>
+	<td>label=level 1 - item 2</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_contentlink-0-content</td>
+	<td>label=document-test-section</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_slug</td>
+	<td>level-2-item-6</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_addanother</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>level 3 - item 7</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_parent</td>
+	<td>label=level 2 - item 3</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_contentlink-0-content</td>
+	<td>label=document-test-section</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>slug</td>
+	<td>level-3-item-7</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_addanother</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>level 3 - item 8</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_parent</td>
+	<td>label=level 2 - item 3</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_contentlink-0-content</td>
+	<td>label=document-test-section</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_slug</td>
+	<td>level-3-item-8</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_addanother</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>level 3 - item 9</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_parent</td>
+	<td>label=level 2 - item 3</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_contentlink-0-content</td>
+	<td>label=document-test-section</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_slug</td>
+	<td>level-3-item-9</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_addanother</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>level 4 - item 10</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_parent</td>
+	<td>label=level 3 - item 8</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_contentlink-0-content</td>
+	<td>label=document-test-section</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_slug</td>
+	<td>level-4-item-10</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_addanother</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>level 4 - item 11</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_parent</td>
+	<td>label=level 3 - item 8</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_contentlink-0-content</td>
+	<td>label=document-test-section</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_slug</td>
+	<td>level-4-item-11</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_addanother</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>level 5 - item 12</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_parent</td>
+	<td>label=level 4 - item 11</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_contentlink-0-content</td>
+	<td>label=document-test-section</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_slug</td>
+	<td>level-5-item-12</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_addanother</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>level 5 - item 13</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_parent</td>
+	<td>label=level 4 - item 11</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_contentlink-0-content</td>
+	<td>label=document-test-section</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_slug</td>
+	<td>level-5-item-13</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_addanother</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>level 6 - item 15</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_slug</td>
+	<td>level-6-item-15</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_parent</td>
+	<td>label=level 5 - item 13</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_contentlink-0-content</td>
+	<td>label=document-test-section</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_addanother</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>level 5 - item 14</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_slug</td>
+	<td>level-5-item-14</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_parent</td>
+	<td>label=level 4 - item 11</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id_contentlink-0-content</td>
+	<td>label=document-test-section</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Home</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Blocks</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=CoreMenuBlock</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_config_0</td>
+	<td>2</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=NavigationBlock</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id_active</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Home</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Content tree</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-menu-section</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=View on site</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>level 1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>level 2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextNotPresent</td>
+	<td>level 3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=level 2 - item 3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>level 3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextNotPresent</td>
+	<td>level 4</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=level 3 - item 7</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>level 3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>level 4</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextNotPresent</td>
+	<td>level 2 - item 4</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=level 4 - item 11</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>level 5</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=level 5 - item 14</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>level 6</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>level 5</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextNotPresent</td>
+	<td>level 4 - item 10</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/admin/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Blocks</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=CoreMenuBlock</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_config_0</td>
+	<td>4</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Home</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Content tree</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-menu-section</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=View on site</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>level 4</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextNotPresent</td>
+	<td>level 5</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=level 4 - item 11</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>level 5</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=level 5 - item 13</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>level 5</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>level 6</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextNotPresent</td>
+	<td>level 4 - item 10</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Admin site</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Content tree</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-menu-section</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='content']/ul/div/li/a[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=documents</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=document-test-section</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value=&quot;Yes, I'm sure&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test-menu-section</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value=&quot;Yes, I'm sure&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Home</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Blocks</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=NavigationBlock</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id_active</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Home</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
