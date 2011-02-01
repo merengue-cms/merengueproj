@@ -852,7 +852,7 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
 
         # perms_needed
 
-        if request.POST: # The user has already confirmed the deletion.
+        if request.POST:  # The user has already confirmed the deletion.
             if perms_needed or objects_without_delete_perm:
                 raise PermissionDenied
             obj_display = force_unicode(obj)
@@ -941,6 +941,10 @@ class BaseContentViewAdmin(BaseContentAdmin):
 
     def has_add_permission(self, request):
         return False
+
+    def lookup_allowed(self, lookup):
+        is_allowed = super(BaseContentViewAdmin, self).lookup_allowed(lookup)
+        return is_allowed or lookup == u'id__in'
 
 
 class RelatedModelAdmin(BaseAdmin):
@@ -1242,7 +1246,6 @@ def register(site):
 
 def register_related_base(site, related_to):
     site.register_related(ContactInfo, BaseContentRelatedContactInfoAdmin, related_to=related_to)
-
 
 
 # ----- begin monkey patching -----
