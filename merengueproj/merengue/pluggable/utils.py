@@ -29,6 +29,7 @@ from django.conf import settings
 from django.conf.urls.defaults import include, url
 from django.contrib.admin.sites import NotRegistered
 from django.core.exceptions import ImproperlyConfigured, FieldError, MiddlewareNotUsed
+from django.core.management import call_command
 from django.core.management.color import no_style
 from django.core.management.sql import sql_all
 from django.core.management.validation import get_validation_errors
@@ -37,6 +38,9 @@ from django.db import connection, transaction
 from django.db.models import get_models
 from django.db.models.loading import load_app
 from django.utils.importlib import import_module
+
+from south import migration
+from south.exceptions import NoMigrations
 
 from merengue import registry
 from merengue.base.adminsite import site
@@ -63,22 +67,22 @@ _plugin_middlewares_cache = {
 
 
 def install_plugin(registered_plugin):
-    app_name = get_plugin_module_name(registered_plugin.directory_name)
-    app_mod = load_app(app_name)
+    app_name = registered_plugin.directory_name
+    plugin_name = get_plugin_module_name(app_name)
     # Needed update installed apps in order
     # to get SQL command from merengue.pluggable
-    add_to_installed_apps(app_name)
-    if app_mod and not are_installed_models(app_mod):
-        install_models(app_mod)
+    add_to_installed_apps(plugin_name)
+    if load_app(plugin_name) and not are_installed_models(app_name):
+        install_models(app_name)
         # Force registered_plugin saving after connection closes.
         registered_plugin.save()
     if registered_plugin.active:
-        enable_plugin(app_name)
+        enable_plugin(plugin_name)
         # Doing extra custom installation implemented in each plugin
-        plugin_config = get_plugin_config(app_name, prepend_plugins_dir=False)
+        plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
         plugin_config.post_install()
     else:
-        disable_plugin(app_name)
+        disable_plugin(plugin_name)
 
 
 def get_plugins_dir():
@@ -118,8 +122,20 @@ def validate_plugin(plugin_config):
         raise ImproperlyConfigured('Plugin %s must have a defined "name" attribute' % plugin_config)
 
 
-def are_installed_models(plugin_mod):
-    plugin_models = get_models(plugin_mod)
+def have_south(app_name):
+    try:
+        migrations = migration.Migrations(app_name)  # pyflakes:ignore
+    except NoMigrations:
+        return False
+    else:
+        return True
+
+
+def are_installed_models(app_name):
+    if have_south(app_name):
+        return False
+    app_module = load_app(get_plugin_module_name(app_name))
+    plugin_models = get_models(app_module)
     tables = connection.introspection.table_names()
     seen_models = connection.introspection.installed_models(tables)
     for plugin_model in plugin_models:
@@ -128,12 +144,16 @@ def are_installed_models(plugin_mod):
     return True
 
 
-def install_models(plugin_mod):
-    style = no_style()
-    cursor = connection.cursor()
-    sql_commands = sql_all(plugin_mod, style)
-    for sql_command in sql_commands:
-        cursor.execute(sql_command)
+def install_models(app_name):
+    app_module = load_app(get_plugin_module_name(app_name))
+    if have_south(app_name):
+        call_command('migrate', app=app_name)
+    else:
+        style = no_style()
+        cursor = connection.cursor()
+        sql_commands = sql_all(app_module, style)
+        for sql_command in sql_commands:
+            cursor.execute(sql_command)
     transaction.commit()
 
 
@@ -193,7 +213,7 @@ def check_plugin_broken(plugin_name):
         except ImportError:
             # usually means models module does not exists. Don't worry about that
             pass
-        except (TypeError, FieldError, SyntaxError): # some validation error when importing models
+        except (TypeError, FieldError, SyntaxError):  # some validation error when importing models
             raise BrokenPlugin(plugin_name, *sys.exc_info())
     except Exception:
         raise BrokenPlugin(plugin_name, *sys.exc_info())
@@ -492,12 +512,12 @@ def register_middleware(middleware_path):
     """
     global _plugin_middlewares_cache
     if middleware_path in _plugin_middlewares_cache['loaded_middlewares']:
-        return # already registered
+        return  # already registered
     try:
         dot = middleware_path.rindex('.')
     except ValueError:
         raise ImproperlyConfigured('%s isn\'t a middleware module' % middleware_path)
-    mw_module, mw_classname = middleware_path[:dot], middleware_path[dot+1:]
+    mw_module, mw_classname = middleware_path[:dot], middleware_path[dot + 1:]
     try:
         mod = import_module(mw_module)
     except ImportError, e:
@@ -537,7 +557,7 @@ def unregister_middleware(middleware_path):
     """
     global _plugin_middlewares_cache
     if middleware_path not in _plugin_middlewares_cache['loaded_middlewares']:
-        return # not registered
+        return  # not registered
     for midd_type in ('request_middleware', 'request_middleware',
                       'response_middleware', 'exception_middleware', ):
         for path, method in _plugin_middlewares_cache[midd_type]:
