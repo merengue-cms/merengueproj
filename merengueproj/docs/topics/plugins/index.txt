@@ -360,3 +360,33 @@ After changing ``REQUIRED_PLUGINS`` setting, you have to register plugin with th
 command to get new plugins activated (and also get their models created if exist)::
 
     python manage.py migrate
+
+South migrations in plugins
+---------------------------
+
+If your plugin change its models and you want a clean migration in websites
+with your plugin installed, you may need to implement `South`_ migrations on it.
+
+For creating south migrations, you have to use the ``schemamigration`` and
+``datamigration`` commands (see `South docs`_ for more information). You only
+have to remember to add temporary the plugin name to ``INSTALLED_APPS`` setting
+before executing those commands, because south does not find enabled plugins by
+itself.
+
+When a plugin with south migrations is installed, Merengue automatically will
+execute its South migrations. To execute plugins migrations in already
+installed plugins you have to uninstall and install the plugin in Merengue admin.
+
+Also, there is a useful ``migrate_plugins`` command which migrates all enabled
+plugins in your website. There are some example of use:
+
+.. code-block:: bash
+
+    $ python manage.py migrate_plugins  # migrate all enabled plugins
+    $ python manage.py migrate_plugins --list  # show migration list of enabled plugins
+    $ python manage.py migrate_plugins forum  # migrate only forum plugin, if enabled
+    $ python manage.py migrate_plugins forum 0002  # migrate only 0002* step for forum plugin
+    $ python manage.py migrate_plugins forum 0001_initial  # fakes 0001_initial step for forum plugin
+
+.. _`South`: http://south.aeracode.org/
+.. _`South docs`: http://south.aeracode.org/docs/
