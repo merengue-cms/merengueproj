@@ -22,10 +22,10 @@ django-notification==0.1.5
 django-oot
 django-genericforeignkey
 django-stdfile
-cmsutils
+cmsutils>=0.5.3
 transhette
-django-inlinetrans
+django-inlinetrans>=0.2dev
 django-transmeta
-sorl-thumbnail
+sorl-thumbnail>=11.01
 searchform
 django-autoreports
