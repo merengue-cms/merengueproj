@@ -904,10 +904,6 @@ table.gsc-search-box td.gsc-input {
   #header-blocks ul li a span {
     display: inline-block;
   }
-  #header-blocks #portalmenu li a,
-  #header-blocks #portalmenu .menu1 > li a {
-    padding-top: 7px;
-  }
 }
 
 
