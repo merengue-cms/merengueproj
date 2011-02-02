@@ -60,7 +60,7 @@ def setup(app):
         indextemplate = "pair: %s; django-admin command-line option",
         parse_node    = parse_django_adminopt_node,
     )
-    app.add_config_value('django_next_version', '0.0', True)
+    app.add_config_value('merengue_next_version', '0.0', True)
     app.add_directive('versionadded', parse_version_directive, 1, (1, 1, 1))
     app.add_directive('versionchanged', parse_version_directive, 1, (1, 1, 1))
     app.add_transform(SuppressBlockquotes)
@@ -69,7 +69,7 @@ def setup(app):
 def parse_version_directive(name, arguments, options, content, lineno,
                       content_offset, block_text, state, state_machine):
     env = state.document.settings.env
-    is_nextversion = env.config.django_next_version == arguments[0]
+    is_nextversion = env.config.merengue_next_version == arguments[0]
     ret = []
     node = addnodes.versionmodified()
     ret.append(node)
