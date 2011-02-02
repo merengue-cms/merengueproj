@@ -61,7 +61,7 @@ version = '0.6'
 # The full version, including alpha/beta/rc tags.
 release = version
 # The next version to be released
-django_next_version = '0.7'
+merengue_next_version = '0.7'
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
