@@ -52,7 +52,7 @@ class RegisteredBlock(RegisteredItem):
         help_text=_("""block will <em>only</em> be visible in urls matching these
             regular expressions (one per line, using <a\
             href='http://docs.python.org./library/re.html#regular-expression-syntax'
-            title='python regular expressions'>python re syntax</a>). <br/>
+            title='python regular expressions' target='_blank'>python re syntax</a>). <br/>
             Please use relative paths.
             This field has preference over 'hidden in urls'."""))
     hidden_in_urls = models.TextField(
@@ -61,7 +61,7 @@ class RegisteredBlock(RegisteredItem):
         help_text=_("""block will be hidden in urls matching these regular
             expressions (one per line, using <a
             href='http://docs.python.org/library/re.html#regular-expression-syntax'
-            title='python regular expressions'>python re syntax</a>)."""))
+            title='python regular expressions' target='_blank'>python re syntax</a>)."""))
 
     objects = RegisteredItemManager()
 
@@ -73,7 +73,7 @@ class RegisteredBlock(RegisteredItem):
                     urlre = re.compile(e, re.IGNORECASE)
                     if urlre.search(url):
                         return True
-                except re.error, err:
+                except re.error, err:  # pyflakes:ignore
                     continue
             return False
 
