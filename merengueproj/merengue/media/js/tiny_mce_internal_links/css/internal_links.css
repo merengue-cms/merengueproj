@@ -13,8 +13,9 @@ a:hover { color: #666666 !important; }
     clear: both;
 }
 
-ul.operators {
+#content ul.operators {
     list-style-type: none;
+	margin-bottom: 1em;
 }
 
 ul#search-sections {
@@ -27,12 +28,15 @@ ul#search-sections li {
     padding: 5px 10px;
     margin: 0px;
     border-top-width: 0px;
-    width: 100px;
+    width: 83px;
+	background-color: #f2f2f2;
+	list-style: none;
 }
 
 ul#search-sections li.selected {
-    border-right-color: #f0f0ee;
+    border-right-color: #fff;
     z-index: 90;
+	background-color: white;
 }
 
 .searchlet {
@@ -71,7 +75,7 @@ ul#search-sections li.selected {
 }
 
 #search_form input.search-action {
-    background: none;
+    background: #f2f2f2;
     border: 1px solid black;
     text-indent: 0px;
     padding: 0px;
