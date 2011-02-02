@@ -9,16 +9,7 @@ Django debug toolbar
 
 Merengue has a customized version of `Django debug toolbar`_ deactivated by default.
 
-You have to remove comments from `merengue/settings.py`_ to activate this toolbar:
-
-.. code-block:: python
-
-    POST_MERENGUE_MIDDLEWARE_CLASSES = (
-        # ... stuff
-        'debug_toolbar.middleware.DebugToolbarMiddleware',
-        # ... stuff
-
-Also, you have to make sure that ``DEBUG_TOOLBAR`` setting is enabled.
+To activate this toolbar you have to set ``DEBUG_TOOLBAR`` setting to ``True``.
 
 You can activate specific debug toolbar panels setting ``DEBUG_TOOLBAR_PANELS``.
 
