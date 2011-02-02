@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas 
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -132,7 +132,7 @@ PRE_MERENGUE_MIDDLEWARE_CLASSES = (
 
 POST_MERENGUE_MIDDLEWARE_CLASSES = (
     #'django.middleware.gzip.GZipMiddleware',
-    #'debug_toolbar.middleware.DebugToolbarMiddleware',  # remove comment if you want to activate django debug toolbar
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'merengue.section.middleware.ResponseSectionMiddleware',
     'merengue.pluggable.middleware.PluginMiddlewaresProxy',
     #'cmsutils.middleware.I18NFetchFromCacheMiddleware', # this has to be last # removed anonymous cache middleware
