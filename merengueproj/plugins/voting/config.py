@@ -28,7 +28,7 @@ class PluginConfig(Plugin):
     description = 'Voting plugin'
     version = '0.0.1a'
     url_prefixes = (
-        ('voting', 'plugins.voting.urls'),
+        ({'en': 'voting', 'es': 'votos'}, 'plugins.voting.urls'),
     )
 
     @classmethod

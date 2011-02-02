@@ -15,15 +15,21 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls.defaults import patterns
+from merengue.conf.urls.defaults import merengue_url as url
+
 
 SLUG_RE = r'[-_\w]+'
 
 urlpatterns = patterns('plugins.ezdashboard.views',
     url(r'^$', 'dashboard', name='dashboard'),
-    url(r'^catalog/$', 'gadgets_list', name='catalog'),
+    url({'en': r'^catalog/$',
+         'es': r'^catalogo/$'},
+         'gadgets_list', name='catalog'),
     url(r'^meta/(?P<gadget_name>%s)/$' % SLUG_RE, 'gadget_meta',
         name='meta'),
-    url(r'^content/(?P<gadget_name>%s)/$' % SLUG_RE, 'gadget_view',
+    url({'en': r'^content/(?P<gadget_name>%s)/$' % SLUG_RE,
+         'es': r'^contenido/(?P<gadget_name>%s)/$' % SLUG_RE},
+         'gadget_view',
         name='content'),
 )

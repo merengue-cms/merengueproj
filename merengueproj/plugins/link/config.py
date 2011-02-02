@@ -29,7 +29,9 @@ class PluginConfig(Plugin):
     version = '0.0.1a'
 
     url_prefixes = (
-        ('link', 'plugins.link.urls'),
+        ({'en': 'link',
+          'es': 'enlaces'},
+         'plugins.link.urls'),
     )
 
     @classmethod

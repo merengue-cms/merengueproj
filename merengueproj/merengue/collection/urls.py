@@ -15,8 +15,11 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls.defaults import patterns
+from merengue.conf.urls.defaults import merengue_url as url
 
 urlpatterns = patterns('merengue.collection.views',
-    url(r'ajax/get_collection_fields/$', 'get_collection_fields', name='get_collection_fields'),
+    url({'en': r'ajax/get_collection_fields/$',
+         'es': r'ajax/campos_de_coleccion/$'},
+         'get_collection_fields', name='get_collection_fields'),
 )

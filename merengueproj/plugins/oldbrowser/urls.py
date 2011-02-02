@@ -15,8 +15,12 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls.defaults import patterns
+from merengue.conf.urls.defaults import merengue_url as url
+
 
 urlpatterns = patterns('plugins.oldbrowser.views',
-    url(r'^browserinfo$', 'browser_info', name='browser_info'),
+    url({'en': r'^browserinfo$',
+         'es': r'^informacion_de_navegador$'},
+         'browser_info', name='browser_info'),
 )

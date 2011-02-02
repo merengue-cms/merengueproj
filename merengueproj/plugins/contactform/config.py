@@ -31,7 +31,9 @@ class PluginConfig(Plugin):
     version = '0.0.1'
 
     url_prefixes = (
-        ('contactform', 'plugins.contactform.urls'),
+        ({'en': 'contactform',
+          'es': 'formulario_de_contacto'},
+             'plugins.contactform.urls'),
     )
 
     config_params = [

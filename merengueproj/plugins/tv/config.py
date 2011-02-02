@@ -26,7 +26,9 @@ class PluginConfig(Plugin):
     version = '0.0.1a'
 
     url_prefixes = (
-        ('canales-de-television', 'plugins.tv.urls'),
+        ({'en': 'tv-channels',
+          'es': 'canales-de-television'},
+          'plugins.tv.urls'),
     )
 
     @classmethod

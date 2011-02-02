@@ -15,10 +15,13 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls.defaults import patterns
+from merengue.conf.urls.defaults import merengue_url as url
 
 urlpatterns = patterns('merengue.block.views',
-    url(r'order/ajax/', 'blocks_reorder', name='blocks_reorder'),
+    url({'en': r'order/ajax/',
+         'es': r'orden/ajax/'},
+        'blocks_reorder', name='blocks_reorder'),
     url(r'config/ajax/(?P<block_id>\d+)$', 'generate_blocks_configuration',
         name='generate_blocks_configuration'),
 )

@@ -15,10 +15,13 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls.defaults import patterns
+from merengue.conf.urls.defaults import merengue_url as url
 
 
 urlpatterns = patterns('plugins.subscription.views',
     url(r'^(?P<basecontent_slug>[\w-]+)/$', 'subscription_form', name='subscription_form'),
-    url(r'^(?P<basecontent_slug>[\w-]+)/subscribers/$', 'subscriber_listing', name='subscriber_listing'),
+    url({'en': r'^(?P<basecontent_slug>[\w-]+)/subscribers/$',
+         'es': r'^(?P<basecontent_slug>[\w-]+)/subscriptores/$'},
+         'subscriber_listing', name='subscriber_listing'),
 )

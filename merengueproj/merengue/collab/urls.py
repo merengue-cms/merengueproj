@@ -15,17 +15,38 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf.urls.defaults import patterns, url
+
+from django.conf.urls.defaults import patterns
+from merengue.conf.urls.defaults import merengue_url as url
+
 
 urlpatterns = patterns('merengue.collab.views',
-    url(r'ajax/comments/(?P<content_type_id>\d+)/(?P<content_id>\d+)/$', 'ajax_admin_comments', name='ajax_admin_comments'),
-    url(r'ajax/comments/(?P<content_type_id>\d+)/(?P<content_id>\d+)/list/$', 'ajax_list_comments', name='ajax_list_comments'),
-    url(r'ajax/comments/(?P<content_type_id>\d+)/(?P<content_id>\d+)/add/$', 'ajax_add_comment', name='ajax_add_comment'),
-    url(r'ajax/comments/(?P<comment_id>\d+)/revise/$', 'ajax_revise_comment', name='ajax_revise_comment'),
-    url(r'ajax/comments/(?P<comment_id>\d+)/$', 'ajax_get_comment', name='ajax_get_comment'),
-    url(r'ajax/comments/(?P<content_type_id>\d+)/(?P<content_id>\d+)/count/$', 'ajax_num_comments', name='ajax_num_comments'),
+    url({'en': r'ajax/comments/(?P<content_type_id>\d+)/(?P<content_id>\d+)/$',
+         'es': r'ajax/comentarios/(?P<content_type_id>\d+)/(?P<content_id>\d+)/$'},
+         'ajax_admin_comments', name='ajax_admin_comments'),
+    url({'en': r'ajax/comments/(?P<content_type_id>\d+)/(?P<content_id>\d+)/list/$',
+         'es': r'ajax/comentarios/(?P<content_type_id>\d+)/(?P<content_id>\d+)/list/$'},
+         'ajax_list_comments', name='ajax_list_comments'),
+    url({'en': r'ajax/comments/(?P<content_type_id>\d+)/(?P<content_id>\d+)/add/$',
+         'es': r'ajax/comentarios/(?P<content_type_id>\d+)/(?P<content_id>\d+)/add/$'},
+         'ajax_add_comment', name='ajax_add_comment'),
+    url({'en': r'ajax/comments/(?P<comment_id>\d+)/revise/$',
+         'es': r'ajax/comentarios/(?P<comment_id>\d+)/revise/$'},
+         'ajax_revise_comment', name='ajax_revise_comment'),
+    url({'en': r'ajax/comments/(?P<comment_id>\d+)/$',
+         'es': r'ajax/comentarios/(?P<comment_id>\d+)/$'},
+         'ajax_get_comment', name='ajax_get_comment'),
+    url({'en': r'ajax/comments/(?P<content_type_id>\d+)/(?P<content_id>\d+)/count/$',
+         'es': r'ajax/comentarios/(?P<content_type_id>\d+)/(?P<content_id>\d+)/count/$'},
+         'ajax_num_comments', name='ajax_num_comments'),
     # Translation
-    url(r'ajax/translation/(?P<content_type_id>\d+)/(?P<content_id>\d+)/(?P<field>\w+)/$', 'ajax_admin_translation', name='ajax_admin_translation'),
-    url(r'ajax/translation/(?P<content_type_id>\d+)/(?P<content_id>\d+)/(?P<field>\w+)/lang/$', 'ajax_edit_translation', name='ajax_edit_translation'),
-    url(r'ajax/translation/(?P<content_type_id>\d+)/(?P<content_id>\d+)/(?P<field>\w+)/lang/(?P<language_id>\w+)/$', 'ajax_edit_translation', name='ajax_edit_translation'),
+    url({'en': r'ajax/translation/(?P<content_type_id>\d+)/(?P<content_id>\d+)/(?P<field>\w+)/$',
+         'es': r'ajax/traducciones/(?P<content_type_id>\d+)/(?P<content_id>\d+)/(?P<field>\w+)/$'},
+         'ajax_admin_translation', name='ajax_admin_translation'),
+    url({'en': r'ajax/translation/(?P<content_type_id>\d+)/(?P<content_id>\d+)/(?P<field>\w+)/lang/$',
+         'es': r'ajax/traducciones/(?P<content_type_id>\d+)/(?P<content_id>\d+)/(?P<field>\w+)/lang/$'},
+         'ajax_edit_translation', name='ajax_edit_translation'),
+    url({'en': r'ajax/translation/(?P<content_type_id>\d+)/(?P<content_id>\d+)/(?P<field>\w+)/lang/(?P<language_id>\w+)/$',
+         'es': r'ajax/traducciones/(?P<content_type_id>\d+)/(?P<content_id>\d+)/(?P<field>\w+)/lang/(?P<language_id>\w+)/$'},
+         'ajax_edit_translation', name='ajax_edit_translation'),
 )

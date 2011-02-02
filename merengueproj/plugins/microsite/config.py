@@ -27,7 +27,9 @@ class PluginConfig(Plugin):
     version = '0.0.1a'
 
     url_prefixes = (
-        ('microsite', 'plugins.microsite.urls'),
+        ({'en': 'microsite',
+          'es': 'micrositios'},
+             'plugins.microsite.urls'),
     )
 
     @classmethod

@@ -18,11 +18,21 @@
 from django.conf.urls.defaults import patterns
 from django.contrib import admin
 
+from merengue.conf.urls.defaults import merengue_url as url
+
+
 admin.autodiscover()
 
+
 urlpatterns = patterns('merengue.base.views',
-    (r'^admin_redirect/(?P<content_type>\d+)/(?P<content_id>\d+)/(?P<url>.*)$', 'admin_link'),
-    (r'^public_redirect/(?P<app_label>\w+)/(?P<model_name>\w+)/(?P<content_id>\d+)/$', 'public_link'),
-    (r'^view/(?P<app_label>\w+)/(?P<model_name>\w+)/(?P<content_id>\d+)/(?P<content_slug>[\w-]+)/$', 'public_view'),
+    url({'en': r'^admin_redirect/(?P<content_type>\d+)/(?P<content_id>\d+)/(?P<url>.*)$',
+         'es': r'^redireccion_admin/(?P<content_type>\d+)/(?P<content_id>\d+)/(?P<url>.*)$'},
+        'admin_link'),
+    url({'en': r'^public_redirect/(?P<app_label>\w+)/(?P<model_name>\w+)/(?P<content_id>\d+)/$',
+         'es': r'^redireccion_publica/(?P<app_label>\w+)/(?P<model_name>\w+)/(?P<content_id>\d+)/$'},
+        'public_link'),
+    url({'en': r'^view/(?P<app_label>\w+)/(?P<model_name>\w+)/(?P<content_id>\d+)/(?P<content_slug>[\w-]+)/$',
+         'es': r'^ver/(?P<app_label>\w+)/(?P<model_name>\w+)/(?P<content_id>\d+)/(?P<content_slug>[\w-]+)/$'},
+        'public_view'),
     (r'^ajax/autocomplete/tags/(?P<app_name>.*)/(?P<model>.*)/$', 'ajax_autocomplete_tags'),
 )

@@ -27,7 +27,9 @@ class PluginConfig(Plugin):
     required_apps = {'autoreports': {}, }
 
     url_prefixes = (
-        ('search', 'plugins.smartsearch.urls'),
+        ({'en': 'search',
+          'es': 'busqueda'},
+          'plugins.smartsearch.urls'),
     )
 
     @classmethod

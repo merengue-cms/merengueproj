@@ -15,8 +15,12 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls.defaults import patterns
+from merengue.conf.urls.defaults import merengue_url as url
+
 
 urlpatterns = patterns('plugins.voting.views',
-    url(r'^vote/(?P<object_id>\d+)/$', 'vote_object', name='vote_object'),
+    url({'en': r'^vote/(?P<object_id>\d+)/$',
+         'es': r'^votar/(?P<object_id>\d+)/$'},
+         'vote_object', name='vote_object'),
 )

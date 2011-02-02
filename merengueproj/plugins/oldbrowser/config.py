@@ -28,7 +28,9 @@ class PluginConfig(Plugin):
     version = '0.0.1'
 
     url_prefixes = (
-        ('oldbrowser', 'plugins.oldbrowser.urls'),
+        ({'en': 'oldbrowser',
+          'es': 'navegador_antiguo'},
+         'plugins.oldbrowser.urls'),
     )
 
     @classmethod

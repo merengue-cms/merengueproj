@@ -29,7 +29,9 @@ class PluginConfig(Plugin):
     description = 'Events plugin'
     version = '0.0.1a'
     url_prefixes = (
-        ('event', 'plugins.event.urls'),
+        ({'en': 'event',
+          'es': 'eventos'},
+          'plugins.event.urls'),
     )
 
     @classmethod

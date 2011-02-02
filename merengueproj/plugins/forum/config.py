@@ -13,7 +13,9 @@ class PluginConfig(Plugin):
     ]
 
     url_prefixes = (
-        ('forum', 'plugins.forum.urls'),
+        ({'en': 'forum',
+          'es': 'foros'},
+         'plugins.forum.urls'),
     )
 
     required_plugins = {'feedback': {},

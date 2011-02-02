@@ -36,7 +36,9 @@ class PluginConfig(Plugin):
     ]
 
     url_prefixes = (
-        ('filebrowser', 'plugins.filebrowser.urls'),
+        ({'en': 'filebrowser',
+          'es': 'navegador_de_ficheros'},
+          'plugins.filebrowser.urls'),
     )
 
     @classmethod

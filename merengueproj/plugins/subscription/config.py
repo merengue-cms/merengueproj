@@ -27,7 +27,9 @@ class PluginConfig(Plugin):
     version = '0.0.1a'
 
     url_prefixes = (
-        ('subscriptions', 'plugins.subscription.urls'),
+        ({'en': 'subscriptions',
+          'es': 'subscripciones'},
+          'plugins.subscription.urls'),
     )
 
     @classmethod

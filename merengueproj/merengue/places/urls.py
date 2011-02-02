@@ -15,9 +15,15 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls.defaults import patterns
+from merengue.conf.urls.defaults import merengue_url as url
+
 
 urlpatterns = patterns('merengue.places.views',
-    url(r'^ajax/nearby/$', 'places_ajax_nearby', name='places_ajax_nearby'),
-    url(r'^merengue_content_info/(?P<content_type>\d+)/(?P<content_id>\d+)/$', 'content_info', name='content_info'),
+    url({'en': r'^ajax/nearby/$',
+         'es': r'^ajax/cercano/$'},
+         'places_ajax_nearby', name='places_ajax_nearby'),
+    url({'en': r'^merengue_content_info/(?P<content_type>\d+)/(?P<content_id>\d+)/$',
+         'es': r'^merengue_informacion_contenido/(?P<content_type>\d+)/(?P<content_id>\d+)/$'},
+         'content_info', name='content_info'),
 )

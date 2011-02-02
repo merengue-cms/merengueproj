@@ -18,6 +18,8 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
 from django.conf.urls.defaults import *
+from merengue.conf.urls.defaults import merengue_url as url
+
 
 js_info_dict = {
         'packages': ('django.conf', ),
@@ -27,17 +29,31 @@ handler404 = 'merengue.perms.defaults.page_not_found'
 
 urlpatterns = patterns('',
     # actions
-    (r'^actions/', include('merengue.action.urls')),
+    url({'en': r'^actions/',
+         'es': r'^acciones/'},
+         include('merengue.action.urls')),
 
     # blocks
-    (r'^blocks/', include('merengue.block.urls')),
+    url({'en': r'^blocks/',
+         'es': r'^bloques/'},
+         include('merengue.block.urls')),
 
     # login and logout
-    url(r'^login/$', 'merengue.portal.views.login', name="merengue_login"),
-    url(r'^logout/$', 'merengue.portal.views.logout', name="merengue_logout"),
-    url(r'^password/reset/$', 'merengue.portal.views.password_reset', name="password_reset"),
-    url(r'^password/reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', 'merengue.portal.views.password_reset_confirm', name="password_reset_confirm"),
-    url(r'^password/reset/done/$', 'merengue.portal.views.password_reset_complete', name="password_reset_complete"),
+    url({'en': r'^login/$',
+         'es': r'^autenticar/$'},
+         'merengue.portal.views.login', name="merengue_login"),
+    url({'en': r'^logout/$',
+         'es': r'^salir/$'},
+         'merengue.portal.views.logout', name="merengue_logout"),
+    url({'en': r'^password/reset/$',
+         'es': r'^contrasena/cambiar/$'},
+         'merengue.portal.views.password_reset', name="password_reset"),
+    url({'en': r'^password/reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$',
+         'es': r'^contrasena/cambiar/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$'},
+         'merengue.portal.views.password_reset_confirm', name="password_reset_confirm"),
+    url({'en': r'^password/reset/done/$',
+         'es': r'^contrasena/cambiar/hecho/$'},
+         'merengue.portal.views.password_reset_complete', name="password_reset_complete"),
 
     # base urls
     (r'^base/', include('merengue.base.urls')),
@@ -46,7 +62,9 @@ urlpatterns = patterns('',
     (r'^multimedia/', include('merengue.multimedia.urls')),
 
     # section
-    (r'^sections/', include('merengue.section.urls')),
+    url({'en': r'^sections/',
+         'es': r'^secciones/'},
+        include('merengue.section.urls')),
 
     # menu
     url(r'^menu(/[\w\-]+)*/(?P<menu_slug>[\w-]+)/$', 'merengue.section.views.menu_view', name='menu_view'),
@@ -64,8 +82,12 @@ urlpatterns = patterns('',
     (r'^collab/', include('merengue.collab.urls')),
 
     # searchforms
-    (r'^searchform/', include('searchform.urls')),
-    (r'^searchform_jsi18n/', include('searchform.jsi18n_urls')),
+    url({'en': r'^searchform/',
+         'es': r'^formulario_de_busqueda/'},
+         include('searchform.urls')),
+    url({'en': r'^searchform_jsi18n/',
+         'es': r'^formulario_de_busqueda_jsi18n/'},
+        include('searchform.jsi18n_urls')),
 
     # ajax_select
     (r'^ajax_select/', include('ajax_select.urls')),
@@ -74,7 +96,9 @@ urlpatterns = patterns('',
     (r'^genericforeignkey/', include('genericforeignkey.urls')),
 
     # collections
-    (r'^collection/', include('merengue.collection.urls')),
+    url({'en': r'^collection/',
+         'es': r'^coleccion/'},
+        include('merengue.collection.urls')),
 
     # notification
     (r'^notification/', include('notification.urls')),
