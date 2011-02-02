@@ -64,7 +64,7 @@ def merengue_urls_prefix(request):
 
 
 def is_homepage(request):
-    return {'is_homepage': request.get_full_path() == '/'}
+    return {'is_homepage': request.path == '/'}
 
 
 def all_context(request):
