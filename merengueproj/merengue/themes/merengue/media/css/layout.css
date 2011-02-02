@@ -542,6 +542,7 @@ body div#content-zone {
 .contentList li {
   border-bottom: 1px dotted #E5C597;
   padding-top: 10px;
+  list-style: none;
 }
 
 /*news*/
@@ -703,6 +704,14 @@ div.errormessage, div#messagebox ul#info-list {
 .eventDates label{
   color: #997B53;
 }
+
+/* Plugin ITag */
+div.blockContainer div#tagcloud ul li {
+	margin-bottom: 0;
+	font-size: 1.2em;
+}
+
+/* end Plugin ITag */
 
 /* footer */
 #footer {
