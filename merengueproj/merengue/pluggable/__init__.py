@@ -29,6 +29,19 @@ from merengue.utils import is_last_application, classproperty
 class Plugin(RegistrableItem):
     url_prefixes = ()
 
+    @classmethod
+    def get_url_prefixes(cls):
+        prefixes = []
+        for url_prefix, url in cls.url_prefixes:
+            prefix = url_prefix
+            if isinstance(url_prefix, dict):
+                prefix = url_prefix.get(settings.LANGUAGE_CODE, None)
+                if prefix is None:
+                    prefix = url_prefix(getattr(settings, 'URL_DEFAULT_LANG'), 'en')
+            prefixes.append((prefix, url))
+
+        return prefixes
+
     @classproperty
     @classmethod
     def model(cls):

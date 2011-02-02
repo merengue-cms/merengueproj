@@ -32,7 +32,7 @@ class PluginConfig(Plugin):
     version = '0.0.1a'
 
     url_prefixes = (
-        ('news', 'plugins.news.urls'),
+        ({'en': 'news', 'es': 'noticias'}, 'plugins.news.urls'),
     )
 
     @classmethod

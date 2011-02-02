@@ -161,7 +161,7 @@ def find_plugin_urls(plugin_name):
     plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
     if not plugin_config:
         return
-    for url_prefix, urlconf in plugin_config.url_prefixes:
+    for url_prefix, urlconf in plugin_config.get_url_prefixes():
         plugin_url_re = r'^%s/' % url_prefix
         try:
             import_module(urlconf)
