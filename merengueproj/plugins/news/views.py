@@ -64,7 +64,7 @@ def get_news(request=None, limit=None):
     request_param = tuple()
     if request and request.section:
         request_param = (request.section, )
-    return collection.get_items(*request_param)
+    return collection.get_items(*request_param)[:limit]
 
 
 def get_collection_news():
