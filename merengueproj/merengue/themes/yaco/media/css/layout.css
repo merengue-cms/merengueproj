@@ -123,7 +123,7 @@ div#portalmenu ul li {
 }
 
 div#portal-primary-links ul li a {
-	color: #ccc;
+	color: #888;
 	text-decoration: none;
 }
 
@@ -202,8 +202,8 @@ div#user-actions ul li a:hover {
 }
 
 #site-actions a {
-    color: #CCCCCC;
-	border: 1px dotted #AAA;
+    color: #A3A3A3;
+	border: 1px dotted #808080;
 	padding: 1px 3px;
 }
 
