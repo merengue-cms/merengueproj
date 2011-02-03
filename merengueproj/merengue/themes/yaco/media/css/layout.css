@@ -184,7 +184,7 @@ div#user-actions ul li {
 }
 
 div#user-actions ul li a:hover {
-	color: white;
+	color: #ccc;
 	text-decoration: none;v
 }
 
@@ -236,7 +236,7 @@ div#contentwrapper a {
 }
 
 div#contentwrapper a:hover {
-    color: #44EE22;
+    color: #55E046;
 }
 
 div#content {
