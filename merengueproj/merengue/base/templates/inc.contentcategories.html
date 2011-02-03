@@ -1,0 +1,8 @@
+{% load i18n inlinetrans %}
+
+<div id="contentCategories">
+  <label>{% inline_trans "categories" %}:</label>
+  {% for cat in content.categories.all %}
+    {{ cat }}{% if not forloop.last %}, {% else %}.{% endif %}
+  {% endfor %}
+</div>
