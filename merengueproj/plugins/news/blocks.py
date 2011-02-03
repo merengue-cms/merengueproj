@@ -53,7 +53,7 @@ class LatestNewsBlock(BlockQuerySetItemProvider, Block):
     @classmethod
     def render(cls, request, place, context, block_content_relation=None,
                *args, **kwargs):
-        news_list = cls.get_queryset(request, context)
+        news_list = cls.get_queryset(request, context, block_content_relation)
         return cls.render_block(request, template_name='news/block_latest.html',
                                 block_title=ugettext('Latest news'),
                                 context={'news_list': news_list},
