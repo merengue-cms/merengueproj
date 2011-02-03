@@ -7,9 +7,77 @@ p {
     color:#717171;
 }
 
+a:link, a:visited {
+    color: #bf9460;
+}
+a:hover {
+    color: #806446;
+}
+
 /* ----- header styles ----- */
+#header {
+    background: #E6D8C0;
+    color: #917250;
+    min-height:62px;
+    border-bottom: 4px solid #BCB9AD;
+}
+
 div#header img#merengue_logo {
     float: left;
+}
+
+#branding h1 { 
+    margin: 1.2em 0 0 11em;
+    color: #BF843B;
+}
+
+/*---- other styles ----*/
+
+.module-merengue h1,
+#content-related .module h2,
+.merengueadmin .module h2,
+.module caption, 
+.inline-group h2 {
+    background: #E6D8C0 url(../img/admin/default-bg.gif) repeat-x top left;
+}
+
+#changelist-filter li.selected a {
+    color: #BF9460 !important;
+}
+
+#changelist-filter h2,
+.module h2, 
+.module caption, 
+.inline-group h2 {
+    background: #E6D8C0 url(../img/admin/default-bg.gif) repeat-x top left;   
+}
+
+.row1 {
+    background: #f7f5f0;
+}
+
+.button.default, input.default[type="submit"], .submit-row input.default {
+    border: 1px solid #C49A6C;
+    background: #E6D8C0 url(../img/admin/default-bg.gif) repeat-x top left;
+    color: #917250;
+}
+
+.button.default:active, input.default[type="submit"]:active {
+    border: 1px solid #C49A6C;
+    background: #E6D8C0 url(../img/admin/default-bg-reverse.gif) repeat-x top left;
+    color: #917250;
+}
+
+#changelist-filter h2,
+.module h2,
+.module caption,
+.inline-group h2 {
+    background: #E6D8C0 url(../img/admin/default-bg.gif) repeat-x top left;
+}
+
+.object-tools {
+    margin-bottom: 0.5em;
+    margin-top: 0em;
 }
 
 .login #container {
@@ -20,7 +88,6 @@ div#header img#merengue_logo {
     padding: 2em 10px 1em 10px;
 }
 
-/*---- other styles ----*/
 .object-tools {
     margin-bottom:0.5em;
     margin-top:0em;
@@ -68,7 +135,7 @@ div#header img#merengue_logo {
 
 .object-tools li.selected span.selected-with-subtools {
     padding-bottom: 9px;
-    background: white url(/media/img/subtools-arrow-down.gif) no-repeat bottom center;
+    background: white;
 }
 
 .object-subtools ul li.selected {
@@ -106,7 +173,7 @@ div.mini-googlemap {
 .calendarbox .calendarnav-previous-month,
 .calendarbox .calendarnav-previous,
 .calendarbox .calendarnav-next {
-   background: #c9dbed url(/admin_media/img/admin/default-bg.gif) repeat-x left bottom;
+   background: #c9dbed url(../img/admin/default-bg.gif) repeat-x left bottom;
    color: white;
    padding-left: 0px;
    padding-right: 0px;
@@ -170,7 +237,6 @@ a.ajax_geolocation{
 }
 
 #global-languageselector li a {
-   background: url(/media/img/separador_drcha.gif) no-repeat center right;
    padding: 10px 15px;
 }
 
@@ -417,6 +483,22 @@ textarea#id_css_chunk {
 	font-style: italic;
 	margin-bottom:0.5em;
 	color: #aaa;
+}
+
+.paginator a:hover {
+	background: #E6D8C0;
+	border-color: #BF9460;
+	color: #BF9460;
+}
+
+.selector-add  {
+    background:url("../img/selector-add.gif") no-repeat scroll center top transparent;
+    margin-bottom:2px;
+}
+
+a.selector-chooseall {
+    background:url("../img/selector-addall.gif") no-repeat scroll left center transparent;
+    width:7em;
 }
 
 /* ----- plugin admin ----- */
