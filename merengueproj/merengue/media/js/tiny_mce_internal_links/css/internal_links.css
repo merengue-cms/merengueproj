@@ -18,9 +18,10 @@ a:hover { color: #666666 !important; }
 	margin-bottom: 1em;
 }
 
-ul#search-sections {
+div#content ul#search-sections {
     border-top: 1px solid black;
     clear: left;
+	margin-top: 0;
 }
 
 ul#search-sections li {
@@ -28,7 +29,7 @@ ul#search-sections li {
     padding: 5px 10px;
     margin: 0px;
     border-top-width: 0px;
-    width: 83px;
+    width: 86px;
 	background-color: #f2f2f2;
 	list-style: none;
 }
@@ -71,7 +72,7 @@ ul#search-sections li.selected {
 
 #search_form h4.title {
     position: absolute;
-    bottom: 1em;
+    bottom: 0;
 }
 
 #search_form input.search-action {
