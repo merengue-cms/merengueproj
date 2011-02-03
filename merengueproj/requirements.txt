@@ -27,5 +27,5 @@ transhette
 django-inlinetrans>=0.2dev
 django-transmeta
 sorl-thumbnail>=11.01
-searchform
+searchform>=0.1.1
 django-autoreports
