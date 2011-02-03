@@ -1,8 +1,15 @@
 {% extends "content_view.html" %}
 
-{% load i18n inlinetrans action_tags %}
+{% load i18n inlinetrans action_tags datefilters %}
 
 {% block pagetitle %}{{ content }}{% endblock %}
+
+{% block extrabeforecontentblocks %}
+{% if content.publish_date %}
+<div class="date">{{ content.publish_date|transdate }}</div>
+{% endif %}
+{% include "inc.contentcategories.html" %}
+{% endblock %}
 
 {% block contentbody %}
   <div class="contentbody news-contentbody">
