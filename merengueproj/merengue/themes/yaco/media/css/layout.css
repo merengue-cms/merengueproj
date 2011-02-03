@@ -89,6 +89,7 @@ body div#content-zone {
 #header-blocks #portal-primary-links {
     border: none;
     width: auto;
+	margin-top: 0.5em;
 }
 
 #header div#header-blocks {
@@ -97,7 +98,8 @@ body div#content-zone {
 
 #header-blocks ul li,
 #site-actions ul li,
-#language-tools ul li {
+#language-tools ul li,
+#user-actions ul li {
     display: inline;
 	margin-left 3em;
 }
@@ -117,13 +119,11 @@ div#portalmenu ul li {
 }
 
 #header-blocks div#portal-primary-links ul li {
-	background-color: #E6FCE3;
-    margin-left: 0.5em;
 	font-size: 12px;
 }
 
 div#portal-primary-links ul li a {
-	color: #999999;
+	color: #ccc;
 	text-decoration: none;
 }
 
@@ -158,29 +158,41 @@ div#language-tools {
 }
 
 #language-tools ul li img {
-    padding: 3px 2px;
+	opacity: 0.6;
 }
 
-#language-tools ul li.currentLangItem img {
-    padding: 2px;
-    border: 1px solid #54B848;
+#language-tools ul li.currentLangItem img,
+#language-tools ul li a:hover img {
+    opacity: 1;
 }
 
-#user-actions {
+#language-selector {
+	margin-left: 4.5em;
+}
+
+div#user-actions,
+div#language-tools {
 	float: right;
-    display: block;
-    width: 26%;
+    width: 23%;
+	margin-top: 5.5em;
+	font-size: 12px;
 }
 
-#user-action a {
-    color: white;
+div#user-actions ul li {
+	border-right: 1px solid #666;
+	padding: 0.1em 0.3em;
+}
+
+div#user-actions ul li a:hover {
+	color: white;
+	text-decoration: none;v
 }
 
 #site-actions {
     position: absolute;
     top: 70px;
     display: block;
-    width: 70%;
+    width: 50%;
 	margin-left: 2em;
 }
 
@@ -279,8 +291,9 @@ li.linkAdmin a {
     background:transparent url(/media/themes/yaco/img/linkadmin_icon.png) no-repeat scroll right top;
 }
 
-.contentDescription {
+#content-zone .contentDescription {
     color: #999999;
+	padding-top: 2.5em;
 }
 
 .contentList li {
