@@ -6,7 +6,7 @@
 
 {% block extrabeforecontentblocks %}
 {% if content.publish_date %}
-<div class="date">{{ content.publish_date|transdate }}</div>
+<div class="date"><label>{% inline_trans "Publication date" %}:</label> {{ content.publish_date|transdate }}</div>
 {% endif %}
 {% include "inc.contentcategories.html" %}
 {% endblock %}
