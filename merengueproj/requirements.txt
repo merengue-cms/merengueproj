@@ -10,7 +10,7 @@ django==1.1.3
 south==0.7.2
 django-extensions==0.5
 cssutils
-django-tagging
+django-tagging>=0.3.1
 django-pagination
 template_utils
 django-mptt
@@ -21,10 +21,10 @@ django-notification==0.1.5
 django-oot
 django-genericforeignkey
 django-stdfile
-cmsutils
+cmsutils>=0.5.3
 transhette
-django-inlinetrans
+django-inlinetrans>=0.2dev
 django-transmeta
-sorl-thumbnail
-searchform
+sorl-thumbnail>=11.01
+searchform>=0.1.1
 django-autoreports
