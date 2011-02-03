@@ -67,12 +67,15 @@ ul#search-sections li.selected {
 
 #search_form {
     position: relative;
-    padding-bottom: 4em;
+    padding-bottom: 6.5em;
+	width: 600px;
 }
 
 #search_form h4.title {
     position: absolute;
     bottom: 0;
+	font-size: 1em;
+	margin: 0 0 0 1.5em;
 }
 
 #search_form input.search-action {
