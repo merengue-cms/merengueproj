@@ -24,20 +24,21 @@ def run_all_suite():
     directory_list = [i for i in os.listdir('.') if os.path.isdir(i) \
                           and not i.startswith('.') \
                           and 'suite.html' in os.listdir(i)]
-    if 'selenium-server.jar' in os.listdir('.'):
-        for directory in directory_list:
-            print '------------------------ SELENIUM TEST CASE ---------------------------'
-            print 'java -jar selenium-server.jar -htmlSuite "*firefox" "%s" "%s" "%s"' \
-                          % (sys.argv[1],
-                             os.path.join(os.path.abspath(directory), 'suite.html'),
-                             os.path.join(os.path.join('.'), 'results', directory + '.html'))
-
-            os.system('java -jar selenium-server.jar -htmlSuite "*firefox" "%s" "%s" "%s"' \
-                          % (sys.argv[1],
-                             os.path.join(os.path.abspath(directory), 'suite.html'),
-                             os.path.join(os.path.join('.'), 'results', directory + '.html')))
+    if len(sys.argv) == 1:
+        print """
+ERROR: Can not found base url.
+USE: python run_suites.py 'url base for selenium test, as http://localhost:8000/'
+"""
     else:
-        print 'ERROR: File selenium-server.jar can not be found.'
+        if 'selenium-server.jar' in os.listdir('.') and 'user-extensions.js' in os.listdir('.'):
+            for directory in directory_list:
+                os.system('java -jar selenium-server.jar -htmlSuite "*firefox" "%s" "%s" "%s" -userExtensions "%s"' \
+                              % (sys.argv[1],
+                                 os.path.join(os.path.abspath(directory), 'suite.html'),
+                                 os.path.join(os.path.abspath('.'), 'results', directory + '.html'),
+                                 os.path.join(os.path.abspath('.'), 'user-extensions.js')))
+        else:
+            print 'ERROR: File selenium-server.jar/user-extensions.js can not be found.'
 
 if __name__ == '__main__':
     run_all_suite()
