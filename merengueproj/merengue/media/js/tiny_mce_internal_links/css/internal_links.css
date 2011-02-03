@@ -13,6 +13,10 @@ a:hover { color: #666666 !important; }
     clear: both;
 }
 
+div#content {
+	float: none;
+}
+
 #content ul.operators {
     list-style-type: none;
 	margin-bottom: 1em;
@@ -29,7 +33,7 @@ ul#search-sections li {
     padding: 5px 10px;
     margin: 0px;
     border-top-width: 0px;
-    width: 86px;
+    width: 89px;
 	background-color: #f2f2f2;
 	list-style: none;
 }
@@ -44,7 +48,7 @@ ul#search-sections li.selected {
     padding: 0px 2em 2em;
     z-index: 1;
     border: 1px solid black;
-    width: 400px;
+    width: 350px;
     margin-left: 121px; 
     float: none;
 }
