@@ -1,8 +1,19 @@
 {% extends "content_view.html" %}
 
-{% load i18n inlinetrans action_tags %}
+{% load i18n inlinetrans action_tags datefilters %}
 
 {% block pagetitle %}{{ content }}{% endblock %}
 
 
+{% block extrabeforecontentblocks %}
+<div id="eventDates">
+{% ifequal content.start content.end %}
+<p><label>{% inline_trans "date" %}:</label>{{ content.start|transdate }}</p>
+{% else %}
+<p>{% inline_trans "from" %} {{ content.start|transdatetime }} {% inline_trans "until" %} {{ content.end|transdatetime }}
+</p>
+{% endifequal %}
+</div>
+{% include "inc.contentcategories.html" %}
+{% endblock %}
 
