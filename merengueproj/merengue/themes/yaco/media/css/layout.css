@@ -111,18 +111,20 @@ div#portalmenu ul li {
     font-weight: bold;
 }
 
-div#portal-primary-links ul {
+#header-blocks div#portal-primary-links ul {
 	margin-left: 1em;
+	display: inline;
 }
 
-div#portal-primary-links ul li {
+#header-blocks div#portal-primary-links ul li {
 	background-color: #E6FCE3;
     margin-left: 0.5em;
 	font-size: 12px;
 }
 
 div#portal-primary-links ul li a {
-	color: #1c2e06;
+	color: #999999;
+	text-decoration: none;
 }
 
 div#portal-primary-links ul li a:hover {
