@@ -91,9 +91,8 @@ body div#content-zone {
     width: auto;
 }
 
-#header ul,
 #header div#header-blocks {
-    margin-left: 3em;
+    margin-left: 2.5em;
 }
 
 #header-blocks ul li,
@@ -104,9 +103,30 @@ body div#content-zone {
 }
 
 #header-blocks ul li {
+	padding: 0.1em 0.5em;
+}
+
+div#portalmenu ul li {
     border-right: 2px solid #666666;
     font-weight: bold;
-    padding: 0 0.5em;
+}
+
+div#portal-primary-links ul {
+	margin-left: 1em;
+}
+
+div#portal-primary-links ul li {
+	background-color: #E6FCE3;
+    margin-left: 0.5em;
+	font-size: 12px;
+}
+
+div#portal-primary-links ul li a {
+	color: #1c2e06;
+}
+
+div#portal-primary-links ul li a:hover {
+	color: #54B848;
 }
 
 #header div#googlesearch {
@@ -159,7 +179,7 @@ div#language-tools {
     top: 70px;
     display: block;
     width: 70%;
-	margin-left: 1.5em;
+	margin-left: 2em;
 }
 
 #site-actions ul li{
@@ -170,7 +190,7 @@ div#language-tools {
 #site-actions a {
     color: #CCCCCC;
 	border: 1px dotted #AAA;
-	padding: 2px 4px;
+	padding: 1px 3px;
 }
 
 .blockBody .block {
@@ -182,7 +202,6 @@ div#language-tools {
 #portalmenu {
 	display: inline;
 	margin-left: 2em;
-	float: right;
 }
 
 #header #standingout div.blockBody {
