@@ -18,7 +18,7 @@
             containers.each(function() {
                 var orderList = [];
                 var place = $(this).children(".blockPlace").val();
-                $(this).children(".block").children(".blockOrder").each(function() {
+                $(this).children(".block").find(".blockOrder").each(function() {
                     var val = $(this).val();
                     if (val) {
                         order.push(val +"#"+ place);
