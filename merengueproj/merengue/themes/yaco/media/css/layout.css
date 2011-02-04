@@ -83,7 +83,6 @@ body div#content-zone {
 
 #header-blocks ul {
     margin-top: 0;
-    padding-top: 1em;
 }
 
 #header-blocks #portal-primary-links {
@@ -96,7 +95,6 @@ body div#content-zone {
     margin-left: 2.5em;
 }
 
-#header-blocks ul li,
 #site-actions ul li,
 #language-tools ul li,
 #user-actions ul li {
@@ -108,10 +106,23 @@ body div#content-zone {
 	padding: 0.1em 0.5em;
 }
 
+/* portalmenu */
+
+#portalmenu {
+    padding-top: 1em;
+}
+
 div#portalmenu ul li {
-    border-right: 2px solid #666666;
     font-weight: bold;
 }
+
+div#portalmenu ul.menu_ul.menuDepth1 ul.menuDepth2 li {
+	color: #888;
+	margin-left: 2.5em;
+}
+
+
+/* end portalmenu */
 
 #header-blocks div#portal-primary-links ul {
 	margin-left: 1em;
@@ -211,11 +222,6 @@ div#user-actions ul li a:hover {
     width: auto;
     padding: 0;
     border: none;
-}
-
-#portalmenu {
-	display: inline;
-	margin-left: 2em;
 }
 
 #header #standingout div.blockBody {
