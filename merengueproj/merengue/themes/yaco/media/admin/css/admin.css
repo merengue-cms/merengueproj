@@ -1,2 +1,28 @@
 @import url('../../../../merengue/css/admin.css');
 
+/* ----- general styles ----- */
+
+p {
+	color: #737373;
+}
+
+a:link, a:visited {
+	color: #54B848;
+	text-decoration: underline;
+}
+
+a:hover {
+	color: #55E046;
+}
+
+/* ----- header styles ----- */
+#header {
+    background: #2F2A12;
+    color: #54B848;
+    min-height:62px;
+    border-bottom: none;
+}
+
+#branding h1 { 
+    color: #54B848;
+}

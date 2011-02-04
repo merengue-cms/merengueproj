@@ -5,7 +5,8 @@ html {
 
 body {
     font-size: 11pt;
-    font-family: arial;
+    font-family: "Lucida Grande","Lucida Sans Unicode","bitstream vera sans","trebuchet ms",verdana,arial,sans-serif;
+	color: #737373;
 }
 
 a {
