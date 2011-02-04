@@ -1,18 +1,23 @@
 {% extends "content_view.html" %}
 
-{% load i18n inlinetrans action_tags datefilters %}
+{% load i18n inlinetrans action_tags datefilters datefilters inplace_edit %}
 
 {% block pagetitle %}{{ content }}{% endblock %}
 
 
 {% block extrabeforecontentblocks %}
 <div id="eventDates">
-{% ifequal content.start content.end %}
-<p><label>{% inline_trans "date" %}:</label>{{ content.start|transdate }}</p>
-{% else %}
-<p>{% inline_trans "from" %} {{ content.start|transdatetime }} {% inline_trans "until" %} {{ content.end|transdatetime }}
-</p>
-{% endifequal %}
+    {% ifequal content.start content.end %}
+    <p>
+        <label>{% inline_trans "date" %}:</label>
+        {% inplace_edit "content.start|transdate" loads=datefilters %}
+    </p>
+    {% else %}
+    <p>
+        {% inline_trans "from" %} {% inplace_edit "content.start|transdatetime" loads="datefilters" %}
+        {% inline_trans "until" %} {% inplace_edit "content.end|transdatetime" loads="datefilters" %}
+    </p>
+    {% endifequal %}
 </div>
 {% include "inc.contentcategories.html" %}
 {% endblock %}
