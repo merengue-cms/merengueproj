@@ -49,14 +49,17 @@ def _get_adaptor(request_params, request):
     obj_id = request_params.get('obj_id', None)
     content_type_id = request_params.get('content_type_id', None)
 
+    if not field_name or not obj_id or not content_type_id:
+        return HttpResponse(simplejson.dumps({'errors': 'Params insufficient'}),
+                            mimetype='application/json')
+
     filters_to_show = simplejson.loads(request_params.get('filters_to_show', None))
     filters_to_edit = simplejson.loads(request_params.get('filters_to_edit', None))
     field_adaptor = request_params.get('field_adaptor', None)
     class_inplace = request_params.get('class_inplace', None)
-
-    if not field_name or not obj_id or not content_type_id:
-        return HttpResponse(simplejson.dumps({'errors': 'Params insufficient'}),
-                            mimetype='application/json')
+    content_type_id = request_params.get('content_type_id', None)
+    tag_name_cover = request_params.get('tag_name_cover', None)
+    loads_tags = request_params.get('loads_tags', '').split(":")
 
     contenttype = ContentType.objects.get(id=content_type_id)
     model_class = contenttype.model_class()
@@ -68,5 +71,8 @@ def _get_adaptor(request_params, request):
 
     adaptor = class_field(field_name, obj, request,
                           filters_to_show, filters_to_edit,
-                          class_inplace, **options)
+                          class_inplace=class_inplace,
+                          tag_name_cover=tag_name_cover,
+                          loads_tags=loads_tags,
+                          **options)
     return adaptor

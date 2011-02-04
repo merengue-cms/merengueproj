@@ -109,10 +109,12 @@
                 var filters_to_show = $.evalJSON(inplaceedit_conf.find("span.filters_to_show").html());
                 var filters_to_edit = $.evalJSON(inplaceedit_conf.find("span.filters_to_edit").html());
                 var adaptor = inplaceedit_conf.find("span.adaptor").html();
+                var loads_tags = inplaceedit_conf.find("span.loads_tags").html();
                 return ("field_name=" + field_name + "&obj_id="+ obj_id + "&content_type_id="
                         + content_type_id + "&filters_to_show="+ $.toJSON(filters_to_show)
                         + "&filters_to_edit="+ $.toJSON(filters_to_edit)
-                        + "&field_adaptor=" + adaptor + "&class_inplace=" + class_inplace);
+                        + "&field_adaptor=" + adaptor + "&class_inplace=" + class_inplace
+                        + "$loads_tags=" + loads_tags);
             }
 
             function loadjscssfile(media){

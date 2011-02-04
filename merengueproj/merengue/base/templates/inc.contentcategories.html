@@ -1,8 +1,6 @@
-{% load i18n inlinetrans %}
+{% load i18n inlinetrans inplace_edit %}
 
 <div id="contentCategories">
   <label>{% inline_trans "categories" %}:</label>
-  {% for cat in content.categories.all %}
-    {{ cat }}{% if not forloop.last %}, {% else %}.{% endif %}
-  {% endfor %}
+  {% inplace_edit "content.categories" %}
 </div>

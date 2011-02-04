@@ -23,10 +23,12 @@ class InplaceEditNode(RenderWithArgsAndKwargsNode):
     def prepare_context(self, args, kwargs, context):
         expression_to_show = args[0]
         filters_to_edit = kwargs.get('filters_to_edit', [])
+
         options = kwargs.get('options', None)
         adaptor = kwargs.get('adaptor', None)
         class_inplace = kwargs.get('class_inplace', None)
         tag_name_cover = kwargs.get('tag_name_cover', None)
+        loads_tags = kwargs.get('loads', '').split(':')
 
         tokens_to_show = expression_to_show.split('|')
         obj_field_name, filters_to_show = tokens_to_show[0], tokens_to_show[1:]
@@ -41,8 +43,9 @@ class InplaceEditNode(RenderWithArgsAndKwargsNode):
         adaptor_field = class_adaptor(field_name, obj,
                                       request, filters_to_show,
                                       filters_to_edit,
-                                      class_inplace,
-                                      tag_name_cover)
+                                      class_inplace=class_inplace,
+                                      tag_name_cover=tag_name_cover,
+                                      loads_tags=loads_tags)
 
         context = {
             'adaptor_field': adaptor_field,

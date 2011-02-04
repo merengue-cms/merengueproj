@@ -33,10 +33,14 @@ def get_dict_from_obj(obj):
     return obj_dict_result
 
 
-def apply_filters(value, filters):
+def apply_filters(value, filters, load_tags=None):
     if filters:
         filters_str = '|%s' % '|'.join(filters)
-        value = template.Template("""{{ value%s }}""" % filters_str).render(template.Context({'value': value}))
+        load_tags = load_tags or []
+        if load_tags:
+            load_tags = "{%% load %s %%}" % ' '.join(load_tags)
+        value = template.Template("""
+                %s{{ value%s }}""" % (load_tags, filters_str)).render(template.Context({'value': value}))
     return value
 
 

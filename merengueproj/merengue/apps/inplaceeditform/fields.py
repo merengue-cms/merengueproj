@@ -14,6 +14,7 @@ class BaseAdaptorField(object):
     def __init__(self, field_name, obj, request,
                  filters_to_show=None, filters_to_edit=None,
                  class_inplace=None, tag_name_cover=None,
+                 loads_tags=None,
                  **options):
         self.model = obj.__class__
         self.field_name_render = field_name  # To transmeta
@@ -24,6 +25,7 @@ class BaseAdaptorField(object):
         self.filters_to_edit = filters_to_edit or []
         self.class_inplace = class_inplace or ''
         self.tag_name_cover = tag_name_cover or 'span'
+        self.loads_tags = loads_tags or []
         self._transmeta_processing()
         self.options = options
 
@@ -51,7 +53,7 @@ class BaseAdaptorField(object):
 
     def render_value(self):
         value = getattr(self.obj, self.field_name_render)
-        return apply_filters(value, self.filters_to_show)
+        return apply_filters(value, self.filters_to_show, self.loads_tags)
 
     def render_field(self, template_name="inplaceeditform/render_field.html"):
         return render_to_string(template_name,
@@ -75,6 +77,7 @@ class BaseAdaptorField(object):
                                  'filters_to_edit': simplejson.dumps(self.filters_to_edit),
                                  'adaptor': self.name,
                                  'class_inplace': self.class_inplace,
+                                 'loads_tags': self.loads_tags,
                                  })
 
     def can_edit(self):

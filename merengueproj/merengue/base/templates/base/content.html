@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load i18n content_tags action_tags block_tags media_tags map_tags section_tags %}
+{% load i18n content_tags action_tags block_tags media_tags map_tags section_tags inplace_edit %}
 
 {% block metatags %}
   {{ block.super }}
@@ -78,7 +78,7 @@
 
       {% block contentdescription %}
         {% if content.description %}
-          <div class="contentDescription">{{ content.description|safe }}</div>
+          <div class="contentDescription">{% inplace_edit "content.description|safe" %}</div>
         {% endif %}
       {% endblock %}
 
