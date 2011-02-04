@@ -60,6 +60,7 @@ MERENGUE_APPS = (
     'merengue.internallinks',
     'merengue.collection',
     'merengue.review',
+    'merengue.inline',
     'merengue.collab',  # Please, keep this application in last place cause it's used to know when activate plugins after migration
 )
 
@@ -280,6 +281,9 @@ LOCALE_PATHS = (
 DEFAULT_THEME_PREVIEW = 'merengue/img/preview_merengue.png'
 
 STATIC_ROLES = [u'Anonymous User', u'Owner']
+
+# inplaceeditform
+ADAPTOR_INPLACEEDIT = {'textarea': 'merengue.inline.fields.AdaptorTinyMCEField'}
 
 # Plugin default preview image. The real path would be path.join(MEDIA_URL, DEFAULT_PLUGIN_PREVIEW)
 DEFAULT_PLUGIN_PREVIEW = path.join('merengue', 'img', 'preview_merengue.png')
