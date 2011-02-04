@@ -13,27 +13,12 @@
     $(document).ready(function() {
         var containers = $(".blockContainer:visible");
 
-        function getBlocksOrder() {
+        function getBlocksOrder(className) {
             var order = [];
-            containers.each(function() {
+            containers.each(function () {
                 var orderList = [];
                 var place = $(this).children(".blockPlace").val();
-                $(this).children(".block").find(".blockId").each(function() {
-                    var val = $(this).val();
-                    if (val) {
-                        order.push(val +"#"+ place);
-                    }
-                });
-            });
-            return order.join(",");
-        }
-
-        function getBlocksContentRelated() {
-            var order = [];
-            containers.each(function() {
-                var orderList = [];
-                var place = $(this).children(".blockPlace").val();
-                $(this).children(".block").children(".blockContentRelated").each(function() {
+                $(this).children(".block").find("." + className).each(function() {
                     var val = $(this).val();
                     if (val) {
                         order.push(val +"#"+ place);
@@ -194,8 +179,8 @@
         }
 
         function postNewOrder() {
-            var newOrder = getBlocksOrder();
-            var blockCntRltd = getBlocksContentRelated();
+            var newOrder = getBlocksOrder("blockId");
+            var blockCntRltd = getBlocksOrder("blockContentRelated");
             $.ajax({
                 url: "{% url blocks_reorder %}",
                 type: "POST",
