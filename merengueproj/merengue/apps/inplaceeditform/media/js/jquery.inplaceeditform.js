@@ -114,7 +114,7 @@
                         + content_type_id + "&filters_to_show="+ $.toJSON(filters_to_show)
                         + "&filters_to_edit="+ $.toJSON(filters_to_edit)
                         + "&field_adaptor=" + adaptor + "&class_inplace=" + class_inplace
-                        + "$loads_tags=" + loads_tags);
+                        + "&loads_tags=" + loads_tags);
             }
 
             function loadjscssfile(media){

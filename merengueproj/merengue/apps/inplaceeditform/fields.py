@@ -77,7 +77,7 @@ class BaseAdaptorField(object):
                                  'filters_to_edit': simplejson.dumps(self.filters_to_edit),
                                  'adaptor': self.name,
                                  'class_inplace': self.class_inplace,
-                                 'loads_tags': self.loads_tags,
+                                 'loads_tags': ':'.join(self.loads_tags),
                                  })
 
     def can_edit(self):
