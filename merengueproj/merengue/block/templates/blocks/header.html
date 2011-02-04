@@ -18,7 +18,7 @@
             containers.each(function() {
                 var orderList = [];
                 var place = $(this).children(".blockPlace").val();
-                $(this).children(".block").find(".blockOrder").each(function() {
+                $(this).children(".block").find(".blockId").each(function() {
                     var val = $(this).val();
                     if (val) {
                         order.push(val +"#"+ place);
@@ -97,7 +97,7 @@
             var blocks_index_url = '{% url blocks_index %}';
             var block = $(this).parents('.block');
             var block_name = block.attr('id');
-            var block_id = block.find('.blockOrder').val();
+            var block_id = block.find('.blockId').val();
             var block_title = block.children('.blockHiddenTitle').html();
             $.ajax({
                 url: blocks_index_url + 'ajax/config/' + block_id,
