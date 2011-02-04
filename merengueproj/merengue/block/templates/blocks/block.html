@@ -1,4 +1,5 @@
 <div class="{{ block.placed_at }}Block block" id="{{ block.name }}">
+<div class="blockInner">
  {% block blocktitle %}
    <h1>{{ block_title }}</h1>
  {% endblock %}
@@ -9,8 +10,9 @@
  {% endblock %}
  </div>
  {% if block_content_relation %}
- <input type="hidden" value="{{ block_content_relation.id }}" id="{{ block.name }}ContentRelated" class="blockContentRelated" />
-{% else %}
- <input type="hidden" value="{{ block.id }}" id="{{ block.name }}Order" class="blockOrder" />
+   <input type="hidden" value="{{ block_content_relation.id }}" id="{{ block.name }}ContentRelated" class="blockContentRelated" />
+ {% else %}
+   <input type="hidden" value="{{ block.id }}" id="{{ block.name }}Order" class="blockOrder" />
  {% endif %}
+</div>
 </div>

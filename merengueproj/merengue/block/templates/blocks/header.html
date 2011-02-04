@@ -45,37 +45,7 @@
 
         function initBlockTools() {
             $(".block").each(function() {
-                var dragAnchor, confAnchor, divTools, position;
-                position = $(this).position();
-                divTools = $("<div>");
-                // creating block tools
-                dragAnchor = $("<a>");
-                dragAnchor.attr("href", "javascript:void(0)");
-                dragAnchor.attr("title", "{% trans "Enable/disable blocks dragging" %}");
-                dragAnchor.addClass("drag");
-                dragAnchor.click(enableDragging);
-                confAnchor = $("<a>");
-                confAnchor.attr("href", "javascript:void(0)");
-                confAnchor.attr("rel", "shadowbox");
-                confAnchor.click(loadBlockConfiguration);
-                confAnchor.addClass("configure");
-                confAnchor.attr("title", "{% trans "Configure block" %}");
-                // place all block tools
-                divTools.append(dragAnchor);
-                divTools.append(confAnchor);
-                divTools.addClass("blockTools");
-                divTools.css({"left": position.left - 20});
-                divTools.css({"top": position.top});
-                $(this).append(divTools);
-                $(this).mouseenter(function() {
-                    if($(this).attr("id")) {
-                        $(this).children(".blockTools").stop(true, true).show();
-                    }
-                }).mouseleave(function() {
-                    if($(this).attr("id")) {
-                        $(this).children(".blockTools").delay(1000).fadeOut();
-                    }
-                });
+                initBlock($(this));
             });
             // initialize shadowbox (if not initialized with multimedia slide)
             var mediaurl = '{{ MEDIA_URL }}';
@@ -89,11 +59,46 @@
             });
         }
 
+        function initBlock(block) {
+            var dragAnchor, confAnchor, divTools, position;
+            position = block.position();
+            divTools = $("<div>");
+            // creating block tools
+            dragAnchor = $("<a>");
+            dragAnchor.attr("href", "javascript:void(0)");
+            dragAnchor.attr("title", "{% trans "Enable/disable blocks dragging" %}");
+            dragAnchor.addClass("drag");
+            dragAnchor.click(enableDragging);
+            confAnchor = $("<a>");
+            confAnchor.attr("href", "javascript:void(0)");
+            confAnchor.attr("rel", "shadowbox");
+            confAnchor.click(loadBlockConfiguration);
+            confAnchor.addClass("configure");
+            confAnchor.attr("title", "{% trans "Configure block" %}");
+            // place all block tools
+            divTools.append(dragAnchor);
+            divTools.append(confAnchor);
+            divTools.addClass("blockTools");
+            divTools.css({"left": position.left - 20});
+            divTools.css({"top": position.top});
+            block.append(divTools);
+            block.mouseenter(function() {
+                if(block.attr("id")) {
+                    block.children(".blockTools").stop(true, true).show();
+                }
+            }).mouseleave(function() {
+                if(block.attr("id")) {
+                    block.children(".blockTools").delay(1000).fadeOut();
+                }
+            });
+        }
+
         function loadBlockConfiguration() {
             var blocks_index_url = '{% url blocks_index %}';
-            var block = $(this).parents(".block");
-            var block_id = block.children(".blockOrder").val();
-            var block_title = block.children(".blockHiddenTitle").html();
+            var block = $(this).parents('.block');
+            var block_name = block.attr('id');
+            var block_id = block.find('.blockOrder').val();
+            var block_title = block.children('.blockHiddenTitle').html();
             $.ajax({
                 url: blocks_index_url + 'ajax/config/' + block_id,
                 context: document.body,
@@ -116,13 +121,10 @@
                     url: $(this).attr('action'),
                     data: $(this).serialize(),
                     success: function(data) {
-                        $.ajax({
-                            url: '.?render_block=' + block_id,
-                            success: function(data) {
-                                block.replaceWith(data);
-                                Shadowbox.close();
-                            }
+                        block.load('.?render_block=' + block_id + " .blockInner", function() {
+                            initBlock($('#'+block_name));
                         });
+                        Shadowbox.close();
                     }
                 });
                 return false;
