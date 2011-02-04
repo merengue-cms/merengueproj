@@ -1,0 +1,18 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ title }} | {% trans 'Merengue site admin' %}{% endblock %}
+
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="{{ THEME_MEDIA_URL }}admin/css/admin.css" />
+{% endblock %}
+
+{% block headerlogo %}
+    <a href="/"><img id="merengue_logo" src="{{ MEDIA_URL }}merengue/img/admin/admin_logo.jpg" alt="{% trans "Merengue logo" %}" title="{% trans "Merengue logo" %}" /></a>
+{% endblock %}
+
+{% block branding %}
+    <h1 id="site-name">{% trans 'Merengue administration' %}</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
