@@ -109,16 +109,49 @@ body div#content-zone {
 /* portalmenu */
 
 #portalmenu {
-    padding-top: 1em;
+    padding-top: 2em;
+	width: 30%;
 }
 
-div#portalmenu ul li {
-    font-weight: bold;
+div#portalmenu ul.menu_ul ul.menuDepth2 {
+    margin-left: 2em;  
+}
+
+div#portalmenu ul.menu_ul.menuDepth1 ul.menuDepth2 {
+	margin-top: -1.3em;
+	font-size: 14px;
+	padding-left: 40px;
 }
 
 div#portalmenu ul.menu_ul.menuDepth1 ul.menuDepth2 li {
+	position: relative;
+}
+
+div#portalmenu ul.menu_ul.menuDepth1 ul.menuDepth3 {
+	position: absolute;
+	top: 1px;
+	left: 65px;
+}
+
+div#portalmenu ul.menu_ul.menuDepth1 ul.menuDepth2 a,
+div#portalmenu ul.menu_ul.menuDepth1 ul.menuDepth3 a {
 	color: #888;
-	margin-left: 2.5em;
+}
+
+div#portalmenu ul.menu_ul.menuDepth1 ul.menuDepth2 a:hover,
+div#portalmenu ul.menu_ul.menuDepth1 ul.menuDepth3 a:hover {
+    color: #DDD;
+	text-decoration: none;
+}
+
+div#portalmenu ul.menu_ul.menuDepth1 ul.menuDepth2 li:hover ul {
+	display: block;
+	visibility: visible;
+}
+
+div#portalmenu ul.menu_ul.menuDepth1 ul.menuDepth3 {
+	visibility: hidden;
+	display: none;
 }
 
 
@@ -185,7 +218,7 @@ div#user-actions,
 div#language-tools {
 	float: right;
     width: 23%;
-	margin-top: 5.5em;
+	margin-top: 6em;
 	font-size: 12px;
 }
 
