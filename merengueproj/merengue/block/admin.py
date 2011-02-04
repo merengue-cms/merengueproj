@@ -44,6 +44,7 @@ class BaseContentRelatedBlockAdmin(RelatedModelAdmin):
     tool_name = 'block_content_related'
     tool_label = _('block content related')
     related_field = 'content'
+    change_form_template = 'admin/block/related_block_admin.html'
     form = BaseContentRelatedBlockForm
 
 

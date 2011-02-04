@@ -583,3 +583,8 @@ div.module.form-row {
     margin-left: 2em;
     color: #99aabb;
 }
+
+
+.configDebug {
+    clear: both;
+}

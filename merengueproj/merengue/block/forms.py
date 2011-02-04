@@ -49,7 +49,7 @@ class BaseContentRelatedBlockForm(BaseAdminModelForm):
     class Media:
         js = (
             settings.MEDIA_URL + 'merengue/js/block/dynamic-config-param.js',
-            )
+        )
 
 
 class BlockConfigForm(forms.Form, FormAdminDjango):

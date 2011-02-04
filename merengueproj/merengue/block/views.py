@@ -15,12 +15,19 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse, HttpResponseBadRequest
-from django.utils.importlib import import_module
+from django.shortcuts import render_to_response
 from django.utils.simplejson import dumps
 
 from merengue.block.forms import BlockConfigForm
 from merengue.block.models import RegisteredBlock, BlockContentRelation
+from merengue.perms.utils import has_global_permission
+
+
+def blocks_index(request):
+    """ block index marker (not implemented) """
+    return ''
 
 
 def blocks_reorder(request):
@@ -53,10 +60,10 @@ def blocks_reorder(request):
     return HttpResponseBadRequest(mimetype=mimetype)
 
 
-def generate_blocks_configuration(request, block_id):
+def generate_blocks_configuration_for_content(request, block_id):
     try:
         reg_block = RegisteredBlock.objects.get(id=block_id)
-        block = getattr(import_module(reg_block.module), reg_block.class_name)
+        block = reg_block.get_registry_item_class()
         form = BlockConfigForm()
         form.fields['config'].set_config(block.get_config())
         result = form.as_django_admin()
@@ -69,5 +76,22 @@ def generate_blocks_configuration(request, block_id):
         result += '<p class="help">Fill this field to overwrite the block configuration</p>'
     except RegisteredBlock.DoesNotExist:
         result = ''
-
     return HttpResponse(result, mimetype='text/html')
+
+
+def generate_blocks_configuration(request, block_id):
+    if not has_global_permission(request.user, 'manage_portal'):
+        raise PermissionDenied()
+    reg_block = RegisteredBlock.objects.get(id=block_id)
+    block = reg_block.get_registry_item_class()
+    if request.method == 'POST':
+        form = BlockConfigForm(request.POST)
+        form.fields['config'].set_config(block.get_config())
+        if form.is_valid():
+            reg_block.config = form.cleaned_data['config']
+            reg_block.save()
+            return HttpResponse('ok')
+    else:
+        form = BlockConfigForm()
+        form.fields['config'].set_config(block.get_config())
+    return render_to_response('blocks/block_config.html', {'form': form, 'reg_block': reg_block})

@@ -1,0 +1,14 @@
+{% extends "admin/change_form.html" %}
+
+{% block extrahead %}
+{{ block.super }}
+<script type="text/javascript">
+(function($) {
+    $(document).ready(function() {
+        $(".block #id_block").change(function(){
+            update_block_config('{% url blocks_index %}');
+        });
+    });
+})(jQuery);
+</script>
+{% endblock %}

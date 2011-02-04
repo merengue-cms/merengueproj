@@ -20,10 +20,17 @@
 }
 
 .blockContainer .block .blockTools a {
-    background: transparent url("../img/arrow_refresh.png") no-repeat 0px 5px;
     width: 20px;
-    height: 20px;
+    height: 25px;
     display: block;
+}
+
+.blockContainer .block .blockTools a.drag {
+    background: transparent url("../img/arrow_refresh.png") no-repeat 0px 5px;
+}
+
+.blockContainer .block .blockTools a.configure {
+    background: transparent url("../img/configure.png") no-repeat 0px 0px;
 }
 
 .blockContainer .blockDrag {
@@ -31,4 +38,12 @@
     font-style: italic;
     padding: 2px;
     font-size: 1em;
+}
+
+.blockHiddenTitle {
+    display: none;
+}
+
+.configDebug {
+    display: none;
 }

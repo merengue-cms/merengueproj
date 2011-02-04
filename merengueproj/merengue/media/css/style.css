@@ -216,3 +216,9 @@ input#id_password {
   padding-right: 8px;
   background: transparent url(/media/merengue/img/required.gif) no-repeat right center;
 }
+
+/* ----- shadowbox ----- */
+
+#shadowbox_container #shadowbox_body {
+    color: #717171;
+}

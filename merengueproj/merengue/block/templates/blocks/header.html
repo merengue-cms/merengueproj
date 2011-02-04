@@ -1,8 +1,14 @@
 {% load i18n permissions_tags %}
 {% ifhasperm "manage_portal" %}
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}merengue/css/render_blocks.css"/>
-<script language="javascript">
-;(function($) {
+<link href="{{ MEDIA_URL }}merengue/css/shadowbox.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/mootools.v1.11.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/shadowbox/shadowbox-mootools.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/shadowbox/shadowbox.js"></script>
+<script type="text/javascript">
+// <![CDATA[
+
+(function($) {
   if (!$.browser.msie || $.browser.version != '6.0') {
     $(document).ready(function() {
         var containers = $(".blockContainer:visible");
@@ -37,26 +43,85 @@
             return order.join(",");
         }
 
-        function initDragging() {
+        function initBlockTools() {
             $(".block").each(function() {
-                var aTools, divTools, position;
+                var dragAnchor, confAnchor, divTools, position;
                 position = $(this).position();
-                aTools = $("<a>");
                 divTools = $("<div>");
-                aTools.attr("href", "javascript:void(0)");
-                aTools.attr("title", "{% trans "Enable/disable blocks dragging" %}");
-                aTools.click(enableDragging);
-                divTools.append(aTools);
+                // creating block tools
+                dragAnchor = $("<a>");
+                dragAnchor.attr("href", "javascript:void(0)");
+                dragAnchor.attr("title", "{% trans "Enable/disable blocks dragging" %}");
+                dragAnchor.addClass("drag");
+                dragAnchor.click(enableDragging);
+                confAnchor = $("<a>");
+                confAnchor.attr("href", "javascript:void(0)");
+                confAnchor.attr("rel", "shadowbox");
+                confAnchor.click(loadBlockConfiguration);
+                confAnchor.addClass("configure");
+                confAnchor.attr("title", "{% trans "Configure block" %}");
+                // place all block tools
+                divTools.append(dragAnchor);
+                divTools.append(confAnchor);
                 divTools.addClass("blockTools");
                 divTools.css({"left": position.left - 20});
                 divTools.css({"top": position.top});
                 $(this).append(divTools);
                 $(this).mouseenter(function() {
-                    $(this).children(".blockTools").stop(true, true).show();
+                    if($(this).attr("id")) {
+                        $(this).children(".blockTools").stop(true, true).show();
+                    }
                 }).mouseleave(function() {
-                    $(this).children(".blockTools").delay(1000).fadeOut();
+                    if($(this).attr("id")) {
+                        $(this).children(".blockTools").delay(1000).fadeOut();
+                    }
                 });
             });
+            // initialize shadowbox (if not initialized with multimedia slide)
+            var mediaurl = '{{ MEDIA_URL }}';
+            Shadowbox.init({
+                assetUrl: mediaurl,
+                loadingImage: mediaurl + 'multimedia/img/loading.gif',
+                displayNav: true,
+                skipSetup: true,
+                displayClose: true,
+                continuous: true
+            });
+        }
+
+        function loadBlockConfiguration() {
+            var blocks_index_url = '{% url blocks_index %}';
+            var block = $(this).parents(".block");
+            var block_id = block.children(".blockOrder").val();
+            var block_title = block.children(".blockHiddenTitle").html();
+            $.ajax({
+                url: blocks_index_url + 'ajax/config/' + block_id,
+                context: document.body,
+                success: function(data){
+                    Shadowbox.open({
+                        content:    data,
+                        type:       "html",
+                        title:      block_title,
+                        height:     600,
+                        width:      500
+                    });
+                }
+            });
+            // when block config was loaded by AJAX (previous function)
+            // we change usual submit by a AJAX submit (without refreshing browser)
+            $('#config-block-form').live("submit", function(event) {
+                event.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: $(this).attr('action'),
+                    data: $(this).serialize(),
+                    success: function(data) {
+                        $('#config-block').html('{% trans "Block config saved" %}');
+                    }
+                });
+                return false;
+            });
+
         }
 
         function enableDragging() {
@@ -137,9 +202,10 @@
             });
         }
 
-        initDragging();
+        initBlockTools();
     });
   }
 })(jQuery);
+// ]]>
 </script>
 {% endifhasperm %}

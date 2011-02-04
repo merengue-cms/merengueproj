@@ -45,7 +45,7 @@ class ParamWidget(widgets.Widget):
 class ConfigWidget(widgets.MultiWidget):
 
     def __init__(self, attrs=None):
-        self.config = None # to be filled in registry model admin
+        self.config = None  # to be filled in registry model admin
         super(ConfigWidget, self).__init__(widgets=[], attrs=attrs)
 
     def add_config_widgets(self, config):
@@ -57,7 +57,7 @@ class ConfigWidget(widgets.MultiWidget):
         if value and getattr(self.config, 'values', []):
             return [param for param in self.config.values()]
         # if all None we returns n-Nones
-        return [None]*len(self.widgets)
+        return [None] * len(self.widgets)
 
     def value_from_datadict(self, data, files, name):
         value_list = super(ConfigWidget, self).value_from_datadict(data,
@@ -72,7 +72,7 @@ class ConfigWidget(widgets.MultiWidget):
         widgets_render = super(ConfigWidget, self).render(name, value, attrs)
         json_value = linebreaks(json.dumps(value, indent=2))
         return mark_safe(widgets_render + \
-            u"""<div style="clear: both;">
+            u"""<div class="configDebug">
                     <label>JSON Debug:</label>
                     <pre>%s</pre>
                 </div>""" % json_value)
