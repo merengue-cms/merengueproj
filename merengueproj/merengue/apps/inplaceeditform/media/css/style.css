@@ -80,3 +80,7 @@ button.apply span {
     color: red;
     text-align: center;
 }
+
+span.textareainplaceedit {
+    display: block;
+}

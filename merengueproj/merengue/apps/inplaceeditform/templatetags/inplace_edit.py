@@ -2,16 +2,12 @@
 
 from django.template import Library, Variable
 from django.conf import settings
-from django.utils import simplejson
-from django.utils.translation import ugettext_lazy
-from django.utils.translation import get_language
-from django.contrib.contenttypes.models import ContentType
 
-from inplaceeditform.commons import (get_form_class, apply_filters,
-                                     special_procesing, 
-                                     has_translation)
+from inplaceeditform.commons import get_adaptor_class
+from inplaceeditform.tag_utils import RenderWithArgsAndKwargsNode, parse_args_kwargs
 
 register = Library()
+
 
 def inplace_media(context):
     return context.update({
@@ -19,59 +15,42 @@ def inplace_media(context):
             'MEDIA_URL': context.get('MEDIA_URL', settings.MEDIA_URL),
             'ADMIN_MEDIA_PREFIX': settings.ADMIN_MEDIA_PREFIX,
     })
-register.inclusion_tag("inplace_media.html", takes_context=True)(inplace_media)
+register.inclusion_tag("inplaceeditform/inplace_media.html", takes_context=True)(inplace_media)
 
 
-def inplace_edit(context, obj, expression, form='', expression2=None):
-    content_type_id = ContentType.objects.get_for_model(obj.__class__).id
-    form_class = get_form_class(form, content_type_id)
-    prefix = '%s_%s'%(content_type_id, obj.id)
-    form_obj = form_class(instance=obj, prefix=prefix)
-    tokens = expression.split('|')
-    field, filters = tokens[0], tokens[1:]
-    current_language = get_language()
-    field_lang = None
-    if field in form_obj.fields:
-        field_obj = form_obj[field]
-    else:
-        field_lang = "%s_%s" %(field, current_language)
-        field_obj = form_obj[field_lang]
+class InplaceEditNode(RenderWithArgsAndKwargsNode):
+
+    def prepare_context(self, args, kwargs, context):
+        expression_to_show = args[0]
+        filters_to_edit = kwargs.get('filters_to_edit', [])
+        options = kwargs.get('options', None)
+        adaptor = kwargs.get('adaptor', None)
+        class_inplace = kwargs.get('class_inplace', None)
+        tag_name_cover = kwargs.get('tag_name_cover', None)
+
+        tokens_to_show = expression_to_show.split('|')
+        obj_field_name, filters_to_show = tokens_to_show[0], tokens_to_show[1:]
+        obj_context, field_name = obj_field_name.split(".")
+        obj = Variable(obj_context).resolve(context)
+        options = options or {}
+
+        filters_to_edit = filters_to_edit and filters_to_edit.split('|') or []
+
+        class_adaptor = get_adaptor_class(adaptor, obj, field_name)
+        request = context.get('request')
+        adaptor_field = class_adaptor(field_name, obj,
+                                      request, filters_to_show,
+                                      filters_to_edit,
+                                      class_inplace,
+                                      tag_name_cover)
+
+        context = {
+            'adaptor_field': adaptor_field,
+        }
+        return context
 
 
-    value = getattr(obj, field, '-----')
-    value = special_procesing(field_obj, value)
-
-
-    value = apply_filters(value, filters)
-
-    empty_value = (isinstance(value, str) and value.strip() == u'' or not value)
-
-    if field_lang and not has_translation(field_obj, obj, current_language):
-        old_value = form_obj.initial[field_obj.name]
-        if old_value:
-            form_obj.initial[field_obj.name] = old_value 
-
-
-    if expression2:
-        tokens = expression2.split('|')
-        field2, filters2 = tokens[0], tokens[1:]
-        value2 = Variable(field2).resolve(context)
-        value2 = apply_filters(value2, filters2)
-    else:
-        value2 = None
-
-    return {
-            'obj': obj,
-            'field': field_obj,
-            'content_type_id': content_type_id,
-            'form': form,
-            'form_obj': form_obj,
-            'value':  value,
-            'value2':  value2,
-            'empty_value': empty_value,
-            'filters': simplejson.dumps(filters),
-            'MEDIA_URL': context.get('MEDIA_URL',''),
-            'user': context.get('user',None),
-    }
-register.inclusion_tag("inplace_edit.html", takes_context=True)(inplace_edit)
-
+@register.tag
+def inplace_edit(parser, token):
+    args, kwargs = parse_args_kwargs(parser, token)
+    return InplaceEditNode(args, kwargs, 'inplaceeditform/inplace_edit.html')
