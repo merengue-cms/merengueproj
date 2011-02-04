@@ -28,6 +28,10 @@ a:hover {
 }
 
 /*---- other styles ----*/
+#content {
+	width: 75%;
+}
+
 .module-merengue h1,
 #content-related .module h2,
 .merengueadmin .module h2,
@@ -53,14 +57,68 @@ a:hover {
 
 .button.default, input.default[type="submit"], .submit-row input.default {
     border: 1px solid #3f8c37;
-    background: #54B848;
+    background: #54B848 url(../img/admin/default-bg.gif) repeat-x top left;
     color: white;
 	text-shadow: 1px 1px 0 #3f8c37;
 }
 
 .button.default:active, input.default[type="submit"]:active {
     border: 1px solid #3f8c37;
-    background: #54B848;
+    background: #54B848 url(../img/admin/default-bg-reverse.gif) repeat-x top left;
     color: white;
+	text-shadow: 1px 1px 0 #3f8c37;
+}
+
+#changelist-filter h2,
+.module h2,
+.module caption,
+.inline-group h2 {
+    background: #54B848 url(../img/admin/default-bg.gif) repeat-x top left;
+}
+
+.object-subtools ul li.selected {
+   background-color: #54B848;
+}
+
+.calendarbox .calendarnav-next-month,
+.calendarbox .calendarnav-previous-month,
+.calendarbox .calendarnav-previous,
+.calendarbox .calendarnav-next {
+   background: #54B848 url(../img/admin/default-bg.gif) repeat-x left bottom;
+   color: #FFF;
+}
+
+.calendarbox .calendarnav-next-month:hover,
+.calendarbox .calendarnav-previous-month:hover,
+.calendarbox .calendarnav-previous:hover,
+.calendarbox .calendarnav-next:hover {
+	background-color: #3f8c37;
+}
+.calendar td a:hover, 
+.timelist a:hover,
+.calendar td a:active, 
+.timelist a:active {
+	background: #E8FDE1;
+	color: #3f8c37;
+}
+
+a.fadeingooglemap {
+    color: #54B848;
+}
+
+ul#global-languageselector li {
+	opacity: 0.3;
+}
+
+ul#global-languageselector li.currentLangItem {
+  opacity: 1;
+  border: none;
+  padding: 0;
+}
+
+.paginator a:hover {
+    background: #54B848;
+    border-color: #3f8c37;
+    color: #FFF;
 	text-shadow: 1px 1px 0 #3f8c37;
 }
