@@ -31,7 +31,6 @@ def blocks_index(request):
 
 
 def blocks_reorder(request):
-
     def relocate_blocks(items, cls):
         for order, item in enumerate(items):
             if "#" in item:

@@ -1,4 +1,4 @@
-<div class="{{ block.placed_at }}Block block" id="{{ block.name }}">
+<div class="{{ block.placed_at }}Block block {% if not block_content_relation %}blockGlobal{% else %}blockRelated{% endif %}" id="{{ block.name }}">
 <div class="blockInner">
  {% block blocktitle %}
    <h1>{{ block_title }}</h1>
@@ -9,10 +9,10 @@
    {# to override #}
  {% endblock %}
  </div>
- {% if block_content_relation %}
-   <input type="hidden" value="{{ block_content_relation.id }}" id="{{ block.name }}ContentRelated" class="blockContentRelated" />
+ {% if not block_content_relation %}
+   <input type="hidden" value="{{ block.id }}" class="blockId" />
  {% else %}
-   <input type="hidden" value="{{ block.id }}" id="{{ block.name }}Id" class="blockId" />
+   <input type="hidden" value="{{ block_content_relation.id }}" class="blockId" />
  {% endif %}
 </div>
 </div>

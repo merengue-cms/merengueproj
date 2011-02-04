@@ -18,7 +18,7 @@
             containers.each(function () {
                 var orderList = [];
                 var place = $(this).children(".blockPlace").val();
-                $(this).children(".block").find("." + className).each(function() {
+                $(this).children("." + className).find(".blockId").each(function() {
                     var val = $(this).val();
                     if (val) {
                         order.push(val +"#"+ place);
@@ -179,8 +179,8 @@
         }
 
         function postNewOrder() {
-            var newOrder = getBlocksOrder("blockId");
-            var blockCntRltd = getBlocksOrder("blockContentRelated");
+            var newOrder = getBlocksOrder("blockGlobal");
+            var blockCntRltd = getBlocksOrder("blockRelated");
             $.ajax({
                 url: "{% url blocks_reorder %}",
                 type: "POST",
