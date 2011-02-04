@@ -21,7 +21,7 @@ from models import Chunk
 from cmsutils.forms.widgets import TinyMCE
 
 from merengue.base.admin import PluginAdmin
-from plugins.chunks.forms.forms import ChunkAdminModelForm
+from plugins.chunks.forms import ChunkAdminModelForm
 
 
 class TransTinyMCEWidget(TinyMCE):
