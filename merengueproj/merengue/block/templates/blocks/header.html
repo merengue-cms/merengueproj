@@ -116,7 +116,13 @@
                     url: $(this).attr('action'),
                     data: $(this).serialize(),
                     success: function(data) {
-                        $('#config-block').html('{% trans "Block config saved" %}');
+                        $.ajax({
+                            url: '.?render_block=' + block_id,
+                            success: function(data) {
+                                block.replaceWith(data);
+                                Shadowbox.close();
+                            }
+                        });
                     }
                 });
                 return false;

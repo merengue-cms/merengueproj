@@ -136,6 +136,7 @@ POST_MERENGUE_MIDDLEWARE_CLASSES = (
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'merengue.section.middleware.ResponseSectionMiddleware',
     'merengue.pluggable.middleware.PluginMiddlewaresProxy',
+    'merengue.block.middleware.RenderBlockMiddleware',
     #'cmsutils.middleware.I18NFetchFromCacheMiddleware', # this has to be last # removed anonymous cache middleware
 )
 
