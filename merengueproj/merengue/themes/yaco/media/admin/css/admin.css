@@ -8,11 +8,11 @@ p {
 
 a:link, a:visited {
 	color: #54B848;
-	text-decoration: underline;
 }
 
 a:hover {
 	color: #79db6f;
+	text-decoration: underline;
 }
 
 /* ----- header styles ----- */
@@ -37,7 +37,7 @@ a:hover {
 .merengueadmin .module h2,
 .module caption, 
 .inline-group h2 {
-    background: #54B848;
+    background: #54B848 url(../img/admin/yaco-bg.gif) repeat-x top left;
 }
 
 #changelist-filter li.selected a {
@@ -48,7 +48,7 @@ a:hover {
 .module h2, 
 .module caption, 
 .inline-group h2 {
-	background: #54B848;
+	background: #54B848 url(../img/default-bg.gif) repeat-x top left;
 }
 
 .row1 {
@@ -57,14 +57,14 @@ a:hover {
 
 .button.default, input.default[type="submit"], .submit-row input.default {
     border: 1px solid #3f8c37;
-    background: #54B848 url(../img/admin/default-bg.gif) repeat-x top left;
+    background: #54B848 url(../img/default-bg.gif) repeat-x top left;
     color: white;
 	text-shadow: 1px 1px 0 #3f8c37;
 }
 
 .button.default:active, input.default[type="submit"]:active {
     border: 1px solid #3f8c37;
-    background: #54B848 url(../img/admin/default-bg-reverse.gif) repeat-x top left;
+    background: #54B848 url(../img/default-bg-reverse.gif) repeat-x top left;
     color: white;
 	text-shadow: 1px 1px 0 #3f8c37;
 }
@@ -73,7 +73,7 @@ a:hover {
 .module h2,
 .module caption,
 .inline-group h2 {
-    background: #54B848 url(../img/admin/default-bg.gif) repeat-x top left;
+    background: #54B848 url(../img/default-bg.gif) repeat-x top left;
 }
 
 .object-subtools ul li.selected {
@@ -84,7 +84,7 @@ a:hover {
 .calendarbox .calendarnav-previous-month,
 .calendarbox .calendarnav-previous,
 .calendarbox .calendarnav-next {
-   background: #54B848 url(../img/admin/default-bg.gif) repeat-x left bottom;
+   background: #54B848 url(../img/default-bg.gif) repeat-x left bottom;
    color: #FFF;
 }
 
@@ -107,7 +107,7 @@ a.fadeingooglemap {
 }
 
 ul#global-languageselector li {
-	opacity: 0.3;
+	opacity: 0.6;
 }
 
 ul#global-languageselector li.currentLangItem {
