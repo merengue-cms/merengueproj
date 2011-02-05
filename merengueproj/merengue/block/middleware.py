@@ -22,6 +22,6 @@ class RenderBlockMiddleware(object):
             return HttpResponse(block.render(
                 request,
                 place=place,
-                context=None,
+                context=dict(),
                 block_content_relation=bcr,
             ))
