@@ -1,13 +1,13 @@
 from django.http import HttpResponse
 
-from merengue.block.models import RegisteredBlock, BlockContentRelation
-
 
 class RenderBlockMiddleware(object):
     """This middleware render only a block if passed by request """
 
     def process_request(self, request):
         if 'render_block' in request.GET:
+            from merengue.block.models import RegisteredBlock, BlockContentRelation
+
             block_id = request.GET['render_block']
             related = 'related' in request.GET
             if not related:
