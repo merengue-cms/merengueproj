@@ -36,7 +36,7 @@
             var mediaurl = '{{ MEDIA_URL }}';
             Shadowbox.init({
                 assetUrl: mediaurl,
-                loadingImage: mediaurl + 'multimedia/img/loading.gif',
+                loadingImage: mediaurl + 'merengue/img/multimedia/loading.gif',
                 displayNav: true,
                 skipSetup: true,
                 displayClose: true,
@@ -84,8 +84,12 @@
             var block_name = block.attr('id');
             var block_id = block.find('.blockId').val();
             var block_title = block.children('.blockHiddenTitle').html();
+            var block_config_url = blocks_index_url + 'ajax/config/' + block_id;
+            if (block.hasClass('blockRelated')) {
+                block_config_url = block_config_url + '?related=1';
+            }
             $.ajax({
-                url: blocks_index_url + 'ajax/config/' + block_id,
+                url: block_config_url,
                 context: document.body,
                 success: function(data){
                     Shadowbox.open({
@@ -101,13 +105,19 @@
             // we change usual submit by a AJAX submit (without refreshing browser)
             $('#config-block-form').live("submit", function(event) {
                 event.preventDefault();
+                var block_id = $(this).find('[name=blockid]').val();
+                var block_name = $(this).find('[name=blockname]').val();
+                var render_block_url = '.?render_block=' + block_id;
+                if($(this).find('[name=related]').length > 0) {
+                    render_block_url = render_block_url + '&related=1';
+                }
                 $.ajax({
                     type: 'POST',
                     url: $(this).attr('action'),
                     data: $(this).serialize(),
                     success: function(data) {
-                        block.load('.?render_block=' + block_id + " .blockInner", function() {
-                            initBlock($('#'+block_name));
+                        $('#' + block_name).load(render_block_url + " .blockInner", function() {
+                            initBlock($('#' + block_name));
                         });
                         Shadowbox.close();
                     }

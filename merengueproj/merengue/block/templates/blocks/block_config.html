@@ -2,6 +2,12 @@
 <div id="config-block">
   <form id="config-block-form" method="POST" action="{% url generate_blocks_configuration reg_block.id %}">
     {{ form }}
+    <input type="hidden" name="blockid" value="{{ reg_block.id }}" />
+    <input type="hidden" name="blockname"
+           value="{{ block.name }}{% if is_related_block %}-related{% endif %}" />
+    {% if is_related_block %}
+      <input type="hidden" name="related" value="1" />
+    {% endif %}
     <input type="submit" value="{% trans "Save configuration" %}" />
   </form>
 </div>

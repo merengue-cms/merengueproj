@@ -19,7 +19,6 @@ import copy
 
 from django.db import models
 from django.db.models import signals
-from django.utils.importlib import import_module
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.models import BaseContent
@@ -119,9 +118,11 @@ class BlockContentRelation(models.Model):
         verbose_name=_('overwrite generic block if is present on the actual page'),
         default=False)
 
+    def get_config(self):
+        return self.config
+
     def get_block_config_field(self):
-        block = getattr(import_module(self.block.module),
-                        self.block.class_name)
+        block = self.get_registry_item_class()
         block_config_field = copy.copy(block.config_params)
         return ConfigDict(block_config_field, self.config)
 

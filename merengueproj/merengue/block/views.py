@@ -81,16 +81,28 @@ def generate_blocks_configuration_for_content(request, block_id):
 def generate_blocks_configuration(request, block_id):
     if not has_global_permission(request.user, 'manage_portal'):
         raise PermissionDenied()
-    reg_block = RegisteredBlock.objects.get(id=block_id)
-    block = reg_block.get_registry_item_class()
+    is_related_block = 'related' in request.REQUEST
+    if is_related_block:
+        reg_block = BlockContentRelation.objects.get(id=block_id)
+        block = reg_block.block.get_registry_item_class()
+        config = block.get_config(reg_block)
+    else:
+        reg_block = RegisteredBlock.objects.get(id=block_id)
+        block = reg_block.get_registry_item_class()
+        config = block.get_config()
     if request.method == 'POST':
         form = BlockConfigForm(request.POST)
-        form.fields['config'].set_config(block.get_config())
+        form.fields['config'].set_config(config)
         if form.is_valid():
             reg_block.config = form.cleaned_data['config']
             reg_block.save()
             return HttpResponse('ok')
     else:
         form = BlockConfigForm()
-        form.fields['config'].set_config(block.get_config())
-    return render_to_response('blocks/block_config.html', {'form': form, 'reg_block': reg_block})
+        form.fields['config'].set_config(config)
+    return render_to_response('blocks/block_config.html', {
+        'form': form,
+        'reg_block': reg_block,
+        'block': block,
+        'is_related_block': is_related_block,
+    })

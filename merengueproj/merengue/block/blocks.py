@@ -31,6 +31,14 @@ class BaseBlock(RegistrableItem):
         return 'block'
 
     @classmethod
+    def get_config(cls, block_content_relation=None):
+        if block_content_relation is None:
+            config = cls.get_registered_item().get_config()
+        else:
+            config = block_content_relation.get_config()
+        return cls._config_dict(config)
+
+    @classmethod
     def render_block(cls, request, template_name='block.html', block_title=None,
                      context=None, block_content_relation=None):
         if context is None:

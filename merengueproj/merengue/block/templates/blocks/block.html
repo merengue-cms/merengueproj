@@ -1,4 +1,5 @@
-<div class="{{ block.placed_at }}Block block {% if not block_content_relation %}blockGlobal{% else %}blockRelated{% endif %}" id="{{ block.name }}">
+<div id="{{ block.name }}{% if block_content_relation %}-related{% endif %}"
+     class="{{ block.placed_at }}Block block {% if not block_content_relation %}blockGlobal{% else %}blockRelated{% endif %}">
 <div class="blockInner">
  {% block blocktitle %}
    <h1>{{ block_title }}</h1>

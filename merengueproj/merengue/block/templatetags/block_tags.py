@@ -55,10 +55,7 @@ def _render_blocks_list(blocks, request, obj, place, block_type, context, relate
             )
             render_args.append(block_content_relation)
         # append the block rendering to list
-        try:
-            rendered_blocks.append(block.render(*render_args))
-        except:
-            rendered_blocks.append(block.render(*render_args))
+        rendered_blocks.append(block.render(*render_args))
     return rendered_blocks
 
 
