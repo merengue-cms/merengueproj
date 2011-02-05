@@ -19,6 +19,7 @@ from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render_to_response
 from django.utils.simplejson import dumps
+from django.utils.translation import ugettext as _
 
 from merengue.block.forms import BlockConfigForm
 from merengue.block.models import RegisteredBlock, BlockContentRelation
@@ -71,7 +72,7 @@ def generate_blocks_configuration_for_content(request, block_id):
         result = result.replace('<div class="form-row">', '')
         result = result[::-1].replace('>vid/<', '', 1)[::-1]
         # previous replace just removes the last </div> ocurrence
-        result = result.replace('Config:', 'Block specific configuration:')
+        result = result.replace(_('Configuration'), _('Block specific configuration'))
         result += '<p class="help">Fill this field to overwrite the block configuration</p>'
     except RegisteredBlock.DoesNotExist:
         result = ''

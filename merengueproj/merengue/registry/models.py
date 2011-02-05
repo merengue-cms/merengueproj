@@ -36,7 +36,7 @@ class RegisteredItem(models.Model):
     order = models.IntegerField(_("Order"), blank=True, null=True)
     traceback = models.TextField(_("Error traceback"), default='', editable=False,
                                  help_text=_("Error traceback on broken item"))
-    config = ConfigField()
+    config = ConfigField(_('Configuration'))
 
     objects = RegisteredItemManager()
 

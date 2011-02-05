@@ -83,7 +83,7 @@
             var block = $(this).parents('.block');
             var block_name = block.attr('id');
             var block_id = block.find('.blockId').val();
-            var block_title = block.children('.blockHiddenTitle').html();
+            var block_title = block.find('.blockHiddenTitle').html();
             var block_config_url = blocks_index_url + 'ajax/config/' + block_id;
             if (block.hasClass('blockRelated')) {
                 block_config_url = block_config_url + '?related=1';

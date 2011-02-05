@@ -27,6 +27,7 @@ class ConfigFormField(JSONFormField):
 
     def __init__(self, *args, **kwargs):
         super(ConfigFormField, self).__init__(*args, **kwargs)
+        self.label = kwargs.get('label', _('Configuration'))
         self.widget = ConfigWidget()
 
     def set_config(self, config):
