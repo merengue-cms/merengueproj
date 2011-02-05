@@ -7,9 +7,18 @@
 {% block blockbody %}
 <!-- ADDTHIS BUTTON BEGIN -->
 <script type="text/javascript">
+// <![CDATA[
 var addthis_config = {
      username: "merengue"
-}
+};
+
+(function($) {
+    $(document).ready(function() {
+        addthis.init();
+//         addthis.update();
+    });
+})(jQuery);
+//]]
 </script>
 
 {% if services %}
@@ -23,6 +32,6 @@ var addthis_config = {
 {% endif %}
 
 <script type="text/javascript"
-        src="http://s7.addthis.com/js/250/addthis_widget.js"></script>
+        src="http://s7.addthis.com/js/250/addthis_widget.js#async=1"></script>
 <!-- ADDTHIS BUTTON END -->
 {% endblock %}

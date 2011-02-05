@@ -31,8 +31,9 @@ class BaseMenuBlock(object):
                        label=_('maximum number of levels to show'), default=-1)]
 
     @classmethod
-    def get_max_level(cls):
-        max_value = cls.get_config().get('max_num_level', None)
+    def get_max_level(cls, bcr=None):
+        print cls, bcr
+        max_value = cls.get_config(bcr).get('max_num_level', None)
         if max_value:
             return max_value.get_value()
         return -1
@@ -59,7 +60,7 @@ class CoreMenuBlock(BaseMenuBlock, Block):
                                 context={'section': section,
                                          'menu': main_menu,
                                          'descendants': descendants,
-                                         'max_num_level': cls.get_max_level()},
+                                         'max_num_level': cls.get_max_level(block_content_relation)},
                                 block_content_relation=block_content_relation)
 
 
@@ -79,7 +80,7 @@ class NavigationBlock(BaseMenuBlock, Block):
                                 block_title=_('Navigation'),
                                 context={'sections': sections,
                                          'active_section': request.section,
-                                         'max_num_level': cls.get_max_level()},
+                                         'max_num_level': cls.get_max_level(block_content_relation)},
                                 block_content_relation=block_content_relation)
 
 
