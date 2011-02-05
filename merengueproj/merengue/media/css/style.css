@@ -208,6 +208,11 @@ input#id_password {
      text-align: center;
 }
 
+/* ----- blocks ----- */
+
+.blockHiddenTitle {
+    display: none;
+}
 
 /* ----- feedback plugin ----- */
 
