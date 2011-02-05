@@ -15,8 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from merengue.block.models import RegisteredBlock
-
 
 def get_block(name):
+    from merengue.block.models import RegisteredBlock
     return RegisteredBlock.objects.get(name=name)
