@@ -32,7 +32,6 @@ class BaseMenuBlock(object):
 
     @classmethod
     def get_max_level(cls, bcr=None):
-        print cls, bcr
         max_value = cls.get_config(bcr).get('max_num_level', None)
         if max_value:
             return max_value.get_value()
