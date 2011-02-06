@@ -1,12 +1,12 @@
 {% extends "block.html" %}
-{% load i18n %}
+{% load i18n adminmedia %}
 
 
 {% block blockbody %}
+  <link href="{% admin_media_prefix %}css/forms.css" type="text/css" rel="stylesheet">
+  <script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
+  <script type="text/javascript" src="{% admin_media_prefix %}js/core.js"></script>
   {% for form_search in forms_search %}
-    <link href="/admin_media/css/forms.css" type="text/css" rel="stylesheet">
-    <script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
-    <script type="text/javascript" src="/admin_media/js/core.js"></script>
     {{ form_search.media }}
     <form action="{% url search_is_valid form_search.report.id %}">
         <table >{{ form_search.as_table }}</table>
