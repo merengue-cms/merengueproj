@@ -15,18 +15,31 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from threading import local
+
 from django import template
 
 from classytags.arguments import Argument
-from classytags.core import Options
+from classytags.core import Tag, Options
 from classytags.parser import Parser
 from oembed.templatetags.oembed_tags import OEmbedNode
+from sekizai.data import SekizaiDictionary
 from sekizai.templatetags import sekizai_tags
+
 
 register = template.Library()
 
 
 SLIDE_TYPES = ['photo', 'video', 'panoramicview', 'image3d', 'audio']
+
+_content_holder = local()
+
+
+def get_content_holder():
+    global _content_holder
+    if not hasattr(_content_holder, 'data'):
+        _content_holder.data = SekizaiDictionary()
+    return _content_holder.data
 
 
 @register.inclusion_tag('media_slide.html', takes_context=True)
@@ -96,7 +109,7 @@ class ExtraOembedNode(OEmbedNode):
         original_render = super(ExtraOembedNode, self).render(context)
         if not self.var_name:
             return original_render
-        context[self.var_name]=original_render
+        context[self.var_name] = original_render
         return ''
 
 
@@ -128,6 +141,11 @@ def extra_oembed(parser, token):
 class RenderBundledMedia(sekizai_tags.RenderBlock):
     name = 'render_bundled_media'
 
+    def render_tag(self, context, name, nodelist):
+        rendered_contents = nodelist.render(context)
+        data = get_content_holder()[name].render()
+        return '%s\n%s' % (data, rendered_contents)
+
 register.tag(RenderBundledMedia)
 
 
@@ -141,11 +159,17 @@ class AddMediaParser(Parser):
         self.parser.delete_first_token()
 
 
-class AddMedia(sekizai_tags.Addtoblock):
-    name = 'addmedia'    
+class AddMedia(Tag):
+    name = 'addmedia'
     options = Options(
         Argument('name'),
         parser_class=AddMediaParser,
     )
+
+    def render_tag(self, context, name, nodelist):
+        rendered_contents = nodelist.render(context)
+        content_holder = get_content_holder()
+        content_holder[name].append(rendered_contents)
+        return ""
 
 register.tag(AddMedia)
