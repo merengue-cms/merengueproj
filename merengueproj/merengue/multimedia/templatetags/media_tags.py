@@ -17,6 +17,8 @@
 
 from threading import local
 
+from BeautifulSoup import BeautifulSoup
+
 from django import template
 
 from classytags.arguments import Argument
@@ -143,8 +145,13 @@ class RenderBundledMedia(sekizai_tags.RenderBlock):
 
     def render_tag(self, context, name, nodelist):
         rendered_contents = nodelist.render(context)
-        data = get_content_holder()[name].render()
-        return '%s\n%s' % (data, rendered_contents)
+        soup = BeautifulSoup(get_content_holder()[name].render())
+        media_assets = []
+        for node in soup.findAll():  # remove duplicated media assets
+            media = unicode(node)
+            if media not in media_assets:
+                media_assets.append(media)
+        return '%s\n%s' % ('\n'.join(media_assets), rendered_contents)
 
 register.tag(RenderBundledMedia)
 
