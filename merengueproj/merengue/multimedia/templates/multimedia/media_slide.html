@@ -1,15 +1,17 @@
-{% load i18n media_tags %}
+{% load i18n media_tags compress %}
 
 {% if multimedia_list %}
-
-<link href="{{ MEDIA_URL }}merengue/css/shadowbox.css" rel="stylesheet" type="text/css" />
-<link href="{{ MEDIA_URL }}merengue/css/slideshow.css" rel="stylesheet" type="text/css" media="screen" />
-<script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/mootools.v1.11.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/shadowbox/shadowbox-mootools.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/shadowbox/shadowbox.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/shadowbox/shadowbox-{{ LANGUAGE_CODE }}.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/multimedia/jquery.slideshow.js"></script>
-
+{% compress css %}
+  <link href="{{ MEDIA_URL }}merengue/css/shadowbox.css" rel="stylesheet" type="text/css" />
+  <link href="{{ MEDIA_URL }}merengue/css/slideshow.css" rel="stylesheet" type="text/css" media="screen" />
+{% endcompress %}
+{% compress js %}
+  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/mootools.v1.11.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/shadowbox/shadowbox-mootools.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/shadowbox/shadowbox.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/shadowbox/shadowbox-{{ LANGUAGE_CODE }}.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/multimedia/jquery.slideshow.js"></script>
+{% endcompress %}
 <div class="MultimediaSlide">
 <div id="slideshow">
   <div class="screenShotTable">

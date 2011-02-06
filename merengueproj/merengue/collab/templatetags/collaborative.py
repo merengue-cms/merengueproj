@@ -27,8 +27,10 @@ register = template.Library()
 
 
 def collaborative_comments_media(context):
-    return {'MEDIA_URL': context.get('MEDIA_URL', settings.MEDIA_URL),
-           }
+    return {
+        'MEDIA_URL': context.get('MEDIA_URL', settings.MEDIA_URL),
+        'user': context.get('user', None),
+    }
 register.inclusion_tag("collab/collaborative_comments_media.html", takes_context=True)(collaborative_comments_media)
 
 
@@ -42,9 +44,11 @@ register.inclusion_tag("collab/collaborative_comments.html", takes_context=True)
 
 
 def collaborative_translation_media(context):
-    return {'MEDIA_URL': context.get('MEDIA_URL', settings.MEDIA_URL),
-            'TINYMCE_JS': TINYMCE_JS,
-           }
+    return {
+        'MEDIA_URL': context.get('MEDIA_URL', settings.MEDIA_URL),
+        'TINYMCE_JS': TINYMCE_JS,
+        'user': context.get('user', None),
+    }
 register.inclusion_tag("collab/collaborative_translation_media.html", takes_context=True)(collaborative_translation_media)
 
 

@@ -1,6 +1,10 @@
+{% load compress %}
 <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/jquery-ui-1.8.min.js"></script>
+{% compress js %}
+<script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/jquery.form.js" type="text/javascript"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/css_browser_selector.js"></script>
+{% endcompress %}
 <script type="text/javascript">
     jQuery.noConflict();
 </script>
@@ -30,11 +34,11 @@
                 google.maps.Unload();
             });
         }
-		var print = $("#action-print a");
-		if(print.length > 0) {
-			print.attr("onClick", "javascript:print();");
-			print.attr("href", "");	
-		}
+        var print = $("#action-print a");
+        if(print.length > 0) {
+            print.attr("onClick", "javascript:print();");
+            print.attr("href", "");	
+        }
     });
     })(jQuery);
 </script>

@@ -1,4 +1,4 @@
-{% load i18n inlinetrans breadcrumbs messagebox svn block_tags section_tags inplace_edit %}
+{% load i18n inlinetrans breadcrumbs messagebox svn block_tags section_tags inplace_edit compress %}
 {% block doctype %}<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">{% endblock %}
 <html>
 <head>
@@ -19,12 +19,14 @@
   {% endblock %}
 
   {% block cssstyles %}
-    {% include "inc.cssstyles.html" %}
-    {% block extrastyles %}{% endblock %}
+    {% compress css %}
+      {% include "inc.cssstyles.html" %}
+      {% block extrastyles %}{% endblock %}
+    {% endcompress %}
   {% endblock %}
-  
+
   {% block cssprint %}
-  	<link href="{{ MEDIA_URL }}merengue/css/print.css" rel="stylesheet" type="text/css" media="print" /> 
+    <link href="{{ MEDIA_URL }}merengue/css/print.css" rel="stylesheet" type="text/css" media="print" /> 
   {% endblock %}
 
   {% block jsscripts %}

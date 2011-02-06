@@ -1,10 +1,13 @@
-<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}merengue/css/collab/translation.css" />
-<script src="{{ TINYMCE_JS }}" type="text/javascript"></script>
-<script src="{{ MEDIA_URL }}merengue/js/jquery.form.js" type="text/javascript"></script>
-<script src="{{ MEDIA_URL }}merengue/js/collab/CollabTranslation.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-tinyMCE.init({
+{% if user.is_authenticated %}
+{% load compress %}
+{% compress css %}
+  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}merengue/css/collab/translation.css" />
+{% endcompress %}
+{% compress js %}
+  <script src="{{ TINYMCE_JS }}" type="text/javascript"></script>
+  <script src="{{ MEDIA_URL }}merengue/js/collab/CollabTranslation.js" type="text/javascript"></script>
+  <script type="text/javascript">
+  tinyMCE.init({
         "spellchecker_languages": "+Spanish=es",
             "mode": "none",
             "convert_on_click": true,
@@ -30,4 +33,6 @@ tinyMCE.init({
             "extended_valid_elements": "hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",
             "file_browser_callback": "CustomFileBrowser"
             });
-</script>
+  </script>
+{% endcompress %}
+{% endif %}

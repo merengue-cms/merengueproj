@@ -1,10 +1,14 @@
-<link href="{{ MEDIA_URL }}merengue/css/section/document.css" rel="stylesheet" type="text/css" />
-<script src="{{ MEDIA_URL }}cmsutils/js/widgets/tiny_mce/jquery.tinymce.js" type="text/javascript"></script>
-<script src="{{ MEDIA_URL }}merengue/js/jquery.form.js" type="text/javascript"></script>
-<script src="{{ MEDIA_URL }}merengue/js/section/DocumentSection.js" type="text/javascript"></script>
-<script type="text/javascript">
-//<![CDATA[ */
-(function ($) {
+{% if user.is_authenticated %}
+{% load compress %}
+{% compress css %}
+  <link href="{{ MEDIA_URL }}merengue/css/section/document.css" rel="stylesheet" type="text/css" />
+{% endcompress %}
+{% compress js %}
+  <script src="{{ MEDIA_URL }}cmsutils/js/widgets/tiny_mce/jquery.tinymce.js" type="text/javascript"></script>
+  <script src="{{ MEDIA_URL }}merengue/js/section/DocumentSection.js" type="text/javascript"></script>
+  <script type="text/javascript">
+  //<![CDATA[ */
+  (function ($) {
     $(document).ready(function () {
         var new_tinymce_settings = {
             content_css: '{{ tinymce_extra_media.css }}',
@@ -13,7 +17,8 @@
         $.fn.MerengueDocument.set_tinymce_settings(new_tinymce_settings);
         $(".merengue-document").MerengueDocument();
     });
-})(jQuery);
-//]]>
-</script>
-
+  })(jQuery);
+  //]]>
+  </script>
+{% endcompress %}
+{% endif %}

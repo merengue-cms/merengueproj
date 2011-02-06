@@ -1,3 +1,9 @@
-<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}merengue/css/collab/collab.css" />
-<script src="{{ MEDIA_URL }}merengue/js/jquery.form.js" type="text/javascript"></script>
-<script src="{{ MEDIA_URL }}merengue/js/collab/CollabComments.js" type="text/javascript"></script>
+{% if user.is_authenticated %}
+  {% load compress %}
+  {% compress css %}
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}merengue/css/collab/collab.css" />
+  {% endcompress %}
+  {% compress js %}
+    <script src="{{ MEDIA_URL }}merengue/js/collab/CollabComments.js" type="text/javascript"></script>
+  {% endcompress %}
+{% endif %}
