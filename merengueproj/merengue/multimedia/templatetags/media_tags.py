@@ -17,8 +17,11 @@
 
 from django import template
 
+from classytags.arguments import Argument
+from classytags.core import Options
+from classytags.parser import Parser
 from oembed.templatetags.oembed_tags import OEmbedNode
-
+from sekizai.templatetags import sekizai_tags
 
 register = template.Library()
 
@@ -120,3 +123,29 @@ def extra_oembed(parser, token):
     nodelist = parser.parse(('endoembed', ))
     parser.delete_first_token()
     return ExtraOembedNode(nodelist, width, height, m.group('var_name'), m.group('size_var'))
+
+
+class RenderBundledMedia(sekizai_tags.RenderBlock):
+    name = 'render_bundled_media'
+
+register.tag(RenderBundledMedia)
+
+
+class AddMediaParser(Parser):
+
+    def parse_blocks(self):
+        name = self.kwargs['name'].var.token
+        self.blocks['nodelist'] = self.parser.parse(
+            ('endaddmedia', 'endaddmedia %s' % name)
+        )
+        self.parser.delete_first_token()
+
+
+class AddMedia(sekizai_tags.Addtoblock):
+    name = 'addmedia'    
+    options = Options(
+        Argument('name'),
+        parser_class=AddMediaParser,
+    )
+
+register.tag(AddMedia)
