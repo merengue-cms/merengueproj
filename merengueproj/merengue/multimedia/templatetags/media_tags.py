@@ -22,6 +22,9 @@ from django import template
 from classytags.arguments import Argument
 from classytags.core import Tag, Options
 from classytags.parser import Parser
+from compressor import CssCompressor, JsCompressor
+from compressor.conf.settings import COMPRESS
+from compressor.templatetags.compress import CompressorNode
 from oembed.templatetags.oembed_tags import OEmbedNode
 
 from merengue.multimedia.datastructures import MediaDictionary
@@ -144,7 +147,7 @@ class MediaParser(Parser):
         self.blocks['nodelist'] = self.parser.parse()
 
 
-class RenderBundledMedia(Tag):
+class RenderBundledMedia(Tag, CompressorNode):
     name = 'render_bundled_media'
 
     options = Options(
@@ -158,8 +161,23 @@ class RenderBundledMedia(Tag):
 
     def render_tag(self, context, name, nodelist):
         rendered_contents = nodelist.render(context)
-        data = get_content_holder()[name].render()
-        return '%s\n%s' % (data, rendered_contents)
+        content = get_content_holder()[name].render()
+        if COMPRESS:
+            if name == 'css':
+                compressor = CssCompressor(content)
+            elif name == 'js':
+                compressor = JsCompressor(content)
+            output = self.cache_get(compressor.cachekey)
+            if output is None:
+                try:
+                    output = compressor.output()
+                    self.cache_set(compressor.cachekey, output)
+                except:
+                    from traceback import format_exc
+                    raise Exception(format_exc())
+        else:
+            output = content  # no compression
+        return '%s\n%s' % (output, rendered_contents)
 
 register.tag(RenderBundledMedia)
 
