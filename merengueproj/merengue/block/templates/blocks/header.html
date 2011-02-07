@@ -125,8 +125,8 @@
                     success: function(data) {
                         if(data == 'ok') {
                             $('#' + block_name).fadeOut(1000, function() {
-                                $('#' + block_name).load(render_block_url + " .blockInner", function() {
-                                    initBlock($('#' + block_name))
+                                $('#' + block_name).parent().load(render_block_url, function() {
+                                    initBlock($('#' + block_name));
                                 }).fadeIn('slow');
                             });
                             Shadowbox.close();

@@ -91,10 +91,12 @@ def _render_blocks(request, obj, place, block_type, context):
         rendered_blocks += _render_blocks_list(blocks_related_to_content,
             request, obj, place, 'contentblock', context, related_to_content=True)
 
+    wrapped_blocks = ['<div class="blockWrapper">%s</div>' % s for s in rendered_blocks]
+
     return "<div class='blockContainer %ss'>%s" \
             "<input type=\"hidden\" class=\"blockPlace\" value=\"%s\">" \
             "</div>" \
-            % (block_type, '\n'.join(rendered_blocks), place)
+            % (block_type, '\n'.join(wrapped_blocks), place)
 
 
 class RenderBlocksNode(template.Node):
