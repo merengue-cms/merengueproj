@@ -43,3 +43,24 @@
 .configDebug {
     display: none;
 }
+
+#config-block form#config-block-form label {
+	color: #54B848;
+	font-size: 1.5em;
+}
+
+#config-block form#config-block-form div.config_params_container {
+    border: 1px dotted #DDD;
+	padding: 4px;
+} 
+
+#config-block form#config-block-form div.config_params_container label {
+	font-size: 13px;
+	color: #737373;
+}
+
+#config-block form#config-block-form input[type="submit"] {
+	margin-top: 1em;
+	text-align: center;
+	width: 30%;
+}
