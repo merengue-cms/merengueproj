@@ -57,3 +57,20 @@ These are the steps for installing and executing the Merengue
 
 .. _`download page`: http://seleniumhq.org/download/
 .. _`Selenium tests suites`: http://dev.merengueproject.org/browser/trunk/merengueproj/tests/selenium/generic
+
+How to run all selenium test?
+-----------------------------
+
+There is a script to execute all suites of selenium test that are located at ``merengueproj/tests/selenium/generic`` subdirectories.
+This script is *run_suites.py* and is used as follow:
+
+.. code-block:: bash
+
+    $ python run_suites.py basic_url
+
+``basic_url`` is the basic url of the domain to test. All relatives url depends of this one.
+
+Also, it's necessary to run the script with two files on the same directory:
+
+ * ``selenium-server.jar`` It's selenium application. You need this file to run selenium application by command line.
+ * ``user-extensions.js`` It's an extension of selenium application. With this file, you can ``store datas and variables`` on any test.
