@@ -56,6 +56,10 @@ div.object-buttons {
     margin: 1em 0;
 }
 
+#content div.object-buttons ul {
+    margin-left: 0;
+}
+
 div.object-buttons ul li {
     display: inline-block;
     margin-right: 0.5em;
@@ -64,7 +68,7 @@ div.object-buttons ul li {
 div.object-buttons ul li a span {
     display: inline-block;
     line-height: 25px;
-    padding-left: 30px;
+    padding-left: 15px;
 }
 
 div.object-buttons ul li.createFolder a {
@@ -81,6 +85,11 @@ div.object-buttons ul li.cancelEdit a {
 }
 div.object-buttons ul li.docEdit a {
     background: transparent url(../img/document-text-editor.png) no-repeat left top;
+}
+
+#content .action-buttons p.noContent {
+    background: transparent url("../img/info-icon.png") no-repeat left center;
+    padding-left: 20px;
 }
 
 table#webfs-table label {
