@@ -229,6 +229,7 @@ def enable_plugin(plugin_name, register=True):
         register_app(plugin_name)
         register_plugin_actions(plugin_name)
         register_plugin_blocks(plugin_name)
+        register_plugin_toolbar(plugin_name)
         register_plugin_middlewares(plugin_name)
         register_plugin_viewlets(plugin_name)
         register_plugin_templatetags(plugin_name)
@@ -255,6 +256,7 @@ def disable_plugin(plugin_name, unregister=True):
             pass
         unregister_plugin_actions(plugin_name)
         unregister_plugin_blocks(plugin_name)
+        unregister_plugin_toolbar(plugin_name)
         unregister_plugin_middlewares(plugin_name)
         unregister_plugin_viewlets(plugin_name)
         unregister_plugin_templatetags(plugin_name)
@@ -312,11 +314,11 @@ def unregister_plugin_templatetags(plugin_name):
 
 
 def register_items(item_list):
-    try:
-        for item_class in item_list:
+    for item_class in item_list:
+        try:
             registry.register(item_class, activate=True)
-    except AlreadyRegisteredItem:
-        pass
+        except AlreadyRegisteredItem:
+            pass
 
 
 def unregister_items(item_list):
@@ -367,6 +369,20 @@ def unregister_plugin_viewlets(plugin_name):
     if not plugin_config:
         return
     unregister_items(plugin_config.get_viewlets())
+
+
+def register_plugin_toolbar(plugin_name):
+    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    if not plugin_config:
+        return
+    register_items(plugin_config.get_toolbar_panels())
+
+
+def unregister_plugin_toolbar(plugin_name):
+    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
+    if not plugin_config:
+        return
+    unregister_items(plugin_config.get_toolbar_panels())
 
 
 def register_plugin_post_actions(plugin_name):

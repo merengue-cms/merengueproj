@@ -89,6 +89,10 @@ class Plugin(RegistrableItem):
         return []  # to override in plugins
 
     @classmethod
+    def get_toolbar_panels(cls):
+        return []  # to override in plugins
+
+    @classmethod
     def post_install(cls):
         pass
 

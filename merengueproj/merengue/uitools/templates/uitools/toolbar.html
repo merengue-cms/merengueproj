@@ -1,0 +1,15 @@
+{% if request.user.is_staff %}
+{% load i18n uitools_tags media_tags %}
+{% addmedia "css" %}
+  <link href="{{ MEDIA_URL }}merengue/css/toolbar.css" rel="stylesheet" type="text/css" />
+{% endaddmedia %}
+
+<div id="toolbar">
+  <ul>
+    <li id="toolbar-title">{% trans "Merengue toolbar" %}</li>
+    {% for panel in panels %}
+      {% render_panel panel %}
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}

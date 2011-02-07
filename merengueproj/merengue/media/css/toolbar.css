@@ -1,0 +1,54 @@
+/* ----- Toolbar styles ----- */
+
+#toolbar {
+    background: #1161ab;
+    height: 30px;
+    border-bottom: 2px solid #234f32;
+}
+
+#toolbar ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#toolbar ul li {
+    border-left: 1px solid #053e74;
+    color: #fff;
+    display: inline;
+    font-size: 11px;
+    font-weight: bold;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    line-height: 30px;
+    padding: 8px 9px 9px;
+    position: relative;
+    width: auto;
+}
+
+#toolbar ul li#toolbar-title {
+    color: #59e2ff;
+    text-transform: uppercase;
+}
+
+#toolbar li:hover {
+    background: #72ace3;
+}
+
+#toolbar ul:hover li#toolbar-title {
+    background: transparent;
+}
+
+#toolbar li a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+#toolbar li:hover a {
+    color: #fff;
+}
+
+#toolbar li:last-child {
+    border-right: 1px solid #053e74;
+}

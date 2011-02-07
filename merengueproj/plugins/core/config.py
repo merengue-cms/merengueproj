@@ -26,6 +26,7 @@ from plugins.core.actions import AdminAction, LoginAction, LogoutAction, PrintAc
 from plugins.core.blocks import (CoreMenuBlock, NavigationBlock,
                                  PrimaryLinksBlock, SecondaryLinksBlock,
                                  PortalMenuBlock, ContactInfoBlock)
+from plugins.core.panels import InlineEditPanel
 
 
 class PluginConfig(Plugin):
@@ -48,6 +49,10 @@ class PluginConfig(Plugin):
     def get_blocks(cls):
         return [CoreMenuBlock, NavigationBlock, PrimaryLinksBlock,
                 SecondaryLinksBlock, PortalMenuBlock, ContactInfoBlock]
+
+    @classmethod
+    def get_toolbar_panels(cls):
+        return [InlineEditPanel, ]
 
     @classmethod
     def section_models(cls):

@@ -1,4 +1,4 @@
-{% load i18n inlinetrans breadcrumbs messagebox svn block_tags section_tags inplace_edit compress media_tags %}
+{% load i18n inlinetrans breadcrumbs messagebox svn block_tags section_tags inplace_edit compress media_tags uitools_tags %}
 {% block doctype %}<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">{% endblock %}
 <html>
 <head>
@@ -56,6 +56,9 @@
 </head>
 
 <body dir="ltr" {% block extrabodytag %}{% endblock %}>
+{% block toolbar %}
+  {% render_toolbar %}
+{% endblock %}
 {% block page %}
 <div id="page-wrapper">
 
