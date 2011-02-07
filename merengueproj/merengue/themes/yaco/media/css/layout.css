@@ -659,9 +659,14 @@ div.contentFiles ul {
     background: transparent url("../img/new-doc.png") no-repeat left bottom;
 }
 
+#content div.object-buttons ul li.cancelEdit a {
+    background: transparent url("../img/edit-undo.png") no-repeat left bottom;
+}
+
 #content div.object-buttons ul li.createFolder a span,
 #content div.object-buttons ul li.createFile a span,
-#content div.object-buttons ul li.createDocument a span  {
+#content div.object-buttons ul li.createDocument a span,
+#content div.object-buttons ul li.cancelEdit a span {
     background: none;
     padding-left: 0;
 }
