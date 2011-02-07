@@ -45,32 +45,29 @@
 }
 
 #config-block form#config-block-form label {
-	color: #ABABAB;
-	font-size: 1.5em;
-	font-weight: bolder;
-	
+    color: #ABABAB;
+    font-size: 1.2em;
 }
 
 #config-block form#config-block-form div.config_params_container {
     border: 1px solid #EEE;
-	padding: 6px 12px;
-	margin-top: -1px;
+    padding: 6px 12px;
+    margin-top: 5px;
 } 
 
 #config-block form#config-block-form div.config_params_container label {
-	font-size: 13px;
-	color: #737373;
-	float: left;
-	margin-right: 1em;
-	font-weight: normal;
+    font-size: 13px;
+    color: #737373;
+    float: left;
+    margin-right: 1em;
+    font-weight: normal;
 }
 
 #config-block form#config-block-form div.config_params_container input {
-	margin-left: 0.5em;
+    margin-left: 0.5em;
 }
 
-#config-block form#config-block-form input[type="submit"] {
-	margin-top: 1em;
-	text-align: center;
-	width: 30%;
+#config-block form#config-block-form div.submit {
+    margin: 0.5em;
+    text-align: center;
 }
