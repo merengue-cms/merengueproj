@@ -1,16 +1,19 @@
-{% load i18n permissions_tags compress %}
+{% load i18n permissions_tags compress media_tags %}
 {% ifhasperm "manage_portal" %}
-{% compress css %}
+
+{% addmedia "css" %}
   <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}merengue/css/render_blocks.css"/>
   <link href="{{ MEDIA_URL }}merengue/css/shadowbox.css" rel="stylesheet" type="text/css" />
-{% endcompress %}
-{% compress js %}
+{% endaddmedia %}
+
+{% addmedia "js" %}
   <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/mootools.v1.11.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/shadowbox/shadowbox-mootools.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/shadowbox/shadowbox.js"></script>
+{% endaddmedia %}
+
 <script type="text/javascript">
 // <![CDATA[
-
 (function($) {
   if (!$.browser.msie || $.browser.version != '6.0') {
     $(document).ready(function() {
@@ -219,5 +222,4 @@
 })(jQuery);
 // ]]>
 </script>
-{% endcompress %}
 {% endifhasperm %}

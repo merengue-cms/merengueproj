@@ -1,4 +1,4 @@
-{% load i18n inlinetrans breadcrumbs messagebox svn block_tags section_tags inplace_edit compress %}
+{% load i18n inlinetrans breadcrumbs messagebox svn block_tags section_tags inplace_edit compress media_tags %}
 {% block doctype %}<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">{% endblock %}
 <html>
 <head>
@@ -28,6 +28,12 @@
   {% block cssprint %}
     <link href="{{ MEDIA_URL }}merengue/css/print.css" rel="stylesheet" type="text/css" media="print" /> 
   {% endblock %}
+
+  {# placeholder to allow plugins and other templates to add css assets #}
+  {% render_bundled_media "css" %}
+
+  {# placeholder to allow plugins and other templates to add javascript assets #}
+  {% render_bundled_media "js" %}
 
   {% block jsscripts %}
     {% include "inc.jsfiles.html" %}
