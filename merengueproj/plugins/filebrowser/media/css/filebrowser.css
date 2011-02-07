@@ -65,26 +65,26 @@ div.object-buttons ul li {
     margin-right: 0.5em;
 }
 
-div.object-buttons ul li a span {
+div.object-buttons ul li a {
     display: inline-block;
-    line-height: 25px;
-    padding-left: 15px;
+    line-height: 22px;
+    padding-left: 30px;
 }
 
 div.object-buttons ul li.createFolder a {
-    background: transparent url(../img/folder-new.png) no-repeat left top;
+    background: transparent url(../img/folder-new.png) no-repeat left bottom;
 }
 
 div.object-buttons ul li.createFile a,
 div.object-buttons ul li.createDocument a {
-    background: transparent url(../img/go-up.png) no-repeat left top;
+    background: transparent url(../img/go-up.png) no-repeat left bottom;
 }
 
 div.object-buttons ul li.cancelEdit a {
-    background: transparent url(../img/edit-undo.png) no-repeat left top;
+    background: transparent url(../img/edit-undo.png) no-repeat left bottom;
 }
 div.object-buttons ul li.docEdit a {
-    background: transparent url(../img/document-text-editor.png) no-repeat left top;
+    background: transparent url(../img/document-text-editor.png) no-repeat left bottom;
 }
 
 #content .action-buttons p.noContent {
@@ -97,15 +97,50 @@ table#webfs-table label {
 }
 
 table#webfs-table label.folder {
-    background: transparent url(../img/folder.png) no-repeat left top;
+    background: transparent url(../img/folder.png) no-repeat left center;
 }
 
 form label.file,
 table#webfs-table label.file {
     padding-left: 18px;
-    background: transparent url(../img/file.png) no-repeat left top;
+    background: transparent url(../img/file.png) no-repeat left center;
 }
 
 table#webfs-table label.document {
-    background: transparent url(../img/text-x-generic.png) no-repeat left top;
+    background: transparent url(../img/text-x-generic.png) no-repeat left center;
+}
+
+#webfs-table, .forumTable {
+    border-collapse: collapse;
+    line-height: 14px;
+    margin-top: 10px;
+    width: 95%;
+}
+
+.forumTable th,
+.forumTable td, 
+table#webfs-table tr,
+table#webfs-table td {
+    border: 1px solid #D9D9D9;
+    text-align: center;
+}
+
+.forumTable th,
+#webfs-table th {
+    background: none repeat scroll 0 0 #EBEBEB;
+    padding: 5px 12px;
+}
+
+.forumTable th,
+.forumTable td,
+table#webfs-table tr,
+table#webfs-table td {
+    border: 1px solid #D9D9D9;
+    text-align: center;
+}
+
+div.action-buttons {
+    clear: both;
+    margin-top: 1.5em;
+    text-align: center;
 }
