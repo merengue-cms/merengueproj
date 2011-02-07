@@ -285,7 +285,7 @@ DEFAULT_THEME_PREVIEW = 'merengue/img/preview_merengue.png'
 STATIC_ROLES = [u'Anonymous User', u'Owner']
 
 # inplaceeditform
-ADAPTOR_INPLACEEDIT = {'textarea': 'merengue.inline.fields.AdaptorTinyMCEField'}
+ADAPTOR_INPLACEEDIT = {'textarea': 'merengue.uitools.fields.AdaptorTinyMCEField'}
 
 # Plugin default preview image. The real path would be path.join(MEDIA_URL, DEFAULT_PLUGIN_PREVIEW)
 DEFAULT_PLUGIN_PREVIEW = path.join('merengue', 'img', 'preview_merengue.png')
