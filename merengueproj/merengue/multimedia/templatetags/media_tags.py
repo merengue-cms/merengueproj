@@ -17,17 +17,14 @@
 
 from threading import local
 
-from BeautifulSoup import BeautifulSoup
-
 from django import template
 
 from classytags.arguments import Argument
 from classytags.core import Tag, Options
 from classytags.parser import Parser
 from oembed.templatetags.oembed_tags import OEmbedNode
-from sekizai.data import SekizaiDictionary
-from sekizai.templatetags import sekizai_tags
 
+from merengue.multimedia.datastructures import MediaDictionary
 
 register = template.Library()
 
@@ -40,7 +37,7 @@ _content_holder = local()
 def get_content_holder():
     global _content_holder
     if not hasattr(_content_holder, 'data'):
-        _content_holder.data = SekizaiDictionary()
+        _content_holder.data = MediaDictionary()
     return _content_holder.data
 
 
@@ -140,18 +137,29 @@ def extra_oembed(parser, token):
     return ExtraOembedNode(nodelist, width, height, m.group('var_name'), m.group('size_var'))
 
 
-class RenderBundledMedia(sekizai_tags.RenderBlock):
+class MediaParser(Parser):
+
+    def parse_blocks(self):
+        super(MediaParser, self).parse_blocks()
+        self.blocks['nodelist'] = self.parser.parse()
+
+
+class RenderBundledMedia(Tag):
     name = 'render_bundled_media'
+
+    options = Options(
+        Argument('name'),
+        parser_class=MediaParser,
+    )
+
+    @property
+    def nodelist(self):
+        return self.blocks['nodelist']
 
     def render_tag(self, context, name, nodelist):
         rendered_contents = nodelist.render(context)
-        soup = BeautifulSoup(get_content_holder()[name].render())
-        media_assets = []
-        for node in soup.findAll():  # remove duplicated media assets
-            media = unicode(node)
-            if media not in media_assets:
-                media_assets.append(media)
-        return '%s\n%s' % ('\n'.join(media_assets), rendered_contents)
+        data = get_content_holder()[name].render()
+        return '%s\n%s' % (data, rendered_contents)
 
 register.tag(RenderBundledMedia)
 

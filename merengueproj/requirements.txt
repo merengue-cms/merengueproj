@@ -30,4 +30,4 @@ sorl-thumbnail>=11.01
 searchform>=0.1.1
 django-autoreports
 django_compressor
-django-sekizai
+django-classy-tags
