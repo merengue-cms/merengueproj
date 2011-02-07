@@ -1,2 +1,4 @@
 {{ value }}
-<script id="tiny_mce_js" src="{{ MEDIA_URL }}cmsutils/js/widgets/tiny_mce/tiny_mce.js" type="text/javascript"></script>
+{% if not is_ajax %}
+    <script id="tiny_mce_js" src="{{ MEDIA_URL }}cmsutils/js/widgets/tiny_mce/tiny_mce.js" type="text/javascript"></script>
+{% endif %}

@@ -78,7 +78,7 @@
 
       {% block contentdescription %}
         {% if content.description %}
-          <div class="contentDescription">{% inplace_edit "content.description|safe" %}</div>
+          <div class="contentDescription">{% inplace_edit "content.description|safe" class_inplace="inplace_description" %}</div>
         {% endif %}
       {% endblock %}
 

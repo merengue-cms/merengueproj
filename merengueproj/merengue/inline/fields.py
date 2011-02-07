@@ -33,7 +33,8 @@ class AdaptorTinyMCEField(AdaptorTextAreaField):
         value = super(AdaptorTinyMCEField, self).render_value()
         return render_to_string('tiny_adaptor/render_value.html', {'value': value,
                                                                    'MEDIA_URL': settings.MEDIA_URL,
-                                                                   'adaptor': self})
+                                                                   'adaptor': self,
+                                                                   'is_ajax': self.request.is_ajax()})
 
     def render_media_field(self, template_name="tiny_adaptor/render_media_field.html"):
         return super(AdaptorTinyMCEField, self).render_media_field(template_name)

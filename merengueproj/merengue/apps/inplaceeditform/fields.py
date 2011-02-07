@@ -256,7 +256,7 @@ class AdaptorForeingKeyField(BaseAdaptorField):
         self.obj.save()
 
 
-class AdaptorManyToManyField(BaseDateField):
+class AdaptorManyToManyField(BaseAdaptorField):
 
     @property
     def name(self):
