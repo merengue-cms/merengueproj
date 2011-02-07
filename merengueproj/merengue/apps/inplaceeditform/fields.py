@@ -5,6 +5,7 @@ from django.forms.models import modelform_factory
 from django.template.loader import render_to_string
 from django.utils import simplejson
 from django.utils.importlib import import_module
+from django.utils.translation import ugettext
 
 from inplaceeditform.commons import has_transmeta, apply_filters
 
@@ -26,6 +27,7 @@ class BaseAdaptorField(object):
         self.class_inplace = class_inplace or ''
         self.tag_name_cover = tag_name_cover or 'span'
         self.loads_tags = loads_tags or []
+        self.initial = {}
         self._transmeta_processing()
         self.options = options
 
@@ -41,7 +43,8 @@ class BaseAdaptorField(object):
         return modelform_factory(self.model)
 
     def get_form(self):
-        return self.get_form_class()(instance=self.obj)
+        return self.get_form_class()(instance=self.obj,
+                                     initial=self.initial)
 
     def get_field(self):
         field = self.get_form()[self.field_name]
@@ -51,9 +54,19 @@ class BaseAdaptorField(object):
     def get_value_editor(self, value):
         return self.get_field().field.clean(value)
 
-    def render_value(self):
-        value = getattr(self.obj, self.field_name_render)
+    def render_value(self, field_name=None):
+        field_name = field_name or self.field_name_render
+        value = getattr(self.obj, field_name)
         return apply_filters(value, self.filters_to_show, self.loads_tags)
+
+    def render_value_edit(self):
+        value = self.render_value()
+        if value:
+            return value
+        return self.empty_value()
+
+    def empty_value(self):
+        return ugettext('Dobleclick to edit')
 
     def render_field(self, template_name="inplaceeditform/render_field.html"):
         return render_to_string(template_name,
@@ -70,7 +83,7 @@ class BaseAdaptorField(object):
     def render_config(self, template_name="inplaceeditform/render_config.html"):
         content_type = ContentType.objects.get_for_model(self.model)
         return render_to_string(template_name,
-                                {'field_name': self.field_name,
+                                {'field_name': self.field_name_render,
                                  'obj': self.obj,
                                  'content_type': content_type,
                                  'filters_to_show': simplejson.dumps(self.filters_to_show),
@@ -113,12 +126,16 @@ class BaseAdaptorField(object):
         return field
 
     def _transmeta_processing(self):
-        if not has_transmeta:
-            return
-        import transmeta
-        translatable_fields = self._get_translatable_fields(self.model)
-        if self.field_name in translatable_fields:
-            self.field_name = transmeta.get_real_fieldname(self.field_name)
+        if has_transmeta:
+            import transmeta
+            translatable_fields = self._get_translatable_fields(self.model)
+            if self.field_name in translatable_fields:
+                self.field_name = transmeta.get_real_fieldname(self.field_name)
+                self.transmeta = True
+                if not self.render_value(self.field_name):
+                    self.initial = {self.field_name: ugettext('Write a traslation')}
+                return
+        self.transmeta = False
 
     def _get_translatable_fields(self, cls):
         classes = cls.mro()
@@ -156,7 +173,7 @@ class AdaptorTextAreaField(BaseAdaptorField):
 class BaseDateField(BaseAdaptorField):
 
     def render_media_field(self):
-        return render_to_string("inplaceeditform/adaptordate/render_media_field.html",
+        return render_to_string("inplaceeditform/adaptor_date/render_media_field.html",
                                 {'field': self.get_field(),
                                  'MEDIA_URL': settings.MEDIA_URL,
                                  'ADMIN_MEDIA_PREFIX': settings.ADMIN_MEDIA_PREFIX})
@@ -173,8 +190,8 @@ class AdaptorDateField(BaseDateField):
         field.field.widget = AdminDateWidget()
         return field
 
-    def render_value(self):
-        val = super(AdaptorDateField, self).render_value()
+    def render_value(self, field_name=None):
+        val = super(AdaptorDateField, self).render_value(field_name)
         if not isinstance(val, str) and not isinstance(val, unicode):
             val = apply_filters(val, ["date:'%s'" % settings.DATE_FORMAT])
         return val
@@ -186,11 +203,11 @@ class AdaptorDateTimeField(BaseDateField):
     def name(self):
         return 'datetime'
 
-    def render_field(self, template_name="inplaceeditform/adaptordatetime/render_field.html"):
+    def render_field(self, template_name="inplaceeditform/adaptor_datetime/render_field.html"):
         return super(AdaptorDateTimeField, self).render_field(template_name)
 
     def render_media_field(self):
-        return render_to_string("inplaceeditform/adaptordatetime/render_media_field.html",
+        return render_to_string("inplaceeditform/adaptor_datetime/render_media_field.html",
                                 {'field': self.get_field(),
                                  'ADMIN_MEDIA_PREFIX': settings.ADMIN_MEDIA_PREFIX})
 
@@ -199,8 +216,8 @@ class AdaptorDateTimeField(BaseDateField):
         field.field.widget = AdminSplitDateTime()
         return field
 
-    def render_value(self):
-        val = super(AdaptorDateTimeField, self).render_value()
+    def render_value(self, field_name=None):
+        val = super(AdaptorDateTimeField, self).render_value(field_name)
         if not isinstance(val, str) and not isinstance(val, unicode):
             val = apply_filters(val, ["date:'%s'" % settings.DATETIME_FORMAT])
         return val
@@ -218,8 +235,9 @@ class AdaptorChoicesField(BaseAdaptorField):
     def treatment_width(self, width):
         return '100px'
 
-    def render_value(self):
-        value = getattr(self.obj, self.field_name)
+    def render_value(self, field_name=None):
+        field_name = field_name or self.field_name
+        value = getattr(self.obj, field_name)
         return apply_filters(value, self.filters_to_show).title()
 
 
@@ -235,16 +253,9 @@ class AdaptorForeingKeyField(BaseAdaptorField):
     def treatment_width(self, width):
         return '100px'
 
-    def render_value(self):
-        value = super(AdaptorForeingKeyField, self).render_value()
-        if value:
-            value = (getattr(value, '__unicode__', None) and value.__unicode__() or
-                 getattr(value, '__repr__', None) and value.__repr__())
-        else:
-            if self.can_edit():
-                value = '------'
-            else:
-                value = ''
+    def render_value(self, field_name=None):
+        value = super(AdaptorForeingKeyField, self).render_value(field_name)
+        value = getattr(value, '__unicode__', None) and value.__unicode__() or None
         return value
 
     def get_value_editor(self, value):
@@ -271,8 +282,8 @@ class AdaptorManyToManyField(BaseAdaptorField):
     def get_value_editor(self, value):
         return [item.pk for item in super(AdaptorManyToManyField, self).get_value_editor(value)]
 
-    def render_value(self):
-        return super(AdaptorManyToManyField, self).render_value().all()
+    def render_value(self, field_name=None):
+        return super(AdaptorManyToManyField, self).render_value(field_name).all()
 
 
 class AdaptorCommaSeparatedManyToManyField(AdaptorManyToManyField):
@@ -281,13 +292,6 @@ class AdaptorCommaSeparatedManyToManyField(AdaptorManyToManyField):
     def name(self):
         return 'm2mcomma'
 
-    def render_value(self, template_name="inplaceeditform/m2m/render_commaseparated_value.html"):
-        queryset = super(AdaptorCommaSeparatedManyToManyField, self).render_value()
-        if not queryset:
-            if self.can_edit():
-                value = '------'
-            else:
-                value = ''
-        else:
-            value = render_to_string(template_name, {'queryset': queryset})
-        return value
+    def render_value(self, field_name=None, template_name="inplaceeditform/adaptor_m2m/render_commaseparated_value.html"):
+        queryset = super(AdaptorCommaSeparatedManyToManyField, self).render_value(field_name)
+        return render_to_string(template_name, {'queryset': queryset})

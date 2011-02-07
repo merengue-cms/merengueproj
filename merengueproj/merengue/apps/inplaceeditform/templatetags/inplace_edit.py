@@ -9,9 +9,25 @@ from inplaceeditform.tag_utils import RenderWithArgsAndKwargsNode, parse_args_kw
 register = Library()
 
 
+def inplace_js(context, activate_inplaceedit=True):
+    return context.update({
+            'MEDIA_URL': context.get('MEDIA_URL', settings.MEDIA_URL),
+            'ADMIN_MEDIA_PREFIX': settings.ADMIN_MEDIA_PREFIX,
+            'activate_inplaceedit': activate_inplaceedit,
+    })
+register.inclusion_tag("inplaceeditform/inplace_js.html", takes_context=True)(inplace_js)
+
+
+def inplace_css(context):
+    return context.update({
+            'MEDIA_URL': context.get('MEDIA_URL', settings.MEDIA_URL),
+            'ADMIN_MEDIA_PREFIX': settings.ADMIN_MEDIA_PREFIX,
+    })
+register.inclusion_tag("inplaceeditform/inplace_css.html", takes_context=True)(inplace_css)
+
+
 def inplace_media(context):
     return context.update({
-            'user': context['request'].user,
             'MEDIA_URL': context.get('MEDIA_URL', settings.MEDIA_URL),
             'ADMIN_MEDIA_PREFIX': settings.ADMIN_MEDIA_PREFIX,
     })
