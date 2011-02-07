@@ -299,18 +299,20 @@ div#content ul {
 }
 
 div#content ul#content-actions {
-    border: 1px solid lightgray;
     float: right;
-    margin: 0.5em;
-    padding: 0.5em;
+    margin: 0;
 }
 
 ul#content-actions li {
-    display: block;
+    display: inline;
+	float: right;
     list-style: none;
     font-size: 0.8em;
     font-weight: bold;
-    padding: 3px 0 5px;
+	font-size: 12px;
+    padding: 2px 4px;
+	margin: 0.5em;
+	border: 1px dotted #54B848;
 }
 
 div#content ul#content-actions li a {
@@ -325,6 +327,10 @@ div#content ul#content-actions li#action-facebooklink a {
 
 div#content ul#content-actions li#action-facebooklink a:hover {
     background-position: right bottom;
+}
+
+div#content ul#content-actions li#action-exportodt a {
+	background: transparent url(/media/themes/yaco/img/odt.png) no-repeat right top;
 }
 
 li.linkAdmin a {
