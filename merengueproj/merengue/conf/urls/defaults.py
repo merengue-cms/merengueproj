@@ -22,10 +22,9 @@ from django.conf import settings
 
 def merengue_url(regex, view, kwargs=None, name=None, prefix=''):
     if isinstance(regex, dict):
-        regex_translatable = regex.get(settings.LANGUAGE_CODE, None)
-        if regex_translatable is None:
-            regex_translatable = regex.get(getattr(settings,
-                                            'URL_DEFAULT_LANG'), 'en')
+        regex_translatable = regex.get(
+            getattr(settings, 'URL_DEFAULT_LANG', settings.LANGUAGE_CODE),
+        )
     else:
         regex_translatable = regex
     return url(regex_translatable, view, kwargs, name, prefix)

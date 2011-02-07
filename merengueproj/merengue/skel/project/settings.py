@@ -5,7 +5,7 @@
 from os import path
 from merengue.settings import *
 
-ugettext = lambda s: s # dummy ugettext function, as said on django docs
+ugettext = lambda s: s  # dummy ugettext function, as said on django docs
 
 BASEDIR = path.dirname(path.abspath(__file__))
 
@@ -48,6 +48,8 @@ LANGUAGES = (
     ('es', ugettext('Español')),
     ('fr', ugettext('Français')),
 )
+
+URL_DEFAULT_LANG = LANGUAGE_CODE
 
 SITE_ID = 1
 SITE_REGISTER_ID = 2

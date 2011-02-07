@@ -35,9 +35,9 @@ class Plugin(RegistrableItem):
         for url_prefix, url in cls.url_prefixes:
             prefix = url_prefix
             if isinstance(url_prefix, dict):
-                prefix = url_prefix.get(settings.LANGUAGE_CODE, None)
-                if prefix is None:
-                    prefix = url_prefix(getattr(settings, 'URL_DEFAULT_LANG'), 'en')
+                prefix = url_prefix.get(
+                    getattr(settings, 'URL_DEFAULT_LANG', settings.LANGUAGE_CODE),
+                )
             prefixes.append((prefix, url))
 
         return prefixes
@@ -54,19 +54,19 @@ class Plugin(RegistrableItem):
 
     @classmethod
     def get_actions(cls):
-        return [] # to override in plugins
+        return []  # to override in plugins
 
     @classmethod
     def get_blocks(cls):
-        return [] # to override in plugins
+        return []  # to override in plugins
 
     @classmethod
     def get_middlewares(cls):
-        return [] # to override in plugins
+        return []  # to override in plugins
 
     @classmethod
     def get_viewlets(cls):
-        return [] # to override in plugins
+        return []  # to override in plugins
 
     @classmethod
     def post_actions(cls):
@@ -74,7 +74,7 @@ class Plugin(RegistrableItem):
 
     @classmethod
     def section_models(cls):
-        return [] # to override in plugins
+        return []  # to override in plugins
 
     @classmethod
     def section_register_hook(cls, site_related, model):
@@ -82,11 +82,11 @@ class Plugin(RegistrableItem):
 
     @classmethod
     def get_model_admins(cls):
-        return [] # to override in plugins
+        return []  # to override in plugins
 
     @classmethod
     def get_perms(cls):
-        return [] # to override in plugins
+        return []  # to override in plugins
 
     @classmethod
     def post_install(cls):
@@ -94,7 +94,7 @@ class Plugin(RegistrableItem):
 
     @classmethod
     def get_notifications(cls):
-        return [] # to override in plugins
+        return []  # to override in plugins
 
 
 def register_plugin(plugin_dir):
@@ -177,7 +177,6 @@ def active_default_plugins(*args, **kwargs):
     # south have not a "post all migrations" signal.
     # The workaround is "collab" have to be the last application migrated
     if is_last_application(kwargs['app']):
-        interactive = kwargs.get('interactive', None)
         # register required plugins
         for plugin_dir in settings.REQUIRED_PLUGINS:
             active_plugin_with_deps(plugin_dir)
