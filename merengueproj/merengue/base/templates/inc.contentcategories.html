@@ -1,6 +1,8 @@
 {% load i18n inlinetrans inplace_edit %}
 
+{% if content.categories.all %}
 <div id="contentCategories">
   <label>{% inline_trans "categories" %}:</label>
   {% inplace_edit "content.categories" %}
 </div>
+{% endif %}
