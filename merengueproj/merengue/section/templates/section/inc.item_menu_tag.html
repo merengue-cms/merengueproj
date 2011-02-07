@@ -11,14 +11,22 @@
         </li>
     {% else %}
         {% if max_level %}
-            </li>
+            {% if node.level >= max_level %}
+                </li>
+            {% endif %}
         {% endif %}
     {% endif %}
 {% endwith %}
 {% endwith %}
 
 {% for level in structure.closed_levels %}
-    {% if level > 1 %}</ul></li>{% endif %}
+    {% if level > 1 %}
+        </ul></li>
+    {% else %}
+        {% ifequal level 1 %}
+            </ul>
+        {% endifequal %}
+    {% endif %}
 {% endfor %}
 
 
