@@ -6,18 +6,10 @@
 
 
 {% block extrabeforecontentblocks %}
-<div id="eventDates">
-    {% ifequal content.start content.end %}
-    <p>
-        <label>{% inline_trans "date" %}:</label>
-        {% inplace_edit "content.start|transdate" loads=datefilters %}
-    </p>
-    {% else %}
-    <p>
-        {% inline_trans "from" %} {% inplace_edit "content.start|transdatetime" loads="datefilters" %}
-        {% inline_trans "until" %} {% inplace_edit "content.end|transdatetime" loads="datefilters" %}
-    </p>
-    {% endifequal %}
+<div class="eventDates">
+    <img class="eventIcon" src="{{ THEME_MEDIA_URL }}img/event_icon.jpg"/>
+    <label>{% inline_trans "start date" %}</label>: {% inplace_edit "content.start|transdatetime" loads="datefilters" %}<br/>
+    <label>{% inline_trans "end date" %}</label>: {% inplace_edit "content.end|transdatetime" loads="datefilters" %}
 </div>
 {% include "inc.contentcategories.html" %}
 {% endblock %}
