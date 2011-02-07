@@ -1,24 +1,18 @@
-{% load compress media_tags %}
+{% load media_tags %}
+
+<script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/mootools.v1.11.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript">
+ jQuery.noConflict();
+</script>
+<script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/jquery-ui-1.8.min.js"></script>
 
 {% addmedia "js" %}
-  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/mootools.v1.11.js"></script>
-  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/jquery-1.4.2.min.js"></script>
-  <script type="text/javascript">
-   jQuery.noConflict();
-  </script>
   <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/multimedia/jquery.slideshow.js"></script>
-  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/jquery-ui-1.8.min.js"></script>
-{% endaddmedia %}
-
-{% compress js %}
   <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/jquery.form.js" type="text/javascript"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/css_browser_selector.js"></script>
-{% endcompress %}
+{% endaddmedia %}
 
-
-<script type="text/javascript">
-    jQuery.noConflict();
-</script>
 <script type="text/javascript">
     (function($) {
     $(document).ready(function () {

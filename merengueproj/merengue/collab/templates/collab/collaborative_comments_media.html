@@ -1,9 +1,9 @@
 {% if user.is_authenticated %}
-  {% load compress %}
-  {% compress css %}
+  {% load media_tags %}
+  {% addmedia "css" %}
     <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}merengue/css/collab/collab.css" />
-  {% endcompress %}
-  {% compress js %}
+  {% endaddmedia %}
+  {% addmedia "js" %}
     <script src="{{ MEDIA_URL }}merengue/js/collab/CollabComments.js" type="text/javascript"></script>
-  {% endcompress %}
+  {% endaddmedia %}
 {% endif %}

@@ -12,6 +12,7 @@
   <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/shadowbox/shadowbox.js"></script>
 {% endaddmedia %}
 
+{% compress js %}
 <script type="text/javascript">
 // <![CDATA[
 (function($) {
@@ -222,4 +223,6 @@
 })(jQuery);
 // ]]>
 </script>
+{% endcompress %}
+
 {% endifhasperm %}
