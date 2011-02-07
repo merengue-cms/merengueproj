@@ -18,5 +18,7 @@
 from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('plugins.itags.views',
+    url(r'^tag_list/$', 'tag_list', name='tag_list'),
+    url(r'^tag_list/(?P<tag_name>[ \w-]+)/$', 'tag_list', name='tag_list'),
     url(r'^(?P<tag_name>[ \w-]+)/$', 'tag_view', name='tag_view'),
 )
