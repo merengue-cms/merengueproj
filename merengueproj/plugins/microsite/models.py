@@ -16,6 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.core.urlresolvers import reverse
+from django.db.models import permalink
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 from merengue.section.models import Section
@@ -58,6 +59,10 @@ class MicroSite(Section):
             'section': self,
             'urls': url_section,
         })
+
+    @permalink
+    def get_absolute_url(self):
+        return ('microsite_view', (self.slug, ))
 
     class Meta:
         verbose_name = _('microsite')
