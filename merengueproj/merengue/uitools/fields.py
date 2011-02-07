@@ -46,7 +46,7 @@ class AdaptorTinyMCEField(AdaptorTextAreaField):
                                            print_head=False)
         return field
 
-    def render_value(self):
+    def render_value_edit(self):
         value = super(AdaptorTinyMCEField, self).render_value()
         return render_to_string('tiny_adaptor/render_value.html', {'value': value,
                                                                    'MEDIA_URL': settings.MEDIA_URL,
