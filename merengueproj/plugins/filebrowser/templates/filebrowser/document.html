@@ -1,11 +1,5 @@
 {% extends "filebrowser/base.html" %}
-{% load i18n inlinetrans thumbnail truncate_filter filebrowser_tags %}
-
-{% block extrascripts %}
-  <script type="text/javascript" src="{{ MEDIA_URL }}filebrowser/js/multifile.js"></script>
-  <script type="text/javascript" src="{{ MEDIA_URL }}filebrowser/js/manage-attachments-docs.js"></script>
-  <script type="text/javascript" src="{{ MEDIA_URL }}filebrowser/js/jquery.form.js"></script>
-{% endblock %}
+{% load i18n inlinetrans thumbnail truncate_filter filebrowser_tags media_tags %}
 
 {% block pagetitle %}{{ block.super }} - {% trans "Document detail" %}{% endblock %}
 
@@ -15,6 +9,13 @@
 {% endblock %}
 
 {% block content %}
+
+{% addmedia "js" %}
+  <script type="text/javascript" src="{{ MEDIA_URL }}filebrowser/js/multifile.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}filebrowser/js/manage-attachments-docs.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}filebrowser/js/jquery.form.js"></script>
+{% endaddmedia %}
+
 <div id="content-title">
     <h1 title="{{ document.title }}">{{ document.title }}</h1>
 </div>
