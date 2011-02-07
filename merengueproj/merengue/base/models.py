@@ -51,6 +51,7 @@ from transmeta import TransMeta, get_fallback_fieldname
 from tagging.fields import TagField
 
 from merengue.base.managers import BaseContentManager, WorkflowManager
+from merengue.conf.urls import get_url_default_lang
 from merengue.multimedia.models import BaseMultimedia
 from merengue.utils import is_last_application
 
@@ -486,7 +487,10 @@ class BaseContent(BaseClass):
         from merengue.pluggable.utils import get_plugin_config
         plugin_dir = self._meta.app_label
         plugin_config = get_plugin_config(plugin_dir)
-        plugin_url = "/%s/" % plugin_config.url_prefixes[0][0]
+        url_prefix = plugin_config.url_prefixes[0][0]
+        if isinstance(url_prefix, dict):
+            url_prefix = url_prefix.get(get_url_default_lang(), 'en')
+        plugin_url = "/%s/" % url_prefix
         return (self._meta.verbose_name_plural, plugin_url)
 
     def breadcrumbs_last_item(self):
