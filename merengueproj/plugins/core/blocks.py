@@ -21,6 +21,7 @@ from django.utils.translation import ugettext as _
 from merengue.block.blocks import Block, ContentBlock
 from merengue.registry import params
 from merengue.section.models import BaseSection, Menu
+from merengue.section.utils import get_section
 from merengue.portal.models import PortalLink
 
 
@@ -47,12 +48,12 @@ class CoreMenuBlock(BaseMenuBlock, Block):
     @classmethod
     def render(cls, request, place, context, block_content_relation=None,
                *args, **kwargs):
-        section = request.section
+        section = get_section(request, context)
         if not section:
             return ''  # renders nothing
         main_menu = section.main_menu
         descendants = main_menu.get_descendants()
-        if not request.section or not descendants:
+        if not section or not descendants:
             return ''  # renders nothing
         return cls.render_block(request, template_name='core/block_menu.html',
                                 block_title=_('Menu'),
@@ -73,12 +74,13 @@ class NavigationBlock(BaseMenuBlock, Block):
     def render(cls, request, place, context, block_content_relation=None,
                *args, **kwargs):
         sections = BaseSection.objects.published()
+        section = get_section(request, context)
         if not sections:
             return ''  # renders nothing
         return cls.render_block(request, template_name='core/block_navigation.html',
                                 block_title=_('Navigation'),
                                 context={'sections': sections,
-                                         'active_section': request.section,
+                                         'active_section': section,
                                          'max_num_level': cls.get_max_level(block_content_relation)},
                                 block_content_relation=block_content_relation)
 

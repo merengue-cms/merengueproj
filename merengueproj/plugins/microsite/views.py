@@ -26,6 +26,8 @@ from merengue.section.views import section_view, content_section_view
 
 
 def microsite_view(request, microsite_slug):
+    microsite = get_object_or_404(MicroSite, slug=microsite_slug)
+    request.section = microsite
     return section_view(request, microsite_slug)
 
 
