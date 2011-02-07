@@ -60,7 +60,7 @@ MERENGUE_APPS = (
     'merengue.internallinks',
     'merengue.collection',
     'merengue.review',
-    'merengue.inline',
+    'merengue.uitools',
     'merengue.collab',  # Please, keep this application in last place cause it's used to know when activate plugins after migration
 )
 
