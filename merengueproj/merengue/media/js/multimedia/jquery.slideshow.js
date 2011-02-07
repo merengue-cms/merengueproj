@@ -11,14 +11,15 @@
             var typeorder;
 
             var initShadowBox = function() {
-	        Shadowbox.init({
-	            assetUrl: mediaurl,
-	            loadingImage: mediaurl + 'multimedia/img/loading.gif',
-	            displayNav: true,
-	            displayClose: true,
-	            skipSetup: true,
-	            continuous: true
-	        });
+                Shadowbox.init({
+                    assetUrl: mediaurl,
+                    loadingImage: mediaurl + 'multimedia/img/loading.gif',
+                    displayNav: true,
+                    displayClose: true,
+                    skipSetup: true,
+                    continuous: true,
+                    enableKeys: false
+                });
             }
 
             var configureShadowBox = function() {
