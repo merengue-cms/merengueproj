@@ -11,7 +11,7 @@ a:link, a:visited {
 }
 
 a:hover {
-	color: #79db6f;
+	color: #4fd141;
 	text-decoration: underline;
 }
 
@@ -22,9 +22,14 @@ a:hover {
     min-height:62px;
     border-bottom: none;
 }
+div#header img#merengue_logo {
+	margin: 0.7em;
+}
 
 #branding h1 { 
     color: #54B848;
+	margin: 0.8em 0 0 7em;
+	font-size: 1.7em;
 }
 
 /*---- other styles ----*/
@@ -37,7 +42,9 @@ a:hover {
 .merengueadmin .module h2,
 .module caption, 
 .inline-group h2 {
-    background: #54B848 url(../img/admin/yaco-bg.gif) repeat-x top left;
+	color: white;
+	text-shadow: 1px 1px 0 #306b2a;
+    background: #54B848 url(../img/default-bg-reverse.gif) repeat-x top left;
 }
 
 #changelist-filter li.selected a {
@@ -48,7 +55,8 @@ a:hover {
 .module h2, 
 .module caption, 
 .inline-group h2 {
-	background: #54B848 url(../img/default-bg.gif) repeat-x top left;
+	text-shadow: 1px 1px 0 #306b2a;
+	background: #54B848 url(../img/default-bg-reverse.gif) repeat-x top left;
 }
 
 .row1 {
@@ -57,22 +65,23 @@ a:hover {
 
 .button.default, input.default[type="submit"], .submit-row input.default {
     border: 1px solid #3f8c37;
-    background: #54B848 url(../img/default-bg.gif) repeat-x top left;
+    background: #54B848 url(../img/default-bg-reverse.gif) repeat-x top left;
     color: white;
-	text-shadow: 1px 1px 0 #3f8c37;
+	text-shadow: 1px 1px 0 #306b2a;
 }
 
 .button.default:active, input.default[type="submit"]:active {
     border: 1px solid #3f8c37;
-    background: #54B848 url(../img/default-bg-reverse.gif) repeat-x top left;
+    background: #54B848 url(../img/default-bg.gif) repeat-x top left;
     color: white;
-	text-shadow: 1px 1px 0 #3f8c37;
+	text-shadow: 1px 1px 0 #306b2a;
 }
 
 #changelist-filter h2,
 .module h2,
 .module caption,
 .inline-group h2 {
+	text-shadow: 1px 1px 0 #306b2a;
     background: #54B848 url(../img/default-bg.gif) repeat-x top left;
 }
 
