@@ -904,6 +904,10 @@ table.gsc-search-box td.gsc-input {
 #content #content-main div {
     margin-left: 1.5em;
 }
+/* TagCloud */
+#content #tagcloud div.blockBody ul li {
+	font-size: 1em !important;
+}
 
 /* Safari 3.0 and Chrome rules here */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
