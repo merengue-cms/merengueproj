@@ -125,7 +125,7 @@
                     data: $(this).serialize(),
                     success: function(data) {
                         if(data == 'ok') {
-                            $('#' + block_name).fadeOut(1000, function() {
+                            $('#' + block_name).parent().fadeOut(1000, function() {
                                 $('#' + block_name).parent().load(render_block_url, function() {
                                     initBlock($('#' + block_name));
                                 }).fadeIn('slow');
