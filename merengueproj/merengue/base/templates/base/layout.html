@@ -36,9 +36,6 @@
     {% include "inc.jsfiles.html" %}
   {% endblock %}
 
-  {# placeholder to allow plugins and other templates to add javascript assets #}
-  {% render_bundled_media "js" %}
-
   {% inlinetrans_media %}
   {% inplace_media %}
   {% render_blocks_media %}
@@ -197,5 +194,8 @@
 {% endblock %}
 </div>
 {% endblock %}
+
+{# placeholder to allow plugins and other templates to add javascript assets #}
+{% render_bundled_media "js" %}
 </body>
 </html>
