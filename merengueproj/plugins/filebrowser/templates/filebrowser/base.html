@@ -1,9 +1,10 @@
 {% extends base_template %}
-{% load i18n inlinetrans filebrowser_tags %}
+{% load i18n inlinetrans filebrowser_tags media_tags %}
 
-{% block extrastyles %}
-  {{ block.super }}
-  <link href="{{ MEDIA_URL }}filebrowser/css/filebrowser.css" rel="stylesheet" type="text/css" />
+{% block extrahead %}
+  {% addmedia "css"  %}
+    <link href="{{ MEDIA_URL }}filebrowser/css/filebrowser.css" rel="stylesheet" type="text/css" />
+  {% endaddmedia %}
 {% endblock %}
 
 {% block pagetitle %}{% trans "Document repository" %} {% endblock %}

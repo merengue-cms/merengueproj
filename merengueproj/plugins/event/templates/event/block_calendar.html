@@ -1,5 +1,5 @@
 {% extends "block.html" %}
-{% load i18n %}
+{% load i18n media_tags %}
 
 {% block blockbody %}
   <style type="text/css">
@@ -27,10 +27,13 @@
 
 <link href="{{ MEDIA_URL }}merengue/css/jquery-ui-1.8.css" rel="stylesheet" type="text/css"/>
 <link href="{{ MEDIA_URL }}event/jquery.tooltip.css" rel="stylesheet" type="text/css"/>
-<script src="{{ MEDIA_URL }}merengue/js/jquery-ui-1.8.min.js"></script>
-<script language="javascript" src="{{ MEDIA_URL }}merengue/js/jquery.ui.datepicker-{{ LANGUAGE_CODE }}.js"></script>
-<script language="javascript" src="{{ MEDIA_URL }}event/lib/jquery.bgiframe.js"></script>
-<script language="javascript" src="{{ MEDIA_URL }}event/jquery.tooltip.js"></script>
+
+{% addmedia "js" %}
+  <script src="{{ MEDIA_URL }}merengue/js/jquery-ui-1.8.min.js"></script>
+  <script language="javascript" src="{{ MEDIA_URL }}merengue/js/jquery.ui.datepicker-{{ LANGUAGE_CODE }}.js"></script>
+  <script language="javascript" src="{{ MEDIA_URL }}event/lib/jquery.bgiframe.js"></script>
+  <script language="javascript" src="{{ MEDIA_URL }}event/jquery.tooltip.js"></script>
+{% endaddmedia %}
 
 <script language="javascript" >
 ;(function($) {

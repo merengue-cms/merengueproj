@@ -1,11 +1,17 @@
 {% extends "block.html" %}
 
-{% load i18n inlinetrans voting_tags %}
+{% load i18n inlinetrans voting_tags media_tags %}
 
 {% block blockbody %}
-<link href="{{ MEDIA_URL }}voting/css/voting.css" rel="stylesheet" type="text/css" />
+
+{% addmedia "css" %}
+   <link href="{{ MEDIA_URL }}voting/css/voting.css" rel="stylesheet" type="text/css" />
+{% endaddmedia %}
+
 {% if not readonly %}
-    <script type="text/javascript" src="{{ MEDIA_URL }}voting/js/jquery.rating.js"> </script>
+    {% addmedia "js" %}
+      <script type="text/javascript" src="{{ MEDIA_URL }}voting/js/jquery.rating.js"> </script>
+    {% endaddmedia %}
     <script type="text/javascript">
     (function ($){
         $(function(){

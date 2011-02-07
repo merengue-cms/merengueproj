@@ -1,8 +1,11 @@
 {% extends "viewlet.html" %}
-{% load pagination_tags voting_tags %}
+{% load pagination_tags voting_tags media_tags %}
 
 {% block viewletbody %}
-  <link href="{{ MEDIA_URL }}voting/css/voting.css" rel="stylesheet" type="text/css" />
+  {% addmedia "css" %}
+    <link href="{{ MEDIA_URL }}voting/css/voting.css" rel="stylesheet" type="text/css" />
+  {% endaddmedia %}
+
   {% if is_paginated %}
     {% autopaginate news_list paginate_by %}
   {% endif %}

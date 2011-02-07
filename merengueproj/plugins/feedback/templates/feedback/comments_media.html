@@ -1,6 +1,10 @@
-<script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/jquery-ui-1.8.dragdrop.min.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}feedback/jquery.comment-helper.js"></script>
-<link href="{{ MEDIA_URL }}feedback/styles.css" rel="stylesheet" type="text/css"/>
+{% load media_tags %}
+{% addmedia "js" %}
+  <script type="text/javascript" src="{{ MEDIA_URL }}feedback/jquery.comment-helper.js"></script>
+{% endaddmedia %}
+{% addmedia "css" %}
+  <link href="{{ MEDIA_URL }}feedback/styles.css" rel="stylesheet" type="text/css"/>
+{% endaddmedia %}
 
 <script type="text/javascript">
 (function($) {

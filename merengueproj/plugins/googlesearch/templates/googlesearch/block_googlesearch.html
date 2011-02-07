@@ -1,10 +1,14 @@
 {% extends "block.html" %}
 
-{% load i18n %}
+{% load i18n media_tags %}
 
 {% block blockbody %}
 <div id="cse" style="width: 100%;">{% trans "Loading" %}</div>
-<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+
+{% addmedia "js" %}
+  <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+{% endaddmedia %}
+
 <script type="text/javascript">
   google.load("search", "1", {language : "{{ plugin_config.language.value }}"});
   google.setOnLoadCallback(function(){
@@ -31,8 +35,11 @@
         });
   }, true);
 </script>
-<link rel="stylesheet" href="http://www.google.com/cse/style/look/default.css" type="text/css" /> 
-<link rel="stylesheet" href="{{ MEDIA_URL }}googlesearch/style.css" type="text/css" /> 
+
+{% addmedia "css" %}
+  <link rel="stylesheet" href="http://www.google.com/cse/style/look/default.css" type="text/css" /> 
+  <link rel="stylesheet" href="{{ MEDIA_URL }}googlesearch/style.css" type="text/css" /> 
+{% endaddmedia %}
 
 {% endblock %}
 
