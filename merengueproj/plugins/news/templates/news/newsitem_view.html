@@ -1,19 +1,19 @@
 {% extends "content_view.html" %}
 
-{% load i18n inlinetrans action_tags datefilters %}
+{% load i18n inlinetrans action_tags datefilters inplace_edit %}
 
 {% block pagetitle %}{{ content }}{% endblock %}
 
 {% block extrabeforecontentblocks %}
 {% if content.publish_date %}
-<div class="date"><label>{% inline_trans "Publication date" %}:</label> {{ content.publish_date|transdate }}</div>
+<div class="date"><label>{% inline_trans "Publication date" %}:</label> {% inplace_edit "content.publish_date|transdate" adaptor="date",loads="datefilters" %}</div>
 {% endif %}
 {% include "inc.contentcategories.html" %}
 {% endblock %}
 
 {% block contentbody %}
   <div class="contentbody news-contentbody">
-    {{ content.body|safe }}
+    {% inplace_edit "content.body|safe" class_inplace="inplace_description"  %}
   </div>
 {% endblock %}
 
