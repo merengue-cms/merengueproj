@@ -67,19 +67,19 @@ div.object-buttons ul li a span {
     padding-left: 30px;
 }
 
-div.object-buttons ul li.createFolder a span {
+div.object-buttons ul li.createFolder a      {
     background: transparent url(../img/folder-new.png) no-repeat left top;
 }
 
-div.object-buttons ul li.createFile a span,
-div.object-buttons ul li.createDocument a span {
+div.object-buttons ul li.createFile a     ,
+div.object-buttons ul li.createDocument a      {
     background: transparent url(../img/go-up.png) no-repeat left top;
 }
 
-div.object-buttons ul li.cancelEdit a span {
+div.object-buttons ul li.cancelEdit a      {
     background: transparent url(../img/edit-undo.png) no-repeat left top;
 }
-div.object-buttons ul li.docEdit a span {
+div.object-buttons ul li.docEdit a      {
     background: transparent url(../img/document-text-editor.png) no-repeat left top;
 }
 
