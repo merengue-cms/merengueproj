@@ -227,3 +227,10 @@ input#id_password {
 #shadowbox_container #shadowbox_body {
     color: #717171;
 }
+
+/* inplaceedit */
+
+form.inplace_description {
+    float:left;
+}
+/* end inplaceedit */
