@@ -15,16 +15,17 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+import time
 from threading import local
 
 from django import template
+from django.core.cache import cache
 
 from classytags.arguments import Argument
 from classytags.core import Tag, Options
 from classytags.parser import Parser
 from compressor import CssCompressor, JsCompressor
 from compressor.conf.settings import COMPRESS
-from compressor.templatetags.compress import CompressorNode
 from oembed.templatetags.oembed_tags import OEmbedNode
 
 from merengue.multimedia.datastructures import MediaDictionary
@@ -33,6 +34,8 @@ register = template.Library()
 
 
 SLIDE_TYPES = ['photo', 'video', 'panoramicview', 'image3d', 'audio']
+MINT_DELAY = 30  # on how long any compression should take to be generated
+REBUILD_TIMEOUT = 2592000  # rebuilds the cache every 30 days if nothing has changed
 
 _content_holder = local()
 
@@ -147,13 +150,31 @@ class MediaParser(Parser):
         self.blocks['nodelist'] = self.parser.parse()
 
 
-class RenderBundledMedia(Tag, CompressorNode):
+class RenderBundledMedia(Tag):
     name = 'render_bundled_media'
 
     options = Options(
         Argument('name'),
         parser_class=MediaParser,
     )
+
+    def cache_get(self, key):
+        packed_val = cache.get(key)
+        if packed_val is None:
+            return None
+        val, refresh_time, refreshed = packed_val
+        if (time.time() > refresh_time) and not refreshed:
+            # Store the stale value while the cache
+            # revalidates for another MINT_DELAY seconds.
+            self.cache_set(key, val, timeout=MINT_DELAY, refreshed=True)
+            return None
+        return val
+
+    def cache_set(self, key, val, timeout=REBUILD_TIMEOUT, refreshed=False):
+        refresh_time = timeout + time.time()
+        real_timeout = timeout + MINT_DELAY
+        packed_val = (val, refresh_time, refreshed)
+        return cache.set(key, packed_val, real_timeout)
 
     @property
     def nodelist(self):
