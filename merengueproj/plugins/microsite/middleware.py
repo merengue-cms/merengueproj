@@ -18,6 +18,7 @@
 from django.conf import settings
 from django.http import Http404
 from django.http import HttpResponseRedirect
+from merengue.conf.urls import get_url_default_lang
 
 
 class ResponseMicrositeMiddleware(object):
@@ -27,13 +28,15 @@ class ResponseMicrositeMiddleware(object):
         path_info = request.get_full_path()
         url_args = [item for item in path_info.split('/') if item]
         from plugins.microsite.config import PluginConfig
-        if len(url_args) > 1 and url_args[0] == PluginConfig.url_prefixes[0][0]:
+        url_prefixes = PluginConfig.url_prefixes[0][0]
+        prefix_microsite = url_prefixes.get(get_url_default_lang(), 'en')
+        if len(url_args) > 1 and url_args[0] == prefix_microsite:
             del url_args[0]
             url_new = '/'.join(url_args)
             url_new = '/%s/' % url_new
             return HttpResponseRedirect(url_new)
         if response.status_code != 404:
-            return response # No need to check for a section for non-404 responses.
+            return response  # No need to check for a section for non-404 responses.
         try:
             return self.microsite_dispatcher(request, url_args)
         # Return the original response if any errors happened. Because this
