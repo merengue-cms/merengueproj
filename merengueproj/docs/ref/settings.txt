@@ -75,6 +75,29 @@ In your project ``urls.py`` file, merengue URLs are included as follows:
 
 You can override this settings if you prefer other prefix than ``cms``.
 
+.. setting:: URL_DEFAULT_LANG
+
+URL_DEFAULT_LANG
+----------------
+
+Default: The ``LANGUAGE_CODE`` value
+
+It will say to Merengue what URL will be used in internazionalized URLs.
+
+For example, if you declare a in a plugin ``config.py`` file, a
+``url_prefixes`` like that:
+
+.. code-block:: python
+
+    class PluginConfig(Plugin):
+        # ... stuff
+        url_prefixes = (
+            ({'en': 'event', 'es': 'eventos'},
+             'plugins.event.urls'),
+        )
+
+And your ``URL_DEFAULT_LANG`` is ``"es"``, the ``/eventos`` URL prefix will be
+used.
 
 .. setting:: CACHE_BACKEND
 

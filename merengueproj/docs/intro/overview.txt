@@ -81,7 +81,7 @@ In that sense, when you install a plugin, Merengue will (among other things):
 
  * Register plugin as Django application.
 
- * Include some URL prefixes to be handled by the plugin.
+ * Include some URL prefixes to be handled by the plugin. Also you have i18n URLs.
 
  * Register plugin blocks (areas of the screen to render things).
 

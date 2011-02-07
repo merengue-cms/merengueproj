@@ -189,12 +189,10 @@ This is a ``config.py`` file code fragment example:
 Parameters reference
 --------------------
 
-``url_prefixes``
-~~~~~~~~~~~~~~~~
+Plugin URLs
+~~~~~~~~~~~
 
-Default value: ``None``
-
-This parameter is mandatory. This is the URL prefix for all your plugin urls.
+The ``url_prefixes`` parameter is the URL prefix for all your plugin urls.
 
 Example:
 
@@ -216,6 +214,26 @@ system will perform a operation like this:
     urlpatterns += patterns('',
       (r'^fooplugin/', include('plugins.fooplugin.urls')),
     )
+
+Also you can internazionalize your plugins URLs. See this example:
+
+.. code-block:: python
+
+    class PluginConfig(Plugin):
+        # ... stuff
+        url_prefixes = (
+            ({'en': 'event', 'es': 'eventos'},
+             'plugins.event.urls'),
+        )
+
+The final URL prefix used will depend of the ``URL_DEFAULT_LANG`` setting (by
+default will be same as ``LANGUAGE_CODE``).
+
+.. note::
+    Your site will have only **one** prefix for every url prefixes you have
+    internazionalized. So, if your ``URL_DEFAULT_LANG`` is ``"es"``, only
+    ``/eventos`` will be handled for the plugin and ``/event`` will raise a 404
+    error.
 
 Plugin possibilities
 --------------------
