@@ -342,7 +342,7 @@ li.linkAdmin a {
 }
 
 #content-zone .contentDescription {
-    color: #999999;
+    color: #666;
 	padding-top: 2.5em;
 }
 
@@ -598,7 +598,6 @@ div.contentFiles ul {
 	margin-bottom: 0;
 }
 
-
 /* ----- pagination  ----- */
 .prev {
 	display:block;
@@ -636,6 +635,40 @@ div.contentFiles ul {
 	width:10px;
 	height:14px;
 	background:transparent url(/media/themes/yaco/img/paginator_next.gif) no-repeat scroll left 4px;
+}
+
+/* ----- filebrowser ----- */
+#content div.object-buttons ul {
+	margin-left: 0;
+}
+
+#content div.object-buttons ul li a {
+    text-decoration: none;
+    padding-left: 25px;
+}
+
+#content div.object-buttons ul li.createFolder a {
+    background: transparent url("../img/folder-new.png") no-repeat left bottom;
+}
+
+#content div.object-buttons ul li.createFile a {
+    background: transparent url("../img/folder-up.png") no-repeat left bottom;
+}
+
+#content div.object-buttons ul li.createDocument a {
+    background: transparent url("../img/new-doc.png") no-repeat left bottom;
+}
+
+#content div.object-buttons ul li.createFolder a span,
+#content div.object-buttons ul li.createFile a span,
+#content div.object-buttons ul li.createDocument a span  {
+    background: none;
+    padding-left: 0;
+}
+
+#content .action-buttons p.noContent {
+	background: transparent url("../img/info_icon.png") no-repeat left center;
+	padding-left: 20px;
 }
 
 /* ----- multimedia viewer  ----- */
