@@ -233,4 +233,10 @@ input#id_password {
 form.inplace_description {
     float:left;
 }
+
+.edit_over_merengue {
+  cursor: pointer; 
+  background: #FFFFBB;
+}
+
 /* end inplaceedit */
