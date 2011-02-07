@@ -134,7 +134,7 @@ class CollectionItemsNode(Node):
 
     def render(self, context):
         collection = self.collection.resolve(context)
-        if (collection, FeedCollection):
+        if isinstance(collection, FeedCollection):
             context.update({self.var_name: collection.get_items()})
             return ''
         items = self._get_items(collection, context)
