@@ -315,6 +315,10 @@ ul#content-actions li {
 	border: 1px dotted #54B848;
 }
 
+ul#content-actions li:hover {
+	background-color: #E8FDE1;
+}
+
 div#content ul#content-actions li a {
     display:block;
     padding-right:25px;
