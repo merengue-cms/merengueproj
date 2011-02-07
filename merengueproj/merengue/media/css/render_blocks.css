@@ -45,18 +45,28 @@
 }
 
 #config-block form#config-block-form label {
-	color: #54B848;
+	color: #ABABAB;
 	font-size: 1.5em;
+	font-weight: bolder;
+	
 }
 
 #config-block form#config-block-form div.config_params_container {
-    border: 1px dotted #DDD;
-	padding: 4px;
+    border: 1px solid #EEE;
+	padding: 6px 12px;
+	margin-top: -1px;
 } 
 
 #config-block form#config-block-form div.config_params_container label {
 	font-size: 13px;
 	color: #737373;
+	float: left;
+	margin-right: 1em;
+	font-weight: normal;
+}
+
+#config-block form#config-block-form div.config_params_container input {
+	margin-left: 0.5em;
 }
 
 #config-block form#config-block-form input[type="submit"] {
