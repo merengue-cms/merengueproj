@@ -14,7 +14,7 @@ a {
 }
 
 a:hover {
-    color: #339911;
+    color: #4ad13b;
     text-decoration: underline;
 }
 
@@ -309,7 +309,7 @@ ul#content-actions li {
     list-style: none;
     font-size: 0.8em;
     font-weight: bold;
-	font-size: 12px;
+	font-size: 11px;
     padding: 2px 4px;
 	margin: 0.5em;
 	border: 1px dotted #54B848;
@@ -641,3 +641,7 @@ div.contentFiles ul {
 	background-color: #ebfce8;
 }
 
+/* ----- Tagcloud  ----- */
+#right-sidebar #tagcloud div.blockInner ul li {
+	font-size: 1.2em !important;
+}
