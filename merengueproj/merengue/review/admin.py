@@ -52,9 +52,7 @@ class ReviewAdmin(BaseAdmin):
 
     def queryset(self, request):
         if not self.has_add_permission(request):
-            my_assigned_tasks = ReviewTask.objects.filter(assigned_to=request.user)
-            my_owned_tasks = ReviewTask.objects.filter(owner=request.user)
-            return my_assigned_tasks | my_owned_tasks
+            return ReviewTask.objects.filter(assigned_to=request.user)
         return ReviewTask.objects.all()
 
     def has_add_permission(self, request):
@@ -64,7 +62,7 @@ class ReviewAdmin(BaseAdmin):
         return perms_api.has_global_permission(request.user, 'manage_review')
 
     def has_change_permission(self, request, obj=None):
-        #regular users can still edit the task status, others are readonly
+        #regular users can still edit the task status, other fields are read only
         return True
 
     def has_delete_permission(self, request, obj=None):

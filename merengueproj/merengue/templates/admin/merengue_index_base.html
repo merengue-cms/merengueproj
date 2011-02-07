@@ -118,9 +118,7 @@
   <div class="module" id="administrator-menu">
     <h2>{{ user.username }}</h2>
     <ul class="level1">
-      {% ifhasperm 'manage_review' %}
-        <li><a href="review/reviewtask/">{% trans 'Review list' %}</a></li>
-      {% endifhasperm %}
+      <li><a href="review/reviewtask/">{% trans 'Review list' %}</a></li>
       <li><a href="{% url admin:django_admin %}">{% trans "Django admin" %}</a></li>
     </ul>
   </div>
