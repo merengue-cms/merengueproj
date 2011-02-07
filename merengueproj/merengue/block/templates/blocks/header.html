@@ -124,9 +124,9 @@
                     data: $(this).serialize(),
                     success: function(data) {
                         if(data == 'ok') {
-                            $('#' + block_name).load(render_block_url + " .blockInner", function() {
+                            $('#' + block_name).fadeOut(1000).load(render_block_url + " .blockInner", function() {
                                 initBlock($('#' + block_name));
-                            });
+                            }).fadeIn('slow');
                             Shadowbox.close();
                         } else {
                             // a validation error happens. We will render the form again
