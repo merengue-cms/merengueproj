@@ -13,10 +13,9 @@
 {% block listing %}
 <div id="alltags">
 {% for t in itags %}
-  <a href="/itags/tag_list/{{ t }}" {% ifequal t.tag_name tag %}class="current"{% endifequal %}>{{ t }}</a>{% if forloop.last %}.{% else %}, {% endif %}
+  <a style="font-size: {{ t.count }}em; display: inline; line-height: 1em;" href="/itags/tag_list/{{ t }}" {% ifequal t.tag_name tag %}class="current"{% endifequal %}>{{ t }}</a>{% if forloop.last %}.{% else %}, {% endif %}
 {% endfor %}
 </div>
-
 {% regroup content_list by content_type as grouped %}
 {% for item in grouped %}
 <h2>{{ item.grouper.model_class|basecontent_type }}</h2>

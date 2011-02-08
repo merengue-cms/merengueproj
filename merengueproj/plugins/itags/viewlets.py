@@ -69,7 +69,7 @@ class TagCloudViewlet(ViewLetQuerySetItemProvider, Viewlet):
 
         tag_cloud = []
         for tag in taglist:
-            if len(tag_cloud) >= limit:
+            if (limit and len(tag_cloud) >= limit):
                 break
             try:
                 if not tag.item_count:

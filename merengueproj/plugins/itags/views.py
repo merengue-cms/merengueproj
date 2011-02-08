@@ -21,6 +21,7 @@ from merengue.base.views import content_list
 from merengue.section.models import Section
 from plugins.itags.models import ITag
 from tagging.models import TaggedItem
+from plugins.itags.viewlets import TagCloudViewlet
 
 
 def tag_view(request, tag_name):
@@ -44,7 +45,8 @@ def tag_view(request, tag_name):
 
 
 def tag_list(request, tag_name=''):
-    itags = ITag.objects.all()
+    context = request.GET.get('context', None)
+    itags = TagCloudViewlet.get_tag_cloud(request, context, False, False)
     if tag_name:
         tag = tag_name
         itag = get_object_or_404(ITag, name=tag_name)
