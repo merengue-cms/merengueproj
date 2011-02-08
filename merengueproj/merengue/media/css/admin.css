@@ -339,7 +339,7 @@ form .aligned p.errornote{
 }
 
 div.warning-message { 
-    border: 1px solid blue;
+    border: 1px solid #73d0ff;
     margin: 1em 0px;
     background: #cceeff;
     font-weight: bold;
@@ -352,7 +352,6 @@ div.warning-message ul {
 div.warning-message ul li {
     list-style-image: url("../img/info_icon.gif");
     line-height: 16px;
-    margin: 1em 0px;
 }
 
 input.withInternalLinkUrl {
