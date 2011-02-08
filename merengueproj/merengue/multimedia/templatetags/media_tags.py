@@ -16,7 +16,6 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 import time
-from threading import local
 
 from django import template
 from django.core.cache import cache
@@ -28,7 +27,7 @@ from compressor import CssCompressor, JsCompressor
 from compressor.conf.settings import COMPRESS
 from oembed.templatetags.oembed_tags import OEmbedNode
 
-from merengue.multimedia.datastructures import MediaDictionary
+from merengue.multimedia.utils import get_content_holder
 
 register = template.Library()
 
@@ -36,15 +35,6 @@ register = template.Library()
 SLIDE_TYPES = ['photo', 'video', 'panoramicview', 'image3d', 'audio']
 MINT_DELAY = 30  # on how long any compression should take to be generated
 REBUILD_TIMEOUT = 2592000  # rebuilds the cache every 30 days if nothing has changed
-
-_content_holder = local()
-
-
-def get_content_holder():
-    global _content_holder
-    if not hasattr(_content_holder, 'data'):
-        _content_holder.data = MediaDictionary()
-    return _content_holder.data
 
 
 @register.inclusion_tag('media_slide.html', takes_context=True)

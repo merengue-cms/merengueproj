@@ -110,6 +110,7 @@ MERENGUE_MIDDLEWARE_CLASSES = (
     'merengue.middleware.RemoveRandomAjaxParameter',
     'merengue.section.middleware.RequestSectionMiddleware',
     'merengue.section.middleware.DebugSectionMiddleware',
+    'merengue.multimedia.middleware.MediaMiddleware',
     'merengue.middleware.SimplifiedLayoutMiddleware',
     'merengue.middleware.LocaleMiddleware',
     'merengue.middleware.HttpStatusCodeRendererMiddleware',
