@@ -27,10 +27,10 @@ class MediaMiddleware(object):
 
     def process_request(self, request):
         """ Initialize media contents for render_bundled_media and addmedia tags """
-        request.content_holder = MediaDictionary()
+        request.media_holder = MediaDictionary()
 
     def process_response(self, request, response):
         """ Uninitialize media contents for render_bundled_media and addmedia tags """
-        if hasattr(request, 'content_holder'):
-            del request.content_holder
+        if hasattr(request, 'media_holder'):
+            del request.media_holder
         return response

@@ -171,7 +171,7 @@ class RenderBundledMedia(Tag):
     def render_tag(self, context, name, nodelist):
         request = context['request']
         rendered_contents = nodelist.render(context)
-        content = request.content_holder[name].render()
+        content = request.media_holder[name].render()
         if COMPRESS:
             if name == 'css':
                 compressor = CssCompressor(content)
@@ -212,7 +212,7 @@ class AddMedia(Tag):
     def render_tag(self, context, name, nodelist):
         request = context['request']
         rendered_contents = nodelist.render(context)
-        request.content_holder[name].append(rendered_contents)
+        request.media_holder[name].append(rendered_contents)
         return ""
 
 register.tag(AddMedia)
