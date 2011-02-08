@@ -645,6 +645,8 @@ div.contentFiles ul {
 #content div.object-buttons ul li a {
     text-decoration: none;
     padding-left: 25px;
+    border: 1px dotted;
+    padding-right: 5px;
 }
 
 #content div.object-buttons ul li.createFolder a {
@@ -657,8 +659,6 @@ div.contentFiles ul {
 
 #content div.object-buttons ul li.createDocument a {
     background: transparent url("../img/new-doc.png") no-repeat left bottom;
-    border: 1px dotted;
-    padding-right: 5px;
 }
 
 #content div.object-buttons ul li.cancelEdit a {
