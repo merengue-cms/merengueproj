@@ -24,7 +24,7 @@ django-genericforeignkey
 django-stdfile
 cmsutils>=0.5.3
 transhette
-django-inlinetrans>=0.3dev
+django-inlinetrans>=0.3.1dev
 django-transmeta
 sorl-thumbnail>=11.01
 searchform>=0.1.1

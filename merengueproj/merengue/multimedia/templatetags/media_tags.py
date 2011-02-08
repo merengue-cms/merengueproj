@@ -27,8 +27,6 @@ from compressor import CssCompressor, JsCompressor
 from compressor.conf.settings import COMPRESS
 from oembed.templatetags.oembed_tags import OEmbedNode
 
-from merengue.multimedia.utils import get_content_holder
-
 register = template.Library()
 
 
@@ -171,8 +169,9 @@ class RenderBundledMedia(Tag):
         return self.blocks['nodelist']
 
     def render_tag(self, context, name, nodelist):
+        request = context['request']
         rendered_contents = nodelist.render(context)
-        content = get_content_holder()[name].render()
+        content = request.content_holder[name].render()
         if COMPRESS:
             if name == 'css':
                 compressor = CssCompressor(content)
@@ -211,9 +210,9 @@ class AddMedia(Tag):
     )
 
     def render_tag(self, context, name, nodelist):
+        request = context['request']
         rendered_contents = nodelist.render(context)
-        content_holder = get_content_holder()
-        content_holder[name].append(rendered_contents)
+        request.content_holder[name].append(rendered_contents)
         return ""
 
 register.tag(AddMedia)

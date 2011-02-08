@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from merengue.multimedia.utils import activate_media, deactivate_media
+from merengue.multimedia.datastructures import MediaDictionary
 
 
 class MediaMiddleware(object):
@@ -26,8 +26,11 @@ class MediaMiddleware(object):
     """
 
     def process_request(self, request):
-        activate_media()
+        """ Initialize media contents for render_bundled_media and addmedia tags """
+        request.content_holder = MediaDictionary()
 
     def process_response(self, request, response):
-        deactivate_media()
+        """ Uninitialize media contents for render_bundled_media and addmedia tags """
+        if hasattr(request, 'content_holder'):
+            del request.content_holder
         return response

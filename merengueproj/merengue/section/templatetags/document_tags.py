@@ -33,6 +33,7 @@ def document_section_media(context):
         'MEDIA_URL': context.get('MEDIA_URL', settings.MEDIA_URL),
         'tinymce_extra_media': tinymce_extra_media,
         'user': context['user'],
+        'request': context['request'],
     }
 register.inclusion_tag("section/document_section_media.html", takes_context=True)(document_section_media)
 
