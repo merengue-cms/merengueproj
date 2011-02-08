@@ -1,7 +1,4 @@
 {{ value }}
 {% if not is_ajax %}
-  {% load media_tags %}
-  {% addmedia "js" %}
-    <script type="text/javascript" src="{{ MEDIA_URL }}cmsutils/js/widgets/tiny_mce/tiny_mce.js"></script>
-  {% endaddmedia %}
+  <script type="text/javascript" src="{{ MEDIA_URL }}cmsutils/js/widgets/tiny_mce/tiny_mce.js"></script>
 {% endif %}
