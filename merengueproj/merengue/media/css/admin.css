@@ -58,7 +58,7 @@ div#header img#merengue_logo {
 
 .object-tools a.viewsitelink:hover,
 .object-tools a.golink:hover {
-    background: #E6D8C0 url(../img/admin/tooltag-arrowright_over.gif) no-repeat top right;
+    background: #D1D1D1 url(../img/admin/tooltag-arrowright_over.gif) no-repeat top right;
    text-shadow: 1px 1px 0 #999;
 }
 
@@ -69,7 +69,7 @@ div#header img#merengue_logo {
 
 .object-tools a:hover,
 .object-tools li:hover a {
-    background: #E6D8C0 url(../img/admin/tool-right_over.gif) no-repeat top right;
+    background: #D1D1D1 url(../img/admin/tool-right_over.gif) no-repeat top right;
 }
 .button.default, input.default[type="submit"], .submit-row input.default {
     border: 1px solid #C49A6C;
@@ -419,7 +419,7 @@ ul.object-tools li.din_selected a {
 
 ul.object-tools li.parent:hover a.din_smart_trigger,
 ul.object-tools li.din_selected a.din_smart_trigger {
-    background: #5b80b2 url(../img/admin/smart-tool-trigger.gif) no-repeat top right !important;
+    background: #D1D1D1 url(../img/admin/smart-tool-trigger.gif) no-repeat top right !important;
     float: left;
     width: 20px;
     padding: 0px;
