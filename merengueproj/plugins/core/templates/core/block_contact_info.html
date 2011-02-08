@@ -2,6 +2,12 @@
 
 {% load i18n inlinetrans html_tags stringfilters %}
 
+{% block blocktitle %}
+  {% if cont %}
+    {{ block.super }}
+  {% endif %}
+{% endblock %}
+
 {% block blockbody %}
 <div id="contact-info">
     {% if cont %}
