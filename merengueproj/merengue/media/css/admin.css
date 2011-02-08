@@ -347,11 +347,14 @@ div.warning-message {
 
 div.warning-message ul {
     margin: 0px;
+    padding-left: 12px;
 }
 
 div.warning-message ul li {
-    list-style-image: url("../img/info_icon.gif");
-    line-height: 16px;
+    list-style: none;
+    background: url("../img/info_icon.gif") center left no-repeat;
+    line-height: 22px;
+    padding-left: 26px;
 }
 
 input.withInternalLinkUrl {
