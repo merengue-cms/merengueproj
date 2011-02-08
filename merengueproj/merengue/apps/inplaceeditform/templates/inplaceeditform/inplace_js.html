@@ -7,8 +7,9 @@
         $(document).ready(function () {
             var getFieldUrl = "{% url inplace_get_field %}";
             var saveURL = "{% url inplace_save %}";
-            $(".inplaceedit").inplaceeditform({"getFieldUrl": getFieldUrl,
-                                                "saveURL": saveURL});
+            var inplaceManager = $(".inplaceedit").inplaceeditform({"getFieldUrl": getFieldUrl,
+                                                                    "saveURL": saveURL});
+            inplaceManager.enabled();
 
     });
 })(jQuery);

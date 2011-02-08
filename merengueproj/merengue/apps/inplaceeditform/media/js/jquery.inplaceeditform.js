@@ -1,14 +1,21 @@
 (function($) {
     $.fn.inplaceeditform = function (o, callback) {
         var defaults = {"getFieldUrl": "/implaceeditform/get_field/",
-            "saveURL": "/inplaceeditform/save/"}
+            "saveURL": "/inplaceeditform/save/"};
+        var enabled = true;
         o = $.extend(defaults, o || {});
-        return this.each(function () {
+        this.each(function () {
             $(this).click(function() {
+                if(!enabled) {
+                    return true;
+                }
                 return false;
             });
 
             $(this).mouseenter(function() {
+                if(!enabled) {
+                    return false;
+                }
                 $(this).addClass("edit_over");
             });
 
@@ -17,6 +24,10 @@
             });
 
             $(this).dblclick(function () {
+                if(!enabled) {
+                    return false;
+                }
+                $(this).data("inplace_enabled")
                 var data = getDataToRequest($(this).find("span.config"));
                 data += "&height=" + $(this).height() + "px" + "&width=" + $(this).width() + "px";
                 var _this = $(this);
@@ -88,7 +99,7 @@
                         alert(response.errors);
                     }
                     else {
-                        var inplace_span = inplaceedit_conf.parent();
+                        var inplace_span = inplaceedit_conf.parents(".inplaceedit");
                         var config = inplace_span.find("span.config").html();
                         inplace_span.html(response.value + "<span class='config'>" + config + "</span>");
                         inplace_span.show();
@@ -138,7 +149,14 @@
                     document.getElementsByTagName("head")[0].appendChild(fileref)
                 }
             }
-            });
-
-            };
+    });
+    return {
+        enable: function () {
+            enabled = true;
+        },
+        disable: function () {
+            enabled = false;
+        }
+    };
+ }
 })(jQuery);
