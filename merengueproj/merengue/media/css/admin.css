@@ -63,7 +63,7 @@ div#header img#merengue_logo {
 }
 
 .object-tools li:hover {
-    background: #E6D8C0 url(../img/admin/tool-left_over.gif) no-repeat top left;
+    background: transparent url(../img/admin/tool-left_over.gif) no-repeat top left;
    text-shadow: 1px 1px 0 #999;
 }
 
