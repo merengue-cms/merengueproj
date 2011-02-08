@@ -227,6 +227,23 @@ you click it, the display will change to this:
 
 So you just have to drag and drop the blocks that you want to rearrange.
 
+Blocks in specific contents
+---------------------------
+
+Additionally to *general* blocks, you can indicate that you want some specific
+block on some specific content. Also you can *overwrite* the block configuration
+just for that block.
+
+To do this, we just add a new children *block_content_related* for the content:
+
+.. image:: _images/add_block_content_related.png
+
+You can select what block do you want to include on the content, in wich place
+or even the order on that place. Dinamically, the **block specific configuration**
+will change to adapt the form for the selected block.
+
+The configuration that you select will apply only at the block related to the content,
+this way, you can have two or more similar blocks, but using a different configuration.
 
 Navigational elements
 =====================
