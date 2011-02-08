@@ -56,6 +56,21 @@ div#header img#merengue_logo {
     background: #f7f5f0;
 }
 
+.object-tools a.viewsitelink:hover,
+.object-tools a.golink:hover {
+    background: #E6D8C0 url(../img/admin/tooltag-arrowright_over.gif) no-repeat top right;
+   text-shadow: 1px 1px 0 #999;
+}
+
+.object-tools li:hover {
+    background: #E6D8C0 url(../img/admin/tool-left_over.gif) no-repeat top left;
+   text-shadow: 1px 1px 0 #999;
+}
+
+.object-tools a:hover,
+.object-tools li:hover a {
+    background: #E6D8C0 url(../img/admin/tool-right_over.gif) no-repeat top right;
+}
 .button.default, input.default[type="submit"], .submit-row input.default {
     border: 1px solid #C49A6C;
     background: #E6D8C0 url(../img/admin/default-bg.gif) repeat-x top left;
@@ -492,12 +507,12 @@ textarea#id_css_chunk {
 }
 
 .selector-add  {
-    background:url("../img/selector-add.gif") no-repeat scroll center top transparent;
+    background:url("../img/admin/selector-add.gif") no-repeat scroll center top transparent;
     margin-bottom:2px;
 }
 
 a.selector-chooseall {
-    background:url("../img/selector-addall.gif") no-repeat scroll left center transparent;
+    background:url("../img/admin/selector-addall.gif") no-repeat scroll left center transparent;
     width:7em;
 }
 
