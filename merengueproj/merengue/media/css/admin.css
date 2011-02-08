@@ -67,6 +67,13 @@ div#header img#merengue_logo {
    text-shadow: 1px 1px 0 #999;
 }
 
+
+ul.object-tools li.parent:hover a.din_smart_trigger_open,
+ul.object-tools li.din_selected a.din_smart_trigger_open {
+    background: #E6D8C0 url(../img/admin/smart-tool-trigger.gif) no-repeat top right;
+}
+
+
 .object-tools a:hover,
 .object-tools li:hover a {
     background: #E6D8C0 url(../img/admin/tool-right_over.gif) no-repeat top right;
@@ -419,12 +426,7 @@ ul.object-tools li.din_selected a {
 
 ul.object-tools li.parent:hover a.din_smart_trigger,
 ul.object-tools li.din_selected a.din_smart_trigger {
-    background: #5b80b2 url(../img/admin/smart-tool-trigger.gif) no-repeat top right !important;
-    float: left;
-    width: 20px;
-    padding: 0px;
-    height: 16px;
-    margin-left: 2px;
+    background: #FFF url(../img/admin/smart-tool-trigger.gif) no-repeat top right;
 }
 
 ul.object-tools li.parent:hover a.din_smart_trigger_open,
@@ -444,15 +446,6 @@ ul.object-tools li.parent span {
     padding: 0.1em;
     color: white;
 }
-
-ul.object-tools li.parent a.din_smart_trigger {
-    background: #999999 url(../img/admin/gray-smart-tool-trigger.gif) no-repeat top right !important;
-}
-
-ul.object-tools li.parent a.din_smart_trigger_open {
-    background: #999999 url(../img/admin/gray-smart-tool-trigger-up.gif) no-repeat top right !important;
-}
-
 
 ul.dependencies {
     padding-left: 15px;
