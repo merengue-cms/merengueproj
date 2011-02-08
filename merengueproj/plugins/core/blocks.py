@@ -52,7 +52,9 @@ class CoreMenuBlock(BaseMenuBlock, Block):
         if not section:
             return ''  # renders nothing
         main_menu = section.main_menu
-        descendants = main_menu.get_descendants()
+        descendants = None
+        if main_menu is not None:
+            descendants = main_menu.get_descendants()
         if not section or not descendants:
             return ''  # renders nothing
         return cls.render_block(request, template_name='core/block_menu.html',
