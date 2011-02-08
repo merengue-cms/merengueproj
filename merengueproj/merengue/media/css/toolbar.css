@@ -52,3 +52,17 @@
 #toolbar li:last-child {
     border-right: 1px solid #053e74;
 }
+
+/* ----- inline trans panel styles ----- */
+
+#inlinetrans-toolbar .inlinetransContainer {
+    background-color: transparent;
+    display: inline;
+    border: none;
+    font-family: Arial,Helvetica,sans-serif;
+    height: 100%;
+}
+
+#inlinetrans-toolbar .inlinetransAction {
+    text-decoration: underline;
+}

@@ -49,5 +49,6 @@ def render_toolbar(context):
     return {
         'MEDIA_URL': context['MEDIA_URL'],
         'request': context['request'],
+        'user': context['user'],
         'panels': panels,
     }

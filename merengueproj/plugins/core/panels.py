@@ -20,8 +20,15 @@ from django.template.loader import render_to_string
 from merengue.uitools import panels
 
 
-class InlineEditPanel(panels.Panel):
+class InplaceEditPanel(panels.Panel):
 
     @classmethod
     def render(cls, context):
         return render_to_string('core/panels/inplaceedit.html', context)
+
+
+class InlineTransPanel(panels.Panel):
+
+    @classmethod
+    def render(cls, context):
+        return render_to_string('core/panels/inlinetrans.html', context)
