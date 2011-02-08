@@ -420,18 +420,14 @@ ul.din_smart_relations_object_tool li {
     white-space: nowrap;
 }
 
-ul.object-tools li.din_selected a {
-    background-image: none !important;
-}
-
 ul.object-tools li.parent:hover a.din_smart_trigger,
 ul.object-tools li.din_selected a.din_smart_trigger {
-    background: #FFF url(../img/admin/smart-tool-trigger.gif) no-repeat top right;
+    background: #E6D8C0 url(../img/admin/smart-tool-trigger.gif) no-repeat top right;
 }
 
 ul.object-tools li.parent:hover a.din_smart_trigger_open,
 ul.object-tools li.din_selected a.din_smart_trigger_open {
-    background-image: url(../img/admin/smart-tool-trigger-up.gif) !important;
+    background-image: #E6D8C0 url(../img/admin/smart-tool-trigger-up.gif);
 }
 
 ul.object-tools li.parent:hover span {
