@@ -4,19 +4,21 @@
   {% inplace_js 0 %}
   <script type="text/javascript"> 
     (function($){
+        var inplaceManager = null;
         $("a#activate-inline-edit").click(function () {
-            if (!$(this).hasClass("edit")) {
-                var getFieldUrl = "{% url inplace_get_field %}";
-                var saveURL = "{% url inplace_save %}";
-                $(".inplaceedit").inplaceeditform({"getFieldUrl": getFieldUrl,
-                                                "saveURL": saveURL});
+            if (!$(".inplaceedit").hasClass("edit_over_merengue")) {
+                if (inplaceManager == null) {
+                    var getFieldUrl = "{% url inplace_get_field %}";
+                    var saveURL = "{% url inplace_save %}";
+                    inplaceManager = $(".inplaceedit").inplaceeditform({"getFieldUrl": getFieldUrl,
+                                                                        "saveURL": saveURL});
+                }
+                inplaceManager.enable();
                 $(".inplaceedit").addClass("edit_over_merengue");
-                $(this).addClass("edit");
             } else {
                 $(".inplaceedit").removeClass("edit_over_merengue");
                 $(".inplaceeditform .cancel").click();
-                $(".inplaceedit").dblclick(function () {return false;});
-                $(this).removeClass("edit");
+                inplaceManager.disable();
             }
             return false;
         });
