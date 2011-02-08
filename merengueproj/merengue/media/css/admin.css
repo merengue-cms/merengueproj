@@ -76,7 +76,7 @@ ul.object-tools li.din_selected a.din_smart_trigger_open {
 
 .object-tools a:hover,
 .object-tools li:hover a {
-    background: #E6D8C0 url(../img/admin/tool-right_over.gif) no-repeat top right;
+    background: transparent url(../img/admin/tool-right_over.gif) no-repeat top right;
 }
 .button.default, input.default[type="submit"], .submit-row input.default {
     border: 1px solid #C49A6C;
