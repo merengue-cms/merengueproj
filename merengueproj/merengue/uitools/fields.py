@@ -28,6 +28,10 @@ class AdaptorTinyMCEField(AdaptorTextAreaField):
     def name(self):
         return 'textarea'
 
+    def __init__(self, *args, **kwargs):
+        super(AdaptorTinyMCEField, self).__init__(*args, **kwargs)
+        self.widget_options = self.config and self.config.get('widget_options', {})
+
     def get_field(self):
         field = super(AdaptorTinyMCEField, self).get_field()
 
@@ -55,7 +59,7 @@ class AdaptorTinyMCEField(AdaptorTextAreaField):
                               'theme_advanced_resize_horizontal': True,
                               'convert_on_click': True,
                              })
-        extra_mce_settings.update(self.options)
+        extra_mce_settings.update(self.widget_options)
         field.field.widget = TinyMCE(extra_mce_settings=extra_mce_settings,
                                            print_head=False)
         return field
@@ -78,10 +82,10 @@ class AdaptorTinyMCEField(AdaptorTextAreaField):
             'theme_advanced_buttons2': '',
             'theme_advanced_buttons3': '',
             }
-        if not 'width' in self.options or not self.options['width']:
+        if not 'width' in self.widget_options or not self.widget_options['width']:
             return result
 
-        total_width = int(self.options['width'].replace('px', ''))
+        total_width = int(self.widget_options['width'].replace('px', ''))
         buttons, selectors = self._priorize_tinymce_buttons(buttons_priorized,
                                                             selectors_priorized,
                                                             button_width,
@@ -116,7 +120,7 @@ class AdaptorTinyMCEField(AdaptorTextAreaField):
         return result
 
     def _priorize_tinymce_buttons(self, buttons, selectors, button_width=20, selector_width=80):
-        row_width = int(self.options['width'].replace('px', ''))
+        row_width = int(self.widget_options['width'].replace('px', ''))
         total_width = row_width * 3
         used_width = 0
 
