@@ -242,7 +242,7 @@ system will perform a operation like this:
       (r'^fooplugin/', include('plugins.fooplugin.urls')),
     )
 
-Also you can internazionalize your plugins URLs. See this example:
+You can also internazionalize your plugins URLs. See this example:
 
 .. code-block:: python
 
