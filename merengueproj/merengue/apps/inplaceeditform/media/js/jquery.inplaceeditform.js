@@ -38,7 +38,10 @@
                 async:true,
                 dataType: 'json',
                 success: function(response) {
-                    if (response.errors) {
+                    if (response == null) {
+                        alert("The server is down");
+                    }
+                    else if (response.errors) {
                         alert(response.errors);
                     }
                     else {
@@ -95,7 +98,10 @@
                 async: true,
                 dataType: 'json',
                 success: function(response){
-                    if (response.errors) {
+                    if (response == null) {
+                        alert("The server is down");
+                    }
+                    else if (response.errors) {
                         alert(response.errors);
                     }
                     else {

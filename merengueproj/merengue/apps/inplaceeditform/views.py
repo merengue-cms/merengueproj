@@ -2,6 +2,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponse
+from django.forms import ValidationError
 from django.shortcuts import get_object_or_404
 from django.utils import simplejson
 
@@ -15,20 +16,28 @@ def save_ajax(request):
         return HttpResponse(simplejson.dumps({'errors': 'It is not a POST request'}),
                             mimetype='application/json')
     adaptor = _get_adaptor(request, 'POST')
+    if not adaptor:
+        return HttpResponse(simplejson.dumps({'errors': 'Params insufficient'}),
+                            mimetype='application/json')
     value = simplejson.loads(request.POST.get('value'))
     new_data = get_dict_from_obj(adaptor.obj)
     form_class = adaptor.get_form_class()
     field_name = adaptor.field_name
+
     form = form_class(data=new_data, instance=adaptor.obj)
-    value_edit = adaptor.get_value_editor(value)
-    value_edit_with_filter = apply_filters(value_edit, adaptor.filters_to_edit)
-    new_data[field_name] = value_edit_with_filter
-    if form.is_valid():
-        adaptor.save(value_edit_with_filter)
-        return HttpResponse(simplejson.dumps({'errors': False,
-                                         'value': adaptor.render_value()}),
-                            mimetype='application/json')
-    return HttpResponse(simplejson.dumps({'errors': form.errors}), mimetype='application/json')
+    try:
+        value_edit = adaptor.get_value_editor(value)
+        value_edit_with_filter = apply_filters(value_edit, adaptor.filters_to_edit)
+        new_data[field_name] = value_edit_with_filter
+        if form.is_valid():
+            adaptor.save(value_edit_with_filter)
+            return HttpResponse(simplejson.dumps({'errors': False,
+                                            'value': adaptor.render_value()}),
+                                mimetype='application/json')
+        return HttpResponse(simplejson.dumps({'errors': form.errors}), mimetype='application/json')
+    except ValidationError, error:
+        message_i18n = ', '.join([u"%s" % m for m in error.messages])
+        return HttpResponse(simplejson.dumps({'errors': message_i18n}), mimetype='application/json')
 
 
 @login_required
@@ -37,6 +46,10 @@ def get_field(request):
         return HttpResponse(simplejson.dumps({'errors': 'It is not a GET request'}),
                             mimetype='application/json')
     adaptor = _get_adaptor(request, 'GET')
+    if not adaptor:
+        return HttpResponse(simplejson.dumps({'errors': 'Params insufficient'}),
+                            mimetype='application/json')
+
     field_render = adaptor.render_field()
     field_media_render = adaptor.render_media_field()
     return HttpResponse(simplejson.dumps({'field_render': field_render,
@@ -53,8 +66,7 @@ def _get_adaptor(request, method='GET'):
     module_name = request_params.get('module_name', None)
 
     if not field_name or not obj_id or not app_label and module_name:
-        return HttpResponse(simplejson.dumps({'errors': 'Params insufficient'}),
-                            mimetype='application/json')
+        return None
 
     contenttype = ContentType.objects.get(app_label=app_label,
                                           model=module_name)
