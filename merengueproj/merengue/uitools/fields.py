@@ -72,6 +72,15 @@ class AdaptorTinyMCEField(AdaptorTextAreaField):
 
     def _order_tinymce_buttons(self, buttons_priorized, selectors_priorized,
                                button_width=20, selector_width=80):
+
+        result = {
+            'theme_advanced_buttons1': '',
+            'theme_advanced_buttons2': '',
+            'theme_advanced_buttons3': '',
+            }
+        if not 'width' in self.options or not self.options['width']:
+            return result
+
         total_width = int(self.options['width'].replace('px', ''))
         buttons, selectors = self._priorize_tinymce_buttons(buttons_priorized,
                                                             selectors_priorized,
@@ -79,12 +88,6 @@ class AdaptorTinyMCEField(AdaptorTextAreaField):
                                                             selector_width)
         buttons_width = len(buttons) * button_width
         selectors_width = len(selectors) * selector_width
-
-        result = {
-            'theme_advanced_buttons1': '',
-            'theme_advanced_buttons2': '',
-            'theme_advanced_buttons3': '',
-            }
 
         if total_width >= buttons_width + selectors_width:  # one row
             if total_width >= selectors_width:
