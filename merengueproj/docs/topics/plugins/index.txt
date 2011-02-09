@@ -168,6 +168,9 @@ This is a ``config.py`` file code fragment example:
     from merengue.pluggable import Plugin
 
     class PluginConfig(Plugin):
+
+        name = "Foo plugin"
+
         url_prefixes = (
             ('fooplugin', 'plugins.fooplugin.urls'),
         )
@@ -188,6 +191,30 @@ This is a ``config.py`` file code fragment example:
 
 Parameters reference
 --------------------
+
+Plugin metadata
+~~~~~~~~~~~~~~~
+
+The ``name`` parameter is used to give this plugin a name that will be
+visible in the Merengue plugin control center. It is a required parameter
+and usually it is just a single word or two.
+
+The ``descrpition`` parameter add some more information for this plugin.
+It can be a full sentence that will help the Merengue administrator to
+decide if it is worthy to install this plugin.
+
+Finally the ``version`` parameter is a string with the version information
+of the plugin. It is not required but highly recommended.
+
+Example:
+
+.. code-block:: python
+
+    class PluginConfig(Plugin):
+
+        name = "Foo"
+        description = "Demo plugin to explain how to create Merengue plugins"
+        version = "1.0.0"
 
 Plugin URLs
 ~~~~~~~~~~~
