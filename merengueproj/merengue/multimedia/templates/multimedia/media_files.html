@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n stringfilters %}
 {% if content_files %}
 <div class="contentFiles {% block contentFilesExtraClass %}{% endblock %}">
 {% block contentfilestitle %}
@@ -10,7 +10,7 @@
     {% with multimedia.file as file %}
     {% block contentfileitem %}
       <li id="content-file-{{ file.id }}">
-        <a href="{{ file.file.url }}" title="{{ file }}">{{ file }}</a>
+        <a href="{{ file.file.url }}" title="{{ file }}">{{ file|truncatechars:"25" }}</a>
       </li>
     {% endblock %}
     {% endwith %}
