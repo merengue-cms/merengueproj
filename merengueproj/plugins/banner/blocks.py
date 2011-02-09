@@ -41,15 +41,15 @@ class BannerBlock(BlockQuerySetItemProvider, Block):
             custom_config = block_content_relation.get_block_config_field()
         else:
             custom_config = None
-        number_news = cls.get_merged_config(custom_config).get(
+        number_banners = cls.get_merged_config(custom_config).get(
             'limit', []).get_value() or None
-        banners_list = get_banners(request, number_news)
+        banners_list = get_banners(request, number_banners)
         return banners_list
 
     @classmethod
     def render(cls, request, place, context, block_content_relation=None,
                *args, **kwargs):
-        banners = cls.get_queryset(request, context)
+        banners = cls.get_queryset(request, context, block_content_relation)
         return cls.render_block(request, template_name='banner/block_banner.html',
                                 block_title=ugettext('banners'),
                                 context={'banners': banners},
