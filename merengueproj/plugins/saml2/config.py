@@ -21,6 +21,10 @@ from merengue.pluggable import Plugin
 
 class PluginConfig(Plugin):
 
+    name = 'Saml2'
+    description = 'Adds SAML2 authentication and authorization to Merengue'
+    version = '0.1.0dev'
+
     url_prefixes = (
         ('saml2', 'plugins.saml2.urls'),
         )
