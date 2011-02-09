@@ -15,12 +15,6 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.conf.urls.defaults import patterns
 
-from merengue.pluggable import Plugin
-
-
-class PluginConfig(Plugin):
-
-    url_prefixes = (
-        ('saml2', 'plugins.saml2.urls'),
-        )
+urlpatterns = patterns('')
