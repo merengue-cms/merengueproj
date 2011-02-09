@@ -38,8 +38,10 @@ def apply_filters(value, filters, load_tags=None):
         filters_str = '|%s' % '|'.join(filters)
         load_tags = load_tags or []
         if load_tags:
-            load_tags = "{%% load %s %%}" % ' '.join(load_tags)
-        value = template.Template("""%s{{ value%s }}""" % (load_tags, filters_str)).render(template.Context({'value': value}))
+            load_tags_str = "{%% load %s %%}" % ' '.join(load_tags)
+        else:
+            load_tags_str = ""
+        value = template.Template("""%s{{ value%s }}""" % (load_tags_str, filters_str)).render(template.Context({'value': value}))
     return value
 
 

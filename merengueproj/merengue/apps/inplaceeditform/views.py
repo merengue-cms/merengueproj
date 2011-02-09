@@ -14,7 +14,7 @@ def save_ajax(request):
     if not request.method == 'POST':
         return HttpResponse(simplejson.dumps({'errors': 'It is not a POST request'}),
                             mimetype='application/json')
-    adaptor = _get_adaptor(request.POST, request)
+    adaptor = _get_adaptor(request, 'POST')
     value = simplejson.loads(request.POST.get('value'))
     new_data = get_dict_from_obj(adaptor.obj)
     form_class = adaptor.get_form_class()
@@ -36,7 +36,7 @@ def get_field(request):
     if not request.method == 'GET':
         return HttpResponse(simplejson.dumps({'errors': 'It is not a GET request'}),
                             mimetype='application/json')
-    adaptor = _get_adaptor(request.GET, request)
+    adaptor = _get_adaptor(request, 'GET')
     field_render = adaptor.render_field()
     field_media_render = adaptor.render_media_field()
     return HttpResponse(simplejson.dumps({'field_render': field_render,
@@ -44,35 +44,52 @@ def get_field(request):
                                         mimetype='application/json')
 
 
-def _get_adaptor(request_params, request):
+def _get_adaptor(request, method='GET'):
+    request_params = getattr(request, method)
     field_name = request_params.get('field_name', None)
     obj_id = request_params.get('obj_id', None)
-    content_type_id = request_params.get('content_type_id', None)
 
-    if not field_name or not obj_id or not content_type_id:
+    app_label = request_params.get('app_label', None)
+    module_name = request_params.get('module_name', None)
+
+    if not field_name or not obj_id or not app_label and module_name:
         return HttpResponse(simplejson.dumps({'errors': 'Params insufficient'}),
                             mimetype='application/json')
 
-    filters_to_show = simplejson.loads(request_params.get('filters_to_show', None))
-    filters_to_edit = simplejson.loads(request_params.get('filters_to_edit', None))
-    field_adaptor = request_params.get('field_adaptor', None)
-    class_inplace = request_params.get('class_inplace', None)
-    content_type_id = request_params.get('content_type_id', None)
-    tag_name_cover = request_params.get('tag_name_cover', None)
-    loads_tags = request_params.get('loads_tags', '').split(":")
+    contenttype = ContentType.objects.get(app_label=app_label,
+                                          model=module_name)
 
-    contenttype = ContentType.objects.get(id=content_type_id)
     model_class = contenttype.model_class()
-    obj = get_object_or_404(model_class, id=obj_id)
-    class_field = get_adaptor_class(field_adaptor, obj, field_name)
-    height = request_params.get('height', False)
-    width = request_params.get('width', False)
-    options = {'height': height, 'width': width}
+    obj = get_object_or_404(model_class,
+                            pk=obj_id)
+    adaptor = request_params.get('adaptor', None)
+    class_adaptor = get_adaptor_class(adaptor, obj, field_name)
 
-    adaptor = class_field(field_name, obj, request,
-                          filters_to_show, filters_to_edit,
-                          class_inplace=class_inplace,
-                          tag_name_cover=tag_name_cover,
-                          loads_tags=loads_tags,
-                          **options)
-    return adaptor
+    filters_to_show = request_params.get('filters_to_show', None)
+
+    kwargs = _convert_params_in_config(request_params, ('field_name',
+                                                        'obj_id',
+                                                        'app_label',
+                                                        'module_name',
+                                                        'filters_to_show',
+                                                        'adaptor'))
+    config = class_adaptor.get_config(**kwargs)
+    adaptor_field = class_adaptor(request, obj, field_name,
+                                               filters_to_show,
+                                               config)
+    return adaptor_field
+
+
+def _convert_params_in_config(request_params, exclude_params=None):
+    exclude_params = exclude_params or []
+    config = {}
+    options_widget = {}
+    for key, value in request_params.items():
+        if key not in exclude_params:
+            if key.startswith('__widget_'):
+                key = key.replace('__widget_', '')
+                options_widget[key] = value
+            else:
+                config[str(key)] = value
+    config['widget_options'] = options_widget
+    return config

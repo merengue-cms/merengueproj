@@ -29,7 +29,7 @@
                 }
                 $(this).data("inplace_enabled")
                 var data = getDataToRequest($(this).find("span.config"));
-                data += "&height=" + $(this).height() + "px" + "&width=" + $(this).width() + "px";
+                data += "&__widget_height=" + $(this).height() + "px" + "&__widget_width=" + $(this).width() + "px";
                 var _this = $(this);
                 $.ajax({
                 data: data,
@@ -113,19 +113,20 @@
             }
 
             function getDataToRequest(inplaceedit_conf) {
-                var field_name = inplaceedit_conf.find("span.field_name").html();
-                var obj_id = inplaceedit_conf.find("span.obj_id").html();
-                var content_type_id = inplaceedit_conf.find("span.content_type_id").html();
-                var class_inplace = inplaceedit_conf.find("span.class_inplace").html();
-                var filters_to_show = $.evalJSON(inplaceedit_conf.find("span.filters_to_show").html());
-                var filters_to_edit = $.evalJSON(inplaceedit_conf.find("span.filters_to_edit").html());
-                var adaptor = inplaceedit_conf.find("span.adaptor").html();
-                var loads_tags = inplaceedit_conf.find("span.loads_tags").html();
-                return ("field_name=" + field_name + "&obj_id="+ obj_id + "&content_type_id="
-                        + content_type_id + "&filters_to_show="+ $.toJSON(filters_to_show)
-                        + "&filters_to_edit="+ $.toJSON(filters_to_edit)
-                        + "&field_adaptor=" + adaptor + "&class_inplace=" + class_inplace
-                        + "&loads_tags=" + loads_tags);
+                var dataToRequest = "";
+                var settings = inplaceedit_conf.find("span");
+                $.map(settings, function (setting, i) {
+                    var setting = $(setting);
+                    var data = "&";
+                    if (i == 0) {
+                        data = "";
+                    }
+                    var key = setting.attr("class");
+                    var value = setting.html();
+                    data = data + key + "=" + value;
+                    dataToRequest += data;
+                });
+                return dataToRequest;
             }
 
             function loadjscssfile(media){

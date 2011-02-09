@@ -1,9 +1,7 @@
 from django.conf import settings
 from django.contrib.admin.widgets import AdminSplitDateTime, AdminDateWidget
-from django.contrib.contenttypes.models import ContentType
 from django.forms.models import modelform_factory
 from django.template.loader import render_to_string
-from django.utils import simplejson
 from django.utils.importlib import import_module
 from django.utils.translation import ugettext
 
@@ -12,24 +10,34 @@ from inplaceeditform.commons import has_transmeta, apply_filters
 
 class BaseAdaptorField(object):
 
-    def __init__(self, field_name, obj, request,
-                 filters_to_show=None, filters_to_edit=None,
-                 class_inplace=None, tag_name_cover=None,
-                 loads_tags=None,
-                 **options):
+    def __init__(self, request, obj, field_name,
+                       filters_to_show=None,
+                       config=None):
+        self.request = request
+        self.obj = obj
+        self.field_name = field_name
+        self.filters_to_show = filters_to_show and filters_to_show.split('|')
+
         self.model = obj.__class__
         self.field_name_render = field_name  # To transmeta
-        self.field_name = field_name
-        self.obj = obj
-        self.request = request
-        self.filters_to_show = filters_to_show or []
-        self.filters_to_edit = filters_to_edit or []
-        self.class_inplace = class_inplace or ''
-        self.tag_name_cover = tag_name_cover or 'span'
-        self.loads_tags = loads_tags or []
+
+        self.config = config or {}
+        self.config['obj_id'] = self.obj.id
+        self.config['field_name'] = self.field_name_render
+        self.config['filters_to_show'] = self.filters_to_show
+        self.config['app_label'] = self.model._meta.app_label
+        self.config['module_name'] = self.model._meta.module_name
+        self.config['filters_to_show'] = filters_to_show
+
+        filters_to_edit = self.config.get('filters_to_edit', None)
+        self.filters_to_edit = filters_to_edit and filters_to_edit.split('|') or []
+
+        self.class_inplace = self.config.get('class_inplace', None)
+        self.tag_name_cover = self.config.get('tag_name_cover', 'span')
+        loads = self.config.get('loads', None)
+        self.loads = loads and loads.split(':') or []
         self.initial = {}
         self._transmeta_processing()
-        self.options = options
 
     @property
     def name(self):
@@ -38,6 +46,10 @@ class BaseAdaptorField(object):
     @property
     def classes(self):
         return 'inplaceedit %sinplaceedit' % (self.name)
+
+    @classmethod
+    def get_config(self, **kwargs):
+        return kwargs
 
     def get_form_class(self):
         return modelform_factory(self.model)
@@ -57,7 +69,7 @@ class BaseAdaptorField(object):
     def render_value(self, field_name=None):
         field_name = field_name or self.field_name_render
         value = getattr(self.obj, field_name)
-        return apply_filters(value, self.filters_to_show, self.loads_tags)
+        return apply_filters(value, self.filters_to_show, self.loads)
 
     def render_value_edit(self):
         value = self.render_value()
@@ -81,17 +93,8 @@ class BaseAdaptorField(object):
                                  'ADMIN_MEDIA_PREFIX': settings.ADMIN_MEDIA_PREFIX})
 
     def render_config(self, template_name="inplaceeditform/render_config.html"):
-        content_type = ContentType.objects.get_for_model(self.model)
         return render_to_string(template_name,
-                                {'field_name': self.field_name_render,
-                                 'obj': self.obj,
-                                 'content_type': content_type,
-                                 'filters_to_show': simplejson.dumps(self.filters_to_show),
-                                 'filters_to_edit': simplejson.dumps(self.filters_to_edit),
-                                 'adaptor': self.name,
-                                 'class_inplace': self.class_inplace,
-                                 'loads_tags': ':'.join(self.loads_tags),
-                                 })
+                                {'config': self.config})
 
     def can_edit(self):
         can_edit_adaptor_path = getattr(settings, 'ADAPTOR_INPLACEEDIT_EDIT', None)
@@ -113,12 +116,15 @@ class BaseAdaptorField(object):
 
     def _adding_size(self, field):
         attrs = field.field.widget.attrs
+        widget_options = self.config and self.config.get('widget_options', {})
+        auto_height = widget_options.get('auto_height', False)
+        auto_width = widget_options.get('auto_width', False)
         if not 'style' in attrs:
             style = ''
-            for key, value in self.options.items():
-                if key == 'height':
+            for key, value in widget_options.items():
+                if key == 'height' and not auto_height:
                     value = self.treatment_height(value)
-                elif key == 'width':
+                elif key == 'width' and not auto_width:
                     value = self.treatment_width(value)
                 style += "%s: %s; " % (key, value)
             attrs['style'] = style
