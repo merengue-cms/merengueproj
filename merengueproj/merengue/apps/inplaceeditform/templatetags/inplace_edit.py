@@ -40,7 +40,9 @@ class InplaceEditNode(RenderWithArgsAndKwargsNode):
         expression_to_show = args[0]
         tokens_to_show = expression_to_show.split('|')
         obj_field_name, filters_to_show = tokens_to_show[0], '|'.join(tokens_to_show[1:])
-        obj_context, field_name = obj_field_name.split(".")
+        obj_field_name_split = obj_field_name.split(".")
+        obj_context = '.'.join(obj_field_name_split[:-1])
+        field_name = obj_field_name_split[-1]
         obj = Variable(obj_context).resolve(context)
         adaptor = kwargs.get('adaptor', None)
         class_adaptor = get_adaptor_class(adaptor, obj, field_name)
