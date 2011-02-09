@@ -31,11 +31,19 @@ class AdaptorTinyMCEField(AdaptorTextAreaField):
     def get_field(self):
         field = super(AdaptorTinyMCEField, self).get_field()
 
-        tiny_mce_buttons = ['bold', 'italic', 'underline',
-                            'justifyleft', 'justifycenter', 'justifyright',
-                            'justifyfull', 'bullist', 'numlist', 'outdent',
-                            'indent']
-        tiny_mce_selectors = ['fontsizeselect', 'styleselect', 'formatselect', 'fontselect']
+        tiny_mce_buttons = {
+            '0': ['bold', 'italic', 'underline', 'justifyleft',
+                  'justifycenter', 'justifyright', 'justifyfull'],
+            '1': ['bullist', 'numlist', 'outdent', 'indent'],
+            '2': ['undo', 'redo'],
+            '3': ['cut', 'copy', 'paste', 'pasteword'],
+            '4': ['forecolor', 'link', 'code', 'internal_links'],
+            '5': ['iframes', 'image', 'file', 'removeformat'],
+            }
+
+        tiny_mce_selectors = {'0': ['fontsizeselect'],
+                              '1': ['formatselect', 'fontselect'],
+                              '2': ['styleselect']}
 
         extra_mce_settings = getattr(settings, 'EXTRA_MCE', {})
         extra_mce_settings.update(self._order_tinymce_buttons(tiny_mce_buttons, tiny_mce_selectors))
@@ -62,12 +70,21 @@ class AdaptorTinyMCEField(AdaptorTextAreaField):
     def render_media_field(self, template_name="tiny_adaptor/render_media_field.html"):
         return super(AdaptorTinyMCEField, self).render_media_field(template_name)
 
-    def _order_tinymce_buttons(self, buttons, selectors, button_width=20, selector_width=80):
+    def _order_tinymce_buttons(self, buttons_priorized, selectors_priorized,
+                               button_width=20, selector_width=80):
         total_width = int(self.options['width'].replace('px', ''))
+        buttons, selectors = self._priorize_tinymce_buttons(buttons_priorized,
+                                                            selectors_priorized,
+                                                            button_width,
+                                                            selector_width)
         buttons_width = len(buttons) * button_width
         selectors_width = len(selectors) * selector_width
 
-        result = {}
+        result = {
+            'theme_advanced_buttons1': '',
+            'theme_advanced_buttons2': '',
+            'theme_advanced_buttons3': '',
+            }
 
         if total_width >= buttons_width + selectors_width:  # one row
             if total_width >= selectors_width:
@@ -76,8 +93,6 @@ class AdaptorTinyMCEField(AdaptorTextAreaField):
             else:
                 num_selectors = (total_width - buttons_width) / selector_width
                 result['theme_advanced_buttons1'] = ','.join(selectors[:num_selectors] + buttons)
-                result['theme_advanced_buttons2'] = ''
-            result['theme_advanced_buttons3'] = ''  # needed to preserve the order, could faild either way
 
         elif total_width * 2 >= buttons_width + selectors_width:  # two rows
             aux_index = total_width / button_width
@@ -87,7 +102,6 @@ class AdaptorTinyMCEField(AdaptorTextAreaField):
             else:
                 result['theme_advanced_buttons1'] = ','.join(buttons[:aux_index])
                 result['theme_advanced_buttons2'] = ','.join(selectors + buttons[aux_index:])
-            result['theme_advanced_buttons3'] = ''
 
         else:
             aux_index = total_width / button_width
@@ -97,3 +111,23 @@ class AdaptorTinyMCEField(AdaptorTextAreaField):
             result['theme_advanced_buttons3'] = ','.join(selectors[:num_selectors])
 
         return result
+
+    def _priorize_tinymce_buttons(self, buttons, selectors, button_width=20, selector_width=80):
+        row_width = int(self.options['width'].replace('px', ''))
+        total_width = row_width * 3
+        used_width = 0
+
+        buttons_list = []
+        selectors_list = []
+        # we assume that we have more priority levels on buttons
+
+        for key in buttons:
+            if (used_width + button_width * len(buttons[key])) < total_width:
+                buttons_list += buttons[key]
+                used_width += button_width * len(buttons[key])
+            if key in selectors:
+                if (used_width + selector_width * len(selectors[key])) < total_width:
+                    selectors_list += selectors[key]
+                    used_width += selector_width * len(selectors[key])
+
+        return buttons_list, selectors_list
