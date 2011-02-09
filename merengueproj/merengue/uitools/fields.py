@@ -77,6 +77,7 @@ class AdaptorTinyMCEField(AdaptorTextAreaField):
                 num_selectors = (total_width - buttons_width) / selector_width
                 result['theme_advanced_buttons1'] = ','.join(selectors[:num_selectors] + buttons)
                 result['theme_advanced_buttons2'] = ''
+            result['theme_advanced_buttons3'] = ''  # needed to preserve the order, could faild either way
 
         elif total_width * 2 >= buttons_width + selectors_width:  # two rows
             aux_index = total_width / button_width
@@ -86,6 +87,7 @@ class AdaptorTinyMCEField(AdaptorTextAreaField):
             else:
                 result['theme_advanced_buttons1'] = ','.join(buttons[:aux_index])
                 result['theme_advanced_buttons2'] = ','.join(selectors + buttons[aux_index:])
+            result['theme_advanced_buttons3'] = ''
 
         else:
             aux_index = total_width / button_width
