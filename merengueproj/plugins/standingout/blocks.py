@@ -33,8 +33,7 @@ class StandingOutBlock(Block):
         params.Integer(name='limit', label=_('limit for standingouts in block'), default='5'),
     ]
 
-    @classmethod
-    def render(cls, request, place, context, block_content_relation=None,
+    def render(self, request, place, context, block_content_relation=None,
                *args, **kwargs):
         standingout_categories = StandingOutCategory.objects.all()
         standingouts = None
@@ -46,14 +45,9 @@ class StandingOutBlock(Block):
                 if standingouts:
                     break
         standingouts = standingouts or StandingOut.objects.filter(related_content_type__isnull=True, related_id__isnull=True)
-        if block_content_relation:
-            custom_config = block_content_relation.get_block_config_field()
-        else:
-            custom_config = None
-        limit = cls.get_merged_config(custom_config).get('limit', None)
+        limit = self.get_config().get('limit', None)
         if limit:
             standingouts = standingouts[:limit.get_value()]
-        return cls.render_block(request, template_name='standingout/block_standingout.html',
-                                block_title=_('Search'),
-                                context={'standingouts': standingouts},
-                                block_content_relation=block_content_relation)
+        return self.render_block(request, template_name='standingout/block_standingout.html',
+                                 block_title=_('Search'),
+                                 context={'standingouts': standingouts})

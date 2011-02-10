@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import signals
 from django.utils.translation import ugettext_lazy as _
 
@@ -51,6 +50,7 @@ class RegistrableItem(object):
     help_text = None  # to be overriden in subclasses
     model = RegisteredItem  # to be overriden in subclasses
     config_params = []  # configuration parameters, to be overriden
+    singleton = False  # only allow one registered item per class
 
     @classmethod
     def get_class_name(cls):
@@ -65,43 +65,33 @@ class RegistrableItem(object):
         return 'registryitem'
 
     @classmethod
-    def _config_dict(cls, config):
-        return ConfigDict(cls.config_params, config)
+    def get_extended_attrs(cls):
+        return {}
 
-    @classmethod
-    def get_config(cls):
-        registered_item = cls.get_registered_item()
-        return cls._config_dict(registered_item.get_config())
+    def __init__(self, reg_item):
+        self.reg_item = reg_item
 
-    @classmethod
-    def get_merged_config(cls, *configs):
+    def _config_dict(self, config):
+        return ConfigDict(self.config_params, config)
+
+    def get_config(self):
+        registered_item = self.get_registered_item()
+        return self._config_dict(registered_item.get_config())
+
+    def get_merged_config(self, *configs):
         """ get a merged config with all config dicts passed by param """
-        merged_config = cls.get_config()
+        merged_config = self.get_config()
         for config in configs:
             if config:
                 merged_config.update(config)
         return merged_config
 
-    @classmethod
-    def get_registered_item(cls):
-        if hasattr(cls, '_cached_registered_item'):
-            return cls._cached_registered_item
-        for registered_item in cls.model.objects.all():
-            # note: we do not use get to use cache from caching manager
-            if registered_item.module == cls.get_module() and \
-               registered_item.class_name == cls.get_class_name():
-                cls._cached_registered_item = registered_item
-                return registered_item
-        raise ObjectDoesNotExist
+    def get_registered_item(self):
+        return self.reg_item
 
-    @classmethod
-    def get_extended_attrs(cls):
-        return {}
-
-    @classmethod
-    def invalidate_cache(cls):
-        if hasattr(cls, '_cached_registered_item'):
-            del cls._cached_registered_item
+    def invalidate_cache(self):
+        if hasattr(self, '_cached_registered_item'):
+            del self._cached_registered_item
 
 
 def _get_children_classes(content_type):
@@ -160,44 +150,35 @@ class SectionFilterItemProvider(object):
 
 class ContentsItemProvider(object):
 
-    @classmethod
-    def get_contents(cls, request=None, context=None, section=None):
+    def get_contents(self, request=None, context=None, section=None):
         raise NotImplementedError()
 
 
 class QuerySetItemProvider(ContentsItemProvider, SectionFilterItemProvider):
 
-    @classmethod
-    def _get_section(cls, request, context):
+    def _get_section(self, request, context):
         return get_section(request, context)
 
-    @classmethod
-    def get_queryset(cls, request=None, context=None):
-        section = cls._get_section(request, context)
-        return cls.queryset(request, context, section)
+    def get_queryset(self, request=None, context=None):
+        section = self._get_section(request, context)
+        return self.queryset(request, context, section)
 
-    @classmethod
-    def queryset(cls, request=None, context=None, section=None):
-        queryset = cls.get_contents(request, context, section)
-        if section and cls.get_config().get('filtering_section', False).get_value():
+    def queryset(self, request=None, context=None, section=None):
+        queryset = self.get_contents(request, context, section)
+        if section and self.get_config().get('filtering_section', False).get_value():
             queryset = filtering_in_section(queryset, section)
         return queryset
 
 
 class BlockQuerySetItemProvider(QuerySetItemProvider):
 
-    @classmethod
-    def get_queryset(cls, request=None, context=None,
-                     block_content_relation=None):
-        section = cls._get_section(request, context)
-        return cls.queryset(request, context, section, block_content_relation)
+    def get_queryset(self, request=None, context=None):
+        section = self._get_section(request, context)
+        return self.queryset(request, context, section)
 
-    @classmethod
-    def queryset(cls, request=None, context=None, section=None,
-                 block_content_relation=None):
-        queryset = cls.get_contents(request, context, section,
-                                    block_content_relation)
-        if section and cls.get_config().get('filtering_section', False).get_value():
+    def queryset(self, request=None, context=None, section=None):
+        queryset = self.get_contents(request, context, section)
+        if section and self.get_config().get('filtering_section', False).get_value():
             queryset = filtering_in_section(queryset, section)
         return queryset
 
@@ -208,19 +189,18 @@ class BlockSectionFilterItemProvider(SectionFilterItemProvider):
 
 class ViewLetQuerySetItemProvider(QuerySetItemProvider):
 
-    @classmethod
-    def _get_section(cls, request, context):
+    def _get_section(self, request, context):
         menu = context.get('menu', None)
         section = None
         if menu:
             section = menu.get_root().get_section()
-        return section or super(ViewLetQuerySetItemProvider, cls)._get_section(request, context)
+        return section or super(ViewLetQuerySetItemProvider, self)._get_section(request, context)
 
 
 def post_save_handler(sender, instance, **kwargs):
     if isinstance(instance, RegisteredItem):
-        # cache invalidation of registered item in a registrable intem
-        instance.get_registry_item_class().invalidate_cache()
+        # cache invalidation of registered item in a registrable item
+        instance.get_registry_item().invalidate_cache()
 
 
 signals.post_save.connect(post_save_handler)

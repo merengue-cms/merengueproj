@@ -76,12 +76,15 @@ How can I do plugin registering? With these sentences:
 
 .. code-block:: python
 
-    >>> from merengue.registry import register, is_registered
+    >>> from merengue.registry import register, is_registered, have_registered_items
     >>> from plugins.fooplugin.config import PluginConfig
-    >>> is_registered(PluginConfig)
+    >>> have_registered_items(PluginConfig)
     False
-    >>> register(PluginConfig)
-    >>> is_registered(PluginConfig)
+    >>> reg_item = register(PluginConfig)
+    >>> have_registered_items(PluginConfig)
+    True
+    >>> item = reg_item.get_registry_item()
+    >>> is_registered(item)
     True
 
 .. admonition:: Plugin autoregistering
@@ -108,8 +111,8 @@ You can access to registered object with these sentences:
     >>> from merengue.registry.models import RegisteredItem
     >>> RegisteredItem.objects.all().values()
     [{'class_name': u'PluginConfig', 'category': u'plugin', 'config': u'', 'id': 5, 'module': u'plugins.fooplugin.config'}]
-    >>> RegisteredItem.objects.get_by_item(PluginConfig)
-    <RegisteredItem: PluginConfig>
+    >>> RegisteredItem.objects.by_item_class(PluginConfig)
+    [<RegisteredItem: PluginConfig>]
 
 .. _topics-registry-configuration-params:
 

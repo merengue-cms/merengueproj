@@ -26,8 +26,7 @@ class ContentGroupLinksBlock(Block):
     name = 'contentgrouplinks'
     default_place = 'aftercontenttitle'
 
-    @classmethod
-    def render(cls, request, place, context, *args, **kwargs):
+    def render(self, request, place, context, *args, **kwargs):
         from plugins.contentmenu.config import PluginConfig
         content_groups = ContentGroup.objects.filter(contents=context['content'])
         if content_groups:
@@ -35,7 +34,7 @@ class ContentGroupLinksBlock(Block):
                                   for child_cont in cont.contents.all()]
                                  for cont in content_groups]
             numchars = PluginConfig.get_config().get('numchars', []).get_value()
-            return cls.render_block(
+            return self.render_block(
                 request, template_name='contentmenu/contentlinks_block.html',
                 block_title=_('Content group links'),
                 context={'contents': filtered_contents,

@@ -27,11 +27,8 @@ class LatestVideoBlock(Block):
     help_text = ugettext_lazy('Block provides latest videos')
     verbose_name = ugettext_lazy('Latest videos block')
 
-    @classmethod
-    def render(cls, request, channel, context, block_content_relation=None,
-               *args, **kwargs):
+    def render(self, request, channel, context, *args, **kwargs):
         video_list = VideoStreaming.objects.all()
-        return cls.render_block(request, template_name='tv/block_latest.html',
-                                block_title=_('Latest video'),
-                                context={'video_list': video_list},
-                                block_content_relation=block_content_relation)
+        return self.render_block(request, template_name='tv/block_latest.html',
+                                 block_title=_('Latest video'),
+                                 context={'video_list': video_list})

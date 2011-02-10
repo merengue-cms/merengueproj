@@ -24,57 +24,49 @@ from merengue.registry.items import RegistrableItem
 
 class BaseAction(RegistrableItem):
     model = RegisteredAction
+    singleton = True
 
     @classmethod
     def get_category(cls):
         return 'action'
 
     @classmethod
-    def get_url(cls, request):
-        raise NotImplementedError()
-
-    @classmethod
     def get_extended_attrs(cls):
         return {'name': cls.name}
 
-    @classmethod
-    def get_response(cls):
+    def get_url(self, request):
         raise NotImplementedError()
 
-    @classmethod
-    def has_action(cls):
+    def get_response(self):
+        raise NotImplementedError()
+
+    def has_action(self):
         return True
 
 
 class SiteAction(BaseAction):
 
-    @classmethod
-    def get_url(cls, request):
-        return reverse("site_action", args=(cls.name, ))
+    def get_url(self, request):
+        return reverse("site_action", args=(self.name, ))
 
 
 class UserAction(BaseAction):
 
-    @classmethod
-    def has_action(cls, user):
-        return super(UserAction, cls).has_action()
+    def has_action(self, user):
+        return super(UserAction, self).has_action()
 
-    @classmethod
-    def get_url(cls, request, user):
-        return reverse("user_action", args=(user.username, cls.name, ))
+    def get_url(self, request, user):
+        return reverse("user_action", args=(user.username, self.name, ))
 
 
 class ContentAction(BaseAction):
 
-    @classmethod
-    def get_url(cls, request, content):
+    def get_url(self, request, content):
         content_type = ContentType.objects.get_for_model(content.__class__)
-        return reverse("content_action", args=(content_type.id, content.id, cls.name, ))
+        return reverse("content_action", args=(content_type.id, content.id, self.name, ))
 
-    @classmethod
-    def get_response(cls, content):
+    def get_response(self, content):
         raise NotImplementedError()
 
-    @classmethod
-    def has_action(cls, content):
-        return super(ContentAction, cls).has_action()
+    def has_action(self, content):
+        return super(ContentAction, self).has_action()

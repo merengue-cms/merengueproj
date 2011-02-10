@@ -15,18 +15,13 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-import copy
-
 from django.db import models
 from django.db.models import signals
-from django.utils.importlib import import_module
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.models import BaseContent
-from merengue.registry.dbfields import ConfigField
 from merengue.registry.managers import RegisteredItemManager
 from merengue.registry.models import RegisteredItem
-from merengue.registry.params import ConfigDict
 
 import re
 
@@ -62,6 +57,14 @@ class RegisteredBlock(RegisteredItem):
             expressions (one per line, using <a
             href='http://docs.python.org/library/re.html#regular-expression-syntax'
             title='python regular expressions' target='_blank'>python re syntax</a>)."""))
+    # fields for blocks related to contents
+    content = models.ForeignKey(BaseContent, verbose_name=_(u'related content'), null=True)
+    overwrite_if_place = models.BooleanField(
+        verbose_name=_('overwrite block if the place is the same'),
+        default=True)
+    overwrite_always = models.BooleanField(
+        verbose_name=_('overwrite generic block if is present on the actual page'),
+        default=False)
 
     objects = RegisteredItemManager()
 
@@ -89,55 +92,13 @@ class RegisteredBlock(RegisteredItem):
             return self.show_in_url(url)
         return False
 
-    def get_content_related_block(self, content, place):
-        if not isinstance(content, BaseContent):
-            return None
-        try:
-            return BlockContentRelation.objects.get(block=self, content=content,
-                                                    placed_at=place)
-        except BlockContentRelation.DoesNotExist:
-            return None
-
     def __unicode__(self):
         return self.name
 
 
-class BlockContentRelation(models.Model):
-
-    block = models.ForeignKey(RegisteredBlock, verbose_name=_(u'related block'))
-    content = models.ForeignKey(BaseContent, verbose_name=_(u'related content'))
-    placed_at = models.CharField(_(u'placed at'), max_length=100,
-                                 choices=PLACES)
-    order = models.IntegerField(_(u'Order'), blank=True, null=True)
-    config = ConfigField(
-        verbose_name=_(u'block specific configuration'), default={},
-        help_text=_(u'Fill this field to overwrite the block configuration'))
-    overwrite_if_place = models.BooleanField(
-        verbose_name=_('overwrite generic block if the place is the same'),
-        default=True)
-    overwrite_allways = models.BooleanField(
-        verbose_name=_('overwrite generic block if is present on the actual page'),
-        default=False)
-
-    def get_config(self):
-        return self.config
-
-    def get_block_config_field(self):
-        block = self.get_registry_item_class()
-        block_config_field = copy.copy(block.config_params)
-        return ConfigDict(block_config_field, self.config)
-
-    def get_registry_item_class(self):
-        return getattr(import_module(self.block.module),
-                       self.block.class_name)
-
-    def __unicode__(self):
-        return u'%s - %s' % (self.block.name, self.content.name)
-
-
 def post_save_handler(sender, instance, **kwargs):
     content = instance.content
-    if not content.has_related_blocks:
+    if content and not content.has_related_blocks:
         # we mark that base content has related blocks, for performance reason
         content.has_related_blocks = True
         content.save()
@@ -145,12 +106,13 @@ def post_save_handler(sender, instance, **kwargs):
 
 def pre_delete_handler(sender, instance, **kwargs):
     content = instance.content
-    other_content_blocks = BlockContentRelation.objects.filter(content=content).exclude(pk=instance.pk)
-    if not other_content_blocks:
-        # we unmark that base content has relateds block
-        content.has_related_blocks = False
-        content.save()
+    if content:
+        other_content_blocks = RegisteredBlock.objects.filter(content=content).exclude(pk=instance.pk)
+        if not other_content_blocks:
+            # we unmark that base content has relateds block
+            content.has_related_blocks = False
+            content.save()
 
 
-signals.post_save.connect(post_save_handler, sender=BlockContentRelation)
-signals.pre_delete.connect(pre_delete_handler, sender=BlockContentRelation)
+signals.post_save.connect(post_save_handler, sender=RegisteredBlock)
+signals.pre_delete.connect(pre_delete_handler, sender=RegisteredBlock)

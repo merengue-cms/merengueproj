@@ -56,9 +56,10 @@ class RegisteredItem(models.Model):
                 self.config[param.name] = param.default
         self.save()
 
-    def get_registry_item_class(self):
+    def get_registry_item(self):
         module = import_module(self.module)
-        return getattr(module, self.class_name)
+        item_class = getattr(module, self.class_name)
+        return item_class(self)
 
     def get_config(self):
         parent_instance = getattr(self, 'registereditem_ptr', None)

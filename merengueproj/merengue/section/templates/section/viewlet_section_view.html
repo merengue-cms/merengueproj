@@ -11,7 +11,7 @@
         <span class="breadcrumbSeparator">→</span>
         <a href="{{ link }}" title="{{ label }}">{% cutrender %}{{ label }}{% endcutrender %}</a>
     {% endfor %}
-    <span class="breadcrumbSeparator">→</span> {{ registered_viewlet.get_registry_item_class.label }}
+    <span class="breadcrumbSeparator">→</span> {{ registered_viewlet.get_registry_item.label }}
 {% endblock %}
 
 {% block content %}

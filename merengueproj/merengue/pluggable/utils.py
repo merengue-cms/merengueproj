@@ -44,11 +44,11 @@ from south.exceptions import NoMigrations
 
 from merengue import registry
 from merengue.base.adminsite import site
-from merengue.registry.items import (NotRegistered as NotRegisteredItem,
-                                     AlreadyRegistered as AlreadyRegisteredItem)
+from merengue.registry.items import (NotRegistered as NotRegisteredItem)
 from merengue.section.models import Section
 from merengue.perms.utils import register_permission, unregister_permission
 from merengue.pluggable.exceptions import BrokenPlugin
+from merengue.pluggable.models import RegisteredPlugin
 
 
 # ----- internal attributes and methods -----
@@ -79,8 +79,8 @@ def install_plugin(registered_plugin):
     if registered_plugin.active:
         enable_plugin(plugin_name)
         # Doing extra custom installation implemented in each plugin
-        plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
-        plugin_config.post_install()
+        plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
+        plugin.post_install()
     else:
         disable_plugin(plugin_name)
 
@@ -115,6 +115,12 @@ def get_plugin_config(plugin_dir, prepend_plugins_dir=True):
         if settings.DEBUG:
             raise
         return None
+
+
+def get_plugin(plugin_dir, prepend_plugins_dir=True):
+    plugin_config = get_plugin_config(plugin_dir, prepend_plugins_dir)
+    reg_plugin = RegisteredPlugin.objects.by_item_class(plugin_config).get()
+    return reg_plugin.get_registry_item()
 
 
 def validate_plugin(plugin_config):
@@ -178,10 +184,10 @@ def remove_from_installed_apps(plugin_name):
 
 
 def find_plugin_urls(plugin_name):
-    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
-    if not plugin_config:
+    plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
+    if not plugin:
         return
-    for url_prefix, urlconf in plugin_config.get_url_prefixes():
+    for url_prefix, urlconf in plugin.get_url_prefixes():
         plugin_url_re = r'^%s/' % url_prefix
         try:
             import_module(urlconf)
@@ -221,9 +227,7 @@ def check_plugin_broken(plugin_name):
 
 def enable_plugin(plugin_name, register=True):
     from merengue.base.admin import register_app
-    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
-    if not plugin_config:
-        return
+    plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
     add_to_installed_apps(plugin_name)
     if register:
         register_app(plugin_name)
@@ -239,7 +243,7 @@ def enable_plugin(plugin_name, register=True):
         register_plugin_perms(plugin_name)
     register_plugin_urls(plugin_name)
     # activate plugin in DB
-    registered_plugin = plugin_config.get_registered_item()
+    registered_plugin = plugin.get_registered_item()
     registered_plugin.activate()
     # app_directories template loader loads app_template_dirs in
     # compile time, so we have to load it again.
@@ -315,139 +319,137 @@ def unregister_plugin_templatetags(plugin_name):
 
 def register_items(item_list):
     for item_class in item_list:
-        try:
+        if not registry.have_registered_items(item_class):
             registry.register(item_class, activate=True)
-        except AlreadyRegisteredItem:
-            pass
 
 
 def unregister_items(item_list):
     try:
         for item_class in item_list:
-            registry.unregister(item_class)
+            registry.unregister_all(item_class)
     except NotRegisteredItem:
         pass
 
 
 def register_plugin_actions(plugin_name):
-    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
-    if not plugin_config:
+    plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
+    if not plugin:
         return
-    register_items(plugin_config.get_actions())
+    register_items(plugin.get_actions())
 
 
 def unregister_plugin_actions(plugin_name):
-    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
-    if not plugin_config:
+    plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
+    if not plugin:
         return
-    unregister_items(plugin_config.get_actions())
+    unregister_items(plugin.get_actions())
 
 
 def register_plugin_blocks(plugin_name):
-    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
-    if not plugin_config:
+    plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
+    if not plugin:
         return
-    register_items(plugin_config.get_blocks())
+    register_items(plugin.get_blocks())
 
 
 def unregister_plugin_blocks(plugin_name):
-    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
-    if not plugin_config:
+    plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
+    if not plugin:
         return
-    unregister_items(plugin_config.get_blocks())
+    unregister_items(plugin.get_blocks())
 
 
 def register_plugin_viewlets(plugin_name):
-    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
-    if not plugin_config:
+    plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
+    if not plugin:
         return
-    register_items(plugin_config.get_viewlets())
+    register_items(plugin.get_viewlets())
 
 
 def unregister_plugin_viewlets(plugin_name):
-    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
-    if not plugin_config:
+    plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
+    if not plugin:
         return
-    unregister_items(plugin_config.get_viewlets())
+    unregister_items(plugin.get_viewlets())
 
 
 def register_plugin_toolbar(plugin_name):
-    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
-    if not plugin_config:
+    plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
+    if not plugin:
         return
-    register_items(plugin_config.get_toolbar_panels())
+    register_items(plugin.get_toolbar_panels())
 
 
 def unregister_plugin_toolbar(plugin_name):
-    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
-    if not plugin_config:
+    plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
+    if not plugin:
         return
-    unregister_items(plugin_config.get_toolbar_panels())
+    unregister_items(plugin.get_toolbar_panels())
 
 
 def register_plugin_post_actions(plugin_name):
-    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
-    if not plugin_config:
+    plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
+    if not plugin:
         return
-    plugin_config.post_actions()
+    plugin.post_actions()
 
 
 def register_plugin_section_models(plugin_name):
-    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
-    if not plugin_config:
+    plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
+    if not plugin:
         return
-    register_plugin_section_models_in_admin_site(plugin_config, plugin_name, site)
+    register_plugin_section_models_in_admin_site(plugin, plugin_name, site)
 
 
-def register_plugin_section_models_in_admin_site(plugin_config, plugin_name, admin_site):
+def register_plugin_section_models_in_admin_site(plugin, plugin_name, admin_site):
     if not admin_site:
         return
-    for model, admin_model in plugin_config.section_models():
+    for model, admin_model in plugin.section_models():
         site_related = admin_site.register_related(model, admin_model, related_to=Section)
-        plugin_config.section_register_hook(site_related, model)
+        plugin.section_register_hook(site_related, model)
 
 
 def register_plugin_in_plugin_admin_site(plugin_name):
-    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
-    if not plugin_config:
+    plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
+    if not plugin:
         return
-    model_admins = plugin_config.get_model_admins()
+    model_admins = plugin.get_model_admins()
     if not model_admins:
         return
     plugin_site = site.register_plugin_site(plugin_name)
-    for model, admin_model in plugin_config.get_model_admins():
+    for model, admin_model in plugin.get_model_admins():
         plugin_site.register(model, admin_model)
 
 
 def register_plugin_perms(plugin_name):
-    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
-    if not plugin_config:
+    plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
+    if not plugin:
         return
-    for perm in plugin_config.get_perms():
+    for perm in plugin.get_perms():
         register_permission(*perm)
 
 
 def unregister_plugin_perms(plugin_name):
-    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
-    if not plugin_config:
+    plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
+    if not plugin:
         return
-    for perm in plugin_config.get_perms():
+    for perm in plugin.get_perms():
         unregister_permission(perm[1])
 
 
 def register_plugin_middlewares(plugin_name):
-    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
-    if not plugin_config:
+    plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
+    if not plugin:
         return
-    for middleware in plugin_config.get_middlewares():
+    for middleware in plugin.get_middlewares():
         register_middleware(middleware)
 
 
 def unregister_plugin_middlewares(plugin_name):
-    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
-    if not plugin_config:
+    plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
+    if not plugin:
         return
-    for middleware in plugin_config.get_middlewares():
+    for middleware in plugin.get_middlewares():
         unregister_middleware(middleware)
 
 
@@ -456,11 +458,11 @@ def unregister_plugin_section_models(plugin_name):
 
 
 def unregister_plugin_in_plugin_admin_site(plugin_name):
-    plugin_config = get_plugin_config(plugin_name, prepend_plugins_dir=False)
-    if not plugin_config:
+    plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
+    if not plugin:
         return
     else:
-        plugin = plugin_config.get_registered_item()
+        plugin = plugin.get_registered_item()
         if not plugin.installed:
             return
     site.unregister_plugin_site(plugin_name)

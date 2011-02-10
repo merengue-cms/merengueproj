@@ -19,15 +19,14 @@ from merengue.registry.items import RegistrableItem
 
 
 class Panel(RegistrableItem):
+    singleton = True
 
     @classmethod
     def get_category(cls):
         return 'panel'
 
-    @classmethod
-    def show(cls, context):
+    def show(self, context):
         return True
 
-    @classmethod
-    def render(cls, context):
+    def render(self, context):
         raise NotImplementedError()

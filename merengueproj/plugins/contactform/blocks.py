@@ -29,8 +29,7 @@ class ContactFormBlock(ContentBlock):
     help_text = ugettext_lazy('Block with contact form')
     verbose_name = ugettext_lazy('Contact Form Block')
 
-    @classmethod
-    def render(cls, request, place, content, context, *args, **kwargs):
+    def render(self, request, place, content, context, *args, **kwargs):
 
         try:
             contact_form = ContactForm.objects.filter(content=content)[0]
@@ -50,6 +49,6 @@ class ContactFormBlock(ContentBlock):
                        admin_media=settings.ADMIN_MEDIA_PREFIX,
                        form=form)
 
-        return cls.render_block(request, template_name='contactform/block_form.html',
-                                block_title=_('Contact form'),
-                                context=context)
+        return self.render_block(request, template_name='contactform/block_form.html',
+                                 block_title=_('Contact form'),
+                                 context=context)

@@ -93,9 +93,6 @@
             var block_id = block.find('.blockId').val();
             var block_title = block.find('.blockHiddenTitle').html();
             var block_config_url = blocks_index_url + 'ajax/config/' + block_id;
-            if (block.hasClass('blockRelated')) {
-                block_config_url = block_config_url + '?related=1';
-            }
             $.ajax({
                 url: block_config_url,
                 context: document.body,
@@ -116,9 +113,6 @@
                 var block_id = $(this).find('[name=blockid]').val();
                 var block_name = $(this).find('[name=blockname]').val();
                 var render_block_url = '.?render_block=' + block_id;
-                if($(this).find('[name=related]').length > 0) {
-                    render_block_url = render_block_url + '&related=1';
-                }
                 $.ajax({
                     type: 'POST',
                     url: $(this).attr('action'),

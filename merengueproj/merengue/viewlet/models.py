@@ -27,4 +27,4 @@ class RegisteredViewlet(RegisteredItem):
     objects = RegisteredItemManager()
 
     def __unicode__(self):
-        return u'%s (%s)' % (self.get_registry_item_class().help_text or self.name, self.name)
+        return u'%s (%s)' % (self.get_registry_item().help_text or self.name, self.name)

@@ -32,24 +32,19 @@ class EventsCalendarBlock(BlockQuerySetItemProvider, Block):
     help_text = ugettext_lazy('Block that renders calendar with events')
     verbose_name = ugettext_lazy('Events Calendar Block')
 
-    @classmethod
-    def get_contents(cls, request=None, context=None, section=None,
-                     block_content_relation=None):
+    def get_contents(self, request=None, context=None, section=None):
         events = get_events(request)
         if not events.query.can_filter():
             events = events.model.objects.filter(id__in=events.values('id').query)
 
         return events
 
-    @classmethod
-    def render(cls, request, place, context, block_content_relation=None,
-               *args, **kwargs):
+    def render(self, request, place, context, *args, **kwargs):
         current_month = date.today().month
         current_year = date.today().year
-        events = cls.get_queryset(request, context)
+        events = self.get_queryset(request, context)
         events_dic = getEventsMonthYear(current_month, current_year, events)
-        return cls.render_block(request,
+        return self.render_block(request,
                                 template_name='event/block_calendar.html',
                                 block_title=_('Events calendar'),
-                                context={'events_dic': events_dic},
-                                block_content_relation=block_content_relation)
+                                context={'events_dic': events_dic})

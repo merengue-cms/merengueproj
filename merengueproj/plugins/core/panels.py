@@ -22,8 +22,8 @@ from merengue.uitools import panels
 
 class InplaceEditPanel(panels.Panel):
 
-    @classmethod
-    def render(cls, context):
+    def render(self, context):
+        self.get_config()
         return render_to_string('core/panels/inplaceedit.html', context)
 
 

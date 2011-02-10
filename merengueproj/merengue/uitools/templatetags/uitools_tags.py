@@ -41,11 +41,10 @@ register.tag(RenderPanel)
 
 @register.inclusion_tag('uitools/toolbar.html', takes_context=True)
 def render_toolbar(context):
-    active_plugins = RegisteredPlugin.objects.actives()
+    active_plugins = RegisteredPlugin.objects.actives().get_items()
     panels = []
-    for reg_plugin in active_plugins:
-        plugin = reg_plugin.get_registry_item_class()
-        panels.extend(plugin.get_toolbar_panels())
+    for plugin in active_plugins:
+        panels.extend(plugin.get_toolbar_panels_items())
     return {
         'MEDIA_URL': context['MEDIA_URL'],
         'request': context['request'],

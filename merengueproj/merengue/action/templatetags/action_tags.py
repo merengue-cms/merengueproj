@@ -41,13 +41,13 @@ class GetActionsNode(template.Node):
         actions = []
         registered_actions = RegisteredAction.objects.actives()
         for registered_action in registered_actions:
-            item_class = registered_action.get_registry_item_class()
-            if scope == 'site' and issubclass(item_class, SiteAction):
-                actions.append(item_class)
-            elif for_content and scope == 'content' and issubclass(item_class, ContentAction):
-                actions.append(item_class)
-            elif for_content and scope == 'user' and issubclass(item_class, UserAction):
-                actions.append(item_class)
+            item = registered_action.get_registry_item()
+            if scope == 'site' and isinstance(item, SiteAction):
+                actions.append(item)
+            elif for_content and scope == 'content' and isinstance(item, ContentAction):
+                actions.append(item)
+            elif for_content and scope == 'user' and isinstance(item, UserAction):
+                actions.append(item)
         context[self.as_var] = actions
         return u''
 

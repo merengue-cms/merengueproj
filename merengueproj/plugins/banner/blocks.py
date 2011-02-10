@@ -34,23 +34,14 @@ class BannerBlock(BlockQuerySetItemProvider, Block):
                       default='3'),
     ]
 
-    @classmethod
-    def get_contents(cls, request=None, context=None, section=None,
-                     block_content_relation=None):
-        if block_content_relation:
-            custom_config = block_content_relation.get_block_config_field()
-        else:
-            custom_config = None
-        number_banners = cls.get_merged_config(custom_config).get(
+    def get_contents(self, request=None, context=None, section=None):
+        number_banners = self.get_config().get(
             'limit', []).get_value() or None
         banners_list = get_banners(request, number_banners)
         return banners_list
 
-    @classmethod
-    def render(cls, request, place, context, block_content_relation=None,
-               *args, **kwargs):
-        banners = cls.get_queryset(request, context, block_content_relation)
-        return cls.render_block(request, template_name='banner/block_banner.html',
-                                block_title=ugettext('banners'),
-                                context={'banners': banners},
-                                block_content_relation=block_content_relation)
+    def render(self, request, place, context, *args, **kwargs):
+        banners = self.get_queryset(request, context)
+        return self.render_block(request, template_name='banner/block_banner.html',
+                                 block_title=ugettext('banners'),
+                                 context={'banners': banners})

@@ -35,19 +35,10 @@ class VotingBlock(BlockSectionFilterItemProvider, ContentBlock):
                     default=False),
     ]
 
-    @classmethod
-    def render(cls, request, place, content, context,
-               block_content_relation=None, *args, **kwargs):
-        if block_content_relation:
-            custom_config = block_content_relation.get_block_config_field()
-        else:
-            custom_config = None
-        readonly = cls.get_merged_config(custom_config).get(
-            'readonly').get_value()
-        return cls.render_block(request, template_name='voting/block_voting.html',
-                                block_title=_('Vote content'),
-                                context={'content': content,
-                                         'can_vote': get_can_vote(content, request.user),
-                                         'readonly': readonly,
-                                         },
-                                block_content_relation=block_content_relation)
+    def render(self, request, place, content, context, *args, **kwargs):
+        readonly = self.get_config().get('readonly').get_value()
+        return self.render_block(request, template_name='voting/block_voting.html',
+                                 block_title=_('Vote content'),
+                                 context={'content': content,
+                                          'can_vote': get_can_vote(content, request.user),
+                                          'readonly': readonly})

@@ -16,40 +16,49 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django import forms
-from django.core.exceptions import ObjectDoesNotExist
-from django.conf import settings
 from django.utils.importlib import import_module
+from django.utils.translation import ugettext_lazy as _
 
 from autoreports.forms import FormAdminDjango
 
 from merengue.base.forms import BaseAdminModelForm
-from merengue.block.models import RegisteredBlock
+from merengue.pluggable.models import RegisteredPlugin
+from merengue.registry import register
 from merengue.registry.fields import ConfigFormField
-from merengue.registry.params import ConfigDict
 
 
-class BaseContentRelatedBlockForm(BaseAdminModelForm):
+class BaseContentRelatedBlockAddForm(forms.Form):
+    block_class = forms.ChoiceField(
+        label=_('Block to add'),
+    )
 
     def __init__(self, *args, **kwargs):
-        super(BaseContentRelatedBlockForm, self).__init__(*args, **kwargs)
-        if args:
-            block_id = args[0]['block']
-            reg_block = RegisteredBlock.objects.get(id=block_id)
-        else:
-            try:
-                reg_block = self.instance.block
-            except ObjectDoesNotExist:
-                reg_block = None
-        if reg_block:
-            block = getattr(import_module(reg_block.module),
-                            reg_block.class_name)
-            self.fields['config'].set_config(ConfigDict(block.config_params,
-                                                        self.instance.config))
+        super(BaseContentRelatedBlockAddForm, self).__init__(*args, **kwargs)
+        active_plugins = RegisteredPlugin.objects.actives().get_items()
+        blocks_classes = []
+        for plugin in active_plugins:
+            blocks_classes.extend(plugin.get_blocks())
+        self.fields['block_class'].choices = [
+            ('%s.%s' % (b.get_module(), b.get_class_name()), b.name) for b in blocks_classes
+        ]
 
-    class Media:
-        js = (
-            settings.MEDIA_URL + 'merengue/js/block/dynamic-config-param.js',
-        )
+    def save(self, *args, **kwargs):
+        block_class_path = self.cleaned_data['block_class']
+        class_name = block_class_path.split('.')[-1]
+        module_path = '.'.join(block_class_path.split('.')[:-1])
+        module = import_module(module_path)
+        block_class = getattr(module, class_name)
+        reg_block = register(block_class)
+        reg_block.content = self.cleaned_data['content']
+        reg_block.save()
+        return reg_block
+
+    def save_m2m(self, *args, **kwargs):
+        pass
+
+
+class BaseContentRelatedBlockChangeForm(BaseAdminModelForm):
+    pass
 
 
 class BlockConfigForm(forms.Form, FormAdminDjango):

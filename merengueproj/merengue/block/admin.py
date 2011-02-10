@@ -19,8 +19,9 @@ from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.admin import RelatedModelAdmin
 from merengue.base.models import BaseContent
-from merengue.block.models import RegisteredBlock, BlockContentRelation
-from merengue.block.forms import BaseContentRelatedBlockForm
+from merengue.block.models import RegisteredBlock
+from merengue.block.forms import BaseContentRelatedBlockAddForm, BaseContentRelatedBlockChangeForm
+from merengue.perms import utils as perms_api
 from merengue.registry.admin import RegisteredItemAdmin
 
 
@@ -40,15 +41,32 @@ class RegisteredBlockAdmin(RegisteredItemAdmin):
         return False
 
 
-class BaseContentRelatedBlockAdmin(RelatedModelAdmin):
+class BaseContentRelatedBlockAdmin(RelatedModelAdmin, RegisteredBlockAdmin):
     tool_name = 'block_content_related'
     tool_label = _('block content related')
     related_field = 'content'
     change_form_template = 'admin/block/related_block_admin.html'
-    form = BaseContentRelatedBlockForm
+    form = BaseContentRelatedBlockChangeForm
+    fieldsets = RegisteredBlockAdmin.fieldsets + (
+       (_('Visibility when duplicated blocks'),
+            {'fields': ('overwrite_if_place', 'overwrite_always', )}),
+    )
+
+    def has_add_permission(self, request):
+        return perms_api.can_manage_site(request.user)
+
+    def add_view(self, request, form_url='', extra_context=None):
+        self.fieldsets = None  # fieldsets was cleared in add view
+        return super(BaseContentRelatedBlockAdmin, self).add_view(request, form_url, extra_context)
+
+    def get_form(self, request, obj=None, **kwargs):
+        if request.get_full_path().endswith('add/'):
+            return BaseContentRelatedBlockAddForm
+        else:
+            return super(BaseContentRelatedBlockAdmin, self).get_form(request, obj, **kwargs)
 
 
 def register(site):
     site.register(RegisteredBlock, RegisteredBlockAdmin)
-    site.register_related(BlockContentRelation, BaseContentRelatedBlockAdmin,
+    site.register_related(RegisteredBlock, BaseContentRelatedBlockAdmin,
                           related_to=BaseContent)

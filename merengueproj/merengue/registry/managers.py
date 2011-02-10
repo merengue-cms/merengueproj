@@ -17,7 +17,6 @@
 
 from django.db import models
 from django.db.models.query import QuerySet
-from django.core.exceptions import ObjectDoesNotExist
 
 
 class RegisteredItemQuerySet(QuerySet):
@@ -42,6 +41,11 @@ class RegisteredItemQuerySet(QuerySet):
     def with_brokens(self):
         return self.filter()
 
+    def get_items(self):
+        """ Returns registrable items (not registered items) """
+        for item in self.filter():
+            yield item.get_registry_item()
+
 
 class RegisteredItemManager(models.Manager):
     """ Registered item manager """
@@ -60,10 +64,13 @@ class RegisteredItemManager(models.Manager):
         """ Retrieves inactive items for site """
         return self.get_query_set().inactives(ordered)
 
-    def get_by_item(self, item_class):
+    def get_by_item(self, item):
         """ obtain registered item passing by param a RegistrableItem """
-        for registered_item in self.all():
-            if registered_item.module == item_class.get_module() and \
-               registered_item.class_name == item_class.get_class_name():
-                return registered_item
-        raise ObjectDoesNotExist
+        return self.get(id=item.reg_item.id)
+
+    def by_item_class(self, item_class):
+        """ obtain registered item passing by param a RegistrableItem """
+        return self.filter(
+            module=item_class.get_module(),
+            class_name=item_class.get_class_name(),
+        )

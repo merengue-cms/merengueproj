@@ -34,10 +34,9 @@ class GoogleSearchBlock(Block):
         params.Single(name='search_form_content', label=_('Search form content (element\'s id of DOM)'), default='cse'),
     ]
 
-    @classmethod
-    def render(cls, request, place, context, block_content_relation=None,
+    def render(self, request, place, context, block_content_relation=None,
                *args, **kwargs):
-        return cls.render_block(request, template_name='googlesearch/block_googlesearch.html',
-                                block_title=_('Search'),
-                                context={'plugin_config': cls.get_config()},
-                                block_content_relation=block_content_relation)
+        return self.render_block(request, template_name='googlesearch/block_googlesearch.html',
+                                 block_title=_('Search'),
+                                 context={'plugin_config': self.get_config()},
+                                 block_content_relation=block_content_relation)

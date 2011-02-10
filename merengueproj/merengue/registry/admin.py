@@ -55,13 +55,13 @@ class RegisteredItemAdmin(BaseOrderableAdmin):
                 set_field_read_only(field, field_name, obj)
 
         if not broken_item and 'config' in form.base_fields.keys():
-            config = obj.get_registry_item_class().get_config()
+            config = obj.get_registry_item().get_config()
             config_field = form.base_fields['config']
             config_field.set_config(config)
         return form
 
     def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
-        broken_item = is_broken(obj)
+        broken_item = obj and is_broken(obj) or False
         context.update({
             'is_broken': broken_item,
         })

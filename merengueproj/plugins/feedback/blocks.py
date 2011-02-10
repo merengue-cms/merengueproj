@@ -26,12 +26,9 @@ class FeedbackBlock(ContentBlock):
     verbose_name = ugettext_lazy('Feedback block')
     help_text = ugettext_lazy('The block represents the feedback widget')
 
-    @classmethod
-    def render(cls, request, place, content, context, block_content_relation=None,
-               *args, **kwargs):
+    def render(self, request, place, content, context, *args, **kwargs):
         if content.is_commentable():
-            return cls.render_block(request, template_name='feedback/block_feedback.html',
-                                    block_title=_('Feedback content'),
-                                    context={'content': content},
-                                    block_content_relation=block_content_relation)
+            return self.render_block(request, template_name='feedback/block_feedback.html',
+                                     block_title=_('Feedback content'),
+                                     context={'content': content})
         return ''

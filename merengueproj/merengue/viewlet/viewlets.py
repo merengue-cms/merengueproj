@@ -30,26 +30,24 @@ class Viewlet(RegistrableItem):
     def get_category(cls):
         return 'viewlet'
 
-    @classmethod
-    def render_viewlet(cls, request, template_name='viewlet.html', context=None):
+    def render_viewlet(self, request, template_name='viewlet.html', context=None):
         if context is None:
             context = {}
         viewlet_context = {
-            'registered_viewlet': cls.get_registered_item(),
-            'viewlet': cls,
+            'registered_viewlet': self.get_registered_item(),
+            'viewlet': self,
             'template_base': 'viewlet.html',
         }
         viewlet_context.update(context)
         return render_to_string(template_name, viewlet_context,
                                 context_instance=RequestContext(request))
 
-    @classmethod
-    def render(cls, request, context):
+    def render(self, request, context):
         raise NotImplementedError('You have to override this method')
 
 
 def registered_viewlet(sender, **kwargs):
-    if issubclass(sender, Viewlet):
+    if isinstance(sender, Viewlet):
         registered_item = kwargs['registered_item']
         registered_item.name = sender.name
         registered_item.save()

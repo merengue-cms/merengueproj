@@ -27,9 +27,8 @@ class ChunksBlock(Block):
     help_text = ugettext_lazy('Chunks Block')
     verbose_name = ugettext_lazy('Chunks Block')
 
-    @classmethod
-    def render(cls, request, place, context, *args, **kwargs):
+    def render(self, request, place, context, *args, **kwargs):
         chunks = Chunk.objects.placed_at(place, request.get_full_path())
-        return cls.render_block(request, template_name='chunks/chunks_block.html',
-                                block_title=_('Chunks'),
-                                context={'chunks': chunks})
+        return self.render_block(request, template_name='chunks/chunks_block.html',
+                                 block_title=_('Chunks'),
+                                 context={'chunks': chunks})

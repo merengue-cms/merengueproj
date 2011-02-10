@@ -25,20 +25,25 @@ from merengue.registry.models import RegisteredItem
 from merengue.registry.signals import item_registered, item_unregistered
 
 
-def is_registered(item_class):
-    """ Returns if a class is registered as RegisteredItem """
+def is_registered(item):
+    """ Returns if a class is registered in some RegisteredItem """
     try:
-        RegisteredItem.objects.get_by_item(item_class)
-    except ObjectDoesNotExist:
+        RegisteredItem.objects.get_by_item(item)
+    except RegisteredItem.DoesNotExist:
         return False
     else:
         return True
 
 
+def have_registered_items(item_class):
+    """ Returns if a class is registered in some RegisteredItem """
+    return bool(RegisteredItem.objects.by_item_class(item_class))
+
+
 def is_broken(registered_item):
     """ Returns if registered item is broken (not exist in file system) """
     try:
-        registered_item.get_registry_item_class()
+        registered_item.get_registry_item()
     except (ImportError, TypeError):
         return True
     else:
@@ -58,46 +63,55 @@ def register(item_class, activate=False):
     if settings.CACHE_BACKEND.startswith('johnny'):
         invalidate_registereditem()
 
-
     sid = transaction.savepoint()
     try:
         if not issubclass(item_class, RegistrableItem):
             raise RegistryError('item class "%s" to be registered is not '
                                 'a RegistrableItem subclass' % item_class)
 
-        try:
-            registered_item = item_class.model.objects.get_by_item(item_class)
-        except ObjectDoesNotExist:
-            attributes = {
-                'class_name': item_class.get_class_name(),
-                'module': item_class.get_module(),
-            }
-            # Add attributes for extended class
-            extended_attrs = item_class.get_extended_attrs()
-            attributes.update(extended_attrs)
-            registered_item = item_class.model.objects.create(**attributes)
-            registered_item.category = item_class.get_category()
-            registered_item.set_default_config(item_class)
-            if activate:
-                registered_item.activate()
-        else:
-            raise AlreadyRegistered('item class "%s" is already registered'
-                                    % item_class)
+        if item_class.singleton:
+            # check not exists duplicated items
+            if have_registered_items(item_class):
+                raise AlreadyRegistered('item class "%s" is already registered'
+                                        % item_class)
+        registered_item = _register_new_item(item_class, activate)
     except:
         transaction.savepoint_rollback(sid)
         raise
     else:
         transaction.savepoint_commit(sid)
         item_registered.send(sender=item_class, registered_item=registered_item)
+    return registered_item
 
 
-def unregister(item_class):
+def _register_new_item(item_class, activate):
+    attributes = {
+        'class_name': item_class.get_class_name(),
+        'module': item_class.get_module(),
+    }
+    # Add attributes for extended class
+    extended_attrs = item_class.get_extended_attrs()
+    attributes.update(extended_attrs)
+    registered_item = item_class.model.objects.create(**attributes)
+    registered_item.category = item_class.get_category()
+    registered_item.set_default_config(item_class)
+    if activate:
+        registered_item.activate()
+    return registered_item
+
+
+def unregister(item):
     try:
-        registered_item = RegisteredItem.objects.get_by_item(item_class)
+        registered_item = RegisteredItem.objects.get_by_item(item)
     except ObjectDoesNotExist:
-        raise NotRegistered('item class "%s" is not registered' % item_class)
+        raise NotRegistered('item class "%s" is not registered' % item)
     registered_item.delete()
-    item_unregistered.send(sender=item_class)
+    item_unregistered.send(sender=item)
+
+
+def unregister_all(item_class):
+    for item in RegisteredItem.objects.by_item_class(item_class):
+        unregister(item)
 
 
 def get_item(name, category):

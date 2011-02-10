@@ -25,29 +25,24 @@ from merengue.registry.signals import item_registered
 
 class BaseBlock(RegistrableItem):
     model = RegisteredBlock
+    singleton = False
+
+    def __init__(self, reg_item):
+        super(BaseBlock, self).__init__(reg_item)
+        self.content = reg_item.content
 
     @classmethod
     def get_category(cls):
         return 'block'
 
-    @classmethod
-    def get_config(cls, block_content_relation=None):
-        if block_content_relation is None:
-            config = cls.get_registered_item().get_config()
-        else:
-            config = block_content_relation.get_config()
-        return cls._config_dict(config)
-
-    @classmethod
-    def render_block(cls, request, template_name='block.html', block_title=None,
-                     context=None, block_content_relation=None):
+    def render_block(self, request, template_name='block.html', block_title=None,
+                     context=None):
         if context is None:
             context = {}
-        registered_block = cls.get_registered_item()
+        registered_block = self.get_registered_item()
         block_context = {
             'block_title': block_title or registered_block.name,
             'block': registered_block,
-            'block_content_relation': block_content_relation,
         }
         block_context.update(context)
         return render_to_string(template_name, block_context,
@@ -57,8 +52,7 @@ class BaseBlock(RegistrableItem):
 class Block(BaseBlock):
     default_place = 'leftsidebar'
 
-    @classmethod
-    def render(cls, request, place, context, block_content_relation,
+    def render(self, request, place, context,
                *args, **kwargs):
         raise NotImplementedError()
 
@@ -66,8 +60,7 @@ class Block(BaseBlock):
 class ContentBlock(BaseBlock):
     default_place = 'content'
 
-    @classmethod
-    def render(cls, request, place, content, context, block_content_relation,
+    def render(self, request, place, content, context,
                *args, **kwargs):
         raise NotImplementedError()
 
@@ -75,8 +68,7 @@ class ContentBlock(BaseBlock):
 class SectionBlock(BaseBlock):
     default_place = 'leftsidebar'
 
-    @classmethod
-    def render(cls, request, place, section, context, block_content_relation,
+    def render(self, request, place, section, context,
                *args, **kwargs):
         raise NotImplementedError()
 

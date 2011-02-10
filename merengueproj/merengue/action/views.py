@@ -25,13 +25,13 @@ from merengue.action import get_action
 
 def site_action(request, name):
     action_item = get_action(name=name)
-    item_class = action_item.get_registry_item_class()
+    item_class = action_item.get_registry_item()
     return item_class.get_response(request)
 
 
 def content_action(request, content_type_id, object_id, name):
     action_item = get_action(name=name)
-    item_class = action_item.get_registry_item_class()
+    item_class = action_item.get_registry_item()
     try:
         content_type = ContentType.objects.get(pk=content_type_id)
         obj = content_type.get_object_for_this_type(pk=object_id)
@@ -44,7 +44,7 @@ def content_action(request, content_type_id, object_id, name):
 
 def user_action(request, username, name):
     action_item = get_action(name=name)
-    item_class = action_item.get_registry_item_class()
+    item_class = action_item.get_registry_item()
     try:
         user = User.objects.get(username=username)
     except User.DoesNotExist:

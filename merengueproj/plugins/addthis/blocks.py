@@ -48,18 +48,12 @@ class AddThisBlock(Block):
         ),
     ]
 
-    @classmethod
-    def render(cls, request, place, context, block_content_relation=None,
+    def render(self, request, place, context,
                *args, **kwargs):
-        if block_content_relation:
-            custom_config = block_content_relation.get_block_config_field()
-        else:
-            custom_config = None
-        services = cls.get_merged_config(custom_config).get(
+        services = self.get_config().get(
             'services', []).get_value()
-        return cls.render_block(
+        return self.render_block(
             request, template_name='addthis/links_block.html',
             block_title=_('Share this'),
             context={'services': services},
-            block_content_relation=block_content_relation,
         )

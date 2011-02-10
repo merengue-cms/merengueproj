@@ -22,7 +22,7 @@ from django.utils.simplejson import dumps
 from django.utils.translation import ugettext as _
 
 from merengue.block.forms import BlockConfigForm
-from merengue.block.models import RegisteredBlock, BlockContentRelation
+from merengue.block.models import RegisteredBlock
 from merengue.perms.utils import has_global_permission
 
 
@@ -51,11 +51,8 @@ def blocks_reorder(request):
     mimetype = "application/json"
     if request.is_ajax() and request.POST and "new_order" in request.POST:
         new_order = request.POST['new_order']
-        block_cnt_rltd = request.POST['block_cnt_rltd']
         items = new_order.split(",")
-        block_content_related = block_cnt_rltd.split(",")
         relocate_blocks(items, RegisteredBlock)
-        relocate_blocks(block_content_related, BlockContentRelation)
         return HttpResponse(dumps(True), mimetype=mimetype)
     return HttpResponseBadRequest(mimetype=mimetype)
 
@@ -63,7 +60,7 @@ def blocks_reorder(request):
 def generate_blocks_configuration_for_content(request, block_id):
     try:
         reg_block = RegisteredBlock.objects.get(id=block_id)
-        block = reg_block.get_registry_item_class()
+        block = reg_block.get_registry_item()
         form = BlockConfigForm()
         form.fields['config'].set_config(block.get_config())
         result = form.as_django_admin()
@@ -82,15 +79,9 @@ def generate_blocks_configuration_for_content(request, block_id):
 def generate_blocks_configuration(request, block_id):
     if not has_global_permission(request.user, 'manage_portal'):
         raise PermissionDenied()
-    is_related_block = 'related' in request.REQUEST
-    if is_related_block:
-        reg_block = BlockContentRelation.objects.get(id=block_id)
-        block = reg_block.block.get_registry_item_class()
-        config = block.get_config(reg_block)
-    else:
-        reg_block = RegisteredBlock.objects.get(id=block_id)
-        block = reg_block.get_registry_item_class()
-        config = block.get_config()
+    reg_block = RegisteredBlock.objects.get(id=block_id)
+    block = reg_block.get_registry_item()
+    config = block.get_config()
     if request.method == 'POST':
         form = BlockConfigForm(request.POST)
         form.fields['config'].set_config(config)
@@ -105,5 +96,4 @@ def generate_blocks_configuration(request, block_id):
         'form': form,
         'reg_block': reg_block,
         'block': block,
-        'is_related_block': is_related_block,
     })

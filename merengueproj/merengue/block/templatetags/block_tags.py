@@ -21,39 +21,31 @@ from django.conf import settings
 
 from merengue.base.models import BaseContent
 from merengue.block.blocks import Block, ContentBlock, SectionBlock
-from merengue.block.models import RegisteredBlock, BlockContentRelation
+from merengue.block.models import RegisteredBlock
 
 
 register = template.Library()
 
 
-def _print_block(block, place, block_type, related_to_content, request):
-    if related_to_content:  # always print block that is marked for that content
-        return True
-    if block_type == 'block' and issubclass(block, Block) or \
-       block_type == 'contentblock' and issubclass(block, ContentBlock) or \
-       block_type == 'sectionblock' and issubclass(block, SectionBlock):
+def _print_block(block, place, block_type, request):
+    if block_type == 'block' and isinstance(block, Block) or \
+       block_type == 'contentblock' and isinstance(block, ContentBlock) or \
+       block_type == 'sectionblock' and isinstance(block, SectionBlock):
         return block.get_registered_item().print_block(place, request.get_full_path())
     else:
         return False
 
 
-def _render_blocks_list(blocks, request, obj, place, block_type, context, related_to_content=False):
+def _render_blocks_list(blocks, request, obj, place, block_type, context):
     rendered_blocks = []
-    for registered_block in blocks:
-        block = registered_block.get_registry_item_class()
-        if not _print_block(block, place, block_type, related_to_content, request):
+    for block in blocks:
+        if not _print_block(block, place, block_type, request):
             continue
         # building render method arguments
         render_args = [request, place]
-        if issubclass(block, ContentBlock) or issubclass(block, SectionBlock):
+        if isinstance(block, ContentBlock) or isinstance(block, SectionBlock):
             render_args.append(obj)
         render_args.append(context)
-        if related_to_content:
-            block_content_relation = registered_block.get_content_related_block(
-                obj, place,
-            )
-            render_args.append(block_content_relation)
         # append the block rendering to list
         rendered_blocks.append(block.render(*render_args))
     return rendered_blocks
@@ -66,30 +58,34 @@ def _render_blocks(request, obj, place, block_type, context):
     page_content = context.get('content', None)
 
     rendered_blocks = []
-    registered_blocks = RegisteredBlock.objects.actives(ordered=True)
+    registered_blocks = RegisteredBlock.objects.actives()
 
     if page_content and page_content.has_related_blocks:
-        content_related_blocks = BlockContentRelation.objects.filter(
-            content=page_content)
         # removing from registered_blocks all the "repeated" blocks
         # if defined as "repeated" in related block configuration
-        registered_blocks = registered_blocks.exclude(
-            blockcontentrelation__in=content_related_blocks.filter(Q(
-                placed_at=place, overwrite_if_place=True) | Q(
-                overwrite_allways=True)))
+        block_with_no_dups = RegisteredBlock.objects.filter(
+            content=page_content,
+        ).filter(Q(placed_at=place, overwrite_if_place=True) | \
+                 Q(overwrite_always=True))
+        no_dups_ids = [b.id for b in block_with_no_dups]
+        ids_to_remove = []
+        for no_dup_block in block_with_no_dups:
+            ids_to_remove.extend(
+                [b.id for b in RegisteredBlock.objects.filter(
+                    module=no_dup_block.module, class_name=no_dup_block.class_name,
+                 ).exclude(id__in=no_dups_ids)],
+            )
+        registered_blocks = registered_blocks.exclude(id__in=ids_to_remove)
+    if obj and isinstance(obj, BaseContent) and obj.has_related_blocks:
+        registered_blocks = registered_blocks | RegisteredBlock.objects.actives().filter(
+            content=obj, placed_at=place)
+    registered_blocks = registered_blocks.order_by('order')
+
+    blocks = registered_blocks.get_items()
 
     # first we get the rendered blocks of those that are "generic"
-    rendered_blocks = _render_blocks_list(registered_blocks, request, obj,
-                                              place, block_type, context)
-    if obj and isinstance(obj, BaseContent) and obj.has_related_blocks:
-        # render the blocks related to the content.
-        # note that obj can be be different that page_content (can be None).
-        # obj is page_content when calling render_content_blocks templatetag
-        blocks_related_to_content = RegisteredBlock.objects.filter(
-            blockcontentrelation__in=BlockContentRelation.objects.filter(
-                content=obj, placed_at=place))
-        rendered_blocks += _render_blocks_list(blocks_related_to_content,
-            request, obj, place, 'contentblock', context, related_to_content=True)
+    rendered_blocks = _render_blocks_list(blocks, request, obj,
+                                          place, block_type, context)
 
     wrapped_blocks = ['<div class="blockWrapper">%s</div>' % s for s in rendered_blocks]
 
@@ -249,7 +245,7 @@ def do_render_single_block(parser, token):
     module = '.'.join(splitted_block_name[:-1])
     classname = splitted_block_name[-1]
     try:
-        block = RegisteredBlock.objects.get(module=module, class_name=classname).get_registry_item_class()
+        block = RegisteredBlock.objects.get(module=module, class_name=classname).get_registry_item()
     except RegisteredBlock.DoesNotExist:
         block = None
     return RenderSingleBlockNode(block)

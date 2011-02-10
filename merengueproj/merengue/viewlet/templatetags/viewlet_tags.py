@@ -34,7 +34,7 @@ class RenderViewletNode(template.Node):
         request = context.get('request', None)
         try:
             if self.registered_viewlet is not None:
-                viewlet = self.registered_viewlet.resolve(context).get_registry_item_class()
+                viewlet = self.registered_viewlet.resolve(context).get_registry_item()
             else:
                 viewlet = None
             return viewlet.render(request, context)
