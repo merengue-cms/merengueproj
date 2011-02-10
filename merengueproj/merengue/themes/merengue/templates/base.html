@@ -1,5 +1,5 @@
 {% extends "base/layout.html" %}
-{% load i18n inlinetrans breadcrumbs messagebox %}
+{% load i18n inlinetrans breadcrumbs messagebox section_tags %}
 
 {% block shortcut %}
  <link rel="shortcut icon" href="{{ THEME_MEDIA_URL }}img/favicon.ico" type="image/gif" />
@@ -98,13 +98,16 @@
 
   <div id="content" class="{% block contentclass %}withsidebar{% endblock %}">
     <div id="breadcrumbs">
+      {% block breadcrumbs %}
         {% include "inc.breadcrumbs.html" %}
-        {% block contentbreadcrumbs %}
-            {% block breadcrumbs %}
-                {% block extrabreadcrumbs %}
-                {% endblock %}
+        {% block extrabreadcrumbs %}
+            {% block sectionbreadcrumbs %}
+                {% if section %}
+                    {% section_breadcrumbs_tag section %}
+                {% endif %}
             {% endblock %}
         {% endblock %}
+      {% endblock %}
     </div>
     <div id="messagebox">
       {% messagebox %}
