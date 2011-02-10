@@ -25,6 +25,7 @@ from merengue.registry.signals import item_registered
 
 class Viewlet(RegistrableItem):
     model = RegisteredViewlet
+    singleton = True
 
     @classmethod
     def get_category(cls):

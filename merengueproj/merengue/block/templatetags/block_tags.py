@@ -222,7 +222,7 @@ class RenderSingleBlockNode(template.Node):
         try:
             obj = None
             place = ''
-            if not ContentBlock in self.block.mro() and not SectionBlock in self.block.mro():
+            if not ContentBlock in self.block.__class__.mro() and not SectionBlock in self.block.__class__.mro():
                 return self.block.render(request, place, context)
             else:
                 return self.block.render(request, obj, place, context)
