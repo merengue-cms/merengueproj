@@ -678,6 +678,10 @@ div.contentFiles ul {
 	padding-left: 20px;
 }
 
+#content-main h2.element-action {
+    font-size: 1em;
+}
+
 /* ----- multimedia viewer  ----- */
 .simpleImgGallery2 {
 	border-style: dotted !important;
