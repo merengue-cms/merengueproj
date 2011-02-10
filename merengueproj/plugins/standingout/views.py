@@ -27,6 +27,7 @@ def standingout_list(request, filters=None, extra_context=None):
     filters = filters or {}
     filters_section = {}
     section = None
+    standingouts = None
     standingouts_base = get_standingouts().filter(**filters)
     if extra_context and 'section' in extra_context:
         section = extra_context['section']
