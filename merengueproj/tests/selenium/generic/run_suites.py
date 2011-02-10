@@ -18,6 +18,7 @@
 
 import os
 import sys
+import shutil
 
 
 def run_all_suite():
@@ -33,17 +34,24 @@ USE: python run_suites.py 'url base for selenium test, as http://localhost:8000/
         pwd = os.path.dirname(os.path.abspath(__file__))
         extensions_file = os.path.join(os.path.abspath('..'), 'extensions', 'user-extensions.js')
         selenium_file = os.path.join(pwd, 'selenium-server.jar')
+        variables_file = os.path.join(pwd, 'variables.html')
+        firefox_profile = os.path.join(pwd, '..', 'firefox-profile')
         if os.path.exists(extensions_file) and os.path.exists(selenium_file):
             for directory in directory_list:
-                os.chdir(os.path.join(pwd, directory))
-                suite_file = os.path.join(pwd, directory, 'suite.html')
+                os.chdir(pwd)
+                directory_path = os.path.join(pwd, directory)
+                suite_file = os.path.join(directory_path, 'suite.html')
                 results_file = os.path.join(pwd, 'results', directory + '.html')
-                os.system('java -jar %s -htmlSuite "*firefox" "%s" "%s" "%s" -userExtensions "%s"' \
+                variables_copy = os.path.join(directory_path, 'variables.html')
+                shutil.copy(variables_file, variables_copy)
+                os.system('java -jar %s -firefoxProfileTemplate %s -htmlSuite "*firefox" "%s" "%s" "%s" -userExtensions "%s"' \
                               % (selenium_file,
+                                 firefox_profile,
                                  sys.argv[1],
                                  suite_file,
                                  results_file,
                                  extensions_file))
+                os.remove(variables_copy)
         else:
             print 'ERROR: File selenium-server.jar/user-extensions.js can not be found.'
 
