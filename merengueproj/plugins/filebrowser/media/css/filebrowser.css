@@ -33,10 +33,10 @@ div.addlink {
 }
 
 div.file button {
-  border: 1px solid #999;
-  text-decoration: none;
-  font-size: 10px;
-  margin-left: 3px;
+    border: 1px solid #999;
+    text-decoration: none;
+    font-size: 10px;
+    margin-left: 3px;
 }
 
 div.image {
@@ -60,7 +60,7 @@ div.object-buttons {
     margin-left: 0;
 }
 
-div.object-buttons ul li {
+#content div.object-buttons ul li {
     display: inline-block;
     margin-right: 0.5em;
 }
@@ -87,7 +87,7 @@ div.object-buttons ul li.docEdit a {
     background: transparent url(../img/document-text-editor.png) no-repeat left bottom;
 }
 
-#content .action-buttons p.noContent {
+.action-buttons p.noContent {
     background: transparent url("../img/info-icon.png") no-repeat left center;
     padding-left: 20px;
 }
