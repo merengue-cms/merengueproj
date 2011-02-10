@@ -50,7 +50,7 @@ These are the steps for installing and executing the Merengue
 1. Installing the selenium IDE Firefox plugin, in the `download page`_.
 2. Make sure that *English* is the first language preference in Firefox.
 3. Launch Selenium IDE in Options menu.
-4. Load a needed Selenium Core extension for loading global variables, located in ``merengueproj/tests/selenium/extensions/user-extensions.js.global``. This is done in ``Options`` menu in Selenium IDE.
+4. Load a needed Selenium Core extension for loading global variables, located in ``merengueproj/tests/selenium/extensions/user-extensions.js``. This is done in ``Options`` menu in Selenium IDE.
 5. Change the ``merengueproj/tests/selenium/generic/variables.html`` file, setting the ``TEST_DATA_DIR`` variable, which have to point to the absolute path to ``merengueproj/tests/selenium/test-data`` directory.
 6. Open any test suite (``suite.html`` file) located in the subdirectories of ``merengueproj/tests/selenium/generic`` directory.
 7. Execute it.

@@ -30,13 +30,20 @@ ERROR: Can not found base url.
 USE: python run_suites.py 'url base for selenium test, as http://localhost:8000/'
 """
     else:
-        if 'selenium-server.jar' in os.listdir('.') and 'user-extensions.js' in os.listdir('.'):
+        pwd = os.path.dirname(os.path.abspath(__file__))
+        extensions_file = os.path.join(os.path.abspath('..'), 'extensions', 'user-extensions.js')
+        selenium_file = os.path.join(pwd, 'selenium-server.jar')
+        if os.path.exists(extensions_file) and os.path.exists(selenium_file):
             for directory in directory_list:
-                os.system('java -jar selenium-server.jar -htmlSuite "*firefox" "%s" "%s" "%s" -userExtensions "%s"' \
-                              % (sys.argv[1],
-                                 os.path.join(os.path.abspath(directory), 'suite.html'),
-                                 os.path.join(os.path.abspath('.'), 'results', directory + '.html'),
-                                 os.path.join(os.path.abspath('.'), 'user-extensions.js')))
+                os.chdir(os.path.join(pwd, directory))
+                suite_file = os.path.join(pwd, directory, 'suite.html')
+                results_file = os.path.join(pwd, 'results', directory + '.html')
+                os.system('java -jar %s -htmlSuite "*firefox" "%s" "%s" "%s" -userExtensions "%s"' \
+                              % (selenium_file,
+                                 sys.argv[1],
+                                 suite_file,
+                                 results_file,
+                                 extensions_file))
         else:
             print 'ERROR: File selenium-server.jar/user-extensions.js can not be found.'
 
