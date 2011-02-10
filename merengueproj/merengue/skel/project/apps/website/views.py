@@ -17,13 +17,13 @@
 
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from plugins.core.config import PluginConfig as CoreConfig
+from merengue.pluggable.utils import get_plugin
 from merengue.base.models import BaseContent
 
 
 def index(request):
     """ Index page. You can override as you like """
-    core_config = CoreConfig().get_config()
+    core_config = get_plugin('core').get_config()
     main_content_index = core_config['home_initial_content'].get_value()
     content = BaseContent.objects.get(pk=main_content_index).get_real_instance()
     return render_to_response([content._meta.content_view_template,
