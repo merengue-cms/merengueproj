@@ -355,6 +355,7 @@ li.linkAdmin a {
     margin-left:32px;
     margin-top:20px;
     padding-left:30px;
+    font-size: 12px;
 }
 
 
@@ -663,6 +664,10 @@ div.contentFiles ul {
 
 #content div.object-buttons ul li.cancelEdit a {
     background: transparent url("../img/edit-undo.png") no-repeat left bottom;
+}
+
+#content div.object-buttons ul li.docEdit a {
+    background: transparent url("../img/document-text-editor.png") no-repeat left bottom;
 }
 
 #content div.object-buttons ul li.createFolder a span,
