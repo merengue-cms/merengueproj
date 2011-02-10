@@ -59,7 +59,7 @@
          {% for d in dirs %}
             <tr class="{% cycle row1,row2 %}">
               <td><input type="checkbox" name="dir_{{ forloop.counter }}" id="dir_{{ forloop.counter }}" value="{{ d.name }}" /></td>
-              <td>
+              <td class="contentTitle">
                <label for="dir_{{ forloop.counter }}" class="folder">
                 {% if d.path %}
                  <a href="{% filebrowser_url filebrowser_dir_listing repository_name=repository.name,path=d.path %}">{{ d.name|inline_truncate:40 }}</a>
