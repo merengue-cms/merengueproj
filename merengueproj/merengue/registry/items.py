@@ -124,9 +124,8 @@ class ContentTypeProvider(object):
 
 class ContentTypeFilterProvider(ContentTypeProvider):
 
-    @classmethod
-    def is_renderizable(cls, content_type):
-        contenttypes_config = cls.get_config().get('contenttypes', None)
+    def match_type(self, content_type):
+        contenttypes_config = self.get_config().get('contenttypes', None)
         if (not contenttypes_config or
             contenttypes_config.get_value() == params.NOT_PROVIDED):
             return True
