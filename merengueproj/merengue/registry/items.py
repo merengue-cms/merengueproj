@@ -104,6 +104,49 @@ class RegistrableItem(object):
             del cls._cached_registered_item
 
 
+def _get_children_classes(content_type):
+    subclasses = content_type.__subclasses__()
+    result = []
+    for subclass in subclasses:
+        result += _get_children_classes(subclass)
+        result += [subclass]
+    return result
+
+
+def _get_all_children_classes(content_type=None):
+    if not content_type:  # to avoid circular import
+        from merengue.base.models import BaseContent
+        content_type = BaseContent
+    return [(children_class._meta.module_name, children_class._meta.verbose_name)
+            for children_class in _get_children_classes(content_type)]
+
+
+class ContentTypeProvider(object):
+
+    config_params = [
+        params.List(
+            name="contenttypes",
+            label=_("Content types that whant to filter"),
+            choices=_get_all_children_classes,
+        ),
+    ]
+
+
+class ContentTypeFilterProvider(ContentTypeProvider):
+
+    @classmethod
+    def is_renderizable(cls, content_type):
+        contenttypes_config = cls.get_config().get('contenttypes', None)
+        if (not contenttypes_config or
+            contenttypes_config.get_value() == params.NOT_PROVIDED):
+            return True
+        elif content_type:
+            cts = contenttypes_config.get_value()
+            return content_type.class_name in cts
+        else:
+            return False
+
+
 class SectionFilterItemProvider(object):
 
     config_params = [
