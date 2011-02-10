@@ -19,8 +19,8 @@ from django import template
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
 
+from merengue.pluggable.utils import get_plugin
 from plugins.feedback.forms import CaptchaFreeThreadedCommentForm
-from plugins.feedback.config import PluginConfig
 from threadedcomments.models import FreeThreadedComment
 
 
@@ -36,9 +36,10 @@ def content_comments(context, content):
         comments = FreeThreadedComment.objects.all_for_object(content_object=content, parent__isnull=True).order_by('date_submitted')
     else:
         comments = FreeThreadedComment.public.all_for_object(content_object=content, parent__isnull=True).order_by('date_submitted')
-    number_of_comments = PluginConfig.get_config().get('number_of_comments').get_value()
-    show_children = PluginConfig.get_config().get('show_children').get_value()
-    show_links = PluginConfig.get_config().get('show_links').get_value()
+    plugin_config = get_plugin('feedback').get_config()
+    number_of_comments = plugin_config.get('number_of_comments').get_value()
+    show_children = plugin_config.get('show_children').get_value()
+    show_links = plugin_config.get('show_links').get_value()
     has_pagination = number_of_comments > 0
     return {'content': content,
             'MEDIA_URL': context['MEDIA_URL'],

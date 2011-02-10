@@ -21,6 +21,7 @@ from django.utils.translation import ugettext_lazy as _
 from merengue.block.blocks import Block
 from merengue.registry import params
 from merengue.registry.items import BlockQuerySetItemProvider
+from merengue.viewlet.models import RegisteredViewlet
 from plugins.itags.viewlets import TagCloudViewlet
 
 
@@ -43,7 +44,10 @@ class TagCloudBlock(BlockQuerySetItemProvider, Block):
         config = self.get_config()
         limit = config.get('max_tags_in_cloud', []).get_value()
         filter_section = config.get('filtering_section', False).get_value()
-        tag_cloud = TagCloudViewlet.get_tag_cloud(request, context, limit, filter_section)
+        reg_viewlet = RegisteredViewlet.objects.by_item_class(
+            TagCloudViewlet,
+        ).get()
+        tag_cloud = reg_viewlet.get_registry_item().get_tag_cloud(request, context, limit, filter_section)
         if not tag_cloud:
             return ""
         return self.render_block(request, template_name='itags/blocks/tagcloud.html',

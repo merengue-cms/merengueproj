@@ -40,9 +40,8 @@ class TagCloudViewlet(ViewLetQuerySetItemProvider, Viewlet):
         ),
     ]
 
-    @classmethod
-    def get_tag_cloud(cls, request, context, limit=20, filter_section=None):
-        section = filter_section and cls._get_section(request, context)
+    def get_tag_cloud(self, request, context, limit=20, filter_section=None):
+        section = filter_section and self._get_section(request, context)
         dbparams = {'tag_table': Tag._meta.db_table,
                     'tag_id_field': Tag._meta.pk.name,
                     'item_table': TaggedItem._meta.db_table,
@@ -88,11 +87,10 @@ class TagCloudViewlet(ViewLetQuerySetItemProvider, Viewlet):
         tag_cloud.sort(key=attrgetter('tag_name'))
         return tag_cloud
 
-    @classmethod
-    def render(cls, request, context):
-        limit = cls.get_config().get('max_tags_in_cloud', []).get_value()
-        filter_section = cls.get_config().get('filtering_section', False).get_value()
-        tag_cloud = cls.get_tag_cloud(request, context, limit, filter_section)
-        return cls.render_viewlet(request, template_name='itags/viewlets/tagcloud.html',
+    def render(self, request, context):
+        limit = self.get_config().get('max_tags_in_cloud', []).get_value()
+        filter_section = self.get_config().get('filtering_section', False).get_value()
+        tag_cloud = self.get_tag_cloud(request, context, limit, filter_section)
+        return self.render_viewlet(request, template_name='itags/viewlets/tagcloud.html',
                                   context={'taglist': tag_cloud,
                                            'filter_section': filter_section})

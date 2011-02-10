@@ -19,6 +19,7 @@
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.block.blocks import Block
+from merengue.registry.items import ContentTypeFilterProvider
 from plugins.addthis import params
 
 
@@ -34,13 +35,13 @@ DEFAULT_SERVICES = [
     ]
 
 
-class AddThisBlock(Block):
+class AddThisBlock(ContentTypeFilterProvider, Block):
     name = 'AddThisBlock'
     default_place = 'aftercontent'
     help_text = _('Block that displays AddThis links')
     verbose_name = _('AddThis service block')
 
-    config_params = [
+    config_params = ContentTypeFilterProvider.config_params + [
         params.AjaxListParam(
             name="services",
             label=_("Services do you want to show on "),
@@ -52,8 +53,11 @@ class AddThisBlock(Block):
                *args, **kwargs):
         services = self.get_config().get(
             'services', []).get_value()
-        return self.render_block(
-            request, template_name='addthis/links_block.html',
-            block_title=_('Share this'),
-            context={'services': services},
-        )
+        if self.match_type(context.get('content', None)):
+            return self.render_block(
+                request, template_name='addthis/links_block.html',
+                block_title=_('Share this'),
+                context={'services': services},
+                )
+        else:
+            return ''

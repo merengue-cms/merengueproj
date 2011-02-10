@@ -19,7 +19,7 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _, ugettext_lazy
 
 from merengue.block.blocks import Block
-from merengue.block.models import RegisteredBlock
+from merengue.pluggable.models import RegisteredPlugin
 
 
 class RSSGlobalFeed(Block):
@@ -30,8 +30,8 @@ class RSSGlobalFeed(Block):
 
     def render(self, request, place, context, *args, **kwargs):
         from plugins.rss.config import PluginConfig
-        plugin = RegisteredBlock.objects.by_item_class(PluginConfig).get()
-        portal_title = plugin.get_config().get('portal', '').get_value()
+        plugin = RegisteredPlugin.objects.by_item_class(PluginConfig).get()
+        portal_title = plugin.get_config().get('portal', '')
         feed_url = reverse('rss_views')
         return self.render_block(
             request, template_name='rss/global_block.html',

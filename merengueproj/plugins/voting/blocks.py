@@ -19,26 +19,30 @@ from django.utils.translation import ugettext as _, ugettext_lazy
 
 from merengue.block.blocks import ContentBlock
 from merengue.registry import params
-from merengue.registry.items import BlockSectionFilterItemProvider
+from merengue.registry.items import (BlockSectionFilterItemProvider,
+                                     ContentTypeFilterProvider)
 
 from plugins.voting.utils import get_can_vote
 
 
-class VotingBlock(BlockSectionFilterItemProvider, ContentBlock):
+class VotingBlock(BlockSectionFilterItemProvider, ContentTypeFilterProvider, ContentBlock):
     name = 'voting'
     default_place = 'beforecontent'
     help_text = ugettext_lazy('Block that provides the voting functionality')
     verbose_name = ugettext_lazy('Voting block')
 
-    config_params = BlockSectionFilterItemProvider.config_params + [
-        params.Bool(name='readonly', label=_('is readonly?'),
-                    default=False),
-    ]
+    config_params = (BlockSectionFilterItemProvider.config_params +
+                     ContentTypeFilterProvider.config_params +
+                     [params.Bool(name='readonly', label=_('is readonly?'),
+                                  default=False)])
 
     def render(self, request, place, content, context, *args, **kwargs):
         readonly = self.get_config().get('readonly').get_value()
-        return self.render_block(request, template_name='voting/block_voting.html',
-                                 block_title=_('Vote content'),
-                                 context={'content': content,
-                                          'can_vote': get_can_vote(content, request.user),
-                                          'readonly': readonly})
+        if self.match_type(content):
+            return self.render_block(request, template_name='voting/block_voting.html',
+                                     block_title=_('Vote content'),
+                                     context={'content': content,
+                                              'can_vote': get_can_vote(content, request.user),
+                                              'readonly': readonly})
+        else:
+            return ''

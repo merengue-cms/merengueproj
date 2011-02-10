@@ -38,5 +38,4 @@ class GoogleSearchBlock(Block):
                *args, **kwargs):
         return self.render_block(request, template_name='googlesearch/block_googlesearch.html',
                                  block_title=_('Search'),
-                                 context={'plugin_config': self.get_config()},
-                                 block_content_relation=block_content_relation)
+                                 context={'plugin_config': self.get_config()})
