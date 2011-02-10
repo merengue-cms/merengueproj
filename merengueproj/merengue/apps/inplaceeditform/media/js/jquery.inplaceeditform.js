@@ -1,9 +1,10 @@
 (function($) {
-    $.fn.inplaceeditform = function (o, callback) {
+    $.fn.inplaceeditform = function (opts, callback) {
         var defaults = {"getFieldUrl": "/implaceeditform/get_field/",
-            "saveURL": "/inplaceeditform/save/"};
+            "saveURL": "/inplaceeditform/save/",
+            "successText": "Successfully saved"};
         var enabled = true;
-        o = $.extend(defaults, o || {});
+        opts = $.extend(defaults, opts || {});
         this.each(function () {
             $(this).click(function() {
                 if(!enabled) {
@@ -33,7 +34,7 @@
                 var _this = $(this);
                 $.ajax({
                 data: data,
-                url: o.getFieldUrl,
+                url: opts.getFieldUrl,
                 type: "GET",
                 async:true,
                 dataType: 'json',
@@ -78,10 +79,12 @@
 
             function inplaceApply() {
                 var form = $(this).parents("form.inplaceeditform");
+                form.animate({opacity: 0.1});
+                form.find("ul.errors").fadeOut(function(){$(this).remove();});
                 var inplaceedit_conf = form.prev().find("span.config");
                 var data = getDataToRequest(inplaceedit_conf);
                 var field_id = form.find("span.field_id").html();
-                var get_value = $(this).data("get_value");
+                var get_value = $(this).data("get_value"); // A hook
                 if (get_value != null) {
                    var value = get_value(form, field_id);
                 }
@@ -93,7 +96,7 @@
 
                 $.ajax({
                 data: data,
-                url:  o.saveURL,
+                url:  opts.saveURL,
                 type: "POST",
                 async: true,
                 dataType: 'json',
@@ -102,19 +105,27 @@
                         alert("The server is down");
                     }
                     else if (response.errors) {
-                        alert(response.errors);
+                        form.animate({opacity: 1});
+                        form.prepend("<ul class='errors'><li>" + response.errors + "</li></ul>");
                     }
                     else {
+                        _this.parent().fadeOut();
+                        _this.fadeIn();
+                        form.removeClass("inplaceeditformsaving");
                         var inplace_span = inplaceedit_conf.parents(".inplaceedit");
                         var config = inplace_span.find("span.config").html();
-                        inplace_span.html(response.value + "<span class='config'>" + config + "</span>");
+                        inplace_span.html(response.value + "<span class='config' style='display:none;'>" + config + "</span>");
+                        var success_message = $("<ul class='success'><li>" + opts.successText + "</li></ul>")
+                        inplace_span.prepend(success_message);
+                        setTimeout(function(){
+                            success_message.fadeOut(function(){
+                                $(this).remove();
+                            });
+                        }, 2000);
                         inplace_span.show();
                         _this.parent().remove();
                     }
                 }});
-
-                $(this).parent().fadeOut();
-                $(this).fadeIn();
                 return false;
             }
 

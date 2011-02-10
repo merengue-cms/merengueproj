@@ -52,7 +52,7 @@ button.apply span {
     vertical-align: bottom;
 }
 
-.save  {
+.success  {
     list-style: none;
     list-style-image: none !important;
     padding: 0;
@@ -60,7 +60,7 @@ button.apply span {
     margin-bottom: 5px;
 }
 
-.save li {
+.success li {
     border: 1px solid #118811;
     margin: 0;
     padding: 5px 5px 5px 5px;
@@ -69,7 +69,7 @@ button.apply span {
     vertical-align: middle;
 }
 
-.save img {
+.success img {
     text-decoration: none;
     border: none;
     vertical-align: bottom;
@@ -84,3 +84,4 @@ button.apply span {
 span.textareainplaceedit {
     display: block;
 }
+
