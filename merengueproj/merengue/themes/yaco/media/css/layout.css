@@ -640,7 +640,12 @@ div.contentFiles ul {
 
 /* ----- filebrowser ----- */
 #content div.object-buttons ul {
-	margin-left: 0;
+    margin-left: 0;
+}
+
+#content div.object-buttons ul li{
+    display: inline-block;
+    margin-right: 0.5em;
 }
 
 #content div.object-buttons ul li a {
@@ -679,8 +684,8 @@ div.contentFiles ul {
 }
 
 #content .action-buttons p.noContent {
-	background: transparent url("../img/info_icon.png") no-repeat left center;
-	padding-left: 20px;
+    background: transparent url("../img/info_icon.png") no-repeat left center;
+    padding-left: 20px;
 }
 
 #content-main h2.element-action {
