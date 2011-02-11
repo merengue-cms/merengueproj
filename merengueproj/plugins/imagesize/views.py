@@ -1,4 +1,5 @@
-# Copyright (c) 2010 by Yaco Sistemas <dgarcia@yaco.es>
+# encoding: utf-8
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -23,10 +24,12 @@ except ImportError:
     import Image  # pyflakes:ignore
 
 from django.conf import settings
+from django.contrib.sites.models import Site
 from django.http import HttpResponse
 from django.utils.translation import ugettext as _
 from notification import models as notification
 
+from merengue.multimedia.models import Photo
 from plugins.imagesize.models import ImageSize
 
 
@@ -52,7 +55,23 @@ def notify():
             try:
                 img = Image.open(fullpath)
                 w, h = img.size
-                imgstr = '%s (%sx%s)' % (path, w, h)
+                imgstr = u'%s (%sx%s)' % (path, w, h)
+                try:
+                    photo = Photo.objects.get(
+                        image=os.path.join(imagesize.folder, path))
+                    if photo.multimediarelation_set.count():
+                        imgstr = u''
+                        for content_rel in photo.multimediarelation_set.all():
+                            content_path = content_rel.content.get_real_instance().public_link()
+                            image_path = photo.image.url
+                            domain = 'http://%s' % Site.objects.all()[0].domain
+                            content_url = '%s%s' % (domain, content_path)
+                            image_url = '%s%s' % (domain, image_path)
+                            imgstr += u'%s en el contenido %s con dimensiones (%sx%s)' % (image_url,
+                                                                                          content_url,
+                                                                                          w, h)
+                except Photo.DoesNotExist:
+                    pass
                 if w > width or h > height:
                     bigimages[imagesize] = bigimages.get(imagesize, []) +\
                                            [imgstr]
