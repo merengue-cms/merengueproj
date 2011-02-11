@@ -26,11 +26,12 @@ from django.template.loader import render_to_string
 from merengue.base.models import BaseContent
 from merengue.registry.params import NOT_PROVIDED
 
-from plugins.rss.config import PluginConfig
+from merengue.pluggable.utils import get_plugin
 
 
 def rss_views(request):
 
+    PluginConfig = get_plugin('rss')
     contenttypes = PluginConfig.get_config().get(
         'contenttypes', []).get_value()
 
