@@ -75,9 +75,12 @@ div.object-buttons ul li.createFolder a {
     background: transparent url(../img/folder-new.png) no-repeat left bottom;
 }
 
-div.object-buttons ul li.createFile a,
-div.object-buttons ul li.createDocument a {
+div.object-buttons ul li.createFile a {
     background: transparent url(../img/go-up.png) no-repeat left bottom;
+}
+
+div.object-buttons ul li.createDocument a {
+    background: transparent url(../img/new-doc.png) no-repeat left bottom;
 }
 
 div.object-buttons ul li.cancelEdit a {
@@ -90,6 +93,14 @@ div.object-buttons ul li.docEdit a {
 .action-buttons p.noContent {
     background: transparent url("../img/info-icon.png") no-repeat left center;
     padding-left: 20px;
+}
+div.action-buttons p {
+    background: transparent url("../img/info-icon.png") no-repeat left center;
+    padding-left: 21px;
+    font-style: italic;
+    color: #717171;
+    margin-top: 1em;
+    font-size: 12px;
 }
 
 table#webfs-table label {
