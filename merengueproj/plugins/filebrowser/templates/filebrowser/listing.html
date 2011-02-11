@@ -75,7 +75,7 @@
          {% for f in files %}
             <tr class="{% cycle row1,row2 %}">
               <td><input type="checkbox" name="file_{{ forloop.counter }}" id="file_{{ forloop.counter }}" value="{{ f.name }}" /></td>
-              <td>
+              <td class="contentTitle">
                <label for="file_{{ forloop.counter }}" class="file">
                 <a href="{% filebrowser_url filebrowser_download repository_name=repository.name,path=f.path %}">{{ f.name|inline_truncate:40 }}</a>
                </label>
@@ -87,7 +87,7 @@
          {% for doc in documents %}
             <tr class="{% cycle row1,row2 %}">
               <td><input type="checkbox" name="doc_{{ forloop.counter }}" id="doc_{{ forloop.counter }}" value="{{ doc.slug }}" /></td>
-              <td>
+              <td class="contentTitle">
               	<label for="doc_{{ forloop.counter }}" class="document">
 				 <a href="{% filebrowser_url filebrowser_viewdoc repository_name=repository.name,doc_slug=doc.slug %}">{{ doc.title|inline_truncate:40 }}</a>
 		   		</label>
