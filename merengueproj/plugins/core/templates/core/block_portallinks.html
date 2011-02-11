@@ -1,4 +1,4 @@
-{% load i18n inlinetrans %}
+{% load i18n inlinetrans inplace_edit %}
 
 <div id="portal-{{ category }}-links" class="block">
   {% block portallinktitle %}
@@ -12,7 +12,7 @@
             {% if link.image %}
                 <img src="{{ MEDIA_URL }}{{ link.image }}" alt="{{ link }}" title="{{ link }}"/>
             {% else %}
-                {{ link }}
+                {% inplace_edit "link.name" %}
             {% endif %}
         </span></a>
     </li>
