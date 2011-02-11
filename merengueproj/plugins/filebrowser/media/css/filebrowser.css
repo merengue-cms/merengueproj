@@ -32,13 +32,6 @@ div.addlink {
     margin-left: 20px;
 }
 
-div.file button {
-    border: 1px solid #999;
-    text-decoration: none;
-    font-size: 10px;
-    margin-left: 3px;
-}
-
 div.image {
     float: left;
     margin: 2em;
