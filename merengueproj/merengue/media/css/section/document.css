@@ -46,6 +46,10 @@
     clear: left;
 }
 
+.document-section .mceEditor  {
+    clear: both;
+}
+
 .document-section-actions {
     position: absolute;
     left: 25px;

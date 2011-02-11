@@ -1,4 +1,4 @@
-{% load smart_if section_filters %}
+{% load smart_if section_filters inplace_edit %}
 
 {% if structure.new_level %}
     <ul class="menu_ul menu{{node.level}}  menuDepth{{ node.level|menu_less:min_level }}">
@@ -6,7 +6,7 @@
 {% with node.get_absolute_url as node_url %}
 {% with node.get_descendants as node_descendants %}
     <li id="{{ node.slug }}" class="item {% if structure.new_level %}first{% endif %} {% if node_descendants %}haveDescendants{% endif %} {% ifequal node menu_item %}selected{% endifequal %}{% if node in ancestors %}selectedAncestors{% endif %}">
-        <a href="{{ node.get_absolute_url }}" class="item {% ifequal node menu_item %}selected{% endifequal %}{% if node in ancestors %}selectedAncestors{% endif %}  menu{{node.level}}">{{ node.name }}</a>
+        <a href="{{ node.get_absolute_url }}" class="item {% ifequal node menu_item %}selected{% endifequal %}{% if node in ancestors %}selectedAncestors{% endif %}  menu{{node.level}}">{% inplace_edit "node.name" %}</a>
     {% if not node_descendants %}
         </li>
     {% else %}
