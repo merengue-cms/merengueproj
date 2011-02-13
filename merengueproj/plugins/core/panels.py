@@ -29,6 +29,5 @@ class InplaceEditPanel(panels.Panel):
 
 class InlineTransPanel(panels.Panel):
 
-    @classmethod
-    def render(cls, context):
+    def render(self, context):
         return render_to_string('core/panels/inlinetrans.html', context)
