@@ -184,10 +184,12 @@ For accessing to configuration inside an app, you can do like this:
 
 .. code-block:: bash
 
-    >>> from plugins.myplugin.actions import SendPage
-    >>> SendPage.get_config('cc_emails').value
+    >>> from merengue.registry import get_item
+    >>> plugins.myplugin.actions import SendPage
+    >>> sendpage_action = get_item(SendPage)
+    >>> sendpage_action.get_config()['cc_emails'].get_value()
     ['info@yoursite.com',]
-    >>> SendPage.get_config('cc_emails').label
+    >>> sendpage_action.get_config()['cc_emails'].label
     'CC email addresses'
 
 Then, you can have a decoupled actions from a reusable view with this code:
@@ -199,19 +201,21 @@ Then, you can have a decoupled actions from a reusable view with this code:
         def get_url(self, request):
            return HttpResponseRedirect(
                reverse("sendpage",
-                       args=[request.get_full_path()]),
-                       kwargs={'from_email': self.get_config('from_email'),
-                               'cc_emails': self.get_config('cc_emails'),}),
+                       args=[request.get_full_path()],
+                       kwargs={'from_email': self.get_config()['from_email'].get_value(),
+                               'cc_emails': self.get_config()['cc_emails'].get_value(),}),
            )
 
 Or inside view:
 
 .. code-block:: python
 
+    from merengue.registry import get_item
     from plugins.myplugin.actions import SendPage
-    
+
     def sendpage(request, request_path):
-       from_email = SendPage.get_config('from_email')
+       sendpage_action = get_item(SendPage)
+       from_email = sendpage_action.get_config()['from_email'].get_value()
        # ... do stuff
 
 Other way is using ``actions.get_action`` function:
@@ -219,22 +223,9 @@ Other way is using ``actions.get_action`` function:
 .. code-block:: python
 
     from merengue.action import get_action
-    
+
     def sendpage(request, path_to_send):
-        action = get_action('sendpage')
-        from_email = action.config['from_email']
-        cc_emails = action.config['cc_emails']
+        reg_action = get_action('sendpage')
+        from_email = reg_action.config['from_email']
+        cc_emails = reg_action.config['cc_emails']
         # do your staff ...
-
-And... how I can access to configuration of all actions (customized or not)? Using ``actions.get_actions`` method, like this:
-
-.. code-block:: python
-
-    from merengue.action import get_actions
-    
-    def user_actions(request):
-        actions = get_actions(category='user')
-        # ... do stuff
-
-.. note::
-    ``{% get_actions ... %``} templatetag uses ``actions.get_actions`` function inside. So, you can retrieve actions in same way in views as in templates.

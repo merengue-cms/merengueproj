@@ -138,10 +138,10 @@ Let's look at this example:
                                 ('rosa', 'Rosa'),
                                 ('juan', 'Juan')]),
             params.Single(name='season', label=_('season'),
-                        choices=[('spring', _('Spring')),
-                                ('summer', _('Summer')),
-                                ('autumn', _('Autumn')),
-                                ('winter', _('Winter'))]),
+                          choices=[('spring', _('Spring')),
+                                  ('summer', _('Summer')),
+                                  ('autumn', _('Autumn')),
+                                  ('winter', _('Winter'))]),
         ]
 
 Automatically, with this configuration, you can access to registered item in
@@ -155,9 +155,10 @@ he would use these sentences:
 
 .. code-block:: python
 
-    >>> from plugins.fooplugin.config import PluginConfig
-    >>> config = PluginConfig.get_config()
-    >>> print config['friends'].value
+    >>> from merengue.registry import get_items
+    >>> plugin = get_item('plugins.fooplugin.config.PluginConfig')
+    >>> config = plugin.get_config()
+    >>> print config['friends'].get_value()
     ['paco', 'juan']
     >>> print config['friends'].choices
     [('antonio', 'Antonio'), ('paco', 'Paco'), ('rosa', 'Rosa'), ('juan', 'Juan')]
@@ -169,51 +170,74 @@ he would use these sentences:
 If you register a registrable item, you also will save this configuration in
 database. See this example:
 
-    >>> class PersonItem(RegistrableItem):
-    ...     config_params = [
-    ...         params.Bool(name='is_human', default=True),
-    ...         params.Integer(name='age'),
-    ...         params.List(name='friends', choices=('Juan', 'Luis', 'Pepe'))
-    ...     ]
-    ...
-    >>> register(PersonItem)
-    >>> PersonItem.get_config()
+.. code-block:: python
+
+    class PersonItem(RegistrableItem):
+        config_params = [
+            params.Bool(name='is_human', default=True),
+            params.Integer(name='age'),
+            params.List(name='friends', choices=('Juan', 'Luis', 'Pepe'))
+        ]
+
+And now an example use:
+
+.. code-block:: python
+
+    >>> reg_item = register(PersonItem)
+    >>> item = reg_item.get_registry_item()
+    >>> item.get_config()
     {'is_human': <True, Bool>,
     'age': <<class 'merengue.registry.params.NOT_PROVIDED'>, Integer>,
     'friends': <<class 'merengue.registry.params.NOT_PROVIDED'>, List>}
-    >>> reg_item = PersonItem.get_registered_item()
     >>> reg_item.config
     {u'is_human': True}
     >>> reg_item.config['age'] = 30
     >>> reg_item.save()
-    >>> PersonItem.get_config()
+    >>> item.get_config()
     {'is_human': <True, Bool>,
     'age': <30, Integer>,
     'friends': <<class 'merengue.registry.params.NOT_PROVIDED'>, List>}
 
-Merging configurations
-----------------------
+Singleton items
+---------------
 
-Sometimes a plugin developer want to override a default configuration with
-other configurations. This happens for example in block configuration, which
-may be overrided when I place a specific block for a specific content. In this
-case, block configuration was the merging of the global configuration and the
-specific configuration in that content. An example API use:
+Sometimes you need to define a constrain to register only one item for every
+item class. This is named a `singleton`_. In a Merengue plugin, its actions,
+panels and viewlets are singletons, but blocks not (because you can add two
+same blocks in your web).
+
+To define a singleton you have to add a ``singleton=True`` in your registrable
+class definition. See this explanatory example:
 
 .. code-block:: python
 
-    >>> PersonItem.get_config()
-    {'is_human': <True, Bool>,
-    'age': <<class 'merengue.registry.params.NOT_PROVIDED'>, Integer>,
-    'friends': <<class 'merengue.registry.params.NOT_PROVIDED'>, List>}
-    >>> PersonItem.get_merged_config(params.ConfigDict(config_params, {'is_human': False, 'age': 35}))
-    {'is_human': <False, Bool>,
-    'age': <35, Integer>,
-    'friends': <<class 'merengue.registry.params.NOT_PROVIDED'>, List>}
-    >>> PersonItem.get_merged_config(
-    ...     params.ConfigDict(config_params, {'age': 35}),
-    ...     params.ConfigDict(config_params, {'age': 15}),
-    ... )
-    {'is_human': <True, Bool>,
-    'age': <15, Integer>,
-    'friends': <<class 'merengue.registry.params.NOT_PROVIDED'>, List>}
+    class NonSingletonItem(RegistrableItem):
+        pass
+
+    class SingletonItem(RegistrableItem):
+        singleton = True
+
+See what happen if I do some registering tasks:
+
+.. code-block:: python
+
+    >>> register(NonSingletonItem)
+    <RegisteredItem: NonSingletonItem>
+    >>> register(NonSingletonItem)
+    <RegisteredItem: NonSingletonItem>
+    >>> register(SingletonItem)
+    <RegisteredItem: SingletonItem>
+    >>> register(SingletonItem)
+    ...
+    AlreadyRegistered: item class "<class 'fooplugin.SingletonItem'>" is already registered
+    >>> from merengue.registry import get_items, get_item
+    >>> get_item(SingletonItem)
+    <fooplugin.SingletonItem object at 0xaae482c>
+    >>> list(get_items(NonSingletonItem))
+    [<fooplugin.NonSingletonItem object at 0xad60f2c>,
+    <fooplugin.NonSingletonItem object at 0xad60e6c>]
+    >>> get_item(NonSingletonItem)
+    ...
+    MultipleObjectsReturned: get() returned more than one RegisteredItem -- it returned 2! Lookup parameters were {}
+
+.. _`singleton`: http://en.wikipedia.org/wiki/Singleton_pattern

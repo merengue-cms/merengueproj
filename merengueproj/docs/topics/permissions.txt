@@ -246,7 +246,7 @@ Removing a permission to a content
     >>> remove_permission(editor, 'vote', content)
 
 Removing a permission to all contents
-----------------------------------
+-------------------------------------
 
 .. code-block:: python
 
