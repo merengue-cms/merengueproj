@@ -29,7 +29,7 @@ class BaseBlock(RegistrableItem):
 
     def __init__(self, reg_item):
         super(BaseBlock, self).__init__(reg_item)
-        self.content = reg_item.content
+        self.content = getattr(reg_item, 'content', None)
 
     @classmethod
     def get_category(cls):

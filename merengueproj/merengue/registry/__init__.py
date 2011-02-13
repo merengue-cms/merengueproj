@@ -110,9 +110,21 @@ def unregister(item):
 
 
 def unregister_all(item_class):
-    for item in RegisteredItem.objects.by_item_class(item_class):
+    for item in RegisteredItem.objects.by_item_class(item_class).get_items():
         unregister(item)
 
 
-def get_item(name, category):
-    return RegisteredItem.objects.get(name=name, category=category)
+def get_item(item_class):
+    return RegisteredItem.objects.by_item_class(item_class).get().get_registry_item()
+
+
+def get_items(item_class):
+    return RegisteredItem.objects.by_item_class(item_class).get_items()
+
+
+def get_item_by_name(name):
+    return RegisteredItem.objects.by_name(name=name).get_item()
+
+
+def get_items_by_name(name):
+    return RegisteredItem.objects.by_name(name=name).get_items()

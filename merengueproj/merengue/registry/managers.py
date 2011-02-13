@@ -46,6 +46,31 @@ class RegisteredItemQuerySet(QuerySet):
         for item in self.filter():
             yield item.get_registry_item()
 
+    def get_item(self):
+        """ Returns the registrable item (not registered items) """
+        return self.get().get_registry_item()
+
+    def get_by_item(self, item):
+        """ obtain registered item passing by param a RegistrableItem """
+        return self.get(id=item.reg_item.id)
+
+    def by_item_class(self, item_class):
+        """ obtain registered items passing by param a RegistrableItem class """
+        return self.filter(
+            module=item_class.get_module(),
+            class_name=item_class.get_class_name(),
+        )
+
+    def by_name(self, name):
+        """ obtains registered items passing a full dotted name to RegistrableItem class """
+        bits = name.split('.')
+        module = '.'.join(bits[:-1])
+        class_name = bits[-1]
+        return self.filter(
+            module=module,
+            class_name=class_name,
+        )
+
 
 class RegisteredItemManager(models.Manager):
     """ Registered item manager """
@@ -66,11 +91,12 @@ class RegisteredItemManager(models.Manager):
 
     def get_by_item(self, item):
         """ obtain registered item passing by param a RegistrableItem """
-        return self.get(id=item.reg_item.id)
+        return self.get_query_set().get_by_item(item)
 
     def by_item_class(self, item_class):
-        """ obtain registered item passing by param a RegistrableItem """
-        return self.filter(
-            module=item_class.get_module(),
-            class_name=item_class.get_class_name(),
-        )
+        """ obtain registered items passing by param a RegistrableItem class """
+        return self.get_query_set().by_item_class(item_class)
+
+    def by_name(self, name):
+        """ obtains registered items passing a full dotted name to RegistrableItem class """
+        return self.get_query_set().by_name(name)
