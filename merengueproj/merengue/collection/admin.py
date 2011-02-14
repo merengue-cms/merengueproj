@@ -77,6 +77,7 @@ class CollectionAdmin(BaseContentAdmin):
         )
     filter_horizontal = BaseContentAdmin.filter_horizontal + ('content_types', )
     inlines = [IncludeCollectionFilterInline, ExcludeCollectionFilterInline]
+    change_form_template = 'collection/collection_admin_change_form.html'
 
     def queryset(self, request):
         qs = super(CollectionAdmin, self).queryset(request)

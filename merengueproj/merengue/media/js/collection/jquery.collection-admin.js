@@ -37,7 +37,7 @@ var Collection = null;
                 }
             }
             var doAjax = function(cts) {
-                href = '/cms/collection/ajax/get_collection_fields/';
+                href = $('.collection-get-fields-by-ajax').text();
                 $.ajax({
                     url: href,
                     type: "GET",

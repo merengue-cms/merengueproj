@@ -1,0 +1,5 @@
+{% extends "admin/change_form.html" %}
+{% block content %}
+<span style="display: none;" class="collection-get-fields-by-ajax">{% url get_collection_fields %}</span>
+{{ block.super }}
+{% endblock %}
