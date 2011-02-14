@@ -511,22 +511,28 @@ ul.menu_ul {
 div.contentFiles {
     clear: right;
     float: right;
-    border: 1px solid lightgray;
+    border: 1px dotted #54B848;
     margin: 0.5em;
     padding: 0.5em;
     width: 180px;
 }
 
 div.contentFiles h2 {
+    background: transparent url(../img/attached_icon.png) no-repeat left center;
+    padding-left: 25px;
+    margin-bottom: 4px;
     font-size: 1em;
-/*    text-align: right;*/
     margin-top: 0;
 }
+div.contentFiles ul {
+    margin-left: 0.5em;
+}
 
-/*div.contentFiles ul {
-    text-align: right;
-}*/
-
+div.contentFiles ul li {
+    background: transparent url(../img/menu_bullet.png) no-repeat left 7px;
+    padding-left: 12px;
+    font-size: 12px;
+}
 /* ----- calendar  ----- */
 .ui-datepicker .ui-datepicker-header {
     height:25px;
