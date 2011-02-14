@@ -454,8 +454,6 @@ div#coremenu ul.menu1 li a.menu1 {
   right: 98%; 
 } 
 
-/* div#right-sidebar .blockContainer > div */
-         
 div#right-sidebar {
   float: right;
   display: block;
@@ -703,6 +701,15 @@ div.errormessage, div#messagebox ul#info-list {
 
 .eventDates label{
   color: #997B53;
+}
+
+/* filebrowser */
+#content div.addlink {
+    margin-left: 0;
+}
+
+#content div.object-buttons ul {
+    margin-left: 0;
 }
 
 /* Plugin ITag */
