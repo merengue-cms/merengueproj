@@ -62,18 +62,18 @@ for dirpath, dirnames, filenames in os.walk('.'):
 
 
 setup(
-    name = "merengue",
-    version = "0.7.0-alpha0",
-    install_requires = parse_requirements('requirements.txt'),
-    dependency_links = parse_dependency_links('requirements.txt'),
-    author = "Yaco Sistemas",
-    author_email = "msaelices@yaco.es",
-    description = "Django-based CMS with steroids",
+    name="merengue",
+    version="0.7.0-alpha1",
+    install_requires=parse_requirements('requirements.txt'),
+    dependency_links=parse_dependency_links('requirements.txt'),
+    author="Yaco Sistemas",
+    author_email="msaelices@yaco.es",
+    description="Django-based CMS with steroids",
     long_description=(read('README') + '\n\n' + read('CHANGES')),
-    url = "http://www.merengueproject.org/",
+    url="http://www.merengueproject.org/",
     #download_url = 'http://www.merengueproject.org/download/0.5/merengue-0.5.tar.gz',
-    include_package_data = True,
-    classifiers = [
+    include_package_data=True,
+    classifiers=[
         'Framework :: Django',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
@@ -86,7 +86,7 @@ setup(
         'Environment :: Web Environment',
         'Programming Language :: Python',
     ],
-    packages = find_packages(),
-    data_files = data_files,
-    scripts = ['bin/merengue-admin.py'],
+    packages=find_packages(),
+    data_files=data_files,
+    scripts=['bin/merengue-admin.py'],
 )
