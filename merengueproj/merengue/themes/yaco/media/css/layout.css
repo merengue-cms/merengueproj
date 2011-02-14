@@ -569,6 +569,10 @@ div.contentFiles ul li {
 	margin-top:0;
 }
 
+#right-sidebar.blockContainer div#voting {
+    float: none;
+}
+
 .blockContainer div#voting  {
 	float:right;
 	margin: 0.2em 0 0 0.5em;
@@ -590,6 +594,21 @@ div.contentFiles ul li {
 .star-rating ol {
 	left: 42px !important;
 	top:-2px !important;
+}
+
+#content .star-rating li.current-rating {
+    background: transparent url("../img/stars.png") repeat scroll left bottom;
+}
+#content .star-rating ol {
+    background: transparent url("../img/stars.png") repeat-x scroll left top;
+}
+
+#content .star-rating li a:hover {
+    background: transparent url("../img/stars.png") repeat-x scroll left center;;
+}
+
+#content .star-rating a:hover span {
+    color: #54B848;
 }
 
 /* ----- searcher  ----- */
