@@ -519,13 +519,13 @@ div.contentFiles {
 
 div.contentFiles h2 {
     font-size: 1em;
-    text-align: right;
+/*    text-align: right;*/
     margin-top: 0;
 }
 
-div.contentFiles ul {
+/*div.contentFiles ul {
     text-align: right;
-}
+}*/
 
 /* ----- calendar  ----- */
 .ui-datepicker .ui-datepicker-header {
