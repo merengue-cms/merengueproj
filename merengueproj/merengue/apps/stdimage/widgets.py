@@ -23,8 +23,9 @@ class DelAdminFileWidget(AdminFileWidget):
     input_type = 'file'
 
     def render(self, name, value, attrs=None):
+        from stdimage.fields import StdImageFieldFile
         input = super(forms.widgets.FileInput, self).render(name, value, attrs)
-        if value and value != DELETED:
+        if value and value != DELETED and isinstance(value, StdImageFieldFile):
             item = '<tr><td style="vertical-align: middle;">%s</td><td>%s</td>'
             output = []
             output.append('<table style="border-style: none;">')
