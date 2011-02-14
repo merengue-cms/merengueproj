@@ -49,11 +49,11 @@ div.object-buttons {
     margin: 1em 0;
 }
 
-#content div.object-buttons ul {
+div.object-buttons ul {
     margin-left: 0;
 }
 
-#content div.object-buttons ul li {
+div.object-buttons ul li {
     display: inline-block;
     margin-right: 0.5em;
 }
