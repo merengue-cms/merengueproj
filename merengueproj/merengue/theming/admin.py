@@ -25,6 +25,7 @@ from merengue.theming.models import Theme
 class ThemeAdmin(BaseAdmin):
     readonly_fields = ('name', 'description', 'directory_name', 'installed')
     list_display = ('name', 'active', 'directory_name', 'admin_thumbnail', )
+    actions = None
 
     def admin_thumbnail(self, instance):
         if instance.preview:
