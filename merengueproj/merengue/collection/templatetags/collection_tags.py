@@ -114,7 +114,10 @@ class CollectionItemsNode(Node):
             result = []
             for queryset in items:
                 queryset = self._filter_by_multiple_filters(queryset, filters)
-                result += list(queryset)
+                if hasattr(queryset, '__iter__'):
+                    result += list(queryset)
+                else:
+                    result.append(queryset)
         else:
             result = self._filter_by_multiple_filters(items, filters)
         return result
