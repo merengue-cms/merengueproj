@@ -19,16 +19,29 @@
 Tests for merengue.registry application
 """
 
+from merengue.registry import params
+from merengue.registry.items import RegistrableItem
+
+
+config_params = [
+    params.Bool(name='is_human', default=True),
+    params.Integer(name='age'),
+    params.List(name='friends', choices=('Juan', 'Luis', 'Pepe'))
+]
+
+
+class PersonItem(RegistrableItem):
+    config_params = config_params
+
+
+class SingletonItem(RegistrableItem):
+    singleton = True
+    config_params = config_params
+
+
 __test__ = {"doctest": """
 >>> from merengue.registry import register
->>> from merengue.registry.items import RegistrableItem
->>> from merengue.registry import params
 
->>> config_params = [
-...    params.Bool(name='is_human', default=True),
-...    params.Integer(name='age'),
-...    params.List(name='friends', choices=('Juan', 'Luis', 'Pepe'))
-... ]
 >>> config_params
 [<True, Bool>, <<class 'merengue.registry.params.NOT_PROVIDED'>, Integer>, <<class 'merengue.registry.params.NOT_PROVIDED'>, List>]
 >>> config = params.ConfigDict(config_params, {'age': 25, 'friends': ('Juan', )})
@@ -38,36 +51,35 @@ __test__ = {"doctest": """
 >>> config
 {'is_human': <True, Bool>, 'age': <40, Integer>, 'friends': <('Juan',), List>}
 
->>> class PersonItem(RegistrableItem):
-...     config_params = config_params
-...
->>> register(PersonItem)
->>> PersonItem.get_config()
+>>> reg_item = register(PersonItem)
+>>> item = reg_item.get_registry_item()
+>>> item.get_config()
 {'is_human': <True, Bool>, 'age': <<class 'merengue.registry.params.NOT_PROVIDED'>, Integer>, 'friends': <<class 'merengue.registry.params.NOT_PROVIDED'>, List>}
 
 # saving registered item in database should change the configuration
->>> reg_item = PersonItem.get_registered_item()
 >>> reg_item.config
-{u'is_human': True}
+{'is_human': True}
 >>> reg_item.config['age'] = 30
 >>> reg_item.save()
->>> PersonItem.get_config()
+>>> item.get_config()
 {'is_human': <True, Bool>, 'age': <30, Integer>, 'friends': <<class 'merengue.registry.params.NOT_PROVIDED'>, List>}
 >>> del reg_item.config['age']
 >>> reg_item.save()
->>> PersonItem.get_config()
+>>> item.get_config()
 {'is_human': <True, Bool>, 'age': <<class 'merengue.registry.params.NOT_PROVIDED'>, Integer>, 'friends': <<class 'merengue.registry.params.NOT_PROVIDED'>, List>}
 
-# testing get_merged_config
+# testing singleton objects
 
-# note that 'age' param should not be updated (because is not provided)
->>> PersonItem.get_merged_config(params.ConfigDict(config_params, {'is_human': False}))
-{'is_human': <False, Bool>, 'age': <<class 'merengue.registry.params.NOT_PROVIDED'>, Integer>, 'friends': <<class 'merengue.registry.params.NOT_PROVIDED'>, List>}
->>> PersonItem.get_merged_config(params.ConfigDict(config_params, {'is_human': False}), params.ConfigDict(config_params, {'age': 20}))
-{'is_human': <True, Bool>, 'age': <20, Integer>, 'friends': <<class 'merengue.registry.params.NOT_PROVIDED'>, List>}
+>>> register(PersonItem)
+<RegisteredItem: PersonItem>
+>>> register(PersonItem)   # we can register PersonItem twice
+<RegisteredItem: PersonItem>
 
-# last dictionary should be which set the 'age' param
->>> PersonItem.get_merged_config(params.ConfigDict(config_params, {'age': 10}), params.ConfigDict(config_params, {'age': 12}))
-{'is_human': <True, Bool>, 'age': <12, Integer>, 'friends': <<class 'merengue.registry.params.NOT_PROVIDED'>, List>}
+>>> register(SingletonItem)
+<RegisteredItem: SingletonItem>
+>>> register(SingletonItem)  # SingletonItem is a singleton... it cannot be registered twice
+Traceback (most recent call last):
+    ...
+AlreadyRegistered: item class "<class 'merengue.registry.tests.SingletonItem'>" is already registered
 
 """}
