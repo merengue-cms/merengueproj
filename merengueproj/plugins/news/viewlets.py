@@ -33,17 +33,15 @@ class LatestNewsViewlet(ViewLetQuerySetItemProvider, Viewlet):
                       default='3'),
     ]
 
-    @classmethod
-    def get_contents(cls, request=None, context=None, section=None):
-        number_news = cls.get_config().get('limit', []).get_value()
+    def get_contents(self, request=None, context=None, section=None):
+        number_news = self.get_config().get('limit', []).get_value()
         news_list = get_news(request, number_news)
         return news_list
 
-    @classmethod
-    def render(cls, request, context):
-        news_list = cls.get_queryset(request, context)
-        return cls.render_viewlet(request, template_name='news/viewlet_latest.html',
-                                  context={'news_list': news_list})
+    def render(self, request, context):
+        news_list = self.get_queryset(request, context)
+        return self.render_viewlet(request, template_name='news/viewlet_latest.html',
+                                   context={'news_list': news_list})
 
 
 class AllNewsViewlet(ViewLetQuerySetItemProvider, Viewlet):
@@ -51,15 +49,13 @@ class AllNewsViewlet(ViewLetQuerySetItemProvider, Viewlet):
     help_text = _('All news')
     verbose_name = _('All news block')
 
-    @classmethod
-    def get_contents(cls, request=None, context=None, section=None):
+    def get_contents(self, request=None, context=None, section=None):
         news_list = get_news(request)
         return news_list
 
-    @classmethod
-    def render(cls, request, context):
-        news_list = cls.get_queryset(request, context)
-        return cls.render_viewlet(request, template_name='news/viewlet_latest.html',
+    def render(self, request, context):
+        news_list = self.get_queryset(request, context)
+        return self.render_viewlet(request, template_name='news/viewlet_latest.html',
                                   context={'news_list': news_list,
                                            'is_paginated': True,
                                            'paginate_by': 10})
