@@ -49,9 +49,12 @@ class CollectionFilterForm(forms.ModelForm):
             self.instance.filter_field = cdata.get('filter_field')
             self.instance.filter_operator = cdata.get('filter_operator')
             self.instance.filter_value = cdata.get('filter_value')
-            self.instance.filter_query(query)
+            self.instance.filter_query(query).count()
         except Exception, e:
-                raise forms.ValidationError(e)
+            # Close connection if it brokes
+            from django.db import connection
+            connection.close()
+            raise forms.ValidationError(e)
         return self.cleaned_data
 
 
