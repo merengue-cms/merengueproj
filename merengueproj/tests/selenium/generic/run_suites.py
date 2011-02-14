@@ -35,7 +35,6 @@ USE: python run_suites.py 'url base for selenium test, as http://localhost:8000/
         extensions_file = os.path.join(os.path.abspath('..'), 'extensions', 'user-extensions.js')
         selenium_file = os.path.join(pwd, 'selenium-server.jar')
         variables_file = os.path.join(pwd, 'variables.html')
-        firefox_profile = os.path.join(pwd, '..', 'firefox-profile')
         if os.path.exists(extensions_file) and os.path.exists(selenium_file):
             for directory in directory_list:
                 os.chdir(pwd)
@@ -44,9 +43,8 @@ USE: python run_suites.py 'url base for selenium test, as http://localhost:8000/
                 results_file = os.path.join(pwd, 'results', directory + '.html')
                 variables_copy = os.path.join(directory_path, 'variables.html')
                 shutil.copy(variables_file, variables_copy)
-                os.system('java -jar %s -firefoxProfileTemplate %s -htmlSuite "*firefox" "%s" "%s" "%s" -userExtensions "%s"' \
+                os.system('java -jar %s -htmlSuite "*firefox" "%s" "%s" "%s" -userExtensions "%s"' \
                               % (selenium_file,
-                                 firefox_profile,
                                  sys.argv[1],
                                  suite_file,
                                  results_file,
