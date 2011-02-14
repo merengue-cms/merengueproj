@@ -114,8 +114,7 @@ SITE_FIXTURES = {
     # 'app_name': ('fixture1', 'fixture2', ...)
 }
 
-BUILDBOT_IP = '192.168.11.209'
-INTERNAL_IPS = ('127.0.0.1', '80.36.82.38', BUILDBOT_IP)
+INTERNAL_IPS = ('127.0.0.1', )
 
 # Pagination options
 LIMIT_URL_SPIDER_TEST = 20
