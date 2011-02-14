@@ -14,10 +14,9 @@
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
-from django.conf import settings
 
 from merengue.pluggable import Plugin
-from transmeta import get_real_fieldname
+from transmeta import get_real_fieldname_in_each_language
 
 from plugins.standingout.admin import StandingOutAdmin, StandingOutCategoryAdmin, StandingSectionOutAdmin
 from plugins.standingout.models import StandingOut, StandingOutCategory
@@ -44,10 +43,12 @@ class PluginConfig(Plugin):
     @classmethod
     def post_install(cls):
         soc_section = StandingOutCategory(context_variable='section', slug='section')
-        setattr(soc_section, get_real_fieldname('name', settings.LANGUAGE_CODE), 'section')
+        for real_field in get_real_fieldname_in_each_language('name'):
+            setattr(soc_section, real_field, 'section')
         soc_section.save()
         soc_content = StandingOutCategory(context_variable='content', slug='content')
-        setattr(soc_content, get_real_fieldname('name', settings.LANGUAGE_CODE), 'content')
+        for real_field in get_real_fieldname_in_each_language('name'):
+            setattr(soc_content, real_field, 'content')
         soc_content.save()
 
     @classmethod
