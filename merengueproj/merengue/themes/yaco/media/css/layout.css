@@ -46,6 +46,12 @@ strong {
     color: #737373;
 }
 
+span.translatable {
+    background-image: none!important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
 /* ----- Useful class ----- */
 .visualClear {
     display: block;
