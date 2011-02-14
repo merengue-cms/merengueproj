@@ -591,9 +591,9 @@ div.contentFiles ul li {
 	font-size: 13px;
 	padding:0.2em;
 }
-.star-rating ol {
-	left: 42px !important;
-	top:-2px !important;
+#content .star-rating ol {
+    left: 42px !important;
+    top:-2px !important;
 }
 
 #content .star-rating li.current-rating {
