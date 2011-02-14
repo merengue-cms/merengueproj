@@ -217,10 +217,10 @@ div#language-tools {
 
 div#user-actions,
 div#language-tools {
-	float: right;
+    float: right;
     width: 23%;
-	margin-top: 3em;
-	font-size: 12px;
+    margin-top: 3.7em;
+    font-size: 12px;
 }
 
 div#user-actions ul li {
