@@ -63,4 +63,4 @@ def register(site):
 
 def unregister(site):
     """ Merengue admin unregistration callback """
-    site.unregister(RedirectAdmin)
+    site.unregister(Redirect)
