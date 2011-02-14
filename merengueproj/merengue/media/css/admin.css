@@ -49,11 +49,17 @@ div#header img#merengue_logo {
 .module h2, 
 .module caption, 
 .inline-group h2 {
-    background: #E6D8C0 url(../img/admin/default-bg.gif) repeat-x top left;   
+    background: #E6D8C0 url(../img/admin/default-bg.gif) repeat-x top left;
+}
+.object-tools a:hover {
+	text-decoration: none;
 }
 
 .row1 {
     background: #f7f5f0;
+}
+.object-tools a.addlink:hover {
+    background: #D1D1D1 url("../img/admin/tooltag-add_over.gif") no-repeat scroll right top;
 }
 
 .object-tools a.viewsitelink:hover,
