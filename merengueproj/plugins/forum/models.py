@@ -26,6 +26,7 @@ class Forum(BaseContent):
     class Meta:
         verbose_name = _('Forum')
         verbose_name_plural = _('Forums')
+        content_view_function = 'plugins.forum.views.content_forum_view'
         content_view_template = 'forum/forum_view.html'
 
     def _public_link_without_section(self):

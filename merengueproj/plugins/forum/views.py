@@ -7,7 +7,7 @@ from django.utils.translation import ugettext as _
 
 from captcha.decorators import add_captcha
 
-from merengue.base.views import content_list, content_view
+from merengue.base.views import content_list, content_view, render_content
 from merengue.perms.utils import has_permission
 from merengue.section.utils import get_section, filtering_in_section
 
@@ -31,6 +31,13 @@ def forum_view(request, forum_slug, original_context=None):
                'paginate_threads_by': PAGINATE_BY,
               }
     return content_view(request, forum, extra_context=context)
+
+
+def content_forum_view(request, content, template_name, extra_context):
+    context = {'thread_list': content.thread_set.published(),
+               'paginate_threads_by': PAGINATE_BY,
+              }
+    return render_content(request, content, template_name, context)
 
 
 def thread_view(request, forum_slug, thread_slug, original_context=None):
