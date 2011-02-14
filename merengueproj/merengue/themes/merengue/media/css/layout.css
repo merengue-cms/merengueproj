@@ -485,6 +485,7 @@ div#right-sidebar {
   background: #f9f4f4 url(../img/portlet_bg.jpg) repeat-x center top;
   border: 1px solid #ddd;
   width: 197px;
+  padding-bottom: 0.2em;
 }
 
 #right-sidebar div.blockBody ul {
@@ -859,6 +860,11 @@ table.gsc-search-box td.gsc-input {
   font-size: 1.5em;
   margin-bottom: 0.2em;
   margin-top: 0;
+}
+
+#right-sidebar .blockContainer div#voting {
+    border: none;
+    padding: 0;
 }
 
 .blockContainer div#voting {
