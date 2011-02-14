@@ -71,7 +71,6 @@ setup(
     description="Django-based CMS with steroids",
     long_description=(read('README') + '\n\n' + read('CHANGES')),
     url="http://www.merengueproject.org/",
-    #download_url = 'http://www.merengueproject.org/download/0.5/merengue-0.5.tar.gz',
     include_package_data=True,
     classifiers=[
         'Framework :: Django',
