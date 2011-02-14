@@ -1,6 +1,74 @@
 Changes
 =======
 
+Version 0.7.0-alpha (3630)
+--------------------------
+
+* Support registering by instances (not classes) in Merengue registry, with singleton feature. See #1445.
+
+* Itags view, to show all tags in website. See #1404.
+
+* Pluggable toolbar with panels registrable in plugins. See #1391.
+
+* Inline edit support for contents, with a rewritten django-inplaceedit.
+
+* New selenium tests for the new features in 0.7 series.
+
+* Integrate JS and CSS assets in a place holder, avoiding duplicates and compressing code. See #1418.
+
+* CSS and JS compression when its configured for a production site. See #1415.
+
+* Improved yaco theme. See #1388.
+
+* Block configuration in public view. See #1365.
+
+* South support in plugins. See #1381.
+
+* Inline translation in all Merengue templates, using django-inlinetrans. See #1349.
+
+* Implemented a print style sheet and a print action. See #966.
+
+* Internationalized URLs. See #1112.
+
+* Optimized Merengue SQL sentences. See #1320.
+
+* Implemented unit tests for registry application. See #1314.
+
+* Cleaned up and refactored the Merengue menu implementation. See #1313.
+
+* Contact information is rendered in contents which have filled it. See #1309.
+
+* Implemented a review system, used in ``redirect`` plugin. See #1074.
+
+* You can attach blocks to individual contents, with a custom configuration for them. See #1261.
+
+* Manager can set the rendering a block only for one or more contents, with custom block configuration for each content. See #1247.
+
+* Plain text generation support for all contents, for indexing, tagging, etc. See #1088.
+
+* Refactored MIDDLEWARE_CLASSES to improve customization in projects. See #1253.
+
+* New features for microsite plugin:
+
+  * MIDDLEWARE to allow URLs like /foo-microsite/foo/url that will be like /microsites/foo-microsite/foo/url/
+  * All blocks in built-in plugins are valid inside microsites, showing only microsite contents.
+
+* Implemented contentmenu plugin, to allow content grouping in a Menu, but without having contents in same section.
+
+* Huge plugins, viewlets, blocks and breadcrumbs refactoring to improve redefinition in plugins. See #1256, #1258 and #1269
+
+* All built-in plugins uses collection when needed, to improve customization in listings by managers. See #1267.
+
+* HTML editor (TinyMCE) is now resizable. See #1270.
+
+* Removed hook_post_register hook and implemented post_install hook, invoked only when plugin are installed. See #1277.
+
+* Make rss plugin more customizable. See #1273.
+
+* Implemented ``tmtemplates`` plugin, to create HTML templates which can be inserted in every HTML field.
+
+* Collection can filtered by adding a extra ``_filters_collection`` context in view.
+
 Version 0.6.0-final
 -------------------
 
