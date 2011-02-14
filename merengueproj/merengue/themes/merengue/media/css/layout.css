@@ -51,6 +51,11 @@ ul {
   background: transparent url(../img/header_bg.jpg) no-repeat center top;
   margin-top: -15px;
 }
+span.translatable {
+    background-image: none!important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
 
 /* ----- Useful class ----- */
 .visualClear {
