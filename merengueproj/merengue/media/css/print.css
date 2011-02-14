@@ -1,25 +1,24 @@
 * {
-	background-color: white !important;
-	background-image: none !important;
+    background-color: white !important;
+    background-image: none !important;
 }
 
 img {
-	border: none;
+    border: none;
 }
 
 #footer,
 #djDebug,
 #header div,
 #left-sidebar,
-#right-sidebar,
-#current-svn-revision {
-	display: none;
+#right-sidebar {
+    display: none;
 }
 
 #header div#headerlogo {
-	display: block;
-	clear: both;
-	float: none;
+    display: block;
+    clear: both;
+    float: none;
 }
 
 

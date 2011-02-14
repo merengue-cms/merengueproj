@@ -16,7 +16,9 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.template.loader import render_to_string
+from django.utils.translation import ugettext as _
 
+import merengue
 from merengue.uitools import panels
 
 
@@ -31,3 +33,9 @@ class InlineTransPanel(panels.Panel):
 
     def render(self, context):
         return render_to_string('core/panels/inlinetrans.html', context)
+
+
+class VersionPanel(panels.Panel):
+
+    def render(self, context):
+        return _('Version: %s') % merengue.get_version()

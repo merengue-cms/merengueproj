@@ -58,14 +58,6 @@ a img {
     display: none;
 }
 
-/* ----- Develop version info ----- */
-#current-svn-revision {
-    position: absolute;
-    top: 5px;
-    right: 20px;
-    color: red;
-}
-
 /* ------ Core Plugin ----- */
 
 div#coremenu ul.menu1 li a.menu1{
