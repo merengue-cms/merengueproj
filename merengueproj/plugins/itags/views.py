@@ -20,8 +20,9 @@ from django.shortcuts import get_object_or_404
 from merengue.base.views import content_list
 from merengue.section.models import Section
 from plugins.itags.models import ITag
-from tagging.models import TaggedItem
 from plugins.itags.viewlets import TagCloudViewlet
+from tagging.models import TaggedItem
+from merengue.viewlet.models import RegisteredViewlet
 
 
 def tag_view(request, tag_name):
@@ -46,7 +47,10 @@ def tag_view(request, tag_name):
 
 def tag_list(request, tag_name=''):
     context = request.GET.get('context', None)
-    itags = TagCloudViewlet.get_tag_cloud(request, context, False, False)
+    reg_viewlet = RegisteredViewlet.objects.by_item_class(
+            TagCloudViewlet,
+        ).get()
+    itags = reg_viewlet.get_registry_item().get_tag_cloud(request, context, False, False)
     if tag_name:
         tag = tag_name
         itag = get_object_or_404(ITag, name=tag_name)
@@ -54,17 +58,6 @@ def tag_list(request, tag_name=''):
     else:
         tag = itags[0].tag_name
         queryset = TaggedItem.objects.filter(tag=itags[0].tag_ptr)
-    model = request.GET.get('model', None)
-    if model:
-        queryset = queryset.filter(content_type__model=model)
-    section_id = request.GET.get('section', None)
-    if section_id:
-        try:
-            section = Section.objects.get(id=section_id)
-            content_ids = [i['id'] for i in section.related_content.values('id')]
-            queryset = queryset.filter(object_id__in=content_ids)
-        except Section.DoesNotExist:
-            pass
     return content_list(request, queryset,
                         template_name='itags/itags_list.html',
                         extra_context={'tag': tag,

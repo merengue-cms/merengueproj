@@ -1,5 +1,7 @@
 {% extends "block.html" %}
-
+ {% block blocktitle %}
+   <h1><a  href="/itags/tag_list/?section={{ section.id }}">{{ block_title }}</a></h1>
+ {% endblock %}
 {% block blockbody %}
   <ul style="padding: 0px; margin: 0px; text-align: center;">
       {% for tag in taglist %}
