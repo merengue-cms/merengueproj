@@ -51,7 +51,7 @@ from transmeta import TransMeta, get_fallback_fieldname
 from tagging.fields import TagField
 
 from merengue.base.managers import BaseContentManager, WorkflowManager
-from merengue.conf.urls import get_url_default_lang
+from merengue.urlresolvers import get_url_default_lang
 from merengue.multimedia.models import BaseMultimedia
 from merengue.utils import is_last_application
 

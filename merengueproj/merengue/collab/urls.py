@@ -17,7 +17,7 @@
 
 
 from django.conf.urls.defaults import patterns
-from merengue.conf.urls.defaults import merengue_url as url
+from merengue.urlresolvers import merengue_url as url
 
 
 urlpatterns = patterns('merengue.collab.views',

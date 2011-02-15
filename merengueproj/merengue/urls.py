@@ -18,7 +18,7 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
 from django.conf.urls.defaults import *
-from merengue.conf.urls.defaults import merengue_url as url
+from merengue.urlresolvers import merengue_url as url
 
 
 js_info_dict = {

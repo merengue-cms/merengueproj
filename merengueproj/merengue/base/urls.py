@@ -18,7 +18,7 @@
 from django.conf.urls.defaults import patterns
 from django.contrib import admin
 
-from merengue.conf.urls.defaults import merengue_url as url
+from merengue.urlresolvers import merengue_url as url
 
 
 admin.autodiscover()

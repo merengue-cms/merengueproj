@@ -18,7 +18,7 @@
 from django.conf import settings
 from django.http import Http404
 from django.http import HttpResponseRedirect
-from merengue.conf.urls import get_url_default_lang
+from merengue.urlresolvers import get_url_default_lang
 
 
 class ResponseMicrositeMiddleware(object):

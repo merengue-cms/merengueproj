@@ -16,7 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf.urls.defaults import patterns
-from merengue.conf.urls.defaults import merengue_url as url
+from merengue.urlresolvers import merengue_url as url
 
 
 SLUG_RE = r'[-_\w]+'

@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from merengue.conf.urls import get_url_default_lang
+from merengue.urlresolvers import get_url_default_lang
 from merengue.pluggable import Plugin
 
 from plugins.microsite.models import MicroSite

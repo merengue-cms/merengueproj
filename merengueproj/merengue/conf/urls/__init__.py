@@ -14,9 +14,3 @@
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
-
-from django.conf import settings
-
-
-def get_url_default_lang():
-    return getattr(settings, 'URL_DEFAULT_LANG', settings.LANGUAGE_CODE)
