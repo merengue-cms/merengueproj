@@ -27,6 +27,7 @@ from django.shortcuts import render_to_response
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.admin.filterspecs import FilterSpec
 from django.contrib.admin.views.main import ChangeList, ERROR_FLAG
 from django.contrib.admin.options import IncorrectLookupParameters
 from django.contrib.admin.util import unquote, flatten_fieldsets
@@ -56,6 +57,7 @@ from transmeta import (canonical_fieldname, get_all_translatable_fields,
 
 from merengue.base.adminsite import site
 from merengue.base.admin_utils import get_deleted_contents
+from merengue.base.filterspecs import ClassnameFilterSpec
 from merengue.base.forms import AdminBaseContentOwnersForm, BaseAdminModelForm
 from merengue.base.models import BaseContent, ContactInfo
 from merengue.base.widgets import CustomTinyMCE, RelatedBaseContentWidget
@@ -66,6 +68,12 @@ from genericforeignkey.admin import GenericAdmin
 # A flag to tell us if autodiscover is running.  autodiscover will set this to
 # True while running, and False when it finishes.
 LOADING = False
+
+
+# Don't call register but insert it at the beginning of the registry
+# otherwise, the AllFilterSpec will be taken first
+FilterSpec.filter_specs.insert(0, (lambda f: f.name == 'class_name',
+                                   ClassnameFilterSpec))
 
 
 def register_app(app_name, admin_site=None):
@@ -938,6 +946,7 @@ class BaseContentViewAdmin(BaseContentAdmin):
     """ An special admin to find and edit all site contents """
 
     list_display = ('admin_absolute_url', ) + BaseContentAdmin.list_display[1:]
+    list_filter = ('class_name', )
 
     def has_add_permission(self, request):
         return False
