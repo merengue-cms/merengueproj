@@ -20,6 +20,7 @@ from merengue.conf.urls.defaults import merengue_url as url
 
 
 urlpatterns = patterns('merengue.section.views',
+    url(r'^$', 'section_index', name='section_index'),
     url({'en': r'ajax/save_menu_order/$',
          'es': r'ajax/guardar_orden_de_menu/$'},
          'save_menu_order', name='save_menu_order'),

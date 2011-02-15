@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from merengue.conf.urls import get_url_default_lang
 from merengue.pluggable import Plugin
 
 from plugins.microsite.models import MicroSite
@@ -32,6 +33,8 @@ class PluginConfig(Plugin):
              'plugins.microsite.urls'),
     )
 
-    @classmethod
-    def get_model_admins(cls):
+    def get_model_admins(self):
         return [(MicroSite, MicroSiteAdmin)]
+
+    def get_section_prefixes(self):
+        return (u'/%s/' % self.url_prefixes[0][0][get_url_default_lang()], )

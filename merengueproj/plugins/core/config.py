@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.pluggable import Plugin
@@ -56,3 +57,6 @@ class PluginConfig(Plugin):
 
     def get_perms(self):
         return ()
+
+    def get_section_prefixes(self):
+        return (reverse('section_index'), )

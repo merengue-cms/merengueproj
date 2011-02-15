@@ -30,6 +30,11 @@ from merengue.base.views import content_view
 from merengue.section.models import AbsoluteLink, ContentLink, ViewletLink, Menu
 
 
+def section_index(request):
+    """ place holder to have reverse URL resolution """
+    return HttpResponse('')
+
+
 def section_view(request, section_slug, original_context={},
                  template='section/section_view_without_maincontent.html'):
     section_slug = section_slug.strip('/')

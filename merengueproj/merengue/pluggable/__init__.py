@@ -91,6 +91,9 @@ class Plugin(RegistrableItem):
     def get_toolbar_panels(self):
         return []  # to override in plugins
 
+    def get_section_prefixes(self):
+        return []  # to override in plugins
+
     def post_install(self):
         pass
 

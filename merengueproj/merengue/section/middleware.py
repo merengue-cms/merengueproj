@@ -20,6 +20,19 @@ from django.core.cache import cache
 from django.http import Http404
 
 
+_section_prefixes = []
+
+
+def register_section_prefix(section_prefix):
+    if section_prefix not in _section_prefixes:
+        _section_prefixes.append(section_prefix)
+
+
+def unregister_section_prefix(section_prefix):
+    if section_prefix in _section_prefixes:
+        _section_prefixes.remove(section_prefix)
+
+
 class RequestSectionMiddleware(object):
     """This middleware autodiscovers the current section from the url"""
 
@@ -27,31 +40,32 @@ class RequestSectionMiddleware(object):
         from merengue.section.models import BaseSection
 
         section = None
-        if request.path:
-            path_list = request.path.split('/')
-            if path_list[1] == settings.MERENGUE_URLS_PREFIX and path_list[2] == 'sections':
-                section_position = 3
-            elif path_list[1] == 'sections':
-                section_position = 2
-            else:
-                section_position = 1
-            section_path = path_list[section_position]
-            slugs_cache_key = 'section_slugs'
-            section_slugs = cache.get(slugs_cache_key)
-            if section_slugs is None:
-                section_slugs = [v[0] for v in BaseSection.objects.all().values_list('slug')]
-                cache.set(slugs_cache_key, section_slugs)
-            if section_path in section_slugs:
-                try:
-                    cache_key = 'app_section_%s' % section_path
-                    section = cache.get(cache_key)
-                    if section is None:
-                        section = BaseSection.objects.get(slug=section_path)
-                        cache.set(cache_key, section)
-                except:
-                    # we put an blank except because some times in WSGI in a heavy loaded environments
-                    # backends specific exceptions can be thrown, i.e. psycopg.ProgrammingError
-                    pass
+        if request.path and not request.path.startswith(settings.MEDIA_URL):
+            matched_prefix = None
+            for section_prefix in _section_prefixes + ['/', ]:
+                if request.path.startswith(section_prefix):
+                    matched_prefix = section_prefix
+                    break
+            if matched_prefix:
+                section_path = request.path[len(matched_prefix):]
+                next_slash_index = section_path.find('/')
+                section_slug = section_path[:next_slash_index]
+                slugs_cache_key = 'section_slug_list'
+                section_slug_list = cache.get(slugs_cache_key)
+                if section_slug_list is None:
+                    section_slug_list = [v[0] for v in BaseSection.objects.all().values_list('slug')]
+                    cache.set(slugs_cache_key, section_slug_list)
+                if section_slug in section_slug_list:
+                    try:
+                        cache_key = 'section_%s' % section_slug
+                        section = cache.get(cache_key)
+                        if section is None:
+                            section = BaseSection.objects.get(slug=section_slug)
+                            cache.set(cache_key, section)
+                    except:
+                        # we put an blank except because some times in WSGI in a heavy loaded environments
+                        # backends specific exceptions can be thrown, i.e. psycopg.ProgrammingError
+                        pass
         request.section = section
 
 

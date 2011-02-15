@@ -46,6 +46,7 @@ from merengue import registry
 from merengue.base.adminsite import site
 from merengue.registry.items import (NotRegistered as NotRegisteredItem)
 from merengue.section.models import Section
+from merengue.section.middleware import register_section_prefix, unregister_section_prefix
 from merengue.perms.utils import register_permission, unregister_permission
 from merengue.pluggable.exceptions import BrokenPlugin
 from merengue.pluggable.models import RegisteredPlugin
@@ -241,6 +242,7 @@ def enable_plugin(plugin_name, register=True):
         register_plugin_section_models(plugin_name)
         register_plugin_in_plugin_admin_site(plugin_name)
         register_plugin_perms(plugin_name)
+        register_plugin_section_prefixes(plugin_name)
     register_plugin_urls(plugin_name)
     # activate plugin in DB
     registered_plugin = plugin.get_registered_item()
@@ -267,6 +269,7 @@ def disable_plugin(plugin_name, unregister=True):
         unregister_plugin_section_models(plugin_name)
         unregister_plugin_in_plugin_admin_site(plugin_name)
         unregister_plugin_perms(plugin_name)
+        unregister_plugin_section_prefixes(plugin_name)
     unregister_plugin_urls(plugin_name)
     # app_directories template loader loads app_template_dirs in
     # compile time, so we have to load it again.
@@ -401,6 +404,10 @@ def register_plugin_section_models(plugin_name):
     register_plugin_section_models_in_admin_site(plugin, plugin_name, site)
 
 
+def unregister_plugin_section_models(plugin_name):
+    pass
+
+
 def register_plugin_section_models_in_admin_site(plugin, plugin_name, admin_site):
     if not admin_site:
         return
@@ -419,6 +426,17 @@ def register_plugin_in_plugin_admin_site(plugin_name):
     plugin_site = site.register_plugin_site(plugin_name)
     for model, admin_model in plugin.get_model_admins():
         plugin_site.register(model, admin_model)
+
+
+def unregister_plugin_in_plugin_admin_site(plugin_name):
+    plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
+    if not plugin:
+        return
+    else:
+        plugin = plugin.get_registered_item()
+        if not plugin.installed:
+            return
+    site.unregister_plugin_site(plugin_name)
 
 
 def register_plugin_perms(plugin_name):
@@ -453,19 +471,20 @@ def unregister_plugin_middlewares(plugin_name):
         unregister_middleware(middleware)
 
 
-def unregister_plugin_section_models(plugin_name):
-    pass
-
-
-def unregister_plugin_in_plugin_admin_site(plugin_name):
+def register_plugin_section_prefixes(plugin_name):
     plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
     if not plugin:
         return
-    else:
-        plugin = plugin.get_registered_item()
-        if not plugin.installed:
-            return
-    site.unregister_plugin_site(plugin_name)
+    for section_prefix in plugin.get_section_prefixes():
+        register_section_prefix(section_prefix)
+
+
+def unregister_plugin_section_prefixes(plugin_name):
+    plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
+    if not plugin:
+        return
+    for section_prefix in plugin.get_section_prefixes():
+        unregister_section_prefix(section_prefix)
 
 
 def reload_app_directories_template_loader():
