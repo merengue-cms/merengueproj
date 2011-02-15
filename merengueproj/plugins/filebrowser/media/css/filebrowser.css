@@ -99,6 +99,10 @@ table#webfs-table label {
     padding-left: 18px;
 }
 
+table#webfs-table td.contentTitle {
+    text-align: left;
+}
+
 table#webfs-table label.folder {
     background: transparent url(../img/folder.png) no-repeat left center;
 }
