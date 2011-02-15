@@ -631,15 +631,10 @@ div.contentFiles ul li {
 }
 
 /* ----- pagination  ----- */
-.prev {
-	display:block;
-	width:10px;
-	height:14px;
-	background:transparent url(/media/themes/yaco/img/paginator_previous.gif) no-repeat scroll left 4px;
+.disabled span {
+    color: #DDD;
 }
-.pagination img{
-	display: none;
-}
+
 .pagination {
 	width:100%;
 	display: block;
@@ -658,17 +653,12 @@ div.contentFiles ul li {
 	margin: 0 0.2em;
 	border: 1px dotted #54B848;
 }
+/*
 .pagination .current,
 .pagination a {
 	float:left;
 }
-.next {
-	display:block;
-	width:10px;
-	height:14px;
-	background:transparent url(/media/themes/yaco/img/paginator_next.gif) no-repeat scroll left 4px;
-}
-
+*/
 /* ----- filebrowser ----- */
 #content div.object-buttons ul {
     margin-left: 0;
