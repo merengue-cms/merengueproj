@@ -225,7 +225,8 @@ div#user-actions,
 div#language-tools {
     float: right;
     width: 23%;
-    margin-top: 3.7em;
+    position: relative;
+    top: 48px;
     font-size: 12px;
 }
 
