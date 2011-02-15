@@ -4,7 +4,7 @@ import feedparser
 try:
     import cPickle as pickle
 except:
-    import pickle
+    import pickle  # pyflakes:ignore
 
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import FieldError
@@ -105,17 +105,17 @@ class Collection(BaseContent):
         query = model.objects.all()
         return self._filter_query(query)
 
-    def _reduce_to_section(self, query):
+    def _reduce_to_section(self, query, section=None):
         try:
-            query = query.filter(basesection__in=self.basesection_set.all())
+            if section:
+                query = query.filter(basesection=section)
+            else:
+                query = query.filter(basesection__in=self.basesection_set.all())
         except FieldError:
             pass
         return query
 
     def _filter_query(self, query):
-        if self.basesection_set.all():
-            query = self._reduce_to_section(query)
-
         for f in self.get_include_filters():
             try:
                 query = f.filter_query(query)
@@ -150,8 +150,8 @@ class Collection(BaseContent):
                                                                 content_types)
                     return items
             items = self._get_items_from_basecontent(content_types)
-        if section and self.filtering_section:
-            items = items.filter(basesection=section)
+        if self.filtering_section:
+            items = self._reduce_to_section(items, section)
         return items
 
     def get_first_parents_of_content_types(self):
