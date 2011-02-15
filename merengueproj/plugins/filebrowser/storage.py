@@ -26,13 +26,15 @@ class FileBrowserStorage(FileSystemStorage):
 
 
 def get_root_location():
-    from plugins.filebrowser.config import PluginConfig
-    return os.path.join(settings.MEDIA_ROOT, PluginConfig.get_config()['filebrowser_root'].get_value())
+    from merengue.pluggable.utils import get_plugin
+    plugin_config = get_plugin('filebrowser').get_config()
+    return os.path.join(settings.MEDIA_ROOT, plugin_config['filebrowser_root'].get_value())
 
 
 def get_location():
-    from plugins.filebrowser.config import PluginConfig
-    return os.path.join(settings.MEDIA_ROOT, PluginConfig.get_config()['filebrowser_docs_root'].get_value())
+    from merengue.pluggable.utils import get_plugin
+    plugin_config = get_plugin('filebrowser').get_config()
+    return os.path.join(settings.MEDIA_ROOT, plugin_config['filebrowser_docs_root'].get_value())
 
 
 def get_base_url():
