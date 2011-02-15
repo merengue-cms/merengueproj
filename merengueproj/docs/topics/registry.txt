@@ -155,7 +155,7 @@ he would use these sentences:
 
 .. code-block:: python
 
-    >>> from merengue.registry import get_items
+    >>> from merengue.registry import get_item
     >>> plugin = get_item('plugins.fooplugin.config.PluginConfig')
     >>> config = plugin.get_config()
     >>> print config['friends'].get_value()
