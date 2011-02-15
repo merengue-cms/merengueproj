@@ -1,4 +1,4 @@
-{% load i18n inlinetrans breadcrumbs messagebox svn block_tags section_tags compress media_tags uitools_tags %}
+{% load i18n inlinetrans breadcrumbs messagebox block_tags section_tags compress media_tags uitools_tags %}
 {% block doctype %}<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">{% endblock %}
 <html>
 <head>
@@ -61,12 +61,6 @@
 <div id="page-wrapper">
 
 <div id="container" class="theme-{{ theme }} {% block bodyextraclasses %}{% endblock %}">
-  {% block currentrevision %}
-  <div id="current-svn-revision">
-    {% current_svn_rev %}
-  </div>
-  {% endblock %}
-
 {% if not request.HIDE_DECORATIONS %}
   {% block headerwrapper %}
   <div id="header">
