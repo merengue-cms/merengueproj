@@ -34,25 +34,20 @@ class PluginConfig(Plugin):
           'plugins.event.urls'),
     )
 
-    @classmethod
-    def section_models(cls):
+    def section_models(self):
         return [(Event, EventSectionAdmin)]
 
-    @classmethod
-    def get_blocks(cls):
+    def get_blocks(self):
         return [EventsCalendarBlock]
 
-    @classmethod
-    def get_model_admins(cls):
+    def get_model_admins(self):
         return [(Event, EventAdmin),
                 (Category, EventCategoryAdmin)]
 
-    @classmethod
-    def get_viewlets(cls):
+    def get_viewlets(self):
         return [LatestEventViewlet, AllEventViewlet]
 
-    @classmethod
-    def post_install(cls):
+    def post_install(self):
         create_normalize_collection('event', u'Event', Event,
                                     create_display_field=True,
                                     create_filter_field=True)
