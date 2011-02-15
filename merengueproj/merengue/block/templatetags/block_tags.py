@@ -22,6 +22,7 @@ from django.conf import settings
 from merengue.base.models import BaseContent
 from merengue.block.blocks import Block, ContentBlock, SectionBlock
 from merengue.block.models import RegisteredBlock
+from merengue.registry import register as merengue_register, get_items_by_name
 
 
 register = template.Library()
@@ -238,16 +239,26 @@ def do_render_single_block(parser, token):
     """
     bits = token.split_contents()
     tag_name = bits[0]
-    if len(bits) != 2:
+    if len(bits) != 3:
         raise template.TemplateSyntaxError('"%r" tag requires only two '
                                            'arguments' % tag_name)
     splitted_block_name = bits[1][1:-1].split('.')
+    block_name = bits[2][1:-1]
     module = '.'.join(splitted_block_name[:-1])
     classname = splitted_block_name[-1]
     try:
-        block = RegisteredBlock.objects.get(module=module, class_name=classname).get_registry_item()
+        block = RegisteredBlock.objects.get(module=module,
+                                            class_name=classname,
+                                            name=block_name, is_fixed=True).get_registry_item()
     except RegisteredBlock.DoesNotExist:
-        block = None
+        try:
+            old_block = get_items_by_name('%s.%s' % (module, classname)).next()
+            reg_block = merengue_register(old_block.__class__)
+            reg_block.active = reg_block.is_fixed = False
+            reg_block.name = block_name
+            block = reg_block.get_registry_item()
+        except RegisteredBlock.DoesNotExist:
+            block = None
     return RenderSingleBlockNode(block)
 
 
