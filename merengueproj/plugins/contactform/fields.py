@@ -15,19 +15,15 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-
-from django.conf import settings
-
-if settings.USE_GIS:
-    from django.contrib.gis.db import models
-else:
-    from django.db import models
+from django.db import models
 
 from django.contrib.admin import widgets
 from django.forms.util import ValidationError
 from django.forms.fields import email_re
 from django.utils.translation import ugettext as _
 from django import forms
+
+from merengue.pluggable.utils import get_plugin
 
 from plugins.contactform.recaptcha.client import captcha
 
@@ -76,8 +72,8 @@ class ModelMultiEmailField(models.TextField):
 class CaptchaWidget(forms.widgets.Widget):
 
     def render(self, name, value, attrs=None):
-        from plugins.contactform.config import PluginConfig
-        pubkey = PluginConfig.get_config().get('rpubk', None)
+        plugin = get_plugin('contactform')
+        pubkey = plugin.get_config().get('rpubk', None)
         if pubkey:
             pubkey = pubkey.value
         else:
