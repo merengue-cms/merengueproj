@@ -15,8 +15,13 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.utils.translation import ugettext_lazy as _
 
 from merengue.pluggable import Plugin
+from merengue.registry import params
+
+from plugins.saml2.models import IdentityProvider, ContactPerson, Organization
+from plugins.saml2.admin import IdentityProviderAdmin, ContactPersonAdmin, OrganizationAdmin
 
 
 class PluginConfig(Plugin):
@@ -28,3 +33,43 @@ class PluginConfig(Plugin):
     url_prefixes = (
         ('saml2', 'plugins.saml2.urls'),
         )
+
+    config_params = [
+        params.Single(name='entity_id',
+                      label=_('Entity ID')),
+        params.Single(name='entity_name',
+                      label=_('Entity Name')),
+        params.Single(name='username_attribute',
+                      label=_('Username attribute'),
+                      default='uid'),
+        params.Single(name='first_name_attribute',
+                      label=_('First name attribute'),
+                      default='cn'),
+        params.Single(name='last_name_attribute',
+                      label=_('First name attribute'),
+                      default='sn'),
+        params.Single(name='email_attribute',
+                      label=_('Email attribute'),
+                      default='mail'),
+        params.Single(name='required_attributes',
+                      label=_('Comma/space separated list of required attributes'),
+                      default='uid'),
+        params.Single(name='xmlsec_binary',
+                      label=_('Path to xmlsec1 program'),
+                      default='/usr/bin/xmlsec1'),
+        params.Single(name='key_file_path',
+                      label=_('Certificate private part')),
+        params.Single(name='cert_file_path',
+                      label=_('Certificate public part')),
+        params.PositiveInteger(name='valid_for',
+                               label=_('Expiration time in hours'),
+                               default=24)
+        ]
+
+    @classmethod
+    def get_model_admins(cls):
+        return [
+            (IdentityProvider, IdentityProviderAdmin),
+            (ContactPerson, ContactPersonAdmin),
+            (Organization, OrganizationAdmin),
+            ]
