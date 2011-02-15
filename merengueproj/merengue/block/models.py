@@ -57,6 +57,9 @@ class RegisteredBlock(RegisteredItem):
             expressions (one per line, using <a
             href='http://docs.python.org/library/re.html#regular-expression-syntax'
             title='python regular expressions' target='_blank'>python re syntax</a>)."""))
+    is_fixed = models.BooleanField(
+        verbose_name=_('disable the activation and desactivation of the block'),
+        default=False)
     # fields for blocks related to contents
     content = models.ForeignKey(BaseContent, verbose_name=_(u'related content'), null=True)
     overwrite_if_place = models.BooleanField(
