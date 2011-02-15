@@ -632,10 +632,6 @@ div.contentFiles ul li {
 }
 
 /* ----- pagination  ----- */
-.disabled span {
-    color: #DDD;
-}
-
 .pagination {
 	width:100%;
 	display: block;
@@ -643,6 +639,11 @@ div.contentFiles ul li {
     margin: 1.5em 0;
 	font-size: 85%;
 }
+
+div.pagination  span.disabled {
+    color: #CCC;
+}
+
 .page {
 	padding: 0 0.2em;
 	text-decoration: none !important;
