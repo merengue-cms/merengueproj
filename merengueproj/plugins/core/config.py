@@ -41,29 +41,18 @@ class PluginConfig(Plugin):
         params.Content(name='home_initial_content',
                        label=_('home initial content'), default=1)]
 
-    @classmethod
-    def get_actions(cls):
+    def get_actions(self):
         return [AdminAction, LoginAction, LogoutAction, PrintAction]
 
-    @classmethod
-    def get_blocks(cls):
+    def get_blocks(self):
         return [CoreMenuBlock, NavigationBlock, PrimaryLinksBlock,
                 SecondaryLinksBlock, PortalMenuBlock, ContactInfoBlock]
 
-    @classmethod
-    def get_toolbar_panels(cls):
+    def get_toolbar_panels(self):
         return [InplaceEditPanel, InlineTransPanel, VersionPanel]
 
-    @classmethod
-    def section_models(cls):
-        # section_models of merengue core
+    def section_models(self):
         return [(Document, DocumentRelatedModelAdmin)]
 
-    @classmethod
-    def get_perms(cls):
+    def get_perms(self):
         return ()
-        # an example was:
-        #return (
-        #    ('vote', _('Vote content')),
-        #    ('mark_as_finished', _('View any content'), models=[Document]),
-        #)
