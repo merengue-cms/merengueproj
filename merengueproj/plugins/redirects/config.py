@@ -37,10 +37,10 @@ class PluginConfig(Plugin):
                       default=_('Review this redirection')),
         params.List(name="review_users",
                     label=_("Users by default to have redirects reviewed"),
-                    choices=[(u.id, u.username) for u in User.objects.all()]),
+                    choices=[(u.username, u.username) for u in User.objects.all()]),
         params.List(name="review_groups",
                     label=_("User groups by default to have redirects reviewed"),
-                    choices=[(g.id, g.name) for g in Group.objects.all()]),
+                    choices=[(g.name, g.name) for g in Group.objects.all()]),
     ]
 
     @classmethod

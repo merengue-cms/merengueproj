@@ -18,17 +18,17 @@
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.review import create_review_task
-from plugins.redirects.config import PluginConfig
+from merengue.pluggable.utils import get_plugin
 from django.contrib.auth.models import User, Group
 
 
 def create_redirect_review_task(user, obj):
-    config = PluginConfig.get_config()
-    user_ids = config['review_users'].value
-    group_ids = config['review_groups'].value
+    config = get_plugin('redirects').get_config()
+    usernames = config.get('review_users', []).get_value()
+    groupnames = config.get('review_groups', []).get_value()
     create_review_task(user,
         title=config['review_title'].value or _('Review this redirection'),
         url=obj.old_path,
         task_object=obj,
-        users=[u for u in User.objects.filter(id__in=user_ids)],
-        groups=[g for g in Group.objects.filter(id__in=group_ids)])
+        users=[u for u in User.objects.filter(username__in=usernames)],
+        groups=[g for g in Group.objects.filter(name__in=groupnames)])
