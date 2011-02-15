@@ -17,7 +17,7 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.base.admin import RelatedModelAdmin
+from merengue.base.admin import RelatedModelAdmin, set_field_read_only
 from merengue.base.models import BaseContent
 from merengue.block.models import RegisteredBlock
 from merengue.block.forms import BaseContentRelatedBlockAddForm, BaseContentRelatedBlockChangeForm
@@ -36,6 +36,14 @@ class RegisteredBlockAdmin(RegisteredItemAdmin):
         (_('Status'),
             {'fields': ('placed_at', 'active', 'shown_in_urls', 'hidden_in_urls', 'order', 'config')}
         ))
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(RegisteredBlockAdmin, self).get_form(request, obj, **kwargs)
+        if obj.is_fixed:
+            for field_name in ('placed_at', 'order', 'active'):
+                if field_name in form.base_fields:
+                    set_field_read_only(form.base_fields[field_name], field_name, obj)
+        return form
 
     def has_add_permission(self, request):
         return False
