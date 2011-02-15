@@ -70,7 +70,7 @@ def content_related_items(context, content):
     related_items_excluded = ['story']
     related_items = content.related_items.published().exclude(class_name__in=related_items_excluded)
     related_stories = content.related_items.published().filter(class_name='story')
-    related_sections = content.basesection_set.all()
+    related_sections = content.sections.all()
 
     return {'content': content,
             'related_items': related_items,
@@ -136,7 +136,7 @@ class CuttedNode(template.Node):
         full_value = self.content_node.render(context)
         value = unescape_entities(full_value)
         if len(value) > length - 3:
-            value = value[:length-3] + '...'
+            value = value[:length - 3] + '...'
         return '<span title="%s">%s</span>' % (full_value, value)
 
 
@@ -163,7 +163,7 @@ def cut_objects_list(context, items, max_len=90, separator=', '):
     for item in items:
         if len(cad + item.name) < max_len:
             cad += item.name + separator
-            count +=1
+            count += 1
         else:
             too_long = True
             break

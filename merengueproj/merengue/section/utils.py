@@ -20,7 +20,7 @@ from django import db
 
 def get_section(request=None, context=None):
     section = (request and getattr(request, 'section', None)) or (context and context.get('section', None))
-    return section and section.real_instance
+    return section and section.get_real_instance()
 
 
 def filtering_in_section(queryset, section=None):
@@ -33,5 +33,5 @@ def filtering_in_section(queryset, section=None):
             # some backends like Mysql and Oracle does not support limit in subselects. See #1369
             ids = [element.id for element in queryset]
             queryset = queryset.model.objects.filter(id__in=ids)
-    queryset = queryset.filter(basesection=section)
+    queryset = queryset.filter(sections=section)
     return queryset

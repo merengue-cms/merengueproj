@@ -36,7 +36,13 @@ class Deserializer(xml_serializer.Deserializer):
                     pk = node.getAttribute("pk")
                     if not pk:
                         raise base.DeserializationError("<object> node is missing the 'pk' attribute")
-                    if Model._base_manager.filter(pk=Model._meta.pk.to_python(pk)):
+                    if not node.hasAttribute("compare-by"):
+                        filters = {'pk': Model._meta.pk.to_python(pk)}
+                    else:  # comparing by custom field defined in the fixture
+                        field = str(node.getAttribute("compare-by"))
+                        value = node.getAttribute(field)
+                        filters = {field: value}
+                    if Model._base_manager.filter(**filters):
                         # if object is found we will not overwrite it
                         # because is marked as non overridable
                         continue

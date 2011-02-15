@@ -41,6 +41,29 @@
         <field to="base.basecontent" name="related_items" rel="ManyToManyRel"> </field>
         <field to="auth.user" name="owners" rel="ManyToManyRel"> </field>
     </object>
+    <object pk="2" model="base.basecontent" overwrite="no">
+        <field type="CharField" name="name_es">Sección de prueba</field>
+        <field type="CharField" name="name_en">Test section</field>
+        <field type="SlugField" name="slug">test-section</field>
+        <field type="TextField" name="plain_description_es"><None></None></field>
+        <field type="TextField" name="plain_description_en"><None></None></field>
+        <field type="TextField" name="description_es"><None></None></field>
+        <field type="TextField" name="description_en"><None></None></field>
+        <field type="CharField" name="status">published</field>
+        <field type="FileField" name="main_image"></field>
+        <field to="base.contactinfo" name="contact_info" rel="ManyToOneRel"> <None> </None> </field>
+        <field type="DateTimeField" name="creation_date">2010-03-08 13:47:08</field>
+        <field type="DateTimeField" name="modification_date">2010-03-08 15:47:07</field>
+        <field type="DateTimeField" name="user_modification_date">2010-03-08 15:47:07</field>
+        <field to="auth.user" name="last_editor" rel="ManyToOneRel">1</field>
+        <field type="CharField" name="tags"> </field>
+        <field type="TextField" name="meta_desc"> </field>
+        <field type="CharField" name="commentable">allowed</field>
+        <field type="CharField" name="class_name">basesection</field>
+        <field type="FloatField" name="rank">100.0</field>
+        <field to="base.basecontent" name="related_items" rel="ManyToManyRel"> </field>
+        <field to="auth.user" name="owners" rel="ManyToManyRel"> </field>
+    </object>
     <object pk="2" model="section.menu" overwrite="no">
         <field type="CharField" name="name_es">Menu principal de sección</field>
         <field type="CharField" name="name_en">Main menu of section</field>
@@ -52,27 +75,16 @@
         <field type="PositiveIntegerField" name="tree_id">2</field>
         <field type="PositiveIntegerField" name="level">0</field>
     </object>
-    <object pk="1" model="section.basesection" overwrite="no">
-        <field type="CharField" name="name_es">Sección de prueba</field>
-        <field type="CharField" name="name_en">Test section</field>
-        <field type="SlugField" name="slug">test-section</field>
-        <field type="TextField" name="plain_description_es"><None></None></field>
-        <field type="TextField" name="plain_description_en"><None></None></field>
-        <field type="TextField" name="description_es"><None></None></field>
-        <field type="TextField" name="description_en"><None></None></field>
-        <field type="CharField" name="status">published</field>
-        <field type="FileField" name="main_image"></field>
+    <object pk="2" model="section.basesection" overwrite="no" compare-by="main_menu" main_menu="2">
         <field type="IntegerField" name="order">0</field>
         <field to="section.menu" name="main_menu" rel="OneToOneRel">2</field>
         <field to="base.basecontent" name="main_content" rel="ManyToOneRel">1</field>
         <field to="section.customstyle" name="customstyle" rel="ManyToOneRel"><None></None></field>
     </object>
-    <object pk="1" model="section.sectionrelatedcontent">
-        <field to="section.basesection" name="basesection" rel="ManyToOneRel">1</field>
+    <object pk="1" model="section.sectionrelatedcontent" overwrite="no">
+        <field to="section.basesection" name="basesection" rel="ManyToOneRel">2</field>
         <field to="base.basecontent" name="basecontent" rel="ManyToOneRel">1</field>
         <field type="PositiveIntegerField" name="order">0</field>
-    </object>
-    <object pk="1" model="section.section">
     </object>
     <object pk="1" model="section.document" overwrite="no">
         <field type="CharField" name="search_form"><None></None></field>

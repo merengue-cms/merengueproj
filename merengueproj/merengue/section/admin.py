@@ -29,7 +29,7 @@ from merengue.base.admin import set_field_read_only
 from merengue.base.widgets import RelatedFieldWidgetWrapperWithoutAdding
 from merengue.section.fields import CSSValidatorField
 from merengue.section.forms import MenuAdminModelForm
-from merengue.section.models import (Menu, Section,
+from merengue.section.models import (Menu, BaseSection,
                                      BaseLink, AbsoluteLink, ContentLink, ViewletLink,
                                      Document, DocumentSection, CustomStyle,
                                      SectionRelatedContent, CustomStyleImage)
@@ -72,7 +72,7 @@ class BaseSectionAdmin(BaseOrderableAdmin):
             if not obj:
                 qs = qs.model.objects.get_empty_query_set()
             else:
-                qs = qs.filter(basesection=obj)
+                qs = qs.filter(sections=obj)
 
             # Como Document no esta registrado en el admin site, no tiene
             # sentido mostrar este campo si no tiene opciones ya que no
@@ -121,7 +121,7 @@ class SectionAdmin(BaseSectionAdmin):
 
 
 class SectionContentAdmin(OrderableRelatedModelAdmin):
-    related_field = 'basesection'
+    related_field = 'sections'
     sortablefield = 'order'
     manage_contents = True
 
@@ -444,14 +444,14 @@ class DocumentSectionRelatedModelAdmin(RelatedModelAdmin):
 
 
 def register_related(site):
-    site.register_related(Document, DocumentRelatedModelAdmin, related_to=Section)
-    site.register_related(CustomStyle, CustomStyleRelatedModelAdmin, related_to=Section)
-    site.register_related(Menu, MainMenuRelatedAdmin, related_to=Section)
+    site.register_related(Document, DocumentRelatedModelAdmin, related_to=BaseSection)
+    site.register_related(CustomStyle, CustomStyleRelatedModelAdmin, related_to=BaseSection)
+    site.register_related(Menu, MainMenuRelatedAdmin, related_to=BaseSection)
     site.register_related(DocumentSection, DocumentSectionRelatedModelAdmin, related_to=Document)
 
 
 def register(site):
-    site.register(Section, SectionAdmin)
+    site.register(BaseSection, SectionAdmin)
     site.register(Document, DocumentAdmin)
     site.register(Menu, PortalMenuAdmin)
     register_related(site)

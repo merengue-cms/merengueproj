@@ -45,7 +45,7 @@ from south.exceptions import NoMigrations
 from merengue import registry
 from merengue.base.adminsite import site
 from merengue.registry.items import (NotRegistered as NotRegisteredItem)
-from merengue.section.models import Section
+from merengue.section.models import BaseSection
 from merengue.section.middleware import register_section_prefix, unregister_section_prefix
 from merengue.perms.utils import register_permission, unregister_permission
 from merengue.pluggable.exceptions import BrokenPlugin
@@ -412,7 +412,7 @@ def register_plugin_section_models_in_admin_site(plugin, plugin_name, admin_site
     if not admin_site:
         return
     for model, admin_model in plugin.section_models():
-        site_related = admin_site.register_related(model, admin_model, related_to=Section)
+        site_related = admin_site.register_related(model, admin_model, related_to=BaseSection)
         plugin.section_register_hook(site_related, model)
 
 

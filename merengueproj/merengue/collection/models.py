@@ -108,9 +108,9 @@ class Collection(BaseContent):
     def _reduce_to_section(self, query, section=None):
         try:
             if section:
-                query = query.filter(basesection=section)
+                query = query.filter(sections=section)
             else:
-                query = query.filter(basesection__in=self.basesection_set.all())
+                query = query.filter(sections__in=self.sections.all())
         except FieldError:
             pass
         return query

@@ -17,10 +17,10 @@
 
 from django.core.exceptions import ObjectDoesNotExist
 
-from merengue.base.managers import WorkflowManager
+from merengue.base.managers import BaseContentManager
 
 
-class SectionManager(WorkflowManager):
+class SectionManager(BaseContentManager):
     """ manager for all menu objects """
 
     def main(self):

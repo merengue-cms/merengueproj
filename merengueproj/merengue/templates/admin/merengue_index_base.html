@@ -20,7 +20,7 @@
       <p>{% trans "Manage the site's content" %}</p>
       <dl>
         {% ifhasperm 'manage_section' %}
-          <dt><a href="section/section/" title="{% trans "Section" %}">{% trans "Content tree" %}</a></dt>
+          <dt><a href="section/basesection/" title="{% trans "Section" %}">{% trans "Content tree" %}</a></dt>
           <dd>{% trans "View, edit and delete the site's contents." %}</dd>
         {% endifhasperm %}
         {% ifhasperm 'manage_menu' %}

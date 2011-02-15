@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
@@ -29,7 +28,7 @@ from django.utils.translation import ugettext_lazy as _
 import mptt
 
 from merengue.base.managers import WorkflowManager
-from merengue.base.models import Base, BaseContent
+from merengue.base.models import BaseContent
 from merengue.section.managers import SectionManager
 from merengue.viewlet.models import RegisteredViewlet
 from transmeta import TransMeta, get_fallback_fieldname
@@ -130,7 +129,7 @@ class Menu(models.Model):
         ancestors_path = menus_ancestors and '/%s' % '/'.join(menus_ancestors) or ''
         section = self.get_section()
         if section:
-            return section.real_instance._menu_public_link(ancestors_path, self)
+            return section.get_real_instance()._menu_public_link(ancestors_path, self)
         else:
             return self._menu_public_link_without_section(ancestors_path)
 
@@ -239,9 +238,7 @@ class ViewletLink(BaseLink):
         return True
 
 
-class BaseSection(Base, RealInstanceMixin):
-
-    __metaclass__ = TransMeta
+class BaseSection(BaseContent):
 
     order = models.IntegerField(
         _('order'),
@@ -271,6 +268,7 @@ class BaseSection(Base, RealInstanceMixin):
 
     related_content = models.ManyToManyField(
         BaseContent,
+        related_name='sections',
         verbose_name=_('related contents'),
         editable=False,
         through='SectionRelatedContent',
@@ -288,22 +286,22 @@ class BaseSection(Base, RealInstanceMixin):
     objects = SectionManager()
 
     class Meta:
-        abstract = False
         ordering = ('order', )
+        verbose_name = _('section')
 
     def __unicode__(self):
         return unicode(self.name)
 
     @property
-    def app_name(self):
-        return self.real_instance.app_name
-
-    @property
     def check_attributes(self):
         return [subcl._meta.module_name for subcl in self.__class__.__subclasses__()]
 
-    def get_absolute_url(self):
-        return strip_section_prefix(self.real_instance.get_absolute_url())
+    def public_link(self):
+        url = super(BaseSection, self).public_link()
+        return strip_section_prefix(url)
+
+    def _public_link_without_section(self):
+        return ('section_view', [self.slug])
 
     def get_breadcrumbs(self):
         return [(self.get_absolute_url(), unicode(self))]
@@ -351,7 +349,8 @@ class BaseSection(Base, RealInstanceMixin):
 
 
 def strip_section_prefix(link):
-    return link.replace('%s/sections/' % settings.MERENGUE_URLS_PREFIX, '')
+    section_index_url = reverse('section_index')[:-1]
+    return link.replace('%s' % section_index_url, '')
 
 
 def sections_permalink(func):
@@ -364,24 +363,12 @@ def sections_permalink(func):
 
 
 class SectionRelatedContent(models.Model):
-    basesection = models.ForeignKey(BaseSection)
+    basesection = models.ForeignKey(BaseSection, related_name='sectionrelatedcontent')
     basecontent = models.ForeignKey(BaseContent)
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
         db_table = 'section_basesection_related_content'
-
-
-class Section(BaseSection):
-    objects = SectionManager()
-
-    @property
-    def app_name(self):
-        return ''
-
-    @sections_permalink
-    def get_absolute_url(self):
-        return ('section_view', (self.slug, ))
 
 
 class Document(BaseContent):
@@ -407,7 +394,7 @@ class Document(BaseContent):
         section = self.get_main_section()
         if not section:
             return self._public_link_without_section()
-        return section.real_instance._document_public_link(section, self)
+        return section.get_real_instance()._document_public_link(section, self)
 
 
 class DocumentSection(models.Model):
@@ -417,7 +404,7 @@ class DocumentSection(models.Model):
     document = models.ForeignKey(
         Document,
         verbose_name=_('Parent document'),
-        related_name='sections',
+        related_name='document_sections',
         )
 
     position = models.IntegerField(
@@ -515,7 +502,7 @@ class CustomStyleImage(models.Model):
 
 
 def create_menus(sender, **kwargs):
-    if issubclass(sender, Section):
+    if issubclass(sender, BaseSection):
         created = kwargs.get('created', False)
         instance = kwargs.get('instance')
 
@@ -535,11 +522,11 @@ def handle_link_url_post_save(sender, instance, **kwargs):
     linklist = []
     if isinstance(instance, BaseLink):
         linklist = [instance]
-    elif isinstance(instance, BaseContent):
-        linklist = instance.contentlink_set.all()
     elif isinstance(instance, BaseSection):
         for content in instance.related_content.all():
             linklist += content.contentlink_set.all()
+    elif isinstance(instance, BaseContent):
+        linklist = instance.contentlink_set.all()
 
     for link in linklist:
         if link and link.get_absolute_url() != link.menu.url:

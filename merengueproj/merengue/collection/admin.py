@@ -12,7 +12,7 @@ from merengue.base.admin import (BaseContentAdmin, RelatedModelAdmin,
 from merengue.section.admin import SectionContentAdmin
 
 from merengue.base.models import BaseContent
-from merengue.section.models import Section
+from merengue.section.models import BaseSection
 from merengue.collection.models import (Collection, IncludeCollectionFilter,
                                         ExcludeCollectionFilter,
                                         CollectionDisplayField,
@@ -117,7 +117,7 @@ class CollectionAdmin(BaseContentAdmin):
     def get_form(self, request, obj=None, **kwargs):
         form = super(CollectionAdmin, self).get_form(request, obj, **kwargs)
         if 'content_types' in form.base_fields:
-            main_models = self.get_subclasses([BaseContent, Section])
+            main_models = self.get_subclasses([BaseContent, ])
             types_id = []
             for m in main_models:
                 if not m._meta.abstract:
@@ -278,7 +278,7 @@ class FeedItemAdmin(RelatedModelAdmin):
 
 
 def register_related(site):
-    site.register_related(Collection, CollectionRelatedModelAdmin, related_to=Section)
+    site.register_related(Collection, CollectionRelatedModelAdmin, related_to=BaseSection)
     site.register_related(CollectionDisplayField, CollectionDisplayFieldAdmin, related_to=Collection)
     site.register_related(CollectionDisplayField, FeedItemDisplayFieldAdmin, related_to=FeedCollection)
     site.register_related(FeedItem, FeedItemAdmin, related_to=FeedCollection)

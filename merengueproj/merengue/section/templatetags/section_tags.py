@@ -150,7 +150,7 @@ class SectionBreadcrumbsNode(template.Node):
         section = self.section and context.get(self.section, None)
         content = self.content and context.get(self.content, None)
         if section:
-            return section.real_instance.breadcrumbs(content)
+            return section.get_real_instance().breadcrumbs(content)
         else:
             return content.get_real_instance().breadcrumbs()
 
@@ -179,7 +179,7 @@ class URLInSectionBreadcrumbsNode(template.Node):
     def render(self, context):
         section = context.get(self.section, None)
         url = context.get(self.url, None)
-        url_in_section = section and section.real_instance.url_in_section(url)
+        url_in_section = section and section.get_real_instance().url_in_section(url)
         if self.var_name:
             context[self.var_name] = url_in_section
             return ''

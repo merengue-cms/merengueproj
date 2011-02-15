@@ -18,7 +18,7 @@
 from merengue.base.admin import BaseAdmin, RelatedModelAdmin
 from merengue.base.forms import BaseAdminModelForm
 
-from merengue.section.models import Section
+from merengue.section.models import BaseSection
 
 from plugins.contentmenu.models import ContentGroup
 
@@ -39,7 +39,7 @@ class ContentGroupSectionAdmin(ContentGroupAdmin, RelatedModelAdmin):
     def get_form(self, request, obj=None, **kwargs):
         class_form = super(ContentGroupSectionAdmin, self).get_form(request, obj=None, **kwargs)
         base_qs = class_form.base_fields['contents'].queryset
-        class_form.base_fields['contents'].queryset = base_qs.filter(basesection=self.basecontent)
+        class_form.base_fields['contents'].queryset = base_qs.filter(sections=self.basecontent)
         return class_form
 
     def save_model(self, request, obj, form, change):
@@ -54,7 +54,7 @@ def register(site):
     """ Merengue admin registration callback """
     site.register(ContentGroup, ContentGroupAdmin)
     site.register_related(ContentGroup, ContentGroupSectionAdmin,
-                          related_to=Section)
+                          related_to=BaseSection)
 
 
 def unregister(site):

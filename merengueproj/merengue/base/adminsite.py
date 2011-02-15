@@ -164,7 +164,7 @@ class BaseAdminSite(DjangoAdminSite):
         if admin_class and settings.DEBUG:
             from django.contrib.admin.validation import validate
         else:
-            validate = lambda model, adminclass: None
+            validate = lambda model, adminclass: None  # pyflakes:ignore
 
         if isinstance(model_or_iterable, ModelBase):
             model_or_iterable = [model_or_iterable]
@@ -201,10 +201,10 @@ class BaseAdminSite(DjangoAdminSite):
             if real_content is not None:
                 content = real_content
                 model = content.__class__
-                related_sections = real_content.basesection_set.all()
+                related_sections = real_content.sections.all()
                 if related_sections.count() == 1:
                     # we have to redirect to the content related section
-                    section = related_sections.get().real_instance
+                    section = related_sections.get().get_real_instance()
                     tool = self.get_tool_for_model(section.__class__, real_content.__class__)
                     if tool:
                         admin_prefix += '%s%s/' % (self.get_prefix_for_model(section.__class__), section.id)
@@ -309,14 +309,14 @@ class RelatedModelRegistrable(object):
             raise Exception('Already registered a modeladmin with %s as tool_name' % tool_name)
 
         model_admin = model_tools.get(tool_name, admin_class(model_or_iterable, self))
-        model_tools[tool_name]=model_admin
+        model_tools[tool_name] = model_admin
         base_model_registry = self.related_registry.get(related_to, {})
         related_modeladmins = base_model_registry.get(model_or_iterable, [])
         if model_admin not in related_modeladmins:
             related_modeladmins += [model_admin]
         base_model_registry[model_or_iterable] = related_modeladmins
         self.related_registry[related_to] = base_model_registry
-        self.tools[related_to]=model_tools
+        self.tools[related_to] = model_tools
 
 
 class AdminSite(BaseAdminSite, RelatedModelRegistrable):
@@ -369,7 +369,7 @@ class AdminSite(BaseAdminSite, RelatedModelRegistrable):
         if plugin_name in self._plugin_sites.keys():
             return self._plugin_sites[plugin_name]
         plugin_site = PluginAdminSite(main_admin_site=self, plugin_name=plugin_name)
-        self._plugin_sites[plugin_name]=plugin_site
+        self._plugin_sites[plugin_name] = plugin_site
         return plugin_site
 
     def unregister_plugin_site(self, plugin_name):

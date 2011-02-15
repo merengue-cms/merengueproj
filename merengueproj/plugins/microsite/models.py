@@ -16,13 +16,12 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.core.urlresolvers import reverse
-from django.db.models import permalink
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
-from merengue.section.models import Section
+from merengue.section.models import BaseSection
 
 
-class MicroSite(Section):
+class MicroSite(BaseSection):
 
     def _content_public_link(self, section, content):
         url_external = reverse(content._public_link_without_section()[0],
@@ -60,8 +59,7 @@ class MicroSite(Section):
             'urls': url_section,
         })
 
-    @permalink
-    def get_absolute_url(self):
+    def _public_link_without_section(self):
         return ('microsite_view', (self.slug, ))
 
     class Meta:

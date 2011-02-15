@@ -23,7 +23,7 @@ from django.template import RequestContext
 from django.utils import simplejson
 from django.utils.translation import get_language_from_request
 
-from merengue.section.models import BaseSection, Document, Section, \
+from merengue.section.models import BaseSection, Document, \
                                     DocumentSection, BaseLink
 
 from merengue.base.views import content_view
@@ -40,7 +40,7 @@ def section_view(request, section_slug, original_context={},
     section_slug = section_slug.strip('/')
     section = get_object_or_404(BaseSection, slug=section_slug)
     context = original_context or {}
-    context['section'] = section.real_instance
+    context['section'] = section.get_real_instance()
     main_content = section.main_content and section.main_content.get_real_instance() or None
     if not main_content:
         return section_view_without_maincontent(request, context, template)
@@ -91,7 +91,7 @@ def menu_section_view(request, section_slug, menu_slug):
     else:
         context = {}
         if section_slug:
-            context['section'] = section.real_instance
+            context['section'] = section.get_real_instance()
         context['menu'] = menu
         if isinstance(link, ViewletLink):
             context['registered_viewlet'] = link.viewlet
@@ -115,7 +115,7 @@ def section_view_without_maincontent(request, context,
     admin_absolute_url = False
     if user.is_authenticated():
         if user.is_superuser or (user.is_staff and
-                                  (user.has_perm('section.change_%s'% section._meta.module_name) or
+                                 (user.has_perm('section.change_%s' % section._meta.module_name) or
                                   user.has_perm('section.change_basesection'))):
             admin_absolute_url = True
     context['admin_absolute_url'] = admin_absolute_url
@@ -124,7 +124,7 @@ def section_view_without_maincontent(request, context,
 
 
 def section_custom_style(request, section_slug):
-    section = get_object_or_404(Section, slug=section_slug)
+    section = get_object_or_404(BaseSection, slug=section_slug)
     return render_to_response('section/section_colors.css',
                               {'customstyle': section.customstyle},
                               context_instance=RequestContext(request),
@@ -166,7 +166,7 @@ def section_dispatcher(request, url):
         func = menu_section_view
         kwargs.update({'menu_slug': parts[-1]})
     elif not url.startswith('/sections'):
-        return HttpResponseRedirect('/sections%s' %url)
+        return HttpResponseRedirect('/sections%s' % url)
     else:
         raise Http404
     return func(request, **kwargs)
@@ -194,7 +194,6 @@ def insert_document_section_after(request):
 
 @login_required
 def document_section_delete(request):
-    document_id = request.GET.get('document_id', None)
     document_section_id = request.GET.get('document_section_id', None)
     section = get_object_or_404(DocumentSection, id=document_section_id)
     section.delete()
@@ -204,7 +203,6 @@ def document_section_delete(request):
 
 @login_required
 def document_section_edit(request):
-    document_id = request.POST.get('document_id', None)
     document_section_id = request.POST.get('document_section_id', None)
     document_section_body = request.POST.get('document_section_body', None)
     section = get_object_or_404(DocumentSection, id=document_section_id)
@@ -217,8 +215,6 @@ def document_section_edit(request):
 
 @login_required
 def document_section_move(request):
-    document_id = request.GET.get('document_id', None)
-    document = get_object_or_404(Document, id=document_id)
     document_section_id = request.GET.get('document_section_id', None)
     prevsection = request.GET.get('document_section_prev', None)
     nextsection = request.GET.get('document_section_next', None)

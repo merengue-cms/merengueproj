@@ -438,7 +438,7 @@ class BaseContent(BaseClass):
     def public_link(self):
         section = self.get_main_section()
         if section:
-            return section.real_instance._content_public_link(section, self)
+            return section.get_real_instance()._content_public_link(section, self)
         else:
             return self._public_link_without_section()
 
@@ -453,7 +453,7 @@ class BaseContent(BaseClass):
     def get_main_section(self):
         """ Get main section of a content """
         try:
-            return self.basesection_set.main()
+            return self.sections.main()
         except ObjectDoesNotExist:
             return None
 
