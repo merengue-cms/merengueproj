@@ -432,7 +432,8 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
 
         if field and isinstance(db_field, ForeignKey):
             if db_field.related.parent_model == BaseContent:
-                field.widget = RelatedBaseContentWidget(field.widget, field.widget.rel, field.widget.admin_site)
+                request = kwargs.get('request', None)
+                field.widget = RelatedBaseContentWidget(field.widget, field.widget.rel, field.widget.admin_site, request=request)
         return field
 
     def get_actions(self, request):
@@ -893,6 +894,12 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
         ], context, context_instance=context_instance)
 
     def select_changelist_view(self, request, extra_context=None):
+        widget_id = request.GET.get('widget_id', None)
+        if widget_id:
+            del(request.GET['widget_id'])
+            extra_query = request.session.get(widget_id, {})
+            if extra_query:
+                request.GET.update(extra_query)
         extra_context = self._base_update_extra_context(extra_context)
         opts = self.model._meta
         app_label = opts.app_label
@@ -912,6 +919,10 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
             return HttpResponseRedirect(request.path + '?' + ERROR_FLAG + '=1')
         cl.formset = None
         cl.params.update({'for_select': 1})
+        if widget_id:
+            cl.params.update({'widget_id': widget_id})
+            for key in extra_query.keys():
+                del(cl.params[key])
         context = {
             'title': cl.title,
             'is_popup': cl.is_popup,
@@ -946,7 +957,7 @@ class BaseContentViewAdmin(BaseContentAdmin):
     """ An special admin to find and edit all site contents """
 
     list_display = ('admin_absolute_url', ) + BaseContentAdmin.list_display[1:]
-    list_filter = ('class_name', )
+    list_filter = BaseContentAdmin.list_filter + ('class_name', )
 
     def has_add_permission(self, request):
         return False
