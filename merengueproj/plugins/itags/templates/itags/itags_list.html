@@ -1,6 +1,6 @@
 {% extends "content_list.html" %}
 
-{% load i18n inlinetrans action_tags content_tags content_filters %}
+{% load i18n inlinetrans action_tags content_tags content_filters inplace_edit %}
 
 {% block pagetitle %}{% trans "Tag" %}: {{ tag.tag_name }}{% endblock %}
 
@@ -13,7 +13,7 @@
 {% block listing %}
 <div id="alltags">
 {% for t in itags %}
-  <a style="font-size: {{ t.count }}em; display: inline; line-height: 1em;" href="/itags/tag_list/{{ t }}" {% ifequal t.tag_name tag %}class="current"{% endifequal %}>{{ t }}</a>{% if forloop.last %}.{% else %}, {% endif %}
+  <a style="font-size: {{ t.count }}em; display: inline; line-height: 1em;" href="/itags/tag_list/{{ t }}" {% ifequal t.tag_name tag %}class="current"{% endifequal %}>{% inplace_edit "t.tag_name" %}</a>{% if forloop.last %}.{% else %}, {% endif %}
 {% endfor %}
 </div>
 {% regroup content_list by content_type as grouped %}

@@ -51,13 +51,18 @@ def tag_list(request, tag_name=''):
             TagCloudViewlet,
         ).get()
     itags = reg_viewlet.get_registry_item().get_tag_cloud(request, context, False, False)
-    if tag_name:
-        tag = tag_name
-        itag = get_object_or_404(ITag, name=tag_name)
-        queryset = TaggedItem.objects.filter(tag=itag.tag_ptr)
+    #import ipdb; ipdb.set_trace();
+    if itags:
+        if tag_name:
+            tag = tag_name
+            itag = get_object_or_404(ITag, name=tag_name)
+            queryset = TaggedItem.objects.filter(tag=itag.tag_ptr)
+        else:
+            tag = itags[0].tag_name
+            queryset = TaggedItem.objects.filter(tag=itags[0].tag_ptr)
     else:
-        tag = itags[0].tag_name
-        queryset = TaggedItem.objects.filter(tag=itags[0].tag_ptr)
+        tag = None
+        queryset = TaggedItem.objects.none()
     return content_list(request, queryset,
                         template_name='itags/itags_list.html',
                         extra_context={'tag': tag,
