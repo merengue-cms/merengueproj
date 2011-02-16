@@ -127,6 +127,10 @@ span.translatable {
   background: transparent url(../img/flag-fr.gif) no-repeat left top;
 }
 
+#language-tools ul li a#de {
+  background: transparent url(../img/flag-de.gif) no-repeat left top;
+}
+
 #language-tools  ul li a:hover, 
 #language-tools  ul li.currentLangItem a  {
   background-position: left bottom !important;
@@ -580,6 +584,10 @@ body div#content-zone {
 .comment p {
   font-size: 12px;
 }
+#content #feedback .commentform ul li label {
+    margin-right: 0;
+}
+
 #feedback h2{
   border-bottom: 1px dotted;
   padding-bottom: 0.1em;
