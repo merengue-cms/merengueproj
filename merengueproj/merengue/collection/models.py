@@ -109,8 +109,6 @@ class Collection(BaseContent):
         try:
             if section:
                 query = query.filter(sections=section)
-            else:
-                query = query.filter(sections__in=self.sections.all())
         except FieldError:
             pass
         return query
