@@ -23,6 +23,7 @@ from merengue.registry import params
 from merengue.section.models import BaseSection, Menu
 from merengue.section.utils import get_section
 from merengue.portal.models import PortalLink
+from announcements.models import current_announcements_for_request
 
 
 class BaseMenuBlock(object):
@@ -141,3 +142,21 @@ class ContactInfoBlock(ContentBlock):
             request, template_name='core/block_contact_info.html',
             block_title=_('Contact info'),
             context={'contact_info': content.contact_info})
+
+
+class AnnouncementsBlock(ContentBlock):
+    """ Block that displays the site announcements """
+    name = 'announcements'
+    default_place = 'header'
+    help_text = _('Block with the site announcements')
+    verbose_name = _('Announcements block')
+
+    def render(self, request, place, content, context, *args, **kwargs):
+        announcements = current_announcements_for_request(request)
+        if not announcements:
+            return ''
+
+        return self.render_block(
+            request, template_name='core/block_announcements.html',
+            block_title=_('Announcements'),
+            context={'site_wide_announcements': announcements})

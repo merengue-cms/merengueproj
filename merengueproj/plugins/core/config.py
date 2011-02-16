@@ -26,7 +26,8 @@ from merengue.section.models import Document
 from plugins.core.actions import AdminAction, LoginAction, LogoutAction, PrintAction
 from plugins.core.blocks import (CoreMenuBlock, NavigationBlock,
                                  PrimaryLinksBlock, SecondaryLinksBlock,
-                                 PortalMenuBlock, ContactInfoBlock)
+                                 PortalMenuBlock, ContactInfoBlock,
+                                 AnnouncementsBlock)
 from plugins.core.panels import InplaceEditPanel, InlineTransPanel, VersionPanel
 
 
@@ -47,7 +48,8 @@ class PluginConfig(Plugin):
 
     def get_blocks(self):
         return [CoreMenuBlock, NavigationBlock, PrimaryLinksBlock,
-                SecondaryLinksBlock, PortalMenuBlock, ContactInfoBlock]
+                SecondaryLinksBlock, PortalMenuBlock, ContactInfoBlock,
+                AnnouncementsBlock]
 
     def get_toolbar_panels(self):
         return [InplaceEditPanel, InlineTransPanel, VersionPanel]
