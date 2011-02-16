@@ -256,6 +256,7 @@ def do_render_single_block(parser, token):
             reg_block = merengue_register(old_block.__class__)
             reg_block.active = reg_block.is_fixed = False
             reg_block.name = block_name
+            reg_block.save()
             block = reg_block.get_registry_item()
         except RegisteredBlock.DoesNotExist:
             block = None
