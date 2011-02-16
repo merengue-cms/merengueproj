@@ -19,6 +19,7 @@ django-oembed
 django-ajax-selects
 django-threadedcomments==0.5.3
 django-notification==0.1.5
+django-announcements>=0.1.2
 django-oot
 django-genericforeignkey
 django-stdfile

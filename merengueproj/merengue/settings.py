@@ -103,6 +103,7 @@ INSTALLED_APPS = (
     'ajax_select',
     'notification',
     'compressor',
+    'announcements',
 ) + MERENGUE_APPS
 
 # merengue exclusive middlewares. you have to put at least these middleware in your project settings
