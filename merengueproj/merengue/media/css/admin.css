@@ -31,6 +31,11 @@ div#header img#merengue_logo {
     color: #BF843B;
 }
 
+div.breadcrumbs {
+    border-top-width: 0px;
+    padding: 5px 10px;
+    clear: both;
+}
 /*---- other styles ----*/
 
 .module-merengue h1,
@@ -700,4 +705,70 @@ ul.contents_parent {
 
 ul.extra_options {
     right: -1px;
+}
+
+/* ----- main tabs ------- */
+.maintabs {
+    background-color: #f1f1f1;
+    margin: 0px;
+    padding: 0px;
+    float: left;
+    clear: both;
+    width: 100%;
+    border-bottom: 1px solid #cccccc;
+}
+
+.maintabs ul {
+    margin: 0px;
+    padding: 0px;
+    list-style-type: 0px;
+    float: left;
+    margin-bottom: -1px;
+}
+
+.maintabs ul li {
+    float: left;
+    display: block;
+    border-right: 1px solid #cccccc;
+    background-color: #cccccc;
+}
+
+.maintabs ul li.active {
+    font-weight: bold;
+    background-color: #f1f1f1;
+}
+
+.maintabs ul li a {
+    display: block;
+    padding: 1em 32px 1em 44px;
+    background-color: #e0e0e0;
+    background-repeat: no-repeat;
+    background-position: center left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.maintabs ul li.active a {
+    background-color: #f1f1f1;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.maintabs ul li a:hover {
+    background-color: white;
+    border-bottom: 1px solid white;
+}
+
+.maintabs ul li.contentmanagement a {
+    background-image: url(../img/admin/content-management.png);
+}
+
+.maintabs ul li.sitebuilding a {
+    background-image: url(../img/admin/site-configuration.png);
+}
+
+.maintabs ul li.usermanagement a {
+    background-image: url(../img/admin/manage-users.png);
+}
+
+.maintabs ul li.plugins a {
+    background-image: url(../img/admin/plugins.png);
 }

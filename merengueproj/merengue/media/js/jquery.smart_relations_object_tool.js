@@ -10,15 +10,6 @@
             var more_trigger = extra_link.find('a.trigger');
             var more_trigger_text = more_trigger.text();
 
-            var toggleMenu = function() {
-                container.toggle();
-                $('.din_smart_relations_object_tool').not(container).hide();
-                var trigger = $(this).parent('li').find('.din_smart_trigger');
-                $('.din_smart_trigger').not(trigger).removeClass('din_smart_trigger_open');
-                trigger.toggleClass('din_smart_trigger_open');
-                return false;
-            };
-
             var checkActive = function() {
                 container.find('li.selected').addClass('active');
                 if (!container.find('li.active').length) {
@@ -95,21 +86,6 @@
             };
             initItems();
             initTriggers();
-/*
-            container.addClass('din_smart_relations_object_tool'); 
-            if (active.length) {
-                container.after(active);
-            } else {
-                container.after('<li class="parent"><a class="launch_smart_trigger" href="">-----</a></li>');
-                active=container.next('li.parent');
-            }
-            container.hide();
-            if (size>1) {
-                active.addClass('din_selected');
-                active.append('<a href="" class="din_smart_trigger launch_smart_trigger"></a>');
-                active.find('a').click(toggleMenu);
-            }
-*/
         });
     };
 

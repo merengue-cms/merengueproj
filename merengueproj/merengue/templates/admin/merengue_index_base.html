@@ -7,10 +7,16 @@
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}merengue/css/merengueadmin.css" />
 {% endblock %}
 
+{% block extrahead %}
+  {{ block.super }}
+  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/jquery.admin-tabs-index.js" />
+{% endblock %}
+
 {% block coltype %}colMS colMSMerengueIndex{% endblock %}
 
 
 {% block breadcrumbs %}{% endblock %}
+{% block content_title %}{% endblock %}
 
 {% block content %}
 <div id="content-main">
@@ -40,6 +46,24 @@
           <dd>{% trans "Translate the site messages." %}</dd>
         {% endif_can_access_transhette %}
       </dl>
+    {% ifhasperm 'manage_multimedia' %}
+    <div id="multimedia">
+      <h1>{% trans "Multimedia" %}</h1>
+      <p>{% trans "Manage the site's multimedia content" %}</p>
+      <dl>
+        <dt><a href="multimedia/photo/" title="{% trans "Photos" %}">{% trans "Photos" %}</a></dt>
+        <dd>{% trans "View, edit and delete the site's photos." %}</dd>
+        <dt><a href="multimedia/video/" title="{% trans "Video" %}">{% trans "Video" %}</a></dt>
+        <dd>{% trans "View, edit and delete the site's videos." %}</dd>
+        <dt><a href="multimedia/audio/" title="{% trans "Audio" %}">{% trans "Audio" %}</a></dt>
+        <dd>{% trans "View, edit and delete the site's audios." %}</dd>
+        <dt><a href="multimedia/panoramicview/" title="{% trans "Panoramic views" %}">{% trans "Panoramic views" %}</a></dt>
+        <dd>{% trans "View, edit and delete the site's panoramic views." %}</dd>
+        <dt><a href="multimedia/image3d/" title="{% trans "Images 3D" %}">{% trans "Images 3D" %}</a></dt>
+        <dd>{% trans "View, edit and delete the site's Images 3D." %}</dd>
+      </dl>
+    </div>
+    {% endifhasperm %}
     </div>
     {% ifhasperm 'manage_site' %}
     <div class="module-merengue" id="sitebuilding">
@@ -58,24 +82,6 @@
         <dd>{% trans "Merengue registry" %}</dd>
         <dt><a href="siteconfig/" title="{% trans "Save/restore configuration" %}">{% trans "Save/restore configuration" %}</a></dt>
         <dd>{% trans "Save/restore the site configuration (block, plugins, active theme, etc.)" %}</dd>
-      </dl>
-    </div>
-    {% endifhasperm %}
-    {% ifhasperm 'manage_multimedia' %}
-    <div class="module-merengue" id="multimedia">
-      <h1>{% trans "Multimedia" %}</h1>
-      <p>{% trans "Manage the site's multimedia content" %}</p>
-      <dl>
-        <dt><a href="multimedia/photo/" title="{% trans "Photos" %}">{% trans "Photos" %}</a></dt>
-        <dd>{% trans "View, edit and delete the site's photos." %}</dd>
-        <dt><a href="multimedia/video/" title="{% trans "Video" %}">{% trans "Video" %}</a></dt>
-        <dd>{% trans "View, edit and delete the site's videos." %}</dd>
-        <dt><a href="multimedia/audio/" title="{% trans "Audio" %}">{% trans "Audio" %}</a></dt>
-        <dd>{% trans "View, edit and delete the site's audios." %}</dd>
-        <dt><a href="multimedia/panoramicview/" title="{% trans "Panoramic views" %}">{% trans "Panoramic views" %}</a></dt>
-        <dd>{% trans "View, edit and delete the site's panoramic views." %}</dd>
-        <dt><a href="multimedia/image3d/" title="{% trans "Images 3D" %}">{% trans "Images 3D" %}</a></dt>
-        <dd>{% trans "View, edit and delete the site's Images 3D." %}</dd>
       </dl>
     </div>
     {% endifhasperm %}

@@ -1,0 +1,9 @@
+{% load i18n %}
+    <div class="maintabs">
+       <ul>
+         <li class="contentmanagement{% ifequal selected "contentmanagement" %} active{% endifequal %}"><a href="{% url admin:index %}#contentmanagement">{% trans "Content management" %}</a></li>
+         <li class="sitebuilding{% ifequal selected "sitebuilding" %} active{% endifequal %}"><a href="{% url admin:index %}#sitebuilding">{% trans "Site configuration" %}</a></li>
+         <li class="usermanagement{% ifequal selected "usermanagement" %} active{% endifequal %}"><a href="{% url admin:index %}#usermanagement">{% trans "User management" %}</a></li>
+         <li class="plugins{% ifequal selected "plugins" %} active{% endifequal %}"><a href="{% url admin:index %}#plugins">{% trans "Plugin administration" %}</a></li>
+       </ul>
+    </div>
