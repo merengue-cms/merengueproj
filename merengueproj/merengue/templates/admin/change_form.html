@@ -1,5 +1,5 @@
 {% extends "admin/base_site.html" %}
-{% load i18n admin_modify customize_admin_modify adminmedia %}
+{% load i18n admin_modify customize_admin_modify adminmedia related_admin_tags %}
 
 {% block extrahead %}{{ block.super }}
 <script type="text/javascript" src="/{{ MERENGUE_URLS_PREFIX}}/jsi18n/"></script>
@@ -33,6 +33,7 @@
 {% endblock %}
 
 {% block content-main %}
+{% smart_relations_object_tool %}
 <div id="content-main">
 {% if original.no_deletable or original.no_changeable %}
   <div class="warning-message">

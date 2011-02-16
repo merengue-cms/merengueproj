@@ -25,15 +25,13 @@ register = template.Library()
 
 def _calculate_route(context, only_initial=False):
     model_admin = context.get('model_admin', None)
-    model_admin_visited = []
     if model_admin:
-        admin_site = model_admin.admin_site
         original = context.get('original', None) or context.get('object', None)
         site_list = [{'opts': model_admin.opts,
                       'obj': original,
                       'admin': model_admin,
                       'site': model_admin.admin_site,
-                      'tool_name': None,
+                      'tool_name': getattr(model_admin, 'tool_name', None),
                      }]
         if only_initial:
             return site_list
@@ -83,11 +81,11 @@ def advanced_breadcrumbs(context):
                         }]
             if route[0]['obj']:
                 url_list += [{'label':route[0]['obj'],
-                            'url': "%s/%s/" %(url_list[-1]['url'], route[0]['obj'].id),
+                            'url': "%s/%s/" % (url_list[-1]['url'], route[0]['obj'].id),
                             }]
             elif add:
                 url_list += [{'label': _('Add'),
-                            'url': "%s/add/" %(url_list[-1]['url']),
+                            'url': "%s/add/" % (url_list[-1]['url']),
                             }]
             base_url = url_list[-1]['url']
 
@@ -100,7 +98,7 @@ def advanced_breadcrumbs(context):
                                 }]
                 if r['obj']:
                     url_list += [{'label': r['obj'],
-                                'url': base_url + r['admin'].tool_name + '/'+ str(r['obj'].id) + '/',
+                                'url': base_url + r['admin'].tool_name + '/' + str(r['obj'].id) + '/',
                                 }]
                 elif add:
                     url_list += [{'label': _('Add'),
@@ -134,7 +132,8 @@ def _smart_relations_object_tool_admin_site(admin_site, model_admin, obj, tool_n
                 tools_admin_site.append({'tool_name': model_admin.tool_name,
                             'tool_label': getattr(model_admin, 'tool_label', model_admin.model._meta.verbose_name_plural),
                             'tool_url': getattr(model_admin, 'tool_name', model_admin.model._meta.module_name),
-                            'selected': False,
+                            'selected': model_admin.tool_name == tool_name,
+                            'manage_contents': getattr(model_admin, 'manage_contents', False),
                             })
     if tools_admin_site:
         tools += tools_admin_site
@@ -142,37 +141,38 @@ def _smart_relations_object_tool_admin_site(admin_site, model_admin, obj, tool_n
     return tools
 
 
-def _get_object_tools_in_route(route):
-    base_url = urlresolvers.reverse('admin:index')
+def _get_object_tools_in_route(route, context):
     res = []
+    tool_name = None
     for item in route:
         obj = item['obj']
         if not obj:
+            tool_name = item['tool_name']
             continue
-        model_admin = item['admin']
-        tool_name = item['tool_name']
         obj_tool = {'base_object': obj,
                     'base_object_opts': obj and obj._meta or None,
                     'tools': _smart_relations_object_tool_admin_site(
                                         item['site'],
                                         item['admin'],
                                         item['obj'],
-                                        item['tool_name'],
+                                        tool_name,
                                    ),
                    }
-        base_url += '%s/%s/' % (model_admin.model._meta.app_label, model_admin.model._meta.module_name)
-        if tool_name:
-            # Thereis a next model_admin and an object for this model_admin
-            base_url += '%s/' % (obj.id)
-            obj_tool['base_url'] = base_url
-            base_url += '%s/' % tool_name
         if obj_tool['tools']:
+            if tool_name:
+                if not route[0]['obj'] and not context.get('add', False):
+                    obj_tool['base_url'] = '../'
+                else:
+                    obj_tool['base_url'] = '../../'
             res.append(obj_tool)
+            break
+        tool_name = item['tool_name']
     return res
 
 
 def smart_relations_object_tool(context):
-    route = _calculate_route(context, True) or []
-    obj_tools = _get_object_tools_in_route(route)
+    route = _calculate_route(context) or []
+    route.reverse()
+    obj_tools = _get_object_tools_in_route(route, context)
     return {'obj_tools': obj_tools}
 smart_relations_object_tool = register.inclusion_tag('admin/smart_relations_object_tool.html', takes_context=True)(smart_relations_object_tool)

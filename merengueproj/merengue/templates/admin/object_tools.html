@@ -1,6 +1,4 @@
-{% load i18n content_tags related_admin_tags %}
+{% load i18n content_tags %}
     {% if original %}
       {% if original.get_absolute_url %}<li><a href="{% url merengue.base.views.public_link opts.app_label opts.module_name object_id %}" class="viewsitelink">{% trans "View on site" %}</a></li>{% endif%}
     {% endif %}
-
-    {% smart_relations_object_tool %}

@@ -611,3 +611,93 @@ div.module.form-row {
 .configDebug {
     clear: both;
 }
+
+/* ----- change form tabs ------- */
+.change-tabs {
+    clear: both;
+    float: left;
+}
+
+#change-tabs-ul {
+    list-style-type: none;
+    float: left;
+    margin: 0px;
+    padding: 0px;
+}
+
+#change-tabs-ul li {
+    position: relative;
+    list-style-type: none;
+    float: left;
+    margin-right: -1px;
+    margin-top: 5px;
+    border: 1px solid #cccccc;
+    border-bottom-width: 0px;
+    padding: 0px;
+    margin-bottom: -1px;
+    z-index: 100;
+}
+
+#change-tabs-ul li a {
+    display: block;
+    padding: 5px 2em;
+    background-color: #eeeeee;
+}
+
+#change-tabs-ul li.active {
+    margin-top: 0px;
+    border-bottom: 1px solid white;
+}
+
+#change-tabs-ul li.active a {
+    padding-top: 10px;
+    background-color: white;
+}
+
+#content-main {
+    position: relative;
+    z-index: 1;
+}
+
+#change-tabs-ul li.extra-link a,
+#change-tabs-ul li.content-link a {
+    background-image: url(../img/admin/dropdown.gif);
+    background-repeat: no-repeat;
+    background-position: center right;
+    padding-right: 32px;
+}
+
+ul.extra_options,
+ul.contents_parent {
+    position: absolute;
+    display: none;
+    margin: 0px;
+    padding: 0px;
+    border-right: 1px solid #cccccc;
+    border-left: 1px solid #cccccc;
+    margin-top: 1px;
+}
+
+#change-tabs-ul ul.extra_options li,
+#change-tabs-ul ul.contents_parent li {
+    z-index: 200;
+    float: none;
+    display: block;
+    border-width: 0px;
+    border-bottom: 1px solid #cccccc;
+    padding: 0px;
+    margin: 0px;
+}
+
+#change-tabs-ul ul.extra_options li a,
+#change-tabs-ul ul.contents_parent li a {
+    background: white;
+}
+
+ul.contents_parent {
+    left: -1px;
+}
+
+ul.extra_options {
+    right: -1px;
+}

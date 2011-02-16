@@ -1,12 +1,16 @@
 {% load i18n %}
+{% if obj_tools %}
+<div class="change-tabs">
 {% for obj_tool in obj_tools %}
-    <div class="smart_relations_object_tool_container">
   
-        <ul class="smart_relations_object_tool">
-            <li class="parent"><a href="{{ obj_tool.base_url }}">{% blocktrans with obj_tool.base_object_opts.verbose_name|capfirst as model %}{{ model }} children{% endblocktrans %}</a></li>
+        <ul id="change-tabs-ul" class="smart_relations_object_tool">
+            <li class="edit-link"><a href="{{ obj_tool.base_url }}">{% trans "Edit" %}</a></li>
+            <li class="content-link" style="display: none;"><a class="trigger" href="#">{% trans "Contents" %}</a><ul class="contents_parent"></ul></li>
             {% for tools_admin_site in obj_tool.tools %}
-                <li{% if tools_admin_site.selected %} class="selected"{% endif %}><a href="{{ obj_tool.base_url }}{{ tools_admin_site.tool_url }}">{{ tools_admin_site.tool_label }}</a></li>
+                <li class="object_tool_item{% if tools_admin_site.selected %} selected{% endif %}{% if tools_admin_site.manage_contents %} content_manager{% endif %}"><a href="{{ obj_tool.base_url }}{{ tools_admin_site.tool_url }}">{{ tools_admin_site.tool_label }}</a></li>
             {% endfor %}
+            <li class="extra-link" style="display: none;"><a class="trigger" href="#">{% trans "More" %}</a><ul class="extra_options"></ul></li>
         </ul>
-  </div>
 {% endfor %}
+</div>
+{% endif %}

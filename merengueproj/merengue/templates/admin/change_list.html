@@ -1,5 +1,5 @@
 {% extends "admin/base_site.html" %}
-{% load adminmedia admin_list i18n autoreports_tags %}
+{% load adminmedia admin_list i18n autoreports_tags related_admin_tags %}
 
 {% block extrastyle %}
   {{ block.super }}
@@ -36,7 +36,6 @@
 {% block coltype %}flex{% endblock %}
 
 {% block content %}
-  <div id="content-main">
     {% block object-tools %}
         <ul class="object-tools">
           {% autoreports_admin %}
@@ -52,6 +51,10 @@
           {% endif %}
         </ul>
     {% endblock %}
+
+{% smart_relations_object_tool %}
+
+  <div id="content-main">
     {% if cl.formset.errors %}
         <p class="errornote">
         {% blocktrans count cl.formset.errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
