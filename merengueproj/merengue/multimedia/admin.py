@@ -87,7 +87,7 @@ class MultimediaAddContentRelatedModelAdmin(BaseMultimediaContentRelatedModelAdm
                             'model_name': self.opts}
                 msg = ugettext(u"Successfully associated %(number)d %(model_name)s.") % msg_data
                 self.message_user(request, msg)
-                return # end action
+                return  # end action
             extra_context = {'title': ugettext(u'Are you sure you want to associate these contents?'),
                              'action_submit': 'associate_contents'}
             return self.confirm_action(request, queryset, extra_context)
@@ -118,7 +118,7 @@ class MultimediaRemoveContentRelatedModelAdmin(BaseMultimediaContentRelatedModel
                                 'model_name': self.opts}
                 msg = ugettext(u"Successfully disassociated %(number)d %(model_name)s.") % msg_data
                 self.message_user(request, msg)
-                return # end action
+                return  # end action
             extra_context = {'title': ugettext('Are you sure you want disassociate this contents?'),
                              'action_submit': 'disassociate_contents'}
             return self.confirm_action(request, queryset, extra_context)
@@ -220,7 +220,7 @@ class PhotoAdmin(BaseMultimediaAdmin):
             qs = qs.filter(basecontent__class_name=class_name)
             get.pop('class_name')
             request.CLASS_NAME = class_name
-            request.GET=get
+            request.GET = get
         return qs
 
     def changelist_view(self, request, extra_context=None):
@@ -235,8 +235,8 @@ class PhotoAdmin(BaseMultimediaAdmin):
             return HttpResponseRedirect(request.path + '?' + ERROR_FLAG + '=1')
 
         class_name = getattr(request, 'CLASS_NAME', None)
-        cl.has_filters=True
-        class_names=[{'name': ugettext('All'), 'url': cl.get_query_string(remove='class_name')}]
+        cl.has_filters = True
+        class_names = [{'name': ugettext('All'), 'url': cl.get_query_string(remove='class_name')}]
         for i in BaseContent.objects.order_by('class_name').values('class_name').distinct():
             class_names.append({'name': i['class_name'],
                                 'url': cl.get_query_string(new_params={'class_name': i['class_name']})})
@@ -275,7 +275,6 @@ class Image3DAdmin(BaseMultimediaAdmin):
         def clean(self):
             super(form, self).clean()
             file_cleaned_data = self.cleaned_data.get('file', None)
-            url_cleaned_data = self.cleaned_data.get('external_url', None)
             old_file = obj and obj.file
             if not old_file and not file_cleaned_data:
                 global_errors = self.errors.get('__all__', ErrorList([]))
@@ -302,10 +301,11 @@ class RelatedBaseMultimediaAdmin(OrderableRelatedModelAdmin):
     search_fields = ('name', 'original_filename')
     list_display = ('__str__', 'status', 'last_editor')
     related_field = 'basecontent'
+    manage_contents = True
 
     def custom_relate_content(self, request, obj, form, change):
         if not change:
-            multimedia_rel = MultimediaRelation.objects.create(content=self.basecontent,
+            MultimediaRelation.objects.create(content=self.basecontent,
                 multimedia=obj.basemultimedia_ptr)
 
     def get_relation_obj(self, through_model, obj):
