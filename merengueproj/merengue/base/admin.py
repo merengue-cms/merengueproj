@@ -599,7 +599,7 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
             )
         elif mode == 'list':
             tools.append(
-                {'url': url_prefix + 'add/', 'label': _('Add %s') % force_unicode(self.model._meta.verbose_name), 'class': 'addlink'},
+                {'url': url_prefix + 'add/', 'label': ugettext('Add %s') % force_unicode(self.model._meta.verbose_name), 'class': 'addlink'},
             )
         return tools
 

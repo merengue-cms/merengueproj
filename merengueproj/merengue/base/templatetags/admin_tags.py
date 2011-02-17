@@ -17,6 +17,13 @@
 
 from django import template
 from django.core import urlresolvers
+from django.template.loader import render_to_string
+from django.utils.translation import ugettext
+from django.utils.encoding import force_unicode
+
+from classytags.arguments import Argument
+from classytags.core import Tag, Options
+
 
 register = template.Library()
 
@@ -50,18 +57,48 @@ def main_admin_tabs(context):
 main_admin_tabs = register.inclusion_tag('admin/main_admin_tabs.html', takes_context=True)(main_admin_tabs)
 
 
-def object_tools(context, model_admin, mode, url_prefix='', obj=None):
-    request = context.get('request', None)
-    object_tools = model_admin.object_tools(request, mode, url_prefix)
-    if obj is None:
-        obj = context.get('original', None)
-    return {
-        'path': request.META.get('PATH_INFO', ''),
-        'request': request,
-        'object_tools': object_tools,
-        'opts': getattr(obj, '_meta', None),
-        'object': obj,
-        'mode': mode,
-        'model_admin': model_admin,
-    }
-object_tools = register.inclusion_tag('admin/object_tools.html', takes_context=True)(object_tools)
+class ObjectToolsTag(Tag):
+    name = 'object_tools'
+    options = Options(
+        Argument('model_admin', resolve=False, required=False),
+        Argument('mode', required=False, default='change'),
+        Argument('url_prefix', required=False, default=''),
+        Argument('obj', required=False),
+    )
+
+    def render_tag(self, context, model_admin=None, mode='change', url_prefix='', obj=None):
+        request = context['request']
+        try:
+            model_admin = template.Variable(model_admin).resolve(context)
+        except template.VariableDoesNotExist:
+            model_admin = None
+        if obj is None:
+            obj = context.get('original', None)
+        opts = getattr(obj, '_meta', context.get('opts', None))
+        if model_admin is not None:
+            object_tools = model_admin.object_tools(request, mode, url_prefix)
+        elif mode == 'change':
+            object_tools = [
+                {'url': url_prefix + 'history/', 'label': ugettext('History')},
+                {'url': url_prefix + '../add/', 'label': ugettext('Add %s') % force_unicode(opts.verbose_name), 'class': 'addlink'},
+            ]
+        elif mode == 'list':
+            object_tools = [
+                {'url': url_prefix + 'add/', 'label': ugettext('Add new'), 'class': 'addlink'},
+            ]
+        else:  # mode is 'add'
+            object_tools = []
+        context = {
+            'path': request.META.get('PATH_INFO', ''),
+            'request': request,
+            'object_tools': object_tools,
+            'opts': opts,
+            'object': obj,
+            'mode': mode,
+            'model_admin': model_admin,
+        }
+        return render_to_string(
+            'admin/object_tools.html', context,
+            context_instance=template.RequestContext(request),
+        )
+register.tag(ObjectToolsTag)
