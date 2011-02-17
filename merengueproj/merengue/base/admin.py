@@ -339,8 +339,9 @@ class RelatedURLsModelAdmin(admin.ModelAdmin):
                         callback, args, kwargs = resolved
                         # add ourselves as parent model admin to be referred from child model admin
                         # add also parent object to be referred also in child model if needed
-                        kwargs['parent_model_admin'] = self
-                        kwargs['parent_object'] = basecontent
+                        if callback.func_name in ('changelist_view', 'change_view', 'add_view', 'history_view'):
+                            kwargs['parent_model_admin'] = self
+                            kwargs['parent_object'] = basecontent
                         return callback(request, *args, **kwargs)
         raise Http404
 
