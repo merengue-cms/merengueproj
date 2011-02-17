@@ -176,16 +176,13 @@ This is a ``config.py`` file code fragment example:
             ('fooplugin', 'plugins.fooplugin.urls'),
         )
 
-        @classmethod
-        def get_actions(cls):
+        def get_actions(self):
             return [...]
 
-        @classmethod
-        def get_blocks(cls):
+        def get_blocks(self):
             return [...]
 
-        @classmethod
-        def section_models(cls):
+        def section_models(self):
             return [...]
 
         # ... etcetera
@@ -269,7 +266,7 @@ Plugin possibilities
 A developer can do a lot of things when developing a new Plugin:
 
 
-* **Defining new blocks**, implementing the ``get_blocks(cls)`` class method in the ``PluginConfig`` class. See :ref:`blocks reference <topics-blocks>`. Example:
+* **Defining new blocks**, implementing the ``get_blocks(self)`` method in the ``PluginConfig`` class. See :ref:`blocks reference <topics-blocks>`. Example:
 
 .. code-block:: python
 
@@ -278,11 +275,10 @@ A developer can do a lot of things when developing a new Plugin:
     class PluginConfig(Plugin):
         # stuff ...
 
-        @classmethod
-        def get_blocks(cls):
+        def get_blocks(self):
             return [FooBlock, ]
 
-* **Defining new actions**, implementing the ``get_actions(cls)`` class method in the ``PluginConfig`` class. See :ref:`actions reference <topics-actions>`. Example:
+* **Defining new actions**, implementing the ``get_actions(self)`` method in the ``PluginConfig`` class. See :ref:`actions reference <topics-actions>`. Example:
 
 .. code-block:: python
 
@@ -291,8 +287,7 @@ A developer can do a lot of things when developing a new Plugin:
     class PluginConfig(Plugin):
         # stuff ...
 
-        @classmethod
-        def get_actions(cls):
+        def get_actions(self):
             return [FooAction, ]
 
 * **Creates new models**, implementing those models in the plugin ``models.py`` file. Example:
@@ -305,7 +300,7 @@ A developer can do a lot of things when developing a new Plugin:
         new_field = models.CharField(max_length=100)
         # stuff ...
 
-* **Defining a plugin custom admin site**, implementing the ``get_model_admins(cls)`` class method in the ``PluginConfig`` class. Example:
+* **Defining a plugin custom admin site**, implementing the ``get_model_admins(self)`` method in the ``PluginConfig`` class. Example:
 
 .. code-block:: python
 
@@ -315,12 +310,11 @@ A developer can do a lot of things when developing a new Plugin:
     class PluginConfig(Plugin):
         # stuff ...
 
-        @classmethod
-        def get_model_admins(cls):
+        def get_model_admins(self):
             return [(FooContent, FooContentAdmin),
                     (FooCategory, FooCategoryAdmin)]
 
-* **Defining new permissions**, implementing the ``get_perms(cls)`` class method in the ``PluginConfig`` class. See :ref:`permissions reference <topics-permissions>`. Example:
+* **Defining new permissions**, implementing the ``get_perms(self)`` method in the ``PluginConfig`` class. See :ref:`permissions reference <topics-permissions>`. Example:
 
 .. code-block:: python
 
@@ -329,11 +323,10 @@ A developer can do a lot of things when developing a new Plugin:
     class PluginConfig(Plugin):
         # stuff ...
 
-        @classmethod
-        def get_perms(cls):
+        def get_perms(self):
             return [('Vote foo', 'vote_foo', [FooContent]), ), ]
 
-* **Defining new viewlets**, implementing the ``get_viewlets(cls)`` class method in the ``PluginConfig`` class. See :ref:`viewlets reference <topics-viewlets>`. Example:
+* **Defining new viewlets**, implementing the ``get_viewlets(self)`` method in the ``PluginConfig`` class. See :ref:`viewlets reference <topics-viewlets>`. Example:
 
 .. code-block:: python
 
@@ -342,24 +335,22 @@ A developer can do a lot of things when developing a new Plugin:
     class PluginConfig(Plugin):
         # stuff ...
 
-        @classmethod
-        def get_viewlets(cls):
+        def get_viewlets(self):
             return [FooViewlet1, FooViewlet2]
 
-* **Defining new middlewares**, implementing the ``get_middlewares(cls)`` class method in the ``PluginConfig`` class. See `Django middleware reference`_. Example:
+* **Defining new middlewares**, implementing the ``get_middlewares(self)`` method in the ``PluginConfig`` class. See `Django middleware reference`_. Example:
 
 .. code-block:: python
 
     class PluginConfig(Plugin):
         # stuff ...
 
-        @classmethod
-        def get_middlewares(cls):
+        def get_middlewares(self):
             return ['plugins.fooplugin.middleware.FooMiddleware', ]
 
 .. _`Django middleware reference`: http://docs.djangoproject.com/en/1.1/topics/http/middleware/
 
-* **Anything you want after plugin activation**, implementing the ``hook_post_register(cls)`` class method in the ``PluginConfig`` class. Example:
+* **Anything you want after plugin activation**, implementing the ``hook_post_register(self)`` method in the ``PluginConfig`` class. Example:
 
 .. code-block:: python
 
@@ -368,8 +359,7 @@ A developer can do a lot of things when developing a new Plugin:
     class PluginConfig(Plugin):
         # stuff ...
 
-        @classmethod
-        def hook_post_register(cls):
+        def hook_post_register(self):
             send_mail('Foo plugin enabled', 'The foo plugin has been enabled.', 'from@example.com',
                       'admin@example.com', fail_silently=True)
 

@@ -287,8 +287,7 @@ To define specific permissions, for example, to edit news:
 
     class PluginConfig(Plugin):
 
-        @classmethod
-        def get_perms(cls):
+        def get_perms(self):
             return (
                 ('edit_newsitem', _('Edit news items'), [NewsItem, ]),)
 
@@ -301,8 +300,7 @@ To define global permissions to vote any such content:
 
     class PluginConfig(Plugin):
 
-        @classmethod
-        def get_perms(cls):
+        def get_perms(self):
             return (
                 ('vote', _('Vote content')),)
 

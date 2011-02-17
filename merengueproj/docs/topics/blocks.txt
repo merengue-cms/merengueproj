@@ -66,10 +66,9 @@ This is a ``blocks.py`` file code fragment:
         name = 'latestnews'
         default_place = 'leftsidebar'
 
-        @classmethod
-        def render(cls, request, place, context):
+        def render(self, request, place, context):
             news_list = get_news(request, 5)
-            return cls.render_block(request, template_name='news/block_latest.html',
+            return self.render_block(request, template_name='news/block_latest.html',
                                     block_title='Latest news',
                                     context={'news_list': news_list})
 
@@ -133,8 +132,7 @@ be used in ``render`` method, if you want. Next example is self-explanatory:
         name = 'whereiam'
         default_place = 'leftsidebar'
 
-        @classmethod
-        def render(cls, request, place, context):
+        def render(self, request, place, context):
             if place in ['leftsidebar', 'rightsidebar']:
                 return 'I am in a side column'
             else:
@@ -228,9 +226,8 @@ Our ``LatestNewsBlock`` class must be referenced in the plugin configuration ins
     class PluginConfig(Plugin):
         #some stuff
 
-        @classmethod
-        def get_blocks(cls):
+        def get_blocks(self):
             return [LatestNewsBlock]
 
-* ``get_blocks`` is a classmethod that returns the specified blocks that we want to register.
+* ``get_blocks`` is a method that returns the specified blocks that we want to register.
 
