@@ -72,7 +72,7 @@ class CollectionAdmin(BaseContentAdmin):
                        ['status', 'tags', 'meta_desc', 'commentable', 'owners']},
             ),
         (_('Collection Configuration'),
-            {'fields': ('content_types', 'group_by', 'order_by', 'reverse_order', 'show_main_image', 'filtering_section')},
+            {'fields': ('content_types', 'group_by', 'order_by', 'limit', 'reverse_order', 'show_main_image', 'filtering_section')},
             ),
         )
     filter_horizontal = BaseContentAdmin.filter_horizontal + ('content_types', )

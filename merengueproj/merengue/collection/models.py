@@ -70,20 +70,26 @@ class Collection(BaseContent):
         null=True,
         )
 
+    limit = models.IntegerField(
+        verbose_name=_(u'Number of elements '),
+        blank=True,
+        null=True,
+        )
+
     reverse_order = models.BooleanField(
         default=False,
-        verbose_name=_('Reverse order'),
+        verbose_name=_(u'Reverse order'),
         )
 
     show_main_image = models.BooleanField(
         default=True,
-        verbose_name=_('Show main_image of collection items'),
+        verbose_name=_(u'Show main_image of collection items'),
         )
 
     filtering_section = models.BooleanField(
         default=True,
-        verbose_name=_('Filtering section'),
-        help_text=_('If the collection is into a section, filter for the contents of this section'),
+        verbose_name=_(u'Filtering section'),
+        help_text=_(u'If the collection is into a section, filter for the contents of this section'),
         )
 
     class Meta:
@@ -152,6 +158,8 @@ class Collection(BaseContent):
             filtering_section = self.filtering_section
         if filtering_section:
             items = self._reduce_to_section(items, section)
+        if self.limit:
+            items = items[:self.limit]
         return items
 
     def get_first_parents_of_content_types(self):
