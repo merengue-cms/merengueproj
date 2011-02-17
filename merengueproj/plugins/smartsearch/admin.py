@@ -32,11 +32,11 @@ class SearcherRelatedCollectionAdmin(RelatedModelAdmin):
     related_field = 'collections'
     form = SearcherRelatedCollectionModelAdminForm
 
-    def add_view(self, request, form_url='', extra_context=None):
+    def add_view(self, request, form_url='', extra_context=None, parent_model_admin=None, parent_object=None):
         form_top_class = self.get_form(request)
         content_type_model = self.basecontent.get_first_parents_of_content_types()
         content_type = ContentType.objects.get_for_model(content_type_model)
-        extra_context = extra_context or {}
+        extra_context = self._update_extra_context(request, extra_context, parent_model_admin, parent_object)
         context = {'model_admin': self,
                    'columns': {'fields': True,
                                'filter': True,

@@ -316,8 +316,10 @@ class RelatedURLsModelAdmin(admin.ModelAdmin):
         extra_context = extra_context or {}
         path = pathstr.split('/')
         if len(path) == 1:
-            #return self.change_view(request, path[0], extra_context, parent_model_admin)
-            return self.change_view(request, path[0], extra_context)
+            if isinstance(self, RelatedModelAdmin):
+                return self.change_view(request, path[0], extra_context, parent_model_admin, parent_object)
+            else:
+                return self.change_view(request, path[0], extra_context)
         object_id = path[0]
         basecontent = self._get_base_content(request, object_id)
         tool_name = path[1]
@@ -589,11 +591,13 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
         return super(BaseAdmin, self).delete_view(request, object_id, extra_context)
 
     def object_tools(self, request, mode, url_prefix):
-        """ Object tools for the model admin """
-        tools = [
-            {'url': url_prefix + 'history/', 'label': ugettext('History')},
-        ]
-        if mode == 'list':
+        """ Object tools for the model admin. mode can be "change", "add" or "list" """
+        tools = []
+        if mode == 'change':
+            tools.append(
+                {'url': url_prefix + 'history/', 'label': ugettext('History')},
+            )
+        elif mode == 'list':
             tools.append(
                 {'url': url_prefix + 'add/', 'label': _('Add %s') % force_unicode(self.model._meta.verbose_name), 'class': 'addlink'},
             )
@@ -1022,6 +1026,7 @@ class RelatedModelAdmin(BaseAdmin):
     manage_contents = False
     change_form_template = 'admin/related_change_form.html'
     change_list_template = 'admin/related_change_list.html'
+    object_history_template = 'admin/related_object_history.html'
 
     def __init__(self, *args, **kwargs):
         super(RelatedModelAdmin, self).__init__(*args, **kwargs)
@@ -1075,7 +1080,7 @@ class RelatedModelAdmin(BaseAdmin):
             return obj[0]
         return None
 
-    def ajax_changelist_view(self, request):
+    def ajax_changelist_view(self, request, model_admin=None, parent_model_admin=None, parent_object=None):
         if not self.has_change_permission(request, None):
             raise PermissionDenied
         contents = [{'name': unicode(i), 'url': i.get_admin_absolute_url()} for i in self.queryset(request)]
@@ -1171,7 +1176,7 @@ class RelatedModelAdmin(BaseAdmin):
             tools.append(
                 {'url': url_prefix + 'add/', 'label': _('Add %s') % force_unicode(self.model._meta.verbose_name), 'class': 'addlink'},
             )
-        else:
+        elif mode == 'change':
             tools.append(
                 {'url': url_prefix + 'history/', 'label': ugettext('History'), 'class': 'historylink'},
             )
@@ -1260,7 +1265,7 @@ class OrderableRelatedModelAdmin(RelatedModelAdmin):
 
       >>> site.register_related(Page, PageOrderableRelatedAdmin, related_to=Book)
     """
-    change_list_template = "admin/basecontent/sortable_change_list.html"
+    change_list_template = "admin/basecontent/related_sortable_change_list.html"
     sortablefield = 'position'
 
     def get_ordering(self):

@@ -52,8 +52,8 @@ class SentContactFormAdmin(BaseAdmin):
     list_display = ('contact_form', 'sent_date')
 
 
-class ContactFormRelatedContactFormOptAdmin(ContactFormOptAdmin,
-                                            RelatedModelAdmin):
+class ContactFormRelatedContactFormOptAdmin(RelatedModelAdmin,
+                                            ContactFormOptAdmin):
     tool_name = 'contact_form_opt'
     tool_label = _('contact form option')
     one_to_one = False

@@ -36,7 +36,7 @@ from merengue.multimedia.models import (Photo, Video, PanoramicView, Image3D,
 from merengue.perms import utils as perms_api
 
 
-class BaseMultimediaContentRelatedModelAdmin(BaseContentAdmin, RelatedModelAdmin):
+class BaseMultimediaContentRelatedModelAdmin(RelatedModelAdmin, BaseContentAdmin):
     list_filter = ('class_name', ) + BaseContentAdmin.list_filter
     inherit_actions = False
     related_field = 'multimediarelation'

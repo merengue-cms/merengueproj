@@ -1,0 +1,18 @@
+{% extends "admin/basecontent/sortable_change_list.html" %}
+
+{% load admin_tags related_admin_tags %}
+
+{% block object-tools %}
+  {% object_tools parent_model_admin "change" "../" parent_object %}
+{% endblock %}
+
+{% block content-main-inner %}
+  {% block related-object-tools %}
+  <div class="object-tools-wrapper">
+     {% object_tools model_admin "list" %}
+     <div class="object-tools-bottom"></div>
+  </div>
+  {% endblock %}
+
+  {{ block.super }}
+{% endblock %}

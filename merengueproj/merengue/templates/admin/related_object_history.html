@@ -1,19 +1,15 @@
-{% extends "admin/change_form.html" %}
+{% extends "admin/object_history.html" %}
 
 {% load admin_tags %}
 
 {% block object-tools %}
-   {% object_tools parent_model_admin "change" "../../" parent_object %}
+   {% object_tools parent_model_admin "change" "../../../" parent_object %}
 {% endblock %}
 
 {% block content-main-inner %}
   {% block related-object-tools %}
    <div class="object-tools-wrapper">
-    {% if change %}
-      {% object_tools model_admin "change" %}
-    {% else %}
-      {% object_tools model_admin "add" %}
-    {% endif %}
+    {% object_tools model_admin "change" "../" %}
     <div class="object-tools-bottom"></div>
    </div>
   {% endblock %}

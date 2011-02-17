@@ -5,7 +5,12 @@
 
 <ul class="object-tools mode-{{ mode }}">
 {% if object %}
-  {% if object.get_absolute_url %}<li><a href="{% url merengue.base.views.public_link opts.app_label opts.module_name object.id %}" class="viewsitelink">{% trans "View on site" %}</a></li>{% endif%}
+  {% if object.get_absolute_url %}
+    <li><a href="{% url merengue.base.views.public_link opts.app_label opts.module_name object.id %}" class="viewsitelink">
+    {% with opts.verbose_name as model_name %}
+     {% blocktrans %}View {{ model_name }} on site{% endblocktrans %}</a></li>
+    {% endwith %}
+  {% endif%}
 {% endif %}
 {% for tool in object_tools %}
   <li>

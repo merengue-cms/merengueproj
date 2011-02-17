@@ -260,6 +260,7 @@ div.mini-googlemap {
 
 .module {
     clear: right;
+    padding-top: 1em;
 }
 
 .object-subtools {
