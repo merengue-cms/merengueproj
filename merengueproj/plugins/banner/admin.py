@@ -24,7 +24,7 @@ class BannerAdmin(PluginAdmin, BaseContentAdmin):
     pass
 
 
-class BannerSectionAdmin(BannerAdmin, SectionContentAdmin):
+class BannerSectionAdmin(SectionContentAdmin, BannerAdmin):
     manage_contents = True
 
 

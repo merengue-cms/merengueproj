@@ -34,7 +34,7 @@ class NewsItemAdmin(BaseContentAdmin):
         js = ('news/date_auto_fill.js', )
 
 
-class NewsItemSectionAdmin(NewsItemAdmin, SectionContentAdmin):
+class NewsItemSectionAdmin(SectionContentAdmin, NewsItemAdmin):
     """ Admin for news item management inside sections """
     manage_contents = True
 

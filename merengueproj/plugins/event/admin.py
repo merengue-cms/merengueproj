@@ -39,7 +39,7 @@ class EventAdmin(BaseContentAdmin):
     list_filter = ('categories', 'status', 'user_modification_date', )
 
 
-class EventSectionAdmin(EventAdmin, SectionContentAdmin):
+class EventSectionAdmin(SectionContentAdmin, EventAdmin):
     manage_contents = True
 
 

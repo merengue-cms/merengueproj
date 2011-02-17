@@ -17,11 +17,11 @@ class ForumAdmin(BaseContentAdmin):
     removed_fields = ('map_icon', 'commentable', )
 
 
-class ForumSectionAdmin(ForumAdmin, SectionContentAdmin):
+class ForumSectionAdmin(SectionContentAdmin, ForumAdmin):
     manage_contents = True
 
 
-class ThreadRelatedAdmin(BaseContentAdmin, RelatedModelAdmin):
+class ThreadRelatedAdmin(RelatedModelAdmin, BaseContentAdmin):
     html_fields = ('description', )
     removed_fields = ('map_icon', 'commentable', )
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
