@@ -45,7 +45,7 @@ from django.utils.html import escape
 from django.utils.importlib import import_module
 from django.utils.text import capfirst
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext
+from django.utils.translation import ugettext, get_language
 from django.utils.translation import ugettext_lazy as _
 
 from autoreports.admin import ReportAdmin
@@ -55,7 +55,7 @@ from announcements.models import Announcement
 from announcements.admin import AnnouncementAdmin
 from transmeta import (canonical_fieldname, get_all_translatable_fields,
                        get_real_fieldname_in_each_language,
-                       get_fallback_fieldname)
+                       get_fallback_fieldname, get_real_fieldname)
 
 from merengue.base.adminsite import site
 from merengue.base.admin_utils import get_deleted_contents
@@ -417,6 +417,11 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
     def formfield_for_dbfield(self, db_field, **kwargs):
         field = super(BaseAdmin, self).formfield_for_dbfield(db_field, **kwargs)
         db_fieldname = canonical_fieldname(db_field)
+        if field:
+            field.trans_candidate = getattr(db_field, 'original_fieldname', False) and True
+            field.canonical = db_fieldname
+            field.fallback = get_fallback_fieldname(db_fieldname)
+            field.current = get_real_fieldname(db_fieldname, get_language()) == db_field.name
 
         # tinymce editor for html fields
         if db_fieldname in self.html_fields:

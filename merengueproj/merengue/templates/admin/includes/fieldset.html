@@ -1,0 +1,27 @@
+<fieldset class="module aligned {{ fieldset.classes }}">
+  {% if fieldset.name %}<h2>{{ fieldset.name }}</h2>{% endif %}
+  {% if fieldset.description %}<div class="description">{{ fieldset.description|safe }}</div>{% endif %}
+  {% for line in fieldset %}
+      <div class="form-row{% if line.errors %} errors{% endif %} {% for field in line %}{{ field.field.name }} {% endfor %} ">
+      {{ line.errors }}
+      {% for field in line %}
+      <div{% if not line.fields|length_is:"1" %} class="field-box"{% endif %}>
+          {% if field.field.field.trans_candidate %}
+          <div class="field-meta" style="display: none;">
+            <span class="canonical">{{ field.field.field.canonical }}</span>
+            <span class="fallback">{{ field.field.field.fallback }}</span>
+            {% if field.field.field.required %}<span class="required"></span>{% endif %}
+            {% if field.field.field.current %}<span class="current"></span>{% endif %}
+          </div>
+          {% endif %}
+          {% if field.is_checkbox %}
+              {{ field.field }}{{ field.label_tag }}
+          {% else %}
+              <span class="label-tag">{{ field.label_tag }}</span><span class="field-after-label">{{ field.field }}</span>
+          {% endif %}
+          {% if field.field.field.help_text %}<p class="help">{{ field.field.field.help_text|safe }}</p>{% endif %}
+      </div>
+      {% endfor %}
+      </div>
+  {% endfor %}
+</fieldset>

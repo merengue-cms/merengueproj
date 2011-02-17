@@ -4,6 +4,7 @@
 {% block extrahead %}{{ block.super }}
 <script type="text/javascript" src="/{{ MERENGUE_URLS_PREFIX}}/jsi18n/"></script>
 {{ media }}
+<script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/jquery.transmeta-fields.js"></script>
 {% endblock %}
 
 {% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% admin_media_prefix %}css/forms.css" />{% endblock %}
