@@ -77,14 +77,14 @@ def events_calendar(request):
     return HttpResponseBadRequest(mimetype=mimetype)
 
 
-def get_events(request=None, limit=None, queryset=None):
+def get_events(request=None, limit=None, queryset=None, filtering_section=None):
     if queryset:
         return queryset
     collection = get_collection_event()
-    request_param = tuple()
+    section = None
     if request and request.section:
-        request_param = (request.section, )
-    return collection.get_items(*request_param)[:limit]
+        section = request.section
+    return collection.get_items(section, filtering_section)[:limit]
 
 
 def get_collection_event():

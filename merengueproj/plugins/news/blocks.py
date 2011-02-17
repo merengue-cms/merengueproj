@@ -39,13 +39,13 @@ class LatestNewsBlock(BlockQuerySetItemProvider, Block):
     ]
 
     def get_contents(self, request=None, context=None, section=None):
-        number_news = self.get_config().get('limit', []).get_value()
-        news_list = get_news(request, number_news)
+        news_list = get_news(request, filtering_section=False)
         return news_list
 
     def render(self, request, place, context, block_content_relation=None,
                *args, **kwargs):
-        news_list = self.get_queryset(request, context)
+        number_news = self.get_config().get('limit', []).get_value()
+        news_list = self.get_queryset(request, context)[:number_news]
         return self.render_block(request, template_name='news/block_latest.html',
                                  block_title=ugettext('Latest news'),
                                  context={'news_list': news_list})

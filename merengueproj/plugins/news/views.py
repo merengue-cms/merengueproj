@@ -59,12 +59,12 @@ def news_by_date(request, year, month, day):
                            template_name='news/news_index.html')
 
 
-def get_news(request=None, limit=None):
+def get_news(request=None, limit=None, filtering_section=None):
     collection = get_collection_news()
-    request_param = tuple()
+    section = None
     if request and request.section:
-        request_param = (request.section, )
-    return collection.get_items(*request_param)[:limit]
+        section = request.section
+    return collection.get_items(section, filtering_section)[:limit]
 
 
 def get_collection_news():

@@ -40,10 +40,10 @@ def get_links(request=None, limit=None, queryset=None):
     if queryset:
         return queryset
     collection = get_collection_link()
-    request_param = tuple()
+    section = None
     if request and request.section:
-        request_param = (request.section, )
-    return collection.get_items(*request_param)[:limit]
+        section = request.section
+    return collection.get_items(section)[:limit]
 
 
 def get_collection_link():

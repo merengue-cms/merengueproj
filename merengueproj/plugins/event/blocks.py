@@ -33,11 +33,7 @@ class EventsCalendarBlock(BlockQuerySetItemProvider, Block):
     verbose_name = ugettext_lazy('Events Calendar Block')
 
     def get_contents(self, request=None, context=None, section=None):
-        events = get_events(request)
-        if not events.query.can_filter():
-            events = events.model.objects.filter(id__in=events.values('id').query)
-
-        return events
+        return get_events(request, filtering_section=False)
 
     def render(self, request, place, context, *args, **kwargs):
         current_month = date.today().month

@@ -26,12 +26,12 @@ def banner_index(request, template_name='banner/banner_index.html'):
     return collection_view(request, banner_list, template_name=template_name)
 
 
-def get_banners(request=None, limit=0):
+def get_banners(request=None, limit=None, filtering_section=None):
     collection = get_collection_banner()
-    request_param = tuple()
+    section = None
     if request and request.section:
-        request_param = (request.section, )
-    return collection.get_items(*request_param)[:limit]
+        section = request.section
+    return collection.get_items(section, filtering_section)[:limit]
 
 
 def get_collection_banner():
