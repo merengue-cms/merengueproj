@@ -41,7 +41,7 @@ class StandingOutAdmin(BaseOrderableAdmin):
         return form
 
 
-class StandingSectionOutAdmin(StandingOutAdmin, OrderableRelatedModelAdmin):
+class StandingSectionOutAdmin(OrderableRelatedModelAdmin, StandingOutAdmin):
 
     list_display = ('obj', )
     standingoutcategory = 'section'
