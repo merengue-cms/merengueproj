@@ -137,7 +137,7 @@ class Collection(BaseContent):
         query = BaseContent.objects.filter(class_name__in=classes)
         return self._filter_query(query)
 
-    def get_items(self, section=None):
+    def get_items(self, section=None, filtering_section=None):
         content_types = self.content_types.all()
         if content_types.count() == 1:
             items = self._get_items_from_one_source(content_types[0])
@@ -148,7 +148,9 @@ class Collection(BaseContent):
                                                                 content_types)
                     return items
             items = self._get_items_from_basecontent(content_types)
-        if self.filtering_section:
+        if filtering_section is None:
+            filtering_section = self.filtering_section
+        if filtering_section:
             items = self._reduce_to_section(items, section)
         return items
 
