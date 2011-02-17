@@ -603,9 +603,11 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
                 {'url': url_prefix + 'history/', 'label': ugettext('History')},
             )
         elif mode == 'list':
-            tools.append(
+            tools.extend([
                 {'url': url_prefix + 'add/', 'label': ugettext('Add %s') % force_unicode(self.model._meta.verbose_name), 'class': 'addlink'},
-            )
+                {'url': url_prefix + 'report/quick/', 'label': ugettext('Quick Report'), 'class': 'quickreport'},
+                {'url': url_prefix + 'report/advance/', 'label': ugettext('Advanced Report'), 'class': 'advancedreport'},
+            ])
         return tools
 
 
@@ -1176,16 +1178,7 @@ class RelatedModelAdmin(BaseAdmin):
 
     def object_tools(self, request, mode, url_prefix):
         """ Object tools for the model admin """
-        tools = []
-        if mode == 'list':
-            tools.append(
-                {'url': url_prefix + 'add/', 'label': _('Add %s') % force_unicode(self.model._meta.verbose_name), 'class': 'addlink'},
-            )
-        elif mode == 'change':
-            tools.append(
-                {'url': url_prefix + 'history/', 'label': ugettext('History'), 'class': 'historylink'},
-            )
-        return tools
+        return BaseAdmin.object_tools(self, request, mode, url_prefix)
 
 
 class BaseContentRelatedContactInfoAdmin(RelatedModelAdmin):
