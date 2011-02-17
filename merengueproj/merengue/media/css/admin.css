@@ -264,11 +264,11 @@ div.mini-googlemap {
 
 .module {
     clear: right;
-    padding-top: 1em;
 }
 
 .related .module {
     border-top: none;
+    padding-top: 1em;
 } 
 
 .object-subtools {
