@@ -9,7 +9,7 @@
 
 {% block extrahead %}
   {{ block.super }}
-  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/jquery.admin-tabs-index.js" />
+  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/jquery.admin-tabs-index.js"></script>
 {% endblock %}
 
 {% block coltype %}colMS colMSMerengueIndex{% endblock %}
@@ -22,8 +22,6 @@
 <div id="content-main">
 <div id="content-merengue">
     <div class="module-merengue" id="contentmanagement">
-      <h1>{% trans "Content management" %}</h1>
-      <p>{% trans "Manage the site's content" %}</p>
       <dl>
         {% ifhasperm 'manage_section' %}
           <dt><a href="section/basesection/" title="{% trans "Section" %}">{% trans "Content tree" %}</a></dt>
@@ -45,30 +43,22 @@
           <dt><a href="{% url transhette-home %}" title="{% trans "Translate portal" %}">{% trans "Translate site" %}</a></dt>
           <dd>{% trans "Translate the site messages." %}</dd>
         {% endif_can_access_transhette %}
+        {% ifhasperm 'manage_multimedia' %}
+          <dt><a href="multimedia/photo/" title="{% trans "Photos" %}">{% trans "Photos" %}</a></dt>
+          <dd>{% trans "View, edit and delete the site's photos." %}</dd>
+          <dt><a href="multimedia/video/" title="{% trans "Video" %}">{% trans "Video" %}</a></dt>
+          <dd>{% trans "View, edit and delete the site's videos." %}</dd>
+          <dt><a href="multimedia/audio/" title="{% trans "Audio" %}">{% trans "Audio" %}</a></dt>
+          <dd>{% trans "View, edit and delete the site's audios." %}</dd>
+          <dt><a href="multimedia/panoramicview/" title="{% trans "Panoramic views" %}">{% trans "Panoramic views" %}</a></dt>
+          <dd>{% trans "View, edit and delete the site's panoramic views." %}</dd>
+          <dt><a href="multimedia/image3d/" title="{% trans "Images 3D" %}">{% trans "Images 3D" %}</a></dt>
+          <dd>{% trans "View, edit and delete the site's Images 3D." %}</dd>
+        {% endifhasperm %}
       </dl>
-    {% ifhasperm 'manage_multimedia' %}
-    <div id="multimedia">
-      <h1>{% trans "Multimedia" %}</h1>
-      <p>{% trans "Manage the site's multimedia content" %}</p>
-      <dl>
-        <dt><a href="multimedia/photo/" title="{% trans "Photos" %}">{% trans "Photos" %}</a></dt>
-        <dd>{% trans "View, edit and delete the site's photos." %}</dd>
-        <dt><a href="multimedia/video/" title="{% trans "Video" %}">{% trans "Video" %}</a></dt>
-        <dd>{% trans "View, edit and delete the site's videos." %}</dd>
-        <dt><a href="multimedia/audio/" title="{% trans "Audio" %}">{% trans "Audio" %}</a></dt>
-        <dd>{% trans "View, edit and delete the site's audios." %}</dd>
-        <dt><a href="multimedia/panoramicview/" title="{% trans "Panoramic views" %}">{% trans "Panoramic views" %}</a></dt>
-        <dd>{% trans "View, edit and delete the site's panoramic views." %}</dd>
-        <dt><a href="multimedia/image3d/" title="{% trans "Images 3D" %}">{% trans "Images 3D" %}</a></dt>
-        <dd>{% trans "View, edit and delete the site's Images 3D." %}</dd>
-      </dl>
-    </div>
-    {% endifhasperm %}
     </div>
     {% ifhasperm 'manage_site' %}
     <div class="module-merengue" id="sitebuilding">
-      <h1>{% trans "Site configuration" %}</h1>
-      <p>{% trans "Control how the site looks and feels." %}</p>
       <dl>
         <dt><a href="block/registeredblock/" title="{% trans "Blocks" %}">{% trans "Blocks" %}</a></dt>
         <dd>{% trans "View, edit and delete the site's blocks." %}</dd>
@@ -87,8 +77,6 @@
     {% endifhasperm %}
     {% ifhasperm 'manage_user' %}
     <div class="module-merengue" id="usermanagement">
-      <h1>{% trans "User management" %}</h1>
-      <p>{% trans "Manage the site's users, groups and access to site features." %}</p>
       <dl>
         <dt><a href="auth/group" title="{% trans "Groups" %}">{% trans "Groups" %}</a></dt>
         <dd>{% trans "View, edit and delete the site's groups." %}</dd>
@@ -105,20 +93,20 @@
 {% if plugins %}
     {% ifhasperm 'manage_plugin_content' %}
     <div class="module-merengue" id="plugins">
-      <h1>{% trans "Plugins administration" %}</h1>
-      <p>{% trans "Manage your installed plugins." %}</p>
       <dl>
       {% for plug in plugins.values %}
         <dt><a href="{{ plug.app_url }}" title="{{ plug.name }}">{{ plug.name }}</a></dt>
+        <dd>{{ plug.config.description }} ({{ plug.config.version }})</dd>
       {% endfor %}
       </dl>
     </div>
     {% endifhasperm %}
 {% endif %}
 
+</div> <!--- end content-merengue -->
 </div>
 {% endblock %}
-</div> <!--- end content-merengue -->
+
 {% block sidebar %}
 <div id="content-related">
   <div class="module" id="administrator-menu">
