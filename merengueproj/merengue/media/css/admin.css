@@ -95,6 +95,9 @@ div.breadcrumbs {
     font-size: 12px;
 }
 
+#content-related {
+    z-index: 2;
+}
 
 #content-related .module {
     padding-top: 0;
