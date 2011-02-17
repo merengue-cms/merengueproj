@@ -45,6 +45,7 @@ MODEL_ADMIN_PREFIX = 'base_model_admin_'
 
 class BaseAdminSite(DjangoAdminSite):
     base_model_admins = None
+    index_template = 'admin/django_index.html'  # Django legacy index template
 
     def __init__(self, *args, **kwargs):
         self.apps_registered = []

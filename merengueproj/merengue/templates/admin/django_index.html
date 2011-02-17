@@ -1,15 +1,23 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% load adminmedia %}{% admin_media_prefix %}css/dashboard.css" />{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}dashboard{% endblock %}
+
+
+{% block breadcrumbs %}
+<div class="breadcrumbs"><a href="../">
+{% trans "Home" %}</a> &rsaquo; {% trans "Django admin" %}
+</div>
+{% endblock %}
+
+{% block content %}
 {% load i18n %}
 
 <div id="content-main" class="module-merengue">
-
-{% block breadcrumbs %}
-{% if not inplugin %}
-<div class="breadcrumbs">
-<a href="../">{% trans "Home" %}</a>
-&rsaquo;
-</div>
-{% endif %}
-{% endblock %}
 
 <div id="content">
 {% if app_list %}
@@ -19,7 +27,7 @@
         {% for model in app.models %}
             <dt>
             {% if model.perms.change %}
-              <a href="{{ relative_path }}{{ model.admin_url }}">{{ model.name }}</a>
+              <a href="../{{ model.admin_url }}">{{ model.name }}</a>
             {% else %}
               {{ model.name }}
             {% endif %}
@@ -33,3 +41,5 @@
 {% endif %}
 </div>
 </div>
+{% endblock %}
+
