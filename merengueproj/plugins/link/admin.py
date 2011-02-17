@@ -28,7 +28,7 @@ class LinkAdmin(BaseContentAdmin):
     pass
 
 
-class LinkSectionAdmin(LinkAdmin, SectionContentAdmin):
+class LinkSectionAdmin(SectionContentAdmin, LinkAdmin):
     pass
 
 
