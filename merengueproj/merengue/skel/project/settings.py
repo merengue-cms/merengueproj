@@ -13,6 +13,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 DEBUG_TOOLBAR = DEBUG
 HTTP_ERRORS_DEBUG = DEBUG
+COMPRESS = not DEBUG  # JS and CSS compression
 
 ADMINS = (
     ('Your Name', 'youremail@yourdomain.org'),
