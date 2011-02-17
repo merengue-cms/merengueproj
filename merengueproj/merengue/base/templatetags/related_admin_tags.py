@@ -63,7 +63,6 @@ def advanced_breadcrumbs(context):
                   'site': None,
                   'tool_name': None}]
     url_list = []
-
     if route:
         try:
             url_list = [{'label': _('Home'),
@@ -102,7 +101,7 @@ def advanced_breadcrumbs(context):
                                 }]
                 elif add:
                     url_list += [{'label': _('Add'),
-                                'url': base_url + r['admin'].tool_name + '/' + '/add/',
+                                'url': base_url + r['admin'].tool_name + '/add/',
                                 }]
                 base_url = url_list[-1]['url']
         except NoReverseMatch:
