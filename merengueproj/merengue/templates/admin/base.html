@@ -39,7 +39,7 @@
 </head>
 {% load i18n transhette_tags admin_tags %}
 
-<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}merengueadmin{% endblock %}">
+<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}merengueadmin{% endblock %} {% block extrabodyclass %}{% endblock %}">
 
 <!-- Container -->
 <div id="container">

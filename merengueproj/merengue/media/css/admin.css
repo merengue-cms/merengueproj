@@ -265,8 +265,11 @@ div.mini-googlemap {
 .module {
     clear: right;
     padding-top: 1em;
-    border-top: none;
 }
+
+.related .module {
+    border-top: none;
+} 
 
 .object-subtools {
     padding-top:0;
@@ -711,6 +714,10 @@ div.module.form-row {
 #content-main {
     position: relative;
     z-index: 1;
+}
+
+#content-main form > div:first-child fieldset {
+    padding-top: 1em;
 }
 
 #content-main form fieldset {

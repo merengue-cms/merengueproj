@@ -6,6 +6,8 @@
   {% object_tools parent_model_admin "change" "../" parent_object %}
 {% endblock %}
 
+{% block extrabodyclass %}related{% endblock %}
+
 {% block content-main-inner %}
   {% block related-object-tools %}
   <div class="object-tools-wrapper">
