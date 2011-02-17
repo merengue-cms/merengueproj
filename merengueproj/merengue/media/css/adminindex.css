@@ -47,38 +47,6 @@ body {
     margin-left: 10px;
 }
 
-.module-merengue {
-    padding: 0.5em;
-    background: #ffffff url(../img/admin/top-gradient.png) repeat-x top left;
-}
-
-.module-merengue h1 {
-    background: white !important;
-    font-size: 1.3em;
-    margin: 0;
-    padding: 2px 5px 3px;
-}
-
-.module-merengue dl {
-    margin-top: 2em;
-    margin-left: 2em;
-}
-
-.module-merengue dt {
-    font-size: 1.2em;
-}
-
-.module-merengue dd {
-    font-size: 1em;
-    margin: 0.5em 0px 1em;
-    padding-left: 2em;
-}
-
-.module-merengue h1 a {
-    color: white;
-    font-size: 12px;
-}
-
 .module-merengue-big {
     width: 100%;
     border: 0px;

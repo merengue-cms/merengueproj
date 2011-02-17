@@ -41,7 +41,9 @@ div.breadcrumbs {
     border-bottom: none;
     padding: 10px 10px;
     clear: both;
+    background: transparent url(../img/admin/nav-bg-reverse.gif) repeat-x scroll 0 -10px;
 }
+
 /*---- other styles ----*/
 
 .module-merengue h1,
@@ -51,6 +53,48 @@ div.breadcrumbs {
 .inline-group h2 {
     background: #E6D8C0 url(../img/admin/default-bg.gif) repeat-x top left;
 }
+
+.module-merengue {
+    padding: 0.5em;
+    background: #ffffff url(../img/admin/top-gradient.png) repeat-x top left;
+}
+
+.dashboard .module-merengue {
+    background: none;
+    padding-top: 0;
+}
+
+.module-merengue h1 {
+    background: white !important;
+    font-size: 1.3em;
+    margin: 0;
+    padding: 2px 5px 3px;
+}
+
+.module-merengue h2 {
+    color: #666666;
+}
+
+.module-merengue dl {
+    margin-top: 2em;
+    margin-left: 2em;
+}
+
+.module-merengue dt {
+    font-size: 1.2em;
+}
+
+.module-merengue dd {
+    font-size: 1em;
+    margin: 0.5em 0px 1em;
+    padding-left: 2em;
+}
+
+.module-merengue h1 a {
+    color: white;
+    font-size: 12px;
+}
+
 
 #content-related .module {
     padding-top: 0;
@@ -820,6 +864,10 @@ ul.extra_options {
 
 .maintabs ul li.contentmanagement a {
     background-image: url(../img/admin/content-management.png);
+}
+
+.maintabs ul li {
+    font-size: 1.1em;
 }
 
 .maintabs ul li.sitebuilding a {

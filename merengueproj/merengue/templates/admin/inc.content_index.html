@@ -1,26 +1,38 @@
 {% load i18n %}
-<div id="content-main" class="control-panel">
 
+<div id="content-main" class="module-merengue">
+
+{% block breadcrumbs %}
+{% if not inplugin %}
+<div class="breadcrumbs">
+<a href="../">{% trans "Home" %}</a>
+&rsaquo;
+{% for app in app_list %}
+{% trans app.name %}
+{% endfor %}
+</div>
+{% endif %}
+{% endblock %}
+
+<div id="content">
 {% if app_list %}
     {% for app in app_list %}
-        <div class="module">
-        <table summary="{% blocktrans with app.name as name %}Models available in the {{ name }} application.{% endblocktrans %}">
-        <caption><a href="{{ relative_path }}{{ app.app_url }}" class="section">{% blocktrans with app.name as name %}{{ name }}{% endblocktrans %}</a></caption>
+        <h2>{% blocktrans with app.name as name %}{{ name }}{% endblocktrans %}</h2>
+        <dl>
         {% for model in app.models %}
-            <tr>
+            <dt>
             {% if model.perms.change %}
-                <th scope="row"><a href="{{ relative_path }}{{ model.admin_url }}">{{ model.name }}</a></th>
+              <a href="{{ relative_path }}{{ model.admin_url }}">{{ model.name }}</a>
             {% else %}
-                <th scope="row">{{ model.name }}</th>
+              {{ model.name }}
             {% endif %}
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            </tr>
+            </dt>
+            <dd></dd>
         {% endfor %}
-        </table>
-        </div>
+        </dl>
     {% endfor %}
 {% else %}
     <p>{% trans "You don't have permission to edit anything." %}</p>
 {% endif %}
+</div>
 </div>
