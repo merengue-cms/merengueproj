@@ -38,7 +38,8 @@ div#header img#merengue_logo {
 
 div.breadcrumbs {
     border-top-width: 0px;
-    padding: 5px 10px;
+    border-bottom: none;
+    padding: 10px 10px;
     clear: both;
 }
 /*---- other styles ----*/
@@ -108,8 +109,7 @@ div.breadcrumbs {
 
 #content-main ul.object-tools li {
     background: none;
-    margin-left: 1em;
-    margin-right: 1em;
+    margin: 0.8em 1em 1em 0;
 }
 
 #content-main ul.object-tools li a {
@@ -125,7 +125,6 @@ div.breadcrumbs {
 }
 
 #content-main .object-tools-wrapper {
-    background: url(../img/admin/bg-tools.gif) bottom repeat-x;
     border-top: 1px solid #CCCCCC;
     border-left: 1px solid #CCCCCC;
     border-right: 1px solid #CCCCCC;
@@ -266,6 +265,7 @@ div.mini-googlemap {
 .module {
     clear: right;
     padding-top: 1em;
+    border-top: none;
 }
 
 .object-subtools {
@@ -600,9 +600,10 @@ a.selector-chooseall {
     width: 100%;
 }
 
+.form-row,
 div.module.form-row {
     border: 0px;
-    border-bottom: 1px solid #EEEEEE;
+    border-bottom: 1px dotted #EEEEEE !important;
 }
 
 /* ---- section changelist ---- */
