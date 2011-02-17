@@ -353,7 +353,7 @@ class MenuAdmin(BaseAdmin):
             except:
                 pass
 
-    def changelist_view(self, request, extra_context={}):
+    def changelist_view(self, request, extra_context={}, parent_model_admin=None, parent_object=None):
         source = self.move_menus(request)
         media = self.media
         media.add_js([settings.MEDIA_URL + "merengue/js/jquery-ui-1.8.dragdrop.min.js"])
@@ -361,7 +361,7 @@ class MenuAdmin(BaseAdmin):
         media.add_js([settings.MEDIA_URL + "merengue/js/section/OrderableMenuTree.js"])
         extra_context.update({'media': media.render(),
                               'moved_source': source})
-        return super(MenuAdmin, self).changelist_view(request, extra_context)
+        return super(MenuAdmin, self).changelist_view(request, extra_context, parent_model_admin)
 
 
 class BaseSectionMenuRelatedAdmin(MenuAdmin, RelatedModelAdmin):

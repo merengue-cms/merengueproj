@@ -1,5 +1,5 @@
 {% extends "admin/base_site.html" %}
-{% load adminmedia admin_list i18n autoreports_tags related_admin_tags %}
+{% load adminmedia admin_list i18n autoreports_tags admin_tags related_admin_tags %}
 
 {% block extrastyle %}
   {{ block.super }}
@@ -36,32 +36,22 @@
 {% block coltype %}flex{% endblock %}
 
 {% block content %}
-    {% block object-tools %}
-        <ul class="object-tools">
-          {% autoreports_admin %}
-          {% if inside_basecontent %}
-          {% include "admin/object_tools.html" %}
-          {% endif %}
-          {% if has_add_permission %}
-          <li>
-            <a href="add/{% if is_popup %}?_popup=1{% endif %}" class="addlink">
-              {% blocktrans with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktrans %}
-            </a>
-          </li>
-          {% endif %}
-        </ul>
-    {% endblock %}
+  {% block object-tools %}
+    {% object_tools model_admin "list" %}
+  {% endblock %}
 
-{% smart_relations_object_tool %}
+  {% smart_relations_object_tool %}
 
+  {% block content-main %}
   <div id="content-main">
-    {% if cl.formset.errors %}
+    {% block content-main-inner %}
+      {% if cl.formset.errors %}
         <p class="errornote">
         {% blocktrans count cl.formset.errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
         </p>
         <ul class="errorlist">{% for error in cl.formset.non_field_errors %}<li>{{ error }}</li>{% endfor %}</ul>
-    {% endif %}
-    <div class="module{% if cl.has_filters %} filtered{% endif %}{% block module-extra-class %}{% endblock %}" id="changelist">
+      {% endif %}
+      <div class="module{% if cl.has_filters %} filtered{% endif %}{% block module-extra-class %}{% endblock %}" id="changelist">
       {% block search %}{% search_form cl %}{% endblock %}
       {% block date_hierarchy %}{% date_hierarchy cl %}{% endblock %}
 
@@ -89,5 +79,8 @@
       {% block pagination %}{% pagination cl %}{% endblock %}
       </form>
     </div>
+    {% endblock %}
   </div>
+  {% endblock %}
+
 {% endblock %}

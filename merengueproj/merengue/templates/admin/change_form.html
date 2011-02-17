@@ -1,5 +1,5 @@
 {% extends "admin/base_site.html" %}
-{% load i18n admin_modify customize_admin_modify adminmedia related_admin_tags %}
+{% load i18n admin_modify customize_admin_modify adminmedia admin_tags related_admin_tags %}
 
 {% block extrahead %}{{ block.super }}
 <script type="text/javascript" src="/{{ MERENGUE_URLS_PREFIX}}/jsi18n/"></script>
@@ -19,22 +19,19 @@
 {% endif %}{% endblock %}
 
 {% block content %}
+
 {% block object-tools %}
-<ul class="object-tools">
-    {% include "admin/object_tools.html" %}
-    {% if not is_popup %}{% if change %}
-    <li><a href="history/" class="historylink">{% trans "History" %}</a></li>
-    {% if with_permissions %}
-      <li><a href="permissions/" class="historylink">{% trans "Permissions" %}</a></li>
-    {% endif %}
-    {% endif %}
-  {% endif %}
-</ul>
+    {% object_tools model_admin "change" %}
 {% endblock %}
 
 {% block content-main %}
+
 {% smart_relations_object_tool %}
+
 <div id="content-main">
+
+{% block content-main-inner %}
+
 {% if original.no_deletable or original.no_changeable %}
   <div class="warning-message">
   <ul>
@@ -114,6 +111,9 @@
 {% prepopulated_fields_js %}
 
 </div>
-</form></div>
+</form>
+{% endblock %}
+
+</div>
 {% endblock %}
 {% endblock %}

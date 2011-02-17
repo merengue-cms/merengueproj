@@ -48,3 +48,20 @@ def main_admin_tabs(context):
             break
     return {'selected': selected}
 main_admin_tabs = register.inclusion_tag('admin/main_admin_tabs.html', takes_context=True)(main_admin_tabs)
+
+
+def object_tools(context, model_admin, mode, url_prefix='', obj=None):
+    request = context.get('request', None)
+    object_tools = model_admin.object_tools(request, mode, url_prefix)
+    if obj is None:
+        obj = context.get('original', None)
+    return {
+        'path': request.META.get('PATH_INFO', ''),
+        'request': request,
+        'object_tools': object_tools,
+        'opts': getattr(obj, '_meta', None),
+        'object': obj,
+        'mode': mode,
+        'model_admin': model_admin,
+    }
+object_tools = register.inclusion_tag('admin/object_tools.html', takes_context=True)(object_tools)

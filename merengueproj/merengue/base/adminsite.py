@@ -56,7 +56,6 @@ class BaseAdminSite(DjangoAdminSite):
         super(BaseAdminSite, self).__init__(*args, **kwargs)
 
     def admin_view(self, view, cacheable=False):
-
         def inner(request, *args, **kwargs):
             if not self.has_permission(request):
                 return self.login(request)
@@ -132,20 +131,6 @@ class BaseAdminSite(DjangoAdminSite):
                 self.admin_view(self.save_backup),
                 name='save_backup'),
         )
-        #for model, model_admin in self._registry.iteritems():
-            #for key in self.related_admin_sites.keys():
-                #if issubclass(model, key):
-                    #for tool_name, related_admin_site in self.related_admin_sites[key].items():
-                        #related_admin_site.base_model_admins[model] = model_admin
-                        #related_urlpatterns += patterns('',
-                            #url(r'^%(app)s/%(model)s/(?P<%(pref)s%(tname)s>\d+)/%(tname)s/' % ({'app': model._meta.app_label,
-                                                                                                #'model': model._meta.module_name,
-                                                                                                #'pref': OBJECT_ID_PREFIX,
-                                                                                                #'tname': slugify(tool_name),
-                                                                                               #}),
-                                #include(related_admin_site.urls), {'%s%s' % (MODEL_ADMIN_PREFIX, slugify(tool_name)): model_admin}))
-
-        #return custom_patterns + related_urlpatterns + urlpatterns
         return custom_patterns + urlpatterns
 
     def register(self, model_or_iterable, admin_class=None, **options):
@@ -297,6 +282,7 @@ class BaseAdminSite(DjangoAdminSite):
 class RelatedModelRegistrable(object):
 
     def register_related(self, model_or_iterable, admin_class=None, related_to=None, **options):
+
         if not model_or_iterable or not admin_class or not related_to:
             return
         tool_name = admin_class and (getattr(admin_class, 'tool_name', None) or getattr(model_or_iterable._meta, 'module_name', None))

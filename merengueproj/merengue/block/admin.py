@@ -63,9 +63,9 @@ class BaseContentRelatedBlockAdmin(RelatedModelAdmin, RegisteredBlockAdmin):
     def has_add_permission(self, request):
         return perms_api.can_manage_site(request.user)
 
-    def add_view(self, request, form_url='', extra_context=None):
+    def add_view(self, request, form_url='', extra_context=None, parent_model_admin=None, parent_object=None):
         self.fieldsets = None  # fieldsets was cleared in add view
-        return super(BaseContentRelatedBlockAdmin, self).add_view(request, form_url, extra_context)
+        return super(BaseContentRelatedBlockAdmin, self).add_view(request, form_url, extra_context, parent_model_admin)
 
     def get_form(self, request, obj=None, **kwargs):
         if request.get_full_path().endswith('add/'):

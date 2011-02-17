@@ -288,6 +288,8 @@ class RelatedURLsModelAdmin(admin.ModelAdmin):
         def wrap(view):
 
             def wrapper(*args, **kwargs):
+                #if isinstance(self, RelatedModelAdmin):
+                    #kwargs['parent_model_admin'] = self
                 return self.admin_site.admin_view(view)(*args, **kwargs)
             return update_wrapper(wrapper, view)
 
@@ -310,10 +312,11 @@ class RelatedURLsModelAdmin(admin.ModelAdmin):
         )
         return urlpatterns
 
-    def parse_path(self, request, pathstr, extra_context=None, basecontent=None):
+    def parse_path(self, request, pathstr, extra_context=None, basecontent=None, parent_model_admin=None, parent_object=None):
         extra_context = extra_context or {}
         path = pathstr.split('/')
         if len(path) == 1:
+            #return self.change_view(request, path[0], extra_context, parent_model_admin)
             return self.change_view(request, path[0], extra_context)
         object_id = path[0]
         basecontent = self._get_base_content(request, object_id)
@@ -332,6 +335,10 @@ class RelatedURLsModelAdmin(admin.ModelAdmin):
                     resolved = pattern.resolve(pathstr)
                     if resolved:
                         callback, args, kwargs = resolved
+                        # add ourselves as parent model admin to be referred from child model admin
+                        # add also parent object to be referred also in child model if needed
+                        kwargs['parent_model_admin'] = self
+                        kwargs['parent_object'] = basecontent
                         return callback(request, *args, **kwargs)
         raise Http404
 
@@ -580,6 +587,17 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
     def delete_view(self, request, object_id, extra_context=None):
         extra_context = self._base_update_extra_context(extra_context)
         return super(BaseAdmin, self).delete_view(request, object_id, extra_context)
+
+    def object_tools(self, request, mode, url_prefix):
+        """ Object tools for the model admin """
+        tools = [
+            {'url': url_prefix + 'history/', 'label': ugettext('History')},
+        ]
+        if mode == 'list':
+            tools.append(
+                {'url': url_prefix + 'add/', 'label': _('Add %s') % force_unicode(self.model._meta.verbose_name), 'class': 'addlink'},
+            )
+        return tools
 
 
 class BaseCategoryAdmin(BaseAdmin):
@@ -951,6 +969,12 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
         extra_context.update({'with_permissions': True})
         return extra_context
 
+    def object_tools(self, request, mode, url_prefix):
+        return super(BaseContentAdmin, self).object_tools(request, mode, url_prefix) + [
+            {'url': url_prefix + 'permissions/', 'label': ugettext('Permissions'), 'class': 'historylink'},
+        ]
+
+
 if settings.USE_GIS:
     BaseContentAdmin.list_display += ('google_minimap', )
 
@@ -996,6 +1020,8 @@ class RelatedModelAdmin(BaseAdmin):
     reverse_related_field = None  # For m2m with through class
     one_to_one = False
     manage_contents = False
+    change_form_template = 'admin/related_change_form.html'
+    change_list_template = 'admin/related_change_list.html'
 
     def __init__(self, *args, **kwargs):
         super(RelatedModelAdmin, self).__init__(*args, **kwargs)
@@ -1014,6 +1040,7 @@ class RelatedModelAdmin(BaseAdmin):
         def wrap(view):
 
             def wrapper(*args, **kwargs):
+                kwargs['model_admin'] = self
                 return self.admin_site.admin_view(view)(*args, **kwargs)
             return update_wrapper(wrapper, view)
 
@@ -1026,7 +1053,7 @@ class RelatedModelAdmin(BaseAdmin):
         urlpatterns += super(RelatedModelAdmin, self).get_urls()
         return urlpatterns
 
-    def _update_extra_context(self, request, extra_context=None):
+    def _update_extra_context(self, request, extra_context=None, parent_model_admin=None, parent_object=None):
         extra_context = extra_context or {}
         #basecontent = self._get_base_content(request)
         basecontent_type_id = ContentType.objects.get_for_model(self.basecontent).id
@@ -1035,7 +1062,11 @@ class RelatedModelAdmin(BaseAdmin):
                               'basecontent_opts': self.basecontent._meta,
                               'basecontent_type_id': basecontent_type_id,
                               'inside_basecontent': True,
-                              'selected': self.tool_name})
+                              'selected': self.tool_name,
+                              'model_admin': self,
+                              'parent_model_admin': parent_model_admin,
+                              'parent_object': parent_object,
+                              })
         return extra_context
 
     def is_created_one_to_one_object(self):
@@ -1053,8 +1084,8 @@ class RelatedModelAdmin(BaseAdmin):
                                       'message': ugettext('No contents found')})
         return HttpResponse(json_dict, mimetype='text/plain')
 
-    def changelist_view(self, request, extra_context=None):
-        extra_context = self._update_extra_context(request, extra_context)
+    def changelist_view(self, request, extra_context=None, parent_model_admin=None, parent_object=None):
+        extra_context = self._update_extra_context(request, extra_context, parent_model_admin, parent_object)
         if self.one_to_one:
             obj_created = self.is_created_one_to_one_object()
             if obj_created:
@@ -1069,24 +1100,24 @@ class RelatedModelAdmin(BaseAdmin):
             basecontent = self.basecontent
         return base_qs.filter(**{self.related_field: basecontent})
 
-    def add_view(self, request, form_url='', extra_context=None):
-        extra_context = self._update_extra_context(request, extra_context)
+    def add_view(self, request, form_url='', extra_context=None, parent_model_admin=None, parent_object=None):
+        extra_context = self._update_extra_context(request, extra_context, parent_model_admin, parent_object)
         if self.one_to_one:
             obj_created = self.is_created_one_to_one_object()
             if obj_created:
                 return HttpResponseRedirect('%s../%s' % (request.get_full_path(), obj_created.pk))
         return super(RelatedModelAdmin, self).add_view(request, form_url, extra_context)
 
-    def change_view(self, request, object_id, extra_context=None):
-        extra_context = self._update_extra_context(request, extra_context)
+    def change_view(self, request, object_id, extra_context=None, parent_model_admin=None, parent_object=None):
+        extra_context = self._update_extra_context(request, extra_context, parent_model_admin, parent_object)
         return super(RelatedModelAdmin, self).change_view(request, object_id, extra_context)
 
-    def delete_view(self, request, object_id, extra_context=None):
-        extra_context = self._update_extra_context(request, extra_context)
+    def delete_view(self, request, object_id, extra_context=None, parent_model_admin=None, parent_object=None):
+        extra_context = self._update_extra_context(request, extra_context, parent_model_admin, parent_object)
         return super(RelatedModelAdmin, self).delete_view(request, object_id, extra_context)
 
-    def history_view(self, request, object_id, extra_context=None):
-        extra_context = self._update_extra_context(request, extra_context)
+    def history_view(self, request, object_id, extra_context=None, parent_model_admin=None, parent_object=None):
+        extra_context = self._update_extra_context(request, extra_context, parent_model_admin, parent_object)
         return super(RelatedModelAdmin, self).history_view(request, object_id, extra_context)
 
     def save_form(self, request, form, change):
@@ -1132,6 +1163,19 @@ class RelatedModelAdmin(BaseAdmin):
     def remove_related_field_from_form(self, form):
         if self.related_field in form.base_fields.keys():
             form.base_fields.pop(self.related_field)
+
+    def object_tools(self, request, mode, url_prefix):
+        """ Object tools for the model admin """
+        tools = []
+        if mode == 'list':
+            tools.append(
+                {'url': url_prefix + 'add/', 'label': _('Add %s') % force_unicode(self.model._meta.verbose_name), 'class': 'addlink'},
+            )
+        else:
+            tools.append(
+                {'url': url_prefix + 'history/', 'label': ugettext('History'), 'class': 'historylink'},
+            )
+        return tools
 
 
 class BaseContentRelatedContactInfoAdmin(RelatedModelAdmin):
@@ -1228,13 +1272,13 @@ class OrderableRelatedModelAdmin(RelatedModelAdmin):
         relation_lookup = field.field.rel.through.lower()
         return ('%s__order' % relation_lookup, 'asc')
 
-    def changelist_view(self, request, extra_context=None):
-        extra_context = self._update_extra_context(request, extra_context)
+    def changelist_view(self, request, extra_context=None, parent_model_admin=None, parent_object=None):
+        extra_context = self._update_extra_context(request, extra_context, parent_model_admin, parent_object)
         if request.method == 'POST':
             neworder_list = request.POST.get('neworder', None)
             page = request.GET.get('p', 0)
             if neworder_list is None:
-                return super(OrderableRelatedModelAdmin, self).changelist_view(request, extra_context)
+                return super(OrderableRelatedModelAdmin, self).changelist_view(request, extra_context, parent_model_admin, parent_object)
             neworder_list = neworder_list.split(',')
             items = self.queryset(request).filter(id__in=neworder_list)
             for item in items:
@@ -1245,7 +1289,7 @@ class OrderableRelatedModelAdmin(RelatedModelAdmin):
                 setattr(relation, self.sortablefield, neworder)
                 relation.save()
 
-        return super(OrderableRelatedModelAdmin, self).changelist_view(request, extra_context)
+        return super(OrderableRelatedModelAdmin, self).changelist_view(request, extra_context, parent_model_admin, parent_object)
 
     def get_relation_obj(self, through_model, obj):
         """

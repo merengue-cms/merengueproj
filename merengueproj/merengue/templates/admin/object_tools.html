@@ -1,4 +1,15 @@
 {% load i18n content_tags %}
-    {% if original %}
-      {% if original.get_absolute_url %}<li><a href="{% url merengue.base.views.public_link opts.app_label opts.module_name object_id %}" class="viewsitelink">{% trans "View on site" %}</a></li>{% endif%}
-    {% endif %}
+
+{# next line is only for debugging purposes #}
+<span style="display:none">{{ model_admin }}</span>
+
+<ul class="object-tools mode-{{ mode }}">
+{% if object %}
+  {% if object.get_absolute_url %}<li><a href="{% url merengue.base.views.public_link opts.app_label opts.module_name object.id %}" class="viewsitelink">{% trans "View on site" %}</a></li>{% endif%}
+{% endif %}
+{% for tool in object_tools %}
+  <li>
+    <a href="{{ tool.url }}" title="{{ tool.label }}" {% if tool.class %}class="{{ tool.class }}"{% endif %}>{{ tool.label }}</a>
+  </li>
+{% endfor %}
+</ul>

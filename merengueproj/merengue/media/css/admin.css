@@ -10,8 +10,13 @@ p {
 a:link, a:visited {
     color: #bf9460;
 }
+
 a:hover {
     color: #806446;
+}
+
+.clear {
+    clear: both;
 }
 
 /* ----- header styles ----- */
@@ -86,6 +91,43 @@ div.breadcrumbs {
     border: 1px solid #C49A6C;
     background: #E6D8C0 url(../img/admin/default-bg.gif) repeat-x top left;
     color: #917250;
+}
+
+/* ----- related object tools ----- */
+#content-main ul.object-tools {
+    float: left;
+    margin-top: 8px;
+    margin-right: 2em;
+    z-index: 10;
+}
+
+#content-main ul.object-tools li {
+    background: none;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+#content-main ul.object-tools li a {
+    background: none;
+    color: #BF9460;
+}
+
+#content-main ul.object-tools li a.addlink {
+    padding-right: 15px;
+    background-image: url(../img/admin/icon_addlink.gif);
+    background-repeat: no-repeat;
+    background-position: 100% 0.3em;
+}
+
+#content-main .object-tools-wrapper {
+    background: url(../img/admin/bg-tools.gif) bottom repeat-x;
+    border-top: 1px solid #CCCCCC;
+    border-left: 1px solid #CCCCCC;
+    border-right: 1px solid #CCCCCC;
+}
+
+#content-main .object-tools-bottom {
+    clear: both;
 }
 
 .button.default:active, input.default[type="submit"]:active {
@@ -217,7 +259,7 @@ div.mini-googlemap {
 }
 
 .module {
-    clear:both;
+    clear: right;
 }
 
 .object-subtools {
@@ -662,6 +704,10 @@ div.module.form-row {
 #content-main {
     position: relative;
     z-index: 1;
+}
+
+#content-main form fieldset {
+    clear: left;
 }
 
 #change-tabs-ul li.extra-link a,
