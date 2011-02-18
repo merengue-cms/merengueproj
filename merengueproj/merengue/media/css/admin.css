@@ -151,7 +151,7 @@ div#header img#merengue_logo {
 
 .object-tools a.viewsitelink:hover,
 .object-tools a.golink:hover {
-    background: #D1D1D1 url("../img/admin/tooltag-arrowright_over.gif") no-repeat scroll right -1px;
+    background: #D1D1D1 url("../img/admin/tooltag-arrowright_over.gif") no-repeat scroll right top;
 }
 
 ul.object-tools li.parent a.din_smart_trigger {
@@ -162,6 +162,11 @@ ul.object-tools li.parent a.din_smart_trigger_open {
     background: #999999 url(../img/admin/gray-smart-tool-trigger-up.gif) no-repeat top right !important;
 }
 
+ul.object-tools li.parent:hover a.din_smart_trigger_open,
+ul.object-tools li.din_selected a.din_smart_trigger_open {
+    background-image: url(../img/admin/smart-tool-trigger-up.gif) !important;
+}
+
 .object-tools li:hover {
     background-image: none;
     background-color: #D1D1D1;
@@ -169,7 +174,8 @@ ul.object-tools li.parent a.din_smart_trigger_open {
 
 .object-tools a.quickreportlink,
 .object-tools a.advancedreportlink,
-.object-tools a.historylink {
+.object-tools a.historylink,
+.object-tools a.permissionslink {
     background-image: none;
 }
 
@@ -199,10 +205,6 @@ ul.object-tools li.din_selected a.din_smart_trigger {
     margin-left: 2px;
 }
 
-ul.object-tools li.parent:hover a.din_smart_trigger_open,
-ul.object-tools li.din_selected a.din_smart_trigger_open {
-    background-image: url(../img/admin/smart-tool-trigger-up.gif) !important;
-}
 
 ul.object-tools li.parent:hover span {
     background-color: #5b80b2;
@@ -832,6 +834,11 @@ div.module.form-row {
     background-repeat: no-repeat;
     background-position: 6.5em 0.6em;
     padding-right: 32px;
+}
+
+#change-tabs-ul li.extra-link.active a,
+#change-tabs-ul li.content-link.active a {
+    background-image: none;
 }
 
 ul.extra_options,
