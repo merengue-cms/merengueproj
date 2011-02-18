@@ -834,13 +834,13 @@ div.module.form-row {
 #change-tabs-ul li.content-link a {
     background-image: url(../img/admin/dropdown.gif);
     background-repeat: no-repeat;
-    background-position: 6.5em 0.6em;
+    background-position: 90% 0.6em;
     padding-right: 32px;
 }
 
 #change-tabs-ul li.extra-link.active a,
 #change-tabs-ul li.content-link.active a {
-    background-image: none;
+    background-position: 90% 1em;
 }
 
 ul.extra_options,
