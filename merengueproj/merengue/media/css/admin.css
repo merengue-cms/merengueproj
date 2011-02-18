@@ -24,7 +24,6 @@ a:hover {
     background: #E6D8C0;
     color: #917250;
     min-height:62px;
-    border-bottom: 4px solid #BCB9AD;
 }
 
 div#header img#merengue_logo {
@@ -154,11 +153,6 @@ div#header img#merengue_logo {
     background: #D1D1D1 url("../img/admin/tooltag-arrowright_over.gif") no-repeat scroll right top;
 }
 
-.object-tools li:hover {
-    background-image: none !important;
-    background-color: #D1D1D1 !important;
-}
-
 .object-tools a.quickreportlink,
 .object-tools a.advancedreportlink,
 .object-tools a.historylink,
@@ -242,6 +236,7 @@ input.default[type="submit"],
 
 #content-main ul.object-tools li a:hover {
     color: #806446;
+    background: none;
 }
 
 #content-main ul.object-tools li a.addlink {
@@ -875,6 +870,7 @@ ul.extra_options {
     background-color: #f1f1f1;
     margin: 0px;
     padding: 0px;
+    padding-top: 5px;
     float: left;
     clear: both;
     width: 100%;
@@ -899,6 +895,7 @@ ul.extra_options {
 .maintabs ul li.active {
     font-weight: bold;
     background-color: #f1f1f1;
+    border-top: 1px solid #ccc;
 }
 
 .maintabs ul li a {
