@@ -163,6 +163,8 @@ def _get_object_tools_in_route(route, context):
                     obj_tool['base_url'] = '../'
                 else:
                     obj_tool['base_url'] = '../../'
+            elif not context.get('change', False):
+                obj_tool['base_url'] = '../'
             res.append(obj_tool)
             break
         tool_name = item['tool_name']
