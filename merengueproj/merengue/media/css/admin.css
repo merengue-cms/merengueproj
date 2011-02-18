@@ -122,28 +122,102 @@ div#header img#merengue_logo {
 .row1 {
     background: #f7f5f0;
 }
+
+/* ------- Object tools buttons -------*/
+.object-tools {
+    margin-bottom:0.5em;
+    margin-top:0em;
+}
+
+.object-tools li {
+    margin-bottom: 0.5em;
+    background: #999;
+    padding: 5px;
+}
+
+.object-tools a.addlink {
+    background: #999 url("../img/admin/tooltag-add.gif") no-repeat scroll right top;
+    padding-right: 24px;
+}
+
 .object-tools a.addlink:hover {
     background: #D1D1D1 url("../img/admin/tooltag-add_over.gif") no-repeat scroll right top;
 }
 
+.object-tools a:link,
+.object-tools a:visited {
+    background: #999;
+}
+
 .object-tools a.viewsitelink:hover,
 .object-tools a.golink:hover {
-    background: #D1D1D1 url(../img/admin/tooltag-arrowright_over.gif) no-repeat top right;
+    background: #D1D1D1;
 }
 
 .object-tools li:hover {
-    background: transparent url(../img/admin/tool-left_over.gif) no-repeat top left;
+    background: #D1D1D1;
 }
 
 .object-tools a:hover,
 .object-tools li:hover a {
-    background: #D1D1D1 url(../img/admin/tool-right_over.gif) no-repeat top right;
+    background: #D1D1D1;
 }
-.button.default, input.default[type="submit"], .submit-row input.default {
+/*----- end object tools ---*/
+
+.button.default,
+input.default[type="submit"],
+.submit-row input.default {
     border: 1px solid #C49A6C;
     background: #E6D8C0 url(../img/admin/default-bg.gif) repeat-x top left;
     color: #917250;
 }
+
+ul.din_smart_relations_object_tool li {
+    display: block;
+    float: none;
+    white-space: nowrap;
+}
+
+ul.object-tools li.din_selected a {
+    background-image: none !important;
+}
+
+ul.object-tools li.parent:hover a.din_smart_trigger,
+ul.object-tools li.din_selected a.din_smart_trigger {
+    background: #D1D1D1 no-repeat top right !important;
+    float: left;
+    width: 20px;
+    padding: 0px;
+    height: 16px;
+    margin-left: 2px;
+}
+
+ul.object-tools li.parent:hover a.din_smart_trigger_open,
+ul.object-tools li.din_selected a.din_smart_trigger_open {
+    background-image: url(../img/admin/smart-tool-trigger-up.gif) !important;
+}
+
+ul.object-tools li.parent:hover span {
+    background-color: #5b80b2;
+}
+
+ul.object-tools li.parent span {
+    width: 50px;
+    float: left;
+    height: 14px;
+    background-color: #999999;
+    padding: 0.1em;
+    color: white;
+}
+
+ul.object-tools li.parent a.din_smart_trigger {
+    background: #999999 url(../img/admin/gray-smart-tool-trigger.gif) no-repeat top right !important;
+}
+
+ul.object-tools li.parent a.din_smart_trigger_open {
+    background: #999999 url(../img/admin/gray-smart-tool-trigger-up.gif) no-repeat top right !important;
+}
+
 
 /* ----- related object tools ----- */
 #content-main ul.object-tools {
@@ -232,15 +306,6 @@ div#header img#merengue_logo {
 
 #user-tools {
     padding: 2em 10px 1em 10px;
-}
-
-.object-tools {
-    margin-bottom:0.5em;
-    margin-top:0em;
-}
-
-.object-tools li {
-    margin-bottom: 0.5em;
 }
 
 .object-subtools {
@@ -545,51 +610,6 @@ ul.din_smart_relations_object_tool {
     top: 20px;
 }
 
-ul.din_smart_relations_object_tool li {
-    display: block;
-    float: none;
-    white-space: nowrap;
-}
-
-ul.object-tools li.din_selected a {
-    background-image: none !important;
-}
-
-ul.object-tools li.parent:hover a.din_smart_trigger,
-ul.object-tools li.din_selected a.din_smart_trigger {
-    background: #D1D1D1 url(../img/admin/smart-tool-trigger.gif) no-repeat top right !important;
-    float: left;
-    width: 20px;
-    padding: 0px;
-    height: 16px;
-    margin-left: 2px;
-}
-
-ul.object-tools li.parent:hover a.din_smart_trigger_open,
-ul.object-tools li.din_selected a.din_smart_trigger_open {
-    background-image: url(../img/admin/smart-tool-trigger-up.gif) !important;
-}
-
-ul.object-tools li.parent:hover span {
-    background-color: #5b80b2;
-}
-
-ul.object-tools li.parent span {
-    width: 50px;
-    float: left;
-    height: 14px;
-    background-color: #999999;
-    padding: 0.1em;
-    color: white;
-}
-
-ul.object-tools li.parent a.din_smart_trigger {
-    background: #999999 url(../img/admin/gray-smart-tool-trigger.gif) no-repeat top right !important;
-}
-
-ul.object-tools li.parent a.din_smart_trigger_open {
-    background: #999999 url(../img/admin/gray-smart-tool-trigger-up.gif) no-repeat top right !important;
-}
 
 
 ul.dependencies {
