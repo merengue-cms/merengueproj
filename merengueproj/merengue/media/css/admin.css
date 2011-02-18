@@ -128,12 +128,10 @@ div.breadcrumbs {
 .object-tools a.viewsitelink:hover,
 .object-tools a.golink:hover {
     background: #D1D1D1 url(../img/admin/tooltag-arrowright_over.gif) no-repeat top right;
-   text-shadow: 1px 1px 0 #999;
 }
 
 .object-tools li:hover {
     background: transparent url(../img/admin/tool-left_over.gif) no-repeat top left;
-   text-shadow: 1px 1px 0 #999;
 }
 
 .object-tools a:hover,
@@ -164,17 +162,40 @@ div.breadcrumbs {
     color: #BF9460;
 }
 
+#content-main ul.object-tools li a:hover {
+    color: #806446;
+}
+
 #content-main ul.object-tools li a.addlink {
     padding-right: 15px;
     background-image: url(../img/admin/icon_addlink.gif);
     background-repeat: no-repeat;
-    background-position: 100% 0.1em;
+    background-position: 100% 0.2em;
 }
 
 #content-main ul.object-tools li a.quickreportlink {
-    background-image: url(../img/admin/icon_quickreportlink.gif) no-repeat top right;
+    background: url(../img/admin/icon_quickreportlink.gif) no-repeat;
     padding-right: 15px;
+    background-position: 100% 0.2em;
 }
+
+#content-main ul.object-tools li a.advancedreportlink {
+    background: url(../img/admin/icon_advancedreportlink.gif) no-repeat;
+    padding-right: 15px;
+    background-position: 100% 0.2em;
+}
+
+#content-main ul.object-tools li a.viewsitelink {
+    background: url(../img/admin/icon_viewsitelink.gif) no-repeat;
+    padding-right: 15px;
+    background-position: 100% 0.2em;
+}
+
+#content-main ul.object-tools li a.historylink {
+    background: url(../img/admin/icon_historylink.gif) no-repeat;
+    padding-right: 15px;
+    background-position: 100% 0.2em;
+} 
 
 #content-main .object-tools-wrapper {
     border-top: 1px solid #CCCCCC;
