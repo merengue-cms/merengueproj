@@ -168,7 +168,12 @@ div.breadcrumbs {
     padding-right: 15px;
     background-image: url(../img/admin/icon_addlink.gif);
     background-repeat: no-repeat;
-    background-position: 100% 0.3em;
+    background-position: 100% 0.1em;
+}
+
+#content-main ul.object-tools li a.quickreportlink {
+    background-image: url(../img/admin/icon_quickreportlink.gif) no-repeat top right;
+    padding-right: 15px;
 }
 
 #content-main .object-tools-wrapper {
