@@ -136,17 +136,12 @@ div#header img#merengue_logo {
 }
 
 .object-tools a.addlink {
-    background: #999 url("../img/admin/tooltag-add.gif") no-repeat scroll right top;
+    background: #999 url("../img/admin/tooltag-add.gif") no-repeat scroll right -1px;
     padding-right: 24px;
 }
 
 .object-tools a.addlink:hover {
-    background: #D1D1D1 url("../img/admin/tooltag-add_over.gif") no-repeat scroll right top;
-}
-
-.object-tools a:link,
-.object-tools a:visited {
-    background: #999;
+    background: #D1D1D1 url("../img/admin/tooltag-add_over.gif") no-repeat scroll right -1px;
 }
 
 .object-tools a.viewsitelink:hover,
@@ -156,12 +151,21 @@ div#header img#merengue_logo {
 
 .object-tools li:hover {
     background: #D1D1D1;
+    color: 6b6b6b !important;
+}
+
+.object-tools a.quickreportlink,
+.object-tools a.advancedreportlink {
+    background-image: none;
 }
 
 .object-tools a:hover,
-.object-tools li:hover a {
-    background: #D1D1D1;
+.object-tools li a:hover{
+    background-color: #D1D1D1;
+    background-image: none;
+    color: 6b6b6b!important;
 }
+
 /*----- end object tools ---*/
 
 .button.default,
