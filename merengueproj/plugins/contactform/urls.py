@@ -23,5 +23,4 @@ urlpatterns = patterns('',
     url({'en': r'^submit/([\w-]+)/(\d+)/$',
          'es': r'^enviar/([\w-]+)/(\d+)/$'},
          'plugins.contactform.views.contact_form_submit', name='contact_form_submit'),
-    url(r'^jsi18n.js$', 'django.views.i18n.javascript_catalog', {'packages': ('django.conf', )}, name='contact_form_jsi18n'),
 )
