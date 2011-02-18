@@ -144,18 +144,24 @@ div#header img#merengue_logo {
     background: #D1D1D1 url("../img/admin/tooltag-add_over.gif") no-repeat scroll right -1px;
 }
 
+.object-tools a.viewsitelink,
+.object-tools a.golink {
+    background: #999 url("../img/admin/tooltag-arrowright.gif") no-repeat scroll right -1px;
+}
+
 .object-tools a.viewsitelink:hover,
 .object-tools a.golink:hover {
-    background: #D1D1D1;
+    background: #D1D1D1 url("../img/admin/tooltag-arrowright_over.gif") no-repeat scroll right -1px;
 }
 
 .object-tools li:hover {
-    background: #D1D1D1;
-    color: 6b6b6b !important;
+    background-image: none;
+    background-color: #D1D1D1;
 }
 
 .object-tools a.quickreportlink,
-.object-tools a.advancedreportlink {
+.object-tools a.advancedreportlink,
+.object-tools a.historylink {
     background-image: none;
 }
 
@@ -163,7 +169,6 @@ div#header img#merengue_logo {
 .object-tools li a:hover{
     background-color: #D1D1D1;
     background-image: none;
-    color: 6b6b6b!important;
 }
 
 /*----- end object tools ---*/
