@@ -601,13 +601,13 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
         tools = []
         if mode == 'change':
             tools.append(
-                {'url': url_prefix + 'history/', 'label': ugettext('History')},
+                {'url': url_prefix + 'history/', 'label': ugettext('History'), 'class': 'historylink'},
             )
         elif mode == 'list':
             tools.extend([
                 {'url': url_prefix + 'add/', 'label': ugettext('Add %s') % force_unicode(self.model._meta.verbose_name), 'class': 'addlink'},
-                {'url': url_prefix + 'report/quick/', 'label': ugettext('Quick Report'), 'class': 'quickreport'},
-                {'url': url_prefix + 'report/advance/', 'label': ugettext('Advanced Report'), 'class': 'advancedreport'},
+                {'url': url_prefix + 'report/quick/', 'label': ugettext('Quick Report'), 'class': 'quickreportlink'},
+                {'url': url_prefix + 'report/advance/', 'label': ugettext('Advanced Report'), 'class': 'advancedreportlink'},
             ])
         return tools
 
@@ -983,7 +983,7 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
 
     def object_tools(self, request, mode, url_prefix):
         return super(BaseContentAdmin, self).object_tools(request, mode, url_prefix) + [
-            {'url': url_prefix + 'permissions/', 'label': ugettext('Permissions'), 'class': 'historylink'},
+            {'url': url_prefix + 'permissions/', 'label': ugettext('Permissions'), 'class': 'permissionslink'},
         ]
 
 
