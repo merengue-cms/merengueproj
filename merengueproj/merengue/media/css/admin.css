@@ -36,12 +36,12 @@ div#header img#merengue_logo {
     color: #BF843B;
 }
 
-div.breadcrumbs {
+#container div.breadcrumbs {
     border-top-width: 0px;
     border-bottom: none;
     padding: 10px 10px;
     clear: both;
-    background: transparent url(../img/admin/nav-bg-reverse.gif) repeat-x scroll 0 -10px;
+    background: none;
 }
 
 /*---- other styles ----*/
@@ -802,7 +802,7 @@ div.module.form-row {
 #change-tabs-ul li.content-link a {
     background-image: url(../img/admin/dropdown.gif);
     background-repeat: no-repeat;
-    background-position: center right;
+    background-position: 6.5em 0.6em;
     padding-right: 32px;
 }
 
@@ -882,14 +882,17 @@ ul.extra_options {
 }
 
 .maintabs ul li.active a {
-    background-color: #f1f1f1;
-    border-bottom: 1px solid #f1f1f1;
+    background-color: #fff;
+    border-bottom: 2px solid #fff;
+    margin-bottom: -1px;
 }
 
 .maintabs ul li a:hover {
-    background-color: white;
-    border-bottom: 1px solid white;
+    background-color: #fff;
+    border-bottom: 2px solid #fff;
+    margin-bottom: -1px;
 }
+
 
 .maintabs ul li.contentmanagement a {
     background-image: url(../img/admin/content-management.png);
