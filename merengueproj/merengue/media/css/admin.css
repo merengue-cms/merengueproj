@@ -154,24 +154,9 @@ div#header img#merengue_logo {
     background: #D1D1D1 url("../img/admin/tooltag-arrowright_over.gif") no-repeat scroll right top;
 }
 
-/*
-ul.object-tools li.parent a.din_smart_trigger {
-    background: #999999 url(../img/admin/gray-smart-tool-trigger.gif) no-repeat top right !important;
-}
-
-ul.object-tools li.parent a.din_smart_trigger_open {
-    background: #999999 url(../img/admin/gray-smart-tool-trigger-up.gif) no-repeat top right !important;
-}
-
-ul.object-tools li.parent:hover a.din_smart_trigger_open,
-ul.object-tools li.din_selected a.din_smart_trigger_open {
-    background-image: url(../img/admin/smart-tool-trigger-up.gif) !important;
-}
-*/
-
 .object-tools li:hover {
-    background-image: none;
-    background-color: #D1D1D1;
+    background-image: none !important;
+    background-color: #D1D1D1 !important;
 }
 
 .object-tools a.quickreportlink,
@@ -182,9 +167,16 @@ ul.object-tools li.din_selected a.din_smart_trigger_open {
 }
 
 .object-tools a:hover,
-.object-tools li a:hover{
+.object-tools li:hover,
+.object-tools li:hover a {
+    background: none;
     background-color: #D1D1D1;
-    background-image: none;
+}
+
+.object-tools a:link,
+.object-tools a:visited,
+.object-tools a:actived {
+    background-image: none !important;
 }
 
 ul.din_smart_relations_object_tool li {
@@ -1018,4 +1010,9 @@ ul.extra_options {
 
 .trans-field-container .errors {
     background-color: #ffffcc;
+}
+
+/*------- administrator-menu ------*/
+#administrator-menu ul li {
+    list-style: none;
 }
