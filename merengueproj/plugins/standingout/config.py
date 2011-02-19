@@ -32,16 +32,13 @@ class PluginConfig(Plugin):
         ('standingout', 'plugins.standingout.urls'),
     )
 
-    @classmethod
-    def get_blocks(cls):
+    def get_blocks(self):
         return [StandingOutBlock]
 
-    @classmethod
-    def section_models(cls):
+    def section_models(self):
         return [(StandingOut, StandingSectionOutAdmin)]
 
-    @classmethod
-    def post_install(cls):
+    def post_install(self):
         soc_section = StandingOutCategory(context_variable='section', slug='section')
         for real_field in get_real_fieldname_in_each_language('name'):
             setattr(soc_section, real_field, 'section')
@@ -51,7 +48,6 @@ class PluginConfig(Plugin):
             setattr(soc_content, real_field, 'content')
         soc_content.save()
 
-    @classmethod
-    def get_model_admins(cls):
+    def get_model_admins(self):
         return [(StandingOut, StandingOutAdmin),
                 (StandingOutCategory, StandingOutCategoryAdmin)]

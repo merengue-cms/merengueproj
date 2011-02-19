@@ -32,10 +32,8 @@ class PluginConfig(Plugin):
           'plugins.subscription.urls'),
     )
 
-    @classmethod
-    def get_actions(cls):
+    def get_actions(self):
         return [SubscriptionAction]
 
-    @classmethod
-    def get_model_admins(cls):
+    def get_model_admins(self):
         return [(BaseSubscription, BaseSubscriptionAdmin)]

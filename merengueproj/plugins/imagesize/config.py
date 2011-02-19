@@ -32,12 +32,10 @@ class PluginConfig(Plugin):
         ('imagesize', 'plugins.imagesize.urls'),
     )
 
-    @classmethod
-    def get_model_admins(cls):
+    def get_model_admins(self):
         return [(ImageSize, ImageSizeAdmin)]
 
-    @classmethod
-    def get_notifications(cls):
+    def get_notifications(self):
         _("Invitation Received"), _("you have received an invitation")
         return [('imagesize_images', _('Images bigger thant expected'), _('Images bigger thant expected')),
                 ('imagesize_broken', _("Image directory doesn't exists"), _("Image directory doesn't exists"))]

@@ -33,14 +33,11 @@ class PluginConfig(Plugin):
          'plugins.oldbrowser.urls'),
     )
 
-    @classmethod
-    def get_actions(cls):
+    def get_actions(self):
         return []
 
-    @classmethod
-    def get_model_admins(cls):
+    def get_model_admins(self):
         return [(OldBrowser, OldBrowserAdmin)]
 
-    @classmethod
-    def get_blocks(cls):
+    def get_blocks(self):
         return [OldBrowserBlock]

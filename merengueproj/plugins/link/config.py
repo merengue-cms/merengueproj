@@ -34,20 +34,16 @@ class PluginConfig(Plugin):
          'plugins.link.urls'),
     )
 
-    @classmethod
-    def section_models(cls):
+    def section_models(self):
         return [(Link, LinkSectionAdmin)]
 
-    @classmethod
-    def get_model_admins(cls):
+    def get_model_admins(self):
         return [(Link, LinkAdmin), (LinkCategory, LinkCategoryAdmin)]
 
-    @classmethod
-    def get_viewlets(cls):
+    def get_viewlets(self):
         return [LatestLinkViewlet, AllLinkViewlet]
 
-    @classmethod
-    def post_install(cls):
+    def post_install(self):
         create_normalize_collection(
             'links', u'Links', Link,
             create_display_field=True, create_filter_field=True)

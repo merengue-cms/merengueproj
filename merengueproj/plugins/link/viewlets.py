@@ -35,16 +35,14 @@ class LatestLinkViewlet(ViewLetQuerySetItemProvider, Viewlet):
             default='10'),
     ]
 
-    @classmethod
-    def get_contents(cls, request=None, context=None, section=None):
-        number_links = cls.get_config().get('limit', []).get_value()
+    def get_contents(self, request=None, context=None, section=None):
+        number_links = self.get_config().get('limit', []).get_value()
         link_list = get_links(request, number_links)
         return link_list
 
-    @classmethod
-    def render(cls, request, context):
-        link_list = cls.get_queryset(request, context)
-        return cls.render_viewlet(request, template_name='link/viewlet_latest.html',
+    def render(self, request, context):
+        link_list = self.get_queryset(request, context)
+        return self.render_viewlet(request, template_name='link/viewlet_latest.html',
                                   context={'link_list': link_list})
 
 
@@ -53,15 +51,13 @@ class AllLinkViewlet(ViewLetQuerySetItemProvider, Viewlet):
     help_text = _('All links')
     verbose_name = _('All links')
 
-    @classmethod
-    def get_contents(cls, request=None, context=None, section=None):
+    def get_contents(self, request=None, context=None, section=None):
         link_list = get_links(request)
         return link_list
 
-    @classmethod
-    def render(cls, request, context):
-        link_list = cls.get_queryset(request, context)
-        return cls.render_viewlet(request, template_name='link/viewlet_latest.html',
+    def render(self, request, context):
+        link_list = self.get_queryset(request, context)
+        return self.render_viewlet(request, template_name='link/viewlet_latest.html',
                                   context={'link_list': link_list,
                                            'is_paginated': True,
                                            'paginate_by': 10})

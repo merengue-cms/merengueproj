@@ -41,16 +41,13 @@ class PluginConfig(Plugin):
 
     required_apps = ('oot', )
 
-    @classmethod
-    def get_actions(cls):
+    def get_actions(self):
         return [ExportODT]
 
-    @classmethod
-    def get_model_admins(cls):
+    def get_model_admins(self):
         return [(OpenOfficeTemplate, OpenOfficeTemplateAdmin)]
 
-    @classmethod
-    def post_install(cls):
+    def post_install(self):
         odt_path = path.join('oot', 'base.odt')
         try:
             OpenOfficeTemplate.objects.get(title='BaseContent-template')

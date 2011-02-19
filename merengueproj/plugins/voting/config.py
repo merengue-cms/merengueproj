@@ -31,14 +31,11 @@ class PluginConfig(Plugin):
         ({'en': 'voting', 'es': 'votos'}, 'plugins.voting.urls'),
     )
 
-    @classmethod
-    def get_blocks(cls):
+    def get_blocks(self):
         return [VotingBlock]
 
-    @classmethod
-    def get_model_admins(cls):
+    def get_model_admins(self):
         return [(Vote, VoteAdmin)]
 
-    @classmethod
-    def get_viewlets(cls):
+    def get_viewlets(self):
         return [BaseContentWithMoreVotes, BaseContentTopRated]

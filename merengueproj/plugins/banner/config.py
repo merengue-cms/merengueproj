@@ -33,24 +33,19 @@ class PluginConfig(Plugin):
         ('banners', 'plugins.banner.urls'),
     )
 
-    @classmethod
-    def section_models(cls):
+    def section_models(self):
         return [(Banner, BannerSectionAdmin)]
 
-    @classmethod
-    def get_model_admins(cls):
+    def get_model_admins(self):
         return [(Banner, BannerAdmin), ]
 
-    @classmethod
-    def get_blocks(cls):
+    def get_blocks(self):
         return [BannerBlock]
 
-    @classmethod
-    def get_viewlets(cls):
+    def get_viewlets(self):
         return [AllBannerViewlet]
 
-    @classmethod
-    def post_install(cls):
+    def post_install(self):
         create_normalize_collection('banners', u'Banners', Banner,
                                     create_display_field=True,
                                     create_filter_field=True)

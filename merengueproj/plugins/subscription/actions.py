@@ -28,10 +28,8 @@ class SubscriptionAction(ContentAction):
     verbose_name = _('Subscription')
     help_text = _('The view provide subscription functionality')
 
-    @classmethod
-    def get_response(cls, request, content):
+    def get_response(self, request, content):
         return HttpResponseRedirect(reverse("subscription_form", args=(content.slug, )))
 
-    @classmethod
-    def has_action(cls, content):
+    def has_action(self, content):
         return content.subscribable_set.actives()

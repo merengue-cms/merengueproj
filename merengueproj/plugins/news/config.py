@@ -35,29 +35,23 @@ class PluginConfig(Plugin):
         ({'en': 'news', 'es': 'noticias'}, 'plugins.news.urls'),
     )
 
-    @classmethod
-    def get_actions(cls):
+    def get_actions(self):
         return [NewsIndex, NewsRSS]
 
-    @classmethod
-    def get_blocks(cls):
+    def get_blocks(self):
         return [LatestNewsBlock]
 
-    @classmethod
-    def get_viewlets(cls):
+    def get_viewlets(self):
         return [LatestNewsViewlet, AllNewsViewlet]
 
-    @classmethod
-    def section_models(cls):
+    def section_models(self):
         return [(NewsItem, NewsItemSectionAdmin)]
 
-    @classmethod
-    def get_model_admins(cls):
+    def get_model_admins(self):
         return [(NewsCategory, NewsCategoryAdmin),
                 (NewsItem, NewsItemAdmin)]
 
-    @classmethod
-    def post_install(cls):
+    def post_install(self):
         create_normalize_collection('news', u'News', NewsItem,
                                     create_display_field=True,
                                     create_filter_field=True)

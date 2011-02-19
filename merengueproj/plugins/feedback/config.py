@@ -35,6 +35,5 @@ class PluginConfig(Plugin):
         params.Bool(name='show_links', label=_('Show options bar'), default=True),
     ]
 
-    @classmethod
-    def get_blocks(cls):
+    def get_blocks(self):
         return [FeedbackBlock]

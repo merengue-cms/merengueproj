@@ -30,10 +30,8 @@ class PluginConfig(Plugin):
     url_prefixes = (
     )
 
-    @classmethod
-    def get_blocks(cls):
+    def get_blocks(self):
         return [ChunksBlock]
 
-    @classmethod
-    def get_model_admins(cls):
+    def get_model_admins(self):
         return [(Chunk, ChunkAdmin)]

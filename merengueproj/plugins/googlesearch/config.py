@@ -25,6 +25,5 @@ class PluginConfig(Plugin):
     description = 'Google search plugin'
     version = '0.0.1a'
 
-    @classmethod
-    def get_blocks(cls):
+    def get_blocks(self):
         return [GoogleSearchBlock]

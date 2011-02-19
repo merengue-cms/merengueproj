@@ -32,6 +32,5 @@ class PluginConfig(Plugin):
           'plugins.smartsearch.urls'),
     )
 
-    @classmethod
-    def get_blocks(cls):
+    def get_blocks(self):
         return [SearchBlock]

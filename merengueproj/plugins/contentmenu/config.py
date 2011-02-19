@@ -38,10 +38,8 @@ class PluginConfig(Plugin):
         ),
     ]
 
-    @classmethod
-    def get_blocks(cls):
+    def get_blocks(self):
         return [ContentGroupLinksBlock, ]
 
-    @classmethod
-    def get_model_admins(cls):
+    def get_model_admins(self):
         return [(ContentGroup, ContentGroupAdmin)]

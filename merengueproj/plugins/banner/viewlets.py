@@ -33,16 +33,14 @@ class AllBannerViewlet(ViewLetQuerySetItemProvider, Viewlet):
                       default='3'),
     ]
 
-    @classmethod
-    def get_contents(cls, request=None, context=None, section=None):
-        number_banners = cls.get_config().get('limit', []).get_value()
+    def get_contents(self, request=None, context=None, section=None):
+        number_banners = self.get_config().get('limit', []).get_value()
         banners_list = get_banners(request, number_banners)
         return banners_list
 
-    @classmethod
-    def render(cls, request, context):
-        banner_list = cls.get_queryset(request, context)
-        return cls.render_viewlet(request, template_name='banner/viewlet_latest.html',
+    def render(self, request, context):
+        banner_list = self.get_queryset(request, context)
+        return self.render_viewlet(request, template_name='banner/viewlet_latest.html',
                                   context={'banner_list': banner_list,
                                            'is_paginated': True,
                                            'paginate_by': 10})

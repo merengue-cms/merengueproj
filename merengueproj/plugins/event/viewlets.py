@@ -35,16 +35,14 @@ class LatestEventViewlet(ViewLetQuerySetItemProvider, Viewlet):
             default='10'),
     ]
 
-    @classmethod
-    def get_contents(cls, request=None, context=None, section=None):
-        number_events = cls.get_config().get('limit', []).get_value()
+    def get_contents(self, request=None, context=None, section=None):
+        number_events = self.get_config().get('limit', []).get_value()
         event_list = get_events(request, number_events)
         return event_list
 
-    @classmethod
-    def render(cls, request, context):
-        event_list = cls.get_queryset(request, context)
-        return cls.render_viewlet(request, template_name='event/viewlet_latest.html',
+    def render(self, request, context):
+        event_list = self.get_queryset(request, context)
+        return self.render_viewlet(request, template_name='event/viewlet_latest.html',
                                   context={'event_list': event_list})
 
 
@@ -60,16 +58,14 @@ class AllEventViewlet(ViewLetQuerySetItemProvider, Viewlet):
             default='10'),
     ]
 
-    @classmethod
-    def get_contents(cls, request=None, context=None, section=None):
+    def get_contents(self, request=None, context=None, section=None):
         event_list = get_events(request)
         return event_list
 
-    @classmethod
-    def render(cls, request, context):
-        per_page = cls.get_config().get('page_elements', []).get_value()
-        event_list = cls.get_queryset(request, context)
-        return cls.render_viewlet(request, template_name='event/viewlet_latest.html',
+    def render(self, request, context):
+        per_page = self.get_config().get('page_elements', []).get_value()
+        event_list = self.get_queryset(request, context)
+        return self.render_viewlet(request, template_name='event/viewlet_latest.html',
                                   context={'event_list': event_list,
                                            'is_paginated': True,
                                            'paginate_by': int(per_page)})

@@ -27,8 +27,7 @@ class NewsIndex(SiteAction):
     verbose_name = _('News index')
     help_text = _('Index page with all news items')
 
-    @classmethod
-    def get_response(cls, request):
+    def get_response(self, request):
         return HttpResponseRedirect(reverse('news_index'))
 
 
@@ -37,6 +36,5 @@ class NewsRSS(SiteAction):
     verbose_name = _('News RSS')
     help_text = _('News RSS for all feeds')
 
-    @classmethod
-    def get_response(cls, request):
+    def get_response(self, request):
         return HttpResponseRedirect(reverse('news_index'))

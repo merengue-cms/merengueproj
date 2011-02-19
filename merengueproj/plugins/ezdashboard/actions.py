@@ -25,10 +25,8 @@ class DashboardAction(UserAction):
     name = 'ezweb'
     verbose_name = _('dashboard')
 
-    @classmethod
-    def get_url(cls, request, user):
+    def get_url(self, request, user):
         return reverse('dashboard')
 
-    @classmethod
-    def has_action(cls, user):
+    def has_action(self, user):
         return user.is_authenticated()

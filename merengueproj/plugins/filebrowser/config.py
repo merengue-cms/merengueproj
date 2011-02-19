@@ -41,11 +41,9 @@ class PluginConfig(Plugin):
           'plugins.filebrowser.urls'),
     )
 
-    @classmethod
-    def get_model_admins(cls):
+    def get_model_admins(self):
         return [(Repository, RepositoryModelAdmin),
                 (Document, DocumentModelAdmin)]
 
-    @classmethod
-    def section_models(cls):
+    def section_models(self):
         return [(Repository, RepositorySectionModelAdmin)]

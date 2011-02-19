@@ -29,15 +29,13 @@ from plugins.voting.models import Vote
 
 class BaseVotinViewlet(ViewLetQuerySetItemProvider, Viewlet):
 
-    @classmethod
-    def get_contents(cls, request=None, context=None, section=None):
+    def get_contents(self, request=None, context=None, section=None):
         votes = Vote.objects.all()
         contents = BaseContent.objects.published().filter(vote__in=votes)
         return contents
 
-    @classmethod
-    def get_content_with_votes(cls, request=None, context=None, limit=0, order_by='id'):
-        contents = cls.get_queryset(request, context)
+    def get_content_with_votes(self, request=None, context=None, limit=0, order_by='id'):
+        contents = self.get_queryset(request, context)
         from copy import copy
         request_copy = copy_request(request, ['set_language'], copy)
         qsm = QueryStringManager(request, page_var='page')
@@ -53,10 +51,9 @@ class BaseContentTopRated(BaseVotinViewlet):
     help_text = _('Content top rated')
     verbose_name = _('Top rated content')
 
-    @classmethod
-    def render(cls, request, context):
-        votes_list = cls.get_content_with_votes(request, context, limit=None, order_by='-vote__vote')
-        return cls.render_viewlet(request, template_name='voting/viewlet_voting_basecontent.html',
+    def render(self, request, context):
+        votes_list = self.get_content_with_votes(request, context, limit=None, order_by='-vote__vote')
+        return self.render_viewlet(request, template_name='voting/viewlet_voting_basecontent.html',
                                   context={'votes_list': votes_list})
 
 
@@ -65,8 +62,7 @@ class BaseContentWithMoreVotes(BaseVotinViewlet):
     help_text = _('Content that contains more votes')
     verbose_name = _('More votes content')
 
-    @classmethod
-    def render(cls, request, context):
-        votes_list = cls.get_content_with_votes(request, context, limit=None, order_by='-vote__num_votes')
-        return cls.render_viewlet(request, template_name='voting/viewlet_voting_basecontent.html',
+    def render(self, request, context):
+        votes_list = self.get_content_with_votes(request, context, limit=None, order_by='-vote__num_votes')
+        return self.render_viewlet(request, template_name='voting/viewlet_voting_basecontent.html',
                                   context={'votes_list': votes_list})

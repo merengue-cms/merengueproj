@@ -30,6 +30,5 @@ class PluginConfig(Plugin):
         ('tmtemplates', 'plugins.tmtemplates.urls'),
     )
 
-    @classmethod
-    def get_model_admins(cls):
+    def get_model_admins(self):
         return [(TMTemplate, TMTemplateAdmin)]

@@ -25,6 +25,5 @@ class PluginConfig(Plugin):
     description = 'Facebook integration plugin'
     version = '0.0.1a'
 
-    @classmethod
-    def get_actions(cls):
+    def get_actions(self):
         return [FacebookLink]

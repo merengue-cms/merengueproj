@@ -41,10 +41,8 @@ class PluginConfig(Plugin):
         params.Single(name='rprivk', label=_('recaptcha private key'), default='6LegA8ASAAAAAAI-nxu0DcCdDCQIzuWCNbKOXPw3'),
     ]
 
-    @classmethod
-    def get_blocks(cls):
+    def get_blocks(self):
         return [ContactFormBlock]
 
-    @classmethod
-    def get_model_admins(cls):
+    def get_model_admins(self):
         return [(ContactForm, ContactFormAdmin), (SentContactForm, SentContactFormAdmin)]

@@ -40,19 +40,15 @@ class PluginConfig(Plugin):
         ('itags', 'plugins.itags.urls'),
     )
 
-    @classmethod
-    def get_model_admins(cls):
+    def get_model_admins(self):
         return [(ITag, ITagAdmin)]
 
-    @classmethod
-    def get_viewlets(cls):
+    def get_viewlets(self):
         return [TagCloudViewlet]
 
-    @classmethod
-    def get_blocks(cls):
+    def get_blocks(self):
         return [TagCloudBlock]
 
-    @classmethod
-    def post_install(cls):
+    def post_install(self):
         from tagging.models import Tag
         [i.save() for i in Tag.objects.all()]

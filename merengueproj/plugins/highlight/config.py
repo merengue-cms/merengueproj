@@ -27,12 +27,10 @@ class PluginConfig(Plugin):
     description = 'Highlight content on home page'
     version = '0.0.1a'
 
-    @classmethod
-    def get_blocks(cls):
+    def get_blocks(self):
         return [HighlightBlock]
 
-    @classmethod
-    def get_model_admins(cls):
+    def get_model_admins(self):
         return [
             (Highlight, HighlightAdmin),
         ]

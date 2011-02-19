@@ -48,6 +48,5 @@ class PluginConfig(Plugin):
                       default=True),
     ]
 
-    @classmethod
-    def get_actions(cls):
+    def get_actions(self):
         return [DashboardAction, ]

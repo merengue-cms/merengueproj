@@ -29,8 +29,7 @@ class ExportODT(ContentAction):
     verbose_name = _('Export ODT')
     help_text = _('Export ODT block')
 
-    @classmethod
-    def get_response(cls, request, content):
+    def get_response(self, request, content):
         template_id = get_odt_template_id(content.__class__)
         object_id = content.id
 
@@ -39,8 +38,7 @@ class ExportODT(ContentAction):
         response['Content-Disposition'] = content_disp
         return response
 
-    @classmethod
-    def has_action(cls, content):
+    def has_action(self, content):
         return content and get_odt_template_id(content.__class__) != 0
 
 

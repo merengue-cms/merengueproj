@@ -25,12 +25,10 @@ class AdminAction(UserAction):
     name = 'admin'
     verbose_name = _('Admin site')
 
-    @classmethod
-    def get_url(cls, request, user):
+    def get_url(self, request, user):
         return reverse('admin_index')
 
-    @classmethod
-    def has_action(cls, user):
+    def has_action(self, user):
         return user.is_staff
 
 
@@ -38,15 +36,13 @@ class LoginAction(UserAction):
     name = 'login'
     verbose_name = _('Login')
 
-    @classmethod
-    def get_url(cls, request, user):
+    def get_url(self, request, user):
         login_url = reverse('merengue_login')
         if request.get_full_path() not in [reverse('merengue_logout'), reverse('admin:logout')]:  # to avoid automatic logout after login
             login_url += '?next=%s' % request.get_full_path()
         return login_url
 
-    @classmethod
-    def has_action(cls, user):
+    def has_action(self, user):
         return not user.is_authenticated()
 
 
@@ -54,12 +50,10 @@ class LogoutAction(UserAction):
     name = 'logout'
     verbose_name = _('Logout')
 
-    @classmethod
-    def get_url(cls, request, user):
+    def get_url(self, request, user):
         return reverse('merengue_logout')
 
-    @classmethod
-    def has_action(cls, user):
+    def has_action(self, user):
         return user.is_authenticated()
 
 

@@ -43,16 +43,13 @@ class PluginConfig(Plugin):
                     choices=[(g.name, g.name) for g in Group.objects.all()]),
     ]
 
-    @classmethod
-    def get_middlewares(cls):
+    def get_middlewares(self):
         return ['plugins.redirects.middleware.RedirectMiddleware']
 
-    @classmethod
-    def get_model_admins(cls):
+    def get_model_admins(self):
         return [(Redirect, RedirectAdmin), ]
 
-    @classmethod
-    def get_perms(cls):
+    def get_perms(self):
         return (
             (_('Submit redirects'), 'submit_redirects', [Redirect], ),
             (_('Manage redirects'), 'manage_redirects', [Redirect], )

@@ -65,14 +65,11 @@ class PluginConfig(Plugin):
         ),
     ]
 
-    @classmethod
-    def get_actions(cls):
+    def get_actions(self):
         return [GenerateRSS]
 
-    @classmethod
-    def get_model_admins(cls):
+    def get_model_admins(self):
         return []
 
-    @classmethod
-    def get_blocks(cls):
+    def get_blocks(self):
         return [RSSGlobalFeed, ]

@@ -66,8 +66,7 @@ class PluginConfig(Plugin):
                                default=24)
         ]
 
-    @classmethod
-    def get_model_admins(cls):
+    def get_model_admins(self):
         return [
             (IdentityProvider, IdentityProviderAdmin),
             (ContactPerson, ContactPersonAdmin),

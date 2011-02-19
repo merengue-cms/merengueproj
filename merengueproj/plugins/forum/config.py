@@ -21,16 +21,13 @@ class PluginConfig(Plugin):
     required_plugins = {'feedback': {},
                         }
 
-    @classmethod
-    def section_models(cls):
+    def section_models(self):
         return [(Forum, ForumSectionAdmin)]
 
-    @classmethod
-    def get_model_admins(cls):
+    def get_model_admins(self):
         return [(Forum, ForumAdmin),
                 (ForumCategory, ForumCategoryAdmin)]
 
-    @classmethod
-    def get_perms(cls):
+    def get_perms(self):
         return (
             ('Moderate forum', 'moderate_forum', [Forum]), )

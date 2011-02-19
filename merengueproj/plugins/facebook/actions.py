@@ -28,7 +28,6 @@ class FacebookLink(ContentAction):
     verbose_name = _('Share in Facebook')
     help_text = _('Facebook share widget')
 
-    @classmethod
-    def get_response(cls, request, content):
+    def get_response(self, request, content):
         request_url = 'http://%s%s' % (Site.objects.get_current().domain, content.public_link())
         return HttpResponseRedirect('http://www.facebook.com/share.php?u=%s' % urlquote(request_url))

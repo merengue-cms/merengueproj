@@ -31,6 +31,5 @@ class PluginConfig(Plugin):
           'plugins.tv.urls'),
     )
 
-    @classmethod
-    def get_blocks(cls):
+    def get_blocks(self):
         return [LatestVideoBlock, ]

@@ -25,6 +25,5 @@ class PluginConfig(Plugin):
     description = 'Plugin that includes a new block with AddThis service'
     version = '0.0.2'
 
-    @classmethod
-    def get_blocks(cls):
+    def get_blocks(self):
         return [AddThisBlock, ]
