@@ -1,8 +1,33 @@
 Changes
 =======
 
-Version 0.7.0-alpha (3630)
---------------------------
+Version 0.7.0-beta1 (3786 revision)
+-----------------------------------
+
+* Manager can set a numbers of objects limit in collections. See #1510.
+
+* Implement related object tools for related model admins. See #1502.
+
+* Redesign of Merengue admin to improve usability. See #1503 and #1517.
+
+* Integrated django-announcements. Not finished yet. See #1302.
+
+* Saml2 pulgin to get federated AuthN/AuthR via SAML SP. Not finished yet. See #1442.
+
+* Toolbar panel which shows Merengue version for debugging purposes. See #1473.
+
+* Section request middleware (which define ``request.section``) is now pluggable, and can be easily redefined, for example by ``microsite`` plugin. See #1484.
+
+* Support registering by instances, to be able to have multiple registered items of a registrable class. Used for blocks related to contents. See #1445.
+
+* New filter by type in "browse content" admin view. See #1483.
+
+* Merengue sections (BaseSection model) are now base contents (inherited to BaseContent), with permissions, related blocks, and all features implemented in Merengue. See #1318.
+
+* Fixed a lot of bugs caused by last features added. See #1433, #1355, #1330, #1192, #1465, #1469, #1396, #1481, #1493, #1504, #1494, #1499.
+
+Version 0.7.0-alpha (3630 revision)
+-----------------------------------
 
 * Support registering by instances (not classes) in Merengue registry, with singleton feature. See #1445.
 
