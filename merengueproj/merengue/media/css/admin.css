@@ -86,8 +86,18 @@ div#header img#merengue_logo {
 .module-merengue dd {
     font-size: 1em;
     margin: 0.5em 0px 1em;
-    padding-left: 0.5em;
+    padding-left: 0.2em;
     font-style: italic;
+    color: #707070;
+}
+
+.module ul, .module ol {
+    margin-left: 1em;
+}
+
+#administrator-menu ul li {
+    background: transparent url(../img/admin/demo_bullet.png) no-repeat center left;
+    padding-left: 12px;
 }
 
 .module-merengue h1 a {
@@ -134,14 +144,14 @@ div#header img#merengue_logo {
     padding: 2px;
 }
 
-#content .object-tools a:link.addlink,
-#content .object-tools a.addlink {
+.object-tools a:link.addlink,
+.object-tools a.addlink {
     background: #999 url("../img/admin/tooltag-add.gif") no-repeat scroll right -1px;
     padding-right: 24px;
 }
 
-#content .object-tools a:link.addlink:hover,
-#content .object-tools a.addlink:hover {
+.object-tools a:link.addlink:hover,
+.object-tools a.addlink:hover {
     background: #D1D1D1 url("../img/admin/tooltag-add_over.gif") no-repeat scroll right -1px;
 }
 
@@ -241,49 +251,49 @@ input.default[type="submit"],
     color: #BF9460;
 }
 
-#content-main ul.object-tools li a:hover {
+#content #content-main ul.object-tools li a:hover {
     color: #806446;
     background: none;
 }
 
-#content-main ul.object-tools li a.addlink {
+#content #content-main ul.object-tools li a.addlink {
     padding-right: 15px;
     background-image: url(../img/admin/icon_addlink.gif);
     background-repeat: no-repeat;
     background-position: 100% 0.2em;
 }
 
-#content-main ul.object-tools li a.quickreportlink {
+#content #content-main ul.object-tools li a.quickreportlink {
     background: url(../img/admin/icon_quickreportlink.gif) no-repeat;
     padding-right: 15px;
     background-position: 100% 0.2em;
 }
 
-#content-main ul.object-tools li a.advancedreportlink {
+#content #content-main ul.object-tools li a.advancedreportlink {
     background: url(../img/admin/icon_advancedreportlink.gif) no-repeat;
     padding-right: 15px;
     background-position: 100% 0.2em;
 }
 
-#content-main ul.object-tools li a.viewsitelink {
+#content #content-main ul.object-tools li a.viewsitelink {
     background: url(../img/admin/icon_viewsitelink.gif) no-repeat;
     padding-right: 15px;
     background-position: 100% 0.2em;
 }
 
-#content-main ul.object-tools li a.historylink {
+#content #content-main ul.object-tools li a.historylink {
     background: url(../img/admin/icon_historylink.gif) no-repeat;
     padding-right: 15px;
     background-position: 100% 0.2em;
 } 
 
-#content-main .object-tools-wrapper {
+#content #content-main .object-tools-wrapper {
     border-top: 1px solid #CCCCCC;
     border-left: 1px solid #CCCCCC;
     border-right: 1px solid #CCCCCC;
 }
 
-#content-main .object-tools-bottom {
+#content #content-main .object-tools-bottom {
     clear: both;
 }
 
