@@ -58,19 +58,32 @@ These are the steps for installing and executing the Merengue
 .. _`download page`: http://seleniumhq.org/download/
 .. _`Selenium tests suites`: http://dev.merengueproject.org/browser/trunk/merengueproj/tests/selenium/generic
 
-How to run all selenium test?
------------------------------
+How to run all selenium test at once?
+-------------------------------------
 
-There is a script to execute all suites of selenium test that are located at ``merengueproj/tests/selenium/generic`` subdirectories.
-This script is *run_suites.py* and is used as follow:
+There is a script to execute all suites of selenium test that are located at
+``merengueproj/tests/selenium/generic`` subdirectories. This script is
+*run_suites.py* and is used as follow:
 
 .. code-block:: bash
 
     $ python run_suites.py basic_url
 
-``basic_url`` is the basic url of the domain to test. All relatives url depends of this one.
+``basic_url`` is the basic url of the domain to test (i.e.
+http://localhost:8000/). All relatives url depends of this one.
 
-Also, it's necessary to run the script with two files on the same directory:
+Also, it's necessary to run the script with ``selenium-server.jar`` files on the same directory.
 
- * ``selenium-server.jar`` It's selenium application. You need this file to run selenium application by command line.
- * ``user-extensions.js`` It's an extension of selenium application. With this file, you can ``store datas and variables`` on any test.
+.. note::
+
+    ``selenium-server.jar`` is a file included in Selenium application.
+
+.. admonition:: Note for not english browsers
+
+    If your browser are configured in non english language and your web allow
+    the language, Merengue will set by default that language and the test will
+    fail. A quick workaround is disabling ``'django.middleware.locale.LocaleMiddleware'``
+    from your project middlewares (by default is in ``PRE_MERENGUE_MIDDLEWARE_CLASSES``
+    setting, in `merengue/settings.py`_ file).
+
+.. _`merengue/settings.py`: http://dev.merengueproject.org/browser/trunk/merengueproj/merengue/settings.py
