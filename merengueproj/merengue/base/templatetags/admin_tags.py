@@ -79,7 +79,7 @@ class ObjectToolsTag(Tag):
             object_tools = model_admin.object_tools(request, mode, url_prefix)
         elif mode == 'change':
             object_tools = [
-                {'url': url_prefix + 'history/', 'label': ugettext('History')},
+                {'url': url_prefix + 'history/', 'label': ugettext('History'), 'class': 'historylink'},
                 {'url': url_prefix + '../add/', 'label': ugettext('Add %s') % force_unicode(opts.verbose_name), 'class': 'addlink'},
             ]
         elif mode == 'list':
