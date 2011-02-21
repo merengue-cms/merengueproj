@@ -140,8 +140,8 @@ div#header img#merengue_logo {
     padding-right: 24px;
 }
 
-.object-tools a:link.addlink:hover,
-.object-tools a.addlink:hover {
+#content .object-tools a:link.addlink:hover,
+#content .object-tools a.addlink:hover {
     background: #D1D1D1 url("../img/admin/tooltag-add_over.gif") no-repeat scroll right -1px;
 }
 
@@ -457,14 +457,14 @@ a.ajax_geolocation{
     padding-left: 0px;
 }
 
-#global-languageselector li a {
-   padding: 10px 15px;
+ul#global-languageselector li {
+    opacity: 0.3;
 }
 
 ul#global-languageselector li.currentLangItem {
-   border: 2px solid #FFA500;
-   top: 1px;
-   padding: 0px 0px 0px 2px;
+  opacity: 1;
+  border: none;
+  padding: 0;
 }
 
 #global-languageselector li form,
