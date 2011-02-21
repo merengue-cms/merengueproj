@@ -142,6 +142,11 @@ ENABLE_TRANSLATION_SUGGESTIONS = False
 CACHE_BACKEND = 'johnny.backends.locmem:///'
 JOHNNY_MIDDLEWARE_KEY_PREFIX = '%s-cache' % DATABASE_NAME
 
+# if merengue will detect new plugins in file system
+DETECT_NEW_PLUGINS = True
+# if merengue will detect broken plugins
+DETECT_BROKEN_PLUGINS = True
+
 # Allow overwriting any configuration in optional settings_local.py
 # (it can be used to set up your own database, debug and cache options, contact mails...)
 try:
