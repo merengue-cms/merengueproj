@@ -24,19 +24,18 @@ from django.utils import feedgenerator
 from django.template.loader import render_to_string
 
 from merengue.base.models import BaseContent
-from merengue.registry.params import NOT_PROVIDED
+from merengue.registry.items import ALL_TYPES
 
 from merengue.pluggable.utils import get_plugin
 
 
 def rss_views(request):
-
-    PluginConfig = get_plugin('rss')
-    contenttypes = PluginConfig.get_config().get(
+    plugin = get_plugin('rss')
+    contenttypes = plugin.get_config().get(
         'contenttypes', []).get_value()
 
     query = Q()
-    if not contenttypes or contenttypes == NOT_PROVIDED:
+    if not contenttypes or ALL_TYPES in contenttypes:
         results = BaseContent.objects.filter(
             status='published').order_by('modification_date')[::-1]
     else:
@@ -46,7 +45,7 @@ def rss_views(request):
         results = BaseContent.objects.filter(status='published').filter(
             query).order_by('modification_date')[::-1]
 
-    portal_title = PluginConfig.get_config().get(
+    portal_title = plugin.get_config().get(
         'portal', '').get_value()
     f = feedgenerator.Rss201rev2Feed(
         title=portal_title,
@@ -56,7 +55,7 @@ def rss_views(request):
         author_name=render_to_string('rss/author_name.html'),
         feed_url=render_to_string('rss/feed_url.html'),
     )
-    limit = PluginConfig.get_config().get('limit', None)
+    limit = plugin.get_config().get('limit', None)
     results = results[:int(limit.get_value())]
     link_prefix = 'http://%s' % Site.objects.all()[0].domain
     for item in results:

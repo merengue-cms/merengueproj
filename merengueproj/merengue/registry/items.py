@@ -16,7 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.db.models import signals
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext, ugettext_lazy as _
 
 from merengue.registry.models import RegisteredItem
 from merengue.registry import params
@@ -78,14 +78,6 @@ class RegistrableItem(object):
         registered_item = self.get_registered_item()
         return self._config_dict(registered_item.get_config())
 
-    def get_merged_config(self, *configs):
-        """ get a merged config with all config dicts passed by param """
-        merged_config = self.get_config()
-        for config in configs:
-            if config:
-                merged_config.update(config)
-        return merged_config
-
     def get_registered_item(self):
         return self.reg_item
 
@@ -103,11 +95,14 @@ def _get_children_classes(content_type):
     return result
 
 
-def _get_all_children_classes(content_type=None):
+ALL_TYPES = '_all_types_'
+
+
+def get_all_managed_types(content_type=None):
     if not content_type:  # to avoid circular import
         from merengue.base.models import BaseContent
         content_type = BaseContent
-    return [(children_class._meta.module_name, children_class._meta.verbose_name)
+    return [(ALL_TYPES, ugettext('All content types'))] + [(children_class._meta.module_name, children_class._meta.verbose_name)
             for children_class in _get_children_classes(content_type)]
 
 
@@ -117,7 +112,8 @@ class ContentTypeProvider(object):
         params.List(
             name="contenttypes",
             label=_("Content types that whant to filter"),
-            choices=_get_all_children_classes,
+            default=ALL_TYPES,
+            choices=get_all_managed_types,
         ),
     ]
 
@@ -127,7 +123,7 @@ class ContentTypeFilterProvider(ContentTypeProvider):
     def match_type(self, content_type):
         contenttypes_config = self.get_config().get('contenttypes', None)
         if (not contenttypes_config or
-            contenttypes_config.get_value() == params.NOT_PROVIDED):
+            ALL_TYPES in contenttypes_config.get_value()):
             return True
         elif content_type:
             cts = contenttypes_config.get_value()
