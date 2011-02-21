@@ -982,10 +982,12 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
         return extra_context
 
     def object_tools(self, request, mode, url_prefix):
-        return super(BaseContentAdmin, self).object_tools(request, mode, url_prefix) + [
-            {'url': url_prefix + 'permissions/', 'label': ugettext('Permissions'), 'class': 'permissionslink'},
-        ]
-
+        tools = super(BaseContentAdmin, self).object_tools(request, mode, url_prefix)
+        if mode == 'change':
+            tools.extend([
+                {'url': url_prefix + 'permissions/', 'label': ugettext('Permissions'), 'class': 'permissionslink'},
+            ])
+        return tools
 
 if settings.USE_GIS:
     BaseContentAdmin.list_display += ('google_minimap', )
