@@ -15,17 +15,25 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+import os.path
+import httplib2
+
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 from django.db import models
+from django.db.models import signals
 from django.utils.translation import ugettext_lazy as _
 
-#import saml2
+import saml2
+
+
+METADATA_DIRECTORY = 'saml2-metadata'
 
 
 class IdentityProvider(models.Model):
 
     BINDINGS = (
-#        (saml2.BINDING_HTTP_REDIRECT, u'HTTP Redirect'),
-        ('http-redirect', u'HTTP Redirect'),
+        (saml2.BINDING_HTTP_REDIRECT, u'HTTP Redirect'),
         )
 
     entity_id = models.CharField(_('Entity ID'), max_length=200)
@@ -52,10 +60,25 @@ class IdentityProvider(models.Model):
         max_length=200,
         )
 
-    metadata = models.TextField(_('XML Metadata'))
+    metadata = models.FileField(_('XML Metadata'), blank=True,
+                                upload_to=METADATA_DIRECTORY)
 
     def __unicode__(self):
         return self.entity_id
+
+
+def identity_provider_post_save(sender, instance, created, **kwargs):
+    if not instance.metadata:
+        client = httplib2.Http()
+        (response, content) = client.request(instance.entity_id, "GET")
+        if response.status == 200:
+            relative_path = os.path.join(METADATA_DIRECTORY, '%d.xml' % instance.id)
+            full_path = default_storage.path(relative_path)
+            default_storage.save(full_path, ContentFile(content))
+            instance.metadata = relative_path
+            instance.save()
+
+signals.post_save.connect(identity_provider_post_save, sender=IdentityProvider)
 
 
 class ContactPerson(models.Model):
@@ -81,6 +104,7 @@ class Organization(models.Model):
     name = models.CharField(_('Name'), max_length=200)
     display_name = models.CharField(_('Display name'), max_length=200)
     url = models.URLField(_('URL'), max_length=200)
+    language = models.CharField(_('Language code'), max_length=10)
 
     def __unicode__(self):
         return self.name

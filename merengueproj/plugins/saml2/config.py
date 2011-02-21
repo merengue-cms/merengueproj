@@ -35,8 +35,6 @@ class PluginConfig(Plugin):
         )
 
     config_params = [
-        params.Single(name='entity_id',
-                      label=_('Entity ID')),
         params.Single(name='entity_name',
                       label=_('Entity Name')),
         params.Single(name='username_attribute',
@@ -54,6 +52,9 @@ class PluginConfig(Plugin):
         params.Single(name='required_attributes',
                       label=_('Comma/space separated list of required attributes'),
                       default='uid'),
+        params.Single(name='optional_attributes',
+                      label=_('Comma/space separated list of optional attributes'),
+                      default=''),
         params.Single(name='xmlsec_binary',
                       label=_('Path to xmlsec1 program'),
                       default='/usr/bin/xmlsec1'),
