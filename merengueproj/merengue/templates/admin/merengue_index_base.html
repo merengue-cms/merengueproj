@@ -63,7 +63,7 @@
         <dt><a href="block/registeredblock/" title="{% trans "Blocks" %}">{% trans "Blocks" %}</a></dt>
         <dd>{% trans "View, edit and delete the site's blocks." %}</dd>
         <dt><a href="pluggable/registeredplugin/" title="{% trans "Plugins" %}">{% trans "Plugins" %}</a></dt>
-        <dd>{% trans "View, edit and delete the site's plugin." %}</dd>
+        <dd>{% trans "View, edit and delete the site's plugins." %}</dd>
         <dt><a href="theming/theme/" title="{% trans "Themes" %}">{% trans "Themes" %}</a></dt>
         <dd>{% trans "View, edit and delete the site's themes." %}</dd>
         <dt><a href="action/registeredaction/" title="{% trans "Actions" %}">{% trans "Actions" %}</a></dt>
@@ -91,16 +91,23 @@
       </dl>
     </div>
     {% endifhasperm %}
-    
+
 {% if plugins %}
     {% ifhasperm 'manage_plugin_content' %}
     <div class="module-merengue" id="plugins">
-      <dl>
-      {% for plug in plugins.values %}
-        <dt><a href="{{ plug.app_url }}" title="{{ plug.name }}">{{ plug.name }}</a></dt>
-        <dd>{{ plug.config.description }} ({{ plug.config.version }})</dd>
-      {% endfor %}
-      </dl>
+     <dl>
+      <dt><a href="pluggable/registeredplugin/" title="{% trans "Plugins" %}">{% trans "Plugins" %}</a></dt>
+      <dd>{% trans "View, edit and delete the site's plugins." %}</dd>
+      <dt>{% trans "Plugin custom administration interfaces" %}</dt>
+      <dd>{% trans "Enabled plugins can define its own administration interfaces. These are the custom admins in your installed plugins:" %}
+        <dl>
+        {% for plug in plugins.values %}
+          <dt><a href="{{ plug.app_url }}" title="{{ plug.name }}">{{ plug.name }}</a></dt>
+          <dd>{{ plug.config.description }} ({{ plug.config.version }})</dd>
+        {% endfor %}
+        </dl>
+      </dd>
+     </dl>
     </div>
     {% endifhasperm %}
 {% endif %}

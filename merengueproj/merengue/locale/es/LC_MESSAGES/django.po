@@ -264,8 +264,8 @@ msgid "Plugins"
 msgstr ""
 
 #: merengue/templates/admin/merengue_index_base.html.py:50
-msgid "View, edit and delete the site's plugin."
-msgstr "Ver, editar y eliminar el plugin del sitio."
+msgid "View, edit and delete the site's plugins."
+msgstr "Ver, editar y eliminar los plugins del sitio."
 
 #: merengue/templates/admin/merengue_index_base.html.py:51
 msgid "Themes"

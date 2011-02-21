@@ -29,9 +29,9 @@ register = template.Library()
 
 
 PATHS_SECTIONS = [
+    ('pluggable/', 'plugins'),
     ('plugins.', 'plugins'),
     ('block/', 'sitebuilding'),
-    ('pluggable/', 'sitebuilding'),
     ('theming/', 'sitebuilding'),
     ('action/', 'sitebuilding'),
     ('registry/', 'sitebuilding'),
