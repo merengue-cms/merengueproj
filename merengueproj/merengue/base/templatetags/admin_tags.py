@@ -19,7 +19,6 @@ from django import template
 from django.core import urlresolvers
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext
-from django.utils.encoding import force_unicode
 
 from classytags.arguments import Argument
 from classytags.core import Tag, Options
@@ -72,6 +71,14 @@ class ObjectToolsTag(Tag):
             model_admin = template.Variable(model_admin).resolve(context)
         except template.VariableDoesNotExist:
             model_admin = None
+        # set permissions dictionary with user capabilities adding, changing and deleting
+        permissions = {}
+        for perm in ('add', 'change', 'delete', ):
+            perm_var = 'has_%s_permission' % perm
+            permissions[perm] = model_admin and \
+                getattr(model_admin, perm_var)(request) or \
+                context.get(perm_var, False)
+
         if obj is None:
             obj = context.get('original', None)
         opts = getattr(obj, '_meta', context.get('opts', None))
@@ -80,18 +87,20 @@ class ObjectToolsTag(Tag):
         elif mode == 'change':
             object_tools = [
                 {'url': url_prefix + 'history/', 'label': ugettext('History'), 'class': 'historylink'},
-                {'url': url_prefix + '../add/', 'label': ugettext('Add %s') % force_unicode(opts.verbose_name), 'class': 'addlink'},
             ]
         elif mode == 'list':
             object_tools = [
-                {'url': url_prefix + 'add/', 'label': ugettext('Add new'), 'class': 'addlink'},
+                {'url': url_prefix + 'add/', 'label': ugettext('Add new'),
+                 'class': 'addlink', 'permission': 'add'},
             ]
         else:  # mode is 'add'
             object_tools = []
+        granted_tools = [tool for tool in object_tools if 'permission' not in tool or
+                           permissions[tool['permission']]]
         context = {
             'path': request.META.get('PATH_INFO', ''),
             'request': request,
-            'object_tools': object_tools,
+            'object_tools': granted_tools,
             'opts': opts,
             'object': obj,
             'mode': mode,
