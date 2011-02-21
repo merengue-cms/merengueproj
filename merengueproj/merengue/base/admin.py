@@ -339,7 +339,9 @@ class RelatedURLsModelAdmin(admin.ModelAdmin):
                         callback, args, kwargs = resolved
                         # add ourselves as parent model admin to be referred from child model admin
                         # add also parent object to be referred also in child model if needed
-                        if callback.func_name in ('changelist_view', 'change_view', 'add_view', 'history_view'):
+                        if callback.func_name in ('changelist_view', 'change_view',
+                                                  'add_view', 'history_view',
+                                                  'parse_path'):
                             kwargs['parent_model_admin'] = self
                             kwargs['parent_object'] = basecontent
                         return callback(request, *args, **kwargs)
