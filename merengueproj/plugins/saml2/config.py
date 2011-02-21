@@ -20,8 +20,9 @@ from django.utils.translation import ugettext_lazy as _
 from merengue.pluggable import Plugin
 from merengue.registry import params
 
-from plugins.saml2.models import IdentityProvider, ContactPerson, Organization
+from plugins.saml2.actions import Saml2LoginAction, Saml2LogoutAction
 from plugins.saml2.admin import IdentityProviderAdmin, ContactPersonAdmin, OrganizationAdmin
+from plugins.saml2.models import IdentityProvider, ContactPerson, Organization
 
 
 class PluginConfig(Plugin):
@@ -73,3 +74,6 @@ class PluginConfig(Plugin):
             (ContactPerson, ContactPersonAdmin),
             (Organization, OrganizationAdmin),
             ]
+
+    def get_actions(self):
+        return [Saml2LoginAction, Saml2LogoutAction]
