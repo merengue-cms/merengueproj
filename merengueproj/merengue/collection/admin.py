@@ -214,6 +214,12 @@ class FeedItemDisplayFieldAdmin(CollectionDisplayFieldAdmin):
         super(FeedItemDisplayFieldAdmin, self).save_model(request, obj, form, change)
 
 
+class FeedItemAdmin(RelatedModelAdmin):
+    tool_name = 'items'
+    tool_label = _('feed items')
+    related_field = 'feed_collection'
+
+
 class FeedCollectionAdmin(CollectionAdmin):
     fieldsets = (
         (_('Collection Basic Information'),
@@ -271,14 +277,14 @@ class FeedCollectionAdmin(CollectionAdmin):
         return form
 
 
-class FeedItemAdmin(RelatedModelAdmin):
-    tool_name = 'items'
-    tool_label = _('feed items')
-    related_field = 'feed_collection'
+class FeedCollectionRelatedModelAdmin(SectionContentAdmin, FeedCollectionAdmin):
+    tool_name = 'feed collections'
+    tool_label = _('feed collections')
 
 
 def register_related(site):
     site.register_related(Collection, CollectionRelatedModelAdmin, related_to=BaseSection)
+    site.register_related(FeedCollection, FeedCollectionRelatedModelAdmin, related_to=BaseSection)
     site.register_related(CollectionDisplayField, CollectionDisplayFieldAdmin, related_to=Collection)
     site.register_related(CollectionDisplayField, FeedItemDisplayFieldAdmin, related_to=FeedCollection)
     site.register_related(FeedItem, FeedItemAdmin, related_to=FeedCollection)
