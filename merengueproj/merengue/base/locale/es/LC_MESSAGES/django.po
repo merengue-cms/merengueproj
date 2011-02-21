@@ -135,7 +135,7 @@ msgstr "Panel de control"
 
 #: adminsite.py:416 templatetags/related_admin_tags.py:71
 msgid "Plugin administration"
-msgstr "Plugin de administración"
+msgstr "Administración de plugins"
 
 #: forms.py:352 models.py:324
 msgid "owners"
