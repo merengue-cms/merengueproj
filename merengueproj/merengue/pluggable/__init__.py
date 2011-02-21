@@ -174,16 +174,19 @@ def enable_active_plugins():
 def register_all_plugins(verbose=False):
     from merengue.pluggable.utils import get_plugin_directories, get_plugin_config
     for plugin_dir in get_plugin_directories():
-        if verbose:
-            plugin_config = get_plugin_config(plugin_dir)
-            if plugin_config:
-                if not have_registered_items(plugin_config):
-                    print 'Registering new plugin %s...' % plugin_dir
+        try:
+            if verbose:
+                plugin_config = get_plugin_config(plugin_dir)
+                if plugin_config:
+                    if not have_registered_items(plugin_config):
+                        print 'Registering new plugin %s...' % plugin_dir
+                    else:
+                        print 'Re-registering plugin %s...' % plugin_dir
                 else:
-                    print 'Re-registering plugin %s...' % plugin_dir
-            else:
-                print 'Error walking to plugin %s.' % plugin_dir
-        register_plugin(plugin_dir)
+                    print 'Error walking to plugin %s.' % plugin_dir
+            register_plugin(plugin_dir)
+        except:
+            print 'Error registering %s plugin... go to next plugin.' % plugin_dir
 
 
 def active_default_plugins(*args, **kwargs):
