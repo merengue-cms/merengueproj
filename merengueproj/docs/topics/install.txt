@@ -536,6 +536,8 @@ You can make a database backup in SQL with the following command:
     When using PostgreSQL as database backend, you need install ``pexpect``
     python package.
 
+.. _topics-deploying:
+
 ==================
 Deploying Merengue
 ==================
@@ -580,6 +582,20 @@ media file also with this command:
 
     See :ref:`media files in plugins <topics-plugins-media-files>` for more information about this.
 
+Compressing Javascript and CSS files
+====================================
+
+For performance reasons, Merengue will locate most Javascript files near to
+``</body>`` HTML tag, and CSS assets in the ``<head>`` section.
+
+Aditionally, you can compress those files setting the ``COMPRESS`` setting to
+``True``
+
+.. note::
+
+    By default ``COMPRESS`` value is ``not DEBUG``. That means if you set
+    ``DEBUG`` to ``False`` when deploy the website (which is recomended), you
+    have not to change ``COMPRESS`` setting explicitly.
 
 Example Merengue configuration with nginx and WSGI
 ==================================================

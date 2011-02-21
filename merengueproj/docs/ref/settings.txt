@@ -210,3 +210,15 @@ Default: ``('base.basecontent',)``
 
 All models included will be displayed in a filter included in map view, when
 GIS is activated.
+
+COMPRESS
+--------
+
+Default: ``not DEBUG``
+
+This setting activate/deactivate compression in Javascript and CSS files.
+When deployment is done is recommended to activate this variable.
+
+.. note::
+
+    This variable will be activated by default if ``DEBUG`` is ``False``.

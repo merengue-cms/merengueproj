@@ -8,12 +8,78 @@ Common Merengue errors
     :local:
     :depth: 1
 
+
+Media errors
+============
+
+.. _ref-frontend-ui-errors:
+
+Some front-end UI are not working (multimedia slide, inline trans, etc.)
+------------------------------------------------------------------------
+
+**Cause**: the media for plugins/application are not copied/linked into your media root.
+
+**Solution**: execute either ``sync_apps_media`` or ``sync_plugins_media`` command. For example:
+
+.. code-block:: bash
+
+    $ python manage.py sync_apps_media --link
+    $ python manage.py sync_plugins_media --link --all
+
+.. note::
+
+    The latest ``sync_plugins_media`` is not needed during development, but
+    you have to execute it when deploy your website. See
+    :ref:`deploying Merengue <topics-deploying>`.
+
+Javascript console raises a ``non defined`` or ``not a function`` error
+-----------------------------------------------------------------------
+
+**Example javascript error**:
+
+.. code-block:: javascript
+
+    $("#inlinetrans-toolbar").inlinetranstoolbar is not a function
+
+**Possible cause**: the media for plugins/application are not copied/linked into your media root.
+
+**Solution**: execute either ``sync_apps_media`` or ``sync_plugins_media``
+command. See :ref:`previous error <ref-frontend-ui-errors>`.
+
+JS/CSS compression error
+------------------------
+
+**Error traceback**::
+
+    Traceback (most recent call last):
+    ...
+    Exception Type: TemplateSyntaxError at /
+    Exception Value: Caught UncompressableFileError while rendering: "/path/to/js/foofile.js" does not exist
+
+**Cause**: you have enabled compression and the files to compress are not linked into media root.
+
+**Solution**: one of these:
+
+   * Disable JS/CSS compression, setting ``COMPRESS`` to ``False``. See :ref:`deploying Merengue <topics-deploying>`.
+   * Execute either ``sync_apps_media`` or ``sync_plugins_media`` to copy/link the media asset to media root.
+
+
+Plugins errors
+==============
+
+You cannot see all in admin the plugins installed in ``plugins`` directory
+--------------------------------------------------------------------------
+
+**Possible cause**: the plugins are not registered.
+
+**Solution**: one of these:
+
+   * Define the ``DETECT_NEW_PLUGINS`` setting to ``True`` and go again admin plugins view.
+   * Execute the ``register_new_plugins`` command with ``python manage.py register_new_plugins``.
+
+
 Database errors
 ===============
-
-Here's a full list of all available merengue settings.
-
-.. setting:: SITE_FIXTURES
 
 Use a non GIS database with a GIS project
 -----------------------------------------
@@ -37,8 +103,6 @@ Use a non GIS database with a GIS project
 **Cause**: you are using a non GIS database but your project is configured with ``USE_GIS=True``
 
 **Solution**: one of these:
+
    * Use a GIS database (it depends of your database engine).
    * Define ``USE_GIS=False`` if you don't need geographic features.
-
-
-(( to be completed ))
