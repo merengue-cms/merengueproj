@@ -129,5 +129,15 @@ ul#global-languageselector li.currentLangItem {
     background: #54B848;
     border-color: #3f8c37;
     color: #FFF;
-	text-shadow: 1px 1px 0 #3f8c37;
+    text-shadow: 1px 1px 0 #3f8c37;
+}
+
+.module ul, .module ol {
+    margin-left: 1em;
+    list-style: none;
+}
+
+#administrator-menu ul li {
+    background: transparent url(../img/menu_bullet.png) no-repeat center left;
+    padding-left: 12px;
 }
