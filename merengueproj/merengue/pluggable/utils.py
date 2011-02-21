@@ -36,7 +36,7 @@ from django.core.management.validation import get_validation_errors
 from django.core import urlresolvers
 from django.db import connection, transaction
 from django.db.models import get_models
-from django.db.models.loading import load_app
+from django.db.models.loading import load_app, cache
 from django.utils.importlib import import_module
 
 from south import migration
@@ -274,6 +274,8 @@ def disable_plugin(plugin_name, unregister=True):
     # app_directories template loader loads app_template_dirs in
     # compile time, so we have to load it again.
     reload_app_directories_template_loader()
+    # clear model cache to update south migration dependencies
+    cache.app_store.clear()
 
 
 def register_plugin_urls(plugin_name):
