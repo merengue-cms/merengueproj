@@ -19,5 +19,4 @@ from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('',
     url(r'^submit/([\w-]+)/(\d+)/$', 'plugins.contactform.views.contact_form_submit', name='contact_form_submit'),
-    url(r'^jsi18n/$', 'django.views.i18n.javascript_catalog', {'packages': ('django.conf', )}, name='contact_form_jsi18n'),
 )
