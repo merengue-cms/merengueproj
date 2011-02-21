@@ -595,7 +595,7 @@ Aditionally, you can compress those files setting the ``COMPRESS`` setting to
 
     By default ``COMPRESS`` value is ``not DEBUG``. That means if you set
     ``DEBUG`` to ``False`` when deploy the website (which is recomended), you
-    have not to change ``COMPRESS`` setting explicitly.
+    don't have to change ``COMPRESS`` setting explicitly.
 
 Example Merengue configuration with nginx and WSGI
 ==================================================
