@@ -727,9 +727,19 @@ div.errormessage, div#messagebox ul#info-list {
 }
 
 /* Plugin ITag */
-div.blockContainer div#tagcloud ul li {
-	margin-bottom: 0;
-	font-size: 1.2em;
+div#tagcloud ul li {
+     
+}
+div#tagcloud ul li a {
+    font-size: 69%;
+    line-height: 0.5em;
+}
+div#tagcloud h1 a {
+    color: white;
+}
+
+div#tagcloud h1 a:hover {
+    color: #EEE;
 }
 
 /* end Plugin ITag */
