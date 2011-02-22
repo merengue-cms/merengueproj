@@ -73,6 +73,7 @@ body div#content-zone {
 #header {
     background: #2F2A12 url(/media/themes/yaco/img/header_back.gif) repeat-y left top;
     height: 170px;
+    position: relative;
 }
 
 #headerlogo {
@@ -95,7 +96,7 @@ body div#content-zone {
 #header-blocks #portal-primary-links {
     border: none;
     width: auto;
-	margin-top: 0.5em;
+    margin-top: 0.5em;
 }
 
 #header div#header-blocks {
@@ -106,11 +107,15 @@ body div#content-zone {
 #language-tools ul li,
 #user-actions ul li {
     display: inline;
-	margin-left 3em;
+    margin-left: 1em;
+}
+
+#language-tools ul li {
+    margin-left: 0.2em;
 }
 
 #header-blocks ul li {
-	padding: 0.1em 0.5em;
+    padding: 0.1em 0.5em;
 }
 
 /* portalmenu */
@@ -217,18 +222,21 @@ div#language-tools {
     opacity: 1;
 }
 
-#language-selector {
-	margin-left: 4.5em;
-}
-
 div#user-actions,
 div#language-tools {
-    float: right;
-    width: 23%;
-    position: relative;
-    top: 48px;
+    position: absolute;
+    top: 143px;
+}
+
+div#user-actions {
+    right: 520px;
     font-size: 12px;
 }
+
+div#language-tools {
+    right: 32px;
+}
+
 
 div#user-actions ul li {
 	border-right: 1px solid #666;
@@ -289,7 +297,7 @@ div#contentwrapper a:hover {
 div#content {
     position: relative;
     float: left;
-    background: white;
+    background: transparent;
     margin-left: 10px;
     width: 60%;
     padding: 0 20px 10px 2em;
