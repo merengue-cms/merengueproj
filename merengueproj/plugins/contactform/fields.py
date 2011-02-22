@@ -93,8 +93,8 @@ class CaptchaField(forms.Field):
         super(CaptchaField, self).__init__(*args, **kwargs)
 
     def clean(self, value):
-        from plugins.contactform.config import PluginConfig
-        privkey = PluginConfig.get_config().get('rprivk', None)
+        plugin = get_plugin('contactform')
+        privkey = plugin.get_config().get('rprivk', None)
         if privkey:
             privkey = privkey.value
         else:
