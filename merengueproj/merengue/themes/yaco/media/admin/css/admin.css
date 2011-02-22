@@ -26,10 +26,18 @@ div#header img#merengue_logo {
 	margin: 0.7em;
 }
 
+.login #container {
+    width: 31em;
+}
+
 #branding h1 { 
     color: #54B848;
 	margin: 0.8em 0 0 7em;
 	font-size: 1.7em;
+}
+
+.login form input[type="submit"] {
+    cursor: pointer;
 }
 
 /*---- other styles ----*/

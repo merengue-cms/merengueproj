@@ -740,3 +740,32 @@ div.pagination  span.disabled {
 #right-sidebar #tagcloud div.blockInner ul li {
 	font-size: 1.2em !important;
 }
+
+/* cms login */
+#login  {
+    -moz-border-radius: 0;
+    padding: 0;
+    background: #2F2A12 url(../img/logo_green.png) no-repeat 10px 10px;
+}
+
+#login form {
+    overflow: auto;
+    margin-top: 62px !important;
+    background: white;
+}
+
+#login form input[type="submit"] {
+    cursor: pointer;
+}
+
+#login label {
+    color: #333;
+}
+
+#login a.resetPassword {
+    color: #54B848;
+    display: block;
+    background: white;
+    padding: 0 0 1em 1em;
+}
+/* end cms login */
