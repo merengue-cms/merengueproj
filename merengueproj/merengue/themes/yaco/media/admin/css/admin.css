@@ -85,6 +85,10 @@ div#header img#merengue_logo {
     background: #54B848 url(../img/default-bg.gif) repeat-x top left;
 }
 
+#content #content-main ul.object-tools li a {
+    color: #54B848;
+}
+
 .object-subtools ul li.selected {
    background-color: #54B848;
 }
