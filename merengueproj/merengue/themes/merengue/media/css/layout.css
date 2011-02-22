@@ -961,6 +961,10 @@ table.gsc-search-box td.gsc-input {
   #portal-primary-links {
     width: 39%;
   }
+  #portalmenu .menuDepth1 > li > a {
+    display: inline-block;
+    line-height: 15px;
+  }
   #header-blocks ul li a span {
     display: inline-block;
   }
@@ -969,7 +973,11 @@ table.gsc-search-box td.gsc-input {
 
 /* Opera */
 @media all and (-webkit-min-device-pixel-ratio:10000), not all and (-webkit-min-device-pixel-ratio:0)
-{
+{  
+  #portalmenu .menuDepth1 > li > a {
+    display: inline-block;
+    line-height: 15px;
+  }
   #header-blocks #portalmenu .menu1 > li a {
     padding-top: 7px !important;
   }
