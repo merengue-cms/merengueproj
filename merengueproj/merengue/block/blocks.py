@@ -41,6 +41,7 @@ class BaseBlock(RegistrableItem):
             context = {}
         registered_block = self.get_registered_item()
         block_context = {
+            'block_name': registered_block.name,
             'block_title': block_title or registered_block.name,
             'block': registered_block,
             'has_config': self.has_config(),
