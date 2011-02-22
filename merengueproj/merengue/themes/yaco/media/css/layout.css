@@ -527,6 +527,17 @@ ul.menu_ul {
     right: 30px;
     color: gray;
 }
+/* category and date fields */
+div.date,
+div#contentCategories {
+    color: #54B848;
+}
+
+div.date label,
+div#contentCategories label {
+    color: #717171;
+}
+
 
 /* ----- attached files for contents ----- */
 div.contentFiles {

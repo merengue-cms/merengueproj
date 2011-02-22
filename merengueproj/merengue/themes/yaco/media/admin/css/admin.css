@@ -11,8 +11,8 @@ a:link, a:visited {
 }
 
 a:hover {
-	color: #4fd141;
-	text-decoration: underline;
+    color: #4fd141;
+    text-decoration: underline;
 }
 
 /* ----- header styles ----- */
@@ -99,6 +99,14 @@ div#header img#merengue_logo {
 
 .object-subtools ul li.selected {
    background-color: #54B848;
+}
+
+#content #content-main ul.object-tools li a {
+    color: #54B848;
+}
+#content #content-main ul.object-tools li a:hover {
+    color: #4fd141;
+    text-decoration: underline;
 }
 
 .calendarbox .calendarnav-next-month,
