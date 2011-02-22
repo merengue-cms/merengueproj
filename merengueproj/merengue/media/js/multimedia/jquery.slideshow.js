@@ -115,6 +115,11 @@
 
             var setMaxPagination = function(value) {
                 paginator.find('.imgMax').text(value);
+                if (value==1) {
+                    paginator.hide();
+                } else {
+                    paginator.show();
+                }
             }
 
             var activateType = function(type, action_link) {

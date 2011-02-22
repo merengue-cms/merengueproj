@@ -38,6 +38,7 @@
 /*  margin-right: 0.2em;*/
 }
 .simpleImgGallery2 div.imageController {
+  display: none;
   float: right;
   margin: 4px 1em;
   height: 24px;
