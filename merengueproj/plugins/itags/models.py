@@ -22,6 +22,8 @@ from django.utils.translation import ugettext_lazy as _
 from tagging.models import Tag
 from transmeta import TransMeta, get_fallback_fieldname, get_real_fieldname
 
+from merengue.pluggable.utils import get_plugin
+
 
 class ITag(Tag):
 
@@ -46,9 +48,8 @@ def create_itag_from_tag(sender, instance, **kwargs):
     try:
         instance.itag
     except ITag.DoesNotExist:
-        from plugins.itags.config import PluginConfig
         itag = ITag(tag_ptr=instance)
-        lang = PluginConfig.get_config().get('main_language', None)
+        lang = get_plugin('itags').get_config().get('main_language', None)
         lang = lang and lang.value or None
         if lang in dict(settings.LANGUAGES).keys():
             setattr(itag, get_real_fieldname('tag_name', lang), instance.name)
