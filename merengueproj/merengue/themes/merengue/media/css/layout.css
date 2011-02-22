@@ -747,13 +747,19 @@ div#tagcloud ul li a {
 }
 div#tagcloud h1 a {
     color: white;
+    background: transparent url(../img/link_icon.png) no-repeat right center;
+    padding-right: 10px;
 }
 
 div#tagcloud h1 a:hover {
-    color: #EEE;
+    color: #F7CDCD;
 }
 
 /* end Plugin ITag */
+/* contact info*/
+div#contact-info strong {
+    font-size: 90%;
+}
 
 /* footer */
 #footer {
