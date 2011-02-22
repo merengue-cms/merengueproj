@@ -17,6 +17,18 @@
 
 from merengue.base.admin import PluginAdmin
 
+from plugins.imagesize.models import ImageSize
+
 
 class ImageSizeAdmin(PluginAdmin):
     exclude = ('notified', )
+
+
+def register(site):
+    """ Merengue admin registration callback """
+    site.register(ImageSize, ImageSizeAdmin)
+
+
+def unregister(site):
+    """ Merengue admin unregistration callback """
+    site.unregister(ImageSize)
