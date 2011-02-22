@@ -57,6 +57,13 @@ span.translatable {
     margin: 0 !important;
 }
 
+
+* span.translatable {
+    background-image: none!important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
 /* ----- Useful class ----- */
 .visualClear {
   display: block;
@@ -149,7 +156,9 @@ span.translatable {
 
 #header-blocks #portal-primary-links li {
   background: transparent url(../img/left_menu_button.jpg) no-repeat left top;
-  padding: 6px 0 5px 11px;
+  padding: 0 0 0  11px;
+  height: 31px;
+  display: inline-block;
 }
 
 .ie7 #header-blocks li {
@@ -159,12 +168,14 @@ span.translatable {
 }
 
 #portal-primary-links li a {
-  padding: 7px 12px 7px 5px;
-  font-size: 10pt;
-  background: transparent url(../img/right_menu_button.jpg) no-repeat right top;
+    padding: 0 12px 0 0;
+    font-size: 10pt;
+    display: inline-block;
+    height: 31px;
+    line-height: 31px;
+    background: transparent url(../img/right_menu_button.jpg) no-repeat right top;
 }
 
-.ie #portal-primary-links li a span,
 .ie #header-blocks #portalmenu li a span {
   line-height: 30px;
 }
