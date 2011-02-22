@@ -49,7 +49,7 @@ class LocaleMiddleware(object):
         forced_lang = request.GET.get('set_language', None)
         if forced_lang:
             translation.activate(forced_lang)
-            request.LANGUAGE_CODE = translation.get_language()
+        request.LANGUAGE_CODE = translation.get_language()
 
     def process_response(self, request, response):
         forced_lang = request.GET.get('set_language', None)
