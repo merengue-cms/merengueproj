@@ -29,6 +29,7 @@ class RegisteredBlockAdmin(RegisteredItemAdmin):
     readonly_fields = RegisteredItemAdmin.readonly_fields + ('name', )
     list_display = RegisteredItemAdmin.list_display + ('placed_at', )
     list_filter = ('placed_at', )
+    search_fields = ('name', )
     ordering = ('order', )
 
     fieldsets = (

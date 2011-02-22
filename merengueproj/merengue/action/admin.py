@@ -24,6 +24,7 @@ from merengue.action.models import RegisteredAction
 class RegisteredActionAdmin(RegisteredItemAdmin):
     readonly_fields = RegisteredItemAdmin.readonly_fields + ('name', )
     list_display = ('class_name', 'module', 'active', )
+    search_fields = ('name', )
     ordering = ('order', )
 
     fieldsets = (

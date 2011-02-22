@@ -21,7 +21,13 @@
         {% for block in original.meta_info.blocks %}
         <div class="form-row">
           <div>
-            {{ block.name }}{% if block.help_text %}: {{ block.help_text }} {% endif %} 
+          {% if original.installed %}
+            <a href="{% url admin_index %}block/registeredblock/?q={{ block.name }}" title="{% trans "Registered blocks" %}">
+            {{ block.name }}</a>
+          {% else %}
+            {{ block.name }}
+          {% endif %}
+          {% if block.help_text %}: {{ block.help_text }} {% endif %} 
           </div>
         </div>
       {% endfor %}
@@ -43,13 +49,19 @@
         {% for action in original.meta_info.actions %}
         <div class="form-row">
           <div>
-            {{ action.name }}{% if action.help_text %}: {{ action.help_text }} {% endif %} 
+          {% if original.installed %}
+            <a href="{% url admin_index %}action/registeredaction/2/?q={{ action.name }}" title="{% trans "Registered actions" %}">
+            {{ action.name }}</a>
+          {% else %}
+            {{ action.name }}
+          {% endif %}
+          {% if action.help_text %}: {{ action.help_text }} {% endif %} 
           </div>
         </div>
       {% endfor %}
   </fieldset>
   {% endif %}
-  
+
   {% if original.meta_info.viewlets %}
   <fieldset class="module aligned">
         <h2>{% trans "New Viewlets" %}</h2>
@@ -75,7 +87,7 @@
       {% endfor %}
   </fieldset>
   {% endif %}
-  
+
   {% if original.meta_info.section_models %}
   <fieldset class="module aligned">
         <h2>{% trans "New content types addable in a section" %}</h2>
@@ -88,8 +100,5 @@
       {% endfor %}
   </fieldset>
   {% endif %}
-  
+
 {% endblock %}
-
-
- 
