@@ -250,7 +250,7 @@ class ContentLinkInline(BaseLinkInline):
             qs = formfield.queryset
             admin_model = getattr(self, 'admin_model', None)
             if admin_model:
-                qs = qs.filter(basesection=admin_model.basecontent)
+                qs = qs.filter(sections=admin_model.basecontent)
             formfield.queryset = qs
             # change the widget to a wrapper
             # note: formfield.wigdet is already a wrapper of formfield.widget.widget
