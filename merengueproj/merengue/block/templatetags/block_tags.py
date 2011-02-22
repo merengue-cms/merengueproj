@@ -31,7 +31,8 @@ register = template.Library()
 def _print_block(block, place, block_type, request):
     if block_type == 'block' and isinstance(block, Block) or \
        block_type == 'contentblock' and isinstance(block, ContentBlock) or \
-       block_type == 'sectionblock' and isinstance(block, SectionBlock):
+       block_type == 'sectionblock' and isinstance(block, SectionBlock) or \
+       block.content is not None:  # block related to content is printed always
         return block.get_registered_item().print_block(place, request.get_full_path())
     else:
         return False
@@ -59,7 +60,7 @@ def _render_blocks(request, obj, place, block_type, context):
     page_content = context.get('content', None)
 
     rendered_blocks = []
-    registered_blocks = RegisteredBlock.objects.actives()
+    registered_blocks = RegisteredBlock.objects.actives().filter(content__isnull=True)
 
     if page_content and page_content.has_related_blocks:
         # removing from registered_blocks all the "repeated" blocks
@@ -84,7 +85,6 @@ def _render_blocks(request, obj, place, block_type, context):
 
     blocks = registered_blocks.get_items()
 
-    # first we get the rendered blocks of those that are "generic"
     rendered_blocks = _render_blocks_list(blocks, request, obj,
                                           place, block_type, context)
 
