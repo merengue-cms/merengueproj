@@ -73,8 +73,13 @@
                 divTools.append(confAnchor);
             }
             divTools.addClass("blockTools");
-            divTools.css({"left": position.left - 20});
-            divTools.css({"top": position.top});
+            if (block.css('position') != 'absolute') {
+                divTools.css({"left": position.left - 20});
+                divTools.css({"top": position.top});
+            } else { // blocks positioned absolutely will have relative blockTools
+                divTools.css({"left": -20});
+                divTools.css({"top": 0});
+            }
             block.append(divTools);
             block.mouseenter(function() {
                 if(block.attr("id")) {
