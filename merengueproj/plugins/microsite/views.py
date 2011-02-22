@@ -17,6 +17,7 @@
 
 from django.conf import settings
 from django.core import urlresolvers
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 
 
@@ -36,8 +37,23 @@ def microsite_url(request, microsite_slug, url):
     index_prefix = request.get_full_path().index(microsite_slug)
     prefix = request.get_full_path()[:index_prefix + len(microsite_slug) + 1]
     resolver = urlresolvers.RegexURLResolver(r'^%s' % prefix, urlconf)
-    callback, callback_args, callback_kwargs = resolver.resolve(
-                        request.path_info)
+    newurl = request.path_info
+    try:
+        callback, callback_args, callback_kwargs = resolver.resolve(
+                            newurl)
+    except urlresolvers.Resolver404, e:
+        if settings.APPEND_SLASH and (not newurl.endswith('/')):
+            newurl = newurl + '/'
+            if settings.DEBUG and request.method == 'POST':
+                raise RuntimeError((""
+                    "You called this URL via POST, but the URL doesn't end "
+                    "in a slash and you have APPEND_SLASH set. Django can't "
+                    "redirect to the slash URL while maintaining POST data. "
+                    "Change your form to point to %s (note the trailing "
+                    "slash), or set APPEND_SLASH=False in your Django "
+                    "settings.") % newurl)
+            return HttpResponseRedirect(newurl)
+        raise e
     if 'extra_context' in callback.func_code.co_varnames[:callback.func_code.co_argcount]:
         extra_context = {'section': microsite, 'microsite': microsite}
         callback_kwargs = callback_kwargs or {}
