@@ -92,12 +92,12 @@
     </div>
     {% endifhasperm %}
 
-{% if plugins %}
-    {% ifhasperm 'manage_plugin_content' %}
+{% ifhasperm 'manage_plugin_content' %}
     <div class="module-merengue" id="plugins">
      <dl>
       <dt><a href="pluggable/registeredplugin/" title="{% trans "Plugins" %}">{% trans "Plugins" %}</a></dt>
       <dd>{% trans "View, edit and delete the site's plugins." %}</dd>
+  {% if plugins %}
       <dt>{% trans "Plugin custom administration interfaces" %}</dt>
       <dd>{% trans "Enabled plugins can define its own administration interfaces. These are the custom admins in your installed plugins:" %}
         <dl>
@@ -109,8 +109,8 @@
       </dd>
      </dl>
     </div>
-    {% endifhasperm %}
-{% endif %}
+  {% endif %}
+{% endifhasperm %}
 
 </div> <!--- end content-merengue -->
 </div>
