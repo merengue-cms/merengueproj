@@ -152,7 +152,7 @@ class AnnouncementsBlock(ContentBlock):
     verbose_name = _('Announcements block')
 
     def render(self, request, place, content, context, *args, **kwargs):
-        announcements = current_announcements_for_request(request)
+        announcements = current_announcements_for_request(request, site_wide=True)
         if not announcements:
             return ''
 

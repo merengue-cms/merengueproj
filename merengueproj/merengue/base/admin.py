@@ -52,7 +52,7 @@ from autoreports.admin import ReportAdmin
 from cmsutils.forms.widgets import AJAXAutocompletionWidget, ReadOnlyWidget
 from oembed.models import ProviderRule, StoredOEmbed
 from announcements.models import Announcement
-from announcements.admin import AnnouncementAdmin
+from announcements.admin import AnnouncementAdmin as AnnouncementDefaultAdmin
 from transmeta import (canonical_fieldname, get_all_translatable_fields,
                        get_real_fieldname_in_each_language,
                        get_fallback_fieldname, get_real_fieldname)
@@ -1307,6 +1307,10 @@ class OrderableRelatedModelAdmin(RelatedModelAdmin):
         To override in subclasses. See example implementation above.
         """
         raise NotImplementedError('You have to override this method')
+
+
+class AnnouncementAdmin(AnnouncementDefaultAdmin, BaseAdmin):
+    pass
 
 
 def register(site):
