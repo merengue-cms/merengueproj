@@ -1033,3 +1033,7 @@ ul.extra_options {
 #administrator-menu ul li {
     list-style: none;
 }
+
+li.changelink {
+    list-style: none;
+}

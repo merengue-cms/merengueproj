@@ -226,6 +226,15 @@ input#id_password {
     color: #717171;
 }
 
+/* contact info */
+div#contact-info span.contactName,
+div#contact-info span.contactEmail {
+    display: block;
+}
+div#contact-info span.contactPhone {
+    padding-right: 1.5em;
+}
+
 /* inplaceedit */
 
 form.inplace_description {
