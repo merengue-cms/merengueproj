@@ -1034,6 +1034,7 @@ ul.extra_options {
     list-style: none;
 }
 
-li.changelink {
+li.changelink,
+li.addlink {
     list-style: none;
 }

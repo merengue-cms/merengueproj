@@ -226,7 +226,18 @@ input#id_password {
     color: #717171;
 }
 
+/* object tools */
+#content-main ul.object-tools li a {
+    color: inherit;
+}
+
+#content-main ul.object-tools li a:hover {
+    color: inherit;
+}
 /* contact info */
+div#contact-info {
+    font-size: 90%;
+}
 div#contact-info span.contactName,
 div#contact-info span.contactEmail {
     display: block;
