@@ -1,0 +1,20 @@
+{% extends "block.html" %}
+
+{% load i18n inlinetrans %}
+
+{% block blocktitle %}
+{% endblock %}
+
+{% block blockbody %}
+    {% if site_wide_announcements %}
+        <div id="site_wide_announcements">
+            {% for announcement in site_wide_announcements %}
+                <div class="announcement">
+                    <h3>{{ announcement }}</h3>
+                    <p>{{ announcement.content }}</p>
+                    <a href="{% url announcement_hide announcement.pk %}?next={{ request.path }}">{% inline_trans "Hide announcement" %}</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
