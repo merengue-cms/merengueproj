@@ -54,6 +54,12 @@ a img {
    border: none;
 }
 
+h1 a,
+h1 a:hover {
+    color: inherit;
+    text-decoration: inherit;
+}
+
 .hide {
     display: none;
 }

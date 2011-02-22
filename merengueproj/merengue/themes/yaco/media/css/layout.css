@@ -386,6 +386,11 @@ div#breadcrumbs a:hover {
 	font-size: 1.5em;
 }
 
+#right-sidebar h1 a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
 #right-sidebar .blockBody {
     padding: 1.5em;
     width: 14em;
@@ -399,7 +404,8 @@ div#breadcrumbs a:hover {
     padding: 0px 10px;
 	width: 25%;
 }
-.ui-widget-content {
+
+ui-datepicker-inline {
 	height: 250px !important;
 	background: transparent !important;
 }
