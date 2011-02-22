@@ -49,6 +49,7 @@ class BaseContentRelatedBlockAddForm(forms.Form):
         module = import_module(module_path)
         block_class = getattr(module, class_name)
         reg_block = register(block_class)
+        reg_block.active = True
         reg_block.content = self.cleaned_data['content']
         reg_block.save()
         return reg_block
