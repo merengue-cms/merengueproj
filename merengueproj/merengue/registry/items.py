@@ -78,6 +78,9 @@ class RegistrableItem(object):
         registered_item = self.get_registered_item()
         return self._config_dict(registered_item.get_config())
 
+    def has_config(self):
+        return bool(self.config_params)
+
     def get_registered_item(self):
         return self.reg_item
 

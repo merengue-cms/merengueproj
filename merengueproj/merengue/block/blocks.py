@@ -43,6 +43,7 @@ class BaseBlock(RegistrableItem):
         block_context = {
             'block_title': block_title or registered_block.name,
             'block': registered_block,
+            'has_config': self.has_config(),
         }
         block_context.update(context)
         return render_to_string(template_name, block_context,
