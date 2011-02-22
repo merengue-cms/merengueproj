@@ -755,7 +755,17 @@ div#tagcloud h1 a:hover {
     color: #F7CDCD;
 }
 
-/* end Plugin ITag */
+/* category and date fields */
+div.date,
+div#contentCategories {
+    color: #CDA873;
+}
+
+div.date label,
+div#contentCategories label {
+    color: #717171;
+}
+
 /* contact info*/
 div#contact-info strong {
     font-size: 90%;
