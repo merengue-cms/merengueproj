@@ -131,7 +131,7 @@ div.errormessage, div#messagebox ul#info-list {
 }
 
 span.errormsg {
-    background: transparent url(/media/merengue/img/icon_error.gif) no-repeat scroll 0 0;
+    background: transparent url(../img/icon_error.gif) no-repeat scroll 0 0;
     color: red;
     padding-left: 20px;
     display: block;
@@ -174,7 +174,7 @@ span.inplace_view_editable_field {
      width: 350px;
      margin: 100px auto;
      border: 1px solid #cccccc;
-     background: #E6D8C0 url(/media/merengue/img/login_logo.jpg) no-repeat center top;
+     background: #E6D8C0 url(../img/login_logo.jpg) no-repeat center top;
      padding: 20px;
      /* border-radius */
       -webkit-border-radius: 8px;
@@ -217,7 +217,7 @@ input#id_password {
 #feedback .required label {
   display: inline; 
   padding-right: 8px;
-  background: transparent url(/media/merengue/img/required.gif) no-repeat right center;
+  background: transparent url(../img/required.gif) no-repeat right center;
 }
 
 /* ----- shadowbox ----- */
@@ -233,6 +233,28 @@ input#id_password {
 
 #content-main ul.object-tools li a:hover {
     color: inherit;
+}
+/* category and date fields */
+div.date,
+div#contentCategories {
+    font-size: 12px;
+}
+
+div.date label,
+div#contentCategories label {
+    padding-left: 19px;
+    font-weight: bolder;
+    text-transform: capitalize;
+}
+div#contentCategories {
+    margin-bottom: 1em;
+}
+div.date label {
+    background: transparent url(../img/date_icon.png) no-repeat left center;
+}
+
+div#contentCategories label {
+    background: transparent url(../img/category_icon.png) no-repeat left center;
 }
 /* contact info */
 div#contact-info {
