@@ -1,6 +1,41 @@
 Changes
 =======
 
+Version 0.7.0-beta2 (3861 revision)
+-----------------------------------
+
+* Fixed a lot of bug. These are the most important:
+
+ * If a plugin is broken when registering all plugins, the process stopped. Now it continues with next plugin. See #1539.
+ * Cleared Django apps cache after unregister plugin, to avoid weird errors in some circunstances. See #1526.
+ * Plugins disabling was broken (only worked uninstalling). Now you can disable plugins. See #1486.
+ * Blocks with content types filtering configuration was not showing any data. See #1530.
+ * Add permission definition in related and non related object tools.
+ * You can define successfully blocks related both in sections and in contents. See #1509 and #1491.
+ * Removed 2mbytes of unused media in ``chunks`` plugin. See #1472.
+ * Block config button is not shown if block has no available configuration. See #1528.
+ * Others: #1532, #1519, #1508, #1523, #1525, #1543, #1544, #1487, #1460, #1410, #1497, #1527, #1498, #1476, #1549, #1546, #728, #608, #1478, #1378, #1551, #1552.
+
+* Adapted Selenium test to new Merengue admin redesign. See #1524.
+
+* Enable captcha in ``feedback`` plugin for non authenticated users. See #1534.
+
+* Adapted demo.merengueproject.org demo fixtures to section as base content refactoring. See #1531.
+
+* Finish ``Saml2`` plugin to support federated authentication/authorization. See #1442.
+
+* Users can now add feed collections to sections. See #1538.
+
+* Improved plugin tab to get more intuitive for users. See #1540.
+
+* Improve run_suites.py script, to run all selenium tests automatically. Also improve the documentation. See #1458.
+
+* Make direct accesses to regiteres blocks and actions in installed plugins, from plugin admin. See #1542.
+
+* Complete documentation in Merengue error reference, Merengue deployment, JS/CSS compression.
+
+* Finished django-announcements integration.
+
 Version 0.7.0-beta1 (3786 revision)
 -----------------------------------
 
