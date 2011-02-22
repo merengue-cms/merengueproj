@@ -828,7 +828,7 @@ div.module.form-row {
     z-index: 1;
 }
 
-#content-main form > div:first-child fieldset {
+#content-main form > div fieldset:first-child {
     padding-top: 1em;
 }
 
