@@ -1,8 +1,14 @@
+{% extends "block.html" %}
+
 {% load i18n inlinetrans inplace_edit %}
 
-<div id="portal-{{ category }}-links" class="block">
-  {% block portallinktitle %}
-  {% endblock %}
+{% block blockid %}id="portal-{{ category }}-links"{% endblock %}
+
+{% block blocktitle %}
+{% endblock %}
+
+{% block blockbody %}
+<div>
   {% block portallinks %}
   <ul>
   {% for link in links %}
@@ -22,4 +28,4 @@
   {% endblock %}
   <input type="hidden" value="{{ block.id }}" id="{{ block.name }}Order" class="blockOrder" />
 </div>
-
+{% endblock %}
