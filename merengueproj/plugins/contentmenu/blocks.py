@@ -18,6 +18,7 @@
 from django.utils.translation import ugettext as _
 
 from merengue.block.blocks import Block
+from merengue.pluggable.utils import get_plugin
 
 from plugins.contentmenu.models import ContentGroup
 
@@ -27,13 +28,12 @@ class ContentGroupLinksBlock(Block):
     default_place = 'aftercontenttitle'
 
     def render(self, request, place, context, *args, **kwargs):
-        from plugins.contentmenu.config import PluginConfig
         content_groups = ContentGroup.objects.filter(contents=context['content'])
         if content_groups:
             filtered_contents = [[(child_cont.name, child_cont.public_link())
                                   for child_cont in cont.contents.all()]
                                  for cont in content_groups]
-            numchars = PluginConfig.get_config().get('numchars', []).get_value()
+            numchars = get_plugin('contentmenu').get_config().get('numchars', []).get_value()
             return self.render_block(
                 request, template_name='contentmenu/contentlinks_block.html',
                 block_title=_('Content group links'),

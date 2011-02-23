@@ -20,7 +20,8 @@ from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.template.loader import render_to_string
-from django.utils.importlib import import_module
+
+from merengue.pluggable.utils import get_plugin
 
 
 class Gadget(object):
@@ -31,7 +32,7 @@ class Gadget(object):
     version = 0.1
     description = 'abstract base gadget'
     meta_template = 'ezgadgets/meta.xml'
-    content_template = None # to override in subclasses
+    content_template = None  # to override in subclasses
     events = ()
     slots = ()
 
@@ -49,8 +50,7 @@ class Gadget(object):
     def _build_context(self):
         site = Site.objects.get_current()
         # We use import_module to avoid circular dependencies
-        plugin_mod = import_module("plugins.ezdashboard.config").PluginConfig
-        plugin_config = plugin_mod.get_config()
+        plugin_config = get_plugin('ezdashboard').get_config()
         return {
             'gadget': self,
             'SITE_DOMAIN': site.domain,
@@ -60,7 +60,7 @@ class Gadget(object):
 
     @property
     def image_url(self):
-        return '%s%sgadgets/%s.jpg'%(self._site_url(), settings.MEDIA_URL, self.name)
+        return '%s%sgadgets/%s.jpg' % (self._site_url(), settings.MEDIA_URL, self.name)
 
     def meta_url(self):
         return '%s%s' % (self._site_url(),
