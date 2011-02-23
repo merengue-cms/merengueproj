@@ -47,8 +47,13 @@
 }
 
 .collaborative-translation-workplace {
-    padding: 0px 20px;
+    padding: 0px;
     font-size: 0.8em;
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    height: 100%;
+    width: 100%;
 }
 
 .collaborative-translation-workplace-translation-middle,
@@ -58,7 +63,7 @@
     top: 70px;
     bottom: 10px;
     left: 20px;
-    right: 55%;
+    right: 65%;
     height: auto;
     padding: 10px;
     border: 1px solid #EFCB00;
@@ -72,10 +77,13 @@
     bottom: 0px;
     height: auto;
     padding-right: 20px;
+    left: 10px;
+    right: 10px;
+    z-index: 9999;
 }
 
 .collaborative-translation-workplace-translation-language {
-    left: 50%;
+    left: 40%;
     right: 20px;
     overflow: auto;
     background-color: #e9eff5;
@@ -83,8 +91,8 @@
 }
 
 .collaborative-translation-workplace-translation-middle {
-    left: 45%;
-    right: 50%;
+    left: 35%;
+    right: 60%;
     border-width: 0px;
     background: url(/media/merengue/img/collab/translate_arrow.jpg) repeat-y top right;
     padding-left: 1px;
@@ -118,4 +126,7 @@
 
 .collaborative-translation-workplace .mceEditorIframe {
     height: 200px !important;
+    position: relative;
+    z-index: 100;
+    display: none !important;
 }
