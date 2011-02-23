@@ -191,6 +191,25 @@ can create a content called **Lorem ipsums** and publish it.
 This is the way to create content in Merengue. Remember that a content is 
 allways related to a section.
 
+Announcements
+-------------
+
+Site admins can publish announcements for the visitors that are displayed througout 
+the site. Access the announcements link on the right of the admin site to manage 
+this messages.
+
+An announcement consist of a title and a message content, which would be both 
+displayed as long as the *Site wide* option is enabled. If you want to hide a 
+certain announcement for the users, you can simply check off this option.
+
+You can make announcements specific for site members. All announcements marked 
+with *Members only* won't be shown to anonymous visitors. If you save the 
+announcement with the *Send now* option enabled, the announcement will be mailed to 
+the users.
+
+Furthermore, visitors can hide announcements permanently by clicking *Hide announcement*. 
+
+
 Blocks concept
 ==============
 
