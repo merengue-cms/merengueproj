@@ -100,8 +100,8 @@ class CustomTinyMCE(TinyMCE):
         except NoReverseMatch:
             pass
         self.mce_settings['urlconverter_callback'] = "customUrlConverter"
-        content_css = settings.TINYMCE_EXTRA_MEDIA.get('css', [])
-        content_js = settings.TINYMCE_EXTRA_MEDIA.get('css', [])
+        content_css = [i for i in settings.TINYMCE_EXTRA_MEDIA.get('css', [])]
+        content_js = [i for i in settings.TINYMCE_EXTRA_MEDIA.get('css', [])]
         content_css.extend(["merengue/css/editorstyles.css"])
         content_css = ','.join(["%s%s" % (settings.MEDIA_URL, css) for css in content_css])
         self.mce_settings['content_css'] = content_css
