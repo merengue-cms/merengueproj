@@ -38,5 +38,6 @@ def get_location():
 
 
 def get_base_url():
-    from plugins.filebrowser.config import PluginConfig
-    return os.path.join(settings.MEDIA_URL, PluginConfig.get_config()['filebrowser_docs_url'].get_value())
+    from merengue.pluggable.utils import get_plugin
+    plugin_config = get_plugin('filebrowser').get_config()
+    return os.path.join(settings.MEDIA_URL, plugin_config['filebrowser_docs_url'].get_value())
