@@ -63,12 +63,12 @@ for dirpath, dirnames, filenames in os.walk('.'):
 
 setup(
     name="merengue",
-    version="0.7.0-beta2",
+    version="0.7.0-beta3",
     install_requires=parse_requirements('requirements.txt'),
     dependency_links=parse_dependency_links('requirements.txt'),
     author="Yaco Sistemas",
     author_email="msaelices@yaco.es",
-    description="Django-based CMS with steroids",
+    description="Django-based CMS on steroids",
     long_description=(read('README') + '\n\n' + read('CHANGES')),
     url="http://www.merengueproject.org/",
     include_package_data=True,
