@@ -204,6 +204,7 @@ CAPTCHA_SETTINGS = {
                     'B': '8',
     },
     'CASE_SENSITIVE': False,
+    'USE_EXTRA_IMAGE': False,
 }
 
 # Default parameters for suggestion box
