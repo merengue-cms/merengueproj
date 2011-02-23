@@ -32,7 +32,7 @@ Do you want to cancel and lost your changes?
   {% ifcanedit user content %}
     <a href="#" class="insert-first-section">{% trans "Insert first section" %}</a>
   {% endifcanedit %}
-  {% for document_section in content.sections.all %}
+  {% for document_section in content.document_sections.all %}
     {% include "section/document_section_view.html" %}
   {% endfor %}
 </div>
