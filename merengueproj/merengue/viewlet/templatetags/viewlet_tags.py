@@ -16,11 +16,9 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django import template
-from django.conf import settings
-from django.template import RequestContext
-from django.template.loader import render_to_string
 from django.http import Http404
 from django.core.exceptions import PermissionDenied
+from merengue.base.utils import get_render_http_error
 
 register = template.Library()
 
@@ -58,13 +56,3 @@ def do_render_viewlet(parser, token):
         raise template.TemplateSyntaxError('"%r" tag requires at one argument' % tag_name)
     registered_viewlet = parser.compile_filter(bits[1])
     return RenderViewletNode(registered_viewlet)
-
-
-# ----- auxiliar functions ----- #
-
-
-def get_render_http_error(request, http_error):
-    template = settings.HTTP_STATUS_CODE_TEMPLATES.get(http_error, None)
-    context = {'template_base': 'viewlet_error.html', 'is_admin': False}
-    return render_to_string(template, context,
-                                      context_instance=RequestContext(request))

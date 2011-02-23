@@ -35,9 +35,10 @@ from merengue.section.models import (Menu, BaseSection,
                                      SectionRelatedContent, CustomStyleImage)
 from merengue.section.formsets import BaseLinkInlineFormSet
 from merengue.perms import utils as perms_api
+from merengue.perms.admin import PermissionAdmin
 
 
-class BaseSectionAdmin(BaseOrderableAdmin):
+class BaseSectionAdmin(BaseOrderableAdmin, PermissionAdmin):
     sortablefield = 'order'
     ordering = ('order', )
     list_display = ('name', 'slug', )
@@ -82,6 +83,24 @@ class BaseSectionAdmin(BaseOrderableAdmin):
             else:
                 form.base_fields.pop('main_content')
         return form
+
+    def object_tools(self, request, mode, url_prefix):
+        tools = super(BaseSectionAdmin, self).object_tools(request, mode, url_prefix)
+        if mode == 'change':
+            tools.extend([
+                {'url': url_prefix + 'permissions/', 'label': ugettext('Permissions'),
+                 'class': 'permissionslink', 'permission': 'change'},
+            ])
+        return tools
+
+    def get_urls(self):
+        from django.conf.urls.defaults import patterns
+        urls = super(BaseSectionAdmin, self).get_urls()
+        # override objectpermissions root path
+        my_urls = patterns('',
+            (r'^([^/]+)/permissions/$', self.admin_site.admin_view(self.change_roles_permissions)))
+
+        return my_urls + urls
 
 
 class AbsoluteLinkAdmin(BaseAdmin):

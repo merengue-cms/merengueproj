@@ -29,6 +29,9 @@ from merengue.section.models import BaseSection, Document, \
 from merengue.base.views import content_view
 from merengue.section.models import AbsoluteLink, ContentLink, ViewletLink, Menu
 
+from merengue.perms import utils as perms_api
+from merengue.base.utils import get_render_http_error
+
 
 def section_index(request):
     """ place holder to have reverse URL resolution """
@@ -39,6 +42,11 @@ def section_view(request, section_slug, original_context={},
                  template='section/section_view_without_maincontent.html'):
     section_slug = section_slug.strip('/')
     section = get_object_or_404(BaseSection, slug=section_slug)
+    has_view = perms_api.has_permission(section, request.user, 'view')
+    if not has_view:
+        forbidden_response = HttpResponse()
+        forbidden_response.write(get_render_http_error(request, 403))
+        return forbidden_response
     context = original_context or {}
     context['section'] = section.get_real_instance()
     main_content = section.main_content and section.main_content.get_real_instance() or None

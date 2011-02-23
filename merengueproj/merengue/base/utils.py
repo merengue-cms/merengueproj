@@ -1,3 +1,7 @@
+from django.conf import settings
+from django.template.loader import render_to_string
+from django.template import RequestContext
+
 from copy import deepcopy
 from django.db import connection
 from south.db import db
@@ -37,3 +41,10 @@ def delete_south_trans_column(table, field_name):
 
 def table_exists(table):
     return table in connection.introspection.get_table_list(connection.cursor())
+
+
+def get_render_http_error(request, http_error):
+    template = settings.HTTP_STATUS_CODE_TEMPLATES.get(http_error, None)
+    context = {'template_base': 'viewlet_error.html', 'is_admin': False}
+    return render_to_string(template, context,
+                                      context_instance=RequestContext(request))
