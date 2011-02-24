@@ -81,12 +81,12 @@ div#header img#merengue_logo {
 
 .module-merengue dt {
     font-size: 1.2em;
+    margin-top: 1em;
 }
 
 .module-merengue dd {
     font-size: 1em;
-    margin: 0.5em 0px 1em;
-    padding-left: 0.2em;
+    margin-top: 0.2em;
     font-style: italic;
     color: #707070;
 }
@@ -718,9 +718,13 @@ a.selector-chooseall {
 .form-row,
 div.module.form-row {
     border: 0px;
-    border-bottom: 1px dotted #EEEEEE !important;
+    border-bottom: 1px dotted #EEEEEE;
 }
 
+.login .form-row,
+.login div.module.form-row {
+    border: none;
+}
 /* ---- section changelist ---- */
 .section-contents {
     margin: 0px -5px;
@@ -1035,6 +1039,7 @@ ul.extra_options {
 }
 
 li.changelink,
-li.addlink {
+li.addlink,
+li.deletelink {
     list-style: none;
 }
