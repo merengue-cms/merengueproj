@@ -75,15 +75,14 @@ div#header img#merengue_logo {
 }
 
 .module-merengue dl {
-    margin-top: 2em;
-    margin-left: 2em;
+    margin-left: 1em;
 }
 
 .module-merengue dt {
     font-size: 1.2em;
     margin-top: 1em;
-    border-left: 4px solid #DDDDDD;
-    padding-left: 8px;
+    background: transparent url(../img/admin/admin_bullet.gif) no-repeat center left;
+    padding-left: 12px;
 }
 
 .module-merengue dd {
