@@ -82,11 +82,14 @@ div#header img#merengue_logo {
 .module-merengue dt {
     font-size: 1.2em;
     margin-top: 1em;
+    border-left: 4px solid #DDDDDD;
+    padding-left: 8px;
 }
 
 .module-merengue dd {
     font-size: 1em;
     margin-top: 0.2em;
+    margin-left: 1em;
     font-style: italic;
     color: #707070;
 }
