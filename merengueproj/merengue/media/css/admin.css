@@ -88,9 +88,8 @@ div#header img#merengue_logo {
 .module-merengue dd {
     font-size: 1em;
     margin-top: 0.2em;
-    margin-left: 1em;
     font-style: italic;
-    color: #707070;
+    color: #999;
 }
 
 .module ul, .module ol {
@@ -833,6 +832,7 @@ div.module.form-row {
     position: relative;
     z-index: 1;
     width: auto;
+    width: 100%;
 }
 
 #content-main form > div fieldset:first-child {
