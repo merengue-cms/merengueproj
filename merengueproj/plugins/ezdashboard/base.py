@@ -21,8 +21,6 @@ from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.template.loader import render_to_string
 
-from merengue.pluggable.utils import get_plugin
-
 
 class Gadget(object):
     """
@@ -49,7 +47,8 @@ class Gadget(object):
 
     def _build_context(self):
         site = Site.objects.get_current()
-        # We use import_module to avoid circular dependencies
+        # We use import get_plugin here to avoid circular dependencies
+        from merengue.pluggable.utils import get_plugin
         plugin_config = get_plugin('ezdashboard').get_config()
         return {
             'gadget': self,
