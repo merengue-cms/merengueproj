@@ -75,13 +75,13 @@ div#header img#merengue_logo {
 }
 
 .module-merengue dl {
-    margin-left: 1em;
+    margin-left: 2em;
 }
 
 .module-merengue dt {
     font-size: 1.2em;
     margin-top: 1em;
-    background: transparent url(../img/admin/admin_bullet.gif) no-repeat center left;
+    background: transparent url(../img/admin_bullet.gif) no-repeat center left;
     padding-left: 12px;
 }
 
@@ -98,7 +98,7 @@ div#header img#merengue_logo {
 }
 
 #administrator-menu ul li {
-    background: transparent url(../img/admin/demo_bullet.png) no-repeat center left;
+    background: transparent url(../img/demo_bullet.png) no-repeat center left;
     padding-left: 12px;
 }
 
@@ -832,6 +832,7 @@ div.module.form-row {
 #content-main {
     position: relative;
     z-index: 1;
+    width: auto;
 }
 
 #content-main form > div fieldset:first-child {
