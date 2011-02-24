@@ -63,7 +63,7 @@ for dirpath, dirnames, filenames in os.walk('.'):
 
 setup(
     name="merengue",
-    version="0.7.0-beta3",
+    version="0.7.0-beta4",
     install_requires=parse_requirements('requirements.txt'),
     dependency_links=parse_dependency_links('requirements.txt'),
     author="Yaco Sistemas",

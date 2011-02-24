@@ -1,6 +1,19 @@
 Changes
 =======
 
+Version 0.7.0-beta4 (3913 revision)
+-----------------------------------
+
+* Permissions are now definible into sections. See #1564.
+
+* Some bugs fixed:
+
+ * When I create a banner I can't see the image on site. See #1547.
+ * Documented announcements section.
+ * Layout errors in translation UI with IE. See #583.
+ * Changed admin app index style. See #1569.
+ * Bad django-inlinetrans dependence in requirements.txt.
+
 Version 0.7.0-beta3 (3880 revision)
 -----------------------------------
 
