@@ -15,6 +15,7 @@
 
 {% block content %}
   {{ block.super }}
+  <span id="collapsableSaveURL" style="display:none">{% url save_menu_order %}</span>
   <div class="ajax-loading hide"><img src="{{ MEDIA_URL }}merengue/img/ajax-loader-admin.gif" /> {% trans "Saving" %}</span>
   <img class="plusMenu hide" src="{{ MEDIA_URL }}merengue/img/section/admin/plus.gif" />
   <img class="minusMenu hide" src="{{ MEDIA_URL }}merengue/img/section/admin/minus.gif" />

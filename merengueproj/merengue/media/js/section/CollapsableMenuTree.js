@@ -300,6 +300,7 @@
         minus = $('.minusMenu');
         draggable = $('.draggable-icon');
         draggable_disabled = $('.draggable-icon-disabled');
+        save_url = $('#collapsableSaveURL').html() || save_url;
         $("#changelist table thead tr").children("th").eq(0).hide();
         $("#changelist table thead tr").children("th").eq(1).hide();
         var tree = make_tree();
