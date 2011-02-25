@@ -1,5 +1,5 @@
 <div {% block blockid %}id="{{ block_name }}{% if block_content_relation %}-related{% endif %}"{% endblock %}
-     {% block blockclass %}class="{{ block.placed_at }}Block block {% if not block_content_relation %}blockGlobal{% else %}blockRelated{% endif %} {% if not has_config %}noconfig{% endif %}"{% endblock %}>
+     {% block blockclass %}class="{{ placed_at }}Block block {% if not block_content_relation %}blockGlobal{% else %}blockRelated{% endif %} {% if not has_config %}noconfig{% endif %}"{% endblock %}>
  {% block blocktitle %}
    <h1>{{ block_title }}</h1>
  {% endblock %}
