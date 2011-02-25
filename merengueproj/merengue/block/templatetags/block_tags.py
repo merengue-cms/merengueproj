@@ -19,81 +19,12 @@ from django import template
 from django.db.models import Q
 from django.conf import settings
 
-from merengue.base.models import BaseContent
 from merengue.block.blocks import Block, ContentBlock, SectionBlock
 from merengue.block.models import RegisteredBlock
 from merengue.registry import register as merengue_register, get_items_by_name
 
 
 register = template.Library()
-
-
-def _print_block(block, place, block_type, request):
-    if block_type == 'block' and isinstance(block, Block) or \
-       block_type == 'contentblock' and isinstance(block, ContentBlock) or \
-       block_type == 'sectionblock' and isinstance(block, SectionBlock) or \
-       block.content is not None:  # block related to content is printed always
-        return block.get_registered_item().print_block(place, request.get_full_path())
-    else:
-        return False
-
-
-def _render_blocks_list(blocks, request, obj, place, block_type, context):
-    rendered_blocks = []
-    for block in blocks:
-        if not _print_block(block, place, block_type, request):
-            continue
-        # building render method arguments
-        render_args = [request, place]
-        if isinstance(block, ContentBlock) or isinstance(block, SectionBlock):
-            render_args.append(obj)
-        render_args.append(context)
-        # append the block rendering to list
-        rendered_blocks.append(block.render(*render_args))
-    return rendered_blocks
-
-
-def _render_blocks(request, obj, place, block_type, context):
-    # TODO: we shouldn't "imagine" there will be a "content" variable in
-    # context but we need that for excluding the duplicated registered_blocks
-    # see below. Should be better to have request.content (with a middleware)
-    page_content = context.get('content', None)
-
-    rendered_blocks = []
-    registered_blocks = RegisteredBlock.objects.actives().filter(content__isnull=True)
-
-    if page_content and page_content.has_related_blocks:
-        # removing from registered_blocks all the "repeated" blocks
-        # if defined as "repeated" in related block configuration
-        block_with_no_dups = RegisteredBlock.objects.filter(
-            content=page_content,
-        ).filter(Q(placed_at=place, overwrite_if_place=True) | \
-                 Q(overwrite_always=True))
-        no_dups_ids = [b.id for b in block_with_no_dups]
-        ids_to_remove = []
-        for no_dup_block in block_with_no_dups:
-            ids_to_remove.extend(
-                [b.id for b in RegisteredBlock.objects.filter(
-                    module=no_dup_block.module, class_name=no_dup_block.class_name,
-                 ).exclude(id__in=no_dups_ids)],
-            )
-        registered_blocks = registered_blocks.exclude(id__in=ids_to_remove)
-    if obj and isinstance(obj, BaseContent) and obj.has_related_blocks:
-        registered_blocks = registered_blocks | RegisteredBlock.objects.actives().filter(
-            content=obj, placed_at=place)
-    registered_blocks = registered_blocks.order_by('order')
-
-    blocks = registered_blocks.get_items()
-
-    rendered_blocks = _render_blocks_list(blocks, request, obj,
-                                          place, block_type, context)
-
-    wrapped_blocks = ['<div class="blockWrapper">%s</div>' % s for s in rendered_blocks]
-
-    return "<div class='blockContainer %ss'>%s" \
-            "<input type=\"hidden\" class=\"blockPlace\" value=\"%s\">" \
-            "</div>" \
-            % (block_type, '\n'.join(wrapped_blocks), place)
 
 
 class RenderBlocksNode(template.Node):
@@ -109,7 +40,8 @@ class RenderBlocksNode(template.Node):
             obj = None
             if self.obj is not None:
                 obj = self.obj.resolve(context)
-            return _render_blocks(request, obj, self.place, self.block_type, context)
+            blocks = RegisteredBlock.objects.actives().filter(content=obj)
+            return _render_blocks(request, blocks, obj, self.place, self.block_type, context)
         except template.VariableDoesNotExist:
             return ''
 
@@ -161,21 +93,71 @@ def do_render_section_blocks(parser, token):
     return do_render_blocks(parser, token, 'sectionblock')
 
 
+def _print_block(block, place, block_type, request):
+    if block_type == 'block' and isinstance(block, Block) or \
+       block_type == 'contentblock' and isinstance(block, ContentBlock) or \
+       block_type == 'sectionblock' and isinstance(block, SectionBlock) or \
+       block.content is not None:  # block related to content is printed always
+        return block.get_registered_item().print_block(place, request.get_full_path())
+    else:
+        return False
+
+
+def _render_blocks(request, blocks, obj, place, block_type, context):
+    rendered_blocks = []
+    for block in blocks.get_items():
+        if not _print_block(block, place, block_type, request):
+            continue
+        # building render method arguments
+        render_args = [request, place]
+        if isinstance(block, ContentBlock) or isinstance(block, SectionBlock):
+            render_args.append(obj)
+        render_args.append(context)
+        # append the block rendering to list
+        rendered_blocks.append(block.render(*render_args))
+
+    wrapped_blocks = ['<div class="blockWrapper">%s</div>' % s for s in rendered_blocks]
+
+    return "<div class='blockContainer %ss'>%s" \
+            "<input type=\"hidden\" class=\"blockPlace\" value=\"%s\">" \
+            "</div>" \
+            % (block_type, '\n'.join(wrapped_blocks), place)
+
+
 class RenderAllBlocksNode(template.Node):
 
     def __init__(self, place):
         self.place = place
 
     def render(self, context):
+        """
+        Three block groups are fetched separately and rendered in increasing priority:
+            - site blocks (no content)
+            - section related blocks
+            - content related blocks
+        """
         request = context.get('request', None)
         try:
             content = context.get('content', None)
             section = context.get('section', None)
-            result = _render_blocks(request, None, self.place, "block", context)
-            if content:
-                result += _render_blocks(request, content, self.place, "contentblock", context)
+            overwrite = Q(placed_at=self.place, overwrite_if_place=True) | Q(overwrite_always=True)
+
+            blocks = RegisteredBlock.objects.actives().filter(content__isnull=True)
             if section:
-                result += _render_blocks(request, section, self.place, "sectionblock", context)
+                section_blocks = RegisteredBlock.objects.actives().filter(content=section)
+                for b in section_blocks.filter(overwrite):
+                    blocks = blocks.exclude(module=b.module, class_name=b.class_name)
+            if content:
+                content_blocks = RegisteredBlock.objects.actives().filter(content=content)
+                for b in content_blocks.filter(overwrite):
+                    blocks = blocks.exclude(module=b.module, class_name=b.class_name)
+                    section_blocks = section_blocks.exclude(module=b.module, class_name=b.class_name)
+
+            result = _render_blocks(request, blocks, None, self.place, "block", context)
+            if section:
+                result += _render_blocks(request, section_blocks, section, self.place, "sectionblock", context)
+            if content:
+                result += _render_blocks(request, content_blocks, content, self.place, "contentblock", context)
             return result
         except template.VariableDoesNotExist:
             return ''
