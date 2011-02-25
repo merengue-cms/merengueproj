@@ -1,8 +1,9 @@
 {% extends "admin/change_form.html" %}
 
-{% load i18n adminmedia customize_admin_modify %}
+{% load i18n adminmedia customize_admin_modify related_admin_tags admin_tags %}
 
 {% block object-tools %}
+{% object_tools parent_model_admin "change" "../" parent_object %}
 {% endblock %}
 
 {% block form_top %}
@@ -15,21 +16,24 @@
 {% endblock %}
 
 {% block content-main %}
-<div id="content-main">
 <p>
-    {% if original %}
-        {% trans "Update the permissions for each role for the content: " %}'{{ original }}'
+    {% if content %}
+        {% trans "Update the permissions for each role for the content: " %}'{{ content }}'
     {% else %}
         {% trans "Update the permissions for each role: " %}
     {% endif %}
 </p>
+
+{% smart_relations_object_tool %}
+
+<div id="content-main">
 <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">
-{% if original %}
+{% if content %}
 <div>
   <div id="changeform" class="module">
     <div class="form-row">
       {% trans "Should this content adquire global permissions?" %}
-      <input type="checkbox" name="adquire_global_permissions" {% if original.adquire_global_permissions %}checked="checked"{% endif %} class="action-select">
+      <input type="checkbox" name="adquire_global_permissions" {% if content.adquire_global_permissions %}checked="checked"{% endif %} class="action-select">
     </div>
   </div>
 </div>
@@ -61,9 +65,9 @@
     <div class="module aligned"></div>
     {% customize_submit_row "roles_" %}
 </form>
-{% if original %}
+{% if content %}
 <h2>{% trans "User and groups local roles" %} </h2>
-<p>{% trans "Create local roles for user or group for the content: " %}'{{ original }}'</p>
+<p>{% trans "Create local roles for user or group for the content: " %}'{{ content }}'</p>
 <p class="noteUser">{% trans "Autocomplete the user or autocomplete the group and select a role" %}</p>
 <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">
     {{ prr_form }}

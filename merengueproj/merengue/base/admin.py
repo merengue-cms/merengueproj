@@ -729,7 +729,7 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
         urls = super(BaseContentAdmin, self).get_urls()
         # override objectpermissions root path
         my_urls = patterns('',
-            (r'^([^/]+)/permissions/$', self.admin_site.admin_view(self.change_roles_permissions)))
+            (r'^([^/]+)/permissions/$', self.admin_site.admin_view(self.changelist_view)))
 
         return my_urls + urls
 
@@ -983,15 +983,6 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
 
         extra_context.update({'with_permissions': True})
         return extra_context
-
-    def object_tools(self, request, mode, url_prefix):
-        tools = super(BaseContentAdmin, self).object_tools(request, mode, url_prefix)
-        if mode == 'change':
-            tools.extend([
-                {'url': url_prefix + 'permissions/', 'label': ugettext('Permissions'),
-                 'class': 'permissionslink', 'permission': 'change'},
-            ])
-        return tools
 
 if settings.USE_GIS:
     BaseContentAdmin.list_display += ('google_minimap', )
@@ -1313,6 +1304,18 @@ class AnnouncementAdmin(AnnouncementDefaultAdmin, BaseAdmin):
     pass
 
 
+class PermissionRelatedAdmin(RelatedModelAdmin, PermissionAdmin):
+    tool_name = 'manage_permissions'
+    tool_label = _('permissions')
+    change_roles_template = 'admin/basecontent/role_permissions.html'
+
+    def changelist_view(self, request, extra_context=None, parent_model_admin=None, parent_object=None):
+        extra_context = self._update_extra_context(request, extra_context, parent_model_admin, parent_object)
+        extra_context.update({'original': None,
+                              'content': self.basecontent})
+        return self.change_roles_permissions(request, self.basecontent.id, extra_context=extra_context)
+
+
 def register(site):
     ## register admin models
     site.register(BaseContent, BaseContentViewAdmin)
@@ -1327,6 +1330,7 @@ def register(site):
 
 def register_related_base(site, related_to):
     site.register_related(ContactInfo, BaseContentRelatedContactInfoAdmin, related_to=related_to)
+    site.register_related(BaseContent, PermissionRelatedAdmin, related_to=related_to)
 
 
 # ----- begin monkey patching -----
