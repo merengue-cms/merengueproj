@@ -753,6 +753,8 @@ div#tagcloud h1 a {
 
 #left-sidebar div#tagcloud h1 a {
     color: #E5C597;
+    padding: 0;
+    background: none;
 }
 
 #left-sidebar div#tagcloud h1 a:hover {
