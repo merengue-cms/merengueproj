@@ -40,6 +40,8 @@ from merengue.base.widgets import ReadOnlyWidget
 
 class PermissionAdmin(admin.ModelAdmin):
 
+    change_roles_template = 'admin/perms/objectpermission/role_permissions.html'
+
     def has_change_permission(self, request, obj=None):
         """
         Overrides Django admin behaviour to add ownership based access control
@@ -192,8 +194,9 @@ class PermissionAdmin(admin.ModelAdmin):
                    'group_roles': group_roles,
                    'anonymous_role_slug': ANONYMOUS_ROLE_SLUG, }
 
-
-        template = 'admin/perms/objectpermission/role_permissions.html'
+        extra_context = extra_context or {}
+        context.update(extra_context)
+        template = self.change_roles_template
         return render_to_response(template,
                                   context,
                                   context_instance=RequestContext(request))
@@ -256,7 +259,6 @@ class ObjectPermissionAdmin(PermissionAdmin):
 
             return self.response_change_permissions(request)
 
-
         roles = Role.objects.all()
         permissions = {}
 
@@ -264,7 +266,6 @@ class ObjectPermissionAdmin(PermissionAdmin):
             permissions[perm] = []
             for role in roles:
                 permissions[perm].append((role, perm.objectpermission_set.filter(role=role) and True or False))
-
 
         context = {'admin_site': admin_site.name,
                    'change': True,
@@ -281,7 +282,6 @@ class ObjectPermissionAdmin(PermissionAdmin):
                    'has_change_permission': has_perm,
                    'role_permissions': permissions,
                    'roles': roles}
-
 
         template = 'admin/perms/objectpermission/role_permissions.html'
         return render_to_response(template,

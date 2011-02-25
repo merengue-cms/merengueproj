@@ -1,0 +1,152 @@
+{% extends "admin/change_form.html" %}
+
+{% load i18n adminmedia customize_admin_modify %}
+
+{% block object-tools %}
+{% endblock %}
+
+{% block form_top %}
+    {{ block.super }}
+{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    {{ prr_form.media}}
+{% endblock %}
+
+{% block content-main %}
+<div id="content-main">
+<p>
+    {% if original %}
+        {% trans "Update the permissions for each role for the content: " %}'{{ original }}'
+    {% else %}
+        {% trans "Update the permissions for each role: " %}
+    {% endif %}
+</p>
+<form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">
+{% if original %}
+<div>
+  <div id="changeform" class="module">
+    <div class="form-row">
+      {% trans "Should this content adquire global permissions?" %}
+      <input type="checkbox" name="adquire_global_permissions" {% if original.adquire_global_permissions %}checked="checked"{% endif %} class="action-select">
+    </div>
+  </div>
+</div>
+{% endif %}
+<div>
+    <div id="changeform" class="module">
+        <table cellspacing="0">
+            <thead>
+                <tr>
+                <th>{% trans "Permissions"%}</th>
+                {% for role in roles %}
+                <th>{{ role }}</th>
+                {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for perm, roles in role_permissions.items %}
+                    <tr class="{% cycle 'row1' 'row2' %}">
+                        <td>{{ perm }}</td>
+                        {% for role, checked in roles %}
+                        <td><input type="checkbox" {% if checked %}checked="checked"{% endif %} class="action-select" value="{{ role.id}}_{{ perm.id }}" name="selected_perm" /></td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+    <div class="module aligned"></div>
+    {% customize_submit_row "roles_" %}
+</form>
+{% if original %}
+<h2>{% trans "User and groups local roles" %} </h2>
+<p>{% trans "Create local roles for user or group for the content: " %}'{{ original }}'</p>
+<p class="noteUser">{% trans "Autocomplete the user or autocomplete the group and select a role" %}</p>
+<form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">
+    {{ prr_form }}
+    <input type="submit" value="{% trans 'Create' %}" name="_continue_role_relation"/>
+</form>
+
+{% if user_roles %}
+  <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">
+  <div>
+      <div id="changeform" class="module">
+          <table cellspacing="0">
+              <thead>
+                  <tr>
+                  <th>{% trans "Users"%}</th>
+                  {% for role in roles %}
+                      {% ifequal role.slug anonymous_role_slug %}
+                      {% else %}
+                          <th>{{ role }}</th>
+                      {% endifequal %}
+                  {% endfor %}
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for user, roles in user_roles.items %}
+                      <tr class="{% cycle 'row1' 'row2' %}">
+                          <td>{{ user }}</td>
+                          {% for role, checked in roles %}
+                              {% ifequal role.slug anonymous_role_slug %}
+                              {% else %}
+                                  <td><input type="checkbox" {% if checked %}checked="checked"{% endif %} class="action-select" value="{{ role.id}}_{{ user.id }}" name="selected_user" /></td>
+                              {% endifequal %}
+                          {% endfor %}
+                      </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      </div>
+  </div>
+  </div>
+      <div class="module aligned"></div>
+      {% customize_submit_row "users_" %}
+  </form>
+{% endif %}
+
+{% if group_roles %}
+  <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">
+  <div>
+      <div id="changeform" class="module">
+          <table cellspacing="0">
+              <thead>
+                  <tr>
+                  <th>{% trans "Groups"%}</th>
+                  {% for role in roles %}
+                      {% ifequal role.slug anonymous_role_slug %}
+                      {% else %}
+                          <th>{{ role }}</th>
+                      {% endifequal %}
+                  {% endfor %}
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for group, roles in group_roles.items %}
+                      <tr class="{% cycle 'row1' 'row2' %}">
+                          <td>{{ group }}</td>
+                          {% for role, checked in roles %}
+                              {% ifequal role.slug anonymous_role_slug %}
+                              {% else %}
+                                  <td><input type="checkbox" {% if checked %}checked="checked"{% endif %} class="action-select" value="{{ role.id}}_{{ group.id }}" name="selected_group" /></td>
+                              {% endifequal %}
+                          {% endfor %}
+                      </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      </div>
+  </div>
+      <div class="module aligned"></div>
+      {% customize_submit_row "groups_" %}
+  </form>
+{% endif %}
+
+{% endif %}
+</div>
+{% endblock %}
+
+
