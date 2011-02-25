@@ -830,7 +830,6 @@ div.module.form-row {
 
 #content-main {
     position: relative;
-    z-index: 1;
     width: auto;
     width: 100%;
 }
