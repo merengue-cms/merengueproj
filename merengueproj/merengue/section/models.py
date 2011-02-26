@@ -207,6 +207,19 @@ class AbsoluteLink(BaseLink):
         help_text=_('The absolute urls have to write complety: Protocol, domain, query'),
     )
 
+    target_blank = models.BooleanField(
+        verbose_name=_('open in new window'),
+        blank=True,
+        default=False,
+    )
+
+    link_class = models.CharField(
+        verbose_name=_('css class for this link'),
+        max_length=200,
+        blank=True,
+        null=True,
+    )
+
     def get_absolute_url(self):
         return self.url
 

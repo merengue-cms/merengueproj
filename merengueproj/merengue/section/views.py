@@ -95,7 +95,7 @@ def menu_section_view(request, section_slug, menu_slug):
         return render_to_response('section/menu_link_not_exists.html',
             {'menu': menu}, context_instance=RequestContext(request))
     if isinstance(link, AbsoluteLink):
-        return HttpResponseRedirect(link.url)
+        return HttpResponseRedirect(link.get_absolute_url())
     else:
         context = {}
         if section_slug:
