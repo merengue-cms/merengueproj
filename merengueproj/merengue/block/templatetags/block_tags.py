@@ -151,7 +151,8 @@ class RenderAllBlocksNode(template.Node):
                 content_blocks = RegisteredBlock.objects.actives().filter(content=content)
                 for b in content_blocks.filter(overwrite):
                     blocks = blocks.exclude(module=b.module, class_name=b.class_name)
-                    section_blocks = section_blocks.exclude(module=b.module, class_name=b.class_name)
+                    if section:
+                        section_blocks = section_blocks.exclude(module=b.module, class_name=b.class_name)
 
             result = _render_blocks(request, blocks, None, self.place, "block", context)
             if section:
