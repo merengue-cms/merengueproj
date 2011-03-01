@@ -1018,7 +1018,7 @@ ul.extra_options {
     background-color: white;
     color: #666666;
     border-right: 1px solid white;
-    z-index: 100;
+    z-index: 10;
 }
 
 .trans-field-container .labels .active.errors label {
