@@ -24,7 +24,7 @@ from merengue.pluggable.utils import get_plugin
 
 
 def dashboard(request):
-    plugin_config = get_plugin('ezdashboard')
+    plugin_config = get_plugin('ezdashboard').get_config()
     return render_to_response('ezdashboard/dashboard.html',
                               {'plugin_config': plugin_config},
                               context_instance=RequestContext(request))
