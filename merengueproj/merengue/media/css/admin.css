@@ -319,8 +319,35 @@ input.default[type="submit"],
     margin-top: 0em;
 }
 
+body.login  {
+    background: #F4F0E5;
+}
+
 .login #container {
-    width: 30em;
+    width: 350px;
+    padding: 0 20px;
+    background:  #E6D8C0 url(../img/login_logo.jpg) no-repeat scroll center top;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+}
+
+.login #container #header {
+    visibility: hidden;
+    min-height: 90px;
+}
+
+.login .form-row label {
+    color: #A17F59;
+    float: left;
+    margin-right: 5px;
+    text-align: right;
+    width: 150px;
+}
+
+.login .form-row input#id_username,
+.login .form-row input#id_password {
+    width: 150px;
 }
 
 #user-tools {
