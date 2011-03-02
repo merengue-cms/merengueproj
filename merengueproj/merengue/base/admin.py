@@ -53,6 +53,9 @@ from cmsutils.forms.widgets import AJAXAutocompletionWidget, ReadOnlyWidget
 from oembed.models import ProviderRule, StoredOEmbed
 from announcements.models import Announcement
 from announcements.admin import AnnouncementAdmin as AnnouncementDefaultAdmin
+from merengue.base.forms import AnnouncementAdminForm
+from notification.models import NoticeType, NoticeSetting, Notice
+from notification.admin import NoticeTypeAdmin, NoticeSettingAdmin, NoticeAdmin
 from transmeta import (canonical_fieldname, get_all_translatable_fields,
                        get_real_fieldname_in_each_language,
                        get_fallback_fieldname, get_real_fieldname)
@@ -1300,10 +1303,6 @@ class OrderableRelatedModelAdmin(RelatedModelAdmin):
         raise NotImplementedError('You have to override this method')
 
 
-class AnnouncementAdmin(AnnouncementDefaultAdmin, BaseAdmin):
-    pass
-
-
 class PermissionRelatedAdmin(RelatedModelAdmin, PermissionAdmin):
     tool_name = 'manage_permissions'
     tool_label = _('permissions')
@@ -1316,6 +1315,10 @@ class PermissionRelatedAdmin(RelatedModelAdmin, PermissionAdmin):
         return self.change_roles_permissions(request, self.basecontent.id, extra_context=extra_context)
 
 
+class AnnouncementAdmin(AnnouncementDefaultAdmin):
+    form = AnnouncementAdminForm
+
+
 def register(site):
     ## register admin models
     site.register(BaseContent, BaseContentViewAdmin)
@@ -1323,6 +1326,12 @@ def register(site):
     site.register(ProviderRule)
     site.register(StoredOEmbed)
     site.register(Announcement, AnnouncementAdmin)
+
+    #default notification
+    site.register(NoticeType, NoticeTypeAdmin)
+    site.register(NoticeSetting, NoticeSettingAdmin)
+    site.register(Notice, NoticeAdmin)
+
     register_related_base(site, BaseContent)
     if settings.USE_GIS:
         register_related_gis(site, BaseContent)

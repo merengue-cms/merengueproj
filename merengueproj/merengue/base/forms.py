@@ -33,6 +33,8 @@ from django.utils.translation import ugettext_lazy as _
 from genericforeignkey.forms import GenericAdminModelForm
 from transmeta import canonical_fieldname
 
+from notification import models as notification
+from announcements.forms import AnnouncementAdminForm as AnnouncementAdminDefaultForm
 from threadedcomments.models import FreeThreadedComment
 from threadedcomments.forms import FreeThreadedCommentForm
 from captcha.fields import CaptchaField
@@ -103,33 +105,33 @@ class FormRequiredFields(object):
         Returns form rendered as HTML <tr>s -- excluding the <table></table>.
         """
         return self._html_output_required(
-            normal_row = u'<tr%(html_class_attr)s><th>%(label)s</th><td>%(errors)s%(field)s%(help_text)s</td></tr>',
-            error_row = u'<tr><td colspan="2">%s</td></tr>',
-            row_ender = u'</td></tr>',
-            help_text_html = u'<br />%s',
-            errors_on_separate_row = False)
+            normal_row=u'<tr%(html_class_attr)s><th>%(label)s</th><td>%(errors)s%(field)s%(help_text)s</td></tr>',
+            error_row=u'<tr><td colspan="2">%s</td></tr>',
+            row_ender=u'</td></tr>',
+            help_text_html=u'<br />%s',
+            errors_on_separate_row=False)
 
     def as_ul_required(self):
         """
         Returns form rendered as HTML <li>s -- excluding the <ul></ul>.
         """
         return self._html_output_required(
-            normal_row = u'<li%(html_class_attr)s>%(errors)s%(label)s %(field)s%(help_text)s</li>',
-            error_row = u'<li>%s</li>',
-            row_ender = '</li>',
-            help_text_html = u' %s',
-            errors_on_separate_row = False)
+            normal_row=u'<li%(html_class_attr)s>%(errors)s%(label)s %(field)s%(help_text)s</li>',
+            error_row=u'<li>%s</li>',
+            row_ender='</li>',
+            help_text_html=u' %s',
+            errors_on_separate_row=False)
 
     def as_p_required(self):
         """
         Returns this form rendered as HTML <p>s.
         """
         return self._html_output_required(
-            normal_row = u'<p%(html_class_attr)s>%(label)s %(field)s%(help_text)s</p>',
-            error_row = u'%s',
-            row_ender = '</p>',
-            help_text_html = u' %s',
-            errors_on_separate_row = True)
+            normal_row=u'<p%(html_class_attr)s>%(label)s %(field)s%(help_text)s</p>',
+            error_row=u'%s',
+            row_ender='</p>',
+            help_text_html=u' %s',
+            errors_on_separate_row=True)
 
     def css_classes(self, extra_classes=None):
         """
@@ -148,13 +150,13 @@ class FormRequiredFields(object):
         """
         Helper function for outputting HTML. Used by as_table(), as_ul(), as_p().
         """
-        top_errors = self.non_field_errors() # Errors that should be displayed above all fields.
+        top_errors = self.non_field_errors()  # Errors that should be displayed above all fields.
         output, hidden_fields = [], []
 
         for name, field in self.fields.items():
             html_class_attr = ''
             bf = BoundField(self, field, name)
-            bf_errors = self.error_class([conditional_escape(error) for error in bf.errors]) # Escape and cache in local variable.
+            bf_errors = self.error_class([conditional_escape(error) for error in bf.errors])  # Escape and cache in local variable.
             if bf.is_hidden:
                 if bf_errors:
                     top_errors.extend([u'(Hidden field %s) %s' % (name, force_unicode(e)) for e in bf_errors])
@@ -196,7 +198,7 @@ class FormRequiredFields(object):
         if top_errors:
             output.insert(0, error_row % force_unicode(top_errors))
 
-        if hidden_fields: # Insert any hidden fields in the last row.
+        if hidden_fields:  # Insert any hidden fields in the last row.
             str_hidden = u''.join(hidden_fields)
             if output:
                 last_row = output[-1]
@@ -281,7 +283,7 @@ class BaseModelForm(forms.ModelForm, FormAdminDjango, FormRequiredFields):
         if opts.model:
             field_list = []
             modelopts = opts.model._meta
-            transmeta_fields = [f for f in modelopts.fields if canonical_fieldname(f)!=f.name]
+            transmeta_fields = [f for f in modelopts.fields if canonical_fieldname(f) != f.name]
             for f in transmeta_fields:
                 if not f.editable:
                     continue
@@ -289,7 +291,7 @@ class BaseModelForm(forms.ModelForm, FormAdminDjango, FormRequiredFields):
                     continue
                 if opts.exclude and canonical_fieldname(f) in opts.exclude:
                     continue
-                if not f.name.endswith('_'+lang):
+                if not f.name.endswith('_' + lang):
                     continue
                 formfield = f.formfield()
                 formfield.label = capfirst(_(canonical_fieldname(f)))
@@ -298,11 +300,11 @@ class BaseModelForm(forms.ModelForm, FormAdminDjango, FormRequiredFields):
                     self.initial.update({canonical_fieldname(f): f.value_from_object(instance)})
                 if formfield:
                     field_list.append((canonical_fieldname(f), formfield))
-            self.transmeta_fields=SortedDict(field_list)
+            self.transmeta_fields = SortedDict(field_list)
             self.fields.update(self.transmeta_fields)
             if opts.fields:
                 order = [fieldname for fieldname in opts.fields if fieldname in self.fields.keys()]
-                self.fields.keyOrder=order
+                self.fields.keyOrder = order
 
     def clean(self):
         cleaned_data = super(BaseModelForm, self).clean()
@@ -323,7 +325,7 @@ class BaseModelForm(forms.ModelForm, FormAdminDjango, FormRequiredFields):
 
     def __init__(self, *args, **kwargs):
         super(BaseModelForm, self).__init__(*args, **kwargs)
-        instance=kwargs.get('instance', None)
+        instance = kwargs.get('instance', None)
         self._add_transmeta_fields(instance)
         for name, field in self.fields.items():
             if name in self.two_columns_fields:
@@ -367,16 +369,32 @@ class AdminBaseContentOwnersForm(forms.Form):
 
 
 class BaseAdminModelForm(GenericAdminModelForm):
-    
+
     def clean_tags(self):
         import re
         value = self.cleaned_data.get('tags', None)
         if not value:
             return value
         value = value.strip()
-        value = re.sub(' +',' ', value)
+        value = re.sub(' +', ' ', value)
         pt = re.compile('[\w\- ]', flags=re.UNICODE)
         check = re.sub(pt, '', value)
         if check:
             raise forms.ValidationError(_('The following chars are not allowed in tags: %(char_list)s') % {'char_list': ' '.join(set(check))})
         return value
+
+
+class AnnouncementAdminForm(AnnouncementAdminDefaultForm):
+
+    def save(self, commit=True):
+        # get announcement object avoiding being sent by the parent
+        send = self.cleaned_data["send_now"]
+        self.cleaned_data["send_now"] = False
+        announcement = super(AnnouncementAdminForm, self).save(commit)
+
+        if send:
+            users = User.objects.all()
+            notification.send(users, "announcement", {
+                "announcement": announcement,
+            }, on_site=False, queue=False)
+        return announcement

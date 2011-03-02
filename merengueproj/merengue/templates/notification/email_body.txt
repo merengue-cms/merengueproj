@@ -1,0 +1,13 @@
+{% ifequal notice "Announcement" %}
+    **{{ announcement.title }}**
+    
+    {{ announcement.content }}
+    
+    {{ current_site }}
+{% else %}
+{% load i18n %}
+{% blocktrans %}
+    {{ message }}
+{% endblocktrans %}
+
+{% endifequal %}
