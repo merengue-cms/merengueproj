@@ -2,11 +2,15 @@
 from south.db import db
 from south.v2 import SchemaMigration
 
+from merengue.base.utils import table_exists
+
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding model 'RegisteredBlock'
+        if table_exists('block_registeredblock'):
+            return  # already migrated
         db.create_table('block_registeredblock', (
             ('registereditem_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['registry.RegisteredItem'], unique=True, primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
