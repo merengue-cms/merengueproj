@@ -227,9 +227,9 @@ def restore_config(zip_config):
     version = config.get("version", "MERENGUE_VERSION")
     # TODO: Implement method to get current merengue version
     if "MERENGUE_VERSION" != version:
-        raise CommandError("Merengue version error") # To fix. CommandError can not be displayed TTW.
+        raise CommandError("Merengue version error")  # To fix. CommandError can not be displayed TTW.
     models_to_restore = (
-        (RegisteredItem, "registry"), # this has to be first in tuple
+        (RegisteredItem, "registry"),  # this has to be first in tuple
         (RegisteredAction, "actions"),
         (RegisteredBlock, "blocks"),
         (RegisteredPlugin, "plugins"),
@@ -267,7 +267,7 @@ def restore_models(zip_config, models_to_restore):
     try:
         models = set()
         for model_to_restore, file_name in models_to_restore:
-            model_to_restore.objects.all().delete() # we first delete all objects to avoid duplication problems
+            model_to_restore.objects.all().delete()  # we first delete all objects to avoid duplication problems
             format = 'json'
             fixtures_file_name = "%s.%s" % (file_name, format)
             fixtures_data = zip_config.read(fixtures_file_name)
@@ -344,3 +344,15 @@ def is_last_application(app):
     """ returns Merengue last application """
     last_app = settings.MERENGUE_APPS[-1].split('.')[1]
     return app == last_app
+
+
+def ask_yesno_question(question, default_answer):
+    while True:
+        prompt = '%s: (yes/no) [%s]: ' % (question, default_answer)
+        answer = raw_input(prompt).strip()
+        if answer == '':
+            return default_answer == 'yes' and True or False
+        elif answer in ('yes', 'no'):
+            return answer == 'yes' and True or False
+        else:
+            print 'Please answer yes or no'
