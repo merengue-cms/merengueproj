@@ -1,6 +1,6 @@
 {% load i18n %}
 {% ifequal notice "Announcement" %}
-[{{ current_site }}]{% blocktrans %}Announcement{% endblocktrans %}: {{ announcement.title }}
+[{{ current_site }}] {% blocktrans %}Announcement{% endblocktrans %}: {{ announcement.title }}
 {% else %}
 {% blocktrans %}[{{ current_site }}] {{ message }}{% endblocktrans %}
 {% endifequal %}
