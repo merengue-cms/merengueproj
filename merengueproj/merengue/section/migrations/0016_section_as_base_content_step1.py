@@ -9,6 +9,12 @@ from merengue.base.utils import table_exists
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
+        db.create_table('section_sectioncontentmapping', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('old_id', self.gf('django.db.models.fields.IntegerField')(unique=True)),
+            ('new_id', self.gf('django.db.models.fields.IntegerField')(unique=True)),
+        ))
+
         if not table_exists('microsite_microsite'):
             # Deleting model 'Section'
             db.delete_table('section_section')
@@ -24,6 +30,7 @@ class Migration(SchemaMigration):
             db.delete_foreign_key('section_basesection_related_content', 'basesection_id')
 
     def backwards(self, orm):
+        db.delete_table('section_content_mapping')
 
         # Adding model 'Section'
         db.create_table('section_section', (

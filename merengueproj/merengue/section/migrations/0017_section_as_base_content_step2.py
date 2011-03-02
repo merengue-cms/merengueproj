@@ -10,7 +10,6 @@ from merengue.base.utils import add_south_trans_fields, table_exists
 class Migration(DataMigration):
 
     def forwards(self, orm):
-
         sections_to_migrate = orm['section.BaseSection'].objects.all()
         for section in sections_to_migrate:
             old_section_id = section.id
@@ -27,6 +26,10 @@ class Migration(DataMigration):
             new_content.save()
             section.basecontent_ptr = new_content
             section.save()
+            # save ID mapping done to allow a possible traceback
+            orm['section.SectionContentMapping'].objects.create(
+                old_id=old_section_id, new_id=new_content.id,
+            )
             if table_exists('microsite_microsite'):
                 try:
                     old_section = orm['section.Section'].objects.get(id=old_section_id)
@@ -52,6 +55,12 @@ class Migration(DataMigration):
         pass
 
     models = {
+        'section.sectioncontentmapping': {
+            'Meta': {'object_name': 'SectionContentMapping'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'old_id': ('django.db.models.fields.IntegerField', [], {'unique': 'True', }),
+            'new_id': ('django.db.models.fields.IntegerField', [], {'unique': 'True', }),
+        },
         'auth.group': {
             'Meta': {'object_name': 'Group'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
