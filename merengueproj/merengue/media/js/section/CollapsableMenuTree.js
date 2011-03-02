@@ -37,7 +37,7 @@
         }
         this.close = function() {
             this.closeChildren();
-            this.paintNodes();
+            this.paintNodes(true);
         }
         this.addChild = function(node) {
             this.children.push(node);
@@ -119,21 +119,34 @@
                node.close();
             });
         }
-        this.paintNode = function() {
+        this.paintNode = function(moving) {
+            if (typeof(moving) == 'undefined') moving = false;
             var element = this.domelement;
             if (!element) return;
             element.children('td').eq(0).hide();
             element.children('td').eq(1).hide();
-            this.undecorate();
-            this.decorate();
-            this.setListeners();
+            if (!moving) {
+                this.undecorate();
+                this.decorate();
+                this.setListeners();
+            } else {
+            if (this.parent.opened) element.show(); else element.hide();
+                if (this.opened) {
+                    element.find(".minusMenu").show();
+                    element.find(".plusMenu").hide();
+                } else {
+                    element.find(".minusMenu").hide();
+                    element.find(".plusMenu").show();
+                }
+            }
         }
-        this.paintNodes = function() {
+        this.paintNodes = function(moving) {
+            if (typeof(moving) == 'undefined') moving = false;
             var children = this.children;
             for (var i in children) {
-                children[i].paintNodes();
+                children[i].paintNodes(moving);
             }
-            this.paintNode();
+            this.paintNode(moving);
             recalculateRows();
         }
         this.findNodeByElement = function(element) {
