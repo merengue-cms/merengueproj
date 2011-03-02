@@ -19,9 +19,11 @@ from django.core.management import call_command
 
 from south.management.commands import migrate
 
+from merengue.utils import ask_yesno_question
 from merengue.base.management.base import MerengueCommand
+from merengue.pluggable import enable_active_plugins
 from merengue.pluggable.models import RegisteredPlugin
-from merengue.pluggable.utils import have_south, enable_plugin, get_plugins_dir
+from merengue.pluggable.utils import have_south
 
 
 class Command(MerengueCommand):
@@ -30,6 +32,7 @@ class Command(MerengueCommand):
     args = "[pluginname] [migrationname|zero] [--all] [--list] [--skip] [--merge] [--no-initial-data] [--fake] [--db-dry-run] [--database=dbalias]"
 
     def handle(self, app=None, target=None, **options):
+        enable_active_plugins()
         plugins = RegisteredPlugin.objects.actives()
         if app:
             plugins = plugins.filter(directory_name=app)
@@ -38,9 +41,11 @@ class Command(MerengueCommand):
                 return
 
         for plugin_registered in plugins:
-            enable_plugin(get_plugins_dir() + '.' + plugin_registered.directory_name)
-
-        for plugin_registered in plugins:
             app_name = plugin_registered.directory_name
-            if have_south(app_name):
-                call_command('migrate', app=app_name, target=target, **options)
+            try:
+                if have_south(app_name):
+                    call_command('migrate', app=app_name, target=target, **options)
+            except:
+                if ask_yesno_question('The migration of %s plugin has failed... Continue?' % app_name, 'yes'):
+                    continue
+                raise
