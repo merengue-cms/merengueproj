@@ -28,15 +28,19 @@ class Migration(DataMigration):
             section.basecontent_ptr = new_content
             section.save()
             if table_exists('microsite_microsite'):
-                old_section = orm['section.Section'].objects.get(id=old_section_id)
-                old_section.basesection_ptr_id = section.basecontent_ptr_id
-                old_section.save()
                 try:
-                    microsite = orm['microsite.MicroSite'].objects.get(section_ptr_id=old_section_id)
-                    microsite.basesection_ptr_id = new_content.id
-                    microsite.save(force_update=True)
-                except orm['microsite.MicroSite'].DoesNotExist:
-                    pass
+                    old_section = orm['section.Section'].objects.get(id=old_section_id)
+                    old_section.basesection_ptr_id = section.basecontent_ptr_id
+                    old_section.save()
+                    try:
+                        microsite = orm['microsite.MicroSite'].objects.get(section_ptr_id=old_section_id)
+                        microsite.basesection_ptr_id = new_content.id
+                        microsite.save(force_update=True)
+                    except orm['microsite.MicroSite'].DoesNotExist:
+                        pass
+                except orm['section.Section'].DoesNotExist:
+                    # this should be caused because old_section is broken (i.e. a basesection with no section model
+                    print 'WARNING: BaseSection %d is broken. Check manually' % old_section_id
 
             # re-referencing all the related contents to the section
             for related_content in orm['section.SectionRelatedContent'].objects.filter(
