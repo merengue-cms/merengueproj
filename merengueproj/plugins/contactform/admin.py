@@ -18,6 +18,7 @@
 from django.contrib import admin
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
+from django.core.exceptions import PermissionDenied
 
 from merengue.base.admin import (RelatedModelAdmin, BaseAdmin, PluginAdmin,
                                  BaseOrderableAdmin, BaseContentAdmin)
@@ -82,6 +83,19 @@ class BaseContentRelatedContactFormAdmin(ContactFormAdmin, RelatedModelAdmin):
     one_to_one = False
     related_field = 'content'
     filter_or_exclude = 'filter'
+
+    def object_tools(self, request, mode, url_prefix):
+        tools = super(BaseContentRelatedContactFormAdmin, self).object_tools(request, mode, url_prefix)
+        if self.basecontent.contact_form.count():
+            for tool in tools:
+                if tool.get('url', '').endswith(url_prefix + 'add/'):
+                    tools.remove(tool)
+        return tools
+
+    def add_view(self, request, form_url='', extra_context=None, parent_model_admin=None, parent_object=None):
+        if self.basecontent.contact_form.count():
+            raise PermissionDenied
+        return super(BaseContentRelatedContactFormAdmin, self).add_view(request, form_url, extra_context)
 
     def save_form(self, request, form, change):
         return super(RelatedModelAdmin, self).save_form(request, form, change)
