@@ -128,9 +128,12 @@ def _smart_relations_object_tool_admin_site(admin_site, model_admin, obj, tool_n
             tool_url = _get_url_for_model(model)
             tools_url.append(tool_url)
             for model_admin in model_admin_list:
+                tool_url = getattr(model_admin, 'tool_name', model_admin.model._meta.module_name)
+                if not tool_url.endswith('/'):
+                    tool_url += '/'
                 tools_admin_site.append({'tool_name': model_admin.tool_name,
                             'tool_label': getattr(model_admin, 'tool_label', model_admin.model._meta.verbose_name_plural),
-                            'tool_url': getattr(model_admin, 'tool_name', model_admin.model._meta.module_name),
+                            'tool_url': tool_url,
                             'selected': model_admin.tool_name == tool_name,
                             'manage_contents': getattr(model_admin, 'manage_contents', False),
                             })
@@ -162,7 +165,10 @@ def _get_object_tools_in_route(route, context):
                 if not route[0]['obj'] and not context.get('add', False):
                     obj_tool['base_url'] = '../'
                 else:
-                    obj_tool['base_url'] = '../../'
+                    if obj == route[0]['obj'] or context.get('add', False) or context.get('change', False):
+                        obj_tool['base_url'] = '../../'
+                    else:
+                        obj_tool['base_url'] = '../../../'
             elif not context.get('change', False):
                 obj_tool['base_url'] = '../'
             res.append(obj_tool)
