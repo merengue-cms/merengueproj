@@ -36,8 +36,11 @@ class Command(MerengueCommand):
             if not plugins:
                 print 'Enabled plugin named "%s" does not exist' % app
                 return
+
+        for plugin_registered in plugins:
+            enable_plugin(get_plugins_dir() + '.' + plugin_registered.directory_name)
+
         for plugin_registered in plugins:
             app_name = plugin_registered.directory_name
-            enable_plugin(get_plugins_dir() + '.' + app_name)
             if have_south(app_name):
                 call_command('migrate', app=app_name, target=target, **options)
