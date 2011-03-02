@@ -53,7 +53,9 @@ class PluginConfig(Plugin):
     def hook_post_register(cls):
         odt_path = path.join('oot', 'base.odt')
         try:
-            OpenOfficeTemplate.objects.get(title='BaseContent-template')
+            OpenOfficeTemplate.objects.get(
+                content_type=ContentType.objects.get_for_model(
+                    BaseContent))
         except OpenOfficeTemplate.DoesNotExist:
             OpenOfficeTemplate.objects.create(
                 title='BaseContent-template', template=odt_path,
