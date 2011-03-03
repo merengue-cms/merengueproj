@@ -114,6 +114,14 @@ div#header img#merengue_logo {
     padding-top: 0;
 }
 
+#changelist .actions label {
+    line-height: 20px;
+    margin-right: 0.3em;
+}
+
+*+html #changelist .actions button.button { /* IE7 hack */
+    height: 19px;
+}
 
 #changelist-filter li.selected a {
     color: #BF9460 !important;
