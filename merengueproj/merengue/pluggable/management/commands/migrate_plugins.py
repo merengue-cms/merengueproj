@@ -21,7 +21,7 @@ from south.management.commands import migrate
 
 from merengue.utils import ask_yesno_question
 from merengue.base.management.base import MerengueCommand
-from merengue.pluggable import enable_active_plugins
+from merengue.pluggable.loading import load_plugins
 from merengue.pluggable.models import RegisteredPlugin
 from merengue.pluggable.utils import have_south
 
@@ -32,7 +32,7 @@ class Command(MerengueCommand):
     args = "[pluginname] [migrationname|zero] [--all] [--list] [--skip] [--merge] [--no-initial-data] [--fake] [--db-dry-run] [--database=dbalias]"
 
     def handle(self, app=None, target=None, **options):
-        enable_active_plugins()
+        load_plugins()
         plugins = RegisteredPlugin.objects.actives()
         if app:
             plugins = plugins.filter(directory_name=app)
