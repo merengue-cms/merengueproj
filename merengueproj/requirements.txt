@@ -31,5 +31,5 @@ sorl-thumbnail>=11.01
 searchform>=0.1.1
 django-autoreports
 django_compressor
-django-classy-tags
+django-classy-tags==0.3.0
 django-inplaceedit
