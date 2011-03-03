@@ -33,8 +33,8 @@ class RenderViewletNode(template.Node):
         try:
             if self.registered_viewlet is not None:
                 viewlet = self.registered_viewlet.resolve(context).get_registry_item()
-            else:
-                viewlet = None
+            else:  # if no viewlet found
+                return ''
             return viewlet.render(request, context)
         except template.VariableDoesNotExist:
             return ''
