@@ -92,7 +92,7 @@ class PortalMenuBlock(BaseMenuBlock, Block):
         return self.render_block(request, template_name='core/block_portal_menu.html',
                                  block_title=_('Portal Menu'),
                                  context={'portal_menu': portal_menu,
-                                         'max_num_level': self.get_max_level()})
+                                          'max_num_level': self.get_max_level()})
 
 
 class LinkBaseBlock(Block):
