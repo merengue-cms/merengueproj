@@ -109,6 +109,21 @@
   padding-top: 35px;
 }
 
+.withoutMenu #slideshow .screenShotTable {
+  padding-top: 0px;
+}
+
+.withoutMenu #slideshow .simpleImgGallery2 {
+  height: 0px;
+  border-width: 0px;
+  padding: 0px;
+  margin: 0px;
+}
+
+.withoutMenu #slideshow .MultimediaSlideVisualZone {
+  padding-top: 0px;
+}
+
 span.imgMax,
 span.imgNow {
     margin: 0pt;

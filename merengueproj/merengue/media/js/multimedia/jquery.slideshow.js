@@ -89,12 +89,17 @@
             };
 
             var showTypes = function() {
+                var count = 0;
                 $.each(typeorder, function(index, t) {
                     if (typeof(types[t]) != 'undefined') {
                         menu.append('<span class="galleryButton galleryButton-'+ t +'"><img src="' + mediaurl + 'merengue/img/multimedia/mediacontents/' + t + '_action_link.png" /></span>')
                         types[t].order=index;
+                        count += types[t].items.length;
                     }
                 });
+                if (count <= 1) {
+                    slide.addClass('withoutMenu');
+                }
             };
 
             var showItem = function(item) {
