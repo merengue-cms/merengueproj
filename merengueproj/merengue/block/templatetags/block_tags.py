@@ -124,6 +124,24 @@ def _render_blocks(request, blocks, obj, place, block_type, context):
             % (block_type, '\n'.join(wrapped_blocks), place)
 
 
+def _get_blocks_to_display(place=None, content=None):
+    """
+    Gets content related blocks excluding the ones overwritten by blocks within the same content
+    """
+    if content:
+        blocks = content.registeredblock_set.all()
+    else:
+        blocks = RegisteredBlock.objects.actives().filter(content__isnull=True)
+
+    overwrite = Q(placed_at=place, overwrite_if_place=True) | Q(overwrite_always=True)
+    excluders = blocks.filter(overwrite)
+    excluded = blocks.none()
+    for b in excluders:
+        excluded |= blocks.filter(~Q(id=b.id), module=b.module, class_name=b.class_name, overwrite_always=False)
+
+    return blocks.exclude(id__in=[b.id for b in excluded])
+
+
 class RenderAllBlocksNode(template.Node):
 
     def __init__(self, place):
@@ -142,13 +160,13 @@ class RenderAllBlocksNode(template.Node):
             section = context.get('section', None)
             overwrite = Q(placed_at=self.place, overwrite_if_place=True) | Q(overwrite_always=True)
 
-            blocks = RegisteredBlock.objects.actives().filter(content__isnull=True)
+            blocks = _get_blocks_to_display()
             if section:
-                section_blocks = RegisteredBlock.objects.actives().filter(content=section)
+                section_blocks = _get_blocks_to_display(self.place, section)
                 for b in section_blocks.filter(overwrite):
                     blocks = blocks.exclude(module=b.module, class_name=b.class_name)
             if content:
-                content_blocks = RegisteredBlock.objects.actives().filter(content=content)
+                content_blocks = _get_blocks_to_display(self.place, content)
                 for b in content_blocks.filter(overwrite):
                     blocks = blocks.exclude(module=b.module, class_name=b.class_name)
                     if section:
