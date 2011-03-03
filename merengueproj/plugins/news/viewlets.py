@@ -18,7 +18,6 @@
 from django.utils.translation import ugettext_lazy as _, ugettext
 
 from merengue.viewlet.viewlets import Viewlet
-from plugins.news.views import get_news
 from merengue.registry import params
 from merengue.registry.items import ViewLetQuerySetItemProvider
 
@@ -33,15 +32,13 @@ class LatestNewsViewlet(ViewLetQuerySetItemProvider, Viewlet):
                       default='3'),
     ]
 
-    def get_contents(self, request=None, context=None, section=None):
-        number_news = self.get_config().get('limit', []).get_value()
-        news_list = get_news(request, number_news)
-        return news_list
-
-    def render(self, request, context):
+    def render(self, request, context=None):
+        if context is None:
+            context = {}
         news_list = self.get_queryset(request, context)
+        context.update({'news_list': news_list})
         return self.render_viewlet(request, template_name='news/viewlet_latest.html',
-                                   context={'news_list': news_list})
+                                   context=context)
 
 
 class AllNewsViewlet(ViewLetQuerySetItemProvider, Viewlet):
@@ -49,13 +46,14 @@ class AllNewsViewlet(ViewLetQuerySetItemProvider, Viewlet):
     help_text = _('All news')
     verbose_name = _('All news block')
 
-    def get_contents(self, request=None, context=None, section=None):
-        news_list = get_news(request)
-        return news_list
-
-    def render(self, request, context):
+    def render(self, request, context=None):
+        if context is None:
+            context = {}
         news_list = self.get_queryset(request, context)
+        context.update({
+            'news_list': news_list,
+            'is_paginated': True,
+            'paginate_by': 10,
+        })
         return self.render_viewlet(request, template_name='news/viewlet_latest.html',
-                                  context={'news_list': news_list,
-                                           'is_paginated': True,
-                                           'paginate_by': 10})
+                                   context=context)
