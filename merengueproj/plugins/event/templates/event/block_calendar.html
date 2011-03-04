@@ -31,13 +31,12 @@
 {% endaddmedia %}
 
 {% addmedia "js" %}
-  <script language="javascript" src="{{ MEDIA_URL }}merengue/js/jquery.ui.datepicker-{{ LANGUAGE_CODE }}.js"></script>
   <script language="javascript" src="{{ MEDIA_URL }}event/lib/jquery.bgiframe.js"></script>
   <script language="javascript" src="{{ MEDIA_URL }}event/jquery.tooltip.js"></script>
 {% endaddmedia %}
 
+<script language="javascript" src="{{ MEDIA_URL }}merengue/js/jquery.ui.datepicker-{{ LANGUAGE_CODE }}.js"></script>
 <script language="javascript" >
-
 (function($) {
     $(document).ready(function() {
         function bind_days_tooltip ()
