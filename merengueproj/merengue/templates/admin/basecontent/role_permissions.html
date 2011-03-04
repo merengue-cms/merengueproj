@@ -88,6 +88,7 @@
                           <th>{{ role }}</th>
                       {% endifequal %}
                   {% endfor %}
+                  <th>{% trans "Remove all roles?" %}</th>
                   </tr>
               </thead>
               <tbody>
@@ -100,6 +101,7 @@
                                   <td><input type="checkbox" {% if checked %}checked="checked"{% endif %} class="action-select" value="{{ role.id}}_{{ user.id }}" name="selected_user" /></td>
                               {% endifequal %}
                           {% endfor %}
+                          <td class="delete"><input type="checkbox" name="delete_user_roles" id="{{ user.id }}-DELETE-USER-ROLES" value="{{ user.id }}"></td>
                       </tr>
                   {% endfor %}
               </tbody>
@@ -125,6 +127,7 @@
                           <th>{{ role }}</th>
                       {% endifequal %}
                   {% endfor %}
+                  <th>{% trans "Remove all roles?" %}</th>
                   </tr>
               </thead>
               <tbody>
@@ -137,6 +140,7 @@
                                   <td><input type="checkbox" {% if checked %}checked="checked"{% endif %} class="action-select" value="{{ role.id}}_{{ group.id }}" name="selected_group" /></td>
                               {% endifequal %}
                           {% endfor %}
+                          <td class="delete"><input type="checkbox" name="delete_group_roles" id="{{ user.id }}-DELETE-GROUP-ROLES" value="{{ group.id }}"></td>
                       </tr>
                   {% endfor %}
               </tbody>

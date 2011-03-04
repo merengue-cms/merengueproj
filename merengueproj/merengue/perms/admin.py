@@ -85,17 +85,21 @@ class PermissionAdmin(admin.ModelAdmin):
 
     def _update_role_users(self, request, obj):
         selected = request.POST.getlist('selected_user')
+        users_to_delete = request.POST.getlist('delete_user_roles')
+        for uppr in PrincipalRoleRelation.objects.filter(content=obj, user__in=users_to_delete):
+            uppr.delete()
         for ppr in PrincipalRoleRelation.objects.filter(content=obj, user__isnull=False):
             role_user = "%s_%s" % (ppr.role.id, ppr.user.id)
             if role_user not in selected:
                 ppr.delete()
         for role_user in selected:
             role_id, user_id = role_user.split('_')
-            role = Role.objects.get(id=role_id)
-            user = User.objects.get(id=user_id)
-            ppr, created = PrincipalRoleRelation.objects.get_or_create(role=role,
-                                                                       user=user,
-                                                                       content=obj)
+            if user_id not in users_to_delete:
+                role = Role.objects.get(id=role_id)
+                user = User.objects.get(id=user_id)
+                ppr, created = PrincipalRoleRelation.objects.get_or_create(role=role,
+                                                                           user=user,
+                                                                           content=obj)
         msg = _('The role users were changed successfully.')
         if '_users_continue' in request.POST:
             url_redirect = '.'
@@ -105,17 +109,21 @@ class PermissionAdmin(admin.ModelAdmin):
 
     def _update_role_groups(self, request, obj):
         selected = request.POST.getlist('selected_group')
+        groups_to_delete = request.POST.getlist('delete_group_roles')
+        for gppr in PrincipalRoleRelation.objects.filter(content=obj, group__in=groups_to_delete):
+            gppr.delete()
         for ppr in PrincipalRoleRelation.objects.filter(content=obj, group__isnull=False):
             role_group = "%s_%s" % (ppr.role.id, ppr.group.id)
             if role_group not in selected:
                 ppr.delete()
         for role_group in selected:
             role_id, group_id = role_group.split('_')
-            role = Role.objects.get(id=role_id)
-            group = Group.objects.get(id=group_id)
-            ppr, created = PrincipalRoleRelation.objects.get_or_create(role=role,
-                                                                       group=group,
-                                                                       content=obj)
+            if group_id not in groups_to_delete:
+                role = Role.objects.get(id=role_id)
+                group = Group.objects.get(id=group_id)
+                ppr, created = PrincipalRoleRelation.objects.get_or_create(role=role,
+                                                                           group=group,
+                                                                           content=obj)
         msg = _('The role groups were changed successfully.')
         if '_groups_continue' in request.POST:
             url_redirect = '.'
