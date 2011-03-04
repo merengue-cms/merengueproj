@@ -19,7 +19,7 @@ from django import template
 from django.db.models import Q
 from django.conf import settings
 
-from merengue.block.blocks import Block, ContentBlock, SectionBlock
+from merengue.block.blocks import BaseBlock, ContentBlock, SectionBlock
 from merengue.block.models import RegisteredBlock
 from merengue.registry import register as merengue_register, get_items_by_name
 
@@ -94,7 +94,7 @@ def do_render_section_blocks(parser, token):
 
 
 def _print_block(block, place, block_type, request):
-    if block_type == 'block' and isinstance(block, Block) or \
+    if block_type == 'block' and isinstance(block, BaseBlock) or \
        block_type == 'contentblock' and isinstance(block, ContentBlock) or \
        block_type == 'sectionblock' and isinstance(block, SectionBlock) or \
        block.content is not None:  # block related to content is printed always
@@ -172,7 +172,7 @@ class RenderAllBlocksNode(template.Node):
                     if section:
                         section_blocks = section_blocks.exclude(module=b.module, class_name=b.class_name)
 
-            result = _render_blocks(request, blocks, None, self.place, "block", context)
+            result = _render_blocks(request, blocks, content, self.place, "block", context)
             if section:
                 result += _render_blocks(request, section_blocks, section, self.place, "sectionblock", context)
             if content:
