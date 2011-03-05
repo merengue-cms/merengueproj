@@ -1,6 +1,31 @@
 Changes
 =======
 
+Version 0.7.0-rc1 (3978 revision)
+-----------------------------------
+
+* Permissions are now a related admin, placed into a different tab in admin UI. See #1570.
+* Links can be open in new windows. See #1582.
+* Unified login UI in all themes. See #1382.
+* Removed multimedia slide when only one multimedia asset is shown. See #1460.
+* A new ``reinstall_plugins`` command to reinstall enabled plugins. See #1594.
+* Local roles and permissions can be deleted. See #1605.
+
+* A lot of bugs fixed:
+
+ * Fixes menu reordering. See #1581.
+ * Errors in block reordering with drag-and-drop. See #1580, #1581.
+ * Fixes some admin UI look and feel errors: See #1563, #1584, #1588, #1585.
+ * Fixed Tag cloud block title look and feel in Merengue theme. See #1497.
+ * Fixed block overwriting when same block is placed twice. See #1575.
+ * Fixed error in ezdashboard plugin. See #1586.
+ * Limit only one contact form for every content. See #1196.
+ * Fixed oot error. See #1579.
+ * Fixed south migration when tables already exist. See #1592.
+ * Fixed ``migrate_plugins`` command in some circunstances. See #1595.
+ * Fixed a viewlet error when request context is passed. See #1600.
+ * Calendar block rendered using project locale. See #1609.
+
 Version 0.7.0-beta4 (3913 revision)
 -----------------------------------
 
