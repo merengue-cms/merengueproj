@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% load i18n inlinetrans %}
+
+{% block extrabodytag %}class="cmsLogin"{% endblock %}
+
 {% block page %}
 
 <script type="text/javascript">
@@ -7,8 +10,6 @@
     jQuery('#id_username').focus()
  });
 </script> 
-
-{% block extrabodytag %}class="cmsLogin"{% endblock %}
 
 <div id="login">
   <form method="post" action="{% url merengue_login %}">
