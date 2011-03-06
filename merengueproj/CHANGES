@@ -13,6 +13,7 @@ Version 0.7.0-rc1 (3978 revision)
 
 * A lot of bugs fixed:
 
+ * Fixed broken comments in document sections for anonymous users. See #1614.
  * Fixes menu reordering. See #1581.
  * Errors in block reordering with drag-and-drop. See #1580, #1581.
  * Fixes some admin UI look and feel errors: See #1563, #1584, #1588, #1585.
