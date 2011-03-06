@@ -42,7 +42,7 @@ msgstr "orden"
 
 #: models.py:25
 msgid "category"
-msgstr "Encontrados %s contenidos"
+msgstr "categoría"
 
 #: models.py:28
 msgid "portal link"
