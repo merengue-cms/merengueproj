@@ -1,7 +1,7 @@
 Changes
 =======
 
-Version 0.7.0-rc1 (3978 revision)
+Version 0.7.0-rc1 (3988 revision)
 ---------------------------------
 
 * Permissions are now a related admin, placed into a different tab in admin UI. See #1570.
