@@ -50,7 +50,7 @@ class Viewlet(RegistrableItem):
 
 
 def registered_viewlet(sender, **kwargs):
-    if isinstance(sender, Viewlet):
+    if issubclass(sender, Viewlet):
         registered_item = kwargs['registered_item']
         registered_item.name = sender.name
         registered_item.save()
