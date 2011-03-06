@@ -30,12 +30,9 @@ from django.utils.translation import get_language
 from cmsutils.tag_utils import parse_args_kwargs_and_as_var, \
                                RenderWithArgsAndKwargsNode
 
-from merengue.base.models import BaseContent
-
 if settings.USE_GIS:
     from merengue.base.models import LocatableContent
     from django.contrib.gis.geos import MultiPoint, MultiPolygon
-    from merengue.places.models import BaseLocation
 
 
 register = template.Library()
@@ -59,7 +56,7 @@ if settings.USE_GIS:
             mp = MultiPoint(points)
             ap = MultiPolygon(areas)
             return ap.simplify().union(mp).extent
-        elif len(points)>1:
+        elif len(points) > 1:
             mp = MultiPoint(points)
             return mp.extent
         elif points:
@@ -151,7 +148,7 @@ if settings.USE_GIS:
                 zoom_to_bounds = False
 
             if not display_pois:
-                content_pois = [] # we calculate bounds, but doesnt show anything
+                content_pois = []  # we calculate bounds, but doesnt show anything
 
             pois_verbose_name_plural = None
             pois_icon_name = None
@@ -237,7 +234,7 @@ if settings.USE_GIS:
 
     @register.tag
     def google_map_media(parser, token):
-        if len(token.split_contents()) == 1: # No parameters
+        if len(token.split_contents()) == 1:  # No parameters
             args = tuple()
             kwargs = dict()
         else:
@@ -262,34 +259,10 @@ if settings.USE_GIS:
             'MEDIA_URL': context.get('MEDIA_URL', '/media/'),
             }
 
-
-    CONTENT_TYPES_ORDER = [
-        'accommodation.accommodation',
-        'restaurant.restaurant',
-        'visit.visit',
-        ]
-
-    def _sort_content_types(x, y):
-        newx = '%s.%s' % (x.app_label, x.model)
-        newy = '%s.%s' % (y.app_label, y.model)
-        return _sort_content_types_args(newx, newy)
-
-    def _sort_content_types_args(x, y):
-        if x not in CONTENT_TYPES_ORDER:
-            pos_x=len(CONTENT_TYPES_ORDER)
-        else:
-            pos_x=CONTENT_TYPES_ORDER.index(x)
-        if y not in CONTENT_TYPES_ORDER:
-            pos_y=len(CONTENT_TYPES_ORDER)
-        else:
-            pos_y=CONTENT_TYPES_ORDER.index(y)
-        return cmp(pos_x, pos_y)
-
     def _get_content_types(args):
         if not args:
             args = settings.MAP_FILTRABLE_MODELS
-        args=list(args)
-        args.sort(_sort_content_types_args)
+        args = list(args)
         content_types = []
         for arg in args:
             items = arg.replace('"', '').split('.')
@@ -316,10 +289,10 @@ if settings.USE_GIS:
 
     def google_map_proximity_filter(parser, token):
         try:
-            tag_name, args = token.contents.split(None, 1)
+            tag_name, args = token.contents.split(None, 1)  # pyflakes:ignore
             args = args.split()
         except ValueError:
-            tag_name = token.contents.split()[0]
+            tag_name = token.contents.split()[0]  # pyflakes:ignore
             args = []
         content_types = _get_content_types(args)
         return ProximityFilter(content_types)

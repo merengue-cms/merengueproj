@@ -53,7 +53,6 @@ LANGUAGES = (
 URL_DEFAULT_LANG = LANGUAGE_CODE
 
 SITE_ID = 1
-SITE_REGISTER_ID = 2
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -102,8 +101,6 @@ INSTALLED_APPS += (
     'website',
 )
 
-SVNDIR = path.join(BASEDIR, 'apps')
-
 TEST_DB_CREATION_SUFFIX = 'WITH TEMPLATE template_postgis'
 
 FIXTURE_DIRS = (
@@ -128,15 +125,8 @@ TINYMCE_EXTRA_MEDIA = {
    'css': [],
 }
 
-LOGOUT_PROTECTED_URL_REDIRECTS = (
-    #(r'^/regularexpresion/(.*)$', '/redirect_url'),
-)
-
 PRODUCTION_DB_URL = ""
 PRODUCTION_DB_UPDATE_PASSWORDS = (('admin', 'admin'), )
-
-# For transhette
-ENABLE_TRANSLATION_SUGGESTIONS = False
 
 # For johnny cache. Johnny cache key prefix should not be the same in other projects
 CACHE_BACKEND = 'johnny.backends.locmem:///'
@@ -146,6 +136,17 @@ JOHNNY_MIDDLEWARE_KEY_PREFIX = '%s-cache' % DATABASE_NAME
 DETECT_NEW_PLUGINS = True
 # if merengue will detect broken plugins
 DETECT_BROKEN_PLUGINS = True
+
+DEBUG_TOOLBAR_PANELS = (
+    #'debug_toolbar.panels.version.VersionDebugPanel',
+    #'debug_toolbar.panels.timer.TimerDebugPanel',
+    'debug_toolbar.panels.headers.HeaderDebugPanel',
+    'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
+    #'debug_toolbar.panels.sql.SQLDebugPanel',
+    #'debug_toolbar.panels.cache.CacheDebugPanel',
+    'debug_toolbar.panels.template.TemplateDebugPanel',
+    #'debug_toolbar.panels.logger.LoggingPanel',
+)
 
 # Allow overwriting any configuration in optional settings_local.py
 # (it can be used to set up your own database, debug and cache options, contact mails...)
