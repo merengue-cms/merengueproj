@@ -1,9 +1,7 @@
-{% if user.is_authenticated %}
-  {% load media_tags %}
-  {% addmedia "css" %}
-    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}merengue/css/collab/collab.css" />
-  {% endaddmedia %}
-  {% addmedia "js" %}
-    <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/collab/CollabComments.js"></script>
-  {% endaddmedia %}
-{% endif %}
+{% load media_tags %}
+{% addmedia "css" %}
+  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}merengue/css/collab/collab.css" />
+{% endaddmedia %}
+{% addmedia "js" %}
+  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/collab/CollabComments.js"></script>
+{% endaddmedia %}

@@ -1,8 +1,9 @@
-{% if user.is_authenticated %}
 {% load media_tags %}
 {% addmedia "css" %}
   <link href="{{ MEDIA_URL }}merengue/css/section/document.css" rel="stylesheet" type="text/css" />
 {% endaddmedia %}
+
+{% if user.is_authenticated %}
 {% addmedia "js" %}
   <script src="{{ MEDIA_URL }}cmsutils/js/widgets/tiny_mce/jquery.tinymce.js" type="text/javascript"></script>
   <script src="{{ MEDIA_URL }}merengue/js/section/DocumentSection.js" type="text/javascript"></script>
