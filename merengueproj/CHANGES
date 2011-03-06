@@ -2,7 +2,7 @@ Changes
 =======
 
 Version 0.7.0-rc1 (3978 revision)
------------------------------------
+---------------------------------
 
 * Permissions are now a related admin, placed into a different tab in admin UI. See #1570.
 * Links can be open in new windows. See #1582.
@@ -24,8 +24,9 @@ Version 0.7.0-rc1 (3978 revision)
  * Fixed oot error. See #1579.
  * Fixed south migration when tables already exist. See #1592.
  * Fixed ``migrate_plugins`` command in some circunstances. See #1595.
- * Fixed a viewlet error when request context is passed. See #1600.
+ * Fixed two viewlet errors. See #1600 and #1616.
  * Calendar block rendered using project locale. See #1609.
+ * Fixed 404 error in ``contactform`` plugin. See #1536.
 
 Version 0.7.0-beta4 (3913 revision)
 -----------------------------------
