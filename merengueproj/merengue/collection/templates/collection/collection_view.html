@@ -9,7 +9,7 @@
     {% if content.group_by %}
       {% collectionregroup items in content as grouped %}
       {% for group in grouped %}
-      <h2>{{ group.grouper }}</h2>
+      <h2>{{ group.grouper|default:"" }}</h2>
       <ul class="contentList collection-{{ collection.slug }} collectionGrouped collection-{{ collection.slug }}-groupedby-{{ content.groupby }}">
         {% for item in group.list %}
           {% collectionitem content item %}
