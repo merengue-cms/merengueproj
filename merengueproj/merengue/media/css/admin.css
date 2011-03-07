@@ -245,6 +245,10 @@ input.default[type="submit"],
     color: #917250;
 }
 
+.submit-row input {
+    float: right;
+}
+
 /* ----- related object tools ----- */
 #content-main ul.object-tools {
     float: left;
