@@ -18,8 +18,7 @@ from merengue.collection.models import (Collection, IncludeCollectionFilter,
                                         CollectionDisplayField,
                                         CollectionDisplayFieldFilter,
                                         FeedCollection, FeedItem)
-from merengue.collection.utils import get_common_fields_no_language, \
-                                                            get_common_fields
+from merengue.collection.utils import get_common_fields_no_language, get_common_fields
 from merengue.collection.forms import CollectionFilterForm, CollectionDisplayFilterForm
 
 

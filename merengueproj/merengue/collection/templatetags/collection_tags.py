@@ -2,13 +2,12 @@ from copy import copy
 
 from django.db.models import Q
 from django.core.exceptions import FieldError
-from django.template import TemplateSyntaxError, Variable, Library, Node, Context
-from django.template.defaultfilters import dictsort
+from django.template import TemplateSyntaxError, Library, Node, Context
 from django.template.defaulttags import RegroupNode
 
 from cmsutils.adminfilters import QueryStringManager
-from merengue.collection.models import FeedCollection
-from merengue.collection.utils import get_render_item_template
+from merengue.collection.models import Collection, FeedCollection
+from merengue.collection.utils import get_render_item_template, get_common_field_translated_name
 
 
 register = Library()
@@ -91,12 +90,12 @@ class CollectionItemsNode(Node):
                 items = self._filter_by_context(context, items)
             result = items
         elif isinstance(items, list):
-            result = []
+            result = Collection.objects.none()
             for queryset in items:
-                result += list(queryset)
+                result |= queryset
         else:
             result = items
-        return list(CollectionIterator(list(result)))
+        return items
 
     def _filter_by_multiple_filters(self, queryset, filters):
         if isinstance(filters, dict):
@@ -143,33 +142,39 @@ class CollectionItemsNode(Node):
         items = self._get_items(collection, context)
         context.update({self.var_name: items})
 
-        if not collection.group_by and not collection.order_by:
+        group_by_attr = get_common_field_translated_name(collection, collection.group_by)
+        order_by_attr = get_common_field_translated_name(collection, collection.order_by)
+
+        if not group_by_attr and not order_by_attr:
             return ''
 
-        def sort_func(x, y):
-            first = cmp(Variable(collection.group_by).resolve(x),
-                        Variable(collection.group_by).resolve(y))
+        if not order_by_attr and group_by_attr:
+            items = items.order_by(group_by_attr)
+            context.update({self.var_name: list(items)})
+            return ''
+
+        if not group_by_attr:
+            if collection.reverse_order:
+                result = items.order_by('-%s' % order_by_attr)
+            else:
+                result = items.order_by(order_by_attr)
+            context.update({self.var_name: result})
+            return ''
+
+        items_grouped = list(items.order_by(group_by_attr))
+        items_ordered = list(items.order_by(order_by_attr))
+
+        def sorting(x, y):
+            first = cmp(items_grouped.index(x), items_grouped.index(y))
             if first:
                 return first
-            second = cmp(Variable(collection.order_by).resolve(x),
-                         Variable(collection.order_by).resolve(y))
+            second = cmp(items_ordered.index(x), items_ordered.index(y))
             if collection.reverse_order:
                 return -second
             return second
 
-        if not collection.order_by and collection.group_by:
-            context.update({self.var_name: dictsort(items, collection.group_by)})
-            return ''
-
-        if not collection.group_by:
-            result = dictsort(items, collection.order_by)
-            if collection.reverse_order:
-                result.reverse()
-            context.update({self.var_name: result})
-            return ''
-
         result = list(items)
-        result.sort(sort_func)
+        result.sort(sorting)
         context.update({self.var_name: result})
         return ''
 

@@ -58,6 +58,30 @@ def get_common_fields(collection):
     return get_common_fields_for_cts(collection.content_types.all())
 
 
+def get_common_field_translated_name(collection, field):
+    """
+    Return the translation field if it exists for all collection models,
+    or the original field otherwise.
+    """
+    translatable = set()
+    common_fields = get_common_fields(collection)
+    checked = set()
+    models = list([ct.model_class() for ct in collection.content_types.all()])
+    while models:
+        m = models.pop()
+        if m not in checked:
+            if getattr(m, '_meta', None):
+                for f in getattr(m._meta, 'translatable_fields', []):
+                    translatable.add(f)
+                    models.extend(m.__bases__)
+        checked.add(m)
+    if field in translatable:
+        real_field = get_real_fieldname(field)
+        if real_field in common_fields:
+            return real_field
+    return field
+
+
 def create_normalize_collection(slug, name, model, create_display_field=True,
                                 create_filter_field=True):
     ct = ContentType.objects.get_for_model(model)
