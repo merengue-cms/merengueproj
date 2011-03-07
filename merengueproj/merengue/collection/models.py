@@ -32,8 +32,10 @@ FILTER_OPERATORS = (
     ('iendswith', _('Ends with (case-insensitive)')),
     ('lt', _('Less than')),
     ('lte', _('Less than or equal')),
+    ('date_lt', _('Less than (for dates objects)')),
     ('gt', _('Greater than')),
     ('gte', _('Greater than or equal')),
+    ('date_gt', _('Grater than (for dates objects)')),
     ('in', _('In (coma separated list)')),
     ('isnull', _('Is empty')),
 )
@@ -499,6 +501,18 @@ class CollectionFilter(models.Model):
         """
         return self.filter_value.lower() == 'true'
 
+    def _prepare_date_lt_value(self):
+        """
+        Custom method that add a new filter 'date_lt'
+        """
+        return datetime.datetime.now()
+
+    def _prepare_date_gt_value(self):
+        """
+        Custom method that add a new filter 'date_gt'
+        """
+        return datetime.datetime.now()
+
     def _prepare_value(self):
         """
         The property that returns the actually prepared value of the filter.
@@ -532,6 +546,26 @@ class CollectionFilter(models.Model):
         if not self.value:
             return isnull_q & ~is_empty_q
         return isnull_q | is_empty_q
+
+    def _get_date_lt_q_object(self):
+
+        field_lookup = Q(
+            (str('%s__lt') % self.filter_field, self.value),
+            ) | Q(
+            (str('%s__isnull') % self.filter_field, True),
+            )
+
+        return field_lookup
+
+    def _get_date_gt_q_object(self):
+
+        field_lookup = Q(
+            (str('%s__gt') % self.filter_field, self.value),
+            ) | Q(
+            (str('%s__isnull') % self.filter_field, True),
+            )
+
+        return field_lookup
 
     def get_q_object(self):
         """

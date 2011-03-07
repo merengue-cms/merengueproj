@@ -89,6 +89,8 @@ def create_normalize_collection(slug, name, model, create_display_field=True,
                     filter_params='15')
             collection.content_types.add(ct)
 
+    return collection
+
 
 def get_render_item_template(model_collection):
     template_list = []
