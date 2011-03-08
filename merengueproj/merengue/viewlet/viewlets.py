@@ -42,7 +42,7 @@ class Viewlet(RegistrableItem):
         for key, value in viewlet_context.items():
             if key not in context:
                 context[key] = value  # only set if key does not already exist
-        return render_to_string(template_name, viewlet_context,
+        return render_to_string(template_name, context,
                                 context_instance=RequestContext(request))
 
     def render(self, request, context=None):
