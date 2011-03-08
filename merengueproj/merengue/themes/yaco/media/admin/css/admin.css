@@ -166,3 +166,11 @@ ul#global-languageselector li.currentLangItem {
     color: #777;
     text-shadow: 1px 1px 0 white;
 }
+
+#content-main a.selector-chooseall {
+    background: transparent url(../img/selector-addall.gif) no-repeat left center;
+}
+
+#content-main a.selector-add {
+    background: transparent url(../img/selector-add.gif) no-repeat center top;
+}
