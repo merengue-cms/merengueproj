@@ -161,3 +161,8 @@ ul#global-languageselector li.currentLangItem {
     background: transparent url(../img/menu_bullet.png) no-repeat center left;
     padding-left: 12px;
 }
+
+#content-main .selector .selector-available h2 {
+    color: #777;
+    text-shadow: 1px 1px 0 white;
+}
