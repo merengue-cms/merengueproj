@@ -43,7 +43,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=News</td>
+	<td>link=Events</td>
 	<td></td>
 </tr>
 <tr>
@@ -63,28 +63,28 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=News</td>
+	<td>link=Event</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@id='content']/dl/dt[1]/a</td>
+	<td>link=Events</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Add news item</td>
+	<td>link=Add event</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id_name_en</td>
-	<td>Noticia CA15-CL01</td>
+	<td>Event CA15-CL01</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id_slug</td>
-	<td>noticia-ca15-cl01</td>
+	<td>event-ca15-cl01</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -92,9 +92,24 @@
 	<td>label=Publicado</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>id_body_en</td>
-	<td>noticia-ca15-cl01</td>
+	<td>click</td>
+	<td>link=Today</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Now</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//form[@id='event_form']/div/fieldset/div[11]/div/span[2]/p/span[1]/a[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//form[@id='event_form']/div/fieldset/div[11]/div/span[2]/p/span[2]/a[1]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -184,7 +199,7 @@
 <tr>
 	<td>select</td>
 	<td>id_contentlink-0-content</td>
-	<td>label=Noticia CA15-CL01</td>
+	<td>label=Event CA15-CL01</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -208,7 +223,7 @@
 </tr>
 <tr>
 	<td>assertTextPresent</td>
-	<td>Noticia CA15-CL01</td>
+	<td>Event CA15-CL01</td>
 	<td></td>
 </tr>
 <tr>
@@ -234,7 +249,7 @@
 <tr>
 	<td>select</td>
 	<td>id_viewletlink-0-viewlet</td>
-	<td>label=Latest news (latestnews)</td>
+	<td>label=All events (allevent)</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -248,7 +263,7 @@
 </tr>
 <tr>
 	<td>assertTextPresent</td>
-	<td>Noticia CA15-CL01</td>
+	<td>Event CA15-CL01</td>
 	<td></td>
 </tr>
 <tr>
@@ -278,17 +293,17 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=News</td>
-	<td></td>
-</tr>
-<tr>
-	<td>open</td>
-	<td>/admin/plugins.news/news/newsitem/</td>
+	<td>link=Event</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Noticia CA15-CL01</td>
+	<td>link=Events</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Event CA15-CL01</td>
 	<td></td>
 </tr>
 <tr>
@@ -313,7 +328,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=News</td>
+	<td>link=Events</td>
 	<td></td>
 </tr>
 <tr>
