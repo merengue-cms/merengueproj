@@ -17,7 +17,7 @@
 
 from merengue.base.forms import BaseModelForm
 
-from plugins.forum.models import ForumThreadComment
+from plugins.forum.models import ForumThreadComment, Thread
 
 
 class CaptchaForumThreadCommentForm(BaseModelForm):
@@ -28,3 +28,9 @@ class CaptchaForumThreadCommentForm(BaseModelForm):
 
     def __init__(self, user, *args, **kwargs):
         super(CaptchaForumThreadCommentForm, self).__init__(*args, **kwargs)
+
+
+class CreateThreadForm(BaseModelForm):
+    class Meta:
+        model = Thread
+        fields = ('name_es', 'description_es', 'tags', )

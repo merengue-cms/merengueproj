@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
+from django.template.defaultfilters import slugify
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
 
@@ -12,7 +13,7 @@ from merengue.perms.utils import has_permission
 from merengue.section.utils import get_section, filtering_in_section
 
 from plugins.forum.models import Forum, Thread, ForumThreadComment
-from plugins.forum.forms import CaptchaForumThreadCommentForm
+from plugins.forum.forms import CaptchaForumThreadCommentForm, CreateThreadForm
 
 
 PAGINATE_BY = 20
@@ -49,6 +50,27 @@ def thread_view(request, forum_slug, thread_slug, original_context=None):
         comments = comments.filter(banned=False)
     return content_view(request, thread, extra_context={'comments': comments,
                                                         'can_comment': not thread.closed and is_auth})
+
+
+@login_required
+def create_new_thread(request, forum_slug):
+    forum = get_object_or_404(Forum, slug=forum_slug)
+    if request.POST:
+        form = CreateThreadForm(request.POST)
+        if form.is_valid():
+            thread = form.save(commit=False)
+            thread.slug = slugify(thread.name)
+            thread.forum = forum
+            thread.user = request.user
+            thread.status = 'published'
+            thread.save()
+            return HttpResponseRedirect(thread.get_absolute_url())
+    else:
+        form = CreateThreadForm()
+
+    return render_to_response('forum/forum_create_thread.html', {
+            'form': form, 'forum': forum,
+            }, context_instance=RequestContext(request))
 
 
 @add_captcha(CaptchaForumThreadCommentForm)

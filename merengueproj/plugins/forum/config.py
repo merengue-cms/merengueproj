@@ -1,7 +1,8 @@
 from merengue.pluggable import Plugin
 
-from plugins.forum.models import Forum, ForumCategory
+from plugins.forum.actions import CreateThreadAction
 from plugins.forum.admin import ForumAdmin, ForumCategoryAdmin, ForumSectionAdmin
+from plugins.forum.models import Forum, ForumCategory
 
 
 class PluginConfig(Plugin):
@@ -24,10 +25,14 @@ class PluginConfig(Plugin):
     def section_models(self):
         return [(Forum, ForumSectionAdmin)]
 
+    def get_actions(self):
+        return [CreateThreadAction]
+
     def get_model_admins(self):
         return [(Forum, ForumAdmin),
                 (ForumCategory, ForumCategoryAdmin)]
 
     def get_perms(self):
         return (
-            ('Moderate forum', 'moderate_forum', [Forum]), )
+            ('Moderate forum', 'moderate_forum', [Forum]),
+            ('Create new thread', 'create_new_thread', [Forum]), )

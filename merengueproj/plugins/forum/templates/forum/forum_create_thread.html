@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <h1>{% trans "Create new thread" %} - {{ forum.name }}</h1>
+    <form class="forumForm" method="POST" action="{% url create_new_thread forum.slug %}">
+      <ul>
+        {{ form.as_ul_required }}
+      </ul>
+      <div class="submitline">
+        <input class="submit" type="submit" value="{% trans "Create thread" %}"/>
+      </div>
+    </form>
+{% endblock %}
