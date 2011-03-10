@@ -55,7 +55,11 @@ class ConfigWidget(widgets.MultiWidget):
 
     def decompress(self, value):
         if value and getattr(self.config, 'values', []):
-            return [param for param in self.config.values()]
+            param_list = []
+            for param in self.config.values():
+                param.value = value.get(param.name, param.value)
+                param_list.append(param)
+            return param_list
         # if all None we returns n-Nones
         return [None] * len(self.widgets)
 
