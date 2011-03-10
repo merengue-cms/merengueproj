@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-10-07 10:57+0200\n"
-"PO-Revision-Date: 2010-10-05 13:46\n"
+"PO-Revision-Date: 2011-03-07 17:47\n"
 "Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -33,20 +33,12 @@ msgid "limit for standingouts in block"
 msgstr "limitar para el bloque destacados"
 
 #: forms.py:30
-msgid ""
-"If you select the option in field standing out category you have to select a "
-"option in related field"
-msgstr ""
-"Si selecciona la opción en el campo de categoría destacada tienes que "
-"seleccionar una opción del campo relacionado."
+msgid "If you select the option in field standing out category you have to select a option in related field"
+msgstr "Si selecciona la opción en el campo de categoría destacada tienes que seleccionar una opción del campo relacionado."
 
 #: forms.py:35
-msgid ""
-"If you select the option in field related you have to select a option in "
-"standing out category field"
-msgstr ""
-"Si selecciona la opción en el campo relacionado tiene que seleccionar una "
-"opción en destacado del campo de categoría"
+msgid "If you select the option in field related you have to select a option in standing out category field"
+msgstr "Si selecciona la opción en el campo relacionado tiene que seleccionar una opción en destacado del campo de categoría"
 
 #: forms.py:46
 #, python-format
