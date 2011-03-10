@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from datetime import datetime
+
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.template import RequestContext
@@ -54,7 +56,8 @@ def news_by_date(request, year, month, day):
     news_collection = get_collection_news()
     extra_context = {'_filters_collection': dict(publish_date__year=year,
                                              publish_date__month=month,
-                                             publish_date__day=day)}
+                                             publish_date__day=day),
+                     'date': datetime(int(year), int(month), int(day))}
     return collection_view(request, news_collection, extra_context=extra_context,
                            template_name='news/news_index.html')
 
