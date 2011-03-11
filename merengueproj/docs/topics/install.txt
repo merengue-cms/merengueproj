@@ -34,6 +34,26 @@ Previous dependencies
 
     $ sudo apt-get install ffmpeg libavcodec-unstripped-52 libavdevice-unstripped-52 libavformat-unstripped-52 libavutil-unstripped-49 libpostproc-unstripped-51 libswscale-unstripped-0 yamdi
 
+PIL installation
+----------------
+
+The `Python Imaging Library`_ is usually one of the hardest components to
+install in a Python from python packages, because it need several system
+packages to compile properly all the image manipulation libraries.
+
+In Ubuntu/Debian environments, you will get PIL installed correctly if you
+install these dependencies:
+
+.. code-block:: bash
+
+    $ sudo apt-get install libfreetype6-dev
+    $ sudo apt-get install python-tk
+    $ sudo apt-get install tcl8.5-dev
+    $ sudo apt-get install tk8.5-dev
+    $ sudo apt-get install liblcms1-dev liblcms-utils
+
+.. _`Python Imaging Library`: http://www.pythonware.com/products/pil/
+
 Other recommended dependencies
 ------------------------------
 
