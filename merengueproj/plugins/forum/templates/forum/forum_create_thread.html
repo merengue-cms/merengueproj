@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{% extends "content_view.html" %}
 {% load i18n %}
 
 {% block content %}
-    <h1>{% trans "Create new thread" %} - {{ forum.name }}</h1>
-    <form class="forumForm" method="POST" action="{% url create_new_thread forum.slug %}">
+    <h1>{% trans "Create new thread" %} - {{ content.name }}</h1>
+    <form class="forumForm" method="POST" action="{% url create_new_thread content.slug %}">
       <ul>
         {{ form.as_ul_required }}
       </ul>

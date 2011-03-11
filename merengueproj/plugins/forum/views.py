@@ -69,7 +69,7 @@ def create_new_thread(request, forum_slug):
         form = CreateThreadForm()
 
     return render_to_response('forum/forum_create_thread.html', {
-            'form': form, 'forum': forum,
+            'form': form, 'content': forum,
             }, context_instance=RequestContext(request))
 
 
