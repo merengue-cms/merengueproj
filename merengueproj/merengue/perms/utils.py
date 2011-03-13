@@ -16,6 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 # django imports
+from django.conf import settings
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
@@ -224,8 +225,13 @@ def get_roles(principal, obj=None):
     if obj is not None:
         roles.extend(get_local_roles(obj, principal))
 
-        if principal in obj.owners.all():
-            roles.extend([Role.objects.get(name=u'Owner')])
+        owners = obj.owners.all()
+        if getattr(settings, 'ACQUIRE_SECTION_OWNERSHIP', False):
+            for s in obj.sections.all():
+                owners |= s.owners.all()
+
+        if principal in owners:
+            roles.append(Role.objects.get(name=u'Owner'))
 
     if isinstance(principal, User):
         for group in principal.groups.all():
@@ -283,7 +289,7 @@ def grant_permission(role, permission, obj=None):
     """
     if not isinstance(permission, Permission):
         try:
-            permission = Permission.objects.get(codename = permission)
+            permission = Permission.objects.get(codename=permission)
         except Permission.DoesNotExist:
             return False
 
@@ -317,7 +323,7 @@ def remove_permission(role, permission, obj=None):
     """
     if not isinstance(permission, Permission):
         try:
-            permission = Permission.objects.get(codename = permission)
+            permission = Permission.objects.get(codename=permission)
         except Permission.DoesNotExist:
             return False
 
@@ -325,7 +331,7 @@ def remove_permission(role, permission, obj=None):
         ct = ContentType.objects.get_for_model(obj)
 
     try:
-        op = ObjectPermission.objects.get(role=role, content=obj, permission = permission)
+        op = ObjectPermission.objects.get(role=role, content=obj, permission=permission)
     except ObjectPermission.DoesNotExist:
         return False
 
@@ -472,7 +478,7 @@ def add_inheritance_block(obj, permission):
     """
     if not isinstance(permission, Permission):
         try:
-            permission = Permission.objects.get(codename = permission)
+            permission = Permission.objects.get(codename=permission)
         except Permission.DoesNotExist:
             return False
 
@@ -501,7 +507,7 @@ def remove_inheritance_block(obj, permission):
     """
     if not isinstance(permission, Permission):
         try:
-            permission = Permission.objects.get(codename = permission)
+            permission = Permission.objects.get(codename=permission)
         except Permission.DoesNotExist:
             return False
 
@@ -530,7 +536,7 @@ def is_inherited(obj, codename):
     ct = ContentType.objects.get_for_model(obj)
     try:
         ObjectPermissionInheritanceBlock.objects.get(
-            content=obj, permission__codename = codename)
+            content=obj, permission__codename=codename)
     except ObjectDoesNotExist:
         return True
     else:

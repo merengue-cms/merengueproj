@@ -17,6 +17,7 @@
 
 from django.conf import settings
 from django.contrib import admin
+from django.db.models import Q
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
@@ -57,13 +58,28 @@ class BaseSectionAdmin(BaseOrderableAdmin, PermissionAdmin):
         """
         Overrides Django admin behaviour to add ownership based access control
         """
-        return self.has_add_permission(request)
+        if self.has_add_permission(request):
+            return True
+        else:
+            if getattr(settings, 'ACQUIRE_SECTION_OWNERSHIP', False):
+                if BaseSection.objects.filter(owners=request.user).count():
+                    return True
+        return False
 
     def has_delete_permission(self, request, obj=None):
         """
         Overrides Django admin behaviour to add ownership based access control
         """
         return self.has_add_permission(request)
+
+    def queryset(self, request):
+        qs = super(BaseSectionAdmin, self).queryset(request)
+        if self.has_add_permission(request):
+            return qs
+        elif self.has_change_permission(request):
+            return qs.filter(owners=request.user)
+        else:
+            return qs
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(BaseSectionAdmin, self).get_form(request, obj, **kwargs)

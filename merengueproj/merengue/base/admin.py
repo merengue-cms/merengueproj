@@ -21,6 +21,8 @@ from django import template
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.db import models
+from django.db.models import Q
+
 from django.db.models.related import RelatedObject
 from django.db.models.fields.related import ForeignKey
 from django.shortcuts import render_to_response
@@ -1004,6 +1006,13 @@ class BaseContentViewAdmin(BaseContentAdmin):
         is_allowed = super(BaseContentViewAdmin, self).lookup_allowed(lookup)
         return is_allowed or lookup == u'id__in'
 
+    def queryset(self, request):
+        qs = super(BaseContentAdmin, self).queryset(request)
+        if perms_api.has_global_permission(request.user, 'manage_portal'):
+            return qs
+        elif self.has_change_permission(request):
+            return qs.filter(Q(owners=request.user) | Q(sections__owners=request.user))
+
 
 class RelatedModelAdmin(BaseAdmin):
     """
@@ -1180,6 +1189,9 @@ class RelatedModelAdmin(BaseAdmin):
     def object_tools(self, request, mode, url_prefix):
         """ Object tools for the model admin """
         return BaseAdmin.object_tools(self, request, mode, url_prefix)
+
+    def has_add_permission(self, request):
+        return perms_api.has_permission(self.basecontent, request.user, 'edit')
 
 
 class BaseContentRelatedContactInfoAdmin(RelatedModelAdmin):

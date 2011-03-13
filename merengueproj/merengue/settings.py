@@ -167,6 +167,9 @@ DETECT_BROKEN_PLUGINS = True
 # The module to store session data
 SESSION_ENGINE = 'merengue.backends.db'
 
+# Users can manage sections they own and their related objects
+ACQUIRE_SECTION_OWNERSHIP = False
+
 # cache default settings
 CACHE_BACKEND = 'johnny.backends.locmem:///'
 CACHE_MIDDLEWARE_SECONDS = 3600 * 24
