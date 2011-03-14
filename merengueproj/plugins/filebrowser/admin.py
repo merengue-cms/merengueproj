@@ -1,5 +1,7 @@
-from merengue.base.admin import PluginAdmin, RelatedModelAdmin
+import os.path
+from django.utils.translation import ugettext_lazy as _
 
+from merengue.base.admin import PluginAdmin, RelatedModelAdmin
 from plugins.filebrowser.models import Repository, Document
 
 
@@ -28,6 +30,21 @@ class RepositorySectionModelAdmin(RepositoryModelAdmin, RelatedModelAdmin):
 
 class DocumentModelAdmin(PluginAdmin):
     ordering = ('id', )
+    list_display = ('__unicode__', 'repository', 'location_exists', )
+
+    def location_exists(self, obj=None):
+        return os.path.exists(obj.repository.get_absolute_path(obj.location))
+    location_exists.short_description = _("The repository folder exists")
+    location_exists.boolean = True
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(DocumentModelAdmin, self).get_form(request, obj, **kwargs)
+        if obj:
+            obj_location = os.path.join(obj.repository.get_root_path(), obj.location)
+            if not os.path.exists(obj_location):
+                msg = _("The location folder does not exist in the database. Save the document to create it.")
+                form.base_fields['location'].help_text = msg
+        return form
 
 
 def register(site):

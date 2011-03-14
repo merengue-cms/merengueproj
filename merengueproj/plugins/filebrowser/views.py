@@ -46,6 +46,7 @@ def root(request, repository_name,
 def listing(request, repository_name, path='',
             base_template=FILEBROWSER_BASE_TEMPLATE, url_prefix=None, errornote=''):
     repository = get_object_or_404(Repository, name=repository_name)
+    repository.rebuild_if_missing()
     if path and not repository.check_dir(path):
         raise Http404
 
@@ -71,7 +72,7 @@ def listing(request, repository_name, path='',
                                'documents': documents,
                                'url_prefix': url_prefix,
                                'edit_permission': edit_permission},
-                              context_instance = RequestContext(request))
+                              context_instance=RequestContext(request))
 
 
 @login_required_or_permission_denied
@@ -86,7 +87,7 @@ def createdir(request, repository_name, path='',
             errornote = _('You must introduce the name of the new folder')
         elif repository.check_dir(join(path, dirname)):
             errornote = _(u'Folder %(dirname)s already exists') % {'dirname': dirname}
-        if errornote: # si hay algun tipo de error
+        if errornote:  # si hay algun tipo de error
             return render_to_response('filebrowser/createdir.html',
                                       {'repository': repository,
                                        'base_template': base_template,
@@ -109,7 +110,7 @@ def createdir(request, repository_name, path='',
                                    'path': path,
                                    'parents': parents,
                                    'url_prefix': url_prefix},
-                                  context_instance = RequestContext(request))
+                                  context_instance=RequestContext(request))
 
 
 @login_required_or_permission_denied
@@ -136,7 +137,7 @@ def upload(request, repository_name, path='',
                                    'path': path,
                                    'parents': parents,
                                    'url_prefix': url_prefix},
-                                  context_instance = RequestContext(request))
+                                  context_instance=RequestContext(request))
 
 
 @login_required_or_permission_denied
@@ -221,7 +222,7 @@ def action(request, repository_name, path,
                                    'docs': docs,
                                    'url_prefix': url_prefix,
                                   },
-                                  context_instance = RequestContext(request))
+                                  context_instance=RequestContext(request))
     elif action == 'rename':
         repository.rename_elems(path, elems, old_elems)
         send_info(request, _('Elements renamed successfully'))
@@ -299,7 +300,7 @@ def viewdoc(request, repository_name, doc_slug,
                                 'doc_files': files,
                                 'doc_images': images,
                                 'url_prefix': url_prefix},
-                                context_instance = RequestContext(request))
+                                context_instance=RequestContext(request))
 
 
 @login_required_or_permission_denied

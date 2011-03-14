@@ -52,6 +52,9 @@ class Repository(models.Model):
 
     def save(self, force_insert=False, force_update=False):
         super(Repository, self).save(force_insert, force_update)
+        self.rebuild_if_missing()
+
+    def rebuild_if_missing(self):
         if not os.path.exists(get_root_location()):
             os.mkdir(get_root_location())
         if not os.path.exists(self.get_root_path()):
@@ -86,7 +89,7 @@ class Repository(models.Model):
         for l in os.listdir(absolute_path):
             fullpath = os.path.join(absolute_path, l)
             if l.startswith('.'):
-                continue # is hidden
+                continue  # is hidden
             if os.path.isdir(fullpath):
                 dirs.append(DirDesc(root_path, os.path.join(path, l)))
             elif os.path.isfile(fullpath):
@@ -177,6 +180,9 @@ class Document(models.Model):
         basedir = os.path.join(get_location(), str(self.id))
         if not os.path.exists(basedir):
             os.makedirs(basedir)
+        location = os.path.join(self.repository.get_root_path(), self.location)
+        if not os.path.exists(location):
+            os.makedirs(location)
 
     def delete(self):
         basedir = os.path.join(get_location(), str(self.id))
