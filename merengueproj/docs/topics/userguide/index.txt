@@ -246,6 +246,14 @@ you click it, the display will change to this:
 
 So you just have to drag and drop the blocks that you want to rearrange.
 
+Also you can configure the blocks if block define configuration parameters:
+
+.. image:: _images/tagcloud_block.png
+
+The configuration form appears in same interface:
+
+.. image:: _images/tagcloud_config.png
+
 Blocks in specific contents
 ---------------------------
 

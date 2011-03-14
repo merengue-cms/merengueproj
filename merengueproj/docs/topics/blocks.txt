@@ -212,6 +212,46 @@ the block in your home page, you should write:
   ^/$
 
 
+Configuring a block
+-------------------
+
+Some blocks can be configured in public view. In example, you may configure a
+block which list latest contents added with a ``limit`` parameter to configure
+it:
+
+.. code-block:: python
+
+    class LatestAddedBlock(Block):
+        name = 'latestadded'
+        verbose_name = _('Latest added contents')
+        default_place = 'leftsidebar'
+
+        config_params = [
+            params.PositiveInteger(
+                name='limit',
+                label=_('number of contents to show'),
+                default=5,
+            ),
+        ]
+
+        def render(self, request, place, context, *args, **kwargs):
+            limit = self.get_config()['limit'].get_value()
+            content_list = BaseContent.objects.all().order_by('-creation_date')[:limit]
+            return self.render_block(request, template_name='fooplugin/block_latest.html',
+                                     block_title=ugettext('Latest added contents'),
+                                     context={'content_list': content_list})
+
+The ``limit`` configuration parameter is used in render method to limit the
+queryset. If you are logged as admin user in public interface, you will see a
+configuration icon if you enter the mouse over the block:
+
+.. image:: _images/latest_added_block.png
+
+If you click in configuration icon Merengue will show a form to config the
+block:
+
+.. image:: _images/latest_added_block_config.png
+
 How to register the block
 -------------------------
 
