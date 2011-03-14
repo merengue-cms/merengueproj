@@ -53,13 +53,30 @@ def _calculate_route(context, only_initial=False):
     return None
 
 
+class FalseOpts(object):
+    app_label = ''
+    verbose_name = ''
+    verbose_name_plural = ''
+    module_name = ''
+
+
 def advanced_breadcrumbs(context):
     add = context.get('add', None)
     route = _calculate_route(context)
     if not route:
+        opts = context.get('opts') or (context.get('cl') and context.get('cl').opts)
+        if not opts:
+            obj = context.get('original', None) or context.get('object', None)
+            if obj:
+                opts = obj._meta
+            else:
+                opts = FalseOpts()
+                opts.module_name = context.get('module_name', '').lower()
+                opts.app_label = context.get('app_label', '')
+
         route = [{'admin': None,
-                  'obj': context.get('original'),
-                  'opts': context.get('opts') or context.get('cl').opts,
+                  'obj': context.get('original') or context.get('object'),
+                  'opts': opts,
                   'site': None,
                   'tool_name': None}]
     url_list = []
