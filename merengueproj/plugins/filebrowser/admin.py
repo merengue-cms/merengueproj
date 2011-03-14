@@ -30,7 +30,11 @@ class RepositorySectionModelAdmin(RepositoryModelAdmin, RelatedModelAdmin):
 
 class DocumentModelAdmin(PluginAdmin):
     ordering = ('id', )
-    list_display = ('__unicode__', 'repository', 'location_exists', )
+    list_display = ('__unicode__', 'repository_name', 'location_exists', )
+
+    def repository_name(self, obj=None):
+        return obj.repository.name
+    repository_name.short_description = _("Repository")
 
     def location_exists(self, obj=None):
         return os.path.exists(obj.repository.get_absolute_path(obj.location))
