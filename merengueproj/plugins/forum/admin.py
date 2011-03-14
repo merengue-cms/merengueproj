@@ -49,6 +49,9 @@ class ThreadRelatedAdmin(RelatedModelAdmin, BaseContentAdmin):
             request.path = obj.get_admin_absolute_url()
         return super(ThreadRelatedAdmin, self).response_change(request, obj)
 
+    def has_change_permission(self, request, obj=None):
+        return self.has_add_permission(request)
+
 
 class ForumThreadCommentRelatedAdmin(RelatedModelAdmin):
     related_field = 'thread'

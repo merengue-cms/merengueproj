@@ -317,7 +317,10 @@ class RelatedBaseMultimediaAdmin(OrderableRelatedModelAdmin):
         """
             Overrides Django admin behaviour to add ownership based access control
         """
-        return perms_api.can_manage_multimedia(request.user)
+        if perms_api.can_manage_multimedia(request.user):
+            return True
+        else:
+            return perms_api.has_permission(self.basecontent, request.user, perms_api.MANAGE_MULTIMEDIA_PERMISSION)
 
     def has_change_permission(self, request, obj=None):
         """
