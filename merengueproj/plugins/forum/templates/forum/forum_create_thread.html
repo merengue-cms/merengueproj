@@ -1,5 +1,11 @@
 {% extends "content_view.html" %}
-{% load i18n %}
+{% load i18n content_tags %}
+
+  {% block contentbreadcrumbs %}
+        <span class="breadcrumbSeparator">→</span>
+        <a href="" title="{% trans "Create new thread" %} - {{ content.name }}">{% cutrender %}{% trans "Create new thread" %} - {{ content.name }}{% endcutrender %}</a>
+  {% endblock %}
+
 
 {% block content %}
     <h1>{% trans "Create new thread" %} - {{ content.name }}</h1>
