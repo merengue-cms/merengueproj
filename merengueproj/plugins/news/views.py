@@ -31,7 +31,7 @@ from plugins.news.models import NewsItem, NewsCategory
 NEWS_COLLECTION_SLUG = 'news'
 
 
-def news_index(request, queryset=None, extra_context=None, template_name='news/news_index.html'):
+def news_index(request, extra_context=None, template_name='news/news_index.html'):
     news_collection = get_collection_news()
     return collection_view(request, news_collection, extra_context=extra_context, template_name=template_name)
 
@@ -71,5 +71,4 @@ def get_news(request=None, limit=None, filtering_section=None):
 
 
 def get_collection_news():
-    return Collection.objects.get(
-        slug=NEWS_COLLECTION_SLUG)
+    return get_object_or_404(Collection, slug=NEWS_COLLECTION_SLUG)
