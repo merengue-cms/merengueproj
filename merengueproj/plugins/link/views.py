@@ -26,7 +26,7 @@ LINK_COLLECTION_SLUG = 'links'
 
 
 def link_index(request, extra_context=None, template_name='link/link_index.html'):
-    link_collection = Collection.objects.get(slug=LINK_COLLECTION_SLUG)
+    link_collection = get_object_or_404(Collection, slug=LINK_COLLECTION_SLUG)
     extra_context = extra_context or {}
     return content_view(request, link_collection, extra_context=extra_context, template_name=template_name)
 
