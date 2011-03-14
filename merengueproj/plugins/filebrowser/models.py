@@ -38,6 +38,10 @@ class Repository(models.Model):
         verbose_name = _(u'repository')
         verbose_name_plural = _(u'repositories')
 
+    def __init__(self, *args, **kwargs):
+        super(Repository, self).__init__(*args, **kwargs)
+        self.rebuild_if_missing()
+
     def __unicode__(self):
         return u'Repository at %s' % self.get_root_path()
 

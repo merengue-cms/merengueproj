@@ -46,7 +46,6 @@ def root(request, repository_name,
 def listing(request, repository_name, path='',
             base_template=FILEBROWSER_BASE_TEMPLATE, url_prefix=None, errornote=''):
     repository = get_object_or_404(Repository, name=repository_name)
-    repository.rebuild_if_missing()
     if path and not repository.check_dir(path):
         raise Http404
 
