@@ -495,6 +495,8 @@ class BaseContent(BaseClass):
         from merengue.pluggable.utils import get_plugin_config
         plugin_dir = self._meta.app_label
         plugin_config = get_plugin_config(plugin_dir)
+        if plugin_config is None:
+            return None  # item model is outside plugin... no first item generated
         url_prefix = plugin_config.url_prefixes[0][0]
         if isinstance(url_prefix, dict):
             url_prefix = url_prefix.get(get_url_default_lang(), 'en')
