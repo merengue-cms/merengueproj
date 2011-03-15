@@ -95,7 +95,14 @@ class Repository(models.Model):
             if l.startswith('.'):
                 continue  # is hidden
             if os.path.isdir(fullpath):
-                dirs.append(DirDesc(root_path, os.path.join(path, l)))
+                item_path = os.path.join(path, l)
+                desc = DirDesc(root_path, item_path)
+                if item_path.endswith('/'):
+                    location = item_path
+                else:
+                    location = item_path + '/'
+                desc.childnumber += Document.objects.filter(location=location).count()
+                dirs.append(desc)
             elif os.path.isfile(fullpath):
                 files.append(FileDesc(root_path, os.path.join(path, l)))
         parents = []
