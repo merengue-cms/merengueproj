@@ -52,7 +52,7 @@ def main_admin_tabs(context):
         if path.startswith(start):
             selected = section
             break
-    return {'selected': selected}
+    return {'selected': selected, 'request': request}
 main_admin_tabs = register.inclusion_tag('admin/main_admin_tabs.html', takes_context=True)(main_admin_tabs)
 
 
