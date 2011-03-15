@@ -1,6 +1,6 @@
 {% extends "block.html" %}
 
-{% load i18n inlinetrans html_tags stringfilters %}
+{% load i18n inlinetrans html_tags stringfilters inplace_edit %}
 
 {% block blocktitle %}
   {% if contact_info %}
@@ -13,41 +13,41 @@
     {% if contact_info.name %}
 	<span  class="contactName">
     <strong>{% inline_trans "Name" %}:</strong>
-    {{ contact_info.name }}
+    {% inplace_edit "contact_info.name" %}
     </span>
     {% endif %}
     {% if contact_info.phone %}
     <span class="contactPhone">
     <strong>{% inline_trans "Phone" %}:</strong>
-    {{ contact_info.phone }}
+    {% inplace_edit "contact_info.phone" %}
     </span>
     {% endif %}
 
     {% if contact_info.phone2 %}
     <span class="contactPhone">
     <strong>{% inline_trans "Phone 2" %}:</strong>
-    {{ contact_info.phone2 }}
+    {% inplace_edit "contact_info.phone2" %}
     </span>
     {% endif %}
 
     {% if contact_info.fax %}
     <span class="contactPhone">
     <strong>{% inline_trans "Fax" %}:</strong>
-    {{ contact_info.fax }}
+    {% inplace_edit "contact_info.fax" %}
     </span>
     {% endif %}
 
     {% if contact_info.contact_email %}
     <span class="contactEmail">
     <strong>{% inline_trans "Email" %}:</strong>
-    <a href="mailto:{{ contact_info.contact_email }}" title="{{ contact_info.contact_email }}">{{ contact_info.contact_email|truncatechars:42 }}</a>
+    <a href="mailto:{{ contact_info.contact_email }}" title="{{ contact_info.contact_email }}">{% inplace_edit "contact_info.contact_email" filters_to_show="|truncatechars:42" %}</a>
     </span>
     {% endif %}
 
     {% if contact_info.contact_email2 %}
     <span class="contactEmail">
     <strong>{% inline_trans "Email 2" %}:</strong>
-    <a href="mailto:{{ contact_info.contact_email2 }}" title="{{ contact_info.contact_email2 }}" >{{ contact_info.contact_email2|truncatechars:42 }}</a>
+    <a href="mailto:{{ contact_info.contact_email2 }}" title="{{ contact_info.contact_email2 }}" >{% inplace_edit "contact_info.contact_email2" filters_to_show="truncatechars:42" %}</a>
     </span>
     {% endif %}
 
