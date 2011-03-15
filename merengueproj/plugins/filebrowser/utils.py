@@ -20,7 +20,10 @@ class DirDesc(PathDesc):
 
     def __init__(self, root, path):
         super(DirDesc, self).__init__(root, path)
-        childs = os.listdir(join(root, path))
+        childs = []
+        for i in os.listdir(join(root, path)):
+            if os.path.exists(os.path.join(join(root, path), i)):
+                childs.append(i)
         self.childnumber = len(childs)
         if not self.path.endswith('/'):
             self.path += '/'
