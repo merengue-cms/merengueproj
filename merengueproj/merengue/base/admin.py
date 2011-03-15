@@ -697,16 +697,15 @@ class StatusControlProvider(object):
         options = set()
         all_options = set(settings.STATUS_LIST)
 
-        if hasattr(obj, 'owners'):
-            if not obj or user in obj.owners.all():
-                options = options.union([o for o in all_options if o[0] in ('draft', 'pending')])
-
         # if there's not an object yet, we'll try to get the permissions for the section
         if not obj:
             try:
                 obj = self.basecontent
             except AttributeError:
                 pass
+        if perms_api.has_permission(obj, user, 'edit'):
+            options = options.union([o for o in all_options if o[0] in ('draft', 'pending')])
+
         # Remember that superuser has all the perms
         if perms_api.has_permission(obj, user, 'can_draft'):
             options = options.union([o for o in all_options if o[0] == 'draft'])
