@@ -58,7 +58,7 @@ class BaseSectionAdmin(BaseOrderableAdmin, PermissionAdmin):
         """
         Overrides Django admin behaviour to add ownership based access control
         """
-        if self.has_add_permission(request):
+        if perms_api.has_global_permission(request.user, 'manage_section'):
             return True
         else:
             if getattr(settings, 'ACQUIRE_SECTION_OWNERSHIP', False):
@@ -70,16 +70,16 @@ class BaseSectionAdmin(BaseOrderableAdmin, PermissionAdmin):
         """
         Overrides Django admin behaviour to add ownership based access control
         """
-        return self.has_add_permission(request)
+        return perms_api.has_global_permission(request.user, 'manage_section')
 
     def queryset(self, request):
         qs = super(BaseSectionAdmin, self).queryset(request)
-        if self.has_add_permission(request):
+        if perms_api.has_global_permission(request.user, 'manage_portal'):
             return qs
         elif self.has_change_permission(request):
-            return qs.filter(owners=request.user)
+            return qs.filter(Q(owners=request.user))
         else:
-            return qs
+            return qs.none()
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(BaseSectionAdmin, self).get_form(request, obj, **kwargs)
