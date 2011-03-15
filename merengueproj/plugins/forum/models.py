@@ -98,7 +98,7 @@ class ForumThreadComment(models.Model):
     user = models.ForeignKey(User)
 
     # Content Fields
-    title = models.CharField(max_length=255)
+    title = models.CharField(_('title'), max_length=255)
     comment = models.TextField(_('comment'))
 
     # Meta Fields
