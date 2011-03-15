@@ -65,6 +65,20 @@ def event_list(request, year=None, month=None, day=None, queryset=None,
     return collection_view(request, event_collection, extra_context=context, template_name=template_name)
 
 
+def event_historic(request, queryset=None, extra_context=None,
+               template_name='event/event_historic.html'):
+    filters = {}
+    event_collection = get_collection_event()
+
+    today = datetime.datetime.now()
+    filters = Q(end__lte=today)
+
+    context = {'_filters_collection': filters}
+    extra_context = extra_context or {}
+    context.update(extra_context)
+    return collection_view(request, event_collection, extra_context=context, template_name=template_name)
+
+
 def events_calendar(request):
     mimetype = "application/json"
     if (request.GET and 'month' in request.GET

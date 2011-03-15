@@ -21,6 +21,7 @@ from merengue.urlresolvers import merengue_url as url
 
 urlpatterns = patterns('plugins.event.views',
     url(r'^$', 'event_list', name='event_list'),
+    url(r'^$', 'event_historic', name='event_historic'),
     url(r'^(?P<event_slug>[\w-]+)/$', 'event_view', name='event_view'),
     url(r'^(?P<year>[\d-]+)/(?P<month>[\d-]+)/(?P<day>[\d-]+)/$', 'event_list', name='event_list'),
     url({'en': r'^calendar/ajax/$',
