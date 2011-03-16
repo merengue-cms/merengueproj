@@ -61,9 +61,8 @@ class BaseSectionAdmin(BaseOrderableAdmin, PermissionAdmin):
         if perms_api.has_global_permission(request.user, 'manage_section'):
             return True
         else:
-            if getattr(settings, 'ACQUIRE_SECTION_OWNERSHIP', False):
-                if BaseSection.objects.filter(owners=request.user).count():
-                    return True
+            if BaseSection.objects.filter(owners=request.user).count():
+                return True
         return False
 
     def has_delete_permission(self, request, obj=None):
