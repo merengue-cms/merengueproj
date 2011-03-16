@@ -19,6 +19,7 @@ from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
 
 import merengue
+from merengue.perms.utils import can_manage_site
 from merengue.uitools import panels
 
 
@@ -30,6 +31,10 @@ class InplaceEditPanel(panels.Panel):
 
 
 class InlineTransPanel(panels.Panel):
+
+    def show(self, context):
+        user = getattr(context.get('request', None), 'user', None)
+        return user and can_manage_site(user)
 
     def render(self, context):
         return render_to_string('core/panels/inlinetrans.html', context)
