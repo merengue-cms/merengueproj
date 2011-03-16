@@ -14,6 +14,13 @@ from merengue.collection.utils import get_render_item_template, get_common_field
 register = Library()
 
 
+def _get_group_by_value(group_by):
+    if isinstance(group_by, Manager):
+        objects_related = group_by.all()
+        return objects_related and objects_related[0] or ''
+    return group_by
+
+
 class CollectionIterator(list):
 
     def __iter__(self):
@@ -143,8 +150,11 @@ class CollectionItemsNode(Node):
         items = self._get_items(collection, context)
         context.update({self.var_name: items})
 
+        group_by_attr = context.get('_group_by_collection',
+                                    get_common_field_translated_name(collection, collection.group_by))
         group_by_attr = get_common_field_translated_name(collection, collection.group_by)
-        order_by_attr = get_common_field_translated_name(collection, collection.order_by)
+        order_by_attr = context.get('_order_by_collection',
+                                    get_common_field_translated_name(collection, collection.order_by))
 
         if not group_by_attr and not order_by_attr:
             return ''
@@ -162,18 +172,17 @@ class CollectionItemsNode(Node):
             context.update({self.var_name: result})
             return ''
 
-        items_grouped = list(items.order_by(group_by_attr))
         items_ordered = list(items.order_by(order_by_attr))
 
         def sorting(x, y):
-            first = cmp(items_grouped.index(x), items_grouped.index(y))
+            first = cmp(_get_group_by_value(getattr(x, group_by_attr)),
+                        _get_group_by_value(getattr(y, group_by_attr)))
             if first:
                 return first
             second = cmp(items_ordered.index(x), items_ordered.index(y))
             if collection.reverse_order:
                 return -second
             return second
-
         result = list(items)
         result.sort(sorting)
         context.update({self.var_name: result})
@@ -204,11 +213,7 @@ class CollectionRegroupNode(RegroupNode):
 
     def _group_by(self, value, ignore_failures):
         group_by = self.expression.resolve_original(value, ignore_failures)
-        if isinstance(group_by, Manager):
-            objects_related = group_by.all()
-            return objects_related and objects_related[0] or ''
-        else:
-            return group_by
+        return _get_group_by_value(group_by)
 
     def render(self, context):
         collection = self.collection.resolve(context, True)
