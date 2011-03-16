@@ -848,6 +848,11 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
                     form.base_fields['status'].initial = default_status
             else:
                 form.base_fields.pop('status')
+        if 'owners' in keys:
+            owners_field = form.base_fields['owners']
+            if owners_field.initial is None:
+                # user automatically get owner of this object
+                owners_field.initial = (request.user.id, )
         if obj and obj.no_changeable_fields:
             no_changeable_fields = obj.no_changeable_fields
             for name in no_changeable_fields:
@@ -868,9 +873,6 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
         obj.user_modification_date = datetime.datetime.today()
 
         super(BaseContentAdmin, self).save_model(request, obj, form, change)
-
-        # user automatically get owner of this object
-        obj.owners.add(request.user)
 
     def formfield_for_dbfield(self, db_field, **kwargs):
         field = super(BaseContentAdmin, self).formfield_for_dbfield(db_field, **kwargs)
