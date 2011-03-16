@@ -16,7 +16,8 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf import settings
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext
+from django.utils.translation import ugettext_lazy as _
 
 from merengue.block.blocks import Block, ContentBlock
 from merengue.registry import params
@@ -56,7 +57,7 @@ class CoreMenuBlock(BaseMenuBlock, Block):
         if not section or not descendants:
             return ''  # renders nothing
         return self.render_block(request, template_name='core/block_menu.html',
-                                 block_title=_('Menu'),
+                                 block_title=ugettext('Menu'),
                                  context={'section': section,
                                           'menu': main_menu,
                                           'descendants': descendants,
@@ -75,7 +76,7 @@ class NavigationBlock(BaseMenuBlock, Block):
         if not sections:
             return ''  # renders nothing
         return self.render_block(request, template_name='core/block_navigation.html',
-                                 block_title=_('Navigation'),
+                                 block_title=ugettext('Navigation'),
                                  context={'sections': sections,
                                           'active_section': section,
                                           'max_num_level': self.get_max_level()})
@@ -90,7 +91,7 @@ class PortalMenuBlock(BaseMenuBlock, Block):
     def render(self, request, place, context, *args, **kwargs):
         portal_menu = Menu.objects.get(slug=settings.MENU_PORTAL_SLUG)
         return self.render_block(request, template_name='core/block_portal_menu.html',
-                                 block_title=_('Portal Menu'),
+                                 block_title=ugettext('Portal Menu'),
                                  context={'portal_menu': portal_menu,
                                           'max_num_level': self.get_max_level()})
 
@@ -105,7 +106,7 @@ class LinkBaseBlock(Block):
     def render(self, request, place, context, *args, **kwargs):
         links = PortalLink.objects.filter(category=self.category)
         return self.render_block(request, template_name=self.template_name,
-                                block_title=_('Portal links'),
+                                block_title=ugettext('Portal links'),
                                 context={'links': links,
                                          'category': self.category})
 
@@ -140,7 +141,7 @@ class ContactInfoBlock(ContentBlock):
     def render(self, request, place, content, context, *args, **kwargs):
         return self.render_block(
             request, template_name='core/block_contact_info.html',
-            block_title=_('Contact info'),
+            block_title=ugettext('Contact info'),
             context={'contact_info': content.contact_info})
 
 
@@ -158,5 +159,28 @@ class AnnouncementsBlock(ContentBlock):
 
         return self.render_block(
             request, template_name='core/block_announcements.html',
-            block_title=_('Announcements'),
+            block_title=ugettext('Announcements'),
             context={'site_wide_announcements': announcements})
+
+
+from merengue.base.models import BaseContent
+
+class LatestAddedBlock(Block):
+    name = 'latestadded'
+    verbose_name = _('Latest added contents')
+    default_place = 'leftsidebar'
+
+    config_params = [
+        params.PositiveInteger(
+            name='limit',
+            label=_('number of contents to show'),
+            default=5,
+        ),
+    ]
+
+    def render(self, request, place, context, *args, **kwargs):
+        limit = self.get_config()['limit'].get_value()
+        content_list = BaseContent.objects.all().order_by('-creation_date')[:limit]
+        return self.render_block(request, template_name='fooplugin/block_latest.html',
+                                 block_title=ugettext('Latest added contents'),
+                                 context={'content_list': content_list})
