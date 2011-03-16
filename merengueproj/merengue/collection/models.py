@@ -48,7 +48,10 @@ def _get_value(field, field_name, item):
     for vfilter in field.collectiondisplayfieldfilter_set.all().order_by('filter_order'):
         filter_module_name, filter_module_function = vfilter.filter_module.rsplit('.', 1)
         func = getattr(import_module(filter_module_name), filter_module_function, None)
-        value = func(value, *vfilter.filter_params.split(','))
+        if vfilter.filter_params:
+            value = func(value, *vfilter.filter_params.split(','))
+        else:
+            value = func(value)
     return value
 
 
@@ -682,6 +685,8 @@ class CollectionDisplayFieldFilter(models.Model):
     filter_params = models.CharField(
         max_length=250,
         verbose_name=_(u'Filter params'),
+        blank=True,
+        default='',
         )
 
     filter_order = models.IntegerField(

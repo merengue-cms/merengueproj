@@ -27,6 +27,7 @@ DEFAULT_FILTERS = (
     ('django.template.defaultfilters.truncatewords', _('Truncate words'), ),
     ('django.template.defaultfilters.truncatewords_html', _('Truncate words HTML'), ),
     ('cmsutils.templatetags.stringfilters.truncatechars', _('Truncate chars'), ),
+    ('django.template.defaultfilters.striptags', _('Strip tags'), ),
 )
 
 
