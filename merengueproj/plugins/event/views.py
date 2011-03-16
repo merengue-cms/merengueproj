@@ -73,7 +73,9 @@ def event_historic(request, queryset=None, extra_context=None,
     today = datetime.datetime.now()
     filters = Q(end__lte=today)
 
-    context = {'_filters_collection': filters}
+    context = {'_filters_collection': filters,
+               '_group_by_collection': None,
+               '_order_by_collection': '-end'}
     extra_context = extra_context or {}
     context.update(extra_context)
     return collection_view(request, event_collection, extra_context=context, template_name=template_name)

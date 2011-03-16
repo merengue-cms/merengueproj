@@ -5,3 +5,12 @@
 {% block pagetitle %}{% trans "Past Events" %}{% endblock %}
 
 {% block listtitle %}{% inline_trans "Past events" %}{% endblock %}
+
+{% block contenttitletext %}{% inline_trans "Past events" %}{% endblock %}
+
+{% block extrabreadcrumbs %}
+    <span class="breadcrumbSeparator">→</span>
+    <a href="../" title="{% trans "Events" %}">{% inline_trans "Event" %}</a>
+    <span class="breadcrumbSeparator">→</span>
+    <a href="." title="{% trans "Past events" %}">{% inline_trans "Past" %}</a>
+{% endblock %}
