@@ -41,7 +41,7 @@
 
   {% block contenttitle %}
     <div id="content-title" class="{{ content.class_name }}">
-      <h1 title="{{ content.name }}">{% cutrender %}{{ content }}{% endcutrender %}</h1>
+      <h1 title="{{ content.name }}">{% block contenttitletext %}{% cutrender %}{{ content }}{% endcutrender %}{% endblock %}</h1>
     </div>
     {% render_all_blocks "aftercontenttitle" %}
   {% endblock %}
