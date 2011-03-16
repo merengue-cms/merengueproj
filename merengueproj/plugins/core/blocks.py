@@ -161,26 +161,3 @@ class AnnouncementsBlock(ContentBlock):
             request, template_name='core/block_announcements.html',
             block_title=ugettext('Announcements'),
             context={'site_wide_announcements': announcements})
-
-
-from merengue.base.models import BaseContent
-
-class LatestAddedBlock(Block):
-    name = 'latestadded'
-    verbose_name = _('Latest added contents')
-    default_place = 'leftsidebar'
-
-    config_params = [
-        params.PositiveInteger(
-            name='limit',
-            label=_('number of contents to show'),
-            default=5,
-        ),
-    ]
-
-    def render(self, request, place, context, *args, **kwargs):
-        limit = self.get_config()['limit'].get_value()
-        content_list = BaseContent.objects.all().order_by('-creation_date')[:limit]
-        return self.render_block(request, template_name='fooplugin/block_latest.html',
-                                 block_title=ugettext('Latest added contents'),
-                                 context={'content_list': content_list})
