@@ -843,8 +843,9 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
             options = self._get_status_options(user, obj)
             if options:
                 form.base_fields['status'].choices = options
-                if 'pending' in [o[0] for o in options]:
-                    form.base_fields['status'].initial = 'pending'
+                default_status = getattr(settings, 'DEFAULT_STATUS', 'pending')
+                if default_status in [o[0] for o in options]:
+                    form.base_fields['status'].initial = default_status
             else:
                 form.base_fields.pop('status')
         if obj and obj.no_changeable_fields:
