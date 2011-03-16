@@ -55,7 +55,7 @@ def thread_view(request, forum_slug, thread_slug, original_context=None):
 
 def create_new_thread(request, forum_slug):
     forum = get_object_or_404(Forum, slug=forum_slug)
-    if not request.user or (not request.user.is_superuser or not has_permission(forum, request.user, 'create_new_thread')):
+    if not request.user or not (request.user.is_superuser or has_permission(forum, request.user, 'create_new_thread')):
         login_url = '%s?next=%s' % (reverse('merengue_login'),
                                     request.get_full_path())
         return HttpResponseRedirect(login_url)
