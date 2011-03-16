@@ -57,7 +57,7 @@ def listing(request, repository_name, path='',
     documents = Document.objects.filter(repository=repository,
                                         location=location)
 
-    edit_permission = request.user.is_superuser
+    edit_permission = request.user.is_staff
 
     return render_to_response('filebrowser/listing.html',
                               {'repository': repository,

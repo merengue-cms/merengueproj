@@ -21,7 +21,7 @@
 </div>
 
 <div class="object-buttons">
-{% if user.is_superuser %}
+{% if user.is_staff %}
 <ul><li class="docEdit">
 <a href="{% filebrowser_url plugins.filebrowser.views.editdoc repository_name=repository.name,doc_slug=document.slug %}"><span>{% inline_trans "Edit" %}</span></a>
 </li>
