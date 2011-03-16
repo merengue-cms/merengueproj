@@ -32,6 +32,8 @@ from merengue.perms.models import Permission
 from merengue.perms.models import PrincipalRoleRelation
 from merengue.perms.models import Role
 
+from merengue.section.models import BaseSection
+
 MANAGE_SITE_PERMISION = 'manage_site'
 MANAGE_USER_PERMISION = 'manage_user'
 MANAGE_MULTIMEDIA_PERMISSION = 'manage_multimedia'
@@ -202,6 +204,30 @@ def remove_local_roles(obj, principal):
         return False
 
 
+def _get_owners(obj):
+    """Returns the object owners.
+    If the obj model does not support owners, returns the related basecontent owners.
+    If ACQUIRE_SECTION_OWNERSHIP is set, the section owners are also added.
+    """
+    if getattr(obj, 'owners', None):
+        owners = obj.owners.all()
+    else:
+        owners = User.objects.none()
+        for bc in obj.basecontent_set.all():
+            owners |= bc.owners.all()
+
+    if getattr(settings, 'ACQUIRE_SECTION_OWNERSHIP', False):
+        if getattr(obj, 'sections', None):
+            sections = obj.sections.all()
+        else:
+            sections = BaseSection.objects.none()
+            for bc in obj.basecontent_set.all():
+                sections |= bc.sections.all()
+        for s in sections.all():
+            owners |= s.owners.all()
+    return owners
+
+
 def get_roles(principal, obj=None):
     """Returns all roles of passed user for passed content object. This takes
     direct and roles via a group into account. If an object is passed local
@@ -220,12 +246,7 @@ def get_roles(principal, obj=None):
     if obj is not None:
         roles.extend(get_local_roles(obj, principal))
 
-        owners = obj.owners.all()
-        if getattr(settings, 'ACQUIRE_SECTION_OWNERSHIP', False):
-            for s in obj.sections.all():
-                owners |= s.owners.all()
-
-        if principal in owners:
+        if principal in _get_owners(obj):
             roles.append(Role.objects.get(name=u'Owner'))
 
     if isinstance(principal, User):
@@ -404,6 +425,13 @@ def has_permission(obj, user, codename, roles=None):
         roles.extend(get_roles(user, obj))
 
     while obj is not None:
+        # if obj doesn't support permissions, use related basecontent
+        if getattr(obj, 'adquire_global_permissions', None) is None:
+            try:
+                obj = obj.basecontent_set.all()[0]
+            except IndexError:
+                return False
+
         filters = Q(content=obj, role__in=roles, permission__codename=codename)
         if obj.adquire_global_permissions:
             filters |= Q(content__isnull=True, role__in=roles, permission__codename=codename)

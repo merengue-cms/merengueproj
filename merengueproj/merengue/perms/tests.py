@@ -22,7 +22,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.test import TestCase
 from django.test.client import Client
 
-from merengue.base.models import BaseContent
+from merengue.base.models import BaseContent, ContactInfo
 from merengue.perms.models import Permission
 from merengue.perms.models import ObjectPermission
 from merengue.perms.models import ObjectPermissionInheritanceBlock
@@ -482,6 +482,24 @@ class PermissionTestCase(TestCase):
         merengue.perms.utils.grant_permission(owner, "view_perm", self.page_1)
 
         result = merengue.perms.utils.has_permission(self.page_1, creator, "view_perm", [owner])
+        self.assertEqual(result, True)
+
+    def test_has_permission_related(self):
+        """
+        """
+        ci = ContactInfo()
+        ci.save()
+        result = merengue.perms.utils.has_permission(ci, self.user, 'view_perm')
+        self.assertEqual(result, False)
+
+        merengue.perms.utils.add_role(self.user, self.role_1)
+        result = merengue.perms.utils.grant_permission(self.role_1, "view_perm", self.page_1)
+        self.assertEqual(result, True)
+
+        self.page_1.contact_info = ci
+        self.page_1.save()
+
+        result = merengue.perms.utils.has_permission(ci, self.user, 'view_perm')
         self.assertEqual(result, True)
 
     def test_local_role(self):
