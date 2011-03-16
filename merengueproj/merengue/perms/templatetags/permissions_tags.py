@@ -30,28 +30,35 @@ class PermissionComparisonNode(template.Node):
     @classmethod
     def handle_token(cls, parser, token):
         bits = token.contents.split()
-        if len(bits) != 2:
+        if len(bits) not in (2, 3):
             raise template.TemplateSyntaxError(
-                "'%s' tag takes one argument" % bits[0])
+                "'%s' tag takes one or two arguments" % bits[0])
         end_tag = 'endifhasperm'
         nodelist_true = parser.parse(('else', end_tag))
         token = parser.next_token()
-        if token.contents == 'else': # there is an 'else' clause in the tag
+        if token.contents == 'else':  # there is an 'else' clause in the tag
             nodelist_false = parser.parse((end_tag, ))
             parser.delete_first_token()
         else:
             nodelist_false = ""
         val = parser.compile_filter(bits[1])
+        if len(bits) == 3:
+            obj = template.Variable(bits[2])
+        else:
+            obj = None
+        return cls(val, obj, nodelist_true, nodelist_false)
 
-        return cls(val, nodelist_true, nodelist_false)
-
-    def __init__(self, permission, nodelist_true, nodelist_false):
+    def __init__(self, permission, obj, nodelist_true, nodelist_false):
         self.permission = permission
         self.nodelist_true = nodelist_true
         self.nodelist_false = nodelist_false
+        self.obj = obj
 
     def render(self, context):
-        obj = context.get("obj") or context.get("content")
+        if not self.obj:
+            obj = context.get("obj") or context.get("content")
+        else:
+            obj = self.obj.resolve(context)
         request = context.get("request")
         self.permission = self.permission.resolve(context, True)
         if obj:
@@ -70,5 +77,9 @@ class PermissionComparisonNode(template.Node):
 @register.tag
 def ifhasperm(parser, token):
     """This function provides functionality for the 'ifhasperm' template tag.
+    Usage::
+      {% ifhasperm "edit" %}
+    Or:
+      {% ifhasperm "edit" obj %}
     """
     return PermissionComparisonNode.handle_token(parser, token)
