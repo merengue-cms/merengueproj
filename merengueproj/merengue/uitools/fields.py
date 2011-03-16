@@ -21,6 +21,29 @@ from django.template.loader import render_to_string
 from inplaceeditform.fields import AdaptorTextAreaField
 from cmsutils.forms.widgets import TinyMCE
 
+from merengue.perms.utils import has_permission
+
+
+class AdaptorEditInline(object):
+
+    @classmethod
+    def can_edit(cls, field):
+        request = field.request
+        obj = field.obj
+        if request.user.is_anonymous():
+            can_edit = False
+        elif request.user.is_superuser:
+            can_edit = True
+        else:
+            if not getattr(request, 'cache_edit_inline', None):
+                request.cache_edit_inline = {}
+            if obj in request.cache_edit_inline:
+                can_edit = request.cache_edit_inline.get(obj)
+            else:
+                can_edit = has_permission(obj, request.user, 'edit')
+                request.cache_edit_inline[obj] = can_edit
+        return can_edit
+
 
 class AdaptorTinyMCEField(AdaptorTextAreaField):
 
