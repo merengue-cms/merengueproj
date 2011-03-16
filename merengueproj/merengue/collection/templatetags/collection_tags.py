@@ -1,6 +1,7 @@
 from copy import copy
 
 from django.db.models import Q
+from django.db.models.manager import Manager
 from django.core.exceptions import FieldError
 from django.template import TemplateSyntaxError, Library, Node, Context
 from django.template.defaulttags import RegroupNode
@@ -201,12 +202,22 @@ class CollectionRegroupNode(RegroupNode):
         self.var_name = var_name
         self.parser = parser
 
+    def _group_by(self, value, ignore_failures):
+        group_by = self.expression.resolve_original(value, ignore_failures)
+        if isinstance(group_by, Manager):
+            objects_related = group_by.all()
+            return objects_related and objects_related[0] or ''
+        else:
+            return group_by
+
     def render(self, context):
         collection = self.collection.resolve(context, True)
         if isinstance(collection, FeedCollection):
             self.expression = self.parser.compile_filter('group_field')
         else:
             self.expression = self.parser.compile_filter(collection.group_by)
+            self.expression.resolve_original = self.expression.resolve
+            self.expression.resolve = self._group_by
         return super(CollectionRegroupNode, self).render(context)
 
 

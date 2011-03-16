@@ -1,15 +1,17 @@
 {% extends "content_view.html" %}
-{% load pagination_tags collection_tags %}
+{% load inlinetrans pagination_tags collection_tags %}
 
 {% block contentbody %}
   {% collectionitems content as items %}
   {% if items %}
-    {% autopaginate items 10 %}
-    {% paginate %}
+    {% block paginatetop %}
+        {% autopaginate items 10 %}
+        {% paginate %}
+    {% endblock %}
     {% if content.group_by %}
       {% collectionregroup items in content as grouped %}
       {% for group in grouped %}
-      <h2>{{ group.grouper|default:"" }}</h2>
+      {% if group.grouper %}<h2>{{ group.grouper|default:"" }}</h2>{% endif %}
       <ul class="contentList collection-{{ collection.slug }} collectionGrouped collection-{{ collection.slug }}-groupedby-{{ content.groupby }}">
         {% for item in group.list %}
           {% collectionitem content item %}
@@ -25,6 +27,12 @@
         {% endfor %}
       </ul>
     {% endif %}
-    {% paginate %}
+    {% block paginatebottom %}
+        {% paginate %}
+    {% endblock %}
+  {% else %}
+    {% block noresults %}
+        <div class="noResults">{% itrans "There are no results" %}</div>
+    {% endblock noresults %}
   {% endif %}
 {% endblock contentbody %}
