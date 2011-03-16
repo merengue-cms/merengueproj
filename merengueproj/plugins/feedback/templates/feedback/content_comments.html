@@ -2,9 +2,13 @@
 
 {% comments_media %}
 
-<h2 id="comment-header">{% inline_trans "Comments on this content" %}:</h2>
+{% block commentsheader %}
+    <h2 id="comment-header">{% inline_trans "Comments on this content" %}:</h2>
+{% endblock %}
 
+{% block commentsbody %}
 <div id="firstcomment">
+    {% block precommentslist %}
     <div class="comment-discard-message" style="display: none;">{% inline_trans "Are you sure you want to discard this comment form?" %}</div>
     <div id="comment-error" style="display:none">
        {% inline_trans "An error has occurred, try again" %}
@@ -15,20 +19,28 @@
         <a  style="display:none" class="hideReply"
            href="#">{% inline_trans "Hide Reply" %}</a>
     </div>
+    {% endblock %}
 
-    <div class="commentform"></div>
-    {% if comments %}
-        {% if has_pagination %}
-            {% autopaginate comments number_of_comments %}
-            {% paginate %}
+    {% block commentsform %}
+        <div class="commentform"></div>
+    {% endblock %}
+    {% block commentslist %}
+        {% if comments %}
+            {% if has_pagination %}
+                {% autopaginate comments number_of_comments %}
+                {% paginate %}
+            {% endif %}
+            {% for comment in comments %}
+                {% content_comment content comment show_links show_children %}
+            {% endfor %}
+            {% if has_pagination %}
+                {% paginate %}
+            {% endif %}
         {% endif %}
-        {% for comment in comments %}
-            {% content_comment content comment show_links show_children %}
-        {% endfor %}
-        {% if has_pagination %}
-            {% paginate %}
-        {% endif %}
-    {% endif %}
-    <div class="commentresults" style="display:none"></div>
+    {% endblock %}
+    {% block postcommentslist %}
+        <div class="commentresults" style="display:none"></div>
+    {% endblock %}
 </div>
 <div class="visualClass"></div>
+{% endblock %}
