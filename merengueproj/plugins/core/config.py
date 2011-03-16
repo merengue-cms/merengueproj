@@ -27,7 +27,7 @@ from plugins.core.actions import AdminAction, LoginAction, LogoutAction, PrintAc
 from plugins.core.blocks import (CoreMenuBlock, NavigationBlock,
                                  PrimaryLinksBlock, SecondaryLinksBlock,
                                  PortalMenuBlock, ContactInfoBlock,
-                                 AnnouncementsBlock, LatestAddedBlock)
+                                 AnnouncementsBlock)
 from plugins.core.panels import InplaceEditPanel, InlineTransPanel, VersionPanel
 
 
@@ -49,7 +49,7 @@ class PluginConfig(Plugin):
     def get_blocks(self):
         return [CoreMenuBlock, NavigationBlock, PrimaryLinksBlock,
                 SecondaryLinksBlock, PortalMenuBlock, ContactInfoBlock,
-                AnnouncementsBlock, LatestAddedBlock]
+                AnnouncementsBlock]
 
     def get_toolbar_panels(self):
         return [InplaceEditPanel, InlineTransPanel, VersionPanel]
