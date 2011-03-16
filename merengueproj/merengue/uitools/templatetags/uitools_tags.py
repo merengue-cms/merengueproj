@@ -50,4 +50,5 @@ def render_toolbar(context):
         'request': context['request'],
         'user': context['user'],
         'panels': panels,
+        'content': context.get('content', None),
     }
