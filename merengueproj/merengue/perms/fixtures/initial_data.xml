@@ -80,9 +80,49 @@
         <field type="CharField" name="codename">manage_review</field>
         <field type="BooleanField" name="builtin">False</field>
     </object>    
-    <object pk="1" model="perms.objectpermission">
+    <object pk="1" model="perms.objectpermission" overwrite="no">
         <field to="perms.role" name="role" rel="ManyToOneRel">1</field>
         <field to="perms.permission" name="permission" rel="ManyToOneRel">1</field>
+        <field to="base.basecontent" name="content" rel="ManyToOneRel"><None></None></field>
+    </object>
+    <object pk="2" model="perms.objectpermission" overwrite="no">
+        <field to="perms.role" name="role" rel="ManyToOneRel">2</field>
+        <field to="perms.permission" name="permission" rel="ManyToOneRel">4</field>
+        <field to="base.basecontent" name="content" rel="ManyToOneRel"><None></None></field>
+    </object>
+    <object pk="3" model="perms.objectpermission" overwrite="no">
+        <field to="perms.role" name="role" rel="ManyToOneRel">2</field>
+        <field to="perms.permission" name="permission" rel="ManyToOneRel">5</field>
+        <field to="base.basecontent" name="content" rel="ManyToOneRel"><None></None></field>
+    </object>
+    <object pk="4" model="perms.objectpermission" overwrite="no">
+        <field to="perms.role" name="role" rel="ManyToOneRel">2</field>
+        <field to="perms.permission" name="permission" rel="ManyToOneRel">3</field>
+        <field to="base.basecontent" name="content" rel="ManyToOneRel"><None></None></field>
+    </object>
+    <object pk="5" model="perms.objectpermission" overwrite="no">
+        <field to="perms.role" name="role" rel="ManyToOneRel">2</field>
+        <field to="perms.permission" name="permission" rel="ManyToOneRel">2</field>
+        <field to="base.basecontent" name="content" rel="ManyToOneRel"><None></None></field>
+    </object>
+    <object pk="6" model="perms.objectpermission" overwrite="no">
+        <field to="perms.role" name="role" rel="ManyToOneRel">2</field>
+        <field to="perms.permission" name="permission" rel="ManyToOneRel">12</field>
+        <field to="base.basecontent" name="content" rel="ManyToOneRel"><None></None></field>
+    </object>
+    <object pk="7" model="perms.objectpermission" overwrite="no">
+        <field to="perms.role" name="role" rel="ManyToOneRel">2</field>
+        <field to="perms.permission" name="permission" rel="ManyToOneRel">10</field>
+        <field to="base.basecontent" name="content" rel="ManyToOneRel"><None></None></field>
+    </object>
+    <object pk="8" model="perms.objectpermission" overwrite="no">
+        <field to="perms.role" name="role" rel="ManyToOneRel">2</field>
+        <field to="perms.permission" name="permission" rel="ManyToOneRel">1</field>
+        <field to="base.basecontent" name="content" rel="ManyToOneRel"><None></None></field>
+    </object>
+    <object pk="9" model="perms.objectpermission" overwrite="no">
+        <field to="perms.role" name="role" rel="ManyToOneRel">2</field>
+        <field to="perms.permission" name="permission" rel="ManyToOneRel">7</field>
         <field to="base.basecontent" name="content" rel="ManyToOneRel"><None></None></field>
     </object>
     <object pk="1" model="perms.role">
