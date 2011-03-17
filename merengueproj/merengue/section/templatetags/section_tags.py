@@ -44,13 +44,13 @@ def menu_tag(context, menu, max_num_level=-1, descendants=None):
             menu_item = descendants.get(slug=menuitem_slug)
             ancestors = menu_item.get_ancestors()[1:]
         except Menu.DoesNotExist:
-            try:
-                # Try to get the last item in path which will be the selected menu item.
-                for item in allmenuitems:
+            # Try to get the last item in path which will be the selected menu item.
+            for item in allmenuitems:
+                try:
                     menu_item = descendants.get(slug=item)
                     ancestors = menu_item.get_ancestors()[1:]
-            except Menu.DoesNotExist:
-                pass
+                except Menu.DoesNotExist:
+                    pass
     except IndexError:
         pass
 
