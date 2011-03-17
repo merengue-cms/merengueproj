@@ -39,7 +39,12 @@ def content_comment_form(request, content, parent_id, form=None, template='feedb
             form = CaptchaFreeThreadedCommentForm(user=request.user)
 
     if request.user:
-        form.initial = {'username': getattr(request.user, 'username', ''),
+        name = ''
+        if hasattr(request.user, 'get_full_name'):
+            name = request.user.get_full_name()
+        if not name:
+            name = getattr(request.user, 'username', '')
+        form.initial = {'name': name,
                         'email': getattr(request.user, 'email', '')}
 
     content_type = ContentType.objects.get_for_model(content)
