@@ -24,11 +24,15 @@ from merengue.perms import utils as perms_api
 
 class ReviewAdmin(BaseAdmin):
 
-    list_display = ('title', 'owner', 'assigned_to', 'is_done', 'url', 'task_object', )
+    list_display = ('title', 'owner', 'get_assigned_to', 'is_done', 'url', 'task_object', )
     list_filter = ('is_done', )
     search_fields = ('title', 'url', 'assigned_to__username', 'owner__username', )
     list_per_page = 50
     actions = ['mark_as_done', 'mark_as_not_done']
+
+    def get_assigned_to(self, obj):
+        return ', '.join([i.username for i in obj.assigned_to.order_by('username')])
+    get_assigned_to.short_description = _('assigned to')
 
     def get_form(self, request, obj=None):
         if not self.has_add_permission(request):

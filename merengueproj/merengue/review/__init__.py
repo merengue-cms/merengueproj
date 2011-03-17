@@ -25,14 +25,15 @@ def create_review_task(owner, title=None, url=None, task_object=None, users=[], 
             if user not in users:
                 users.append(user)
 
+    rt = ReviewTask()
+    rt.owner = owner
+    rt.title = title
+    rt.task_object = task_object
+    rt.url = url
+    rt.save()
+
     for user in users:
-        rt = ReviewTask()
-        rt.owner = owner
-        rt.assigned_to = user
-        rt.title = title
-        rt.task_object = task_object
-        rt.url = url
-        rt.save()
+        rt.assigned_to.add(user)
 
 
 def get_review_tasks(**filters):

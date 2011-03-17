@@ -24,7 +24,7 @@ from django.utils.translation import ugettext_lazy as _
 
 class ReviewTask(models.Model):
     owner = models.ForeignKey(User, verbose_name=_(u'owner'), related_name='owned_by')
-    assigned_to = models.ForeignKey(User, verbose_name=_(u'assigned to'), related_name='assigned_to')
+    assigned_to = models.ManyToManyField(User, verbose_name=_(u'assigned to'), related_name='assigned_to')
     title = models.CharField(verbose_name=_(u'title'), max_length=1024)
     description = models.TextField(verbose_name=_(u'description'), blank=True)
     url = models.CharField(verbose_name=_(u'url'), max_length=1024, blank=True, null=True)
