@@ -6,8 +6,8 @@
   {% block collectiontop %}
   {% endblock %}
   {% if items %}
+    {% autopaginate items paginate_by %}
     {% block paginatetop %}
-        {% autopaginate items 10 %}
         {% paginate %}
     {% endblock %}
     {% if content.group_by %}

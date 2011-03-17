@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponse, HttpResponseRedirect
@@ -53,6 +54,7 @@ def collection_view(request, content, template_name=None, extra_context=None):
         template_name.append(content._meta.content_view_template)
     render_item_template = get_render_item_template(model_collection)
     context['render_item_template'] = render_item_template
+    context['paginate_by'] = settings.NUM_ELEM_PER_PAGE_DEFAULT
     return render_content(request, content, template_name, context)
 
 

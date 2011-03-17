@@ -287,3 +287,6 @@ ADAPTOR_INPLACEEDIT = {'textarea': 'merengue.uitools.fields.AdaptorTinyMCEField'
 
 # Plugin default preview image. The real path would be path.join(MEDIA_URL, DEFAULT_PLUGIN_PREVIEW)
 DEFAULT_PLUGIN_PREVIEW = path.join('merengue', 'img', 'preview_merengue.png')
+
+# Num element per page in collections
+NUM_ELEM_PER_PAGE_DEFAULT = 10
