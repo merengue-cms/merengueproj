@@ -519,6 +519,9 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
         """
         Hack for saving related object from edit_related admin option
         """
+        if hasattr(obj, 'last_editor'):
+            obj.last_editor = request.user
+
         super(BaseAdmin, self).save_model(request, obj, form, change)
         if change and self.edit_related:
             for related_field in self.edit_related:

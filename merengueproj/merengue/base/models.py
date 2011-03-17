@@ -51,6 +51,7 @@ from transmeta import TransMeta, get_fallback_fieldname
 from tagging.fields import TagField
 
 from merengue.base.managers import BaseContentManager, WorkflowManager
+from merengue.base.review_tasks import review_to_pending_status
 from merengue.urlresolvers import get_url_default_lang
 from merengue.multimedia.models import BaseMultimedia
 from merengue.utils import is_last_application
@@ -361,6 +362,10 @@ class BaseContent(BaseClass):
 
     objects = BaseContentManager()
 
+    def __init__(self, *args, **kwargs):
+        super(BaseContent, self).__init__(*args, **kwargs)
+        self._original_status = self.status
+
     def generate_plain_text(self):
         return strip_tags(self.description)
 
@@ -534,6 +539,22 @@ def base_content_pre_save_handler(sender, instance, **kwargs):
 
 
 signals.pre_save.connect(base_content_pre_save_handler)
+
+
+def notify_status_changes(sender, instance, **kwargs):
+    if isinstance(instance, BaseContent):
+        if not hasattr(instance, '_original_status'):
+            return
+        if instance._original_status == instance.status:
+            return
+        if instance.status == 'pending':
+            review_to_pending_status(instance, instance._original_status)
+        # Change cached original status so if we have
+        # multiple saves we don't generate multiple
+        # review tasks
+        instance._original_status = instance.status
+
+signals.post_save.connect(notify_status_changes)
 
 
 class MultimediaRelation(models.Model):
