@@ -87,14 +87,6 @@ def content_comment_add(request, content_type, content_id, parent_id=None):
             new_comment.parent = get_object_or_404(FreeThreadedComment, id=int(parent_id))
         new_comment.save()
 
-        if request.user and not request.user.is_anonymous():
-            request.user.message_set.create(message=_("Your message has been posted successfully."))
-        else:
-            request.session['successful_data'] = {
-                'name': form.cleaned_data['name'],
-                'website': form.cleaned_data['website'],
-                'email': form.cleaned_data['email'],
-            }
         if request.is_ajax():
             moderation = request.user and request.user.is_staff
             return render_to_response('feedback/content_comment.html',
@@ -109,6 +101,14 @@ def content_comment_add(request, content_type, content_id, parent_id=None):
                                        context_instance=RequestContext(request))
 
         else:
+            if request.user and not request.user.is_anonymous():
+                request.user.message_set.create(message=_("Your message has been posted successfully."))
+            else:
+                request.session['successful_data'] = {
+                    'name': form.cleaned_data['name'],
+                    'website': form.cleaned_data['website'],
+                    'email': form.cleaned_data['email'],
+                }
             return HttpResponseRedirect(content.get_absolute_url())
     else:
         template = 'feedback/content_comment_preview.html'
