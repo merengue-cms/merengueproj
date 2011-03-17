@@ -2,8 +2,8 @@
 {% load inlinetrans pagination_tags collection_tags %}
 
 {% block contentbody %}
-  {% block collectionfilter %}
-    {% collectionitems content as items %}
+  {% collectionitems content as items %}
+  {% block collectiontop %}
   {% endblock %}
   {% if items %}
     {% block paginatetop %}
