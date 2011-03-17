@@ -38,12 +38,19 @@ def menu_tag(context, menu, max_num_level=-1, descendants=None):
     if not descendants:
         descendants = menu.get_descendants()
     try:
-        menuitem_slug = context['request'].META['PATH_INFO'].split('/')[-2]
+        allmenuitems = [e for e in context['request'].META['PATH_INFO'].split('/') if e]
+        menuitem_slug = allmenuitems[-1]
         try:
             menu_item = descendants.get(slug=menuitem_slug)
             ancestors = menu_item.get_ancestors()[1:]
         except Menu.DoesNotExist:
-            pass
+            try:
+                # Try to get the last item in path which will be the selected menu item.
+                for item in allmenuitems:
+                    menu_item = descendants.get(slug=item)
+                    ancestors = menu_item.get_ancestors()[1:]
+            except Menu.DoesNotExist:
+                pass
     except IndexError:
         pass
 
