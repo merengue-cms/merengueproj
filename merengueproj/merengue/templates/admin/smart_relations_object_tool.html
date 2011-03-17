@@ -6,7 +6,7 @@
             <li class="edit-link"><a href="{{ obj_tool.base_url }}">{% trans "Edit" %}</a></li>
             <li class="content-link" style="display: none;"><a class="trigger" href="#">{% trans "Contents" %}</a><ul class="contents_parent"></ul></li>
             {% for tools_admin_site in obj_tool.tools %}
-                <li class="object_tool_item{% if tools_admin_site.selected %} selected{% endif %}{% if tools_admin_site.manage_contents %} content_manager{% endif %}"><a href="{{ obj_tool.base_url }}{{ tools_admin_site.tool_url }}">{{ tools_admin_site.tool_label }}</a></li>
+                <li class="object_tool_item{% if tools_admin_site.selected %} selected{% endif %}{% if tools_admin_site.manage_contents %} content_manager{% endif %} {{ tools_admin_site.tool_url|slice:":-1" }}Tool"><a href="{{ obj_tool.base_url }}{{ tools_admin_site.tool_url }}">{{ tools_admin_site.tool_label }}</a></li>
             {% endfor %}
             <li class="extra-link" style="display: none;"><a class="trigger" href="#">{% trans "More" %}</a><ul class="extra_options"></ul></li>
         </ul>
