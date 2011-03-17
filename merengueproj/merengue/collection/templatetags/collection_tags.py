@@ -14,10 +14,20 @@ from merengue.collection.utils import get_render_item_template, get_common_field
 register = Library()
 
 
-def _get_group_by_value(group_by):
+def _get_group_by_value(group_by, template_tag=None, value=None):
     if isinstance(group_by, Manager):
         objects_related = group_by.all()
-        return objects_related and objects_related[0] or ''
+        if objects_related:
+            objects_related_count = objects_related.count()
+            if objects_related.count() == 1 or not template_tag:
+                return objects_related[0]
+            else:
+                cached_group_by_m2m = getattr(template_tag, 'cached_group_by_m2m', {})
+                num_group_by = cached_group_by_m2m.get(value, 0)
+                cached_group_by_m2m[value] = (num_group_by + 1) % objects_related_count
+                template_tag.cached_group_by_m2m = cached_group_by_m2m
+                return objects_related[num_group_by]
+        return ''
     return group_by
 
 
@@ -158,35 +168,21 @@ class CollectionItemsNode(Node):
 
         if not group_by_attr and not order_by_attr:
             return ''
-
-        if not order_by_attr and group_by_attr:
+        elif not order_by_attr and group_by_attr:
             items = items.order_by(group_by_attr)
-            context.update({self.var_name: list(items)})
+            context.update({self.var_name: items})
             return ''
-
-        if not group_by_attr:
+        elif not group_by_attr:
             if collection.reverse_order:
                 result = items.order_by('-%s' % order_by_attr)
             else:
                 result = items.order_by(order_by_attr)
             context.update({self.var_name: result})
             return ''
-
-        items_ordered = list(items.order_by(order_by_attr))
-
-        def sorting(x, y):
-            first = cmp(_get_group_by_value(getattr(x, group_by_attr)),
-                        _get_group_by_value(getattr(y, group_by_attr)))
-            if first:
-                return first
-            second = cmp(items_ordered.index(x), items_ordered.index(y))
-            if collection.reverse_order:
-                return -second
-            return second
-        result = list(items)
-        result.sort(sorting)
-        context.update({self.var_name: result})
-        return ''
+        else:
+            items = items.order_by(group_by_attr, order_by_attr)
+            context.update({self.var_name: items})
+            return ''
 
 
 def collectionitems(parser, token):
@@ -213,7 +209,7 @@ class CollectionRegroupNode(RegroupNode):
 
     def _group_by(self, value, ignore_failures):
         group_by = self.expression.resolve_original(value, ignore_failures)
-        return _get_group_by_value(group_by)
+        return _get_group_by_value(group_by, self, value)
 
     def render(self, context):
         collection = self.collection.resolve(context, True)
