@@ -63,6 +63,7 @@
                         comment_body.find('.comment a.publishComment').unbind('click').click(change_visibility);
                         comment_body.find('.comment a.censureComment').unbind('click').click(change_visibility);
                         comment_body.find('.comment a.deleteComment').unbind('click').click(delete_comment);
+                        comment_body.trigger('added-new-comment');
                     }
                     comment_body.children('.actions').find('.hideReply').hide();
                     comment_body.children('.actions').find('.addReply').show();
