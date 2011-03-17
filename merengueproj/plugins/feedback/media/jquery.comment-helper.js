@@ -185,8 +185,10 @@
                 $(this).find('a.hideReply:first').click(hide_reply);
                 $(this).find('a.addReply:first').click(add_reply);
             });
-            $('div#firstcomment a.hideReply:first').click(hide_reply);
-            $('div#firstcomment a.addReply:first').click(add_reply);
+            $('div#firstcomment').each(function() {
+                $(this).find('a.hideReply:first').click(hide_reply);
+                $(this).find('a.addReply:first').click(add_reply);
+           });
            return this;
        }
 })(jQuery);
