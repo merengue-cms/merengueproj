@@ -2,7 +2,9 @@
 {% load inlinetrans pagination_tags collection_tags %}
 
 {% block contentbody %}
-  {% collectionitems content as items %}
+  {% block collectionfilter %}
+    {% collectionitems content as items %}
+  {% endblock %}
   {% if items %}
     {% block paginatetop %}
         {% autopaginate items 10 %}
