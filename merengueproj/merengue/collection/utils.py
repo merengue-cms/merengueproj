@@ -63,19 +63,13 @@ def get_common_field_translated_name(collection, field):
     Return the translation field if it exists for all collection models,
     or the original field otherwise.
     """
-    translatable = set()
+    model = collection.get_first_parents_of_content_types()
+    import transmeta
+    translatables = transmeta.get_all_translatable_fields(model)
+
     common_fields = get_common_fields(collection)
-    checked = set()
-    models = list([ct.model_class() for ct in collection.content_types.all()])
-    while models:
-        m = models.pop()
-        if m not in checked:
-            if getattr(m, '_meta', None):
-                for f in getattr(m._meta, 'translatable_fields', []):
-                    translatable.add(f)
-                    models.extend(m.__bases__)
-        checked.add(m)
-    if field in translatable:
+
+    if field in translatables:
         real_field = get_real_fieldname(field)
         if real_field in common_fields:
             return real_field
