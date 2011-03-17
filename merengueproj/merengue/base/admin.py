@@ -716,6 +716,10 @@ class StatusControlProvider(object):
             options = options.union([o for o in all_options if o[0] == 'pending'])
         if perms_api.has_permission(obj, user, 'can_published'):
             options = options.union([o for o in all_options if o[0] == 'published'])
+        if obj and hasattr(obj, 'status'):
+            status_list = [o[0] for o in options]
+            if obj.status == 'published' and 'published' not in status_list:
+                return None
         return options
 
 
@@ -846,11 +850,11 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
             options = self._get_status_options(user, obj)
             if options:
                 form.base_fields['status'].choices = options
-                default_status = getattr(settings, 'DEFAULT_STATUS', 'pending')
+                default_status = getattr(settings, 'DEFAULT_STATUS', 'draft')
                 if default_status in [o[0] for o in options]:
                     form.base_fields['status'].initial = default_status
             else:
-                form.base_fields.pop('status')
+                set_field_read_only(form.base_fields['status'], 'status', obj)
         if 'owners' in keys:
             owners_field = form.base_fields['owners']
             if owners_field.initial is None:

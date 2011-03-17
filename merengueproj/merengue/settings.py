@@ -151,7 +151,7 @@ STATUS_LIST = (
     ('pending', ugettext('Pendiente')),
     ('published', ugettext('Publicado')),
 )
-DEFAULT_STATUS = 'pending'
+DEFAULT_STATUS = 'draft'
 
 # merengue default directory for plugins
 PLUGINS_DIR = 'plugins'
