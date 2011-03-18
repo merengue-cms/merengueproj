@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from merengue.collection.models import IncludeCollectionFilter
 from merengue.collection.utils import create_normalize_collection
 from merengue.pluggable import Plugin
 
@@ -48,6 +49,11 @@ class PluginConfig(Plugin):
         return [LatestEventViewlet, AllEventViewlet]
 
     def post_install(self):
-        create_normalize_collection('event', u'Event', Event,
-                                    create_display_field=True,
-                                    create_filter_field=True)
+        collection = create_normalize_collection('event', u'Event', Event,
+                                                 create_display_field=True,
+                                                 create_filter_field=True)
+        IncludeCollectionFilter.objects.get_or_create(
+            collection=collection,
+            filter_field='end',
+            filter_operator='date_gt',
+            )  # this way, we won't have in count the expired news
