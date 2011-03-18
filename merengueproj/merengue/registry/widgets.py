@@ -57,7 +57,7 @@ class ConfigWidget(widgets.MultiWidget):
         if value and getattr(self.config, 'values', []):
             param_list = []
             for param in self.config.values():
-                param.value = value.get(param.name, param.value)
+                param.value = value.get(param.name, param.get_value())
                 param_list.append(param)
             return param_list
         # if all None we returns n-Nones
