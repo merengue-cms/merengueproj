@@ -700,6 +700,7 @@ class StatusControlProvider(object):
         options = set()
         all_options = set(settings.STATUS_LIST)
 
+        original_obj = obj
         # if there's not an object yet, we'll try to get the permissions for the section
         if not obj:
             try:
@@ -716,9 +717,9 @@ class StatusControlProvider(object):
             options = options.union([o for o in all_options if o[0] == 'pending'])
         if perms_api.has_permission(obj, user, 'can_published'):
             options = options.union([o for o in all_options if o[0] == 'published'])
-        if obj and hasattr(obj, 'status'):
+        if original_obj and hasattr(original_obj, 'status'):
             status_list = [o[0] for o in options]
-            if obj.status == 'published' and 'published' not in status_list:
+            if original_obj.status == 'published' and 'published' not in status_list:
                 return None
         return options
 
