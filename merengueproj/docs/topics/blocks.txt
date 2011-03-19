@@ -271,3 +271,53 @@ Our ``LatestNewsBlock`` class must be referenced in the plugin configuration ins
 
 * ``get_blocks`` is a method that returns the specified blocks that we want to register.
 
+
+Multimedia assets in blocks
+---------------------------
+
+If block you are implemented need to use some Javascript or CSS files in the
+block template. The direct way was to do something like this:
+
+.. code-block:: html+django
+
+    {% extends "block.html" %}
+
+    {% block blockbody %}
+    <link href="{{ MEDIA_URL }}fooplugin/block.css" type="text/css" />
+    <link href="{{ MEDIA_URL }}fooplugin/block_print.css" type="text/css" media="print" />
+    <script type="text/javascript" src="{{ MEDIA_URL }}fooplugin/block.js"></script>
+
+    # stuff that uses these assets
+    {% endblock %}
+
+The previous solution has two inconveniences:
+
+* Mix media assets with HTML content. The CSS files are recommended to put into ``<head>...</head>`` section, and Javascript files should be just before ``</body>`` tag, for performance reasons.
+* You cannot do features like compression or merging, because Merengue does know the blocks which uses Javascript or CSS (because there is no registration).
+
+Merengue came with multimedia features to add CSS or Javascript files like this:
+
+.. code-block:: html+django
+
+    {% extends "block.html" %}
+
+    {% block blockbody %}
+
+    {% addmedia "css" %}
+      <link href="{{ MEDIA_URL }}fooplugin/block.css" type="text/css"/>
+      <link href="{{ MEDIA_URL }}fooplugin/block_print.css" type="text/css" media="print" />
+    {% endaddmedia %}
+
+    {% addmedia "js" %}
+      <script type="text/javascript" src="{{ MEDIA_URL }}fooplugin/block.js"></script>
+    {% endaddmedia %}
+
+    # stuff that uses these assets
+    {% endblock %}
+
+All the media definitions declared into ``{% addmedia "css" %}`` block will be
+included in ``<head>`` section and the ``{% addmedia "js" %}`` stuff will before
+``</body>`` tag.
+
+Also, those media assets will be merged and compressed if ``DEBUG`` is ``False``
+or ``COMPRESS`` setting is set to ``True``.
