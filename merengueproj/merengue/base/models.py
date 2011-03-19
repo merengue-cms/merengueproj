@@ -185,6 +185,7 @@ if settings.USE_GIS:
                                    null=True, blank=True)
         location = models.ForeignKey(Location, verbose_name=_('location'),
                                      null=True, blank=True, editable=False)
+        location.delete_cascade = False
 
         objects = WorkflowManager()
 
