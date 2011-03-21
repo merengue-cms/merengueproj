@@ -17,6 +17,7 @@
 
 import BeautifulSoup
 import datetime
+import hashlib
 import re
 
 from django import forms
@@ -152,11 +153,11 @@ class CustomTinyMCE(TinyMCE):
         forbidden_tags = ('style', 'link', 'meta', 'script', 'xml', )
         for tag in soup.findAll():
             if tag.name in forbidden_tags:
-                tag.hidden=True
+                tag.hidden = True
             elif tag.name in unallowed_tags:
                 tag.name = 'span'
             else:
-                attr_todel=[]
+                attr_todel = []
                 for at, val in tag.attrs:
                     if at not in allowed_attrs:
                         attr_todel.append(at)
@@ -203,7 +204,7 @@ class TranslatableInputDateWidget(DateTimeInput):
             value = datetime_safe.new_datetime(value)
             value = value.strftime(self.format)
         hidden_final_attrs = self.build_attrs(attrs, type='hidden', name=name)
-        final_attrs = self.build_attrs(attrs, type=self.input_type, name='visual-'+name)
+        final_attrs = self.build_attrs(attrs, type=self.input_type, name='visual-' + name)
         final_attrs.update({'id': 'visual-' + final_attrs.get('id', name)})
         final_attrs.update({'class': 'vDateField TranslatableInputDateWidget'})
         if value != '':
@@ -245,6 +246,7 @@ class RelatedBaseContentWidget(RelatedFieldWidgetWrapper):
 
     def __init__(self, *args, **kwargs):
         self.hide_original_widget = kwargs.pop('hide_original_widget', True)
+        self.request = kwargs.pop('request', None)
         super(RelatedBaseContentWidget, self).__init__(*args, **kwargs)
 
     def render(self, name, value, *args, **kwargs):
@@ -266,14 +268,16 @@ class RelatedBaseContentWidget(RelatedFieldWidgetWrapper):
         else:
             output += super(RelatedBaseContentWidget, self).render(name, value, *args, **kwargs)
             output += u'<br />'
-        params=[]
+        params = []
         if getattr(self.widget, 'choices', None):
             for id, value in self.widget.choices:
                 if not isinstance(id, int):
                     continue
                 params.append(str(id))
-        if params:
-            params_str = '&id__in=%s' % ','.join(params)
+        if params and self.request:
+            widget_id = hashlib.sha1('%s_%s' % (self.request.META.get('PATH_INFO', ''), name)).hexdigest()
+            self.request.session[widget_id] = {'id__in': ','.join(params)}
+            params_str = '&widget_id=%s' % widget_id
         else:
             params_str = ''
 
@@ -308,18 +312,18 @@ if settings.USE_GIS:
                 latitude = self._emule_widget_django('latitude', 'latitude', name, value_latitude)
                 longitude = self._emule_widget_django('longitude', 'longitude', name, value_longitude)
                 view_on_map = "<input id='view_on_map_%s' class='view_on_map' type='button' value='%s'/>" % (name, _('View on map'))
-                return mark_safe("%s %s %s %s"% (html, latitude, longitude, view_on_map))
+                return mark_safe("%s %s %s %s" % (html, latitude, longitude, view_on_map))
             return html
 
         def _emule_widget_django(self, label, sufix, name, value):
             label = _(label)
-            _id = "%s_%s" %(name, sufix)
+            _id = "%s_%s" % (name, sufix)
             _str = """<div class='form-row %s'>
                 <div>
                     <label for='id_%s'>%s:</label>
                     <input id='id_%s' class='change_%s' type='text' name='%s' value='%s'/>
                 </div>
-            </div>"""%(name, _id, label, _id, sufix, _id, value)
+            </div>""" % (name, _id, label, _id, sufix, _id, value)
             return _str
 
     class OpenLayersInlineAwareWidget(OpenLayersWidget):
