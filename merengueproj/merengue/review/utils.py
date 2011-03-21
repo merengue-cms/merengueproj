@@ -7,7 +7,7 @@ from django.template.loader import render_to_string
 from transmeta import get_real_fieldname
 
 
-def send_mail_content_as_pending(obj, users=None, template='email_as_pending.html'):
+def send_mail_content_as_pending(obj, users=None, template='review/email_as_pending.html'):
     """
     Send a notification mail about that an object has been created as pending
     """

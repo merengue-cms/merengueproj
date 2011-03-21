@@ -1,0 +1,15 @@
+{% load i18n %}
+
+<p>{% trans "Hello" %} {{ username }}:</p>
+
+<p>{% trans "It seems that you have some tasks to review" %}:</p>
+
+<ul>
+  {% for task in content_list %}
+    <li>
+      <a href="{{ task.url }}">{{ task.task_object.name }}</a>
+    </li>
+  {% endfor %}
+</ul>
+
+<p><a href="/admin/review/reviewtask/">{% trans "Go to admin page for more info" %}</a></p>
