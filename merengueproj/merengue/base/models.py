@@ -312,7 +312,9 @@ class BaseContent(BaseClass):
     adquire_global_permissions = models.BooleanField(_('Adquire global permissions'), default=True)
 
     # tagging info
-    tags = TagField(verbose_name=_('Tags'))
+    tags = TagField(verbose_name=_('Tags'),
+                    help_text=_('Tags will be splitted by spaces or commas if present. To force \
+                                tag names, use double quotes.'))
 
     # meta info
     meta_desc = models.TextField(verbose_name=_('meta description'), null=True, blank=True)
