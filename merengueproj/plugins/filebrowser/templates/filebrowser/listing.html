@@ -12,7 +12,7 @@
         {{ section.breadcrumbs }}
     {% endif %}
     <span class="breadcrumbSeparator">→</span><a href="{% filebrowser_url filebrowser_repositories %}">{% inline_trans "Repository List" %}</a>
-    <span class="breadcrumbSeparator">→</span>{% if parents %}<a href="{% filebrowser_url filebrowser_root_listing repository.name %}">{% inline_trans "Document repository" %}</a>{% else %}<a href="">{{ repository.name  }}</a>{% endif %}
+    <span class="breadcrumbSeparator">→</span>{% if parents %}<a href="{% filebrowser_url filebrowser_root_listing repository.name %}">{{ repository.name }}</a>{% else %}<a href="">{{ repository.name  }}</a>{% endif %}
     {% if parents %}
       {% for p in parents %}
         <span class="breadcrumbSeparator">→</span>
