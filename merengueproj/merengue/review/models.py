@@ -16,10 +16,14 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.db import models
+from django.db.models.signals import post_save
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.utils.translation import ugettext_lazy as _
+
+from merengue.review.utils import send_mail_content_as_pending
 
 
 class ReviewTask(models.Model):
@@ -45,3 +49,14 @@ class ReviewTask(models.Model):
         else:
             done = _('not done')
         return "%s (%s)" % (self.title, done)
+
+
+def notify_review_task(sender, instance, created, **kwargs):
+    if (getattr(settings, 'SEND_MAIL_IF_PENDING', False) and
+        created and not ReviewTask.objects.filter(
+            is_done=False, task_object_id=instance.task_object_id).count()):
+        send_mail_content_as_pending(instance.task_object,
+                                     [instance.owner] + instance.assigned_to.all())
+
+
+post_save.connect(notify_review_task, sender=ReviewTask)

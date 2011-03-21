@@ -1,0 +1,12 @@
+{% load i18n %}
+
+<p>{% trans "Hello," %}</p>
+
+<p>
+  {% trans "The content" %} <a href="{{ content.get_absolute_url }}">{{ content.name }}</a>
+  {% trans "has been set as pending and it's waiting for revision." %}
+</p>
+
+<p>
+  <a href="{{ content.get_admin_absolute_url }}">{% trans "Link to admin page" %}</a>
+</p>
