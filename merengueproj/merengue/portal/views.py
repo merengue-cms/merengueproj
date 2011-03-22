@@ -42,8 +42,10 @@ def login(request, redirect_field_name='next'):
 
 
 @never_cache
-def logout(request, template_name='registration/logged_out.html'):
-    return auth_logout(request, template_name=template_name)
+def logout(request):
+    response = auth_logout(request, next_page='/')
+    send_info(request, _("Thanks for your visit"))
+    return response
 
 
 def password_reset(request, template_name='registration/password_reset.html',
@@ -97,6 +99,6 @@ def _get_redirect_to(new_get_data, redirect_field_name='next'):
     else:
         sep = '&'
     if params:
-        redirect_to = '%s%s%s' %(redirect_to, sep, params)
+        redirect_to = '%s%s%s' % (redirect_to, sep, params)
 
     return redirect_to
