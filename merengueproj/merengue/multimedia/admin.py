@@ -252,7 +252,9 @@ class PhotoAdmin(BaseMultimediaAdmin):
         return super(PhotoAdmin, self).changelist_view(request, context)
 
     def save_model(self, request, obj, form, change):
-        if 'image' in form.changed_data:
+        if obj.id and 'image' in form.changed_data:
+            # if image was changed, we will delete the previous thumbnails
+            # both in photo and all the basecontent related objects
             sorl.thumbnail.delete(obj.image, delete_file=False)
             for bc in obj.basecontent_set.all():
                 sorl.thumbnail.delete(bc.main_image, delete_file=False)
