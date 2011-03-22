@@ -394,9 +394,17 @@ class BaseContent(BaseClass):
         """ get object child instance """
         if hasattr(self, '_real_instance'): # try looking in our cache
             return self._real_instance
-        real_instance = getattr(self, self.class_name, self)
-        self._real_instance = real_instance
-        return real_instance
+        subclasses = self.__class__.__subclasses__()
+        if not subclasses:  # already real_instance
+            real_instance = getattr(self, self.class_name, self)
+            self._real_instance = real_instance
+            return real_instance
+        else:
+            subclasses_names = [cls.__name__.lower() for cls in subclasses]
+            for subcls_name in subclasses_names:
+                if hasattr(self, subcls_name):
+                    return getattr(self, subcls_name, self).get_real_instance()
+            return self
 
     @permalink
     def get_absolute_url(self):
