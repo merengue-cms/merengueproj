@@ -276,6 +276,8 @@ def disable_plugin(plugin_name, unregister=True):
     reload_app_directories_template_loader()
     # clear model cache to update south migration dependencies
     cache.app_store.clear()
+    cache.loaded = False
+    cache.handled = {}
 
 
 def register_plugin_urls(plugin_name):
