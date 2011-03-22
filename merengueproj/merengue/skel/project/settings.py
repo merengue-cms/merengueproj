@@ -137,6 +137,9 @@ DETECT_NEW_PLUGINS = True
 # if merengue will detect broken plugins
 DETECT_BROKEN_PLUGINS = True
 
+# it merengue will send an email if there are some task to review
+SEND_MAIL_IF_PENDING = False
+
 DEBUG_TOOLBAR_PANELS = (
     #'debug_toolbar.panels.version.VersionDebugPanel',
     #'debug_toolbar.panels.timer.TimerDebugPanel',
