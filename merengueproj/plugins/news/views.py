@@ -17,7 +17,7 @@
 
 from datetime import datetime
 
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
 from django.template import RequestContext
 from django.template.loader import render_to_string
@@ -54,10 +54,14 @@ def newsitem_by_category_view(request, newscategory_slug):
 
 def news_by_date(request, year, month, day):
     news_collection = get_collection_news()
+    try:
+        date = datetime(int(year), int(month), int(day))
+    except ValueError:
+        raise Http404()
     extra_context = {'_filters_collection': dict(publish_date__year=year,
                                              publish_date__month=month,
                                              publish_date__day=day),
-                     'date': datetime(int(year), int(month), int(day))}
+                     'date': date}
     return collection_view(request, news_collection, extra_context=extra_context,
                            template_name='news/news_index.html')
 
