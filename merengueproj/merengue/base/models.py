@@ -425,9 +425,19 @@ class BaseContent(BaseClass):
 
     def get_real_instance(self):
         """ get object child instance """
+        def get_subclasses(cls):
+            subclasses = cls.__subclasses__()
+            result = []
+            for subclass in subclasses:
+                if not subclass._meta.abstract:
+                    result.append(subclass)
+                else:
+                    result += get_subclasses(subclass)
+            return result
+
         if hasattr(self, '_real_instance'):  # try looking in our cache
             return self._real_instance
-        subclasses = self.__class__.__subclasses__()
+        subclasses = get_subclasses(self.__class__)
         if not subclasses:  # already real_instance
             real_instance = getattr(self, self.class_name, self)
             self._real_instance = real_instance
