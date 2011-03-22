@@ -31,7 +31,8 @@ BASEDIR = os.path.dirname(os.path.abspath(__file__))
 
 
 def split_str(attribute_str):
-    return [part.strip() for part in attribute_str.split(",")]
+    if attribute_str:
+        return [part.strip() for part in attribute_str.split(",")]
 
 
 def get_idps():
@@ -93,8 +94,6 @@ def merengue_config_loader():
                         (site_url + 'ls/', saml2.BINDING_HTTP_REDIRECT),
                         ],
                     },
-                'required_attributes': split_str(plugin_config['required_attributes'].get_value()),
-                'optional_attributes': split_str(plugin_config['optional_attributes'].get_value()),
                 'idp': get_idps(),
                 },
             },
@@ -114,8 +113,19 @@ def merengue_config_loader():
         'organization': get_organization(),
         'valid_for': plugin_config['valid_for'].get_value(),  # hours
         }
+
+    required_attrs = split_str(plugin_config['required_attributes'].get_value())
+    if required_attrs:
+        config_dict['service']['sp']['required_attributes'] = required_attrs
+
+    optional_attrs = split_str(plugin_config['optional_attributes'].get_value())
+    if optional_attrs:
+        config_dict['service']['sp']['optional_attributes'] = optional_attrs
+
     sp_config = saml2.config.SPConfig()
     sp_config.load(config_dict)
+    from pprint import pprint
+    pprint(config_dict)
     return sp_config
 
 
