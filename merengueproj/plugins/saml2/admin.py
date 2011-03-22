@@ -17,6 +17,8 @@
 
 from django.contrib import admin
 
+from plugins.saml2.models import IdentityProvider, ContactPerson, Organization
+
 
 class IdentityProviderAdmin(admin.ModelAdmin):
     list_display = ('entity_id', 'single_sign_on_service_url',
@@ -29,3 +31,17 @@ class ContactPersonAdmin(admin.ModelAdmin):
 
 class OrganizationAdmin(admin.ModelAdmin):
     list_display = ('name', 'display_name', 'url')
+
+
+def register(site):
+    """ Merengue admin registration callback """
+    site.register(IdentityProvider, IdentityProviderAdmin)
+    site.register(ContactPerson, ContactPersonAdmin)
+    site.register(Organization, OrganizationAdmin)
+
+
+def unregister(site):
+    """ Merengue admin unregistration callback """
+    site.unregister(IdentityProvider)
+    site.unregister(ContactPerson)
+    site.unregister(Organization)

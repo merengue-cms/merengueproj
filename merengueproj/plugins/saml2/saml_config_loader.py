@@ -124,8 +124,6 @@ def merengue_config_loader():
 
     sp_config = saml2.config.SPConfig()
     sp_config.load(config_dict)
-    from pprint import pprint
-    pprint(config_dict)
     return sp_config
 
 
