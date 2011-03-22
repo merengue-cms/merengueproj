@@ -27,6 +27,7 @@ from django.utils.translation import ugettext
 
 #from batchadmin.util import model_ngettext
 
+import sorl
 from merengue.base.admin import (OrderableRelatedModelAdmin, BaseContentAdmin, BaseAdmin,
                                  WorkflowBatchActionProvider, RelatedModelAdmin)
 from merengue.base.models import BaseContent, MultimediaRelation
@@ -250,6 +251,13 @@ class PhotoAdmin(BaseMultimediaAdmin):
         context.update(extra_context or {})
         return super(PhotoAdmin, self).changelist_view(request, context)
 
+    def save_model(self, request, obj, form, change):
+        if 'image' in form.changed_data:
+            sorl.thumbnail.delete(obj.image, delete_file=False)
+            for bc in obj.basecontent_set.all():
+                sorl.thumbnail.delete(bc.main_image, delete_file=False)
+        return super(PhotoAdmin, self).save_model(request, obj, form, change)
+
 
 class VideoChecker(object):
     form = VideoCheckerModelForm
@@ -339,6 +347,11 @@ class RelatedPhotoAdmin(RelatedBaseMultimediaAdmin):
     tool_name = 'photos'
     tool_label = _('photos')
     list_display = ('__str__', 'admin_thumbnail', 'status', 'last_editor', )
+
+    def save_model(self, request, obj, form, change):
+        if 'image' in form.changed_data and getattr(self.basecontent, 'main_image'):
+            sorl.thumbnail.delete(self.basecontent.main_image, delete_file=False)
+        return super(RelatedBaseMultimediaAdmin, self).save_model(request, obj, form, change)
 
 
 class RelatedVideoAdmin(VideoChecker, RelatedBaseMultimediaAdmin):
