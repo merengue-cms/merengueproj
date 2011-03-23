@@ -75,6 +75,7 @@ def install_plugin(registered_plugin):
     add_to_installed_apps(plugin_name)
     if load_app(plugin_name) and not are_installed_models(app_name):
         install_models(app_name)
+        reload_models_cache()
         # Force registered_plugin saving after connection closes.
         registered_plugin.save()
     if registered_plugin.active:
@@ -274,10 +275,8 @@ def disable_plugin(plugin_name, unregister=True):
     # app_directories template loader loads app_template_dirs in
     # compile time, so we have to load it again.
     reload_app_directories_template_loader()
-    # clear model cache to update south migration dependencies
-    cache.app_store.clear()
-    cache.loaded = False
-    cache.handled = {}
+    # clear models cache to populate new models
+    reload_models_cache()
 
 
 def register_plugin_urls(plugin_name):
@@ -489,6 +488,23 @@ def unregister_plugin_section_prefixes(plugin_name):
         return
     for section_prefix in plugin.get_section_prefixes():
         unregister_section_prefix(section_prefix)
+
+
+def reload_models_cache():
+    """
+    Reload Django internal cache for all models in installed apps.
+    This includes model field mapping, related fields in _meta object, etc.
+    """
+    cache.loaded = False
+    cache.handled = {}
+    cache.app_store.clear()
+    cache._populate()
+    for model in get_models():
+        opts = model._meta
+        if hasattr(opts, '_related_many_to_many_cache'):
+            # we remove related m2m fields cache for all models
+            del opts._related_many_to_many_cache
+        opts.init_name_map()
 
 
 def reload_app_directories_template_loader():

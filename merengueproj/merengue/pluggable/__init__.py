@@ -166,9 +166,10 @@ def register_plugin(plugin_dir):
 
 def enable_active_plugins():
     from merengue.pluggable.models import RegisteredPlugin
-    from merengue.pluggable.utils import enable_plugin, get_plugin_module_name
+    from merengue.pluggable.utils import enable_plugin, get_plugin_module_name, reload_models_cache
     for plugin_registered in RegisteredPlugin.objects.actives():
         enable_plugin(get_plugin_module_name(plugin_registered.directory_name))
+    reload_models_cache()
 
 
 def register_all_plugins(verbose=False):
