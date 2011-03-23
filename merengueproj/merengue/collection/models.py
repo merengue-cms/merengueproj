@@ -170,7 +170,7 @@ class Collection(BaseContent):
                 try:
                     lang = fallback_language()
                     field = item._meta.get_field(get_real_fieldname(field_name, lang))
-                    verbose_name = field.verbose_name[:-len(lang) - 1]
+                    verbose_name = unicode(field.verbose_name)[:-len(lang) - 1]
                 except:
                     # TODO: make this except not empty and discriminate errors
                     return None
