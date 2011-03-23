@@ -18,7 +18,7 @@
 import datetime
 
 from django.db.models import Q
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.shortcuts import get_object_or_404
 from django.utils.simplejson import dumps
 
@@ -51,8 +51,11 @@ def event_list(request, year=None, month=None, day=None, queryset=None,
     event_collection = get_collection_event()
 
     if year and month and day:
-        date_day_start = datetime.datetime(int(year), int(month), int(day), 0, 0, 0)
-        date_day_end = datetime.datetime(int(year), int(month), int(day), 23, 59, 59)
+        try:
+            date_day_start = datetime.datetime(int(year), int(month), int(day), 0, 0, 0)
+            date_day_end = datetime.datetime(int(year), int(month), int(day), 23, 59, 59)
+        except ValueError:
+            raise Http404
         filters = Q(start__lt=date_day_end,
                     end__gt=date_day_start)
     else:
