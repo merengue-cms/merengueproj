@@ -42,7 +42,7 @@ def login(request, redirect_field_name='next'):
 
 
 @never_cache
-def logout(request):
+def logout(request, template_name='registration/logged_out.html'):
     response = auth_logout(request, next_page='/')
     send_info(request, _("Thanks for your visit"))
     return response
