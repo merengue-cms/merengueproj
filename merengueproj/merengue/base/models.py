@@ -411,7 +411,12 @@ class BaseContent(BaseClass):
         tags_field = self._meta.get_field('tags')
         tags_field._save(instance=self)
         # updating the tags may leave some without related items, so we'll delete them
-        Tag.objects.filter(items__isnull=True).delete()
+        for tag in Tag.objects.filter(items__isnull=True):
+            if hasattr(tag, 'itag'):
+                # itag deletion gets rid of the original tag object
+                tag.itag.delete()
+            else:
+                tag.delete()
 
         # Save thumbnail of main_image in model inherited
         main_image_field = self._meta.get_field('main_image')
