@@ -1,6 +1,42 @@
 Changes
 =======
 
+Version 0.7.0-final (4161 revision)
+-----------------------------------
+
+* Fixed an error in Mysql south migrations. See #1583.
+* Collections filters for date comparing. See #1621.
+* Bugfixes for collection grouping and ordering. See #1608, #1670.
+* Viewlets rendering bugfixes. See #1600.
+* Other bugfixes in collections: #1626.
+* IE7 layout bugfixes. See #1516.
+* Thread creation action for public view. See #1628.
+* Config params store validation fails to show in form with errors. See #1630.
+* Improving get_real_instance() logic to work in all cases. See #1632.
+* Users can manage its contents. All permissions are adapted to allow it. See #1634, #1658, #1688.
+* ``filebrowser`` plugin bugfixes. See #1629, #1661.
+* Improve permission checking throughout site. See #1644.
+* Some breadcrumbs fixes. See #1646, #1662, #1686.
+* Inline edit uses Merengue ``edit`` permission to decide if show the widget. See #1665.
+* View to show past events. See #1664.
+* New ``striptags`` filter in collection. See #1667.
+* Allow defining the default status for all contents in settings. See #1674.
+* Inline translation only appears to managers. See #1675.
+* Creator became the owner of contents he created automatically. See #1654.
+* Allow to set the same review task to more than one user. See #1679.
+* When a content gets in ``pending`` status, a new review task is created. See #1679.
+* Allow configure the page size in collections, make it a setting for that. See #1682.
+* ``feedback`` plugin get the user full name when adding comments. See #1683.
+* Model translation bugfixed when finding translatable fields if the superclass model is abstract. See #1685.
+* Fixed bugs in translation tools (``django-inlinetrans`` and ``transhette``), which was failing in some cases. See #1693, 
+* Content location can be deleted now. See #1692.
+* Allow tags with white spaces inside. See #1228.
+* A new ``notify_pending_reviews`` command to notify users for pending tasks. See #1694.
+* Thumbnails in main image for contents are correctly updated when adding/hanging/deleting the content photos. See #1700.
+* Fixes some errors in SAML plugin. See #1442.
+* The models cache is not corretly re-populated when loading plugins. See #1712.
+* Other bugfixes: See #1701, #1706, #1561, #1711.
+
 Version 0.7.0-rc1 (3988 revision)
 ---------------------------------
 
