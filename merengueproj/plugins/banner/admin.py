@@ -15,13 +15,20 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+import sorl
 from merengue.base.admin import BaseContentAdmin, PluginAdmin
 from merengue.section.admin import SectionContentAdmin
 from plugins.banner.models import Banner
 
 
 class BannerAdmin(PluginAdmin, BaseContentAdmin):
-    pass
+
+    def save_model(self, request, obj, form, change):
+        saved = super(BannerAdmin, self).save_model(request, obj, form, change)
+        # if we changed the image, its thumbnail is no longer valid.
+        if obj.id and 'image' in form.changed_data:
+            sorl.thumbnail.delete(obj.image, delete_file=False)
+        return saved
 
 
 class BannerSectionAdmin(SectionContentAdmin, BannerAdmin):
