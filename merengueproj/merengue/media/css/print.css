@@ -18,8 +18,10 @@ img {
 #content-actions,
 div#left-sidebar,
 div#right-sidebar,
+.simpleImgGallery2,
 .insert-first-section,
 #portal-primary-links,
+.document-section-comments,
 .document-section-actions-menu {
     display: none;
 }
@@ -34,5 +36,11 @@ body div#content-zone {
     width: 900px;
 }
 
+#slideshow .screenShotTable {
+    padding-top: 0!important;
+}
 
+div.document-section {
+    clear: both;
+}
 
