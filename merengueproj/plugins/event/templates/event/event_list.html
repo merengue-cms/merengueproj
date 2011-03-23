@@ -6,3 +6,11 @@
 
 {% block listtitle %}{% inline_trans "Events index" %} - {% if date %}{{ date|date }}{% else %}{% inline_trans "For every date" %}{% endif %}{% endblock %}
 
+{% block contenttitle %}
+    {{ block.super }}
+    {% block eventhistoric %}
+       <div id="event-historic">
+            <a href="{% url event_historic %}"> "Events historic" </a>
+        </div>
+    {% endblock %}
+{% endblock %}
