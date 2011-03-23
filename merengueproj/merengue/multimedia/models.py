@@ -30,6 +30,7 @@ from south.modelsinspector import add_introspection_rules
 from stdimage import StdImageField
 from tagging.fields import TagField
 from transmeta import TransMeta
+import sorl
 
 from merengue.base.managers import WorkflowManager
 from merengue.multimedia.managers import MultimediaManager
@@ -86,7 +87,7 @@ class BaseMultimedia(models.Model):
             return u'%s (%s)' % (self.name, self.original_filename)
         else:
             return self.name
-    full_name=property(_get_mixed_name)
+    full_name = property(_get_mixed_name)
 
     def save(self, **kwargs):
         super(BaseMultimedia, self).save(**kwargs)
@@ -198,10 +199,18 @@ class Photo(BaseMultimedia):
         translate = ('caption', )
 
     def save(self, **kwargs):
-        self._save_original_filename(self.image)
         super(Photo, self).save(**kwargs)
         for multimedia_relation in self.multimediarelation_set.all():
             multimedia_relation.save()
+        self._save_original_filename(self.image)
+
+        # wether we are adding or modifying an image, the tumbnails are no longer valid.
+        # delete it from the image and all its basecontent related items.
+        sorl.thumbnail.delete(self.image, delete_file=False)
+        if self.id:
+            for bc in self.basecontent_set.filter(main_image__isnull=False):
+                sorl.thumbnail.delete(bc.main_image, delete_file=False)
+
 #@FIXME: Duplicate code. base/models.py line 219
     def admin_thumbnail(self):
         file_access_failed = False
@@ -253,6 +262,7 @@ class Video(BaseMultimedia):
     def save(self, **kwargs):
         self._save_original_filename(self.file)
         super(Video, self).save(**kwargs)
+
 #@FIXME: Duplicate code. line 292
     def admin_thumbnail(self):
         if self.preview:
@@ -289,6 +299,7 @@ class PanoramicView(BaseMultimedia):
     def save(self, **kwargs):
         self._save_original_filename(self.preview)
         super(PanoramicView, self).save(**kwargs)
+
 #@FIXME: Duplicate code. line 256
     def admin_thumbnail(self):
         if self.preview:
