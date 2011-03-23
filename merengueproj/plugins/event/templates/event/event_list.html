@@ -10,7 +10,7 @@
     {{ block.super }}
     {% block eventhistoric %}
        <div id="event-historic">
-            <a href="{% url event_historic %}"> "Events historic" </a>
+            <a href="{% url event_historic %}"> {% inline_trans "Events historic" %}</a>
         </div>
     {% endblock %}
 {% endblock %}
