@@ -48,6 +48,7 @@ from south.modelsinspector import add_introspection_rules
 from south.signals import pre_migrate, post_migrate
 from stdimage import StdImageField
 from transmeta import TransMeta, get_fallback_fieldname
+from tagging.models import Tag
 from tagging.fields import TagField
 
 from merengue.base.managers import BaseContentManager, WorkflowManager
@@ -409,6 +410,8 @@ class BaseContent(BaseClass):
 
         tags_field = self._meta.get_field('tags')
         tags_field._save(instance=self)
+        # updating the tags may leave some without related items, so we'll delete them
+        Tag.objects.filter(items__isnull=True).delete()
 
         # Save thumbnail of main_image in model inherited
         main_image_field = self._meta.get_field('main_image')
