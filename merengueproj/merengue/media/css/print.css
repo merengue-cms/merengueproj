@@ -9,9 +9,18 @@ img {
 
 #footer,
 #djDebug,
+#toolbar,
 #header div,
-#left-sidebar,
-#right-sidebar {
+#portalmenu,
+#breadcrumbs,
+#user-actions,
+#site-actions,
+#content-actions,
+div#left-sidebar,
+div#right-sidebar,
+.insert-first-section,
+#portal-primary-links,
+.document-section-actions-menu {
     display: none;
 }
 
@@ -21,6 +30,9 @@ img {
     float: none;
 }
 
+body div#content-zone {
+    width: 900px;
+}
 
 
 
