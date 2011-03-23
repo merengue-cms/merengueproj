@@ -36,6 +36,10 @@ div#header img#merengue_logo {
 	font-size: 1.7em;
 }
 
+.login .form-row label {
+    width: 9em;
+}
+
 .login form input[type="submit"] {
     cursor: pointer;
 }
