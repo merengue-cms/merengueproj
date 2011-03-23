@@ -477,6 +477,7 @@ ul.errorlist {
 }
 
 ul.errorlist li {
+    color: white;
     background-color: red;
     border: 1px solid red;
     padding: 4px 5px 4px 25px;
