@@ -68,6 +68,8 @@ Version 0.7.0-final
 
 * Better styling in public forms. See #1716.
 
+* Calendar block do not show events when loading the page. See #1719.
+
 * Other bugfixes: See #1701, #1706, #1561, #1711.
 
 Version 0.7.0-rc1 (3988 revision)
