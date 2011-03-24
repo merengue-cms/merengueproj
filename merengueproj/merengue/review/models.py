@@ -41,7 +41,7 @@ class ReviewTask(models.Model):
     task_object = generic.GenericForeignKey('task_object_type', 'task_object_id')
 
     class Meta:
-        ordering = ('is_done', 'title', 'url', 'owner', 'assigned_to')
+        ordering = ('is_done', 'title', 'url', 'owner')
 
     def __unicode__(self):
         if self.is_done:
@@ -52,11 +52,12 @@ class ReviewTask(models.Model):
 
 
 def notify_review_task(sender, instance, created, **kwargs):
-    if (getattr(settings, 'SEND_MAIL_IF_PENDING', False) and
-        created and not ReviewTask.objects.filter(
-            is_done=False, task_object_id=instance.task_object_id).count()):
-        send_mail_content_as_pending(instance.task_object,
-                                     [instance.owner] + instance.assigned_to.all())
+    if getattr(settings, 'SEND_MAIL_IF_PENDING', False):
+        if created and not ReviewTask.objects.filter(
+            is_done=False, task_object_id=instance.task_object_id).count() > 1:
+            assigned = [user for user in instance.assigned_to.all()]
+            send_mail_content_as_pending(instance.task_object,
+                                         [instance.owner] + assigned)
 
 
 post_save.connect(notify_review_task, sender=ReviewTask)
