@@ -55,17 +55,12 @@ def notify_review_task(sender, instance, created, **kwargs):
     if created and getattr(settings, 'SEND_MAIL_IF_PENDING', False):
         if not ReviewTask.objects.filter(
             is_done=False, task_object_id=instance.task_object_id).count() > 1:
-            from merengue.perms.models import Role, Permission, ObjectPermission
-            roles = Role.objects.filter(
-                objectpermission__in=ObjectPermission.objects.filter(
-                    permission__in=Permission.objects.filter(
-                        codename='can_published')))
+            from merengue.perms import utils as perms_api
             # disclaimer: the assigned users are not selected using instance
             # because they're not updated, because M2M fields are updated
             # after the post_save signal
-            assigned = []
-            for rol in roles:
-                assigned += [rel.user for rel in rol.get_users()]
+            assigned = [i for i in User.objects.all()
+                        if perms_api.has_permission(instance.task_object, i, 'can_published')]
             send_mail_content_as_pending(instance.task_object,
                                          [instance.owner] + assigned)
 
