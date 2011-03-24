@@ -30,6 +30,6 @@ class FeedbackBlock(ContentTypeFilterProvider, ContentBlock):
     def render(self, request, place, content, context, *args, **kwargs):
         if content.is_commentable() and self.match_type(content):
             return self.render_block(request, template_name='feedback/block_feedback.html',
-                                     block_title=_('Feedback content'),
+                                     block_title=_('Comments'),
                                      context={'content': content})
         return ''
