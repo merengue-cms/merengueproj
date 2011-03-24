@@ -1,8 +1,8 @@
 Changes
 =======
 
-Version 0.7.0-final (4161 revision)
------------------------------------
+Version 0.7.0-final
+-------------------
 
 * Fixed an error in Mysql south migrations. See #1583.
 
