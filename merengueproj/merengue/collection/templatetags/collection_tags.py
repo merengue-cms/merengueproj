@@ -146,8 +146,11 @@ class CollectionItemsNode(Node):
         group_by_attr = context.get('_group_by_collection',
                                     get_common_field_translated_name(collection, collection.group_by))
         group_by_attr = get_common_field_translated_name(collection, collection.group_by)
-        order_by_attr = context.get('_order_by_collection',
-                                    get_common_field_translated_name(collection, collection.order_by))
+        order_by_attr = context.get('_order_by_collection', None)
+        can_reversed = False
+        if not order_by_attr:
+            order_by_attr = get_common_field_translated_name(collection, collection.order_by)
+            can_reversed = True
 
         if not group_by_attr and not order_by_attr:
             return ''
@@ -156,13 +159,14 @@ class CollectionItemsNode(Node):
             context.update({self.var_name: items})
             return ''
         elif not group_by_attr:
-            if collection.reverse_order:
-                result = items.order_by('-%s' % order_by_attr)
-            else:
-                result = items.order_by(order_by_attr)
+            if collection.reverse_order and can_reversed:
+                order_by_attr = '-%s' % order_by_attr
+            result = items.order_by(order_by_attr)
             context.update({self.var_name: result})
             return ''
         else:
+            if collection.reverse_order and can_reversed:
+                order_by_attr = '-%s' % order_by_attr
             items = items.order_by(group_by_attr, order_by_attr)
             context.update({self.var_name: items})
             return ''
