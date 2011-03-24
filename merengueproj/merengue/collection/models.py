@@ -163,8 +163,6 @@ class Collection(BaseContent):
             filtering_section = self.filtering_section
         if filtering_section:
             items = self._reduce_to_section(items, section)
-        if self.limit:
-            items = items[:self.limit]
         return items
 
     def get_first_parents_of_content_types(self):

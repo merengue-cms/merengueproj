@@ -154,22 +154,20 @@ class CollectionItemsNode(Node):
 
         if not group_by_attr and not order_by_attr:
             return ''
-        elif not order_by_attr and group_by_attr:
+        if not order_by_attr and group_by_attr:
             items = items.order_by(group_by_attr)
-            context.update({self.var_name: items})
-            return ''
         elif not group_by_attr:
             if collection.reverse_order and can_reversed:
                 order_by_attr = '-%s' % order_by_attr
-            result = items.order_by(order_by_attr)
-            context.update({self.var_name: result})
-            return ''
+            items = items.order_by(order_by_attr)
         else:
             if collection.reverse_order and can_reversed:
                 order_by_attr = '-%s' % order_by_attr
             items = items.order_by(group_by_attr, order_by_attr)
-            context.update({self.var_name: items})
-            return ''
+        if collection.limit:
+            items = items[:collection.limit]
+        context.update({self.var_name: items})
+        return ''
 
 
 def collectionitems(parser, token):
