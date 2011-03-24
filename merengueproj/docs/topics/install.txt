@@ -92,7 +92,7 @@ it with these instructions:
 
 .. code-block:: bash
 
-    $ wget http://www.djangoproject.com/download/1.1.3/tarball/
+    $ wget --trust-server-names http://www.djangoproject.com/download/1.1.3/tarball/
     $ tar xzvf Django-1.1.3.tar.gz
     $ cd Django-1.1.3
     $ sudo python setup.py install
