@@ -14,23 +14,6 @@ from merengue.collection.utils import get_render_item_template, get_common_field
 register = Library()
 
 
-def _get_group_by_value(group_by, template_tag=None, value=None):
-    if isinstance(group_by, Manager):
-        objects_related = group_by.all()
-        if objects_related:
-            objects_related_count = objects_related.count()
-            if objects_related.count() == 1 or not template_tag:
-                return objects_related[0]
-            else:
-                cached_group_by_m2m = getattr(template_tag, 'cached_group_by_m2m', {})
-                num_group_by = cached_group_by_m2m.get(value, 0)
-                cached_group_by_m2m[value] = (num_group_by + 1) % objects_related_count
-                template_tag.cached_group_by_m2m = cached_group_by_m2m
-                return objects_related[num_group_by]
-        return ''
-    return group_by
-
-
 class CollectionIterator(list):
 
     def __iter__(self):
@@ -207,9 +190,30 @@ class CollectionRegroupNode(RegroupNode):
         self.var_name = var_name
         self.parser = parser
 
+    def _num_group_by(self, value):
+        cached_group_by_m2m = getattr(self, 'cached_group_by_m2m', {})
+        num_group_by = cached_group_by_m2m.get(value, 0)
+        if num_group_by == 0:
+            paginator = self.context.get('paginator', None)
+            current_page = self.context.get('page_obj', None).number
+            for p in range(1, current_page):
+                num_group_by += paginator.page(p).object_list.count(value)
+        cached_group_by_m2m[value] = (num_group_by + 1)
+        self.cached_group_by_m2m = cached_group_by_m2m
+        return num_group_by
+
     def _group_by(self, value, ignore_failures):
         group_by = self.expression.resolve_original(value, ignore_failures)
-        return _get_group_by_value(group_by, self, value)
+        if isinstance(group_by, Manager):
+            objects_related = group_by.all()
+            if objects_related:
+                if objects_related.count() == 1:
+                    num_group_by = 0
+                else:
+                    num_group_by = self._num_group_by(value)
+                return objects_related[num_group_by]
+            return ''
+        return group_by
 
     def render(self, context):
         collection = self.collection.resolve(context, True)
@@ -218,6 +222,7 @@ class CollectionRegroupNode(RegroupNode):
         else:
             self.expression = self.parser.compile_filter(collection.group_by)
             self.expression.resolve_original = self.expression.resolve
+            self.context = context
             self.expression.resolve = self._group_by
         return super(CollectionRegroupNode, self).render(context)
 
