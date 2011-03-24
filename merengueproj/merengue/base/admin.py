@@ -677,6 +677,7 @@ class WorkflowBatchActionProvider(object):
         selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
         if selected:
             if request.POST.get('post', False):
+                original_status_dict = dict(queryset.values_list('pk', 'status'))
                 updated = queryset.update(status=state)
                 obj_log = ugettext("Changed to %s") % state
                 msg_data = {'number': updated,
@@ -684,6 +685,7 @@ class WorkflowBatchActionProvider(object):
                             'state': state}
                 msg = ugettext(u"Successfully set %(number)d %(model_name)s as %(state)s.") % msg_data
                 for obj in queryset:
+                    obj._original_status = original_status_dict.get(obj.pk, obj.status)
                     self.log_change(request, obj, obj_log)
                     obj.save()
                 self.message_user(request, msg)
