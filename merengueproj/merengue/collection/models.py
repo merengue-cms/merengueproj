@@ -75,7 +75,7 @@ class Collection(BaseContent):
         null=True,
         )
 
-    limit = models.IntegerField(
+    limit = models.PositiveIntegerField(
         verbose_name=_(u'Number of elements '),
         blank=True,
         null=True,
