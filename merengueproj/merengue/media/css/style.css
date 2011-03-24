@@ -280,3 +280,40 @@ form.inplace_description {
 }
 
 /* end inplaceedit */
+
+/* content */
+#content table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#content table tr th,
+#content table tr td {
+    padding: 0.3em 0.5em;
+    border: 1px solid #CEA670;
+}
+
+#content table tr th {
+    background: #F4F0E5;
+}
+
+/* content form */
+#content form ul {
+    list-style: none;
+}
+
+#content form ul li {
+    margin-bottom: 1.2em;
+}
+
+#content form ul li label {
+    display: block;
+    margin-bottom: 0.6em;
+}
+
+#content form ul li.required label {
+    font-weight: bold;
+}
+/* end content form */
+
+/* end content*/
