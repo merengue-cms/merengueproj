@@ -52,10 +52,15 @@ class ReviewTask(models.Model):
 
 
 def notify_review_task(sender, instance, created, **kwargs):
-    if getattr(settings, 'SEND_MAIL_IF_PENDING', False):
-        if created and not ReviewTask.objects.filter(
+    if created and getattr(settings, 'SEND_MAIL_IF_PENDING', False):
+        if not ReviewTask.objects.filter(
             is_done=False, task_object_id=instance.task_object_id).count() > 1:
-            assigned = [user for user in instance.assigned_to.all()]
+            from merengue.perms import utils as perms_api
+            # disclaimer: the assigned users are not selected using instance
+            # because they're not updated, because M2M fields are updated
+            # after the post_save signal
+            assigned = [i for i in User.objects.all()
+                        if perms_api.has_permission(instance.task_object, i, 'can_published')]
             send_mail_content_as_pending(instance.task_object,
                                          [instance.owner] + assigned)
 
