@@ -51,13 +51,29 @@ class ReviewTask(models.Model):
         return "%s (%s)" % (self.title, done)
 
 
+def add_can_publish_users(sender, instance, created, **kwargs):
+    if created:
+        from merengue.perms.models import Role, Permission, ObjectPermission
+        roles = Role.objects.filter(
+            objectpermission__in=ObjectPermission.objects.filter(
+                permission__in=Permission.objects.filter(
+                    codename='can_published')))
+        users = []
+        for rol in roles:
+            users += [rel.user for rel in rol.get_users()]
+        for user in users:
+            instance.assigned_to.add(user)
+        instance.save()
+
+
 def notify_review_task(sender, instance, created, **kwargs):
-    if getattr(settings, 'SEND_MAIL_IF_PENDING', False):
-        if created and not ReviewTask.objects.filter(
+    if created and getattr(settings, 'SEND_MAIL_IF_PENDING', False):
+        if not ReviewTask.objects.filter(
             is_done=False, task_object_id=instance.task_object_id).count() > 1:
             assigned = [user for user in instance.assigned_to.all()]
             send_mail_content_as_pending(instance.task_object,
                                          [instance.owner] + assigned)
 
 
+post_save.connect(add_can_publish_users, sender=ReviewTask)
 post_save.connect(notify_review_task, sender=ReviewTask)

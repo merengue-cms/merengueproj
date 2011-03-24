@@ -16,6 +16,7 @@ def send_mail_content_as_pending(obj, users=None, template='review/email_as_pend
     subject = ugettext(u'%s has been set as pending') % getattr(obj, get_real_fieldname('name'))
     body = render_to_string(template, {'content': obj})
     from_mail = settings.EMAIL_HOST_USER
-    recipers = [user.email for user in users if user.email and user.has_perm('can_publish')]
+    recipers = [user.email for user in users if user.email]
 
-    send_mail(subject, body, from_mail, recipers, fail_silently=False)
+    for reciper in recipers:
+        send_mail(subject, body, from_mail, [reciper], fail_silently=False)
