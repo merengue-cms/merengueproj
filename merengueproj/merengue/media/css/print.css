@@ -18,9 +18,11 @@ img {
 #content-actions,
 div#left-sidebar,
 div#right-sidebar,
+.feedback .actions,
 .simpleImgGallery2,
 .insert-first-section,
 #portal-primary-links,
+.feedback .commentLink,
 .document-section-comments,
 .document-section-actions-menu {
     display: none;
