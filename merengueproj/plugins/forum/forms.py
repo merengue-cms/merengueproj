@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from transmeta import get_real_fieldname
+from transmeta import get_fallback_fieldname
 
 from merengue.base.forms import BaseModelForm
 from plugins.forum.models import ForumThreadComment, Thread
@@ -34,4 +34,4 @@ class CaptchaForumThreadCommentForm(BaseModelForm):
 class CreateThreadForm(BaseModelForm):
     class Meta:
         model = Thread
-        fields = (get_real_fieldname('name'), get_real_fieldname('description'), 'tags', )
+        fields = (get_fallback_fieldname('name'), get_fallback_fieldname('description'), 'tags', )
