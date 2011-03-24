@@ -52,6 +52,23 @@
             'url': '{{ event.url }}'
         }
         {% endfor %}
+
+        var updateByAjax = function(year, month) {
+                $('#datepicker-loading').fadeIn("slow");
+                $.ajax({
+                    url: "{% url events_calendar %}",
+                    type: "GET",
+                    data: ({month: month, year: year}),
+                    dataType: "json",
+                    success: function(events) {
+                        $('#datepicker-loading').fadeOut("slow");
+                        eventDate = events;
+                        $("#eventsCalendar").datepicker("refresh");
+                        bind_days_tooltip();
+                    }
+                });
+        };
+
         datepickerOptions = {
             showButtonPanel: true,
             changeMonth: true,
@@ -80,24 +97,14 @@
                 }
             },
             onChangeMonthYear: function(year, month, inst) {
-                $('#datepicker-loading').fadeIn("slow");
-                $.ajax({
-                    url: "{% url events_calendar %}",
-                    type: "GET",
-                    data: ({month: month, year: year}),
-                    dataType: "json",
-                    success: function(events) {
-                        $('#datepicker-loading').fadeOut("slow");
-                        eventDate = events;
-                        $("#eventsCalendar").datepicker("refresh");
-                        bind_days_tooltip();
-                    }
-                });
+                 updateByAjax(year, month);
             }
         };
         $("#eventsCalendar").datepicker(datepickerOptions);
         bind_days_tooltip();
         $('#datepicker-loading').hide();
+        var cdate=$('#eventsCalendar').datepicker("getDate");
+        updateByAjax(cdate.getFullYear(), cdate.getMonth()+1);
     });
 })(jQuery);
 </script>
