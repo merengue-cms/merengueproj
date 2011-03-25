@@ -60,6 +60,21 @@ h1 a:hover {
     text-decoration: inherit;
 }
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table tr th,
+table tr td {
+    padding: 0.3em 0.5em;
+    border: 1px solid #CEA670;
+}
+
+table tr th {
+    background: #F4F0E5;
+}
+
 .hide {
     display: none;
 }
@@ -282,21 +297,6 @@ form.inplace_description {
 /* end inplaceedit */
 
 /* content */
-#content table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-#content table tr th,
-#content table tr td {
-    padding: 0.3em 0.5em;
-    border: 1px solid #CEA670;
-}
-
-#content table tr th {
-    background: #F4F0E5;
-}
-
 /* content form */
 #content form ul {
     list-style: none;
