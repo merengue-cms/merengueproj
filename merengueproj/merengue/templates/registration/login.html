@@ -12,7 +12,7 @@
 </script> 
 
 <div id="login">
-  <form method="post" action="{% url merengue_login %}">
+  <form method="post" action="{% url merengue_login %}">{% csrf_token %}
   {{ form.as_p }}
   <p class="actionRow">
   <input type="hidden" name="next" value="{{ next }}" />

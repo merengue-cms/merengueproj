@@ -23,10 +23,12 @@ MERENGUEDIR = path.dirname(path.abspath(__file__))
 
 # List  of  callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'merengue.theming.loader.load_template_source',  # for enabling theme support in Merengue
-    'django.template.loaders.filesystem.load_template_source',
-    'django.template.loaders.app_directories.load_template_source',
-    'django.template.loaders.eggs.load_template_source',
+    #('django.template.loaders.cached.Loader', (
+        'merengue.theming.loader.load_template_source',  # for enabling theme support in Merengue
+        'django.template.loaders.filesystem.load_template_source',
+        'django.template.loaders.app_directories.load_template_source',
+        'django.template.loaders.eggs.load_template_source',
+    #)),
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -116,6 +118,7 @@ MERENGUE_MIDDLEWARE_CLASSES = (
     'merengue.middleware.LocaleMiddleware',
     'merengue.middleware.HttpStatusCodeRendererMiddleware',
     'merengue.pluggable.middleware.ActivePluginsMiddleware',
+    'django.middleware.csrf.CsrfResponseMiddleware',
 )
 
 # merengue usual middleware list. you can use this variable in your MIDDLEWARE_CLASSES project settings

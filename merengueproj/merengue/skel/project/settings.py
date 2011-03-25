@@ -21,17 +21,22 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = 'postgresql_psycopg2'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = ''             # Or path to database file if using sqlite3.
-DATABASE_USER = ''             # Not used with sqlite3.
-DATABASE_PASSWORD = ''         # Not used with sqlite3.
-DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
-
-if DATABASE_ENGINE == 'postgresql_psycopg2':
-    DATABASE_OPTIONS = {
-        'autocommit': True,
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': '',                       # Or path to database file if using sqlite3.
+        'USER': '',                       # Not used with sqlite3.
+        'PASSWORD': '',                   # Not used with sqlite3.
+        'HOST': '',                       # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                       # Set to empty string for default. Not used with sqlite3.
     }
+}
+
+for database in DATABASES.values():
+    if database['ENGINE'] == 'django.db.backends.postgresql_psycopg2':
+        database['OPTIONS'] = {
+            'autocommit': True,
+        }
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -63,7 +68,8 @@ USE_GIS = False
 
 if USE_GIS:
     INSTALLED_APPS += ('django.contrib.gis', 'merengue.places', )
-    if DATABASE_ENGINE == 'postgresql_psycopg2':
+    if DATABASES['default']['ENGINE'] == 'django.db.backends.postgresql_psycopg2':
+        DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
         TEST_DB_CREATION_SUFFIX = 'WITH TEMPLATE template_postgis'
 
 # Absolute path to the directory that holds media.
@@ -101,8 +107,6 @@ INSTALLED_APPS += (
     'website',
 )
 
-TEST_DB_CREATION_SUFFIX = 'WITH TEMPLATE template_postgis'
-
 FIXTURE_DIRS = (
     path.join(BASEDIR, 'fixtures', ),
 )
@@ -130,7 +134,7 @@ PRODUCTION_DB_UPDATE_PASSWORDS = (('admin', 'admin'), )
 
 # For johnny cache. Johnny cache key prefix should not be the same in other projects
 CACHE_BACKEND = 'johnny.backends.locmem:///'
-JOHNNY_MIDDLEWARE_KEY_PREFIX = '%s-cache' % DATABASE_NAME
+JOHNNY_MIDDLEWARE_KEY_PREFIX = '%s-cache' % DATABASES['default']['NAME']
 
 # if merengue will detect new plugins in file system
 DETECT_NEW_PLUGINS = True

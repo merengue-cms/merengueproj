@@ -19,7 +19,7 @@ from django.db import models
 
 from django.contrib.admin import widgets
 from django.forms.util import ValidationError
-from django.forms.fields import email_re
+from django.core.validators import email_re
 from django.utils.translation import ugettext as _
 from django import forms
 

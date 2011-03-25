@@ -33,6 +33,13 @@ class NotProvidedMeta(type):
 class NOT_PROVIDED:
     __metaclass__ = NotProvidedMeta
 
+    def __nonzero__(self):
+        # we ensure NOT_PROVIDED evaluates to False in Django 1.3 templates
+        # if we do {% if foovalue %} and foovalue is NOT_PROVIDED class
+        # Django templates in 1.3 will call to class creating a NOT_PROVIDED
+        # object, which have to evaluate to false to avoid some logic errors
+        return False
+
 
 class Param(object):
     """ Base class for all configuration parameters """

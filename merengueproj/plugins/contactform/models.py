@@ -24,7 +24,7 @@ from django.contrib.auth.models import User
 
 from transmeta import TransMeta
 
-from cmsutils.db.fields import JSONField
+from merengue.base.dbfields import JSONField
 from merengue.base.models import BaseContent
 
 from plugins.contactform import fields as custom_fields

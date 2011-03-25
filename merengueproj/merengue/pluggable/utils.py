@@ -38,6 +38,7 @@ from django.db import connection, transaction
 from django.db.models import get_models
 from django.db.models.loading import load_app, cache
 from django.utils.importlib import import_module
+from django.utils.translation import get_language, activate
 
 from south import migration
 from south.exceptions import NoMigrations
@@ -155,11 +156,14 @@ def are_installed_models(app_name):
 def install_models(app_name):
     app_module = load_app(get_plugin_module_name(app_name))
     if have_south(app_name):
+        lang = get_language()
         call_command('migrate', app=app_name)
+        # call_command activates a default 'en-us' locale in thread. we restore it
+        activate(lang)
     else:
         style = no_style()
         cursor = connection.cursor()
-        sql_commands = sql_all(app_module, style)
+        sql_commands = sql_all(app_module, style, connection)
         for sql_command in sql_commands:
             cursor.execute(sql_command)
     transaction.commit()

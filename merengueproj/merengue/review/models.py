@@ -41,7 +41,7 @@ class ReviewTask(models.Model):
     task_object = generic.GenericForeignKey('task_object_type', 'task_object_id')
 
     class Meta:
-        ordering = ('is_done', 'title', 'url', 'owner')
+        ordering = ('is_done', 'title', 'url', 'owner', )
 
     def __unicode__(self):
         if self.is_done:

@@ -176,13 +176,13 @@ class Migration:
             'content': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['base.BaseContent']"})
         },
         'section.customstyle': {
-            'color_1': ('cmsutils.db.fields.ColorField', [], {'null': 'True', 'blank': 'True'}),
-            'color_2': ('cmsutils.db.fields.ColorField', [], {'null': 'True', 'blank': 'True'}),
-            'color_3': ('cmsutils.db.fields.ColorField', [], {'null': 'True', 'blank': 'True'}),
+            'color_1': ('django.db.models.fields.CharField', [], {'null': 'True', 'blank': 'True'}),
+            'color_2': ('django.db.models.fields.CharField', [], {'null': 'True', 'blank': 'True'}),
+            'color_3': ('django.db.models.fields.CharField', [], {'null': 'True', 'blank': 'True'}),
             'content_head_background': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'menu_head_background': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'menu_link_color': ('cmsutils.db.fields.ColorField', [], {'null': 'True', 'blank': 'True'}),
+            'menu_link_color': ('django.db.models.fields.CharField', [], {'null': 'True', 'blank': 'True'}),
             'search_results_item_background': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'searcher_last_tab_image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'searcher_left_arrow': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),

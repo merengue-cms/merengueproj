@@ -276,8 +276,8 @@ class BaseSection(BaseContent):
         verbose_name=_('main content'),
         help_text=_('content selected here will be shown when entering the section'),
         related_name='section_main_content',
+        on_delete=models.SET_NULL,
     )
-    main_content.delete_cascade = False
 
     related_content = models.ManyToManyField(
         BaseContent,
@@ -293,8 +293,8 @@ class BaseSection(BaseContent):
         blank=True,
         editable=False,
         verbose_name=_('custom style'),
+        on_delete=models.SET_NULL,
     )
-    customstyle.delete_cascade = False
 
     objects = SectionManager()
 
@@ -385,12 +385,6 @@ class SectionRelatedContent(models.Model):
 
 
 class Document(BaseContent):
-
-    permanent = models.BooleanField(verbose_name=_('permanent'),
-                                    help_text=_('make this document not erasable and its slug ummutable'),
-                                    editable=False,
-                                    default=False,
-    )
 
     objects = WorkflowManager()
 

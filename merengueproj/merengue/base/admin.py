@@ -20,11 +20,11 @@ import datetime
 from django import template
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
-from django.db import models
+from django.db import models, router
 from django.db.models import Q
 
 from django.db.models.related import RelatedObject
-from django.db.models.fields.related import ForeignKey
+from django.db.models.fields.related import ForeignKey, ManyToManyField
 from django.shortcuts import render_to_response
 from django.contrib import admin
 from django.contrib.auth.models import User
@@ -173,6 +173,16 @@ def autodiscover(admin_site=None):
     LOADING = False
 
 
+def set_field_read_only(field, field_name, obj):
+    """ utility function for convert a widget field into a read only widget """
+    if hasattr(obj, 'get_%s_display' % field_name):
+        display_value = getattr(obj, 'get_%s_display' % field_name)()
+    else:
+        display_value = None
+    field.widget = ReadOnlyWidget(getattr(obj, field_name, ''), display_value)
+    field.required = False
+
+
 # Merengue Model Admins -----
 
 
@@ -275,16 +285,6 @@ class ReverseAdminInline(admin.StackedInline):
         return self._inlineformset_factory(self.parent_model, self.model, **defaults)
 
 
-def set_field_read_only(field, field_name, obj):
-    """ utility function for convert a widget field into a read only widget """
-    if hasattr(obj, 'get_%s_display' % field_name):
-        display_value = getattr(obj, 'get_%s_display' % field_name)()
-    else:
-        display_value = None
-    field.widget = ReadOnlyWidget(getattr(obj, field_name, ''), display_value)
-    field.required = False
-
-
 class RelatedURLsModelAdmin(admin.ModelAdmin):
 
     def get_urls(self):
@@ -313,7 +313,8 @@ class RelatedURLsModelAdmin(admin.ModelAdmin):
                 wrap(self.delete_view),
                 name='%s_%s_delete' % info),
             url(r'^(.+)/$',
-                wrap(self.parse_path), )
+                wrap(self.parse_path),
+                name='%s_%s_change' % info)
         )
         return urlpatterns
 
@@ -357,7 +358,6 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
     html_fields = ()
     autocomplete_fields = {}
     edit_related = ()
-    readonly_fields = ()
     removed_fields = ()
     list_per_page = 50
     inherit_actions = True
@@ -412,15 +412,6 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
             raise Http404(_('%(name)s object with primary key %(key)r does not exist.') % {'name': force_unicode(opts.verbose_name), 'key': escape(object_id)})
 
         return obj
-
-    def get_form(self, request, obj=None, **kwargs):
-        form = super(BaseAdmin, self).get_form(request, obj)
-        if hasattr(self, 'readonly_fields'):
-            for field_name in self.readonly_fields:
-                if field_name in form.base_fields:
-                    field = form.base_fields[field_name]
-                    set_field_read_only(field, field_name, obj)
-        return form
 
     def formfield_for_dbfield(self, db_field, **kwargs):
         field = super(BaseAdmin, self).formfield_for_dbfield(db_field, **kwargs)
@@ -836,6 +827,12 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
     def has_change_permission_to_any(self, request):
         return super(BaseContentAdmin, self).has_change_permission(request, None)
 
+    def get_readonly_fields(self, request, obj=None):
+        readonly_fields = super(BaseContentAdmin, self).get_readonly_fields(request, obj)
+        if obj and obj.no_changeable_fields:
+            readonly_fields += tuple(obj.no_changeable_fields)
+        return readonly_fields
+
     def get_form(self, request, obj=None, **kwargs):
         """
         Overrides Django admin behaviour
@@ -863,11 +860,6 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
             if owners_field.initial is None:
                 # user automatically get owner of this object
                 owners_field.initial = (request.user.id, )
-        if obj and obj.no_changeable_fields:
-            no_changeable_fields = obj.no_changeable_fields
-            for name in no_changeable_fields:
-                if name in form.base_fields:
-                    set_field_read_only(form.base_fields[name], name, obj)
         if obj and getattr(obj, 'no_changeable', False):
             # Prevent changes if some one forces a save submit
             form.is_valid = lambda x: False
@@ -914,9 +906,11 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
         if obj is None:
             raise Http404(_('%(name)s object with primary key %(key)r does not exist.') % {'name': force_unicode(opts.verbose_name), 'key': escape(object_id)})
 
+        using = router.db_for_write(self.model)
+
         # Populate deleted_objects, a data structure of all related objects that
         # will also be deleted.
-        (deleted_objects, objects_without_delete_perm, perms_needed) = get_deleted_contents((obj, ), opts, request.user, self.admin_site)
+        (deleted_objects, objects_without_delete_perm, perms_needed) = get_deleted_contents((obj, ), opts, request.user, self.admin_site, using)
 
         # perms_needed
 
@@ -1021,8 +1015,8 @@ class BaseContentViewAdmin(BaseContentAdmin):
     def has_add_permission(self, request):
         return False
 
-    def lookup_allowed(self, lookup):
-        is_allowed = super(BaseContentViewAdmin, self).lookup_allowed(lookup)
+    def lookup_allowed(self, lookup, value):
+        is_allowed = super(BaseContentViewAdmin, self).lookup_allowed(lookup, value)
         return is_allowed or lookup == u'id__in'
 
     def queryset(self, request):
@@ -1031,6 +1025,21 @@ class BaseContentViewAdmin(BaseContentAdmin):
             return qs
         elif self.has_change_permission(request):
             return qs.filter(Q(owners=request.user) | Q(sections__owners=request.user))
+
+
+def related_form_clean(related_field, basecontent):
+    """ Returns a customized form.clean() method that insert the related field
+        into cleaned_data """
+    def _form_clean(self):
+        related_content = basecontent
+        field = self.instance._meta.get_field_by_name(related_field)[0]
+        if isinstance(field, ManyToManyField):
+            # if m2m the cleaned_data have to be a iterable
+            related_content = [related_content, ]
+        cleaned_data = super(self.__class__, self).clean()
+        cleaned_data[related_field] = related_content
+        return cleaned_data
+    return _form_clean
 
 
 class RelatedModelAdmin(BaseAdmin):
@@ -1161,11 +1170,6 @@ class RelatedModelAdmin(BaseAdmin):
         extra_context = self._update_extra_context(request, extra_context, parent_model_admin, parent_object)
         return super(RelatedModelAdmin, self).history_view(request, object_id, extra_context)
 
-    def save_form(self, request, form, change):
-        # we associate related object
-        form.cleaned_data[self.related_field] = self.basecontent
-        return super(BaseAdmin, self).save_form(request, form, change)
-
     def save_model(self, request, obj, form, change):
         super(RelatedModelAdmin, self).save_model(request, obj, form, change)
         opts = obj._meta
@@ -1199,6 +1203,7 @@ class RelatedModelAdmin(BaseAdmin):
     def get_form(self, request, obj=None, **kwargs):
         form = super(RelatedModelAdmin, self).get_form(request, obj, **kwargs)
         self.remove_related_field_from_form(form)
+        form.clean = related_form_clean(self.related_field, self.basecontent)
         return form
 
     def remove_related_field_from_form(self, form):
@@ -1304,7 +1309,7 @@ class OrderableRelatedModelAdmin(RelatedModelAdmin):
         """
         opts = self.model._meta
         field = opts.get_field_by_name(self.related_field)[0]
-        relation_lookup = field.field.rel.through.lower()
+        relation_lookup = field.field.rel.through.__name__.lower()
         return ('%s__order' % relation_lookup, 'asc')
 
     def changelist_view(self, request, extra_context=None, parent_model_admin=None, parent_object=None):

@@ -7,7 +7,7 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding field 'RegisteredPlugin.meta_info'
-        db.add_column('plugins_registeredplugin', 'meta_info', self.gf('cmsutils.db.fields.JSONField')(null=True), keep_default=False)
+        db.add_column('plugins_registeredplugin', 'meta_info', self.gf('merengue.base.dbfields.JSONField')(null=True), keep_default=False)
 
     def backwards(self, orm):
         # Deleting field 'RegisteredPlugin.meta_info'
@@ -19,7 +19,7 @@ class Migration(SchemaMigration):
             'description': ('django.db.models.fields.TextField', [], {'default': "''"}),
             'directory_name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'unique': 'True'}),
             'installed': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'meta_info': ('cmsutils.db.fields.JSONField', [], {'null': 'True'}),
+            'meta_info': ('merengue.base.dbfields.JSONField', [], {'null': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'registereditem_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['registry.RegisteredItem']", 'unique': 'True', 'primary_key': 'True'}),
             'required_apps': ('merengue.pluggable.dbfields.RequiredAppsField', [], {}),

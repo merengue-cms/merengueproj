@@ -46,7 +46,6 @@ class RegisteredItemAdmin(BaseOrderableAdmin):
     def get_form(self, request, obj=None, **kwargs):
         form = super(RegisteredItemAdmin, self).get_form(request, obj,
                                                          **kwargs)
-
         broken_item = is_broken(obj)
 
         if broken_item:
@@ -58,6 +57,7 @@ class RegisteredItemAdmin(BaseOrderableAdmin):
             config = obj.get_registry_item().get_config()
             config_field = form.base_fields['config']
             config_field.set_config(config)
+
         return form
 
     def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):

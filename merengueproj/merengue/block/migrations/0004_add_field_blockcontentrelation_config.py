@@ -69,7 +69,7 @@ class Migration(SchemaMigration):
             'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200', 'db_index': 'True'}),
             'name_fr': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'no_changeable': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'no_changeable_fields': ('cmsutils.db.fields.JSONField', [], {'null': 'True', 'blank': 'True'}),
+            'no_changeable_fields': ('merengue.base.dbfields.JSONField', [], {'null': 'True', 'blank': 'True'}),
             'no_deletable': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'owners': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'contents_owned'", 'null': 'True', 'symmetrical': 'False', 'to': "orm['auth.User']"}),
             'plain_description_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),

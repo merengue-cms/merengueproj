@@ -118,19 +118,19 @@ class Migration(SchemaMigration):
         db.add_column('section_customstyle', 'menu_head_background', self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True), keep_default=False)
 
         # Adding field 'customstyle.menu_link_color'
-        db.add_column('section_customstyle', 'menu_link_color', self.gf('cmsutils.db.fields.ColorField')(null=True, blank=True), keep_default=False)
+        db.add_column('section_customstyle', 'menu_link_color', self.gf('django.db.models.fields.CharField')(null=True, blank=True), keep_default=False)
 
         # Adding field 'customstyle.searcher_left_arrow'
         db.add_column('section_customstyle', 'searcher_left_arrow', self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True), keep_default=False)
 
         # Adding field 'customstyle.color_3'
-        db.add_column('section_customstyle', 'color_3', self.gf('cmsutils.db.fields.ColorField')(null=True, blank=True), keep_default=False)
+        db.add_column('section_customstyle', 'color_3', self.gf('django.db.models.fields.CharField')(null=True, blank=True), keep_default=False)
 
         # Adding field 'customstyle.color_2'
-        db.add_column('section_customstyle', 'color_2', self.gf('cmsutils.db.fields.ColorField')(null=True, blank=True), keep_default=False)
+        db.add_column('section_customstyle', 'color_2', self.gf('django.db.models.fields.CharField')(null=True, blank=True), keep_default=False)
 
         # Adding field 'customstyle.color_1'
-        db.add_column('section_customstyle', 'color_1', self.gf('cmsutils.db.fields.ColorField')(null=True, blank=True), keep_default=False)
+        db.add_column('section_customstyle', 'color_1', self.gf('django.db.models.fields.CharField')(null=True, blank=True), keep_default=False)
 
 
     models = {

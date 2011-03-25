@@ -18,8 +18,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from cmsutils.cache import CachingManager
-
 from merengue.base.managers import BaseContentManager
 from merengue.base.models import BaseCategory, BaseContent
 
@@ -29,8 +27,6 @@ class LinkCategory(BaseCategory):
     class Meta:
         verbose_name = _('link category')
         verbose_name_plural = _('link categories')
-
-    objects = CachingManager(cache_object_retrieval=True)
 
 
 class Link(BaseContent):

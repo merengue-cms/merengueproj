@@ -31,7 +31,7 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
     change_form_template = 'admin/plugin/plugin_change_form.html'
     change_list_template = 'admin/plugin/plugin_change_list.html'
     readonly_fields = RegisteredItemAdmin.readonly_fields + ('name',
-        'description', 'version', 'timestamp', 'directory_name', )
+        'description', 'version', 'directory_name', )
     list_display = ('name', 'directory_name', 'installed', 'active', 'screenshot_link', )
 
     fieldsets = (
@@ -45,40 +45,36 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
         )
     )
 
-    def get_form(self, request, obj=None):
-        form = super(RegisteredPluginAdmin, self).get_form(request, obj)
-        if not obj.installed:
-            set_field_read_only(form.base_fields['active'], 'active', obj)
+    def get_readonly_fields(self, request, obj=None):
+        readonly_fields = super(RegisteredPluginAdmin, self).get_readonly_fields(request, obj)
         if obj.directory_name in settings.REQUIRED_PLUGINS:
             # required plugins cannot being deactivated or uninstalled
-            set_field_read_only(form.base_fields['active'], 'active', obj)
-            set_field_read_only(form.base_fields['installed'], 'installed', obj)
+            readonly_fields += ('active', 'installed', )
+        elif not obj.installed:
+            readonly_fields += ('active', )
+
+        return readonly_fields
+
+    def get_form(self, request, obj=None):
+        form = super(RegisteredPluginAdmin, self).get_form(request, obj)
         if not has_required_dependencies(obj):
             installed_field = form.base_fields['installed']
             help_text = installed_field.help_text
             installed_field.help_text = "%s %s" \
                                         % (help_text,
                                           _('Not all dependencies are met'))
-            set_field_read_only(installed_field, 'installed', obj)
-        # checking if plugin is broken
         if obj.broken:
             # a broken registered item will be not editable by anybody
             for field_name, field in form.base_fields.items():
                 set_field_read_only(field, field_name, obj)
-
         return form
 
     def save_form(self, request, form, change):
         change_installed_field = 'installed' in form.changed_data
         is_installed = form.cleaned_data['installed'] == True
-        if change_installed_field:
-            if is_installed:
-                # it has no sense install a plugin without activate
-                form.cleaned_data['active'] = True
-            else:
-                form.cleaned_data['active'] = False
         registered_plugin = form.save(commit=False)
         if change_installed_field and is_installed:
+            registered_plugin.active = True
             install_plugin(registered_plugin)
         return registered_plugin
 

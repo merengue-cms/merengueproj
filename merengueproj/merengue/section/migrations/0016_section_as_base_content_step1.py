@@ -1,5 +1,4 @@
 # encoding: utf-8
-from django.conf import settings
 from south.db import db
 from south.v2 import SchemaMigration
 
@@ -21,12 +20,12 @@ class Migration(SchemaMigration):
         else:
             # Adding field 'MicroSite.basesection_ptr'
             db.add_column('microsite_microsite', 'basesection_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['section.BaseSection'], null=True), keep_default=False)
-            if settings.DATABASE_ENGINE not in ['sqlite3', 'mysql']:
+            if db.backend_name not in ['sqlite3', 'mysql']:
                 db.delete_foreign_key('section_section', 'basesection_ptr_id')
 
         # Adding field 'BaseSection.basecontent_ptr'
         db.add_column('section_basesection', 'basecontent_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['base.BaseContent'], null=True), keep_default=False)
-        if settings.DATABASE_ENGINE not in ['sqlite3', 'mysql']:
+        if db.backend_name not in ['sqlite3', 'mysql']:
             db.delete_foreign_key('section_basesection_related_content', 'basesection_id')
 
     def backwards(self, orm):
@@ -86,7 +85,7 @@ class Migration(SchemaMigration):
             'modification_date': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'null': 'True', 'blank': 'True'}),
             'multimedia': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['multimedia.BaseMultimedia']", 'symmetrical': 'False', 'through': "'MultimediaRelation'", 'blank': 'True'}),
             'no_changeable': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'no_changeable_fields': ('cmsutils.db.fields.JSONField', [], {'null': 'True', 'blank': 'True'}),
+            'no_changeable_fields': ('merengue.base.dbfields.JSONField', [], {'null': 'True', 'blank': 'True'}),
             'no_deletable': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'owners': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "'contents_owned'", 'blank': 'True', 'null': 'True', 'to': "orm['auth.User']"}),
             'rank': ('django.db.models.fields.FloatField', [], {'default': '100.0', 'db_index': 'True'}),

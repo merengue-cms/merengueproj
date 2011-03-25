@@ -19,7 +19,6 @@
 import os
 import re
 
-import django
 from django.conf import settings
 if settings.USE_GIS:
     from django.contrib.gis.db import models
@@ -30,8 +29,6 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.management import call_command
 from django.core.exceptions import ObjectDoesNotExist, SuspiciousOperation
 from django.db.models import signals, permalink
-from django.db.models.fields.related import OneToOneRel
-from django.db.models.query import delete_objects, CollectedObjects
 from django.db.models.signals import post_save
 from django.template.loader import render_to_string
 from django.utils.encoding import force_unicode
@@ -40,7 +37,6 @@ from django.utils.text import unescape_entities
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
-from cmsutils.db.fields import AutoSlugField, JSONField
 from cmsutils.signals import post_rebuild_db
 if settings.USE_GIS:
     from south.introspection_plugins import geodjango  # pyflakes:ignore
@@ -51,6 +47,7 @@ from transmeta import TransMeta, get_fallback_fieldname
 from tagging.models import Tag
 from tagging.fields import TagField
 
+from merengue.base.dbfields import AutoSlugField, JSONField
 from merengue.base.managers import BaseContentManager, WorkflowManager
 from merengue.base.review_tasks import review_to_pending_status
 from merengue.urlresolvers import get_url_default_lang
@@ -185,7 +182,8 @@ if settings.USE_GIS:
         map_icon = StdImageField(_('map icon'), upload_to='map_icons',
                                    null=True, blank=True)
         location = models.ForeignKey(Location, verbose_name=_('location'),
-                                     null=True, blank=True, editable=False)
+                                     null=True, blank=True, editable=False,
+                                     on_delete=models.SET_NULL)
         location.delete_cascade = False
 
         objects = WorkflowManager()
@@ -306,8 +304,8 @@ class BaseContent(BaseClass):
                                    null=True, blank=True, editable=False)
 
     last_editor = models.ForeignKey(User, null=True, blank=True, editable=False,
-                                    related_name='last_edited_content')
-    last_editor.delete_cascade = False
+                                    related_name='last_edited_content',
+                                    on_delete=models.SET_NULL)
 
     # permission global
     adquire_global_permissions = models.BooleanField(_('Adquire global permissions'), default=True)
@@ -655,13 +653,6 @@ class MultimediaRelation(models.Model):
             self.content.save()
 
 
-def ensure_break_relations(sender, instance, **kwargs):
-    if hasattr(instance, 'break_relations'):
-        instance.break_relations()
-
-signals.pre_delete.connect(ensure_break_relations)
-
-
 def init_gis(sender, **kwargs):
     call_command('init_gis')
 
@@ -672,120 +663,22 @@ def recalculate_main_image(sender, instance, **kwargs):
         ordered_photo_relations = MultimediaRelation.objects.filter(
             multimedia__class_name='photo',
             content=instance.content,
-        ).order_by('order')
+        ).exclude(pk=instance.pk).order_by('order')
         # we can assert instance will not be in ordered_photo_relations
         if ordered_photo_relations:
             # reorder photos
             for i, mr in enumerate(ordered_photo_relations):
                 mr.order = i
                 mr.save()
-        instance.content.recalculate_main_image()
+            instance.content.recalculate_main_image()
+        elif instance.content.main_image:
+            instance.content.main_image.delete()
 
 
-signals.post_delete.connect(recalculate_main_image, sender=MultimediaRelation)
+signals.pre_delete.connect(recalculate_main_image, sender=MultimediaRelation)
 if settings.USE_GIS:
     post_rebuild_db.connect(init_gis)
 
-
-def _collect_sub_objects(self, seen_objs, parent=None, nullable=False):
-    """
-    Recursively populates seen_objs with all objects related to this
-    object.
-
-    When done, seen_objs.items() will be in the format:
-        [(model_class, {pk_val: obj, pk_val: obj, ...}),
-            (model_class, {pk_val: obj, pk_val: obj, ...}), ...]
-
-    Patched Django version to allowing disable delete cascade behavior in
-    foreign keys fields.
-    """
-    pk_val = self._get_pk_val()
-    # This Django version checking is a needed workaround
-    # because internal API was changed in
-    # http://code.djangoproject.com/changeset/12600
-    if django.VERSION[:3] in [(1, 1, 0), (1, 1, 1)]:
-        if seen_objs.add(self.__class__, pk_val, self,
-                         parent, nullable):
-            return
-    else:  # For Django 1.1.2 or newer
-        if seen_objs.add(self.__class__, pk_val, self,
-                         type(parent), parent, nullable):
-            return
-
-    for related in self._meta.get_all_related_objects():
-        rel_opts_name = related.get_accessor_name()
-        delete_cascade = getattr(related.field, 'delete_cascade', True)
-        if not delete_cascade:
-            continue
-        if isinstance(related.field.rel, OneToOneRel):
-            try:
-                sub_obj = getattr(self, rel_opts_name)
-            except ObjectDoesNotExist:
-                pass
-            else:
-                sub_obj._collect_sub_objects(seen_objs, self, related.field.null)
-        else:
-            # To make sure we can access all elements, we can't use the
-            # normal manager on the related object. So we work directly
-            # with the descriptor object.
-            for cls in self.__class__.mro():
-                if rel_opts_name in cls.__dict__:
-                    rel_descriptor = cls.__dict__[rel_opts_name]
-                    break
-            else:
-                raise AssertionError("Should never get here.")
-            delete_qs = rel_descriptor.delete_manager(self).all()
-            for sub_obj in delete_qs:
-                sub_obj._collect_sub_objects(seen_objs, self, related.field.null)
-
-    # Handle any ancestors (for the model-inheritance case). We do this by
-    # traversing to the most remote parent classes -- those with no parents
-    # themselves -- and then adding those instances to the collection. That
-    # will include all the child instances down to "self".
-    parent_stack = [p for p in self._meta.parents.values() if p is not None]
-    while parent_stack:
-        link = parent_stack.pop()
-        parent_obj = getattr(self, link.name)
-        if parent_obj._meta.parents:
-            parent_stack.extend(parent_obj._meta.parents.values())
-            continue
-        # At this point, parent_obj is base class (no ancestor models). So
-        # delete it and all its descendents.
-        parent_obj._collect_sub_objects(seen_objs)
-
-
-def break_relations(self):
-    for related in self._meta.get_all_related_objects():
-        rel_opts_name = related.get_accessor_name()
-        field = related.field
-        delete_cascade = getattr(field, 'delete_cascade', True)
-        if not delete_cascade:
-            if isinstance(related.field.rel, models.OneToOneRel):
-                setattr(self, rel_opts_name, None)
-            else:
-                for sub_obj in getattr(self, rel_opts_name).all():
-                    setattr(sub_obj, related.field.name, None)
-                    sub_obj.save()
-
-
-def delete(self):
-    assert self._get_pk_val() is not None, "%s object can't be deleted because its %s attribute is set to None." % (self._meta.object_name, self._meta.pk.attname)
-
-    # Break relations
-    self.break_relations()
-
-    # Find all the objects than need to be deleted.
-    seen_objs = CollectedObjects()
-    self._collect_sub_objects(seen_objs)
-
-    # Actually delete the objects.
-    delete_objects(seen_objs)
-
-delete.alters_data = True
-
-models.Model.add_to_class('delete', delete)
-models.Model.add_to_class('break_relations', break_relations)
-models.Model.add_to_class('_collect_sub_objects', _collect_sub_objects)
 
 # ----- adding south rules to help introspection -----
 

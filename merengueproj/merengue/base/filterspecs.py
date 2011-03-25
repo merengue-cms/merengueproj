@@ -10,7 +10,7 @@ class ClassnameFilterSpec(AllValuesFilterSpec):
                'query_string': cl.get_query_string({}, [self.field.name]),
                'display': _('All')}
         for val in self.lookup_choices:
-            val = smart_unicode(val[self.field.name])
+            val = smart_unicode(val)
             yield {'selected': self.lookup_val == val,
                    'query_string': cl.get_query_string({self.field.name: val}),
                    'display': _(val)}

@@ -209,12 +209,16 @@ following parameters:
 
     .. code-block:: python
 
-       DATABASE_ENGINE = 'postgresql_psycopg2'
-       DATABASE_NAME = 'myproject'
-       DATABASE_USER = 'myprojectuser'
-       DATABASE_PASSWORD = 'password'
-       DATABASE_HOST = ''
-       DATABASE_PORT = ''
+        DATABASE = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql_psycopg2',
+                'NAME': 'myproject',
+                'USER': 'myprojectuser',
+                'PASSWORD': 'password',
+                'HOST': '',
+                'PORT': '',
+            }
+        }
 
 You can use all database engine supported by django
 http://docs.djangoproject.com/en/1.1/ref/settings/#database-engine

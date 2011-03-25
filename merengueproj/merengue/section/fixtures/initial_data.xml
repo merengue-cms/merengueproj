@@ -89,7 +89,6 @@
     <object pk="1" model="section.document" overwrite="no">
         <field type="CharField" name="search_form"><None></None></field>
         <field type="TextField" name="search_form_filters"><None></None></field>
-        <field type="BooleanField" name="permanent">False</field>
         <field to="base.basecontent" name="related_items" rel="ManyToManyRel"></field>
         <field to="auth.user" name="owners" rel="ManyToManyRel"></field>
     </object>

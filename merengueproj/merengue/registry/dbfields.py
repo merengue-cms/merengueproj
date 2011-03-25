@@ -15,12 +15,16 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from cmsutils.db.fields import JSONField
-
+from merengue.base.dbfields import JSONField
 from merengue.registry.fields import ConfigFormField
 
 
 class ConfigField(JSONField):
+
+    def __init__(self, *args, **kwargs):
+        kwargs['blank'] = True
+        kwargs['null'] = True
+        super(ConfigField, self).__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):
         defaults = {'form_class': ConfigFormField}

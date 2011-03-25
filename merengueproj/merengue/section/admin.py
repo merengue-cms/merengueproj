@@ -26,7 +26,6 @@ from transmeta import get_fallback_fieldname
 
 from merengue.base.admin import BaseAdmin, BaseContentAdmin, RelatedModelAdmin, \
                                 BaseOrderableAdmin, OrderableRelatedModelAdmin
-from merengue.base.admin import set_field_read_only
 from merengue.base.widgets import RelatedFieldWidgetWrapperWithoutAdding
 from merengue.section.fields import CSSValidatorField
 from merengue.section.forms import MenuAdminModelForm
@@ -187,12 +186,6 @@ class DocumentRelatedModelAdmin(SectionContentAdmin, DocumentAdmin):
     tool_name = 'documents'
     tool_label = _('documents')
     manage_contents = True
-
-    def get_form(self, request, obj=None, **kwargs):
-        form = super(DocumentRelatedModelAdmin, self).get_form(request, obj, **kwargs)
-        if obj and obj.permanent and 'slug' in form.base_fields.keys():
-            set_field_read_only(form.base_fields['slug'], 'slug', obj)
-        return form
 
 
 class BaseLinkInline(admin.TabularInline):

@@ -19,17 +19,16 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
 from transmeta import TransMeta
 
 
 REVISOR_RESULTS = (
-    ('just', ugettext('Just set status')),
-    ('replace', ugettext('Display an alternative comment in public view')),
-    ('hide', ugettext('Hide comment from public view')),
-    )
+    ('just', _('Just set status')),
+    ('replace', _('Display an alternative comment in public view')),
+    ('hide', _('Hide comment from public view')),
+)
 
 
 class CollabCommentType(models.Model):
@@ -37,12 +36,12 @@ class CollabCommentType(models.Model):
 
     name = models.CharField(
         _('name'),
-        max_length = 20,
+        max_length=20,
         )
 
     label = models.CharField(
         _('label'),
-        max_length = 100,
+        max_length=100,
         )
 
     class Meta:
@@ -58,11 +57,12 @@ class CollabCommentUserType(CollabCommentType):
 
 
 class CollabCommentRevisorStatusType(CollabCommentType):
+
     decorator = models.ImageField(
         _('decorator'),
-        upload_to = 'revisor_status_types',
-        blank = True,
-        null = True,
+        upload_to='revisor_status_types',
+        blank=True,
+        null=True,
         )
 
     result = models.CharField(
@@ -75,8 +75,8 @@ class CollabCommentRevisorStatusType(CollabCommentType):
 
     reason = models.TextField(
         _('reason'),
-        blank = True,
-        null = True,
+        blank=True,
+        null=True,
         )
 
     class Meta:
@@ -87,44 +87,44 @@ class CollabComment(models.Model):
     # Generic Foreign Key
     content_type = models.ForeignKey(
         ContentType,
-        verbose_name = _('content type'),
-        related_name = "content_type_set_for_%(class)s",
+        verbose_name=_('content type'),
+        related_name="content_type_set_for_%(class)s",
         )
     object_pk = models.PositiveIntegerField(
         _('object ID'),
         )
     content_object = generic.GenericForeignKey(
-        ct_field = "content_type",
-        fk_field = "object_pk",
+        ct_field="content_type",
+        fk_field="object_pk",
         )
 
     # User commenting (Authenticated)
     user = models.ForeignKey(
         User,
-        verbose_name = _('user'),
-        blank = True,
-        null = True,
-        related_name = "%(class)s_comments",
+        verbose_name=_('user'),
+        blank=True,
+        null=True,
+        related_name="%(class)s_comments",
     )
 
     # User commenting (Non Authenticated)
     user_name = models.CharField(
         _("user's name"),
-        max_length = 50,
-        blank = True,
+        max_length=50,
+        blank=True,
         )
     user_email = models.EmailField(
         _("user's email address"),
-        blank = True,
+        blank=True,
         )
     user_url = models.URLField(
         _("user's URL"),
-        blank = True,
+        blank=True,
         )
 
     comment_user_type = models.ForeignKey(
         CollabCommentUserType,
-        verbose_name = _('comment user type'),
+        verbose_name=_('comment user type'),
         )
 
     comment = models.TextField(
@@ -133,13 +133,13 @@ class CollabComment(models.Model):
 
     submit_date = models.DateTimeField(
         _('date/time submitted'),
-        default = None,
-        auto_now_add = True,
+        default=None,
+        auto_now_add=True,
         )
     ip_address = models.IPAddressField(
         _('IP address'),
-        blank = True,
-        null = True,
+        blank=True,
+        null=True,
         )
 
     class Meta:
@@ -171,34 +171,34 @@ class CollabComment(models.Model):
 class CollabCommentRevisorStatus(models.Model):
     comment = models.ForeignKey(
         CollabComment,
-        verbose_name = _('revised comment'),
+        verbose_name=_('revised comment'),
     )
 
     # User that revises the comment
     revisor = models.ForeignKey(
         User,
-        verbose_name = _('user'),
-        blank = True,
-        null = True,
-        related_name = "revised_%(class)s_comments",
+        verbose_name=_('user'),
+        blank=True,
+        null=True,
+        related_name="revised_%(class)s_comments",
     )
 
     type = models.ForeignKey(
         CollabCommentRevisorStatusType,
-        verbose_name = _('revised comment status'),
+        verbose_name=_('revised comment status'),
         )
 
     revision_date = models.DateTimeField(
         _('date/time revised'),
-        default = None,
-        auto_now_add = True,
+        default=None,
+        auto_now_add=True,
         )
 
     short_comment = models.CharField(
         _('short comment'),
-        max_length = 100,
-        blank = True,
-        null = True,
+        max_length=100,
+        blank=True,
+        null=True,
         )
 
     def __unicode__(self):

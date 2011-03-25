@@ -84,12 +84,16 @@ simplicity's sake.
 
 .. code-block:: python
 
-       DATABASE_ENGINE = 'sqlite3'
-       DATABASE_NAME = 'merengueprojectorg.db'
-       DATABASE_USER = ''
-       DATABASE_PASSWORD = ''
-       DATABASE_HOST = ''
-       DATABASE_PORT = ''
+       DATABASE = {
+           'default': {
+               'ENGINE': 'django.db.backends.sqlite3',
+               'NAME': 'merengueprojectorg.db',
+               'USER': '',
+               'PASSWORD': '',
+               'HOST': '',
+               'PORT': '',
+           }
+       }
 
 Other settings you should define:
 

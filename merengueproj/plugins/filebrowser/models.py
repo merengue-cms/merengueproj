@@ -7,8 +7,7 @@ from django.core.urlresolvers import reverse
 from django.utils.encoding import force_unicode, smart_str
 from django.utils.translation import ugettext_lazy as _
 
-from cmsutils.db.fields import AutoSlugField
-
+from merengue.base.dbfields import AutoSlugField
 from merengue.section.models import BaseSection
 
 from plugins.filebrowser.managers import (RepositoryManager, DocumentManager,

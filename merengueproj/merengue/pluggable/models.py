@@ -24,8 +24,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from south.modelsinspector import add_introspection_rules
 
-from cmsutils.db.fields import JSONField
-
+from merengue.base.dbfields import JSONField
 from merengue.pluggable.managers import PluginManager
 from merengue.pluggable.dbfields import RequiredPluginsField, RequiredAppsField
 from merengue.registry.models import RegisteredItem
@@ -105,4 +104,4 @@ rules_jsonfield = [
 ]
 
 add_introspection_rules(rules, ["^merengue\.pluggable"])
-add_introspection_rules(rules_jsonfield, ["^cmsutils"])
+add_introspection_rules(rules_jsonfield, ["^merengue\.base"])
