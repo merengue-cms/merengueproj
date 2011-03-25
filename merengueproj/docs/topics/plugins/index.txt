@@ -348,7 +348,7 @@ A developer can do a lot of things when developing a new Plugin:
         def get_middlewares(self):
             return ['plugins.fooplugin.middleware.FooMiddleware', ]
 
-.. _`Django middleware reference`: http://docs.djangoproject.com/en/1.1/topics/http/middleware/
+.. _`Django middleware reference`: http://docs.djangoproject.com/en/1.3/topics/http/middleware/
 
 * **Anything you want after plugin activation**, implementing the ``hook_post_register(self)`` method in the ``PluginConfig`` class. Example:
 

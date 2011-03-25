@@ -46,10 +46,10 @@ And you Merengue will show a page like this::
 
     ncalls  tottime  percall  cumtime  percall filename:lineno(function)
         4796    0.076    0.000    0.076    0.000 /tmp/venv2.6/lib/python2.6/posixpath.py:307(normpath)
-          11    0.075    0.007    0.076    0.007 /tmp/django_src_1.1.X/django/db/models/fields/related.py:759(db_type)
-        2398    0.042    0.000    0.191    0.000 /tmp/django_src_1.1.X/django/utils/_os.py:24(safe_join)
-          88    0.035    0.000    0.055    0.001 /tmp/django_src_1.1.X/django/template/debug.py:10(tokenize)
-          79    0.032    0.000    0.191    0.002 /tmp/django_src_1.1.X/django/template/loaders/app_directories.py:48(load_template_source)
+          11    0.075    0.007    0.076    0.007 /tmp/django_src_1.3.X/django/db/models/fields/related.py:759(db_type)
+        2398    0.042    0.000    0.191    0.000 /tmp/django_src_1.3.X/django/utils/_os.py:24(safe_join)
+          88    0.035    0.000    0.055    0.001 /tmp/django_src_1.3.X/django/template/debug.py:10(tokenize)
+          79    0.032    0.000    0.191    0.002 /tmp/django_src_1.3.X/django/template/loaders/app_directories.py:48(load_template_source)
           ... # more stuff
 
 .. _`merengue/settings.py`: http://dev.merengueproject.org/browser/trunk/merengueproj/merengue/settings.py

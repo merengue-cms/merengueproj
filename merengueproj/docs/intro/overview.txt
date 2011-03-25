@@ -106,7 +106,7 @@ The main advantages with `Django permissions`_ are more granularity and that
 all permission configurations will persist in the database, and so can be
 configurable by admin users, using management interface.
 
-.. _Django permissions: http://docs.djangoproject.com/en/1.1/topics/auth/#id1
+.. _Django permissions: http://docs.djangoproject.com/en/1.3/topics/auth/#id1
 
 GIS integrated
 --------------
@@ -158,7 +158,7 @@ to be placed in the ``rightsidebar`` zone. You only have to create this template
     Merengue uses the `Django templates system`_. See `Django templates` to get more
     information about Merengue templating.
 
-.. _`Django templates system`: http://docs.djangoproject.com/en/1.1/topics/templates/
+.. _`Django templates system`: http://docs.djangoproject.com/en/1.3/topics/templates/
 
 Full featured management interface
 ----------------------------------
@@ -210,7 +210,7 @@ Merengue uses `South`_ to implement schema evolution.
 .. _django-rosetta: http://code.google.com/p/django-rosetta/
 .. _django-inlinetrans: http://code.google.com/p/django-inlinetrans/
 .. _django-transmeta: http://code.google.com/p/django-transmeta/
-.. _Django translation: http://docs.djangoproject.com/en/1.1/topics/i18n/#topics-i18n
+.. _Django translation: http://docs.djangoproject.com/en/1.3/topics/i18n/#topics-i18n
 .. _South: http://south.aeracode.org/
 
 Philosophy

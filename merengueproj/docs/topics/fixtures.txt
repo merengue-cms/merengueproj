@@ -11,7 +11,7 @@ after populate your database.
 
     See `fixtures in Django`_ for more information.
 
-.. _`fixtures in Django`: http://docs.djangoproject.com/en/1.1/howto/initial-data/
+.. _`fixtures in Django`: http://docs.djangoproject.com/en/1.3/howto/initial-data/
 
 Site fixtures
 =============
@@ -51,7 +51,7 @@ XML serializer, adding these improvements:
 * Translations fields support.
 * Option for not overwrite objects previously loaded in your site.
 
-.. _`Django serialization framework`: http://docs.djangoproject.com/en/1.1/topics/serialization/#topics-serialization
+.. _`Django serialization framework`: http://docs.djangoproject.com/en/1.3/topics/serialization/#topics-serialization
 
 Translation fields support
 --------------------------

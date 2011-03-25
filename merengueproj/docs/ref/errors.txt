@@ -89,13 +89,13 @@ Use a non GIS database with a GIS project
     Traceback (most recent call last):
     ...
         version_tuple = postgis_version_tuple()
-    File "/home/user/django_src_1.1.X/django/contrib/gis/db/backend/postgis/management.py", line 46, in postgis_version_tuple
+    File "/home/user/django_src_1.3.X/django/contrib/gis/db/backend/postgis/management.py", line 46, in postgis_version_tuple
         version = postgis_lib_version()
-    File "/home/user/django_src_1.1.X/django/contrib/gis/db/backend/postgis/management.py", line 26, in postgis_lib_version
+    File "/home/user/django_src_1.3.X/django/contrib/gis/db/backend/postgis/management.py", line 26, in postgis_lib_version
         return _get_postgis_func('postgis_lib_version')
-    File "/home/user/django_src_1.1.X/django/contrib/gis/db/backend/postgis/management.py", line 13, in _get_postgis_func
+    File "/home/user/django_src_1.3.X/django/contrib/gis/db/backend/postgis/management.py", line 13, in _get_postgis_func
         cursor.execute('SELECT %s()' % func)
-    File "/home/user/django_src_1.1.X/django/db/backends/util.py", line 19, in execute
+    File "/home/user/django_src_1.3.X/django/db/backends/util.py", line 19, in execute
         return self.cursor.execute(sql, params)
     psycopg2.ProgrammingError: no existe la función postgis_lib_version()
     LINE 1: SELECT postgis_lib_version()
