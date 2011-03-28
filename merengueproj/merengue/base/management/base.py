@@ -56,7 +56,7 @@ def copy_helper(style, name, directory, symlink=False):
     # directory -- The directory to which the layout template should be copied.
     import re
     from merengue import settings as merengue_settings
-    if not re.search(r'^[_a-zA-Z]\w*$', name): # If it's not a valid directory name.
+    if not re.search(r'^[_a-zA-Z]\w*$', name):  # If it's not a valid directory name.
         # Provide a smart error message, depending on the error.
         if not re.search(r'^[_a-zA-Z]', name):
             message = 'make sure the name begins with a letter or underscore'
@@ -94,9 +94,12 @@ def copy_merengue_dirs(style, name, merengue_root, top_dir, symlink, remove_if_e
         symlink_possible = True
 
     # Symlink "merengue" top dir
-    if symlink_possible:
+    if symlink:
         dest = os.path.join(top_dir, 'merengue')
         make_symlink(merengue_root, dest, remove_if_exists)
+    else:
+        dest = os.path.join(top_dir, 'merengue')
+        copy_dir(merengue_root, dest, name, remove_if_exists, style)
 
     # Copy or symlink merengue plugins
     dest = os.path.join(top_dir, 'plugins')
@@ -119,7 +122,7 @@ def copy_merengue_dirs(style, name, merengue_root, top_dir, symlink, remove_if_e
     themes_dir = os.path.join(merengue_root, 'themes')
     for theme in os.listdir(themes_dir):
         if theme.startswith('.'):
-            continue # we ignore hidden directories
+            continue  # we ignore hidden directories
         theme_dir = os.path.join(themes_dir, theme)
         dest_media = os.path.join(top_dir, 'media', 'themes', theme)
         dest_templates = os.path.join(top_dir, 'templates', 'themes', theme)
@@ -152,7 +155,7 @@ def copy_dir(source, dest, name, remove_if_exists, style, link=False):
         os.makedirs(dest)
 
     for d, subdirs, files in os.walk(source):
-        relative_dir = d[len(source)+1:].replace('project_name', name)
+        relative_dir = d[len(source) + 1:].replace('project_name', name)
         new_relative_dir = os.path.join(dest, relative_dir)
         if not os.path.exists(new_relative_dir):
             os.makedirs(new_relative_dir)
