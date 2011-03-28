@@ -46,7 +46,7 @@ def thread_view(request, forum_slug, thread_slug, original_context=None):
     thread = get_object_or_404(Thread, slug=thread_slug)
     is_moderated = request.user and (request.user.is_superuser or has_permission(thread.forum, request.user, 'moderate_forum'))
     is_auth = request.user and request.user.is_authenticated()
-    comments = thread.forumthreadcomment_set.all().order_by('date_submitted')
+    comments = thread.forumthreadcomment_set.filter(parent__isnull=True).order_by('date_submitted')
     if not is_moderated:
         comments = comments.filter(banned=False)
     return content_view(request, thread, extra_context={'comments': comments,
