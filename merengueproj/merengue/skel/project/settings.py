@@ -71,6 +71,8 @@ if USE_GIS:
     if DATABASES['default']['ENGINE'] == 'django.db.backends.postgresql_psycopg2':
         DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
         TEST_DB_CREATION_SUFFIX = 'WITH TEMPLATE template_postgis'
+    if DATABASES['default']['ENGINE'] == 'django.db.backends.mysql':
+        DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.mysql'
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
