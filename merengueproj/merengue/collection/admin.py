@@ -276,6 +276,12 @@ class FeedCollectionAdmin(CollectionAdmin):
                 form.base_fields[i].widget = forms.Select(choices=default_fields)
         return form
 
+    def response_add(self, request, obj, post_url_continue='../%s/'):
+        if obj:
+            obj.perform_query(apply_options=True, force_update=True)
+            obj.save()
+        return super(FeedCollectionAdmin, self).response_add(request, obj, post_url_continue)
+
 
 class FeedCollectionRelatedModelAdmin(SectionContentAdmin, FeedCollectionAdmin):
     tool_name = 'feed collections'
