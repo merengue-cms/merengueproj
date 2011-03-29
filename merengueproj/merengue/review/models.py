@@ -61,7 +61,7 @@ def notify_review_task(sender, instance, created, **kwargs):
             # after the post_save signal
             assigned = [i for i in User.objects.all()
                         if perms_api.has_permission(instance.task_object, i, 'can_published')]
-            send_mail_content_as_pending(instance.task_object,
+            send_mail_content_as_pending(instance.task_object, instance,
                                          [instance.owner] + assigned)
 
 
