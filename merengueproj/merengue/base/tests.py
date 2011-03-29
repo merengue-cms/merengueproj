@@ -39,7 +39,19 @@ class ChildOfChildOfSectionChildOne(ChildOfSectionChildOne):
     child_eggs_attribute = models.CharField(max_length=100, null=True, blank=True)
 
 
-models = [SectionChildOne, SectionChildTwo, ChildOfSectionChildOne, ChildOfChildOfSectionChildOne]
+class ChildOfSectionChildTwo(SectionChildTwo):
+    child_span_attribute = models.CharField(max_length=100, null=True, blank=True)
+
+    class Meta:
+        abstract = True
+
+
+class ChildOfChildOfSectionChildTwo(ChildOfSectionChildTwo):
+    child_eggs_attribute = models.CharField(max_length=100, null=True, blank=True)
+
+
+models = [SectionChildOne, SectionChildTwo, ChildOfSectionChildOne, ChildOfChildOfSectionChildOne,
+          ChildOfSectionChildTwo, ChildOfChildOfSectionChildTwo]
 
 
 def create_table(*models):
@@ -91,6 +103,10 @@ class GetRealInstanceTests(TestCase):
             name='Child of child of section child one',
             slug='child-of-child-of-section-child-one',
             )
+        self.obj_childofchildofsectionchildtwo = ChildOfChildOfSectionChildTwo.objects.create(
+            name='Child of child of section child two',
+            slug='child-of-child-of-section-child-two',
+            )
 
     def test_check_own_objects(self):
         # We check the correctness of each object by itself
@@ -120,6 +136,11 @@ class GetRealInstanceTests(TestCase):
         self.assertEquals(self.obj_childofchildofsectionchildone.get_real_instance().__class__,
                           ChildOfChildOfSectionChildOne)
 
+        self.assertEquals(self.obj_childofchildofsectionchildtwo.get_real_instance().pk,
+                          self.obj_childofchildofsectionchildtwo.pk)
+        self.assertEquals(self.obj_childofchildofsectionchildtwo.get_real_instance().__class__,
+                          ChildOfChildOfSectionChildTwo)
+
     def test_check_as_base_content(self):
         # First, we fetch all the items using BaseContent instances
         bc_1 = BaseContent.objects.get(slug='base-content')
@@ -128,6 +149,7 @@ class GetRealInstanceTests(TestCase):
         bc_4 = BaseContent.objects.get(slug='section-child-two')
         bc_5 = BaseContent.objects.get(slug='child-of-section-child-one')
         bc_6 = BaseContent.objects.get(slug='child-of-child-of-section-child-one')
+        bc_7 = BaseContent.objects.get(slug='child-of-child-of-section-child-two')
 
         self.assertEquals(bc_1.get_real_instance().pk, self.obj_basecontent.pk)
         self.assertEquals(bc_1.get_real_instance().name, self.obj_basecontent.name)
@@ -158,6 +180,37 @@ class GetRealInstanceTests(TestCase):
         self.assertEquals(bc_6.get_real_instance().name, self.obj_childofchildofsectionchildone.name)
         self.assertEquals(bc_6.get_real_instance().slug, self.obj_childofchildofsectionchildone.slug)
         self.assertEquals(bc_6.get_real_instance().__class__, ChildOfChildOfSectionChildOne)
+
+        self.assertEquals(bc_7.get_real_instance().pk, self.obj_childofchildofsectionchildtwo.pk)
+        self.assertEquals(bc_7.get_real_instance().name, self.obj_childofchildofsectionchildtwo.name)
+        self.assertEquals(bc_7.get_real_instance().slug, self.obj_childofchildofsectionchildtwo.slug)
+        self.assertEquals(bc_7.get_real_instance().__class__, ChildOfChildOfSectionChildTwo)
+
+    def test_same_object_different_instances(self):
+        foo_obj = ChildOfChildOfSectionChildOne.objects.get(slug='child-of-child-of-section-child-one')
+        foo_pk = foo_obj.pk
+
+        all_models = [BaseContent, BaseSection, SectionChildOne,
+                      ChildOfSectionChildOne, ChildOfChildOfSectionChildOne]
+        for model in all_models:
+            obj = model.objects.get(pk=foo_pk)
+            self.assertEquals(obj.slug, foo_obj.slug)
+            self.assertEquals(obj.name, foo_obj.name)
+            self.assertEquals(obj.get_real_instance().__class__,
+                              ChildOfChildOfSectionChildOne)
+
+    def test_same_object_different_instances_abstract(self):
+        foo_obj = ChildOfChildOfSectionChildTwo.objects.get(slug='child-of-child-of-section-child-two')
+        foo_pk = foo_obj.pk
+
+        all_models = [BaseContent, BaseSection, SectionChildTwo,
+                      ChildOfSectionChildTwo, ChildOfChildOfSectionChildTwo]
+        for model in all_models:
+            obj = model.objects.get(pk=foo_pk)
+            self.assertEquals(obj.slug, foo_obj.slug)
+            self.assertEquals(obj.name, foo_obj.name)
+            self.assertEquals(obj.get_real_instance().__class__,
+                              ChildOfChildOfSectionChildTwo)
 
     def tearDown(self):
         BaseContent.objects.all().delete()  # we assume that the table is already created
