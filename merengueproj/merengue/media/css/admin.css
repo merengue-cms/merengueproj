@@ -457,6 +457,10 @@ div.mini-googlemap {
    background-color: #003366;
 }
 
+.related .calendarbox.module {
+    padding-top: 0;
+}
+
 .module {
     clear: right;
 }
