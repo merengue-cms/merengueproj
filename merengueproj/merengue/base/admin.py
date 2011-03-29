@@ -312,6 +312,9 @@ class RelatedURLsModelAdmin(admin.ModelAdmin):
             url(r'^([^/]+)/delete/$',
                 wrap(self.delete_view),
                 name='%s_%s_delete' % info),
+            url(r'^([^/]+)/$',
+                wrap(self.change_view),
+                name='%s_%s_change' % info),
             url(r'^(.+)/$',
                 wrap(self.parse_path), )
         )
