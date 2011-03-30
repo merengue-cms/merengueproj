@@ -25,29 +25,25 @@ from plugins.contactform.models import ContactForm
 
 
 def contact_form_submit(request, content_slug, contact_form_id):
-    content = get_object_or_404(BaseContent, slug=content_slug)
+    content = get_object_or_404(BaseContent, slug=content_slug).get_real_instance()
     contact_form = get_object_or_404(ContactForm, pk=contact_form_id,
                                      content__slug=content_slug)
 
-    msg = ''
     if request.method == 'POST':
         form = contact_form.get_form(request)
 
         if form.is_valid():
             form.save(request, content, contact_form)
-            msg = contact_form.sent_msg
+
+            if contact_form.redirect_to:
+                redirect = contact_form.redirect_to
+            else:
+                redirect = request.META.get('HTTP_REFERER',
+                                            content.public_link())
+            if contact_form.sent_msg:
+                send_info(request, contact_form.sent_msg)
         else:
-            errors_to_session(request, content, form)
-
-    if contact_form.redirect_to:
-        redirect = contact_form.redirect_to
-    else:
-        if hasattr(content, 'get_real_instance'):
-            content = content.get_real_instance()
-        redirect = content.public_link()
-
-    if msg:
-        send_info(request, msg)
+            return errors_to_session(request, content, form)
 
     return HttpResponseRedirect(redirect)
 
@@ -59,5 +55,6 @@ def errors_to_session(request, content, form):
         err[k] = [unicode(v) for v in vs]
     request.session['form_errors'] = err
     request.session['form_data'] = form.data
-    redirect = content.public_link()
+    redirect = request.META.get('HTTP_REFERER',
+                                content.public_link())
     return HttpResponseRedirect(redirect)
