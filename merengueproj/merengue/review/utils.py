@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
+from django.utils.html import escape
 from django.utils.translation import ugettext
 from django.template.loader import render_to_string
 
@@ -19,4 +20,4 @@ def send_mail_content_as_pending(obj, users=None, template='review/email_as_pend
     recipers = list(set([user.email for user in users if user.email]))
 
     for reciper in recipers:
-        send_mail(subject, body, from_mail, [reciper], fail_silently=False)
+        send_mail(subject, escape(body), from_mail, [reciper], fail_silently=False)
