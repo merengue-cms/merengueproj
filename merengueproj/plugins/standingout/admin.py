@@ -22,9 +22,11 @@ from merengue.base.models import BaseContent
 from plugins.standingout.forms import StandingOutAdminModelForm
 from plugins.standingout.models import StandingOut, StandingOutCategory
 
+from transmeta import get_real_fieldname_in_each_language
+
 
 class StandingOutAdmin(BaseOrderableAdmin):
-    list_display = ('obj', 'related', 'standing_out_category')
+    list_display = ('__unicode__', 'related', 'standing_out_category')
     list_filter = ('related_content_type', 'related_id', 'obj_content_type', 'id')
     form = StandingOutAdminModelForm
     sortablefield = 'order'
@@ -34,7 +36,7 @@ class StandingOutAdmin(BaseOrderableAdmin):
         form = super(StandingOutAdmin, self).get_form(request, obj)
         self.fieldsets = (
                 (_('Basic Options'), {
-                                'fields': ('obj', )}),
+                                'fields': get_real_fieldname_in_each_language('title') + ['obj']}),
                 (_('Advanced Options'), {
                                 'fields': ('standing_out_category', 'related')}),
         )

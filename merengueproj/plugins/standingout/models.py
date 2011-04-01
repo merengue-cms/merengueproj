@@ -22,6 +22,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.models import BaseCategory
 
+from transmeta import TransMeta
+
 
 class StandingOutCategory(BaseCategory):
 
@@ -34,6 +36,9 @@ class StandingOutCategory(BaseCategory):
 
 class StandingOut(models.Model):
 
+    __metaclass__ = TransMeta
+
+    title = models.CharField(_('title'), max_length=200, blank=True, null=True)
     obj_content_type = models.ForeignKey(ContentType, verbose_name=_('obj content type'),
                                          related_name='standingout_objects')
     obj_id = models.PositiveIntegerField(_('object id'), db_index=True)
@@ -51,6 +56,7 @@ class StandingOut(models.Model):
 
     class Meta:
         ordering = ('order', )
+        translate = ('title', )
         unique_together = (('obj_content_type', 'obj_id', 'related_content_type', 'related_id', 'standing_out_category'), )
 
     @property
@@ -69,6 +75,9 @@ class StandingOut(models.Model):
         return self.obj.get_absolute_url()
 
     def __unicode__(self):
+        res = u''
+        if self.title:
+            res += u'[%s] ' % self.title
         if not self.related_content_type or not self.related_id:
-            return unicode(self.obj)
-        return "%s --> %s" %(unicode(self.obj), unicode(self.related))
+            return res + unicode(self.obj)
+        return "%s%s --> %s" % (res, unicode(self.obj), unicode(self.related))
