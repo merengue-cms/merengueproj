@@ -39,6 +39,7 @@ class StandingOut(models.Model):
     __metaclass__ = TransMeta
 
     title = models.CharField(_('title'), max_length=200, blank=True, null=True)
+    short_description = models.TextField(_('short description'), blank=True, null=True)
     obj_content_type = models.ForeignKey(ContentType, verbose_name=_('obj content type'),
                                          related_name='standingout_objects')
     obj_id = models.PositiveIntegerField(_('object id'), db_index=True)
@@ -56,7 +57,7 @@ class StandingOut(models.Model):
 
     class Meta:
         ordering = ('order', )
-        translate = ('title', )
+        translate = ('title', 'short_description')
         unique_together = (('obj_content_type', 'obj_id', 'related_content_type', 'related_id', 'standing_out_category'), )
 
     @property

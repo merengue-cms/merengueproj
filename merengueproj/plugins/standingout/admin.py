@@ -36,7 +36,9 @@ class StandingOutAdmin(BaseOrderableAdmin):
         form = super(StandingOutAdmin, self).get_form(request, obj)
         self.fieldsets = (
                 (_('Basic Options'), {
-                                'fields': get_real_fieldname_in_each_language('title') + ['obj']}),
+                                'fields': get_real_fieldname_in_each_language('title') +\
+                                          get_real_fieldname_in_each_language('short_description') +\
+                                          ['obj']}),
                 (_('Advanced Options'), {
                                 'fields': ('standing_out_category', 'related')}),
         )
