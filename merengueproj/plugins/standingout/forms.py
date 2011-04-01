@@ -41,7 +41,10 @@ class StandingOutAdminModelForm(BaseAdminModelForm):
                 for field in unique:
                     dict_filter[field] = cleaned_data.get(field, None)
                 try:
-                    obj = self._meta.model.objects.get(**dict_filter)
+                    exclude = {}
+                    if self.instance and self.instance.pk:
+                        exclude = {'pk': self.instance.pk}
+                    obj = self._meta.model.objects.exclude(**exclude).get(**dict_filter)
                     obj_error = self._errors.get('obj', ErrorList([]))
                     obj_error_new = ErrorList([_(u'There was a object with the same fields pk=%s') % obj.id])
                     obj_error.extend(obj_error_new)
