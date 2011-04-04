@@ -186,6 +186,7 @@
 
 .collaborative-comments-ui table ul.errorlist{
     color: red;
+    list-style: inside;
 }
 
 .collab-comments-add-comment-form-message {
