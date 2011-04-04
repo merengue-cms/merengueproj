@@ -50,9 +50,6 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'StandingOutCategory'},
             'context_variable': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name_en': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'name_fr': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '200', 'db_index': 'True'})
         }
     }
