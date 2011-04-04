@@ -12,13 +12,13 @@ Introduction
 ============
 
  * **Install:**
-   Read the :ref:`install instructions<topics-install>` for installing merengue framework.
+   Read the :ref:`install instructions<topics-install>` for installing the merengue framework.
 
  * **Overview:**
-   Read the :ref:`overview <intro-overview>` to take a glance.
+   Read the :ref:`overview <intro-overview>` for a high-level summary of the framework.
 
  * **Tutorial:**
-   Creates your first Merengue site reading the :ref:`tutorial <intro-tutorial>`
+   Create your first Merengue site by reading the :ref:`tutorial <intro-tutorial>`.
 
 Managing content
 ================
