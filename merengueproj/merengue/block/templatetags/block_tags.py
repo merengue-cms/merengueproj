@@ -240,11 +240,11 @@ def do_render_single_block(parser, token):
     """
     bits = token.split_contents()
     tag_name = bits[0]
-    if len(bits) != 3:
+    if len(bits) != 2:
         raise template.TemplateSyntaxError('"%r" tag requires only two '
                                            'arguments' % tag_name)
     splitted_block_name = bits[1][1:-1].split('.')
-    block_name = bits[2][1:-1]
+    block_name = bits[1][1:-1]
     module = '.'.join(splitted_block_name[:-1])
     classname = splitted_block_name[-1]
     try:
