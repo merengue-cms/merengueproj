@@ -40,6 +40,7 @@
 
 .collaborative-translation-main-close {
     position: absolute;
+    z-index: 2;
     right: 20px;
     top: 10px;
     font-weight: bold;
