@@ -27,8 +27,8 @@ class PluginState(object):
     # Use the Borg pattern to share state between all instances. Details at
     # http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/66531.
     __shared_state = dict(
-        loaded = False,
-        write_lock = threading.RLock(),
+        loaded=False,
+        write_lock=threading.RLock(),
     )
 
     def __init__(self):
@@ -48,7 +48,8 @@ class PluginState(object):
                 return
             from merengue.registry import invalidate_registereditem
             from merengue.pluggable.utils import (enable_plugin,
-                                                  get_plugin_module_name)
+                                                  get_plugin_module_name,
+                                                  reload_models_cache)
             from merengue.pluggable.models import RegisteredPlugin
             # enable active plugins
             active_plugins = RegisteredPlugin.objects.actives()
@@ -58,6 +59,8 @@ class PluginState(object):
                 enable_plugin(plugin_name, register=True)
             # invalidate any existing cache
             invalidate_registereditem()
+            # reload models cache. needed because new plugins could bring new models
+            reload_models_cache()
             self.loaded = True
         finally:
             self.write_lock.release()
