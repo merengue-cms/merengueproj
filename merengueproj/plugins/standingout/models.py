@@ -73,7 +73,9 @@ class StandingOut(models.Model):
         return self.obj.main_image
 
     def get_absolute_url(self):
-        return self.obj.get_absolute_url()
+        if hasattr(self.obj, 'get_absolute_url'):
+            return self.obj.get_absolute_url()
+        return None
 
     def __unicode__(self):
         res = u''

@@ -5,17 +5,23 @@
 {% block blocktitle %}{% endblock %}
 
 {% block blockbody %}
+
 {% addmedia "css" %}
+  <link href="{{ MEDIA_URL }}merengue/css/shadowbox.css" rel="stylesheet" type="text/css" />
   <link href="{{ MEDIA_URL }}standingout/css/slideshow.css" rel="stylesheet" type="text/css"/>
 {% endaddmedia %}
 
 {% addmedia "js" %}
   <script language="javascript" src="{{ MEDIA_URL }}standingout/js/jquery.tools.tabs.min.js"></script>
   <script language="javascript" src="{{ MEDIA_URL }}standingout/js/jquery.standingout-slideshow.js"></script>
-  </script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/shadowbox/shadowbox-mootools.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/shadowbox/shadowbox.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/shadowbox/shadowbox-{{ LANGUAGE_CODE }}.js"></script>
 {% endaddmedia %}
 
 <div class="standingout-slideshow">
+  <div class="standing-out-media-url" style="display: none;">{{ MEDIA_URL }}</div>
+
   <!-- "previous slide" button -->
   <a class="backward" href="#"></a>
 
@@ -23,6 +29,11 @@
     {% if standingouts %}
         {% for standingout in standingouts %}
             <div class="standingout-slide">
+                {% ifequal standingout.obj.class_name "video" %}
+                <div class ="standingout-image standingout-video">
+                   {% multimedia_slide_link standingout.obj standingout "350x240" %}
+                </div>
+                {% else %}
                 {% if standingout.obj.main_image %}
                 <div class="standingout-image">
                   {% thumbnail standingout.main_image "350x240" crop="center" as thumb %}
@@ -30,6 +41,7 @@
                   {% endthumbnail %}
                 </div>
                 {% endif %}
+                {% endifequal %}
                 <div class="standingout-title">
                 {% if standingout.obj.get_absolute_url %}
                     <a href="{{ standingout.obj.get_absolute_url }}">{{ standingout.title|default:standingout.obj }}</a>
@@ -37,11 +49,13 @@
                     {{ standingout.title|default:standingout.obj }}
                 {% endif %}
                 </div>
-                {% if standingout.description %}
                 <div class="standingout-description">
-                    {{ standingout.description|default:standingout.obj.description }}
-                </div>
+                {% if standigout.obj.description %}
+                    {{ standingout.short_description|default:standingout.obj.description }}
+                {% else %}
+                    {{ standingout.short_description|default:"" }}
                 {% endif %}
+                </div>
             </div>
         {% endfor %}
     {% endif %}
