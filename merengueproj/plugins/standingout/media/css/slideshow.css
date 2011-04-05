@@ -1,0 +1,71 @@
+.standingout-slideshow {
+    height: 369px;
+    width: 962px;
+    padding: 0px;
+    margin: 0px;
+    position: relative;
+    background: url(../img/standingout-slideshow-background.png) no-repeat top left;
+}
+
+.standingout-slide {
+    position: absolute;
+    top: 22px;
+    left: 60px;
+    width: 802px;
+    height: 243px;
+    overflow: hidden;
+    padding: 40px 20px;
+}
+
+.standingout-slideshow .forward,
+.standingout-slideshow .backward {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 369px;
+    width: 60px;
+    background: url(../img/standingout-slideshow-backward.png) no-repeat center center;
+}
+
+.standingout-slideshow .forward {
+    left: auto;
+    right: 0px;
+    background: url(../img/standingout-slideshow-forward.png) no-repeat center center;
+}
+
+.standingout-slideshow .slidetabs {
+    position: absolute;
+    bottom: 4px;
+    width: 100%;
+    text-align: center;
+}
+
+.standingout-slideshow .slidetabs a {
+    display: inline;
+    font-size: 11px;
+    line-height: 11px;
+    padding-left: 11px;
+    margin-left: 8px;
+    background: url(../img/standingout-slideshow-tab.png) no-repeat top left;
+}
+
+.standingout-slideshow .slidetabs a.current {
+    background: url(../img/standingout-slideshow-tab-current.png) no-repeat top left;
+}
+
+.standingout-slideshow .standingout-image {
+    float: right;
+    margin-left: 40px;
+}
+
+.standingout-slideshow .standingout-slide .standingout-title {
+    font-size: 30px;
+    line-height: 32px;
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+
+.standingout-slideshow .standingout-slide .standingout-description {
+    font-size: 20px;
+    line-height: 22px;
+}

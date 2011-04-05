@@ -51,3 +51,24 @@ class StandingOutBlock(Block):
         return self.render_block(request, template_name='standingout/block_standingout.html',
                                  block_title=_('Search'),
                                  context={'standingouts': standingouts})
+
+
+class StandingOutSlideShowBlock(Block):
+    name = 'standingout-slideshow'
+    default_place = 'homepage'
+    help_text = ugettext_lazy('Block with a jquery slideshow of standingouts')
+    verbose_name = ugettext_lazy('Standing out Slide Show block')
+
+    config_params = [
+        params.Integer(name='limit', label=_('limit for standingouts in block'), default='5'),
+    ]
+
+    def render(self, request, place, context, block_content_relation=None,
+               *args, **kwargs):
+        standingouts = StandingOut.objects.all()
+        limit = self.get_config().get('limit', None)
+        if limit:
+            standingouts = standingouts[:limit.get_value()]
+        return self.render_block(request, template_name='standingout/block_slideshow.html',
+                                 block_title=_('Slideshow'),
+                                 context={'standingouts': standingouts})

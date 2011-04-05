@@ -1,0 +1,59 @@
+{% extends "block.html" %}
+
+{% load i18n inlinetrans section_tags media_tags thumbnail %}
+
+{% block blocktitle %}{% endblock %}
+
+{% block blockbody %}
+{% addmedia "css" %}
+  <link href="{{ MEDIA_URL }}standingout/css/slideshow.css" rel="stylesheet" type="text/css"/>
+{% endaddmedia %}
+
+{% addmedia "js" %}
+  <script language="javascript" src="{{ MEDIA_URL }}standingout/js/jquery.tools.tabs.min.js"></script>
+  <script language="javascript" src="{{ MEDIA_URL }}standingout/js/jquery.standingout-slideshow.js"></script>
+  </script>
+{% endaddmedia %}
+
+<div class="standingout-slideshow">
+  <!-- "previous slide" button -->
+  <a class="backward" href="#"></a>
+
+  <div class="standingout-slidecontainer">
+    {% if standingouts %}
+        {% for standingout in standingouts %}
+            <div class="standingout-slide">
+                {% if standingout.obj.main_image %}
+                <div class="standingout-image">
+                  {% thumbnail standingout.main_image "350x240" crop="center" as thumb %}
+                    <img src="{{ thumb.url }}" />
+                  {% endthumbnail %}
+                </div>
+                {% endif %}
+                <div class="standingout-title">
+                {% if standingout.obj.get_absolute_url %}
+                    <a href="{{ standingout.obj.get_absolute_url }}">{{ standingout.title|default:standingout.obj }}</a>
+                {% else %}
+                    {{ standingout.title|default:standingout.obj }}
+                {% endif %}
+                </div>
+                {% if standingout.description %}
+                <div class="standingout-description">
+                    {{ standingout.description|default:standingout.obj.description }}
+                </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% endif %}
+  </div>
+
+  <!-- "next slide" button -->
+  <a class="forward" href="#"></a>
+
+  <div class="slidetabs">
+  {% for standingout in standingouts %}
+     <a href="#"></a>
+  {% endfor %}
+  </div>
+</div>
+{% endblock %}

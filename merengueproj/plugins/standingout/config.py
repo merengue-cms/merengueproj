@@ -20,7 +20,7 @@ from transmeta import get_real_fieldname_in_each_language
 
 from plugins.standingout.admin import StandingOutAdmin, StandingOutCategoryAdmin, StandingSectionOutAdmin
 from plugins.standingout.models import StandingOut, StandingOutCategory
-from plugins.standingout.blocks import StandingOutBlock
+from plugins.standingout.blocks import StandingOutBlock, StandingOutSlideShowBlock
 
 
 class PluginConfig(Plugin):
@@ -33,7 +33,7 @@ class PluginConfig(Plugin):
     )
 
     def get_blocks(self):
-        return [StandingOutBlock]
+        return [StandingOutBlock, StandingOutSlideShowBlock]
 
     def section_models(self):
         return [(StandingOut, StandingSectionOutAdmin)]
