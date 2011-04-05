@@ -24,7 +24,6 @@ from django.contrib.auth.views import password_reset as auth_password_reset
 from django.contrib.auth.views import password_reset_confirm as auth_password_reset_confirm
 from django.contrib.auth.views import password_reset_complete as auth_password_reset_complete
 from django.http import HttpResponse, HttpResponseRedirect
-from django.utils import translation
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
 from django.views.i18n import set_language as django_set_language
@@ -71,7 +70,6 @@ def set_language(request):
     """ Call default django set_language but set language cookie to advise caching middleware """
     lang_code = request.POST.get('language', None)
     response = django_set_language(request)
-    translation.activate(lang_code)
     if lang_code:
         response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
     return response
