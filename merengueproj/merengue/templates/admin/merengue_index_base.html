@@ -23,36 +23,34 @@
 <div id="content-merengue">
     <div class="module-merengue" id="contentmanagement">
       <dl>
-          <dt><a href="section/basesection/" title="{% trans "Section" %}">{% trans "Content tree" %}</a></dt>
-          <dd>{% trans "View, edit and delete the site's contents." %}</dd>
-        {% ifhasperm 'manage_menu' %}
-          <dt><a href="section/menu/" title="{% trans "Portal Menu" %}">{% trans "Portal Menu" %}</a></dt>
-          <dd>{% trans "View, edit and delete the site's menus." %}</dd>
-        {% endifhasperm %}
-        {% ifhasperm 'manage_link' %}
-          <dt><a href="portal/portallink/" title="{% trans "Portal links" %}">{% trans "Portal links" %}</a></dt>
-          <dd>{% trans "View, edit and delete the site's primary and secondary links." %}</dd>
-        {% endifhasperm %}
-        <dt><a href="collection/" title="{% trans "Collections" %}">{% trans "Collections" %}</a></dt>
-        <dd>{% trans "View, edit and delete the site's collections." %}</dd>
-        <dt><a href="base/basecontent/" title="{% trans "Content" %}">{% trans "Browse content" %}</a></dt>
-        <dd>{% trans "Browse the site's contents." %}</dd>
+        <dt>{% trans "Contents" %}</dt>
+        <dd>
+          <dl>
+            <dt><a href="section/basesection/" title="{% trans "Browse by hierarchy" %}">{% trans "Browse by hierarchy" %}</a></dt>
+            <dd>{% trans "Browse the site's contents by hierarchy." %}</dd>
+            <dt><a href="base/basecontent/" title="{% trans "Search" %}">{% trans "Search catalog" %}</a></dt>
+            <dd>{% trans "Search the site's contents." %}</dd>
+            <dt><a href="collection/" title="{% trans "Collections" %}">{% trans "Collections" %}</a></dt>
+            <dd>{% trans "View, edit and delete the site's collections." %}</dd>
+          </dl>
+        </dd>
+        <dt>{% trans "Navigation" %}</dt>
+        <dd>
+          <dl>
+          {% ifhasperm 'manage_menu' %}
+            <dt><a href="section/menu/" title="{% trans "Portal Menu" %}">{% trans "Portal Menu" %}</a></dt>
+            <dd>{% trans "View, edit and delete the site's menus." %}</dd>
+          {% endifhasperm %}
+          {% ifhasperm 'manage_link' %}
+            <dt><a href="portal/portallink/" title="{% trans "Portal links" %}">{% trans "Portal links" %}</a></dt>
+            <dd>{% trans "View, edit and delete the site's primary and secondary links." %}</dd>
+          {% endifhasperm %}
+          </dl>
+        </dd>
         {% if_can_access_transhette %}
           <dt><a href="{% url transhette-home %}" title="{% trans "Translate portal" %}">{% trans "Translate site" %}</a></dt>
           <dd>{% trans "Translate the site messages." %}</dd>
         {% endif_can_access_transhette %}
-        {% ifhasperm 'manage_multimedia' %}
-          <dt><a href="multimedia/photo/" title="{% trans "Photos" %}">{% trans "Photos" %}</a></dt>
-          <dd>{% trans "View, edit and delete the site's photos." %}</dd>
-          <dt><a href="multimedia/video/" title="{% trans "Video" %}">{% trans "Video" %}</a></dt>
-          <dd>{% trans "View, edit and delete the site's videos." %}</dd>
-          <dt><a href="multimedia/audio/" title="{% trans "Audio" %}">{% trans "Audio" %}</a></dt>
-          <dd>{% trans "View, edit and delete the site's audios." %}</dd>
-          <dt><a href="multimedia/panoramicview/" title="{% trans "Panoramic views" %}">{% trans "Panoramic views" %}</a></dt>
-          <dd>{% trans "View, edit and delete the site's panoramic views." %}</dd>
-          <dt><a href="multimedia/image3d/" title="{% trans "Images 3D" %}">{% trans "Images 3D" %}</a></dt>
-          <dd>{% trans "View, edit and delete the site's Images 3D." %}</dd>
-        {% endifhasperm %}
       </dl>
     </div>
     {% ifhasperm 'manage_site' %}
