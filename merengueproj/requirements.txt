@@ -13,6 +13,7 @@ django-extensions==0.5
 cssutils
 django-tagging>=0.3.1
 django-pagination
+johnny-cache>=0.2.1
 template_utils
 django-mptt
 django-oembed

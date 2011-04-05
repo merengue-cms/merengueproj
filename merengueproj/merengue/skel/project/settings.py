@@ -135,7 +135,12 @@ PRODUCTION_DB_URL = ""
 PRODUCTION_DB_UPDATE_PASSWORDS = (('admin', 'admin'), )
 
 # For johnny cache. Johnny cache key prefix should not be the same in other projects
-CACHE_BACKEND = 'johnny.backends.locmem:///'
+CACHES = {
+    'default': {
+        'BACKEND': 'johnny.backends.locmem.LocMemCache',
+        'KEY_PREFIX': SECRET_KEY,
+    }
+}
 JOHNNY_MIDDLEWARE_KEY_PREFIX = '%s-cache' % DATABASES['default']['NAME']
 
 # if merengue will detect new plugins in file system
