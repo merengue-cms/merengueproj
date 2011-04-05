@@ -3,7 +3,7 @@
 # Django settings for merengue project.
 
 from os import path
-from merengue.settings import *
+from merengue.settings import *  # pyflakes:ignore
 
 ugettext = lambda s: s  # dummy ugettext function, as said on django docs
 
