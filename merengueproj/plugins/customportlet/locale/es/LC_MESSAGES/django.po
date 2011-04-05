@@ -1,0 +1,58 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-12-14 16:43+0100\n"
+"PO-Revision-Date: 2010-12-14 16:46+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: blocks.py:35 models.py:44
+msgid "Portal description"
+msgstr ""
+
+#: config.py:35
+msgid "data limit of portal description"
+msgstr ""
+
+#: models.py:30
+msgid "subtitle"
+msgstr "subtítulo"
+
+#: models.py:33
+msgid "link"
+msgstr "enlace"
+
+#: models.py:34
+msgid ""
+"Add the link for the block. It can be a internal or external link. Add "
+"'http://' to render the link as external"
+msgstr ""
+"Añada el enlace del bloque. Puede ser un enlace interno o externo.\n"
+"Incluya 'http://' al principio para que se reconozca como enlace externo."
+
+#: models.py:36
+msgid "link color"
+msgstr "color del enlace"
+
+#: models.py:38
+msgid "block order"
+msgstr "orden del bloque"
+
+#: models.py:40
+msgid "background"
+msgstr "fondo"
+
+#: models.py:45
+msgid "Portal descriptions"
+msgstr ""

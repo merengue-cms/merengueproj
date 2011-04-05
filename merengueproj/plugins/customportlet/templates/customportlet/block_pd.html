@@ -1,0 +1,18 @@
+{% extends "block.html" %}
+{% load i18n inplace_edit %}
+
+{% block blocktitle %}
+{% endblock %}
+
+{% block blockbody %}
+  <div id="customportlet">
+  {% for pd in customportlets %}
+  <div id="{{pd.name|slugify}}" style="background:url({{MEDIA_URL}}{{pd.background}}) no-repeat scroll left top transparent;" class="portalDescriptionItem">
+    <a href="{{pd.link}}">
+      <h2 style="color: {{pd.link_color}}">{% inplace_edit "pd.name" %}</h2>
+    </a>
+    {% inplace_edit "pd.description|safe" %}
+  </div>
+  {% endfor %}
+  </div>
+{% endblock %}
