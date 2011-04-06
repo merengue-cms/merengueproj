@@ -89,6 +89,12 @@ class Menu(models.Model):
         null=False,
         )
 
+    help_text = models.CharField(
+        verbose_name=_('help text'),
+        help_text=_('text to describe user the menu target, usually placed as link title attribute'),
+        max_length=200,
+        )
+
     parent = models.ForeignKey('Menu',
         verbose_name=_('Parent'),
         blank=True,
