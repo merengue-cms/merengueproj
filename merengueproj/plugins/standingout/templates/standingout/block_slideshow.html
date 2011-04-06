@@ -1,6 +1,6 @@
 {% extends "block.html" %}
 
-{% load i18n inlinetrans section_tags media_tags thumbnail %}
+{% load i18n inlinetrans section_tags media_tags thumbnail stringfilters %}
 
 {% block blocktitle %}{% endblock %}
 
@@ -34,7 +34,7 @@
                    {% multimedia_slide_link standingout.obj standingout "350x240" %}
                 </div>
                 {% else %}
-                {% if standigout.image %}
+                {% if standingout.image %}
                   <div class="standingout-image">
                     {% thumbnail standingout.image "350x240" crop="center" as thumb %}
                       <img src="{{ thumb.url }}" />
@@ -58,11 +58,11 @@
                 {% endif %}
                 </div>
                 <div class="standingout-description">
-                {% if standigout.short_description %}
-                    {{ standingout.short_description|striptags }}
+                {% if standingout.short_description %}
+                    {{ standingout.short_description|striptags|truncatechars:250 }}
                 {% else %}
                     {% if standingout.obj.description %}
-                        {{ standingout.obj.description|striptags }}
+                        {{ standingout.obj.description|striptags|truncatechars:250 }}
                     {% endif %}
                 {% endif %}
                 </div>
