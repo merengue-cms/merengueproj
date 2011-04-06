@@ -91,8 +91,10 @@ class Menu(models.Model):
 
     help_text = models.CharField(
         verbose_name=_('help text'),
-        help_text=_('text to describe user the menu target, usually placed as link title attribute'),
+        help_text=_('text for describing the menu target, usually placed as link title attribute'),
         max_length=200,
+        blank=True,
+        null=True,
         )
 
     parent = models.ForeignKey('Menu',
@@ -112,7 +114,7 @@ class Menu(models.Model):
     class Meta:
         verbose_name = _('menu')
         verbose_name_plural = _('menus')
-        translate = ('name', )
+        translate = ('name', 'help_text', )
 
     def __unicode__(self):
         return unicode(self.name)

@@ -1,15 +1,24 @@
 # encoding: utf-8
-from south.db import db
 from south.v2 import SchemaMigration
+from merengue.base.utils import (delete_south_trans_column,
+                                 add_south_trans_column, add_south_trans_fields)
 
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        db.add_column('section_menu', 'help_text', self.gf('django.db.models.fields.CharField')(default='', max_length=200), keep_default=False)
+        add_south_trans_column(
+            table='section_menu',
+            model_name='section.menu',
+            field_name='help_text',
+            orm=orm,
+        )
 
     def backwards(self, orm):
-        db.delete_column('section_menu', 'help_text')
+        delete_south_trans_column(
+            table='section_menu',
+            field_name='help_text',
+        )
 
     models = {
         'auth.group': {
@@ -165,7 +174,6 @@ class Migration(SchemaMigration):
         },
         'section.menu': {
             'Meta': {'object_name': 'Menu'},
-            'help_text': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'level': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'lft': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
@@ -193,5 +201,10 @@ class Migration(SchemaMigration):
             'registereditem_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['registry.RegisteredItem']", 'unique': 'True', 'primary_key': 'True'}),
         }
     }
+    add_south_trans_fields(models, {
+        'section.menu': {
+            'help_text': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
+        },
+    })
 
     complete_apps = ['section']
