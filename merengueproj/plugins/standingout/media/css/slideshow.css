@@ -9,6 +9,7 @@
 
 .standingout-slide {
     position: absolute;
+    display: none;
     top: 22px;
     left: 60px;
     width: 802px;
