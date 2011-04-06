@@ -58,10 +58,12 @@
                 {% endif %}
                 </div>
                 <div class="standingout-description">
-                {% if standigout.obj.description %}
-                    {{ standingout.short_description|default:standingout.obj.description }}
+                {% if standigout.short_description %}
+                    {{ standingout.short_description|striptags }}
                 {% else %}
-                    {{ standingout.short_description|default:"" }}
+                    {% if standingout.obj.description %}
+                        {{ standingout.obj.description|striptags }}
+                    {% endif %}
                 {% endif %}
                 </div>
             </div>
