@@ -736,6 +736,11 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
                                     'size': 100}, }
     exclude = ('adquire_global_permissions', )
 
+    def __init__(self, *args, **kwargs):
+        super(BaseContentAdmin, self).__init__(*args, **kwargs)
+        # Save original prepopulated fields just in case we have to remove any readonly field from it
+        self.original_prepopulated_fields = self.prepopulated_fields.copy()
+
     def get_urls(self):
         from django.conf.urls.defaults import patterns
         urls = super(BaseContentAdmin, self).get_urls()
@@ -831,6 +836,10 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
         readonly_fields = super(BaseContentAdmin, self).get_readonly_fields(request, obj)
         if obj and obj.no_changeable_fields:
             readonly_fields += tuple(obj.no_changeable_fields)
+        self.prepopulated_fields = self.original_prepopulated_fields.copy()
+        for f in readonly_fields:
+            if f in self.prepopulated_fields.keys():
+                del(self.prepopulated_fields[f])
         return readonly_fields
 
     def get_form(self, request, obj=None, **kwargs):
