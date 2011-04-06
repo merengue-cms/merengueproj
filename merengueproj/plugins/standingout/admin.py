@@ -38,7 +38,7 @@ class StandingOutAdmin(BaseOrderableAdmin):
                 (_('Basic Options'), {
                                 'fields': get_real_fieldname_in_each_language('title') +\
                                           get_real_fieldname_in_each_language('short_description') +\
-                                          ['obj']}),
+                                          ['image', 'obj']}),
                 (_('Advanced Options'), {
                                 'fields': ('standing_out_category', 'related')}),
         )

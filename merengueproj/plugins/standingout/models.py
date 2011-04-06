@@ -23,6 +23,7 @@ from django.utils.translation import ugettext_lazy as _
 from merengue.base.models import BaseCategory
 
 from transmeta import TransMeta
+from stdimage import StdImageField
 
 
 class StandingOutCategory(BaseCategory):
@@ -40,6 +41,14 @@ class StandingOut(models.Model):
 
     title = models.CharField(_('title'), max_length=200, blank=True, null=True)
     short_description = models.TextField(_('short description'), blank=True, null=True)
+    image = StdImageField(
+        _('image'),
+        help_text=_('If you don\'t specify any image then the first photo (if any) associated to the content will be shown'),
+        upload_to='standingout',
+        thumbnail_size=(350, 240),
+        null=True,
+        blank=True,
+        )
     obj_content_type = models.ForeignKey(ContentType, verbose_name=_('obj content type'),
                                          related_name='standingout_objects')
     obj_id = models.PositiveIntegerField(_('object id'), db_index=True)

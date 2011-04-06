@@ -34,12 +34,20 @@
                    {% multimedia_slide_link standingout.obj standingout "350x240" %}
                 </div>
                 {% else %}
-                {% if standingout.obj.main_image %}
-                <div class="standingout-image">
-                  {% thumbnail standingout.main_image "350x240" crop="center" as thumb %}
-                    <img src="{{ thumb.url }}" />
-                  {% endthumbnail %}
-                </div>
+                {% if standigout.image %}
+                  <div class="standingout-image">
+                    {% thumbnail standingout.image "350x240" crop="center" as thumb %}
+                      <img src="{{ thumb.url }}" />
+                    {% endthumbnail %}
+                  </div>
+                {% else %}
+                  {% if standingout.obj.main_image %}
+                  <div class="standingout-image">
+                    {% thumbnail standingout.obj.main_image "350x240" crop="center" as thumb %}
+                      <img src="{{ thumb.url }}" />
+                    {% endthumbnail %}
+                  </div>
+                  {% endif %}
                 {% endif %}
                 {% endifequal %}
                 <div class="standingout-title">
