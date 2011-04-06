@@ -113,7 +113,7 @@ class ContactForm(models.Model):
             initial = ''
             if request.user.is_authenticated():
                 initial = request.user.email
-            sender_email = forms.EmailField(_('sender email'),
+            sender_email = forms.EmailField(label=_('sender email'),
                                     initial=initial)
             f.fields.insert(index, 'sender_email', sender_email)
             index += 1
