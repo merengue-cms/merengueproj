@@ -24,7 +24,7 @@ django-announcements>=0.1.2
 django-oot
 django-genericforeignkey
 django-stdfile
-cmsutils>=0.5.5
+cmsutils>=0.5.6
 transhette>=0.5.6
 django-inlinetrans>=0.4.7dev
 django-transmeta>=0.6.1
