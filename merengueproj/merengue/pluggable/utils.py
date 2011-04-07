@@ -506,8 +506,9 @@ def reload_models_cache():
     for model in get_models():
         opts = model._meta
         if hasattr(opts, '_related_many_to_many_cache'):
-            # we remove related m2m fields cache for all models
+            # we remove related m2m and fk fields cache for all models
             del opts._related_many_to_many_cache
+            del opts._related_objects_cache
         opts.init_name_map()
 
 
