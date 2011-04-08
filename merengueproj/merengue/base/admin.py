@@ -1353,6 +1353,7 @@ class PermissionRelatedAdmin(RelatedModelAdmin, PermissionAdmin):
 class AnnouncementAdmin(AnnouncementDefaultAdmin):
     form = AnnouncementAdminForm
 
+
 class LogEntryRelatedContentModelAdmin(admin.ModelAdmin):
     change_list_template = "admin/logentry/changelog.html"
     list_display = ('logentry_link',
@@ -1360,7 +1361,6 @@ class LogEntryRelatedContentModelAdmin(admin.ModelAdmin):
                     'get_link_contenttype',
                     'get_culpright',
                     'get_action', 'get_link_admin_url',)
-    list_display_links = ('get_link_public_url',)
     date_hierarchy = 'action_time'
     list_filter = ('content_type', 'user')
     actions = None
@@ -1391,8 +1391,8 @@ class LogEntryRelatedContentModelAdmin(admin.ModelAdmin):
     # COLUMNS
 
     def logentry_link(self, logentry):
-        return logentry.action_time
-    logentry_link.allow_tags = False
+        return mark_safe('<a id="logentry%s">%s</a>' % (logentry.id, logentry.action_time))
+    logentry_link.allow_tags = True
     logentry_link.short_description = _(u'Log entry')
 
     def get_culpright(self, logentry):
@@ -1401,13 +1401,11 @@ class LogEntryRelatedContentModelAdmin(admin.ModelAdmin):
     get_culpright.allow_tags = True
     get_culpright.short_description = _(u'User')
 
-
     def get_link_admin_url(self, logentry):
         return self.get_url(logentry, admin=True)
     get_link_admin_url.allow_tags = True
     get_link_admin_url.short_description = _(u'Admin url')
 
-    
     def get_link_public_url(self, logentry):
         if len(logentry.object_repr) < 40:
             label = logentry.object_repr
@@ -1417,7 +1415,6 @@ class LogEntryRelatedContentModelAdmin(admin.ModelAdmin):
     get_link_public_url.allow_tags = True
     get_link_public_url.short_description = _(u'Public url')
 
-    
     def get_link_contenttype(self, logentry):
         model_class = logentry.content_type.model_class()
         return self.get_url(logentry,
