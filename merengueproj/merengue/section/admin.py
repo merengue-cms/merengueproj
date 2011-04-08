@@ -190,6 +190,7 @@ class DocumentRelatedModelAdmin(SectionContentAdmin, DocumentAdmin):
 
 class BaseLinkInline(admin.TabularInline):
 
+    extra = 0
     formset = BaseLinkInlineFormSet
 
     def get_fieldsets(self, request, obj=None):
