@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
@@ -15,6 +17,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+import re
+import htmlentitydefs
 from django.template import Library
 from django.utils.translation import ugettext as _
 
@@ -30,7 +34,7 @@ def trans_yesno(value, arg=None):
         arg = _('yes,no,maybe')
     bits = arg.split(u',')
     if len(bits) < 2:
-        return _(value) # Invalid arg.
+        return _(value)  # Invalid arg.
     try:
         yes, no, maybe = bits
     except ValueError:
@@ -42,6 +46,24 @@ def trans_yesno(value, arg=None):
         return _(yes)
     return _(no)
 trans_yesno.is_safe = False
+
+
+@register.filter
+def unescape_html_entities(string):
+    """Converts HTML entities into unicode letters.
+
+    Examples:
+
+      "&aacute;".convert_accented_entities #: "á"
+      "&ccedil;".convert_accented_entities #: "ç"
+
+    """
+    entities_regex = re.compile('&(' + '|'.join(htmlentitydefs.name2codepoint.keys()) + ');')
+    return re.sub(
+        entities_regex,
+        lambda m: unichr(htmlentitydefs.name2codepoint[m.group(1)]),
+        string,
+    )
 
 
 @register.filter
