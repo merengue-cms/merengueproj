@@ -77,6 +77,9 @@ class StandingOut(models.Model):
     def description(self):
         return self.obj.description
 
+    def has_description(self):
+        return True
+
     @property
     def main_image(self):
         return self.obj.main_image

@@ -1,6 +1,6 @@
 {% extends "block.html" %}
 
-{% load i18n inlinetrans section_tags media_tags thumbnail stringfilters %}
+{% load i18n inlinetrans section_tags media_tags thumbnail stringfilters content_filters  %}
 
 {% block blocktitle %}{% endblock %}
 
@@ -62,7 +62,7 @@
                     {{ standingout.short_description|striptags|truncatechars:250 }}
                 {% else %}
                     {% if standingout.obj.description %}
-                        {{ standingout.obj.description|striptags|truncatechars:250 }}
+                        {{ standingout.obj.description|striptags|unescape_html_entities|truncatechars:250 }}
                     {% endif %}
                 {% endif %}
                 </div>
