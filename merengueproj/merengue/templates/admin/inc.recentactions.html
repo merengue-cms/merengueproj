@@ -3,7 +3,7 @@
 
 {% block recentactions %}
     <div class="module" id="recent-actions-module">
-        <h2>{% trans 'Recent Actions' %}</h2>
+        <h2><a href="/admin/admin/logentry/">{% trans 'Recent Actions' %}</a></h2>
         <h3>{% trans 'My Actions' %}</h3>
         {% get_admin_log 10 as admin_log for_user user %}
         {% if not admin_log %}

@@ -33,6 +33,7 @@ from django.contrib.admin.filterspecs import FilterSpec
 from django.contrib.admin.views.main import ChangeList, ERROR_FLAG
 from django.contrib.admin.options import IncorrectLookupParameters
 from django.contrib.admin.util import unquote, flatten_fieldsets
+from django.contrib.admin.models import LogEntry
 from django.contrib.sites.admin import Site, SiteAdmin
 from django.forms.models import ModelForm, BaseInlineFormSet, \
                                 fields_for_model, save_instance, modelformset_factory
@@ -1363,6 +1364,92 @@ class PermissionRelatedAdmin(RelatedModelAdmin, PermissionAdmin):
 class AnnouncementAdmin(AnnouncementDefaultAdmin):
     form = AnnouncementAdminForm
 
+class LogEntryRelatedContentModelAdmin(admin.ModelAdmin):
+    change_list_template = "admin/logentry/changelog.html"
+    list_display = ('logentry_link',
+                    'get_link_public_url',
+                    'get_link_contenttype',
+                    'get_culpright',
+                    'get_action', 'get_link_admin_url',)
+    list_display_links = ('get_link_public_url',)
+    date_hierarchy = 'action_time'
+    list_filter = ('content_type', 'user')
+    actions = None
+
+    def get_url(self, logentry, admin=False, url=None, label=None):
+        if not logentry.object_id.isdigit():
+            return _(u'Error in id')
+        if logentry.object_id and not url:
+            try:
+                obj = logentry.content_type.model_class().objects.get(pk=logentry.object_id)
+            except models.ObjectDoesNotExist:
+                return label or _(u'deleted')
+            if admin:
+                url = '/admin/%s' % logentry.get_admin_url()
+            else:
+                get_absolute_url = getattr(obj, 'get_absolute_url', '')
+                url = get_absolute_url and get_absolute_url() or get_absolute_url
+            label = label or url
+    
+        if url:
+            if len(label) > 30:
+                label = "%s ..." % label[:30]
+            return mark_safe("<a href='%s'>%s</a>" % (url, label))
+        elif label:
+            return label
+        return '---'
+
+    # COLUMNS
+
+    def logentry_link(self, logentry):
+        return logentry.action_time
+    logentry_link.allow_tags = False
+    logentry_link.short_description = _(u'Log entry')
+
+    def get_culpright(self, logentry):
+        user = logentry.user
+        return mark_safe(u'<a href="/admin/auth/user/%s/">%s</a>' % (user.id, user.get_full_name() or user.username))
+    get_culpright.allow_tags = True
+    get_culpright.short_description = _(u'User')
+
+
+    def get_link_admin_url(self, logentry):
+        return self.get_url(logentry, admin=True)
+    get_link_admin_url.allow_tags = True
+    get_link_admin_url.short_description = _(u'Admin url')
+    
+    
+    def get_link_public_url(self, logentry):
+        if len(logentry.object_repr) < 40:
+            label = logentry.object_repr
+        else:
+            label = "%s..." % logentry.object_repr[:37]
+        return self.get_url(logentry, admin=False, label=label)
+    get_link_public_url.allow_tags = True
+    get_link_public_url.short_description = _(u'Public url')
+    
+    
+    def get_link_contenttype(self, logentry):
+        model_class = logentry.content_type.model_class()
+        return self.get_url(logentry,
+                            url='/admin/%s/%s/'%
+                               (model_class._meta.app_label,
+                                model_class._meta.module_name),
+                            label=logentry.content_type.__unicode__())
+    get_link_contenttype.allow_tags = True
+    get_link_contenttype.short_description = _(u'Content type')
+
+    def get_action(self, logentry):
+        if logentry.is_addition():
+            return _(u'Added')
+        elif logentry.is_deletion():
+            return _(u'Deleted')
+        elif logentry.is_change():
+            return logentry.change_message
+        return '---'
+    get_action.allow_tags = True
+    get_action.short_description = _(u'Action')
+
 
 def register(site):
     ## register admin models
@@ -1371,6 +1458,7 @@ def register(site):
     site.register(ProviderRule)
     site.register(StoredOEmbed)
     site.register(Announcement, AnnouncementAdmin)
+    site.register(LogEntry, LogEntryRelatedContentModelAdmin)
 
     #default notification
     site.register(NoticeType, NoticeTypeAdmin)
@@ -1385,7 +1473,6 @@ def register(site):
 def register_related_base(site, related_to):
     site.register_related(ContactInfo, BaseContentRelatedContactInfoAdmin, related_to=related_to)
     site.register_related(BaseContent, PermissionRelatedAdmin, related_to=related_to)
-
 
 # ----- begin monkey patching -----
 
