@@ -1391,7 +1391,7 @@ class LogEntryRelatedContentModelAdmin(admin.ModelAdmin):
                 get_absolute_url = getattr(obj, 'get_absolute_url', '')
                 url = get_absolute_url and get_absolute_url() or get_absolute_url
             label = label or url
-    
+
         if url:
             if len(label) > 30:
                 label = "%s ..." % label[:30]
@@ -1417,7 +1417,7 @@ class LogEntryRelatedContentModelAdmin(admin.ModelAdmin):
         return self.get_url(logentry, admin=True)
     get_link_admin_url.allow_tags = True
     get_link_admin_url.short_description = _(u'Admin url')
-    
+
     def get_link_public_url(self, logentry):
         if len(logentry.object_repr) < 40:
             label = logentry.object_repr
@@ -1426,11 +1426,11 @@ class LogEntryRelatedContentModelAdmin(admin.ModelAdmin):
         return self.get_url(logentry, admin=False, label=label)
     get_link_public_url.allow_tags = True
     get_link_public_url.short_description = _(u'Public url')
-    
+
     def get_link_contenttype(self, logentry):
         model_class = logentry.content_type.model_class()
         return self.get_url(logentry,
-                            url='/admin/%s/%s/'%
+                            url='/admin/%s/%s/' %
                                (model_class._meta.app_label,
                                 model_class._meta.module_name),
                             label=logentry.content_type.__unicode__())
