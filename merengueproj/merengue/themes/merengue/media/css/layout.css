@@ -134,6 +134,10 @@ span.translatable {
   background: transparent url(../img/flag-fr.gif) no-repeat left top;
 }
 
+#language-tools ul li a#it {
+  background: transparent url(../img/flag-it.gif) no-repeat left top;
+}
+
 #language-tools ul li a#de {
   background: transparent url(../img/flag-de.gif) no-repeat left top;
 }
