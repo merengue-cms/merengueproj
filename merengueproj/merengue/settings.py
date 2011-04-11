@@ -273,7 +273,7 @@ MANAGE_FILE = 'manage.py'
 # /usr/bin/python
 SYS_EXECUTABLE = None
 
-JOHNNY_TABLE_BLACKLIST = ('south_migrationhistory', 'django_content_type', )
+JOHNNY_TABLE_BLACKLIST = ('south_migrationhistory', 'django_content_type', 'thumbnail_kvstore')
 
 # Path for translation catalogs search
 LOCALE_PATHS = (
