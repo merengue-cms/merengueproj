@@ -71,7 +71,8 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
 
     def save_form(self, request, form, change):
         change_installed_field = 'installed' in form.changed_data
-        is_installed = form.cleaned_data['installed'] == True
+        if 'installed' in form.cleaned_data:
+            is_installed = form.cleaned_data['installed'] == True
         registered_plugin = form.save(commit=False)
         if change_installed_field and is_installed:
             registered_plugin.active = True
