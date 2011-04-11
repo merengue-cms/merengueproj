@@ -27,7 +27,7 @@ else:
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.core.management import call_command
-from django.core.exceptions import ObjectDoesNotExist, SuspiciousOperation
+from django.core.exceptions import ObjectDoesNotExist, SuspiciousOperation, ValidationError
 from django.db.models import signals, permalink
 from django.db.models.signals import post_save
 from django.template.loader import render_to_string
@@ -154,6 +154,23 @@ class Base(models.Model):
             setattr(self, to_field, text)
         else:
             setattr(self, to_field, original_text)
+
+    def clean(self):
+        super(Base, self).clean()
+        # avoid integer overflows
+        numeric_fields = [models.IntegerField, models.PositiveIntegerField,
+                          models.PositiveSmallIntegerField, models.SmallIntegerField]
+        invalid_fields = set()
+        for field in self._meta.fields:
+            for numeric in numeric_fields:
+                if isinstance(field, numeric) and field.value_from_object(self) > settings.MAX_INT_VALUE:
+                    invalid_fields.add(field)
+                    continue
+        if invalid_fields:
+            error_msg = u"%s: %s %d" % (', '.join([force_unicode(f.verbose_name) for f in invalid_fields]),
+                                        _('Numeric fields can not be larger than'),
+                                        settings.MAX_INT_VALUE)
+            raise ValidationError(error_msg)
 
     def save(self, *args, **kwargs):
         for lang in settings.LANGUAGES:

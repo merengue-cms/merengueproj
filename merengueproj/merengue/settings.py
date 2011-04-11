@@ -156,6 +156,9 @@ STATUS_LIST = (
 )
 DEFAULT_STATUS = 'draft'
 
+# max integer value (database safe)
+MAX_INT_VALUE = 2147483647
+
 # merengue default directory for plugins
 PLUGINS_DIR = 'plugins'
 
