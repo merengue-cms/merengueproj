@@ -81,10 +81,10 @@ class ActionURLNode(template.Node):
         action = self.action.resolve(context)
         action_link = None
         if content_or_user:
-            if action.has_action(content_or_user):
+            if action.has_action(request, content_or_user):
                 action_link = action.get_url(request, content_or_user)
         else:
-            if action.has_action():
+            if action.has_action(request):
                 action_link = action.get_url(request)
         context[self.variable_context] = action_link
         return ''

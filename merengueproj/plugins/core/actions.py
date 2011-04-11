@@ -28,7 +28,7 @@ class AdminAction(UserAction):
     def get_url(self, request, user):
         return reverse('admin_index')
 
-    def has_action(self, user):
+    def has_action(self, request, user):
         return user.is_staff
 
 
@@ -42,7 +42,7 @@ class LoginAction(UserAction):
             login_url += '?next=%s' % request.get_full_path()
         return login_url
 
-    def has_action(self, user):
+    def has_action(self, request, user):
         return not user.is_authenticated()
 
 
@@ -53,7 +53,7 @@ class LogoutAction(UserAction):
     def get_url(self, request, user):
         return reverse('merengue_logout')
 
-    def has_action(self, user):
+    def has_action(self, request, user):
         return user.is_authenticated()
 
 

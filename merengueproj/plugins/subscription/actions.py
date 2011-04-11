@@ -31,5 +31,5 @@ class SubscriptionAction(ContentAction):
     def get_response(self, request, content):
         return HttpResponseRedirect(reverse("subscription_form", args=(content.slug, )))
 
-    def has_action(self, content):
+    def has_action(self, request, content):
         return content.subscribable_set.actives()

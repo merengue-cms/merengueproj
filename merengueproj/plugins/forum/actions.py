@@ -37,7 +37,7 @@ class CreateThreadAction(ContentAction):
                                         request.get_full_path())
             return HttpResponseRedirect(login_url)
 
-    def has_action(self, content):
+    def has_action(self, request, content):
         if type(content) == Forum:
             return content
         else:

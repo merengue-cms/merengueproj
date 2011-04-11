@@ -40,7 +40,7 @@ class BaseAction(RegistrableItem):
     def get_response(self):
         raise NotImplementedError()
 
-    def has_action(self):
+    def has_action(self, request):
         return True
 
 
@@ -52,8 +52,8 @@ class SiteAction(BaseAction):
 
 class UserAction(BaseAction):
 
-    def has_action(self, user):
-        return super(UserAction, self).has_action()
+    def has_action(self, request, user):
+        return super(UserAction, self).has_action(request)
 
     def get_url(self, request, user):
         return reverse("user_action", args=(user.username, self.name, ))
@@ -68,5 +68,5 @@ class ContentAction(BaseAction):
     def get_response(self, content):
         raise NotImplementedError()
 
-    def has_action(self, content):
-        return super(ContentAction, self).has_action()
+    def has_action(self, request, content):
+        return super(ContentAction, self).has_action(request)

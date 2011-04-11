@@ -28,5 +28,5 @@ class DashboardAction(UserAction):
     def get_url(self, request, user):
         return reverse('dashboard')
 
-    def has_action(self, user):
+    def has_action(self, request, user):
         return user.is_authenticated()

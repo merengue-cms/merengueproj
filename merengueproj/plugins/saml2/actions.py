@@ -30,7 +30,7 @@ class Saml2LoginAction(UserAction):
         return '%s?next=%s' % (reverse('saml2_login'), request.get_full_path())
 
     @classmethod
-    def has_action(cls, user):
+    def has_action(cls, request, user):
         return not user.is_authenticated()
 
 
@@ -43,5 +43,5 @@ class Saml2LogoutAction(UserAction):
         return reverse('saml2_logout')
 
     @classmethod
-    def has_action(cls, user):
+    def has_action(cls, request, user):
         return user.is_authenticated()

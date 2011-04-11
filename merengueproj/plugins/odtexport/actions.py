@@ -38,8 +38,9 @@ class ExportODT(ContentAction):
         response['Content-Disposition'] = content_disp
         return response
 
-    def has_action(self, content):
-        return content and get_odt_template_id(content.__class__) != 0
+    def has_action(self, request, content):
+        return (request.user.is_authenticated() and
+                content and get_odt_template_id(content.__class__) != 0)
 
 
 def get_odt_template_id(content_class):
