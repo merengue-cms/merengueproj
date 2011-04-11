@@ -226,9 +226,24 @@ class StdImageField(ImageField):
         else:
             return u''
 
+    def _anulate_sorl(self, instance=None, **kwargs):
+        try:
+            import sorl
+        except ImportError:
+            return
+        image = getattr(instance, self.name, None)
+        if not image:
+            return
+        sorl.thumbnail.delete(image, delete_file=False)
+
     def contribute_to_class(self, cls, name):
         '''
         Call methods for generating all operations on specified signals
         '''
         super(StdImageField, self).contribute_to_class(cls, name)
         signals.post_save.connect(self._rename_resize_image, sender=cls)
+        try:
+            import sorl  # pyflakes:ignore
+            signals.post_save.connect(self._anulate_sorl, sender=cls)
+        except ImportError:
+            pass
