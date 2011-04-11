@@ -17,7 +17,7 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.base.admin import RelatedModelAdmin
+from merengue.base.admin import RelatedModelAdmin, related_form_clean
 from merengue.base.models import BaseContent
 from merengue.block.models import RegisteredBlock
 from merengue.block.forms import BaseContentRelatedBlockAddForm, BaseContentRelatedBlockChangeForm
@@ -62,15 +62,24 @@ class BaseContentRelatedBlockAdmin(RelatedModelAdmin, RegisteredBlockAdmin):
     def has_add_permission(self, request):
         return perms_api.can_manage_site(request.user)
 
+    def get_fieldsets(self, request, obj=None):
+        if obj is None:
+            form = self.get_form(request, obj)
+            fields = form.base_fields.keys()
+            return [(None, {'fields': fields})]  # not included the readonly_fields
+        else:
+            return super(BaseContentRelatedBlockAdmin, self).get_fieldsets(request, obj)
+
     def add_view(self, request, form_url='', extra_context=None, parent_model_admin=None, parent_object=None):
-        self.fieldsets = None  # fieldsets was cleared in add view
         return super(BaseContentRelatedBlockAdmin, self).add_view(request, form_url, extra_context, parent_model_admin)
 
     def get_form(self, request, obj=None, **kwargs):
         if request.get_full_path().endswith('add/'):
-            return BaseContentRelatedBlockAddForm
+            form = BaseContentRelatedBlockAddForm
+            form.clean = related_form_clean(self.related_field, self.basecontent)
         else:
-            return super(BaseContentRelatedBlockAdmin, self).get_form(request, obj, **kwargs)
+            form = super(BaseContentRelatedBlockAdmin, self).get_form(request, obj, **kwargs)
+        return form
 
 
 def register(site):

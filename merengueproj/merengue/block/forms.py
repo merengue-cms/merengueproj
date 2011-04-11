@@ -23,12 +23,13 @@ from django.utils.translation import ugettext_lazy as _
 from autoreports.forms import FormAdminDjango
 
 from merengue.base.forms import BaseAdminModelForm
+from merengue.block.models import RegisteredBlock
 from merengue.pluggable.models import RegisteredPlugin
 from merengue.registry import register
 from merengue.registry.fields import ConfigFormField
 
 
-class BaseContentRelatedBlockAddForm(forms.Form):
+class BaseContentRelatedBlockAddForm(forms.ModelForm):
     block_class = forms.ChoiceField(
         label=_('Block to add'),
     )
@@ -64,6 +65,10 @@ class BaseContentRelatedBlockAddForm(forms.Form):
 
     def save_m2m(self, *args, **kwargs):
         pass
+
+    class Meta:
+        model = RegisteredBlock
+        fields = ('block_class', )
 
 
 class BaseContentRelatedBlockChangeForm(BaseAdminModelForm):
