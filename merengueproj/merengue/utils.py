@@ -325,8 +325,7 @@ def get_all_parents(model, parents=None):
 def invalidate_johnny_cache(model, invalidate_parent=False, parent_finish=None):
     if 'johnny' in settings.INSTALLED_APPS:
         from johnny import cache
-        from django.core.cache import cache as django_cache
-        query_cache_backend = cache.get_backend()(django_cache)
+        query_cache_backend = cache.get_backend()
         query_cache_backend.patch()
         if parent_finish and not issubclass(model, parent_finish):
             return

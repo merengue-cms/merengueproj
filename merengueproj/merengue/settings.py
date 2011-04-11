@@ -175,7 +175,6 @@ SESSION_ENGINE = 'merengue.backends.db'
 ACQUIRE_SECTION_OWNERSHIP = False
 
 # cache default settings
-CACHE_BACKEND = 'johnny.backends.locmem:///'
 CACHE_MIDDLEWARE_SECONDS = 3600 * 24
 CACHE_MIDDLEWARE_KEY_PREFIX = 'merengue'
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
