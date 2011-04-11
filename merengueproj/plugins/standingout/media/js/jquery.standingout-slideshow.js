@@ -20,15 +20,19 @@
         Shadowbox.init({
                 assetUrl: mediaurl,
                 loadingImage: mediaurl + 'merengue/img/multimedia/loading.gif',
+                skipSetup: true,
                 displayNav: true,
                 displayClose: true,
                 continuous: true,
                 enableKeys: false
         });
 
-        Shadowbox.setup($('div.standingout-video a'), {
-                autoplayMovies: true,
-                flvPlayer: mediaurl + 'merengue/flash/flvplayer.swf'
-        });
+        var videos = $('div.standingout-video a');
+        if (videos.length) {
+            Shadowbox.setup($('div.standingout-video a'), {
+                    autoplayMovies: true,
+                    flvPlayer: mediaurl + 'merengue/flash/flvplayer.swf'
+            });
+       }
     });
 })(jQuery);
