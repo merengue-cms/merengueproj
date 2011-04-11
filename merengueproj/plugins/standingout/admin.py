@@ -14,6 +14,8 @@
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
+import sorl
+
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
 
@@ -43,6 +45,13 @@ class StandingOutAdmin(BaseOrderableAdmin):
                                 'fields': ('standing_out_category', 'related')}),
         )
         return form
+
+    def save_model(self, request, obj, form, change):
+        saved = super(StandingOutAdmin, self).save_model(request, obj, form, change)
+        # if we changed the image, its thumbnail is no longer valid.
+        if obj.id and 'image' in form.changed_data:
+            sorl.thumbnail.delete(obj.image, delete_file=False)
+        return saved
 
 
 class StandingSectionOutAdmin(OrderableRelatedModelAdmin, StandingOutAdmin):
