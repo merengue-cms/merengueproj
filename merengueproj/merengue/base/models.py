@@ -721,8 +721,8 @@ def handle_pre_migrate(sender, **kwargs):
     post_save_receivers = post_save.receivers
     post_save.receivers = []
     # use dummy cache backend because Johnny cache does weird things. See #852
-    cache_backend = settings.CACHE_BACKEND
-    settings.CACHE_BACKEND = 'dummy://'
+    cache_backend = settings.CACHES['default']['BACKEND']
+    settings.CACHES['default']['BACKEND'] = 'django.core.cache.backends.dummy.DummyCache'
 
 
 def handle_post_migrate(sender, **kwargs):
@@ -738,7 +738,7 @@ def handle_post_migrate(sender, **kwargs):
                 call_command('loaddata', fixture, verbosity=1)
     # will set again saved receivers and cache backend
     post_save.receivers = post_save_receivers
-    settings.CACHE_BACKEND = cache_backend
+    settings.CACHES['default']['BACKEND'] = cache_backend
 
 
 pre_migrate.connect(handle_pre_migrate)
