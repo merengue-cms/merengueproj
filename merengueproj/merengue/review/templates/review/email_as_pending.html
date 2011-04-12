@@ -3,11 +3,11 @@
 <p>{% trans "Hello," %}</p>
 
 <p>
-  {% trans "The content" %} <a href="{{ content.get_absolute_url }}">{{ content.name }}</a>
+  {% trans "The content" %} <a href="{{ content_url }}">{{ content.name }}</a>
   {% trans "has been set as pending and it's waiting for revision." %}
 </p>
 
 <p>
-  <a href="{{ content.get_admin_absolute_url }}">{% trans "Link to the admin page" %}</a>
+  <a href="{{ admin_content_url }}">{% trans "Link to the admin page" %}</a>
   <a href="{{ task_admin_url}}">{% trans "Link to the review task admin page" %}</a>
 </p>
