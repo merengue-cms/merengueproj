@@ -36,9 +36,7 @@
                 {% else %}
                 {% if standingout.image %}
                   <div class="standingout-image">
-                    {% thumbnail standingout.image "350x240" crop="center" as thumb %}
-                      <img src="{{ thumb.url }}" />
-                    {% endthumbnail %}
+                    <img src="{{ standingout.image.url }}" />
                   </div>
                 {% else %}
                   {% if standingout.obj.main_image %}
