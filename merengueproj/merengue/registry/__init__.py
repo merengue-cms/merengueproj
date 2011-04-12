@@ -60,7 +60,7 @@ def register(item_class, activate=False):
     """ Register a item in the registry """
     # all process will be in a unique transaction, we don't want to get
     # half committed
-    if settings.CACHE_BACKEND.startswith('johnny'):
+    if settings.CACHES['default']['BACKEND'].startswith('johnny'):
         invalidate_registereditem()
 
     sid = transaction.savepoint()
