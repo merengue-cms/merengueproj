@@ -22,6 +22,7 @@ from transmeta import get_fallback_fieldname
 from merengue.base.admin import BaseContentAdmin, BaseCategoryAdmin
 from merengue.section.admin import SectionContentAdmin
 from plugins.event.models import Event, Category
+from plugins.event.forms import EventAdminForm
 
 
 class EventCategoryAdmin(BaseCategoryAdmin):
@@ -34,6 +35,7 @@ class EventAdmin(BaseContentAdmin):
     exclude = ('expire_date', )
     list_display = ('name', 'start', 'end', 'status', 'user_modification_date',
                     'last_editor')
+    form = EventAdminForm
     if settings.USE_GIS:
         list_display = list_display + ('google_minimap', )
     list_filter = ('categories', 'status', 'user_modification_date', )
