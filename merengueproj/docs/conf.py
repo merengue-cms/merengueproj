@@ -57,11 +57,11 @@ copyright = 'Yaco Sistemas and contributors'
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = '0.7'
+version = '0.8'
 # The full version, including alpha/beta/rc tags.
 release = version
 # The next version to be released
-merengue_next_version = '0.8'
+merengue_next_version = '0.9'
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
