@@ -260,7 +260,7 @@ Some examples follow:
     True
 
 An Extensible Data Schema, Not Hierarchical Pages
-----------------------------------------------
+-------------------------------------------------
 
 Some CMSs are based on a simple data model using hierarchical pages or nodes
 without a semantic meaning -- just data.

@@ -36,6 +36,10 @@ Previous Dependencies
 
     $ sudo apt-get install ffmpeg libavcodec-unstripped-52 libavdevice-unstripped-52 libavformat-unstripped-52 libavutil-unstripped-49 libpostproc-unstripped-51 libswscale-unstripped-0 yamdi
 
+* ``gettext``: Utility for managing translations catalogs.
+
+    $ sudo apt-get install gettext
+
 PIL Installation
 ----------------
 
@@ -713,7 +717,12 @@ memory backend is used in multithreaded environments with the setting:
 
 .. code-block:: python
 
-    CACHE_BACKEND = 'johnny.backends.locmem:///'
+    CACHES = {
+        'default': {
+            'BACKEND': 'johnny.backends.locmem.LocMemCache',
+            'KEY_PREFIX': SECRET_KEY,
+        }
+    }
 
 In multithreaded environments, this configuration may cause random errors where
 views are not refreshed correctly after content modification. The "fix" for
@@ -721,7 +730,35 @@ this problem is to change the cache backend to something like memcached:
 
 .. code-block:: python
 
-    CACHE_BACKEND = 'johnny.backends.memcached://127.0.0.1:11211/'
+    CACHES = {
+        'default': {
+            'BACKEND': 'johnny.backends.memcached.MemcachedCache',
+            'LOCATION': '127.0.0.1:11211',
+            'JOHNNY_CACHE': True,
+        }
+    }
+
+Template caching
+----------------
+
+The Django 1.3 version allow caching the compiled templates (see 
+`django.template.loaders.cached.Loader loader`_). This could vastly speed up a
+Merengue site because Merengue page layout is rendered with a lot of templates
+which renders the page fragments.
+
+In order to activate the caching in templates, you have to change the
+``TEMPLATE_LOADERS`` setting in your project settings as follow:
+
+.. code-block:: python
+
+    TEMPLATE_LOADERS = (
+        ('django.template.loaders.cached.Loader', TEMPLATE_LOADERS),
+    )
+
+The ``TEMPLATE_LOADERS`` variable is defined in ``merengue/settings.py`` file.
+We wrap the Merengue template loaders with the
+``django.template.loaders.cached.Loader`` loader.
 
 .. _`Deploying Django`: http://docs.djangoproject.com/en/dev/howto/deployment/
 .. _`Johnny Cache`: http://packages.python.org/johnny-cache/
+.. _`django.template.loaders.cached.Loader loader`: http://docs.djangoproject.com/en/1.3/ref/templates/api/#loader-types
