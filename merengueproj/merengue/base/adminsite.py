@@ -341,11 +341,13 @@ class AdminSite(BaseAdminSite, RelatedModelRegistrable):
             if manage_plugin_content:
                 name = app_label.split('.')[1:]
                 name = name and name[0] or ''
+                config = get_plugin_config(name)
                 app_dict[app_label] = {
                     'name': name.title(),
                     'app_url': app_label + '/',
                     'has_module_perms': manage_plugin_content,
-                    'config': get_plugin_config(name),
+                    'description': getattr(config, 'description', None),
+                    'version': getattr(config, 'version', None),
                 }
 
         # Sort the apps alphabetically.
