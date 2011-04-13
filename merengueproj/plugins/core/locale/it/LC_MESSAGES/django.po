@@ -1,0 +1,50 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Mirto Silvio Busico <m.busico@ieee.org>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"PO-Revision-Date: 2011-04-12 19:12+0200\n"
+"Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
+"Language-Team: it <m.busico@ieee.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: actions.py:26
+msgid "Admin site"
+msgstr "Amministra il sito"
+
+#: actions.py:39
+msgid "Login"
+msgstr "Login"
+
+#: actions.py:55
+msgid "Logout"
+msgstr "Logout"
+
+#: blocks.py:40
+msgid "Menu"
+msgstr "Menu"
+
+#: blocks.py:56
+msgid "Navigation"
+msgstr "Navigazione"
+
+#: blocks.py:69
+msgid "Portal Menu"
+msgstr "Menu del portale"
+
+#: blocks.py:82
+msgid "Portal links"
+msgstr "Link del portale"
+
+#: config.py:39
+msgid "home initial content"
+msgstr "Contenuto iniziale della 'home'"

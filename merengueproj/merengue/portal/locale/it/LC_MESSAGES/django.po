@@ -1,0 +1,97 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Mirto Silvio Busico <m.busico@ieee.org>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-04-12 11:58+0200\n"
+"PO-Revision-Date: 2011-04-11 20:19+0200\n"
+"Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
+"Language-Team: it <m.busico@ieee.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: models.py:9
+msgid "Primary link"
+msgstr "Link primario"
+
+#: models.py:10
+msgid "Secondary link"
+msgstr "Link secondario"
+
+#: models.py:18
+msgid "name"
+msgstr "nome"
+
+#: models.py:19
+msgid "Content"
+msgstr "Contenuto"
+
+#: models.py:21 models.py:22
+msgid "url"
+msgstr "url"
+
+#: models.py:24
+msgid "order"
+msgstr "ordine"
+
+#: models.py:25
+msgid "category"
+msgstr "categoria"
+
+#: models.py:28
+msgid "portal link"
+msgstr "il link del portale"
+
+#: models.py:29
+msgid "portal links"
+msgstr "i link del portale"
+
+#: views.py:38
+#, python-format
+msgid "Welcome %s"
+msgstr "Benvenuto %s"
+
+#: views.py:45
+msgid "User exists, but it have not active account"
+msgstr "L'utente esiste ma non possiede una abilitazione attiva"
+
+#: views.py:47
+msgid "Credentials are incorrect"
+msgstr "Le credenziali non sono corrette"
+
+#: views.py:143
+msgid "Thanks for visit"
+msgstr "Grazie per la visita"
+
+#: views.py:179
+msgid "Cache from this page was invalidated"
+msgstr "La cache per questa pagina è stata invalidata"
+
+#: templates/portal/list_pending.html:5 templates/portal/list_pending.html:8
+msgid "Pending contents"
+msgstr "contenuto in attesa"
+
+#: templates/portal/login_form.html:32 templates/portal/login_form.html:45
+msgid "Case sensitive, make sure caps lock is not enabled."
+msgstr ""
+"Sensibile a maiuscole e minuscole. Assicurati che il tasto Blocco Maiuscole "
+"non sia abilitato"
+
+#: templates/portal/login_form.html:53
+msgid "Password"
+msgstr "Password"
+
+#: templates/portal/login_form.html:56
+msgid "Login"
+msgstr "Login"
+
+#: templates/portal/searchform.html:7
+msgid "Search"
+msgstr "Cerca"

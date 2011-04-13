@@ -1,0 +1,69 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Mirto Silvio Busico <m.busico@ieee.org>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-07 10:56+0200\n"
+"PO-Revision-Date: 2011-04-12 20:52+0200\n"
+"Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
+"Language-Team: it <m.busico@ieee.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: blocks.py:35 models.py:40
+msgid "banners"
+msgstr "bandiere"
+
+#: config.py:35
+msgid "limit for banner block"
+msgstr "limite per il blocco delle bandiere"
+
+#: models.py:31
+msgid "Url Link"
+msgstr "Link dell'URL"
+
+#: models.py:32
+msgid "Portal name"
+msgstr "Nome del portale"
+
+#: models.py:33
+msgid "image"
+msgstr "immagine"
+
+#: models.py:35
+msgid ""
+"The system don't resize the icon. You need to upload with the final size"
+msgstr ""
+"Il sistema non ridimensiona l'icona. Devi caricarla con la dimensione "
+"definitiva"
+
+#: models.py:39
+msgid "banner"
+msgstr "bandiera"
+
+#: viewlets.py:26
+msgid "All Banners"
+msgstr "Tutte le bandiere"
+
+#: templates/banner/banner_index.html:5 templates/banner/banner_index.html:11
+msgid "Banner history"
+msgstr "Storia della bandiera"
+
+#: templates/banner/banner_index.html:8
+msgid "Banners"
+msgstr "Bandiere"
+
+#: templates/banner/block_banner.html:9
+msgid "History banner"
+msgstr "Babdiera della storia"
+
+#: templates/banner/viewlet_latest.html:17
+msgid "View more"
+msgstr "Vedi di più"

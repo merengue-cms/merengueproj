@@ -1,0 +1,53 @@
+# German translations for django-permissions
+# Copyright (C) 2010 Kai Diefenbach
+# This file is distributed under the same license as the PACKAGE package.
+# Kai Diefenbach <kai.diefenbach@iqpp.de>, 2010.
+# Mirto Silvio Busico <m.busico@ieee.org>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-03-30 23:12+0200\n"
+"PO-Revision-Date: 2011-04-11 18:05+0200\n"
+"Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
+"Language-Team: it <m.busico@ieee.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: models.py:154
+msgid "Name"
+msgstr "Name"
+
+#: models.py:155
+msgid "Codename"
+msgstr "Codename"
+
+#: models.py:156
+msgid "Content Types"
+msgstr "Tipi di contenuto"
+
+#: models.py:175 models.py:280
+msgid "Role"
+msgstr "Ruolo"
+
+#: models.py:176 models.py:216
+msgid "Permission"
+msgstr "Permesso"
+
+#: models.py:178 models.py:218 models.py:282
+msgid "Content type"
+msgstr "Tipo di contenuto"
+
+#: models.py:179 models.py:219 models.py:283
+msgid "Content id"
+msgstr "ID del contenuto"
+
+#: models.py:278
+msgid "User"
+msgstr "Utente"
+
+#: models.py:279
+msgid "Group"
+msgstr "Gruppo"

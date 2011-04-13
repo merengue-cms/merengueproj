@@ -1,0 +1,304 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Mirto Silvio Busico <m.busico@ieee.org>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"PO-Revision-Date: 2011-04-12 20:47+0200\n"
+"Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
+"Language-Team: it <m.busico@ieee.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: config.py:33
+msgid "Root below MEDIA_ROOT"
+msgstr "Root sotto MEDIA_ROOT"
+
+#: config.py:34
+msgid "Docs root below MEDIA_ROOT"
+msgstr "root dei Docs sotto MEDIA_ROOT"
+
+#: config.py:35
+msgid "Docs url below MEDIA_URL"
+msgstr "url dei Docs sotto MEDIA_URL"
+
+#: forms.py:13
+msgid "Save"
+msgstr "Salva"
+
+#: forms.py:33
+msgid "Create Document"
+msgstr "Crea un Documento"
+
+#: models.py:29
+msgid "name"
+msgstr "nome"
+
+#: models.py:35
+msgid "repository"
+msgstr "repository"
+
+#: models.py:36
+msgid "repositories"
+msgstr "repository"
+
+#: models.py:133
+msgid "title"
+msgstr "titolo"
+
+#: models.py:134
+msgid "content"
+msgstr "contenuto"
+
+#: models.py:135
+msgid "modification date"
+msgstr "data della modifica"
+
+#: models.py:137
+msgid "location"
+msgstr "collocazione"
+
+#: models.py:142 models.py:178 models.py:202
+#: templates/filebrowser/listing.html:81
+msgid "document"
+msgstr "documento"
+
+#: models.py:143
+msgid "documents"
+msgstr "documenti"
+
+#: models.py:179 models.py:203 templates/filebrowser/listing.html:27
+#: templates/filebrowser/listing.html:69 templates/filebrowser/rename.html:35
+#: templates/filebrowser/rename.html:41
+msgid "file"
+msgstr "file"
+
+#: models.py:181
+msgid "indexed"
+msgstr "indicizzato"
+
+#: models.py:185
+msgid "document file attachment"
+msgstr "file allegato al documento"
+
+#: models.py:186
+msgid "document file attachments"
+msgstr "file allegati al documento"
+
+#: models.py:207
+msgid "document image attachment"
+msgstr "immagine allegata al documento"
+
+#: models.py:208
+msgid "document image attachments"
+msgstr "immagini allegate al documento"
+
+#: views.py:70
+msgid "You must introduce the name of the new folder"
+msgstr "Devi inserire il nome della nuova cartella"
+
+#: views.py:72
+#, python-format
+msgid "Folder %(dirname)s already exists"
+msgstr "La cartella %(dirname)s esiste già"
+
+#: views.py:82
+msgid "Folder created successfully"
+msgstr "Cartella creata con successo"
+
+#: views.py:110
+msgid "Files uploaded successfully"
+msgstr "File caricati con successo"
+
+#: views.py:174
+msgid "You didn't selected any element"
+msgstr "Non hai selezionato nessun elemento"
+
+#: views.py:211
+msgid "Elements renamed successfully"
+msgstr "Gli elementi sono stati rinominati con successo"
+
+#: views.py:218
+msgid "Elements deleted successfully"
+msgstr "Gli elementi sono stati cancellati con successo"
+
+#: views.py:291
+msgid "You don't have permission to do that."
+msgstr "Non hai il permesso per fare questo"
+
+#: templates/filebrowser/base.html:9 templates/filebrowser/base.html.py:13
+#: templates/filebrowser/listing.html:11 templates/filebrowser/listing.html:21
+msgid "Document repository"
+msgstr "repository dei documenti"
+
+#: templates/filebrowser/createdir.html:4
+#: templates/filebrowser/createdir.html:8
+#: templates/filebrowser/createdir.html:13
+#: templates/filebrowser/listing.html:26
+msgid "Create folder"
+msgstr "Crea una cartella"
+
+#: templates/filebrowser/createdir.html:18
+#: templates/filebrowser/createdir.html:22
+#: templates/filebrowser/document.html:63
+#: templates/filebrowser/document.html:94
+msgid "Cancel"
+msgstr "Annulla"
+
+#: templates/filebrowser/createdir.html:34
+msgid "New folder name"
+msgstr "Nuovo nome per la cartella"
+
+#: templates/filebrowser/delete.html:4 templates/filebrowser/delete.html:8
+msgid "Confirm delete"
+msgstr "Conferma la cancellazione"
+
+#: templates/filebrowser/delete.html:13
+msgid "Delete confirmation"
+msgstr "cancellazione confermata"
+
+#: templates/filebrowser/delete.html:18 templates/filebrowser/delete.html:22
+#: templates/filebrowser/doc_edit.html:24
+#: templates/filebrowser/doc_edit.html:26
+#: templates/filebrowser/doc_edit.html:34 templates/filebrowser/rename.html:17
+#: templates/filebrowser/rename.html:19 templates/filebrowser/upload.html:23
+#: templates/filebrowser/upload.html:25
+msgid "Back to content"
+msgstr "Ritorna al contenuto"
+
+#: templates/filebrowser/delete.html:28
+msgid "Are you sure to delete these elements?"
+msgstr "Sei sicuro di voler cancellare questi elementi?"
+
+#: templates/filebrowser/delete.html:51 templates/filebrowser/listing.html:94
+msgid "Delete"
+msgstr "Cancella"
+
+#: templates/filebrowser/doc_edit.html:4
+#: templates/filebrowser/doc_edit.html:11
+msgid "Edit document"
+msgstr "Modifica il documento"
+
+#: templates/filebrowser/doc_edit.html:13
+msgid "Add document"
+msgstr "Aggiungi un documento"
+
+#: templates/filebrowser/doc_edit.html:20
+msgid "Add Document"
+msgstr "Aggiungi un Documento"
+
+#: templates/filebrowser/doc_edit.html:31
+msgid "Edit Document"
+msgstr "Modifica un documento"
+
+#: templates/filebrowser/document.html:13
+msgid "Document detail"
+msgstr "Dettagli del documento"
+
+#: templates/filebrowser/document.html:27
+msgid "Edit"
+msgstr "Modifica"
+
+#: templates/filebrowser/document.html:38
+msgid "Files"
+msgstr "File"
+
+#: templates/filebrowser/document.html:49
+#: templates/filebrowser/document.html:79
+msgid "Remove"
+msgstr "Rimuovi"
+
+#: templates/filebrowser/document.html:57
+msgid "New file"
+msgstr "Nuovo file"
+
+#: templates/filebrowser/document.html:62
+msgid "Add file"
+msgstr "Aggiungi file"
+
+#: templates/filebrowser/document.html:67
+msgid "Images"
+msgstr "Immagini"
+
+#: templates/filebrowser/document.html:88
+msgid "New image"
+msgstr "Nuova immagine"
+
+#: templates/filebrowser/document.html:93
+msgid "Add image"
+msgstr "Aggiungi immagine"
+
+#: templates/filebrowser/listing.html:4
+msgid "Listing"
+msgstr "Lista"
+
+#: templates/filebrowser/listing.html:26 templates/filebrowser/listing.html:53
+#: templates/filebrowser/rename.html:29
+msgid "folder"
+msgstr "cartella"
+
+#: templates/filebrowser/listing.html:27 templates/filebrowser/upload.html:4
+#: templates/filebrowser/upload.html:6
+msgid "Upload file"
+msgstr "Carica file"
+
+#: templates/filebrowser/listing.html:38
+msgid "This table contains a list of objects"
+msgstr "Questa tabella contiene una lista di oggetti"
+
+#: templates/filebrowser/listing.html:42
+msgid "Name"
+msgstr "Nome"
+
+#: templates/filebrowser/listing.html:43
+msgid "Size"
+msgstr "Dimensione"
+
+#: templates/filebrowser/listing.html:44
+msgid "Date"
+msgstr "Data"
+
+#: templates/filebrowser/listing.html:44
+msgid "Modification date"
+msgstr "Data di modifica"
+
+#: templates/filebrowser/listing.html:93 templates/filebrowser/rename.html:4
+#: templates/filebrowser/rename.html:13 templates/filebrowser/rename.html:48
+msgid "Rename"
+msgstr "Rinomina"
+
+#: templates/filebrowser/listing.html:95
+msgid "Select one or more files or folders and click the desired button"
+msgstr ""
+"Seleziona uno o più file o cartelle e fai click sul pulsante desiderato"
+
+#: templates/filebrowser/rename.html:8
+msgid "Confirm rename"
+msgstr "Conferma la rinominazione"
+
+#: templates/filebrowser/rename.html:17 templates/filebrowser/rename.html:19
+msgid "Edit Undo"
+msgstr "Annulla le modifiche"
+
+#: templates/filebrowser/rename.html:24
+msgid "Rename these elements"
+msgstr "Rinomia questi elementi"
+
+#: templates/filebrowser/upload.html:14 templates/filebrowser/upload.html:39
+msgid "Upload"
+msgstr "Carica"
+
+#: templates/filebrowser/upload.html:19
+msgid "Upload files"
+msgstr "Carica i file"
+
+#: templates/filebrowser/upload.html:34
+msgid "File to upload"
+msgstr "File da caricare"

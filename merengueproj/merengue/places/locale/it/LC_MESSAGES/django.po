@@ -1,0 +1,54 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Mirto Silvio Busico <m.busico@ieee.org>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-09-28 22:11+0200\n"
+"PO-Revision-Date: 2011-04-11 20:26+0200\n"
+"Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
+"Language-Team: it <m.busico@ieee.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: forms.py:12
+msgid "Name"
+msgstr "Nome"
+
+#: models.py:10
+msgid "main location"
+msgstr "località principale"
+
+#: models.py:12
+msgid "borders"
+msgstr "bordi"
+
+#: models.py:39
+msgid "address"
+msgstr "indirizzo"
+
+#: models.py:41
+msgid "postal_code"
+msgstr "codice postale"
+
+#: models.py:47
+msgid "location"
+msgstr "località"
+
+#: models.py:48
+msgid "locations"
+msgstr "località"
+
+#: models.py:56
+msgid "Without localization"
+msgstr "senza località"
+
+#: models.py:63
+msgid "Address"
+msgstr "indirizzo"

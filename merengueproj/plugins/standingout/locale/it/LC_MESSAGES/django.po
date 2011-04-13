@@ -1,0 +1,109 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Mirto Silvio Busico <m.busico@ieee.org>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"PO-Revision-Date: 2011-04-12 20:05+0200\n"
+"Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
+"Language-Team: it <m.busico@ieee.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: admin.py:35
+msgid "Basic Options"
+msgstr "Opzioni di base"
+
+#: admin.py:37
+msgid "Advanced Options"
+msgstr "Opzioni avanzate"
+
+#: blocks.py:46
+msgid "Search"
+msgstr "Cerca"
+
+#: config.py:33
+msgid "limit for standingouts in block"
+msgstr "Limite per i 'In risalto' nel blocco"
+
+#: forms.py:30
+msgid ""
+"If you select the option in field standing out category you have to select a "
+"option in related field"
+msgstr ""
+"Se hai selezionato l'opzione nel camo della categoria 'In risalto' devi "
+"selezionare l'opzione nel campo correlato"
+
+#: forms.py:35
+msgid ""
+"If you select the option in field related you have to select a option in "
+"standing out category field"
+msgstr ""
+"Se hai selezionato l'opzione nel campo correlato devi selezionare una "
+"opzione nel campo della categoria 'In risalto'"
+
+#: forms.py:46
+#, python-format
+msgid "There was a object with the same fields pk=%s"
+msgstr "C'è un oggetto con gli stessi campi pk=%s"
+
+#: models.py:28
+msgid "context variable"
+msgstr "variabile del contesto"
+
+#: models.py:31
+msgid "standingout category"
+msgstr "categoria 'In risalto'"
+
+#: models.py:32
+msgid "standingout categories"
+msgstr "categorie 'In risalto'"
+
+#: models.py:37
+msgid "obj content type"
+msgstr "contenuto di tipo obj"
+
+#: models.py:39
+msgid "object id"
+msgstr "id dell'oggetto"
+
+#: models.py:42
+msgid "related content type"
+msgstr "tipo del contenuto correlato"
+
+#: models.py:44
+msgid "related object id"
+msgstr "id dell'oggetto correlato"
+
+#: models.py:47
+msgid "standing out category"
+msgstr "categoria 'In risalto'"
+
+#: models.py:50
+msgid "Order"
+msgstr "Ordine"
+
+#: templates/standingout/block_standingout.html:6
+#: templates/standingout/standingout_list.html:10
+msgid "Highlights"
+msgstr "Evidenziati"
+
+#: templates/standingout/block_standingout.html:21
+msgid "View all"
+msgstr "Vedi tutti"
+
+#: templates/standingout/block_standingout.html:23
+msgid "Without highlights"
+msgstr "Senza evidenziatura"
+
+#: templates/standingout/standingout_list.html:5
+#: templates/standingout/standingout_list.html:7
+msgid "Highlights index"
+msgstr "Indice delle evidenziature"

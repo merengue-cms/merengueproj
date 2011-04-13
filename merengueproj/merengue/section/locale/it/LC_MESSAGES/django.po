@@ -1,0 +1,327 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Mirto Silvio Busico <m.busico@ieee.org>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-04-15 11:17+0200\n"
+"PO-Revision-Date: 2011-04-11 19:39+0200\n"
+"Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
+"Language-Team: it <m.busico@ieee.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin.py:91
+msgid "CSS Colors"
+msgstr "Colori CSS"
+
+#: admin.py:92
+msgid "Header images"
+msgstr "Immagini della testata"
+
+#: admin.py:93
+msgid "Searcher images"
+msgstr "Immagini per la ricerca"
+
+#: admin.py:98 models.py:296
+msgid "custom style"
+msgstr "stile personalizzato"
+
+#: admin.py:116 models.py:484
+msgid "documents"
+msgstr "documenti"
+
+#: admin.py:172
+msgid ""
+"Sorry you can not select an Absolute Link and a Content Link simultaneously "
+"for this menu. Fulfill just one."
+msgstr ""
+"Spiacenti non puoi selezionare un 'Link Assoluto' ed un 'Link al Contenuto' "
+"contemporaneamente. Compilane solo uno."
+
+#: admin.py:181
+msgid "Menu Absolute Link"
+msgstr "Menu del 'Link Assoluto'"
+
+#: admin.py:182
+msgid "Menu Absolute Links"
+msgstr "Menu dei 'Link Assoluti'"
+
+#: admin.py:209
+msgid "Menu Content Link"
+msgstr "Menu del 'Link al Contenuto'"
+
+#: admin.py:210
+msgid "Menu Content Links"
+msgstr "Menu dei 'Link ai Contenuti'"
+
+#: admin.py:227
+msgid "Menu Viewlet Link"
+msgstr "Menu della 'Viewlet'"
+
+#: admin.py:228
+msgid "Menu Viewlet Links"
+msgstr "Menu dei link alle Viewlet"
+
+#: admin.py:247
+msgid "Move this menu"
+msgstr "Muovi questo menu"
+
+#: admin.py:248
+msgid "Cancel move"
+msgstr "Annula il comando muovi"
+
+#: admin.py:250
+msgid "Before"
+msgstr ""
+
+#: admin.py:251
+msgid "After"
+msgstr ""
+
+#: admin.py:252
+msgid "Child"
+msgstr ""
+
+#: admin.py:329 models.py:226
+msgid "main menu"
+msgstr ""
+
+#: admin.py:335 models.py:235
+msgid "secondary menu"
+msgstr ""
+
+#: admin.py:398 models.py:400
+msgid "photos"
+msgstr ""
+
+#: admin.py:415
+msgid "Are you sure you want to deselect these photos from carousel?"
+msgstr ""
+
+#: admin.py:418
+msgid "Deselect photo"
+msgstr ""
+
+#: admin.py:424
+msgid "choose photos"
+msgstr ""
+
+#: admin.py:439
+msgid "Are you sure you want to select these photos?"
+msgstr ""
+
+#: admin.py:442
+msgid "Select photo"
+msgstr ""
+
+#: admin.py:452 models.py:577
+msgid "document sections"
+msgstr ""
+
+#: models.py:68 models.py:388
+msgid "name"
+msgstr ""
+
+#: models.py:73 models.py:393
+msgid "slug"
+msgstr ""
+
+#: models.py:80
+msgid "Parent"
+msgstr ""
+
+#: models.py:87 models.py:180
+msgid "url"
+msgstr ""
+
+#: models.py:94 models.py:157
+msgid "menu"
+msgstr ""
+
+#: models.py:95
+msgid "menus"
+msgstr ""
+
+#: models.py:192
+msgid "Content"
+msgstr ""
+
+#: models.py:204
+msgid "Viewlet"
+msgstr ""
+
+#: models.py:219
+msgid "order"
+msgstr ""
+
+#: models.py:244
+msgid "interest menu"
+msgstr ""
+
+#: models.py:252
+msgid "custom main menu template"
+msgstr ""
+
+#: models.py:260
+msgid "custom secondary menu template"
+msgstr ""
+
+#: models.py:268
+msgid "custom interest menu template"
+msgstr ""
+
+#: models.py:279
+msgid "main content"
+msgstr ""
+
+#: models.py:286
+msgid "related contents"
+msgstr ""
+
+#: models.py:406
+msgid "class name"
+msgstr ""
+
+#: models.py:433
+msgid "photo"
+msgstr ""
+
+#: models.py:441
+msgid "float image"
+msgstr ""
+
+#: models.py:442
+msgid "make image float in view"
+msgstr ""
+
+#: models.py:448
+msgid "photo description"
+msgstr ""
+
+#: models.py:456
+msgid "carousel"
+msgstr ""
+
+#: models.py:463
+msgid "search form"
+msgstr ""
+
+#: models.py:470
+msgid "searcher options"
+msgstr ""
+
+#: models.py:475
+msgid "permanent"
+msgstr ""
+
+#: models.py:476
+msgid "make this document not erasable and its slug ummutable"
+msgstr ""
+
+#: models.py:483
+msgid "document"
+msgstr ""
+
+#: models.py:562
+msgid "Parent document"
+msgstr ""
+
+#: models.py:571
+msgid "body"
+msgstr ""
+
+#: models.py:576
+msgid "document section"
+msgstr ""
+
+#: models.py:596
+msgid "Can not move to non existing position"
+msgstr ""
+
+#: models.py:621
+msgid "Trying to save DocumentSection into an existing position"
+msgstr ""
+
+#: models.py:642
+msgid "color 1"
+msgstr ""
+
+#: models.py:648
+msgid "color 2"
+msgstr ""
+
+#: models.py:654
+msgid "color 3"
+msgstr ""
+
+#: models.py:660
+msgid "menu link color"
+msgstr ""
+
+#: models.py:670
+msgid "An arrow pointing to the left for multiple select widgets. (11x11)"
+msgstr ""
+
+#: models.py:678
+msgid "An arrow pointing to the right for multiple select widgets. (11x11)"
+msgstr ""
+
+#: models.py:686
+msgid ""
+"Background image of a searcher tab. Both selected and not selected. (298x85)"
+"<br />You can use <a href=\"/media/img/searcher_tab_a_visits.gif\" target="
+"\"_blank\">this image</a> as a template."
+msgstr ""
+
+#: models.py:694
+msgid ""
+"Background image of the last searcher tab. Both selected and not selected. "
+"(299x85)<br />You can use <a href=\"/media/img/searcher_tab_b_visits.gif\" "
+"target=\"_blank\">this image</a> as a template."
+msgstr ""
+
+#: models.py:702
+msgid ""
+"A vertical gradient image for use in the search results item backgrounds. "
+"(1x126)"
+msgstr ""
+
+#: models.py:710
+msgid "Background image for headers in the menu zone. (175x34)"
+msgstr ""
+
+#: models.py:718
+msgid "Background image for headers in the content zone. (775x34)"
+msgstr ""
+
+#: widgets.py:23
+msgid "Please wait..."
+msgstr ""
+
+#: templates/admin/section/menu/change_list.html:11
+#, python-format
+msgid "Add %(name)s"
+msgstr ""
+
+#: templates/admin/section/menu/change_list.html:18
+msgid "Saving"
+msgstr ""
+
+#: templates/section/document_section_add.html:4
+#: templates/section/document_section_add.html:8
+msgid "Insert document section here"
+msgstr ""
+
+#: templatetags/section_tags.py:76
+msgid "Agenda"
+msgstr ""
+
+#: templatetags/section_tags.py:99
+msgid "Searcher"
+msgstr ""

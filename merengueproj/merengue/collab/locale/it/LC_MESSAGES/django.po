@@ -1,0 +1,187 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Mirto Silvio Busico <m.busico@ieee.org>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-04-12 12:00+0200\n"
+"PO-Revision-Date: 2011-04-11 20:08+0200\n"
+"Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
+"Language-Team: it <m.busico@ieee.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: forms.py:61
+msgid "translation language"
+msgstr "linguaggio della traduzione"
+
+#: forms.py:62
+msgid "translation"
+msgstr "traduzione"
+
+#: models.py:12
+msgid "Just set status"
+msgstr "imposta solo lo stato"
+
+#: models.py:13
+msgid "Display an alternative comment in public view"
+msgstr "Mostra un commento alternativo nella vista pubblica"
+
+#: models.py:14
+msgid "Hide comment from public view"
+msgstr "Nascondi il commento nella vista pubblica"
+
+#: models.py:22
+msgid "name"
+msgstr "nome"
+
+#: models.py:27
+msgid "label"
+msgstr "etichetta"
+
+#: models.py:45
+msgid "decorator"
+msgstr "decorator"
+
+#: models.py:52
+msgid "result"
+msgstr "risultato"
+
+#: models.py:56
+msgid "Select the resulting action this status trigger"
+msgstr "Seleziona l'azione risultante che questo tato fa scattare"
+
+#: models.py:60
+msgid "reason"
+msgstr "ragione"
+
+#: models.py:73
+msgid "content type"
+msgstr "tipo di contenuto"
+
+#: models.py:77
+msgid "object ID"
+msgstr "ID dell'oggetto"
+
+#: models.py:87 models.py:163
+msgid "user"
+msgstr "utente"
+
+#: models.py:95
+msgid "user's name"
+msgstr "nome dell'utente"
+
+#: models.py:100
+msgid "user's email address"
+msgstr "indirizzo email dell'utente"
+
+#: models.py:104
+msgid "user's URL"
+msgstr "URL dell'utente"
+
+#: models.py:110
+msgid "comment user type"
+msgstr "commento del tipo di utente"
+
+#: models.py:114
+msgid "comment"
+msgstr "commento"
+
+#: models.py:118
+msgid "date/time submitted"
+msgstr "data/ora della sottomissione"
+
+#: models.py:123
+msgid "IP address"
+msgstr "indirizzo IP"
+
+#: models.py:131
+msgid "collaborative comment"
+msgstr "commento collaborativo"
+
+#: models.py:132
+msgid "collaborative comments"
+msgstr "commenti collaborativi"
+
+#: models.py:157
+msgid "revised comment"
+msgstr "commento rivisto"
+
+#: models.py:171
+msgid "revised comment status"
+msgstr "stato del commento rivisto"
+
+#: models.py:175
+msgid "date/time revised"
+msgstr "data/ora della revisione"
+
+#: models.py:181
+msgid "short comment"
+msgstr "commento breve"
+
+#: views.py:43
+msgid "Your comment has been added"
+msgstr "Il tuo commento è stato aggiunto"
+
+#: views.py:76
+msgid "Your revisor status has been added"
+msgstr "Il tuo status di revisore è stato aggiunto"
+
+#: views.py:174
+msgid "Your translation has been saved"
+msgstr "La tua traduzione è stata salvata"
+
+#: templates/collab/collaborative_comments.html:7
+msgid "Comments"
+msgstr "Commenti"
+
+#: templates/collab/collaborative_comments_add.html:9
+msgid "Add comment"
+msgstr "Aggiungi commento"
+
+#: templates/collab/collaborative_comments_list_item.html:21
+msgid "By"
+msgstr "Di"
+
+#: templates/collab/collaborative_comments_list_item.html:24
+msgid "Revision History"
+msgstr "Storia delle revisioni"
+
+#: templates/collab/collaborative_comments_list_item.html:38
+msgid "Revisor"
+msgstr "Revisore"
+
+#: templates/collab/collaborative_comments_list_item.html:47
+msgid "Revise this comment"
+msgstr "Revisiona questo commento"
+
+#: templates/collab/collaborative_comments_revise.html:9
+msgid "Add revision"
+msgstr "Aggiungi revisione"
+
+#: templates/collab/collaborative_comments_view.html:12
+msgid "Comments for"
+msgstr "Commenti per"
+
+#: templates/collab/collaborative_comments_view.html:15
+msgid "comments"
+msgstr "commenti"
+
+#: templates/collab/collaborative_comments_view.html:16
+msgid "add comment"
+msgstr "aggiungi commento"
+
+#: templates/collab/collaborative_translation.html:7
+#: templates/collab/collaborative_translation_edit.html:15
+msgid "Translate"
+msgstr "Traduci"
+
+#: templates/collab/collaborative_translation_view.html:11
+msgid "Translation for"
+msgstr "Traduzione per"

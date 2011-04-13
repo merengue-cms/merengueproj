@@ -1,0 +1,77 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Mirto Silvio Busico <m.busico@ieee.org>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"PO-Revision-Date: 2011-04-12 20:24+0200\n"
+"Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
+"Language-Team: it <m.busico@ieee.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Translated-Using: django-rosetta 0.4.RC2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: admin.py:145 admin.py:186
+msgid "Database error"
+msgstr "Errore del database"
+
+#: blocks.py:32
+msgid "Latest video"
+msgstr "Ultimo video"
+
+#: models.py:27
+msgid "duration"
+msgstr "durata"
+
+#: models.py:28
+msgid "clip id"
+msgstr "id della clip"
+
+#: models.py:29 models.py:43
+msgid "channel"
+msgstr "canale"
+
+#: models.py:42
+msgid "In hours"
+msgstr "in ore"
+
+#: models.py:46
+msgid "video"
+msgstr "video"
+
+#: templates/tv/block_latest.html:9
+msgid "min"
+msgstr "min"
+
+#: templates/tv/channel_view.html:14 templates/tv/tv_index.html:11
+#: templates/tv/tv_index.html.py:18
+msgid "Channels"
+msgstr "Canali"
+
+#: templates/tv/tv_index.html:33
+msgid "Channel"
+msgstr "Canale"
+
+#: templates/tv/video_view.html:7 templates/tv/video_view.html.py:12
+msgid "Streaming live"
+msgstr "Trasmissione dal vivo"
+
+#: templates/tv/admin/tv/schedule/day_view.html:10
+#: templates/tv/admin/tv/schedule/week_view.html:24
+msgid "Week view"
+msgstr "vista settimanale"
+
+#: templates/tv/admin/tv/schedule/day_view.html:14
+msgid "View all hours"
+msgstr "vusta per tutte le ore"
+
+#: templates/tv/admin/tv/schedule/day_view.html:16
+msgid "Only show videos"
+msgstr "Mostra solo i video"

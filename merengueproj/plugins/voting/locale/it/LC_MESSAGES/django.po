@@ -1,0 +1,82 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Mirto Silvio Busico <m.busico@ieee.org>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"PO-Revision-Date: 2011-04-12 20:20+0200\n"
+"Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
+"Language-Team: it <m.busico@ieee.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: blocks.py:35
+msgid "Vote content"
+msgstr "Vota il contenuto"
+
+#: config.py:38
+msgid "is readonly?"
+msgstr "è in sola lettura?"
+
+#: forms.py:32
+#, python-format
+msgid "The vote have to be Between %(min_score)s and %(max_score)s"
+msgstr "Il voto deve essere tra %(min_score)s e %(max_score)s"
+
+#: models.py:26
+msgid "Very bad"
+msgstr "Molto male"
+
+#: models.py:26
+msgid "Bad"
+msgstr "Male"
+
+#: models.py:26
+msgid "OK"
+msgstr "Sufficiente"
+
+#: models.py:26
+msgid "Good"
+msgstr "Buono"
+
+#: models.py:26
+msgid "Very good"
+msgstr "Molto buono"
+
+#: models.py:76
+msgid "users"
+msgstr "utenti"
+
+#: viewlets.py:43
+msgid "Content top rated"
+msgstr "Contenuto con il voto più alto"
+
+#: viewlets.py:54
+msgid "Content with more votes"
+msgstr "Contenuto con il maggior numero di votazioni"
+
+#: templates/voting/voting_form.html:3
+#, python-format
+msgid "%(votes)s vote"
+msgid_plural "%(votes)s votes"
+msgstr[0] "%(votes)s voto"
+msgstr[1] "%(votes)s voti"
+
+#: templates/voting/voting_form.html:5
+msgid "stars"
+msgstr "stelle"
+
+#: templates/voting/voting_form.html:16
+msgid "You have voted"
+msgstr "Hai votato"
+
+#: templates/voting/voting_form.html:18
+msgid "Sign in to rate"
+msgstr "Registrati per votare"
