@@ -16,8 +16,6 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 # -*- coding: utf-8 -*-
-from django.core.cache import cache as django_cache
-
 from merengue.base.management.base import MerengueCommand
 from merengue.pluggable import register_all_plugins
 from merengue.pluggable.models import RegisteredPlugin
@@ -34,7 +32,7 @@ class Command(MerengueCommand):
         register_all_plugins(verbose=True)
         # cache invalidation
         print 'Invalidating plugins cache...'
-        query_cache_backend = cache.get_backend()(django_cache)
+        query_cache_backend = cache.get_backend()
         query_cache_backend.patch()
         cache.invalidate(RegisteredPlugin._meta.db_table)
         print 'Done.'
