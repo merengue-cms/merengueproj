@@ -1,24 +1,24 @@
 .. _intro-tutorial:
 
 =================
-Merengue tutorial
+Merengue Tutorial
 =================
 
-Throughout this tutorial, we will:
+In this tutorial, we will:
 
     * Develop a Merengue project.
     * Develop a Merengue plugin.
-    * Start managing content inside Merengue, regular editor work.
+    * Start managing content inside Merengue as an editor.
 
-Creating a project
+Creating a Project
 ==================
 
-We will assume you have :ref:`Merengue installed <topics-install>` and you want to create a
-`www.merengueproject.org`_ website (check out the `merengueprojectorg`_ directory in the
-repository for a working example).
+We will assume you have :ref:`Merengue installed <topics-install>` and that you
+want to create a `Merengue CMS`_ website (check out the
+`merengueprojectorg`_ directory in the repository for a working example).
 
 .. _merengueprojectorg: http://dev.merengueproject.org/browser/sites/merengueprojectorg
-.. _www.merengueproject.org: http://www.merengueproject.org
+.. _Merengue CMS: http://www.merengueproject.org
 
 Let's start the project:
 
@@ -54,30 +54,30 @@ and directories::
         |   `-- yaco/
         `-- website/
 
-Here is a brief description of these files and directories:
+Here is a brief description of the files and directories:
 
  * ``settings.py``: project settings.
  * ``urls.py``: project root url resolvers.
- * ``apps/``: for project specific Django applications. It comes with a skel ``website`` app.
- * ``fixtures/``: an empty directory that can hold project fixtures.
+ * ``apps/``: for project-specific Django applications. It comes with a skeleton ``website`` app.
+ * ``fixtures/``: an empty directory for holding project fixtures.
  * ``locale/``: directory for project translations.
- * ``media/``: multimedia root directory.
- * ``media/themes/``: root for all themes directories, each one containing its multimedia files.
+ * ``media/``: root directory for multimedia files.
+ * ``media/themes/``: root for all themes directories, each one containing its own multimedia files.
  * ``merengue/``: symbolic link to Merengue API.
- * ``plugins/``: plugins directory, with some preinstalled plugins already there.
+ * ``plugins/``: plugins directory, with some plugins preinstalled.
  * ``templates/``: templates project directory.
  * ``templates/themes/``: specific templates for themes.
 
 
-Change project settings
+Change Project Settings
 =======================
 
-The Project settings are in the ``merengueprojectorg/settings.py`` file, which should be
-familiar for Django users.
+The project settings are in the ``merengueprojectorg/settings.py`` file, which should be
+familiar to Django users.
 
-First of all you have to define your database connection (see `database setup`_
-in the Django tutorial). Let's suppose you use SQLite (you need `pysqlite`_ installed) for
-simplicity's sake.
+First of all, you need to define your database connection (see `database setup`_
+in the Django tutorial). Let's assume you are using SQLite (you will also need to
+install `pysqlite`_) to keep things simple.
 
 .. _pysqlite: http://trac.edgewall.org/wiki/PySqlite
 .. _database setup: http://docs.djangoproject.com/en/1.3/intro/tutorial01/#database-setup
@@ -104,7 +104,7 @@ Other settings you should define:
        )
 
 
-Database bootstrap
+Database Bootstrap
 ==================
 
 .. code-block:: bash
@@ -113,12 +113,12 @@ Database bootstrap
 
 .. admonition:: Note
 
-    This is a `django-south`_ command, and is equivalent to execute
+    This is a `django-south`_ command, and is equivalent to executing
     ``python manage.py syncdb`` and then ``python manage.py migrate``.
 
 If there is a problem with this command, please create a ticket in
-`Merengue trac`_, specifying your database engine and your Merengue version. To
-continue the tutorial without problems you can do a quick workaround:
+`Merengue trac`_. Please specify your database engine and the version of Merengue
+you are using. To continue this tutorial without problems, try this quick workaround:
 
   1. Remove the ``merengueprojectorg.db`` file.
   2. Remove south from the ``INSTALLED_APPS`` tuple in the ``merengueprojectorg/merengue/settings.py`` file.
@@ -131,12 +131,12 @@ continue the tutorial without problems you can do a quick workaround:
 .. _django-south: http://south.aeracode.org/
 
 
-Play with your new Merengue project
+Play with Your New Merengue Project
 ===================================
 
-After the project settings were defined and the database was created, you can run
-a development server and see how the Merengue default theme looks like. We
-hope you like it!:
+After the project settings are defined and the database created, you can run
+a development server and see what the default Merengue theme looks like. We
+hope you will like it!:
 
 .. code-block:: bash
 
@@ -145,24 +145,24 @@ hope you like it!:
        Development server is running at http://127.0.0.1:8000/
        Quit the server with CONTROL-C.
 
-Now open you favourite web browser and point it to ``http://localhost:8000`` .
+Now open your favourite web browser, and point it to ``http://localhost:8000`` .
 You should see something like this:
 
 .. image:: _images/merengue_theme_in_new_project.png
 
 For more information about using Merengue, you can read our comprehensive
-:ref:`user guide <topics-userguide>`
+:ref:`user guide <topics-userguide>`.
 
 
 .. _intro-tutorial-theme:
 
 
-Creating the *merengueprojectorg* theme
+Creating the *merengueprojectorg* Theme
 =======================================
 
-In Merengue the preferred way to change the look and feel is to create a theme.
+In Merengue, the preferred method of changing the look and feel is to create a theme.
 
-First of all you have to create both a templates and a media directory for the
+First, you need to create both a templates and a media directory for the
 ``merengueprojectorg`` theme:
 
 .. code-block:: bash
@@ -180,11 +180,11 @@ Merengue has registered ``merengueprojectorg`` as a new theme:
 .. image:: _images/merengueprojectorg_theme_in_admin.png
 
 If you activate the ``merengueprojectorg`` theme you will see a blank theme
-(without CSS styles) since we didn't put anything yet in the above directories:
+(without CSS styles) since we didn't put anything yet in the directories created above:
 
 .. image:: _images/merengueprojectorg_theme_recently_created.png
 
-So You need to add stylesheets to define the look and feel. There are several
+You can now add stylesheets to define the look and feel. There are several
 ways to accomplish this but one of the easiest is to create a ``base.html``
 template in the ``templates/themes/merengueprojectorg/`` directory and then
 hook your stylesheets from there. But first we will see how this template
@@ -194,13 +194,13 @@ works by writing our very own ``hello world`` template:
 
     <h1>Hello world!</h1>
 
-If you reload browser, you will se a big **Hello world!** greeting. No tutorial
+If you refresh your browser page, you will see a big **Hello world!** greeting. No tutorial
 is complete until there is a ``hello world`` example, right?
 
-But wait a second, how is this template loaded? Let's talk a little bit about
+But wait a second... how is this template loaded? Let's talk a little bit about
 Merengue theming internals... Merengue implements a new Django template loader,
 so when some part of the code tries to load a template (in a ``render_to_response``
-call or in a `extends`_ or `include`_ tag) Merengue will look first into the template
+call or in an `extends`_ or `include`_ tag) Merengue will look first into the template
 directory of the current/active theme.
 
 .. _`extends`: http://docs.djangoproject.com/en/1.3/ref/templates/builtins/#extends
@@ -209,20 +209,20 @@ directory of the current/active theme.
 By placing the ``base.html`` template in the ``merengueprojectorg`` theme, you are
 overriding `merengue/base/templates/base.html`_, which extends itself from
 `merengue/base/templates/base/layout.html`_. That's the reason you see a huge
-*hello world* instead of normal Merengue layout. This pattern is repeated all over
-the development cycle of a theme so you better get used to it, huh?
+*hello world* instead of the normal Merengue layout. This pattern is repeated all over
+during the development cycle of a theme so you better get used to it, huh?
 
-You may be thinking, why this double template inheritance? and I'm glad you asked
-that question. The answer is that we usually need to reuse some of the
-Merengue layout stuff, and if this code would have been located in
-``merengue/base/templates/base.html`` we could not have extended this template from
-your theme. In fact, if you try to extend ``base.html`` inside your theme ``base.html``
-template you will get a ``nice`` infinite recursion error.
+You may be thinking, why this double template inheritance? and I'm glad you asked.
+The answer is:  we usually need to reuse some of the Merengue layout stuff, and
+if this code would have been located in ``merengue/base/templates/base.html`` we
+could not have extended this template from your theme. In fact, if you try to extend
+``base.html`` inside your theme ``base.html`` template you will get a ``nice``
+infinite recursion error.
 
 .. _`merengue/base/templates/base.html`: http://dev.merengueproject.org/browser/trunk/merengueproj/merengue/base/templates/base.html
 .. _`merengue/base/templates/base/layout.html`: http://dev.merengueproject.org/browser/trunk/merengueproj/merengue/base/templates/base/layout.html
 
-Let's reuse Merengue base layout in your ``base.html`` template:
+Let's reuse the Merengue base layout in your ``base.html`` template:
 
 .. code-block:: html+django
 
@@ -232,26 +232,25 @@ Let's reuse Merengue base layout in your ``base.html`` template:
       <link href="{{ THEME_MEDIA_URL }}css/layout.css" rel="stylesheet" type="text/css" />
     {% endblock %}
 
-Now if you reload browser you will see again the Merengue default web layout.
+Now if you refresh your browser window, you will again see the Merengue default web layout.
 
 .. admonition:: Note
 
-    ``THEME_MEDIA_URL`` will be replaced for the relative media location of the active
+    ``THEME_MEDIA_URL`` will be replaced with the relative media location of the active
     theme in Merengue admin. Using this context variable instead of hardcoding
     ``/media/themes/merengueprojectorg/css/layout.css`` or
     ``{{ MEDIA_URL }}themes/merengueprojectorg/css/layout.css`` is considered a best
     practice.
 
-Of course you need to create the ``layout.css`` CSS file, that will be in
-``media/themes/merengueprojectorg/css/`` directory, to begin the look and feel
-customization.
+Of course, you need to create the ``layout.css`` CSS file, that will be in
+``media/themes/merengueprojectorg/css/`` directory, to begin customizing the look
+and feel of your site.
 
-First we will add a couple of images, `header_bg.jpg`_ and `header_logo.jpg`, into
-the ``media/themes/merengueprojectorg/img`` directory, to begin with the header
-layout.
+Next, we will add a couple of images, `header_bg.jpg`_ and `header_logo.jpg`, into
+the ``media/themes/merengueprojectorg/img`` directory, to begin the header layout.
 
-After this, we'll write some CSS rules in the ``layout.css`` file. This is the fragment of
-this file in which we put header images and other related stuff:
+After this, we'll write some CSS rules in the ``layout.css`` file. Listed below, is the
+fragment of this file in which we put the header images and other related stuff:
 
 .. code-block:: css
 
@@ -299,15 +298,15 @@ this file in which we put header images and other related stuff:
 .. _`header_bg.jpg`: http://dev.merengueproject.org/browser/sites/merengueprojectorg/media/themes/merengueprojectorg/img/header_bg.jpg
 .. _`header_logo.jpg`: http://dev.merengueproject.org/browser/sites/merengueprojectorg/media/themes/merengueprojectorg/img/header_logo.jpg
 
-If you have done this well and reload your browser, you should see a page similar to
-this screenshot:
+If you have done this correctly, then refresh your browser window and you should see
+a page similar to this screenshot:
 
 .. image:: _images/merengueprojectorg_theme_with_logo.png
 
 Next, we will add a ``Django based CMS framework for perfectionists with deadlines``
-phrase into header. Feel free to change the wording if you are not so perfectionist :-).
-If you take a look at `merengue/base/templates/base/layout.html`_
-template, you will find a fragment like this:
+phrase into header. Feel free to change the wording if you do not consider yourself
+a perfectionist :-). If you take a look at `merengue/base/templates/base/layout.html`_
+template, you will find a fragment similar to this:
 
 .. code-block:: html+django
 
@@ -321,13 +320,14 @@ template, you will find a fragment like this:
 
     # more stuff ...
 
-So, there are two ways to include a text near the logo:
+There are two ways to include text near the logo:
 
  1. Overriding the ``headerlogo`` block in our ``base.html`` template.
  2. Creating a ``inc.headerlogo.html`` template in the ``merengueprojectorg`` theme template directory.
 
-This time, we are going to go for the second choice. Create a ``inc.headerlogo.html``
-file in the ``templates/themes/merengueprojectorg`` directory with this content:
+In this example, we are going to use the second option. Create a ``inc.headerlogo.html``
+file in the ``templates/themes/merengueprojectorg`` directory with the following
+content:
 
 .. code-block:: html+django
 
@@ -352,7 +352,7 @@ Finally, add some CSS for the logo phrase:
         color: #b3a99d;
     }
 
-You should see now a page header with a logo and a phrase to its right side:
+You should see now a page header with a logo and a phrase to the right:
 
 .. image:: _images/merengueprojectorg_theme_with_logo_and_phrase.png
 
@@ -362,28 +362,29 @@ To see a finished version of the `www.merengueproject.org`_ theme, you have to:
  2. Copy the complete `merengueproject layout.css file`_.
  3. Copy all the `images from merengueproject img directory`_.
 
+.. _www.merengueproject.org: http://www.merengueproject.org
 .. _`merengueproject base.html template`: http://dev.merengueproject.org/browser/sites/merengueprojectorg/templates/themes/merengueprojectorg/base.html
 .. _`merengueproject layout.css file`: http://dev.merengueproject.org/browser/sites/merengueprojectorg/media/themes/merengueprojectorg/css/layout.css
 .. _`images from merengueproject img directory`: http://dev.merengueproject.org/browser/sites/merengueprojectorg/media/themes/merengueprojectorg/img
 
-.. admonition:: Deep into
+.. admonition:: More Information
 
     For more information about Merengue theming, you can read :ref:`working with themes <topics-themes-index>`
 
 
-The theme is finished, what is next?
+The Theme is Finished, What Next?
 ====================================
 
-After finishing ``merengueprojectorg`` theme, you should get a index page like
+After finishing the ``merengueprojectorg`` theme, you should get an index page like
 this:
 
 .. image:: _images/merengueprojectorg_after_finishing_theme.png
 
-However, `www.merengueproject.org`_ website looks different:
+However, the `www.merengueproject.org`_ website looks different:
 
 .. image:: _images/merengueprojectorg_index.png
 
-By looking at each other you can see there is more work to do:
+By comparing the two screenshots above, you can see that there is more work to do:
 
  * Non programming tasks (content managing):
 
@@ -395,34 +396,34 @@ By looking at each other you can see there is more work to do:
 
    * Index page changes:
 
-     * Remove breadcrumbs only for home page.
-     * Include a image on the left hand side of the main content.
+     * Remove breadcrumbs only for the home page.
+     * Include an image on the left hand side of the main content area.
 
    * Implement a ``features`` plugin, with:
 
-     * A `features list`_, with a categorized list of all Merengue features.
-     * A features block, to show some Merengue features in the index page (such as *collaborative edition*, *geolocation*, etc.)
-     * A customization of Merengue admin interface that let the user manage the features and categories from a Django admin site.
+     * A `features list`_, containing a categorized list of all Merengue features.
+     * A features block, to show some Merengue features in the index page (such as *collaborative editing*, *geolocation*, etc.).
+     * A customization of the Merengue admin interface that allows the user manage the features and categories from a Django admin site.
 
 .. _`features list`: http://www.merengueproject.org/features/
 
 
-Non programming tasks
+Non-Programming Tasks
 =====================
 
-All the non programming tasks can be done in the Merengue admin interface. For more
-information about how to do this, read the :ref:`Merengue user guide <topics-userguide>`
+All of the non-programming tasks can be handled in the Merengue admin interface. For more
+information about how to do this, please read the :ref:`Merengue user guide <topics-userguide>`
 
 
-Customizing the index page
+Customizing the Index Page
 ==========================
 
 When a Merengue project is created with the ``startproject`` command, a ``website``
-application is created inside the ``apps`` directory. This is a skel application which
-is useful for containing your specific project views that do not fit in any plugin.
+application is created inside the ``apps`` directory. This is a skeleton application
+useful for holding specific project views that do not fit into any plugin.
 
-One example would be index page. In fact, the ``website`` app comes with a default
-index page view implemented, and included in the root ``urls.py``. This is the
+One example would be the index page. In fact, the ``website`` app comes with a default
+index page view already implemented and included in the root ``urls.py``. This is the
 default implementation:
 
 .. code-block:: python
@@ -439,18 +440,18 @@ default implementation:
                                   {'content': content},
                                   context_instance=RequestContext(request))
 
-By default, this implementation takes an initial content and shows it, rendering
+By default, this implementation takes some initial content and shows it, rendering
 a ``website/index.html`` template. Let's explain this code fragment line by line:
 
  * ``core_config = CoreConfig().get_config()``. Load ``plugins.core`` `configuration`_
- * ``main_content_index = core_config['home_initial_content'].get_value()``. Get the ID of the content that will be shown in the index page.
- * ``content = BaseContent.objects.get(pk=main_content_index)``. Use ``BaseContent`` model (parent model of all managed contents) to get the content to be shown.
+ * ``main_content_index = core_config['home_initial_content'].get_value()``. Get the ID of the content that will be shown on the index page.
+ * ``content = BaseContent.objects.get(pk=main_content_index)``. Use the ``BaseContent`` model (the parent model of all managed content) to retrieve the content to be shown.
  * ``return render_to_response('website/index.html', ...``. Render the template that will show the content.
 
-We don't need to change anything in this view for the `www.merengueproject.org`_ index, but we
-need to change several things in the template.
+We do not need to change anything in this view for the `www.merengueproject.org`_ index,
+but we need to change several things in the template.
 
-The template ``website/index.html`` have this default content:
+The template ``website/index.html`` has the following default content:
 
 .. code-block:: html+django
 
@@ -463,35 +464,35 @@ The template ``website/index.html`` have this default content:
     {% endblock %}
 
 This template extends ``content_view.html``, the generic Merengue template used
-in contents detail views. This base template extends others, in the following order:
+to show content in a detail view. This base template extends others, in the following order:
 
   * ``content.html``
   * ``base/content.html``
   * ``base.html``
   * ``base/layout.html``
 
-``content.html`` and ``base.html`` are placeholders templates that only extends
-``base/content.html`` and ``base/layout.html`` respectively. Why are only
-placeholders and have no own content? Because these will be likely overriden in
-the active theme and those custom templates may want to extend from ``base/content.html`` or
-``base/layout.html`` (see the infinite recursion problem described before).
+``content.html`` and ``base.html`` are placeholder templates that only extend
+``base/content.html`` and ``base/layout.html`` respectively. Why are these templates
+only placeholders and have no unique content of their own? Because they will likely be
+overriden in the active theme -- custom templates may extend the ``base/content.html``
+or ``base/layout.html`` files (see the infinite recursion problem described earlier).
 
-The only change we need to do in the default index template ``base/content.html`` is the
-rendering of all visual blocks placed in a ``homepage`` place. See the
+The only change we need to do in the default index template ``base/content.html``
+is to render all of the visual blocks placed in a ``homepage`` place. See the
 :ref:`blocks documentation <topics-blocks>` for more information. The
 ``aftercontentbody`` block is defined in the ``base/content.html`` template and is
 rendered just after the content data.
 
-.. admonition:: Deep into
+.. admonition:: More Information
 
-    We recommend you to read both ``base/content.html`` and ``base/layout.html`` in
-    order to understand the Merengue layout, blocks, actions, etc.
+    We recommend that you explore both the ``base/content.html`` and ``base/layout.html``
+    files in order to understand Merengue layout, blocks, actions, etc.
 
 .. _`configuration`: http://dev.merengueproject.org/browser/trunk/merengueproj/plugins/core/config.py
 
-Now we need to remove the breadcrumbs and put an image close to the main content text.
+Now we need to remove the breadcrumbs and position an image close to the main content text.
 
-The new template will be this (including comments to explain new fragments):
+The new template will look like this (including comments to explain new fragments):
 
 .. code-block:: html+django
 
@@ -514,11 +515,11 @@ The new template will be this (including comments to explain new fragments):
     {% endblock %}
 
 
-Developing a plugin
+Developing a Plugin
 ===================
 
 Merengue *plugins* are installable components that add some functionality or
-change existing Merengue features. See :ref:`Plugins documentation <topics-plugins-overview>`
+change existing Merengue features. See the :ref:`Plugins documentation <topics-plugins-overview>`
 for more information.
 
 In this tutorial, we will implement a ``features`` plugin that:
@@ -530,11 +531,11 @@ In this tutorial, we will implement a ``features`` plugin that:
 .. admonition:: Note
 
     If you want to inspect the finished ``features`` plugin, you can browse
-    `features plugin code`_ in our Trac system.
+    the `features plugin code`_ in our Trac system.
 
 .. _`features plugin code`: http://dev.merengueproject.org/browser/sites/merengueprojectorg/plugins/features
 
-Creating a plugin
+Creating a Plugin
 -----------------
 
 A plugin is a Django application with some restrictions:
@@ -542,7 +543,7 @@ A plugin is a Django application with some restrictions:
  * It must be located in the project's ``plugins`` directory.
  * It must have a plugin configuration file, named ``config.py`` with a ``PluginConfig`` class inside.
 
-So, to build the dummiest plugin possible we have to do:
+So, to build the simplest plugin possible, we do the following:
 
 .. code-block:: bash
 
@@ -552,7 +553,7 @@ So, to build the dummiest plugin possible we have to do:
     $ touch features/models.py
     $ touch features/config.py
 
-And write the following code in ``plugins/features/config.py`` (the plugin configuration
+Then, put the following code in ``plugins/features/config.py`` (the plugin configuration
 file):
 
 .. code-block:: python
@@ -564,14 +565,14 @@ file):
         description = 'Features Display Plugin'
         version = '0.0.1'
 
-This fragment only set the plugin metadata, without changing functionality. Our
-``features`` plugin is still a dummy plugin.
+This fragment only sets the plugin metadata, without changing functionality. Our
+``features`` plugin is still a very simple plugin.
 
-With this data Merengue should recognize this python module as a plugin:
+Merengue should now recognize this python module as a plugin:
 
 .. image:: _images/merengueprojectorg_with_features_plugin.png
 
-Creating plugin models
+Creating Plugin Models
 ----------------------
 
 Before installing the plugin, we should create its models:
@@ -599,16 +600,16 @@ Before installing the plugin, we should create its models:
         objects = BaseContentManager()
 
 ``BaseCategory`` is the base model for all categorizations, and ``BaseContent``
-will be a non abstract model (see `Django model inheritance`_) for all managed
-contents. If your model inherits from ``BaseContent`` it will have all Merengue
+will be a non-abstract model (see `Django model inheritance`_) for all managed
+content. If your model inherits from ``BaseContent`` it will have all of the Merengue
 features related to content management for free. ``BaseContentManager`` is a special
-manager with a lot of cool query methods, like getting contents by workflow status.
+manager with a lot of cool query methods, like getting content by workflow status.
 
 .. _`Django model inheritance`: http://docs.djangoproject.com/en/1.3/topics/db/models/#id5
 
-These models will be created automatically when you install the plugin in
-admin site. Please, do it now before reading more. After that, let's check the tables created in our sqlite3
-database:
+These models will be created automatically when you install the plugin in the
+admin site. Please, do it now before continuing further. Then, let's check the
+tables created in our sqlite3 database:
 
 .. code-block:: bash
 
@@ -617,7 +618,7 @@ database:
     features_feature             features_featurecategory
     features_feature_categories
 
-We can know play with features and feature categories using the Django ORM as follows:
+We can now play with features and feature categories using the Django ORM as follows:
 
 .. code-block:: bash
 
@@ -646,8 +647,8 @@ We can know play with features and feature categories using the Django ORM as fo
     >>> feature.name # 'name' attribute now get 'name_es'
     'Aspecto cambiable'
 
-The features, as we said previously, will be managed contents, like documents,
-news items, etc. Let's check it:
+The features, as we said previously, will be managed content, like documents,
+news items, etc. Let's check:
 
 .. code-block:: python
 
@@ -657,8 +658,8 @@ news items, etc. Let's check it:
     >>> BaseContent.objects.all().values('class_name', 'name_en')
     [{'class_name': u'feature', 'name_en': u'Skinnable'}, {'class_name': u'document', 'name_en': u'Welcome to Merengue'}]
 
-To enable these models in Merengue admin site you need define a plugin admin section,
-implementing the ``get_model_admins`` method in ``config.py``:
+To enable these models in the Merengue admin site, you will need to define a plugin
+admin section implementing the ``get_model_admins`` method in ``config.py``:
 
 .. code-block:: python
 
@@ -677,8 +678,8 @@ Both ``FeatureAdmin`` and ``FeatureCategoryAdmin`` are `Django model admins`_.
 
 .. _`Django model admins`: http://docs.djangoproject.com/en/1.2/ref/contrib/admin/#modeladmin-objects
 
-Of course, as you can see, these ``ModelAdmin`` classes are defined in ``plugins.features.admin``
-module. This implies there is an ``admin.py`` file inside the plugin package with this content:
+Of course, as you can see, these ``ModelAdmin`` classes are defined in the ``plugins.features.admin``
+module. This implies that there is an ``admin.py`` file inside the plugin package with this content:
 
 .. code-block:: python
 
@@ -692,8 +693,8 @@ module. This implies there is an ``admin.py`` file inside the plugin package wit
         pass
 
 Both ``BaseCategoryAdmin`` and ``BaseContentAdmin`` are Django ``ModelAdmin``
-subclasses, but with extra features. You can customize the usual ModelAdmini
-options and many new ones.. See `merengue.base.admin`_ module for more
+subclasses, but with extra features. You can customize the usual ModelAdmin
+options and add new ones. See `merengue.base.admin`_ module for more
 information.
 
 .. _`merengue.base.admin`: http://dev.merengueproject.org/browser/trunk/merengueproj/merengue/base/admin.py
@@ -702,27 +703,27 @@ Now, if you access the admin site, you will see a ``Features`` plugin admin site
 
 .. image:: _images/merengueproject_admin_with_features.png
 
-If you click on it, you will access both ``FeatureAdmin`` and ``FeatureCategoryAdmin``:
+If you click on it, you will access both the ``FeatureAdmin`` and ``FeatureCategoryAdmin``:
 
 .. image:: _images/merengueproject_features_admin.png
 
-Now you can add features in the admin site.
+Now, you can add features via the admin site.
 
-Rendering new blocks
+Rendering New Blocks
 --------------------
 
 This section is about creating new blocks with Merengue. The blocks in Merengue
-can be placed in several places and renders a fragment with information. See
-:ref:`Merengue blocks <topics-blocks>` for more information about blocks.
+can be placed in various locations. See:ref:`Merengue blocks <topics-blocks>` for
+more information about blocks.
 
 We want to implement a ``features`` block to render some Merengue features (from
-``Feature`` model). This fragment is shown in next screenshot:
+the ``Feature`` model). This is shown in next screenshot:
 
 .. image:: _images/merengueprojectorg_features_block.png
 
-To create a Merengue block you have to extends from ``merengue.block.blocks.Block``
-class and implement the ``render`` class method. You can see a possible ``features``
-block implementation:
+To create a Merengue block your code must extend the ``merengue.block.blocks.Block``
+class and implement the ``render`` class method. You can see an example of a ``features``
+block implementation below:
 
 .. code-block:: python
 
@@ -740,14 +741,14 @@ block implementation:
                                     block_title='Some features',
                                     context={'features_list': features_list})
 
-Usually blocks code live in a ``blocks.py`` file into your plugin directory.
-We will explain main lines:
+Usually block code lives in a ``blocks.py`` file inside your plugin directory.
+We will explain the most significant lines of code:
 
-* ``name`` should be a name without spaces and special characters, and will identify block.
-* ``default_place`` is the default place to locate the block when you activate this. You can change this location in admin later.
-* ``render`` is a callback function that will be called when Merengue is rendering blocks in location defined for that block.
+* ``name`` should be a name without spaces and special characters, and will identify the block.
+* ``default_place`` is the default location for placing the block when activated. You can change this location later (inside the admin interface).
+* ``render`` is a callback function that will be called when Merengue renders a block in the location defined for that block.
 
-Now only remains to create the ``features/block_mainfeatures.html`` template:
+Now, the only thing to do is to create the ``features/block_mainfeatures.html`` template:
 
 .. code: bash
 
@@ -755,7 +756,7 @@ Now only remains to create the ``features/block_mainfeatures.html`` template:
     $ mkdir -p templates/features
     $ touch templates/features/block_mainfeatures.html
 
-The content of this template was as follows:
+The content of this template is as follows:
 
 .. code-block:: html+django
 
@@ -783,10 +784,10 @@ The content of this template was as follows:
 
 This template is self-explanatory. It is important to note that there is a base
 template for blocks (named ``block.html``) that should be used in your blocks
-in order to maintain similar look&feel, like it is done in the previous example.
+in order to maintain a similar look and feel (as was done in the previous example).
 
-Now the ``features`` block is finished. Now you need to register it in the
-plugin to say Merengue that this block exists. This is done in the plugin
+Now the ``features`` block is finished. You will need to register it in the
+plugin itself to inform Merengue that this block exists. This is done inside the plugin
 config:
 
 .. code-block:: python
@@ -800,46 +801,47 @@ config:
         def get_blocks(cls):
             return [FeatureBlock]
 
-As ``features`` plugin is already installed and activated, the new block
-is not registered unless we deactivate and reactivate plugin again in admin.
+Since the ``features`` plugin is already installed and activated, the new block
+is not registered unless we deactivate and reactivate the plugin again in the
+admin interface.
 
-If you look in admin blocks after reactivate block, you will see a new block
-registered:
+If you look in the admin screen at the list of blocks (after you reactivate the
+block), you will see a new block registered:
 
 .. image:: _images/merengueprojectorg_blocks_admin.png
 
-As you see, the block is placed by default in ``homepage`` place, because we
-defined this in our block. But you can change location if you want, and even
+As you can see, the block is "placed at", by default, on the ``homepage`` because we
+defined this in our block. You can change this location in the ``blocks.py`` file, or by
 using the Merengue `block reordering interface`_.
 
 .. _`block reordering interface`: http://www.merengueproject.org/features/visual-blocks-management/
 
-Now, you can create one or two features, adding text and also an icon if you want.
-You need to publish those features and mark the *show in home* flag in order to
-see them in our ``features`` block. After that, if you go to home page you will
-see something like this:
+Now, you can create one or two features, adding text and also an icon, if you want.
+You will then need to publish those features and mark the *show in home* flag in
+order to see them in our ``features`` block. After that, if you go to home page,
+you will see something like this:
 
 .. image:: _images/merengueprojectorg_after_finishing_features_block.png
 
 .. admonition:: Note
 
-    You may note that block *Merengue main features* title is not shown in
-    homepage. This is because is hidden using CSS in ``merengueprojectorg``
+    You may have noticed that the title of the block *Merengue main features* is not shown
+    on the homepage. The reason being that it is hidden using CSS in the ``merengueprojectorg``
     theme.
 
-Implementing plugin views
+Implementing Plugin Views
 -------------------------
 
-Last thing you will do in ``feature`` plugin is a definition of two views:
+The last thing you will do in creating the ``feature`` plugin is define two views:
 
-* A feature listing view. See it in `production site`_.
+* A feature listing view. See it in the `production site`_.
 * A features detail view, like `visual block management`_.
 
 .. _`production site`: http://www.merengueproject.org/features/
 .. _`visual block management`: http://www.merengueproject.org/features/visual-blocks-management/
 
-The first thing you would do is register a URL namespace for your plugin, adding
-a ``url_prefixes`` attribute in ``PluginConfig`` class like this:
+The first step consists of registering a URL namespace for your plugin, adding
+a ``url_prefixes`` attribute in the ``PluginConfig`` class like this:
 
 .. code-block:: python
 
@@ -853,15 +855,15 @@ a ``url_prefixes`` attribute in ``PluginConfig`` class like this:
         )
         # ...
 
-Previous code will reserve a ``/features`` prefixes in URLs to be handled in
-our plugin, concretely in ``plugins.features.urls`` module. Of course you can
-add several URL namespaces in every plugin.
+The code above reserves a ``/features`` prefixe in the URLs to be handled by
+our plugin, in the ``plugins.features.urls`` module. Of course, you can
+add several URL namespaces in each individual plugin, if necessary.
 
-Now of course if we access to development server, you will get an error,
-because ``urls`` module and views are not implemented.
+Now, if we try to access the development server, we will get an error,
+because the ``urls`` module and views are not implemented.
 
-So, next thing to do is create an ``urls.py`` file inside your plugin, with a
-content as usual in every Django urls module:
+So, next, we  create an ``urls.py`` file inside your plugin, with content just like
+a normal Django urls module:
 
 .. code-block:: python
 
@@ -872,10 +874,10 @@ content as usual in every Django urls module:
         url(r'^(?P<features_slug>[\w-]+)/$', 'features_view', name='features_view'),
     )
 
-``features_index`` and ``features_view`` will be the listing and detail view of
-a Merengue feature. Again, you will get an error if you access to web server,
-because those views are not implemented. You need to create a ``views.py`` file
-with a content similar to this:
+``features_index`` and ``features_view`` will be the listing and detail views, respectively, of
+the Merengue feature plugin. Again, you will get an error if you try to access the development web server,
+because these views are not implemented. You need to create a ``views.py`` file
+with content similar to this:
 
 .. code-block:: python
 
@@ -896,17 +898,18 @@ with a content similar to this:
         return content_view(request, features_view,
                             template_name='features/features_view.html')
 
-These two views are usual from the Django world. The only thing to note is the
-use of ``content_list`` and ``content_view`` Merengue views, that helps to reuse
-code, although is optional.
+These two views are typical of views used in the Django world. The only thing to note is the
+use of the ``content_list`` and ``content_view`` views from Merengue. The usage of
+these views (available within Merengue) allows us to reuse code (although their
+usage is optional).
 
-Last thing to do is implementing the ``features/features_index.html`` and
+The last thing to do is to implement the ``features/features_index.html`` and
 ``features/features_view.html`` templates. These two templates should be placed
 in a ``templates/features`` directory inside your plugin directory, and never in
-your theme, because define what you want to see (content) and not how you want
-to see (look and feel).
+your theme, because they deal with the content itself, not the appearance of that content.
 
-The ``features/features_index.html`` content would be as follows:
+
+The ``features/features_index.html`` template would look as follows:
 
 .. code-block:: html+django
 
@@ -932,42 +935,46 @@ The ``features/features_index.html`` content would be as follows:
     </ul>
     {% endblock %}
 
-Some thing to say:
+Additional notes:
 
-* It extends a ``content_list.html`` template, that concerns about thins like pagination, and add useful blocks to override like ``listing`` or ``listtitle``. 
+* This template extends a ``content_list.html`` template, which handles things
+  like pagination, and adds useful blocks to override things like ``listing`` or ``listtitle``. 
 
-* It uses ``inline_trans`` templatetag to translate labels, instead of Django ``trans`` one. This is because we can use the `inline WYSIWYG translation tool`_ that came with Merengue.
+* It uses the ``inline_trans`` template tag to translate labels, instead of the
+  usual Django ``trans`` one. This is so we can use the `inline WYSIWYG translation tool`_
+  that comes standard with Merengue.
 
-* Again, the extended template is ``content_list.html`` and not ``base/content_list.html``, because we want to be overridable in themes.
+* As mentioned earlier, the template that is extended is named ``content_list.html`` and not
+  ``base/content_list.html``.  This allows for theming to override this plugin's template.
 
-* We use ``get_absolute_url`` method that is implemented in ``BaseContent``.
+* We use the ``get_absolute_url`` method implemented in ``BaseContent``.
 
-The resulting view if you access to ``/features/`` URL is something like this:
+The resulting view, if you access the ``/features/`` URL, looks something like this:
 
 .. image:: _images/merengueprojectorg_features_index.png
 
-If you click in any link to the feature you will see that it works, even if
-you do not say to Merengue what is the feature detail view. This is because
-``Feature`` model inherits from ``BaseContent`` that have a default
-implementation of the URL returned in ``get_absolute_url``.
+If you click on any link to the feature you will see that it works, even if
+you do not specifically request the feature detail view from Merengue. The reason
+for this being that the ``Feature`` model inherits the ``BaseContent`` model which
+has a default implementation of the URL returned in ``get_absolute_url``.
 
 In fact, ``get_absolute_url`` will not return the final content detail URL. It
-will return a middle URL (something like ``/cms/base/public_redirect/features/feature/4/``)
-that do some checks and then redirect to the URL returned in the first of these two
-methods implemented in the model:
+will return an intermediate URL (something like ``/cms/base/public_redirect/features/feature/4/``)
+which does some checks and then redirects the browser to the URL returned in the
+first of these two methods implemented in the model:
 
 1. ``content.link_by_user(user)``
 2. ``content.public_link()``
 
-The first try is because sometimes you need different behaviour depending the
-user is seeing the content (check permissions, or some login like that). If
-first method is not implemented, Merengue will call the second one, that is
-implemented in ``BaseContent`` model. That is because you see a default page
-even if you have no implemented that method.
+The first method is tried first because sometimes you need different behaviour
+depending whether the user is allowed to see the content (permissions need to be
+checked, or a login is required). If the first method is not implemented, Merengue
+will call the second one (which is implemented in ``BaseContent`` model). That is
+how you will see a default page displayed, even if you have not implemented method #2.
 
-But, as best Django practices say, we have to use ``features_view`` as our
-content link. In Merengue this means to implement a ``public_link`` method in
-``Feature`` model, instead of a ``get_absolute_url`` one:
+But, to conform to Django best practices, we have to use ``features_view`` as our
+content link. In Merengue this means we implement a ``public_link`` method in our
+``Feature`` model, instead of a ``get_absolute_url`` method:
 
 .. code-block:: python
 
@@ -980,8 +987,8 @@ content link. In Merengue this means to implement a ``public_link`` method in
         def public_link(self):
             return ('features_view', [self.slug])
 
-Now all the features links will try to call ``features_view`` view. Before
-finish, you need to implement the last template, ``features/features_view.html``:
+Now, all of the features links will try to call the ``features_view`` view. Before
+we finish, you will need to implement the last template, ``features/features_view.html``:
 
 .. code-block:: html+django
 
@@ -997,20 +1004,20 @@ finish, you need to implement the last template, ``features/features_view.html``
       Categories: {{ content.categories.all|join:"," }}
     {% endblock %}
 
-This template extends ``content_view.html`` that include some features like
+This template extends ``content_view.html`` which include some features like a
 multimedia viewer (you can try to add some images or videos to the feature).
 
-The result view is like this:
+The resulting view looks like this:
 
 .. image:: _images/merengueprojectorg_features_view.png
 
 .. admonition:: Note
 
-    Some fragments of `templates in original features plugin`_ have been ommited
-    for readability reason.
+    Some parts of the `templates used in the original features plugin`_ have been ommited
+    for readability reasons.
 
 .. _`inline WYSIWYG translation tool`: http://www.merengueproject.org/features/inline-translation-tool/
-.. _`templates in original features plugin`: http://dev.merengueproject.org/browser/sites/merengueprojectorg/plugins/features/templates/features
+.. _`templates used in the original features plugin`: http://dev.merengueproject.org/browser/sites/merengueprojectorg/plugins/features/templates/features
 
-The tutorial ends here. At this point you should know how to start a Merengue
+The tutorial ends here. At this point you should know how to begin a Merengue
 project, design new themes, and develop your own plugins.
