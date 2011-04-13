@@ -47,6 +47,7 @@ LANGUAGE_CODE = 'en'
 LANGUAGES = (
     ('en', ugettext('English')),
     ('es', ugettext('Español')),
+    ('it', ugettext('Italiano')),
     ('fr', ugettext('Français')),
 )
 

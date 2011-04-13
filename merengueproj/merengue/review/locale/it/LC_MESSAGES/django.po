@@ -1,0 +1,49 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Mirto Silvio Busico <m.busico@ieee.org>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-04-12 11:57+0200\n"
+"PO-Revision-Date: 2011-04-11 14:12+0200\n"
+"Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
+"Language-Team: it <m.busico@ieee.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: models.py:26
+msgid "owner"
+msgstr "proprietario"
+
+#: models.py:27
+msgid "assigned to"
+msgstr "assegnato a"
+
+#: models.py:31
+msgid "is done"
+msgstr "completato"
+
+#: models.py:33
+msgid "object type"
+msgstr "tipo dell'oggetto"
+
+#: models.py:44
+msgid "done"
+msgstr "eseguito"
+
+#: models.py:44
+msgid "not done"
+msgstr "non eseguito"
+
+#: admin.py:46
+msgid "Task information"
+msgstr "informazioni sul Task"
+
+#: admin.py:48
+msgid "Task status"
+msgstr "stato del task"

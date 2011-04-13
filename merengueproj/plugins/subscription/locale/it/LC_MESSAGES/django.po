@@ -1,0 +1,99 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Mirto Silvio Busico <m.busico@ieee.org>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-15 01:02+0200\n"
+"PO-Revision-Date: 2011-04-12 20:30+0200\n"
+"Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
+"Language-Team: it <m.busico@ieee.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: actions.py:28 templates/subscription/subscription_form.html:18
+#: templates/subscription/subscription_form.html:23
+msgid "Subscription"
+msgstr "Abbonamento"
+
+#: models.py:31
+msgid "content"
+msgstr "contenuto"
+
+#: models.py:33
+msgid "Type of Subscription"
+msgstr "Tipo di Abbonamento"
+
+#: models.py:39 models.py:52
+msgid "subscribable"
+msgstr "disponibile per l'abbonamento"
+
+#: models.py:40
+msgid "subscribables"
+msgstr "disponibili per l'abbonamento"
+
+#: models.py:43
+#, python-format
+msgid "Subscribable for %s"
+msgstr "Disponibile per l'abbonamento per %s"
+
+#: models.py:47
+msgid "first name"
+msgstr "nome"
+
+#: models.py:48
+msgid "last name"
+msgstr "cognome"
+
+#: models.py:49
+msgid "e-mail address"
+msgstr "indirizzo e-mail"
+
+#: models.py:50
+msgid "phone"
+msgstr "telefono"
+
+#: models.py:51
+msgid "comments or suggestions"
+msgstr "commenti o suggerimenti"
+
+#: models.py:55
+msgid "base subscription"
+msgstr "abbonamento di base"
+
+#: models.py:56
+msgid "base subscriptions"
+msgstr "abbonamenti di base"
+
+#: models.py:59
+#, python-format
+msgid "Subscription of %s"
+msgstr "Abbonamento di %s"
+
+#: views.py:50
+#, python-format
+msgid ""
+"Request send successfully. See <a href=\"%(subscriber_listing)s\">suscriber "
+"list</a>"
+msgstr ""
+"Richiesta inviata con successo. Guarda la <a href=\"%(subscriber_listing)s"
+"\">lista degli abbonati</a>"
+
+#: templates/subscription/subscriber_listing.html:9
+#: templates/subscription/subscriber_listing.html:14
+msgid "Subscriber listing"
+msgstr "Lista degli abbonati"
+
+#: templates/subscription/subscription_form.html:28
+msgid "submit"
+msgstr "imposta"
+
+#: forms.py:14
+msgid "End date should be greater than start date."
+msgstr "La data di fine deve essere maggiore della data di inizio"

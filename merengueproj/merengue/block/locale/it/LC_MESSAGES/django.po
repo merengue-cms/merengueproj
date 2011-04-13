@@ -1,0 +1,82 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Mirto Silvio Busico <m.busico@ieee.org>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-04-12 11:57+0200\n"
+"PO-Revision-Date: 2011-04-11 18:02+0200\n"
+"Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
+"Language-Team: it <m.busico@ieee.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: models.py:8
+msgid "All"
+msgstr "Tutti"
+
+#: models.py:9
+msgid "Left sidebar"
+msgstr "Colonna laterale sinistra"
+
+#: models.py:10
+msgid "Right sidebar"
+msgstr "Colonna laterale destra"
+
+#: models.py:11
+msgid "Before content body"
+msgstr "Prima del contenuto del corpo"
+
+#: models.py:12
+msgid "Home page"
+msgstr "Pagina Home"
+
+#: models.py:13
+msgid "After content body"
+msgstr "Dopo il contenuto del corpo"
+
+#: models.py:14
+msgid "Header"
+msgstr "Testata"
+
+#: models.py:15
+msgid "Footer"
+msgstr "Piè di pagina"
+
+#: models.py:42
+msgid "shown in urls"
+msgstr "mostrato negli url"
+
+#: models.py:44
+msgid ""
+"block will <em>only</em> be visible in urls matching these regular "
+"expressions (one per line, using <a href='http://docs.python. org./library/"
+"re.html#regular-expression-syntax' title='python regular expressions'>python "
+"re syntax</a>). <br/> Please use relative paths. This field has preference "
+"over 'hidden in urls'."
+msgstr ""
+"Il blocco sarà visibile <em>soltanto</em> negli urls corrispondenti a queste "
+"espressioni regolari (una per riga, secondo la <a href='http://docs.python. "
+"org./library/re.html#regular-expression-syntax' title='python regular "
+"expressions'>sintassi di python re</a>). <br/> Utilizzare i path relativi. "
+"Questo campo ha la precedenza rispetto a 'hidden in urls'."
+
+#: models.py:51
+msgid "hidden in urls"
+msgstr "hidden in urls"
+
+#: models.py:53
+msgid ""
+"block will be hidden in urls matching these regular expressions (one per "
+"line, using <a href='http://docs.python.org/library/re.html#regular-"
+"expression-syntax' title='python regular expressions'>python re syntax</a>)."
+msgstr ""
+"il blocco sarà 'hidden in url' in corrispondenza delle seguenti espressioni "
+"regolari  (una per riga, secondo la <a href='http://docs.python. org./"
+"library/re.html#regular-expression-syntax' title='python regular "
+"expressions'>sintassi di python re</a>)."
