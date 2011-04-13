@@ -35,15 +35,17 @@ class PluginConfig(Plugin):
           'plugins.event.urls'),
     )
 
+    def models(self):
+        return [
+            (Event, EventAdmin),
+            (Category, EventCategoryAdmin),
+        ]
+
     def section_models(self):
         return [(Event, EventSectionAdmin)]
 
     def get_blocks(self):
         return [EventsCalendarBlock]
-
-    def get_model_admins(self):
-        return [(Event, EventAdmin),
-                (Category, EventCategoryAdmin)]
 
     def get_viewlets(self):
         return [LatestEventViewlet, AllEventViewlet]

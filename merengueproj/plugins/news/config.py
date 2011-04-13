@@ -45,12 +45,12 @@ class PluginConfig(Plugin):
     def get_viewlets(self):
         return [LatestNewsViewlet, AllNewsViewlet]
 
-    def section_models(self):
-        return [(NewsItem, NewsItemSectionAdmin)]
-
-    def get_model_admins(self):
+    def models(self):
         return [(NewsCategory, NewsCategoryAdmin),
                 (NewsItem, NewsItemAdmin)]
+
+    def section_models(self):
+        return [(NewsItem, NewsItemSectionAdmin)]
 
     def post_install(self):
         collection = create_normalize_collection('news', u'News', NewsItem,

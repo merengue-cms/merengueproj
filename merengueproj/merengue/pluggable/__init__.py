@@ -76,6 +76,9 @@ class Plugin(RegistrableItem):
     def post_actions(self):
         pass
 
+    def models(self):
+        return []  # to override in plugins
+
     def section_models(self):
         return []  # to override in plugins
 

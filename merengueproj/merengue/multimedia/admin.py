@@ -367,11 +367,6 @@ class RelatedAudioAdmin(RelatedBaseMultimediaAdmin):
 
 
 def register(site):
-    site.register(Photo, PhotoAdmin)
-    site.register(Video, VideoAdmin)
-    site.register(PanoramicView, PanoramicViewAdmin)
-    site.register(Image3D, Image3DAdmin)
-    site.register(Audio, AudioAdmin)
     register_related_multimedia(site, BaseContent)
 
 

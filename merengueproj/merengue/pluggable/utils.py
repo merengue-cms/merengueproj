@@ -244,6 +244,7 @@ def enable_plugin(plugin_name, register=True):
         register_plugin_viewlets(plugin_name)
         register_plugin_templatetags(plugin_name)
         register_plugin_post_actions(plugin_name)
+        register_plugin_models(plugin_name)
         register_plugin_section_models(plugin_name)
         register_plugin_in_plugin_admin_site(plugin_name)
         register_plugin_perms(plugin_name)
@@ -271,6 +272,7 @@ def disable_plugin(plugin_name, unregister=True):
         unregister_plugin_middlewares(plugin_name)
         unregister_plugin_viewlets(plugin_name)
         unregister_plugin_templatetags(plugin_name)
+        unregister_plugin_models(plugin_name)
         unregister_plugin_section_models(plugin_name)
         unregister_plugin_in_plugin_admin_site(plugin_name)
         unregister_plugin_perms(plugin_name)
@@ -404,11 +406,23 @@ def register_plugin_post_actions(plugin_name):
     plugin.post_actions()
 
 
+def register_plugin_models(plugin_name):
+    plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
+    if not plugin:
+        return
+    for model, model_admin in plugin.models():
+        site.register_model(model, model_admin)
+
+
 def register_plugin_section_models(plugin_name):
     plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
     if not plugin:
         return
     register_plugin_section_models_in_admin_site(plugin, plugin_name, site)
+
+
+def unregister_plugin_models(plugin_name):
+    pass
 
 
 def unregister_plugin_section_models(plugin_name):

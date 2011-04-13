@@ -17,7 +17,6 @@
 
 from merengue.base.admin import BaseCategoryAdmin, BaseContentAdmin
 from merengue.section.admin import SectionContentAdmin
-from plugins.news.models import NewsItem, NewsCategory
 
 
 class NewsCategoryAdmin(BaseCategoryAdmin):
@@ -37,15 +36,3 @@ class NewsItemAdmin(BaseContentAdmin):
 class NewsItemSectionAdmin(SectionContentAdmin, NewsItemAdmin):
     """ Admin for news item management inside sections """
     manage_contents = True
-
-
-def register(site):
-    """ Merengue admin registration callback """
-    site.register(NewsCategory, NewsCategoryAdmin)
-    site.register(NewsItem, NewsItemAdmin)
-
-
-def unregister(site):
-    """ Merengue admin unregistration callback """
-    site.unregister(NewsCategory)
-    site.unregister(NewsItem)

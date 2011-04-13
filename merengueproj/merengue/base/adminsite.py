@@ -48,6 +48,7 @@ class BaseAdminSite(DjangoAdminSite):
     index_template = 'admin/django_index.html'  # Django legacy index template
 
     def __init__(self, *args, **kwargs):
+        self._models_registry = {}
         self.apps_registered = []
         self.base_model_admins = {}
         self.base_object_ids = {}
@@ -122,6 +123,9 @@ class BaseAdminSite(DjangoAdminSite):
             url(r'^admin_redirect/(?P<content_type_id>\d+)/(?P<object_id>\d+)/(?P<extra_url>.*)$',
                 self.admin_view(self.admin_redirect),
                 name='admin_redirect'),
+            url(r'^models/$',
+                self.admin_view(self.models_index),
+                name='models_index'),
             url(r'^siteconfig/$',
                 self.admin_view(self.site_configuration),
                 name='site_configuration'),
@@ -174,6 +178,15 @@ class BaseAdminSite(DjangoAdminSite):
             # Instantiate the admin class to save in the registry
             self._registry[model] = admin_class(model, self)
 
+    def register_model(self, model_or_iterable, admin_class=None, **options):
+        """ Is a special register function which register a managed model.
+            This makes Merengue know the list of managed contents """
+        self.register(model_or_iterable, admin_class, **options)
+        if isinstance(model_or_iterable, ModelBase):
+            model_or_iterable = [model_or_iterable]
+        for model in model_or_iterable:
+            self._models_registry[model] = self._registry[model]
+
     def admin_redirect(self, request, content_type_id, object_id, extra_url=''):
         """ redirect to content admin page or content related admin page in his section """
         try:
@@ -218,6 +231,29 @@ class BaseAdminSite(DjangoAdminSite):
                 admin_prefix += self.get_plugin_site_prefix_for_model(model) + '/'
         admin_prefix += '%s/%s/' % (model._meta.app_label, model._meta.module_name)
         return admin_prefix
+
+    def models_index(self, request, extra_context=None):
+        """ Index with all managed content types admin view """
+        model_list = []
+        for model, model_admin in self._models_registry.items():
+            model_dict = {
+                'name': capfirst(model._meta.verbose_name_plural),
+                'admin_url': reverse('admin:%s_%s_changelist' % (model._meta.app_label, model._meta.module_name)),
+                'model': model,
+            }
+            model_list.append(model_dict)
+            # Sort the models alphabetically
+            model_list.sort(key=lambda x: x['name'])
+        context = {
+            'title': _('Content types'),
+            'model_list': model_list,
+        }
+        context.update(extra_context or {})
+        context_instance = template.RequestContext(request, current_app=self.name)
+        return render_to_response(
+            'admin/model_index.html', context,
+            context_instance=context_instance,
+        )
 
     def site_configuration(self, request):
         if not perms_api.can_manage_site(request.user):

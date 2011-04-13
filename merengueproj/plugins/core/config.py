@@ -20,7 +20,9 @@ from django.utils.translation import ugettext_lazy as _
 
 from merengue.pluggable import Plugin
 from merengue.registry import params
-from merengue.section.admin import DocumentRelatedModelAdmin
+from merengue.multimedia.admin import PhotoAdmin, VideoAdmin, AudioAdmin
+from merengue.multimedia.models import Photo, Video, Audio
+from merengue.section.admin import DocumentRelatedModelAdmin, DocumentAdmin
 from merengue.section.models import Document
 
 from plugins.core.actions import AdminAction, LoginAction, LogoutAction, PrintAction
@@ -53,6 +55,14 @@ class PluginConfig(Plugin):
 
     def get_toolbar_panels(self):
         return [InplaceEditPanel, InlineTransPanel, VersionPanel]
+
+    def models(self):
+        return [
+            (Document, DocumentAdmin),
+            (Photo, PhotoAdmin),
+            (Video, VideoAdmin),
+            (Audio, AudioAdmin),
+        ]
 
     def section_models(self):
         return [(Document, DocumentRelatedModelAdmin)]

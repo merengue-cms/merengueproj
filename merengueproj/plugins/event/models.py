@@ -29,8 +29,8 @@ class Category(BaseCategory):
     """ Event category (deportes nauticos, toros, flamenco...) """
 
     class Meta:
-        verbose_name = _('category')
-        verbose_name_plural = _('categories')
+        verbose_name = _('event category')
+        verbose_name_plural = _('event categories')
 
 
 class Event(BaseContent):

@@ -21,7 +21,6 @@ from transmeta import get_fallback_fieldname
 
 from merengue.base.admin import BaseContentAdmin, BaseCategoryAdmin
 from merengue.section.admin import SectionContentAdmin
-from plugins.event.models import Event, Category
 from plugins.event.forms import EventAdminForm
 
 
@@ -43,8 +42,3 @@ class EventAdmin(BaseContentAdmin):
 
 class EventSectionAdmin(SectionContentAdmin, EventAdmin):
     manage_contents = True
-
-
-def register(site):
-    site.register(Category, EventCategoryAdmin)
-    site.register(Event, EventAdmin)

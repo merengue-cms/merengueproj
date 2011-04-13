@@ -22,15 +22,15 @@ class PluginConfig(Plugin):
     required_plugins = {'feedback': {},
                         }
 
+    def models(self):
+        return [(Forum, ForumAdmin),
+                (ForumCategory, ForumCategoryAdmin)]
+
     def section_models(self):
         return [(Forum, ForumSectionAdmin)]
 
     def get_actions(self):
         return [CreateThreadAction]
-
-    def get_model_admins(self):
-        return [(Forum, ForumAdmin),
-                (ForumCategory, ForumCategoryAdmin)]
 
     def get_perms(self):
         return (
