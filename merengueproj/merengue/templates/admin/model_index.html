@@ -1,0 +1,30 @@
+{% extends "admin/base_site.html" %} 
+
+{% load i18n %}
+
+<div id="content-main" class="module-merengue">
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="../">{% trans "Home" %}</a>
+&rsaquo;
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content" class="module-merengue">
+{% if model_list %}
+    <dl>
+    {% for model_dict in model_list %}
+        <dt>
+            <a href="{{ relative_path }}{{ model_dict.admin_url }}">{{ model_dict.name }}</a>
+        </dt>
+        <dd></dd>
+    {% endfor %}
+    </dl>
+{% else %}
+    <p>{% trans "You don't have permission to edit anything." %}</p>
+{% endif %}
+</div>
+</div>
+{% endblock %}
