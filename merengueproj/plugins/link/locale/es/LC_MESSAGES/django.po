@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"POT-Creation-Date: 2011-04-13 11:27+0200\n"
 "PO-Revision-Date: 2010-10-05 10:46\n"
 "Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,47 +16,68 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Translated-Using: django-transhette 0.1.SVN\n"
 
-#: models.py:31
+#: models.py:30
 msgid "link category"
 msgstr "Categoría de enlace"
 
-#: models.py:32
+#: models.py:31
 msgid "link categories"
 msgstr "Categorías de enlaces"
 
-#: models.py:39
+#: models.py:38
 msgid "Url Link"
 msgstr "Url del enlace"
 
-#: models.py:40
+#: models.py:39
 msgid "Portal name"
 msgstr "Nombre del portal"
 
-#: models.py:44
+#: models.py:41
+msgid "category"
+msgstr "categoría"
+
+#: models.py:46
 msgid "link"
 msgstr "enlace"
 
-#: models.py:45
+#: models.py:47
 msgid "links"
 msgstr "Enlaces"
 
-#: viewlets.py:26
+#: viewlets.py:28
 msgid "Latest link"
+msgstr "Último enlace"
+
+#: viewlets.py:29
+msgid "Latest links"
 msgstr "Últimos enlaces"
 
-#: viewlets.py:37
-msgid "All link"
+#: viewlets.py:34
+msgid "limit for link viewlet"
+msgstr ""
+
+#: viewlets.py:51 viewlets.py:52
+msgid "All links"
 msgstr "Todos los enlaces"
 
-#: templates/link/link_index.html:5 templates/link/link_index.html.py:14
-msgid "Link index"
-msgstr "Indice de enlaces"
-
-#: templates/link/link_index.html:8 templates/link/link_view.html:9
-msgid "Links"
-msgstr "Enlaces"
-
-#: templates/link/link_index.html:19 templates/link/link_view.html:14
+#: templates/link/collection_item.html:20
 #: templates/link/viewlet_latest.html:17
 msgid "View more"
 msgstr "Ver más"
+
+#: templates/link/link_index.html:5 templates/link/link_index.html.py:7
+msgid "Link"
+msgstr "Enlace"
+
+#: templates/link/link_view.html:9
+msgid "External link"
+msgstr "Enlace externo"
+
+#~ msgid "All link"
+#~ msgstr "Todos los enlaces"
+
+#~ msgid "Link index"
+#~ msgstr "Indice de enlaces"
+
+#~ msgid "Links"
+#~ msgstr "Enlaces"
