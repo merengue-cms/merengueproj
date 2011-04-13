@@ -685,7 +685,7 @@ class WorkflowBatchActionProvider(object):
                 extra_context = {'title': confirm_msg,
                                  'action_submit': 'set_as_%s' % state}
                 return self.confirm_action(request, queryset, extra_context)
-    change_state.short_description = _(u"Change state of selected % (verbose_name_plural)s")
+    change_state.short_description = _(u"Change state of selected %(verbose_name_plural)s")
 
 
 class StatusControlProvider(object):
