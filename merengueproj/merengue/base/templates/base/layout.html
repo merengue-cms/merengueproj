@@ -140,15 +140,13 @@
   <div id="contentwrapper">
   {% block contentwrapper %}
 
-  {% if not request.HIDE_MENU %}
-    {% block leftsidebarwrapper %}
-    <div id="left-sidebar">
-      {% block leftsidebar %}
-        {% include "inc.leftsidebar.html" %}
-      {% endblock %}
-    </div>
+  {% block leftsidebarwrapper %}
+  <div id="left-sidebar">
+    {% block leftsidebar %}
+      {% include "inc.leftsidebar.html" %}
     {% endblock %}
-  {% endif %}
+  </div>
+  {% endblock %}
 
   <div id="content" class="{% block contentclass %}withsidebar{% endblock %}">
     {% block messagebox %}
@@ -160,16 +158,15 @@
     {% endblock %}
   </div>
 
-  {% if not request.HIDE_MENU %}
-    {% block rightsidebarwrapper %}
-    <div id="right-sidebar">
-      {% block rightsidebar %}
-        {% include "inc.rightsidebar.html" %}
-      {% endblock %}
-    </div>
+  {% block rightsidebarwrapper %}
+  <div id="right-sidebar">
+    {% block rightsidebar %}
+      {% include "inc.rightsidebar.html" %}
     {% endblock %}
-  {% endif %}
-    <div class="visualClear"></div>
+  </div>
+  {% endblock %}
+
+  <div class="visualClear"></div>
 
   {% if not request.HIDE_DECORATIONS %}
     <div class="visualClear"></div>
