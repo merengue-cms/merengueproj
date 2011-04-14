@@ -45,6 +45,8 @@ class LatestNewsBlock(BlockQuerySetItemProvider, Block):
     def render(self, request, place, context, *args, **kwargs):
         number_news = self.get_config().get('limit', []).get_value()
         news_list = self.get_queryset(request, context)[:number_news]
+        if self.get_config().get('filtering_section', False) and not news_list:
+            news_list = get_news(request, filtering_section=False)[:number_news]
         return self.render_block(request, template_name='news/block_latest.html',
                                  block_title=ugettext('Latest news'),
                                  context={'news_list': news_list})
