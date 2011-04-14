@@ -149,14 +149,13 @@ class Collection(BaseContent):
         return self._filter_query(query)
 
     def get_items(self, section=None, filtering_section=None):
-        content_types = self.content_types.all()
-        if content_types.count() == 1:
+        content_types = list(self.content_types.all())
+        if len(content_types) == 1:
             items = self._get_items_from_one_source(content_types[0])
         else:
             for ct in content_types:
                 if not issubclass(ct.model_class(), BaseContent):
-                    items = self._get_items_from_multiple_sources( \
-                                                                content_types)
+                    items = self._get_items_from_multiple_sources(content_types)
                     return items
             items = self._get_items_from_basecontent(content_types)
         if filtering_section is None:
