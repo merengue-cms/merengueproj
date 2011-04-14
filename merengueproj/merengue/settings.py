@@ -131,7 +131,7 @@ PRE_MERENGUE_MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'johnny.middleware.CommittingTransactionMiddleware',
+    'django.middleware.transaction.TransactionMiddleware'
     'pagination.middleware.PaginationMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'cmsutils.middleware.AutomatizedTestingMiddleware',
