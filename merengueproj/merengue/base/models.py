@@ -420,6 +420,15 @@ class BaseContent(BaseClass):
         return u"%s_menu" % cls._meta.module_name
 
     def save(self, update_rank=True, **kwargs):
+        # new objects should be added in last place
+        if not self.id:
+            try:
+                ordered = self.__class__.objects.filter(position__isnull=False).order_by('-position')
+                last = ordered[0]
+                self.position = last.position + 1
+            except IndexError:
+                pass
+
         super(BaseContent, self).save(**kwargs)
         object_update_again = False
 
