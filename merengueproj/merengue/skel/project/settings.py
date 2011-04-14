@@ -140,6 +140,9 @@ CACHES = {
     'default': {
         'BACKEND': 'johnny.backends.locmem.LocMemCache',
         'KEY_PREFIX': SECRET_KEY,
+        'OPTIONS': {
+            'MAX_ENTRIES': 3000,
+        },
     }
 }
 JOHNNY_MIDDLEWARE_KEY_PREFIX = '%s-cache' % DATABASES['default']['NAME']
