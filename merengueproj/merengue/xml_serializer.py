@@ -9,6 +9,8 @@ from django.db.models.fields import FieldDoesNotExist
 
 from transmeta import get_field_language
 
+from merengue.base.dbfields import JSONField
+
 
 class Serializer(xml_serializer.Serializer):
     """
@@ -109,5 +111,10 @@ class Deserializer(xml_serializer.Deserializer):
                     value = field.to_python(xml_serializer.getInnerText(field_node).strip())
                 data[field.name] = value
 
+        obj = Model(**data)
+        for field in obj._meta.local_fields:
+            if isinstance(field, JSONField):
+                field_name = field.name
+                setattr(obj, field_name, getattr(obj, 'get_%s_json' % field_name)())
         # Return a DeserializedObject so that the m2m data has a place to live.
-        return base.DeserializedObject(Model(**data), m2m_data)
+        return base.DeserializedObject(obj, m2m_data)

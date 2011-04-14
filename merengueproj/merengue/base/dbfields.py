@@ -45,6 +45,13 @@ class JSONField(models.TextField):
     def _loads(self, str):
         return json.loads(str, encoding=settings.DEFAULT_CHARSET)
 
+    def _get_val_from_obj(self, obj):
+        """ to do object serialization (i.e. to save fixtures) """
+        if obj is not None:
+            return self._dumps(super(JSONField, self)._get_val_from_obj(obj))
+        else:
+            return self.get_default()
+
     def get_internal_type(self):
         return 'TextField'
 
@@ -69,10 +76,11 @@ class JSONField(models.TextField):
             instance, sender = kwargs['instance'], kwargs['sender']
             if issubclass(sender, self.class_name) and hasattr(instance, self.attname):
                 value = self.value_from_object(instance)
-                if (value):
-                    setattr(instance, self.attname, self._loads(value))
-                else:
-                    setattr(instance, self.attname, None)
+                if not value:
+                    value = None
+                elif isinstance(value, basestring):
+                    value = self._loads(value)
+                setattr(instance, self.attname, value)
 
 
 def get_ordered_parents(model):
