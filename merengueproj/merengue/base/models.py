@@ -365,6 +365,10 @@ class BaseContent(BaseClass):
                                     null=True, blank=True,
                                     related_name='contents_owned')
 
+    position = models.PositiveIntegerField(verbose_name=_('position'),
+                                           null=True,
+                                           editable=False)
+
     # structural contents
     no_changeable = models.BooleanField(default=False,
                                         editable=False)
@@ -405,7 +409,7 @@ class BaseContent(BaseClass):
         translate = ('cached_plain_text', )
         abstract = False
         #content_view_template = 'content_view.html' # default definition by BaseContentMeta metaclass
-        ordering = (get_fallback_fieldname('name'), )
+        ordering = ('position', get_fallback_fieldname('name'), )
 
     def admin_absolute_url(self):
         return '<a href="%s">%s</a>' % (self.get_real_instance().get_admin_absolute_url(), self.name)

@@ -718,8 +718,31 @@ class StatusControlProvider(object):
         return options
 
 
-class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProvider, PermissionAdmin):
-    change_list_template = "admin/basecontent/change_list.html"
+class BaseOrderableAdmin(BaseAdmin):
+    """
+    A model admin that can reorder content by a sortablefield
+    """
+    change_list_template = "admin/basecontent/sortable_change_list.html"
+    sortablefield = 'position'
+
+    def changelist_view(self, request, extra_context=None):
+        if request.method == 'POST':
+            neworder = request.POST.get('neworder', None)
+            page = request.GET.get('p', 0)
+            if neworder is None:
+                return super(BaseOrderableAdmin, self).changelist_view(request, extra_context)
+            neworder = neworder.split(',')
+            items = self.model.objects.filter(id__in=neworder)
+            for item in items:
+                newposition = neworder.index(unicode(item.id)) + (int(page) * 50)
+                setattr(item, self.sortablefield, newposition)
+                item.save()
+
+        return super(BaseOrderableAdmin, self).changelist_view(request, extra_context)
+
+
+class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, StatusControlProvider, PermissionAdmin):
+    change_list_template = "admin/basecontent/sortable_change_list.html"
     list_display = ('__unicode__', 'status', 'user_modification_date', 'last_editor')
     list_display_for_select = ('name', 'status', 'user_modification_date', 'last_editor')
     search_fields = (get_fallback_fieldname('name'), )
@@ -1258,29 +1281,6 @@ class BaseOrderableInlines(admin.ModelAdmin):
             __media.add_js(['js/menu-sort-tabular.js'])
         return __media
     media = property(_media)
-
-
-class BaseOrderableAdmin(BaseAdmin):
-    """
-    A model admin that can reorder content by a sortablefield
-    """
-    change_list_template = "admin/basecontent/sortable_change_list.html"
-    sortablefield = 'position'
-
-    def changelist_view(self, request, extra_context=None):
-        if request.method == 'POST':
-            neworder = request.POST.get('neworder', None)
-            page = request.GET.get('p', 0)
-            if neworder is None:
-                return super(BaseOrderableAdmin, self).changelist_view(request, extra_context)
-            neworder = neworder.split(',')
-            items = self.model.objects.filter(id__in=neworder)
-            for item in items:
-                newposition = neworder.index(unicode(item.id)) + (int(page) * 50)
-                setattr(item, self.sortablefield, newposition)
-                item.save()
-
-        return super(BaseOrderableAdmin, self).changelist_view(request, extra_context)
 
 
 class OrderableRelatedModelAdmin(RelatedModelAdmin):
