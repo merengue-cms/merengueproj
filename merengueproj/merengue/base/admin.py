@@ -1041,12 +1041,14 @@ def related_form_clean(related_field, basecontent):
     """ Returns a customized form.clean() method that insert the related field
         into cleaned_data """
     def _form_clean(self):
+        cleaned_data = super(self.__class__, self).clean()
+        if not related_field:
+            return cleaned_data
         related_content = basecontent
         field = self.instance._meta.get_field_by_name(related_field)[0]
         if isinstance(field, ManyToManyField):
             # if m2m the cleaned_data have to be a iterable
             related_content = [related_content, ]
-        cleaned_data = super(self.__class__, self).clean()
         cleaned_data[related_field] = related_content
         return cleaned_data
     return _form_clean
