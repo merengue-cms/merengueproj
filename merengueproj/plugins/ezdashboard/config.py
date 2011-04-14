@@ -33,7 +33,6 @@ class PluginConfig(Plugin):
     )
     required_apps = ('django.contrib.sites', )
     config_params = [
-        params.Single(name='theme', label=_('EzWeb theme'), default='default'),
         params.Single(name='url', label=_('EzWeb base URL'),
                       default='http://ezweb.yaco.es/'),
         params.Single(name='style', label=_('EzWeb iframe CSS style'),
