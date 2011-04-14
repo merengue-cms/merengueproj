@@ -15,20 +15,28 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.contrib.admin.filterspecs import FilterSpec
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.admin import RelatedModelAdmin, related_form_clean
 from merengue.base.models import BaseContent
 from merengue.block.models import RegisteredBlock
+from merengue.block.filterspecs import ContentBlockFilterSpec
 from merengue.block.forms import BaseContentRelatedBlockAddForm, BaseContentRelatedBlockChangeForm
 from merengue.perms import utils as perms_api
 from merengue.registry.admin import RegisteredItemAdmin
 
 
+# Don't call register but insert it at the beginning of the registry
+# otherwise, the AllFilterSpec will be taken first
+FilterSpec.filter_specs.insert(0, (lambda f: f.name == 'content' and f.model == RegisteredBlock,
+                               ContentBlockFilterSpec))
+
+
 class RegisteredBlockAdmin(RegisteredItemAdmin):
     readonly_fields = RegisteredItemAdmin.readonly_fields + ('name', )
     list_display = RegisteredItemAdmin.list_display + ('placed_at', )
-    list_filter = ('placed_at', )
+    list_filter = ('placed_at', 'content')
     search_fields = ('name', )
     ordering = ('order', )
 
