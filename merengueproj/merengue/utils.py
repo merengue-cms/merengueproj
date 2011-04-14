@@ -15,23 +15,23 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+import csv
 import ConfigParser
 import os
 import zipfile
+from datetime import datetime
 from cStringIO import StringIO
 
 from django.conf import settings
-from django.core.cache import cache
-from django.utils.cache import _generate_cache_header_key
-from django.utils.encoding import smart_str
-
-from django.core.management.base import CommandError
-
 from django.core import serializers
+from django.core.cache import cache
 from django.core.management.color import no_style
+from django.core.management.base import CommandError
 from django.db import connection, transaction
 from django.db.models import get_models
 from django.db.models.loading import load_app
+from django.utils.cache import _generate_cache_header_key
+from django.utils.encoding import smart_str
 
 
 class classproperty(property):
@@ -355,3 +355,14 @@ def ask_yesno_question(question, default_answer):
             return answer == 'yes' and True or False
         else:
             print 'Please answer yes or no'
+
+
+def print_sql_queries(base_path):
+    now = datetime.now()
+    file_name = 'sqls_%s%s.csv' % (now.strftime('%Y%m%d%H%M%S'), str(now.microsecond))
+    fout = open(os.path.join(base_path, file_name), 'w')
+    csv_stream = csv.writer(fout, delimiter=',',
+                            quotechar='"', quoting=csv.QUOTE_MINIMAL)
+    for query in connection.queries:
+        csv_stream.writerow([query['sql'], query['time']])
+    fout.close()
