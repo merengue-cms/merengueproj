@@ -21,6 +21,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.admin import BaseOrderableAdmin, BaseCategoryAdmin, OrderableRelatedModelAdmin, RelatedModelAdmin
 from merengue.base.models import BaseContent
+from merengue.section.models import BaseSection
 from plugins.standingout.forms import StandingOutAdminModelForm
 from plugins.standingout.models import StandingOut, StandingOutCategory
 
@@ -54,13 +55,12 @@ class StandingOutAdmin(BaseOrderableAdmin):
         return saved
 
 
-class StandingSectionOutAdmin(OrderableRelatedModelAdmin, StandingOutAdmin):
+class StandingContentOutAdmin(OrderableRelatedModelAdmin, StandingOutAdmin):
 
     list_display = ('obj', )
-    standingoutcategory = 'section'
 
     def get_form(self, request, obj=None):
-        form_class = super(StandingSectionOutAdmin, self).get_form(request, obj)
+        form_class = super(StandingContentOutAdmin, self).get_form(request, obj)
         self.fieldsets = (self.fieldsets[0], )
         return form_class
 
@@ -68,7 +68,11 @@ class StandingSectionOutAdmin(OrderableRelatedModelAdmin, StandingOutAdmin):
         return ('order', 'asc')
 
     def save_model(self, request, obj, form, change):
-        standingoutcategory = StandingOutCategory.objects.get(context_variable=self.standingoutcategory)
+        if self.basecontent and isinstance(self.basecontent, BaseSection):
+            category = 'section'
+        else:
+            category = 'content'
+        standingoutcategory = StandingOutCategory.objects.get(context_variable=category)
         obj.standing_out_category = standingoutcategory
         obj.related = self.basecontent
         super(RelatedModelAdmin, self).save_model(request, obj, form, change)
@@ -81,11 +85,6 @@ class StandingSectionOutAdmin(OrderableRelatedModelAdmin, StandingOutAdmin):
         ct = ContentType.objects.get_for_model(basecontent)
         return base_qs.filter(**{'related_id': basecontent.id,
                                  'related_content_type': ct})
-
-
-class StandingContentOutAdmin(StandingSectionOutAdmin):
-
-    standingoutcategory = 'content'
 
 
 class StandingOutCategoryAdmin(BaseCategoryAdmin):
