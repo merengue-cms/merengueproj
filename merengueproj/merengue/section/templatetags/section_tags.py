@@ -127,15 +127,8 @@ def get_menu_iterative(context, menu, menu_tree):
 def get_static_main_menu(context, section, menu_tree):
     menu_child = {}
     try:
-        converter_app_name = {'golf': 'course',
-                                'leisure': None,
-                                'photocontests': 'contestant',
-                                'sport': 'sport_facility'}
-        app_name = section.app_name
-        if app_name in converter_app_name:
-            app_name = converter_app_name[app_name]
-        if app_name:
-            url_search = reverse('%s_search' % app_name)
+        if section.app_name:
+            url_search = reverse('%s_search' % section.app_name)
             menu_child['name'] = _('Searcher')
             menu_child['slug'] = 'search-%s' % section.slug
             menu_child['url'] = url_search
