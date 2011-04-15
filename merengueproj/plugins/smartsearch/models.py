@@ -29,13 +29,8 @@ class Searcher(BaseReport):
         verbose_name=_(u'Collections'),
     )
 
-    @classmethod
-    def get_colums_wizard(cls):
-        return {'fields': True,
-                'filter': True,
-                'display': False,
-                'help_text': True,
-                'advanced_options': True}
+    def get_redirect_wizard(self, report=None):
+        return '../%s/' % self.id
 
     class Meta:
         verbose_name = _('searcher')

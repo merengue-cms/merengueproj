@@ -14,24 +14,35 @@
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
+from django import forms
 from django.conf import settings
 from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext_lazy as _
 
 from autoreports.forms import FormAdminDjango, ReportFilterForm
-from merengue.base.forms import BaseAdminModelForm
+from autoreports.wizards import ReportNameForm
 
 
-class SearcherRelatedCollectionModelAdminForm(BaseAdminModelForm, FormAdminDjango):
+class SearcherRelatedCollectionModelAdminForm(ReportNameForm, FormAdminDjango):
+
+    name = forms.CharField(label=_('name'), required=False)
+
+    def __init__(self, *args, **kwargs):
+        super(SearcherRelatedCollectionModelAdminForm, self).__init__(*args, **kwargs)
+        self.fields['name'].widget.is_required = False
 
     def __unicode__(self):
         return self.as_django_admin()
 
     class Meta:
-        exclude = ('content_type', 'report_filter_fields',
-                   'report_display_fields', 'advanced_options')
+        exclude = ('content_type', 'options',)
 
 
 class SearcherForm(ReportFilterForm):
+
+    def __init__(self, is_admin=False, use_subfix=True, search=None, *args, **kwargs):
+        self.search = search
+        super(SearcherForm, self).__init__(is_admin, use_subfix, *args, **kwargs)
 
     class Media:
         js = (reverse("django.views.i18n.javascript_catalog"),

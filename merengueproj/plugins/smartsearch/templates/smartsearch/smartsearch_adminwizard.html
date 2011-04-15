@@ -1,4 +1,4 @@
-{% extends "autoreports/autoreports_adminwizard.html" %}
+{% extends "autoreports/admin/autoreports_wizard.html" %}
 
 {% load i18n related_admin_tags %}
 
@@ -20,6 +20,8 @@
 {% block title %}
     {% trans "Search Wizard" %}  | {% trans 'Merengue site admin' %}
 {% endblock %}
+
+{% block contentextraclass %}smartSearch{% endblock %}
 
 {% block submit %}
     <input type="submit" name="__report_wizard" class="default" value="{% trans "Create searcher" %}"/>

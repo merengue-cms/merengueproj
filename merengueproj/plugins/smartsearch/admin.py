@@ -34,31 +34,43 @@ class SearcherRelatedCollectionAdmin(RelatedModelAdmin):
 
     def add_view(self, request, form_url='', extra_context=None, parent_model_admin=None, parent_object=None):
         form_top_class = self.get_form(request)
-        content_type_model = self.basecontent.get_first_parents_of_content_types()
-        content_type = ContentType.objects.get_for_model(content_type_model)
         extra_context = self._update_extra_context(request, extra_context, parent_model_admin, parent_object)
-        context = {'model_admin': self,
-                   'columns': {'fields': True,
-                               'filter': True,
-                               'display': False,
-                               'help_text': True,
-                               'advanced_options': True}, }
-        context.update(extra_context)
-        return self.report_api_wizard(request,
-                                      queryset=None, template_name='smartsearch/smartsearch_adminwizard.html',
-                                      extra_context=context,
-                                      model=Searcher,
-                                      form_top_class=form_top_class,
-                                      content_type=content_type)
+        return self.report_wizard(request,
+                                  template_name='smartsearch/smartsearch_adminwizard.html',
+                                  extra_context=extra_context,
+                                  model=Searcher,
+                                  form_top_class=form_top_class,
+                                  content_type=self._get_content_type())
 
-    def _create_report(self, model, name, report_display_fields,
-                            report_filter_fields, content_type, report_advance):
-        searcher = super(SearcherRelatedCollectionAdmin, self)._create_report(model, name, report_display_fields,
-                                                                              report_filter_fields, content_type,
-                                                                              report_advance)
+    def change_view(self, request, object_id, extra_context=None, parent_model_admin=None, parent_object=None):
+        form_top_class = self.get_form(request)
+        extra_context = self._update_extra_context(request, extra_context, parent_model_admin, parent_object)
+        return self.report_edit_wizard(request, object_id,
+                                       template_name='smartsearch/smartsearch_adminwizard.html',
+                                       extra_context=extra_context,
+                                       model=Searcher,
+                                       form_top_class=form_top_class,
+                                       content_type=self._get_content_type())
+
+    def _create_report(self, model, content_type, name, options, report=None):
+        searcher = super(SearcherRelatedCollectionAdmin, self)._create_report(model, content_type, name, options, report)
         if isinstance(searcher, Searcher):
             searcher.collections.add(self.basecontent)
         return searcher
+
+    def _get_content_type(self):
+        content_type_model = self.basecontent.get_first_parents_of_content_types()
+        return ContentType.objects.get_for_model(content_type_model)
+
+    def _update_extra_context(self, request, extra_context=None, parent_model_admin=None, parent_object=None):
+        extra_context = extra_context or {}
+        context = super(SearcherRelatedCollectionAdmin, self)._update_extra_context(request,
+                                                                                    extra_context,
+                                                                                    parent_model_admin,
+                                                                                    parent_object)
+        context = {'model_admin': self, }
+        context.update(extra_context)
+        return context
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(SearcherRelatedCollectionAdmin, self).get_form(request, obj, **kwargs)
