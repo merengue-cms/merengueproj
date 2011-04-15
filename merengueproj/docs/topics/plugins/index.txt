@@ -99,7 +99,7 @@ change form. In this view, Merengue will show the error traceback:
 Plugin Customization
 ====================
 
-Some plugins have customization parameters, which appear in the plugin admin view.
+Some plugins have customization parameters which appear in the plugin admin view.
 See the :ref:`registry configuration params <topics-registry-configuration-params>`
 topic for more details.
 
@@ -168,19 +168,21 @@ Let's explain piece of the directory tree listed above:
 * ``urls.py`` is normal `Django urls`_ file. You can use it to control a URL namespace
   (i.e. all ``/fooplugin/.*`` urls).
 * ``templates/fooplugin/`` is a directory for ``fooplugin`` template resources.
-* ``media/fooplugin/`` is a directory for media resources like icons, css, etc.
+* ``media/fooplugin/`` is a directory for media resources (e.g. icons, css, etc.)
 
 .. _`Django views`: http://docs.djangoproject.com/en/dev/topics/http/views/#topics-http-views
 .. _`Django URLs`: http://docs.djangoproject.com/en/dev/topics/http/urls/#topics-http-urls
 
 .. _topics-plugins-configuration:
 
-Plugin configuration
+Plugin Configuration
 --------------------
 
-Plugin configuration is defined in a ``PluginConfig`` class in a ``config.py`` module inside your plugin directory. This class is readed when plugin is loaded in merengue.
+A plugin configuration is defined in the ``PluginConfig`` class located in the
+``config.py`` module inside your plugin directory. This class is read by Merengue
+when the plugin is loaded initially.
 
-This is a ``config.py`` file code fragment example:
+A code fragment from a ``config.py`` example:
 
 .. code-block:: python
 
@@ -205,24 +207,24 @@ This is a ``config.py`` file code fragment example:
 
         # ... etcetera
 
-Parameters reference
---------------------
+Configuration Parameters Reference
+----------------------------------
 
-Plugin metadata
+Plugin Metadata
 ~~~~~~~~~~~~~~~
 
-The ``name`` parameter is used to give this plugin a name that will be
-visible in the Merengue plugin control center. It is a required parameter
-and usually it is just a single word or two.
+The ``name`` parameter is used to give the plugin a name (visible in the Merengue
+plugin control center). It's a required parameter and usually consists of a single
+word (or two).
 
-The ``descrpition`` parameter add some more information for this plugin.
-It can be a full sentence that will help the Merengue administrator to
-decide if it is worthy to install this plugin.
+The ``description`` parameter adds additional information for the plugin.
+It can be a full sentence, describing the plugin, giving the Merengue administrator
+an idea of the plugin's purpose and its functionality.
 
-Finally the ``version`` parameter is a string with the version information
-of the plugin. It is not required but highly recommended.
+Finally, the ``version`` parameter is a string with version information for the
+plugin. This parameter is not required, however its usage is highly recommended.
 
-Example:
+An example:
 
 .. code-block:: python
 
@@ -235,7 +237,7 @@ Example:
 Plugin URLs
 ~~~~~~~~~~~
 
-The ``url_prefixes`` parameter is the URL prefix for all your plugin urls.
+The ``url_prefixes`` parameter contains the URL prefix for all of your plugin URLs.
 
 Example:
 
@@ -248,9 +250,9 @@ Example:
         )
 
 
-With this example, if plugin was activated, all urls below ``fooplugin`` will
-be handled by ``plugins.fooplugin.urls`` module. Internally, merengue plugin
-system will perform a operation like this:
+In this example, if the plugin was activated, all URLs below ``fooplugin`` will
+be handled by the ``plugins.fooplugin.urls`` module. Internally, the Merengue plugin
+system will perform an operation like this:
 
 .. code-block:: python
 
@@ -258,7 +260,7 @@ system will perform a operation like this:
       (r'^fooplugin/', include('plugins.fooplugin.urls')),
     )
 
-You can also internazionalize your plugins URLs. See this example:
+You can also internationalize your plugin's URLs. See this example:
 
 .. code-block:: python
 
@@ -269,22 +271,25 @@ You can also internazionalize your plugins URLs. See this example:
              'plugins.event.urls'),
         )
 
-The final URL prefix used will depend of the ``URL_DEFAULT_LANG`` setting (by
-default will be same as ``LANGUAGE_CODE``).
+The final URL prefix used will depend on the ``URL_DEFAULT_LANG`` setting (by
+default it will be set the same as ``LANGUAGE_CODE``).
 
-.. note::
+.. note:: 
     Your site will have only **one** prefix for every url prefixes you have
     internazionalized. So, if your ``URL_DEFAULT_LANG`` is ``"es"``, only
     ``/eventos`` will be handled for the plugin and ``/event`` will raise a 404
     error.
 
-Plugin possibilities
+Plugin Possibilities
 --------------------
 
-A developer can do a lot of things when developing a new Plugin:
+A developer can do many things when developing a new plugin:
 
 
-* **Defining new blocks**, implementing the ``get_blocks(self)`` method in the ``PluginConfig`` class. See :ref:`blocks reference <topics-blocks>`. Example:
+* **Define new blocks**: Implement the ``get_blocks(self)`` method in the ``PluginConfig``
+  class. See the :ref:`blocks reference <topics-blocks>` for more information.
+  
+  An example:
 
 .. code-block:: python
 
@@ -296,7 +301,11 @@ A developer can do a lot of things when developing a new Plugin:
         def get_blocks(self):
             return [FooBlock, ]
 
-* **Defining new actions**, implementing the ``get_actions(self)`` method in the ``PluginConfig`` class. See :ref:`actions reference <topics-actions>`. Example:
+* **Define new actions**: Implement the ``get_actions(self)`` method in the
+  ``PluginConfig`` class. See the :ref:`actions reference <topics-actions>` for
+  more information.
+  
+  An example:
 
 .. code-block:: python
 
@@ -308,7 +317,9 @@ A developer can do a lot of things when developing a new Plugin:
         def get_actions(self):
             return [FooAction, ]
 
-* **Creates new models**, implementing those models in the plugin ``models.py`` file. Example:
+* **Create new models**: Implement new models in the plugin ``models.py`` file.
+
+  An example:
 
 .. code-block:: python
 
@@ -318,7 +329,10 @@ A developer can do a lot of things when developing a new Plugin:
         new_field = models.CharField(max_length=100)
         # stuff ...
 
-* **Defining a plugin custom admin site**, implementing the ``get_model_admins(self)`` method in the ``PluginConfig`` class. Example:
+* **Define a plugin's custom admin site**: Implement the ``get_model_admins(self)``
+  method in the ``PluginConfig`` class.
+  
+  An example:
 
 .. code-block:: python
 
@@ -332,7 +346,11 @@ A developer can do a lot of things when developing a new Plugin:
             return [(FooContent, FooContentAdmin),
                     (FooCategory, FooCategoryAdmin)]
 
-* **Defining new permissions**, implementing the ``get_perms(self)`` method in the ``PluginConfig`` class. See :ref:`permissions reference <topics-permissions>`. Example:
+* **Define new permissions**: Implement the ``get_perms(self)`` method in the
+  ``PluginConfig`` class. See the :ref:`permissions reference <topics-permissions>` for
+  more information.
+  
+  An example:
 
 .. code-block:: python
 
@@ -344,7 +362,11 @@ A developer can do a lot of things when developing a new Plugin:
         def get_perms(self):
             return [('Vote foo', 'vote_foo', [FooContent]), ), ]
 
-* **Defining new viewlets**, implementing the ``get_viewlets(self)`` method in the ``PluginConfig`` class. See :ref:`viewlets reference <topics-viewlets>`. Example:
+* **Define new viewlets**: Implement the ``get_viewlets(self)`` method in the
+  ``PluginConfig`` class. See the :ref:`viewlets reference <topics-viewlets>` for
+  more information.
+  
+  An example:
 
 .. code-block:: python
 
@@ -356,7 +378,10 @@ A developer can do a lot of things when developing a new Plugin:
         def get_viewlets(self):
             return [FooViewlet1, FooViewlet2]
 
-* **Defining new middlewares**, implementing the ``get_middlewares(self)`` method in the ``PluginConfig`` class. See `Django middleware reference`_. Example:
+* **Define new middleware**: Implement the ``get_middlewares(self)`` method in the
+  ``PluginConfig`` class. See the `Django middleware reference`_ for more information.
+  
+  An example:
 
 .. code-block:: python
 
@@ -368,7 +393,10 @@ A developer can do a lot of things when developing a new Plugin:
 
 .. _`Django middleware reference`: http://docs.djangoproject.com/en/1.3/topics/http/middleware/
 
-* **Anything you want after plugin activation**, implementing the ``hook_post_register(self)`` method in the ``PluginConfig`` class. Example:
+* **Execute code after plugin activation**: Implementing the ``hook_post_register(self)``
+  method in the ``PluginConfig`` class.
+  
+  An example:
 
 .. code-block:: python
 
@@ -381,58 +409,64 @@ A developer can do a lot of things when developing a new Plugin:
             send_mail('Foo plugin enabled', 'The foo plugin has been enabled.', 'from@example.com',
                       'admin@example.com', fail_silently=True)
 
-Example plugins
+Plugin Examples
 ---------------
 
-In the Merengue `plugins directory`_ you can browse several plugins implemented, like the `news plugin`_.
+Check out the Merengue `plugins directory`_ to see several plugin implementations
+(e.g. the `news plugin`_).
 
 .. _`plugins directory`: http://tracpub.yaco.es/merengue/browser/trunk/merengueproj/plugins/
 .. _`news plugin`: http://tracpub.yaco.es/merengue/browser/trunk/merengueproj/plugins/news/
 
-Required plugins in a project
------------------------------
+Plugin Dependencies in a Project
+--------------------------------
 
-Sometimes your project requires that some plugins were activated by default and
-user cannot deactivated them. For example project logic may rely in existence
-of certains models defined in a plugin.
+Sometimes your project depends on a plugin (or multiple plugins) to be activated
+by default and you want to prevent the user from deactivating it (or them). For
+example, your project logic may rely on the existence of certains models defined
+in a specific plugin.
 
-You can define plugins that will be installed and activated by default including
-next setting in your project settings:
+You can define which plugins your project depends on by including the following
+setting in your project settings:
 
 .. code-block:: python
 
     REQUIRED_PLUGINS = ('core', 'fooplugin', )
 
-Default: ``('core', )`` (``core`` plugin)
+Default: ``('core', )`` (the ``core`` plugin)
 
-.. admonition:: About ``core`` plugin
+.. admonition:: About the ``core`` plugin:
 
-    ``core`` plugin have to be included in ``REQUIRED_PLUGINS`` to maintain all
-    merengue features.
+    The ``core`` plugin must be included in the ``REQUIRED_PLUGINS`` setting
+    for all of the standard Merengue features to be present in your site.
 
-After changing ``REQUIRED_PLUGINS`` setting, you have to register plugin with this
-command to get new plugins activated (and also get their models created if exist)::
+After changing the ``REQUIRED_PLUGINS`` setting, you will need to register the plugin with
+the following command to get new plugins activated (and also to get their models
+created if any exist)::
 
     python manage.py migrate
 
-South migrations in plugins
+South Migrations in Plugins
 ---------------------------
 
-If your plugin change its models and you want a clean migration in websites
-with your plugin installed, you may need to implement `South`_ migrations on it.
+If your plugin's models change, and you want a clean model migration for your site(s),
+you may need to implement `South`_ migrations for it.
 
-For creating south migrations, you have to use the ``schemamigration`` and
-``datamigration`` commands (see `South docs`_ for more information). You only
-have to remember to add temporary the plugin name to ``INSTALLED_APPS`` setting
-before executing those commands, because south does not find enabled plugins by
-itself.
+In order to create South migrations, you have to use the ``schemamigration`` and
+``datamigration`` commands (see the `South docs`_ for more information). You only
+have to remember to temporarily add the plugin name to the ``INSTALLED_APPS`` setting
+before executing thesecommands, because South is not able to find Merengue plugins
+on its own.
 
-When a plugin with south migrations is installed, Merengue automatically will
-execute its South migrations. To execute plugins migrations in already
-installed plugins you have to uninstall and install the plugin in Merengue admin.
+When a plugin with a South migration setup is installed, Merengue will automatically 
+execute the plugin's South migrations.
 
-Also, there is a useful ``migrate_plugins`` command which migrates all enabled
-plugins in your website. There are some example of use:
+To execute an existing (i.e. installed) plugin's South-based migration, you must
+uninstall and re-install the plugin using the Merengue admin site.
+
+Also, you can use the very helpful ``migrate_plugins`` command which migrates all
+installed, enabled plugins in your site. The following lines illustrate how to use
+the ``migrate-plugins`` command:
 
 .. code-block:: bash
 
