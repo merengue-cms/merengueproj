@@ -235,6 +235,13 @@ input#id_password {
   background: transparent url(../img/required.gif) no-repeat right center;
 }
 
+/* ----- contactform plugin ----- */
+
+form#contactform ul.errorlist{
+    margin-left: 0;
+    color: #c00;
+}
+
 /* ----- shadowbox ----- */
 
 #shadowbox_container #shadowbox_body {
