@@ -53,6 +53,7 @@
         }
 
         function initBlock(block) {
+            console.log("block init");
             var dragAnchor, confAnchor, divTools, position;
             position = block.position();
             divTools = $("<div>");
@@ -60,9 +61,11 @@
             dragAnchor = $("<a>");
             dragAnchor.attr("href", "javascript:void(0)");
             dragAnchor.attr("title", "{% trans "Enable/disable blocks dragging" %}");
-            dragAnchor.addClass("drag");
-            dragAnchor.click(enableDragging);
-            divTools.append(dragAnchor);
+            if (!block.hasClass('fixed')){
+                dragAnchor.addClass("drag");
+                dragAnchor.click(enableDragging);
+                divTools.append(dragAnchor);
+            }
             if (!block.hasClass("noconfig")) {
                 confAnchor = $("<a>");
                 confAnchor.attr("href", "javascript:void(0)");

@@ -43,6 +43,7 @@ class BaseBlock(RegistrableItem):
         block_context = {
             'block_name': registered_block.name,
             'placed_at': registered_block.placed_at,
+            'fixed_place': getattr(registered_block, 'fixed_place', False),
             'block_title': block_title or registered_block.name,
             'block': registered_block,
             'has_config': self.has_config(),
@@ -81,6 +82,13 @@ def registered_block(sender, **kwargs):
         registered_item = kwargs['registered_item']
         registered_item.placed_at = sender.default_place
         registered_item.name = sender.name
+
+        # optional block settings
+        if hasattr(sender, 'is_fixed'):
+            registered_item.is_fixed = sender.is_fixed
+        if hasattr(sender, 'fixed_place'):
+            registered_item.fixed_place = sender.fixed_place
+
         registered_item.save()
 
 

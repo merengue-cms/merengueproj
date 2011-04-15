@@ -60,6 +60,9 @@ class RegisteredBlock(RegisteredItem):
     is_fixed = models.BooleanField(
         verbose_name=_('disable the activation and desactivation of the block'),
         default=False)
+    fixed_place = models.BooleanField(
+        verbose_name=_('block can\'t be moved from its default place'),
+        default=False)
     # fields for blocks related to contents
     content = models.ForeignKey(BaseContent, verbose_name=_(u'related content'), null=True)
     overwrite_if_place = models.BooleanField(

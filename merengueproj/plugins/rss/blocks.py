@@ -25,6 +25,7 @@ from merengue.pluggable.utils import get_plugin
 class RSSGlobalFeed(Block):
     name = 'RSSGlobalFeed'
     default_place = 'meta'
+    fixed_place = True
     help_text = ugettext_lazy('Block represents global RSS feed')
     verbose_name = ugettext_lazy('Global RSS feed block')
 

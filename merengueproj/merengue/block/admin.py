@@ -50,6 +50,8 @@ class RegisteredBlockAdmin(RegisteredItemAdmin):
         readonly_fields = super(RegisteredBlockAdmin, self).get_readonly_fields(request, obj)
         if obj and obj.is_fixed:
             readonly_fields += ('placed_at', 'order', 'active')
+        elif obj and obj.fixed_place:
+            readonly_fields += ('placed_at', )
         return readonly_fields
 
     def has_add_permission(self, request):
