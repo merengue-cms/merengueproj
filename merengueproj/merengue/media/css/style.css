@@ -242,6 +242,9 @@ form#contactform ul.errorlist{
     color: #c00;
 }
 
+.calendarnav-previous{ float: left; }
+.calendarnav-next{ float: right; }
+
 /* ----- shadowbox ----- */
 
 #shadowbox_container #shadowbox_body {
