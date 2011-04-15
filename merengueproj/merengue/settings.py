@@ -98,6 +98,7 @@ INSTALLED_APPS = (
     'south',
     'threadedcomments',
     'autoreports',
+    'formadmin',
     'johnny',
     'oot',
     'genericforeignkey',
@@ -298,3 +299,9 @@ NUM_ELEM_PER_PAGE_DEFAULT = 10
 
 # Search in genericforeingkey model admins
 SEARCH_MODELADMIN = True
+
+# Settings to autoreports
+AUTOREPORTS_FUNCTIONS = True
+AUTOREPORTS_INITIAL = True
+AUTOREPORTS_I18N = True
+AUTOREPORTS_SUBFIX = True
