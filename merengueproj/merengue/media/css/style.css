@@ -245,6 +245,12 @@ form#contactform ul.errorlist{
 .calendarnav-previous{ float: left; }
 .calendarnav-next{ float: right; }
 
+/* ----- googlesearch plugin ----- */
+
+div#googlesearch table td{
+    border: none ;
+}
+
 /* ----- shadowbox ----- */
 
 #shadowbox_container #shadowbox_body {
