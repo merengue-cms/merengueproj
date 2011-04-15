@@ -34,6 +34,7 @@
                 var label_tag = field.find('.label-tag');
                 var field_content = field.find('.field-after-label');
                 var label_for = label_tag.find('> label').attr('for');
+                var help = field.find('.help');
                 field_content.addClass(label_for);
                 field_content.hide();
                 labels.append(label_tag);
@@ -50,6 +51,8 @@
                         fields.addClass('errors');
                     }
                 };
+                help.addClass('translatable');
+                field_content.append(help);
             };
 
             var redoFields = function() {

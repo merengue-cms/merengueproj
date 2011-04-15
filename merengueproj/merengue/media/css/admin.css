@@ -1076,6 +1076,10 @@ ul.extra_options {
     background-color: #ffffcc;
 }
 
+.trans-field-container p.help.translatable{
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+}
 /*------- administrator-menu ------*/
 #administrator-menu ul li {
     list-style: none;
