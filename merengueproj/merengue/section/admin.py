@@ -43,6 +43,7 @@ class BaseSectionAdmin(BaseOrderableAdmin, PermissionAdmin):
     ordering = ('order', )
     list_display = ('name', 'slug', )
     list_display_links = ('name', )
+    search_fields = tuple(['name_' + code for code, lang in settings.LANGUAGES])
     html_fields = ()
     removed_fields = ('description', )
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
