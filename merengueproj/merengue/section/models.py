@@ -111,6 +111,14 @@ class Menu(models.Model):
         editable=False,
         )
 
+    status = models.CharField(
+        verbose_name=_('status'),
+        help_text=_('status of the menu element'),
+        choices=(('public', _('public')), ('private', _('private'))),
+        default='public',
+        max_length=25,
+    )
+
     class Meta:
         verbose_name = _('menu')
         verbose_name_plural = _('menus')
