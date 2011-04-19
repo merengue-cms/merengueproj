@@ -290,3 +290,6 @@ DEFAULT_PLUGIN_PREVIEW = path.join('merengue', 'img', 'preview_merengue.png')
 
 # Num element per page in collections
 NUM_ELEM_PER_PAGE_DEFAULT = 10
+
+# Search in genericforeingkey model admins
+SEARCH_MODELADMIN = True
