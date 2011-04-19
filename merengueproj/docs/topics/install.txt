@@ -140,44 +140,45 @@ Execute ``setup.py`` to complete the manual install process:
     $ sudo python setup.py install
 
 
-Merengue project creation
+Merengue Project Creation
 =========================
 
-You've got two options to start a new merengue project: production mode and
-development mode.
+When beginning a Merengue project, you can begin your development in one of two
+modes: production mode or development mode.
 
-In production mode, project will contain a freezed merengue version (it will be
-copied). So, if you are using merengue subversion code, any following updates
-will not affect to your project.
+In production mode, your project will contain a "frozen" version of Merengue
+(the code will be copied). So, if you are using Merengue subversion code, any
+new (i.e. following) code updates will not affect your project.
 
-In development mode, project will contain symbolic links to merengue code. So,
-if you are using merengue subversion code, your project will be affected by any
-later merengue updates (new features, new fixes or new possible errors or
-incompatible changes).
+In development mode, your project will contain symbolic links back to the
+Merengue code in the subversion repository. In this case, your project will be
+affected by any code updates to the Merengue subversion repository (including any
+new features and fixes that have been implemented, as well as any new errors or
+changes that may cause compatibility problems with your code).
 
-* Project creation in *production mode*:
+* To create a project in *production mode*:
 
 .. code-block:: bash
 
     $ merengue-admin.py startproject myproject
 
 
-* Project creation in *development mode*:
+* To create a project in *development mode*:
 
 .. code-block:: bash
 
     $ merengue-admin.py startproject myproject --develop
 
 
-Languages configuration
+Language(s) Configuration
 -----------------------
 
-In Merengue, language configuration should be done before database creation,
-because data models are created with translatable fields (as much columns as 
-languages are configurated).
+In Merengue, language configuration should be done before database creation
+because data models are created with translatable fields (the number of columns
+created is equal to the number of configured languages).
 
-Then it's necessary to define ``LANGUAGE_CODE`` and ``LANGUAGES`` parameters
-in the configuration file ``myproject/settings.py``:
+The ``LANGUAGE_CODE`` and ``LANGUAGES`` parameters must be defined in the
+configuration file ``myproject/settings.py``:
 
     .. code-block:: python
 
@@ -189,23 +190,24 @@ in the configuration file ``myproject/settings.py``:
             ('fr', ugettext('Français')),
         )
 
-.. admonition:: Deep into
+.. admonition:: More Information
 
-    See `django-transmeta`_ app for more information about translatable models.
+    See the `django-transmeta`_ application for more information about
+    translatable models.
 
 .. _`django-transmeta`: http://code.google.com/p/django-transmeta/
 
-Database installation and configuration
+Database Installation and Configuration
 ---------------------------------------
 
-You need to define your database connection, defining ``DATABASE_*`` parameters
-in the configuration file.
+The database connection must be defined in the configuration file by setting
+the ``DATABASE_*`` parameters.
 
-.. admonition:: PostgreSQL as convention database
+.. admonition:: PostgreSQL Assumption
 
-    Next steps will consider PostgreSQL as choiced database engine.
-    Other engines can be used, but you have to adapt instructions to the
-    specific database engine commands.
+    The following instructions assume the use of PostgreSQL as the database engine.
+    Other databases can be used, but the steps below (specifically,
+    the database commands) will have to be adapted for use with your database.
 
 Let's suppose that you were configuring a PostgreSQL database with the
 following parameters:
