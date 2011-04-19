@@ -27,7 +27,7 @@ class Saml2LoginAction(UserAction):
 
     @classmethod
     def get_url(cls, request, user):
-        return reverse('saml2_login')
+        return '%s?next=%s' % (reverse('saml2_login'), request.get_full_path())
 
     @classmethod
     def has_action(cls, user):
