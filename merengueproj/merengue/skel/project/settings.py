@@ -53,7 +53,6 @@ LANGUAGES = (
     ('en', ugettext('English')),
     ('es', ugettext('Español')),
     ('it', ugettext('Italiano')),
-    ('fr', ugettext('Français')),
 )
 
 URL_DEFAULT_LANG = LANGUAGE_CODE
