@@ -24,7 +24,7 @@ Managing content
 ================
 
  * **User guide:**
-   Learn to manage content with merengue reading the :ref:`user guide <topics-userguide>`
+   Learn to manage content with merengue by reading the :ref:`user guide <topics-userguide>`.
 
 Topics
 ======
@@ -65,7 +65,7 @@ Topics
 Reference
 =========
 
- * **Merengue data model**
+ * **Merengue data model:**
    Merengue :ref:`data models <ref-datamodels>`
 
  * **Merengue settings:**
