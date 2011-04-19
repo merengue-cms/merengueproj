@@ -50,7 +50,7 @@ class Repository(models.Model):
     def get_absolute_url(self):
         url_with_out_section = self.get_absolute_url_with_out_section()
         if self.section:
-            return self.section.real_instance.url_in_section(url_with_out_section)
+            return self.section.get_real_instance().url_in_section(url_with_out_section)
         return url_with_out_section
 
     def save(self, force_insert=False, force_update=False):
