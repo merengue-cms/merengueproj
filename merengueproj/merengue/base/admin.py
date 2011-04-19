@@ -749,6 +749,11 @@ class BaseContentAdmin(BaseAdmin, WorkflowBatchActionProvider, StatusControlProv
                                     'size': 100}, }
     exclude = ('adquire_global_permissions', )
 
+    def __init__(self, *args, **kwargs):
+        super(BaseContentAdmin, self).__init__(*args, **kwargs)
+        # Save original prepopulated fields just in case we have to remove any readonly field from it
+        self.original_prepopulated_fields = self.prepopulated_fields.copy()
+
     def get_urls(self):
         from django.conf.urls.defaults import patterns
         urls = super(BaseContentAdmin, self).get_urls()
