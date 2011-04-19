@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-# don't touch this "import *" is necesary for urlresolvers works
-from django.conf.urls.defaults import *
+
 from django.conf import settings
+from django.conf.urls.defaults import patterns, include, url
 
 from merengue.base import admin
-from merengue.urls import *
+from merengue.urls import *  # pyflakes:ignore
 
 admin.autodiscover()
 

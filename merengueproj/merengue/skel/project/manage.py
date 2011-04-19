@@ -28,7 +28,7 @@ def fix_merengue_links():
             merengue_path = raw_input("What is the path to merengueproj directory?: ")
             sys.path.append(merengue_path)
             try:
-                import merengue
+                import merengue  # pyflakes:ignore
             except ImportError:
                 print "In this directory merengue module cannot be imported"
             else:
@@ -40,19 +40,19 @@ def fix_merengue_links():
         print 'Fixing %s, changing from broken "%s" to "%s" location...' % (merengue_link_path, link_src, merengue_path)
 
 try:
-    import django
+    import django  # pyflakes:ignore
 except ImportError:
     sys.stderr.write("Error: django cannot be found. Make sure you have django installed and in your python path\n")
     sys.exit(1)
 
 try:
-    import merengue
+    import merengue  # pyflakes:ignore
 except ImportError:
     sys.stderr.write("Error: merengue cannot be found\n")
     fix_merengue_links()
 
 try:
-    import settings # Assumed to be in the same directory.
+    import settings  # Assumed to be in the same directory.
 except ImportError:
     sys.stderr.write("Error: Can't find the file 'settings.py' in the directory containing %r. It appears you've customized things.\nYou'll have to run django-admin.py, passing it your settings module.\n(If the file settings.py does indeed exist, it's causing an ImportError somehow.)\n" % __file__)
     sys.exit(1)
