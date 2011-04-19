@@ -236,7 +236,7 @@ class RenderSingleBlockNode(template.Node):
 def do_render_single_block(parser, token):
     """
     Usage::
-      {% render_single_block "plugins.news.blocks.NewsBlock" %}
+      {% render_single_block "plugins.news.blocks.NewsBlock" "news_block" %}
     """
     bits = token.split_contents()
     tag_name = bits[0]
@@ -247,11 +247,12 @@ def do_render_single_block(parser, token):
     block_name = bits[2][1:-1]
     module = '.'.join(splitted_block_name[:-1])
     classname = splitted_block_name[-1]
-    try:
-        block = RegisteredBlock.objects.get(module=module,
+    blocks = RegisteredBlock.objects.filter(module=module,
                                             class_name=classname,
-                                            name=block_name, is_fixed=True).get_registry_item()
-    except RegisteredBlock.DoesNotExist:
+                                            name=block_name)
+    if blocks:
+        block = blocks[0].get_registry_item()
+    else:
         try:
             old_block = get_items_by_name('%s.%s' % (module, classname)).next()
             reg_block = merengue_register(old_block.__class__)
