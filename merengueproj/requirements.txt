@@ -25,8 +25,8 @@ django-oot
 django-genericforeignkey
 django-stdfile
 cmsutils>=0.5.6
-transhette>=0.5.6
-django-inlinetrans>=0.4.9dev
+transhette>=0.5.7
+django-inlinetrans>=0.4.10dev
 django-transmeta>=0.6.1
 sorl-thumbnail>=11.01
 searchform>=0.1.1
