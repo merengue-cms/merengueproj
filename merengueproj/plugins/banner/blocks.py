@@ -30,8 +30,8 @@ class BannerBlock(BlockQuerySetItemProvider, Block):
     help_text = _('Block that represents a banner')
 
     config_params = BlockQuerySetItemProvider.config_params + [
-        params.Single(name='limit', label=ugettext('limit for banner block'),
-                      default='3'),
+        params.PositiveInteger(name='limit', label=ugettext('limit for banner block'),
+                               default=3),
     ]
 
     def get_contents(self, request=None, context=None, section=None):
