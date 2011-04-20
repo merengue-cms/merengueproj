@@ -40,8 +40,8 @@
                         comment_body.children('.commentform').find('form').replaceWith(comment_body.children('.commentresults').find('form'));
                         comment_body.children('.commentresults').empty();
                         comment_body.children('.commentform').find('form').submit(sendcomment);
-                        if ($(this).children("form").find("#id_name").val()){
-                            $(this).children("form").find("#id_name").parent().hide();
+                        if (comment_body.find("[id=id_name]").val()){
+                            comment_body.find("[id=id_name]").parent().hide()
                         }
                         comment_body.children('.commentform').find('form').show('slow');
                         form.find('.submit').attr('disabled',0);
