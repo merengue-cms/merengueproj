@@ -39,11 +39,11 @@ class PluginConfig(Plugin):
         return [(StandingOut, StandingSectionOutAdmin)]
 
     def post_install(self):
-        soc_section = StandingOutCategory(context_variable='section', slug='section')
+        (soc_section, created) = StandingOutCategory.objects.get_or_create(context_variable='section', slug='section')
         for real_field in get_real_fieldname_in_each_language('name'):
             setattr(soc_section, real_field, 'section')
         soc_section.save()
-        soc_content = StandingOutCategory(context_variable='content', slug='content')
+        (soc_content, created) = StandingOutCategory.objects.get_or_create(context_variable='content', slug='content')
         for real_field in get_real_fieldname_in_each_language('name'):
             setattr(soc_content, real_field, 'content')
         soc_content.save()
