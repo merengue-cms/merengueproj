@@ -1,6 +1,11 @@
 {% extends "block.html" %}
 {% load i18n adminmedia %}
 
+{% block blocktitle %}
+    {% if forms_search %}
+        {{ block.super }}
+    {% endif %}
+{% endblock %}
 
 {% block blockbody %}
   <link href="{% admin_media_prefix %}css/forms.css" type="text/css" rel="stylesheet">
