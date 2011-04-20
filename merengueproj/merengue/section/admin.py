@@ -367,9 +367,7 @@ class MenuAdmin(BaseAdmin):
     def changelist_view(self, request, extra_context={}):
         source = self.move_menus(request)
         media = self.media
-        media.add_js([settings.MEDIA_URL + "merengue/js/jquery-ui-1.8.dragdrop.min.js"])
         media.add_js([settings.MEDIA_URL + "merengue/js/section/CollapsableMenuTree.js"])
-        media.add_js([settings.MEDIA_URL + "merengue/js/section/OrderableMenuTree.js"])
         extra_context.update({'media': media.render(),
                               'moved_source': source})
         return super(MenuAdmin, self).changelist_view(request, extra_context)
