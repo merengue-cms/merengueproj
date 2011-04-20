@@ -17,10 +17,11 @@
 
 from merengue.section.admin import SectionAdmin
 from plugins.microsite.models import MicroSite
+from plugins.microsite.forms import MicroSiteAdminForm
 
 
 class MicroSiteAdmin(SectionAdmin):
-    pass
+    form = MicroSiteAdminForm
 
 
 def register(site):
