@@ -2,7 +2,7 @@
 .. _index:
 
 ======================
-Merengue documentation
+Merengue Documentation
 ======================
 
 .. rubric:: Everything you need to know about Merengue CMS.
@@ -20,7 +20,7 @@ Introduction
  * **Tutorial:**
    Create your first Merengue site by reading the :ref:`tutorial <intro-tutorial>`.
 
-Managing content
+Managing Content
 ================
 
  * **User guide:**

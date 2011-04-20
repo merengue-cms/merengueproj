@@ -1,422 +1,436 @@
 .. _topics-userguide:
 
 ===================
-Merengue user guide
+Merengue User Guide
 ===================
 
-This document will guide you for using Merengue as admin of your site. We will
-try to show this approach without taking care of technical aspects, just seeing
-aspects of graphical configuration, and how Merengue works for the site admin.
+This document will show how Merengue CMS can be utilised for your site. We will
+use a non-technical approach to show how Merenuge can be configured
+graphically, as well as how general site administration is accomplished by you,
+the site administrator.
 
-.. admonition:: Technical stuff
+.. admonition:: Technical Stuff
     
-    We assume that you already have a Merengue instance working properly. If 
-    you don't, you should have to take a look :ref:`installing merengue <topics-install>` for more
-    information about this.
+    We assume that you have a Merengue instance working properly. If not, have a
+    look at :ref:`installing merengue <topics-install>` for more information.
 
 
-Introduction to Merengue admin site
-===================================
+Introduction to the Merengue Admin Site
+=======================================
 
-Once your Merengue site is active (we suppose in http://localhost:8000), you can
-access to your admin site in http://localhost:8000/admin, and you will see 
-something like this:
+Once your Merengue site is active (for the sake of this guide, we assume your site URL to be 
+http://localhost:8000), you can access the admin site at http://localhost:8000/admin.
+You will see something similar to this:
 
 .. image:: _images/merengue_admin_site.png
 
-This site provides you links to several areas where you can configure your site
-without writing any code, so you don't need any kind of programming knowledge
-to manage a Merengue site.
+The admin site provides links to several areas where your site can be configured.
+This configuration can be performed without writing any code, so you do not need
+any kind of programming knowledge to manage a Merengue CMS site.
 
-It's sepparated by some blocks, in function of what you want to do. Those blocks
-are:
+The configuration areas are organized into blocks, by configuration functionality.
+These blocks are as follows:
 
-* **Content management**. Those are links to manage your site's content. You can access from here to the *content*, the *sections*, *portal menus* and *portal links*
+* **Content management**. Links to manage your site's content. From here, you can
+  access *content*, *sections*, *portal menus*, and *portal links*.
 
-* **Multimedia**. You can edit and delete your site's *photos*, *videos*, *audios*, *panoramic views* and *3D images* from this links.
+* **Multimedia**. Links for editing (and deleting) your site's *photos*, *videos*,
+  *audios*, *panoramic views*, and *3D images*.
+  
+* **Site configuration**. Links to configure how the site looks. Configure the
+  appearance of *blocks*, *plugins*, *themes*, *registry*, and even *save and restore
+  configurations* for backup purposes.
 
-* **Site configuration**. If you want to configure how the site looks, you should use this options. Such as *blocks*, *plugins*, *themes*, *registry* and even *save and restore configuration* to do some backups.
-
-* **User management**. The last block is used to edit *users* privileges, *groups* and *roles*.
+* **User management**. Links for editing *users* and *groups* as well as their
+  *roles* and privileges.
 
 .. _topics-userguide-plugins:
 
 Plugins
 =======
 
-Merengue works thanks to some external elements called *plugins*. Those plugins
-increase the functionality of your site, allowing you to customize your site
-in any way you want.
+Merengue works with external elements called *plugins*. Plugins increase the
+functionality of your site, allowing you to customize your site in any way you want.
 
-You can access to the plugins configuration clicking **Plugins** in the main
-admin page, or going to the URL 
-http://localhost:8000/admin/pluggable/registeredplugin and you will see a menu like
-the next:
+You can configure plugins by clicking **Plugins** on the main admin page, or going
+to the URL http://localhost:8000/admin/pluggable/registeredplugin where you will
+see the menu:
 
 .. image:: _images/merengue_plugin_configuration.png
 
-Installing plugins
+Installing Plugins
 ------------------
 
-If you are working on a clean Merengue installation, you will only have
-activated the **core** plugin. That plugin cannot be disabled because it's
-essential to the proper site's behaviour.
+If you are working on a clean (i.e. new) Merengue installation, the **core** plugin
+will be the only activated plugin. The **core** plugin cannot be disabled because it 
+is essential to the site's proper behaviour.
 
-Let's activate some plugins, for example the *voting* plugin. We just click in
-it's link to go to the configuration of that plugin.
+Now, let's activate some plugins -- for example, the *voting* plugin. We just click
+its link to go to the configuration page for that plugin.
 
 .. image:: _images/voting_plugin_configuration.png
 
-To active a plugin, first you should install it, so you have to check the 
-*Installed* element, save the form, and it will be activated. In some case you
-want to desactivate the plugin but not uninstalled it, you can uncheck the
-*Activate* checkbox.
+To active a plugin, you must first install it, check the *Installed* element, and
+save the form. The plugin is now activated. In some cases you will want to deactivate
+the plugin but not uninstall it. In that case, just uncheck the *Activate* checkbox.
 
-With this plugin for example, you will be able to allow users to vote some
-contents. 
+With the *Voting* plugin, for example, you can allow your users to vote on content. 
 
-.. admonition:: Technical stuff
+.. admonition:: Technical Stuff
     
-    You can add more plugins to that list, or even develop your own plugin. 
-    Take a look to the :ref:`plugins documentation <topics-plugins-index>` for more information about this.
+    You can add additional plugins to the list, or even develop your own plugin. 
+    Take a look at the :ref:`plugins documentation <topics-plugins-index>` for more
+    information.
 
 
 Themes
 ======
 
-Merengue has the capability to abstract your information and elements of the
+Merengue has the ability to abstract your information and other content elements of the
 site from the way you see the site itself. This abstraction is called *themes*
-and determines how a person see your site.
+and determines how the site appears to your users.
 
 Merengue comes with some default themes, you can change between them and choose
-the one you like the most. To do that, you can just click on **themes** in the
-main admin page, or can go to the URL http://localhost:8000/admin/theming/theme/
-and you will see a menu like the follow:
+the one you like best. To switch themes, just click on **themes** in the
+main admin page, or go to the URL http://localhost:8000/admin/theming/theme/
+where you will see a menu that looks like this:
 
 .. image:: _images/theme_configuration.png
 
-If you want to activate some theme, you just only have to click on the theme
-that you want, and check *Activate* block. This action will disable the current
-theme, because you cannot have two differents themes activated at the same time.
+If you want to activate a theme, click on the theme you wish to use, and check
+the *Activate* block. This action will disable the current theme, because you
+cannot have two different themes activated at the same time.
 
-Content management
+Content Management
 ==================
 
-Merengue is a Content Management System (CMS), and as such its main element
-are the contents, and you can build your site based on that contents. 
+Merengue is a Content Management System (CMS) and, as such, its primary purpose
+is to deal with content and allow you to build your site around that content. 
 
-Contents can be anything you want on your site: documents, news, forums, 
-articles, tutorials... that's your choice and it will depend of what kind
-of site are you developing.
+Content can be anything you want to use on your site: documents, news, forums, 
+articles, tutorials... it's your choice and what you use will depend
+on the type of site are you developing.
 
-You have to notice that contents are highly related with *sections*. Think
-about sections as content containers, so first we have to know how to work
-with sections.
+You should know that your content is closely related to *sections* in Merengue.
+Think about sections as containers for your content containers. So first, let's
+learn how to work with sections.
 
 Sections
 --------
 
-As we said before, sections are like content containers. So, the first step to
-create some content is create a section. We go the section menu (in http://localhost:8000/admin/section/section) and see a menu like the next one:
+As mentioned above, sections are like containers for content. So, the first step
+in creating some content is to create a section. We go the section menu
+(in http://localhost:8000/admin/section/section) and see a menu like this:
 
 .. image:: _images/sections_configuration.png
 
-In the upper right corner, you will se a button **Add section**. This button 
-will address to a form in wich we can configure some aspects of the section:
+In the upper right corner, there's a button labeled **Add section**. This button 
+will bring up a form where we can configure some aspects of the section:
 
 .. image:: _images/add_section_form.png
 
-You can see that you have the possibility to input text for the different 
-languages that your site has. For example we can create a *Foo section*, and
-call it in differents ways for each language.
+You can see that there are multiple text lines where you can enter text for the different 
+languages that your site will use. For example, we can create a *Foo section*, and
+give it separate names to be used for each language.
 
-Another important element is *Publication status*. This allows to configure some
-kind of workflow on this section. For example we want to set it to *published*.
-Once we have created our section, we can customize it and content for this
-concrete section.
+Another important element is the *Publication status*. This allows for the configuration
+of a workflow on this section. For example we want to set it to *published*.
+Once we have created our section, we can customize it, and the content, for this
+specific section.
 
-Once we have created the *Foo section*, we can see a configuration form like the
+Once we have created the *Foo section*, we see a configuration form like the
 following:
 
 .. image:: _images/foo_section_configuration.png
 
-We can see in the upper right corner a button called **Section children** that 
+In the upper right corner, there is a button called **Section children** that 
 is actually a drop-down menu, with the options *custom style*, *documents* and
 *main menu*.
 
-.. admonition:: More options
+.. admonition:: Additional Options
 
-   If we add more plugins (for example *News*) we will have more options to add 
-   on sections, like news, media...
+   If we add additional plugins (for example *News*), there will be more options
+   available for sections like news, media, etc.
 
-To begin editing some elements on the section, let's add a few menus to the 
-section. If we click on *main menu*, the list of items is empty, wich is normal 
-because we are working on a new section. Clicking on *Add menu*, the form 
-displayed is the following:
+To begin editing some elements in this section, let's add a few menus to the 
+section. If we click on *main menu*, the list of items is empty -- which is normal 
+because we are working on a new section. Clicking on *Add menu*, brings up the
+following form:
 
 .. image:: _images/new_menu_item.png
 
-where we just add the options for the new menu item. We can add for example a 
+We just add the options for the new menu item. For example, we can add a 
 link to the main page of Merengue project: http://www.merengueproject.org/, with
-the title *Merengue project*, and linked to that URL. This way we create a child
-of *Foo section* that will be displayed as a sub-element of that section on the 
-menu.
+the title *Merengue project*, and link to that URL. With this approach, we can
+create a child of the *Foo section* that will be displayed as a sub-element of
+that section on the menu.
 
 Sections URLs
 -------------
 When we add a section with a slug ``my-section``, the URL ``/my-section/``
-will access to the section main page. This URL is a shortcut of the
-``/cms/sections/my-section/`` URL.
+will access this section from the main page. This URL is a shortcut for the
+longer ``/cms/sections/my-section/`` URL.
 
-Content into sections
----------------------
+Adding Content into Sections
+----------------------------
 
-The content type we can add to a section will depend of what plugins we have 
-installed on our Merengue instance. For example, we can manage *documents*, the 
-default content type that Merengue includes.
+The type of content we can put into a section will depend on what plugins are 
+installed in our Merengue instance. For example, we can manage *documents*, the 
+default content type included with Merengue.
 
-If we access to the documents related with *Foo section*, we will se a screen 
-like the following:
+If we access the documents related to the *Foo section*, we will see a screen 
+similar to the following:
 
 .. image:: _images/documents_into_section.png
 
-So we have no elements linked with *Foo section*, wich is normal because that 
-section have been just created and still not modified. If we want to create a 
-new *document* content, just click on the button *Add document*.
+We have no elements linked with *Foo section*, which is normal because that 
+section has just been created and has not been modified. If we want to create a 
+new *document* as content in this section, just click on the button *Add document*.
 
-This button will address us to a form very similar to the sections form. We can 
-add the *title*, *description*, *publication status*, *tags*... For example, we 
-can create a content called **Lorem ipsums** and publish it.
+This button will take us to a form very similar to the sections form. We can 
+add the *title*, *description*, *publication status*, *tags* etc. For example, we 
+can create a document called **Lorem ipsums** and publish it.
 
-This is the way to create content in Merengue. Remember that a content is 
-allways related to a section.
+This is the way content is created inside Merengue. Remember: content is 
+always related to a section.
 
 Announcements
 -------------
 
-Site admins can publish announcements for the visitors that are displayed througout 
-the site. Access the announcements link on the right of the admin site to manage 
-this messages.
+Site admins can publish announcements for visitors that are displayed throughout 
+the site. Click the announcements link on the right of the admin site to manage 
+these messages.
 
-An announcement consist of a title and a message content, which would be both 
+An announcement consists of a title and the actual message content, which will be 
 displayed as long as the *Site wide* option is enabled. If you want to hide a 
-certain announcement for the users, you can simply check off this option.
+certain announcement for your users, you can simply check off this option.
 
-You can make announcements specific for site members. All announcements marked 
-with *Members only* won't be shown to anonymous visitors. If you save the 
+You can make announcements specific to site members. All announcements marked 
+with *Members only* will not be shown to anonymous visitors. If you save the 
 announcement with the *Send now* option enabled, the announcement will be mailed to 
-the users.
+site users.
 
-Furthermore, visitors can hide announcements permanently by clicking *Hide announcement*. 
+Furthermore, your users can hide announcements permanently by clicking *Hide announcement*. 
 
 
-Blocks concept
-==============
+Blocks
+======
 
-Blocks are very important in Merengue. The defines (in some way) how a page is 
-displayed in your browser. Each one of them are related to a module, and can be 
-rearranged at will. On the URL 
-http://localhost:8000/admin/block/registeredblock/ we can see the blocks enabled
-on the site:
+Blocks are very important in Merengue. They define (in various ways) how a page is 
+displayed in your browser. Each block is related to a module, and can be 
+rearranged at will. If you go the URL 
+http://localhost:8000/admin/block/registeredblock/ you can see the blocks currently
+available for your site:
 
 .. image:: _images/blocks_list.png
 
-The column called **Placed at** is very important, because it says where the 
-block is displayed. For example the *Voting block* (added for the *Voting* 
+The column called **Placed at** is very important, because it describes where the 
+block is displayed. For example the *Voting block* (added by the *Voting* 
 plugin) is placed before the content body.
 
-Let's suppose that we want to change the position of *Voting block*. There are 
-two ways to do that. The first one is on the configuration page of each 
-concrete block. We access to that page by clicking the block we want to edit
-on the list, and see a form like the following.
+Let's suppose that we want to change the position of the *Voting block*. There are 
+two ways to do that. First, the the position can be configured on each block's
+configuration page. The block's configuration page is accessed by clicking,
+in the list, the block we wish to edit. You should see a form like this:
 
 .. image:: _images/single_block_configuration.png
 
-For example, we can change the field **Placed at** and move it to the right
-sidebar. If we go to the main page http://localhost:8000/ we will see the
-voting form on the right:
+For example, we can edit the **Placed at** field to move the *Voting block* to the right
+sidebar. If we go to the main page (at the URL http://localhost:8000/) we now see
+the voting form on the right:
 
 .. image:: _images/main_page_voting_right.png
 
-The other way to do so is using the graphical interface. If you put the pointer
-above some block (for example *Vote content*) you will see a gren button. If
-you click it, the display will change to this:
+The second method of changing the block's position is to do so using the graphical
+interface. If you let your mouse pointer float above a block (for example *Vote
+content*) you will see a green button. If you click it, the display will change
+to this:
 
 .. image:: _images/main_page_rearranging.png
 
-So you just have to drag and drop the blocks that you want to rearrange.
+Just drag and drop to rearrange the blocks on the page.
 
-Also you can configure the blocks if block define configuration parameters:
+You can also configure individual blocks (if the block itself has configurable
+parameters):
 
 .. image:: _images/tagcloud_block.png
 
-The configuration form appears in same interface:
+The configuration form appears with the same user interface:
 
 .. image:: _images/tagcloud_config.png
 
-Blocks in specific contents
+Blocks for Specific Content
 ---------------------------
 
-Additionally to *general* blocks, you can indicate that you want some specific
-block on some specific content. Also you can *overwrite* the block configuration
-just for that block.
+In addition to *general* blocks, you can configure blocks to appear only with
+certain, specific content. Also, you can *overwrite* the block configuration
+just for that specific block.
 
-To do this, we just add a new children *block_content_related* for the content:
+To do this, we add a new child *block_content_related* for that content:
 
 .. image:: _images/add_block_content_related.png
 
-You can select what block do you want to include on the content, in wich place
-or even the order on that place. Dinamically, the **block specific configuration**
-will change to adapt the form for the selected block.
+You can then select what block you wish to have displayed with that particular content,
+in which location, or even the order of that location. The **block specific configuration**
+will change dynamically to adapt the form for the selected block.
 
-The configuration that you select will apply only at the block related to the content,
-this way, you can have two or more similar blocks, but using a different configuration.
+Your selected configuration will only apply to the block related to that content.
+This way, you can have two or more similar blocks, each using a different configuration.
 
-Navigational elements
+Navigational Elements
 =====================
 
-We understand as navigational elements the elements that you see on the page
-that will address the user to a different place (inside or outside the site). 
-For example the breadcrumb, a menu, portal links and so...
+We define navigational elements as the elements that you see on the page
+which link the user to a different places inside or outside of your site. 
+As examples, consider: a breadcrumb, a menu, portal links, etc.
 
 Breadcrumbs
 -----------
 
-A breadcrumb is a set of links that gives users a way to keep track of where
-are the on the sitemap. For example in the following image:
+A breadcrumb is a set of links that gives users a way to keep track of where they
+are in the sitemap. Consider the following image:
 
 .. image:: _images/main_page_breadcrumb.png
 
-In this case indicates that the content *Lorem ipsums* is a child of a section 
-called *Foo section*. This way we can navigate upstream on the site.
+In this case, the breadcrumb indicates that the content *Lorem ipsums* is a child
+of a section called *Foo section*. This way we can easily navigate to site links upstream
+from the user's present location.
 
-This links are autogenerated so we can't modify them, but it's important to
-notice what they are.
+These links are autogenerated so we cannot modify them. Still, it's important to
+know what they are and how they are used.
 
-Portal menus
+Portal Menus
 ------------
 
-Portal links are links that have a full visibility on all the site. At first
-we have no portal links configurated, but we can add the links we want in 
-http://localhost:8080/admin/section/menu/, and clicking on the top-right button
-**Add menu**. Let's add for example links to Google, Twitter and Facebook.
+Portal links are links that have always visible on the entire site. When starting
+a new site, no portal links will have been configured. However, we can add any
+links we want via the URL http://localhost:8080/admin/section/menu/. Click the
+top-right button labeled **Add menu**. Let's add links to Google, Twitter and Facebook.
 
-If you go to the main site page, you will se the links like the following links
-on top of the page:
+If you go to the main page of your site, you will see links similar to those shown
+in the following screenshot:
 
 .. image:: _images/main_site_site_links.png
 
-If you pass the pointer above those links, you will notice that is a block that
-you can drag and drop wherever you want.
+If you hover your mouse pointer above those links, you will notice that the portal
+menus are displayed in a block that you can drag and drop to any location on
+the page.
 
 Navigation Block
 ----------------
 
-The navigation block is a block generated by the core plugin. By default it
-appears on the left sidebar of the site, as you can see on the previous
-image.
+The navigation block is generated by the core plugin. By default it appears on the
+left sidebar of the site, as you can see on the previous image.
 
-This menu displays the elements of the site as a tree view. At the first level
-you see the **Sections** of the site. In our example we have *Foo section* and
-*Test section*. Then we also see the main menu of that section, in this case
-the *Foo section* has a link to Merengue project, so we see that element on the
+This menu displays the elements of your site in a tree view. At the first level
+you see the **Sections** of the site. In our example, we have a *Foo section* and
+a *Test section*. We can also see the main menu for each section. In this case,
+the *Foo section* has a link to Merengue project, so we see that element in the
 navigation block.
 
-We can re-order the block as usual, and also can reorder the sections and put 
-it how we want.
+We can re-order the block as usual, as well as reorder its sections and change its
+location.
 
-Portal links
+Portal Links
 ------------
 
-Portal links are similar to `portal menus`_, and they works on a very similar
-way. 
+Portal links are similar to `portal menus`_, and they work in a similar way. 
 
 .. _`portal menus`: index.html#portal-menus 
 
-There are two differents kind of portal links: **primary links** and **secondary 
-links**. We can add any of them from the URL 
-http://localhost:8080/admin/portal/portallink/add/ . There we will see a form like
-the following:
+There are two different kinds of portal links: **primary links** and **secondary 
+links**. We can add any of them via the URL 
+http://localhost:8080/admin/portal/portallink/add/ . We then see the form:
 
 .. image:: _images/add_portal_link.png
 
 We are going to create two links: a primary link to GMail, and a secondary link
-to Wikipedia, to see what are the differences between them. In the following 
-image we can notice the difference between them:
+to Wikipedia, in order to see the differences between them. In the following 
+image we notice the differences between them:
 
 .. image:: _images/main_page_menus.png
 
-You can see that the all are blocks, so they can be rearranged at will. Semantically,
-**primary links** are links that simplify the navigation  of the site, linking to
-important places of the site (for example *News section*).
+You can see that all primary links are included together in a separate block.
+Secondary links are also placed together in a separate block. Each block can be
+rearranged at will. Semantically, **primary links** are links that simplify the
+navigation of the site (e.g. linking to important areas of the site -- for example
+the *News section*).
 
-In the other hand, **portal menus** are links related to a section. For example 
-categories on the news.
+To clarify, **portal menus** (discussed in a previous section above) are links
+related to a section (e.g. categories in the *News* section).
 
-And **secondary links** are links placed on the footer, not essentials but
-importants (like copyright, about, contact...)
+**secondary links** are links placed in the footer. These are not considered 
+essential to site navigation but are still important (e.g. copyright info, about
+the site, contact info, etc.)
 
-As you can see, create and manage those links is very easy, but is important to 
-know and notice the difference between them.
+As you can see, creating and managing portal links is very simple. However, it's
+important to know the differences between the two types of links.
 
 Actions
 =======
 
-In Merengue we define **actions** as some events that an user trigger with a button.
-For example, if we activate the *Facebook* plugin, we will have a link on the content
-to share the content in Facebook. To click on that link is an action.
+In Merengue, we define **actions** as events that an user triggers with a button.
+For example, if we activate the *Facebook* plugin, your users will see a link on content
+items that allows them to share the content in Facebook. Clicking on that link is
+considered an action.
 
-You can see what actions you have on the system accessing the URL 
-http://localhost:8080/admin/registry/registereditem/?category=action. Those actions
-are provided by differents modules, as well as blocks and other stuff.
+You can see what actions are available on your Merengue site by accessing the
+following URL http://localhost:8080/admin/registry/registereditem/?category=action.
+These actions are provided by different modules, as well as by blocks and other stuff.
 
-Merengue permissions
-==========================================
+Permissions in Merengue
+=======================
 
-In Merengue we define permissions as the authorization that an user must have for he is able to do something.
-For example, if an user wants to edit some content, he need have the edit perm for this content.
-If an user wants to manage the sections he need the manage section perm.
+In Merengue, we define permissions as the authorization an user must have in order
+to be able to do something. For example, if an user wants to edit some content,
+he must have the edit permission for this content. If an user wants to manage sections,
+then he needs the manage section permission.
 
-The permissions can be globals, you can see on the system accessing the URL 
+Permissions can be global, as you can see by accessing the URL 
 http://localhost:8080/admin/perms/objectpermission/.
-Or locals for each content, you can see in /permissions/ into each content 
-http://localhost:8080/admin/base/basecontent/1/permissions/.
+Or permissions can be local for each piece of content. Local permissions can be viewed
+by adding the string `/permissions/` on to the end of the URL for a specific piece of
+content (e.g. http://localhost:8080/admin/base/basecontent/1/permissions/).
 
-To associate permissions with user, we have **roles**. These definen a permission set.
-If you associate a role with an user, this user will every permission of the role. Also you can associate
-a role with a group, and every user of this group will every permission of the role.
+To associate permissions with user, we use **roles**. These define a specific set
+of permissions. You can then associate a role with an user. This user will have
+every permission specified by the role. Additionally, you can assign a role to a
+group. Every user of this group will have all permissions associated with that
+particular role.
 
-There is a special role: "Anonymous User". Every user will every permission of this role.
+There is a special role called "Anonymous User". This role is assigned to every user.
 
-.. admonition:: Deep into
+.. admonition:: More Information
 
-    For more information about Merengue permissions, you can read :ref:`working with permissions <topics-permissions>`
+    For more information about Merengue permissions, you can read :ref:`working with permissions <topics-permissions>`.
 
 
-Maintenance tasks
+Maintenance Tasks
 =================
 
-There are some tasks that use to be executed on a shell, but Merengue allows the
-admin user to do those tasks in a graphic way.
+There are some tasks that are normallye executed in a shell, but Merengue allows the
+admin user to do these tasks using a graphical interface.
 
 Registry
 --------
 
-The registry is a page where you can see all the *registrable items* of the site,
-also showing the state of those items. You can see that list on the URL
-http://localhost:8080/admin/registry/registereditem/ allowing you to get a 
-general view of what is installed on the Merengue instance.
+The registry is a page where you can see all of the *registrable items* of the site,
+as well as showing the state of those items. You can see this list via the URL
+http://localhost:8080/admin/registry/registereditem/ This list provides a 
+general view of what is installed in a particular Merengue instance.
 
 Backups
 -------
 
-If we go to the  URL http://localhost:8080/admin/siteconfig/ we will see the 
-following page:
+Open the following URL http://localhost:8080/admin/siteconfig/ in you web browser.
+You should see the following page:
 
 .. image:: _images/backup_configuration.png
 
-We can do here 3 things:
+From this page, we can:
 
-* First, we can restore a previous configuration backup
-* Create a configuration backup. This backup includes what elements are registred
-* Create a database backup. Is a full content backup, to prevent of data losing on your site
+* Restore a previous configuration backup
+* Create a configuration backup. This backup includes information regarding what
+  elements are registered with your site.
+* Create a database backup. This is a full content backup, to assist in preventing
+  the data loss from your site.
