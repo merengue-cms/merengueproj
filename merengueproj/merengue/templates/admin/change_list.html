@@ -38,7 +38,9 @@
 
 {% block content %}
   {% block object-tools %}
-    {% object_tools model_admin "list" %}
+    {% if not is_popup %}
+        {% object_tools model_admin "list" %}
+    {% endif %}
   {% endblock %}
 
   {% smart_relations_object_tool %}
