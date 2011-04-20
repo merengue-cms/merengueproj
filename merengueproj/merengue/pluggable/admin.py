@@ -70,7 +70,8 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
 
     def save_form(self, request, form, change):
         change_installed_field = 'installed' in form.changed_data
-        is_installed = form.cleaned_data['installed'] == True
+        if 'installed' in form.cleaned_data:
+            is_installed = form.cleaned_data['installed'] == True
         if change_installed_field:
             if is_installed:
                 # it has no sense install a plugin without activate
