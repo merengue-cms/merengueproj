@@ -28,6 +28,7 @@ from merengue.section.models import BaseSection, Document, \
 
 from merengue.base.views import content_view
 from merengue.section.models import AbsoluteLink, ContentLink, ViewletLink, Menu
+from merengue.section.utils import get_section
 
 from merengue.perms import utils as perms_api
 from merengue.base.utils import get_render_http_error
@@ -73,6 +74,9 @@ def menu_section_view(request, section_slug, menu_slug):
     menu = None
     if section_slug:
         section = get_object_or_404(BaseSection, slug=section_slug)
+    else:
+        section = get_section(request=request)
+    if section:
         root_menu = section.main_menu
     else:
         root_menu = Menu.objects.get(slug=settings.MENU_PORTAL_SLUG)
