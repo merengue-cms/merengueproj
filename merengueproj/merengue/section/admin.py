@@ -22,7 +22,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
-from transmeta import get_fallback_fieldname
+from transmeta import get_real_fieldname_in_each_language, get_fallback_fieldname
 
 from merengue.base.admin import BaseAdmin, BaseContentAdmin, RelatedModelAdmin, \
                                 BaseOrderableAdmin, OrderableRelatedModelAdmin
@@ -43,7 +43,7 @@ class BaseSectionAdmin(BaseOrderableAdmin, PermissionAdmin):
     ordering = ('order', )
     list_display = ('name', 'slug', )
     list_display_links = ('name', )
-    search_fields = tuple(['name_' + code for code, lang in settings.LANGUAGES])
+    search_fields = tuple(get_real_fieldname_in_each_language('name'))
     html_fields = ()
     removed_fields = ('description', )
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
