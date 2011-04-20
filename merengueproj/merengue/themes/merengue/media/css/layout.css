@@ -312,7 +312,6 @@ div#coremenu ul.menu1 li a.menu1 {
 	border: 1px solid #EDE8E8;
 }
 
-
 #header-blocks div#latestnews {
 	float: right;
 	width: 28%;
@@ -444,6 +443,11 @@ div#coremenu ul.menu1 li a.menu1 {
 #left-sidebar a:hover {
   color: #CEA670;
 }
+
+#left-sidebar #googlesearch td.gsc-search-button{
+    display: none !important;
+}
+
 
 #navigation a,
 #coremenu a {
