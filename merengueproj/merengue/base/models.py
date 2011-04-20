@@ -393,7 +393,7 @@ class BaseContent(BaseClass):
         ordering = (get_fallback_fieldname('name'), )
 
     def admin_absolute_url(self):
-        return '<a href="%s">%s</a>' % (self.get_admin_absolute_url(), self.name)
+        return '<a href="%s">%s</a>' % (self.get_real_instance().get_admin_absolute_url(), self.name)
     admin_absolute_url.allow_tags = True
 
     @classmethod
