@@ -1,6 +1,40 @@
 Changes
 =======
 
+Version 0.7.1
+-------------
+
+* New italian translations. See #1803 and #1814.
+
+* An email is sent to reviewers when a content came into ``pending`` status. See #1694.
+
+* Add changelog view in admin to review all admin actions. See #1778.
+
+* Implement single logout in ``saml2`` plugin. See #1442.
+
+* Reviewed the english grammar of some Merengue documents. See #377.
+
+* Unit tests for ``get_real_instance`` logic. See #1633.
+
+* More Selenium tests. See #1747.
+
+* Removed french translations because Merengue miss translations. See #1825.
+
+* And a lot of bugfixes:
+
+ * The models cache was not corretly re-populated when loading plugins. See #1712.
+ * Feed collection now read well the feed when created. See #1732.
+ * Fix an error that do not allow to edit an existing ``standingout`` object if the selected content not changes. See #1736.
+ * Error in prepopulated fields when are mixed with read only fields. See #1764.
+ * Fixed microsites errors when user try to add two microsites with the same slug. See #1774. See #1790.
+ * Fix bug about saving plugins registered on REQUIRED_PLUGINS. See #1786.
+ * Check that end date is greater than start date in ``event`` plugin. See #1723.
+ * Fixed some problems with django-inlinetrans and transhette. See #1800, #1799, #1801.
+ * Some look and feel issues, like #1743, #1744 and #1821.
+ * Plugin forums shows duplicated entries if the entries are anidated. See #1727.
+ * Fix readonly widget in many2many fields. See #1776.
+ * Other fixes: See #1789, #1811, #1823, #1731, #1797, #1783.
+
 Version 0.7.0-final
 -------------------
 
