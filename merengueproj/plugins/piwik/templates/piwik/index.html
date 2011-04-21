@@ -1,0 +1,14 @@
+{% extends "piwik/base.html" %}
+
+{% load i18n inlinetrans action_tags %}
+
+{% block pagetitle %}{% trans "Stats index" %}{% endblock %}
+
+{% block content %}
+<h1>{% inline_trans "Stats Index" %}</h1>
+<ul>
+  <li><a href="{{ piwik_url }}"> {% inline_trans "Go to Piwik to view stats deails" %}</a></li>
+  <li><a href="{% url stats_ranking %}"> {% inline_trans "View stats ranking" %}</a></li>
+</ul>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+<!-- Piwik -->
+
+<script type="text/javascript">
+var pkBaseURL = (("https:" == document.location.protocol) ? "{{ url }}" : "{{ url }}");
+document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script type="text/javascript">
+try {
+var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", {{ site_id }});
+
+{% if content %}
+piwikTracker.setCustomVariable(
+  1, // Index, the number from 1 to 5 where this Custom Variable name is stored
+  "{{ content_piwik_variable }}", // Name, the name of the variable
+  "{{ content }} (id:{{ content.id }})" // Value
+);
+{% endif %}
+
+{% if section %}
+piwikTracker.setCustomVariable(
+  2, // Index, the number from 1 to 5 where this Custom Variable name is stored
+  "{{ section_piwik_variable }}", // Name, the name of the variable
+  "{{ section }} (id:{{ section.id }})" // Value
+);
+{% endif %}
+
+
+piwikTracker.trackPageView();
+piwikTracker.enableLinkTracking();
+} catch( err ) {}
+</script><noscript><p><img src="{{ url }}piwik.php?idsite={{ site_id }}" style="border:0" alt="" /></p></noscript>
+<!-- End Piwik Tracking Code -->
+

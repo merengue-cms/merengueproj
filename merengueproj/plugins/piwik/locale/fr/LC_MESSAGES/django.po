@@ -1,0 +1,86 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-04-21 14:19+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: blocks.py:26
+msgid "Block add piwik javascript"
+msgstr ""
+
+#: blocks.py:27
+msgid "Piwik Block"
+msgstr ""
+
+#: config.py:39
+msgid "authentication token"
+msgstr ""
+
+#: config.py:40
+msgid "piwik url"
+msgstr ""
+
+#: config.py:41
+msgid "site id"
+msgstr ""
+
+#: config.py:42
+msgid "metric"
+msgstr ""
+
+#: config.py:43
+msgid "period"
+msgstr ""
+
+#: config.py:44
+msgid "date"
+msgstr ""
+
+#: templates/piwik/base.html:7
+msgid "Stats"
+msgstr ""
+
+#: templates/piwik/index.html:5 templates/piwik/ranking_stats.html:13
+msgid "Stats index"
+msgstr ""
+
+#: templates/piwik/index.html:8
+msgid "Stats Index"
+msgstr ""
+
+#: templates/piwik/index.html:10
+msgid "Go to Piwik to view stats deails"
+msgstr ""
+
+#: templates/piwik/index.html:11
+msgid "View stats ranking"
+msgstr ""
+
+#: templates/piwik/ranking_stats.html:8
+msgid "Ranking"
+msgstr ""
+
+#: templates/piwik/ranking_stats.html:16
+msgid "Contents Ranking"
+msgstr ""
+
+#: templates/piwik/ranking_stats.html:18
+msgid "Sections"
+msgstr ""
+
+#: templates/piwik/ranking_stats.html:27
+msgid "Others Contents"
+msgstr ""
