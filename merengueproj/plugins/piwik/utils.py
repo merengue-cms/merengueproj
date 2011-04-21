@@ -18,11 +18,10 @@
 import re
 from operator import itemgetter
 
-from piwik import PiwikAPI
-
 from merengue.pluggable.utils import get_plugin
 from merengue.base.models import BaseContent
 
+from plugins.piwik.api import PiwikAPI
 from plugins.piwik.settings import PERIOD, DATE, METRIC
 
 # don't change, this is used to track stats in piwik by javascript
