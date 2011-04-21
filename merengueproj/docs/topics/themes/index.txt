@@ -1,7 +1,7 @@
 .. _topics-themes-index:
 
 ====================
-Working with themes
+Working with Themes
 ====================
 
 .. highlightlang:: html+django
@@ -10,37 +10,44 @@ Working with themes
 Overview
 ========
 
-Merengue supports themes, allowing for completely different "look & feel", while maintaning all the merengue functionality, thusly separating logic and presentation.
+Merengue supports the use of themes to allow you to create a completely different "look & feel"
+for your site. Since your site's logic is separated from its presentation (i.e.
+its theme), all Merengue functionality is maintained from theme to theme.
 
-Directory tree
+Directory Tree
 --------------
 
 Themes consist of templates (HTML, TXT, etc.) and media files (images, CSS, Javascript, etc).
 
-Merengue's builtin themes are distributed along merengue, in the ``themes`` directory. They're copied in.
+Merengue's built-in themes are distributed along with Merengue, and located inside the ``themes`` directory.
 
-A project's themes are separated into two directories: ``media/themes/`` and ``/themes/``. For example a ``violet`` theme will be located in:
+A project's themes are separated into two directories: ``media/themes/`` and ``/themes/``.
+For example a theme named ``violet`` will be located in:
 
 .. code-block:: python
 
     merengue_project/templates/themes/violet/
     merengue_project/media/themes/violet/
 
-In the first directory there are all Django templates for:
+The first directory path contains all of the Django template files for:
 
 * Changing site layout.
 * Any HTML markup changes.
 
-Inside the media directory there are all kind of static resources needed by the theme templates, such as CSS, images or javascript files.
+The media directory holds all of the static resources needed by the theme templates,
+such as the CSS code and image or Javascript files.
 
-Template theme mechanism
+Template Theme Mechanism
 ------------------------
 
 .. note::
 
-    Please look `Django template language`_, to get info about template syntax.
+    Please look at the `Django template language`_ documentation for more information
+    about the syntax of Django templates.
 
-Let's take this example template, included maybe in one of the plugins templates directory. Imaging a events plugin that list all events published in site:
+Imagine an events plugin which lists all of the events published on a site. Let's
+use the following example template, which might be included in a plugin's templates
+directory:
 
 .. code-block:: html+django
 
@@ -54,48 +61,59 @@ Let's take this example template, included maybe in one of the plugins templates
       </ul>
     {% endblock %}
 
-This template extends a base template for layout rendering. By default, Django will looks for ``base.html`` in this directories:
+This template extends a base template for layout rendering. By default, Django will
+look for ``base.html`` in these directories:
 
-* Firstly, look into the project template directories, i.e. ``merengueproj/templates/``.
-* Secondly, look into the applications installed template dir, i.e. ``merengueproj/apps/foo/templates/``.
+* First, it checks the project's template directories, (e.g. ``merengueproj/templates/``).
+* Secondly, Django checks the installed application's template directory, (e.g ``merengueproj/apps/foo/templates/``).
 
-Merengue overrides this behaviour, doing the first look into active theme directory.
+Merengue overrides this behaviour by first checking the active theme's template directory.
 
-So, when some part of the code tries to load a template (in a
-``render_to_response`` call or in a `extends`_ or `include`_ tag) the order of
-looking for that template was:
+When your code tries to load a template (e.g. in a ``render_to_response`` call
+or in a `extends`_ or `include`_ tag) the search order for that template will be
+as follows:
 
- 1. Active theme templates directory.
- 2. Project template directories.
- 3. Applications templates directory.
+ 1. The active theme's templates directory.
+ 2. The project's templates directories.
+ 3. The application's templates directory.
 
 .. _`extends`: http://docs.djangoproject.com/en/1.1/ref/templates/builtins/#extends
 .. _`include`: http://docs.djangoproject.com/en/1.1/ref/templates/builtins/#include
 
-Then, if you configure ``violet`` theme as active one, and example template was rendered, 
-merengue will look firstly a ``base.html`` in this directory:
+So, for our ``violet`` theme example, if you configure ``violet`` as the active theme,
+and the example template is rendered, Merengue will look for a ``base.html`` file first
+in this directory:
 
 .. code-block:: bash
 
     merengueproj/templates/themes/violet/
 
-Then, placing a ``base.html`` into your theme directory, you will get change layout page maintaining all event plugin functionality.
+So, by placing a ``base.html`` file into your theme's template directory, your page
+layout will change, however the event plugin functionality will remain the same.
 
 .. _`Django template language`: http://docs.djangoproject.com/en/dev/topics/templates/#topics-templates
 
 
-Overriding template layout
+Overriding Template Layout
 --------------------------
 
-Merengue html layout is designed to be flexible and bring all possibilities to extends in many ways.
+HTML layout in Merengue is designed to be as flexible and extensible as possible.
 
-To reach a tight integration between merengue, themes and plugins, we have to follow this conventions:
+To achieve tight integration with Merengue themes and plugins, the following conventions
+below should be adhered to:
 
-1. All plugins and merengue templates, will extends ``base.html`` template, that looks into your theme if is the active theme for your site.
-2. Usually your theme ``base.html`` will extends ``base/layout.html`` template, located in ``merengueproj/apps/base/templates/``. This is merengue main template, for defining layout and put all functionality blocks.
-3. ``base/layout.html`` will split page into a small fragments, included with ``include`` templatetag. All fragments are templates named ``inc.foofragment.html``. If you put a fragment template with same name into your theme directory, merengue will use it for rendering this piece of page.
+1. All Merengue plugins and templates, will extend the ``base.html`` template (found
+   in your theme -- if it is configured as the active theme for your site).
+2. Usually your theme ``base.html`` will extend the ``base/layout.html`` template,
+   located at ``merengueproj/apps/base/templates/``. This is main Merengue template
+   for defining page layout and the location of all functionality blocks.
+3. ``base/layout.html`` will split the page into small fragments, included with the
+   ``include`` template tag. All fragments are template files named ``inc.foofragment.html``.
+   If you put a fragment template file with the same filename into your theme directory,
+   Merengue will use it to rendering that piece of the page.
 
-Let's go with a example. First we can look a fragment of ``base/layout.html``, located in ``merengueproj/apps/base/templates/`` (you can view whole `template layout`_):
+Here's an example. First, we can find a fragment of ``base/layout.html``, located
+in ``merengueproj/apps/base/templates/`` (you can view the whole `template layout`_):
 
 .. code-block:: html+django
 
@@ -117,12 +135,18 @@ Let's go with a example. First we can look a fragment of ``base/layout.html``, l
 
 .. _`template layout`: http://tracpub.yaco.es/merengue/browser/trunk/merengueproj/merengue/base/templates/base/layout.html
 
-As you see, this base layout template will contains several blocks that you can overrides in your theme ``base.html`` template. Besides, some blocks includes other templates that renders a page fragment. For example, ``base/layout.html`` includes ``inc.cssstyles.html`` to render CSS files... So, if you place a ``inc.csstyles.html`` into your themes template directory, merengue looks your template if ''violet'' theme was active.
+As you can see, this base layout template contains several blocks that you can override
+in your theme's ``base.html`` template. Also, some blocks include other templates
+used to render a page fragment. For example, ``base/layout.html`` includes ``inc.cssstyles.html``
+to render CSS files. So, if you place a ``inc.csstyles.html`` into your theme's template
+directory, Merengue will find your template (assuming the ''violet'' theme was active).
 
-Then, if for example you want to redefine CSS to use your own CSS file, instead of default one, you have two possibilities:
+Then, for example, if you wish to use your own CSS file, instead of the default
+one, you can use one of two options:
 
-1. Without overriding ``base.html`` and placing a ``inc.cssstyles.html`` in your theme template directory.
-2. Overriding ``base.html`` and changing css block, like this:
+1. Without overriding ``base.html``, place a ``inc.cssstyles.html`` in your theme's
+   template directory.
+2. Override the ``base.html`` file and change the CSS block, like this:
 
 .. code-block:: html+django
 
@@ -134,9 +158,14 @@ Then, if for example you want to redefine CSS to use your own CSS file, instead 
     {% endblock %}
 
 .. note::
-    ``THEME_MEDIA_URL`` is a context variable available in every template you create. This will used for linking to your media resources, placed in your theme media directory (in this case will be ``merengueproj/media/themes/violet/``). If you place a ``violet.css`` file in that directory, your CSS will be loaded successfully.
+    ``THEME_MEDIA_URL`` is a context variable available in every template you create.
+    This variable is used to link to your media resources, placed in your theme's
+    media directory (which, in this case, will be ``merengueproj/media/themes/violet/``).
+    If you place a ``violet.css`` file in that directory, your CSS code will be loaded
+    automatically.
 
-As schema, the templates mainly used in theme development are located in these places:
+As the following schema illustrates, the templates primarily used in theme development
+are located in the following locations:
 
 .. code-block:: bash
 
@@ -144,17 +173,17 @@ As schema, the templates mainly used in theme development are located in these p
      |-- templates/
      |    |-- themes/
      |    |    |-- violet/
-     |    |    |    |-- base.html # your main templated, used for page layout rendering in merengue and in all plugins when your theme is active
-     |    |    |    `-- inc.cssstyles.html # a example page fragment overrides from merengue one
+     |    |    |    |-- base.html # The main template, used for page layout rendering in Merengue (and in all plugins when your theme is active).
+     |    |    |    `-- inc.cssstyles.html # An example page fragment which overrides the default Merengue file.
      |-- merengue/
      |    |-- base/
      |    |    |-- templates/
      |    |    |    |-- base/
-     |    |    |    |    |-- layout.html # merengue default layout rendering. Usually your theme base.html will extends that
+     |    |    |    |    |-- layout.html # The default Merengue page layout. Usually, your theme's base.html will extend this file.
      |    |    |    |    `-- ...
-     |    |    |    |-- inc.cssstyles.html # this page fragment will be never used when violet theme was active, because violet overrides
-     |    |    |    |-- inc.footer.html # this page fragment will be used because violet theme does not overrides it.
-     |    |    |    |-- base.html # default base.html used when no theme was activated. Only extends base/layout.html without overriding.
+     |    |    |    |-- inc.cssstyles.html # In our ``violet`` theme example, this page fragment will never be used because it is overridden by the ``violet`` theme.
+     |    |    |    |-- inc.footer.html # This page fragment will be used because the ``violet`` theme does not override it.
+     |    |    |    |-- base.html # The default base.html to be used when no theme is active. Only extends base/layout.html without overriding.
      |    |    |    `-- ...
      |    |    `-- ...
      |    `-- ...
@@ -167,12 +196,13 @@ As schema, the templates mainly used in theme development are located in these p
      |    `-- ...
      `-- ...
 
-Overriding plugins CSS
-----------------------
+Overriding a Plugin's CSS
+-------------------------
 
-Some plugins came with its own CSS and JS files, that are included in any HTML fragment (blocks, actions, etc.).
+Some plugins come with their own CSS and Javascript files embedded in HTML fragments located in blocks, actions, etc.
 
-For example, ``feedback`` plugin add a ``styles.css`` in a block after content view, with this fragment inside:
+For example, the ``feedback`` plugin adds a ``styles.css`` in a block after the
+content view with this fragment inside:
 
 .. code-block:: css
 
@@ -182,9 +212,12 @@ For example, ``feedback`` plugin add a ``styles.css`` in a block after content v
         color: gray;
     }
 
-Then, if you wants to override plugin CSS, and you add ``#feedback #firstcomment .commentinfo`` selector in your theme CSS file, browser will take the plugins one and ignore yours, because the plugin CSS file is after the theme CSS one.
+If you want to override the plugin's CSS, and you add a ``#feedback #firstcomment .commentinfo``
+selector in your theme CSS file, the web browser will use the plugin's CSS code and
+ignore your CSS because the plugin's CSS file is located after the theme's CSS file
+in the default theme search order.
 
-The way to solve these is add this CSS fragment into your CSS file:
+To solve this problem, add this CSS fragment into your CSS file:
 
 .. code-block:: css
 
@@ -194,24 +227,26 @@ The way to solve these is add this CSS fragment into your CSS file:
         color: gray;
     }
 
-This works because in ``base/layout.html`` we add a CSS class to ``#container`` div, with active theme.
+This will work because in the ``base/layout.html`` file we add a CSS class to the
+``#container`` div, with the active theme.
 
-Creating a new theme step by step
+Creating a New Theme Step by Step
 ---------------------------------
 
-Please look the :ref:`Merengue tutorial <intro-tutorial-theme>` for learning to create a theme from scratch.
+Please read the :ref:`Merengue tutorial <intro-tutorial-theme>` to learn how to
+create a theme from scratch.
 
 Internals
 ---------
 
-Merengue prepends ``merengue.theming.loader.load_template_source`` template
-loader to change the order when searching for templates. This template loader
-will look into project database and will find the active theme. Then it will
-search the template first in ``templates/themes/the-active-theme`` and:
+Merengue prepends the ``merengue.theming.loader.load_template_source`` template
+loader to change the default Django search order for locating templates. This template
+loader looks into the project database to find the active theme. Then it search
+for the template first in ``templates/themes/the-active-theme`` and:
 
-* If the template is found, then will be returned.
-* Else, it will deletate to usual Django template loaders.
+* if the template is found, it will be returned.
+* otherwise, it will delegate theme loading to the usual Django template loaders.
 
-The Merengue template loader will affect to all ``include`` and ``extends``
+The Merengue template loader affects all ``include`` and ``extends``
 tags, and all ``render_to_response``, ``render_to_string`` and
 ``loader.get_template`` calls.
