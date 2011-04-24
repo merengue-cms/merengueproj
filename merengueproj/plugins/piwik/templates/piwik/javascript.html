@@ -7,25 +7,40 @@ document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/ja
 try {
 var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", {{ site_id }});
 
-{% if content %}
-piwikTracker.setCustomVariable(
-  1, // Index, the number from 1 to 5 where this Custom Variable name is stored
-  "{{ content_piwik_variable }}", // Name, the name of the variable
-  "{{ content }} (id:{{ content.id }})" // Value
-);
+
+{% if section and content %}
+  piwikTracker.setDocumentTitle("Section: {{ section }} (id:{{ section.id }})/{{ content }} (id:{{ content.id }})");
+{% else %}
+  {% if section %}
+    piwikTracker.setDocumentTitle("Section: {{ section }} (id:{{ section.id }})");
+  {% endif %}
+  {% if content %}
+    piwikTracker.setDocumentTitle("{{ content }} (id:{{ content.id }})");
+  {% endif %}
 {% endif %}
 
-{% if section %}
-piwikTracker.setCustomVariable(
-  2, // Index, the number from 1 to 5 where this Custom Variable name is stored
-  "{{ section_piwik_variable }}", // Name, the name of the variable
-  "{{ section }} (id:{{ section.id }})" // Value
-);
-{% endif %}
+{% if custom_variables %}
+  {% if content %}
+  piwikTracker.setCustomVariable(
+    1, // Index, the number from 1 to 5 where this Custom Variable name is stored
+    "{{ content_piwik_variable }}", // Name, the name of the variable
+    "{{ content }} (id:{{ content.id }})" // Value
+  );
+  {% endif %}
 
+  {% if section %}
+
+  piwikTracker.setCustomVariable(
+    2, // Index, the number from 1 to 5 where this Custom Variable name is stored
+    "{{ section_piwik_variable }}", // Name, the name of the variable
+    "{{ section }} (id:{{ section.id }})" // Value
+  );
+  {% endif %}
+{% endif %}
 
 piwikTracker.trackPageView();
-piwikTracker.enableLinkTracking();
+
+
 } catch( err ) {}
 </script><noscript><p><img src="{{ url }}piwik.php?idsite={{ site_id }}" style="border:0" alt="" /></p></noscript>
 <!-- End Piwik Tracking Code -->

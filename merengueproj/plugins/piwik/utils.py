@@ -104,7 +104,21 @@ def get_variable_stats(custom_variable):
     return data
 
 
-def get_basecontents(data=None):
+def get_pagetitle_stats():
+    piwik_api = get_piwik_api()
+    site_id = get_site_id()
+    period = get_period()
+    date = get_date()
+    data = piwik_api.call('Actions.getPageTitles', params={'idSite': site_id,
+                                                           'period': period,
+                                                           'date': date,
+                                                           'filter_pattern_recursive': 'id:',
+                                                           'filter_column_recursive': 'label',
+                                                           'expanded': 1}, format='json')
+    return data
+
+
+def get_basecontents_from_customvariables(data=None):
     pattern = ".*id:(\d).*"
     contents = {}
     metric = get_metric()
@@ -122,15 +136,61 @@ def get_basecontents(data=None):
     return contents
 
 
+def get_basecontents(data):
+    pattern = ".*id:(\d+).*"
+    contents = {}
+    metric = get_metric()
+    metric_total = 0
+    for entry in data:
+        match = re.match(pattern, entry['label'])
+        id = None
+        if match:
+            id = match.groups()[0]
+        if id:
+            content = BaseContent.objects.get(id=id)
+            if not content in contents:
+                contents[content] = {}
+            if metric in entry:
+                contents[content]['visits'] = contents[content].get('visits', 0) + entry[metric]
+                metric_total = metric_total + contents[content]['visits']
+            elif 'subtable' in entry:
+                children, ch_metric_total = get_basecontents(entry['subtable'])
+                if contents[content].get('children', None):
+                    for child, child_metric in children.iteritems():
+                        if child in contents[content]['children']:
+                            contents[content]['children'][child]['visits'] += child_metric['visits']
+                        else:
+                            contents[content]['children'].update(child)
+                else:
+                    contents[content]['children'] = children
+                contents[content]['visits'] = contents[content].get('visits', 0) + ch_metric_total
+            else:
+                contents[content]['visits'] = contents[content].get('visits', 0) + 1
+                metric_total = metric_total + contents[content]['visits']
+
+    return contents, metric_total
+
+
 def sort_contents(contents):
     return sorted(contents.iteritems(), key=itemgetter(1), reverse=True)
 
 
-def get_contents():
+def sort_contents_recursive(contents):
+    for content, data in contents.iteritems():
+        if 'children' in data:
+            data['children'] = sort_contents_recursive(data['children'])
+    return sort_contents(contents)
+
+
+def get_contents_from_customvariables():
     data = get_variable_stats(CONTENT_PIWIK_VARIABLE)
-    return sort_contents(get_basecontents(data))
+    return sort_contents(get_basecontents_from_customvariables(data))
 
 
-def get_sections():
+def get_sections_from_customvariables():
     data = get_variable_stats(SECTION_PIWIK_VARIABLE)
-    return sort_contents(get_basecontents(data))
+    return sort_contents(get_basecontents_from_customvariables(data))
+
+
+def get_contents():
+    return sort_contents_recursive(get_basecontents(get_pagetitle_stats())[0])

@@ -19,3 +19,9 @@
 PERIOD = 'year'
 DATE = 'today'
 METRIC = 'sum_daily_nb_uniq_visitors'
+
+# You can trace stats by custom variables instead page titles.
+#IMPORTANT: if you change it to True,you must change
+# the visit_standard_length to 0 in /var/www/piwik/config/global.ini.php so piwik
+# traces fine. This change means losing some statistics as average time on a page
+CUSTOM_VARIABLES = False

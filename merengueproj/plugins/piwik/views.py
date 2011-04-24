@@ -18,7 +18,7 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from plugins.piwik.utils import get_plugin_config, get_contents, get_sections
+from plugins.piwik.utils import get_plugin_config, get_contents
 
 
 def index(request):
@@ -31,6 +31,5 @@ def index(request):
 
 def ranking(request):
     return render_to_response('piwik/ranking_stats.html',
-                              {'contents': get_contents(),
-                              'sections': get_sections()},
+                              {'contents': get_contents()},
                               context_instance=RequestContext(request))

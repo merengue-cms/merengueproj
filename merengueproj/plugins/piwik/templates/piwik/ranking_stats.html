@@ -17,19 +17,18 @@
 
 <h2>{% inline_trans "Sections" %}</h2>
 <ul>
-{% for section, stat in sections %}
+{% for section, data in contents %}
     <li>
-      <a href="{{ section.get_absolute_url }}">{{ section }}</a>: {{ stat }}
+      <a href="{{ section.get_absolute_url }}">{{ section }}</a>: {{ data.visits }}
+      <ul>
+        {% for content, content_data in data.children %}
+        <li>
+        <a href="{{ content.get_absolute_url }}">{{ content }}</a>: {{ content_data.visits }}
+        </li>
+        {% endfor %}
+       </ul>
     </li>
 {% endfor %}
 </ul>
 
-<h2>{% inline_trans "Others Contents" %}</h2>
-<ul>
-{% for content, stat in contents %}
-    <li>
-      <a href="{{ content.get_absolute_url }}">{{ content }}</a>: {{ stat }}
-    </li>
-{% endfor %}
-</ul>
 {% endblock content %}
