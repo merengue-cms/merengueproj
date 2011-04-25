@@ -16,6 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django import template
+from django.conf import settings
 from django.contrib.admin.filterspecs import FilterSpec
 from django.contrib.admin.util import unquote
 from django.contrib.contenttypes.models import ContentType
@@ -28,7 +29,8 @@ from django.utils.html import escape
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.base.admin import RelatedModelAdmin, BaseAdmin
+from merengue.base.admin import RelatedModelAdmin, BaseAdmin, set_field_read_only
+from merengue.base.models import Base
 from merengue.perms import utils as perms_api
 from merengue.perms.models import Permission, Role
 from merengue.workflow.filterspecs import WorkflowModelRelatedFilterSpec
@@ -36,7 +38,7 @@ from merengue.workflow.models import (Workflow, State, Transition,
                                       WorkflowPermissionRelation,
                                       StatePermissionRelation,
                                       WorkflowModelRelation)
-from merengue.workflow.utils import workflow_by_model
+from merengue.workflow.utils import workflow_by_model, update_objects_permissions
 
 from transmeta import get_fallback_fieldname
 
@@ -47,14 +49,101 @@ FilterSpec.filter_specs.insert(0, (lambda f: f.name == 'workflow:workflowmodelre
                                WorkflowModelRelatedFilterSpec))
 
 
+def _get_all_children_models(model=None):
+    if not model:
+        model = Base
+    subclasses = model.__subclasses__()
+    result = []
+    for submodel in subclasses:
+        if not submodel._meta.abstract:
+            result.append(submodel)
+        result += _get_all_children_models(submodel)
+    return result
+
+
 class WorkflowAdmin(BaseAdmin):
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
 
+    def get_urls(self):
+        from django.conf.urls.defaults import patterns
+
+        def wrap(view):
+
+            def wrapper(*args, **kwargs):
+                #kwargs['model_admin'] = self
+                return self.admin_site.admin_view(view)(*args, **kwargs)
+            return update_wrapper(wrapper, view)
+
+        urls = super(WorkflowAdmin, self).get_urls()
+        my_urls = patterns('',
+            (r'^update_permissions/$', wrap(self.update_permissions_view)),
+            (r'^(?P<workflow_id>\d+)/graphic_workflow/$', wrap(self.graphic_workflow_view)))
+        return my_urls + urls
+
+    def object_tools(self, request, mode, url_prefix):
+        tools = super(WorkflowAdmin, self).object_tools(request, mode, url_prefix)
+        if mode == 'list':
+            tools = [{'url': url_prefix + 'update_permissions/', 'label': ugettext('Update permissions'), 'class': 'default', 'permission': 'change'}] + tools
+        elif mode == 'change':
+            tools = [{'url': url_prefix + 'graphic_workflow/', 'label': ugettext('Graphic workflow'), 'class': 'default', 'permission': 'change'}] + tools
+        return tools
+
+    def has_delete_permission(self, request, obj=None):
+        if obj and obj.slug in settings.STATIC_WORKFLOW_DATA['workflow']:
+            return False
+        elif obj:
+            return True
+        else:
+            if request.method == 'POST' and \
+               request.POST.get('action', None) == u'delete_selected':
+                selected_objs = [Workflow.objects.get(id=int(key))
+                                 for key in request.POST.getlist('_selected_action')]
+                for sel_obj in selected_objs:
+                    if not self.has_delete_permission(request, sel_obj):
+                        return False
+                return True
+        return False
+
     def get_form(self, request, obj=None, **kwargs):
         form = super(WorkflowAdmin, self).get_form(request, obj, **kwargs)
-        if not obj and 'initial_state' in form.base_fields.keys():
+        if obj:
+            form.base_fields['initial_state'].queryset = obj.states.all()
+            if obj.slug in settings.STATIC_WORKFLOW_DATA['workflow']:
+                set_field_read_only(form.base_fields['slug'], 'slug', obj)
+        elif 'initial_state' in form.base_fields.keys():
             del form.base_fields['initial_state']
         return form
+
+    def update_permissions_view(self, request, extra_context=None):
+        extra_context = self._base_update_extra_context(extra_context)
+        if request.method == 'POST':
+            update_objects_permissions()
+            return HttpResponseRedirect('..')
+        return render_to_response('admin/workflow/update_permissions.html',
+                                  extra_context,
+                                  context_instance=template.RequestContext(request, current_app=self.admin_site.name))
+
+    def graphic_workflow_view(self, request, workflow_id, extra_context=None):
+        workflow = get_object_or_404(Workflow, id=workflow_id)
+        pairs = []
+        transitions = {}
+        for transition in workflow.transitions.all():
+            for origin in transition.states.all():
+                pair = origin.name, transition.destination.name
+                if (pair[1], pair[0]) in pairs:
+                    transitions[(pair[1], pair[0])] = '%s / %s' % (transitions[(pair[1], pair[0])],
+                                                                   transition.name)
+                elif not pair in pairs:
+                    pairs.append(pair)
+                    transitions[pair] = transition.name
+        tmp_pairs, pairs = pairs[:], []
+        pairs = [(pair[0], pair[1], transitions[pair]) for pair in tmp_pairs]
+        context = extra_context or {}
+        context.update({'pairs': pairs})
+        return render_to_response(
+            'admin/workflow/graphic_workflow.html',
+            context, context_instance=template.RequestContext(
+                request, current_app=self.admin_site.name))
 
 
 class StateRelatedModelAdmin(RelatedModelAdmin):
@@ -62,6 +151,22 @@ class StateRelatedModelAdmin(RelatedModelAdmin):
     tool_label = _('states')
     related_field = 'workflow'
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
+
+    def has_delete_permission(self, request, obj=None):
+        if obj and obj.slug in settings.STATIC_WORKFLOW_DATA['states']:
+            return False
+        elif obj:
+            return True
+        else:
+            if request.method == 'POST' and \
+               request.POST.get('action', None) == u'delete_selected':
+                selected_objs = [State.objects.get(id=int(key))
+                                 for key in request.POST.getlist('_selected_action')]
+                for sel_obj in selected_objs:
+                    if not self.has_delete_permission(request, sel_obj):
+                        return False
+                return True
+        return False
 
     def get_urls(self):
         from django.conf.urls.defaults import patterns
@@ -83,6 +188,8 @@ class StateRelatedModelAdmin(RelatedModelAdmin):
         if obj:
             workflow = obj.workflow
             form.base_fields['transitions'].queryset = Transition.objects.filter(workflow=workflow)
+            if obj.slug in settings.STATIC_WORKFLOW_DATA['states']:
+                set_field_read_only(form.base_fields['slug'], 'slug', obj)
         else:
             form.base_fields['transitions'].queryset = self.basecontent.transitions.all()
         return form
@@ -135,6 +242,33 @@ class TransitionRelatedModelAdmin(RelatedModelAdmin):
     tool_label = _('transitions')
     related_field = 'workflow'
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
+
+    def has_delete_permission(self, request, obj=None):
+        if obj and obj.slug in settings.STATIC_WORKFLOW_DATA['transitions']:
+            return False
+        elif obj:
+            return True
+        else:
+            if request.method == 'POST' and \
+               request.POST.get('action', None) == u'delete_selected':
+                selected_objs = [Transition.objects.get(id=int(key))
+                                 for key in request.POST.getlist('_selected_action')]
+                for sel_obj in selected_objs:
+                    if not self.has_delete_permission(request, sel_obj):
+                        return False
+                return True
+        return False
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(TransitionRelatedModelAdmin, self).get_form(request, obj, **kwargs)
+        if obj:
+            workflow = obj.workflow
+            form.base_fields['destination'].queryset = State.objects.filter(workflow=workflow)
+            if obj.slug in settings.STATIC_WORKFLOW_DATA['transitions']:
+                set_field_read_only(form.base_fields['slug'], 'slug', obj)
+        else:
+            form.base_fields['destination'].queryset = self.basecontent.states.all()
+        return form
 
 
 class PermissionRelatedModelAdmin(RelatedModelAdmin):
@@ -236,7 +370,10 @@ class ContentTypeRelatedModelAdmin(RelatedModelAdmin):
         # Ugly hack to quickly extract non related content types
         if request.GET.get('id__isnull', None) == 'false':
             return ContentType.objects.exclude(workflowmodelrelation__workflow=self.basecontent)
-        return ContentType.objects.all()
+        else:
+            models = _get_all_children_models()
+            return ContentType.objects.filter(model__in=[model._meta.module_name
+                                                         for model in models])
 
     def has_delete_permission(self, request, obj=None):
         return False

@@ -69,7 +69,7 @@ class CollectionAdmin(BaseContentAdmin):
             {'fields': get_real_fieldname_in_each_language('name') +\
                        ['slug', ] +\
                        get_real_fieldname_in_each_language('description') +\
-                       ['status', 'tags', 'meta_desc', 'commentable', 'owners']},
+                       ['status', 'workflow_status', 'tags', 'meta_desc', 'commentable', 'owners']},
             ),
         (_('Collection Configuration'),
             {'fields': ('content_types', 'group_by', 'order_by', 'limit', 'reverse_order', 'show_main_image', 'filtering_section')},
@@ -88,6 +88,9 @@ class CollectionAdmin(BaseContentAdmin):
         media += mark_safe(forms.Media(js=['%smerengue/js/collection/SelectBox.js' % settings.MEDIA_URL,
                                            '%smerengue/js/collection/jquery.collection-admin.js' % settings.MEDIA_URL]))
         context.update({'media': media})
+        fields = self.fieldsets[0][1]['fields']
+        if 'status' in fields:
+            fields.remove('status')
         return super(CollectionAdmin, self).render_change_form(request, context, add, change, form_url, obj)
 
     def get_default_fields(self, obj, request):
@@ -226,7 +229,7 @@ class FeedCollectionAdmin(CollectionAdmin):
             {'fields': get_real_fieldname_in_each_language('name') +\
                        ['slug', ] +\
                        get_real_fieldname_in_each_language('description') +\
-                       ['status', 'tags', 'meta_desc', 'commentable', 'owners']},
+                       ['status', 'workflow_status', 'tags', 'meta_desc', 'commentable', 'owners']},
             ),
         (_('Collection Configuration'),
             {'fields': ('feed_url', 'expire_seconds', 'remove_items', )},

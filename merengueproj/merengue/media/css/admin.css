@@ -182,6 +182,7 @@ div#header img#merengue_logo {
     background: #D1D1D 1 url("../img/admin/tool-right_over.gif") no-repeat scroll right top;
 }
 
+.object-tools a.default,
 .object-tools a.quickreportlink,
 .object-tools a.advancedreportlink,
 .object-tools a.historylink,

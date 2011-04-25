@@ -355,7 +355,7 @@ class BaseContent(BaseClass):
                                     on_delete=models.SET_NULL)
 
     # permission global
-    adquire_global_permissions = models.BooleanField(_('Adquire global permissions'), default=True)
+    adquire_global_permissions = models.BooleanField(_('Adquire global permissions'), default=False)
 
     # tagging info
     tags = TagField(verbose_name=_('Tags'),

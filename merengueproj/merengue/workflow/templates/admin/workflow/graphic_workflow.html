@@ -1,0 +1,38 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_tags related_admin_tags %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="">{% trans "Graphic workflow" %}</a>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div id="content-main">
+
+{% block content-main-inner %}
+
+<script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/dracula/raphael-min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/dracula/dracula_graffle.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/dracula/dracula_graph.js"></script>
+<div id="canvas">
+</div>
+
+<script type="text/javascript">
+   var g = new Graph();
+
+   {% for element in pairs %}
+      g.addEdge("{{ element.0 }}", "{{ element.1 }}", { label: "{{ element.2 }}" });
+   {% endfor %}
+
+   var layouter = new Graph.Layout.Spring(g);
+   layouter.layout();
+
+   var renderer = new Graph.Renderer.Raphael('canvas', g, 800, 300);
+   renderer.draw();
+</script>
+{% endblock %}
+
+</div>
+{% endblock %}

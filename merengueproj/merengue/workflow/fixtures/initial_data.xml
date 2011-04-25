@@ -112,19 +112,4 @@
   <field to="perms.permission" name="permission" rel="ManyToOneRel">1</field>
   <field to="perms.role" name="role" rel="ManyToOneRel">1</field>
  </object>
- <object pk="2" model="workflow.statepermissionrelation">
-  <field to="workflow.state" name="state" rel="ManyToOneRel">2</field>
-  <field to="perms.permission" name="permission" rel="ManyToOneRel">3</field>
-  <field to="perms.role" name="role" rel="ManyToOneRel">3</field>
- </object>
- <object pk="3" model="workflow.statepermissionrelation">
-  <field to="workflow.state" name="state" rel="ManyToOneRel">2</field>
-  <field to="perms.permission" name="permission" rel="ManyToOneRel">2</field>
-  <field to="perms.role" name="role" rel="ManyToOneRel">3</field>
- </object>
- <object pk="4" model="workflow.statepermissionrelation">
-  <field to="workflow.state" name="state" rel="ManyToOneRel">2</field>
-  <field to="perms.permission" name="permission" rel="ManyToOneRel">1</field>
-  <field to="perms.role" name="role" rel="ManyToOneRel">3</field>
- </object>
 </django-objects>

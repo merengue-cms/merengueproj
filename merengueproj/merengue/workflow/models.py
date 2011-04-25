@@ -188,7 +188,7 @@ class State(models.Model):
                     state=self, role=role)]
 
     def __unicode__(self):
-        return "%s (%s)" % (self.name, self.workflow.name)
+        return self.name
 
 
 class Transition(models.Model):
@@ -230,7 +230,7 @@ class Transition(models.Model):
         translate = ('name', )
 
     def __unicode__(self):
-        return "%s (%s)" % (self.name, self.workflow.name)
+        return self.name
 
 
 class WorkflowModelRelation(models.Model):
@@ -362,12 +362,19 @@ def _create_basic_states(sender, instance, created, **kwargs):
         set_as_pending = Transition.objects.create(
             slug='set-as-pending', workflow=instance, destination=pending, **data)
 
+        data = {get_real_fieldname('name'): ugettext('Set as draft')}
+        set_as_draft = Transition.objects.create(
+            slug='set-as-draft', workflow=instance, destination=draft, **data)
+
         data = {get_real_fieldname('name'): ugettext('Publish')}
         publish = Transition.objects.create(
             slug='publish', workflow=instance, destination=published, **data)
 
         draft.transitions.add(set_as_pending)
         pending.transitions.add(publish)
+        pending.transitions.add(set_as_draft)
+        published.transitions.add(set_as_pending)
+        published.transitions.add(set_as_draft)
         anonymous_role = Role.objects.get(slug='anonymous_user')
         view_permission = Permission.objects.get(codename='view')
 

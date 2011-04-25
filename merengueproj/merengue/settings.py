@@ -289,6 +289,12 @@ DEFAULT_THEME_PREVIEW = 'merengue/img/preview_merengue.png'
 
 STATIC_ROLES = [u'Anonymous User', u'Owner']
 
+STATIC_WORKFLOW_DATA = {
+    'workflow': [u'basic-workflow'],
+    'states': [u'draft', u'pending', u'published'],
+    'transitions': [u'set-as-pending', u'publish', u'set-as-draft'],
+}
+
 # inplaceeditform
 ADAPTOR_INPLACEEDIT = {'textarea': 'merengue.uitools.fields.AdaptorTinyMCEField'}
 

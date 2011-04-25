@@ -1,0 +1,26 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_tags related_admin_tags %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  {% advanced_breadcrumbs %} &rsaquo; 
+  <a href="">{% trans 'Update permissions' %}</a>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div id="content-main">
+
+{% block content-main-inner %}
+
+<h1>{% trans "Do you want to update the permissions related to workflows of all the portal objects?" %}</h1>
+
+<form action="" method="post">
+<input type="submit" value="{% trans "Yes, update all object permissions" %}" /> <a href="../">{% trans "No, take me out of here" %}</a>
+</form>
+
+{% endblock %}
+
+</div>
+{% endblock %}
