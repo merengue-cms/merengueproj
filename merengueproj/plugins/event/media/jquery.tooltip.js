@@ -52,7 +52,8 @@
 					$.data(this, "tooltip", settings);
 					this.tOpacity = helper.parent.css("opacity");
 					// copy tooltip into its own expando and remove the title
-					this.tooltipText = this.title;
+					if (this.title)
+    					this.tooltipText = this.title;
 					$(this).removeAttr("title");
 					// also remove alt attribute to prevent default tooltip in IE
 					this.alt = "";
