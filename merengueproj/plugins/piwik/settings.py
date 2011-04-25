@@ -18,7 +18,7 @@
 # default date range and metric to get piwik stats
 PERIOD = 'year'
 DATE = 'today'
-METRIC = 'sum_daily_nb_uniq_visitors'
+METRIC = 'nb_visits'
 
 # You can trace stats by custom variables instead page titles.
 #IMPORTANT: if you change it to True,you must change
