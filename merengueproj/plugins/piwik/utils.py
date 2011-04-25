@@ -140,7 +140,6 @@ def get_basecontents(data):
     pattern = ".*id:(\d+).*"
     contents = {}
     metric = get_metric()
-    metric_total = 0
     for entry in data:
         match = re.match(pattern, entry['label'])
         id = None
@@ -150,11 +149,9 @@ def get_basecontents(data):
             content = BaseContent.objects.get(id=id)
             if not content in contents:
                 contents[content] = {}
-            if metric in entry:
-                contents[content]['visits'] = contents[content].get('visits', 0) + entry[metric]
-                metric_total = metric_total + contents[content]['visits']
-            elif 'subtable' in entry:
-                children, ch_metric_total = get_basecontents(entry['subtable'])
+            contents[content]['visits'] = contents[content].get('visits', 0) + entry.get(metric, 0)
+            if 'subtable' in entry:
+                children = get_basecontents(entry['subtable'])
                 if contents[content].get('children', None):
                     for child, child_metric in children.iteritems():
                         if child in contents[content]['children']:
@@ -163,12 +160,8 @@ def get_basecontents(data):
                             contents[content]['children'].update(child)
                 else:
                     contents[content]['children'] = children
-                contents[content]['visits'] = contents[content].get('visits', 0) + ch_metric_total
-            else:
-                contents[content]['visits'] = contents[content].get('visits', 0) + 1
-                metric_total = metric_total + contents[content]['visits']
 
-    return contents, metric_total
+    return contents
 
 
 def sort_contents(contents):
@@ -193,4 +186,4 @@ def get_sections_from_customvariables():
 
 
 def get_contents():
-    return sort_contents_recursive(get_basecontents(get_pagetitle_stats())[0])
+    return sort_contents_recursive(get_basecontents(get_pagetitle_stats()))
