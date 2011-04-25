@@ -64,6 +64,7 @@ MERENGUE_APPS = (
     'merengue.review',
     'merengue.uitools',
     'merengue.collab',  # Please, keep this application in last place cause it's used to know when activate plugins after migration
+    'merengue.workflow',
 )
 
 HTTP_STATUS_CODE_TEMPLATES = {
@@ -305,3 +306,6 @@ AUTOREPORTS_FUNCTIONS = True
 AUTOREPORTS_INITIAL = True
 AUTOREPORTS_I18N = True
 AUTOREPORTS_SUBFIX = True
+
+# Default workflow
+DEFAULT_WORKFLOW = 1

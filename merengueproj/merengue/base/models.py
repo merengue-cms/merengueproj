@@ -172,6 +172,11 @@ class Base(models.Model):
                                         settings.MAX_INT_VALUE)
             raise ValidationError(error_msg)
 
+    def get_status_object(self):
+        # since the connection with the state is created on the post-save
+        # signal, it will allways exists.
+        return self.stateobjectrelation_set.all()[0].state
+
     def save(self, *args, **kwargs):
         for lang in settings.LANGUAGES:
             field_name = 'description_%s' % lang[0]
