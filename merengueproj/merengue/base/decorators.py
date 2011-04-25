@@ -97,7 +97,7 @@ def content_public_required(view_func=None, slug_field='slug', model=BaseContent
         content = _get_content(request, slug_field, model, *args, **kwargs)
         is_creator = hasattr(content, 'creator') and content.creator and content.creator.id == request.user.id
         # 2 is published status for documents
-        return content.status == 'published' or content.status == 2 or request.user.is_staff or is_creator
+        return content.status == 'published' or request.user.is_staff or is_creator
     decorator = user_passes_test(_content_public_required, login_url)
     if view_func:
         return decorator(view_func)

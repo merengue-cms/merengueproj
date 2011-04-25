@@ -53,6 +53,7 @@ from merengue.base.review_tasks import review_to_pending_status
 from merengue.urlresolvers import get_url_default_lang
 from merengue.multimedia.models import BaseMultimedia
 from merengue.utils import is_last_application
+from merengue.workflow.models import State
 
 
 PRIORITY_CHOICES = (
@@ -129,6 +130,8 @@ class Base(models.Model):
     status = models.CharField(_('Publication status'), max_length=20, choices=settings.STATUS_LIST,
                               default='draft', help_text=_('Enter the current status'), db_index=True,
                               editable=True)
+    workflow_status = models.ForeignKey(State, verbose_name=_('workflow status'),
+                                       null=True, blank=True, editable=True)
     main_image = StdImageField(_('main image'), upload_to='content_images',
                                thumbnail_size=(200, 200),
                                null=True, blank=True, editable=False)
@@ -185,6 +188,19 @@ class Base(models.Model):
 
         super(Base, self).save(*args, **kwargs)
 
+    def update_status(self):
+        """We assume that Statu is changed
+        """
+        from merengue.perms.models import ObjectPermission
+        self.status = self.workflow_status.slug
+        self.objectpermission_set.all().delete()
+        for perm in self.workflow_status.statepermissionrelation_set.all():
+            self.objectpermission_set.add(
+                ObjectPermission.objects.create(content=self,
+                                                role=perm.role,
+                                                permission=perm.permission))
+        self.save()
+
     @permalink
     def get_admin_absolute_url(self):
         content_type = ContentType.objects.get_for_model(self)
@@ -192,6 +208,14 @@ class Base(models.Model):
 
     def is_published(self):
         return self.status == 'published'
+
+
+def base_post_save_handler(sender, instance, created, **kwargs):
+    if 'status' in instance.__dict__ and instance.status != instance.workflow_status.slug:
+        instance.update_status()
+
+
+signals.post_save.connect(base_post_save_handler)
 
 
 BaseClass = Base

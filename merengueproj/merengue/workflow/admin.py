@@ -15,24 +15,37 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.contrib import admin
+from django.utils.translation import ugettext_lazy as _
 
+from merengue.base.admin import RelatedModelAdmin, BaseAdmin
 from merengue.workflow.models import Workflow, State, Transition
 
-
-class WorkflowAdmin(admin.ModelAdmin):
-    pass
+from transmeta import get_fallback_fieldname
 
 
-class StateAdmin(admin.ModelAdmin):
-    pass
+class WorkflowAdmin(BaseAdmin):
+    prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
 
 
-class TransitionAdmin(admin.ModelAdmin):
-    pass
+class StateRelatedModelAdmin(RelatedModelAdmin):
+    tool_name = 'states'
+    tool_label = _('states')
+    related_field = 'workflow'
+    prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
+
+
+class TransitionRelatedModelAdmin(RelatedModelAdmin):
+    tool_name = 'transitions'
+    tool_label = _('transitions')
+    related_field = 'workflow'
+    prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
+
+
+def register_related(site):
+    site.register_related(Transition, TransitionRelatedModelAdmin, related_to=Workflow)
+    site.register_related(State, StateRelatedModelAdmin, related_to=Workflow)
 
 
 def register(site):
     site.register(Workflow, WorkflowAdmin)
-    site.register(State, StateAdmin)
-    site.register(Transition, TransitionAdmin)
+    register_related(site)

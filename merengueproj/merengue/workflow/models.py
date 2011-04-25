@@ -16,11 +16,13 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.db import models
+from django.db.models.signals import post_save
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.perms.models import Permission, Role
-from merengue.perms.utils import has_permission
+from transmeta import TransMeta, get_fallback_fieldname
+
+from merengue import perms  # pyflakes:ignore
 
 
 class Workflow(models.Model):
@@ -47,11 +49,19 @@ class Workflow(models.Model):
         The initial state the model / content gets if created.
     """
 
+    __metaclass__ = TransMeta
     name = models.CharField(_("Name"), max_length=100, unique=True)
+    slug = models.CharField(_(u"Slug"), max_length=100)
     initial_state = models.ForeignKey("State", related_name="workflow_state",
                                       blank=True, null=True)
-    permissions = models.ManyToManyField(Permission, symmetrical=False,
+    permissions = models.ManyToManyField('perms.Permission',
+                                         symmetrical=False,
                                          through="WorkflowPermissionRelation")
+
+    class Meta:
+        verbose_name = _('Workflow')
+        verbose_name_plural = _('Workflows')
+        translate = ('name', )
 
     def __unicode__(self):
         return self.name
@@ -108,7 +118,9 @@ class State(models.Model):
     transitions
         The transitions of a workflow state.
     """
+    __metaclass__ = TransMeta
     name = models.CharField(_(u"Name"), max_length=100)
+    slug = models.CharField(_(u"Slug"), max_length=100)
     workflow = models.ForeignKey(Workflow, verbose_name=_(u"Workflow"),
                                  related_name="states")
     transitions = models.ManyToManyField("Transition",
@@ -117,7 +129,10 @@ class State(models.Model):
                                          related_name="states")
 
     class Meta:
-        ordering = ('name', )
+        verbose_name = _('State')
+        verbose_name_plural = _('States')
+        translate = ('name', )
+        ordering = (get_fallback_fieldname('name'), )
 
     def delete(self, *args, **kwargs):
         if self.workflow_state.count():
@@ -127,6 +142,7 @@ class State(models.Model):
     def get_allowed_transitions(self, obj, user):
         """Returns all allowed transitions for passed object and user.
         """
+        from perms.utils import has_permission
         transitions = []
         for transition in self.transitions.all():
             permission = transition.permission
@@ -188,14 +204,22 @@ class Transition(models.Model):
         The necessary permission to process the transition. Must be a
         Permission instance.
     """
+    __metaclass__ = TransMeta
     name = models.CharField(_(u"Name"), max_length=100)
+    slug = models.CharField(_(u"Slug"), max_length=100)
     workflow = models.ForeignKey(Workflow, verbose_name=_(u"Workflow"),
                                  related_name="transitions")
     destination = models.ForeignKey(State, verbose_name=_(u"Destination"),
                                     null=True, blank=True,
                                     related_name="destination_state")
-    permission = models.ForeignKey(Permission, verbose_name=_(u"Permission"),
+    permission = models.ForeignKey('perms.Permission',
+                                   verbose_name=_(u"Permission"),
                                    blank=True, null=True)
+
+    class Meta:
+        verbose_name = _('Transition')
+        verbose_name_plural = _('Transitions')
+        translate = ('name', )
 
     def __unicode__(self):
         return self.name
@@ -243,7 +267,7 @@ class WorkflowPermissionRelation(models.Model):
         Permission instance.
     """
     workflow = models.ForeignKey(Workflow)
-    permission = models.ForeignKey(Permission, related_name="permissions")
+    permission = models.ForeignKey('perms.Permission', related_name="permissions")
 
     class Meta:
         unique_together = ("workflow", "permission")
@@ -266,7 +290,7 @@ class StateInheritanceBlock(models.Model):
         Permission instance.
     """
     state = models.ForeignKey(State, verbose_name=_(u"State"))
-    permission = models.ForeignKey(Permission, verbose_name=_(u"Permission"))
+    permission = models.ForeignKey('perms.Permission', verbose_name=_(u"Permission"))
 
     def __unicode__(self):
         return "%s %s" % (self.state.name, self.permission.name)
@@ -290,9 +314,41 @@ class StatePermissionRelation(models.Model):
         Role instance.
     """
     state = models.ForeignKey(State, verbose_name=_(u"State"))
-    permission = models.ForeignKey(Permission, verbose_name=_(u"Permission"))
-    role = models.ForeignKey(Role, verbose_name=_(u"Role"))
+    permission = models.ForeignKey('perms.Permission', verbose_name=_(u"Permission"))
+    role = models.ForeignKey('perms.Role', verbose_name=_(u"Role"))
 
     def __unicode__(self):
         return "%s %s %s" % (self.state.name, self.role.name,
                              self.permission.name)
+
+
+def _create_basic_states(sender, instance, created, **kwargs):
+    if created:
+        from merengue.perms.models import Role, Permission
+        draft = State.objects.create(name_en=u'Draft',
+                                     slug='draft', workflow=instance)
+        pending = State.objects.create(name_en=u'Pending',
+                                       slug='pending', workflow=instance)
+        published = State.objects.create(name_en=u'Published',
+                                         slug='published', workflow=instance)
+        set_as_pending = Transition.objects.create(name_en=u'Set as pending',
+                                                   slug='set-as-pending',
+                                                   workflow=instance,
+                                                   destination=pending)
+        publish = Transition.objects.create(name_en=u'Publish',
+                                            slug='publish',
+                                            workflow=instance,
+                                            destination=published)
+        draft.transitions.add(set_as_pending)
+        pending.transitions.add(publish)
+        anonymous_role = Role.objects.get(slug='anonymous_user')
+        view_permission = Permission.objects.get(codename='view')
+
+        StatePermissionRelation.objects.create(
+            state=published, permission=view_permission, role=anonymous_role,
+            )
+        instance.initial_state = draft
+        instance.save()
+
+
+post_save.connect(_create_basic_states, sender=Workflow)

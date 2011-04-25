@@ -35,6 +35,7 @@ PATHS_SECTIONS = [
     ('action/', 'sitebuilding'),
     ('registry/', 'sitebuilding'),
     ('siteconfig/', 'sitebuilding'),
+    ('workflow/', 'sitebuilding'),
     ('auth/', 'usermanagement'),
     ('perms/', 'usermanagement'),
 ]
