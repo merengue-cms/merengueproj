@@ -2,12 +2,15 @@
 from django.conf import settings
 from south.db import db
 from south.v2 import SchemaMigration
-from merengue.base.utils import south_trans_data, add_south_trans_fields
+from merengue.base.utils import south_trans_data, add_south_trans_fields, table_exists
 
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
+        if table_exists('highlight_highlight'):
+            return  # no migration needed
+
         # Adding model 'Highlight'
         data = (('id', orm['highlight.Highlight:id']),
                 ('slug', orm['highlight.Highlight:slug']),
