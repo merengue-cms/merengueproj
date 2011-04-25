@@ -1,38 +1,41 @@
-{% extends "admin/base_site.html" %}
+{% extends "admin/change_form.html" %}
 {% load i18n admin_tags related_admin_tags %}
 
-{% block breadcrumbs %}
-<div class="breadcrumbs">
-  <a href="">{% trans "Graphic workflow" %}</a>
-</div>
+{% block extrahead %}
+    {{ block.super }}
+    <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/dracula/raphael-min.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/dracula/dracula_graffle.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/dracula/dracula_graph.js"></script>
+    <script type="text/javascript">
+      (function($) {
+        $(document).ready(function () {
+            var g = new Graph();
+            {% for element in pairs %}
+                g.addEdge("{{ element.0 }}", "{{ element.1 }}", { label: "{{ element.2 }}" });
+            {% endfor %}
+
+            var layouter = new Graph.Layout.Spring(g);
+            layouter.layout();
+
+            var renderer = new Graph.Renderer.Raphael('canvas', g, 800, 300);
+            renderer.draw();
+         });
+      })(jQuery);
+    </script>
 {% endblock %}
+
+{% block breadcrumbs %}{% if not is_popup %}
+<div class="breadcrumbs">
+    {% include "admin/workflow/inc.graphic_breadcrumbs.html" %}
+</div>
+{% endif %}{% endblock %}
 
 {% block content %}
 
 <div id="content-main">
-
-{% block content-main-inner %}
-
-<script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/dracula/raphael-min.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/dracula/dracula_graffle.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/dracula/dracula_graph.js"></script>
-<div id="canvas">
-</div>
-
-<script type="text/javascript">
-   var g = new Graph();
-
-   {% for element in pairs %}
-      g.addEdge("{{ element.0 }}", "{{ element.1 }}", { label: "{{ element.2 }}" });
-   {% endfor %}
-
-   var layouter = new Graph.Layout.Spring(g);
-   layouter.layout();
-
-   var renderer = new Graph.Renderer.Raphael('canvas', g, 800, 300);
-   renderer.draw();
-</script>
-{% endblock %}
-
+    {% block content-main-inner %}
+    <div id="canvas">
+    </div>
+    {% endblock %}
 </div>
 {% endblock %}

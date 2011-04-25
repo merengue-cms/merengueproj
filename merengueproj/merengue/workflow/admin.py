@@ -139,7 +139,9 @@ class WorkflowAdmin(BaseAdmin):
         tmp_pairs, pairs = pairs[:], []
         pairs = [(pair[0], pair[1], transitions[pair]) for pair in tmp_pairs]
         context = extra_context or {}
-        context.update({'pairs': pairs})
+        context.update({'pairs': pairs,
+                        'original': workflow,
+                        'title': unicode(workflow)})
         return render_to_response(
             'admin/workflow/graphic_workflow.html',
             context, context_instance=template.RequestContext(
