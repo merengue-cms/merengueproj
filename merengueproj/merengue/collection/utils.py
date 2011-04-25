@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.db import transaction
+from django.db.models.fields import FieldDoesNotExist
 from django.template import loader
 
 from transmeta import get_real_fieldname
@@ -12,6 +13,16 @@ from merengue.collection.models import (Collection, IncludeCollectionFilter,
                                         FeedCollection)
 
 
+from stdimage import StdImageField
+from django.db.models import ImageField, ManyToManyField
+from tagging.fields import TagField
+
+NOT_ORDERING_FIELD_TYPES = [StdImageField,
+                            ImageField,
+                            ManyToManyField,
+                            TagField]
+
+
 def get_common_fields_for_cts(content_types):
     result = set()
     extrange = len(content_types) == 1
@@ -20,6 +31,20 @@ def get_common_fields_for_cts(content_types):
         if not issubclass(model, BaseContent):
             extrange = True
         fields = set(model._meta.get_all_field_names())
+
+        # remove all fields that are not suitable for ordering
+        not_ordering = set()
+        for f in fields:
+            try:
+                field = model._meta.get_field_by_name(f)[0]
+                for fieldtype in NOT_ORDERING_FIELD_TYPES:
+                    if isinstance(field, fieldtype):
+                        not_ordering.add(f)
+                        break
+            except FieldDoesNotExist:
+                not_ordering.add(f)
+        fields = fields.difference(not_ordering)
+
         if not result:
             result = fields
         else:
