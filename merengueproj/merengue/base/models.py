@@ -212,7 +212,7 @@ class Base(models.Model):
 
 
 def base_post_save_handler(sender, instance, created, **kwargs):
-    if 'status' in instance.__dict__ and instance.workflow_status and instance.status != instance.workflow_status.slug:
+    if 'status' in instance.__dict__ and hasattr(instance, 'workflow_status') and instance.status != instance.workflow_status.slug:
         instance.update_status()
 
 
