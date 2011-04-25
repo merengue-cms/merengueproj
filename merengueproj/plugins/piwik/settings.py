@@ -16,8 +16,8 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 # default date range and metric to get piwik stats
-PERIOD = 'year'
-DATE = 'today'
+PERIOD = 'range'
+DATE = 'last365'
 METRIC = 'nb_visits'
 
 # You can trace stats by custom variables instead page titles.
