@@ -119,6 +119,50 @@ class State(models.Model):
     class Meta:
         ordering = ('name', )
 
+    def delete(self, *args, **kwargs):
+        if self.workflow_state.count():
+            self.workflow_state.clear()
+        super(State, self).delete(*args, **kwargs)
+
+    def get_allowed_transitions(self, obj, user):
+        """Returns all allowed transitions for passed object and user.
+        """
+        transitions = []
+        for transition in self.transitions.all():
+            permission = transition.permission
+            if permission is None:
+                transitions.append(transition)
+            else:
+                # First we try to get the objects specific has_permission
+                # method (in case the object inherits from the PermissionBase
+                # class).
+                try:
+                    if obj.has_permission(user, permission.codename):
+                        transitions.append(transition)
+                except AttributeError:
+                    if has_permission(obj, user,
+                                      permission.codename):
+                        transitions.append(transition)
+        return transitions
+
+    def get_accesible_states(self):
+        """
+        This function return a list with all accesible states from
+        the own state.
+        """
+        states = [transition.destination
+                  for transition
+                  in self.transitions.all()]
+
+        return list(set(states))
+
+    def get_permissions_by_role(self, role):
+        """
+        """
+        return [stateperm.permission for stateperm
+                in StatePermissionRelation.objects.filter(
+                    state=self, role=role)]
+
     def __unicode__(self):
         return "%s (%s)" % (self.name, self.workflow.name)
 
@@ -226,27 +270,6 @@ class StateInheritanceBlock(models.Model):
 
     def __unicode__(self):
         return "%s %s" % (self.state.name, self.permission.name)
-
-    def get_allowed_transitions(self, obj, user):
-        """Returns all allowed transitions for passed object and user.
-        """
-        transitions = []
-        for transition in self.transitions.all():
-            permission = transition.permission
-            if permission is None:
-                transitions.append(transition)
-            else:
-                # First we try to get the objects specific has_permission
-                # method (in case the object inherits from the PermissionBase
-                # class).
-                try:
-                    if obj.has_permission(user, permission.codename):
-                        transitions.append(transition)
-                except AttributeError:
-                    if has_permission(obj, user,
-                                      permission.codename):
-                        transitions.append(transition)
-        return transitions
 
 
 class StatePermissionRelation(models.Model):

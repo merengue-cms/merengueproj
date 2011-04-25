@@ -18,10 +18,11 @@
 from django.test import TestCase
 from django.contrib.contenttypes.models import ContentType
 
-from merengue.perms.models import Permission
+from merengue.perms.models import Permission, Role
 from merengue.workflow.models import (Workflow, State, Transition,
                                       WorkflowModelRelation,
-                                      WorkflowPermissionRelation)
+                                      WorkflowPermissionRelation,
+                                      StatePermissionRelation)
 
 
 class WorkflowBasicTest(TestCase):
@@ -43,7 +44,6 @@ class WorkflowBasicTest(TestCase):
         self.assertEquals(Transition.objects.count(), 0)
 
         work = Workflow.objects.get(name='foo workflow')
-        self.assertEquals(work.id, 1)
         self.assertEquals(work.permissions.count(), 0)
         self.assertEquals(work.states.count(), 0)
         self.assertEquals(work.transitions.count(), 0)
@@ -189,9 +189,9 @@ class WorkflowStatesBasicTest(TestCase):
         self.assertEquals(self.work.get_initial_state(),
                           self.work.states.all()[0])
 
-        self.work.initial_state = State.objects.get(name="Draft")
+        self.work.initial_state = State.objects.get(name="Published")
         self.assertEquals(self.work.get_initial_state(),
-                          self.work.states.all()[1])
+                          self.work.states.get(name="Published"))
 
     def test_get_initial_state_from_content_type(self):
         """Test if it's possible to get the initial state of a workflow
@@ -230,17 +230,418 @@ class WorkflowStatesBasicTest(TestCase):
                           self.work.states.all()[0])
         self.assertEquals(self.work.get_initial_state().name, "Draft")
         State.objects.get(name="Draft").delete()
+
+        # As we changed a lot of the Workflow structure, we need to
+        # load it again from database
+        self.work = Workflow.objects.all()[0]
         self.assertEquals(self.work.get_initial_state(),
                           self.work.states.all()[0])
-        self.assertEquals(self.work.get_initial_state().name, "Reviewed")
+        self.assertEquals(self.work.get_initial_state().name, "On top")
 
     def test_removing_all_states(self):
         """Test that the workflow behaviour is correct after removing
         all the states.
         """
-        self.assertEquals('TODO', False)
+        State.objects.create(name="Draft", workflow=self.work)
+        State.objects.create(name="Reviewed", workflow=self.work)
+        State.objects.create(name="Rejected", workflow=self.work)
+        State.objects.create(name="Published", workflow=self.work)
+        State.objects.create(name="On top", workflow=self.work)
+
+        self.assertEquals(self.work.states.count(), 5)
+        some_state = State.objects.all()[2]
+        some_state.delete()
+        self.assertEquals(self.work.states.count(), 4)
+
+        State.objects.create(name="Modified", workflow=self.work)
+        self.assertEquals(self.work.states.count(), 5)
+
+        self.work.states.all().delete()
+        self.assertEquals(self.work.states.count(), 0)
+        self.assertEquals(self.work.get_initial_state(), None)
 
     def tearDown(self):
         self.work.delete()
 
-        pass
+
+class WorkflowTransitionBasicTest(TestCase):
+    """This TestCase will test the relations with Transitions
+    objects, basically between State and Transittion.
+    """
+
+    def setUp(self):
+        """With this setting up, we instance a basic Workflow
+        with some perms that will be manage by it, and a ContentType
+        that will use that Workflow.
+
+        It also adds the States objects
+        """
+        self.work = Workflow.objects.create(name='foo workflow')
+
+        permissions = []
+        permissions.append(Permission.objects.get(codename=u'can_draft'))
+        permissions.append(Permission.objects.get(codename=u'can_pending'))
+        permissions.append(Permission.objects.get(codename=u'can_published'))
+        permissions.append(Permission.objects.get(codename=u'delete'))
+        permissions.append(Permission.objects.get(codename=u'edit'))
+        permissions.append(Permission.objects.get(codename=u'view'))
+
+        for perm in permissions:
+            self.work.add_permission(perm)
+
+        self.work.set_to_model(ContentType.objects.get(name='document'))
+
+        State.objects.create(name="Draft", workflow=self.work)
+        State.objects.create(name="Reviewed", workflow=self.work)
+        State.objects.create(name="Rejected", workflow=self.work)
+        State.objects.create(name="Published", workflow=self.work)
+        State.objects.create(name="On top", workflow=self.work)
+
+        self.work.initial_state = State.objects.get(name="Draft")
+        self.work.save()
+
+    def create_basic_structure(self):
+        states = dict([(state.name, state) for state in State.objects.all()])
+        transitions = {}
+
+        transitions['reviewed'] = Transition.objects.create(
+            name="Review", workflow=self.work, destination=states['Reviewed'])
+        states['Draft'].transitions.add(transitions['reviewed'])
+
+        transitions['rejected'] = Transition.objects.create(
+            name="Reject", workflow=self.work,
+            destination=self.work.states.get(name="Rejected"))
+        states['Draft'].transitions.add(transitions['rejected'])
+
+        transitions['modify'] = Transition.objects.create(
+            name="Modify", workflow=self.work,
+            destination=self.work.states.get(name="Draft"))
+        states['Reviewed'].transitions.add(transitions['modify'])
+        states['Rejected'].transitions.add(transitions['modify'])
+
+        transitions['publish'] = Transition.objects.create(
+            name="Publish", workflow=self.work,
+            destination=self.work.states.get(name="Published"))
+        states['Reviewed'].transitions.add(transitions['publish'])
+
+        transitions['add_on_top'] = Transition.objects.create(
+            name="Add on top", workflow=self.work,
+            destination=self.work.states.get(name="On top"))
+        states['Reviewed'].transitions.add(transitions['add_on_top'])
+        states['Published'].transitions.add(transitions['add_on_top'])
+
+    def test_create_transitions_between_states(self):
+        """
+        """
+        self.create_basic_structure()
+        self.assertEquals(Transition.objects.count(), 5)
+
+        states = dict([(state.name, state) for state in State.objects.all()])
+
+        # First, checks that the transitions are correct
+        self.assertEquals(set(states['Draft'].transitions.all()),
+                          set([Transition.objects.get(name='Review'),
+                               Transition.objects.get(name='Reject')]))
+
+        self.assertEquals(set(states['Reviewed'].transitions.all()),
+                          set([Transition.objects.get(name='Modify'),
+                               Transition.objects.get(name='Publish'),
+                               Transition.objects.get(name='Add on top')]))
+
+        self.assertEquals(set(states['Rejected'].transitions.all()),
+                          set([Transition.objects.get(name='Modify')]))
+
+        self.assertEquals(set(states['Published'].transitions.all()),
+                          set([Transition.objects.get(name='Add on top')]))
+
+        self.assertEquals(set(states['On top'].transitions.all()),
+                          set([]))
+
+        # Now, we check the accesible states
+        self.assertEquals(set(states['Draft'].get_accesible_states()),
+                          set([states['Reviewed'], states['Rejected']]))
+
+        self.assertEquals(set(states['Reviewed'].get_accesible_states()),
+                          set([states['Draft'], states['Published'],
+                              states['On top']]))
+
+        self.assertEquals(set(states['Rejected'].get_accesible_states()),
+                          set([states['Draft']]))
+
+        self.assertEquals(set(states['Published'].get_accesible_states()),
+                          set([states['On top']]))
+
+        self.assertEquals(set(states['On top'].get_accesible_states()),
+                          set([]))
+
+    def test_removing_states_throught_transitions(self):
+        """
+        This test covers the removing of some states of the workflow structure
+        """
+        self.create_basic_structure()
+        self.assertEquals(State.objects.count(), 5)
+        self.assertEquals(Transition.objects.count(), 5)
+        aux_state = State.objects.get(name='Rejected')
+        aux_state.delete()
+
+        states = dict([(state.name, state) for state in State.objects.all()])
+
+        self.assertEquals(Transition.objects.count(), 4)
+        self.assertEquals(State.objects.count(), 4)
+
+        # First, checks that the transitions are correct
+        self.assertEquals(set(states['Draft'].transitions.all()),
+                          set([Transition.objects.get(name='Review')]))
+
+        self.assertEquals(set(states['Reviewed'].transitions.all()),
+                          set([Transition.objects.get(name='Modify'),
+                               Transition.objects.get(name='Publish'),
+                               Transition.objects.get(name='Add on top')]))
+
+        self.assertEquals(set(states['Published'].transitions.all()),
+                          set([Transition.objects.get(name='Add on top')]))
+
+        self.assertEquals(set(states['On top'].transitions.all()),
+                          set([]))
+
+        # Now, we check the accesible states
+        self.assertEquals(set(states['Draft'].get_accesible_states()),
+                          set([states['Reviewed']]))
+
+        self.assertEquals(set(states['Reviewed'].get_accesible_states()),
+                          set([states['Draft'], states['Published'],
+                              states['On top']]))
+
+        self.assertEquals(set(states['Published'].get_accesible_states()),
+                          set([states['On top']]))
+
+        self.assertEquals(set(states['On top'].get_accesible_states()),
+                          set([]))
+
+        aux_state = State.objects.get(name='Published')
+        aux_state.delete()
+
+        states = dict([(state.name, state) for state in State.objects.all()])
+
+        self.assertEquals(Transition.objects.count(), 3)
+        self.assertEquals(State.objects.count(), 3)
+
+        # First, checks that the transitions are correct
+        self.assertEquals(set(states['Draft'].transitions.all()),
+                          set([Transition.objects.get(name='Review')]))
+
+        self.assertEquals(set(states['Reviewed'].transitions.all()),
+                          set([Transition.objects.get(name='Modify'),
+                               Transition.objects.get(name='Add on top')]))
+
+        self.assertEquals(set(states['On top'].transitions.all()),
+                          set([]))
+
+        # Now, we check the accesible states
+        self.assertEquals(set(states['Draft'].get_accesible_states()),
+                          set([states['Reviewed']]))
+
+        self.assertEquals(set(states['Reviewed'].get_accesible_states()),
+                          set([states['Draft'], states['On top']]))
+
+        self.assertEquals(set(states['On top'].get_accesible_states()),
+                          set([]))
+
+    def test_removing_transitions(self):
+        """
+        """
+        self.create_basic_structure()
+        self.assertEquals(State.objects.count(), 5)
+        self.assertEquals(Transition.objects.count(), 5)
+
+        some_transition = Transition.objects.get(name='Add on top')
+        some_transition.delete()
+
+        self.assertEquals(State.objects.count(), 5)
+        self.assertEquals(Transition.objects.count(), 4)
+
+        states = dict([(state.name, state) for state in State.objects.all()])
+
+        # First, checks that the transitions are correct
+        self.assertEquals(set(states['Draft'].transitions.all()),
+                          set([Transition.objects.get(name='Review'),
+                               Transition.objects.get(name='Reject')]))
+
+        self.assertEquals(set(states['Reviewed'].transitions.all()),
+                          set([Transition.objects.get(name='Modify'),
+                               Transition.objects.get(name='Publish')]))
+
+        self.assertEquals(set(states['Rejected'].transitions.all()),
+                          set([Transition.objects.get(name='Modify')]))
+
+        self.assertEquals(set(states['Published'].transitions.all()),
+                          set([]))
+
+        self.assertEquals(set(states['On top'].transitions.all()),
+                          set([]))
+
+        # Now, we check the accesible states
+        self.assertEquals(set(states['Draft'].get_accesible_states()),
+                          set([states['Reviewed'], states['Rejected']]))
+
+        self.assertEquals(set(states['Reviewed'].get_accesible_states()),
+                          set([states['Draft'], states['Published']]))
+
+        self.assertEquals(set(states['Rejected'].get_accesible_states()),
+                          set([states['Draft']]))
+
+        self.assertEquals(set(states['Published'].get_accesible_states()),
+                          set([]))
+
+        self.assertEquals(set(states['On top'].get_accesible_states()),
+                          set([]))
+
+    def test_removing_transitions_origins(self):
+        """
+        """
+        self.create_basic_structure()
+        self.assertEquals(State.objects.count(), 5)
+        self.assertEquals(Transition.objects.count(), 5)
+
+        states = dict([(state.name, state) for state in State.objects.all()])
+        transitions = dict([(transition.name, transition)
+                            for transition in Transition.objects.all()])
+
+        # Deattach some transitions between states
+        states['Rejected'].transitions.remove(transitions['Modify'])
+        states['Reviewed'].transitions.remove(transitions['Modify'])
+        states['Reviewed'].transitions.remove(transitions['Add on top'])
+
+        self.assertEquals(State.objects.count(), 5)
+        self.assertEquals(Transition.objects.count(), 5)
+
+        # First, checks that the transitions are correct
+        self.assertEquals(set(states['Draft'].transitions.all()),
+                          set([Transition.objects.get(name='Review'),
+                               Transition.objects.get(name='Reject')]))
+
+        self.assertEquals(set(states['Reviewed'].transitions.all()),
+                          set([Transition.objects.get(name='Publish')]))
+
+        self.assertEquals(set(states['Rejected'].transitions.all()),
+                          set([]))
+
+        self.assertEquals(set(states['Published'].transitions.all()),
+                          set([Transition.objects.get(name='Add on top')]))
+
+        self.assertEquals(set(states['On top'].transitions.all()),
+                          set([]))
+
+        # Now, we check the accesible states
+        self.assertEquals(set(states['Draft'].get_accesible_states()),
+                          set([states['Reviewed'], states['Rejected']]))
+
+        self.assertEquals(set(states['Reviewed'].get_accesible_states()),
+                          set([states['Published']]))
+
+        self.assertEquals(set(states['Rejected'].get_accesible_states()),
+                          set([]))
+
+        self.assertEquals(set(states['Published'].get_accesible_states()),
+                          set([states['On top']]))
+
+        self.assertEquals(set(states['On top'].get_accesible_states()),
+                          set([]))
+
+    def tearDown(self):
+        self.work.delete()
+
+
+class StatesAndPermissionTest(TestCase):
+    """Checks the relation between states and permissions
+    """
+
+    def setUp(self):
+        self.work = Workflow.objects.create(name='foo workflow')
+
+        permissions = []
+        permissions.append(Permission.objects.get(codename=u'can_draft'))
+        permissions.append(Permission.objects.get(codename=u'can_pending'))
+        permissions.append(Permission.objects.get(codename=u'can_published'))
+        permissions.append(Permission.objects.get(codename=u'delete'))
+        permissions.append(Permission.objects.get(codename=u'edit'))
+        permissions.append(Permission.objects.get(codename=u'view'))
+
+        for perm in permissions:
+            self.work.add_permission(perm)
+
+        self.work.set_to_model(ContentType.objects.get(name='document'))
+
+        State.objects.create(name="Draft", workflow=self.work)
+        State.objects.create(name="Reviewed", workflow=self.work)
+        State.objects.create(name="Rejected", workflow=self.work)
+        State.objects.create(name="Published", workflow=self.work)
+        State.objects.create(name="On top", workflow=self.work)
+
+        self.work.initial_state = State.objects.get(name="Draft")
+        self.work.save()
+
+        states = dict([(state.name, state) for state in State.objects.all()])
+        transitions = {}
+
+        transitions['reviewed'] = Transition.objects.create(
+            name="Review", workflow=self.work, destination=states['Reviewed'])
+        states['Draft'].transitions.add(transitions['reviewed'])
+
+        transitions['rejected'] = Transition.objects.create(
+            name="Reject", workflow=self.work,
+            destination=self.work.states.get(name="Rejected"))
+        states['Draft'].transitions.add(transitions['rejected'])
+
+        transitions['modify'] = Transition.objects.create(
+            name="Modify", workflow=self.work,
+            destination=self.work.states.get(name="Draft"))
+        states['Reviewed'].transitions.add(transitions['modify'])
+        states['Rejected'].transitions.add(transitions['modify'])
+
+        transitions['publish'] = Transition.objects.create(
+            name="Publish", workflow=self.work,
+            destination=self.work.states.get(name="Published"))
+        states['Reviewed'].transitions.add(transitions['publish'])
+
+        transitions['add_on_top'] = Transition.objects.create(
+            name="Add on top", workflow=self.work,
+            destination=self.work.states.get(name="On top"))
+        states['Reviewed'].transitions.add(transitions['add_on_top'])
+        states['Published'].transitions.add(transitions['add_on_top'])
+
+        # Some roles creation
+        Role.objects.create(name='Editor', slug='editor')
+        Role.objects.create(name='Revisor', slug='revisor')
+
+    def test_relation_state_permission_role(self):
+        """
+        """
+        # first, checks if the setUp is correct
+        self.assertEquals(State.objects.count(), 5)
+        self.assertEquals(Transition.objects.count(), 5)
+        self.assertEquals(self.work.permissions.count(), 6)
+
+        states = dict([(state.name, state)
+                       for state in State.objects.all()])
+        permissions = dict([(permission.codename, permission)
+                       for permission in self.work.permissions.all()])
+        roles = dict([(role.name, role) for role in Role.objects.all()])
+
+        StatePermissionRelation.objects.create(
+            state=states['Draft'], permission=permissions['view'],
+            role=roles['Owner'])
+        StatePermissionRelation.objects.create(
+            state=states['Draft'], permission=permissions['edit'],
+            role=roles['Owner'])
+        StatePermissionRelation.objects.create(
+            state=states['Draft'], permission=permissions['delete'],
+            role=roles['Owner'])
+
+        self.assertEquals(
+            set(states['Draft'].get_permissions_by_role(roles['Owner'])),
+            set([permissions['view'], permissions['edit'],
+                 permissions['delete']]))
+
+    def tearDown(self):
+        self.work.delete()
