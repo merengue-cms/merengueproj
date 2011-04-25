@@ -54,11 +54,16 @@ class ContactFormForm(forms.Form):
                     opts[opt.label] = d
 
             sentopts = opts.copy()
+            contactuser = {}
             sentopts[u'subject'] = subject
             if request.user.is_authenticated():
                 sentopts[u'user'] = request.user.username
+                contactuser[u'name'] = request.user.get_full_name()
+                contactuser[u'username'] = request.user.username
             else:
                 sentopts[u'user'] = 'Anonymous'
+                contactuser[u'name'] = _('Anonymous')
+                contactuser[u'username'] = 'anonymous'
 
             sentopts[u'mailfrom'] = from_mail
             sent = SentContactForm(contact_form=contact_form,
@@ -69,7 +74,7 @@ class ContactFormForm(forms.Form):
             sent.save()
 
             context = dict(opts=opts, content=content,
-                           contact_form=contact_form)
+                           contact_form=contact_form, contactuser=contactuser)
             html_content = render_to_string('contactform/email.html', context,
                 context_instance=RequestContext(request))
 
