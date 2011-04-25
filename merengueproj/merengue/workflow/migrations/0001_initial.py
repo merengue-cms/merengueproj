@@ -183,7 +183,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'StatePermissionRelation'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'permission': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['perms.Permission']"}),
-            'role': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['perms.Role']"}),
+            'role': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['perms.Role']", 'null': 'True', 'blank': 'True'}),
             'state': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['workflow.State']"}),
         },
         'workflow.transition': {

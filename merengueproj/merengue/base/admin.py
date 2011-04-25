@@ -71,6 +71,7 @@ from merengue.base.models import BaseContent, ContactInfo
 from merengue.base.widgets import CustomTinyMCE, RelatedBaseContentWidget
 from merengue.perms.admin import PermissionAdmin
 from merengue.perms import utils as perms_api
+from merengue.workflow import utils as workflow_api
 from genericforeignkey.admin import GenericAdmin
 
 # A flag to tell us if autodiscover is running.  autodiscover will set this to
@@ -348,7 +349,7 @@ class RelatedURLsModelAdmin(admin.ModelAdmin):
                         # add also parent object to be referred also in child model if needed
                         if callback.func_name in ('changelist_view', 'change_view',
                                                   'add_view', 'history_view',
-                                                  'parse_path'):
+                                                  'parse_path', 'permissions_view'):
                             kwargs['parent_model_admin'] = self
                             kwargs['parent_object'] = basecontent
                         return callback(request, *args, **kwargs)
@@ -378,6 +379,21 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
             else:
                 trans_search_fields.append(f)
         self.search_fields = tuple(trans_search_fields)
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(BaseAdmin, self).get_form(request, obj, **kwargs)
+        keys = form.base_fields.keys()
+        if 'status' in keys:
+            form.base_fields['workflow_status'].required = True
+            form.base_fields['workflow_status'].label = form.base_fields['status'].label
+            del form.base_fields['status']
+            if not obj:
+                status = workflow_api.workflow_by_model(form.Meta.model).get_initial_state()
+            else:
+                status = obj.workflow_status
+            form.base_fields['workflow_status'].queryset = status.get_accesible_states()
+            form.base_fields['workflow_status'].initial = status
+        return form
 
     def has_add_permission(self, request):
         """
@@ -879,15 +895,15 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, StatusCo
         form = super(BaseContentAdmin, self).get_form(request, obj, **kwargs)
         keys = form.base_fields.keys()
         if 'status' in keys:
-            user = request.user
-            options = self._get_status_options(user, obj)
-            if options:
-                form.base_fields['status'].choices = options
-                default_status = getattr(settings, 'DEFAULT_STATUS', 'draft')
-                if default_status in [o[0] for o in options]:
-                    form.base_fields['status'].initial = default_status
+            form.base_fields['workflow_status'].required = True
+            form.base_fields['workflow_status'].label = form.base_fields['status'].label
+            del form.base_fields['status']
+            if not obj:
+                status = workflow_api.workflow_by_model(form.Meta.model).get_initial_state()
             else:
-                set_field_read_only(form.base_fields['status'], 'status', obj)
+                status = obj.workflow_status
+            form.base_fields['workflow_status'].queryset = status.get_accesible_states()
+            form.base_fields['workflow_status'].initial = status
         if 'owners' in keys:
             owners_field = form.base_fields['owners']
             if owners_field.initial is None:

@@ -189,16 +189,17 @@ class Base(models.Model):
         super(Base, self).save(*args, **kwargs)
 
     def update_status(self):
-        """We assume that Statu is changed
+        """We assume that State is changed
         """
         from merengue.perms.models import ObjectPermission
         self.status = self.workflow_status.slug
-        self.objectpermission_set.all().delete()
-        for perm in self.workflow_status.statepermissionrelation_set.all():
-            self.objectpermission_set.add(
-                ObjectPermission.objects.create(content=self,
-                                                role=perm.role,
-                                                permission=perm.permission))
+        if hasattr(self, 'objectpermission_set'):
+            self.objectpermission_set.all().delete()
+            for perm in self.workflow_status.statepermissionrelation_set.all():
+                self.objectpermission_set.add(
+                    ObjectPermission.objects.create(content=self,
+                                                    role=perm.role,
+                                                    permission=perm.permission))
         self.save()
 
     @permalink
@@ -211,7 +212,7 @@ class Base(models.Model):
 
 
 def base_post_save_handler(sender, instance, created, **kwargs):
-    if 'status' in instance.__dict__ and instance.status != instance.workflow_status.slug:
+    if 'status' in instance.__dict__ and instance.workflow_status and instance.status != instance.workflow_status.slug:
         instance.update_status()
 
 
@@ -605,6 +606,19 @@ class BaseContent(BaseClass):
     def breadcrumbs(self):
         urls = self.breadcrumbs_items()
         return render_to_string('base/breadcrumbs.html', {'urls': urls})
+
+    def update_status(self):
+        """We assume that State is changed
+        """
+        super(BaseContent, self).update_status()
+        from merengue.perms.models import ObjectPermission
+        self.objectpermission_set.all().delete()
+        for perm in self.workflow_status.statepermissionrelation_set.all():
+            self.objectpermission_set.add(
+                ObjectPermission.objects.create(content=self,
+                                                role=perm.role,
+                                                permission=perm.permission))
+        self.save()
 
 
 def calculate_class_name(instance):

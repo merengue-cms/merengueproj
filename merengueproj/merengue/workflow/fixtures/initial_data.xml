@@ -1,100 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
 <django-objects version="1.0">
-  <object pk="1" model="workflow.workflow">
-    <field type="CharField" name="name_en">Basic workflow</field>
-    <field type="CharField" name="name_es"></field>
-    <field type="CharField" name="slug">basic-workflow</field>
-    <field to="workflow.state" name="initial_state" rel="ManyToOneRel">1</field>
-  </object>
-  <object pk="1" model="workflow.state">
-    <field type="CharField" name="name_en">Draft</field>
-    <field type="CharField" name="name_es"></field>
-    <field type="CharField" name="slug">draft</field>
-    <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
-    <field to="workflow.transition" name="transitions" rel="ManyToManyRel"></field>
-  </object>
-  <object pk="2" model="workflow.state">
-    <field type="CharField" name="name_en">Pending</field>
-    <field type="CharField" name="name_es"></field>
-    <field type="CharField" name="slug">pending</field>
-    <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
-    <field to="workflow.transition" name="transitions" rel="ManyToManyRel"></field>
-  </object>
-  <object pk="3" model="workflow.state">
-    <field type="CharField" name="name_en">Published</field>
-    <field type="CharField" name="name_es"></field>
-    <field type="CharField" name="slug">published</field>
-    <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
-    <field to="workflow.transition" name="transitions" rel="ManyToManyRel"></field>
-  </object>
-  <object pk="1" model="workflow.transition">
-    <field type="CharField" name="name_en">Set as pending</field>
-    <field type="CharField" name="name_es"></field>
-    <field type="CharField" name="slug">set-as-pending</field>
-    <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
-    <field to="workflow.state" name="destination" rel="ManyToOneRel">2</field>
-  </object>
-  <object pk="2" model="workflow.transition">
-    <field type="CharField" name="name_en">Publish</field>
-    <field type="CharField" name="name_es"></field>
-    <field type="CharField" name="slug">publish</field>
-    <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
-    <field to="workflow.state" name="destination" rel="ManyToOneRel">3</field>
-  </object>
-  <object pk="1" model="workflow.workflowpermissionrelation">
-    <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
-    <field to="perms.permission" name="permission" rel="ManyToOneRel">3</field>
-  </object>
-  <object pk="2" model="workflow.workflowpermissionrelation">
-    <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
-    <field to="perms.permission" name="permission" rel="ManyToOneRel">2</field>
-  </object>
-  <object pk="3" model="workflow.workflowpermissionrelation">
+ <object pk="1" model="workflow.workflow">
+  <field type="CharField" name="name_es">Workflow básico</field>
+  <field type="CharField" name="name_en">Basic workflow</field>
+  <field type="CharField" name="slug">basic-workflow</field>
+  <field to="workflow.state" name="initial_state" rel="ManyToOneRel">1</field>
+ </object>
+ <object pk="1" model="workflow.state">
+  <field type="CharField" name="name_es">Borrador</field>
+  <field type="CharField" name="name_en">Draft</field>
+  <field type="CharField" name="slug">draft</field>
+  <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
+  <field to="workflow.transition" name="transitions" rel="ManyToManyRel"><object pk="1"></object><object pk="2"></object></field>
+ </object>
+ <object pk="2" model="workflow.state">
+  <field type="CharField" name="name_es">Pendiente</field>
+  <field type="CharField" name="name_en">Pending</field>
+  <field type="CharField" name="slug">pending</field>
+  <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
+  <field to="workflow.transition" name="transitions" rel="ManyToManyRel"><object pk="2"></object><object pk="3"></object></field>
+ </object>
+ <object pk="3" model="workflow.state">
+  <field type="CharField" name="name_es">Publicado</field>
+  <field type="CharField" name="name_en">Published</field>
+  <field type="CharField" name="slug">published</field>
+  <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
+  <field to="workflow.transition" name="transitions" rel="ManyToManyRel"><object pk="3"></object></field>
+ </object>
+ <object pk="1" model="workflow.transition">
+  <field type="CharField" name="name_es">Poner a pendiente</field>
+  <field type="CharField" name="name_en">Set as pending</field>
+  <field type="CharField" name="slug">set-as-pending</field>
+  <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
+  <field to="workflow.state" name="destination" rel="ManyToOneRel">2</field>
+  <field to="perms.permission" name="permission" rel="ManyToOneRel">5</field>
+ </object>
+ <object pk="2" model="workflow.transition">
+  <field type="CharField" name="name_es">Publicar</field>
+  <field type="CharField" name="name_en">Publish</field>
+  <field type="CharField" name="slug">publish</field>
+  <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
+  <field to="workflow.state" name="destination" rel="ManyToOneRel">3</field>
+  <field to="perms.permission" name="permission" rel="ManyToOneRel">6</field>
+ </object>
+ <object pk="3" model="workflow.transition">
+  <field type="CharField" name="name_es">Establecer como borrador</field>
+  <field type="CharField" name="name_en">Set as draft</field>
+  <field type="CharField" name="slug">set-as-draft</field>
+  <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
+  <field to="workflow.state" name="destination" rel="ManyToOneRel">1</field>
+  <field to="perms.permission" name="permission" rel="ManyToOneRel">4</field>
+ </object>
+ <object pk="1" model="workflow.workflowmodelrelation">
+  <field to="contenttypes.contenttype" name="content_type" rel="ManyToOneRel"><natural>base</natural><natural>basecontent</natural></field>
+  <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
+ </object>
+ <object pk="1" model="workflow.workflowpermissionrelation">
+  <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
+  <field to="perms.permission" name="permission" rel="ManyToOneRel">3</field>
+ </object>
+ <object pk="2" model="workflow.workflowpermissionrelation">
+  <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
+  <field to="perms.permission" name="permission" rel="ManyToOneRel">2</field>
+ </object>
+ <object pk="3" model="workflow.workflowpermissionrelation">
   <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
   <field to="perms.permission" name="permission" rel="ManyToOneRel">12</field>
-  </object>
-  <object pk="4" model="workflow.workflowpermissionrelation">
-    <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
-    <field to="perms.permission" name="permission" rel="ManyToOneRel">9</field>
-  </object>
-  <object pk="5" model="workflow.workflowpermissionrelation">
-    <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
-    <field to="perms.permission" name="permission" rel="ManyToOneRel">8</field>
-  </object>
-  <object pk="6" model="workflow.workflowpermissionrelation">
-    <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
-    <field to="perms.permission" name="permission" rel="ManyToOneRel">10</field>
-  </object>
-  <object pk="7" model="workflow.workflowpermissionrelation">
-    <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
-    <field to="perms.permission" name="permission" rel="ManyToOneRel">11</field>
-  </object>
-  <object pk="8" model="workflow.workflowpermissionrelation">
-    <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
-    <field to="perms.permission" name="permission" rel="ManyToOneRel">13</field>
-  </object>
-  <object pk="9" model="workflow.workflowpermissionrelation">
-    <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
-    <field to="perms.permission" name="permission" rel="ManyToOneRel">16</field>
-  </object>
-  <object pk="10" model="workflow.workflowpermissionrelation">
-    <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
-    <field to="perms.permission" name="permission" rel="ManyToOneRel">7</field>
-  </object>
-  <object pk="11" model="workflow.workflowpermissionrelation">
-    <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
-    <field to="perms.permission" name="permission" rel="ManyToOneRel">14</field>
-  </object>
-  <object pk="12" model="workflow.workflowpermissionrelation">
-    <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
-    <field to="perms.permission" name="permission" rel="ManyToOneRel">15</field>
-  </object>
-  <object pk="13" model="workflow.workflowpermissionrelation">
-    <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
-    <field to="perms.permission" name="permission" rel="ManyToOneRel">1</field>
-  </object>
-  <object pk="1" model="workflow.statepermissionrelation">
-    <field to="workflow.state" name="state" rel="ManyToOneRel">3</field>
-    <field to="perms.permission" name="permission" rel="ManyToOneRel">1</field>
-  <field to="perms.role" name="role" rel="ManyToOneRel">1</field></object>
+ </object>
+ <object pk="4" model="workflow.workflowpermissionrelation">
+  <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
+  <field to="perms.permission" name="permission" rel="ManyToOneRel">9</field>
+ </object>
+ <object pk="5" model="workflow.workflowpermissionrelation">
+  <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
+  <field to="perms.permission" name="permission" rel="ManyToOneRel">8</field>
+ </object>
+ <object pk="6" model="workflow.workflowpermissionrelation">
+  <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
+  <field to="perms.permission" name="permission" rel="ManyToOneRel">10</field>
+ </object>
+ <object pk="7" model="workflow.workflowpermissionrelation">
+  <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
+  <field to="perms.permission" name="permission" rel="ManyToOneRel">11</field>
+ </object>
+ <object pk="8" model="workflow.workflowpermissionrelation">
+  <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
+  <field to="perms.permission" name="permission" rel="ManyToOneRel">13</field>
+ </object>
+ <object pk="9" model="workflow.workflowpermissionrelation">
+  <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
+  <field to="perms.permission" name="permission" rel="ManyToOneRel">16</field>
+ </object>
+ <object pk="10" model="workflow.workflowpermissionrelation">
+  <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
+  <field to="perms.permission" name="permission" rel="ManyToOneRel">7</field>
+ </object>
+ <object pk="11" model="workflow.workflowpermissionrelation">
+  <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
+  <field to="perms.permission" name="permission" rel="ManyToOneRel">14</field>
+ </object>
+ <object pk="12" model="workflow.workflowpermissionrelation">
+  <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
+  <field to="perms.permission" name="permission" rel="ManyToOneRel">15</field>
+ </object>
+ <object pk="13" model="workflow.workflowpermissionrelation">
+  <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
+  <field to="perms.permission" name="permission" rel="ManyToOneRel">1</field>
+ </object>
+ <object pk="1" model="workflow.statepermissionrelation">
+  <field to="workflow.state" name="state" rel="ManyToOneRel">3</field>
+  <field to="perms.permission" name="permission" rel="ManyToOneRel">1</field>
+  <field to="perms.role" name="role" rel="ManyToOneRel">1</field>
+ </object>
+ <object pk="2" model="workflow.statepermissionrelation">
+  <field to="workflow.state" name="state" rel="ManyToOneRel">2</field>
+  <field to="perms.permission" name="permission" rel="ManyToOneRel">3</field>
+  <field to="perms.role" name="role" rel="ManyToOneRel">3</field>
+ </object>
+ <object pk="3" model="workflow.statepermissionrelation">
+  <field to="workflow.state" name="state" rel="ManyToOneRel">2</field>
+  <field to="perms.permission" name="permission" rel="ManyToOneRel">2</field>
+  <field to="perms.role" name="role" rel="ManyToOneRel">3</field>
+ </object>
+ <object pk="4" model="workflow.statepermissionrelation">
+  <field to="workflow.state" name="state" rel="ManyToOneRel">2</field>
+  <field to="perms.permission" name="permission" rel="ManyToOneRel">1</field>
+  <field to="perms.role" name="role" rel="ManyToOneRel">3</field>
+ </object>
 </django-objects>

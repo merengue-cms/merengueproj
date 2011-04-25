@@ -18,9 +18,10 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.contenttypes.models import ContentType
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext, ugettext_lazy as _
 
-from transmeta import TransMeta, get_fallback_fieldname
+from transmeta import (TransMeta, get_fallback_fieldname, get_real_fieldname,
+                       get_real_fieldname_in_each_language)
 
 from merengue import perms  # pyflakes:ignore
 
@@ -50,7 +51,7 @@ class Workflow(models.Model):
     """
 
     __metaclass__ = TransMeta
-    name = models.CharField(_("Name"), max_length=100, unique=True)
+    name = models.CharField(_("Name"), max_length=100)
     slug = models.CharField(_(u"Slug"), max_length=100)
     initial_state = models.ForeignKey("State", related_name="workflow_state",
                                       blank=True, null=True)
@@ -139,10 +140,10 @@ class State(models.Model):
             self.workflow_state.clear()
         super(State, self).delete(*args, **kwargs)
 
-    def get_allowed_transitions(self, obj, user):
+    def get_allowed_transitions(self, user, obj):
         """Returns all allowed transitions for passed object and user.
         """
-        from perms.utils import has_permission
+        from merengue.perms.utils import has_permission
         transitions = []
         for transition in self.transitions.all():
             permission = transition.permission
@@ -161,16 +162,23 @@ class State(models.Model):
                         transitions.append(transition)
         return transitions
 
-    def get_accesible_states(self):
+    def get_accesible_states(self, user, obj):
+        transitions = self.get_allowed_transitions(user, obj)
+        states_pk = [transition.destination.pk
+                     for transition
+                     in transitions] + [self.pk]
+        return State.objects.filter(pk__in=states_pk)
+
+    def get_all_states(self):
         """
         This function return a list with all accesible states from
         the own state.
         """
-        states = [transition.destination
-                  for transition
-                  in self.transitions.all()]
+        states_pk = [transition.destination.pk
+                     for transition
+                     in self.transitions.all()] + [self.pk]
 
-        return list(set(states))
+        return State.objects.filter(pk__in=states_pk)
 
     def get_permissions_by_role(self, role):
         """
@@ -222,7 +230,7 @@ class Transition(models.Model):
         translate = ('name', )
 
     def __unicode__(self):
-        return self.name
+        return "%s (%s)" % (self.name, self.workflow.name)
 
 
 class WorkflowModelRelation(models.Model):
@@ -245,6 +253,10 @@ class WorkflowModelRelation(models.Model):
                                      unique=True)
     workflow = models.ForeignKey(Workflow, verbose_name=_(u"Workflow"),
                                  related_name="wmrs")
+
+    def natural_key(self):
+        return (self.workflow.slug,) + self.content_type.natural_key()
+    natural_key.dependencies = ['contenttypes.contenttype']
 
     def __unicode__(self):
         return "%s - %s" % (self.content_type.name, self.workflow.name)
@@ -271,6 +283,9 @@ class WorkflowPermissionRelation(models.Model):
 
     class Meta:
         unique_together = ("workflow", "permission")
+
+    def natural_key(self):
+        return (self.workflow.slug, self.permission.codename)
 
     def __unicode__(self):
         return "%s %s" % (self.workflow.name, self.permission.name)
@@ -315,7 +330,11 @@ class StatePermissionRelation(models.Model):
     """
     state = models.ForeignKey(State, verbose_name=_(u"State"))
     permission = models.ForeignKey('perms.Permission', verbose_name=_(u"Permission"))
-    role = models.ForeignKey('perms.Role', verbose_name=_(u"Role"))
+    role = models.ForeignKey('perms.Role', verbose_name=_(u"Role"), blank=True, null=True)
+
+    def natural_key(self):
+        return (self.role.slug, self.permission.codename,
+                self.state.slug, self.state.workflow.slug)
 
     def __unicode__(self):
         return "%s %s %s" % (self.state.name, self.role.name,
@@ -323,22 +342,30 @@ class StatePermissionRelation(models.Model):
 
 
 def _create_basic_states(sender, instance, created, **kwargs):
+    name_fields = get_real_fieldname_in_each_language('name')
+    for field in name_fields:
+        value = getattr(instance, field, True)
+        if value == '':
+            setattr(instance, field, None)
     if created:
         from merengue.perms.models import Role, Permission
-        draft = State.objects.create(name_en=u'Draft',
-                                     slug='draft', workflow=instance)
-        pending = State.objects.create(name_en=u'Pending',
-                                       slug='pending', workflow=instance)
-        published = State.objects.create(name_en=u'Published',
-                                         slug='published', workflow=instance)
-        set_as_pending = Transition.objects.create(name_en=u'Set as pending',
-                                                   slug='set-as-pending',
-                                                   workflow=instance,
-                                                   destination=pending)
-        publish = Transition.objects.create(name_en=u'Publish',
-                                            slug='publish',
-                                            workflow=instance,
-                                            destination=published)
+        data = {get_real_fieldname('name'): ugettext('Draft')}
+        draft = State.objects.create(slug='draft', workflow=instance, **data)
+
+        data = {get_real_fieldname('name'): ugettext('Pending')}
+        pending = State.objects.create(slug='pending', workflow=instance, **data)
+
+        data = {get_real_fieldname('name'): ugettext('Published')}
+        published = State.objects.create(slug='published', workflow=instance, **data)
+
+        data = {get_real_fieldname('name'): ugettext('Set as pending')}
+        set_as_pending = Transition.objects.create(
+            slug='set-as-pending', workflow=instance, destination=pending, **data)
+
+        data = {get_real_fieldname('name'): ugettext('Publish')}
+        publish = Transition.objects.create(
+            slug='publish', workflow=instance, destination=published, **data)
+
         draft.transitions.add(set_as_pending)
         pending.transitions.add(publish)
         anonymous_role = Role.objects.get(slug='anonymous_user')

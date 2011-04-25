@@ -1,0 +1,50 @@
+{% extends "admin/change_list.html" %}
+{% load i18n adminmedia admin_tags %}
+
+{% block extrahead %}
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{% admin_media_prefix %}css/forms.css" />
+{% endblock %}
+
+{% block object-tools %}
+  {% object_tools parent_model_admin "change" "../../../" %}
+{% endblock %}
+
+{% block content-main-inner %}
+<div class="object-tools-wrapper">
+  {% object_tools model_admin "change" "../" %}
+  <div class="object-tools-bottom"></div>
+</div>
+
+
+<form action="" method="post">
+<div>
+    <div id="changeform" class="module">
+        <table cellspacing="0">
+            <thead>
+                <tr>
+                <th>{% trans "Permissions"%}</th>
+                {% for role in roles %}
+                <th>{{ role }}</th>
+                {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for perm, roles in role_permissions.items %}
+                    <tr class="{% cycle 'row1' 'row2' %}">
+                        <td>{{ perm }}</td>
+                        {% for role, checked in roles %}
+                        <td><input type="checkbox" {% if checked %}checked="checked"{% endif %} class="action-select" value="{{ role.id}}_{{ perm.id }}" name="selected_perm" /></td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="submit-row">
+  <input type="submit" class="default" value="{% trans "Save" %}" />
+</div>
+</form>
+{% endblock %}

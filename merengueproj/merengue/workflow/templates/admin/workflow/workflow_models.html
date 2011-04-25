@@ -1,0 +1,37 @@
+{% extends "admin/change_list.html" %}
+{% load i18n adminmedia admin_tags %}
+
+{% block extrahead %}
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{% admin_media_prefix %}css/forms.css" />
+{% endblock %}
+
+{% block object-tools %}
+  {% object_tools parent_model_admin "change" "../" %}
+{% endblock %}
+
+{% block content-main-inner %}
+<form action="" method="post">
+<div class="module" id="changelist">
+<table>
+<thead>
+  <tr>
+    <th class="action-checkbox-column" scope="col"></th>
+    <th>{% trans "Models that use this workflow" %}</th>
+  </tr>
+</thead>
+<tbody>
+{% for perm in permissions %}
+<tr class="{% cycle 'row1' 'row2' %}">
+  <td class="action-checkbox"><input type="checkbox" name="workflowpermission" value="{{ perm.id }}" id="id_for_perm_{{ perm.id }}" {% if perm.managed %} checked="checked"{% endif %}></td>
+  <td><label for="id_for_perm_{{ perm.id }}">{{ perm }}</label></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+<div class="submit-row">
+  <input type="submit" class="default" value="{% trans "Save" %}" />
+</div>
+</form>
+{% endblock %}

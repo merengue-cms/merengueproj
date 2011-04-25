@@ -15,16 +15,46 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django import template
+from django.contrib.admin.filterspecs import FilterSpec
+from django.contrib.admin.util import unquote
+from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import PermissionDenied
+from django.http import HttpResponseRedirect, Http404
+from django.shortcuts import render_to_response, get_object_or_404
+from django.utils.encoding import force_unicode
+from django.utils.functional import update_wrapper
+from django.utils.html import escape
+from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.admin import RelatedModelAdmin, BaseAdmin
-from merengue.workflow.models import Workflow, State, Transition
+from merengue.perms import utils as perms_api
+from merengue.perms.models import Permission, Role
+from merengue.workflow.filterspecs import WorkflowModelRelatedFilterSpec
+from merengue.workflow.models import (Workflow, State, Transition,
+                                      WorkflowPermissionRelation,
+                                      StatePermissionRelation,
+                                      WorkflowModelRelation)
+from merengue.workflow.utils import workflow_by_model
 
 from transmeta import get_fallback_fieldname
 
 
+# Don't call register but insert it at the beginning of the registry
+# otherwise, the AllFilterSpec will be taken first
+FilterSpec.filter_specs.insert(0, (lambda f: f.name == 'workflow:workflowmodelrelation',
+                               WorkflowModelRelatedFilterSpec))
+
+
 class WorkflowAdmin(BaseAdmin):
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(WorkflowAdmin, self).get_form(request, obj, **kwargs)
+        if not obj and 'initial_state' in form.base_fields.keys():
+            del form.base_fields['initial_state']
+        return form
 
 
 class StateRelatedModelAdmin(RelatedModelAdmin):
@@ -32,6 +62,72 @@ class StateRelatedModelAdmin(RelatedModelAdmin):
     tool_label = _('states')
     related_field = 'workflow'
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
+
+    def get_urls(self):
+        from django.conf.urls.defaults import patterns
+
+        def wrap(view):
+
+            def wrapper(*args, **kwargs):
+                #kwargs['model_admin'] = self
+                return self.admin_site.admin_view(view)(*args, **kwargs)
+            return update_wrapper(wrapper, view)
+
+        urls = super(StateRelatedModelAdmin, self).get_urls()
+        my_urls = patterns('',
+            (r'^([^/]+)/permissions/$', wrap(self.permissions_view)))
+        return my_urls + urls
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(StateRelatedModelAdmin, self).get_form(request, obj, **kwargs)
+        if obj:
+            workflow = obj.workflow
+            form.base_fields['transitions'].queryset = Transition.objects.filter(workflow=workflow)
+        else:
+            form.base_fields['transitions'].queryset = self.basecontent.transitions.all()
+        return form
+
+    def object_tools(self, request, mode, url_prefix):
+        tools = super(StateRelatedModelAdmin, self).object_tools(request, mode, url_prefix)
+        if mode == 'change':
+            tools = [{'url': url_prefix + 'permissions/', 'label': ugettext('Permissions'), 'class': 'permissions', 'permission': 'change'}] + tools
+        return tools
+
+    def permissions_view(self, request, object_id, extra_context=None, parent_model_admin=None, parent_object=None):
+        extra_context = self._update_extra_context(request, extra_context, parent_model_admin, parent_object)
+        state = get_object_or_404(State, id=object_id)
+        roles = Role.objects.all()
+        permissions = [i.permission for i in parent_object.workflowpermissionrelation_set.all()]
+
+        if request.method == 'POST':
+            state_perms = request.POST.getlist('selected_perm')
+            for perm in permissions:
+                for role in roles:
+                    rel_id = '%s_%s' % (role.id, perm.id)
+                    if rel_id in state_perms:
+                        StatePermissionRelation.objects.get_or_create(role=role, permission=perm, state=state)
+                    else:
+                        StatePermissionRelation.objects.filter(permission=perm, role=role, state=state).delete()
+            msg = ugettext('State permissions were saved successfully.')
+            self.message_user(request, msg)
+            return HttpResponseRedirect('..')
+
+        role_permissions = {}
+        for perm in permissions:
+            role_permissions[perm] = []
+            for role in roles:
+                role_permissions[perm].append((role, StatePermissionRelation.objects.filter(role=role, permission=perm, state=state) and True or False))
+        context = {
+            'roles': roles,
+            'role_permissions': role_permissions,
+            'model_admin': self,
+            'original': state,
+            'title': _(u'Manage state permissions'),
+        }
+        context.update(extra_context)
+        return render_to_response('admin/workflow/state_permissions.html',
+                                  context,
+                                  context_instance=template.RequestContext(request, current_app=self.admin_site.name))
 
 
 class TransitionRelatedModelAdmin(RelatedModelAdmin):
@@ -41,9 +137,153 @@ class TransitionRelatedModelAdmin(RelatedModelAdmin):
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
 
 
+class PermissionRelatedModelAdmin(RelatedModelAdmin):
+    tool_name = 'permissions'
+    tool_label = _('permissions')
+
+    change_list_template = 'admin/workflow/workflow_permissions.html'
+
+    def queryset(self, request, basecontent=None):
+        return Permission.objects.all()
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return perms_api.has_global_permission(request.user, 'manage_portal')
+
+    def change_view(self, request, object_id, extra_context=None, parent_model_admin=None, parent_object=None):
+        return HttpResponseRedirect('..')
+
+    def changelist_view(self, request, extra_context=None, parent_model_admin=None, parent_object=None):
+        extra_context = self._update_extra_context(request, extra_context, parent_model_admin, parent_object)
+        permissions = self.queryset(request)
+        if request.method == 'POST':
+            wperms = request.POST.getlist('workflowpermission')
+            for perm in permissions:
+                if str(perm.id) in wperms:
+                    WorkflowPermissionRelation.objects.get_or_create(permission=perm, workflow=self.basecontent)
+                    perm.managed = True
+                else:
+                    WorkflowPermissionRelation.objects.filter(permission=perm, workflow=self.basecontent).delete()
+                    perm.managed = False
+            msg = ugettext('Workflow permissions were saved successfully.')
+            self.message_user(request, msg)
+        else:
+            for perm in permissions:
+                perm.managed = WorkflowPermissionRelation.objects.filter(permission=perm, workflow=self.basecontent).count()
+        context = {
+            'actions_on_top': True,
+            'permissions': permissions,
+            'title': _(u'Manage workflow permissions'),
+            }
+        context.update(extra_context)
+        return render_to_response(self.change_list_template,
+                                  context,
+                                  context_instance=template.RequestContext(request, current_app=self.admin_site.name))
+
+
+class ContentTypeRelatedModelAdmin(RelatedModelAdmin):
+    tool_name = 'models'
+    tool_label = _('models')
+    inherit_actions = False
+    list_display = ('__unicode__', 'is_related', 'current_workflow')
+    list_filter = ('workflowmodelrelation', )
+    actions = ['relate_model', 'unrelate_model']
+
+    #change_list_template = 'admin/workflow/workflow_models.html'
+
+    def current_workflow(self, obj):
+        return workflow_by_model(obj.model_class())
+    current_workflow.short_description = _(u"Current workflow")
+
+    def is_related(self, obj):
+        return WorkflowModelRelation.objects.filter(content_type=obj, workflow=self.basecontent).count()
+    is_related.boolean = True
+    is_related.short_description = _(u"Related to this workflow")
+
+    def relate_model(self, request, queryset):
+        if request.POST.get('post', False):
+            for item in queryset:
+                self.basecontent.set_to_model(item)
+            self.message_user(request, ugettext(u'The workflow has been added to these models'))
+        else:
+            extra_context = {'title': ugettext(u'Are you sure you want to add the current workflow to these models?'),
+                             'action_submit': 'relate_model'}
+            return self.confirm_action(request, queryset, extra_context)
+    relate_model.short_description = _(u"Add current workflow to selected models")
+
+    def unrelate_model(self, request, queryset):
+        if request.POST.get('post', False):
+            for item in queryset:
+                WorkflowModelRelation.objects.filter(content_type=item, workflow=self.basecontent).delete()
+            self.message_user(request, ugettext(u'The workflow has been removed from these models'))
+        else:
+            extra_context = {'title': ugettext(u'Are you sure you want to remove the current workflow from these models?'),
+                             'action_submit': 'unrelate_model'}
+            return self.confirm_action(request, queryset, extra_context)
+    unrelate_model.short_description = _(u"Remove current workflow from selected models")
+
+    def lookup_allowed(self, lookup, value):
+        if lookup == 'workflowmodelrelation__workflow':
+            return True
+        return super(ContentTypeRelatedModelAdmin, self).lookup_allowed(lookup, value)
+
+    def queryset(self, request, basecontent=None):
+        # Ugly hack to quickly extract non related content types
+        if request.GET.get('id__isnull', None) == 'false':
+            return ContentType.objects.exclude(workflowmodelrelation__workflow=self.basecontent)
+        return ContentType.objects.all()
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return perms_api.has_global_permission(request.user, 'manage_portal')
+
+    def change_view(self, request, object_id, extra_context=None, parent_model_admin=None, parent_object=None):
+        if request.method == 'POST':
+            object_ids = request.POST.getlist('_selected_action')
+        else:
+            object_ids = [object_id]
+        obj = self.get_object(request, unquote(object_id))
+
+        if not self.has_change_permission(request, obj):
+            raise PermissionDenied
+
+        if obj is None or (object_ids and object_ids != [object_id]):
+            raise Http404(_('%(name)s object with primary key %(key)r does not exist.') % {'name': force_unicode(self.model._meta.verbose_name), 'key': escape(object_id)})
+        queryset = self.queryset(request).filter(id__in=object_ids)
+
+        if request.method == 'POST':
+            if not object_ids:
+                return HttpResponseRedirect("..")
+            if request.POST.get('action', None) == 'relate_model':
+                self.relate_model(request, queryset)
+            else:
+                self.unrelate_model(request, queryset)
+            return HttpResponseRedirect("..")
+        else:
+            if self.is_related(obj):
+                extra_context = {'title': ugettext(u'Are you sure you want to remove the current workflow from these models?'),
+                                 'action_submit': 'unrelate_model'}
+            else:
+                extra_context = {'title': ugettext(u'Are you sure you want to add the current workflow to these models?'),
+                                 'action_submit': 'relate_model'}
+            return self.confirm_action(request, queryset, extra_context)
+
+
 def register_related(site):
-    site.register_related(Transition, TransitionRelatedModelAdmin, related_to=Workflow)
     site.register_related(State, StateRelatedModelAdmin, related_to=Workflow)
+    site.register_related(Transition, TransitionRelatedModelAdmin, related_to=Workflow)
+    site.register_related(Permission, PermissionRelatedModelAdmin, related_to=Workflow)
+    site.register_related(ContentType, ContentTypeRelatedModelAdmin, related_to=Workflow)
 
 
 def register(site):
