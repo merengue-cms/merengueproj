@@ -17,6 +17,7 @@
 
 import datetime
 
+from django import forms
 from django import template
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
@@ -71,6 +72,7 @@ from merengue.base.models import BaseContent, ContactInfo
 from merengue.base.widgets import CustomTinyMCE, RelatedBaseContentWidget
 from merengue.perms.admin import PermissionAdmin
 from merengue.perms import utils as perms_api
+from merengue.section.models import BaseSection, SectionRelatedContent
 from merengue.workflow import utils as workflow_api
 from genericforeignkey.admin import GenericAdmin
 
@@ -913,6 +915,15 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, StatusCo
             if owners_field.initial is None:
                 # user automatically get owner of this object
                 owners_field.initial = (request.user.id, )
+        sections = BaseSection.objects.all()
+        object_sections = obj and obj.sections.all()
+        # We added the section of the content. Manager maybe would want to change it
+        initial_section = object_sections and object_sections[0] or None
+        form.base_fields['section'] = forms.ModelChoiceField(
+            sections, required=False, initial=initial_section,
+            label=ugettext('Section'),
+            help_text=ugettext('Enter the section to which content belongs'),
+        )
         if obj and getattr(obj, 'no_changeable', False):
             # Prevent changes if some one forces a save submit
             form.is_valid = lambda x: False
@@ -926,6 +937,15 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, StatusCo
 
         # simulate auto_now=True for user_modification_date
         obj.user_modification_date = datetime.datetime.today()
+
+        if 'section' in form.fields:
+            # change/remove the section of the content
+            section = form.cleaned_data['section']
+            object_sections = obj.sections.all()
+            if section is not None and section not in object_sections:
+                SectionRelatedContent.objects.create(basecontent=obj, basesection=section)
+            elif section is None and object_sections:
+                SectionRelatedContent.objects.filter(basecontent=obj).delete()
 
         super(BaseContentAdmin, self).save_model(request, obj, form, change)
 

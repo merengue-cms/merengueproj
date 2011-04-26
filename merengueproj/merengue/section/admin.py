@@ -141,6 +141,14 @@ class SectionContentAdmin(OrderableRelatedModelAdmin):
     sortablefield = 'order'
     manage_contents = True
 
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(SectionContentAdmin, self).get_form(request, obj, **kwargs)
+        if 'section' in form.base_fields:
+            # the section should be not editable because the content
+            # is in a admin related to this section. we remove the field
+            del form.base_fields['section']
+        return form
+
     def custom_relate_content(self, request, obj, form, change):
         if not change:
             SectionRelatedContent.objects.create(
