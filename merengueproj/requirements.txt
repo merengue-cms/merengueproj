@@ -30,7 +30,7 @@ django-inlinetrans>=0.4.10dev
 django-transmeta>=0.6.1
 sorl-thumbnail>=11.01
 searchform>=0.1.1
-django-configfield
+django-configfield>=0.1.0-beta
 django-form-admin
 django-autoreports>=0.7.0
 django_compressor==0.5.3
