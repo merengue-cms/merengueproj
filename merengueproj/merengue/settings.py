@@ -263,8 +263,8 @@ SERIALIZATION_MODULES = {
 MERENGUE_URLS_PREFIX = 'cms'
 
 # Login and logout settings
-LOGIN_URL = MERENGUE_URLS_PREFIX + '/login/'
-LOGOUT_URL = MERENGUE_URLS_PREFIX + '/logout/'
+LOGIN_URL = '/%s/login/' % MERENGUE_URLS_PREFIX
+LOGOUT_URL = '/%s/logout/' % MERENGUE_URLS_PREFIX
 LOGIN_REDIRECT_URL = '/'
 
 # Merengue test runner

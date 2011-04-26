@@ -101,8 +101,6 @@ TEMPLATE_DIRS = (
     path.join(BASEDIR, 'templates'),
 ) + TEMPLATE_DIRS
 
-LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = '/account/login/'
 
 INSTALLED_APPS += (
     # put here your project django apps
