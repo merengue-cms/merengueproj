@@ -18,9 +18,12 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
+from merengue.perms.decorators import permission_required
+
 from plugins.piwik.utils import get_plugin_config, get_contents
 
 
+@permission_required(codename='view_stats')
 def index(request):
     plugin_config = get_plugin_config()
     piwik_url = plugin_config.get('url').get_value()
@@ -29,6 +32,7 @@ def index(request):
                               context_instance=RequestContext(request))
 
 
+@permission_required(codename='view_stats')
 def ranking(request):
     return render_to_response('piwik/ranking_stats.html',
                               {'contents': get_contents()},
