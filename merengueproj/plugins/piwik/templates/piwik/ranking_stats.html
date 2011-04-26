@@ -17,7 +17,7 @@
 <h1>{% inline_trans "Contents Ranking" %}</h1>
 
 {% if by_owner %}
-  {% contents_stats user.username 0 %}
+  {% contents_stats user.username %}
 {% else %}
   {% contents_stats %}
 {% endif %}
