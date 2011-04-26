@@ -58,7 +58,7 @@
     {% ifhasperm 'manage_site' %}
     <div class="module-merengue" id="sitebuilding">
       <dl>
-        <dt><a href="block/registeredblock/" title="{% trans "Blocks" %}">{% trans "Blocks" %}</a></dt>
+        <dt><a href="block/registeredblock/?content__isnull=true" title="{% trans "Blocks" %}">{% trans "Blocks" %}</a></dt>
         <dd>{% trans "View, edit and delete the site's blocks." %}</dd>
         <dt><a href="pluggable/registeredplugin/" title="{% trans "Plugins" %}">{% trans "Plugins" %}</a></dt>
         <dd>{% trans "View, edit and delete the site's plugins." %}</dd>
