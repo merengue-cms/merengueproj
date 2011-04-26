@@ -1,14 +1,16 @@
 {% extends "piwik/base.html" %}
 
-{% load i18n inlinetrans action_tags %}
+{% load i18n inlinetrans permissions_tags %}
 
 {% block pagetitle %}{% trans "Stats index" %}{% endblock %}
 
 {% block content %}
 <h1>{% inline_trans "Stats Index" %}</h1>
 <ul>
-  <li><a href="{{ piwik_url }}"> {% inline_trans "Go to Piwik to view stats deails" %}</a></li>
-  <li><a href="{% url stats_ranking %}"> {% inline_trans "View stats ranking" %}</a></li>
+  {% ifhasperm 'view_all_stats' %}
+    <li><a href="{{ piwik_url }}"> {% inline_trans "Go to Piwik to view stats deails" %}</a></li>
+    <li><a href="{% url stats_ranking %}"> {% inline_trans "View stats ranking" %}</a></li>
+  {% endifhasperm %}
   <li><a href="{% url ranking_by_owner %}"> {% inline_trans "View stats ranking of my sections" %}</a></li>
 </ul>
 

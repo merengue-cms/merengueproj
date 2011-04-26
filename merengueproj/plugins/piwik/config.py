@@ -54,4 +54,5 @@ class PluginConfig(Plugin):
         return []
 
     def get_perms(self):
-        return [('View stats', 'view_stats'), ]
+        return [('View all stats', 'view_all_stats'),
+                ('View my stats', 'view_my_stats')]

@@ -23,7 +23,7 @@ from merengue.perms.decorators import permission_required
 from plugins.piwik.utils import get_plugin_config
 
 
-@permission_required(codename='view_stats')
+@permission_required(codename='view_my_stats')
 def index(request):
     plugin_config = get_plugin_config()
     piwik_url = plugin_config.get('url').get_value()
@@ -32,14 +32,14 @@ def index(request):
                               context_instance=RequestContext(request))
 
 
-@permission_required(codename='view_stats')
+@permission_required(codename='view_all_stats')
 def ranking(request):
     return render_to_response('piwik/ranking_stats.html',
                               {},
                               context_instance=RequestContext(request))
 
 
-@permission_required(codename='view_stats')
+@permission_required(codename='view_my_stats')
 def ranking_by_owner(request):
     return render_to_response('piwik/ranking_stats.html',
                               {'by_owner': True},
