@@ -52,8 +52,9 @@ MERENGUE_APPS = (
     'merengue.pluggable',
     'merengue.multimedia',
     'merengue.base',
-    'merengue.section',
     'merengue.perms',
+    'merengue.workflow',
+    'merengue.section',
     'merengue.theming',
     'merengue.action',
     'merengue.block',
@@ -64,7 +65,6 @@ MERENGUE_APPS = (
     'merengue.review',
     'merengue.uitools',
     'merengue.collab',  # Please, keep this application in last place cause it's used to know when activate plugins after migration
-    'merengue.workflow',
 )
 
 HTTP_STATUS_CODE_TEMPLATES = {
