@@ -2,15 +2,6 @@
 
 <div id="content-main" class="module-merengue">
 
-{% block breadcrumbs %}
-{% if not inplugin %}
-<div class="breadcrumbs">
-<a href="../">{% trans "Home" %}</a>
-&rsaquo;
-</div>
-{% endif %}
-{% endblock %}
-
 <div id="content">
 {% if app_list %}
     {% for app in app_list %}

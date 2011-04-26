@@ -422,6 +422,7 @@ class AdminSite(BaseAdminSite, RelatedModelRegistrable):
 
 
 class PluginAdminSite(BaseAdminSite, RelatedModelRegistrable):
+    index_template = 'admin/index.html'  # Plugin aware index template
 
     def __init__(self, *args, **kwargs):
         self.main_site = kwargs.pop('main_admin_site', None)
