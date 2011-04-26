@@ -20,7 +20,7 @@ from django import template
 from merengue.pluggable.utils import get_plugin
 
 from plugins.piwik.settings import CUSTOM_VARIABLES
-from plugins.piwik.utils import SECTION_PIWIK_VARIABLE, CONTENT_PIWIK_VARIABLE
+from plugins.piwik.utils import SECTION_PIWIK_VARIABLE, CONTENT_PIWIK_VARIABLE, get_contents
 
 register = template.Library()
 
@@ -40,3 +40,9 @@ def piwik_script(context):
             'content': context.get('content'),
             'custom_variables': CUSTOM_VARIABLES,
             'request': context.get('request')}
+
+
+@register.inclusion_tag('piwik/contents_stats.html', takes_context=True)
+def contents_stats(context, username=None, expanded=1):
+    contents = get_contents(username, expanded)
+    return {'contents': contents, 'request': context.get('request')}

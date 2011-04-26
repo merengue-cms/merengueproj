@@ -16,10 +16,12 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf.urls.defaults import patterns
+
 from merengue.urlresolvers import merengue_url as url
 
 
 urlpatterns = patterns('plugins.piwik.views',
     url(r'^$', 'index', name='stats_index'),
     url(r'^ranking/$', 'ranking', name='stats_ranking'),
+    url(r'^my-sections/$', 'ranking_by_owner', name='ranking_by_owner'),
 )

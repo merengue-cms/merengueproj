@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-21 14:19+0200\n"
+"POT-Creation-Date: 2011-04-26 14:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,6 +53,14 @@ msgstr ""
 msgid "Stats"
 msgstr ""
 
+#: templates/piwik/contents_stats.html:5
+msgid "Sections"
+msgstr ""
+
+#: templates/piwik/contents_stats.html:22
+msgid "there are no statistics to show"
+msgstr ""
+
 #: templates/piwik/index.html:5 templates/piwik/ranking_stats.html:13
 msgid "Stats index"
 msgstr ""
@@ -69,18 +77,14 @@ msgstr ""
 msgid "View stats ranking"
 msgstr ""
 
+#: templates/piwik/index.html:12
+msgid "View stats ranking of my sections"
+msgstr ""
+
 #: templates/piwik/ranking_stats.html:8
 msgid "Ranking"
 msgstr ""
 
-#: templates/piwik/ranking_stats.html:16
+#: templates/piwik/ranking_stats.html:17
 msgid "Contents Ranking"
-msgstr ""
-
-#: templates/piwik/ranking_stats.html:18
-msgid "Sections"
-msgstr ""
-
-#: templates/piwik/ranking_stats.html:27
-msgid "Others Contents"
 msgstr ""

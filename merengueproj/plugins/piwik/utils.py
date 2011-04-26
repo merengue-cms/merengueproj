@@ -104,7 +104,7 @@ def get_variable_stats(custom_variable):
     return data
 
 
-def get_pagetitle_stats():
+def get_pagetitle_stats(expanded=1):
     piwik_api = get_piwik_api()
     site_id = get_site_id()
     period = get_period()
@@ -114,7 +114,7 @@ def get_pagetitle_stats():
                                                            'date': date,
                                                            'filter_pattern_recursive': 'id:',
                                                            'filter_column_recursive': 'label',
-                                                           'expanded': 1}, format='json')
+                                                           'expanded': expanded}, format='json')
     return data
 
 
@@ -136,7 +136,7 @@ def get_basecontents_from_customvariables(data=None):
     return contents
 
 
-def get_basecontents(data):
+def get_basecontents(data, extra_filters=None):
     pattern = ".*id:(\d+).*"
     contents = {}
     metric = get_metric()
@@ -146,7 +146,14 @@ def get_basecontents(data):
         if match:
             id = match.groups()[0]
         if id:
-            content = BaseContent.objects.get(id=id)
+            filters = {'id': id}
+            if extra_filters:
+                filters.update(extra_filters)
+            try:
+                content = BaseContent.objects.get(**filters)
+            except BaseContent.DoesNotExist:
+                continue
+
             if not content in contents:
                 contents[content] = {}
             contents[content]['visits'] = contents[content].get('visits', 0) + entry.get(metric, 0)
@@ -185,5 +192,14 @@ def get_sections_from_customvariables():
     return sort_contents(get_basecontents_from_customvariables(data))
 
 
-def get_contents():
-    return sort_contents_recursive(get_basecontents(get_pagetitle_stats()))
+def get_contents(username=None, expanded=1):
+    base_contents = None
+    data = get_pagetitle_stats(expanded)
+    if username:
+        filters = {'owners__username': username}
+        base_contents = get_basecontents(data, filters)
+    else:
+        base_contents = get_basecontents(data)
+    if base_contents:
+        return sort_contents_recursive(base_contents)
+    return []
