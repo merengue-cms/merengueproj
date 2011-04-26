@@ -392,9 +392,9 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
             form.base_fields['workflow_status'].queryset = status.get_accesible_states(
                 request.user, obj)
             form.base_fields['workflow_status'].initial = status
-        if 'status' in keys:
-            form.base_fields['workflow_status'].label = form.base_fields['status'].label
-            del form.base_fields['status']
+            if 'status' in keys:
+                form.base_fields['workflow_status'].label = form.base_fields['status'].label
+                del form.base_fields['status']
         return form
 
     def has_add_permission(self, request):
@@ -905,9 +905,9 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, StatusCo
             form.base_fields['workflow_status'].queryset = status.get_accesible_states(
                 request.user, obj)
             form.base_fields['workflow_status'].initial = status
-        if 'status' in keys:
-            form.base_fields['workflow_status'].label = form.base_fields['status'].label
-            del form.base_fields['status']
+            if 'status' in keys:
+                form.base_fields['workflow_status'].label = form.base_fields['status'].label
+                del form.base_fields['status']
         if 'owners' in keys:
             owners_field = form.base_fields['owners']
             if owners_field.initial is None:
