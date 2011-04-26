@@ -52,3 +52,6 @@ class PluginConfig(Plugin):
 
     def section_models(self):
         return []
+
+    def get_perms(self):
+        return [('View stats', 'view_stats'), ]
