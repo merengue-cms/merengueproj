@@ -155,6 +155,5 @@ class Migration(SchemaMigration):
         del models['places.location']
         del models['base.basecontent']['location']
         del models['base.basecontent']['map_icon']
-        del models['base.basecontent']['is_autolocated']
 
     complete_apps = ['highlight']
