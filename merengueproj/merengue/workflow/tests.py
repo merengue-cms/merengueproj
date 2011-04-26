@@ -376,20 +376,20 @@ class WorkflowTransitionBasicTest(WorkflowBaseTestCase):
                           set([]))
 
         # Now, we check the accesible states
-        self.assertEquals(set(states['Draft'].get_accesible_states()),
+        self.assertEquals(set(states['Draft'].get_all_states()),
                           set([states['Reviewed'], states['Rejected']]))
 
-        self.assertEquals(set(states['Reviewed'].get_accesible_states()),
+        self.assertEquals(set(states['Reviewed'].get_all_states()),
                           set([states['Draft'], states['Published'],
                               states['On top']]))
 
-        self.assertEquals(set(states['Rejected'].get_accesible_states()),
+        self.assertEquals(set(states['Rejected'].get_all_states()),
                           set([states['Draft']]))
 
-        self.assertEquals(set(states['Published'].get_accesible_states()),
+        self.assertEquals(set(states['Published'].get_all_states()),
                           set([states['On top']]))
 
-        self.assertEquals(set(states['On top'].get_accesible_states()),
+        self.assertEquals(set(states['On top'].get_all_states()),
                           set([]))
 
     def test_removing_states_throught_transitions(self):
@@ -423,17 +423,17 @@ class WorkflowTransitionBasicTest(WorkflowBaseTestCase):
                           set([]))
 
         # Now, we check the accesible states
-        self.assertEquals(set(states['Draft'].get_accesible_states()),
+        self.assertEquals(set(states['Draft'].get_all_states()),
                           set([states['Reviewed']]))
 
-        self.assertEquals(set(states['Reviewed'].get_accesible_states()),
+        self.assertEquals(set(states['Reviewed'].get_all_states()),
                           set([states['Draft'], states['Published'],
                               states['On top']]))
 
-        self.assertEquals(set(states['Published'].get_accesible_states()),
+        self.assertEquals(set(states['Published'].get_all_states()),
                           set([states['On top']]))
 
-        self.assertEquals(set(states['On top'].get_accesible_states()),
+        self.assertEquals(set(states['On top'].get_all_states()),
                           set([]))
 
         aux_state = State.objects.get(slug='published')
@@ -456,13 +456,13 @@ class WorkflowTransitionBasicTest(WorkflowBaseTestCase):
                           set([]))
 
         # Now, we check the accesible states
-        self.assertEquals(set(states['Draft'].get_accesible_states()),
+        self.assertEquals(set(states['Draft'].get_all_states()),
                           set([states['Reviewed']]))
 
-        self.assertEquals(set(states['Reviewed'].get_accesible_states()),
+        self.assertEquals(set(states['Reviewed'].get_all_states()),
                           set([states['Draft'], states['On top']]))
 
-        self.assertEquals(set(states['On top'].get_accesible_states()),
+        self.assertEquals(set(states['On top'].get_all_states()),
                           set([]))
 
     def test_removing_transitions(self):
@@ -499,19 +499,19 @@ class WorkflowTransitionBasicTest(WorkflowBaseTestCase):
                           set([]))
 
         # Now, we check the accesible states
-        self.assertEquals(set(states['Draft'].get_accesible_states()),
+        self.assertEquals(set(states['Draft'].get_all_states()),
                           set([states['Reviewed'], states['Rejected']]))
 
-        self.assertEquals(set(states['Reviewed'].get_accesible_states()),
+        self.assertEquals(set(states['Reviewed'].get_all_states()),
                           set([states['Draft'], states['Published']]))
 
-        self.assertEquals(set(states['Rejected'].get_accesible_states()),
+        self.assertEquals(set(states['Rejected'].get_all_states()),
                           set([states['Draft']]))
 
-        self.assertEquals(set(states['Published'].get_accesible_states()),
+        self.assertEquals(set(states['Published'].get_all_states()),
                           set([]))
 
-        self.assertEquals(set(states['On top'].get_accesible_states()),
+        self.assertEquals(set(states['On top'].get_all_states()),
                           set([]))
 
     def test_removing_transitions_origins(self):
@@ -551,19 +551,19 @@ class WorkflowTransitionBasicTest(WorkflowBaseTestCase):
                           set([]))
 
         # Now, we check the accesible states
-        self.assertEquals(set(states['Draft'].get_accesible_states()),
+        self.assertEquals(set(states['Draft'].get_all_states()),
                           set([states['Reviewed'], states['Rejected']]))
 
-        self.assertEquals(set(states['Reviewed'].get_accesible_states()),
+        self.assertEquals(set(states['Reviewed'].get_all_states()),
                           set([states['Published']]))
 
-        self.assertEquals(set(states['Rejected'].get_accesible_states()),
+        self.assertEquals(set(states['Rejected'].get_all_states()),
                           set([]))
 
-        self.assertEquals(set(states['Published'].get_accesible_states()),
+        self.assertEquals(set(states['Published'].get_all_states()),
                           set([states['On top']]))
 
-        self.assertEquals(set(states['On top'].get_accesible_states()),
+        self.assertEquals(set(states['On top'].get_all_states()),
                           set([]))
 
     def tearDown(self):
