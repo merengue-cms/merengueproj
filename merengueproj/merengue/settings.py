@@ -128,7 +128,7 @@ MERENGUE_MIDDLEWARE_CLASSES = (
 PRE_MERENGUE_MIDDLEWARE_CLASSES = (
     'johnny.middleware.LocalStoreClearMiddleware',  # this has to be first
     #'cmsutils.middleware.ProfileMiddleware', # remove comment if you want to profile your website
-    #'cmsutils.middleware.I18NUpdateCacheMiddleware', # removed anonymous cache middleware
+    'django.middleware.cache.UpdateCacheMiddleware',
     'johnny.middleware.QueryCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -145,7 +145,7 @@ POST_MERENGUE_MIDDLEWARE_CLASSES = (
     'merengue.section.middleware.ResponseSectionMiddleware',
     'merengue.pluggable.middleware.PluginMiddlewaresProxy',
     'merengue.block.middleware.RenderBlockMiddleware',
-    #'cmsutils.middleware.I18NFetchFromCacheMiddleware', # this has to be last # removed anonymous cache middleware
+    'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 MIDDLEWARE_CLASSES = PRE_MERENGUE_MIDDLEWARE_CLASSES + MERENGUE_MIDDLEWARE_CLASSES + POST_MERENGUE_MIDDLEWARE_CLASSES

@@ -27,7 +27,7 @@ class URLParserLogNode(template.Node):
     def render(self, context):
         request = context.get('request')
         new_get_data = request.GET.copy()
-        new_get_data.pop('set_language', '') # remove double language redirect (see ticket #2995)
+        new_get_data.pop('set_language', '')  # remove double language redirect (see ticket #2995)
         url_parser = request.META['PATH_INFO']
         params = new_get_data.urlencode()
         if params:
@@ -109,3 +109,21 @@ def do_if_cached_page(parser, token):
     else:
         nodelist_false = template.NodeList()
     return IfCachedPageNode(nodelist_true, nodelist_false)
+
+
+class PathWithEncodedDataNode(template.Node):
+
+    def render(self, context):
+        request = context.get('request')
+        new_get_data = request.GET.copy()
+        new_get_data.pop('set_language', '')  # remove double language redirect
+        url_parser = request.META['PATH_INFO']
+        params = new_get_data.urlencode()
+        if params:
+            url_parser = '%s?%s' % (url_parser, params)
+        return mark_safe(url_parser)
+
+
+@register.tag
+def path_with_encoded_data(parser, token):
+    return PathWithEncodedDataNode()

@@ -56,13 +56,17 @@ def copy_request(request, delete_list, copy=None):
 
 def invalidate_cache_for_path(request_path):
     """ invalidates cache based on request.path """
-    # wrap a dummy request object for call django function
 
+    # use a dummy request object so we can call django's _generate_cache_header_key
     class Request(object):
-        pass
 
-    request = Request()
-    request.path = request_path
+        def __init__(self, request_path):
+            self.request_path = request_path
+
+        def get_full_path(self):
+            return self.request_path
+
+    request = Request(request_path)
     cache_header_key = _generate_cache_header_key(settings.CACHE_MIDDLEWARE_KEY_PREFIX, request)
     cache.delete(cache_header_key)
 

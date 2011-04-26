@@ -1,0 +1,3 @@
+{% load i18n inlinetrans portal_tags %}
+
+<a href='{% url invalidate_cache %}?path={% path_with_encoded_data request %}' title='{% trans "Invalidate cache" %}'>{% inline_trans "Invalidate cache" %}</a>

@@ -44,3 +44,13 @@ class VersionPanel(panels.Panel):
 
     def render(self, context):
         return _('Version: %s') % merengue.get_version()
+
+
+class InvalidateCachePanel(panels.Panel):
+
+    def show(self, context):
+        user = getattr(context.get('request', None), 'user', None)
+        return user and can_manage_site(user)
+
+    def render(self, context):
+        return render_to_string('core/panels/invalidate_cache.html', context)

@@ -30,7 +30,7 @@ from plugins.core.blocks import (CoreMenuBlock, NavigationBlock,
                                  PrimaryLinksBlock, SecondaryLinksBlock,
                                  PortalMenuBlock, ContactInfoBlock,
                                  AnnouncementsBlock)
-from plugins.core.panels import InplaceEditPanel, InlineTransPanel, VersionPanel
+from plugins.core.panels import InplaceEditPanel, InlineTransPanel, VersionPanel, InvalidateCachePanel
 
 
 class PluginConfig(Plugin):
@@ -54,7 +54,7 @@ class PluginConfig(Plugin):
                 AnnouncementsBlock]
 
     def get_toolbar_panels(self):
-        return [InplaceEditPanel, InlineTransPanel, VersionPanel]
+        return [InplaceEditPanel, InlineTransPanel, InvalidateCachePanel, VersionPanel, ]
 
     def models(self):
         return [
