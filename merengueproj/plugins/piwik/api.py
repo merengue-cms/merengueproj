@@ -18,7 +18,8 @@
 import urllib
 import httplib
 import urlparse
-import simplejson
+
+from django.utils import simplejson
 
 
 class PiwikAPI:
