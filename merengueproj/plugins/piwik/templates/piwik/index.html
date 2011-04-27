@@ -5,15 +5,13 @@
 {% block pagetitle %}{% trans "Stats index" %}{% endblock %}
 
 {% block content %}
-<div id="stats">
-    <h1>{% inline_trans "Stats Index" %}</h1>
-    <ul>
-      {% ifhasperm 'view_all_stats' %}
-        <li class="piwik"><a href="{{ piwik_url }}"> {% inline_trans "Go to Piwik to view stats deails" %}</a></li>
-        <li class="statsRanking"><a href="{% url stats_ranking %}"> {% inline_trans "View stats ranking" %}</a></li>
-      {% endifhasperm %}
-      <li class="mySection"><a href="{% url ranking_by_owner %}"> {% inline_trans "View stats ranking of my sections" %}</a></li>
-    </ul>
-</div>
+<h1>{% inline_trans "Stats Index" %}</h1>
+<ul id="stats">
+    {% ifhasperm 'view_all_stats' %}
+    <li class="piwik"><a href="{{ piwik_url }}"> {% inline_trans "Go to Piwik to view stats deails" %}</a></li>
+    <li class="statsRanking"><a href="{% url stats_ranking %}"> {% inline_trans "View stats ranking" %}</a></li>
+    {% endifhasperm %}
+    <li class="mySection"><a href="{% url ranking_by_owner %}"> {% inline_trans "View stats ranking of my sections" %}</a></li>
+</ul>
 
 {% endblock %}
