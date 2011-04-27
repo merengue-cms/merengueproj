@@ -31,8 +31,8 @@ django-transmeta>=0.6.1
 sorl-thumbnail>=11.01
 searchform>=0.1.1
 django-configfield>=0.1.0-beta
-django-form-admin
-django-autoreports>=0.7.0
+django-form-admin>=0.3
+django-autoreports>=0.7.1
 django_compressor==0.5.3
 django-classy-tags==0.3.0
 django-inplaceedit
