@@ -16,7 +16,7 @@
     <form action="{% url search_is_valid form_search.search.id %}">
         <table >{{ form_search.as_table }}</table>
         <input name="__path" type="hidden" value="{{ request.path }}"/>
-        <input name="__searcher" type="hidden" value="{{ form_search.report.id }}"/>
+        <input name="__searcher" type="hidden" value="{{ form_search.search.id }}"/>
         <input class="button" name="__send_searcher" type="submit" value="{% trans 'Filter' %}"/>
     </form>
   {% endfor %}
