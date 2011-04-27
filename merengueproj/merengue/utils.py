@@ -24,13 +24,11 @@ from cStringIO import StringIO
 
 from django.conf import settings
 from django.core import serializers
-from django.core.cache import cache
 from django.core.management.color import no_style
 from django.core.management.base import CommandError
 from django.db import connection, transaction
 from django.db.models import get_models
 from django.db.models.loading import load_app
-from django.utils.cache import _generate_cache_header_key
 from django.utils.encoding import smart_str
 
 
@@ -52,23 +50,6 @@ def copy_request(request, delete_list, copy=None):
         if delete_item in request_copy.GET:
             del request_copy.GET[delete_item]
     return request_copy
-
-
-def invalidate_cache_for_path(request_path):
-    """ invalidates cache based on request.path """
-
-    # use a dummy request object so we can call django's _generate_cache_header_key
-    class Request(object):
-
-        def __init__(self, request_path):
-            self.request_path = request_path
-
-        def get_full_path(self):
-            return self.request_path
-
-    request = Request(request_path)
-    cache_header_key = _generate_cache_header_key(settings.CACHE_MIDDLEWARE_KEY_PREFIX, request)
-    cache.delete(cache_header_key)
 
 
 def save_config(overwrite=True, save_all=True):
@@ -324,23 +305,6 @@ def get_all_parents(model, parents=None):
         parents += get_all_parents(pl1, parents)
         parents += parents_level_1
     return parents
-
-
-def invalidate_johnny_cache(model, invalidate_parent=False, parent_finish=None):
-    if 'johnny' in settings.INSTALLED_APPS:
-        from johnny import cache
-        query_cache_backend = cache.get_backend()
-        query_cache_backend.patch()
-        if parent_finish and not issubclass(model, parent_finish):
-            return
-        cache.invalidate(model._meta.db_table)
-        if not invalidate_parent:
-            return
-
-        for model_parent in model.__bases__:
-            if parent_finish and not issubclass(model, parent_finish):
-                continue
-            invalidate_johnny_cache(model_parent, invalidate_parent, parent_finish)
 
 
 def is_last_application(app):

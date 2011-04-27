@@ -92,8 +92,7 @@ ADMIN_MEDIA_PREFIX = '/admin_media/'
 SECRET_KEY = ''
 
 # Enable site caching for anonymous visitors
-# PRE_MERENGUE_MIDDLEWARE_CLASSES += ('django.middleware.cache.UpdateCacheMiddleware', )
-# POST_MERENGUE_MIDDLEWARE_CLASSES += ('django.middleware.cache.FetchFromCacheMiddleware', )
+# CACHE_SITE_FOR_ANONYMOUS = True
 
 MIDDLEWARE_CLASSES = PRE_MERENGUE_MIDDLEWARE_CLASSES + MERENGUE_MIDDLEWARE_CLASSES + POST_MERENGUE_MIDDLEWARE_CLASSES + (
     # put here aditional middlewares

@@ -51,7 +51,7 @@ def is_broken(registered_item):
 
 
 def invalidate_registereditem():
-    from merengue.utils import invalidate_johnny_cache
+    from merengue.cache import invalidate_johnny_cache
     from merengue.registry.models import RegisteredItem
     invalidate_johnny_cache(RegisteredItem)
 

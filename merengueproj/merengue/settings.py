@@ -64,6 +64,7 @@ MERENGUE_APPS = (
     'merengue.collection',
     'merengue.review',
     'merengue.uitools',
+    'merengue.cache',
     'merengue.collab',  # Please, keep this application in last place cause it's used to know when activate plugins after migration
 )
 
@@ -127,6 +128,7 @@ MERENGUE_MIDDLEWARE_CLASSES = (
 
 PRE_MERENGUE_MIDDLEWARE_CLASSES = (
     'johnny.middleware.LocalStoreClearMiddleware',  # this has to be first
+    'merengue.cache.middleware.UpdateAnonymousCacheMiddleware',
     #'cmsutils.middleware.ProfileMiddleware',  # remove comment if you want to profile your website
     'johnny.middleware.QueryCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -144,6 +146,7 @@ POST_MERENGUE_MIDDLEWARE_CLASSES = (
     'merengue.section.middleware.ResponseSectionMiddleware',
     'merengue.pluggable.middleware.PluginMiddlewaresProxy',
     'merengue.block.middleware.RenderBlockMiddleware',
+    'merengue.cache.middleware.FetchFromAnonymousCacheMiddleware',
 )
 
 MIDDLEWARE_CLASSES = PRE_MERENGUE_MIDDLEWARE_CLASSES + MERENGUE_MIDDLEWARE_CLASSES + POST_MERENGUE_MIDDLEWARE_CLASSES

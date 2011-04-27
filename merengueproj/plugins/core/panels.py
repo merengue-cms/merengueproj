@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
 
@@ -49,8 +50,9 @@ class VersionPanel(panels.Panel):
 class InvalidateCachePanel(panels.Panel):
 
     def show(self, context):
+        cache_site = getattr(settings, 'CACHE_SITE_FOR_ANONYMOUS', False)
         user = getattr(context.get('request', None), 'user', None)
-        return user and can_manage_site(user)
+        return cache_site and user and can_manage_site(user)
 
     def render(self, context):
         return render_to_string('core/panels/invalidate_cache.html', context)

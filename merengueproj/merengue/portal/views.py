@@ -28,7 +28,7 @@ from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
 from django.views.i18n import set_language as django_set_language
 
-from merengue.utils import invalidate_cache_for_path
+from merengue.cache import invalidate_cache_for_path
 
 from cmsutils.log import send_info
 
