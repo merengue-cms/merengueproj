@@ -5,11 +5,11 @@
     <h2>{% inline_trans "Sections" %}</h2>
     <ul>
     {% for section, data in contents %}
-        <li>
+        <li class="section">
           <a href="{{ section.get_absolute_url }}">{{ section }}</a>: {{ data.visits }}
           <ul>
             {% for content, content_data in data.children %}
-            <li>
+            <li class="contentData">
             <a href="{{ content.get_absolute_url }}">{{ content }}</a>: {{ content_data.visits }}
             </li>
             {% endfor %}
