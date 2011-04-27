@@ -5,6 +5,7 @@
 {% block pagetitle %}{% trans "Stats index" %}{% endblock %}
 
 {% block content %}
+<div id="stats">
     <h1>{% inline_trans "Stats Index" %}</h1>
     <ul>
       {% ifhasperm 'view_all_stats' %}
