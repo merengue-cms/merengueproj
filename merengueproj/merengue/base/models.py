@@ -212,8 +212,16 @@ class Base(models.Model):
 
 
 def base_post_save_handler(sender, instance, created, **kwargs):
-    if 'status' in instance.__dict__ and hasattr(instance, 'workflow_status') and instance.status != instance.workflow_status.slug:
-        instance.update_status()
+    from merengue.workflow.utils import workflow_by_model
+    if Base in instance.__class__.mro():
+        if (getattr(instance, 'status', None) and
+            getattr(instance, 'workflow_status', None) and
+            instance.status != instance.workflow_status.slug):
+            instance.update_status()
+        if not getattr(instance, 'workflow_status', None):
+            workflow = workflow_by_model(instance.__class__)
+            instance.workflow_status = workflow.get_initial_state()
+            instance.save()
 
 
 signals.post_save.connect(base_post_save_handler)
