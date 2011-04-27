@@ -183,8 +183,7 @@ div#header img#merengue_logo {
 }
 
 .object-tools a.default,
-.object-tools a.quickreportlink,
-.object-tools a.advancedreportlink,
+.object-tools a.reportlink,
 .object-tools a.historylink,
 .object-tools a.permissionslink {
     background-image: none;

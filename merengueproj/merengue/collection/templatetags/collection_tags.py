@@ -85,6 +85,13 @@ class CollectionItemsNode(Node):
         items = collection.get_items(section)
         ignore_filters = request and request.GET.get('__ignore_filters', None)
         if not ignore_filters:
+            # This a code to smarsearch plugin
+            searcher = request.GET.get('__searcher', None)
+            if searcher:
+                from autoreports.utils import pre_procession_request
+                model = collection.get_first_parents_of_content_types()
+                request = pre_procession_request(request, model)
+            # Here end the code to smartsearch plugin
             if request:
                 items = self._filter_by_request(request, items)
             if context:
