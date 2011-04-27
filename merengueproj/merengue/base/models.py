@@ -189,18 +189,18 @@ class Base(models.Model):
         super(Base, self).save(*args, **kwargs)
 
     def update_status(self):
-        """We assume that State is changed
-        """
         from merengue.perms.models import ObjectPermission
-        self.status = self.workflow_status.slug
-        if hasattr(self, 'objectpermission_set'):
-            self.objectpermission_set.all().delete()
-            for perm in self.workflow_status.statepermissionrelation_set.all():
-                self.objectpermission_set.add(
-                    ObjectPermission.objects.create(content=self,
-                                                    role=perm.role,
-                                                    permission=perm.permission))
-        self.save()
+        # an extra check to avoid possibles infinte recursion
+        if self.status != self.workflow_status.slug:
+            self.status = self.workflow_status.slug
+            if hasattr(self, 'objectpermission_set'):
+                self.objectpermission_set.all().delete()
+                for perm in self.workflow_status.statepermissionrelation_set.all():
+                    self.objectpermission_set.add(
+                        ObjectPermission.objects.create(content=self,
+                                                        role=perm.role,
+                                                        permission=perm.permission))
+            self.save()
 
     @permalink
     def get_admin_absolute_url(self):
@@ -214,14 +214,15 @@ class Base(models.Model):
 def base_post_save_handler(sender, instance, created, **kwargs):
     from merengue.workflow.utils import workflow_by_model
     if Base in instance.__class__.mro():
-        if (getattr(instance, 'status', None) and
-            getattr(instance, 'workflow_status', None) and
-            instance.status != instance.workflow_status.slug):
-            instance.update_status()
-        if not getattr(instance, 'workflow_status', None):
+        workflow_status = getattr(instance, 'workflow_status', None)
+        if not workflow_status:
             workflow = workflow_by_model(instance.__class__)
             instance.workflow_status = workflow.get_initial_state()
-            instance.save()
+            workflow_status = instance.workflow_status
+        if (getattr(instance, 'status', None) and
+            workflow_status and
+            instance.status != instance.workflow_status.slug):
+            instance.update_status()
 
 
 signals.post_save.connect(base_post_save_handler)
