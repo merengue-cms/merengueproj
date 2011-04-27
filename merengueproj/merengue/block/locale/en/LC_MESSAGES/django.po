@@ -8,58 +8,180 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-12 11:57+0200\n"
+"POT-Creation-Date: 2011-04-27 19:07+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: models.py:8
+#: admin.py:45
+msgid "Status"
+msgstr ""
+
+#: admin.py:63
+msgid "block content related"
+msgstr ""
+
+#: admin.py:68
+msgid "Visibility when duplicated blocks"
+msgstr ""
+
+#: filterspecs.py:13
+msgid "content block"
+msgstr ""
+
+#: filterspecs.py:16
 msgid "All"
 msgstr ""
 
-#: models.py:9
+#: filterspecs.py:16
+msgid "Yes"
+msgstr ""
+
+#: filterspecs.py:16
+msgid "No"
+msgstr ""
+
+#: forms.py:34
+msgid "Block to add"
+msgstr ""
+
+#: forms.py:94
+msgid ""
+"Placing the block here will take no effect, as another related block is set "
+"to overwrite it"
+msgstr ""
+
+#: forms.py:95
+msgid ""
+"Unmark this field to keep the block in the specified "
+"place                                       (even though it won't be "
+"displayed)"
+msgstr ""
+
+#: forms.py:97
+msgid ""
+"A block is already set to overwrite others of this "
+"kind.                                Unmark this to save the block, even "
+"though it won't be displayed"
+msgstr ""
+
+#: models.py:29
+msgid "All places"
+msgstr ""
+
+#: models.py:30
 msgid "Left sidebar"
 msgstr ""
 
-#: models.py:10
+#: models.py:31
 msgid "Right sidebar"
 msgstr ""
 
-#: models.py:11
+#: models.py:32
+msgid "After content title"
+msgstr ""
+
+#: models.py:33
 msgid "Before content body"
 msgstr ""
 
-#: models.py:12
+#: models.py:34
 msgid "Home page"
 msgstr ""
 
-#: models.py:13
+#: models.py:35
 msgid "After content body"
 msgstr ""
 
-#: models.py:14
+#: models.py:36
 msgid "Header"
 msgstr ""
 
-#: models.py:15
+#: models.py:37
 msgid "Footer"
 msgstr ""
 
+#: models.py:38
+msgid "Meta-information, links, js..."
+msgstr ""
+
 #: models.py:42
+msgid "name"
+msgstr ""
+
+#: models.py:43
+msgid "placed at"
+msgstr ""
+
+#: models.py:45
 msgid "shown in urls"
 msgstr ""
 
-#: models.py:44
-msgid "block will <em>only</em> be visible in urls matching these regular expressions (one per line, using <a href='http://docs.python. org./library/re.html#regular-expression-syntax' title='python regular expressions'>python re syntax</a>). <br/> Please use relative paths. This field has preference over 'hidden in urls'."
+#: models.py:47
+msgid ""
+"block will <em>only</em> be visible in urls matching these\n"
+"            regular expressions (one per line, using <a            "
+"href='http://docs.python.org./library/re.html#regular-expression-syntax'\n"
+"            title='python regular expressions' target='_blank'>python re "
+"syntax</a>). <br/>\n"
+"            Please use relative paths.\n"
+"            This field has preference over 'hidden in urls'."
 msgstr ""
 
-#: models.py:51
+#: models.py:54
 msgid "hidden in urls"
 msgstr ""
 
-#: models.py:53
-msgid "block will be hidden in urls matching these regular expressions (one per line, using <a href='http://docs.python.org/library/re.html#regular-expression-syntax' title='python regular expressions'>python re syntax</a>)."
+#: models.py:56
+msgid ""
+"block will be hidden in urls matching these regular\n"
+"            expressions (one per line, using <a\n"
+"            href='http://docs.python.org/library/re.html#regular-expression-"
+"syntax'\n"
+"            title='python regular expressions' target='_blank'>python re "
+"syntax</a>)."
+msgstr ""
+
+#: models.py:61
+msgid "disable the activation and desactivation of the block"
+msgstr ""
+
+#: models.py:64
+msgid "block can't be moved from its default place"
+msgstr ""
+
+#: models.py:67
+msgid "related content"
+msgstr ""
+
+#: models.py:69
+msgid "overwrite block if the place is the same"
+msgstr ""
+
+#: models.py:72
+msgid "overwrite generic block if is present on the actual page"
+msgstr ""
+
+#: views.py:72
+msgid "Configuration"
+msgstr ""
+
+#: views.py:72
+msgid "Block specific configuration"
+msgstr ""
+
+#: templates/blocks/block_config.html:9
+msgid "Save configuration"
+msgstr ""
+
+#: templates/blocks/header.html:62
+msgid "Enable/disable blocks dragging"
+msgstr ""
+
+#: templates/blocks/header.html:74
+msgid "Configure block"
 msgstr ""

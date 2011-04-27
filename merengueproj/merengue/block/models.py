@@ -26,7 +26,7 @@ from merengue.registry.models import RegisteredItem
 import re
 
 
-PLACES = (('all', _('All')),
+PLACES = (('all', _('All places')),
           ('leftsidebar', _('Left sidebar')),
           ('rightsidebar', _('Right sidebar')),
           ('aftercontenttitle', _('After content title')),
