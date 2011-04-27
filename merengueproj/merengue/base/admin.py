@@ -629,7 +629,7 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
             tools.extend([
                 {'url': url_prefix + 'add/', 'label': ugettext('Add %s') % force_unicode(self.model._meta.verbose_name),
                  'class': 'addlink', 'permission': 'add'},
-                {'url': url_prefix + 'report/quick/', 'label': ugettext('Quick Report'), 'class': 'quickreportlink reportlink'},
+                {'url': url_prefix + 'report/quick/?%s' % request.GET.urlencode(), 'label': ugettext('Quick Report'), 'class': 'quickreportlink reportlink'},
                 {'url': url_prefix + 'report/advance/', 'label': ugettext('Advanced Report'), 'class': 'advancedreportlink reportlink'},
                 {'url': url_prefix + 'report/', 'label': ugettext('Reports'), 'class': 'reportslink reportlink'},
                 {'url': url_prefix + 'report/wizard/', 'label': ugettext('Wizard Report'), 'class': 'wizardreportlink reportlink'},
