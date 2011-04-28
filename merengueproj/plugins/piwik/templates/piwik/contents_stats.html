@@ -1,43 +1,44 @@
 {% load i18n inlinetrans %}
 
-{% if contents %}
+{% if sections %}
 <div id="ranking">
     <h2>{% inline_trans "Sections" %}</h2>
     <ul>
-    {% for section, data in contents %}
-        {% ifequal section.class_name 'basesection' %}
-          <li class="section">
-            <a href="{{ section.get_absolute_url }}">{{ section }}</a>: {{ data.visits }}
-            <ul>
-              {% for content, content_data in data.children %}
-              <li class="contentData">
-              <a href="{{ content.get_absolute_url }}">{{ content }}</a>: {{ content_data.visits }}
-              </li>
-              {% endfor %}
-            </ul>
+    {% for section, data in sections %}
+      <li class="section">
+        <a href="{{ section.get_absolute_url }}">{{ section }}</a>: {{ data.visits }}
+        <ul>
+          {% for child, child_data in data.children %}
+          <li class="contentData">
+          <a href="{{ child.get_absolute_url }}">{{ child }}</a>: {{ child_data.visits }}
           </li>
-        {% endifequal %}
+          {% endfor %}
+        </ul>
+      </li>
     {% endfor %}
     </ul>
+{% endif %}
+
+{% if contents %}
     <h2>{% inline_trans "Other contents" %}</h2>
     <ul>
-    {% for section, data in contents %}
-        {% ifnotequal section.class_name 'basesection' %}
-          <li class="section">
-            <a href="{{ section.get_absolute_url }}">{{ section }}</a>: {{ data.visits }}
-            <ul>
-              {% for content, content_data in data.children %}
-              <li class="contentData">
-              <a href="{{ content.get_absolute_url }}">{{ content }}</a>: {{ content_data.visits }}
-              </li>
-              {% endfor %}
-            </ul>
+    {% for content, data in contents %}
+      <li class="section">
+        <a href="{{ content.get_absolute_url }}">{{ content }}</a>: {{ data.visits }}
+        <ul>
+          {% for child, child_data in data.children %}
+          <li class="contentData">
+          <a href="{{ child.get_absolute_url }}">{{ child }}</a>: {{ child_data.visits }}
           </li>
-        {% endifnotequal %}
+          {% endfor %}
+        </ul>
+      </li>
     {% endfor %}
     </ul>
 </div>
+{% endif %}
 
-{% else %}
+{% if not contents and not sections %}
   {% inline_trans "there are no statistics to show"|capfirst %}
 {% endif %}
+

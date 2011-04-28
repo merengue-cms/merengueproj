@@ -18,6 +18,7 @@
 from django import template
 
 from merengue.pluggable.utils import get_plugin
+from merengue.section.models import BaseSection
 
 from plugins.piwik.settings import CUSTOM_VARIABLES
 from plugins.piwik.utils import SECTION_PIWIK_VARIABLE, CONTENT_PIWIK_VARIABLE, get_contents
@@ -44,5 +45,9 @@ def piwik_script(context):
 
 @register.inclusion_tag('piwik/contents_stats.html', takes_context=True)
 def contents_stats(context, username=None, expanded=1):
-    contents = get_contents(username, expanded)
-    return {'contents': contents, 'request': context.get('request')}
+    basecontents = get_contents(username, expanded)
+    contents = [content for content in basecontents if not isinstance(content[0].get_real_instance(), BaseSection)]
+    sections = [content for content in basecontents if isinstance(content[0].get_real_instance(), BaseSection)]
+    return {'contents': contents,
+            'sections': sections,
+            'request': context.get('request')}
