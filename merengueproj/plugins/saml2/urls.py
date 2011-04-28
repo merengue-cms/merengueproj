@@ -29,13 +29,12 @@ urlpatterns = patterns(
         kwargs=dict(config_loader=merengue_config_loader,
                     attribute_mapping=get_attribute_mapping,
                     create_unknown_user=get_create_unknown_user)),
-    url(r'^logout/$', 'logout', name='saml2_logout',
-        kwargs=dict(config_loader=merengue_config_loader)),
     url(r'^metadata/$', 'metadata', name='saml2_metadata',
         kwargs=dict(config_loader=merengue_config_loader)),
     )
 
 urlpatterns += patterns(
     'plugins.saml2.views',
+    url(r'^logout/$', 'merengue_logout', name='saml2_logout'),
     url(r'^ls/$', 'merengue_logout_service', name='saml2_ls')
     )

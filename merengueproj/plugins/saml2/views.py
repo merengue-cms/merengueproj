@@ -15,13 +15,21 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.contrib.auth.views import logout as django_logout
 from django.utils.translation import gettext as _
 
-from djangosaml2.views import logout_service
+from djangosaml2.views import logout, logout_service
 
 from cmsutils.log import send_info
 
 from plugins.saml2.saml_config_loader import merengue_config_loader
+
+
+def merengue_logout(request):
+    if '_saml2_subject_id' in request.session:
+        return logout(request, config_loader=merengue_config_loader)
+    else:
+        return django_logout(request)
 
 
 def merengue_logout_service(request):
