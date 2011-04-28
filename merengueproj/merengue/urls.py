@@ -39,12 +39,9 @@ urlpatterns = patterns('',
          include('merengue.block.urls')),
 
     # login and logout
-    url({'en': r'^login/$',
-         'es': r'^autenticar/$'},
-         'merengue.portal.views.login', name="merengue_login"),
-    url({'en': r'^logout/$',
-         'es': r'^salir/$'},
-         'merengue.portal.views.logout', name="merengue_logout"),
+    url(r'^login/$', 'merengue.portal.views.login', name="merengue_login"),
+    url(r'^logout/$','merengue.portal.views.logout', name="merengue_logout"),
+
     url({'en': r'^password/reset/$',
          'es': r'^contrasena/cambiar/$'},
          'merengue.portal.views.password_reset', name="password_reset"),
