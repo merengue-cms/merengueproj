@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-26 14:36+0200\n"
+"POT-Creation-Date: 2011-04-28 10:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -69,15 +69,15 @@ msgstr ""
 msgid "Stats Index"
 msgstr ""
 
-#: templates/piwik/index.html:10
-msgid "Go to Piwik to view stats deails"
-msgstr ""
-
 #: templates/piwik/index.html:11
-msgid "View stats ranking"
+msgid "Go to Piwik to view stats details"
 msgstr ""
 
 #: templates/piwik/index.html:12
+msgid "View stats ranking"
+msgstr ""
+
+#: templates/piwik/index.html:14
 msgid "View stats ranking of my sections"
 msgstr ""
 
