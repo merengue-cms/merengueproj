@@ -35,21 +35,20 @@ register = template.Library()
 def menu_tag(context, menu, max_num_level=-1, descendants=None):
     ancestors = []
     menu_item = None
-    user = context['request'].user
     if not descendants:
-        descendants = menu.get_descendants_by_user(user)
+        descendants = menu.get_descendants()
     try:
         allmenuitems = [e for e in context['request'].META['PATH_INFO'].split('/') if e]
         menuitem_slug = allmenuitems[-1]
         try:
             menu_item = descendants.get(slug=menuitem_slug)
-            ancestors = menu_item.get_ancestors_by_user(user)[1:]
+            ancestors = menu_item.get_ancestors()[1:]
         except Menu.DoesNotExist:
             # Try to get the last item in path which will be the selected menu item.
             for item in allmenuitems:
                 try:
                     menu_item = descendants.get(slug=item)
-                    ancestors = menu_item.get_ancestors_by_user(user)[1:]
+                    ancestors = menu_item.get_ancestors()[1:]
                 except Menu.DoesNotExist:
                     pass
     except IndexError:
@@ -64,12 +63,12 @@ def menu_tag(context, menu, max_num_level=-1, descendants=None):
             if current_level == 0:
                 current_level = 1
             min_level = current_level - (current_level - 1) % max_num_level
-            menu = menu_item.get_ancestors_by_user(user).get(level=min_level - 1)
+            menu = menu_item.get_ancestors().get(level=min_level - 1)
         max_level = min_level + max_num_level - 1
-        descendants = menu.get_descendants_by_user(user).filter(Q(level__gte=min_level,
-                                                                  level__lte=max_level) |
-                                                                Q(level=menu_item.level + 1,
-                                                                  parent=menu_item))
+        descendants = menu.get_descendants().filter(Q(level__gte=min_level,
+                                                      level__lte=max_level) | \
+                                                    Q(level=menu_item.level + 1,
+                                                      parent=menu_item))
     else:
         min_level = None
         max_level = None
@@ -104,7 +103,7 @@ def menu_sitemap_tag(context, section, class_ul):
 
 def get_menu_iterative(context, menu, menu_tree):
     user = context['request'].user
-    children = tree_item_iterator(menu.get_descendants_by_user(user))
+    children = tree_item_iterator(menu.get_descendants())
     if children:
         for child, options in children:
             if user.is_staff or child.is_published():
