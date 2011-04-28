@@ -30,6 +30,7 @@ import mptt
 from merengue.base.managers import WorkflowManager
 from merengue.base.models import BaseContent
 from merengue.section.managers import SectionManager
+from merengue.perms.models import Role
 from merengue.viewlet.models import RegisteredViewlet
 from transmeta import TransMeta, get_fallback_fieldname
 
@@ -117,6 +118,12 @@ class Menu(models.Model):
         choices=(('public', _('public')), ('private', _('private'))),
         default='public',
         max_length=25,
+    )
+
+    visible_by_roles = models.ManyToManyField(
+        Role,
+        related_name='visible_menus',
+        verbose_name=_('visible menus'),
     )
 
     class Meta:
