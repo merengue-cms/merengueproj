@@ -124,6 +124,8 @@ class Menu(models.Model):
         Role,
         related_name='visible_menus',
         verbose_name=_('visible menus'),
+        blank=True,
+        null=True,
     )
 
     class Meta:

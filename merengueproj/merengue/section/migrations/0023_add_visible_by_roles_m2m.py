@@ -15,8 +15,8 @@ class Migration(SchemaMigration):
         # Adding M2M table for field visible_by_roles on 'Menu'
         db.create_table('section_menu_visible_by_roles', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('menu', models.ForeignKey(orm['section.menu'], null=False)),
-            ('role', models.ForeignKey(orm['perms.role'], null=False))
+            ('menu', models.ForeignKey(orm['section.menu'])),
+            ('role', models.ForeignKey(orm['perms.role']))
         ))
         db.create_unique('section_menu_visible_by_roles', ['menu_id', 'role_id'])
 
@@ -212,7 +212,7 @@ class Migration(SchemaMigration):
             'status': ('django.db.models.fields.CharField', [], {'default': "'public'", 'max_length': '25'}),
             'tree_id': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'visible_by_roles': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'visible_menus'", 'symmetrical': 'False', 'to': "orm['perms.Role']"}),
+            'visible_by_roles': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'visible_menus'", 'null': 'True', 'symmetrical': 'False', 'to': "orm['perms.Role']"}),
         },
         'section.sectionrelatedcontent': {
             'Meta': {'object_name': 'SectionRelatedContent', 'db_table': "'section_basesection_related_content'"},
