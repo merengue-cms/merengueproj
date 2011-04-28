@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-28 10:45+0200\n"
+"POT-Creation-Date: 2011-04-28 11:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,6 +57,10 @@ msgid "Sections"
 msgstr "Secciones"
 
 #: templates/piwik/contents_stats.html:22
+msgid "Other contents"
+msgstr "Otros contenidos"
+
+#: templates/piwik/contents_stats.html:42
 msgid "there are no statistics to show"
 msgstr "no hay estadísticas a mostrar"
 
@@ -64,21 +68,21 @@ msgstr "no hay estadísticas a mostrar"
 msgid "Stats index"
 msgstr "Índice de estadísticas"
 
-#: templates/piwik/index.html:8
+#: templates/piwik/index.html:9
 msgid "Stats Index"
 msgstr "Índice de estadísticas"
 
-#: templates/piwik/index.html:11
+#: templates/piwik/index.html:12
 msgid "Go to Piwik to view stats details"
 msgstr "Ir a Piwik para ver las estadísticas en detalle"
 
-#: templates/piwik/index.html:12
+#: templates/piwik/index.html:13
 msgid "View stats ranking"
 msgstr "Ver ranking de estadísticas"
 
-#: templates/piwik/index.html:14
-msgid "View stats ranking of my sections"
-msgstr "Ver estadísticas de mis secciones"
+#: templates/piwik/index.html:15
+msgid "View stats ranking of my contents"
+msgstr "Ver estadísticas de mis contenidos"
 
 #: templates/piwik/ranking_stats.html:8
 msgid "Ranking"
@@ -87,4 +91,3 @@ msgstr ""
 #: templates/piwik/ranking_stats.html:17
 msgid "Contents Ranking"
 msgstr "Ranking de contenidos"
-

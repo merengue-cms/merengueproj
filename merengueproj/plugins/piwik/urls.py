@@ -23,6 +23,6 @@ from merengue.urlresolvers import merengue_url as url
 urlpatterns = patterns('plugins.piwik.views',
     url(r'^$', 'index', name='stats_index'),
     url(r'^ranking/$', 'ranking', name='stats_ranking'),
-    url({'en': r'^my-sections/$',
-         'es': r'^mis-secciones/$'}, 'ranking_by_owner', name='ranking_by_owner'),
+    url({'en': r'^my-contents/$',
+         'es': r'^mis-contenidos/$'}, 'ranking_by_owner', name='ranking_by_owner'),
 )

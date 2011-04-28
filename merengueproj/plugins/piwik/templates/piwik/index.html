@@ -12,7 +12,7 @@
         <li class="piwik"><a href="{{ piwik_url }}"> {% inline_trans "Go to Piwik to view stats details" %}</a></li>
         <li class="statsRanking"><a href="{% url stats_ranking %}"> {% inline_trans "View stats ranking" %}</a></li>
         {% endifhasperm %}
-        <li class="mySection"><a href="{% url ranking_by_owner %}"> {% inline_trans "View stats ranking of my sections" %}</a></li>
+        <li class="mySection"><a href="{% url ranking_by_owner %}"> {% inline_trans "View stats ranking of my contents" %}</a></li>
     </ul>
 </div>
 
