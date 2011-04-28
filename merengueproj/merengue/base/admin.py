@@ -940,6 +940,8 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, StatusCo
         # simulate auto_now=True for user_modification_date
         obj.user_modification_date = datetime.datetime.today()
 
+        super(BaseContentAdmin, self).save_model(request, obj, form, change)
+
         if 'section' in form.fields:
             # change/remove the section of the content
             section = form.cleaned_data['section']
@@ -948,8 +950,6 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, StatusCo
                 SectionRelatedContent.objects.create(basecontent=obj, basesection=section)
             elif section is None and object_sections:
                 SectionRelatedContent.objects.filter(basecontent=obj).delete()
-
-        super(BaseContentAdmin, self).save_model(request, obj, form, change)
 
     def formfield_for_dbfield(self, db_field, **kwargs):
         field = super(BaseContentAdmin, self).formfield_for_dbfield(db_field, **kwargs)
