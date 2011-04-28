@@ -59,7 +59,7 @@
     <field to="perms.permission" name="permission" rel="ManyToOneRel">4</field>
   </object>
   <object pk="1" model="workflow.workflowmodelrelation">
-    <field to="contenttypes.contenttype" name="content_type" rel="ManyToOneRel">43</field>
+    <field to="contenttypes.contenttype" name="content_type" rel="ManyToOneRel"><natural>base</natural><natural>basecontent</natural></field>
     <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
   </object>
   <object pk="1" model="workflow.workflowpermissionrelation">
