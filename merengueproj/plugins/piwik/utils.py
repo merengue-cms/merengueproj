@@ -16,7 +16,6 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 import re
-from operator import itemgetter
 
 from merengue.pluggable.utils import get_plugin
 from merengue.base.models import BaseContent
@@ -172,7 +171,7 @@ def get_basecontents(data, extra_filters=None):
 
 
 def sort_contents(contents):
-    return sorted(contents.iteritems(), key=itemgetter(1), reverse=True)
+    return sorted(contents.iteritems(), key=lambda k: k[1]['visits'], reverse=True)
 
 
 def sort_contents_recursive(contents):
