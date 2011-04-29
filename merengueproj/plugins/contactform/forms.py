@@ -23,6 +23,9 @@ from django.utils import simplejson
 from django.template import RequestContext
 from django import forms
 from django.utils.translation import ugettext as _
+from django.utils.safestring import SafeUnicode
+
+from BeautifulSoup import BeautifulSoup
 
 from plugins.contactform.models import SentContactForm
 
@@ -91,3 +94,13 @@ class ContactFormForm(forms.Form):
             email.attach_alternative(html_content, "text/html")
 
             email.send()
+
+        def as_table(self):
+            rendered_form = super(ContactFormForm, self).as_table()
+            soup = BeautifulSoup(rendered_form)
+            for row in soup.findAll('label'):
+                fieldname = row['for'][3:]
+                if self.fields[fieldname].required:
+                    row.attrs.append(('class', 'required'))
+            rendered_form = SafeUnicode(unicode(soup))
+            return rendered_form
