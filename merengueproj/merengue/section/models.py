@@ -19,7 +19,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.db import models
-from django.db.models import permalink
+from django.db.models import permalink, Q
 from django.db.models.signals import post_save
 from django.template import defaultfilters
 from django.template.loader import render_to_string
@@ -115,7 +115,7 @@ class Menu(models.Model):
     status = models.CharField(
         verbose_name=_('status'),
         help_text=_('status of the menu element'),
-        choices=(('public', _('public')), ('private', _('private'))),
+        choices=(('public', _('public')), ('draft', _('draft'))),
         default='public',
         max_length=25,
     )
@@ -193,6 +193,28 @@ class Menu(models.Model):
         if section:
             bc.insert(0, (section.get_absolute_url(), unicode(section)))
         return bc
+
+    def get_ancestors_by_user(self, user=None):
+        ancestors = self.get_ancestors().filter(status='public')  # uses mptt function
+        if user:
+            if not user.is_anonymous():
+                roles = [x.role for x in user.principalrolerelation_set.all()]
+            else:
+                roles = Role.objects.filter(slug='anonymous_user')
+            ancestors = ancestors.filter(Q(visible_by_roles__isnull=True) |
+                                         Q(visible_by_roles__in=roles))
+        return ancestors
+
+    def get_descendants_by_user(self, user=None):
+        descendants = self.get_descendants().filter(status='public')  # uses mptt function
+        if user and not (user.is_staff or user.is_superuser):
+            if not user.is_anonymous():
+                roles = [x.role for x in user.principalrolerelation_set.all()]
+            else:
+                roles = Role.objects.filter(slug='anonymous_user')
+            descendants = descendants.filter(Q(visible_by_roles__isnull=True) |
+                                             Q(visible_by_roles__in=roles))
+        return descendants
 
 try:
     mptt.register(Menu)

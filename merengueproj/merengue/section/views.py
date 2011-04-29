@@ -81,7 +81,7 @@ def menu_section_view(request, section_slug, menu_slug):
     else:
         root_menu = Menu.objects.get(slug=settings.MENU_PORTAL_SLUG)
     try:
-        menu = root_menu.get_descendants().get(slug=menu_slug)
+        menu = root_menu.get_descendants_by_user(request.user).get(slug=menu_slug)
     except Menu.DoesNotExist:
         try:
             if not section_slug:
