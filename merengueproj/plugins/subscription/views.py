@@ -24,7 +24,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from cmsutils.log import send_info
 from merengue.base.models import BaseContent
-from merengue.utils import invalidate_cache_for_path
+from merengue.cache import invalidate_cache_for_path
 
 
 def subscription_form(request, basecontent_slug):
