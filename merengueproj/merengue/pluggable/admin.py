@@ -17,8 +17,13 @@
 
 from django.conf import settings
 from django.utils.safestring import mark_safe
+from django.core.management import call_command
+from django.utils.functional import update_wrapper
+from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
+
+from cmsutils.log import send_info
 
 from merengue.base.admin import set_field_read_only
 from merengue.pluggable.checker import check_plugins
@@ -44,6 +49,26 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
             {'fields': ('installed', 'active', 'order', 'config'), },
         )
     )
+
+    def get_urls(self):
+        from django.conf.urls.defaults import patterns
+
+        def wrap(view):
+
+            def wrapper(*args, **kwargs):
+                #kwargs['model_admin'] = self
+                return self.admin_site.admin_view(view)(*args, **kwargs)
+            return update_wrapper(wrapper, view)
+
+        urls = super(RegisteredPluginAdmin, self).get_urls()
+        my_urls = patterns('',
+            (r'^register-new-plugins/$', wrap(self.register_new_plugins)),)
+        return my_urls + urls
+
+    def register_new_plugins(self, request, extra_context=None):
+        call_command('register_new_plugins')
+        send_info(request, _('New plugins have been registered'))
+        return HttpResponseRedirect('..')
 
     def get_readonly_fields(self, request, obj=None):
         readonly_fields = super(RegisteredPluginAdmin, self).get_readonly_fields(request, obj)
@@ -78,6 +103,12 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
             registered_plugin.active = True
             install_plugin(registered_plugin)
         return registered_plugin
+
+    def object_tools(self, request, mode, url_prefix):
+        tools = super(RegisteredPluginAdmin, self).object_tools(request, mode, url_prefix)
+        if mode == 'list':
+            tools = [{'url': url_prefix + 'register-new-plugins/', 'label': ugettext('Register new plugins'), 'class': 'default', 'permission': 'change'}] + tools
+        return tools
 
     def has_add_permission(self, request):
         return False

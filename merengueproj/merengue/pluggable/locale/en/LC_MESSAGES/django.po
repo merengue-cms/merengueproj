@@ -8,30 +8,95 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-12 12:01+0200\n"
+"POT-Creation-Date: 2011-04-29 20:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.py:25
+#: __init__.py:214
+msgid "portal menu"
+msgstr ""
+
+#: admin.py:48
+msgid "Status"
+msgstr ""
+
+#: admin.py:70
+msgid "New plugins have been registered"
+msgstr ""
+
+#: admin.py:90
 msgid "Not all dependencies are met"
 msgstr "dsadsa"
 
-#: models.py:15
+#: admin.py:110
+msgid "Register new plugins"
+msgstr ""
+
+#: admin.py:118 templates/admin/plugin/plugin_change_form.html:12
+msgid "None"
+msgstr ""
+
+#: admin.py:119 admin.py:121 templates/admin/plugin/plugin_change_form.html:6
+msgid "Screenshot"
+msgstr ""
+
+#: models.py:34
 msgid "name"
 msgstr ""
 
-#: models.py:16
+#: models.py:35
 msgid "description"
 msgstr ""
 
-#: models.py:17
+#: models.py:36
 msgid "version"
 msgstr ""
 
-#: models.py:21
+#: models.py:40
 msgid "directory name"
+msgstr ""
+
+#: models.py:53
+msgid "registered plugin"
+msgstr ""
+
+#: models.py:54
+msgid "registered plugins"
+msgstr ""
+
+#: templates/admin/plugin/plugin_change_form.html:20
+msgid "New blocks"
+msgstr ""
+
+#: templates/admin/plugin/plugin_change_form.html:25
+msgid "Registered blocks"
+msgstr ""
+
+#: templates/admin/plugin/plugin_change_form.html:38
+msgid "Has own admin"
+msgstr ""
+
+#: templates/admin/plugin/plugin_change_form.html:48
+msgid "New Actions"
+msgstr ""
+
+#: templates/admin/plugin/plugin_change_form.html:53
+msgid "Registered actions"
+msgstr ""
+
+#: templates/admin/plugin/plugin_change_form.html:67
+msgid "New Viewlets"
+msgstr ""
+
+#: templates/admin/plugin/plugin_change_form.html:80
+msgid "New Middlewares"
+msgstr ""
+
+#: templates/admin/plugin/plugin_change_form.html:93
+msgid "New content types addable in a section"
 msgstr ""
