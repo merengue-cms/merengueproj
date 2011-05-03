@@ -111,6 +111,36 @@ class LinkBaseBlock(Block):
                                          'category': self.category})
 
 
+class PortalLinksBlock(LinkBaseBlock):
+    """Generic block that renders portal links"""
+    name = 'portallinks'
+    default_place = 'header'
+    help_text = _('Generic block that renders portal links')
+    verbose_name = _('Portal Links Block')
+
+    config_params = [
+        params.Single(
+            name="category",
+            label=_("Portal link category"),
+            choices=settings.PORTAL_LINK_CATEGORIES,
+            default=settings.PORTAL_LINK_CATEGORIES[0][0],
+        ),
+        params.Single(
+            name="template_name",
+            label=_("Template that will be used to render this portal link block"),
+            default='core/block_portallinks.html',
+        ),
+    ]
+
+    @property
+    def category(self):
+        return self.get_config('category', None).get_value()
+
+    @property
+    def template_name(self):
+        return self.get_config('template_name', None).get_value()
+
+
 class PrimaryLinksBlock(LinkBaseBlock):
     """ Block that renders primary portal links """
     name = 'primarylinks'
