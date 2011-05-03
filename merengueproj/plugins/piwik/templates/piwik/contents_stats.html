@@ -1,19 +1,20 @@
 {% load i18n inlinetrans %}
-
-{% if sections %}
 <div id="ranking">
+{% if sections %}
     <h2>{% inline_trans "Sections" %}</h2>
     <ul>
     {% for section, data in sections %}
       <li class="section">
         <a href="{{ section.get_absolute_url }}">{{ section }}</a>: {{ data.visits }}
-        <ul>
-          {% for child, child_data in data.children %}
-          <li class="contentData">
-          <a href="{{ child.get_absolute_url }}">{{ child }}</a>: {{ child_data.visits }}
-          </li>
-          {% endfor %}
-        </ul>
+        {% if data.children %}
+          <ul>
+            {% for child, child_data in data.children %}
+            <li class="contentData">
+              <a href="{{ child.get_absolute_url }}">{{ child }}</a>: {{ child_data.visits }}
+            </li>
+            {% endfor %}
+          </ul>
+	{% endif %}
       </li>
     {% endfor %}
     </ul>
@@ -25,20 +26,21 @@
     {% for content, data in contents %}
       <li class="section">
         <a href="{{ content.get_absolute_url }}">{{ content }}</a>: {{ data.visits }}
-        <ul>
-          {% for child, child_data in data.children %}
-          <li class="contentData">
-          <a href="{{ child.get_absolute_url }}">{{ child }}</a>: {{ child_data.visits }}
-          </li>
-          {% endfor %}
-        </ul>
+	{% if data.children %}
+          <ul>
+            {% for child, child_data in data.children %}
+            <li class="contentData">
+              <a href="{{ child.get_absolute_url }}">{{ child }}</a>: {{ child_data.visits }}
+            </li>
+            {% endfor %}
+          </ul>
+	{% endif %}
       </li>
     {% endfor %}
     </ul>
-</div>
 {% endif %}
 
 {% if not contents and not sections %}
   {% inline_trans "there are no statistics to show"|capfirst %}
 {% endif %}
-
+</div>
