@@ -134,11 +134,11 @@ class PortalLinksBlock(LinkBaseBlock):
 
     @property
     def category(self):
-        return self.get_config('category', None).get_value()
+        return self.get_config().get('category', None).get_value()
 
     @property
     def template_name(self):
-        return self.get_config('template_name', None).get_value()
+        return self.get_config().get('template_name', None).get_value()
 
 
 class PrimaryLinksBlock(LinkBaseBlock):
