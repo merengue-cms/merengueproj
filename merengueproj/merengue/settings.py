@@ -316,3 +316,9 @@ AUTOREPORTS_SUBFIX = True
 
 # Default workflow
 DEFAULT_WORKFLOW = 1
+
+# Portal link categories
+PORTAL_LINK_CATEGORIES = (
+    ('primary', ugettext('Primary link')),
+    ('secondary', ugettext('Secondary link')),
+)

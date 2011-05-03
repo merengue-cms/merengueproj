@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -23,11 +24,6 @@ from transmeta import TransMeta
 from merengue.base.models import BaseContent
 from stdimage import StdImageField
 
-
-CATEGORIES = (
-    ('primary', _('Primary link')),
-    ('secondary', _('Secondary link')),
-)
 
 LINK_MEDIA_PREFIX = 'links'
 
@@ -45,7 +41,8 @@ class PortalLink(models.Model):
     cached_url = models.CharField(verbose_name=_('url'), max_length=200,
                                   blank=True, null=True, editable=False)
     order = models.IntegerField(_('order'), blank=True, null=True)
-    category = models.CharField(_('category'), max_length=100, choices=CATEGORIES)
+    category = models.CharField(_('category'), max_length=100,
+                                choices=settings.PORTAL_LINK_CATEGORIES)
     slug = models.SlugField(verbose_name=_('slug'),
                             max_length=200,
                             blank=False,
