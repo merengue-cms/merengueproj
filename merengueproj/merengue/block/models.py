@@ -63,6 +63,27 @@ class RegisteredBlock(RegisteredItem):
     fixed_place = models.BooleanField(
         verbose_name=_('block can\'t be moved from its default place'),
         default=False)
+    # caching parameters
+    is_cached = models.BooleanField(
+        verbose_name=_('activate cache'),
+        help_text=_('Activate cache for this block. The HTML rendered will be cached'),
+        default=False)
+    cache_timeout = models.IntegerField(
+        verbose_name=_('timeout'),
+        help_text=_('Time that block remained in cache in seconds. "0" means forever'),
+        default=0)
+    cache_only_anonymous = models.BooleanField(
+        verbose_name=_('Cached is applied only for anonymous'),
+        default=False)
+    cache_vary_on_url = models.BooleanField(
+        verbose_name=_('Cache vary on the request URL'),
+        default=False)
+    cache_vary_on_language = models.BooleanField(
+        verbose_name=_('Cache vary on language'),
+        default=True)
+    cache_vary_on_user = models.BooleanField(
+        verbose_name=_('Cached vary on authenticated user'),
+        default=False)
     # fields for blocks related to contents
     content = models.ForeignKey(BaseContent, verbose_name=_(u'related content'), null=True)
     overwrite_if_place = models.BooleanField(
@@ -103,6 +124,10 @@ class RegisteredBlock(RegisteredItem):
 
 
 def post_save_handler(sender, instance, **kwargs):
+    # invalidate block cache if exists
+    block = instance.get_registry_item()
+    block.invalidate_cache()
+    # marking related blocks
     content = instance.content
     if content and not content.has_related_blocks:
         # we mark that base content has related blocks, for performance reason
