@@ -467,7 +467,7 @@ HTML snapshot:
                                 '<div id="shadowbox_title">' +
                                   '<div id="shadowbox_title_close">' +
                                     '<a href="javascript:Shadowbox.close();">' +
-                                    '  <img src="/media/merengue/img/multimedia/close.gif"/>' + 
+                                    '  <img src="/media/merengue/img/multimedia/close.png"/>' + 
                                     '</a> '+ 
                                    '</div>' + 
                                    '<div id="shadowbox_title_inner"></div>' +
@@ -1444,8 +1444,7 @@ HTML snapshot:
                                 tag:    'img',
                                 height: dims.i_height,
                                 width:  dims.i_width,
-                                src:    obj.content + options.appendImg,
-                                style:  'position:absolute'
+                                src:    obj.content + options.appendImg
                             });
                             if(dims.enableDrag && options.handleLgImages == 'drag'){
                                 // listen for drag
