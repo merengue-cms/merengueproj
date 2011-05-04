@@ -64,7 +64,7 @@ class PortalLink(models.Model):
     def get_absolute_url(self):
         return self.cached_url
 
-    def save(self, force_insert=False, force_update=False):
+    def save(self, force_insert=False, force_update=False, using=None):
         if self.content is not None:
             self.cached_url = self.content.public_link()
         else:
