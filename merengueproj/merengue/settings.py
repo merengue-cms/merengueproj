@@ -180,6 +180,9 @@ SESSION_ENGINE = 'merengue.backends.db'
 # Users can manage sections they own and their related objects
 ACQUIRE_SECTION_OWNERSHIP = False
 
+# Users can manage sections they participate and their related objects
+ACQUIRE_SECTION_PARTICIPATION = False
+
 # cache default settings
 CACHE_MIDDLEWARE_SECONDS = 3600 * 24
 CACHE_MIDDLEWARE_KEY_PREFIX = 'merengue'

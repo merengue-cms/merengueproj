@@ -772,7 +772,7 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, StatusCo
     list_filter = ('status', 'user_modification_date', 'last_editor', )
     select_list_filter = ('class_name', 'status', 'user_modification_date', )
     actions = ['set_as_draft', 'set_as_pending', 'set_as_published', 'assign_owners']
-    filter_horizontal = ('owners', )
+    filter_horizontal = ('owners', 'participants')
     edit_related = ()
     html_fields = ('description', )
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}

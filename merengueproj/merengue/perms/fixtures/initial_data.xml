@@ -133,4 +133,8 @@
         <field type="CharField" name="name">Owner</field>
         <field type="CharField" name="slug">owner</field>
     </object>
+    <object pk="3" model="perms.role">
+        <field type="CharField" name="name">Participant</field>
+        <field type="CharField" name="slug">participant</field>
+    </object>
 </django-objects>

@@ -228,6 +228,30 @@ def _get_owners(obj):
     return owners
 
 
+def _get_participants(obj):
+    """Returns the object participants.
+    If the obj model does not support participants, returns the related basecontent participants.
+    If ACQUIRE_SECTION_PARTICIPATION is set, the section participants are also added.
+    """
+    if getattr(obj, 'participants', None):
+        participants = obj.participants.all()
+    else:
+        participants = User.objects.none()
+        for bc in obj.basecontent_set.all():
+            participants |= bc.participants.all()
+
+    if getattr(settings, 'ACQUIRE_SECTION_PARTICIPATION', False):
+        if getattr(obj, 'sections', None):
+            sections = obj.sections.all()
+        else:
+            sections = BaseSection.objects.none()
+            for bc in obj.basecontent_set.all():
+                sections |= bc.sections.all()
+        for s in sections.all():
+            participants |= s.participants.all()
+    return participants
+
+
 def get_roles(principal, obj=None):
     """Returns all roles of passed user for passed content object. This takes
     direct and roles via a group into account. If an object is passed local
@@ -248,6 +272,9 @@ def get_roles(principal, obj=None):
 
         if principal in _get_owners(obj):
             roles.append(Role.objects.get(name=u'Owner'))
+
+        if principal in _get_participants(obj):
+            roles.append(Role.objects.get(name=u'Participant'))
 
     if isinstance(principal, User):
         for group in principal.groups.all():

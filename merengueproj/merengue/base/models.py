@@ -404,6 +404,11 @@ class BaseContent(BaseClass):
                                     null=True, blank=True,
                                     related_name='contents_owned')
 
+    participants = models.ManyToManyField(User,
+                                    verbose_name=_('participants'),
+                                    null=True, blank=True,
+                                    related_name='contents_participated')
+
     position = models.PositiveIntegerField(verbose_name=_('position'),
                                            null=True,
                                            editable=False)
