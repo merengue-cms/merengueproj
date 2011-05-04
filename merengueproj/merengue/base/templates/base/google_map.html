@@ -32,14 +32,14 @@
   {% if show_map %}
     <div class="mapParameters hide">
       {% if zoom_to_bounds %}
-      <span class="bound0">{{ bounds.0 }}</span>
-      <span class="bound1">{{ bounds.1 }}</span>
-      <span class="bound2">{{ bounds.2 }}</span>
-      <span class="bound3">{{ bounds.3 }}</span>
+      <span class="bound0">{{ bounds.0|stringformat:"s" }}</span>
+      <span class="bound1">{{ bounds.1|stringformat:"s" }}</span>
+      <span class="bound2">{{ bounds.2|stringformat:"s" }}</span>
+      <span class="bound3">{{ bounds.3|stringformat:"s" }}</span>
       {% else %}
         {% if content.main_location %}
-        <span class="latitude">{{ content.main_location.y }}</span>
-        <span class="longitude">{{ content.main_location.x }}</span>
+        <span class="latitude">{{ content.main_location.y|stringformat:"s" }}</span>
+        <span class="longitude">{{ content.main_location.x|stringformat:"s" }}</span>
         {% endif %}
       {% endif %}
       {% if markers_url %}
@@ -56,8 +56,8 @@
         <div class="mapPoint hide">
           <span class="id">{{ content.id }}</span>
           <span class="url">{% url content_info content_type=content_type.id, content_id=content.id %}?lang={{ LANGUAGE_CODE }}</span>
-          <span class="latitude">{{ content.main_location.y }}</span>
-          <span class="longitude">{{ content.main_location.x }}</span>
+          <span class="latitude">{{ content.main_location.y|stringformat:"s" }}</span>
+          <span class="longitude">{{ content.main_location.x|stringformat:"s" }}</span>
           <span class="title">{{ content.name }}</span>
           <span class="cluster_text">{{ content.get_cluster_text }}</span>
           <span class="cluster_icon_name">{{ content.get_cluster_icon_name }}</span>
@@ -77,8 +77,8 @@
           <div class="mapPoint hide">
             <span class="id">{{ content.id }}</span>
             <span class="url">{% url content_info content_type=content_type.id, content_id=content.id %}</span>
-            <span class="latitude">{{ content.main_location.y }}</span>
-            <span class="longitude">{{ content.main_location.x }}</span>
+            <span class="latitude">{{ content.main_location.y|stringformat:"s" }}</span>
+            <span class="longitude">{{ content.main_location.x|stringformat:"s" }}</span>
             <span class="title">{{ content.name }}</span>
 
           {% if show_main_image %}
