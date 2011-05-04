@@ -46,7 +46,7 @@
     </div>
     {% if request.user.is_superuser %}
     <div>
-      <button onclick="javascript:removeAttachment('{% filebrowser_url plugins.filebrowser.views.root repository_name=repository.name %}', 'file', {{file.id}})">{% inline_trans "Remove" %}</button></span>
+      <button onclick="javascript:removeAttachment('{% filebrowser_url filebrowser_remove_attachment repository_name=repository.name type="file" objId=file.id %}', 'file', {{file.id}})">{% inline_trans "Remove" %}</button></span>
     </div>
     {% endif %}
   </div>
@@ -74,7 +74,7 @@
     </p>
     <p>
     <span>{{ image.file.size|filesizeformat }}
-        <button onclick="javascript:removeAttachment('{% filebrowser_url plugins.filebrowser.views.root repository_name=repository.name %}', 'image', {{image.id}})">{% trans "Remove" %}</button>
+        <button onclick="javascript:removeAttachment('{% filebrowser_url filebrowser_remove_attachment repository_name=repository.name type="image" objId=image.id %}', 'image', {{image.id}})">{% inline_trans "Remove" %}</button>
     </span>
     </p>
   </div>

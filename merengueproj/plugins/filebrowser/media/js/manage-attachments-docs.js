@@ -12,11 +12,11 @@ function hideForm(form_id) {
   return false;
 }
 
-function removeAttachment(absolute_url, type, objId) {
+function removeAttachment(remove_url, type, objId) {
   /* Remove it from the server */
   $j("#removeattachmentform").ajaxForm({
     type: "POST",
-    url: absolute_url + 'remove/' + type + '/attachment/' + objId + '/',
+    url: remove_url,
     dataType: "json",
     success: function(json) {
             if (json.success) {
