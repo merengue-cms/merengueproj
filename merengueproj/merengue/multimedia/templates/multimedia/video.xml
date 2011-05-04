@@ -16,6 +16,6 @@
     {% endif %}
     <thumbsinplaylist>true</thumbsinplaylist>
     <allowfullscreen>true</allowfullscreen>
-    <image>{{ MEDIA_URL }}merengue/img/video_preview.jpg</image>
+    <image>{{ THEME_MEDIA_URL }}img/video_preview.jpg</image>
 </config>
 

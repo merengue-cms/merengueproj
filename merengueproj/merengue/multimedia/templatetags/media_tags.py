@@ -82,6 +82,7 @@ def multimedia_slide_link(context, multimedia, content, size=None):
             'default': default,
             'user': user,
             'MEDIA_URL': context.get('MEDIA_URL', '/media/'),
+            'THEME_MEDIA_URL': context.get('THEME_MEDIA_URL', context.get('MEDIA_URL', '')),
             'LANGUAGE_CODE': context.get('LANGUAGE_CODE', 'es'), }
 
 
