@@ -141,26 +141,6 @@ class PortalLinksBlock(LinkBaseBlock):
         return self.get_config().get('template_name', None).get_value()
 
 
-class PrimaryLinksBlock(LinkBaseBlock):
-    """ Block that renders primary portal links """
-    name = 'primarylinks'
-    default_place = 'header'
-    category = 'primary'
-    template_name = 'core/block_primarylinks.html'
-    help_text = _('Block reporesents the Primary Links')
-    verbose_name = _('Primary Links Block')
-
-
-class SecondaryLinksBlock(LinkBaseBlock):
-    """ Block that renders secondary portal links """
-    name = 'secondarylinks'
-    default_place = 'footer'
-    category = 'secondary'
-    template_name = 'core/block_secondarylinks.html'
-    help_text = _('Block that renders secondary portal links')
-    verbose_name = _('Link Base Block')
-
-
 class ContactInfoBlock(ContentBlock):
     """ Block that renders basic contact info of the content """
     name = 'contactinfo'
