@@ -196,7 +196,7 @@ class Menu(models.Model):
 
     def get_ancestors_by_user(self, user=None):
         ancestors = self.get_ancestors().filter(status='public')  # uses mptt function
-        if user:
+        if user and not user.is_superuser:
             if not user.is_anonymous():
                 roles = [x.role for x in user.principalrolerelation_set.all()]
             else:
@@ -207,7 +207,7 @@ class Menu(models.Model):
 
     def get_descendants_by_user(self, user=None):
         descendants = self.get_descendants().filter(status='public')  # uses mptt function
-        if user and not (user.is_staff or user.is_superuser):
+        if user and not user.is_superuser:
             if not user.is_anonymous():
                 roles = [x.role for x in user.principalrolerelation_set.all()]
             else:
