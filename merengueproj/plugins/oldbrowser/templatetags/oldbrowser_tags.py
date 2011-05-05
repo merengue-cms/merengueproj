@@ -19,6 +19,7 @@
 import re
 
 from django import template
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 from plugins.oldbrowser.models import OldBrowser
@@ -35,8 +36,11 @@ class OldBrowserNode(template.Node):
         user_agent = request.META['HTTP_USER_AGENT']
         for oldbrowser in OldBrowser.objects.all():
             if re.search(oldbrowser.user_agent, user_agent):
-                return _('(%s) Your browser is too old. Update it.') %\
-                        oldbrowser.user_agent
+                warning_string = _(u'Your browser is too old. Please, update it.')
+                if settings.DEBUG:
+                    warning_string = u'(%s) %s' % (oldbrowser.user_agent,
+                                                   warning_string)
+                return warning_string
 
         return ''
 
