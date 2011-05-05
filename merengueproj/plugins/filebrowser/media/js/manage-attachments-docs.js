@@ -18,6 +18,7 @@ function removeAttachment(remove_url, type, objId) {
     type: "POST",
     url: remove_url,
     dataType: "json",
+    data: {'test': 1},
     success: function(json) {
             if (json.success) {
                     $j("#"+type + "-" + objId).remove();
