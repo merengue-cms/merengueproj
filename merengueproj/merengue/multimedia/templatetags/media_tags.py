@@ -41,6 +41,7 @@ def media_slide(context, content):
             'content': content,
             'street_view': True,
             'MEDIA_URL': context['MEDIA_URL'],
+            'THEME_MEDIA_URL': context.get('THEME_MEDIA_URL', context.get('MEDIA_URL', '')),
             'request': context['request'],
             'LANGUAGE_CODE': context.get('LANGUAGE_CODE', 'es'), }
 
