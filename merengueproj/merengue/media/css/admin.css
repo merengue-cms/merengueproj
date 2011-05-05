@@ -143,8 +143,7 @@ div#header img#merengue_logo {
 
 /* ------- Object tools buttons -------*/
 .object-tools {
-    margin-bottom:0.5em;
-    margin-top:0em;
+    margin: 0 0 0.5em 1em;
 }
 
 .object-tools li {
@@ -229,6 +228,49 @@ ul.object-tools li.parent span {
     padding: 0.1em;
     color: white;
 }
+
+ul#report-links.object-tools {
+    width: 120px;
+}
+
+ul#report-links.object-tools li{
+    width: 100%;
+    padding-left: 0;
+    margin: 0;
+    background-image: url(../img/admin/more_tools.png);
+    background-position: 100px 2px;
+    background-repeat: no-repeat;
+}
+
+ul#report-links.object-tools.open li{
+    background-image: url(../img/admin/less_tools.png);
+}
+
+ul#report-links.object-tools ul{
+    display: none;
+    z-index: 9999;
+    position: absolute;
+    width: 120px;
+    bottom: 26px;
+    right: 0;
+    margin: 0;
+    padding: 5px 0 0 0;
+}
+
+ul#report-links.object-tools ul li{
+    width: 100%;
+    margin: 4px 0;
+    background-image: none;
+}
+
+ul#report-links.object-tools ul li a{
+    float: none;
+}
+
+ul#report-links.object-tools li a.quickreportlink{
+    width: 70px;
+}
+
 /*----- end object tools ---*/
 
 .button.default,
