@@ -537,7 +537,7 @@ def reload_app_directories_template_loader():
         return
     for func in loader.template_source_loaders:
         module = func.__module__
-        attr = func.__name__
+        attr = func.__class__.__name__
         template_loader_name = "%s.%s" % (module, attr)
         if template_loader_app_directories == template_loader_name:
             try:
