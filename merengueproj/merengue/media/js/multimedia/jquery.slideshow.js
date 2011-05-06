@@ -76,7 +76,7 @@
             var addNewItem = function(typename, item) {
                 type = getType(typename);
                 type.items.push(item);
-                if ($(item).find('.MultimediaItemThumbnail a').attr('rel').indexOf('type=')>=0) {
+                if ($(item).find('.MultimediaItemThumbnail a').attr('rel').indexOf('video')>=0) {
                     $(item).find('.MultimediaItemThumbnail a').append('<span class="playbutton">&nbsp;</span>');
                 }
             };

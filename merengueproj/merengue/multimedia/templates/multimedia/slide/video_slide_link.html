@@ -25,11 +25,12 @@
   {% if multimedia.video.file %}
     type=external;autoplayMovies=true;flvPlayer={{ MEDIA_URL }}merengue/flash/flvplayer.swf
   {% else %}
-  {% extra_oembed 500x410 as oembed_url %}{{ multimedia.video.external_url }}{% endoembed %}
-  {% ifequal oembed_url multimedia.video.external_url %}
-  {% else %}
-    type=inline;height=410;width=500
-  {% endifequal %}
+    {% extra_oembed 500x410 as oembed_url %}{{ multimedia.video.external_url }}{% endoembed %}
+    {% ifequal oembed_url multimedia.video.external_url %}
+        height=410;width=500;
+    {% else %}
+      type=inline;height=410;width=500;
+    {% endifequal %}
   {% endif %}
 {% endspaceless %}{% endblock %}
 
