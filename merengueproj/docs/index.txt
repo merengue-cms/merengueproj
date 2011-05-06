@@ -62,6 +62,9 @@ Topics
  * **Profiling:**
    :ref:`Profiling in Merengue <topics-profiling>`
 
+ * **Optimization:**
+   :ref:`Optimizing a Merengue installation <topics-optimization>`
+
 Reference
 =========
 

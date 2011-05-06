@@ -124,6 +124,14 @@ backends in order to get it works with ``johnny-cache`` (see
 
 .. setting:: TINYMCE_EXTRA_MEDIA
 
+CACHE_SITE_FOR_ANONYMOUS
+------------------------
+
+Default: ``False``
+
+``CACHE_SITE_FOR_ANONYMOUS`` activates the site template caching for anonymous requests. See :ref:`Optimizing a Merengue installation <topics-optimization>`.
+
+
 TINYMCE_EXTRA_MEDIA
 -------------------
 

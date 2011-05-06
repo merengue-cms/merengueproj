@@ -1,0 +1,28 @@
+.. _topics-optimization:
+
+==================================
+Optimizing a Merengue installation
+==================================
+
+Merengue features several optimization settings that can greatly increase your site performance.
+
+Site Cache for anonymous users
+==============================
+
+Merengue takes advantage of the built-in anonymous site caching from Django. You can activate this feature in your project settings:
+
+.. code-block:: python
+
+    CACHE_SITE_FOR_ANONYMOUS = True
+
+This setting will cache all request from anonymous users, so the view that generates the response template is only run the first time.
+
+Note that, unlike Django's default behaviour, Merengue caches all requests even if they have GET or POST parameters.
+
+Cache invalidation
+------------------
+
+There are certains occasions where a site manager would want to invalidate the cache for a certain URL. Think for example a news item published with a mistake that needs to be amended right away: anonymous users will keep on reading the cached version until it expires, which usually takes a whole day. Is in the interest of the site managers to force the invalidation of the cache version once the news item has been corrected.
+
+When the cache is active and a manager is logged in, a new button named ``invalidate cache`` is added to the Merengue toolbar. Clicking on it will invalidate the cache for the current page. Note that the invalidation takes effect for all installed languages in the site.
+
