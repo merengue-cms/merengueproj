@@ -17,6 +17,7 @@
 
 from django.shortcuts import get_object_or_404
 
+from merengue.base.models import BaseContent
 from merengue.base.views import content_list
 from merengue.section.models import BaseSection
 from plugins.itags.models import ITag
@@ -31,13 +32,13 @@ def tag_view(request, tag_name):
     queryset = TaggedItem.objects.filter(tag=itag.tag_ptr)
     if model:
         queryset = queryset.filter(content_type__model=model)
+    queryset = BaseContent.objects.filter(id__in=[i['id'] for i in queryset.values('id')])
     section_id = request.GET.get('section', None)
     section = None
     if section_id:
         try:
             section = BaseSection.objects.get(id=section_id)
-            content_ids = [i['id'] for i in section.related_content.values('id')]
-            queryset = queryset.filter(object_id__in=content_ids)
+            queryset = queryset.filter(sections=section)
         except BaseSection.DoesNotExist:
             pass
     return content_list(request, queryset,
