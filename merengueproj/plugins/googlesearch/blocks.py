@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.utils.translation import get_language_from_request
 from django.utils.translation import ugettext as _, ugettext_lazy
 
 from merengue.block.blocks import Block
@@ -29,13 +30,17 @@ class GoogleSearchBlock(Block):
 
     config_params = [
         params.Single(name='custom_search_control', label=_('Custom search control'), default='003808332573069177904:wm3_yobt584'),
-        params.Single(name='language', label=_('language'), default='es'),
         params.Single(name='search_result_content', label=_('Search result content (element\'s id of DOM)'), default='content'),
         params.Single(name='search_form_content', label=_('Search form content (element\'s id of DOM)'), default='cse'),
     ]
 
     def render(self, request, place, context, block_content_relation=None,
                *args, **kwargs):
+        language_get = request.GET.get('set_language', None)
+        # if we just change the language, get_language_from_request function does
+        # not work fine, so first we check if the language have changed now
+        language = language_get or get_language_from_request(request)
         return self.render_block(request, template_name='googlesearch/block_googlesearch.html',
                                  block_title=_('Search'),
-                                 context={'plugin_config': self.get_config()})
+                                 context={'plugin_config': self.get_config(),
+                                          'language': language})
