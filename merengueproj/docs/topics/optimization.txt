@@ -17,7 +17,7 @@ Merengue takes advantage of the built-in anonymous site caching from Django. You
 
 This setting will cache all request from anonymous users, so the view that generates the response template is only run the first time.
 
-Note that, unlike Django's default behaviour, Merengue caches all requests even if they have GET or POST parameters.
+Note that, unlike Django's default behaviour, Merengue caches all requests even if they have GET parameters.
 
 Cache invalidation
 ------------------
