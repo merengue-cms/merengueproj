@@ -125,11 +125,6 @@ class PortalLinksBlock(LinkBaseBlock):
             choices=settings.PORTAL_LINK_CATEGORIES,
             default=settings.PORTAL_LINK_CATEGORIES[0][0],
         ),
-        params.Single(
-            name="template_name",
-            label=_("Template that will be used to render this portal link block"),
-            default='core/block_portallinks.html',
-        ),
     ]
 
     @property
@@ -138,7 +133,8 @@ class PortalLinksBlock(LinkBaseBlock):
 
     @property
     def template_name(self):
-        return self.get_config().get('template_name', None).get_value()
+        category = self.get_config().get('category', None).get_value()
+        return 'core/block_%slinks.html' % category
 
 
 class ContactInfoBlock(ContentBlock):

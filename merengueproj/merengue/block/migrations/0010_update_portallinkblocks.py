@@ -11,8 +11,7 @@ class Migration(DataMigration):
         for block in old_blocks:
             block.class_name = 'PortalLinksBlock'
             key = block.name.replace('links', '')
-            block.config = {'category': key,
-                            'template_name': 'core/block_%s.html' % block.name}
+            block.config = {'category': key}
             block.save()
 
     def backwards(self, orm):
