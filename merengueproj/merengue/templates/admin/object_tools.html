@@ -3,20 +3,21 @@
 <script type="text/javascript" charset="utf-8">
     (function($) {
       $(document).ready(function () {
-          var report_link_elements = $('a.reportlink');
-              if (report_link_elements.length){
+          var report_link_elements = $('div#content > ul.object-tools').find('a.reportlink');
+          if (report_link_elements.length){
               var object_tools = $('ul.object-tools');
               var quick_report = report_link_elements.slice(0,1).parent().detach();
               var report_links = $('<ul id="report-links" class="object-tools mode-list"></ul>');
+
+              var link_items = report_link_elements.parent().detach();
+              var more_report_links = $('<ul></ul>');
+              more_report_links.append(link_items);
+
               report_links.append(quick_report);
               quick_report.click(function(){
                   report_links.toggleClass("open");
                   report_links.find('ul').toggle();
               });
-
-              var link_items = $('a.reportlink').parent().detach();
-              var more_report_links = $('<ul></ul>');
-              more_report_links.append(link_items);
 
               report_links.append(more_report_links);
               report_links.insertBefore(object_tools);
