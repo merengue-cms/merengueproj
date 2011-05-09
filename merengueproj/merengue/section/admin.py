@@ -390,7 +390,8 @@ class BaseSectionMenuRelatedAdmin(MenuAdmin, RelatedModelAdmin):
 
     def get_menu(self, request, *args, **kwargs):
         basecontent = kwargs.pop('basecontent', None)
-        return RelatedModelAdmin.queryset(self, request, basecontent).get()
+        queryset = RelatedModelAdmin.queryset(self, request, basecontent)
+        return queryset and queryset.get() or None
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(BaseSectionMenuRelatedAdmin, self).get_form(request, obj, **kwargs)
