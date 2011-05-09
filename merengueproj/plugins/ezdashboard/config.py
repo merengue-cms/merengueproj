@@ -29,7 +29,7 @@ class PluginConfig(Plugin):
                   'EzWeb platform'
     version = '0.0.2a'
     url_prefixes = (
-        ('dashboard', 'plugins.ezdashboard.urls'),
+        ({'en': 'dashboard', 'es': 'escritorio'}, 'plugins.ezdashboard.urls'),
     )
     required_apps = ('django.contrib.sites', )
     config_params = [
