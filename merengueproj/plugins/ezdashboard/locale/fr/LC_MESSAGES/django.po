@@ -8,39 +8,40 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"POT-Creation-Date: 2011-05-09 18:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: config.py:34
-msgid "EzWeb theme"
+#: actions.py:26
+msgid "dashboard"
 msgstr ""
 
-#: config.py:35
+#: config.py:36
 msgid "EzWeb base URL"
 msgstr ""
 
-#: config.py:37
+#: config.py:38
 msgid "EzWeb iframe CSS style"
 msgstr ""
 
-#: config.py:39
+#: config.py:40
 msgid "EzWeb iframe CSS class"
 msgstr ""
 
-#: config.py:41
+#: config.py:42
 msgid "EzWeb iframe width"
 msgstr ""
 
-#: config.py:43
+#: config.py:44
 msgid "EzWeb iframe height"
 msgstr ""
 
-#: config.py:45
+#: config.py:46
 msgid "EzWeb lite"
 msgstr ""
 
