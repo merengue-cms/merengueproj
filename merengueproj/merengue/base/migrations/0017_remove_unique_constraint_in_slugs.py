@@ -7,7 +7,12 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Removing unique constraint on 'BaseContent', fields ['slug']
-        db.delete_unique('base_basecontent', ['slug'])
+        try:
+            db.delete_unique('base_basecontent', ['slug'])
+        except ValueError, err:
+            if 'Cannot find a UNIQUE constraint' not in err.message:
+                raise
+            print 'Note: there is not a unique constraint in base_basecontent.slug'
 
     def backwards(self, orm):
         # Adding unique constraint on 'BaseContent', fields ['slug']
