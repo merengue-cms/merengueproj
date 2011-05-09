@@ -41,6 +41,7 @@ class Link(BaseContent):
     class Meta:
         verbose_name = _('link')
         verbose_name_plural = _('links')
+        check_slug_uniqueness = True
 
     def _public_link_without_section(self):
         return ('link_view', [self.slug])

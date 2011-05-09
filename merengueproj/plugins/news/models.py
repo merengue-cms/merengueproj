@@ -49,6 +49,7 @@ class NewsItem(BaseContent):
         ordering = ('-publish_date', '-id')
         verbose_name = _('news item')
         verbose_name_plural = _('news')
+        check_slug_uniqueness = True
 
     def _public_link_without_section(self):
         return ('newsitem_view', [self.slug])

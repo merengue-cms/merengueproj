@@ -65,3 +65,4 @@ class MicroSite(BaseSection):
     class Meta:
         verbose_name = _('microsite')
         verbose_name_plural = _('microsites')
+        check_slug_uniqueness = True

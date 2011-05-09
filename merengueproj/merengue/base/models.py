@@ -121,7 +121,7 @@ class BaseCategory(models.Model):
 class Base(models.Model):
     __metaclass__ = TransMeta
     name = models.CharField(verbose_name=_('name'), max_length=200, db_index=True)
-    slug = models.SlugField(verbose_name=_('slug'), max_length=200, db_index=True, unique=True)
+    slug = models.SlugField(verbose_name=_('slug'), max_length=200, db_index=True)
     plain_description = models.TextField(verbose_name=_('plain text description'),
                                          null=True, blank=True, editable=False)
     description = models.TextField(verbose_name=_('description'),
@@ -330,11 +330,17 @@ class BaseContentMeta(TransMeta):
             delattr(attrs['Meta'], 'content_view_function')
         else:
             content_view_function = None
+        if 'Meta' in attrs and hasattr(attrs['Meta'], 'check_slug_uniqueness'):
+            check_slug_uniqueness = attrs['Meta'].check_slug_uniqueness
+            delattr(attrs['Meta'], 'check_slug_uniqueness')
+        else:
+            check_slug_uniqueness = False
 
         new_class = super(BaseContentMeta, cls).__new__(cls, name, bases, attrs)
         if hasattr(new_class, '_meta'):
             new_class._meta.content_view_template = content_view_template
             new_class._meta.content_view_function = content_view_function
+            new_class._meta.check_slug_uniqueness = check_slug_uniqueness
         return new_class
 
 
@@ -454,6 +460,7 @@ class BaseContent(BaseClass):
         abstract = False
         #content_view_template = 'content_view.html' # default definition by BaseContentMeta metaclass
         ordering = ('position', get_fallback_fieldname('name'), )
+        check_slug_uniqueness = True
 
     def admin_absolute_url(self):
         return '<a href="%s">%s</a>' % (self.get_real_instance().get_admin_absolute_url(), self.name)
@@ -502,6 +509,20 @@ class BaseContent(BaseClass):
             if non_pks:
                 # we force an update since we already did an insert
                 super(BaseContent, self).save(force_update=True)
+
+    def validate_unique(self, exclude=None):
+        errors = {}
+        try:
+            super(BaseContent, self).validate_unique(exclude)
+        except ValidationError, validation_errors:
+            errors = validation_errors.update_error_dict(errors)
+        if self._meta.check_slug_uniqueness:
+            # validate that slug is unique in the model
+            content_with_same_slug = self.__class__.objects.filter(slug=self.slug).exclude(pk=self.pk).exists()
+            if content_with_same_slug:
+                errors.setdefault('slug', []).append(ugettext(u'Please set other slug. This slug has been assigned'))
+        if errors:
+            raise ValidationError(errors)
 
     def get_real_instance(self):
         """ get object child instance """

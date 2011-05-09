@@ -27,8 +27,8 @@ from merengue.base.models import BaseContent
 from merengue.cache import invalidate_cache_for_path
 
 
-def subscription_form(request, basecontent_slug):
-    content = BaseContent.objects.get(slug=basecontent_slug)
+def subscription_form(request, basecontent_id):
+    content = BaseContent.objects.get(id=basecontent_id)
     subscribable = content.subscribable_set.actives()
     if not subscribable:
         return HttpResponseRedirect(content.get_absolute_url())
@@ -44,7 +44,7 @@ def subscription_form(request, basecontent_slug):
         subscription = form.save(commit=False)
         subscription.subscribable = subscribable
         subscription.save()
-        subscriber_listing_url = reverse('subscriber_listing', args=(basecontent_slug, ))
+        subscriber_listing_url = reverse('subscriber_listing', args=(basecontent_id, ))
         send_info(
             request,
             _('Request send successfully. See <a href="%(subscriber_listing)s">suscriber list</a>') % {
@@ -61,8 +61,8 @@ def subscription_form(request, basecontent_slug):
                               context_instance=RequestContext(request))
 
 
-def subscriber_listing(request, basecontent_slug):
-    content = BaseContent.objects.get(slug=basecontent_slug)
+def subscriber_listing(request, basecontent_id):
+    content = BaseContent.objects.get(id=basecontent_id)
     subscribable = content.subscribable_set.actives()
     if not subscribable:
         return HttpResponseRedirect(content.get_absolute_url())

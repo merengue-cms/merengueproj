@@ -348,6 +348,7 @@ class BaseSection(BaseContent):
     class Meta:
         ordering = ('order', )
         verbose_name = _('section')
+        check_slug_uniqueness = True
 
     def __unicode__(self):
         return unicode(self.name)

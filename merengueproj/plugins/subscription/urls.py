@@ -20,7 +20,7 @@ from merengue.urlresolvers import merengue_url as url
 
 
 urlpatterns = patterns('plugins.subscription.views',
-    url(r'^(?P<basecontent_slug>[\w-]+)/$', 'subscription_form', name='subscription_form'),
+    url(r'^(?P<basecontent_id>\d+)/$', 'subscription_form', name='subscription_form'),
     url({'en': r'^(?P<basecontent_slug>[\w-]+)/subscribers/$',
          'es': r'^(?P<basecontent_slug>[\w-]+)/subscriptores/$'},
          'subscriber_listing', name='subscriber_listing'),
