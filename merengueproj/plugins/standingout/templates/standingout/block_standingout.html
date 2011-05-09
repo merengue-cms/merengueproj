@@ -12,7 +12,7 @@
         {% for standingout in standingouts %}
             <li>
                 {% if standingout.obj.get_absolute_url %}
-                    <a href="{{ standingout.obj.get_absolute_url }}">{{ standingout.obj }}</a>
+                    <a href="{{ standingout.obj.get_absolute_url }}">{{ standingout.name }}</a>
                 {% else %}
                     {{ standingout.obj }}
                 {% endif %}

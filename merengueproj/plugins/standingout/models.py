@@ -71,11 +71,11 @@ class StandingOut(models.Model):
 
     @property
     def name(self):
-        return self.obj.name
+        return self.title or unicode(self.obj)
 
     @property
     def description(self):
-        return self.obj.description
+        return self.short_description or getattr(self.obj, 'description', '')
 
     def has_description(self):
         return True
