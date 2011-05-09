@@ -63,6 +63,10 @@ SITE_ID = 1
 # to load the internationalization machinery.
 USE_I18N = True
 
+# Localization
+USE_L10N = True
+FORMAT_MODULE_PATH = 'formats'
+
 # PostGIS extension flag
 USE_GIS = False
 
