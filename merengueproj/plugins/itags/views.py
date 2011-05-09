@@ -32,6 +32,7 @@ def tag_view(request, tag_name):
     if model:
         queryset = queryset.filter(content_type__model=model)
     section_id = request.GET.get('section', None)
+    section = None
     if section_id:
         try:
             section = BaseSection.objects.get(id=section_id)
@@ -41,7 +42,8 @@ def tag_view(request, tag_name):
             pass
     return content_list(request, queryset,
                         template_name='itags/itag_view.html',
-                        extra_context={'tag': itag},
+                        extra_context={'tag': itag,
+                                       'section': section},
                        )
 
 

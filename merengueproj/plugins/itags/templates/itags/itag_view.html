@@ -5,23 +5,27 @@
 {% block pagetitle %}{% trans "Tag" %}: {{ tag.tag_name }}{% endblock %}
 
 {% block extrabreadcrumbs %}
+  {{ block.super }}
   <span class="breadcrumbSeparator">→</span><a href="" title="{% trans "Tag" %}: {{ tag.tag_name }}">{% inline_trans "Tag" %}: {{ tag.tag_name }}</a>
 {% endblock %}
 
 {% block listtitle %}{% trans "Tag" %}: {{ tag.tag_name }}{% endblock %}
 
 {% block listing %}
+<div id="content-zone" class="tag-item-list">
 {% regroup content_list by content_type as grouped %}
 {% for item in grouped %}
-<h2>{{ item.grouper.model_class|basecontent_type }}</h2>
+<h2 class="grouper">{{ item.grouper.model_class|basecontent_type }}</h2>
     <ul class="{% block listingclass %}contentList{% endblock %}">
     {% for tagged_content in item.list %}
       {% with tagged_content.object as content %}
       {% block itemdetail %}
-       <li>
+       <li class="itemCollection tagItem">
+        <div class="itemCollectionTitle tagItemTitle">
         <a href="{% block contenturl %}{{ content.get_absolute_url }}{% endblock %}" title="{{ content }}" class="contentLink">
          {% block itemtitle %}{% cutrender 100 %}{{ content }}{% endcutrender %}{% endblock %}
         </a>
+        </div>
         {% block contentinfo %}
         {% endblock %}
        </li>
@@ -30,4 +34,5 @@
     {% endfor %}
     </ul>
 {% endfor %}
+</div>
 {% endblock %}
