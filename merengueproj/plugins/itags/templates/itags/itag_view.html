@@ -1,6 +1,6 @@
 {% extends "content_list.html" %}
 
-{% load i18n inlinetrans action_tags content_tags content_filters %}
+{% load i18n inlinetrans action_tags content_tags content_filters itags_tags %}
 
 {% block pagetitle %}{% trans "Tag" %}: {{ tag.tag_name }}{% endblock %}
 
@@ -13,11 +13,11 @@
 
 {% block listing %}
 <div id="content-zone" class="tag-item-list">
-{% regroup content_list by class_name as grouped %}
+{% regroup content_list|dictsort:"class_name" by class_name as grouped %}
 {% for item in grouped %}
-<h2 class="grouper">{{ item.list.0.get_real_instance|basecontent_type }}</h2>
+<h2 class="grouper">{{ item.list.0.get_real_instance|verbose_name_plural|capfirst }}</h2>
     <ul class="{% block listingclass %}contentList{% endblock %}">
-    {% for content in item.list %}
+    {% for content in item.list|dictsort:"name" %}
       {% block itemdetail %}
        <li class="itemCollection tagItem">
         <div class="itemCollectionTitle tagItemTitle">
