@@ -22,6 +22,8 @@ from django.utils.translation import ugettext_lazy as _
 from transmeta import TransMeta
 
 from merengue.base.models import BaseContent
+from merengue.perms.models import Role
+from merengue.portal.managers import PortalLinksManager
 from stdimage import StdImageField
 
 
@@ -51,6 +53,16 @@ class PortalLink(models.Model):
                               null=True, blank=True,
                               upload_to=LINK_MEDIA_PREFIX,
                               help_text=_('The system don\'t resize the icon. You need to upload with the final size'))
+    visible_by_roles = models.ManyToManyField(
+        Role,
+        related_name='visible_links',
+        verbose_name=_('visible links'),
+        help_text=_('Restrict visibility to some roles'),
+        blank=True,
+        null=True,
+    )
+
+    objects = PortalLinksManager()
 
     class Meta:
         verbose_name = _('portal link')
