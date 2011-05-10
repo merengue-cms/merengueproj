@@ -6,7 +6,9 @@
 
 {% block content %}
 <div id="stats">
+  <div id="content-title">
     <h1>{% inline_trans "Stats Index" %}</h1>
+  </div>
     <div id="stats">
         {% ifhasperm 'view_all_stats' %}
         <div class="piwik"><h4><a href="{{ piwik_url }}"> {% inline_trans "Go to Piwik to view stats details" %}</a></h4>

@@ -13,8 +13,9 @@
 {% block pagetitle %}{% trans "Stats index" %}{% endblock %}
 
 {% block content %}
-
-<h1>{% inline_trans "Contents Ranking" %}</h1>
+<div id="content-title">
+  <h1>{% inline_trans "Contents Ranking" %}</h1>
+</div>
 
 {% if by_owner %}
   {% contents_stats user.username %}
