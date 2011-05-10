@@ -16,13 +16,13 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 # django imports
-from django.contrib.auth.models import Group
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group, AnonymousUser
 from django.contrib.contenttypes.models import ContentType
 from django.test import TestCase
 from django.test.client import Client
 
 from merengue.base.models import BaseContent, ContactInfo
+from merengue.perms import ANONYMOUS_ROLE_SLUG
 from merengue.perms.models import Permission
 from merengue.perms.models import ObjectPermission
 from merengue.perms.models import ObjectPermissionInheritanceBlock
@@ -106,6 +106,11 @@ class RoleTestCase(TestCase):
 
         result = merengue.perms.utils.get_roles(self.user)
         self.assertEqual(result, [])
+
+        # AnonymousUser roles
+        anon_user = AnonymousUser()
+        result = merengue.perms.utils.get_roles(anon_user)
+        self.assertEqual(result[0], Role.objects.get(slug=ANONYMOUS_ROLE_SLUG))
 
     def test_global_roles_group(self):
         """

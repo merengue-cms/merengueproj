@@ -18,8 +18,7 @@
 # django imports
 from django.conf import settings
 from django.db.models import Q
-from django.contrib.auth.models import User
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import User, AnonymousUser, Group
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist, ImproperlyConfigured
 from django.template import defaultfilters
@@ -288,6 +287,8 @@ def get_roles(principal, obj=None):
 def get_global_roles(principal):
     """Returns global roles of passed principal (user or group).
     """
+    if isinstance(principal, AnonymousUser):
+        return Role.objects.filter(slug=ANONYMOUS_ROLE_SLUG)
     if isinstance(principal, User):
         return [prr.role for prr in PrincipalRoleRelation.objects.filter(
             user=principal, content__isnull=True)]
