@@ -313,7 +313,7 @@ if(typeof Shadowbox == 'undefined'){
         skipSetup:          true,
         
         
-        minWidth: 700,
+        minWidth: 200,
 
         /**
          * Text messages to use for Shadowbox. These are provided so they may be
