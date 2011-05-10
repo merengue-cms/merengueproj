@@ -32,7 +32,7 @@ def tag_view(request, tag_name):
     queryset = TaggedItem.objects.filter(tag=itag.tag_ptr)
     if model:
         queryset = queryset.filter(content_type__model=model)
-    queryset = BaseContent.objects.filter(id__in=[i['id'] for i in queryset.values('id')])
+    queryset = BaseContent.objects.published().filter(id__in=[i['id'] for i in queryset.values('id')])
     section_id = request.GET.get('section', None)
     section = None
     if section_id:
