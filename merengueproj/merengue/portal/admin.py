@@ -25,6 +25,7 @@ from merengue.perms import utils as perms_api
 
 class PortalLinkAdmin(BaseAdmin):
     list_display = BaseAdmin.list_display + ('category', )
+    list_filter = ('visible_by_roles', 'category', )
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
     form = PortalLinkForm
 
