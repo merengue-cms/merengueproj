@@ -6,7 +6,8 @@
 
 {% block extrabreadcrumbs %}
   {{ block.super }}
-  <span class="breadcrumbSeparator">→</span><a href="" title="{% trans "Tag" %}: {{ tag.tag_name }}">{% inline_trans "Tag" %}: {{ tag.tag_name }}</a>
+  <span class="breadcrumbSeparator">→</span>
+    <a href="" title="{% trans "Tag" %}: {{ tag.tag_name }}">{% inline_trans "Tag" %}: {{ tag.tag_name }}</a>
 {% endblock %}
 
 {% block listtitle %}{% trans "Tag" %}: {{ tag.tag_name }}{% endblock %}
