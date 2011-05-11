@@ -32,7 +32,7 @@ class Banner(BaseContent):
     portal_name = models.CharField(verbose_name=_('Portal name'), max_length=250, blank=True, null=True)
     image = StdImageField(verbose_name=_('image'),
                               upload_to=BANNER_MEDIA_PREFIX,
-                              help_text=_('The system don\'t resize the icon. You need to upload with the final size'))
+                              help_text=_('The system won\'t resize the image. You need to upload it with its final size'))
     objects = BaseContentManager()
 
     class Meta:

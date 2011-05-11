@@ -1,0 +1,10 @@
+{% load thumbnail %}
+
+{% thumbnail item.image "350x150" upscale=false as thumb %}
+    <li>
+        <a href="{{ item.url_link }}" title="{{ item }}">
+            <img src="{{ thumb.url }}" title="{{ item }}"/><br>
+            {{ item }}
+        </a>
+    </li>
+{% endthumbnail %}
