@@ -125,6 +125,7 @@ class CollectionAdmin(BaseContentAdmin):
             for m in main_models:
                 if not m._meta.abstract:
                     types_id.append(ContentType.objects.get_for_model(m).id)
+            types_id.append(ContentType.objects.get_for_model(BaseContent).id)
             form.base_fields['content_types'].queryset = form.base_fields['content_types'].queryset.filter(id__in=types_id)
         default_fields = self.get_default_fields(obj, request)
         if default_fields:
