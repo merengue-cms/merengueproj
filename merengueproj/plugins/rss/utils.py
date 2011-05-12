@@ -59,6 +59,8 @@ def generate_feed_from_queryset(queryset=None):
     queryset = queryset[:int(limit.get_value())]
     link_prefix = 'http://%s' % Site.objects.all()[0].domain
     for item in queryset:
+        if hasattr(item, 'get_real_instance'):
+            item = item.get_real_instance()
         if 'modification_date' in item.__dict__:
             item_date = item.modification_date
         else:
