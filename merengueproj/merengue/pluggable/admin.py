@@ -99,9 +99,12 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
         if 'installed' in form.cleaned_data:
             is_installed = form.cleaned_data['installed'] == True
         registered_plugin = form.save(commit=False)
-        if change_installed_field and is_installed:
-            registered_plugin.active = True
-            install_plugin(registered_plugin)
+        if change_installed_field:
+            if is_installed:
+                registered_plugin.active = True
+                install_plugin(registered_plugin)
+            else:
+                registered_plugin.active = False
         return registered_plugin
 
     def object_tools(self, request, mode, url_prefix):
