@@ -554,6 +554,14 @@ update, you can use the South ``migrate`` command as follows:
 
     $ python manage.py migrate
 
+This ``migrate`` command does not affect to the installed plugins in the
+project. So, to perform the database migrations in plugins you have to execute
+``migrate_plugins`` command:
+
+.. code-block:: bash
+
+    $ python manage.py migrate_plugins
+
 Also, we recommend following the `changes`_ on the Merengue `skel project`_. This
 documentation may be helpful in incorporating these changes into your own project.
 
