@@ -49,6 +49,9 @@ class RegisteredBlockAdmin(RegisteredItemAdmin):
             {'fields': ('is_cached', 'cache_timeout', 'cache_only_anonymous', 'cache_vary_on_url', 'cache_vary_on_language', 'cache_vary_on_user', )}
         ))
 
+    class Media:
+        js = ('merengue/js/block/caching.js', )
+
     def get_readonly_fields(self, request, obj=None):
         readonly_fields = super(RegisteredBlockAdmin, self).get_readonly_fields(request, obj)
         if obj and obj.is_fixed:
