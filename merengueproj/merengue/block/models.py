@@ -123,6 +123,12 @@ class RegisteredBlock(RegisteredItem):
         return self.name
 
 
+def pre_save_handler(sender, instance, **kwargs):
+    block = instance.get_registry_item()
+    if instance.id is None:
+        block.set_default_caching()
+
+
 def post_save_handler(sender, instance, **kwargs):
     # invalidate block cache if exists
     block = instance.get_registry_item()
@@ -145,5 +151,6 @@ def pre_delete_handler(sender, instance, **kwargs):
             content.save()
 
 
+signals.pre_save.connect(pre_save_handler, sender=RegisteredBlock)
 signals.post_save.connect(post_save_handler, sender=RegisteredBlock)
 signals.pre_delete.connect(pre_delete_handler, sender=RegisteredBlock)

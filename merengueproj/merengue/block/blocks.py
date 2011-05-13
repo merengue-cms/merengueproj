@@ -28,6 +28,14 @@ from merengue.registry.signals import item_registered
 class BaseBlock(RegistrableItem):
     model = RegisteredBlock
     singleton = False
+    default_caching_params = {
+       'enabled': False,
+       'only_anonymous': False,
+       'timeout': 0,
+       'vary_on_url': False,
+       'vary_on_language': True,
+       'vary_on_user': False,
+    }
 
     def __init__(self, reg_item):
         super(BaseBlock, self).__init__(reg_item)
@@ -92,6 +100,17 @@ class BaseBlock(RegistrableItem):
         cache_key = self._get_cache_key(request)
         self._register_cache_key(cache_key)
         return cache.set(cache_key, content, self.reg_item.cache_timeout)
+
+    def set_default_caching(self):
+        reg_block = self.reg_item
+        def_caching_params = self.default_caching_params
+        reg_block.is_cached = def_caching_params.get('enabled', False)
+        reg_block.cache_timeout = def_caching_params.get('timeout', 0)
+        reg_block.cache_only_anonymous = def_caching_params.get('only_anonymous', False)
+        reg_block.cache_vary_on_language = def_caching_params.get('vary_on_language', True)
+        reg_block.cache_vary_on_url = def_caching_params.get('vary_on_url', False)
+        reg_block.cache_vary_on_user = def_caching_params.get('vary_on_user', False)
+        reg_block.save
 
     def invalidate_cache(self):
         registry_cache_key = self._get_registry_cache_key()
