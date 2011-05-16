@@ -4,26 +4,27 @@
 Profiling Merengue
 ==================
 
-Django debug toolbar
-====================
+The Django Debug Toolbar
+========================
 
-Merengue has a customized version of `Django debug toolbar`_ deactivated by default.
+Merengue has a customized version of the `Django debug toolbar`_ deactivated by
+default.
 
-To activate this toolbar you have to set ``DEBUG_TOOLBAR`` setting to ``True``.
+To activate this toolbar, set the ``DEBUG_TOOLBAR`` setting to ``True``.
 
-You can activate specific debug toolbar panels setting ``DEBUG_TOOLBAR_PANELS``.
+You can activate specific debug toolbar panels by setting the ``DEBUG_TOOLBAR_PANELS`` variable.
 
 .. _`Django debug toolbar`: http://rob.cogit8.org/blog/2008/Sep/19/introducing-django-debug-toolbar/
 
 
-Profiling middleware
+Profiling Middleware
 ====================
 
-Merengue has ProfilingMiddleware deactivated by default. For using it, you have
+Merengue has ProfilingMiddleware deactivated by default. To use it, you have
 to install ``python-profiler``.
 
-For activating it is needed to remove comments from `merengue/settings.py`_ to
-activate middleware:
+To activate it, remove the comments from `merengue/settings.py`_ to
+activate the middleware:
 
 .. code-block:: python
 
@@ -32,13 +33,13 @@ activate middleware:
         'cmsutils.middleware.ProfileMiddleware',
         # ... stuff
 
-When you activate the middleware, with ``DEBUG`` set to ``True``, you only have
-to access to the page you want to profile, adding a ``HTTP`` ``profile`` ``GET`` parameter. For
-example, if your server is running in ``localhost:8000``, you have to point the browser to::
+When the middleware is activated with ``DEBUG`` set to ``True``, just access the
+page you want to profile, adding a ``HTTP`` ``profile`` ``GET`` parameter. For
+example, if your server is running at ``localhost:8000``, point your browser to::
 
     http://localhost:8000/?profile
 
-And you Merengue will show a page like this::
+And Merengue will show a page like this::
 
     119364 function calls (110393 primitive calls) in 0.842 CPU seconds
 
