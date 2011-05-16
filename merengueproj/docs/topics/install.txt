@@ -554,9 +554,9 @@ update, you can use the South ``migrate`` command as follows:
 
     $ python manage.py migrate
 
-This ``migrate`` command does not affect to the installed plugins in the
-project. So, to perform the database migrations in plugins you have to execute
-``migrate_plugins`` command:
+This ``migrate`` command does not affect the installed plugins in the
+project. In order to perform the database migrations for plugins, you will need to execute
+the ``migrate_plugins`` command:
 
 .. code-block:: bash
 
