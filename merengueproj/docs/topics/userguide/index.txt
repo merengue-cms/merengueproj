@@ -77,7 +77,7 @@ the plugin but not uninstall it. In that case, just uncheck the *Activate* check
 With the *Voting* plugin, for example, you can allow your users to vote on content. 
 
 .. admonition:: Technical Stuff
-    
+
     You can add additional plugins to the list, or even develop your own plugin. 
     Take a look at the :ref:`plugins documentation <topics-plugins-index>` for more
     information.
@@ -276,6 +276,24 @@ will change dynamically to adapt the form for the selected block.
 
 Your selected configuration will only apply to the block related to that content.
 This way, you can have two or more similar blocks, each using a different configuration.
+
+.. _topics-userguide-block_caching:
+
+Block Caching
+-------------
+
+The HTML rendered in the blocks can be cached if it is configured by the manager user:
+
+.. image:: _images/block_caching.png
+
+The first **Activate cache** checkbox activates block cache for this block. If
+this checkbox is selected the next other parameters will be enabled:
+
+* Cache will only be active for anonymous users or for both authenticated and anonymous ones.
+* Cache will vary on the request URL.
+* Cache will vary on the current language of the user who accesses.
+* Cache will vary depending on the user who accesses the website.
+
 
 Navigational Elements
 =====================

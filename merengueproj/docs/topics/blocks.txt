@@ -346,3 +346,34 @@ included in ``<head>`` section and the ``{% addmedia "js" %}`` stuff will before
 
 Also, those media assets will be merged and compressed if ``DEBUG`` is ``False``
 or ``COMPRESS`` setting is set to ``True``.
+
+
+Blocks Caching
+--------------
+
+The HTML rendered in all the blocks can be cached in the management interface.
+Look at the :ref:`block caching section <topics-userguide-block_caching>` in
+the user guide for more information.
+
+You can define default block parameters for your blocks by including a
+``default_caching_params`` parameter in block definition:
+
+.. code-block:: python
+
+    class LatestAddedBlock(Block):
+        #some stuff
+        default_caching_params = {
+            'enabled': True,
+            'only_anonymous': True,
+            'timeout': 3600,
+            'vary_on_url': False,
+            'vary_on_language': True,
+            'vary_on_user': False,
+        }
+
+The previous block will be cached by default only for anonymous people, with a 
+timeout of one hour and this cache will not vary on URL and user, but will vary
+on the current language.
+
+Of course, these default cache settings can be overriden by managers in the
+administrative interface.
