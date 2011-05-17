@@ -349,7 +349,7 @@ A developer can do many things when developing a new plugin:
 * **Define new permissions**: Implement the ``get_perms(self)`` method in the
   ``PluginConfig`` class. See the :ref:`permissions reference <topics-permissions>` for
   more information.
-  
+
   An example:
 
 .. code-block:: python
@@ -365,7 +365,7 @@ A developer can do many things when developing a new plugin:
 * **Define new viewlets**: Implement the ``get_viewlets(self)`` method in the
   ``PluginConfig`` class. See the :ref:`viewlets reference <topics-viewlets>` for
   more information.
-  
+
   An example:
 
 .. code-block:: python
@@ -395,7 +395,7 @@ A developer can do many things when developing a new plugin:
 
 * **Execute code after plugin activation**: Implementing the ``hook_post_register(self)``
   method in the ``PluginConfig`` class.
-  
+
   An example:
 
 .. code-block:: python
