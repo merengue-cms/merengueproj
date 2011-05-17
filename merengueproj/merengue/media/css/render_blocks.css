@@ -57,6 +57,7 @@
 
 #config-block form#config-block-form div.config_params_container label {
     font-size: 13px;
+    line-height: 20px;
     color: #737373;
     float: left;
     margin-right: 1em;
