@@ -101,7 +101,7 @@ class Collection(BaseContent):
         verbose_name = _(u'Collection')
         verbose_name_plural = _(u'Collections')
         content_view_function = 'merengue.collection.views.collection_view'
-        content_view_template = 'collection/collection_view.html'
+        content_view_template = 'collection_view.html'
 
     def get_exclude_filters(self):
         """@FIXME: Legacy code. Should be refactored"""
@@ -263,7 +263,7 @@ class FeedItem(BaseContent):
 
     class Meta:
         content_view_function = 'merengue.collection.views.feeditem_view'
-        content_view_template = 'collection/feeditem_view.html'
+        content_view_template = 'feeditem_view.html'
 
     def get_real_item(self):
         if hasattr(self, '_real_item'):
@@ -378,7 +378,7 @@ class FeedCollection(Collection):
         verbose_name = _(u'Feed collection')
         verbose_name_plural = _(u'Feed collections')
         content_view_function = 'merengue.collection.views.collection_view'
-        content_view_template = 'collection/collection_view.html'
+        content_view_template = 'collection_view.html'
 
     def perform_query(self, apply_options=False, force_update=False):
         now = datetime.datetime.now()
