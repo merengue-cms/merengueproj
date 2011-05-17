@@ -2,7 +2,7 @@ from copy import copy
 
 from django.db.models import Q
 from django.db.models.manager import Manager
-from django.core.exceptions import FieldError
+from django.core.exceptions import FieldError, ObjectDoesNotExist
 from django.template import TemplateSyntaxError, Library, Node, Context
 from django.template.defaulttags import RegroupNode
 
@@ -86,13 +86,19 @@ class CollectionItemsNode(Node):
         ignore_filters = request and request.GET.get('__ignore_filters', None)
         if not ignore_filters:
             # This a code to smarsearch plugin
-            searcher = request.GET.get('__searcher', None)
+            searcher_id = request.GET.get('__searcher', None)
+            try:
+                from plugins.smartsearch.models import Searcher
+                searcher = Searcher.objects.get(pk=searcher_id)
+            except (ImportError, ObjectDoesNotExist):
+                searcher = None
             if searcher:
-                from autoreports.utils import pre_procession_request
+                from autoreports.utils import pre_procession_request, filtering_from_request
                 model = collection.get_first_parents_of_content_types()
-                request = pre_procession_request(request, model)
+                request_processing = pre_procession_request(request, model)
+                filters, items = filtering_from_request(request_processing, items, searcher)
             # Here end the code to smartsearch plugin
-            if request:
+            if not searcher and request:
                 items = self._filter_by_request(request, items)
             if context:
                 items = self._filter_by_context(context, items)
