@@ -1,3 +1,8 @@
 div.smartSearch div.display {
+    display: none !important;
+}
+
+div.leftsidebar ul.functions,
+div.leftsidebar .functionTitle {
     display: none;
 }
