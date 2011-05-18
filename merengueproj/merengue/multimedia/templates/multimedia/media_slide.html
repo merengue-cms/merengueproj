@@ -18,14 +18,17 @@
   <div class="screenShotTable">
     <div class="simpleImgGallery2">
       <div class="imageController">
-        <img  class="icon prevImg" alt="Previous" src="{{ MEDIA_URL }}merengue/img/multimedia/slide_previous.gif"/>
-        <span class="imagesNumber">
-          <span class="imgNow" >1</span>
-          <span>/</span>
-          <span class="imgMax">1</span>
+        {% block media_slide_previous %}
+            <img  class="icon prevImg" alt="Previous" src="{{ MEDIA_URL }}merengue/img/multimedia/slide_previous.gif"/>
+        {% endblock %}
+         <span class="imagesNumber">
+             <span class="imgNow">1</span>
+             <span>/</span>
+             <span class="imgMax">1</span>
          </span>
-         <img class="icon nextImg" alt="Next"
-              src="{{ MEDIA_URL }}merengue/img/multimedia/slide_next.gif"/>
+         {% block media_slide_next %}
+             <img class="icon nextImg" alt="Next" src="{{ MEDIA_URL }}merengue/img/multimedia/slide_next.gif"/>
+         {% endblock %}
       </div>
       <div class="MultimediaSlideActionLinks">
         <span class="galleryButton toStreet" style="display: none;">
