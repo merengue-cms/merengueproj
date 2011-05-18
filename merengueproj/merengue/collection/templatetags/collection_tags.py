@@ -89,7 +89,7 @@ class CollectionItemsNode(Node):
             # This a code to smarsearch plugin
             searcher_id = request.GET.get('__searcher', None)
             searcher = None
-            if searcher_id and 'plugins.smart_search' in settings.INSTALLED_APPS:
+            if searcher_id and 'plugins.smartsearch' in settings.INSTALLED_APPS:
                 try:
                     from plugins.smartsearch.models import Searcher
                     searcher = Searcher.objects.get(pk=searcher_id)
