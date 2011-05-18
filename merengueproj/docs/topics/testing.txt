@@ -4,7 +4,7 @@
 Testing in Merengue
 ===================
 
-There are two kinds of tests in Merengue:
+There are two kinds of tests used in Merengue:
 
 * Unit tests, see `testing in Django`_ for more information.
 
@@ -14,7 +14,7 @@ There are two kinds of tests in Merengue:
 .. _`Selenium web application testing system`: http://seleniumhq.org/
 
 
-Unit tests
+Unit Tests
 ==========
 
 Unit tests are executed using the ``manage.py`` Django utility located inside
@@ -27,19 +27,19 @@ every Merengue project, like this:
 This will try to execute all tests in every application installed in the
 Merengue project.
 
-You can also launch test for only one application appending the application in
-command line, as follows:
+You can also launch the test for only one application by appending the application
+to the end of the command line, as follows:
 
 .. code-block:: bash
 
     $ python manage.py test perms
 
 
-Selenium tests
+Selenium Tests
 ==============
 
-Selenium tests are very useful because they tests all application layers (from
-database to user interface). It came with a IDE to launch and records functional
+Selenium tests are very useful because they test all application layers (from
+the database to the user interface). It comes with an IDE to launch and record functional
 tests:
 
 .. image:: _images/selenium_tests.png
@@ -47,43 +47,43 @@ tests:
 These are the steps for installing and executing the Merengue
 `Selenium tests suites`_:
 
-1. Installing the selenium IDE Firefox plugin, in the `download page`_.
-2. Make sure that *English* is the first language preference in Firefox.
-3. Launch Selenium IDE in Options menu.
-4. Load a needed Selenium Core extension for loading global variables, located in ``merengueproj/tests/selenium/extensions/user-extensions.js``. This is done in ``Options`` menu in Selenium IDE.
-5. Change the ``merengueproj/tests/selenium/generic/variables.html`` file, setting the ``TEST_DATA_DIR`` variable, which have to point to the absolute path to ``merengueproj/tests/selenium/test-data`` directory.
-6. Open any test suite (``suite.html`` file) located in the subdirectories of ``merengueproj/tests/selenium/generic`` directory.
+1. Install the selenium IDE Firefox plugin from the `download page`_.
+2. Make sure that *English* is selected as the first language used to display pages in Firefox preferences.
+3. Launch the Selenium IDE in the Options menu.
+4. Load the required Selenium Core extension for loading global variables, located in ``merengueproj/tests/selenium/extensions/user-extensions.js``. This is done in the ``Options`` menu in the Selenium IDE.
+5. Change the ``merengueproj/tests/selenium/generic/variables.html`` file, setting the ``TEST_DATA_DIR`` variable to point to the absolute path to the ``merengueproj/tests/selenium/test-data`` directory.
+6. Open any test suite (``suite.html`` file) located in the subdirectories of the ``merengueproj/tests/selenium/generic`` directory.
 7. Execute it.
 
 .. _`download page`: http://seleniumhq.org/download/
 .. _`Selenium tests suites`: http://dev.merengueproject.org/browser/trunk/merengueproj/tests/selenium/generic
 
-How to run all selenium test at once?
+How to Run All Selenium Tests at Once
 -------------------------------------
 
-There is a script to execute all suites of selenium test that are located at
-``merengueproj/tests/selenium/generic`` subdirectories. This script is
-*run_suites.py* and is used as follow:
+There is a script to execute all suites of selenium tests located in the
+``merengueproj/tests/selenium/generic`` subdirectories. This script is called 
+*run_suites.py* and is used as follows:
 
 .. code-block:: bash
 
     $ python run_suites.py basic_url
 
 ``basic_url`` is the basic url of the domain to test (i.e.
-http://localhost:8000/). All relatives url depends of this one.
+http://localhost:8000/). All relative URL's depend on this URL.
 
-Also, it's necessary to run the script with ``selenium-server.jar`` files on the same directory.
+Also, it is necessary to run the script with the ``selenium-server.jar`` files on the same directory.
 
 .. note::
 
     ``selenium-server.jar`` is a file included in Selenium application.
 
-.. admonition:: Note for not english browsers
+.. admonition:: Note for Non-English Browsers
 
-    If your browser are configured in non english language and your web allow
-    the language, Merengue will set by default that language and the test will
-    fail. A quick workaround is disabling ``'django.middleware.locale.LocaleMiddleware'``
-    from your project middlewares (by default is in ``PRE_MERENGUE_MIDDLEWARE_CLASSES``
-    setting, in `merengue/settings.py`_ file).
+    If your browser is configured to use a language other than English,
+    Merengue will use that language by default and the test will
+    fail. A quick workaround is to disable the ``'django.middleware.locale.LocaleMiddleware'``
+    from your project middlewares. The setting ``PRE_MERENGUE_MIDDLEWARE_CLASSES``
+    is found in the `merengue/settings.py`_ file.
 
 .. _`merengue/settings.py`: http://dev.merengueproject.org/browser/trunk/merengueproj/merengue/settings.py
