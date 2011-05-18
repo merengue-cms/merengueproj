@@ -1,10 +1,11 @@
 .. _topics-optimization:
 
 ==================================
-Optimizing a Merengue installation
+Optimizing a Merengue Installation
 ==================================
 
-Merengue features several optimization settings that can greatly increase your site performance.
+Merengue features several optimization settings that can greatly increase the
+performance of your site.
 
 
 Compressing Javascript and CSS files
@@ -13,28 +14,28 @@ Compressing Javascript and CSS files
 For performance reasons, Merengue will place most Javascript files close to the
 ``</body>`` HTML tag. CSS assets will be located in the ``<head>`` section.
 
-You can compress those files by setting the ``COMPRESS`` setting to
+You can compress these files by setting the ``COMPRESS`` setting to
 ``True``
 
 .. note::
 
-    By default the ``COMPRESS`` value is set to ``not DEBUG``. If you set ``DEBUG`` to
+    By default the ``COMPRESS`` setting is set to ``not DEBUG``. If you set ``DEBUG`` to
     ``False`` when deploying the website (recomended practice), you do not have
-    to explicitly change the ``COMPRESS`` setting.
+    to explicitly change the ``COMPRESS`` setting to ``False``.
 
 
 Configuring Caching
 ===================
 
-Merengue uses cache for doing next optimizations:
+Merengue uses caching for the following optimizations:
 
-* **Cache the SQL sentences**, using `Johnny Cache`_. This fantastic application handles transparent caching of all your data models. When a user updates any model content, the cache for this model is invalidated transparently.
-* **Block caching**. All the blocks can be cached if it is configured in administrative interface. See :ref:`block caching <topics-userguide-block_caching>` in userguide for more information.
-* **Anonymous cache for entire site**. All the site can be cached for anonymous users. See :ref:`site cache for anonymous users <topics-optimization-anonymous-cache>`.
+* **Cache the SQL sentences**, using `Johnny Cache`_. This fantastic application provides transparent caching for all of your data models. When a user updates any model content, the cache for this model is invalidated transparently.
+* **Block caching**. All blocks can be cached if configured in the administrative interface. See :ref:`block caching <topics-userguide-block_caching>` in the User Guide for more information.
+* **Anonymous cache for entire site**. The entire site can be cached for anonymous users. See :ref:`site caching for anonymous users <topics-optimization-anonymous-cache>`.
 * **Template caching**, included in Django >1.2. See :ref:`template cache <topics-optimization-template-cache>`.
 
-For all kinds of cache Merengue uses the local memory (by default) for caching. A problem arises when the local
-memory backend is used in multithreaded environments with the setting:
+Local memory is used, by default, for all Merengue caching. However, a problem
+arises when the local memory backend is used in multithreaded environments with the setting:
 
 .. code-block:: python
 
@@ -47,7 +48,7 @@ memory backend is used in multithreaded environments with the setting:
 
 In multithreaded environments, this configuration may cause random errors where
 views are not refreshed correctly after content modification, because the 
-invalidation action only will happen in one thread memory, not in the other
+invalidation action will only happen in one thread's memory and not in the other
 threads. The "fix" for this problem is to change the cache backend to something
 like memcached:
 
@@ -92,33 +93,43 @@ See more on template caching in :ref:`Optimizing a Merengue installation <topics
 
 .. _topics-optimization-anonymous-cache:
 
-Site Cache for anonymous users
-==============================
+Site Caching for Anonymous Users
+================================
 
-Merengue takes advantage of the built-in anonymous site caching from Django. You can activate this feature in your project settings:
+Merengue takes advantage of the built-in anonymous site caching feature from Django.
+You can activate this capability in your project settings:
 
 .. code-block:: python
 
     CACHE_SITE_FOR_ANONYMOUS = True
 
-This setting will cache all request from anonymous users, so the view that generates the response template is only run the first time.
+This setting will cache all requests from anonymous users so that the view that
+generates the response template is only run once.
 
-Note that, unlike Django's default behaviour, Merengue caches all requests even if they have GET parameters.
+Note, that unlike Django's default behaviour, Merengue caches all requests even if they have GET parameters.
 
-Cache invalidation
+Cache Invalidation
 ------------------
 
-There are certains occasions where a site manager would want to invalidate the cache for a certain URL. Think for example a news item published with a mistake that needs to be amended right away: anonymous users will keep on reading the cached version until it expires, which usually takes a whole day. Is in the interest of the site managers to force the invalidation of the cache version once the news item has been corrected.
+There are certain situations where a site manager would want to invalidate the cache
+for a certain URL. For example, consider a news item published with a mistake that
+needs to be corrected immediately. Anonymous users will keep on reading the cached
+version until it expires (which usually takes a whole day). It is in the best
+interest of the site managers to force the invalidation of the cached version
+once the news item has been corrected.
 
-When the cache is active and a manager is logged in, a new button named ``invalidate cache`` is added to the Merengue toolbar. Clicking on it will invalidate the cache for the current page. Note that the invalidation takes effect for all installed languages in the site.
+When the cache is active and a manager is logged in, a new button named ``invalidate cache``
+is added to the Merengue toolbar. Clicking this button will invalidate the cache
+for the current page. Note that the invalidation takes effect for all languages
+installed on the site.
 
 Session Cache
 =============
 
 By default Merengue sessions are implemented by Django. Django sessions are
-stored by default in the project database. This implies that all the requests
-will be execute at least one SQL to fetch the current session. You can avoid
-this SQL sentence using cached sessions (for example in Memcached). See the
+stored by default in the project database. Thus, all requests will execute at
+least one SQL expression to fetch the current session. You can avoid
+this SQL activity by using cached sessions (for example in Memcached). See the
 `Django cached sessions`_ documentation for more information.
 
 .. _`Django cached sessions`: http://docs.djangoproject.com/en/1.3/topics/http/sessions/#using-cached-sessions
