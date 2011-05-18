@@ -44,6 +44,9 @@ class SearchBlock(ContentBlock):
             data = None
             if request.GET.get('__searcher'):
                 data = request.GET
+            fields = get_fields(search)
+            if not fields:
+                continue
             form_search_class.base_fields = get_fields(search)
             form_search = form_search_class(data=data, is_admin=False, search=search)
             if data:
