@@ -75,6 +75,9 @@ class ObjectPermission(models.Model):
 
     content = models.ForeignKey(BaseContent, blank=True, null=True)
 
+    class Meta:
+        unique_together = ('role', 'permission', 'content')
+
     def __unicode__(self):
         return u"%s / %s / %s" % (self.permission.name, self.role, self.content)
 
