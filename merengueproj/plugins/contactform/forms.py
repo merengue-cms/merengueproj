@@ -35,85 +35,85 @@ from plugins.contactform.models import SentContactForm
 
 class ContactFormForm(forms.Form):
 
-        def save(self, request, content, contact_form):
-            data = self.cleaned_data
-            if contact_form.subject_fixed:
-                subject = contact_form.subject
-            else:
-                subject = data['subject']
+    def save(self, request, content, contact_form):
+        data = self.cleaned_data
+        if contact_form.subject_fixed:
+            subject = contact_form.subject
+        else:
+            subject = data['subject']
 
-            if contact_form.sender_email:
-                from_mail = data['sender_email']
-            else:
-                if request.user.is_authenticated():
-                    from_mail = request.user.email
-                else:
-                    from_mail = settings.DEFAULT_FROM_EMAIL
-
-            opts_to_save = {}
-            opts_to_send = {}
-            files = {}
-            for opt in contact_form.opts.all():
-                val = data.get('option_%s' % opt.id, _('Unset'))
-                if val is None:
-                    val = ''
-                label_field = transmeta.get_real_fieldname('label', settings.LANGUAGE_CODE)
-                label = defaultfilters.slugify(getattr(opt, label_field))
-                if opt.field_type == 'file':
-                    files[label] = val
-                else:
-                    opts_to_send[opt.label] = val
-                    opts_to_save[label] = val
-            contactuser = {}
-            opts_to_save[u'subject'] = subject
+        if contact_form.sender_email:
+            from_mail = data['sender_email']
+        else:
             if request.user.is_authenticated():
-                opts_to_save[u'user'] = request.user.username
-                contactuser[u'name'] = request.user.get_full_name()
-                contactuser[u'username'] = request.user.username
+                from_mail = request.user.email
             else:
-                opts_to_save[u'user'] = 'Anonymous'
-                contactuser[u'name'] = _('Anonymous')
-                contactuser[u'username'] = 'anonymous'
+                from_mail = settings.DEFAULT_FROM_EMAIL
 
-            opts_to_save[u'mailfrom'] = from_mail
-            sent = SentContactForm(contact_form=contact_form,
-                                   sent_msg=simplejson.dumps(opts_to_save,
-                                                             cls=DateTimeAwareJSONEncoder))
-            if request.user.is_authenticated():
-                sent.sender = request.user
-            sent.save()
+        opts_to_save = {}
+        opts_to_send = {}
+        files = {}
+        for opt in contact_form.opts.all():
+            val = data.get('option_%s' % opt.id, _('Unset'))
+            if val is None:
+                val = ''
+            label_field = transmeta.get_real_fieldname('label', settings.LANGUAGE_CODE)
+            label = defaultfilters.slugify(getattr(opt, label_field))
+            if opt.field_type == 'file':
+                files[label] = val
+            else:
+                opts_to_send[opt.label] = val
+                opts_to_save[label] = val
+        contactuser = {}
+        opts_to_save[u'subject'] = subject
+        if request.user.is_authenticated():
+            opts_to_save[u'user'] = request.user.username
+            contactuser[u'name'] = request.user.get_full_name()
+            contactuser[u'username'] = request.user.username
+        else:
+            opts_to_save[u'user'] = 'Anonymous'
+            contactuser[u'name'] = _('Anonymous')
+            contactuser[u'username'] = 'anonymous'
 
-            html_content = render_to_string('contactform/email.html',
-                                            {'opts': opts_to_send,
-                                             'content': content,
-                                             'contact_form': contact_form,
-                                             'contactuser': contactuser},
-                context_instance=RequestContext(request))
+        opts_to_save[u'mailfrom'] = from_mail
+        sent = SentContactForm(contact_form=contact_form,
+                                sent_msg=simplejson.dumps(opts_to_save,
+                                                            cls=DateTimeAwareJSONEncoder))
+        if request.user.is_authenticated():
+            sent.sender = request.user
+        sent.save()
 
-            def mailstr_to_list(mailstr):
-                return map(unicode.strip, mailstr.split(','))
+        html_content = render_to_string('contactform/email.html',
+                                        {'opts': opts_to_send,
+                                            'content': content,
+                                            'contact_form': contact_form,
+                                            'contactuser': contactuser},
+            context_instance=RequestContext(request))
 
-            to_mail = mailstr_to_list(contact_form.email)
-            bcc_mail = mailstr_to_list(contact_form.bcc)
+        def mailstr_to_list(mailstr):
+            return map(unicode.strip, mailstr.split(','))
 
-            attachs = [(f.name, f.read(), f.content_type) for f in files.values() if f]
-            plain_content = defaultfilters.striptags(html_content)
-            email = EmailMultiAlternatives(subject, plain_content, from_mail,
-                                           to_mail, bcc=bcc_mail,
-                                           attachments=attachs)
-            email.attach_alternative(html_content, "text/html")
-            email.send()
-            return sent
+        to_mail = mailstr_to_list(contact_form.email)
+        bcc_mail = mailstr_to_list(contact_form.bcc)
 
-        def as_table(self):
-            rendered_form = super(ContactFormForm, self).as_table()
-            soup = BeautifulSoup(rendered_form)
-            for row in soup.findAll('label'):
-                fieldname = row['for'][3:]
-                if self.fields[fieldname].required:
-                    row.attrs.append(('class', 'required'))
-            rendered_form = SafeUnicode(unicode(soup))
-            return rendered_form
+        attachs = [(f.name, f.read(), f.content_type) for f in files.values() if f]
+        plain_content = defaultfilters.striptags(html_content)
+        email = EmailMultiAlternatives(subject, plain_content, from_mail,
+                                        to_mail, bcc=bcc_mail,
+                                        attachments=attachs)
+        email.attach_alternative(html_content, "text/html")
+        email.send()
+        return sent
+
+    def as_table(self):
+        rendered_form = super(ContactFormForm, self).as_table()
+        soup = BeautifulSoup(rendered_form)
+        for row in soup.findAll('label'):
+            fieldname = row['for'][3:]
+            if self.fields[fieldname].required:
+                row.attrs.append(('class', 'required'))
+        rendered_form = SafeUnicode(unicode(soup))
+        return rendered_form
 
 
 class SentContactAdminModelForm(BaseAdminModelForm):
