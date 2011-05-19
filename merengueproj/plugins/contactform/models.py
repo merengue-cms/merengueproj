@@ -63,6 +63,11 @@ class ContactForm(models.Model):
     redirect_to = models.CharField(verbose_name=_('redirect to'),
                                    max_length=200,
                                    blank=True)
+    redirect_to_with_params = models.BooleanField(verbose_name=_('redirect to with params'),
+                                                  help_text=_('If you set "redirect_to", \
+                                                                when the server redirect to\
+                                                                a this URL, set some get params'),
+                                                  default=False)
     subject = models.CharField(verbose_name=_('subject'), max_length=200,
                                default=_('Subject'))
     subject_fixed = models.BooleanField(verbose_name=_('fixed subject'))

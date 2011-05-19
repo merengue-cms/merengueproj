@@ -31,12 +31,15 @@ def contact_form_submit(request, content_slug, contact_form_id):
 
     if request.method == 'POST':
         form = contact_form.get_form(request)
-
         if form.is_valid():
-            form.save(request, content, contact_form)
-
+            sentcontactform = form.save(request, content, contact_form)
             if contact_form.redirect_to:
                 redirect = contact_form.redirect_to
+                if contact_form.redirect_to_with_params:
+                    redirect = "%s?content_id=%s&contact_form_id=%s&sentcontactform=%s" % (redirect,
+                                                                                           content.pk,
+                                                                                           contact_form_id,
+                                                                                           sentcontactform.pk)
             else:
                 redirect = request.META.get('HTTP_REFERER',
                                             content.public_link())

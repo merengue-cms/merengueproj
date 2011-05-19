@@ -103,6 +103,7 @@ class ContactFormForm(forms.Form):
                                            attachments=attachs)
             email.attach_alternative(html_content, "text/html")
             email.send()
+            return sent
 
         def as_table(self):
             rendered_form = super(ContactFormForm, self).as_table()
