@@ -30,8 +30,15 @@ class BannerBlock(BlockQuerySetItemProvider, Block):
     help_text = _('Block that represents a banner')
 
     config_params = BlockQuerySetItemProvider.config_params + [
-        params.PositiveInteger(name='limit', label=ugettext('limit for banner block'),
+        params.PositiveInteger(name='limit',
+                               label=ugettext('limit for banner block'),
                                default=3),
+        params.PositiveInteger(name='width',
+                               label=ugettext('thumbnail maximum width'),
+                               default=None),
+        params.PositiveInteger(name='height',
+                               label=ugettext('thumbnail maximum heigh'),
+                               default=None),
     ]
 
     def get_contents(self, request=None, context=None, section=None):
@@ -41,7 +48,19 @@ class BannerBlock(BlockQuerySetItemProvider, Block):
     def render(self, request, place, context, *args, **kwargs):
         number_banners = self.get_config().get(
             'limit', []).get_value() or None
+        width = self.get_config().get('width', []).get_value() or None
+        height = self.get_config().get('height', []).get_value() or None
+        size = None
+        if width and height:
+            size = str(width) + 'x' + str(height)
+        elif width:
+            size = str(width) + 'x' + str(width)
+        elif height:
+            size = str(height) + 'x' + str(height)
         banners = self.get_queryset(request, context)[:number_banners]
-        return self.render_block(request, template_name='banner/block_banner.html',
+        return self.render_block(request,
+                                 template_name='banner/block_banner.html',
                                  block_title=ugettext('banners'),
-                                 context={'banners': banners})
+                                 context={'banners': banners,
+                                          'size': size,
+                                          })

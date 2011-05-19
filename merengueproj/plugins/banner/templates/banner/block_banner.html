@@ -1,11 +1,20 @@
 {% extends "block.html" %}
 
-{% load i18n inlinetrans %}
+{% load i18n inlinetrans thumbnail %}
 
 {% block blockbody %}
   <ul>
   {% for banner in banners %}
-    <li><a href="{{ banner.url_link }}" title="{{ banner }}"><img src="{{ MEDIA_URL }}{{ banner.image }}" title="{{ banner.portal_name }}" alt="{{ banner.portal_name }}"/></a></li>
+    <li><a href="{{ banner.url_link }}" title="{{ banner }}">
+      {% if size %}
+      {% thumbnail banner.image size as thumb %}
+        <img src="{{ thumb.url }}" title="{{ banner.portal_name }}" alt="{{ banner.portal_name }}"/>
+      {% endthumbnail %}
+      {% else %}
+        <img src="{{ MEDIA_URL }}{{ banner.image }}" title="{{ banner.portal_name }}" alt="{{ banner.portal_name }}"/>
+      {% endif %}
+      </a>
+    </li>
   {% endfor %}
   </ul>
   <a class="bannerHistory" href="{% url banner_index %}">{% inline_trans "History banner" %}</a>
