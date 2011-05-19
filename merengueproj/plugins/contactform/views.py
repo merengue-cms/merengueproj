@@ -43,18 +43,18 @@ def contact_form_submit(request, content_slug, contact_form_id):
             if contact_form.sent_msg:
                 send_info(request, contact_form.sent_msg)
         else:
-            return errors_to_session(request, content, form)
+            return errors_to_session(request, content, form, contact_form_id)
 
     return HttpResponseRedirect(redirect)
 
 
-def errors_to_session(request, content, form):
+def errors_to_session(request, content, form, contact_form_id):
     # Errors in session because we're redirecting
     err = form.errors
     for k, vs in err.items():
         err[k] = [unicode(v) for v in vs]
-    request.session['form_errors'] = err
-    request.session['form_data'] = form.data
+    request.session['form_errors_%s' % contact_form_id] = err
+    request.session['form_data_%s' % contact_form_id] = form.data
     redirect = request.META.get('HTTP_REFERER',
                                 content.public_link())
     return HttpResponseRedirect(redirect)

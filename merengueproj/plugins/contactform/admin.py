@@ -18,12 +18,12 @@
 from django.contrib import admin
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
-from django.core.exceptions import PermissionDenied
 
 from merengue.base.admin import (RelatedModelAdmin, BaseAdmin, PluginAdmin,
                                  BaseOrderableAdmin, BaseContentAdmin)
 from merengue.base.models import BaseContent
 
+from plugins.contactform.forms import SentContactAdminModelForm
 from plugins.contactform.models import (ContactForm, ContactFormOpt,
                                         SentContactForm,
                                         ContactFormSelectOpt)
@@ -50,7 +50,9 @@ class ContactFormOptAdmin(BaseOrderableAdmin, BaseAdmin):
 
 
 class SentContactFormAdmin(BaseAdmin):
-    list_display = ('contact_form', 'sent_date')
+    list_display = ('contact_form', 'sender', 'sent_date')
+    list_filter = ('contact_form', 'sender', 'sent_date')
+    search_fields = ('sent_msg', )
 
 
 class ContactFormRelatedContactFormOptAdmin(RelatedModelAdmin,
@@ -62,10 +64,13 @@ class ContactFormRelatedContactFormOptAdmin(RelatedModelAdmin,
 
 
 class ContactFormRelatedSentContactFormAdmin(SentContactFormAdmin, RelatedModelAdmin):
-    tool_name = 'contact_form'
+    tool_name = 'sent_contact'
     tool_label = _('sent contact form')
+    list_display = SentContactFormAdmin.list_display[1:]
+    list_filter = SentContactFormAdmin.list_filter[1:]
     one_to_one = False
     related_field = 'contact_form'
+    form = SentContactAdminModelForm
 
     def has_add_permission(self, request):
         return False
@@ -83,19 +88,6 @@ class BaseContentRelatedContactFormAdmin(ContactFormAdmin, RelatedModelAdmin):
     one_to_one = False
     related_field = 'content'
     filter_or_exclude = 'filter'
-
-    def object_tools(self, request, mode, url_prefix):
-        tools = super(BaseContentRelatedContactFormAdmin, self).object_tools(request, mode, url_prefix)
-        if self.basecontent.contact_form.count():
-            for tool in tools:
-                if tool.get('url', '').endswith(url_prefix + 'add/'):
-                    tools.remove(tool)
-        return tools
-
-    def add_view(self, request, form_url='', extra_context=None, parent_model_admin=None, parent_object=None):
-        if self.basecontent.contact_form.count():
-            raise PermissionDenied
-        return super(BaseContentRelatedContactFormAdmin, self).add_view(request, form_url, extra_context)
 
     def save_form(self, request, form, change):
         return super(RelatedModelAdmin, self).save_form(request, form, change)

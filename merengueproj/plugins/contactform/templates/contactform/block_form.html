@@ -1,9 +1,20 @@
 {% extends "block.html" %}
 
+{% load media_tags %}
+
 {% block blockbody %}
-    <script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
-    <script type="text/javascript" src="{{ admin_media }}js/core.js"></script>
-    {{ form.media }}
+    <script type="text/javascript">window.__admin_media_prefix__ = "{{ ADMIN_MEDIA_PREFIX }}";</script>
+    {% addmedia "js" %}
+        <script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
+        <script type="text/javascript" src="{{ ADMIN_MEDIA_PREFIX }}js/core.js"></script>
+        {% for form in forms %}
+            {{ form.form.media }}
+        {% endfor %}
+    {% endaddmedia %}
+
+    {% addmedia "css" %}
+        <link href="{{ ADMIN_MEDIA_PREFIX }}css/widgets.css" rel="stylesheet" type="text/css" media="all" />
+    {% endaddmedia %}
     <style>
         .calendarbox, .clockbox {
             background: white;
@@ -12,17 +23,19 @@
         }
     </style>
 
-    <form id="contactform" method="POST" action="{% url contact_form_submit content.slug contact_form.id %}" enctype="multipart/form-data">
-        <fieldset>
-            <legend>{{ contact_form.title }}</legend>
-            <p>
-            {{ contact_form.description|safe }}
-            </p>
-            <table>{{ form }}</table>
-            <input class="button" type="submit" value="{{ contact_form.submit_msg }}"/>
-            {% if contact_form.reset_button %}
-                <input class="button" type="reset" value="{{ contact_form.reset_msg }}"/>
-            {% endif %}
-        </fieldset>
-    </form>
+    {% for form in forms %}
+        <form id="contactform" method="POST" action="{% url contact_form_submit content.slug form.contact_form.id %}" enctype="multipart/form-data">
+            <fieldset>
+                <legend>{{ form.contact_form.title }}</legend>
+                <p>
+                {{ form.contact_form.description|safe }}
+                </p>
+                <table>{{ form.form }}</table>
+                <input class="button" type="submit" value="{{ form.contact_form.submit_msg }}"/>
+                {% if form.contact_form.reset_button %}
+                    <input class="button" type="reset" value="{{ form.contact_form.reset_msg }}"/>
+                {% endif %}
+            </fieldset>
+        </form>
+    {% endfor %}
 {% endblock %}

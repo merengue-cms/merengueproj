@@ -30,25 +30,21 @@ class ContactFormBlock(ContentBlock):
     verbose_name = ugettext_lazy('Contact Form Block')
 
     def render(self, request, place, content, context, *args, **kwargs):
-
-        try:
-            contact_form = ContactForm.objects.filter(content=content)[0]
-        except IndexError:
+        contact_forms = ContactForm.objects.filter(content=content)
+        if not contact_forms:
             return ''
-
-        form = contact_form.get_form(request)
-        errors = request.session.pop('form_errors', {})
-        data = request.session.pop('form_data', {})
-        if data:
-            form._errors = errors
-            form.data = data
-            form.is_bound = True
-
-        context = dict(content=content,
-                       contact_form=contact_form,
-                       admin_media=settings.ADMIN_MEDIA_PREFIX,
-                       form=form)
-
+        forms = []
+        for contact_form in contact_forms:
+            form = contact_form.get_form(request)
+            errors = request.session.pop('form_errors_%s' % contact_form.pk, {})
+            data = request.session.pop('form_data_%s' % contact_form.pk, {})
+            if data:
+                form._errors = errors
+                form.data = data
+                form.is_bound = True
+            forms.append({'contact_form': contact_form, 'form': form})
         return self.render_block(request, template_name='contactform/block_form.html',
                                  block_title=_('Contact form'),
-                                 context=context)
+                                 context={'content': content,
+                                          'ADMIN_MEDIA_PREFIX': settings.ADMIN_MEDIA_PREFIX,
+                                          'forms': forms})

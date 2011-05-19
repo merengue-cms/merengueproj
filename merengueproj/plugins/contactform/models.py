@@ -29,6 +29,8 @@ from merengue.base.models import BaseContent
 
 from plugins.contactform import fields as custom_fields
 
+from south.modelsinspector import add_introspection_rules
+
 
 FIELD_TYPE_CHOICES = (
     ('text', _('Text')),
@@ -77,7 +79,13 @@ class ContactForm(models.Model):
                                      related_name='contact_form',
                                      blank=True, null=True)
     captcha = models.BooleanField(verbose_name=_('captcha'), default=True)
-    sender_email = models.BooleanField(verbose_name=_('sender email'), default=False)
+    sender_email = models.BooleanField(verbose_name=_('contact email'), default=False)
+    is_sender_email_editable = models.BooleanField(verbose_name=_('Fixed contact email'),
+                                                   help_text=_('If you select "contact email", \
+                                                                you can choose if this field is\
+                                                                editable in the public view when\
+                                                                the user is authenticated'),
+                                                   default=False)
 
     def __unicode__(self):
         return self.title
@@ -110,11 +118,16 @@ class ContactForm(models.Model):
         index = 0
 
         if self.sender_email:
-            initial = ''
             if request.user.is_authenticated():
-                initial = request.user.email
-            sender_email = forms.EmailField(label=_('sender email'),
-                                    initial=initial)
+                sender_email = forms.EmailField(label=_('sender email'),
+                                                initial=request.user.email)
+                if not self.is_sender_email_editable:
+                    attrs = sender_email.widget.attrs or {}
+                    editable_attrs = {'readonly': True}
+                    editable_attrs.update(attrs)
+                    sender_email.widget.attrs = editable_attrs
+            else:
+                sender_email = forms.EmailField(label=_('sender email'))
             f.fields.insert(index, 'sender_email', sender_email)
             index += 1
 
@@ -203,3 +216,16 @@ class SentContactForm(models.Model):
 
     def __unicode__(self):
         return self.contact_form.title
+
+
+# ----- adding south rules to help introspection -----
+
+rules = [
+  (
+    (custom_fields.MultiEmailField, ),
+    [],
+    {},
+  ),
+]
+
+add_introspection_rules(rules, ["^plugins\.contactform\.fields"])
