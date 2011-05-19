@@ -29,9 +29,10 @@ class MicroSiteAdminForm(BaseAdminModelForm):
         # be unique among other BaseContents'
         cleaned_data = super(MicroSiteAdminForm, self).clean()
         slug = self.cleaned_data['slug']
-        if MicroSite.objects.filter(slug__exact=slug).count() or \
-           BaseSection.objects.filter(slug__exact=slug).count():
-            invalid_slug = _('A MicroSite or Section with this slug already exists')
-            self._errors["slug"] = self.error_class([invalid_slug])
-            del cleaned_data['slug']
+        if self.instance.id and slug != self.instance.slug:
+            if MicroSite.objects.filter(slug__exact=slug).count() or \
+                    BaseSection.objects.filter(slug__exact=slug).count():
+                invalid_slug = _('A MicroSite or Section with this slug already exists')
+                self._errors["slug"] = self.error_class([invalid_slug])
+                del cleaned_data['slug']
         return cleaned_data
