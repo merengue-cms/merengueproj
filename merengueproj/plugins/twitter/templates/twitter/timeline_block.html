@@ -1,0 +1,16 @@
+{% extends "block.html" %}
+{% load i18n %}
+
+{% block blockbody %}
+{% if not tweets.list %}
+  <div class="error_tweets">{% trans tweets.error %}</div>
+{% else %}
+  <ul>
+    {% for tweet in tweets.list %}
+    <li class="tweet {% cycle 'even' 'odd' %}" title="{{ tweet|striptags }}">"{{ tweet|safe }}"</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+<div class="bar_space"></div>
+<div class="link_twitter"><a href="{{ link.http }}">{{ link.title }}</a></div>
+{% endblock %}
