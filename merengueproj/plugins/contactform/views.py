@@ -24,10 +24,10 @@ from merengue.base.models import BaseContent
 from plugins.contactform.models import ContactForm
 
 
-def contact_form_submit(request, content_slug, contact_form_id):
-    content = get_object_or_404(BaseContent, slug=content_slug).get_real_instance()
+def contact_form_submit(request, content_id, contact_form_id):
+    content = get_object_or_404(BaseContent, pk=content_id).get_real_instance()
     contact_form = get_object_or_404(ContactForm, pk=contact_form_id,
-                                     content__slug=content_slug)
+                                     content__pk=content_id)
 
     if request.method == 'POST':
         form = contact_form.get_form(request)

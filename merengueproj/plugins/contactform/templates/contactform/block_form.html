@@ -24,7 +24,7 @@
     </style>
 
     {% for form in forms %}
-        <form id="contactform" method="POST" action="{% url contact_form_submit content.slug form.contact_form.id %}" enctype="multipart/form-data">
+        <form id="contactform" method="POST" action="{% url contact_form_submit content.pk form.contact_form.pk %}" enctype="multipart/form-data">
             <fieldset>
                 <legend>{{ form.contact_form.title }}</legend>
                 <p>
