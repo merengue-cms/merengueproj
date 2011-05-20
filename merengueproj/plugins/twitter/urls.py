@@ -1,4 +1,4 @@
-# Copyright (c) 2011 by Yaco Sistemas
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -15,19 +15,11 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from merengue.pluggable import Plugin
 
-from plugins.twitter.blocks import UserTimelineBlock, HashtagTimelineBlock
+from django.conf.urls.defaults import patterns
+from merengue.urlresolvers import merengue_url as url
 
-
-class PluginConfig(Plugin):
-    name = 'Twitter'
-    description = 'Plugin to show a timeline of Twitter'
-    version = '0.0.2a'
-
-    url_prefixes = (
-        ('twitter', 'plugins.twitter.urls'),
-        )
-
-    def get_blocks(self):
-        return [UserTimelineBlock, HashtagTimelineBlock]
+urlpatterns = patterns('plugins.twitter.views',
+    url(r'ajax/get_user_tweets/(?P<block_id>\d+)', 'get_user_tweets', name='get_user_tweets'),
+    url(r'ajax/get_hashtag_tweets/(?P<block_id>\d+)', 'get_hashtag_tweets', name='get_hashtag_tweets'),
+                       )
