@@ -38,7 +38,12 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Audio</td>
+	<td>link=Browse by type</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Audio*</td>
 	<td></td>
 </tr>
 <tr>
@@ -88,8 +93,13 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@value="Yes, I'm sure"]</td>
+	<td>//input[@value=&quot;Yes, I'm sure&quot;]</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>link=Audio CA22-Cl01</td>
+	<td>Audio CA22-Cl01</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
