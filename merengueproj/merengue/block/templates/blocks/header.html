@@ -154,7 +154,7 @@
                     break;
                 }
             }
-            var validContainers = containers.filter("." + containerType);
+            var validContainers = containers.filter("." + containerType).not('.nondraggable');
             validContainers.each(function() {
                 if ($(this).children().length < 2 || $(this).height() == 0) {
                     var child;

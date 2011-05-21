@@ -29,10 +29,11 @@ register = template.Library()
 
 class RenderBlocksNode(template.Node):
 
-    def __init__(self, place, obj, block_type='block'):
+    def __init__(self, place, obj, block_type='block', nondraggable=False):
         self.place = place
         self.obj = obj
         self.block_type = block_type
+        self.nondraggable = 'nondraggable' if nondraggable else ''
 
     def render(self, context):
         request = context.get('request', None)
@@ -41,7 +42,7 @@ class RenderBlocksNode(template.Node):
             if self.obj is not None:
                 obj = self.obj.resolve(context)
             blocks = RegisteredBlock.objects.actives().filter(content=obj)
-            return _render_blocks(request, blocks, obj, self.place, self.block_type, context)
+            return _render_blocks(request, blocks, obj, self.place, self.block_type, self.nondraggable, context)
         except template.VariableDoesNotExist:
             return ''
 
@@ -50,36 +51,41 @@ class RenderBlocksNode(template.Node):
 def do_render_blocks(parser, token, block_type='block'):
     """
     Usage::
-      {% render_blocks "leftsidebar" %}
+      {% render_blocks "leftsidebar" [nondraggable] %}
     """
     bits = token.split_contents()
     tag_name = bits[0]
-    if len(bits) != 2 and block_type == 'block':
-        raise template.TemplateSyntaxError('"%r" tag requires only two '
+    if len(bits) < 2 or (len(bits) > 3 and block_type == 'block'):
+        raise template.TemplateSyntaxError('"%r" tag requires two '
                                            'arguments' % tag_name)
-    if len(bits) != 4 and block_type != 'block':
-        raise template.TemplateSyntaxError('"%r" tag requires at four '
+    if len(bits) == 3 and bits[2] != 'nondraggable':
+        raise template.TemplateSyntaxError('"%r" invalid argument'
+                                           'for tag' % tag_name)
+    if (len(bits) != 4 and len(bits) != 5) and block_type != 'block':
+        raise template.TemplateSyntaxError('"%r" tag requires at least four '
                                            'arguments' % tag_name)
-    if len(bits) == 4 and bits[2] != 'for':
+    if (len(bits) == 4 and bits[2] != 'for') or \
+    (len(bits) == 5 and bits[4] != 'nondraggable'):
         raise template.TemplateSyntaxError('"%r" statements should use the '
                                            'format %r "leftsidebar" for '
-                                           'obj' % (tag_name, tag_name))
+                                           'obj [nondraggable]' % (tag_name, tag_name))
     place = bits[1]
-    if len(bits) == 2:
+    if len(bits) == 2 or len(bits) == 3:
         obj = None
     else:
         obj = parser.compile_filter(bits[3])
+    draggable = True if (len(bits) == 3 or len(bits) == 5) else False
     if not (place[0] == place[-1] and place[0] in ('"', "'")):
         raise (template.TemplateSyntaxError, "%r tag's argument should be in "
                                              "quotes" % tag_name)
-    return RenderBlocksNode(place[1:-1], obj, block_type)
+    return RenderBlocksNode(place[1:-1], obj, block_type, draggable)
 
 
 @register.tag(name='render_content_blocks')
 def do_render_content_blocks(parser, token):
     """
     Usage::
-      {% render_content_blocks "rightsidebar" for content %}
+      {% render_content_blocks "rightsidebar" for content [nondraggable] %}
     """
     return do_render_blocks(parser, token, 'contentblock')
 
@@ -88,7 +94,7 @@ def do_render_content_blocks(parser, token):
 def do_render_section_blocks(parser, token):
     """
     Usage::
-      {% render_section_blocks "rightsidebar" for section %}
+      {% render_section_blocks "rightsidebar" for section [nondraggable] %}
     """
     return do_render_blocks(parser, token, 'sectionblock')
 
@@ -103,7 +109,7 @@ def _print_block(block, place, block_type, request):
         return False
 
 
-def _render_blocks(request, blocks, obj, place, block_type, context):
+def _render_blocks(request, blocks, obj, place, block_type, nondraggable, context):
     rendered_blocks = []
     for block in blocks.get_items():
         if not _print_block(block, place, block_type, request):
@@ -118,10 +124,10 @@ def _render_blocks(request, blocks, obj, place, block_type, context):
 
     wrapped_blocks = ['<div class="blockWrapper">%s</div>' % s for s in rendered_blocks]
 
-    return "<div class='blockContainer %ss'>%s" \
+    return "<div class='blockContainer %ss %s'>%s" \
             "<input type=\"hidden\" class=\"blockPlace\" value=\"%s\">" \
             "</div>" \
-            % (block_type, '\n'.join(wrapped_blocks), place)
+            % (block_type, nondraggable, '\n'.join(wrapped_blocks), place)
 
 
 def _get_blocks_to_display(place=None, content=None):
@@ -144,8 +150,9 @@ def _get_blocks_to_display(place=None, content=None):
 
 class RenderAllBlocksNode(template.Node):
 
-    def __init__(self, place):
+    def __init__(self, place, nondraggable=False):
         self.place = place
+        self.nondraggable = 'nondraggable' if nondraggable else ''
 
     def render(self, context):
         """
@@ -172,11 +179,11 @@ class RenderAllBlocksNode(template.Node):
                     if section:
                         section_blocks = section_blocks.exclude(module=b.module, class_name=b.class_name)
 
-            result = _render_blocks(request, blocks, content, self.place, "block", context)
+            result = _render_blocks(request, blocks, content, self.place, "block", self.nondraggable, context)
             if section:
-                result += _render_blocks(request, section_blocks, section, self.place, "sectionblock", context)
+                result += _render_blocks(request, section_blocks, section, self.place, "sectionblock", self.nondraggable, context)
             if content:
-                result += _render_blocks(request, content_blocks, content, self.place, "contentblock", context)
+                result += _render_blocks(request, content_blocks, content, self.place, "contentblock", self.nondraggable, context)
             return result
         except template.VariableDoesNotExist:
             return ''
@@ -188,28 +195,33 @@ def do_render_all_blocks(parser, token):
     It's a tag like using all render_*_blocks.
 
     Usage::
-      {% render_all_blocks "leftsidebar" %}
+      {% render_all_blocks "leftsidebar" [nondraggable] %}
 
     Last templatetag call is a shortcut to this logic::
 
-        {% render_blocks "leftsidebar" %}
+        {% render_blocks "leftsidebar" [nondraggable] %}
         {% if content %}
-            {% render_content_blocks "leftsidebar" for content %}
+            {% render_content_blocks "leftsidebar" for content [nondraggable] %}
         {% endif %}
         {% if section %}
-            {% render_section_blocks "leftsidebar" for section %}
+            {% render_section_blocks "leftsidebar" for section [nondraggable] %}
         {% endif %}
     """
     bits = token.split_contents()
     tag_name = bits[0]
-    if len(bits) != 2:
-        raise template.TemplateSyntaxError('"%r" tag requires only one '
-                                           'argument' % tag_name)
+    if len(bits) < 2:
+        raise template.TemplateSyntaxError('"%r" tag requires at least '
+                                           'two arguments' % tag_name)
+    if len(bits) > 3 or (len(bits) == 3 and bits[2] != 'nondraggable'):
+        raise template.TemplateSyntaxError('"%r" tag requires format '
+                                           'render_all_blocks "leftsidebar" '
+                                           '[nondraggable]' % tag_name)
     place = bits[1]
     if not (place[0] == place[-1] and place[0] in ('"', "'")):
         raise (template.TemplateSyntaxError, "%r tag's argument should be in "
                                              "quotes" % tag_name)
-    return RenderAllBlocksNode(place[1:-1])
+    draggable = True if len(bits) == 3 else False
+    return RenderAllBlocksNode(place[1:-1], draggable)
 
 
 class RenderSingleBlockNode(template.Node):
@@ -241,7 +253,7 @@ def do_render_single_block(parser, token):
     bits = token.split_contents()
     tag_name = bits[0]
     if len(bits) != 3:
-        raise template.TemplateSyntaxError('"%r" tag requires only two '
+        raise template.TemplateSyntaxError('"%r" tag requires two '
                                            'arguments' % tag_name)
     splitted_block_name = bits[1][1:-1].split('.')
     block_name = bits[2][1:-1]
