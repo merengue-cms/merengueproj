@@ -22,6 +22,18 @@ NOT_ORDERING_FIELD_TYPES = [StdImageField,
                             ManyToManyField,
                             TagField]
 
+NOT_ORDERING_FIELD_NAMES = ['adquire_global_permissions',
+                            'cached_plain_text',
+                            'has_related_blocks',
+                            'meta_desc',
+                            'multimediarelation',
+                            'no_changeable',
+                            'no_changeable_fields',
+                            'no_deletable',
+                            'objectpermission',
+                            'objectpermissioninheritanceblock',
+                            'principalrolerelation', ]
+
 
 def get_common_fields_for_cts(content_types):
     result = set()
@@ -35,6 +47,9 @@ def get_common_fields_for_cts(content_types):
         # remove all fields that are not suitable for ordering
         not_ordering = set()
         for f in fields:
+            if f in NOT_ORDERING_FIELD_NAMES:
+                not_ordering.add(f)
+                continue
             try:
                 field = model._meta.get_field_by_name(f)[0]
                 for fieldtype in NOT_ORDERING_FIELD_TYPES:
