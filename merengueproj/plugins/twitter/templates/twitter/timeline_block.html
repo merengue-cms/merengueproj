@@ -7,7 +7,10 @@
 {% else %}
   <ul>
     {% for tweet in tweets.list %}
-    <li class="tweet {% cycle 'even' 'odd' %}" title="{{ tweet|striptags }}">"{{ tweet|safe }}"</li>
+    <li class="tweet {% cycle 'even' 'odd' %}" title="{{ tweet|striptags }}">
+      <img src="{{ tweet.img }}"/>
+      <p>{{ tweet.text|safe }}</p>
+    </li>
     {% endfor %}
   </ul>
 {% endif %}
