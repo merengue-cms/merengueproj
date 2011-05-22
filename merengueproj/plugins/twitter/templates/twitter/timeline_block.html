@@ -1,7 +1,11 @@
 {% extends "block.html" %}
-{% load i18n %}
+{% load i18n media_tags %}
+
 
 {% block blockbody %}
+{% addmedia "css" %}
+    <link href="{{ MEDIA_URL }}twitter/css/twitter.css" rel="stylesheet" type="text/css" />
+{% endaddmedia %}
 {% if not tweets.list %}
   <div class="error_tweets">{% trans tweets.error %}</div>
 {% else %}

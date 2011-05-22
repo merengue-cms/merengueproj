@@ -1,0 +1,59 @@
+
+.error_tweets {
+    color: #ea6767;
+    margin-left: 3%;
+    margin-right: 3%;
+    font: verdana;
+    text-align: justify;
+    margin-top: 5%;
+    font-size: 10pt;
+    font-style: italic;
+}
+
+.bar_space {
+    border: none;
+    margin-top: 4%;
+    margin-bottom: 4%;
+    margin-left: 5%;
+    margin-right: 5%;
+    background-color: lightgrey;
+    height: 1px;
+}
+
+.link_twitter {
+    text-align: right;
+    margin-right: 2%;
+    font-size: 11pt/13pt;
+    font-style: oblique;
+}
+
+.tweet {
+    font-size: 10pt;
+    text-align: left;
+}
+
+.tweet img {
+    display: inline;
+    float: left;
+    margin-right: 3%;
+}
+
+.tweet p {
+    text-align: left;
+    font-size: 11pt/13pt;
+}
+
+.tweet div {
+    color: #CBA36B;
+    text-align: right;
+    font-size: 9pt;
+    font-style: italic;
+}
+
+.even{
+    background-color: #F9EFE1;
+}
+
+.odd {
+    background-color: #FFFAF3;
+}
