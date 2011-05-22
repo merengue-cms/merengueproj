@@ -37,21 +37,20 @@ class twitter_api():
                     return ([], u"This user hasn't tweets yet")
 
                 else:
-                    return ([i.text for i in tweets], u'Ok')
+                    return (tweets, u'Ok')
 
         except twitter.TwitterError:
             return ([], u"This user doesn't exists")
 
     def get_hashtags_tweets(self):
         tweets = self.api.GetSearch(term=self.value,
-                                   lang='es',
                                    per_page=self.limit,
                                    show_user=True)
 
-        return ([i.text for i in tweets], u"There aren't results for the hashtag defined")
+        return (tweets, u"There aren't results for the hashtag defined")
 
     def convert_tweet_html(self, tweet):
-        # comprobar que exista un enlace:
+        # check if exists a link on tweet
         if 'http' in tweet:
             pattern_url = re.compile("https?://[a-zA-Z0-9./-_]+")
             url = pattern_url.search(tweet)
@@ -62,7 +61,7 @@ class twitter_api():
                 tweet = tweet.replace(url.group(), rpl)
                 url = pattern_url.search(tweet, pos)
 
-        # comprobar si existe '#'
+        # check if exists '#' on tweet
         if '#' in tweet:
             pattern_tag = re.compile("#[a-zA-Z0-9]+")
             tag = pattern_tag.search(tweet)
@@ -74,7 +73,7 @@ class twitter_api():
                 tweet = tweet.replace(tag.group(), rpl)
                 tag = pattern_tag.search(tweet, pos)
 
-        # comprobar si existe '@'
+        # check if exists '@' on tweet
         if '@' in tweet:
             pattern_user = re.compile("@[a-zA-Z0-9_]+")
             user = pattern_user.search(tweet)
@@ -87,3 +86,22 @@ class twitter_api():
                 user = pattern_user.search(tweet, pos)
 
         return tweet
+
+    def render_tweets(self, tweets, with_name=True):
+        tweets_dict = []
+
+        for tweet in tweets:
+            # Get user image (check if a retweet, and get the image for the real user)
+            if tweet.retweeted_status:
+                img = tweet.retweeted_status.user.profile_image_url
+            else:
+                img = tweet.user.profile_image_url
+            if with_name:
+                text = '@' + tweet.user.screen_name + ': ' + tweet.text
+            else:
+                text = tweet.text
+
+            tweets_dict.append({'img': img,
+                                'text': self.convert_tweet_html(text)})
+
+        return tweets_dict
