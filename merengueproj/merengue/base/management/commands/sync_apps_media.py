@@ -31,7 +31,7 @@ from merengue.base.management.base import MerengueCommand
 try:
     set
 except NameError:
-    from sets import Set as set # Python 2.3 fallback
+    from sets import Set as set  # Python 2.3 fallback
 
 
 class Command(AppCommand, MerengueCommand):
@@ -162,8 +162,8 @@ class Command(AppCommand, MerengueCommand):
             # Get permission bits and ownership of `root`.
             try:
                 root_stat = os.stat(root)
-            except os.error, e:
-                mode = 0777 # Default for `os.makedirs` anyway.
+            except os.error:
+                mode = 0777  # Default for `os.makedirs` anyway.
                 uid = gid = None
             else:
                 mode = root_stat.st_mode
@@ -173,7 +173,7 @@ class Command(AppCommand, MerengueCommand):
                 # Recursively create all the required directories, attempting
                 # to use the same mode as `root`.
                 os.makedirs(destination_dir, mode)
-            except os.error, e:
+            except os.error:
                 # This probably just means the leaf directory already exists,
                 # but if not, we'll find out when copying or linking anyway.
                 pass
@@ -189,7 +189,8 @@ class Command(AppCommand, MerengueCommand):
             os.lchown(destination, uid, gid)
 
     def copy_file(self, source, destination, interactive=False, dry_run=False):
-        "Attempt to copy `source` to `destination` and return True if successful."
+        """Attempt to copy `source` to `destination` and return True if successful.
+        Don't remove the file if the destination and source files are the same."""
         if interactive:
             exists = os.path.exists(destination) or os.path.islink(destination)
             if exists:
@@ -198,12 +199,16 @@ class Command(AppCommand, MerengueCommand):
                     return False
         print "Copying %r to %r." % (source, destination)
         if not dry_run:
-            try:
-                os.remove(destination)
-            except os.error, e:
-                pass
-            shutil.copy2(source, destination)
-            return True
+            if os.path.realpath(destination) != os.path.realpath(source):
+                try:
+                    os.remove(destination)
+                except os.error:
+                    pass
+                shutil.copy2(source, destination)
+                return True
+            else:
+                print "The file %r is both the source and destination." % destination,
+                print "It won't be modified."
         return False
 
     def link_file(self, source, destination, interactive=False, dry_run=False):
@@ -219,11 +224,11 @@ class Command(AppCommand, MerengueCommand):
                     return False
         if not dry_run:
             try:
+                # unlink the destination before actually linking the source again
                 os.remove(destination)
-            except os.error, e:
+            except os.error:
                 pass
-        print "Linking to %r from %r." % (source, destination)
-        if not dry_run:
+            print "Linking to %r from %r." % (source, destination)
             os.symlink(source, destination)
             return True
         return False
