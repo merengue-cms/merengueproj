@@ -1,0 +1,17 @@
+.. _topics-models:
+
+===================
+Models in Merengue
+===================
+
+.. highlightlang:: html+django
+
+
+Overview
+========
+
+Base models used in Merengue
+----------------------------
+
+Merengue makes heavy use of two of its main data models, ``BaseContent`` and ``BaseCategory`` (:ref:`see  reference <ref-datamodels-basecontent>`).
+

@@ -4,16 +4,56 @@
 Merengue data models
 ====================
 
-
 Managed data models
 ===================
 
 Here's a list of all base models used in Merengue (plugins models not included)
 
+.. _ref-datamodels-basecontent:
+
 BaseContent
 -----------
 
-(( to be completed ))
+This is the main model for all contents in Merengue, including sections, collections, documents, etc. All models inheriting from ``BaseContent`` will have these base attributes:
+
+  * **name**
+  * **slug**
+  * **plain_description:** simple text description
+  * **description:** html formatted description
+  * **status:** publication status, an option between *draft*, *pending* and *published*.
+  * **workflow_status:** current state within the publishing workflow.
+  * **main_image**
+  * **contact_info:** a relation to a ``contact info`` object.
+  * **tags**
+  * **multimedia**
+  * **owners**
+  * **participants**
+  * **position** 
+
+On Merengue installations with GIS support, the following additional attributes can be found:
+  * **map_icon**
+  * **location**
+
+In addition, ``BaseContent`` adds a set of attributes for internal use, which can still be accessed by the developer:
+
+  * **related_items**
+  * **creation_date**
+  * **modification_date**
+  * **user_modification_date**
+  * **cached_plain_text**
+  * **last_editor**
+  * **adquire_global_permissions**
+  * **meta_desc**
+  * **commentable**
+  * **class_name**
+  * **rank**
+  * **no_changeable** 
+  * **no_deletable**
+  * **has_related_blocks**
+  * **no_changeable_fields**
+  
+
+From all these base fields, some will be available separately for each languages you have configured Merengue in. These fields are: ``name``, ``description``, ``plain_description``, ``cached_plain_text``.
 
 BaseCategory
 ------------

@@ -38,6 +38,9 @@ Topics
  * **Themes:**
    :ref:`Theming with Merengue <topics-themes-index>`
 
+ * **Models:**
+   :ref:`Models in Merengue <topics-models>`
+
  * **Blocks:**
    :ref:`Blocks <topics-blocks>`
 
