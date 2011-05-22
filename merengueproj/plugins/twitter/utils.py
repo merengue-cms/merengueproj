@@ -44,8 +44,9 @@ class twitter_api():
 
     def get_hashtags_tweets(self):
         tweets = self.api.GetSearch(term=self.value,
-                                   per_page=self.limit,
-                                   show_user=True)
+                                    lang='all',
+                                    per_page=self.limit,
+                                    show_user=True)
 
         return (tweets, u"There aren't results for the hashtag defined")
 
@@ -102,6 +103,7 @@ class twitter_api():
                 text = tweet.text
 
             tweets_dict.append({'img': img,
-                                'text': self.convert_tweet_html(text)})
+                                'text': self.convert_tweet_html(text),
+                                'time': tweet.relative_created_at})
 
         return tweets_dict
