@@ -63,16 +63,12 @@ class UserTimelineBlock(TimelineProvider, Block):
         limit = self.get_config().get('limit', []).get_value()
         user = self.get_config().get('user', []).get_value()
 
-        self.block_title = user + "'s tweets!"
+        self.block_title = "@" + user
 
         api = twitter_api(limit, user)
         (user_tweets, error) = api.get_user_tweets()
 
-        render_tweets = []
-        for tweet in user_tweets:
-            render_tweets.append(api.convert_tweet_html(tweet))
-
-        return (render_tweets, error)
+        return (api.render_tweets(user_tweets, False), error)
 
     def get_link(self):
         error = self.get_tweets()
@@ -107,11 +103,7 @@ class HashtagTimelineBlock(TimelineProvider, Block):
         api = twitter_api(limit, hashtag)
         (hashtag_tweets, no_tweet_found) = api.get_hashtags_tweets()
 
-        render_tweets = []
-        for tweet in hashtag_tweets:
-            render_tweets.append(api.convert_tweet_html(tweet))
-
-        return (render_tweets, no_tweet_found)
+        return (api.render_tweets(hashtag_tweets), no_tweet_found)
 
     def get_link(self):
         hashtag = self.get_config().get('hashtag', []).get_value()
