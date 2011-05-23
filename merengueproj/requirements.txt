@@ -3,6 +3,8 @@ PIL
 BeautifulSoup
 encutils
 feedparser
+# for twitter plugin
+python-twitter==0.8.2
 
 # Django
 Django==1.3
