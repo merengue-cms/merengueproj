@@ -325,3 +325,8 @@ PORTAL_LINK_CATEGORIES = (
     ('primary', ugettext('Primary link')),
     ('secondary', ugettext('Secondary link')),
 )
+
+PORTAL_LINK_POSITIONS = {
+    'primary': 'header',
+    'secondary': 'header',
+}
