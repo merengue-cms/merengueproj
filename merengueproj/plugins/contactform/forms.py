@@ -25,6 +25,8 @@ from django.template import defaultfilters, RequestContext
 from django import forms
 from django.utils.translation import ugettext as _
 from django.utils.safestring import SafeUnicode
+from django.contrib.sites.models import Site
+
 
 from BeautifulSoup import BeautifulSoup
 
@@ -85,6 +87,7 @@ class ContactFormForm(forms.Form):
 
         html_content = render_to_string('contactform/email.html',
                                         {'opts': opts_to_send,
+                                            'site_domain': Site.objects.get_current().domain,
                                             'content': content,
                                             'contact_form': contact_form,
                                             'contactuser': contactuser},
