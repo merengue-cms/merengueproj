@@ -108,6 +108,6 @@ class HashtagTimelineBlock(TimelineProvider, Block):
     def get_link(self):
         hashtag = self.get_config().get('hashtag', []).get_value()
         if hashtag.startswith('#'):
-            return ('Search ' + hashtag + ' on Twitter!', 'http://www.twitter.com/#!/search/' + hashtag[1:] + '/')
+            return ('Search ' + hashtag + ' on Twitter!', 'http://www.twitter.com/#!/search/%23' + hashtag[1:] + '/')
         else:
             return ('Search ' + hashtag + ' on Twitter!', 'http://www.twitter.com/#!/search/' + hashtag + '/')
