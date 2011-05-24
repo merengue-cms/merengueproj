@@ -17,7 +17,7 @@
 
 
 from django.http import HttpResponse
-from django.utils.simplejson import dumps
+from django.shortcuts import render
 
 from merengue.block.models import RegisteredBlock
 
@@ -25,7 +25,6 @@ from plugins.twitter.utils import twitter_api
 
 
 def get_user_tweets(request, block_id):
-
     block = RegisteredBlock.objects.get(id=block_id)
 
     limit = block.get_config().get('limit', [])
@@ -34,13 +33,13 @@ def get_user_tweets(request, block_id):
     api = twitter_api(limit, user)
     (user_tweets, error) = api.get_user_tweets()
 
-    render_tweets = []
-    for tweet in user_tweets:
-        render_tweets.append(api.convert_tweet_html(tweet))
+    tweets = {'error': error, 'list': api.render_tweets(user_tweets, False)}
 
-    tweets = {'error': error, 'list': render_tweets}
-
-    return HttpResponse(dumps(tweets), mimetype='text/json')
+    x = HttpResponse(render(request=request,
+                            template_name='twitter/list_tweets.html',
+                            dictionary={'tweets': tweets}), 'text/html')
+    print x
+    return x
 
 
 def get_hashtag_tweets(request, block_id):
@@ -52,10 +51,14 @@ def get_hashtag_tweets(request, block_id):
     api = twitter_api(limit, hashtag)
     (hashtag_tweets, error) = api.get_hashtags_tweets()
 
-    render_tweets = []
-    for tweet in hashtag_tweets:
-        render_tweets.append(api.convert_tweet_html(tweet))
+    tweets = {'error': error, 'list': api.render_tweets(hashtag_tweets)}
+    print tweets
 
-    tweets = {'error': error, 'list': render_tweets}
+    # print dumps(tweets)
 
-    return HttpResponse(dumps(tweets), mimetype='text/json')
+    x = HttpResponse(render(request=request,
+                            template_name='twitter/list_tweets.html',
+                            dictionary={'tweets': tweets}), 'text/html')
+    print x
+    return x
+    # return HttpResponse(dumps(tweets), mimetype='text/json')
