@@ -1,0 +1,15 @@
+{% load i18n %}
+
+{% if not tweets.list %}
+  <div class="error_tweets">{% trans tweets.error %}</div>
+{% else %}
+  <ul>
+    {% for tweet in tweets.list %}
+      <li class="tweet {% cycle 'even' 'odd' %}" title="{{ tweet.text|striptags }}">
+        <img src="{{ tweet.img }}"/>
+        <p>{{ tweet.text|safe }}</p>
+        <div id="time">{{ tweet.time|safe }}</div>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
