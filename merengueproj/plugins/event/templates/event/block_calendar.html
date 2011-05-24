@@ -3,7 +3,7 @@
 
 {% block blockbody %}
   <style type="text/css">
-    #datepicker-loading {
+    .datepicker-loading {
         z-index: 5000;
         position: absolute;
         display: none;
@@ -13,31 +13,35 @@
         border: 1px solid gray;
         background: #eee;
     }
-    #eventsCalendar {
+    .eventsCalendar {
         font-size:73%;
         position: relative;
-        height: 247px;
+    }
+    #content .eventsCalendar{
+        margin-top: -10px;
     }
   </style>
-  <div id="eventsCalendar" class="calendar">
-      <div id="datepicker-loading">
-        {% trans "Loading..." %}<img src="{{ MEDIA_URL }}merengue/img/ajax-loader-admin.gif" title="loading"/>
+  <div class="eventsCalendar calendar">
+      <div class="datepicker-loading">
+        {% trans "Loading..." %} <img src="{{ MEDIA_URL }}merengue/img/ajax-loader-admin.gif" title="loading"/>
       </div>
   </div>
 
 {% addmedia "css" %}
-  <link href="{{ MEDIA_URL }}merengue/css/jquery-ui-1.8.css" rel="stylesheet" type="text/css"/>
-  <link href="{{ MEDIA_URL }}event/jquery.tooltip.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ MEDIA_URL }}merengue/css/jquery-ui-1.8.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ MEDIA_URL }}event/jquery.tooltip.css" rel="stylesheet" type="text/css"/>
 {% endaddmedia %}
 
 {% addmedia "js" %}
-  <script language="javascript" src="{{ MEDIA_URL }}event/lib/jquery.bgiframe.js"></script>
-  <script language="javascript" src="{{ MEDIA_URL }}event/jquery.tooltip.js"></script>
+    <script src="{{ MEDIA_URL }}merengue/js/jquery-ui-1.8.min.js"></script>
+    <script language="javascript" src="{{ MEDIA_URL }}event/lib/jquery.bgiframe.js"></script>
+    <script language="javascript" src="{{ MEDIA_URL }}event/jquery.tooltip.js"></script>
 {% endaddmedia %}
 
 <script language="javascript" src="{{ MEDIA_URL }}merengue/js/jquery.ui.datepicker-{{ LANGUAGE_CODE }}.js"></script>
+
 <script language="javascript" >
-(function($) {
+ (function($) {
     $(document).ready(function() {
         function bind_days_tooltip ()
         {
@@ -52,27 +56,13 @@
             'url': '{{ event.url }}'
         }
         {% endfor %}
-
-        var updateByAjax = function(year, month) {
-                $('#datepicker-loading').fadeIn("slow");
-                $.ajax({
-                    url: "{% url events_calendar %}",
-                    type: "GET",
-                    data: ({month: month, year: year}),
-                    dataType: "json",
-                    success: function(events) {
-                        $('#datepicker-loading').fadeOut("slow");
-                        eventDate = events;
-                        $("#eventsCalendar").datepicker("refresh");
-                        bind_days_tooltip();
-                    }
-                });
-        };
-
         datepickerOptions = {
-            showButtonPanel: true,
-            changeMonth: true,
-            changeYear: true,
+            showButtonPanel: false,
+            changeMonth: false,
+            changeYear: false,
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            weekHeader: 'W',
             beforeShowDay: function(date) {
                 var key;
                 key = date.getFullYear() +"-"+ (date.getMonth() + 1) +"-"+ date.getDate();
@@ -97,16 +87,25 @@
                 }
             },
             onChangeMonthYear: function(year, month, inst) {
-                 updateByAjax(year, month);
+                $('.datepicker-loading').fadeIn("slow");
+                $.ajax({
+                    url: "{% url events_calendar %}",
+                    type: "GET",
+                    data: ({month: month, year: year}),
+                    dataType: "json",
+                    success: function(events) {
+                        $('.datepicker-loading').fadeOut("slow");
+                        eventDate = events;
+                        $(".calendar").datepicker("refresh");
+                        bind_days_tooltip();
+                    }
+                });
             }
         };
-        $("#eventsCalendar").datepicker(datepickerOptions);
+        $(".calendar").datepicker(datepickerOptions);
         bind_days_tooltip();
-        $('#datepicker-loading').hide();
-        var cdate=$('#eventsCalendar').datepicker("getDate");
-        updateByAjax(cdate.getFullYear(), cdate.getMonth()+1);
+        $('.datepicker-loading').hide();
     });
 })(jQuery);
 </script>
 {% endblock %}
-
