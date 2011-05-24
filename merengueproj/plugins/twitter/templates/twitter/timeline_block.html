@@ -1,24 +1,20 @@
 {% extends "block.html" %}
 {% load i18n media_tags %}
 
-
 {% block blockbody %}
 {% addmedia "css" %}
     <link href="{{ MEDIA_URL }}twitter/css/twitter.css" rel="stylesheet" type="text/css" />
 {% endaddmedia %}
-{% if not tweets.list %}
-  <div class="error_tweets">{% trans tweets.error %}</div>
-{% else %}
-  <ul>
-    {% for tweet in tweets.list %}
-    <li class="tweet {% cycle 'even' 'odd' %}" title="{{ tweet.text|striptags }}">
-      <img src="{{ tweet.img }}"/>
-      <p>{{ tweet.text|safe }}</p>
-      <div id="time">{{ tweet.time|safe }}</div>
-    </li>
-    {% endfor %}
-  </ul>
-{% endif %}
+{% addmedia "js" %}
+    <script type="text/javascript" src="{{ MEDIA_URL }}twitter/js/refresh.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+{% endaddmedia %}
+
+<div id='tweetlist'>
+{% include "twitter/list_tweets.html" %}
+</div>
+
 <div class="bar_space"></div>
 <div class="link_twitter"><a href="{{ link.http }}">{{ link.title }}</a></div>
 {% endblock %}
+
