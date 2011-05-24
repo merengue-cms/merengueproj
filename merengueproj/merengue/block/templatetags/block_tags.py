@@ -18,6 +18,7 @@
 from django import template
 from django.db.models import Q
 from django.conf import settings
+from django.template.loader import render_to_string
 
 from merengue.block.blocks import BaseBlock, ContentBlock, SectionBlock
 from merengue.block.models import RegisteredBlock
@@ -124,10 +125,14 @@ def _render_blocks(request, blocks, obj, place, block_type, nondraggable, contex
 
     wrapped_blocks = ['<div class="blockWrapper">%s</div>' % s for s in rendered_blocks]
 
-    return "<div class='blockContainer %ss %s'>%s" \
-            "<input type=\"hidden\" class=\"blockPlace\" value=\"%s\">" \
-            "</div>" \
-            % (block_type, nondraggable, '\n'.join(wrapped_blocks), place)
+    return render_to_string('blocks/block_container.html',
+                            {'block_type': block_type,
+                             'nondraggable': nondraggable,
+                             'blocks': '\n'.join(wrapped_blocks),
+                             'content': context.get('content', None),
+                             'section': context.get('section', None),
+                             'place': place,
+                            })
 
 
 def _get_blocks_to_display(place=None, content=None):
