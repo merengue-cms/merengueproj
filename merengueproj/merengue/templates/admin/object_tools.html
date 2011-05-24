@@ -3,6 +3,7 @@
 <script type="text/javascript" charset="utf-8">
     (function($) {
       $(document).ready(function () {
+          // top level object tools
           var report_link_elements = $('div#content > ul.object-tools').find('a.reportlink');
           if (report_link_elements.length){
               var object_tools = $('ul.object-tools');
@@ -21,6 +22,29 @@
 
               report_links.append(more_report_links);
               report_links.insertBefore(object_tools);
+          }
+
+          // related content object tools
+          var tools_wrapper = $('div#content-main > div.object-tools-wrapper > ul.object-tools').not('.expandable');
+          report_link_elements = tools_wrapper.find('a.reportlink');
+          if (report_link_elements.length){
+              object_tools = $('ul.object-tools');
+              quick_report = report_link_elements.slice(0,1).parent();
+              more_report_links = report_link_elements.slice(1).parent();
+              more_report_links.addClass('expandable');
+              more_report_links.hide();
+              
+              var expand_button = $('<li id="expand-report-options"><a href="#">(+)</a></li>');
+              expand_button.click(function(){
+                  $('ul.object-tools.expandable li.expandable').toggle();
+                  if ($('ul.object-tools.expandable li.expandable:visible').length)
+                      $(this).find('a').text('(–)');
+                  else
+                      $(this).find('a').text('(+)');
+              });
+
+              expand_button.insertAfter(quick_report);
+              tools_wrapper.addClass('expandable');
           }
       });
     })(jQuery);
