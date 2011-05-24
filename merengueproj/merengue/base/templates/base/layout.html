@@ -12,7 +12,7 @@
   {% block shortcut %}
   <link rel="shortcut icon" href="{{ THEME_MEDIA_URL }}img/favicon.ico" type="image/gif" />
   {% endblock %}
-  <title>{% block pagetitle %}{% include "base/inc.pagetitle.html" %}{% endblock %} - {% block sitetitle %}Merengue powered site{% endblock %}</title>
+  <title>{% block sitetitlewrapper %}{% block pagetitle %}{% include "base/inc.pagetitle.html" %}{% endblock %} - {% block sitetitle %}Merengue powered site{% endblock %}{% endblock %}</title>
 
   {% block metainfo %}
     {% include "inc.meta.html" %}
