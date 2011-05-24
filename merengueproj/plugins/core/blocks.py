@@ -104,7 +104,7 @@ class LinkBaseBlock(Block):
     verbose_name = _('Link Base Block')
 
     def render(self, request, place, context, *args, **kwargs):
-        links = PortalLink.objects.filter(category=self.category)
+        links = PortalLink.objects.filter(category=self.category).visible_by_user(request.user)
         return self.render_block(request, template_name=self.template_name,
                                 block_title=ugettext('Portal links'),
                                 context={'links': links,
