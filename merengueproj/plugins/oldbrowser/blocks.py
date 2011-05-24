@@ -15,18 +15,31 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+import re
 
-from django.utils.translation import ugettext as _, ugettext_lazy
+from django.conf import settings
+from django.utils.translation import ugettext, ugettext_lazy as _
 
 from merengue.block.blocks import Block
+from plugins.oldbrowser.models import OldBrowser
 
 
 class OldBrowserBlock(Block):
     name = 'oldbrowser'
     default_place = 'header'
-    help_text = ugettext_lazy('Block emulates the old browser ')
-    verbose_name = ugettext_lazy('Old browser block')
+    help_text = _('Block emulates the old browser ')
+    verbose_name = _('Old browser block')
 
     def render(self, request, place, context, *args, **kwargs):
+        user_agent = request.META.get('HTTP_USER_AGENT', None)
+        if not user_agent:
+            return ''
+        warning_string = None
+        for oldbrowser in OldBrowser.objects.all():
+            if re.search(oldbrowser.user_agent, user_agent, flags=re.I):
+                warning_string = _(u'Your browser is too old. Please, update it.')
+                if settings.DEBUG:
+                    warning_string = u'(%s) %s' % (oldbrowser.user_agent,
+                                                   warning_string)
         return self.render_block(request, template_name='oldbrowser/block_oldbrowser.html',
-                                 block_title=_('Old Browser'), context={})
+                                 block_title=ugettext('Old Browser'), context={'warning_string': warning_string})

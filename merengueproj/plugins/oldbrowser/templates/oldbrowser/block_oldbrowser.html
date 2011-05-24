@@ -1,15 +1,19 @@
 {% extends "block.html" %}
-{% load oldbrowser_tags i18n inlinetrans %}
+{% load i18n inlinetrans media_tags %}
 
 {% block blocktitle %}
 {% endblock %}
 {% block blockbody %}
-{% ifoldbrowser %}
-<link href="{{ MEDIA_URL }}oldbrowser/oldbrowser.css" rel="stylesheet" type="text/css" />
-    <div id="oldbrowser">
-        <p>
-            {% oldbrowser %}. <a href="{% url browser_info %}">{% inline_trans "More information" %}</a>
-        </p>
-    </div>
-{% endifoldbrowser %}
+    {% if warning_string %}
+        {% block warningwrapper %}
+            {% addmedia "css" %}
+                <link href="{{ MEDIA_URL }}oldbrowser/oldbrowser.css" rel="stylesheet" type="text/css" />
+            {% endaddmedia %}
+            <div id="oldbrowser">
+                <p>
+                    {% block warningtext %}{{ warning_string }}. <a href="{% url browser_info %}">{% inline_trans "More information" %}</a> {% endblock %}
+                </p>
+            </div>
+        {% endblock %}
+    {% endif %}
 {% endblock %}
