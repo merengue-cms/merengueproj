@@ -1,0 +1,7 @@
+{% load i18n media_tags %}
+
+{% addmedia "js" %}
+  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/block/jquery.addblock.js"></script>
+{% endaddmedia %}
+
+<a href="#" id="activate-add-block" title="{% trans "Add blocks" %}">{% trans "Add blocks" %}</a>
