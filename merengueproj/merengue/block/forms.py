@@ -17,16 +17,20 @@
 
 from django import forms
 from django.db.models import Q
+from django.forms.util import ErrorList
 from django.utils.importlib import import_module
 from django.utils.translation import ugettext_lazy as _
 
 from autoreports.forms import FormAdminDjango
 
-from merengue.base.forms import BaseAdminModelForm
+from merengue.base.models import BaseContent
+from merengue.base.forms import BaseAdminModelForm, BaseForm
+from merengue.block.blocks import Block, ContentBlock, SectionBlock
 from merengue.block.models import RegisteredBlock
 from merengue.pluggable.models import RegisteredPlugin
 from merengue.registry import register
 from merengue.registry.fields import ConfigFormField
+from merengue.section.models import BaseSection
 
 
 class BaseContentRelatedBlockAddForm(forms.ModelForm):
@@ -109,3 +113,76 @@ class BaseContentRelatedBlockChangeForm(BaseAdminModelForm):
 class BlockConfigForm(forms.Form, FormAdminDjango):
 
     config = ConfigFormField()
+
+
+class AddBlockForm(BaseForm):
+
+    block_type = forms.ChoiceField(choices=[], label=_('Select block type'), required=True)
+    place = forms.CharField(widget=forms.HiddenInput)
+    contentid = forms.CharField(widget=forms.HiddenInput, required=False)
+    sectionid = forms.CharField(widget=forms.HiddenInput, required=False)
+
+    def _find_subclasses(self, base, subclasses=None):
+        subclasses = subclasses or []
+        for i in base.__subclasses__():
+            if i not in subclasses:
+                subclasses.append(i)
+                self._find_subclasses(i, subclasses)
+        return subclasses
+
+    def __init__(self, *args, **kwargs):
+        super(AddBlockForm, self).__init__(*args, **kwargs)
+        choices = []
+        block_superclasses = [Block]
+        if self.initial.get('sectionid', None) or self.data.get('sectionid', None):
+            block_superclasses.append(SectionBlock)
+        if self.initial.get('contentid', None) or self.data.get('contentid', None):
+            block_superclasses.append(ContentBlock)
+        for block_type in block_superclasses:
+            all_blocks = self._find_subclasses(block_type)
+            block_list = [('%s.%s' % (i.__module__, i.__name__), i.verbose_name) for i in all_blocks]
+            if block_list:
+                choices.append((block_type.__name__, block_list))
+        self.fields['block_type'].choices = choices
+        self.tie_render = None
+
+    def clean(self):
+        block_type = self.cleaned_data['block_type']
+
+        module, classname = block_type.rsplit('.', 1)
+        block_class = getattr(import_module(module), classname)
+        self.block_class = block_class
+
+        content_id = self.cleaned_data.get('contentid', None)
+        if issubclass(self.block_class, ContentBlock):
+            content = None
+            if content_id:
+                try:
+                    content = BaseContent.objects.get(id=content_id).get_real_instance()
+                    self.tie_render = content
+                except BaseContent.DoesNotExist:
+                    pass
+            if not content:
+                self._errors['block_type'] = ErrorList([_(u'You can not insert a content block from a view without content')])
+
+        section_id = self.cleaned_data.get('sectionid', None)
+        if issubclass(self.block_class, SectionBlock):
+            section = None
+            if section_id:
+                try:
+                    section = BaseSection.objects.get(id=section_id).get_real_instance()
+                    self.tie_render = section
+                except BaseContent.DoesNotExist:
+                    pass
+            if not section:
+                self._errors['block_type'] = ErrorList([_(u'You can not insert a section block from a view without section')])
+        return self.cleaned_data
+
+    def save(self):
+        place = self.cleaned_data['place']
+        reg_block = register(self.block_class)
+        reg_block.active = True
+        reg_block.placed_at = place
+        reg_block.save()
+        reg_block.tied = self.tie_render
+        return reg_block

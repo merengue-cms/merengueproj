@@ -27,4 +27,6 @@ urlpatterns = patterns('merengue.block.views',
         name='generate_blocks_configuration'),
     url(r'ajax/config_for_content/(?P<block_id>\d+)$', 'generate_blocks_configuration_for_content',
         name='generate_blocks_configuration_for_content'),
+    url(r'ajax/add-block/$', 'add_block',
+        name='add_block'),
 )

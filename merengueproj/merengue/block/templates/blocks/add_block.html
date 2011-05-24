@@ -1,0 +1,9 @@
+{% load i18n %}
+<div id="add-block">
+  <form id="add-block-form" method="POST" action="{% url add_block %}">
+    {{ form }}
+    <div class="submit">
+      <input type="submit" value="{% trans "Add new block" %}" />
+    </div>
+  </form>
+</div>

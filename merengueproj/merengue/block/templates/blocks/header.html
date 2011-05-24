@@ -222,7 +222,55 @@
             });
         }
 
+        var initAddBlock = function() {
+            $("a.add-block-in-container").click(function() {
+                var trigger = $(this);
+                $.ajax({
+                    url: trigger.attr('href'),
+                    data: {
+                        place: $(this).parent().find('.blockPlace').val(),
+                        contentid: $(this).parent().find('.contentid').val(),
+                        sectionid: $(this).parent().find('.sectionid').val(),
+                    },
+                    context: document.body,
+                    success: function(data){
+                        Shadowbox.open({
+                            content:    data,
+                            type:       "html",
+                            title:      trigger.text(),
+                            height:     200,
+                            width:      400
+                        });
+                    }
+                });
+                $('#add-block-form').live("submit", function(event) {
+                    event.preventDefault();
+                    $.ajax({
+                        type: 'POST',
+                        url: $(this).attr('action'),
+                        data: $(this).serialize(),
+                        success: function(data) {
+                            if(data.indexOf('div id="add-block"') < 0) {
+                                trigger.before(data);
+                                var block = trigger.prev('.blockWrapper').find('.block');
+                                if (block.length) {
+                                    initBlock(block);
+                                }
+                                Shadowbox.close();
+                            } else {
+                                // a validation error happens. We will render the form again
+                                $('#add-block').replaceWith(data);
+                            }
+                        }
+                    });
+                    return false;
+                });
+                return false;
+            });
+        }
+
         initBlockTools();
+        initAddBlock();
     });
   }
 })(jQuery);
