@@ -53,7 +53,7 @@
         }
 
         function initBlock(block) {
-            var dragAnchor, confAnchor, divTools, position;
+            var dragAnchor, confAnchor, removeAnchor, divTools, position;
             position = block.position();
             divTools = $("<div>");
             // creating block tools
@@ -74,6 +74,13 @@
                 confAnchor.attr("title", "{% trans "Configure block" %}");
                 divTools.append(confAnchor);
             }
+            removeAnchor = $("<a>");
+            removeAnchor.attr("href", "javascript:void(0)");
+            removeAnchor.click(removeBlock);
+            removeAnchor.addClass("remove");
+            removeAnchor.attr("title", "{% trans "Remove block" %}");
+            divTools.append(removeAnchor);
+
             divTools.addClass("blockTools");
             if (block.css('position') != 'absolute') {
                 divTools.css({"left": position.left - 20});
@@ -92,6 +99,27 @@
                     block.children(".blockTools").delay(1000).fadeOut();
                 }
             });
+        }
+
+        function removeBlock() {
+            if (!confirm("{% trans "Are you sure you want to remove this block" %}")) {
+                return false;
+            }
+            var blocks_index_url = '{% url blocks_index %}';
+            var block = $(this).parents('.block');
+            var block_name = block.attr('id');
+            var block_title = block.find('.blockHiddenTitle').html();
+            var block_id = block.find('.blockId').val();
+            var block_remove_url = blocks_index_url + 'ajax/remove-block/' + block_id + '/';
+            $.ajax({
+                url: block_remove_url,
+                success: function(data){
+                    block.fadeOut(function() {
+                        remove();
+                    });
+                }
+            });
+            return false;
         }
 
         function loadBlockConfiguration() {

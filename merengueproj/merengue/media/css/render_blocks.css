@@ -33,6 +33,10 @@
     background: transparent url("../img/configure.png") no-repeat 0px 0px;
 }
 
+.blockContainer .block .blockTools a.remove {
+    background: transparent url("../img/remove_block.png") no-repeat 0px 0px;
+}
+
 .blockContainer .blockDrag {
     color: #999;
     font-style: italic;

@@ -123,3 +123,11 @@ def add_block(request):
     return render_to_response('blocks/add_block.html', {
         'form': form,
     })
+
+
+def remove_block(request, block_id):
+    if not has_global_permission(request.user, 'manage_portal'):
+        raise PermissionDenied()
+    reg_block = RegisteredBlock.objects.get(id=block_id)
+    reg_block.delete()
+    return HttpResponse('ok')
