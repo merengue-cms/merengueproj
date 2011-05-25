@@ -35,11 +35,9 @@ def get_user_tweets(request, block_id):
 
     tweets = {'error': error, 'list': api.render_tweets(user_tweets, False)}
 
-    x = HttpResponse(render(request=request,
-                            template_name='twitter/list_tweets.html',
-                            dictionary={'tweets': tweets}), 'text/html')
-    print x
-    return x
+    return HttpResponse(render(request=request,
+                               template_name='twitter/list_tweets.html',
+                               dictionary={'tweets': tweets}), 'text/html')
 
 
 def get_hashtag_tweets(request, block_id):
@@ -52,13 +50,7 @@ def get_hashtag_tweets(request, block_id):
     (hashtag_tweets, error) = api.get_hashtags_tweets()
 
     tweets = {'error': error, 'list': api.render_tweets(hashtag_tweets)}
-    print tweets
 
-    # print dumps(tweets)
-
-    x = HttpResponse(render(request=request,
+    return HttpResponse(render(request=request,
                             template_name='twitter/list_tweets.html',
                             dictionary={'tweets': tweets}), 'text/html')
-    print x
-    return x
-    # return HttpResponse(dumps(tweets), mimetype='text/json')
