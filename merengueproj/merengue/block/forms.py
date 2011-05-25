@@ -183,6 +183,7 @@ class AddBlockForm(BaseForm):
         reg_block = register(self.block_class)
         reg_block.active = True
         reg_block.placed_at = place
+        reg_block.content = self.tie_render
         reg_block.save()
         reg_block.tied = self.tie_render
         return reg_block
