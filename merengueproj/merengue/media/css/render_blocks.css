@@ -31,6 +31,7 @@
 
 .blockContainer .block .blockTools a.configure {
     background: transparent url("../img/configure.png") no-repeat 0px 0px;
+    height: 20px;
 }
 
 .blockContainer .block .blockTools a.remove {
