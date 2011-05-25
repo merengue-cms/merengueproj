@@ -73,3 +73,16 @@
     margin: 0.5em;
     text-align: center;
 }
+
+.add-block-in-container {
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url("../img/add_block.png") no-repeat top left;
+}
+
+#add-block-form #baseform-fieldname-place,
+#add-block-form #baseform-fieldname-contentid,
+#add-block-form #baseform-fieldname-sectionid {
+    display: none;
+}

@@ -20,7 +20,7 @@ from django.db.models import Q
 from django.conf import settings
 from django.template.loader import render_to_string
 
-from merengue.block.blocks import BaseBlock, ContentBlock, SectionBlock
+from merengue.block.blocks import ContentBlock, SectionBlock
 from merengue.block.models import RegisteredBlock
 from merengue.registry import register as merengue_register, get_items_by_name
 
@@ -40,10 +40,14 @@ class RenderBlocksNode(template.Node):
         request = context.get('request', None)
         try:
             obj = None
+            section = None
             if self.obj is not None:
-                obj = self.obj.resolve(context)
+                if self.block_type == 'contentblock':
+                    obj = self.obj.resolve(context)
+                elif self.block_type == 'sectionblock':
+                    section = self.obj.resolve(context)
             blocks = RegisteredBlock.objects.actives().filter(content=obj)
-            return _render_blocks(request, blocks, obj, self.place, self.block_type, self.nondraggable, context)
+            return _render_blocks(request, blocks, obj, section, self.place, self.block_type, self.nondraggable, context)
         except template.VariableDoesNotExist:
             return ''
 
@@ -101,24 +105,22 @@ def do_render_section_blocks(parser, token):
 
 
 def _print_block(block, place, block_type, request):
-    if block_type == 'block' and isinstance(block, BaseBlock) or \
-       block_type == 'contentblock' and isinstance(block, ContentBlock) or \
-       block_type == 'sectionblock' and isinstance(block, SectionBlock) or \
-       block.content is not None:  # block related to content is printed always
-        return block.get_registered_item().print_block(place, request.get_full_path())
-    else:
-        return False
+    return block.get_registered_item().print_block(place, request.get_full_path())
 
 
-def _render_blocks(request, blocks, obj, place, block_type, nondraggable, context):
+def _render_blocks(request, blocks, obj, section, place, block_type, nondraggable, context):
     rendered_blocks = []
     for block in blocks.get_items():
-        if not _print_block(block, place, block_type, request):
+        if ((isinstance(block, ContentBlock) and not obj) or
+            (isinstance(block, SectionBlock) and not section) or
+            not _print_block(block, place, block_type, request)):
             continue
         # building render method arguments
         render_args = [request, place]
-        if isinstance(block, ContentBlock) or isinstance(block, SectionBlock):
+        if isinstance(block, ContentBlock):
             render_args.append(obj)
+        elif isinstance(block, SectionBlock):
+            render_args.append(section)
         render_args.append(context)
         # append the block rendering to list
         rendered_blocks.append(block.render(*render_args))
@@ -139,16 +141,20 @@ def _get_blocks_to_display(place=None, content=None):
     """
     Gets content related blocks excluding the ones overwritten by blocks within the same content
     """
-    if content:
-        blocks = content.registeredblock_set.all()
+    if place:
+        placed_at = {'placed_at': place}
     else:
-        blocks = RegisteredBlock.objects.actives().filter(content__isnull=True)
+        placed_at = {}
+    if content:
+        blocks = content.registeredblock_set.all().filter(**placed_at)
+    else:
+        blocks = RegisteredBlock.objects.actives().filter(content__isnull=True).filter(**placed_at)
 
     overwrite = Q(placed_at=place, overwrite_if_place=True) | Q(overwrite_always=True)
     excluders = blocks.filter(overwrite)
     excluded = blocks.none()
     for b in excluders:
-        excluded |= blocks.filter(~Q(id=b.id), module=b.module, class_name=b.class_name, overwrite_always=False)
+        excluded |= blocks.filter(~Q(id__in=[i.id for i in excluders]), module=b.module, class_name=b.class_name, overwrite_always=False)
 
     return blocks.exclude(id__in=[b.id for b in excluded])
 
@@ -172,7 +178,9 @@ class RenderAllBlocksNode(template.Node):
             section = context.get('section', None)
             overwrite = Q(placed_at=self.place, overwrite_if_place=True) | Q(overwrite_always=True)
 
-            blocks = _get_blocks_to_display()
+            blocks = _get_blocks_to_display(self.place)
+            content_blocks = RegisteredBlock.objects.none()
+            section_blocks = RegisteredBlock.objects.none()
             if section:
                 section_blocks = _get_blocks_to_display(self.place, section)
                 for b in section_blocks.filter(overwrite):
@@ -184,11 +192,9 @@ class RenderAllBlocksNode(template.Node):
                     if section:
                         section_blocks = section_blocks.exclude(module=b.module, class_name=b.class_name)
 
-            result = _render_blocks(request, blocks, content, self.place, "block", self.nondraggable, context)
-            if section:
-                result += _render_blocks(request, section_blocks, section, self.place, "sectionblock", self.nondraggable, context)
-            if content:
-                result += _render_blocks(request, content_blocks, content, self.place, "contentblock", self.nondraggable, context)
+            blocks = (blocks | content_blocks | section_blocks).order_by('order')
+
+            result = _render_blocks(request, blocks, content, section, self.place, "block", self.nondraggable, context)
             return result
         except template.VariableDoesNotExist:
             return ''

@@ -5,5 +5,5 @@
   <input type="hidden" class="blockPlace" value="{{ place }}">
   <input type="hidden" class="contentid" value="{{ content.id }}">
   <input type="hidden" class="sectionid" value="{{ section.id }}">
-  <a style="display: none;" href="{% url add_block %}" class="add-block-in-container">{{ place }} [{{ block_type }}]: {% trans "Add new block" %}</a>
+  <a style="display: none;" href="{% url add_block %}" class="add-block-in-container" title="{% trans "Add new block" %}">&nbsp;</a>
 </div>
