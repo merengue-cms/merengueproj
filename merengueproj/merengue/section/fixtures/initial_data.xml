@@ -106,34 +106,4 @@
         <field type="TextField" name="body_es"></field>
         <field type="TextField" name="body_en">&lt;h2&gt;To get further&lt;/h2&gt;&lt;p&gt;Please go to &lt;a href="http://docs.merengueproject.org/"&gt;Merengue documentation&lt;/a&gt; to learn more about Merengue, from a developer and content manager point of view.&lt;/p&gt;</field>
     </object>
-        <object pk="13" model="perms.objectpermission" overwrite="no">
-        <field to="perms.role" name="role" rel="ManyToOneRel">1</field>
-        <field to="perms.permission" name="permission" rel="ManyToOneRel">1</field>
-        <field to="base.basecontent" name="content" rel="ManyToOneRel">2</field>
-    </object>
-    <object pk="14" model="perms.objectpermission" overwrite="no">
-        <field to="perms.role" name="role" rel="ManyToOneRel">2</field>
-        <field to="perms.permission" name="permission" rel="ManyToOneRel">4</field>
-        <field to="base.basecontent" name="content" rel="ManyToOneRel">2</field>
-    </object>
-    <object pk="15" model="perms.objectpermission" overwrite="no">
-        <field to="perms.role" name="role" rel="ManyToOneRel">2</field>
-        <field to="perms.permission" name="permission" rel="ManyToOneRel">5</field>
-        <field to="base.basecontent" name="content" rel="ManyToOneRel">2</field>
-    </object>
-    <object pk="19" model="perms.objectpermission" overwrite="no">
-        <field to="perms.role" name="role" rel="ManyToOneRel">1</field>
-        <field to="perms.permission" name="permission" rel="ManyToOneRel">1</field>
-        <field to="base.basecontent" name="content" rel="ManyToOneRel">1</field>
-    </object>
-    <object pk="20" model="perms.objectpermission" overwrite="no">
-        <field to="perms.role" name="role" rel="ManyToOneRel">2</field>
-        <field to="perms.permission" name="permission" rel="ManyToOneRel">4</field>
-        <field to="base.basecontent" name="content" rel="ManyToOneRel">1</field>
-    </object>
-    <object pk="21" model="perms.objectpermission" overwrite="no">
-        <field to="perms.role" name="role" rel="ManyToOneRel">2</field>
-        <field to="perms.permission" name="permission" rel="ManyToOneRel">5</field>
-        <field to="base.basecontent" name="content" rel="ManyToOneRel">1</field>
-    </object>
 </django-objects>
