@@ -24,6 +24,7 @@ class PluginConfig(Plugin):
     name = 'Twitter'
     description = 'Plugin to show a timeline of Twitter'
     version = '0.0.2a'
+    required_apps = {'python-twitter': {}, }
 
     url_prefixes = (
         ('twitter', 'plugins.twitter.urls'),
