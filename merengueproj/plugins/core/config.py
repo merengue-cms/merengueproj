@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
@@ -43,7 +44,9 @@ class PluginConfig(Plugin):
 
     config_params = [
         params.Content(name='home_initial_content',
-                       label=_('home initial content'), default=1)]
+                       label=_('home initial content'), default=1),
+        params.Single(name='login_url',
+                       label=_('Login URL'), default=settings.LOGIN_URL)]
 
     def get_actions(self):
         return [AdminAction, LoginAction, LogoutAction, PrintAction]

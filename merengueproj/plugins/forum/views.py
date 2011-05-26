@@ -1,5 +1,3 @@
-from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
@@ -9,12 +7,15 @@ from django.utils.translation import ugettext as _
 
 from captcha.decorators import add_captcha
 
+from merengue.base.decorators import login_required
+from merengue.base.utils import get_login_url
 from merengue.base.views import content_list, content_view, render_content
 from merengue.perms.utils import has_permission
 from merengue.section.utils import get_section, filtering_in_section
 
 from plugins.forum.models import Forum, Thread, ForumThreadComment
 from plugins.forum.forms import CaptchaForumThreadCommentForm, CreateThreadForm
+from plugins.forum.utils import can_create_new_thread
 
 
 PAGINATE_BY = 20
@@ -55,8 +56,8 @@ def thread_view(request, forum_slug, thread_slug, original_context=None):
 
 def create_new_thread(request, forum_slug):
     forum = get_object_or_404(Forum, slug=forum_slug)
-    if not request.user or not (request.user.is_superuser or has_permission(forum, request.user, 'create_new_thread')):
-        login_url = '%s?next=%s' % (reverse('merengue_login'),
+    if not can_create_new_thread(request.user, forum):
+        login_url = '%s?next=%s' % (get_login_url(),
                                     request.get_full_path())
         return HttpResponseRedirect(login_url)
     if request.POST:

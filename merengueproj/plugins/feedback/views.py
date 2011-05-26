@@ -16,7 +16,6 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
@@ -24,6 +23,7 @@ from django.views.decorators.cache import never_cache
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
 
+from merengue.base.decorators import login_required
 from threadedcomments.models import FreeThreadedComment
 from captcha.decorators import add_captcha
 

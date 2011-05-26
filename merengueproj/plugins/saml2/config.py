@@ -15,9 +15,12 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.pluggable import Plugin
+from merengue.pluggable.models import RegisteredPlugin
+from merengue.pluggable.utils import get_plugin
 from merengue.registry import params
 
 from plugins.saml2.actions import Saml2LoginAction, Saml2LogoutAction
@@ -77,3 +80,11 @@ class PluginConfig(Plugin):
 
     def get_actions(self):
         return [Saml2LoginAction, Saml2LogoutAction]
+
+    def post_actions(self):
+        login_smal2_url = '/saml2/login/'
+        plugin = RegisteredPlugin.objects.get_by_item(get_plugin('core'))
+        login_url = plugin.config.get('login_url', None)
+        if login_url != login_smal2_url and (not login_url or login_url == settings.LOGIN_URL):
+            plugin.config['login_url'] = login_smal2_url
+            plugin.save()

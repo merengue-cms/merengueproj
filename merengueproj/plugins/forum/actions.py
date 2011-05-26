@@ -19,9 +19,10 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 
+from merengue.base.utils import get_login_url
 from merengue.action.actions import ContentAction
-from merengue.perms.utils import has_permission
 from plugins.forum.models import Forum
+from plugins.forum.utils import can_create_new_thread
 
 
 class CreateThreadAction(ContentAction):
@@ -29,13 +30,13 @@ class CreateThreadAction(ContentAction):
     verbose_name = _(u'Create new thread')
 
     def get_response(self, request, content):
-        if request.user and (request.user.is_superuser or has_permission(content, request.user, 'create_new_thread')):
-            return HttpResponseRedirect(reverse('plugins.forum.views.create_new_thread',
-                                                kwargs={'forum_slug': content.slug}))
-        else:
-            login_url = '%s?next=%s' % (reverse('merengue_login'),
+        if not can_create_new_thread(request.user, content):
+            login_url = '%s?next=%s' % (get_login_url(),
                                         request.get_full_path())
             return HttpResponseRedirect(login_url)
+        else:
+            return HttpResponseRedirect(reverse('plugins.forum.views.create_new_thread',
+                                                kwargs={'forum_slug': content.slug}))
 
     def has_action(self, request, content):
         if type(content) == Forum:
