@@ -8,7 +8,10 @@
 <input type="hidden" name="{{name}}" id="{{html_id}}" value="{{current_id}}" />
 <script type="text/javascript">
 jQuery(document).ready(function($){{% block script %}
-	$("#{{html_id}}_text").autocomplete('{{lookup_url}}', {
+{% block lookup_url %}
+    var lookup_url = '{{lookup_url}}';
+{% endblock %}
+	$("#{{html_id}}_text").autocomplete(lookup_url, {
 		width: 320,
 		formatItem: function(row) { return row[2]; },
 		formatResult: function(row) { return row[1]; },

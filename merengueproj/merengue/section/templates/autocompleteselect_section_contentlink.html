@@ -4,13 +4,10 @@
 {% if help_text %}<p class="help">{{ help_text }}</p>{% endif %}
 {% endblock %}
 
-{% block extra_script %}
-    $("#{{html_id}}_text").unautocomplete();
-    section = $("#parent_object").html();
-    $("#{{html_id}}_text").autocomplete('{{lookup_url}}?section=' + section, {
-        width: 320,
-        formatItem: function(row) { return row[2]; },
-        formatResult: function(row) { return row[1]; },
-        dataType: "text"
-    });
+{% block lookup_url %}
+    var section = $("#parent_object").html();
+    var lookup_url = '{{lookup_url}}';
+    if (section) {
+        lookup_url = lookup_url + '?section=' + section;
+    }
 {% endblock %}

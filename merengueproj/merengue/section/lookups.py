@@ -23,11 +23,13 @@ class ContentLinkLookup(ContentLookup):
 
     def get_query(self, q, request):
         """ return a query set. you also have access to request.user if needed """
-        autocompleted = BaseContent.objects.filter(self._get_filters(q))
         section = request.GET.get('section', None)
         limit = request.GET.get('limit', 10)
+        autocompleted = BaseContent.objects.filter(self._get_filters(q))
         if section:
             # we give priority to the contents inside section
             autocompleted = list(autocompleted.filter(sections=section)[:limit].visible_by_user(request.user)) + \
                 list(autocompleted.exclude(sections=section)[:limit].visible_by_user(request.user))
+        else:
+            autocompleted = autocompleted[:limit]
         return autocompleted
