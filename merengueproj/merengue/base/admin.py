@@ -25,7 +25,7 @@ from django.db import models, router
 from django.db.models import Q
 
 from django.db.models.related import RelatedObject
-from django.db.models.fields.related import ForeignKey, ManyToManyField
+from django.db.models.fields.related import ForeignKey, ManyToManyField, RelatedField
 from django.shortcuts import render_to_response
 from django.contrib import admin
 from django.contrib.auth.models import User
@@ -52,6 +52,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext, get_language
 from django.utils.translation import ugettext_lazy as _
 
+from ajax_select.fields import AutoCompleteSelectField, AutoCompleteSelectMultipleField
 from autoreports.admin import ReportAdmin
 from cmsutils.forms.widgets import AJAXAutocompletionWidget, ReadOnlyWidget
 from oembed.models import ProviderRule, StoredOEmbed
@@ -382,6 +383,15 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
                 trans_search_fields.append(f)
         self.search_fields = tuple(trans_search_fields)
 
+    def _media(self):
+        __media = super(BaseAdmin, self)._media()
+        __media.add_js(['merengue/js/ajaxautocompletion/jquery.autocomplete.js',
+                        'merengue/js/ajaxa_select/ajax_select.js'])
+        __media.add_css({'all': ('merengue/css/ajaxautocompletion/jquery.autocomplete.css',
+                                 'merengue/css/ajax_select/iconic.css')})
+        return __media
+    media = property(_media)
+
     def get_form(self, request, obj=None, **kwargs):
         form = super(BaseAdmin, self).get_form(request, obj, **kwargs)
         keys = form.base_fields.keys()
@@ -470,6 +480,11 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
             if db_field.related.parent_model == BaseContent:
                 request = kwargs.get('request', None)
                 field.widget = RelatedBaseContentWidget(field.widget, field.widget.rel, field.widget.admin_site, request=request)
+        if isinstance(db_field, RelatedField) and db_field.related.parent_model == User:
+            if isinstance(field, forms.ModelMultipleChoiceField):
+                field = super(db_field.__class__, db_field).formfield(form_class=AutoCompleteSelectMultipleField, channel='user')
+            else:
+                field = super(db_field.__class__, db_field).formfield(form_class=AutoCompleteSelectField, channel='user')
         return field
 
     def get_actions(self, request):
@@ -520,7 +535,8 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
                 edit_related_fields.append(related_field_dict)
             media = Media()
             media.add_js([settings.ADMIN_MEDIA_PREFIX + "js/SelectBox.js",
-                          settings.ADMIN_MEDIA_PREFIX + "js/SelectFilter2.js", ])
+                          settings.ADMIN_MEDIA_PREFIX + "js/SelectFilter2.js",
+                          ])
             context.update({
                 'edit_related_fields': edit_related_fields,
                 'media': context['media'] + media.render(),
