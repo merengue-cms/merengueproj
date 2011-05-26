@@ -24,13 +24,17 @@ from merengue.base.models import BaseContent
 
 class ContentLookup(object):
 
+    def _get_filters(self, q):
+        name_fields = get_real_fieldname_in_each_language('name')
+        filters = Q()  # query without filters
+        for field_name in name_fields:
+            filters |= Q(**{'%s__contains' % field_name: q})
+        return filters
+
     def get_query(self, q, request):
         """ return a query set. you also have access to request.user if needed """
-        name_fields = get_real_fieldname_in_each_language('name')
-        query = Q()  # query without filters
-        for field_name in name_fields:
-            query |= Q(**{'%s__contains' % field_name: q})
-        autocompleted = BaseContent.objects.filter(query).visible_by_user(request.user)
+        limit = request.GET.get('limit', 10)
+        autocompleted = BaseContent.objects.filter(self._get_filters(q))[:limit].visible_by_user(request.user)
         return autocompleted
 
     def format_item(self, content):
