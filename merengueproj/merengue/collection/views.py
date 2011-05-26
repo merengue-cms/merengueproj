@@ -16,11 +16,11 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import simplejson
 
+from merengue.base.decorators import login_required
 from merengue.base.views import render_content
 from merengue.collection.utils import (get_common_fields_for_cts,
                                        get_common_fields_no_language_from_fields,

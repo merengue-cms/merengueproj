@@ -16,7 +16,6 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -25,7 +24,7 @@ from django.utils.translation import get_language_from_request
 
 from merengue.section.models import BaseSection, Document, \
                                     DocumentSection, BaseLink
-
+from merengue.base.decorators import login_required
 from merengue.base.views import content_view
 from merengue.section.models import AbsoluteLink, ContentLink, ViewletLink, Menu
 from merengue.section.utils import get_section

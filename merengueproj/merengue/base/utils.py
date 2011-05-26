@@ -4,6 +4,7 @@ from django.template import RequestContext
 
 from copy import deepcopy
 from django.db import connection
+from merengue.pluggable.utils import get_plugin
 from south.db import db
 from transmeta import (get_real_fieldname_in_each_language, get_field_language,
                        fallback_language)
@@ -48,3 +49,12 @@ def get_render_http_error(request, http_error):
     context = {'template_base': 'viewlet_error.html', 'is_admin': False}
     return render_to_string(template, context,
                                       context_instance=RequestContext(request))
+
+
+def get_login_url():
+    core_config = get_plugin('core').get_config()
+    login_url_conf = core_config.get('login_url', None)
+    if not login_url_conf:
+        return settings.LOGIN_URL
+    else:
+        return login_url_conf.get_value() or settings.LOGIN_URL

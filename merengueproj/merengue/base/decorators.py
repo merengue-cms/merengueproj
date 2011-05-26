@@ -15,8 +15,17 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-
+from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.contrib.auth.decorators import login_required as login_required_django
 from django.core.exceptions import PermissionDenied
+
+from merengue.base.utils import get_login_url
+
+
+def login_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url=None):
+    return login_required_django(function,
+                                 redirect_field_name=redirect_field_name,
+                                 login_url=get_login_url())
 
 
 def login_required_or_permission_denied(view_func):
