@@ -19,7 +19,6 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.base.utils import get_login_url
 from merengue.action.actions import ContentAction
 from plugins.forum.models import Forum
 from plugins.forum.utils import can_create_new_thread
@@ -30,10 +29,9 @@ class CreateThreadAction(ContentAction):
     verbose_name = _(u'Create new thread')
 
     def get_response(self, request, content):
-        if not can_create_new_thread(request.user, content):
-            login_url = '%s?next=%s' % (get_login_url(),
-                                        request.get_full_path())
-            return HttpResponseRedirect(login_url)
+        http_response = can_create_new_thread(request, content)
+        if http_response:
+            return http_response
         else:
             return HttpResponseRedirect(reverse('plugins.forum.views.create_new_thread',
                                                 kwargs={'forum_slug': content.slug}))
