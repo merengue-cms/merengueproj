@@ -276,7 +276,10 @@ class AbsoluteLink(BaseLink):
 
 class ContentLink(BaseLink):
 
-    content = models.ForeignKey(BaseContent, verbose_name=_('Content'))
+    content = models.ForeignKey(
+        BaseContent,
+        verbose_name=_('Content'),
+    )
 
     def get_absolute_url(self):
         assert self.content is not None

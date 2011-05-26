@@ -22,11 +22,11 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
+from ajax_select.fields import AutoCompleteSelectField
 from transmeta import get_real_fieldname_in_each_language, get_fallback_fieldname
 
 from merengue.base.admin import BaseAdmin, BaseContentAdmin, RelatedModelAdmin, \
                                 BaseOrderableAdmin, OrderableRelatedModelAdmin
-from merengue.base.widgets import RelatedFieldWidgetWrapperWithoutAdding
 from merengue.section.fields import CSSValidatorField
 from merengue.section.forms import MenuAdminModelForm
 from merengue.section.models import (Menu, BaseSection,
@@ -226,6 +226,7 @@ class BaseLinkInline(admin.TabularInline):
 class AbsoluteLinkInline(BaseLinkInline):
     model = AbsoluteLink
     max_num = 1
+    extra = 1
     verbose_name = _('Menu Absolute Link')
     verbose_name_plural = _('Menu Absolute Links')
 
@@ -256,6 +257,7 @@ class AbsoluteLinkInline(BaseLinkInline):
 class ContentLinkInline(BaseLinkInline):
     model = ContentLink
     max_num = 1
+    extra = 1
     verbose_name = _('Menu Content Link')
     verbose_name_plural = _('Menu Content Links')
 
@@ -265,19 +267,11 @@ class ContentLinkInline(BaseLinkInline):
             return formset
         form = formset.form
         if 'content' in form.base_fields.keys():
-            formfield = form.base_fields['content']
-            qs = formfield.queryset
-            admin_model = getattr(self, 'admin_model', None)
-            if admin_model:
-                qs = qs.filter(sections=admin_model.basecontent)
-            formfield.queryset = qs
-            # change the widget to a wrapper
-            # note: formfield.wigdet is already a wrapper of formfield.widget.widget
-            formfield.widget = RelatedFieldWidgetWrapperWithoutAdding(
-                formfield.widget.widget, formfield.widget.rel, self.admin_site,
+            link_autocomplete = AutoCompleteSelectField(
+                'base_content', label=ugettext('Content'),
             )
-            # limiting widget choices to new queryset
-            formfield.widget.widget.choices = formfield.choices
+            link_autocomplete.widget.help_text = ugettext('Enter text to search the content')
+            form.base_fields['content'] = link_autocomplete
         return formset
 
 
@@ -298,6 +292,12 @@ class MenuAdmin(BaseAdmin):
     inlines = [AbsoluteLinkInline, ContentLinkInline, ViewletLinkInline]
     form = MenuAdminModelForm
     menu_slug = None
+
+    class Media:
+        css = {'all': ('merengue/css/ajaxautocompletion/jquery.autocomplete.css',
+                       'merengue/css/ajax_select/iconic.css')}
+        js = ('merengue/js/ajaxautocompletion/jquery.autocomplete.js',
+              'merengue/js/ajax_select/ajax_select.js')
 
     def __init__(self, *args, **kwargs):
         super(MenuAdmin, self).__init__(*args, **kwargs)
