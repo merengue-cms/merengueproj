@@ -21,6 +21,7 @@ from django.contrib.admin.filterspecs import FilterSpec
 from django.contrib.admin.util import unquote
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.utils.encoding import force_unicode
@@ -65,7 +66,7 @@ class WorkflowAdmin(BaseAdmin):
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
 
     def get_urls(self):
-        from django.conf.urls.defaults import patterns
+        from django.conf.urls.defaults import patterns, url
 
         def wrap(view):
 
@@ -76,7 +77,8 @@ class WorkflowAdmin(BaseAdmin):
 
         urls = super(WorkflowAdmin, self).get_urls()
         my_urls = patterns('',
-            (r'^update_permissions/$', wrap(self.update_permissions_view)),
+            url(r'^update_permissions/$', wrap(self.update_permissions_view),
+                name='update_permissions'),
             (r'^(?P<workflow_id>\d+)/graphic_workflow/$', wrap(self.graphic_workflow_view)))
         return my_urls + urls
 
@@ -217,7 +219,8 @@ class StateRelatedModelAdmin(RelatedModelAdmin):
                         StatePermissionRelation.objects.get_or_create(role=role, permission=perm, state=state)
                     else:
                         StatePermissionRelation.objects.filter(permission=perm, role=role, state=state).delete()
-            msg = ugettext('State permissions were saved successfully.')
+            msg = ugettext('State permissions were saved successfully. To make your changes effective you have to update permissions <a href="%(url)s">here</a>') \
+                  % {'url': reverse('admin:update_permissions')}
             self.message_user(request, msg)
             return HttpResponseRedirect('..')
 
