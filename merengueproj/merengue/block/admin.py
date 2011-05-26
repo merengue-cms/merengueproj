@@ -35,7 +35,7 @@ FilterSpec.filter_specs.insert(0, (lambda f: f.name == 'content' and f.model == 
 
 class RegisteredBlockAdmin(RegisteredItemAdmin):
     readonly_fields = RegisteredItemAdmin.readonly_fields + ('name', )
-    list_display = RegisteredItemAdmin.list_display + ('placed_at', )
+    list_display = RegisteredItemAdmin.list_display + ('name', 'placed_at', )
     list_filter = ('placed_at', 'content')
     search_fields = ('name', )
     ordering = ('order', )
