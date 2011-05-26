@@ -268,7 +268,7 @@ class ContentLinkInline(BaseLinkInline):
         form = formset.form
         if 'content' in form.base_fields.keys():
             link_autocomplete = AutoCompleteSelectField(
-                'base_content', label=ugettext('Content'),
+                'section_contentlink', label=ugettext('Content'),
             )
             link_autocomplete.widget.help_text = ugettext('Enter text to search the content')
             form.base_fields['content'] = link_autocomplete

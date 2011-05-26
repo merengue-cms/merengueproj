@@ -33,6 +33,14 @@
 
 {% smart_relations_object_tool %}
 
+{% block context-variables %}
+<span id="context-variables" style="display:none">
+  <!-- context data to be used in javascript if needed -->
+  {% if original %}<span id="object">{{ original.id }}</span>{% endif %}
+  {% block extra-context %}{% endblock %}
+</span>
+{% endblock %}
+
 <div id="content-main">
 
 {% block content-main-inner %}

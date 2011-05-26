@@ -1,0 +1,16 @@
+{% extends "autocompleteselect.html" %}
+{% load i18n %}
+{% block help %}
+{% if help_text %}<p class="help">{{ help_text }}</p>{% endif %}
+{% endblock %}
+
+{% block extra_script %}
+    $("#{{html_id}}_text").unautocomplete();
+    section = $("#parent_object").html();
+    $("#{{html_id}}_text").autocomplete('{{lookup_url}}?section=' + section, {
+        width: 320,
+        formatItem: function(row) { return row[2]; },
+        formatResult: function(row) { return row[1]; },
+        dataType: "text"
+    });
+{% endblock %}

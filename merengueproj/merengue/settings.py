@@ -244,6 +244,7 @@ AJAX_LOOKUP_CHANNELS = {
     'perms_group': ('merengue.perms.lookups', 'GroupLookup'),
     'base_content': ('merengue.base.lookups', 'ContentLookup'),
     'user': ('merengue.base.lookups', 'UserLookup'),
+    'section_contentlink': ('merengue.section.lookups', 'ContentLinkLookup'),
 }
 
 JQUERY_BASE_MEDIA = 'merengue/js/'

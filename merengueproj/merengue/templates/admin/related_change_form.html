@@ -8,7 +8,12 @@
 
 {% block extrabodyclass %}related{% endblock %}
 
+{% block extra-context %}
+  {% if parent_object %}<span id="parent_object">{{ parent_object.id }}</span>{% endif %}
+{% endblock %}
+
 {% block content-main-inner %}
+
   {% block related-object-tools %}
    <div class="object-tools-wrapper">
     {% if change %}
