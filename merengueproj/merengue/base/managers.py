@@ -22,13 +22,13 @@ from django.db.models.query import QuerySet
 
 
 manager_parent_classes = [Manager]
-commentsqueryset_parent_classes = [QuerySet]
+basequeryset_parent_classes = [QuerySet]
 
 if settings.USE_GIS:
     from django.contrib.gis.db.models import GeoManager
     from django.contrib.gis.db.models.query import GeoQuerySet
     manager_parent_classes = [GeoManager]
-    commentsqueryset_parent_classes = [GeoQuerySet]
+    basequeryset_parent_classes = [GeoQuerySet]
 
 
 class ManagerMeta(type):
@@ -39,10 +39,10 @@ class ManagerMeta(type):
         return type.__new__(meta, name, newbases, dct)
 
 
-class CommentsQuerySetMeta(type):
+class BaseQuerySetMeta(type):
 
     def __new__(meta, name, bases, dct):
-        newbases = list(bases) + commentsqueryset_parent_classes + [object]
+        newbases = list(bases) + basequeryset_parent_classes + [object]
         newbases = tuple(newbases)
         return type.__new__(meta, name, newbases, dct)
 
@@ -74,8 +74,18 @@ class WorkflowManager(BaseManager):
         return self.by_status('draft')
 
 
+class BaseContentQuerySet:
+    __metaclass__ = BaseQuerySetMeta
+
+    def visible_by_user(self, user):
+        from merengue.perms.utils import has_permission
+        for content in self:
+            if has_permission(content, user, 'view'):
+                yield content
+
+
 class CommentsQuerySet:
-    __metaclass__ = CommentsQuerySetMeta
+    __metaclass__ = BaseQuerySetMeta
 
     def with_comment_number(self, ordered_by_comment_number=False):
         from django.contrib.contenttypes.models import ContentType
@@ -104,8 +114,14 @@ class CommentsManager(WorkflowManager):
         return CommentsQuerySet(self.model)
 
 
-class BaseContentManager(CommentsManager):
+class BaseContentManager(WorkflowManager):
     """ manager for all objects that inherits from BaseContent """
+
+    def get_query_set(self):
+        return BaseContentQuerySet(self.model)
+
+    def visible_by_user(self, user):
+        return self.get_query_set().visible_by_user(user)
 
     def different_class_names(self):
         """List with the different values for the attribute class_name"""
