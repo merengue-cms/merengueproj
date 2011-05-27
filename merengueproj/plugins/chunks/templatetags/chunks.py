@@ -17,7 +17,6 @@
 
 from django import template
 from django.db import models
-from django.core.cache import cache
 
 from transmeta import get_fallback_fieldname
 
@@ -27,20 +26,21 @@ Chunk = models.get_model('chunks', 'chunk')
 CACHE_PREFIX = "chunk_"
 
 
-def inplace_chunk(context, key, default_text='Text created automatically', cache_time=0):
+def inplace_chunk(context, key, default_text='Text created automatically', mode="textarea"):
+    """
+    Render a chunk, with the possibility to edit it inplace.
+    ``mode`` is "textarea" or "text". "textarea" will use a HTML visual editor.
+    """
     try:
-        cache_key = CACHE_PREFIX + key
-        c = cache.get(cache_key)
-        if c is None:
-            c = Chunk.objects.get(key=key)
-            cache.set(cache_key, c, int(cache_time))
+        chunk = Chunk.objects.get(key=key)
     except Chunk.DoesNotExist:
         content_field = get_fallback_fieldname('content')
-        c = Chunk(key=key)
-        setattr(c, content_field, default_text)
-        c.save()
-    return {'object': c,
+        chunk = Chunk(key=key)
+        setattr(chunk, content_field, default_text)
+        chunk.save()
+    return {'object': chunk,
             'MEDIA_URL': context.get('MEDIA_URL', ''),
             'request': context['request'],
+            'mode': mode,
            }
 register.inclusion_tag("chunks/chunk.html", takes_context=True)(inplace_chunk)
