@@ -18,6 +18,7 @@
 import copy
 
 from django.template.loader import render_to_string
+from django.utils import formats
 from django.utils.datastructures import SortedDict
 from django.utils.encoding import smart_str
 
@@ -93,7 +94,21 @@ class Single(Param):
     pass
 
 
-class Integer(Param):
+class Parsed(Param):
+
+    def get_parsed_value(self, value):
+        raise NotImplementedError()
+
+    def get_value(self):
+        value = super(Parsed, self).get_value()
+        return self.get_parsed_value(value)
+
+    def get_value_from_datadict(self, data, name):
+        value = super(Parsed, self).get_value_from_datadict(data, name)
+        return self.get_parsed_value(value)
+
+
+class Integer(Parsed):
 
     def get_parsed_value(self, value):
         if value is not None and isinstance(value, basestring) and value.strip('-').isdigit():
@@ -104,14 +119,6 @@ class Integer(Param):
                 pass
         return value
 
-    def get_value(self):
-        value = super(Integer, self).get_value()
-        return self.get_parsed_value(value)
-
-    def get_value_from_datadict(self, data, name):
-        value = super(Integer, self).get_value_from_datadict(data, name)
-        return self.get_parsed_value(value)
-
     def is_valid(self, value):
         return isinstance(value, int)
 
@@ -120,6 +127,23 @@ class PositiveInteger(Integer):
 
     def is_valid(self, value):
         return isinstance(value, int) and value >= 0
+
+
+class Float(Parsed):
+
+    def get_parsed_value(self, value):
+        if value is not None and isinstance(value, basestring):
+            value = formats.sanitize_separators(value)
+            try:
+                return float(value)
+            except ValueError:
+                # return value if any error happends that will get validated
+                pass
+        return value
+
+    def is_valid(self, value):
+        value = self.get_parsed_value(value)
+        return isinstance(value, float)
 
 
 class Bool(Param):
