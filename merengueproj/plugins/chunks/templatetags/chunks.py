@@ -19,6 +19,7 @@ from django import template
 from django.db import models
 from django.core.cache import cache
 
+from transmeta import get_fallback_fieldname
 
 register = template.Library()
 
@@ -26,7 +27,7 @@ Chunk = models.get_model('chunks', 'chunk')
 CACHE_PREFIX = "chunk_"
 
 
-def inplace_chunk(context, key, mode='simple', height=100, cache_time=0):
+def inplace_chunk(context, key, default_text='Text created automatically', cache_time=0):
     try:
         cache_key = CACHE_PREFIX + key
         c = cache.get(cache_key)
@@ -34,7 +35,10 @@ def inplace_chunk(context, key, mode='simple', height=100, cache_time=0):
             c = Chunk.objects.get(key=key)
             cache.set(cache_key, c, int(cache_time))
     except Chunk.DoesNotExist:
-        c = ''
+        content_field = get_fallback_fieldname('content')
+        c = Chunk(key=key)
+        setattr(c, content_field, default_text)
+        c.save()
     return {'object': c,
             'MEDIA_URL': context.get('MEDIA_URL', ''),
             'request': context['request'],
