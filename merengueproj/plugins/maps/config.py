@@ -21,7 +21,7 @@ from plugins.maps.blocks import MapBlock
 
 
 class PluginConfig(Plugin):
-    name = 'maps'
+    name = 'Maps'
     description = 'Maps plugin'
     version = '0.0.1a'
 

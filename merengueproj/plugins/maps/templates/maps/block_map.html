@@ -1,0 +1,50 @@
+{% extends "block.html" %}
+
+{% load media_tags %}
+
+{% block blocktitle %}{% endblock %}
+
+{% block blockbody %}
+
+{% addmedia "css" %}
+  <link href="{{ MEDIA_URL }}merengue/css/map/map.css" rel="stylesheet" type="text/css" />
+{% endaddmedia %}
+
+{% addmedia "js" %}
+  <script type="text/javascript" src="http://www.google.com/jsapi?key={{ GOOGLE_MAPS_API_KEY }}"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/map/jquery.gmap.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/map/ClusterMarker_1.3.2/unobfuscated/ClusterMarker.js"></script>
+{% endaddmedia %}
+
+<script type="text/javascript">
+    (function ($) {
+        $(document).ready(function () {
+            var setup_map = function() {
+                $("#mapblock").gmap({
+                    use_cluster: false,
+                    show_directions: false,
+                    use_small_controls: true
+                });
+            };
+
+            google.load("maps", "2", {callback: setup_map, other_params: "sensor=false"});
+        });
+
+    })(jQuery);
+</script>
+
+<div id="mapblock" style="width: {{ width }}px; height: {{ height }}px;">
+  <div class="mapParameters hide">
+    <span class="zoom">{{ zoom }}</span> 
+    <span class="longitude">{{ longitude }}</span>
+    <span class="latitude">{{ latitude }}</span>
+    <span class="markersShownInitially">1</span>
+  </div>
+  <div class="mapPoint hide">
+    <span class="longitude">{{ longitude }}</span>
+    <span class="latitude">{{ latitude }}</span>
+    <span class="iconImage">{{ MEDIA_URL }}merengue/img/map/default_map_icon.png</span>
+  </div>
+</div>
+
+{% endblock %}
