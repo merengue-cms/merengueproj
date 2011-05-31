@@ -21,10 +21,10 @@ from django.http import HttpResponseRedirect
 from merengue.urlresolvers import get_url_default_lang
 
 
-class ResponseMicrositeMiddleware(object):
+class MicrositeMiddleware(object):
     """This middleware autodiscovers the current section from the url"""
 
-    def process_response(self, request, response):
+    def process_request(self, request):
         path_info = request.get_full_path()
         url_args = [item for item in path_info.split('/') if item]
         from plugins.microsite.config import PluginConfig
@@ -35,9 +35,13 @@ class ResponseMicrositeMiddleware(object):
             url_new = '/'.join(url_args)
             url_new = '/%s/' % url_new
             return HttpResponseRedirect(url_new)
+
+    def process_response(self, request, response):
         if response.status_code != 404:
             return response  # No need to check for a section for non-404 responses.
         try:
+            path_info = request.get_full_path()
+            url_args = [item for item in path_info.split('/') if item]
             return self.microsite_dispatcher(request, url_args)
         # Return the original response if any errors happened. Because this
         # is a middleware, we can't assume the errors will be caught elsewhere.
