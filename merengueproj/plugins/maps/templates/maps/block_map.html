@@ -20,7 +20,7 @@
     (function ($) {
         $(document).ready(function () {
             var setup_map = function() {
-                $("#mapblock").gmap({
+                $("#mapblock-{{ reg_block.id }}").gmap({
                     use_cluster: false,
                     show_directions: false,
                     use_small_controls: true
@@ -33,7 +33,7 @@
     })(jQuery);
 </script>
 
-<div id="mapblock" style="width: {{ width }}px; height: {{ height }}px;">
+<div id="mapblock-{{ reg_block.id }}" style="width: {{ width }}px; height: {{ height }}px;">
   <div class="mapParameters hide">
     <span class="zoom">{{ zoom }}</span> 
     <span class="longitude">{{ longitude }}</span>

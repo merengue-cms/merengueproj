@@ -66,6 +66,7 @@ class MapBlock(Block):
             'MEDIA_URL': context.get('MEDIA_URL', settings.MEDIA_URL),
             'GOOGLE_MAPS_API_KEY': context.get('GOOGLE_MAPS_API_KEY', ''),
             'LANGUAGE_CODE': get_language(),
+            'reg_block': self.reg_item,
             'request': context.get('request', None)}
         return self.render_block(
             request,
