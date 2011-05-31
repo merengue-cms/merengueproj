@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-26 13:57+0200\n"
-"PO-Revision-Date: 2011-05-10 19:03\n"
+"PO-Revision-Date: 2011-05-12 14:30\n"
 "Last-Translator: Manuel Saelices <rdurante@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr ""
 
 #: merengue/settings.py:158
 msgid "Publicado"
-msgstr ""
+msgstr "Publicado"
 
 #: merengue/settings.py:326
 msgid "Primary link"
@@ -59,7 +59,7 @@ msgstr ""
 
 #: merengue/apps/captcha/widgets.py:31
 msgid "Type the word that follows the image"
-msgstr "Escribe la palabra que sigue a la imagen"
+msgstr "Enlaces sociales"
 
 #: merengue/apps/captcha/widgets.py:33
 msgid ""
@@ -71,7 +71,7 @@ msgstr ""
 
 #: merengue/apps/rating/admin.py:25
 msgid "Vote"
-msgstr "Voto"
+msgstr "Asunto"
 
 #: merengue/apps/rating/admin.py:26
 msgid "Votes"
@@ -87,11 +87,11 @@ msgstr "Mal"
 
 #: merengue/apps/rating/models.py:28
 msgid "OK"
-msgstr "Ok"
+msgstr ""
 
 #: merengue/apps/rating/models.py:28
 msgid "Good"
-msgstr "Bien"
+msgstr ""
 
 #: merengue/apps/rating/models.py:28
 msgid "Very good"
@@ -168,7 +168,7 @@ msgstr "Archivo"
 
 #: merengue/apps/tinyimages/models.py:34
 msgid "Select a file to upload"
-msgstr "Seleccione un archivo para subir"
+msgstr ""
 
 #: merengue/apps/tinyimages/views.py:26
 msgid "Your file has been uploaded. "
@@ -180,7 +180,7 @@ msgstr "Su imagen ha sido subida."
 
 #: merengue/apps/tinyimages/templates/tinyimages/base.html.py:5
 msgid "TinyImages"
-msgstr ""
+msgstr "La imagen que debe cargar debe ser del tamaño que se indica ya que no cambian de tamaño automáticamente"
 
 #: merengue/apps/tinyimages/templates/tinyimages/base_list.html.py:10
 msgid "Send"
@@ -253,11 +253,11 @@ msgstr "Página Previa"
 
 #: merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:42
 msgid "Next Page"
-msgstr ""
+msgstr "Siguiente Página"
 
 #: merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:45
 msgid "Last Page"
-msgstr ""
+msgstr "Última Página"
 
 #: merengue/base/admin.py:433 merengue/base/admin.py:982
 #: merengue/workflow/admin.py:403
@@ -267,7 +267,7 @@ msgstr ""
 
 #: merengue/base/admin.py:465
 msgid "This field is required."
-msgstr ""
+msgstr "Este campo es obligatorio"
 
 #: merengue/base/admin.py:580 merengue/base/admin.py:1006
 msgid "Are you sure?"
@@ -307,7 +307,7 @@ msgstr "¿Está seguto que quiere pasar este contenido a borrador?"
 
 #: merengue/base/admin.py:674 merengue/workflow/models.py:365
 msgid "Set as draft"
-msgstr "Pasado a borrador"
+msgstr ""
 
 #: merengue/base/admin.py:678
 msgid "Are you sure you want to set this items as pending?"
@@ -401,7 +401,7 @@ msgstr "Usuario"
 
 #: merengue/base/admin.py:1463
 msgid "Admin url"
-msgstr "Url de administración"
+msgstr ""
 
 #: merengue/base/admin.py:1472
 msgid "Public url"
@@ -717,7 +717,7 @@ msgstr ""
 
 #: merengue/base/models.py:688
 msgid "content"
-msgstr ""
+msgstr "contenido"
 
 #: merengue/base/models.py:692
 msgid "is featured"
@@ -1306,7 +1306,7 @@ msgstr ""
 #: merengue/collab/templates/collab/collaborative_translation.html.py:7
 #: merengue/collab/templates/collab/collaborative_translation_edit.html.py:15
 msgid "Translate"
-msgstr "Traducido"
+msgstr "Traducir"
 
 #: merengue/collab/templates/collab/collaborative_translation_view.html.py:11
 msgid "Translation for"
@@ -1350,7 +1350,7 @@ msgstr ""
 
 #: merengue/collection/admin.py:223
 msgid "feed items"
-msgstr ""
+msgstr "elementos de fuente"
 
 #: merengue/collection/admin.py:243
 msgid "Single Item Configuration"
@@ -1358,7 +1358,7 @@ msgstr ""
 
 #: merengue/collection/admin.py:292
 msgid "feed collections"
-msgstr ""
+msgstr "colecciones de fuente"
 
 #: merengue/collection/models.py:25
 msgid "Exact (case-sensitive)"
@@ -1549,7 +1549,7 @@ msgstr ""
 
 #: merengue/collection/models.py:379
 msgid "Feed collections"
-msgstr ""
+msgstr "Colecciones de fuente"
 
 #: merengue/collection/models.py:474
 msgid "Filter field name"
@@ -2124,7 +2124,7 @@ msgstr ""
 
 #: merengue/registry/items.py:117
 msgid "Content types that whant to filter"
-msgstr ""
+msgstr "Tipos de contenido que quiere filtrar"
 
 #: merengue/registry/models.py:37
 msgid "Error traceback"
@@ -2392,7 +2392,7 @@ msgstr ""
 
 #: merengue/section/models.py:354
 msgid "section"
-msgstr ""
+msgstr "sección"
 
 #: merengue/section/models.py:444
 msgid "document"
@@ -2408,7 +2408,7 @@ msgstr ""
 
 #: merengue/section/models.py:480
 msgid "document section"
-msgstr ""
+msgstr "sección de documento"
 
 #: merengue/section/models.py:500
 msgid "Can not move to non existing position"
@@ -2454,12 +2454,12 @@ msgstr ""
 #: merengue/section/templates/section/document_section_add.html.py:4
 #: merengue/section/templates/section/document_section_add.html.py:8
 msgid "Insert document section here"
-msgstr ""
+msgstr "Insertar sección aquí"
 
 #: merengue/section/templates/section/document_section_view.html.py:12
 #: merengue/section/templates/section/document_section_view.html.py:13
 msgid "Document section actions"
-msgstr ""
+msgstr "Acciones para documento de sección"
 
 #: merengue/section/templates/section/document_section_view.html.py:17
 #: merengue/section/templates/section/document_section_view.html.py:18
@@ -2468,15 +2468,15 @@ msgstr ""
 
 #: merengue/section/templates/section/document_section_view.html.py:23
 msgid "Edit document section"
-msgstr ""
+msgstr "Editar sección del documento"
 
 #: merengue/section/templates/section/document_section_view.html.py:24
 msgid "Insert document section"
-msgstr ""
+msgstr "Insertar sección"
 
 #: merengue/section/templates/section/document_section_view.html.py:25
 msgid "Delete document section"
-msgstr ""
+msgstr "Eliminar sección"
 
 #: merengue/section/templates/section/document_section_view.html.py:39
 msgid "Double click to edit"
@@ -2512,7 +2512,7 @@ msgstr ""
 
 #: merengue/section/templates/section/document_view.html.py:33
 msgid "Insert first section"
-msgstr ""
+msgstr "Insertar la primera sección"
 
 #: merengue/section/templates/section/menu_link_not_exists.html.py:19
 msgid "This menu does not link to any target"
