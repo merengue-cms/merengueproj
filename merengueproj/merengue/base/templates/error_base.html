@@ -6,7 +6,7 @@
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}merengue/css/httperror.css" />
 {% endblock %}
-
+{% block bodyextraclasses %}httperrorbody{% endblock %}
 {% block content %}
 <div class="httperror {% block httperrorclass %}{% endblock %}{% if is_admin %} httperror-admin{% endif %}">
     {% block httperrorheader %}
