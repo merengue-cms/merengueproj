@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-18 13:07+0100\n"
+"POT-Creation-Date: 2011-05-10 20:24+0200\n"
 "PO-Revision-Date: 2011-04-12 20:12+0200\n"
 "Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
 "Language-Team: it <m.busico@ieee.org>\n"
@@ -21,6 +21,10 @@ msgstr ""
 #: actions.py:29
 msgid "Export ODT"
 msgstr "Esporta in ODT"
+
+#: actions.py:30
+msgid "Export ODT block"
+msgstr ""
 
 #: models.py:26
 msgid "OpenOffice template"

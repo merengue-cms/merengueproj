@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"POT-Creation-Date: 2011-05-10 20:24+0200\n"
 "PO-Revision-Date: 2011-04-12 20:20+0200\n"
 "Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
 "Language-Team: it <m.busico@ieee.org>\n"
@@ -17,13 +17,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: blocks.py:35
-msgid "Vote content"
-msgstr "Vota il contenuto"
+#: blocks.py:31
+msgid "Block that provides the voting functionality"
+msgstr ""
 
-#: config.py:38
+#: blocks.py:32
+msgid "Voting block"
+msgstr ""
+
+#: blocks.py:36
 msgid "is readonly?"
 msgstr "è in sola lettura?"
+
+#: blocks.py:43
+msgid "Vote content"
+msgstr "Vota il contenuto"
 
 #: forms.py:32
 #, python-format
@@ -54,13 +62,21 @@ msgstr "Molto buono"
 msgid "users"
 msgstr "utenti"
 
-#: viewlets.py:43
+#: viewlets.py:51
 msgid "Content top rated"
 msgstr "Contenuto con il voto più alto"
 
-#: viewlets.py:54
-msgid "Content with more votes"
-msgstr "Contenuto con il maggior numero di votazioni"
+#: viewlets.py:52
+msgid "Top rated content"
+msgstr ""
+
+#: viewlets.py:62
+msgid "Content that contains more votes"
+msgstr ""
+
+#: viewlets.py:63
+msgid "More votes content"
+msgstr ""
 
 #: templates/voting/voting_form.html:3
 #, python-format
@@ -80,3 +96,6 @@ msgstr "Hai votato"
 #: templates/voting/voting_form.html:18
 msgid "Sign in to rate"
 msgstr "Registrati per votare"
+
+#~ msgid "Content with more votes"
+#~ msgstr "Contenuto con il maggior numero di votazioni"

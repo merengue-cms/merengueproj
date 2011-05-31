@@ -3,26 +3,34 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-07 10:57+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2011-05-10 20:24+0200\n"
+"PO-Revision-Date: 2011-05-10 12:54\n"
+"Last-Translator: Manuel Saelices <rdurante@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Translated-Using: django-transhette 0.1.SVN\n"
 
-#: blocks.py:35
-msgid "Vote content"
-msgstr "votar contenido"
+#: blocks.py:31
+msgid "Block that provides the voting functionality"
+msgstr ""
 
-#: config.py:38
+#: blocks.py:32
+msgid "Voting block"
+msgstr ""
+
+#: blocks.py:36
 msgid "is readonly?"
 msgstr "¿Es solo lectura?"
+
+#: blocks.py:43
+msgid "Vote content"
+msgstr "votar contenido"
 
 #: forms.py:32
 #, python-format
@@ -53,20 +61,28 @@ msgstr "Muy bueno"
 msgid "users"
 msgstr "usuarios"
 
-#: viewlets.py:43
+#: viewlets.py:51
 msgid "Content top rated"
 msgstr "Contenidos mejor valorados"
 
-#: viewlets.py:54
-msgid "Content with more votes"
-msgstr "Contenidos con mas votos"
+#: viewlets.py:52
+msgid "Top rated content"
+msgstr ""
+
+#: viewlets.py:62
+msgid "Content that contains more votes"
+msgstr ""
+
+#: viewlets.py:63
+msgid "More votes content"
+msgstr ""
 
 #: templates/voting/voting_form.html:3
 #, python-format
 msgid "%(votes)s vote"
 msgid_plural "%(votes)s votes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(votes)s votos"
+msgstr[1] "%(votes)s voto"
 
 #: templates/voting/voting_form.html:5
 msgid "stars"
@@ -74,8 +90,11 @@ msgstr "estrellas"
 
 #: templates/voting/voting_form.html:16
 msgid "You have voted"
-msgstr "Usted a votado"
+msgstr "Usted ha votado"
 
 #: templates/voting/voting_form.html:18
 msgid "Sign in to rate"
 msgstr "Loguese para votar"
+
+#~ msgid "Content with more votes"
+#~ msgstr "Contenidos con mas votos"

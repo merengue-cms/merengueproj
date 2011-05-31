@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"POT-Creation-Date: 2011-05-10 20:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,30 +20,151 @@ msgstr ""
 msgid "Admin site"
 msgstr ""
 
-#: actions.py:39
+#: actions.py:37
 msgid "Login"
 msgstr ""
 
-#: actions.py:55
+#: actions.py:51
 msgid "Logout"
 msgstr ""
 
-#: blocks.py:40
+#: actions.py:62
+msgid "Print"
+msgstr ""
+
+#: blocks.py:34
+msgid "maximum number of levels to show"
+msgstr ""
+
+#: blocks.py:46
+msgid "Renders the Menu"
+msgstr ""
+
+#: blocks.py:47
+msgid "Core Menu Block"
+msgstr ""
+
+#: blocks.py:60
 msgid "Menu"
 msgstr ""
 
-#: blocks.py:56
+#: blocks.py:70
+msgid "Renders the Navigation"
+msgstr ""
+
+#: blocks.py:71
+msgid "Navigation Block"
+msgstr ""
+
+#: blocks.py:79
 msgid "Navigation"
 msgstr ""
 
-#: blocks.py:69
+#: blocks.py:88
+msgid "Renders the Portal Menu"
+msgstr ""
+
+#: blocks.py:89
+msgid "Portal Menu Block"
+msgstr ""
+
+#: blocks.py:94
 msgid "Portal Menu"
 msgstr ""
 
-#: blocks.py:82
+#: blocks.py:103
+msgid "Abstract block that render portal links"
+msgstr ""
+
+#: blocks.py:104
+msgid "Link Base Block"
+msgstr ""
+
+#: blocks.py:109
 msgid "Portal links"
 msgstr ""
 
-#: config.py:39
+#: blocks.py:118
+msgid "Generic block that renders portal links"
+msgstr ""
+
+#: blocks.py:119
+msgid "Portal Links Block"
+msgstr ""
+
+#: blocks.py:124
+msgid "Portal link category"
+msgstr ""
+
+#: blocks.py:144
+msgid "Block with contact info"
+msgstr ""
+
+#: blocks.py:145
+msgid "Contact Info block"
+msgstr ""
+
+#: blocks.py:150
+msgid "Contact info"
+msgstr ""
+
+#: blocks.py:158
+msgid "Block with the site announcements"
+msgstr ""
+
+#: blocks.py:159
+msgid "Announcements block"
+msgstr ""
+
+#: blocks.py:168
+msgid "Announcements"
+msgstr ""
+
+#: config.py:45
 msgid "home initial content"
+msgstr ""
+
+#: panels.py:47
+#, python-format
+msgid "Version: %s"
+msgstr ""
+
+#: templates/core/block_announcements.html:15
+msgid "Hide announcement"
+msgstr ""
+
+#: templates/core/block_contact_info.html:15
+msgid "Name"
+msgstr ""
+
+#: templates/core/block_contact_info.html:21
+msgid "Phone"
+msgstr ""
+
+#: templates/core/block_contact_info.html:28
+msgid "Phone 2"
+msgstr ""
+
+#: templates/core/block_contact_info.html:35
+msgid "Fax"
+msgstr ""
+
+#: templates/core/block_contact_info.html:42
+msgid "Email"
+msgstr ""
+
+#: templates/core/block_contact_info.html:49
+msgid "Email 2"
+msgstr ""
+
+#: templates/core/block_contact_info.html:56
+msgid "URL"
+msgstr ""
+
+#: templates/core/panels/inplaceedit.html:34
+msgid "activate inline edit"
+msgstr ""
+
+#: templates/core/panels/invalidate_cache.html:3
+msgid "Invalidate cache"
 msgstr ""

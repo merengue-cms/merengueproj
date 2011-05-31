@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"POT-Creation-Date: 2011-05-10 20:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,44 +16,97 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: blocks.py:38
+#: blocks.py:32
+msgid "Block that renders calendar with events"
+msgstr ""
+
+#: blocks.py:33
+msgid "Events Calendar Block"
+msgstr ""
+
+#: blocks.py:45
 msgid "Events calendar"
 msgstr ""
 
-#: models.py:33 models.py:47
-msgid "category"
+#: forms.py:35
+msgid "The end date has to be after the start date"
 msgstr ""
 
-#: models.py:34
-msgid "categories"
+#: models.py:32
+msgid "event category"
 msgstr ""
 
-#: models.py:42
+#: models.py:33
+msgid "event categories"
+msgstr ""
+
+#: models.py:41
 msgid "Start date"
 msgstr ""
 
-#: models.py:44
+#: models.py:43
 msgid "End date"
 msgstr ""
 
-#: models.py:53
+#: models.py:46
+msgid "category"
+msgstr ""
+
+#: models.py:52
 msgid "event"
 msgstr ""
 
-#: models.py:54
+#: models.py:53
 msgid "events"
 msgstr ""
 
-#: viewlets.py:26
+#: viewlets.py:28
 msgid "Latest events"
 msgstr ""
 
-#: viewlets.py:37
+#: viewlets.py:29
+msgid "Latest Event"
+msgstr ""
+
+#: viewlets.py:34
+msgid "limit for event viewlet"
+msgstr ""
+
+#: viewlets.py:51
 msgid "All events"
+msgstr ""
+
+#: viewlets.py:52
+msgid "All Events"
+msgstr ""
+
+#: viewlets.py:57
+msgid "number of elements on a page"
 msgstr ""
 
 #: templates/event/block_calendar.html:24
 msgid "Loading..."
+msgstr ""
+
+#: templates/event/event_historic.html:5
+msgid "Past Events"
+msgstr ""
+
+#: templates/event/event_historic.html:7 templates/event/event_historic.html:9
+#: templates/event/event_historic.html:15
+msgid "Past events"
+msgstr ""
+
+#: templates/event/event_historic.html:13
+msgid "Events"
+msgstr ""
+
+#: templates/event/event_historic.html:13
+msgid "Event"
+msgstr ""
+
+#: templates/event/event_historic.html:15
+msgid "Past"
 msgstr ""
 
 #: templates/event/event_list.html:5 templates/event/event_list.html.py:7
@@ -64,15 +117,15 @@ msgstr ""
 msgid "For every date"
 msgstr ""
 
-#: templates/event/event_list.html:10 templates/event/event_view.html:8
-msgid "Event"
+#: templates/event/event_list.html:13
+msgid "Events historic"
 msgstr ""
 
-#: templates/event/event_view.html:15
+#: templates/event/event_view.html:11
 msgid "start date"
 msgstr ""
 
-#: templates/event/event_view.html:16
+#: templates/event/event_view.html:12
 msgid "end date"
 msgstr ""
 

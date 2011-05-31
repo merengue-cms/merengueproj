@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"POT-Creation-Date: 2011-05-10 20:24+0200\n"
 "PO-Revision-Date: 2010-10-05 10:48\n"
 "Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,51 +20,92 @@ msgstr ""
 msgid "News index"
 msgstr " Indice de noticias"
 
-#: actions.py:36
-msgid "News rss"
-msgstr "Rss de noticias"
+#: actions.py:28
+msgid "Index page with all news items"
+msgstr ""
 
-#: blocks.py:32 viewlets.py:26
+#: actions.py:36
+msgid "News RSS"
+msgstr ""
+
+#: actions.py:37
+msgid "News RSS for all feeds"
+msgstr ""
+
+#: blocks.py:29 blocks.py:51 viewlets.py:27
 msgid "Latest news"
 msgstr "Últimas noticias"
 
-#: blocks.py:43
-msgid "News comments"
-msgstr "Comentarios de noticias"
+#: blocks.py:30
+msgid "Block with last news items published"
+msgstr ""
 
-#: config.py:37
-msgid "limit for templatetags"
-msgstr "limitado para templatetags"
+#: blocks.py:36
+msgid "number of news for the \"Latest news\" block"
+msgstr ""
 
-#: models.py:34
+#: models.py:31
 msgid "news category"
 msgstr "categoría de las noticias"
 
-#: models.py:35
+#: models.py:32
 msgid "news categories"
 msgstr "Categorías de la noticia"
 
-#: models.py:45
+#: models.py:40
 msgid "category"
 msgstr "categoría"
 
-#: models.py:47
+#: models.py:42
 msgid "body"
 msgstr "cuerpo de texto"
 
-#: viewlets.py:37
+#: models.py:50
+msgid "news item"
+msgstr ""
+
+#: models.py:51
+msgid "news"
+msgstr ""
+
+#: viewlets.py:28
+msgid "Latest news block"
+msgstr ""
+
+#: viewlets.py:31
+msgid "limit for news viewlet"
+msgstr ""
+
+#: viewlets.py:46
 msgid "All news"
 msgstr "Todas las noticias"
 
-#: templates/news/news_index.html:5 templates/news/news_index.html.py:8
-#: templates/news/news_index.html:14 templates/news/newsitem_view.html:9
+#: viewlets.py:47
+msgid "All news block"
+msgstr ""
+
+#: templates/news/news_index.html:5 templates/news/news_index.html.py:7
+#: templates/news/newsitem/section_breadcrumbs.html:9
 msgid "News"
 msgstr "Noticia"
 
-#: templates/news/newsitem_by_category.html:14
+#: templates/news/newsitem_by_category.html:15
 msgid "No Image"
 msgstr "Sin imagen"
 
-#: templates/news/newsitem_by_category.html:24
+#: templates/news/newsitem_by_category.html:25
 msgid "read more"
 msgstr "leer más"
+
+#: templates/news/newsitem_view.html:9
+msgid "Publication date"
+msgstr ""
+
+#~ msgid "News rss"
+#~ msgstr "Rss de noticias"
+
+#~ msgid "News comments"
+#~ msgstr "Comentarios de noticias"
+
+#~ msgid "limit for templatetags"
+#~ msgstr "limitado para templatetags"

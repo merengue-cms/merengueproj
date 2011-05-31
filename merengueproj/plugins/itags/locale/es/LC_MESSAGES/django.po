@@ -8,48 +8,56 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-14 16:05+0100\n"
+"POT-Creation-Date: 2011-05-10 20:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 
-#: blocks.py:27 blocks.py:35 viewlets.py:29
+#: blocks.py:30 blocks.py:54 viewlets.py:32
 msgid "Tag cloud"
 msgstr "Nube de etiquetas"
 
-#: blocks.py:28
+#: blocks.py:31
 msgid "Block with a tag cloud"
 msgstr "Bloque con una nube de etiquetas"
+
+#: blocks.py:37 viewlets.py:38
+msgid "Max number of tags in cloud"
+msgstr ""
 
 #: config.py:36
 msgid "Main language for tags"
 msgstr "Lenguaje principal para las etiquetas"
 
-#: config.py:37
-msgid "Max number of tags in cloud block/viewlet"
-msgstr "Numero máximo de etiquetas en el bloque/viewlet nube de etiquetas"
+#: forms.py:21
+msgid "This tag name already exists"
+msgstr ""
 
-#: models.py:30
+#: models.py:32
 msgid "tag name"
 msgstr "nombre de la etiqueta"
 
-#: models.py:34
+#: models.py:36
 msgid "Internazionalized Tag"
 msgstr "Etiqueta internacionalizada"
 
-#: models.py:35
+#: models.py:37
 msgid "Internazionalized Tags"
 msgstr "Etiquetas internacionalizadas"
 
-#: viewlets.py:30
+#: viewlets.py:33
 msgid "Tag cloud block"
 msgstr "Bloque Nube de Etiquetas"
 
-#: templates/itags/itag_view.html:5 templates/itags/itag_view.html.py:8
-#: templates/itags/itag_view.html:11
+#: templates/itags/itag_view.html:5 templates/itags/itag_view.html.py:9
+#: templates/itags/itag_view.html:12 templates/itags/itags_list.html:5
+#: templates/itags/itags_list.html.py:8 templates/itags/itags_list.html:11
 msgid "Tag"
 msgstr "Etiqueta"
+
+#~ msgid "Max number of tags in cloud block/viewlet"
+#~ msgstr "Numero máximo de etiquetas en el bloque/viewlet nube de etiquetas"

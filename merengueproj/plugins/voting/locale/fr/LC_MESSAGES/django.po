@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"POT-Creation-Date: 2011-05-10 20:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,12 +16,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: blocks.py:35
-msgid "Vote content"
+#: blocks.py:31
+msgid "Block that provides the voting functionality"
 msgstr ""
 
-#: config.py:38
+#: blocks.py:32
+msgid "Voting block"
+msgstr ""
+
+#: blocks.py:36
 msgid "is readonly?"
+msgstr ""
+
+#: blocks.py:43
+msgid "Vote content"
 msgstr ""
 
 #: forms.py:32
@@ -53,12 +61,20 @@ msgstr ""
 msgid "users"
 msgstr ""
 
-#: viewlets.py:43
+#: viewlets.py:51
 msgid "Content top rated"
 msgstr ""
 
-#: viewlets.py:54
-msgid "Content with more votes"
+#: viewlets.py:52
+msgid "Top rated content"
+msgstr ""
+
+#: viewlets.py:62
+msgid "Content that contains more votes"
+msgstr ""
+
+#: viewlets.py:63
+msgid "More votes content"
 msgstr ""
 
 #: templates/voting/voting_form.html:3

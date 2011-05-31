@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"POT-Creation-Date: 2011-05-10 20:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,47 +16,59 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: models.py:31
+#: models.py:28
 msgid "link category"
 msgstr ""
 
-#: models.py:32
+#: models.py:29
 msgid "link categories"
 msgstr ""
 
-#: models.py:39
+#: models.py:34
 msgid "Url Link"
 msgstr ""
 
-#: models.py:40
+#: models.py:35
 msgid "Portal name"
 msgstr ""
 
-#: models.py:44
+#: models.py:37
+msgid "category"
+msgstr ""
+
+#: models.py:42
 msgid "link"
 msgstr ""
 
-#: models.py:45
+#: models.py:43
 msgid "links"
 msgstr ""
 
-#: viewlets.py:26
+#: viewlets.py:28
 msgid "Latest link"
 msgstr ""
 
-#: viewlets.py:37
-msgid "All link"
+#: viewlets.py:29
+msgid "Latest links"
 msgstr ""
 
-#: templates/link/link_index.html:5 templates/link/link_index.html.py:14
-msgid "Link index"
+#: viewlets.py:34
+msgid "limit for link viewlet"
 msgstr ""
 
-#: templates/link/link_index.html:8 templates/link/link_view.html:9
-msgid "Links"
+#: viewlets.py:51 viewlets.py:52
+msgid "All links"
 msgstr ""
 
-#: templates/link/link_index.html:19 templates/link/link_view.html:14
+#: templates/link/collection_item.html:20
 #: templates/link/viewlet_latest.html:17
 msgid "View more"
+msgstr ""
+
+#: templates/link/link_index.html:5 templates/link/link_index.html.py:7
+msgid "Link"
+msgstr ""
+
+#: templates/link/link_view.html:9
+msgid "External link"
 msgstr ""

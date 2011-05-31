@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-07 10:56+0200\n"
+"POT-Creation-Date: 2011-05-10 20:24+0200\n"
 "PO-Revision-Date: 2011-04-12 20:52+0200\n"
 "Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
 "Language-Team: it <m.busico@ieee.org>\n"
@@ -17,13 +17,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: blocks.py:35 models.py:40
-msgid "banners"
-msgstr "bandiere"
+#: blocks.py:29
+msgid "Banner Block"
+msgstr ""
 
-#: config.py:35
+#: blocks.py:30
+msgid "Block that represents a banner"
+msgstr ""
+
+#: blocks.py:33
 msgid "limit for banner block"
 msgstr "limite per il blocco delle bandiere"
+
+#: blocks.py:46 models.py:40
+msgid "banners"
+msgstr "bandiere"
 
 #: models.py:31
 msgid "Url Link"
@@ -48,22 +56,29 @@ msgstr ""
 msgid "banner"
 msgstr "bandiera"
 
-#: viewlets.py:26
+#: viewlets.py:28
 msgid "All Banners"
 msgstr "Tutte le bandiere"
 
-#: templates/banner/banner_index.html:5 templates/banner/banner_index.html:11
+#: viewlets.py:29
+msgid "All banner block"
+msgstr ""
+
+#: viewlets.py:32
+msgid "limit for banner viewlet"
+msgstr ""
+
+#: templates/banner/banner_index.html:5 templates/banner/banner_index.html:7
 msgid "Banner history"
 msgstr "Storia della bandiera"
 
-#: templates/banner/banner_index.html:8
-msgid "Banners"
-msgstr "Bandiere"
-
-#: templates/banner/block_banner.html:9
+#: templates/banner/block_banner.html:11
 msgid "History banner"
 msgstr "Babdiera della storia"
 
 #: templates/banner/viewlet_latest.html:17
 msgid "View more"
 msgstr "Vedi di più"
+
+#~ msgid "Banners"
+#~ msgstr "Bandiere"

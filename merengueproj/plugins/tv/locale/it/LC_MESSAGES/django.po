@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"POT-Creation-Date: 2011-05-10 20:24+0200\n"
 "PO-Revision-Date: 2011-04-12 20:24+0200\n"
 "Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
 "Language-Team: it <m.busico@ieee.org>\n"
@@ -22,7 +22,15 @@ msgstr ""
 msgid "Database error"
 msgstr "Errore del database"
 
-#: blocks.py:32
+#: blocks.py:27
+msgid "Block provides latest videos"
+msgstr ""
+
+#: blocks.py:28
+msgid "Latest videos block"
+msgstr ""
+
+#: blocks.py:33
 msgid "Latest video"
 msgstr "Ultimo video"
 

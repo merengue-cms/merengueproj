@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"POT-Creation-Date: 2011-05-10 20:24+0200\n"
 "PO-Revision-Date: 2011-04-12 19:23+0200\n"
 "Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
 "Language-Team: it <m.busico@ieee.org>\n"
@@ -16,6 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: actions.py:29 templates/forum/forum_create_thread.html:6
+#: templates/forum/forum_create_thread.html:11
+msgid "Create new thread"
+msgstr ""
 
 #: models.py:16
 msgid "Forum category"
@@ -29,53 +34,56 @@ msgstr "Categorie del Forum"
 msgid "Forum"
 msgstr "Forum"
 
-#: models.py:28 templates/forum/forum_list.html:7
-#: templates/forum/forum_list.html.py:10 templates/forum/forum_list.html:13
-#: templates/forum/forum_view.html:6 templates/forum/thread_view.html:12
+#: models.py:28 templates/forum/forum_list.html:8
+#: templates/forum/forum_list.html.py:14 templates/forum/forum_list.html:16
 msgid "Forums"
 msgstr "Forum"
 
-#: models.py:51
+#: models.py:55
 msgid "closed"
 msgstr "chiuso"
 
-#: models.py:56 templates/forum/forum_view.html:17
+#: models.py:61 templates/forum/forum_view.html:9
 msgid "Thread"
 msgstr "Thread"
 
-#: models.py:57 templates/forum/forum_list.html:23
+#: models.py:62 templates/forum/forum_list.html:26
 msgid "Threads"
 msgstr "Thread"
 
-#: models.py:81
+#: models.py:102
+msgid "title"
+msgstr ""
+
+#: models.py:103
 msgid "comment"
 msgstr "commento"
 
-#: models.py:84
+#: models.py:106
 msgid "banned"
 msgstr "esiliato"
 
-#: models.py:85
+#: models.py:107
 msgid "date/time submitted"
 msgstr "Data/Ora della sottomissione"
 
-#: models.py:86
+#: models.py:108
 msgid "date/time modified"
 msgstr "Data/Ora della modifica"
 
-#: models.py:87
+#: models.py:109
 msgid "IP address"
 msgstr "Indirizzo IP"
 
-#: models.py:91
+#: models.py:113
 msgid "Forum Thread Comment"
 msgstr "Commento del Thread del Forum"
 
-#: models.py:92
+#: models.py:114
 msgid "Forum Thread Comments"
 msgstr "Commenti del Thread del Forum"
 
-#: views.py:92
+#: views.py:128
 msgid "Your message has been posted successfully."
 msgstr "Il tuo messaggio è stato impostato correttamente"
 
@@ -96,16 +104,21 @@ msgstr "Manda un commento"
 msgid "Return to"
 msgstr "Ritorna a"
 
-#: templates/forum/forum_list.html:24 templates/forum/forum_view.html:18
-#: templates/forum/thread_view.html:22
+#: templates/forum/forum_create_thread.html:18
+msgid "Create thread"
+msgstr ""
+
+#: templates/forum/forum_list.html:27 templates/forum/forum_view.html:10
+#: templates/forum/thread_view.html:21
 msgid "Messages"
 msgstr "Messaggi"
 
-#: templates/forum/forum_list.html:25 templates/forum/forum_view.html:19
+#: templates/forum/forum_list.html:28 templates/forum/forum_view.html:11
 msgid "Last message"
 msgstr "Ultimo messaggio"
 
-#: templates/forum/forum_list.html:42 templates/forum/forum_view.html:35
+#: templates/forum/forum_list.html:45 templates/forum/forum_view.html:27
+#: templates/forum/thread_view.html:13
 msgid "by"
 msgstr "di"
 
@@ -113,7 +126,7 @@ msgstr "di"
 msgid "Are you sure you want to delete this comment?"
 msgstr "Sei sicuro di voler cancellare questo commento?"
 
-#: templates/forum/thread_comment.html:4 templates/forum/thread_view.html:25
+#: templates/forum/thread_comment.html:4 templates/forum/thread_view.html:24
 msgid "Are you sure you want to discard this comment form?"
 msgstr "Sei sicuro di voler gettare via questo commento?"
 
@@ -129,11 +142,11 @@ msgstr "Mandato da"
 msgid "on"
 msgstr "il"
 
-#: templates/forum/thread_comment.html:19 templates/forum/thread_view.html:32
+#: templates/forum/thread_comment.html:19 templates/forum/thread_view.html:31
 msgid "Reply"
 msgstr "Rispondi"
 
-#: templates/forum/thread_comment.html:20 templates/forum/thread_view.html:34
+#: templates/forum/thread_comment.html:20 templates/forum/thread_view.html:33
 msgid "Hide Reply"
 msgstr "Nascondi la risposta"
 
@@ -153,6 +166,6 @@ msgstr "Cancella"
 msgid "Edit"
 msgstr "Modifica"
 
-#: templates/forum/thread_view.html:27
+#: templates/forum/thread_view.html:26
 msgid "An error has occurred, try again"
 msgstr "C'è stato un errore. Porva di nuovo"

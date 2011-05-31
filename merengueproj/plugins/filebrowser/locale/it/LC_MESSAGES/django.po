@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"POT-Creation-Date: 2011-05-10 20:24+0200\n"
 "PO-Revision-Date: 2011-04-12 20:47+0200\n"
 "Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
 "Language-Team: it <m.busico@ieee.org>\n"
@@ -16,6 +16,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: admin.py:37
+msgid "Repository"
+msgstr ""
+
+#: admin.py:41
+msgid "The repository folder exists"
+msgstr ""
+
+#: admin.py:49
+msgid ""
+"The location folder does not exist in the database. Save the document to "
+"create it."
+msgstr ""
 
 #: config.py:33
 msgid "Root below MEDIA_ROOT"
@@ -37,122 +51,121 @@ msgstr "Salva"
 msgid "Create Document"
 msgstr "Crea un Documento"
 
-#: models.py:29
+#: models.py:30
 msgid "name"
 msgstr "nome"
 
-#: models.py:35
+#: models.py:37
 msgid "repository"
 msgstr "repository"
 
-#: models.py:36
+#: models.py:38
 msgid "repositories"
 msgstr "repository"
 
-#: models.py:133
+#: models.py:158
 msgid "title"
 msgstr "titolo"
 
-#: models.py:134
+#: models.py:159
 msgid "content"
 msgstr "contenuto"
 
-#: models.py:135
+#: models.py:160
 msgid "modification date"
 msgstr "data della modifica"
 
-#: models.py:137
+#: models.py:162
 msgid "location"
 msgstr "collocazione"
 
-#: models.py:142 models.py:178 models.py:202
-#: templates/filebrowser/listing.html:81
+#: models.py:167 models.py:206 models.py:230
 msgid "document"
 msgstr "documento"
 
-#: models.py:143
+#: models.py:168
 msgid "documents"
 msgstr "documenti"
 
-#: models.py:179 models.py:203 templates/filebrowser/listing.html:27
-#: templates/filebrowser/listing.html:69 templates/filebrowser/rename.html:35
-#: templates/filebrowser/rename.html:41
+#: models.py:207 models.py:231 templates/filebrowser/document.html:43
+#: templates/filebrowser/rename.html:41 templates/filebrowser/rename.html:47
 msgid "file"
 msgstr "file"
 
-#: models.py:181
+#: models.py:209
 msgid "indexed"
 msgstr "indicizzato"
 
-#: models.py:185
+#: models.py:213
 msgid "document file attachment"
 msgstr "file allegato al documento"
 
-#: models.py:186
+#: models.py:214
 msgid "document file attachments"
 msgstr "file allegati al documento"
 
-#: models.py:207
+#: models.py:235
 msgid "document image attachment"
 msgstr "immagine allegata al documento"
 
-#: models.py:208
+#: models.py:236
 msgid "document image attachments"
 msgstr "immagini allegate al documento"
 
-#: views.py:70
+#: views.py:86
 msgid "You must introduce the name of the new folder"
 msgstr "Devi inserire il nome della nuova cartella"
 
-#: views.py:72
+#: views.py:88
 #, python-format
 msgid "Folder %(dirname)s already exists"
 msgstr "La cartella %(dirname)s esiste già"
 
-#: views.py:82
+#: views.py:98
 msgid "Folder created successfully"
 msgstr "Cartella creata con successo"
 
-#: views.py:110
+#: views.py:126
 msgid "Files uploaded successfully"
 msgstr "File caricati con successo"
 
-#: views.py:174
+#: views.py:190
 msgid "You didn't selected any element"
 msgstr "Non hai selezionato nessun elemento"
 
-#: views.py:211
+#: views.py:227
 msgid "Elements renamed successfully"
 msgstr "Gli elementi sono stati rinominati con successo"
 
-#: views.py:218
+#: views.py:234
 msgid "Elements deleted successfully"
 msgstr "Gli elementi sono stati cancellati con successo"
 
-#: views.py:291
-msgid "You don't have permission to do that."
-msgstr "Non hai il permesso per fare questo"
-
-#: templates/filebrowser/base.html:9 templates/filebrowser/base.html.py:13
-#: templates/filebrowser/listing.html:11 templates/filebrowser/listing.html:21
+#: templates/filebrowser/base.html:10 templates/filebrowser/listing.html:26
 msgid "Document repository"
 msgstr "repository dei documenti"
+
+#: templates/filebrowser/base.html:14 templates/filebrowser/listing.html:14
+#: templates/filebrowser/repository_list.html:5
+#: templates/filebrowser/repository_list.html:7
+msgid "Repository List"
+msgstr ""
 
 #: templates/filebrowser/createdir.html:4
 #: templates/filebrowser/createdir.html:8
 #: templates/filebrowser/createdir.html:13
-#: templates/filebrowser/listing.html:26
+#: templates/filebrowser/listing.html:33
 msgid "Create folder"
 msgstr "Crea una cartella"
 
-#: templates/filebrowser/createdir.html:18
-#: templates/filebrowser/createdir.html:22
-#: templates/filebrowser/document.html:63
-#: templates/filebrowser/document.html:94
+#: templates/filebrowser/createdir.html:21
+#: templates/filebrowser/createdir.html:25
+#: templates/filebrowser/document.html:62
+#: templates/filebrowser/document.html:90
 msgid "Cancel"
 msgstr "Annulla"
 
-#: templates/filebrowser/createdir.html:34
+#: templates/filebrowser/createdir.html:40
 msgid "New folder name"
 msgstr "Nuovo nome per la cartella"
 
@@ -164,20 +177,20 @@ msgstr "Conferma la cancellazione"
 msgid "Delete confirmation"
 msgstr "cancellazione confermata"
 
-#: templates/filebrowser/delete.html:18 templates/filebrowser/delete.html:22
-#: templates/filebrowser/doc_edit.html:24
-#: templates/filebrowser/doc_edit.html:26
-#: templates/filebrowser/doc_edit.html:34 templates/filebrowser/rename.html:17
-#: templates/filebrowser/rename.html:19 templates/filebrowser/upload.html:23
-#: templates/filebrowser/upload.html:25
+#: templates/filebrowser/delete.html:21 templates/filebrowser/delete.html:25
+#: templates/filebrowser/doc_edit.html:27
+#: templates/filebrowser/doc_edit.html:29
+#: templates/filebrowser/doc_edit.html:42 templates/filebrowser/rename.html:20
+#: templates/filebrowser/rename.html:22 templates/filebrowser/upload.html:26
+#: templates/filebrowser/upload.html:28
 msgid "Back to content"
 msgstr "Ritorna al contenuto"
 
-#: templates/filebrowser/delete.html:28
+#: templates/filebrowser/delete.html:34
 msgid "Are you sure to delete these elements?"
 msgstr "Sei sicuro di voler cancellare questi elementi?"
 
-#: templates/filebrowser/delete.html:51 templates/filebrowser/listing.html:94
+#: templates/filebrowser/delete.html:57 templates/filebrowser/listing.html:104
 msgid "Delete"
 msgstr "Cancella"
 
@@ -194,44 +207,44 @@ msgstr "Aggiungi un documento"
 msgid "Add Document"
 msgstr "Aggiungi un Documento"
 
-#: templates/filebrowser/doc_edit.html:31
+#: templates/filebrowser/doc_edit.html:37
 msgid "Edit Document"
 msgstr "Modifica un documento"
 
-#: templates/filebrowser/document.html:13
+#: templates/filebrowser/document.html:4
 msgid "Document detail"
 msgstr "Dettagli del documento"
 
-#: templates/filebrowser/document.html:27
+#: templates/filebrowser/document.html:26
 msgid "Edit"
 msgstr "Modifica"
 
-#: templates/filebrowser/document.html:38
+#: templates/filebrowser/document.html:39
 msgid "Files"
 msgstr "File"
 
 #: templates/filebrowser/document.html:49
-#: templates/filebrowser/document.html:79
+#: templates/filebrowser/document.html:77
 msgid "Remove"
 msgstr "Rimuovi"
 
-#: templates/filebrowser/document.html:57
+#: templates/filebrowser/document.html:56
 msgid "New file"
 msgstr "Nuovo file"
 
-#: templates/filebrowser/document.html:62
+#: templates/filebrowser/document.html:61
 msgid "Add file"
 msgstr "Aggiungi file"
 
-#: templates/filebrowser/document.html:67
+#: templates/filebrowser/document.html:65
 msgid "Images"
 msgstr "Immagini"
 
-#: templates/filebrowser/document.html:88
+#: templates/filebrowser/document.html:84
 msgid "New image"
 msgstr "Nuova immagine"
 
-#: templates/filebrowser/document.html:93
+#: templates/filebrowser/document.html:89
 msgid "Add image"
 msgstr "Aggiungi immagine"
 
@@ -239,59 +252,62 @@ msgstr "Aggiungi immagine"
 msgid "Listing"
 msgstr "Lista"
 
-#: templates/filebrowser/listing.html:26 templates/filebrowser/listing.html:53
-#: templates/filebrowser/rename.html:29
-msgid "folder"
-msgstr "cartella"
-
-#: templates/filebrowser/listing.html:27 templates/filebrowser/upload.html:4
+#: templates/filebrowser/listing.html:34 templates/filebrowser/upload.html:4
 #: templates/filebrowser/upload.html:6
 msgid "Upload file"
 msgstr "Carica file"
 
-#: templates/filebrowser/listing.html:38
+#: templates/filebrowser/listing.html:35
+msgid "Create document"
+msgstr ""
+
+#: templates/filebrowser/listing.html:48
 msgid "This table contains a list of objects"
 msgstr "Questa tabella contiene una lista di oggetti"
 
-#: templates/filebrowser/listing.html:42
+#: templates/filebrowser/listing.html:52
 msgid "Name"
 msgstr "Nome"
 
-#: templates/filebrowser/listing.html:43
+#: templates/filebrowser/listing.html:53
 msgid "Size"
 msgstr "Dimensione"
 
-#: templates/filebrowser/listing.html:44
+#: templates/filebrowser/listing.html:54
 msgid "Date"
 msgstr "Data"
 
-#: templates/filebrowser/listing.html:44
+#: templates/filebrowser/listing.html:54
 msgid "Modification date"
 msgstr "Data di modifica"
 
-#: templates/filebrowser/listing.html:93 templates/filebrowser/rename.html:4
-#: templates/filebrowser/rename.html:13 templates/filebrowser/rename.html:48
+#: templates/filebrowser/listing.html:103 templates/filebrowser/rename.html:4
+#: templates/filebrowser/rename.html:13 templates/filebrowser/rename.html:54
 msgid "Rename"
 msgstr "Rinomina"
 
-#: templates/filebrowser/listing.html:95
+#: templates/filebrowser/listing.html:105
 msgid "Select one or more files or folders and click the desired button"
 msgstr ""
 "Seleziona uno o più file o cartelle e fai click sul pulsante desiderato"
+
+#: templates/filebrowser/listing.html:111
+msgid "The current directory is empty."
+msgstr ""
 
 #: templates/filebrowser/rename.html:8
 msgid "Confirm rename"
 msgstr "Conferma la rinominazione"
 
-#: templates/filebrowser/rename.html:17 templates/filebrowser/rename.html:19
-msgid "Edit Undo"
-msgstr "Annulla le modifiche"
-
-#: templates/filebrowser/rename.html:24
+#: templates/filebrowser/rename.html:30
 msgid "Rename these elements"
 msgstr "Rinomia questi elementi"
 
-#: templates/filebrowser/upload.html:14 templates/filebrowser/upload.html:39
+#: templates/filebrowser/rename.html:35
+msgid "folder"
+msgstr "cartella"
+
+#: templates/filebrowser/upload.html:14 templates/filebrowser/upload.html:45
 msgid "Upload"
 msgstr "Carica"
 
@@ -299,6 +315,12 @@ msgstr "Carica"
 msgid "Upload files"
 msgstr "Carica i file"
 
-#: templates/filebrowser/upload.html:34
+#: templates/filebrowser/upload.html:40
 msgid "File to upload"
 msgstr "File da caricare"
+
+#~ msgid "You don't have permission to do that."
+#~ msgstr "Non hai il permesso per fare questo"
+
+#~ msgid "Edit Undo"
+#~ msgstr "Annulla le modifiche"

@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"POT-Creation-Date: 2011-05-10 20:24+0200\n"
 "PO-Revision-Date: 2010-10-11 11:32\n"
 "Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,9 +16,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Translated-Using: django-transhette 0.1.SVN\n"
 
-#: blocks.py:31
-msgid "Feedback content"
-msgstr "Comentarios"
+#: blocks.py:27
+msgid "Feedback block"
+msgstr ""
+
+#: blocks.py:28
+msgid "The block represents the feedback widget"
+msgstr ""
+
+#: blocks.py:33
+msgid "Comments"
+msgstr ""
 
 #: config.py:33
 msgid "Number of comment for each content"
@@ -32,7 +40,7 @@ msgstr "Mostrar hijos"
 msgid "Show options bar"
 msgstr "Mostrar barra de opciones"
 
-#: views.py:86
+#: views.py:105
 msgid "Your message has been posted successfully."
 msgstr "Su mensaje se ha enviado con exito."
 
@@ -41,7 +49,7 @@ msgid "Are you sure you want to delete this comment?"
 msgstr "¿Está usted seguro de que desea borrar este comentario?"
 
 #: templates/feedback/content_comment.html:4
-#: templates/feedback/content_comments.html:8
+#: templates/feedback/content_comments.html:12
 msgid "Are you sure you want to discard this comment form?"
 msgstr "¿Está seguro que desea deshacer este formulario de comentario?"
 
@@ -64,12 +72,12 @@ msgid "on"
 msgstr "en"
 
 #: templates/feedback/content_comment.html:24
-#: templates/feedback/content_comments.html:14
+#: templates/feedback/content_comments.html:18
 msgid "Reply"
 msgstr "Respuesta"
 
 #: templates/feedback/content_comment.html:25
-#: templates/feedback/content_comments.html:16
+#: templates/feedback/content_comments.html:20
 msgid "Hide Reply"
 msgstr "Ocultar respuesta"
 
@@ -106,11 +114,11 @@ msgstr "Enviar comentario"
 msgid "Return to"
 msgstr "Volver a"
 
-#: templates/feedback/content_comments.html:5
+#: templates/feedback/content_comments.html:6
 msgid "Comments on this content"
 msgstr "Comentarios a este contenido"
 
-#: templates/feedback/content_comments.html:10
+#: templates/feedback/content_comments.html:14
 msgid "An error has occurred, try again"
 msgstr "Ha ocurrido un error, inténtelo de nuevo"
 
@@ -125,3 +133,6 @@ msgstr "Comentario"
 #: templates/feedback/feedback_index.html:12
 msgid "Feedback Index"
 msgstr "Índice de Comentarios"
+
+#~ msgid "Feedback content"
+#~ msgstr "Comentarios"

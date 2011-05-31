@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"POT-Creation-Date: 2011-05-10 20:24+0200\n"
 "PO-Revision-Date: 2009-11-12 19:50\n"
 "Last-Translator: <dev@merengueproject.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,15 @@ msgstr ""
 msgid "Database error"
 msgstr "Error de la base de datos"
 
-#: blocks.py:32
+#: blocks.py:27
+msgid "Block provides latest videos"
+msgstr ""
+
+#: blocks.py:28
+msgid "Latest videos block"
+msgstr ""
+
+#: blocks.py:33
 msgid "Latest video"
 msgstr "Últimos vídeos"
 

@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"POT-Creation-Date: 2011-05-10 20:24+0200\n"
 "PO-Revision-Date: 2011-03-07 17:47\n"
 "Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,81 +16,128 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Translated-Using: django-transhette 0.1.SVN\n"
 
-#: admin.py:35
+#: admin.py:41
 msgid "Basic Options"
 msgstr "Opciones básicas"
 
-#: admin.py:37
+#: admin.py:45
 msgid "Advanced Options"
 msgstr "Opciones avanzadas"
 
-#: blocks.py:46
-msgid "Search"
-msgstr "Buscar"
+#: blocks.py:29
+msgid "Block with standing out by categories"
+msgstr ""
 
-#: config.py:33
+#: blocks.py:30
+msgid "Standing out block"
+msgstr ""
+
+#: blocks.py:33 blocks.py:63
 msgid "limit for standingouts in block"
 msgstr "limitar para el bloque destacados"
 
+#: blocks.py:52
+msgid "Search"
+msgstr "Buscar"
+
+#: blocks.py:59
+msgid "Block with a jquery slideshow of standingouts"
+msgstr ""
+
+#: blocks.py:60
+msgid "Standing out Slide Show block"
+msgstr ""
+
+#: blocks.py:73
+msgid "Slideshow"
+msgstr ""
+
 #: forms.py:30
-msgid "If you select the option in field standing out category you have to select a option in related field"
-msgstr "Si selecciona la opción en el campo de categoría destacada tienes que seleccionar una opción del campo relacionado."
+msgid ""
+"If you select the option in field standing out category you have to select a "
+"option in related field"
+msgstr ""
+"Si selecciona la opción en el campo de categoría destacada tienes que "
+"seleccionar una opción del campo relacionado."
 
 #: forms.py:35
-msgid "If you select the option in field related you have to select a option in standing out category field"
-msgstr "Si selecciona la opción en el campo relacionado tiene que seleccionar una opción en destacado del campo de categoría"
+msgid ""
+"If you select the option in field related you have to select a option in "
+"standing out category field"
+msgstr ""
+"Si selecciona la opción en el campo relacionado tiene que seleccionar una "
+"opción en destacado del campo de categoría"
 
-#: forms.py:46
+#: forms.py:49
 #, python-format
 msgid "There was a object with the same fields pk=%s"
 msgstr "Hay un objeto con el mismo campo pk=%s"
 
-#: models.py:28
+#: models.py:31
 msgid "context variable"
 msgstr "Variable de contexto"
 
-#: models.py:31
+#: models.py:34
 msgid "standingout category"
 msgstr "categoría destacada"
 
-#: models.py:32
+#: models.py:35
 msgid "standingout categories"
 msgstr "categorías destacadas"
 
-#: models.py:37
+#: models.py:42
+msgid "title"
+msgstr ""
+
+#: models.py:43
+msgid "short description"
+msgstr ""
+
+#: models.py:45
+msgid "image"
+msgstr ""
+
+#: models.py:46
+msgid ""
+"If you don't specify any image then the first photo (if any) associated to "
+"the content will be shown"
+msgstr ""
+
+#: models.py:52
 msgid "obj content type"
 msgstr "objeto tipo de contenido "
 
-#: models.py:39
+#: models.py:54
 msgid "object id"
 msgstr "id de objeto"
 
-#: models.py:42
+#: models.py:57
 msgid "related content type"
 msgstr "tipo de contenido relacionado"
 
-#: models.py:44
+#: models.py:59
 msgid "related object id"
 msgstr "id de objeto relacionado"
 
-#: models.py:47
+#: models.py:62
 msgid "standing out category"
 msgstr "destacar categoría"
 
-#: models.py:50
+#: models.py:65
 msgid "Order"
 msgstr "Orden"
 
 #: templates/standingout/block_standingout.html:6
-#: templates/standingout/standingout_list.html:10
+#: templates/standingout/standingout_list.html:11
 msgid "Highlights"
 msgstr "Destacados"
 
-#: templates/standingout/block_standingout.html:21
+#: templates/standingout/block_standingout.html:24
+#: templates/standingout/block_standingout.html:26
 msgid "View all"
 msgstr "Ver todo"
 
-#: templates/standingout/block_standingout.html:23
+#: templates/standingout/block_standingout.html:29
 msgid "Without highlights"
 msgstr "Sin destacados"
 

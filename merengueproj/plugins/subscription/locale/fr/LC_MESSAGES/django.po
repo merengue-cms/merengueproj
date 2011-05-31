@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"POT-Creation-Date: 2011-05-10 20:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,6 +19,14 @@ msgstr ""
 #: actions.py:28 templates/subscription/subscription_form.html:18
 #: templates/subscription/subscription_form.html:23
 msgid "Subscription"
+msgstr ""
+
+#: actions.py:29
+msgid "The view provide subscription functionality"
+msgstr ""
+
+#: forms.py:14
+msgid "End date should be greater than start date."
 msgstr ""
 
 #: models.py:31
@@ -75,10 +83,22 @@ msgstr ""
 msgid "Subscription of %s"
 msgstr ""
 
-#: views.py:46
-msgid "Request send successfully"
+#: views.py:50
+#, python-format
+msgid ""
+"Request send successfully. See <a href=\"%(subscriber_listing)s\">suscriber "
+"list</a>"
 msgstr ""
 
-#: templates/subscription/subscription_form.html:30
+#: templates/admin/subscription/subscribable/change_form.html:9
+msgid "History"
+msgstr ""
+
+#: templates/subscription/subscriber_listing.html:9
+#: templates/subscription/subscriber_listing.html:14
+msgid "Subscriber listing"
+msgstr ""
+
+#: templates/subscription/subscription_form.html:28
 msgid "submit"
 msgstr ""

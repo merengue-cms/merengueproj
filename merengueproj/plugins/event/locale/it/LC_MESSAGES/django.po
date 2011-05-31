@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"POT-Creation-Date: 2011-05-10 20:24+0200\n"
 "PO-Revision-Date: 2011-04-12 20:15+0200\n"
 "Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
 "Language-Team: it <m.busico@ieee.org>\n"
@@ -17,45 +17,98 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: blocks.py:38
+#: blocks.py:32
+msgid "Block that renders calendar with events"
+msgstr ""
+
+#: blocks.py:33
+msgid "Events Calendar Block"
+msgstr ""
+
+#: blocks.py:45
 msgid "Events calendar"
 msgstr "calendario degli eventi"
 
-#: models.py:33 models.py:47
-msgid "category"
-msgstr "categoria"
+#: forms.py:35
+msgid "The end date has to be after the start date"
+msgstr ""
 
-#: models.py:34
-msgid "categories"
-msgstr "categorie"
+#: models.py:32
+msgid "event category"
+msgstr ""
 
-#: models.py:42
+#: models.py:33
+msgid "event categories"
+msgstr ""
+
+#: models.py:41
 msgid "Start date"
 msgstr "Data di inizio"
 
-#: models.py:44
+#: models.py:43
 msgid "End date"
 msgstr "Data di fine"
 
-#: models.py:53
+#: models.py:46
+msgid "category"
+msgstr "categoria"
+
+#: models.py:52
 msgid "event"
 msgstr "evento"
 
-#: models.py:54
+#: models.py:53
 msgid "events"
 msgstr "eventi"
 
-#: viewlets.py:26
+#: viewlets.py:28
 msgid "Latest events"
 msgstr "Ultimi eventi"
 
-#: viewlets.py:37
+#: viewlets.py:29
+msgid "Latest Event"
+msgstr ""
+
+#: viewlets.py:34
+msgid "limit for event viewlet"
+msgstr ""
+
+#: viewlets.py:51
 msgid "All events"
 msgstr "Tutti gli eventi"
+
+#: viewlets.py:52
+msgid "All Events"
+msgstr ""
+
+#: viewlets.py:57
+msgid "number of elements on a page"
+msgstr ""
 
 #: templates/event/block_calendar.html:24
 msgid "Loading..."
 msgstr "Sto caricando..."
+
+#: templates/event/event_historic.html:5
+msgid "Past Events"
+msgstr ""
+
+#: templates/event/event_historic.html:7 templates/event/event_historic.html:9
+#: templates/event/event_historic.html:15
+msgid "Past events"
+msgstr ""
+
+#: templates/event/event_historic.html:13
+msgid "Events"
+msgstr ""
+
+#: templates/event/event_historic.html:13
+msgid "Event"
+msgstr "Evento"
+
+#: templates/event/event_historic.html:15
+msgid "Past"
+msgstr ""
 
 #: templates/event/event_list.html:5 templates/event/event_list.html.py:7
 msgid "Events index"
@@ -65,15 +118,15 @@ msgstr "Indice degli eventi"
 msgid "For every date"
 msgstr "Per ogni data"
 
-#: templates/event/event_list.html:10 templates/event/event_view.html:8
-msgid "Event"
-msgstr "Evento"
+#: templates/event/event_list.html:13
+msgid "Events historic"
+msgstr ""
 
-#: templates/event/event_view.html:15
+#: templates/event/event_view.html:11
 msgid "start date"
 msgstr "data di inizio"
 
-#: templates/event/event_view.html:16
+#: templates/event/event_view.html:12
 msgid "end date"
 msgstr "data di fine"
 
@@ -84,3 +137,6 @@ msgstr "Da"
 #: templates/event/range_dates.html:6
 msgid "To"
 msgstr "A"
+
+#~ msgid "categories"
+#~ msgstr "categorie"

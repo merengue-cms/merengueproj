@@ -8,19 +8,27 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-13 11:46+0100\n"
+"POT-Creation-Date: 2011-05-10 20:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 
-#: models.py:26
+#: blocks.py:39
+msgid "Content group links"
+msgstr ""
+
+#: config.py:36
+msgid "number of chars that should have the link as maximum"
+msgstr ""
+
+#: models.py:27
 msgid "identifier name of this content group"
 msgstr ""
 
-#: models.py:29
+#: models.py:30
 msgid "contents related to the group"
 msgstr ""

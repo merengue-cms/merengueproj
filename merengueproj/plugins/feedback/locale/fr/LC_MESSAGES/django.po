@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-07 10:57+0200\n"
+"POT-Creation-Date: 2011-05-10 20:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,8 +16,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: blocks.py:31
-msgid "Feedback content"
+#: blocks.py:27
+msgid "Feedback block"
+msgstr ""
+
+#: blocks.py:28
+msgid "The block represents the feedback widget"
+msgstr ""
+
+#: blocks.py:33
+msgid "Comments"
 msgstr ""
 
 #: config.py:33
@@ -32,7 +40,7 @@ msgstr ""
 msgid "Show options bar"
 msgstr ""
 
-#: views.py:86
+#: views.py:105
 msgid "Your message has been posted successfully."
 msgstr ""
 
@@ -41,7 +49,7 @@ msgid "Are you sure you want to delete this comment?"
 msgstr ""
 
 #: templates/feedback/content_comment.html:4
-#: templates/feedback/content_comments.html:8
+#: templates/feedback/content_comments.html:12
 msgid "Are you sure you want to discard this comment form?"
 msgstr ""
 
@@ -64,12 +72,12 @@ msgid "on"
 msgstr ""
 
 #: templates/feedback/content_comment.html:24
-#: templates/feedback/content_comments.html:14
+#: templates/feedback/content_comments.html:18
 msgid "Reply"
 msgstr ""
 
 #: templates/feedback/content_comment.html:25
-#: templates/feedback/content_comments.html:16
+#: templates/feedback/content_comments.html:20
 msgid "Hide Reply"
 msgstr ""
 
@@ -106,11 +114,11 @@ msgstr ""
 msgid "Return to"
 msgstr ""
 
-#: templates/feedback/content_comments.html:5
+#: templates/feedback/content_comments.html:6
 msgid "Comments on this content"
 msgstr ""
 
-#: templates/feedback/content_comments.html:10
+#: templates/feedback/content_comments.html:14
 msgid "An error has occurred, try again"
 msgstr ""
 

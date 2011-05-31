@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-07 10:56+0200\n"
+"POT-Creation-Date: 2011-05-10 20:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,12 +16,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: blocks.py:35 models.py:40
-msgid "banners"
+#: blocks.py:29
+msgid "Banner Block"
 msgstr ""
 
-#: config.py:35
+#: blocks.py:30
+msgid "Block that represents a banner"
+msgstr ""
+
+#: blocks.py:33
 msgid "limit for banner block"
+msgstr ""
+
+#: blocks.py:46 models.py:40
+msgid "banners"
 msgstr ""
 
 #: models.py:31
@@ -45,19 +53,23 @@ msgstr ""
 msgid "banner"
 msgstr ""
 
-#: viewlets.py:26
+#: viewlets.py:28
 msgid "All Banners"
 msgstr ""
 
-#: templates/banner/banner_index.html:5 templates/banner/banner_index.html:11
+#: viewlets.py:29
+msgid "All banner block"
+msgstr ""
+
+#: viewlets.py:32
+msgid "limit for banner viewlet"
+msgstr ""
+
+#: templates/banner/banner_index.html:5 templates/banner/banner_index.html:7
 msgid "Banner history"
 msgstr ""
 
-#: templates/banner/banner_index.html:8
-msgid "Banners"
-msgstr ""
-
-#: templates/banner/block_banner.html:9
+#: templates/banner/block_banner.html:11
 msgid "History banner"
 msgstr ""
 
