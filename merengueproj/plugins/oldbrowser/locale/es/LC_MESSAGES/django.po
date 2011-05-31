@@ -1,0 +1,55 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-05-10 20:24+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: blocks.py:27
+msgid "Block emulates the old browser "
+msgstr ""
+
+#: blocks.py:28
+msgid "Old browser block"
+msgstr ""
+
+#: blocks.py:32
+msgid "Old Browser"
+msgstr ""
+
+#: models.py:26
+msgid ""
+"use a user-agent python regular expresion, for example: Firefox/3.6.12 or "
+"Firefox/2.*"
+msgstr ""
+
+#: templates/oldbrowser/block_oldbrowser.html:11
+msgid "More information"
+msgstr ""
+
+#: templates/oldbrowser/browser_info.html:10
+#, python-format
+msgid ""
+"\n"
+"  Your current browser has the following user agent identifier:\n"
+"\n"
+"  <pre>%(user_agent)s</pre>\n"
+"\n"
+"  If you consider it as a old browser, add it on the admin site.\n"
+"  "
+msgstr ""
+
+#: templatetags/oldbrowser_tags.py:39
+msgid "Your browser is too old. Please, update it."
+msgstr ""
