@@ -18,6 +18,7 @@
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.utils.simplejson import dumps
 from django.utils.translation import ugettext as _
 
@@ -107,9 +108,9 @@ def add_block(request):
         if form.is_valid():
             block = form.save()
             if block.tied:
-                result = block.get_registry_item().render(request, form.cleaned_data.get('place'), block.tied, {})
+                result = block.get_registry_item().render(request, form.cleaned_data.get('place'), block.tied, RequestContext(request))
             else:
-                result = block.get_registry_item().render(request, form.cleaned_data.get('place'), {})
+                result = block.get_registry_item().render(request, form.cleaned_data.get('place'), RequestContext(request))
             result = '<div class="blockWrapper">%s</div>' % result
             return HttpResponse(result)
     else:
