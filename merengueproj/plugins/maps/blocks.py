@@ -54,6 +54,11 @@ class MapBlock(Block):
             label=_("Map zoom"),
             default=4,
         ),
+        params.Bool(
+            name="render_ui",
+            label=_("Render UI"),
+            default=True,
+        ),
     ]
 
     def render(self, request, place, context, *args, **kwargs):
@@ -63,6 +68,7 @@ class MapBlock(Block):
             'longitude': self.get_config().get('longitude').get_value(),
             'width': self.get_config().get('width').get_value(),
             'height': self.get_config().get('height').get_value(),
+            'render_ui': self.get_config().get('render_ui').get_value(),
             'MEDIA_URL': context.get('MEDIA_URL', settings.MEDIA_URL),
             'GOOGLE_MAPS_API_KEY': context.get('GOOGLE_MAPS_API_KEY', ''),
             'LANGUAGE_CODE': get_language(),
