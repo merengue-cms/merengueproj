@@ -303,12 +303,14 @@
                     map.setMapType(opts.map_type);
                 }
 
-                if (opts.use_small_controls) {
-                    debug("addControl");
-                    map.addControl(new google.maps.SmallZoomControl3D());
-                } else {
-                    debug("setUIToDefault");
-                    map.setUIToDefault();
+                if (!opts.no_ui) {
+                    if (opts.use_small_controls) {
+                        debug("addControl");
+                        map.addControl(new google.maps.SmallZoomControl3D());
+                    } else {
+                        debug("setUIToDefault");
+                        map.setUIToDefault();
+                    }
                 }
 
                 if (opts.enable_scroll_wheel_zoom) {
