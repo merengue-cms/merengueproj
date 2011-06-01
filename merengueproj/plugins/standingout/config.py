@@ -16,7 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from merengue.pluggable import Plugin
-from transmeta import get_real_fieldname_in_each_language
+from transmeta import get_fallback_fieldname
 
 from plugins.standingout.admin import StandingOutAdmin, StandingOutCategoryAdmin
 from plugins.standingout.models import StandingOut, StandingOutCategory
@@ -36,14 +36,12 @@ class PluginConfig(Plugin):
         return [StandingOutBlock, StandingOutSlideShowBlock]
 
     def post_install(self):
-        (soc_section, created) = StandingOutCategory.objects.get_or_create(context_variable='section', slug='section')
-        for real_field in get_real_fieldname_in_each_language('name'):
-            setattr(soc_section, real_field, 'section')
-        soc_section.save()
-        (soc_content, created) = StandingOutCategory.objects.get_or_create(context_variable='content', slug='content')
-        for real_field in get_real_fieldname_in_each_language('name'):
-            setattr(soc_content, real_field, 'content')
-        soc_content.save()
+        name_field = get_fallback_fieldname('name')
+        for slug in ('section', 'content'):
+            if not StandingOutCategory.objects.filter(slug=slug).exists():
+                standingout_category = StandingOutCategory(context_variable='section', slug='section')
+                setattr(standingout_category, name_field, slug)
+                standingout_category.save()
 
     def get_model_admins(self):
         return [(StandingOut, StandingOutAdmin),
