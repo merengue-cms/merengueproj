@@ -132,3 +132,11 @@ def remove_block(request, block_id):
     reg_block = RegisteredBlock.objects.get(id=block_id)
     reg_block.delete()
     return HttpResponse('ok')
+
+
+def invalidate_cache(request, block_id):
+    if not has_global_permission(request.user, 'manage_portal'):
+        raise PermissionDenied()
+    reg_block = RegisteredBlock.objects.get(id=block_id)
+    reg_block.get_registry_item().invalidate_cache()
+    return HttpResponse('ok')

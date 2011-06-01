@@ -29,6 +29,8 @@ urlpatterns = patterns('merengue.block.views',
         name='generate_blocks_configuration_for_content'),
     url(r'ajax/remove-block/(?P<block_id>\d+)/$', 'remove_block',
         name='remove_block'),
+    url(r'ajax/invalidate-cache/(?P<block_id>\d+)/$', 'invalidate_cache',
+        name='invalidate_cache'),
     url(r'ajax/add-block/$', 'add_block',
         name='add_block'),
 )

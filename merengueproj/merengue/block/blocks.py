@@ -99,6 +99,7 @@ class BaseBlock(RegistrableItem):
             return  # not need to cache nothing
         cache_key = self._get_cache_key(request)
         self._register_cache_key(cache_key)
+        content = '<div class="cached-block">%s</div>' % content
         return cache.set(cache_key, content, self.reg_item.cache_timeout)
 
     def set_default_caching(self):

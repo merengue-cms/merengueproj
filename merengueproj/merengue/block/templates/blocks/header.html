@@ -53,7 +53,7 @@
         }
 
         function initBlock(block) {
-            var dragAnchor, confAnchor, removeAnchor, divTools, position;
+            var dragAnchor, confAnchor, removeAnchor, cacheAnchor, divTools, position;
             position = block.position();
             divTools = $("<div>");
             // creating block tools
@@ -73,6 +73,14 @@
                 confAnchor.addClass("configure");
                 confAnchor.attr("title", "{% trans "Configure block" %}");
                 divTools.append(confAnchor);
+            }
+            if (block.parent().hasClass("cached-block")) {
+                cacheAnchor = $("<a>");
+                cacheAnchor.attr("href", "javascript:void(0)");
+                cacheAnchor.click(invalidateCache);
+                cacheAnchor.addClass("invalidate-cache");
+                cacheAnchor.attr("title", "{% trans "Invalidate cache" %}");
+                divTools.append(cacheAnchor);
             }
             removeAnchor = $("<a>");
             removeAnchor.attr("href", "javascript:void(0)");
@@ -99,6 +107,30 @@
                     block.children(".blockTools").delay(1000).fadeOut();
                 }
             });
+        }
+
+        function invalidateCache() {
+            if (!confirm("{% trans "Are you sure you want to invalidate the cache of this block" %}")) {
+                return false;
+            }
+            var blocks_index_url = '{% url blocks_index %}';
+            var block = $(this).parents('.block');
+            var block_id = block.find('.blockId').val();
+            var block_invalidate_url = blocks_index_url + 'ajax/invalidate-cache/' + block_id + '/';
+            var render_block_url = '.?render_block=' + block_id;
+            $.ajax({
+                url: block_invalidate_url,
+                success: function(data){
+                    if(data == 'ok') {
+                        block.parent().fadeOut(1000, function() {
+                            block.parent().load(render_block_url, function() {
+                                initBlock($('#' + block_name));
+                            }).fadeIn('slow');
+                        });
+                    }
+                }
+            });
+            return false;
         }
 
         function removeBlock() {

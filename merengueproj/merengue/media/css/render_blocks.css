@@ -38,6 +38,10 @@
     background: transparent url("../img/remove_block.png") no-repeat 0px 0px;
 }
 
+.blockContainer .block .blockTools a.invalidate-cache {
+    background: transparent url("../img/invalidate_block.png") no-repeat 0px 0px;
+}
+
 .blockContainer .blockDrag {
     color: #999;
     font-style: italic;
