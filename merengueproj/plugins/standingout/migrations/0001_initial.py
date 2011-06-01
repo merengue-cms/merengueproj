@@ -1,28 +1,33 @@
 # encoding: utf-8
-import datetime
 from south.db import db
 from south.v2 import SchemaMigration
-from django.db import models
 
 from merengue.base.utils import table_exists
+from merengue.base.utils import south_trans_data, add_south_trans_fields
 
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         if table_exists('standingout_standingoutcategory'):
             return
 
+        data = (
+            ('id', orm['standingout.standingoutcategory:id']),
+            ('slug', orm['standingout.standingoutcategory:slug']),
+            ('context_variable', orm['standingout.standingoutcategory:context_variable']),
+        )
+
+        data = data + south_trans_data(
+            orm=orm,
+            trans_data={
+                'standingout.standingoutcategory': ('name', ),
+            },
+        )
+
         # Adding model 'StandingOutCategory'
-        db.create_table('standingout_standingoutcategory', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name_en', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('name_es', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
-            ('name_fr', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=200, db_index=True)),
-            ('context_variable', self.gf('django.db.models.fields.CharField')(max_length=200)),
-        ))
+        db.create_table('standingout_standingoutcategory', data)
         db.send_create_signal('standingout', ['StandingOutCategory'])
 
         # Adding model 'StandingOut'
@@ -40,9 +45,7 @@ class Migration(SchemaMigration):
         # Adding unique constraint on 'StandingOut', fields ['obj_content_type', 'obj_id', 'related_content_type', 'related_id', 'standing_out_category']
         db.create_unique('standingout_standingout', ['obj_content_type_id', 'obj_id', 'related_content_type_id', 'related_id', 'standing_out_category_id'])
 
-
     def backwards(self, orm):
-        
         # Removing unique constraint on 'StandingOut', fields ['obj_content_type', 'obj_id', 'related_content_type', 'related_id', 'standing_out_category']
         db.delete_unique('standingout_standingout', ['obj_content_type_id', 'obj_id', 'related_content_type_id', 'related_id', 'standing_out_category_id'])
 
@@ -51,7 +54,6 @@ class Migration(SchemaMigration):
 
         # Deleting model 'StandingOut'
         db.delete_table('standingout_standingout')
-
 
     models = {
         'contenttypes.contenttype': {
@@ -75,11 +77,14 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'StandingOutCategory'},
             'context_variable': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name_en': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'name_fr': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '200', 'db_index': 'True'})
         }
     }
+    add_south_trans_fields(models, {
+        'standingout.standingoutcategory': {
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+        },
+    })
 
     complete_apps = ['standingout']
