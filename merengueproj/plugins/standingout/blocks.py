@@ -48,7 +48,7 @@ class StandingOutBlock(Block):
         limit = self.get_config().get('limit', None)
         if limit:
             standingouts = standingouts[:limit.get_value()]
-        return self.render_block(request, template_name='standingout/block_standingout.html',
+        return self.render_block(request, template_name='block_standingout.html',
                                  block_title=_('Search'),
                                  context={'standingouts': standingouts})
 
@@ -69,6 +69,6 @@ class StandingOutSlideShowBlock(Block):
         limit = self.get_config().get('limit', None)
         if limit:
             standingouts = standingouts[:limit.get_value()]
-        return self.render_block(request, template_name='standingout/block_slideshow.html',
+        return self.render_block(request, template_name='block_slideshow.html',
                                  block_title=_('Slideshow'),
                                  context={'standingouts': standingouts})

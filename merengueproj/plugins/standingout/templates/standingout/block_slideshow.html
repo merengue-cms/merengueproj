@@ -27,55 +27,61 @@
 
   <div class="standingout-slidecontainer">
     {% if standingouts %}
-        {% for standingout in standingouts %}
-            <div class="standingout-slide">
-                {% ifequal standingout.obj.class_name "video" %}
-                <div class ="standingout-image standingout-video">
-                   {% multimedia_slide_link standingout.obj standingout "350x240" %}
+      {% for standingout in standingouts %}
+        <div class="standingout-slide">
+          {% block standingout %}
+            {% ifequal standingout.obj.class_name "video" %}
+              <div class ="standingout-image standingout-video">
+                {% multimedia_slide_link standingout.obj standingout "350x240" %}
+              </div>
+            {% else %}
+              {% if standingout.image %}
+                <div class="standingout-image">
+                  <img src="{{ standingout.image.url }}" />
                 </div>
-                {% else %}
-                {% if standingout.image %}
-                  <div class="standingout-image">
-                    <img src="{{ standingout.image.url }}" />
-                  </div>
-                {% else %}
-                  {% if standingout.obj.main_image %}
-                  <div class="standingout-image">
-                    {% thumbnail standingout.obj.main_image "350x240" crop="center" as thumb %}
-                      <img src="{{ thumb.url }}" />
-                    {% endthumbnail %}
-                  </div>
-                  {% endif %}
-                {% endif %}
-                {% endifequal %}
-                <div class="standingout-title">
-                {% if standingout.url %}
-                  <a href="{{ standingout.url }}">
-                {% else %}
-                  {% if standingout.obj.get_absolute_url %}
-                    <a href="{{ standingout.obj.get_absolute_url }}">
-                  {% endif %}
-                {% endif %}
-                {% if standingout.title %}
-                  {% inplace_edit "standingout.title" %}
-                {% else %}
-                  {% inplace_edit "standingout.obj.title" %}
-                {% endif %}
-                {% if standingout.obj.get_absolute_url or standingout.url %}
-                    </a>
-                {% endif %}
+              {% else %}
+                {% if standingout.obj.main_image %}
+                <div class="standingout-image">
+                  {% thumbnail standingout.obj.main_image "350x240" crop="center" as thumb %}
+                    <img src="{{ thumb.url }}" />
+                  {% endthumbnail %}
                 </div>
-                <div class="standingout-description">
-                {% if standingout.short_description %}
-                    {% inplace_edit "standingout.short_description|safe" %}
-                {% else %}
-                    {% if standingout.obj.description %}
-                        {{ standingout.obj.description|striptags|unescape_html_entities|truncatechars:250 }}
-                    {% endif %}
                 {% endif %}
-                </div>
+              {% endif %}
+            {% endifequal %}
+            <div class="standingout-title">
+            {% block standingout-title %}
+              {% if standingout.url %}
+                <a href="{{ standingout.url }}">
+              {% else %}
+                {% if standingout.obj.get_absolute_url %}
+                  <a href="{{ standingout.obj.get_absolute_url }}">
+                {% endif %}
+              {% endif %}
+              {% if standingout.title %}
+                {% inplace_edit "standingout.title" %}
+              {% else %}
+                {% inplace_edit "standingout.obj.title" %}
+              {% endif %}
+              {% if standingout.obj.get_absolute_url or standingout.url %}
+                  </a>
+              {% endif %}
+            {% endblock %}
             </div>
-        {% endfor %}
+            <div class="standingout-description">
+            {% block standingout-description %}
+              {% if standingout.short_description %}
+                  {% inplace_edit "standingout.short_description|safe" %}
+              {% else %}
+                  {% if standingout.obj.description %}
+                      {% inplace_edit "standingout.obj.description|safe" %}
+                  {% endif %}
+              {% endif %}
+            {% endblock %}
+            </div>
+          {% endblock %}
+        </div>
+      {% endfor %}
     {% endif %}
   </div>
 
