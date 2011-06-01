@@ -386,7 +386,7 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
     def _media(self):
         __media = super(BaseAdmin, self)._media()
         __media.add_js(['merengue/js/ajaxautocompletion/jquery.autocomplete.js',
-                        'merengue/js/ajaxa_select/ajax_select.js'])
+                        'merengue/js/ajax_select/ajax_select.js'])
         __media.add_css({'all': ('merengue/css/ajaxautocompletion/jquery.autocomplete.css',
                                  'merengue/css/ajax_select/iconic.css')})
         return __media
