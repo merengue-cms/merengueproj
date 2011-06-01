@@ -33,6 +33,7 @@ class StandingOutAdmin(BaseOrderableAdmin):
     list_filter = ('related_content_type', 'related_id', 'obj_content_type', 'id')
     form = StandingOutAdminModelForm
     sortablefield = 'order'
+    html_fields = ('short_description', )
 
     def get_form(self, request, obj=None):
         self.fieldsets = None
@@ -41,7 +42,7 @@ class StandingOutAdmin(BaseOrderableAdmin):
                 (_('Basic Options'), {
                                 'fields': get_real_fieldname_in_each_language('title') +\
                                           get_real_fieldname_in_each_language('short_description') +\
-                                          ['image', 'obj']}),
+                                          ['image', 'obj', 'url']}),
                 (_('Advanced Options'), {
                                 'fields': ('standing_out_category', 'related')}),
         )

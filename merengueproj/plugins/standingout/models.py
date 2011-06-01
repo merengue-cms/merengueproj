@@ -50,9 +50,14 @@ class StandingOut(models.Model):
         blank=True,
         )
     obj_content_type = models.ForeignKey(ContentType, verbose_name=_('obj content type'),
-                                         related_name='standingout_objects')
-    obj_id = models.PositiveIntegerField(_('object id'), db_index=True)
+                                         related_name='standingout_objects', null=True, blank=True)
+    obj_id = models.PositiveIntegerField(_('object id'), db_index=True, null=True, blank=True)
     obj = generic.GenericForeignKey('obj_content_type', 'obj_id')
+
+    url = models.CharField(
+        verbose_name=_('url'), max_length=200, null=True, blank=True,
+        help_text=_('The absolute urls have to write complety: Protocol, domain, query'),
+    )
 
     related_content_type = models.ForeignKey(ContentType, verbose_name=_('related content type'), null=True, blank=True,
                                              related_name='standingout_relateds')

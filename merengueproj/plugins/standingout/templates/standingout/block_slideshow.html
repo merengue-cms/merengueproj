@@ -1,6 +1,6 @@
 {% extends "block.html" %}
 
-{% load i18n inlinetrans section_tags media_tags thumbnail stringfilters content_filters  %}
+{% load i18n inlinetrans inplace_edit section_tags media_tags thumbnail stringfilters content_filters  %}
 
 {% block blocktitle %}{% endblock %}
 
@@ -49,15 +49,25 @@
                 {% endif %}
                 {% endifequal %}
                 <div class="standingout-title">
-                {% if standingout.obj.get_absolute_url %}
-                    <a href="{{ standingout.obj.get_absolute_url }}">{{ standingout.title|default:standingout.obj }}</a>
+                {% if standingout.url %}
+                  <a href="{{ standingout.url }}">
                 {% else %}
-                    {{ standingout.title|default:standingout.obj }}
+                  {% if standingout.obj.get_absolute_url %}
+                    <a href="{{ standingout.obj.get_absolute_url }}">
+                  {% endif %}
+                {% endif %}
+                {% if standingout.title %}
+                  {% inplace_edit "standingout.title" %}
+                {% else %}
+                  {% inplace_edit "standingout.obj.title" %}
+                {% endif %}
+                {% if standingout.obj.get_absolute_url or standingout.url %}
+                    </a>
                 {% endif %}
                 </div>
                 <div class="standingout-description">
                 {% if standingout.short_description %}
-                    {{ standingout.short_description|striptags|truncatechars:250 }}
+                    {% inplace_edit "standingout.short_description|safe" %}
                 {% else %}
                     {% if standingout.obj.description %}
                         {{ standingout.obj.description|striptags|unescape_html_entities|truncatechars:250 }}
