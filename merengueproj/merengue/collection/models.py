@@ -1,3 +1,20 @@
+# Copyright (c) 2010 by Yaco Sistemas
+#
+# This file is part of Merengue.
+#
+# Merengue is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Merengue is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
+
 import base64
 import datetime
 import feedparser
@@ -19,6 +36,7 @@ from transmeta import get_real_fieldname, fallback_language
 
 from merengue.base.models import BaseContent
 from merengue.collection import filter_funcs
+from merengue.collection.exceptions import CollectionWithoutContentTypesException
 
 
 FILTER_OPERATORS = (
@@ -168,7 +186,7 @@ class Collection(BaseContent):
         content_types = self.content_types.all()
         ct_len = len(content_types)
         if ct_len == 0:
-            return None
+            raise CollectionWithoutContentTypesException('The collection "%s" should have defined the content types to list' % self)
         elif ct_len == 1:
             return content_types[0].model_class()
         parents_first = None
@@ -397,6 +415,9 @@ class FeedCollection(Collection):
     def purge_items(self):
         for item in self.feeditem_set.all():
             item.delete()
+
+    def get_first_parents_of_content_types(self):
+        return None
 
     def make_single_item(self, feed_item, entry):
         feed_item.item_cached = base64.encodestring(pickle.dumps(entry))

@@ -1,3 +1,20 @@
+# Copyright (c) 2010 by Yaco Sistemas
+#
+# This file is part of Merengue.
+#
+# Merengue is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Merengue is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
+
 from copy import copy
 
 from django.db.models import Q
@@ -161,7 +178,6 @@ class CollectionItemsNode(Node):
 
         group_by_attr = context.get('_group_by_collection',
                                     get_common_field_translated_name(collection, collection.group_by))
-        group_by_attr = get_common_field_translated_name(collection, collection.group_by)
         order_by_attr = context.get('_order_by_collection', None)
         can_reversed = False
         if not order_by_attr:
