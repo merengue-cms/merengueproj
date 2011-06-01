@@ -115,6 +115,7 @@
             }
             var blocks_index_url = '{% url blocks_index %}';
             var block = $(this).parents('.block');
+            var block_name = block.attr('id');
             var block_id = block.find('.blockId').val();
             var block_invalidate_url = blocks_index_url + 'ajax/invalidate-cache/' + block_id + '/';
             var render_block_url = '.?render_block=' + block_id;
@@ -122,9 +123,10 @@
                 url: block_invalidate_url,
                 success: function(data){
                     if(data == 'ok') {
-                        block.parent().fadeOut(1000, function() {
-                            block.parent().load(render_block_url, function() {
-                                initBlock($('#' + block_name));
+                        var block_parent = block.parents('.blockWrapper').eq(0);
+                        block_parent.fadeOut(1000, function() {
+                            block_parent.load(render_block_url, function() {
+                                initBlock(block_parent.find('#' + block_name));
                             }).fadeIn('slow');
                         });
                     }
