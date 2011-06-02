@@ -22,7 +22,6 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils import simplejson
 from django.template import defaultfilters, RequestContext
-from django import forms
 from django.utils.translation import ugettext as _
 from django.utils.safestring import SafeUnicode
 from django.contrib.sites.models import Site
@@ -30,12 +29,15 @@ from django.contrib.sites.models import Site
 
 from BeautifulSoup import BeautifulSoup
 
-from merengue.base.forms import BaseAdminModelForm
+from merengue.base.forms import BaseAdminModelForm, BaseForm
 from merengue.registry.fields import ConfigFormField
 from plugins.contactform.models import SentContactForm
 
 
-class ContactFormForm(forms.Form):
+class ContactFormForm(BaseForm):
+
+    def __unicode__(self):
+        return self.as_table()
 
     def save(self, request, content, contact_form):
         data = self.cleaned_data
