@@ -35,20 +35,4 @@ class StandingOutAdminModelForm(BaseAdminModelForm):
             standing_out_category_error_new = ErrorList([_(u'If you select the option in field related you have to select a option in standing out category field')])
             standing_out_category_error.extend(standing_out_category_error_new)
             self._errors['standing_out_category'] = ErrorList(standing_out_category_error)
-        if not self._errors:
-            for unique in self._meta.model._meta.unique_together:
-                dict_filter = {}
-                for field in unique:
-                    dict_filter[field] = cleaned_data.get(field, None)
-                try:
-                    exclude = {}
-                    if self.instance and self.instance.pk:
-                        exclude = {'pk': self.instance.pk}
-                    obj = self._meta.model.objects.exclude(**exclude).get(**dict_filter)
-                    obj_error = self._errors.get('obj', ErrorList([]))
-                    obj_error_new = ErrorList([_(u'There was a object with the same fields pk=%s') % obj.id])
-                    obj_error.extend(obj_error_new)
-                    self._errors['obj'] = ErrorList(obj_error)
-                except self._meta.model.DoesNotExist:
-                    pass
         return cleaned_data
