@@ -119,7 +119,7 @@ class ContactForm(models.Model):
         if request.method == 'POST':
             f = ContactFormForm(request.POST, request.FILES)
         else:
-            f = ContactFormForm()
+            f = ContactFormForm(initial=request.GET)
         index = 0
 
         if self.sender_email:
