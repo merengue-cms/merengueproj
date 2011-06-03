@@ -1393,7 +1393,7 @@ class OrderableRelatedModelAdmin(RelatedModelAdmin):
             items = self.queryset(request).filter(id__in=neworder_list)
             for item in items:
                 field = item._meta.get_field_by_name(self.related_field)[0]
-                through_model = field.field.rel.through_model
+                through_model = field.field.rel.through
                 neworder = neworder_list.index(unicode(item.id)) + (int(page) * 50)
                 relation = self.get_relation_obj(through_model, item)
                 setattr(relation, self.sortablefield, neworder)
