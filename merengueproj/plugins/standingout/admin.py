@@ -34,6 +34,7 @@ class StandingOutAdmin(BaseOrderableAdmin):
     form = StandingOutAdminModelForm
     sortablefield = 'order'
     html_fields = ('short_description', )
+    exclude = ('order', )
 
     def get_form(self, request, obj=None):
         self.fieldsets = None
