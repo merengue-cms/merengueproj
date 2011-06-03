@@ -61,7 +61,7 @@ def update_objects_permissions():
 
 def update_queryset_permissions(queryset):
     for content in queryset:
-        print ' Updating content: %s' % content
+        print ' Updating permissions in content: %s' % content
         if not content.workflow_status:  # we need to set the proper state objetc
             print '  Adding workflow.State object'
             if hasattr(content, 'get_real_instance'):
