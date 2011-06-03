@@ -55,6 +55,7 @@ from merengue.urlresolvers import get_url_default_lang
 from merengue.multimedia.models import BaseMultimedia
 from merengue.utils import is_last_application
 from merengue.workflow.models import State
+from merengue.workflow import utils as workflow_api
 
 
 PRIORITY_CHOICES = (
@@ -832,6 +833,8 @@ def handle_post_migrate(sender, **kwargs):
     app = kwargs['app']
     if is_last_application(app):
         enable_active_plugins()
+        print 'Updating permissions in existing objects...\n'
+        workflow_api.update_objects_permissions()
     # site fixtures loading after migration
     for app_name, fixtures in getattr(settings, 'SITE_FIXTURES', {}).items():
         if app_name == app:  # only migrate
