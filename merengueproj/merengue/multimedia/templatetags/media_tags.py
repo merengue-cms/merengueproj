@@ -16,6 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 import time
+from urllib2 import URLError
 
 from django import template
 from django.core.cache import cache
@@ -101,7 +102,10 @@ class ExtraOembedNode(OEmbedNode):
             size = template.Variable(self.size_var).resolve(context)
             if size and re.match('^\d+x\d+$', size):
                 self.width, self.height = size.lower().split('x')
-        original_render = super(ExtraOembedNode, self).render(context)
+        try:
+            original_render = super(ExtraOembedNode, self).render(context)
+        except URLError:
+            return ''
         if not self.var_name:
             return original_render
         context[self.var_name] = original_render
