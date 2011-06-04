@@ -19,7 +19,7 @@ from merengue.collection.models import IncludeCollectionFilter
 from merengue.collection.utils import create_normalize_collection
 from merengue.pluggable import Plugin
 
-from plugins.news.actions import NewsIndex, NewsRSS
+from plugins.news.actions import NewsIndex
 from plugins.news.blocks import LatestNewsBlock
 from plugins.news.viewlets import LatestNewsViewlet, AllNewsViewlet
 
@@ -37,7 +37,7 @@ class PluginConfig(Plugin):
     )
 
     def get_actions(self):
-        return [NewsIndex, NewsRSS]
+        return [NewsIndex]
 
     def get_blocks(self):
         return [LatestNewsBlock]

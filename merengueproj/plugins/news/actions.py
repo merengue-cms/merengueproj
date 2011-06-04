@@ -29,12 +29,3 @@ class NewsIndex(SiteAction):
 
     def get_response(self, request):
         return HttpResponseRedirect(reverse('news_index'))
-
-
-class NewsRSS(SiteAction):
-    name = 'newsrss'
-    verbose_name = _('News RSS')
-    help_text = _('News RSS for all feeds')
-
-    def get_response(self, request):
-        return HttpResponseRedirect(reverse('news_index'))
