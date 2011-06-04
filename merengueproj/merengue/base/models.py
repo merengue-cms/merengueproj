@@ -471,7 +471,7 @@ class BaseContent(BaseClass):
     def get_menu_name(cls):
         return u"%s_menu" % cls._meta.module_name
 
-    def save(self, update_rank=True, **kwargs):
+    def save(self, update_rank=False, **kwargs):
         # new objects should be added in last place
         if not self.id:
             try:
