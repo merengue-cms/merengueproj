@@ -207,7 +207,6 @@ class RenderAllBlocksNode(template.Node):
                         section_blocks = section_blocks.exclude(module=b.module, class_name=b.class_name)
 
             blocks = (blocks | content_blocks | section_blocks).order_by('order')
-
             result = _render_blocks(request, blocks, content, section, self.place, "block", self.nondraggable, context, self.noncontained)
             return result
         except template.VariableDoesNotExist:
@@ -245,8 +244,8 @@ def do_render_all_blocks(parser, token):
     if not (place[0] == place[-1] and place[0] in ('"', "'")):
         raise (template.TemplateSyntaxError, "%r tag's argument should be in "
                                              "quotes" % tag_name)
-    nondraggable = True
-    noncontained = True
+    nondraggable = False
+    noncontained = False
     if len(bits) == 3:
         nondraggable = bits[2] == 'nondraggable'
         noncontained = bits[2] == 'noncontained'
