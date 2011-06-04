@@ -2,7 +2,8 @@
 {% if noncontained %}
   {{ blocks|safe }}
 {% else %}
-<div class='blockContainer {{ block_type }}s {{ nondraggable }}'>
+<div class="blockContainer {{ block_type }}s {{ nondraggable }}">
+  <span class="blockContainerPlace">{{ place_title }}</span>
   {{ blocks|safe }}
   <input type="hidden" class="blockPlace" value="{{ place }}">
   <input type="hidden" class="contentid" value="{{ content.id }}">

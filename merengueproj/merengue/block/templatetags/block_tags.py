@@ -21,7 +21,7 @@ from django.conf import settings
 from django.template.loader import render_to_string
 
 from merengue.block.blocks import ContentBlock, SectionBlock
-from merengue.block.models import RegisteredBlock
+from merengue.block.models import RegisteredBlock, PLACES_DICT
 from merengue.registry import register as merengue_register, get_items_by_name
 
 
@@ -147,6 +147,7 @@ def _render_blocks(request, blocks, obj, section, place, block_type, nondraggabl
                              'content': context.get('content', None),
                              'section': context.get('section', None),
                              'place': place,
+                             'place_title': PLACES_DICT.get(place, place),
                             })
 
 

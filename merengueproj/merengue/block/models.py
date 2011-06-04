@@ -37,6 +37,8 @@ PLACES = (('all', _('All places')),
           ('footer', _('Footer')),
           ('meta', _('Meta-information, links, js...')))
 
+PLACES_DICT = dict(PLACES)
+
 
 class RegisteredBlock(RegisteredItem):
     name = models.CharField(_('name'), max_length=100)

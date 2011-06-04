@@ -227,6 +227,15 @@ input#id_password {
     display: none;
 }
 
+.blockContainerPlace {
+    z-index: 100;
+    color: #053E74;
+    text-transform: lowercase;
+    font-size: 10px;
+    margin: 0.1em;
+    display: none;
+}
+
 /* ----- feedback plugin ----- */
 
 #feedback .required label {
