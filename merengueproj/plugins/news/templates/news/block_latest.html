@@ -1,9 +1,13 @@
 {% extends "block.html" %}
 
+{% load inlinetrans %}
+
 {% block blockbody %}
   <ul>
   {% for n in news_list %}
     <li><a href="{{ n.get_absolute_url }}" title="{{ n }}">{{ n }}</a></li>
+  {% empty %}
+    {% itrans "No published news" %}
   {% endfor %}
   </ul>
 {% endblock %}
