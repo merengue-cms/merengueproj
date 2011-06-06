@@ -10,8 +10,8 @@
   <link href="{{ MEDIA_URL }}merengue/css/map/map.css" rel="stylesheet" type="text/css" />
 {% endaddmedia %}
 
-{% addmedia "js" %}
   <script type="text/javascript" src="http://www.google.com/jsapi?key={{ GOOGLE_MAPS_API_KEY }}"></script>
+{% addmedia "js" %}
   <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/map/jquery.gmap.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/map/ClusterMarker_1.3.2/unobfuscated/ClusterMarker.js"></script>
 {% endaddmedia %}
