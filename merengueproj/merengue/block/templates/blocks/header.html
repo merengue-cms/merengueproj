@@ -196,7 +196,6 @@
                         if(data == 'ok') {
                             block.parent().fadeOut(1000, function() {
                                 block.parent().load(render_block_url, function() {
-                                    console.log(block);
                                     initBlock(getBlock(block_id, block_name));
                                 }).fadeIn('slow');
                             });
