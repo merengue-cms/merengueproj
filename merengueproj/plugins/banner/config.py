@@ -18,9 +18,9 @@
 from merengue.collection.utils import create_normalize_collection
 from merengue.pluggable import Plugin
 
-from plugins.banner.admin import BannerAdmin, BannerSectionAdmin
+from plugins.banner.admin import BannerAdmin, BannerCategoryAdmin, BannerSectionAdmin
 from plugins.banner.blocks import BannerBlock
-from plugins.banner.models import Banner
+from plugins.banner.models import Banner, BannerCategory
 from plugins.banner.viewlets import AllBannerViewlet
 
 
@@ -37,7 +37,8 @@ class PluginConfig(Plugin):
         return [(Banner, BannerSectionAdmin)]
 
     def get_model_admins(self):
-        return [(Banner, BannerAdmin), ]
+        return [(Banner, BannerAdmin),
+                (BannerCategory, BannerCategoryAdmin)]
 
     def get_blocks(self):
         return [BannerBlock]

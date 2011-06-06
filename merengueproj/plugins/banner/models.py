@@ -19,20 +19,30 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.managers import BaseContentManager
-from merengue.base.models import BaseContent
+from merengue.base.models import BaseCategory, BaseContent
 
 from stdimage import StdImageField
 
 BANNER_MEDIA_PREFIX = 'banner'
 
 
+class BannerCategory(BaseCategory):
+
+    class Meta:
+        verbose_name = _('banner category')
+        verbose_name_plural = _('banner categories')
+
+
 class Banner(BaseContent):
 
     url_link = models.URLField(verbose_name=_('Url Link'))
-    portal_name = models.CharField(verbose_name=_('Portal name'), max_length=250, blank=True, null=True)
     image = StdImageField(verbose_name=_('image'),
                               upload_to=BANNER_MEDIA_PREFIX,
                               help_text=_('The system won\'t resize the image. You need to upload it with its final size'))
+    portal_name = models.CharField(verbose_name=_('Text alternative image'), max_length=250, blank=True, null=True)
+    categories = models.ManyToManyField(BannerCategory,
+                                        verbose_name=_('category'),
+                                        blank=True, null=True, db_index=True)
     objects = BaseContentManager()
 
     class Meta:

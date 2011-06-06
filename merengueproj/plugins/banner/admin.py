@@ -16,9 +16,13 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 import sorl
-from merengue.base.admin import BaseContentAdmin, PluginAdmin
+from merengue.base.admin import BaseCategoryAdmin, BaseContentAdmin, PluginAdmin
 from merengue.section.admin import SectionContentAdmin
 from plugins.banner.models import Banner
+
+
+class BannerCategoryAdmin(BaseCategoryAdmin):
+    """ Admin for news item category management """
 
 
 class BannerAdmin(PluginAdmin, BaseContentAdmin):
