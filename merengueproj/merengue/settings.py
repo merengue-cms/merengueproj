@@ -303,7 +303,8 @@ STATIC_WORKFLOW_DATA = {
 }
 
 # inplaceeditform
-ADAPTOR_INPLACEEDIT = {'textarea': 'merengue.uitools.fields.AdaptorTinyMCEField'}
+ADAPTOR_INPLACEEDIT = {'textarea': 'merengue.uitools.fields.AdaptorTinyMCEField',
+                       'image': 'merengue.uitools.fields.AdaptorImageThumbnailField'}
 
 # Plugin default preview image. The real path would be path.join(MEDIA_URL, DEFAULT_PLUGIN_PREVIEW)
 DEFAULT_PLUGIN_PREVIEW = path.join('merengue', 'img', 'preview_merengue.png')

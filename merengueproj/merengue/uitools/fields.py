@@ -18,7 +18,7 @@
 from django.conf import settings
 from django.template.loader import render_to_string
 
-from inplaceeditform.fields import AdaptorTextAreaField
+from inplaceeditform.fields import AdaptorTextAreaField, AdaptorImageField
 from cmsutils.forms.widgets import TinyMCE
 
 from merengue.perms.utils import has_permission
@@ -43,6 +43,12 @@ class AdaptorEditInline(object):
                 can_edit = has_permission(obj, request.user, 'edit')
                 request.cache_edit_inline[obj] = can_edit
         return can_edit
+
+
+class AdaptorImageThumbnailField(AdaptorImageField):
+
+    def render_value(self, field_name=None, template_name='adaptor_imagethumbnail/render_value.html'):
+        return super(AdaptorImageThumbnailField, self).render_value(field_name=field_name, template_name=template_name)
 
 
 class AdaptorTinyMCEField(AdaptorTextAreaField):
