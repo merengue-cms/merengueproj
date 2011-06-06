@@ -176,12 +176,17 @@
                     });
                 }
             });
+            function getBlock(block_id, block_name) {
+                return $('.blockId[value='+ block_id +']').parents('#' + block_name);
+            }
+
             // when block config was loaded by AJAX (previous function)
             // we change usual submit by a AJAX submit (without refreshing browser)
             $('#config-block-form').live("submit", function(event) {
                 event.preventDefault();
                 var block_id = $(this).find('[name=blockid]').val();
                 var block_name = $(this).find('[name=blockname]').val();
+                var block = getBlock(block_id, block_name);
                 var render_block_url = '.?render_block=' + block_id;
                 $.ajax({
                     type: 'POST',
@@ -189,9 +194,10 @@
                     data: $(this).serialize(),
                     success: function(data) {
                         if(data == 'ok') {
-                            $('#' + block_name).parent().fadeOut(1000, function() {
-                                $('#' + block_name).parent().load(render_block_url, function() {
-                                    initBlock($('#' + block_name));
+                            block.parent().fadeOut(1000, function() {
+                                block.parent().load(render_block_url, function() {
+                                    console.log(block);
+                                    initBlock(getBlock(block_id, block_name));
                                 }).fadeIn('slow');
                             });
                             Shadowbox.close();
