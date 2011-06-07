@@ -18,7 +18,7 @@
 from django.utils.translation import get_language_from_request
 from django.utils.translation import ugettext as _, ugettext_lazy
 
-from merengue.block.blocks import Block
+from merengue.block.blocks import Block, BaseBlock
 from merengue.registry import params
 
 
@@ -28,7 +28,7 @@ class GoogleSearchBlock(Block):
     verbose_name = ugettext_lazy('Google Search Block')
     help_text = ugettext_lazy('The block represents the google search widget')
 
-    config_params = [
+    config_params = BaseBlock.config_params + [
         params.Single(name='custom_search_control', label=_('Custom search control'), default='003808332573069177904:wm3_yobt584'),
         params.Single(name='search_result_content', label=_('Search result content (element\'s id of DOM)'), default='content'),
         params.Single(name='search_form_content', label=_('Search form content (element\'s id of DOM)'), default='cse'),

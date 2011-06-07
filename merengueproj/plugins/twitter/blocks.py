@@ -17,7 +17,7 @@
 
 from django.utils.translation import ugettext_lazy as _, ugettext
 
-from merengue.block.blocks import Block
+from merengue.block.blocks import Block, BaseBlock
 from merengue.registry import params
 from plugins.twitter.utils import twitter_api
 
@@ -50,7 +50,7 @@ class UserTimelineBlock(TimelineProvider, Block):
     help_text = _('Block to show a timeline of Twitter for an user.')
     template_name = 'twitter/timeline_block.html'
 
-    config_params = [params.PositiveInteger(name='limit',
+    config_params = BaseBlock.config_params + [params.PositiveInteger(name='limit',
                                             label=ugettext('Limit for twitter block'),
                                             default=3),
                      params.Single(name='user',
@@ -86,7 +86,7 @@ class HashtagTimelineBlock(TimelineProvider, Block):
     help_text = _('Block to show a timeline of Twitter for a hashtag.')
     template_name = 'twitter/timeline_block.html'
 
-    config_params = [params.PositiveInteger(name='limit',
+    config_params = BaseBlock.config_params + [params.PositiveInteger(name='limit',
                                             label=ugettext('Limit for twitter block'),
                                             default=3),
                      params.Single(name='hashtag',

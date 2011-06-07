@@ -18,7 +18,7 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.block.blocks import Block
+from merengue.block.blocks import Block, BaseBlock
 from merengue.registry.items import ContentTypeFilterProvider
 from plugins.addthis import params
 
@@ -41,7 +41,7 @@ class AddThisBlock(ContentTypeFilterProvider, Block):
     help_text = _('Block that displays AddThis links')
     verbose_name = _('AddThis service block')
 
-    config_params = ContentTypeFilterProvider.config_params + [
+    config_params = BaseBlock.config_params + ContentTypeFilterProvider.config_params + [
         params.AjaxListParam(
             name="services",
             label=_("Services do you want to show on "),

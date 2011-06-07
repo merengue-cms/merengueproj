@@ -19,7 +19,7 @@ from django.conf import settings
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.block.blocks import Block, ContentBlock
+from merengue.block.blocks import Block, ContentBlock, BaseBlock
 from merengue.registry import params
 from merengue.section.models import BaseSection, Menu
 from merengue.section.utils import get_section
@@ -29,7 +29,7 @@ from announcements.models import current_announcements_for_request
 
 class BaseMenuBlock(object):
 
-    config_params = [
+    config_params = BaseBlock.config_params + [
         params.Integer(name='max_num_level',
                        label=_('maximum number of levels to show'), default=-1)]
 
@@ -118,7 +118,7 @@ class PortalLinksBlock(LinkBaseBlock):
     help_text = _('Generic block that renders portal links')
     verbose_name = _('Portal Links Block')
 
-    config_params = [
+    config_params = BaseBlock.config_params + [
         params.Single(
             name="category",
             label=_("Portal link category"),

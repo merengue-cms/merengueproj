@@ -17,7 +17,7 @@
 
 from django.utils.translation import ugettext as _, ugettext_lazy
 
-from merengue.block.blocks import ContentBlock
+from merengue.block.blocks import ContentBlock, BaseBlock
 from merengue.registry import params
 from merengue.registry.items import (BlockSectionFilterItemProvider,
                                      ContentTypeFilterProvider)
@@ -31,7 +31,8 @@ class VotingBlock(BlockSectionFilterItemProvider, ContentTypeFilterProvider, Con
     help_text = ugettext_lazy('Block that provides the voting functionality')
     verbose_name = ugettext_lazy('Voting block')
 
-    config_params = (BlockSectionFilterItemProvider.config_params +
+    config_params = (BaseBlock.config_params +
+                     BlockSectionFilterItemProvider.config_params +
                      ContentTypeFilterProvider.config_params +
                      [params.Bool(name='readonly', label=_('is readonly?'),
                                   default=False)])

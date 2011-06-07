@@ -18,7 +18,7 @@
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.block.blocks import Block
+from merengue.block.blocks import Block, BaseBlock
 from merengue.registry import params
 from merengue.registry.items import BlockQuerySetItemProvider
 from merengue.viewlet.models import RegisteredViewlet
@@ -31,7 +31,7 @@ class TagCloudBlock(BlockQuerySetItemProvider, Block):
     help_text = _('Block with a tag cloud')
     default_place = 'leftsidebar'
 
-    config_params = BlockQuerySetItemProvider.config_params + [
+    config_params = BaseBlock.config_params + BlockQuerySetItemProvider.config_params + [
         params.PositiveInteger(
             name='max_tags_in_cloud',
             label=_('Max number of tags in cloud'),

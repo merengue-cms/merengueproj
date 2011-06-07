@@ -17,7 +17,7 @@
 
 from django.utils.translation import ugettext_lazy as _, ugettext
 
-from merengue.block.blocks import Block
+from merengue.block.blocks import Block, BaseBlock
 from merengue.registry import params
 from merengue.registry.items import BlockQuerySetItemProvider
 from plugins.banner.params import BannerParam
@@ -30,7 +30,7 @@ class BannerBlock(BlockQuerySetItemProvider, Block):
     verbose_name = _('Banner Block')
     help_text = _('Block that represents a list of banners')
 
-    config_params = BlockQuerySetItemProvider.config_params + [
+    config_params = BaseBlock.config_params + BlockQuerySetItemProvider.config_params + [
         params.PositiveInteger(name='limit',
                                label=ugettext('limit for banner block'),
                                default=3),

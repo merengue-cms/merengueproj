@@ -17,7 +17,7 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.block.blocks import Block
+from merengue.block.blocks import Block, BaseBlock
 from merengue.registry import params
 
 
@@ -27,7 +27,7 @@ class GoogleAnalyticsBlock(Block):
     help_text = _('Block that includes the javascript needed to enable google analytics')
     verbose_name = _('Google Analytics Block')
 
-    config_params = [
+    config_params = BaseBlock.config_params + [
         params.Single(
             name="google_analytics_id",
             label=_("google analytics id"),

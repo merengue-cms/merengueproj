@@ -19,7 +19,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext as _, ugettext_lazy
 
 from merengue.registry import params
-from merengue.block.blocks import Block
+from merengue.block.blocks import Block, BaseBlock
 from plugins.standingout.models import StandingOut, StandingOutCategory
 
 
@@ -29,7 +29,7 @@ class StandingOutBlock(Block):
     help_text = ugettext_lazy('Block with standing out by categories')
     verbose_name = ugettext_lazy('Standing out block')
 
-    config_params = [
+    config_params = BaseBlock.config_params + [
         params.Integer(name='limit', label=_('limit for standingouts in block'), default='5'),
     ]
 
@@ -59,7 +59,7 @@ class StandingOutSlideShowBlock(Block):
     help_text = ugettext_lazy('Block with a jquery slideshow of standingouts')
     verbose_name = ugettext_lazy('Standing out Slide Show block')
 
-    config_params = [
+    config_params = BaseBlock.config_params + [
         params.Integer(name='limit', label=_('limit for standingouts in block'), default='5'),
     ]
 

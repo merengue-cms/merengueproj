@@ -18,7 +18,7 @@
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _, get_language
 
-from merengue.block.blocks import Block
+from merengue.block.blocks import Block, BaseBlock
 from merengue.registry import params
 
 
@@ -28,7 +28,7 @@ class MapBlock(Block):
     help_text = _('Block that renders a google maps placed in a location')
     verbose_name = _('Maps Block')
 
-    config_params = [
+    config_params = BaseBlock.config_params + [
         params.Float(
             name="latitude",
             label=_("map latitude"),
