@@ -97,7 +97,7 @@ class PortletBannerBlock(Block):
             size = str(height) + 'x' + str(height)
         banner_param = self.get_config().get('banner', None)
         if banner_param and banner_param.value:
-            banner = banner_param.get_value()
+            banner = banner_param.get_obj()
             block_title = unicode(banner)
         else:
             banner = None

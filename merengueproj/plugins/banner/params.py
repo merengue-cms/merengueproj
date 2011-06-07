@@ -37,6 +37,12 @@ class BannerParam(params.Param):
 
     def get_value(self):
         value = super(BannerParam, self).get_value()
+        if value:
+            return int(value)
+        return value
+
+    def get_obj(self):
+        value = self.get_value()
         try:
             return Banner.objects.get(pk=value)
         except Banner.DoesNotExist:
