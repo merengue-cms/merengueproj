@@ -18,9 +18,10 @@
 from django.core.cache import cache
 from django.template import RequestContext
 from django.template.loader import render_to_string
-from django.utils.translation import get_language
+from django.utils.translation import get_language, ugettext as _
 
 from merengue.block.models import RegisteredBlock
+from merengue.registry import params
 from merengue.registry.items import RegistrableItem
 from merengue.registry.signals import item_registered
 
@@ -37,6 +38,10 @@ class BaseBlock(RegistrableItem):
        'vary_on_user': False,
     }
 
+    config_params = [
+        params.Single(name='css_class', label=_('css class to add to this block'), default=''),
+        ]
+
     def __init__(self, reg_item):
         super(BaseBlock, self).__init__(reg_item)
         self.content = getattr(reg_item, 'content', None)
@@ -52,12 +57,15 @@ class BaseBlock(RegistrableItem):
             if context is None:
                 context = {}
             registered_block = self.get_registered_item()
+            css_class = self.get_config().get('css_class', None)
+            css_class = css_class and css_class.get_value() or ''
             block_context = {
                 'block_name': registered_block.name,
                 'placed_at': registered_block.placed_at,
                 'fixed_place': getattr(registered_block, 'fixed_place', False),
                 'block_title': block_title or registered_block.name,
                 'block': registered_block,
+                'css_class': css_class,
                 'has_config': self.has_config(),
             }
             block_context.update(context)
