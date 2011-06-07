@@ -37,4 +37,4 @@ django-form-admin>=0.3
 django-autoreports>=0.7.8
 django_compressor==0.5.3
 django-classy-tags==0.3.0
-django-inplaceedit
+django-inplaceedit==0.65
