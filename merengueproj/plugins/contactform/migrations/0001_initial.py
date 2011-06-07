@@ -3,12 +3,14 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
-from merengue.base.utils import south_trans_data, add_south_trans_fields
+from merengue.base.utils import table_exists, south_trans_data, add_south_trans_fields
 
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
+        if table_exists('contactform_contactform'):
+            return
 
         # Adding model 'ContactForm'
         contactform_data = (
