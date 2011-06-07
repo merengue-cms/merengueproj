@@ -13,36 +13,36 @@
 
 }
 
-.blockContainer .block .blockTools {
+.block .blockTools {
     float: left;
     position: absolute;
     display: none;
 }
 
-.blockContainer .block .blockTools a {
+.block .blockTools a {
     width: 20px;
     height: 25px;
     display: block;
 }
 
-.blockContainer .block .blockTools a.drag {
+.block .blockTools a.drag {
     background: transparent url("../img/arrow_refresh.png") no-repeat 0px 5px;
 }
 
-.blockContainer .block .blockTools a.configure {
+.block .blockTools a.configure {
     background: transparent url("../img/configure.png") no-repeat 0px 0px;
     height: 20px;
 }
 
-.blockContainer .block .blockTools a.remove {
+.block .blockTools a.remove {
     background: transparent url("../img/remove_block.png") no-repeat 0px 0px;
 }
 
-.blockContainer .block .blockTools a.invalidate-cache {
+.block .blockTools a.invalidate-cache {
     background: transparent url("../img/invalidate_block.png") no-repeat 0px 0px;
 }
 
-.blockContainer .blockDrag {
+.blockDrag {
     color: #999;
     font-style: italic;
     padding: 2px;
