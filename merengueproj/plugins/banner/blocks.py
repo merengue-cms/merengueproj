@@ -108,3 +108,30 @@ class PortletBannerBlock(Block):
                                  context={'banner': banner,
                                           'size': size,
                                           })
+
+
+class SingleBannerBlock(Block):
+    name = 'single_banner'
+    default_place = 'rightsidebar'
+    verbose_name = _('Single Banner Block')
+    help_text = _('Block that represents just the image of a banner')
+
+    config_params = [
+        BannerParam(name='banner',
+                    label=ugettext('Choose a banner'),
+                    default=None),
+    ]
+
+    def render(self, request, place, context, *args, **kwargs):
+        banner_param = self.get_config().get('banner', None)
+        if banner_param and banner_param.value:
+            banner = banner_param.get_value()
+            block_title = unicode(banner)
+        else:
+            banner = None
+            block_title = ugettext('Click in "configure block" and choose a banner')
+        return self.render_block(request,
+                                 template_name='banner/block_single_banner.html',
+                                 block_title=block_title,
+                                 context={'banner': banner,
+                                          })
