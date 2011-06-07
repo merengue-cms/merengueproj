@@ -1,12 +1,14 @@
-{% load i18n smart_if %}
+{% load i18n %}
 <div class="config_params_container">
   <label for="config_params_{{ param.name }}">{{ param.label|capfirst }}</label>
     {% if param.choices %}
       {% block param_choices %}
         <select {{ widget_attrs }}>
-          {% for choice in param.choices %}
-             <option value="{{ choice.0 }}" {% if choice.0 = param.get_value %}selected="selected"{% endif %}>{{ choice.1 }}</option>
-          {% endfor %}
+          {% with param.get_value as param_value %}
+            {% for choice in param.choices %}
+                <option value="{{ choice.0 }}" {% ifequal choice.0 param_value %}selected="selected"{% endifequal %}>{{ choice.1 }}</option>
+            {% endfor %}
+          {% endwith %}
         </select>
       {% endblock %}
     {% else %}
