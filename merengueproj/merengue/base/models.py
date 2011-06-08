@@ -18,6 +18,7 @@
 # -*- coding: utf-8 -*-
 import os
 import re
+import sorl
 
 import django
 from django.conf import settings
@@ -498,16 +499,22 @@ class BaseContent(BaseClass):
         """ main image will be first ordered multimedia relation with class "photo" """
         ordered_photo_relations = MultimediaRelation.objects.filter(
             multimedia__class_name='photo',
+            multimedia__status='published',
             content=self,
         ).order_by('order')
         if ordered_photo_relations:
             first_photo = ordered_photo_relations[0].multimedia.get_real_instance()
             if os.path.exists(first_photo.image.path):
+                if self.main_image:
+                    sorl.thumbnail.delete(self.main_image, delete_file=False)
+                    sorl.thumbnail.delete(self.main_image.thumbnail, delete_file=False)
                 self.main_image.save(os.path.basename(first_photo.image.name),
                                      first_photo.image)
                 self.save()
         elif self.main_image:
             # we delete photo if not exists ordered photos for this content
+            sorl.thumbnail.delete(self.main_image, delete_file=False)
+            sorl.thumbnail.delete(self.main_image.thumbnail, delete_file=False)
             self.main_image.delete()
 
     @classmethod
@@ -604,7 +611,7 @@ class MultimediaRelation(models.Model):
         if update_order:
             self.order = self._get_next_order()
             self.save()
-        if self.multimedia.class_name == 'photo' and self.order == 0:
+        if self.multimedia.class_name == 'photo':
             self.content.recalculate_main_image()
 
     def get_image(self):
@@ -668,9 +675,10 @@ def init_gis(sender, **kwargs):
 
 def recalculate_main_image(sender, instance, **kwargs):
     """ recalculate main_image after deleting a relation """
-    if instance.multimedia.class_name == 'photo' and instance.order == 0:
+    if instance.multimedia.class_name == 'photo':
         ordered_photo_relations = MultimediaRelation.objects.filter(
             multimedia__class_name='photo',
+            multimedia__status='published',
             content=instance.content,
         ).order_by('order')
         # we can assert instance will not be in ordered_photo_relations

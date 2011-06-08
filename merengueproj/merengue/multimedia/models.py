@@ -207,9 +207,8 @@ class Photo(BaseMultimedia):
         # wether we are adding or modifying an image, the tumbnails are no longer valid.
         # delete it from the image and all its basecontent related items.
         sorl.thumbnail.delete(self.image, delete_file=False)
-        if self.id:
-            for bc in self.basecontent_set.filter(main_image__isnull=False):
-                sorl.thumbnail.delete(bc.main_image, delete_file=False)
+        # Just in case someone tries to do a sorl thumbnail of the StdImage thumbnail
+        sorl.thumbnail.delete(self.image.thumbnail, delete_file=False)
 
 #@FIXME: Duplicate code. base/models.py line 219
     def admin_thumbnail(self):
