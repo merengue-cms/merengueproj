@@ -21,6 +21,7 @@ from django.utils.translation import ugettext as _, ugettext_lazy
 from merengue.registry import params
 from merengue.block.blocks import Block, BaseBlock
 from plugins.standingout.models import StandingOut, StandingOutCategory
+from transmeta import get_fallback_fieldname
 
 
 class StandingOutBlock(Block):
@@ -65,7 +66,12 @@ class StandingOutSlideShowBlock(Block):
 
     def render(self, request, place, context, block_content_relation=None,
                *args, **kwargs):
-        standingouts = StandingOut.objects.all()
+        (category, created) = StandingOutCategory.objects.get_or_create(slug='slideshow')
+        name_field = get_fallback_fieldname('name')
+        if (created):
+            setattr(category, name_field, 'slideshow')
+            category.save()
+        standingouts = StandingOut.objects.filter(standing_out_category=category)
         limit = self.get_config().get('limit', None)
         if limit:
             standingouts = standingouts[:limit.get_value()]

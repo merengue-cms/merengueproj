@@ -37,9 +37,9 @@ class PluginConfig(Plugin):
 
     def post_install(self):
         name_field = get_fallback_fieldname('name')
-        for slug in ('section', 'content'):
+        for slug in ('section', 'content', 'slideshow'):
             if not StandingOutCategory.objects.filter(slug=slug).exists():
-                standingout_category = StandingOutCategory(context_variable='section', slug='section')
+                standingout_category = StandingOutCategory(context_variable=slug, slug=slug)
                 setattr(standingout_category, name_field, slug)
                 standingout_category.save()
 
