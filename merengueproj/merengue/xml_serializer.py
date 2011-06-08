@@ -10,6 +10,7 @@ from django.db.models.fields import FieldDoesNotExist
 from transmeta import get_field_language
 
 from merengue.base.dbfields import JSONField
+from merengue.base.models import BaseContent
 
 
 class Serializer(xml_serializer.Serializer):
@@ -18,6 +19,23 @@ class Serializer(xml_serializer.Serializer):
     """
 
     pass
+
+
+class DeserializedObject(base.DeserializedObject):
+    """
+    A deserialized model.
+
+    Extends the base deserialized object for asigning permission if object is
+    the object is a BaseContent instance
+    """
+
+    def save(self, save_m2m=True, using=None):
+        super(DeserializedObject, self).save(save_m2m, using)
+        if isinstance(self.object, BaseContent):
+            # it is a weird hack but we cannot update the object permission
+            # because the superclass save function is save_base with raw=True
+            # and the signals are not emited
+            self.object.populate_workflow_status(force_update=True)
 
 
 class Deserializer(xml_serializer.Deserializer):
@@ -117,4 +135,4 @@ class Deserializer(xml_serializer.Deserializer):
                 field_name = field.name
                 setattr(obj, field_name, getattr(obj, 'get_%s_json' % field_name)())
         # Return a DeserializedObject so that the m2m data has a place to live.
-        return base.DeserializedObject(obj, m2m_data)
+        return DeserializedObject(obj, m2m_data)

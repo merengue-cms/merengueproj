@@ -26,6 +26,7 @@ from merengue.workflow.models import (Workflow, State, Transition,
 
 
 class WorkflowBaseTestCase(TestCase):
+
     def setUp(self):
         Workflow.objects.all().delete()
 

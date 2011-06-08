@@ -189,6 +189,19 @@ class Base(models.Model):
 
         super(Base, self).save(*args, **kwargs)
 
+    def populate_workflow_status(self, force_update=False):
+        """ populates the workflow status from the status slug """
+        from merengue.workflow.utils import workflow_by_model
+        workflow_status = getattr(self, 'workflow_status', None)
+        if not workflow_status:
+            workflow = workflow_by_model(self.__class__)
+            self.workflow_status = workflow.get_initial_state()
+            workflow_status = self.workflow_status
+        if force_update or (getattr(self, 'status', None) and
+            workflow_status and
+            self.status != self.workflow_status.slug):
+            self.update_status()
+
     def update_status(self):
         from merengue.perms.models import ObjectPermission
         # an extra check to avoid possibles infinte recursion
@@ -213,17 +226,8 @@ class Base(models.Model):
 
 
 def base_post_save_handler(sender, instance, created, **kwargs):
-    from merengue.workflow.utils import workflow_by_model
     if Base in instance.__class__.mro():
-        workflow_status = getattr(instance, 'workflow_status', None)
-        if not workflow_status:
-            workflow = workflow_by_model(instance.__class__)
-            instance.workflow_status = workflow.get_initial_state()
-            workflow_status = instance.workflow_status
-        if (getattr(instance, 'status', None) and
-            workflow_status and
-            instance.status != instance.workflow_status.slug):
-            instance.update_status()
+        instance.populate_workflow_status()
 
 
 signals.post_save.connect(base_post_save_handler)
@@ -831,10 +835,7 @@ def handle_post_migrate(sender, **kwargs):
     global post_save_receivers, cache_backend
     app = kwargs['app']
     if is_last_application(app):
-        from merengue.workflow import utils as workflow_api
         enable_active_plugins()
-        print 'Updating permissions in existing objects...\n'
-        workflow_api.update_objects_permissions()
     # site fixtures loading after migration
     for app_name, fixtures in getattr(settings, 'SITE_FIXTURES', {}).items():
         if app_name == app:  # only migrate
