@@ -1,6 +1,105 @@
 Changes
 =======
 
+Version 0.8.0-beta1 (r4555)
+---------------------------
+
+* Django 1.3 compatibility. See #1568.
+
+* Workflow system with management interface. See #990, #987, #988, #989.
+
+* Added participants to contents and sections, in oposition of owners. See #1860.
+
+* Improved English readability of documentation. See #377.
+
+* Activate a entire site cache with ``CACHE_SITE_FOR_ANONYMOUS`` setting. Also a ``invalidate cache`` panel. See #167.
+
+* More unit testing. See #1633, 
+
+* Improvements to autoreports UI. See #1850, #1816.
+
+* The portal links categories can be configurable in the settings file. See #1858.
+
+* Better l10n support in datetime format for spanish. See #1875.
+
+* Developer can define the slug uniqueness in every inherited model. See #1873.
+
+* Access by role for the portal links. See #1883.
+
+* Add filtering to the block admin changelist. See #1806.
+
+* Changed the "content management" tab in admin interface. See #1750.
+
+* Remove the ``Johnny-Cache`` fork because Django 1.3 support customs cache key prefixes. See #1758 and #1757.
+
+* Included a new ``size`` parameter in the ``multimedia_slide_link`` templatetags. See #1756.
+
+* Implemented a changelog view in admin interface. See #1778.
+
+* Included italian translations. See #1803.
+
+* All the managed contents types are orderable. See #1812.
+
+* Support for fixed blocks (declared fixed by its developer). See #1056.
+
+* Add status to menus items. See #888.
+
+* Allow to change the section of a content. See #1839.
+
+* Implemented a "browse by type" admin view. See #1752.
+
+* Improvements in plugins:
+
+ * New ``customportlet`` plugin to add customized chunks of HTML as you want. See #1761.
+
+ * New ``piwik`` plugin, to collect statistics of accessing contents and sections using Piwik. See #1573.
+
+ * Google search:
+
+   * Adapt the UI to the browser language. See #1871.
+
+ * Standing out plugin:
+
+   * Create a new slide show block. See #1736.
+   * Completed the schema of standing out object. See #1736.
+
+* A lot of bugfixes. See #1728, #1775, #1870, #1872, #1877, #1885, #1891, #1729, #1748, #1755, #1760, #1763, #1784, #1788, #1791, #1610, #1792, #1795, #1805, #1808, #1809, #1787, #1822, #1407, #1829, #1215, #1838, #1845, #1834, #1849, 
+
+Version 0.7.1
+-------------
+
+* New italian translations. See #1803 and #1814.
+
+* An email is sent to reviewers when a content came into ``pending`` status. See #1694.
+
+* Add changelog view in admin to review all admin actions. See #1778.
+
+* Implement single logout in ``saml2`` plugin. See #1442.
+
+* Reviewed the english grammar of some Merengue documents. See #377.
+
+* Unit tests for ``get_real_instance`` logic. See #1633.
+
+* More Selenium tests. See #1747.
+
+* Removed french translations because Merengue miss translations. See #1825.
+
+* And a lot of bugfixes:
+
+ * The models cache was not corretly re-populated when loading plugins. See #1712.
+ * Feed collection now read well the feed when created. See #1732.
+ * Fix an error that do not allow to edit an existing ``standingout`` object if the selected content not changes. See #1736.
+ * Error in prepopulated fields when are mixed with read only fields. See #1764.
+ * Fixed microsites errors when user try to add two microsites with the same slug. See #1774. See #1790.
+ * Fix bug about saving plugins registered on REQUIRED_PLUGINS. See #1786.
+ * Check that end date is greater than start date in ``event`` plugin. See #1723.
+ * Fixed some problems with django-inlinetrans and transhette. See #1800, #1799, #1801.
+ * Some look and feel issues, like #1743, #1744 and #1821.
+ * Plugin forums shows duplicated entries if the entries are anidated. See #1727.
+ * Fix readonly widget in many2many fields. See #1776.
+ * Other fixes: See #1789, #1811, #1823, #1731, #1797, #1783.
+
+
 Version 0.7.0-final
 -------------------
 
