@@ -39,6 +39,7 @@ class RegisteredBlockAdmin(RegisteredItemAdmin):
     list_filter = ('placed_at', 'content')
     search_fields = ('name', )
     ordering = ('order', )
+    change_form_template = 'admin/block/change_form.html'
 
     fieldsets = (
         ('', {'fields': ('name', 'module', 'class_name', )}),
@@ -58,7 +59,21 @@ class RegisteredBlockAdmin(RegisteredItemAdmin):
             readonly_fields += ('placed_at', 'order', 'active')
         elif obj and obj.fixed_place:
             readonly_fields += ('placed_at', )
+
         return readonly_fields
+
+    def get_fieldsets(self, request, obj=None):
+        fieldsets = super(RegisteredBlockAdmin, self).get_fieldsets(request, obj)
+        if obj and not obj.get_registry_item().cache_allowed:
+            fieldsets = fieldsets[0:2]  # remove the cache parameters
+        return fieldsets
+
+    def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
+        is_cacheable = obj and obj.get_registry_item().cache_allowed or False
+        context.update({
+            'is_cacheable': is_cacheable,
+        })
+        return super(RegisteredBlockAdmin, self).render_change_form(request, context, add, change, form_url, obj)
 
     def has_add_permission(self, request):
         return False

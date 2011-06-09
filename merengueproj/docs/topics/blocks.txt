@@ -377,3 +377,10 @@ on the current language.
 
 Of course, these default cache settings can be overriden by managers in the
 administrative interface.
+
+You may disallow to cache a block by setting a ``cache_allowed`` attribute as follows:
+
+.. code-block:: python
+
+    class LatestAddedBlock(Block):
+        cache_allowed = False

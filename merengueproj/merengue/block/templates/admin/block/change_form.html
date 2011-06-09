@@ -1,0 +1,13 @@
+{% extends "admin/registry/change_form.html" %}
+
+{% load i18n %}
+
+{% block after_field_sets %}
+  {% if not is_cacheable %}
+   <fieldset class="module aligned ">
+    <h2>{% trans "Cache parameters" %}</h2>
+    <div class="warning-message">
+      <ul><li><strong>{% trans "This block is defined as non cacheable. You cannot cache this block" %}</strong></li></ul>
+    </div>
+  {% endif %}
+{% endblock %}
