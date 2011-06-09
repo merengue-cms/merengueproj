@@ -371,6 +371,7 @@ def create_default_states_handler(sender, instance, created, **kwargs):
             slug='publish', workflow=instance, destination=published, **data)
 
         draft.transitions.add(set_as_pending)
+        draft.transitions.add(publish)
         pending.transitions.add(publish)
         pending.transitions.add(set_as_draft)
         published.transitions.add(set_as_pending)
