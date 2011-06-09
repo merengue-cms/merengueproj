@@ -131,6 +131,7 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
     def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
         context.update({
             'is_broken': obj.broken,
+            'required_and_not_installed': obj.directory_name in settings.REQUIRED_PLUGINS and not obj.installed,
         })
         return super(RegisteredItemAdmin, self).render_change_form(request, context, add, change, form_url, obj)
 

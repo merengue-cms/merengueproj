@@ -1,5 +1,17 @@
 {% extends "admin/change_form.html" %}
 {% load i18n %}
+{% block extrahead %}
+{{ block.super }}
+{% if required_and_not_installed %}
+  <script type="text/javascript">
+  (function($) {
+    $(document).ready(function () {
+        $('div.installed span.field-after-label').after('<p>{% trans "This plugin has been set as required in settings.py so you can not install/uninstall from this admin interface. You can install it by running a migrate command" %}</p>');
+    });
+  })(jQuery);
+  </script>
+{% endif %}
+{% endblock %}
 
 {% block after_related_objects %}
   <fieldset class="module aligned">
