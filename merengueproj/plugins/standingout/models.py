@@ -89,14 +89,25 @@ class StandingOut(models.Model):
         return self.obj.main_image
 
     def get_absolute_url(self):
+        url = None
         if hasattr(self.obj, 'get_absolute_url'):
-            return self.obj.get_absolute_url()
-        return None
+            url = self.obj.get_absolute_url()
+        else:
+            url = self.url
+        return url
+
+    def target_name(self):
+        target = None
+        if self.obj:
+            target = unicode(self.obj)
+        elif self.url:
+            target = self.url
+        return target
 
     def __unicode__(self):
         res = u''
         if self.title:
             res += u'[%s] ' % self.title
         if not self.related_content_type or not self.related_id:
-            return res + unicode(self.obj)
+            return res + self.target_name()
         return "%s%s --> %s" % (res, unicode(self.obj), unicode(self.related))
