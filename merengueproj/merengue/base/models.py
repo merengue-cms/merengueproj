@@ -129,7 +129,7 @@ class Base(models.Model):
                                    null=True, blank=True)
 
     status = models.CharField(_('Publication status'), max_length=20, choices=settings.STATUS_LIST,
-                              default='draft', help_text=_('Enter the current status'), db_index=True,
+                              help_text=_('Enter the current status'), db_index=True,
                               editable=True)
     workflow_status = models.ForeignKey(State, verbose_name=_('workflow status'),
                                        null=True, blank=True, editable=True)
@@ -197,9 +197,8 @@ class Base(models.Model):
             workflow = workflow_by_model(self.__class__)
             self.workflow_status = workflow.get_initial_state()
             workflow_status = self.workflow_status
-        if force_update or (getattr(self, 'status', None) and
-            workflow_status and
-            self.status != self.workflow_status.slug):
+        if force_update or (getattr(self, 'status', None) is not None and
+           workflow_status and self.status != self.workflow_status.slug):
             self.update_status()
 
     def update_status(self):
