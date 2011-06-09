@@ -31,6 +31,7 @@ class EventsCalendarBlock(BlockQuerySetItemProvider, Block):
     default_place = 'rightsidebar'
     help_text = ugettext_lazy('Block that renders calendar with events')
     verbose_name = ugettext_lazy('Events Calendar Block')
+    cache_allowed = False
 
     def get_contents(self, request=None, context=None, section=None):
         return get_events(request, filtering_section=False)
