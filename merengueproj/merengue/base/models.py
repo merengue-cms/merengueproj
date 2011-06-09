@@ -664,7 +664,6 @@ class BaseContent(BaseClass):
                 ObjectPermission.objects.create(content=self,
                                                 role=perm.role,
                                                 permission=perm.permission))
-        self.save()
 
 
 def calculate_class_name(instance):
