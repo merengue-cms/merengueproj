@@ -26,6 +26,9 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding unique constraint on 'ObjectPermission', fields ['content', 'role', 'permission']
+        for role_id, content_id, permission_id in orm['perms.objectpermission'].objects.all().values_list('role', 'content', 'permission').distinct():
+            for op in orm['perms.objectpermission'].objects.filter(role=role_id, content=content_id, permission=permission_id)[1:]:
+                op.delete()  # remove the duplicate object
         db.create_unique('perms_objectpermission', ['content_id', 'role_id', 'permission_id'])
 
     def backwards(self, orm):
