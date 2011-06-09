@@ -225,14 +225,6 @@ class Base(models.Model):
         return self.status == 'published'
 
 
-def base_post_save_handler(sender, instance, created, **kwargs):
-    if Base in instance.__class__.mro():
-        instance.populate_workflow_status()
-
-
-signals.post_save.connect(base_post_save_handler)
-
-
 BaseClass = Base
 if settings.USE_GIS:
     from merengue.places.models import Location
@@ -666,34 +658,6 @@ class BaseContent(BaseClass):
                                                 permission=perm.permission))
 
 
-def calculate_class_name(instance):
-    instance.class_name = instance._meta.module_name
-
-
-def base_content_pre_save_handler(sender, instance, **kwargs):
-    if isinstance(instance, BaseContent) and not instance.id:
-        calculate_class_name(instance)
-
-
-signals.pre_save.connect(base_content_pre_save_handler)
-
-
-def notify_status_changes(sender, instance, **kwargs):
-    if isinstance(instance, BaseContent):
-        if not hasattr(instance, '_original_status'):
-            return
-        if instance._original_status == instance.status:
-            return
-        if instance.status == 'pending':
-            review_to_pending_status(instance, instance._original_status)
-        # Change cached original status so if we have
-        # multiple saves we don't generate multiple
-        # review tasks
-        instance._original_status = instance.status
-
-signals.post_save.connect(notify_status_changes)
-
-
 class MultimediaRelation(models.Model):
     content = models.ForeignKey(BaseContent, verbose_name=_('content'))
     multimedia = models.ForeignKey(BaseMultimedia,
@@ -813,7 +777,8 @@ rules = [
 
 add_introspection_rules(rules, ["^cmsutils\.db\.fields\.AutoSlugField"])
 
-# ----- south signals handling -----
+
+# ----- signals handling -----
 
 post_save_receivers = None
 cache_backend = None
@@ -844,6 +809,38 @@ def handle_post_migrate(sender, **kwargs):
     post_save.receivers = post_save_receivers
     settings.CACHES['default']['BACKEND'] = cache_backend
 
+
+def notify_status_changes(sender, instance, **kwargs):
+    if isinstance(instance, BaseContent):
+        if not hasattr(instance, '_original_status'):
+            return
+        if instance._original_status == instance.status:
+            return
+        if instance.status == 'pending':
+            review_to_pending_status(instance, instance._original_status)
+        # Change cached original status so if we have
+        # multiple saves we don't generate multiple
+        # review tasks
+        instance._original_status = instance.status
+
+
+def calculate_class_name(instance):
+    instance.class_name = instance._meta.module_name
+
+
+def base_content_pre_save_handler(sender, instance, **kwargs):
+    if isinstance(instance, BaseContent) and not instance.id:
+        calculate_class_name(instance)
+
+
+def base_post_save_handler(sender, instance, created, **kwargs):
+    if Base in instance.__class__.mro():
+        instance.populate_workflow_status()
+
+
+signals.pre_save.connect(base_content_pre_save_handler)
+signals.post_save.connect(base_post_save_handler)
+signals.post_save.connect(notify_status_changes)
 
 pre_migrate.connect(handle_pre_migrate)
 post_migrate.connect(handle_post_migrate)
