@@ -341,7 +341,7 @@ class StatePermissionRelation(models.Model):
                              self.permission.name)
 
 
-def _create_basic_states(sender, instance, created, **kwargs):
+def create_default_states_handler(sender, instance, created, **kwargs):
     name_fields = get_real_fieldname_in_each_language('name')
     for field in name_fields:
         value = getattr(instance, field, True)
@@ -385,4 +385,4 @@ def _create_basic_states(sender, instance, created, **kwargs):
         instance.save()
 
 
-post_save.connect(_create_basic_states, sender=Workflow)
+post_save.connect(create_default_states_handler, sender=Workflow)
