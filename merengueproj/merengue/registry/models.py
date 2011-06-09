@@ -48,6 +48,12 @@ class RegisteredItem(models.Model):
     def __unicode__(self):
         return self.class_name
 
+    def save(self, *args, **kwargs):
+        if not self.id and not self.order:
+            max_order = RegisteredItem.objects.aggregate(models.Max('order'))['order__max']
+            self.order = (max_order and max_order + 1) or 0
+        super(RegisteredItem, self).save(*args, **kwargs)
+
     def set_default_config(self, item_class):
         if not self.config:
             self.config = {}
