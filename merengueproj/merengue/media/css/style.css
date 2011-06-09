@@ -145,6 +145,29 @@ div.errormessage, div#messagebox ul#info-list {
     color: black;
 }
 
+#notifications,
+#messagebox {
+    display: none;
+}
+
+#notifications {
+    z-index: 5000;
+}
+
+#notifications p {
+    padding-left: 40px;
+    padding-top: 12px;
+    min-height: 32px;
+}
+
+#notifications p.infomsg {
+    background: transparent url(../img/notifications/info.png) no-repeat scroll left center;
+}
+
+#notifications p.errormsg {
+    background: transparent url(../img/notifications/error.png) no-repeat scroll left center;
+}
+
 span.errormsg {
     background: transparent url(../img/icon_error.gif) no-repeat scroll 0 0;
     color: red;

@@ -61,6 +61,14 @@
 <div id="page-wrapper">
 
 <div id="container" class="theme-{{ theme }} {% block bodyextraclasses %}{% endblock %}">
+{% block notifications %}
+<div id="notifications">
+    <div id="basic-template">
+        <a class="ui-notify-cross ui-notify-close" href="#">x</a>
+        <p class="#{classes}">#{text}</p>
+    </div>
+</div>
+{% endblock %}
 {% if not request.HIDE_DECORATIONS %}
   {% block headerwrapper %}
   <div id="header">
