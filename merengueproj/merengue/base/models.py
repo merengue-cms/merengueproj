@@ -784,7 +784,7 @@ post_save_receivers = None
 cache_backend = None
 
 
-def handle_pre_migrate(sender, **kwargs):
+def pre_migrate_handler(sender, **kwargs):
     global post_save_receivers, cache_backend
     # remove post save receivers because we cannot to call create_menus signal
     post_save_receivers = post_save.receivers
@@ -794,7 +794,7 @@ def handle_pre_migrate(sender, **kwargs):
     settings.CACHES['default']['BACKEND'] = 'django.core.cache.backends.dummy.DummyCache'
 
 
-def handle_post_migrate(sender, **kwargs):
+def post_migrate_handler(sender, **kwargs):
     from merengue.pluggable import enable_active_plugins
     global post_save_receivers, cache_backend
     app = kwargs['app']
@@ -833,14 +833,14 @@ def base_content_pre_save_handler(sender, instance, **kwargs):
         calculate_class_name(instance)
 
 
-def base_post_save_handler(sender, instance, created, **kwargs):
+def update_permission_handler(sender, instance, created, **kwargs):
     if Base in instance.__class__.mro():
         instance.populate_workflow_status()
 
 
 signals.pre_save.connect(base_content_pre_save_handler)
-signals.post_save.connect(base_post_save_handler)
+signals.post_save.connect(update_permission_handler)
 signals.post_save.connect(notify_status_changes)
 
-pre_migrate.connect(handle_pre_migrate)
-post_migrate.connect(handle_post_migrate)
+pre_migrate.connect(pre_migrate_handler)
+post_migrate.connect(post_migrate_handler)
