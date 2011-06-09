@@ -43,6 +43,7 @@ PATHS_SECTIONS = [
 
 def main_admin_tabs(context):
     request = context.get('request', None)
+    user = request and request.user or None
     path = request.META.get('PATH_INFO', '')
     index = urlresolvers.reverse('admin:index')
     if path.startswith(index):
@@ -53,7 +54,7 @@ def main_admin_tabs(context):
         if path.startswith(start):
             selected = section
             break
-    return {'selected': selected, 'request': request}
+    return {'selected': selected, 'request': request, 'user': user}
 main_admin_tabs = register.inclusion_tag('admin/main_admin_tabs.html', takes_context=True)(main_admin_tabs)
 
 
