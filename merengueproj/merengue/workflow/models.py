@@ -376,8 +376,16 @@ def create_default_states_handler(sender, instance, created, **kwargs):
         pending.transitions.add(set_as_draft)
         published.transitions.add(set_as_pending)
         published.transitions.add(set_as_draft)
-        anonymous_role = Role.objects.get(slug='anonymous_user')
-        view_permission = Permission.objects.get(codename='view')
+        try:
+            anonymous_role = Role.objects.get(slug='anonymous_user')
+        except Role.DoesNotExist:
+            # maybe the role does not exist (for example when tests are running)
+            anonymous_role = Role.objects.create(id=1, slug='anonymous_user')
+        try:
+            view_permission = Permission.objects.get(codename='view')
+        except Permission.DoesNotExist:
+            # maybe the permission does not exist (for example when tests are running)
+            view_permission = Permission.objects.create(id=1, codename='view')
 
         StatePermissionRelation.objects.create(
             state=published, permission=view_permission, role=anonymous_role,
