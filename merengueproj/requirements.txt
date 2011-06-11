@@ -17,6 +17,7 @@ django-tagging>=0.3.1
 django-pagination
 johnny-cache>=0.3.0
 template_utils
+django-debug-toolbar
 django-mptt
 django-oembed
 django-ajax-selects

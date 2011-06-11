@@ -46,7 +46,7 @@ TEMPLATE_DIRS = (
     path.join(MERENGUEDIR, 'templates'),
 )
 
-# merengue exclusive installed apps. you have to use at least these apps in your INSTALLED_APPS project settings
+# merengue specific installed apps.
 MERENGUE_APPS = (
     'merengue.registry',
     'merengue.pluggable',
@@ -73,7 +73,7 @@ HTTP_STATUS_CODE_TEMPLATES = {
     404: '404.html',
 }
 
-# merengue usual installed apps. you can use this variable in your INSTALLED_APPS project settings
+# Merengue installed apps
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -111,7 +111,7 @@ INSTALLED_APPS = (
     'announcements',
 ) + MERENGUE_APPS
 
-# merengue exclusive middlewares. you have to put at least these middleware in your project settings
+# Merengue specific middlewares.
 MERENGUE_MIDDLEWARE_CLASSES = (
     'merengue.middleware.RemoveRandomAjaxParameter',
     'merengue.section.middleware.RequestSectionMiddleware',
@@ -237,6 +237,11 @@ MAP_FILTRABLE_MODELS = (
 DEBUG_TOOLBAR_EXCLUDED_URLS = (
     r'^/tinyimages/',
 )
+
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+}
+
 
 # ajax_select
 AJAX_LOOKUP_CHANNELS = {
