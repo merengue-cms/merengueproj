@@ -859,7 +859,7 @@ def base_content_pre_save_handler(sender, instance, **kwargs):
 
 
 def update_permission_handler(sender, instance, created, **kwargs):
-    if Base in instance.__class__.mro():
+    if Base in instance.__class__.mro() and instance._meta.abstract:
         instance.populate_workflow_status()
 
 

@@ -15,10 +15,13 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.core.management import sql
-from django.core.management.color import no_style
 from django.db import models, connection
 from django.test import TestCase
+from django.contrib.contenttypes.models import ContentType
+from django.core.management import sql
+from django.core.management.color import no_style
+from django.utils.encoding import smart_unicode
+
 from merengue.base.models import BaseContent
 from merengue.section.models import BaseSection
 
@@ -51,7 +54,7 @@ class ChildOfChildOfSectionChildTwo(ChildOfSectionChildTwo):
 
 
 models = [SectionChildOne, SectionChildTwo, ChildOfSectionChildOne, ChildOfChildOfSectionChildOne,
-          ChildOfSectionChildTwo, ChildOfChildOfSectionChildTwo]
+          ChildOfChildOfSectionChildTwo]
 
 
 def create_table(*models):
@@ -69,6 +72,15 @@ def create_table(*models):
             execute(connection.creation.sql_create_model(model, STYLE)[0])
             execute(connection.creation.sql_indexes_for_model(model, STYLE))
             execute(sql.custom_sql_for_model(model, STYLE, connection))
+    for model in models:
+        opts = model._meta
+        try:
+            ct = ContentType.objects.get(app_label=opts.app_label,
+                                         model=opts.object_name.lower())
+        except ContentType.DoesNotExist:
+            ct = ContentType(name=smart_unicode(opts.verbose_name_raw),
+                             app_label=opts.app_label, model=opts.object_name.lower())
+            ct.save()
 
 
 class BaseModelTests(TestCase):
