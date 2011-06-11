@@ -24,6 +24,7 @@ from django.db.models.query import QuerySet
 manager_parent_classes = [Manager]
 basequeryset_parent_classes = [QuerySet]
 
+# hack to change base class depending on if USE_GIS flag is enabled
 if settings.USE_GIS:
     from django.contrib.gis.db.models import GeoManager
     from django.contrib.gis.db.models.query import GeoQuerySet
@@ -32,6 +33,7 @@ if settings.USE_GIS:
 
 
 class ManagerMeta(type):
+    """ Metaclass which changes the parent classes depending on if USE_GIS flag is enabled """
 
     def __new__(meta, name, bases, dct):
         newbases = list(bases) + manager_parent_classes + [object]
@@ -40,6 +42,7 @@ class ManagerMeta(type):
 
 
 class BaseQuerySetMeta(type):
+    """ Metaclass which changes the parent classes depending on if USE_GIS flag is enabled """
 
     def __new__(meta, name, bases, dct):
         newbases = list(bases) + basequeryset_parent_classes + [object]
@@ -48,15 +51,12 @@ class BaseQuerySetMeta(type):
 
 
 class BaseManager:
-    """ base manager for all content types """
+    """ Base manager for all Merengue content types """
     __metaclass__ = ManagerMeta
-
-    # XXX: for now we have no customization,
-    # but I think in future can be useful
 
 
 class WorkflowManager(BaseManager):
-    """ manager for all objects that have a workflow (a status field) """
+    """ Manager for all objects that have a workflow (a status field) """
 
     def by_status(self, status):
         return self.filter(status=status)
@@ -75,6 +75,7 @@ class WorkflowManager(BaseManager):
 
 
 class BaseContentQuerySet:
+    """ Base queryset class for all managed contents (which inherits BaseContent) """
     __metaclass__ = BaseQuerySetMeta
 
     def visible_by_user(self, user):
@@ -85,9 +86,11 @@ class BaseContentQuerySet:
 
 
 class CommentsQuerySet:
+    """ Base queryset class for comments """
     __metaclass__ = BaseQuerySetMeta
 
     def with_comment_number(self, ordered_by_comment_number=False):
+        """ Add a useful extra attribute with the comments number """
         from django.contrib.contenttypes.models import ContentType
         from threadedcomments.models import FreeThreadedComment
         comments_table = connection.ops.quote_name(FreeThreadedComment._meta.db_table)
@@ -109,13 +112,14 @@ WHERE content_type_id = %%s and object_id = %s.basecontent_ptr_id and is_public"
 
 
 class CommentsManager(WorkflowManager):
+    """ Manager for all comments """
 
     def get_query_set(self):
         return CommentsQuerySet(self.model)
 
 
 class BaseContentManager(WorkflowManager):
-    """ manager for all objects that inherits from BaseContent """
+    """ Manager for all objects that inherits from BaseContent """
 
     def get_query_set(self):
         return BaseContentQuerySet(self.model)

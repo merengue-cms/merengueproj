@@ -21,10 +21,10 @@ from merengue.base.managers import BaseContentManager
 
 
 class SectionManager(BaseContentManager):
-    """ manager for all menu objects """
+    """ Manager for all the section objects """
 
     def main(self):
-        """ main menu """
+        """ Main menu """
         # XXX: for now, first menu will be main menu
         try:
             return self.all()[0]
