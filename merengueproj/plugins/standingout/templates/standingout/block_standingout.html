@@ -11,10 +11,10 @@
     {% if standingouts %}
         {% for standingout in standingouts %}
             <li>
-                {% if standingout.obj.get_absolute_url %}
-                    <a href="{{ standingout.obj.get_absolute_url }}">{{ standingout.name }}</a>
+                {% if standingout.get_absolute_url %}
+                    <a href="{{ standingout.get_absolute_url }}">{{ standingout.name }}</a>
                 {% else %}
-                    {{ standingout.obj }}
+                    {{ standingout.name }}
                 {% endif %}
             </li>
         {% endfor %}

@@ -75,7 +75,7 @@ class StandingOut(models.Model):
 
     @property
     def name(self):
-        return self.title or unicode(self.obj)
+        return self.title or self.obj and unicode(self.obj) or self.target_name()
 
     @property
     def description(self):
