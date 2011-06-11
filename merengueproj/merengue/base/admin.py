@@ -81,7 +81,6 @@ from genericforeignkey.admin import GenericAdmin
 # True while running, and False when it finishes.
 LOADING = False
 
-
 # Don't call register but insert it at the beginning of the registry
 # otherwise, the AllFilterSpec will be taken first
 FilterSpec.filter_specs.insert(0, (lambda f: f.name == 'class_name',
@@ -360,6 +359,10 @@ class RelatedURLsModelAdmin(admin.ModelAdmin):
 
 
 class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
+    """
+    Base model class for the Merengue model admins which have models that
+    inherit from BaseContent model
+    """
     html_fields = ()
     autocomplete_fields = {}
     edit_related = ()
@@ -654,6 +657,10 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
 
 
 class BaseCategoryAdmin(BaseAdmin):
+    """
+    Base model class for the Merengue model admins which have models that
+    inherit from BaseCategory
+    """
     ordering = (get_fallback_fieldname('name'), )
     search_fields = (get_fallback_fieldname('name'), )
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
@@ -682,6 +689,7 @@ class PluginAdmin(BaseAdmin):
 
 
 class WorkflowBatchActionProvider(object):
+    """ Provides batch actions for changing the status of contents """
 
     def set_as_draft(self, request, queryset):
         return self.change_state(request, queryset, 'draft',
@@ -726,40 +734,8 @@ class WorkflowBatchActionProvider(object):
     change_state.short_description = _(u"Change state of selected %(verbose_name_plural)s")
 
 
-class StatusControlProvider(object):
-
-    def _get_status_options(self, user, obj):
-        options = set()
-        all_options = set(settings.STATUS_LIST)
-
-        original_obj = obj
-        # if there's not an object yet, we'll try to get the permissions for the section
-        if not obj:
-            try:
-                obj = self.basecontent
-            except AttributeError:
-                pass
-        if perms_api.has_permission(obj, user, 'edit'):
-            options = options.union([o for o in all_options if o[0] in ('draft', 'pending')])
-
-        # Remember that superuser has all the perms
-        if perms_api.has_permission(obj, user, 'can_draft'):
-            options = options.union([o for o in all_options if o[0] == 'draft'])
-        if perms_api.has_permission(obj, user, 'can_pending'):
-            options = options.union([o for o in all_options if o[0] == 'pending'])
-        if perms_api.has_permission(obj, user, 'can_published'):
-            options = options.union([o for o in all_options if o[0] == 'published'])
-        if original_obj and hasattr(original_obj, 'status'):
-            status_list = [o[0] for o in options]
-            if original_obj.status == 'published' and 'published' not in status_list:
-                return None
-        return options
-
-
 class BaseOrderableAdmin(BaseAdmin):
-    """
-    A model admin that can reorder content by a sortablefield
-    """
+    """ A model admin that can reorder content by a sortablefield """
     change_list_template = "admin/basecontent/sortable_change_list.html"
     sortablefield = 'position'
 
@@ -779,7 +755,11 @@ class BaseOrderableAdmin(BaseAdmin):
         return super(BaseOrderableAdmin, self).changelist_view(request, extra_context)
 
 
-class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, StatusControlProvider, PermissionAdmin):
+class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, PermissionAdmin):
+    """
+    Base model class for the Merengue model admins which have models that
+    inherit from BaseContent
+    """
     change_list_template = "admin/basecontent/sortable_change_list.html"
     list_display = ('__unicode__', 'status', 'user_modification_date', 'last_editor')
     list_display_for_select = ('name', 'status', 'user_modification_date', 'last_editor')
@@ -788,7 +768,6 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, StatusCo
     list_filter = ('status', 'user_modification_date', 'last_editor', )
     select_list_filter = ('class_name', 'status', 'user_modification_date', )
     actions = ['set_as_draft', 'set_as_pending', 'set_as_published', 'assign_owners']
-    filter_horizontal = ('owners', 'participants')
     edit_related = ()
     html_fields = ('description', )
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
@@ -845,7 +824,7 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, StatusCo
 
     def has_add_permission(self, request):
         """
-            Overrides Django admin behaviour to add ownership based access control
+        Overrides Django admin behaviour to add ownership based access control
         """
         return perms_api.has_global_permission(request.user, 'edit')
 
@@ -892,9 +871,15 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, StatusCo
         return False
 
     def has_change_permission_to_any(self, request):
+        """
+        Overrides Django admin behaviour to add ownership based access control
+        """
         return super(BaseContentAdmin, self).has_change_permission(request, None)
 
     def get_readonly_fields(self, request, obj=None):
+        """
+        Overrides Django admin behaviour for adding non changeable fields support
+        """
         readonly_fields = super(BaseContentAdmin, self).get_readonly_fields(request, obj)
         if obj and obj.no_changeable_fields:
             readonly_fields += tuple(obj.no_changeable_fields)
@@ -906,7 +891,7 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, StatusCo
 
     def get_form(self, request, obj=None, **kwargs):
         """
-        Overrides Django admin behaviour
+        Overrides Django admin behaviour to do extra logic
         """
         if not request.user.is_superuser:
             # we remove ownership selection
@@ -949,8 +934,9 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, StatusCo
 
     def save_model(self, request, obj, form, change):
         """
-        Hack for saving object as pending when user is editor
+        Overrides the Django behaviour to do extra logic
         """
+        # request.user will be the last editor
         obj.last_editor = request.user
 
         # simulate auto_now=True for user_modification_date
@@ -966,13 +952,6 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, StatusCo
                 SectionRelatedContent.objects.create(basecontent=obj, basesection=section)
             elif section is None and object_sections:
                 SectionRelatedContent.objects.filter(basecontent=obj).delete()
-
-    def formfield_for_dbfield(self, db_field, **kwargs):
-        field = super(BaseContentAdmin, self).formfield_for_dbfield(db_field, **kwargs)
-        db_fieldname = canonical_fieldname(db_field)
-        if db_fieldname == 'description':
-            field.widget.attrs['rows'] = 4
-        return field
 
     def changelist_view(self, request, extra_context=None):
         if request.GET.get('for_select', None):
@@ -1100,7 +1079,7 @@ if settings.USE_GIS:
 class BaseContentViewAdmin(BaseContentAdmin):
     """ An special admin to find and edit all site contents """
 
-    list_display = ('admin_absolute_url', ) + BaseContentAdmin.list_display[1:]
+    list_display = ('admin_link_markup', ) + BaseContentAdmin.list_display[1:]
     list_filter = BaseContentAdmin.list_filter + ('class_name', )
 
     def has_add_permission(self, request):
@@ -1410,6 +1389,9 @@ class OrderableRelatedModelAdmin(RelatedModelAdmin):
 
 
 class PermissionRelatedAdmin(RelatedModelAdmin, PermissionAdmin):
+    """
+    Model admin for permissions related to a managed content
+    """
     tool_name = 'manage_permissions'
     tool_label = _('permissions')
     change_roles_template = 'admin/basecontent/role_permissions.html'
@@ -1459,8 +1441,6 @@ class LogEntryRelatedContentModelAdmin(admin.ModelAdmin):
         elif label:
             return label
         return '---'
-
-    # COLUMNS
 
     def logentry_link(self, logentry):
         return logentry.action_time

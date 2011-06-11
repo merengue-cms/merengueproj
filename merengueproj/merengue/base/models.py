@@ -68,7 +68,6 @@ PRIORITY_CHOICES = (
     (8, _('Highest')),
     )
 
-
 COMMENTABLE_CHOICES = (
     ('disabled', _('disabled')),
     ('allowed', _('allowed')),
@@ -76,6 +75,9 @@ COMMENTABLE_CHOICES = (
 
 
 class ContactInfo(models.Model):
+    """
+    Store the contact information of all managed contents
+    """
     name = models.CharField(verbose_name=_('name'), max_length=200,
                             blank=True, null=True)
     contact_email = models.EmailField(verbose_name=_('contact email'),
@@ -100,6 +102,9 @@ class ContactInfo(models.Model):
 
 
 class BaseCategory(models.Model):
+    """
+    Abstract model for all models kind of categories
+    """
     __metaclass__ = TransMeta
     name = models.CharField(verbose_name=_('name'), max_length=200)
     slug = models.SlugField(verbose_name=_('slug'), max_length=200, db_index=True)
@@ -115,11 +120,15 @@ class BaseCategory(models.Model):
 
     @permalink
     def get_admin_absolute_url(self):
+        """ Link to the admin page for editing the object """
         content_type = ContentType.objects.get_for_model(self)
         return ('merengue.base.views.admin_link', [content_type.id, self.id, ''])
 
 
 class Base(models.Model):
+    """
+    Abstract model for models with default management features
+    """
     __metaclass__ = TransMeta
     name = models.CharField(verbose_name=_('name'), max_length=200, db_index=True)
     slug = models.SlugField(verbose_name=_('slug'), max_length=200, db_index=True)
@@ -160,8 +169,8 @@ class Base(models.Model):
             setattr(self, to_field, original_text)
 
     def clean(self):
+        """ Override the Django one to take into account integer overflows """
         super(Base, self).clean()
-        # avoid integer overflows
         numeric_fields = [models.IntegerField, models.PositiveIntegerField,
                           models.PositiveSmallIntegerField, models.SmallIntegerField]
         invalid_fields = set()
@@ -178,10 +187,11 @@ class Base(models.Model):
 
     def get_status_object(self):
         # since the connection with the state is created on the post-save
-        # signal, it will allways exists.
-        return self.stateobjectrelation_set.all()[0].state
+        # signal, it will always exists.
+        return self.stateobjectrelation_set.get().state
 
     def save(self, *args, **kwargs):
+        """ Override Django one to generate a plain text representation """
         for lang in settings.LANGUAGES:
             field_name = 'description_%s' % lang[0]
             to_field = 'plain_description_%s' % lang[0]
@@ -190,7 +200,7 @@ class Base(models.Model):
         super(Base, self).save(*args, **kwargs)
 
     def populate_workflow_status(self, force_update=False):
-        """ populates the workflow status from the status slug """
+        """ Populates the workflow status from the status slug """
         from merengue.workflow.utils import workflow_by_model
         workflow_status = getattr(self, 'workflow_status', None)
         if not workflow_status:
@@ -202,6 +212,7 @@ class Base(models.Model):
             self.update_status()
 
     def update_status(self):
+        """ Updates the status object and updates the permissions """
         from merengue.perms.models import ObjectPermission
         # an extra check to avoid possibles infinte recursion
         if self.status != self.workflow_status.slug:
@@ -217,6 +228,7 @@ class Base(models.Model):
 
     @permalink
     def get_admin_absolute_url(self):
+        """ Link to the admin page for editing the object """
         content_type = ContentType.objects.get_for_model(self)
         return ('merengue.base.views.admin_link', [content_type.id, self.id, ''])
 
@@ -341,6 +353,13 @@ class BaseContentMeta(TransMeta):
 
 
 class BaseContent(BaseClass):
+    """
+    Merengue managed content types use relational database inheritance to have
+    a non abstract base managed model to be able to selecting all objects with
+    only one SQL.
+
+    If you want to create a new content type you should inherits from this model.
+    """
     __metaclass__ = BaseContentMeta
 
     contact_info = models.ForeignKey(ContactInfo,
@@ -374,17 +393,17 @@ class BaseContent(BaseClass):
                                 tag names, use double quotes.'))
 
     # meta info
-    meta_desc = models.TextField(verbose_name=_('meta description'), null=True, blank=True)
+    meta_desc = models.TextField(verbose_name=_('meta description'),
+                                 null=True, blank=True)
 
-    commentable = models.CharField(_('comments'), max_length=20, choices=COMMENTABLE_CHOICES,
-                              default='allowed', help_text=_('Is that content commentable'),
-                              editable=True)
+    commentable = models.CharField(_('comments'), max_length=20, default='allowed',
+                                   choices=COMMENTABLE_CHOICES, editable=True,
+                                   help_text=_('Is that content commentable'))
 
     # multimedia resources
-    multimedia = models.ManyToManyField(BaseMultimedia,
+    multimedia = models.ManyToManyField(BaseMultimedia, blank=True,
                                         verbose_name=_('multimedia'),
-                                        through='MultimediaRelation',
-                                        blank=True)
+                                        through='MultimediaRelation')
 
     # cached class name from this content
     # this should has null=False, blank=False but in practice this
@@ -407,9 +426,9 @@ class BaseContent(BaseClass):
                                     related_name='contents_owned')
 
     participants = models.ManyToManyField(User,
-                                    verbose_name=_('participants'),
-                                    null=True, blank=True,
-                                    related_name='contents_participated')
+                                          verbose_name=_('participants'),
+                                          null=True, blank=True,
+                                          related_name='contents_participated')
 
     position = models.PositiveIntegerField(verbose_name=_('position'),
                                            null=True,
@@ -458,15 +477,13 @@ class BaseContent(BaseClass):
         ordering = ('position', get_fallback_fieldname('name'), )
         check_slug_uniqueness = True
 
-    def admin_absolute_url(self):
+    def admin_link_markup(self):
         return '<a href="%s">%s</a>' % (self.get_real_instance().get_admin_absolute_url(), self.name)
-    admin_absolute_url.allow_tags = True
-
-    @classmethod
-    def get_menu_name(cls):
-        return u"%s_menu" % cls._meta.module_name
+    admin_link_markup.allow_tags = True
+    admin_link_markup.short_description = _('Name')
 
     def save(self, update_rank=False, **kwargs):
+        """ Do extra logic like setting ordering, update ranking if needed remove some tags """
         # new objects should be added in last place
         if not self.id:
             try:
@@ -507,6 +524,7 @@ class BaseContent(BaseClass):
                 super(BaseContent, self).save(force_update=True)
 
     def validate_unique(self, exclude=None):
+        """ Check the slug uniqueness """
         errors = {}
         try:
             super(BaseContent, self).validate_unique(exclude)
@@ -521,7 +539,12 @@ class BaseContent(BaseClass):
             raise ValidationError(errors)
 
     def get_real_instance(self):
-        """ get object child instance """
+        """
+        BaseContent objects are only "abstract" managed contents.
+        get_real_instance returns the real object: news item, event, etc.
+
+        Makes a SQL sentence which does the JOIN with its real model class
+        """
         def get_subclasses(cls):
             subclasses = cls.__subclasses__()
             result = []
@@ -551,25 +574,28 @@ class BaseContent(BaseClass):
         return ('merengue.base.views.public_link', [self._meta.app_label, self._meta.module_name, self.id])
 
     @permalink
-    def public_link_without_section(self):
-        return self._public_link_without_section()
-
-    def _public_link_without_section(self):
-        return ('merengue.base.views.public_view', [self._meta.app_label, self._meta.module_name, self.id, self.slug])
-
-    @permalink
     def public_link(self):
+        """ Get the content public link, depending on if is inside a section or not """
         section = self.get_main_section()
         if section:
             return section.get_real_instance()._content_public_link(section, self)
         else:
             return self._public_link_without_section()
 
+    @permalink
+    def public_link_without_section(self):
+        """ Get the content public link without taking into account its section """
+        return self._public_link_without_section()
+
+    def _public_link_without_section(self):
+        return ('merengue.base.views.public_view', [self._meta.app_label, self._meta.module_name, self.id, self.slug])
+
     def link_by_user(self, user):
-        """ User dependent link. To override in subclasses, if needed """
+        """ Get link depending on user. To override in subclasses, if needed """
         raise NotImplementedError("Model %s has no implements a link_by_user method" % self._meta)
 
     def can_edit(self, user):
+        """ Returns if the user can edit this content """
         from merengue.perms.utils import has_permission
         return has_permission(self, user, 'edit')
 
@@ -580,11 +606,8 @@ class BaseContent(BaseClass):
         except ObjectDoesNotExist:
             return None
 
-    def calculate_rank(self):
-        return 100.0  # default implementation
-
     def recalculate_main_image(self):
-        """ main image will be first ordered multimedia relation with class "photo" """
+        """ Main image will be first ordered multimedia relation which is a Photo instance """
         ordered_photo_relations = MultimediaRelation.objects.filter(
             multimedia__class_name='photo',
             multimedia__status='published',
@@ -655,6 +678,9 @@ class BaseContent(BaseClass):
                 ObjectPermission.objects.create(content=self,
                                                 role=perm.role,
                                                 permission=perm.permission))
+
+    def calculate_rank(self):
+        return 100.0  # default implementation
 
 
 class MultimediaRelation(models.Model):
