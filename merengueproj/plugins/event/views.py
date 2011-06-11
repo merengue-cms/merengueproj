@@ -33,19 +33,19 @@ from plugins.event.utils import getEventsMonthYear
 EVENT_COLLECTION_SLUG = 'event'
 
 
-def event_view(request, event_slug, extra_context=None, template_name='event/event_view.html'):
+def event_view(request, event_slug, extra_context=None, template_name='event_view.html'):
     event = get_object_or_404(Event, slug=event_slug)
     event_category_slug = request.GET.get('categories__slug', None)
     event_category = event_category_slug and get_object_or_404(Category, slug=event_category_slug)
     context = {'event_category': event_category}
     extra_context = extra_context or {}
     context.update(extra_context)
-    return content_view(request, event, 'event/event_view.html', extra_context=context)
+    return content_view(request, event, template_name, extra_context=context)
 
 
 def event_list(request, year=None, month=None, day=None, queryset=None,
                extra_context=None,
-               template_name='event/event_list.html'):
+               template_name='event_list.html'):
     filters = {}
     date_day_start = None
     event_collection = get_collection_event()
@@ -69,7 +69,7 @@ def event_list(request, year=None, month=None, day=None, queryset=None,
 
 
 def event_historic(request, queryset=None, extra_context=None,
-               template_name='event/event_historic.html'):
+                   template_name='event_historic.html'):
     filters = {}
     event_collection = get_collection_event()
 

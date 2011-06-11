@@ -51,7 +51,7 @@ class Event(BaseContent):
     class Meta:
         verbose_name = _('event')
         verbose_name_plural = _('events')
-        content_view_template = 'event/event_view.html'
+        content_view_template = 'event_view.html'
         ordering = ('-publish_date', )
         check_slug_uniqueness = True
 
