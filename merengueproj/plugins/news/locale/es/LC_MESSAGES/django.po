@@ -62,7 +62,7 @@ msgstr "cuerpo de texto"
 
 #: models.py:50
 msgid "news item"
-msgstr ""
+msgstr "noticia"
 
 #: models.py:51
 msgid "news"
