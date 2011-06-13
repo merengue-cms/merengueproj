@@ -25,11 +25,17 @@ def workflow_by_model(model):
     """Fetch what workflow is the one used by the given model,
     looking the parents if it's needed
     """
+    if model._meta.abstract:
+        # find the first non abstract model because abstract models have not contenttypes
+        for base in model.__bases__:
+            if not base._meta.abstract:
+                model = base
+                break
     content_type = ContentType.objects.get(model=model._meta.module_name, app_label=model._meta.app_label)
-
     try:
         return WorkflowModelRelation.objects.get(content_type=content_type).workflow
-    except WorkflowModelRelation.DoesNotExist:  # we look for the parent
+    except WorkflowModelRelation.DoesNotExist:
+        # we look for the parent
         if BaseContent in content_type.model_class().mro():
             for base in model.__bases__:
                 return workflow_by_model(base)
