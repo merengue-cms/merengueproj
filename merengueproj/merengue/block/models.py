@@ -77,15 +77,15 @@ class RegisteredBlock(RegisteredItem):
     cache_only_anonymous = models.BooleanField(
         verbose_name=_('Cached is applied only for anonymous'),
         default=False)
+    cache_vary_on_user = models.BooleanField(
+        verbose_name=_('Cached vary on authenticated user'),
+        default=False)
     cache_vary_on_url = models.BooleanField(
         verbose_name=_('Cache vary on the request URL'),
         default=False)
     cache_vary_on_language = models.BooleanField(
         verbose_name=_('Cache vary on language'),
         default=True)
-    cache_vary_on_user = models.BooleanField(
-        verbose_name=_('Cached vary on authenticated user'),
-        default=False)
     # fields for blocks related to contents
     content = models.ForeignKey(BaseContent, verbose_name=_(u'related content'), null=True)
     overwrite_if_place = models.BooleanField(
