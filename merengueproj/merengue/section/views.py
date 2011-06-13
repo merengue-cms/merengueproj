@@ -165,6 +165,8 @@ def section_dispatcher(request, url):
     kwargs = dict(section_slug=parts[0])
     func = None
 
+    if url.startswith(settings.MEDIA_URL):
+        raise Http404  # shortcut to avoid uneeded cpu cycles
     if len(parts) == 1:
         func = section_view
     elif len(parts) == 4 and parts[1] == 'contents':
