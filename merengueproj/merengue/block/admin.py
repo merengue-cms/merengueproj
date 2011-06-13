@@ -47,7 +47,7 @@ class RegisteredBlockAdmin(RegisteredItemAdmin):
             {'fields': ('placed_at', 'active', 'shown_in_urls', 'hidden_in_urls', 'order', 'config')}
         ),
         (_('Cache parameters'),
-            {'fields': ('is_cached', 'cache_timeout', 'cache_only_anonymous', 'cache_vary_on_url', 'cache_vary_on_language', 'cache_vary_on_user', )}
+            {'fields': ('is_cached', 'cache_timeout', 'cache_only_anonymous', 'cache_vary_on_user', 'cache_vary_on_url', 'cache_vary_on_language', )}
         ))
 
     class Media:
