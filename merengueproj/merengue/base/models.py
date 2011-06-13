@@ -224,7 +224,7 @@ class Base(models.Model):
                         ObjectPermission.objects.create(content=self,
                                                         role=perm.role,
                                                         permission=perm.permission))
-            self.save()
+            self.save_base(raw=True)  # to avoid calling again to post_save handlers
 
     @permalink
     def get_admin_absolute_url(self):
@@ -859,7 +859,7 @@ def base_content_pre_save_handler(sender, instance, **kwargs):
 
 
 def update_permission_handler(sender, instance, created, **kwargs):
-    if Base in instance.__class__.mro() and instance._meta.abstract:
+    if Base in instance.__class__.mro() and not instance._meta.abstract:
         instance.populate_workflow_status()
 
 
