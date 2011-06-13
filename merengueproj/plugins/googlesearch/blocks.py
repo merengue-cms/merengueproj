@@ -27,6 +27,14 @@ class GoogleSearchBlock(Block):
     default_place = 'leftsidebar'
     verbose_name = ugettext_lazy('Google Search Block')
     help_text = ugettext_lazy('The block represents the google search widget')
+    default_caching_params = {
+        'enabled': True,
+        'only_anonymous': False,
+        'vary_on_user': False,
+        'timeout': 5184000,
+        'vary_on_url': False,
+        'vary_on_language': True,
+    }
 
     config_params = BaseBlock.config_params + [
         params.Single(name='custom_search_control', label=_('Custom search control'), default='003808332573069177904:wm3_yobt584'),

@@ -34,6 +34,15 @@ class StandingOutBlock(Block):
         params.Integer(name='limit', label=_('limit for standingouts in block'), default='5'),
     ]
 
+    default_caching_params = {
+        'enabled': True,
+        'timeout': 3600,
+        'only_anonymous': True,
+        'vary_on_user': False,
+        'vary_on_url': True,
+        'vary_on_language': True,
+    }
+
     def render(self, request, place, context, block_content_relation=None,
                *args, **kwargs):
         standingout_categories = StandingOutCategory.objects.all()
@@ -63,6 +72,14 @@ class StandingOutSlideShowBlock(Block):
     config_params = BaseBlock.config_params + [
         params.Integer(name='limit', label=_('limit for standingouts in block'), default='5'),
     ]
+    default_caching_params = {
+        'enabled': True,
+        'timeout': 3600,
+        'only_anonymous': True,
+        'vary_on_user': False,
+        'vary_on_url': True,
+        'vary_on_language': True,
+    }
 
     def render(self, request, place, context, block_content_relation=None,
                *args, **kwargs):

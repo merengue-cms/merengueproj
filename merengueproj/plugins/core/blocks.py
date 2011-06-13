@@ -32,6 +32,14 @@ class BaseMenuBlock(object):
     config_params = BaseBlock.config_params + [
         params.Integer(name='max_num_level',
                        label=_('maximum number of levels to show'), default=-1)]
+    default_caching_params = {
+        'enabled': True,
+        'only_anonymous': True,
+        'vary_on_user': False,
+        'timeout': 3600,
+        'vary_on_url': True,
+        'vary_on_language': True,
+    }
 
     def get_max_level(self):
         max_value = self.get_config().get('max_num_level', None)
@@ -69,6 +77,14 @@ class NavigationBlock(BaseMenuBlock, Block):
     default_place = 'leftsidebar'
     help_text = _('Renders the Navigation')
     verbose_name = _('Navigation Block')
+    default_caching_params = {
+        'enabled': True,
+        'only_anonymous': True,
+        'vary_on_user': False,
+        'timeout': 3600,
+        'vary_on_url': True,
+        'vary_on_language': True,
+    }
 
     def render(self, request, place, context, *args, **kwargs):
         sections = BaseSection.objects.published()
@@ -102,6 +118,14 @@ class LinkBaseBlock(Block):
     template_name = 'core/block_portallinks.html'
     help_text = _('Abstract block that render portal links')
     verbose_name = _('Link Base Block')
+    default_caching_params = {
+        'enabled': True,
+        'only_anonymous': False,
+        'vary_on_user': True,
+        'timeout': 3600,
+        'vary_on_url': False,
+        'vary_on_language': True,
+    }
 
     def render(self, request, place, context, *args, **kwargs):
         links = PortalLink.objects.filter(category=self.category).visible_by_user(request.user)
@@ -143,6 +167,14 @@ class ContactInfoBlock(ContentBlock):
     default_place = 'aftercontent'
     help_text = _('Block with contact info')
     verbose_name = _('Contact Info block')
+    default_caching_params = {
+        'enabled': True,
+        'only_anonymous': True,
+        'vary_on_user': False,
+        'timeout': 3600,
+        'vary_on_url': True,
+        'vary_on_language': True,
+    }
 
     def render(self, request, place, content, context, *args, **kwargs):
         return self.render_block(

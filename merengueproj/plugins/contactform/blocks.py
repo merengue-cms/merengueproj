@@ -28,6 +28,14 @@ class ContactFormBlock(ContentBlock):
     default_place = 'aftercontent'
     help_text = ugettext_lazy('Block with contact form')
     verbose_name = ugettext_lazy('Contact Form Block')
+    default_caching_params = {
+        'enabled': True,
+        'timeout': 3600,
+        'only_anonymous': True,
+        'vary_on_user': False,
+        'vary_on_url': True,
+        'vary_on_language': True,
+    }
 
     def render(self, request, place, content, context, *args, **kwargs):
         contact_forms = ContactForm.objects.filter(content=content)

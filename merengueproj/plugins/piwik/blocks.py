@@ -25,6 +25,14 @@ class PiwikBlock(Block):
     default_place = 'footer'
     help_text = ugettext_lazy('Block add piwik javascript')
     verbose_name = ugettext_lazy('Piwik Block')
+    default_caching_params = {
+        'enabled': True,
+        'timeout': 3600,
+        'only_anonymous': False,
+        'vary_on_user': False,
+        'vary_on_url': True,
+        'vary_on_language': False,
+    }
 
     def render(self, request, place, context, *args, **kwargs):
         content = context.get('content')

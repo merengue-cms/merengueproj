@@ -1,6 +1,6 @@
 {% extends "block.html" %}
 
-{% load i18n media_tags %}
+{% load i18n %}
 
 {% block blockbody %}
 <div id="cse" style="width: 100%;">{% trans "Loading" %}</div>
@@ -34,10 +34,9 @@
 </script>
 
 
-  <link rel="stylesheet" href="http://www.google.com/cse/style/look/default.css" type="text/css" />
-{% addmedia "css" %}
-  <link rel="stylesheet" href="{{ MEDIA_URL }}googlesearch/style.css" type="text/css" /> 
-{% endaddmedia %}
+<link rel="stylesheet" href="http://www.google.com/cse/style/look/default.css" type="text/css" />
+<link rel="stylesheet" href="{{ MEDIA_URL }}googlesearch/style.css" type="text/css" /> 
+
 
 {% endblock %}
 

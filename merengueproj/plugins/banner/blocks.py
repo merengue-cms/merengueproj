@@ -42,6 +42,15 @@ class BannerBlock(BlockQuerySetItemProvider, Block):
                                default=0),
     ]
 
+    default_caching_params = {
+        'enabled': True,
+        'timeout': 3600,
+        'only_anonymous': True,
+        'vary_on_user': False,
+        'vary_on_url': True,
+        'vary_on_language': True,
+    }
+
     def get_contents(self, request=None, context=None, section=None):
         banners_list = get_banners(request, filtering_section=False)
         return banners_list

@@ -29,6 +29,7 @@ class OldBrowserBlock(Block):
     default_place = 'header'
     help_text = _('Block emulates the old browser ')
     verbose_name = _('Old browser block')
+    cache_allowed = False
 
     def render(self, request, place, context, *args, **kwargs):
         user_agent = request.META.get('HTTP_USER_AGENT', None)

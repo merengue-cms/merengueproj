@@ -30,6 +30,14 @@ class SearchBlock(ContentBlock):
     default_place = 'aftercontent'
     help_text = ugettext_lazy('Block represents search widget')
     verbose_name = ugettext_lazy('Search block')
+    default_caching_params = {
+        'enabled': True,
+        'timeout': 3600,
+        'only_anonymous': True,
+        'vary_on_user': False,
+        'vary_on_url': True,
+        'vary_on_language': True,
+    }
 
     def render(self, request, place, content, context, *args, **kwargs):
         if not isinstance(content, Collection):

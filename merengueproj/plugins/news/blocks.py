@@ -38,6 +38,15 @@ class LatestNewsBlock(BlockQuerySetItemProvider, Block):
         ),
     ]
 
+    default_caching_params = {
+        'enabled': True,
+        'timeout': 3600,
+        'only_anonymous': True,
+        'vary_on_user': False,
+        'vary_on_url': True,
+        'vary_on_language': True,
+    }
+
     def get_contents(self, request=None, context=None, section=None):
         news_list = get_news(request, filtering_section=False)
         return news_list

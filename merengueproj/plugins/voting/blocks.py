@@ -36,6 +36,7 @@ class VotingBlock(BlockSectionFilterItemProvider, ContentTypeFilterProvider, Con
                      ContentTypeFilterProvider.config_params +
                      [params.Bool(name='readonly', label=_('is readonly?'),
                                   default=False)])
+    cache_allowed = False
 
     def render(self, request, place, content, context, *args, **kwargs):
         readonly = self.get_config().get('readonly').get_value()

@@ -26,6 +26,14 @@ from plugins.contentmenu.models import ContentGroup
 class ContentGroupLinksBlock(Block):
     name = 'contentgrouplinks'
     default_place = 'aftercontenttitle'
+    default_caching_params = {
+        'enabled': True,
+        'timeout': 3600,
+        'only_anonymous': True,
+        'vary_on_user': False,
+        'vary_on_url': True,
+        'vary_on_language': True,
+    }
 
     def render(self, request, place, context, *args, **kwargs):
         content_groups = ContentGroup.objects.filter(contents=context['content'])

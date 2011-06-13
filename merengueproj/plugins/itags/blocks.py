@@ -38,6 +38,14 @@ class TagCloudBlock(BlockQuerySetItemProvider, Block):
             default=20,
         ),
     ]
+    default_caching_params = {
+        'enabled': True,
+        'timeout': 3600,
+        'only_anonymous': False,
+        'vary_on_user': False,
+        'vary_on_url': True,
+        'vary_on_language': True,
+    }
 
     def render(self, request, place, context, block_content_relation=None,
                *args, **kwargs):
