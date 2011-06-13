@@ -44,8 +44,6 @@ def feeditem_view(request, content, template_name=None, extra_context=None):
 
 def collection_view(request, content, template_name=None, extra_context=None):
     context = {}
-    if extra_context:
-        context.update(extra_context)
     model_collection = content.get_first_parents_of_content_types()
     if template_name is None:
         template_name = []
@@ -55,6 +53,8 @@ def collection_view(request, content, template_name=None, extra_context=None):
     render_item_template = get_render_item_template(model_collection)
     context['render_item_template'] = render_item_template
     context['paginate_by'] = settings.NUM_ELEM_PER_PAGE_DEFAULT
+    if extra_context:
+        context.update(extra_context)
     return render_content(request, content, template_name, context)
 
 
