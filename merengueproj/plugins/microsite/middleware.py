@@ -58,8 +58,8 @@ class MicrositeMiddleware(object):
         url_args_len = len(url_args)
         if url_args_len == 4 and url_args[1] == PREFIX_DOC:
             return document_microsite_view(request, url_args[0], url_args[2], url_args[3])
-        if url_args_len > 1:
-            return microsite_url(request, url_args[0], url_args[1:])
-        elif url_args_len == 1:
+        if url_args_len == 1 or (url_args_len == 2 and url_args[1].startswith('?')):
             return microsite_view(request, url_args[0])
+        elif url_args_len > 1:
+            return microsite_url(request, url_args[0], url_args[1:])
         raise Http404
