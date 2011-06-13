@@ -142,10 +142,10 @@ PRE_MERENGUE_MIDDLEWARE_CLASSES = (
 
 POST_MERENGUE_MIDDLEWARE_CLASSES = (
     #'django.middleware.gzip.GZipMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'merengue.section.middleware.ResponseSectionMiddleware',
     'merengue.pluggable.middleware.PluginMiddlewaresProxy',
     'merengue.block.middleware.RenderBlockMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'merengue.cache.middleware.FetchFromAnonymousCacheMiddleware',
 )
 
