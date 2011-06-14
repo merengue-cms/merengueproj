@@ -40,7 +40,7 @@ class MicrositeMiddleware(object):
         if response.status_code != 404:
             return response  # No need to check for a section for non-404 responses.
         try:
-            path_info = request.get_full_path()
+            path_info = request.path_info
             url_args = [item for item in path_info.split('/') if item]
             return self.microsite_dispatcher(request, url_args)
         # Return the original response if any errors happened. Because this
@@ -58,7 +58,7 @@ class MicrositeMiddleware(object):
         url_args_len = len(url_args)
         if url_args_len == 4 and url_args[1] == PREFIX_DOC:
             return document_microsite_view(request, url_args[0], url_args[2], url_args[3])
-        if url_args_len == 1 or (url_args_len == 2 and url_args[1].startswith('?')):
+        if url_args_len == 1:
             return microsite_view(request, url_args[0])
         elif url_args_len > 1:
             return microsite_url(request, url_args[0], url_args[1:])
