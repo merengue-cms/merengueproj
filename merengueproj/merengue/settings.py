@@ -234,12 +234,19 @@ MAP_FILTRABLE_MODELS = (
     'base.basecontent',
 )
 
+
+def show_debug_toolbar(request):
+    from django.conf import settings
+    return settings.DEBUG_TOOLBAR
+
+
 DEBUG_TOOLBAR_EXCLUDED_URLS = (
     r'^/tinyimages/',
 )
 
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
+    'SHOW_TOOLBAR_CALLBACK': show_debug_toolbar,
 }
 
 
