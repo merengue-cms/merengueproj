@@ -50,22 +50,16 @@ class RequestSectionMiddleware(object):
                 section_path = request.path[len(matched_prefix):]
                 next_slash_index = section_path.find('/')
                 section_slug = section_path[:next_slash_index]
-                slugs_cache_key = 'section_slug_list'
-                section_slug_list = cache.get(slugs_cache_key)
-                if section_slug_list is None:
-                    section_slug_list = [v[0] for v in BaseSection.objects.all().values_list('slug')]
-                    cache.set(slugs_cache_key, section_slug_list)
-                if section_slug in section_slug_list:
-                    try:
-                        cache_key = 'section_%s' % section_slug
-                        section = cache.get(cache_key)
-                        if section is None:
-                            section = BaseSection.objects.get(slug=section_slug)
-                            cache.set(cache_key, section)
-                    except:
-                        # we put an blank except because some times in WSGI in a heavy loaded environments
-                        # backends specific exceptions can be thrown, i.e. psycopg.ProgrammingError
-                        pass
+                try:
+                    cache_key = 'section_%s' % section_slug
+                    section = cache.get(cache_key)
+                    if section is None:
+                        section = BaseSection.objects.get(slug=section_slug)
+                        cache.set(cache_key, section)
+                except:
+                    # we put an blank except because some times in WSGI in a heavy loaded environments
+                    # backends specific exceptions can be thrown, i.e. psycopg.ProgrammingError
+                    pass
         request.section = section
 
 
@@ -75,7 +69,7 @@ class ResponseSectionMiddleware(object):
     def process_response(self, request, response):
         from merengue.section.views import section_dispatcher
         if response.status_code != 404:
-            return response # No need to check for a section for non-404 responses.
+            return response  # No need to check for a section for non-404 responses.
         try:
             return section_dispatcher(request, request.path_info)
         # Return the original response if any errors happened. Because this
