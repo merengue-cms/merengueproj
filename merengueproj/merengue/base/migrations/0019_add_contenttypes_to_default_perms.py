@@ -24,7 +24,12 @@ from django.conf import settings
 class Migration(DataMigration):
 
     def forwards(self, orm):
-        pass  # place holder migration because the migration should be in base application
+        codenames = ['view', 'edit', 'delete', 'can_draft', 'can_pending', 'can_published']
+        basecontent_contenttype = orm['contenttypes.contenttype'].objects.get(app_label='base', model='basecontent')
+        perms = orm['perms.permission'].objects.all()
+        for perm in perms:
+            if perm.codename in codenames:
+                perm.content_types.add(basecontent_contenttype)
 
     def backwards(self, orm):
         "Write your backwards methods here."

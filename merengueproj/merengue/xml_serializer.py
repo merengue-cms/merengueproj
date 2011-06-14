@@ -35,7 +35,7 @@ class DeserializedObject(base.DeserializedObject):
             # it is a weird hack but we cannot update the object permission
             # because the superclass save function is save_base with raw=True
             # and the signals are not emited
-            self.object.populate_workflow_status(force_update=True)
+            self.object.populate_workflow_status(force_update=True, raw=True)
 
 
 class Deserializer(xml_serializer.Deserializer):

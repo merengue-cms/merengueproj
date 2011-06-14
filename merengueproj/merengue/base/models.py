@@ -199,7 +199,7 @@ class Base(models.Model):
 
         super(Base, self).save(*args, **kwargs)
 
-    def populate_workflow_status(self, force_update=False):
+    def populate_workflow_status(self, force_update=False, raw=False):
         """ Populates the workflow status from the status slug """
         from merengue.workflow.utils import workflow_by_model
         workflow_status = getattr(self, 'workflow_status', None)
@@ -209,10 +209,11 @@ class Base(models.Model):
             workflow_status = self.workflow_status
         if force_update or (getattr(self, 'status', None) is not None and
            workflow_status and self.status != self.workflow_status.slug):
-            self.update_status()
+            self.update_status(raw)
 
-    def update_status(self):
-        """ Updates the status object and updates the permissions """
+    def update_status(self, raw=False):
+        """ Updates the status object and updates the permissions.
+            If raw=True we will use save_base(raw) to avoid emit any signal """
         from merengue.perms.models import ObjectPermission
         # an extra check to avoid possibles infinte recursion
         if self.status != self.workflow_status.slug:
@@ -224,7 +225,11 @@ class Base(models.Model):
                         ObjectPermission.objects.create(content=self,
                                                         role=perm.role,
                                                         permission=perm.permission))
-            self.save()
+            if raw:
+                # this avoid to emit signals. Useful when loading from fixtures
+                self.save_base(raw=True)
+            else:
+                self.save()
 
     @permalink
     def get_admin_absolute_url(self):
@@ -667,10 +672,10 @@ class BaseContent(BaseClass):
         urls = self.breadcrumbs_items()
         return render_to_string('base/breadcrumbs.html', {'urls': urls})
 
-    def update_status(self):
+    def update_status(self, raw=True):
         """We assume that State is changed
         """
-        super(BaseContent, self).update_status()
+        super(BaseContent, self).update_status(raw)
         from merengue.perms.models import ObjectPermission
         self.objectpermission_set.all().delete()
         for perm in self.workflow_status.statepermissionrelation_set.all():
