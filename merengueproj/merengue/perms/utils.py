@@ -444,8 +444,12 @@ def has_permission(obj, user, codename, roles=None):
 
     roles.append(Role.objects.get(slug=ANONYMOUS_ROLE_SLUG))
 
-    if not obj:
-        return has_global_permission(user, codename, roles)
+    global_perm = has_global_permission(user, codename, roles)
+    if not obj or (obj and getattr(obj, 'adquire_global_permissions', True) and global_perm):
+        # returns global_perm if there is not an object or there is an object
+        # which adquire global permissions and global_perm is True and there is
+        # not need to further processing
+        return global_perm
 
     if user.is_anonymous():
         user = None
@@ -461,8 +465,6 @@ def has_permission(obj, user, codename, roles=None):
                 return False
 
         filters = Q(content=obj, role__in=roles, permission__codename=codename)
-        if obj.adquire_global_permissions:
-            filters |= Q(content__isnull=True, role__in=roles, permission__codename=codename)
         p = ObjectPermission.objects.filter(filters)
 
         if p:

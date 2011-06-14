@@ -335,7 +335,7 @@ class PermissionTestCase(TestCase):
         result = merengue.perms.utils.grant_permission(self.role_1, "view_perm", self.page_1)
         self.assertEqual(result, True)
 
-        # Add ermission which does not exist
+        # Add permission which does not exist
         result = merengue.perms.utils.grant_permission(self.role_1, "hurz", self.page_1)
         self.assertEqual(result, False)
 
