@@ -91,7 +91,7 @@ class BaseContentRelatedBlockAdmin(RelatedModelAdmin, RegisteredBlockAdmin):
     )
 
     def has_add_permission(self, request):
-        return perms_api.can_manage_site(request.user)
+        return perms_api.has_global_permission(request.user, perms_api.MANAGE_BLOCK_PERMISSION)
 
     def get_fieldsets(self, request, obj=None):
         if obj is None:

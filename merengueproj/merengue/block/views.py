@@ -24,7 +24,7 @@ from django.utils.translation import ugettext as _
 
 from merengue.block.forms import BlockConfigForm, AddBlockForm
 from merengue.block.models import RegisteredBlock
-from merengue.perms.utils import has_global_permission
+from merengue.perms.utils import has_global_permission, MANAGE_BLOCK_PERMISSION
 
 
 def blocks_index(request):
@@ -33,6 +33,9 @@ def blocks_index(request):
 
 
 def blocks_reorder(request):
+    if not has_global_permission(request.user, MANAGE_BLOCK_PERMISSION):
+        raise PermissionDenied()
+
     def relocate_blocks(items, cls):
         for order, item in enumerate(items):
             if "#" in item:
@@ -59,6 +62,8 @@ def blocks_reorder(request):
 
 
 def generate_blocks_configuration_for_content(request, block_id):
+    if not has_global_permission(request.user, MANAGE_BLOCK_PERMISSION):
+        raise PermissionDenied()
     try:
         reg_block = RegisteredBlock.objects.get(id=block_id)
         block = reg_block.get_registry_item()
@@ -78,7 +83,7 @@ def generate_blocks_configuration_for_content(request, block_id):
 
 
 def generate_blocks_configuration(request, block_id):
-    if not has_global_permission(request.user, 'manage_portal'):
+    if not has_global_permission(request.user, MANAGE_BLOCK_PERMISSION):
         raise PermissionDenied()
     reg_block = RegisteredBlock.objects.get(id=block_id)
     block = reg_block.get_registry_item()
@@ -101,7 +106,7 @@ def generate_blocks_configuration(request, block_id):
 
 
 def add_block(request):
-    if not has_global_permission(request.user, 'manage_portal'):
+    if not has_global_permission(request.user, MANAGE_BLOCK_PERMISSION):
         raise PermissionDenied()
     if request.method == 'POST':
         form = AddBlockForm(request.POST)
@@ -127,7 +132,7 @@ def add_block(request):
 
 
 def remove_block(request, block_id):
-    if not has_global_permission(request.user, 'manage_portal'):
+    if not has_global_permission(request.user, MANAGE_BLOCK_PERMISSION):
         raise PermissionDenied()
     reg_block = RegisteredBlock.objects.get(id=block_id)
     reg_block.delete()
@@ -135,7 +140,7 @@ def remove_block(request, block_id):
 
 
 def invalidate_cache(request, block_id):
-    if not has_global_permission(request.user, 'manage_portal'):
+    if not has_global_permission(request.user, MANAGE_BLOCK_PERMISSION):
         raise PermissionDenied()
     reg_block = RegisteredBlock.objects.get(id=block_id)
     reg_block.get_registry_item().invalidate_cache()

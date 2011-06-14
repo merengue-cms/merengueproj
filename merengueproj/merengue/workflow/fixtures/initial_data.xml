@@ -126,6 +126,10 @@
     <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
     <field to="perms.permission" name="permission" rel="ManyToOneRel">6</field>
   </object>
+  <object pk="17" model="workflow.workflowpermissionrelation">
+    <field to="workflow.workflow" name="workflow" rel="ManyToOneRel">1</field>
+    <field to="perms.permission" name="permission" rel="ManyToOneRel">17</field>
+  </object>
   <object pk="1" model="workflow.statepermissionrelation">
     <field to="workflow.state" name="state" rel="ManyToOneRel">3</field>
     <field to="perms.permission" name="permission" rel="ManyToOneRel">1</field>

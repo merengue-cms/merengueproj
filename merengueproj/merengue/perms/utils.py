@@ -37,6 +37,7 @@ MANAGE_SITE_PERMISION = 'manage_site'
 MANAGE_USER_PERMISION = 'manage_user'
 MANAGE_MULTIMEDIA_PERMISSION = 'manage_multimedia'
 MANAGE_PLUGIN_PERMISSION = 'manage_plugin_content'
+MANAGE_BLOCK_PERMISSION = 'manage_block'
 
 # Roles ######################################################################
 

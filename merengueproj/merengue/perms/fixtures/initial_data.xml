@@ -80,6 +80,11 @@
         <field type="CharField" name="codename">manage_review</field>
         <field type="BooleanField" name="builtin">False</field>
     </object>
+    <object pk="17" model="perms.permission">
+        <field type="CharField" name="name">Manage block</field>
+        <field type="CharField" name="codename">manage_block</field>
+        <field type="BooleanField" name="builtin">False</field>
+    </object>
     <object pk="1" model="perms.role">
         <field type="CharField" name="name">Anonymous User</field>
         <field type="CharField" name="slug">anonymous_user</field>
