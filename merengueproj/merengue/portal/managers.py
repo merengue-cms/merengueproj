@@ -28,7 +28,7 @@ class PortalLinksQuerySet(QuerySet):
         if not user.is_superuser:
             queryset = queryset.filter(
                 Q(visible_by_roles__isnull=True) | Q(visible_by_roles__in=get_roles(user)),
-            )
+            ).distinct()
         return queryset
 
 
