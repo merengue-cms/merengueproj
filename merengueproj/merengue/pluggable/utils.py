@@ -288,7 +288,7 @@ def disable_plugin(plugin_name, unregister=True):
 def register_plugin_urls(plugin_name):
     for index, plugin_url in find_plugin_urls(plugin_name):
         if plugin_url and index < 0:
-            proj_urls = import_module(urlresolvers.get_urlconf())
+            proj_urls = import_module(urlresolvers.get_urlconf(settings.ROOT_URLCONF))
             proj_urls.urlpatterns += (plugin_url, )
     update_admin_urls()
 
