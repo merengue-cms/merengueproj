@@ -157,6 +157,10 @@ def install_models(app_name):
     app_module = load_app(get_plugin_module_name(app_name))
     if have_south(app_name):
         lang = get_language()
+        # invalidate south cache to avoid very weird bugs (see #2025)
+        migration.Migrations.invalidate_all_modules()
+        migration.Migrations.calculate_dependencies(force=True)
+        # migrate plugin with south
         call_command('migrate', app=app_name)
         # call_command activates a default 'en-us' locale in thread. we restore it
         activate(lang)
