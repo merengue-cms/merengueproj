@@ -121,6 +121,7 @@ class AddBlockForm(BaseForm):
     place = forms.CharField(widget=forms.HiddenInput)
     contentid = forms.CharField(widget=forms.HiddenInput, required=False)
     sectionid = forms.CharField(widget=forms.HiddenInput, required=False)
+    scope = forms.ChoiceField(widget=forms.RadioSelect, initial='global')
 
     def _find_subclasses(self, base, subclasses=None):
         subclasses = subclasses or []
@@ -134,56 +135,89 @@ class AddBlockForm(BaseForm):
         super(AddBlockForm, self).__init__(*args, **kwargs)
         choices = []
         block_superclasses = [Block]
-        if self.initial.get('sectionid', None) or self.data.get('sectionid', None):
-            block_superclasses.append(SectionBlock)
-        if self.initial.get('contentid', None) or self.data.get('contentid', None):
-            block_superclasses.append(ContentBlock)
+        scopes = [('global', _(u'Global'))]
+        section_id = self.initial.get('sectionid', None) or self.data.get('sectionid', None)
+        if section_id:
+            try:
+                section = BaseSection.objects.get(id=section_id)
+                section = section.get_real_instance()
+                block_superclasses.append(SectionBlock)
+                scopes += [('section', _(u'Section: %(section)s') % {'section': section})]
+            except BaseSection.objects.DoesNotExist:
+                pass
+        content_id = self.initial.get('contentid', None) or self.data.get('contentid', None)
+        if content_id:
+            try:
+                block_superclasses.append(ContentBlock)
+                content = BaseContent.objects.get(id=content_id)
+                content = content.get_real_instance()
+                scopes += [('content', _(u'Content: %(content)s') % {'content': content})]
+            except BaseContent.objects.DoesNotExist:
+                pass
         for block_type in block_superclasses:
             all_blocks = self._find_subclasses(block_type)
             block_list = [('%s.%s' % (i.__module__, i.__name__), i.verbose_name) for i in all_blocks]
             if block_list:
                 choices.append((block_type.__name__, block_list))
         self.fields['block_type'].choices = choices
+        self.fields['scope'].choices = scopes
         self.tie_render = None
 
-    def clean(self):
+    def check_scope(self, content=None, section=None):
+        if self.cleaned_data['scope'] == 'section':
+            if not section:
+                self._errors['scope'] = ErrorList([_(u'You can not select section scope cause your are not inside a section')])
+            else:
+                self.tie_render = section
+        elif self.cleaned_data['scope'] == 'content':
+            if not content:
+                self._errors['scope'] = ErrorList([_(u'You can not select content scope cause your are not inside a content')])
+            else:
+                self.tie_render = content
+
+        if issubclass(self.block_class, ContentBlock):
+            if not content:
+                self._errors['block_type'] = ErrorList([_(u'You can not insert a content block from a view without content')])
+            else:
+                self.tie_render = content
+
+    def check_block_type(self, content=None, section=None):
         block_type = self.cleaned_data['block_type']
 
         module, classname = block_type.rsplit('.', 1)
         block_class = getattr(import_module(module), classname)
         self.block_class = block_class
 
-        content_id = self.cleaned_data.get('contentid', None)
-        if issubclass(self.block_class, ContentBlock):
-            content = None
-            if content_id:
-                try:
-                    content = BaseContent.objects.get(id=content_id).get_real_instance()
-                    self.tie_render = content
-                except BaseContent.DoesNotExist:
-                    pass
-            if not content:
-                self._errors['block_type'] = ErrorList([_(u'You can not insert a content block from a view without content')])
-
-        section_id = self.cleaned_data.get('sectionid', None)
         if issubclass(self.block_class, SectionBlock):
-            section = None
-            if section_id:
-                try:
-                    section = BaseSection.objects.get(id=section_id).get_real_instance()
-                    self.tie_render = section
-                except BaseContent.DoesNotExist:
-                    pass
             if not section:
                 self._errors['block_type'] = ErrorList([_(u'You can not insert a section block from a view without section')])
+            else:
+                self.tie_render = section
+
+    def clean(self):
+        content_id = self.cleaned_data.get('contentid', None)
+        try:
+            content = BaseContent.objects.get(id=content_id).get_real_instance()
+        except BaseContent.DoesNotExist:
+            content = None
+
+        section_id = self.cleaned_data.get('sectionid', None)
+        try:
+            section = BaseSection.objects.get(id=section_id).get_real_instance()
+        except BaseSection.DoesNotExist:
+            section = None
+
+        self.check_block_type(content, section)
+        self.check_scope(content, section)
         return self.cleaned_data
 
     def save(self):
         place = self.cleaned_data['place']
         reg_block = register(self.block_class)
         reg_block.active = True
+        if self.cleaned_data['scope'] in ('content', 'section'):
+            reg_block.content = self.tie_render
         reg_block.placed_at = place
-        reg_block.content = self.tie_render
         reg_block.save()
         reg_block.tied = self.tie_render
         return reg_block
