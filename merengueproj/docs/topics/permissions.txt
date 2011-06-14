@@ -103,11 +103,11 @@ Global permissions on merengue
     Manage category (``manage_category``)
       If user has this permission, user will be able to edit, delete and add categories.
 
-    Manage portal (``manage_portal``)
-      If user has this permission, user will be able to move portlets in public views and add sections to documents.
+    Manage block (``manage_block``)
+      If user has this permission, user will be able to move or add blocks in public views.
 
     Manage site (``manage_site``)
-      If user has this permission, user will be able to manage blocks, plugins, themes, registered items and save/restore configuration.
+      If user has this permission, user is like the webmaster, and he will be able to manage plugins, themes, registered items and save/restore configuration.
 
     Manage user (``manage_user``)
       If user has this permission, user will be able to manage groups, users, roles and permissions.
