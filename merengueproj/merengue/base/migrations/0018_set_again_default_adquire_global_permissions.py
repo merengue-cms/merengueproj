@@ -5,9 +5,7 @@ from south.v2 import DataMigration
 class Migration(DataMigration):
 
     def forwards(self, orm):
-        for content in orm.BaseContent.objects.filter(adquire_global_permissions=True):
-            content.adquire_global_permissions = True
-            content.save()
+        orm.BaseContent.objects.filter(adquire_global_permissions=False).update(adquire_global_permissions=True)
 
     def backwards(self, orm):
         raise RuntimeError("Cannot reverse this migration.")
