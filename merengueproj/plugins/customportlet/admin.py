@@ -1,3 +1,4 @@
+from transmeta import get_fallback_fieldname
 from merengue.base.admin import BaseOrderableAdmin
 
 from plugins.customportlet.forms import CustomPortletAdminModelForm
@@ -9,6 +10,7 @@ class CustomPortletAdmin(BaseOrderableAdmin):
     ordering = ('order', )
     html_fields = BaseOrderableAdmin.html_fields + ('description', )
     form = CustomPortletAdminModelForm
+    prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
 
 
 def register(site):
