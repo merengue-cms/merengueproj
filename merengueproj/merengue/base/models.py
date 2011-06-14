@@ -224,7 +224,7 @@ class Base(models.Model):
                         ObjectPermission.objects.create(content=self,
                                                         role=perm.role,
                                                         permission=perm.permission))
-            self.save_base(raw=True)  # to avoid calling again to post_save handlers
+            self.save()
 
     @permalink
     def get_admin_absolute_url(self):
