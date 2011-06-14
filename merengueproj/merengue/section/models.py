@@ -195,8 +195,9 @@ class Menu(models.Model):
         return bc
 
     def get_ancestors_by_user(self, user=None):
+        from merengue.perms.utils import has_global_permission
         ancestors = self.get_ancestors().filter(status='public')  # uses mptt function
-        if user and not user.is_superuser:
+        if user and not has_global_permission(user, 'manage_portal'):
             if not user.is_anonymous():
                 roles = [x.role for x in user.principalrolerelation_set.all()]
             else:
@@ -206,8 +207,9 @@ class Menu(models.Model):
         return ancestors
 
     def get_descendants_by_user(self, user=None):
+        from merengue.perms.utils import has_global_permission
         descendants = self.get_descendants().filter(status='public')  # uses mptt function
-        if user and not user.is_superuser:
+        if user and not has_global_permission(user, 'manage_portal'):
             if not user.is_anonymous():
                 roles = [x.role for x in user.principalrolerelation_set.all()]
             else:
