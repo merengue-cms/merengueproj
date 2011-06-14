@@ -25,7 +25,7 @@ from autoreports.forms import FormAdminDjango
 
 from merengue.base.models import BaseContent
 from merengue.base.forms import BaseAdminModelForm, BaseForm
-from merengue.block.blocks import Block, ContentBlock, SectionBlock
+from merengue.block.blocks import ContentBlock, SectionBlock
 from merengue.block.models import RegisteredBlock
 from merengue.pluggable.models import RegisteredPlugin
 from merengue.registry import register
@@ -134,31 +134,52 @@ class AddBlockForm(BaseForm):
     def __init__(self, *args, **kwargs):
         super(AddBlockForm, self).__init__(*args, **kwargs)
         choices = []
-        block_superclasses = [Block]
         scopes = [('global', _(u'Global'))]
         section_id = self.initial.get('sectionid', None) or self.data.get('sectionid', None)
         if section_id:
             try:
                 section = BaseSection.objects.get(id=section_id)
                 section = section.get_real_instance()
-                block_superclasses.append(SectionBlock)
                 scopes += [('section', _(u'Section: %(section)s') % {'section': section})]
             except BaseSection.objects.DoesNotExist:
                 pass
         content_id = self.initial.get('contentid', None) or self.data.get('contentid', None)
         if content_id:
             try:
-                block_superclasses.append(ContentBlock)
                 content = BaseContent.objects.get(id=content_id)
                 content = content.get_real_instance()
                 scopes += [('content', _(u'Content: %(content)s') % {'content': content})]
             except BaseContent.objects.DoesNotExist:
                 pass
-        for block_type in block_superclasses:
-            all_blocks = self._find_subclasses(block_type)
-            block_list = [('%s.%s' % (i.__module__, i.__name__), i.verbose_name) for i in all_blocks]
-            if block_list:
-                choices.append((block_type.__name__, block_list))
+        blocks = []
+        content_blocks = []
+        section_blocks = []
+        for plugin in RegisteredPlugin.objects.filter(active=True):
+            for block in plugin.get_registry_item().get_blocks():
+                if issubclass(block, SectionBlock):
+                    if not section:
+                        continue
+                    else:
+                        section_blocks.append(block)
+                elif issubclass(block, ContentBlock):
+                    if not content:
+                        continue
+                    else:
+                        content_blocks.append(block)
+                else:
+                    blocks.append(block)
+        if blocks:
+            block_list = [('%s.%s' % (i.__module__, i.__name__), i.verbose_name) for i in blocks]
+            block_list.sort(lambda x, y: cmp(x[1], y[1]))
+            choices.append((_(u'Blocks'), block_list))
+        if content_blocks:
+            block_list = [('%s.%s' % (i.__module__, i.__name__), i.verbose_name) for i in content_blocks]
+            block_list.sort(lambda x, y: cmp(x[1], y[1]))
+            choices.append((_(u'Content blocks'), block_list))
+        if section_blocks:
+            block_list = [('%s.%s' % (i.__module__, i.__name__), i.verbose_name) for i in section_blocks]
+            block_list.sort(lambda x, y: cmp(x[1], y[1]))
+            choices.append((_(u'Section blocks'), block_list))
         self.fields['block_type'].choices = choices
         self.fields['scope'].choices = scopes
         self.tie_render = None
