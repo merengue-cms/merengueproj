@@ -292,7 +292,7 @@ class PermissionRelatedModelAdmin(RelatedModelAdmin):
         return False
 
     def has_change_permission(self, request, obj=None):
-        return perms_api.has_global_permission(request.user, 'manage_portal')
+        return perms_api.can_manage_site(request.user)
 
     def change_view(self, request, object_id, extra_context=None, parent_model_admin=None, parent_object=None):
         return HttpResponseRedirect('..')
@@ -387,7 +387,7 @@ class ContentTypeRelatedModelAdmin(RelatedModelAdmin):
         return False
 
     def has_change_permission(self, request, obj=None):
-        return perms_api.has_global_permission(request.user, 'manage_portal')
+        return perms_api.can_manage_site(request.user)
 
     def change_view(self, request, object_id, extra_context=None, parent_model_admin=None, parent_object=None):
         if request.method == 'POST':

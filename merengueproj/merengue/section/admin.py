@@ -73,7 +73,7 @@ class BaseSectionAdmin(BaseOrderableAdmin, PermissionAdmin):
 
     def queryset(self, request):
         qs = super(BaseSectionAdmin, self).queryset(request)
-        if perms_api.has_global_permission(request.user, 'manage_portal'):
+        if perms_api.can_manage_site(request.user):
             return qs
         elif self.has_change_permission(request):
             return qs.filter(Q(owners=request.user))

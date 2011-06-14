@@ -416,7 +416,7 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
         """
             Overrides Django admin behaviour to add ownership based access control
         """
-        return perms_api.has_global_permission(request.user, 'manage_portal')
+        return perms_api.can_manage_site(request.user)
 
     def has_change_permission(self, request, obj=None):
         """
@@ -1091,7 +1091,7 @@ class BaseContentViewAdmin(BaseContentAdmin):
 
     def queryset(self, request):
         qs = super(BaseContentAdmin, self).queryset(request)
-        if perms_api.has_global_permission(request.user, 'manage_portal'):
+        if perms_api.can_manage_site(request.user):
             return qs
         elif self.has_change_permission(request):
             return qs.filter(Q(owners=request.user) | Q(sections__owners=request.user))
