@@ -30,7 +30,7 @@ class PluginConfig(Plugin):
     def get_blocks(self):
         return [HighlightBlock]
 
-    def get_model_admins(self):
+    def models(self):
         return [
             (Highlight, HighlightAdmin),
         ]

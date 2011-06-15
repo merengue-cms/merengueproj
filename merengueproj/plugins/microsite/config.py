@@ -33,7 +33,7 @@ class PluginConfig(Plugin):
              'plugins.microsite.urls'),
     )
 
-    def get_model_admins(self):
+    def models(self):
         return [(MicroSite, MicroSiteAdmin)]
 
     def get_section_prefixes(self):

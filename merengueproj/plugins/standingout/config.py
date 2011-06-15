@@ -43,6 +43,8 @@ class PluginConfig(Plugin):
                 setattr(standingout_category, name_field, slug)
                 standingout_category.save()
 
+    def models(self):
+        return [(StandingOut, StandingOutAdmin)]
+
     def get_model_admins(self):
-        return [(StandingOut, StandingOutAdmin),
-                (StandingOutCategory, StandingOutCategoryAdmin)]
+        return [(StandingOutCategory, StandingOutCategoryAdmin)]

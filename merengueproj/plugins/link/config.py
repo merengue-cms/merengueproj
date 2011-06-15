@@ -37,8 +37,9 @@ class PluginConfig(Plugin):
     def section_models(self):
         return [(Link, LinkSectionAdmin)]
 
-    def get_model_admins(self):
-        return [(Link, LinkAdmin), (LinkCategory, LinkCategoryAdmin)]
+    def models(self):
+        return [(Link, LinkAdmin),
+                (LinkCategory, LinkCategoryAdmin)]
 
     def get_viewlets(self):
         return [LatestLinkViewlet, AllLinkViewlet]

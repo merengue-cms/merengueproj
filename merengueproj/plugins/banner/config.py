@@ -36,7 +36,7 @@ class PluginConfig(Plugin):
     def section_models(self):
         return [(Banner, BannerSectionAdmin)]
 
-    def get_model_admins(self):
+    def models(self):
         return [(Banner, BannerAdmin),
                 (BannerCategory, BannerCategoryAdmin)]
 
