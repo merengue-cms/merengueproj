@@ -1,8 +1,0 @@
-{% load i18n %}
-
-<form method="POST" action="{% url export_content content.pk %}">
-    {{ form.as_p }}
-    <div class="submit">
-      <input type="submit" value="{% trans "Export Content" %}">
-    </div>
-</form>

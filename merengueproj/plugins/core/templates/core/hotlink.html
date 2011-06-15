@@ -1,0 +1,8 @@
+{% load i18n %}
+
+<form method="POST" action="{% url hotlink content.pk %}">
+    {{ form.as_p }}
+    <div class="submit">
+      <input type="submit" value="{% trans "Hot Link" %}">
+    </div>
+</form>

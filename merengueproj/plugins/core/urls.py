@@ -19,5 +19,5 @@ from django.conf.urls.defaults import patterns, url
 
 
 urlpatterns = patterns('plugins.core.views',
-    url(r'^export_content/(?P<content_id>[\d-]+)/$', 'export_content', name='export_content'),
+    url(r'^hotlink/(?P<content_id>[\d-]+)/$', 'hotlink', name='hotlink'),
 )

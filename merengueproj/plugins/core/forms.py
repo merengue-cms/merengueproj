@@ -8,10 +8,10 @@ from django.utils.translation import ugettext_lazy as _
 from merengue.section.models import BaseSection, Menu, ContentLink
 
 
-class ExportContentForm(forms.ModelForm):
+class HotLinkForm(forms.ModelForm):
 
     def __init__(self, user, content, data=None, *args, **kwargs):
-        super(ExportContentForm, self).__init__(data, *args, **kwargs)
+        super(HotLinkForm, self).__init__(data, *args, **kwargs)
         self.content = content
         if user.is_superuser:
             choices = BaseSection.objects.all()
@@ -46,7 +46,7 @@ class ExportContentForm(forms.ModelForm):
                        set([transmeta.get_real_fieldname('name', settings.LANGUAGE_CODE)])))
 
     def clean(self):
-        cleaned_data = super(ExportContentForm, self).clean()
+        cleaned_data = super(HotLinkForm, self).clean()
         section = cleaned_data.get('section', None)
         if section:
             main_menu = section.get_real_instance().main_menu
@@ -63,7 +63,7 @@ class ExportContentForm(forms.ModelForm):
         return slug
 
     def save(self, commit=False):
-        menu = super(ExportContentForm, self).save(commit)
+        menu = super(HotLinkForm, self).save(commit)
         section = self.cleaned_data['section'].get_real_instance()
         menu_parent = section.main_menu
         menu.parent = menu_parent

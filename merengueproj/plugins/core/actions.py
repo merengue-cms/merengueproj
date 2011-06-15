@@ -72,9 +72,9 @@ class PrintAction(SiteAction):
     verbose_name = _('Print')
 
 
-class ExportContent(ContentTypeFilterProvider, ContentAction):
-    name = 'export_content'
-    verbose_name = _('Export Content')
+class HotLinkAction(ContentTypeFilterProvider, ContentAction):
+    name = 'hotlink'
+    verbose_name = _('Link to your section')
 
     def has_action(self, request, content):
         user = request.user
