@@ -1,7 +1,9 @@
-{% load media_tags compress %}
+{% load i18n media_tags compress %}
 
 {% compress js %}
   <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/mootools.v1.11.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/shadowbox/shadowbox-mootools.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/shadowbox/shadowbox.js"></script>
 {% endcompress %}
 <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript">
@@ -49,7 +51,25 @@
             print.attr("onClick", "javascript:print();return false;");
             print.attr("href", "");	
         }
+        {% if content %}
+        $("#action-export_content").click(function(){
+            $.ajax({
+                url: "{% url export_content content.id %}",
+                context: document.body,
+                success: function(data){
+                    Shadowbox.open({
+                        content:    data,
+                        type:       "html",
+                        title:      "{% trans "Export" %} {{ content }}",
+                        height:     600,
+                        width:      500
+                    });
+                }
+            });
+            return false;
+        });
+        {% endif %}
     });
-    })(jQuery);
+})(jQuery);
 </script>
 {% endcompress %}
