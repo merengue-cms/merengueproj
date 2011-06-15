@@ -1,4 +1,3 @@
-# encoding: utf-8
 from django.db import models
 from south.db import db
 from south.v2 import SchemaMigration
