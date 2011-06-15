@@ -20,7 +20,7 @@ from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
 
 import merengue
-from merengue.perms.utils import can_manage_site
+from merengue.perms.utils import can_manage_site, has_global_permission, MANAGE_BLOCK_PERMISSION
 from merengue.uitools import panels
 
 
@@ -62,7 +62,7 @@ class AddBlockPanel(panels.Panel):
 
     def show(self, context):
         user = getattr(context.get('request', None), 'user', None)
-        return user and can_manage_site(user)
+        return user and has_global_permission(user, MANAGE_BLOCK_PERMISSION)
 
     def render(self, context):
         return render_to_string('core/panels/addblock.html', context)
