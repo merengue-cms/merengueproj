@@ -216,17 +216,21 @@ class AddBlockForm(BaseForm):
                 self.tie_render = section
 
     def clean(self):
+        content = None
         content_id = self.cleaned_data.get('contentid', None)
-        try:
-            content = BaseContent.objects.get(id=content_id).get_real_instance()
-        except BaseContent.DoesNotExist:
-            content = None
+        if content_id:
+            try:
+                content = BaseContent.objects.get(id=content_id).get_real_instance()
+            except BaseContent.DoesNotExist:
+                pass
 
+        section = None
         section_id = self.cleaned_data.get('sectionid', None)
-        try:
-            section = BaseSection.objects.get(id=section_id).get_real_instance()
-        except BaseSection.DoesNotExist:
-            section = None
+        if section_id:
+            try:
+                section = BaseSection.objects.get(id=section_id).get_real_instance()
+            except BaseSection.DoesNotExist:
+                pass
 
         self.check_block_type(content, section)
         self.check_scope(content, section)
