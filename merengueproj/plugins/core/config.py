@@ -26,7 +26,7 @@ from merengue.multimedia.models import Photo, Video, Audio
 from merengue.section.admin import DocumentRelatedModelAdmin, DocumentAdmin
 from merengue.section.models import Document
 
-from plugins.core.actions import AdminAction, LoginAction, LogoutAction, PrintAction
+from plugins.core.actions import AdminAction, LoginAction, LogoutAction, PrintAction, ExportContent
 from plugins.core.blocks import (CoreMenuBlock, NavigationBlock,
                                  PortalMenuBlock, ContactInfoBlock,
                                  AnnouncementsBlock, PortalLinksBlock)
@@ -40,6 +40,7 @@ class PluginConfig(Plugin):
     version = '0.0.1a'
 
     url_prefixes = (
+        ('core', 'plugins.core.urls'),
     )
 
     config_params = [
@@ -49,7 +50,7 @@ class PluginConfig(Plugin):
                        label=_('Login URL'), default=settings.LOGIN_URL)]
 
     def get_actions(self):
-        return [AdminAction, LoginAction, LogoutAction, PrintAction]
+        return [AdminAction, LoginAction, LogoutAction, PrintAction, ExportContent]
 
     def get_blocks(self):
         return [CoreMenuBlock, NavigationBlock, PortalMenuBlock,

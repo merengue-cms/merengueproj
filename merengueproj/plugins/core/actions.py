@@ -19,8 +19,10 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.action.actions import UserAction, SiteAction
+from merengue.action.actions import UserAction, SiteAction, ContentAction
 from merengue.base.utils import get_login_url
+from merengue.section.models import BaseSection
+from merengue.registry.items import ContentTypeFilterProvider
 
 
 class AdminAction(UserAction):
@@ -68,3 +70,21 @@ class LogoutAction(UserAction):
 class PrintAction(SiteAction):
     name = 'print'
     verbose_name = _('Print')
+
+
+class ExportContent(ContentTypeFilterProvider, ContentAction):
+    name = 'export_content'
+    verbose_name = _('Export Content')
+
+    def has_action(self, request, content):
+        user = request.user
+        if user.is_anonymous():
+            return False
+        if not self.match_type(content):
+            return False
+        if user.is_superuser:
+            return True
+        class_names = ['basesection']
+        subclasses = BaseSection.__subclasses__()
+        class_names += [subclass.__name__.lower() for subclass in subclasses]
+        return user.contents_owned.filter(class_name__in=class_names)
