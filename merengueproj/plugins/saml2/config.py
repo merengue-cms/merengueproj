@@ -38,6 +38,8 @@ class PluginConfig(Plugin):
         ('saml2', 'plugins.saml2.urls'),
         )
 
+    required_plugins = {'core': {}}
+
     config_params = [
         params.Single(name='entity_name',
                       label=_('Entity Name')),

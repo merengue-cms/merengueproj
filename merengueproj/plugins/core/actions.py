@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
@@ -36,10 +37,11 @@ class AdminAction(UserAction):
 class LoginAction(UserAction):
     name = 'login'
     verbose_name = _('Login')
+    login_view = 'merengue_logout'
 
     def get_url(self, request, user):
         login_url = get_login_url()
-        if request.get_full_path() not in [reverse('merengue_logout'), reverse('admin:logout')]:  # to avoid automatic logout after login
+        if request.get_full_path() not in [reverse(self.login_view), reverse('admin:logout')]:  # to avoid automatic logout after login
             login_url += '?next=%s' % request.get_full_path()
         return login_url
 
@@ -50,9 +52,14 @@ class LoginAction(UserAction):
 class LogoutAction(UserAction):
     name = 'logout'
     verbose_name = _('Logout')
+    logout_view = 'merengue_logout'
 
     def get_url(self, request, user):
-        return reverse('merengue_logout')
+        merengue_logout_url = reverse(self.logout_view)
+        logout_redirect_url = settings.LOGOUT_REDIRECT_URL
+        if logout_redirect_url:
+            merengue_logout_url = '%s?next=%s' % (merengue_logout_url, logout_redirect_url)
+        return merengue_logout_url
 
     def has_action(self, request, user):
         return user.is_authenticated()

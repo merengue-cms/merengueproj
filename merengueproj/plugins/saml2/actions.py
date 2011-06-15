@@ -18,30 +18,19 @@
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.action.actions import UserAction
+from plugins.core.actions import LoginAction, LogoutAction
 
 
-class Saml2LoginAction(UserAction):
+class Saml2LoginAction(LoginAction):
     name = 'saml2_login'
     verbose_name = _('Federated login')
+    login_view = 'saml2_login'
 
-    @classmethod
-    def get_url(cls, request, user):
-        return reverse('saml2_login')
-
-    @classmethod
-    def has_action(cls, request, user):
-        return not user.is_authenticated()
+    def get_url(self, request, user):
+        return reverse(self.login_view)
 
 
-class Saml2LogoutAction(UserAction):
+class Saml2LogoutAction(LogoutAction):
     name = 'saml2_logout'
     verbose_name = _('Federated logout')
-
-    @classmethod
-    def get_url(cls, request, user):
-        return reverse('saml2_logout')
-
-    @classmethod
-    def has_action(cls, request, user):
-        return user.is_authenticated()
+    logout_view = 'saml2_logout'
