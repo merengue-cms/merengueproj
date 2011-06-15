@@ -153,9 +153,9 @@ MIDDLEWARE_CLASSES = PRE_MERENGUE_MIDDLEWARE_CLASSES + MERENGUE_MIDDLEWARE_CLASS
 
 # merengue status list for contents workflow.
 STATUS_LIST = (
-    ('draft', ugettext('Borrador')),
-    ('pending', ugettext('Pendiente')),
-    ('published', ugettext('Publicado')),
+    ('draft', ugettext('Draft')),
+    ('pending', ugettext('Pending')),
+    ('published', ugettext('Published')),
 )
 DEFAULT_STATUS = 'draft'
 
