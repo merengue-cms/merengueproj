@@ -198,6 +198,20 @@ And now an example use:
     'age': <30, Integer>,
     'friends': <<class 'merengue.registry.params.NOT_PROVIDED'>, List>}
 
+Items not active by default
+---------------------------
+
+You can define a registered item not actived by default:
+
+.. code-block:: python
+
+    class PersonItem(RegistrableItem):
+        active_by_default = False
+
+When you register a item with ``active_by_default`` attribute to ``False`` will
+be included in the database but will not affect in the website until manager
+actives it in admin interface.
+
 Singleton items
 ---------------
 

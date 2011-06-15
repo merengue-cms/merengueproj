@@ -56,10 +56,14 @@ def invalidate_registereditem():
     invalidate_johnny_cache(RegisteredItem)
 
 
-def register(item_class, activate=False):
+def register(item_class, activate=None):
     """ Register a item in the registry """
     # all process will be in a unique transaction, we don't want to get
     # half committed
+
+    if activate is None:
+        activate = item_class.active_by_default
+
     if settings.CACHES['default']['BACKEND'].startswith('johnny'):
         invalidate_registereditem()
 

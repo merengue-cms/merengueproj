@@ -51,6 +51,7 @@ class RegistrableItem(object):
     model = RegisteredItem  # to be overriden in subclasses
     config_params = []  # configuration parameters, to be overriden
     singleton = False  # only allow one registered item per class
+    active_by_default = True  # will be active when registered
 
     @classmethod
     def get_class_name(cls):

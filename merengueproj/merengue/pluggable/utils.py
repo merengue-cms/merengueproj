@@ -360,7 +360,7 @@ def unregister_plugin_templatetags(plugin_name):
 def register_items(item_list):
     for item_class in item_list:
         if not registry.have_registered_items(item_class):
-            registry.register(item_class, activate=True)
+            registry.register(item_class)
 
 
 def unregister_items(item_list):
