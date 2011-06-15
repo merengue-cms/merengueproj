@@ -65,6 +65,10 @@ _plugin_middlewares_cache = {
 }
 
 
+def _get_url_resolver():
+    return urlresolvers.get_resolver(import_module(urlresolvers.get_urlconf(settings.ROOT_URLCONF)))
+
+
 # ----- public methods -----
 
 
@@ -292,27 +296,34 @@ def disable_plugin(plugin_name, unregister=True):
 def register_plugin_urls(plugin_name):
     for index, plugin_url in find_plugin_urls(plugin_name):
         if plugin_url and index < 0:
-            proj_urls = import_module(urlresolvers.get_urlconf(settings.ROOT_URLCONF))
-            proj_urls.urlpatterns += (plugin_url, )
+            urlpatterns = _get_url_resolver().url_patterns
+            urlpatterns += (plugin_url, )
     update_admin_urls()
+    urlresolvers.clear_url_caches()
 
 
 def unregister_plugin_urls(plugin_name):
     for index, plugin_url in find_plugin_urls(plugin_name):
         if index > 0:
-            proj_urls = import_module(settings.ROOT_URLCONF)
-            del proj_urls.urlpatterns[index]
+            urlpatterns = _get_url_resolver().url_patterns
+            del urlpatterns[index]
     update_admin_urls()
 
 
-def update_admin_urls():
+def update_admin_urls(urlresolver=None):
     from merengue.base import admin
-    urlconf = import_module(settings.ROOT_URLCONF)
-    url_patterns = urlconf.urlpatterns
-    for i, url_pattern in enumerate(url_patterns):
-        if getattr(url_pattern, 'app_name', '') == 'admin':
-            urlresolvers.clear_url_caches()
-            urlconf.urlpatterns[i] = url(r'^admin/', include(admin.site.urls))
+    if urlresolver is None:
+        urlresolver = _get_url_resolver()
+    for i, child_pattern in enumerate(urlresolver.url_patterns):
+        if isinstance(child_pattern, urlresolvers.RegexURLResolver):
+            if child_pattern.app_name == 'admin':
+                urlresolver.url_patterns[i] = url(r'^admin/', include(admin.site.urls))
+                return
+            else:
+                # does the recursion to find "admin" app in the child
+                # with debug toolbar the admin is not in root urlconf
+                update_admin_urls(child_pattern)
+                child_pattern._populate()  # invalidate to allow reverse resolution
 
 
 def register_plugin_templatetags(plugin_name):
