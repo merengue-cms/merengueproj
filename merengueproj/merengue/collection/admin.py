@@ -26,17 +26,19 @@ from transmeta import get_real_fieldname_in_each_language
 
 from merengue.base.admin import (BaseContentAdmin, RelatedModelAdmin,
                                  BaseOrderableAdmin)
+from merengue.base.forms import BaseAdminModelForm
 from merengue.section.admin import SectionContentAdmin
 
 from merengue.base.models import BaseContent
 from merengue.section.models import BaseSection
+from merengue.collection.forms import (CollectionFilterForm, CollectionDisplayFilterForm,
+                                       CollectionAdminModelForm)
 from merengue.collection.models import (Collection, IncludeCollectionFilter,
                                         ExcludeCollectionFilter,
                                         CollectionDisplayField,
                                         CollectionDisplayFieldFilter,
                                         FeedCollection, FeedItem)
 from merengue.collection.utils import get_common_fields_no_language, get_common_fields
-from merengue.collection.forms import CollectionFilterForm, CollectionDisplayFilterForm
 
 
 DEFAULT_FILTERS = (
@@ -81,20 +83,34 @@ class IncludeCollectionFilterInline(CollectionFilterInline):
 
 
 class CollectionAdmin(BaseContentAdmin):
-    fieldsets = (
-        (_('Collection Basic Information'),
-            {'fields': get_real_fieldname_in_each_language('name') +\
-                       ['slug', ] +\
-                       get_real_fieldname_in_each_language('description') +\
-                       ['status', 'workflow_status', 'tags', 'meta_desc', 'commentable', 'owners']},
-            ),
-        (_('Collection Configuration'),
-            {'fields': ('content_types', 'group_by', 'order_by', 'limit', 'reverse_order', 'show_main_image', 'filtering_section')},
-            ),
-        )
     filter_horizontal = BaseContentAdmin.filter_horizontal + ('content_types', )
     inlines = [IncludeCollectionFilterInline, ExcludeCollectionFilterInline]
     change_form_template = 'collection/collection_admin_change_form.html'
+    form = CollectionAdminModelForm
+
+    def get_title_basic_info_fields(self, request, obj=None):
+        return _('Collection Basic Information')
+
+    def get_basic_info_fields(self, request, obj=None):
+        basic_info_fields = get_real_fieldname_in_each_language('name') + \
+                            ['slug', ] + get_real_fieldname_in_each_language('description') + \
+                            ['workflow_status', 'tags', 'meta_desc', 'commentable']
+        if request.user.is_superuser:
+            basic_info_fields.append('owners')
+        return basic_info_fields
+
+    def get_title_configurations_fields(self, request, obj=None):
+        return _('Collection Configuration')
+
+    def get_configurations_fields(self, request, obj=None):
+        return ['content_types', 'group_by', 'order_by', 'limit',
+                'reverse_order', 'show_main_image', 'filtering_section']
+
+    def get_fieldsets(self, request, obj=None):
+        return ((self.get_title_basic_info_fields(request, obj),
+                {'fields': self.get_basic_info_fields(request, obj)}),
+                (self.get_title_configurations_fields(request, obj),
+                {'fields': self.get_configurations_fields(request, obj)}),)
 
     def queryset(self, request):
         qs = super(CollectionAdmin, self).queryset(request)
@@ -105,9 +121,6 @@ class CollectionAdmin(BaseContentAdmin):
         media += mark_safe(forms.Media(js=['%smerengue/js/collection/SelectBox.js' % settings.MEDIA_URL,
                                            '%smerengue/js/collection/jquery.collection-admin.js' % settings.MEDIA_URL]))
         context.update({'media': media})
-        fields = self.fieldsets[0][1]['fields']
-        if 'status' in fields:
-            fields.remove('status')
         return super(CollectionAdmin, self).render_change_form(request, context, add, change, form_url, obj)
 
     def get_default_fields(self, obj, request):
@@ -242,25 +255,24 @@ class FeedItemAdmin(RelatedModelAdmin):
 
 
 class FeedCollectionAdmin(CollectionAdmin):
-    fieldsets = (
-        (_('Collection Basic Information'),
-            {'fields': get_real_fieldname_in_each_language('name') +\
-                       ['slug', ] +\
-                       get_real_fieldname_in_each_language('description') +\
-                       ['status', 'workflow_status', 'tags', 'meta_desc', 'commentable', 'owners']},
-            ),
-        (_('Collection Configuration'),
-            {'fields': ('feed_url', 'expire_seconds', 'remove_items', )},
-            ),
-        )
     change_form_inlines = [IncludeCollectionFilterInline, ExcludeCollectionFilterInline]
-    add_configuration_fields = ('feed_url', 'expire_seconds', 'remove_items', )
-    change_configuration_fields = ('feed_url', 'expire_seconds', 'remove_items', 'group_by', 'order_by', 'reverse_order')
+    form = BaseAdminModelForm
     item_fieldsets = (
         (_('Single Item Configuration'),
             {'fields': ('title_field', 'detailed_link', 'external_link', )},
             ),
         )
+
+    def get_fieldsets(self, request, obj=None):
+        fieldsets = super(FeedCollectionAdmin, self).get_fieldsets(request, obj)
+        if obj:
+            fieldsets = fieldsets + self.item_fieldsets
+        return fieldsets
+
+    def get_configurations_fields(self, request, obj=None):
+        if not obj:
+            return ['feed_url', 'expire_seconds', 'remove_items']
+        return ['feed_url', 'expire_seconds', 'remove_items', 'group_by', 'order_by', 'reverse_order']
 
     def queryset(self, request):
         return super(CollectionAdmin, self).queryset(request)
@@ -273,14 +285,10 @@ class FeedCollectionAdmin(CollectionAdmin):
 
     def add_view(self, *args, **kwargs):
         self.inline_instances = []
-        self.fieldsets[1][1]['fields'] = self.add_configuration_fields
-        self.fieldsets = self.fieldsets[:2]
         return super(FeedCollectionAdmin, self).add_view(*args, **kwargs)
 
     def change_view(self, *args, **kwargs):
         self.inline_instances = []
-        self.fieldsets[1][1]['fields'] = self.change_configuration_fields
-        self.fieldsets = self.fieldsets[:2] + self.item_fieldsets
         for inline_class in self.change_form_inlines:
             inline_instance = inline_class(self.model, self.admin_site)
             self.inline_instances.append(inline_instance)
@@ -305,7 +313,7 @@ class FeedCollectionAdmin(CollectionAdmin):
 
 
 class FeedCollectionRelatedModelAdmin(SectionContentAdmin, FeedCollectionAdmin):
-    tool_name = 'feed collections'
+    tool_name = 'feed_collections'
     tool_label = _('feed collections')
 
 

@@ -77,6 +77,8 @@ class Collection(BaseContent):
     content_types = models.ManyToManyField(
         ContentType,
         verbose_name=_(u'Content Types'),
+        blank=True,
+        null=True,
         )
 
     group_by = models.CharField(

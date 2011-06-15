@@ -19,6 +19,8 @@ from django import forms
 from django.contrib.contenttypes.models import ContentType
 from django.utils.importlib import import_module
 
+from merengue.base.forms import BaseAdminModelForm
+
 
 class CollectionFilterForm(forms.ModelForm):
     """
@@ -75,3 +77,11 @@ class CollectionDisplayFilterForm(forms.ModelForm):
             except Exception, e:
                 raise forms.ValidationError(e)
         return self.cleaned_data
+
+
+class CollectionAdminModelForm(BaseAdminModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(CollectionAdminModelForm, self).__init__(*args, **kwargs)
+        if 'content_types' in self.fields:
+            self.fields['content_types'].required = True
