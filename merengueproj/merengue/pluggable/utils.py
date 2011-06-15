@@ -302,11 +302,24 @@ def register_plugin_urls(plugin_name):
     urlresolvers.clear_url_caches()
 
 
-def unregister_plugin_urls(plugin_name):
+def unregister_urlpattern(urlpattern, urlpatterns_list):
+    urlpatterns_to_recurse = []
+    for i, child_pattern in enumerate(urlpatterns_list):
+        if hasattr(child_pattern, 'urlconf_module') and child_pattern.urlconf_module == urlpattern.urlconf_module:
+            del urlpatterns_list[i]  # unregister URL pattern
+            return
+        if isinstance(child_pattern, urlresolvers.RegexURLResolver):
+            urlpatterns_to_recurse.append(child_pattern.url_patterns)
+    for child_url in urlpatterns_to_recurse:
+        unregister_urlpattern(urlpattern, child_url)
+
+
+def unregister_plugin_urls(plugin_name, urlpatterns=None):
+    if urlpatterns is None:
+        urlpatterns = _get_url_resolver().url_patterns
     for index, plugin_url in find_plugin_urls(plugin_name):
         if index > 0:
-            urlpatterns = _get_url_resolver().url_patterns
-            del urlpatterns[index]
+            unregister_urlpattern(plugin_url, urlpatterns)
     update_admin_urls()
 
 
