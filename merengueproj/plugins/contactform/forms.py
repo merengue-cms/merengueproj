@@ -23,11 +23,7 @@ from django.template.loader import render_to_string
 from django.utils import simplejson
 from django.template import defaultfilters, RequestContext
 from django.utils.translation import ugettext as _
-from django.utils.safestring import SafeUnicode
 from django.contrib.sites.models import Site
-
-
-from BeautifulSoup import BeautifulSoup
 
 from merengue.base.forms import BaseAdminModelForm, BaseForm
 from merengue.registry.fields import ConfigFormField
@@ -109,16 +105,6 @@ class ContactFormForm(BaseForm):
         email.attach_alternative(html_content, "text/html")
         email.send()
         return sent
-
-    def as_table(self):
-        rendered_form = super(ContactFormForm, self).as_table()
-        soup = BeautifulSoup(rendered_form)
-        for row in soup.findAll('label'):
-            fieldname = row['for'][3:]
-            if self.fields[fieldname].required:
-                row.attrs.append(('class', 'required'))
-        rendered_form = SafeUnicode(unicode(soup))
-        return rendered_form
 
 
 class SentContactAdminModelForm(BaseAdminModelForm):
