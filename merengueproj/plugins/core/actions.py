@@ -75,6 +75,7 @@ class PrintAction(SiteAction):
 class HotLinkAction(ContentTypeFilterProvider, ContentAction):
     name = 'hotlink'
     verbose_name = _('Link to your section')
+    active_by_default = True
 
     def has_action(self, request, content):
         user = request.user
@@ -87,4 +88,4 @@ class HotLinkAction(ContentTypeFilterProvider, ContentAction):
         class_names = ['basesection']
         subclasses = BaseSection.__subclasses__()
         class_names += [subclass.__name__.lower() for subclass in subclasses]
-        return user.contents_owned.filter(class_name__in=class_names)
+        return user.contents_owned.filter(class_name__in=class_names).exists()
