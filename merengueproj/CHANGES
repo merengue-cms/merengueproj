@@ -1,7 +1,7 @@
 Changes
 =======
 
-Version 0.8.0-beta1 (r4555)
+Version 0.8.0-beta1 (r4880)
 ---------------------------
 
 * Django 1.3 compatibility. See #1568.
@@ -10,13 +10,20 @@ Version 0.8.0-beta1 (r4555)
 
 * Added participants to contents and sections, in oposition of owners. See #1860.
 
-* Improved English readability of documentation. See #377.
+* Documentation:
+
+  * Improved English readability of documentation. See #377.
+  * A new ``optimization`` section. See #1796.
 
 * Activate a entire site cache with ``CACHE_SITE_FOR_ANONYMOUS`` setting. Also a ``invalidate cache`` panel. See #167.
+
+* Block caching with management interface and cache invalidation in public view. See #1332, #1993, #1866 and #2007.
 
 * More unit testing. See #1633, 
 
 * Improvements to autoreports UI. See #1850, #1816.
+
+* Better and nicer notifications. See #1841.
 
 * The portal links categories can be configurable in the settings file. See #1858.
 
@@ -27,6 +34,10 @@ Version 0.8.0-beta1 (r4555)
 * Access by role for the portal links. See #1883.
 
 * Add filtering to the block admin changelist. See #1806.
+
+* Adding and removing blocks in the user interface. See #1913, #1923 and #2011.
+
+* Mark the block container when adding blocks. See #1965.
 
 * Changed the "content management" tab in admin interface. See #1750.
 
@@ -40,7 +51,11 @@ Version 0.8.0-beta1 (r4555)
 
 * All the managed contents types are orderable. See #1812.
 
+* Multiples levels of portal links. See #1858.
+
 * Support for fixed blocks (declared fixed by its developer). See #1056.
+
+* Improve the linking to content from a menu item. See #1928.
 
 * Add status to menus items. See #888.
 
@@ -48,11 +63,31 @@ Version 0.8.0-beta1 (r4555)
 
 * Implemented a "browse by type" admin view. See #1752.
 
+* Allow to change active tabs in admin depending on user. See #1988.
+
+* Inplace edit for image fields. See #1973.
+
+* Update the Django Debug Toolbar. See #2001.
+
+* New CSS class param for the blocks to gain look&feel flexibility. See #1977.
+
+* Implemented access control by roles in menus and portal links. See #1846 and #1883.
+
+* ``nondraggable`` and ``noncontained`` options for ``render_*_blocks`` templatetags. See #1895 and #1957.
+
+* Work in permissions system to make more flexible the authorization control. See #2010, #2016, #2017, .
+
 * Improvements in plugins:
 
  * New ``customportlet`` plugin to add customized chunks of HTML as you want. See #1761.
 
  * New ``piwik`` plugin, to collect statistics of accessing contents and sections using Piwik. See #1573.
+
+ * New ``twitter`` plugin. See #1907.
+
+ * New ``maps`` plugin, with a ``MapBlock`` block. See #1933 and #1941.
+
+ * New ``googleanalytics`` plugin. See #1958.
 
  * Google search:
 
@@ -63,7 +98,13 @@ Version 0.8.0-beta1 (r4555)
    * Create a new slide show block. See #1736.
    * Completed the schema of standing out object. See #1736.
 
-* A lot of bugfixes. See #1728, #1775, #1870, #1872, #1877, #1885, #1891, #1729, #1748, #1755, #1760, #1763, #1784, #1788, #1791, #1610, #1792, #1795, #1805, #1808, #1809, #1787, #1822, #1407, #1829, #1215, #1838, #1845, #1834, #1849, 
+ * ``itags`` plugin: grouping list by content type. See #1879.
+
+ * ``contactform`` plugin: allow to autofill dinamically by GET parameters. See #1950.
+
+ * ``banner`` plugin: a new single banner block to add a banner wherever. See #1979.
+
+* A lot of bugfixes. See #1728, #1775, #1870, #1872, #1877, #1885, #1891, #1729, #1748, #1755, #1760, #1763, #1784, #1788, #1791, #1610, #1792, #1795, #1805, #1808, #1809, #1787, #1822, #1407, #1829, #1215, #1838, #1845, #1834, #1849, #1981, #1956, #1985, #1992, #1991, #1947, #1901, #1862, #1864, #1872, #1875, #1877, #1873, #1885, #1890, #1891, #1899, #1720, #1939, #1942, #1943, #1945, #1940, #1953, #1948, #1959, #1954, #1963, #1966, #1968, #1974, #1975, #1980, #1960, #2002, #2013, #2019, #2009, #2023, #2025, #2021, #2026, #2027.
 
 Version 0.7.1
 -------------
