@@ -37,7 +37,7 @@ class BaseAction(RegistrableItem):
     def get_url(self, request):
         raise NotImplementedError()
 
-    def get_response(self):
+    def get_response(self, request):
         raise NotImplementedError()
 
     def has_action(self, request):
@@ -65,7 +65,7 @@ class ContentAction(BaseAction):
         content_type = ContentType.objects.get_for_model(content.__class__)
         return reverse("content_action", args=(content_type.id, content.id, self.name, ))
 
-    def get_response(self, content):
+    def get_response(self, request, content):
         raise NotImplementedError()
 
     def has_action(self, request, content):
