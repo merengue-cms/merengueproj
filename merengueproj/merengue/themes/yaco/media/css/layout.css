@@ -66,14 +66,18 @@ span.translatable {
 }
 
 body div#content-zone {
+    width: 745px;
+/*
     width: auto;
+*/
 }
 
 /* ----- header ----- */
 #header {
     background: #2F2A12 url(/media/themes/yaco/img/header_back.gif) repeat-y left top;
-    height: 170px;
+    min-height: 170px;
     position: relative;
+    overflow: auto;
 }
 
 #headerlogo {
@@ -225,7 +229,7 @@ div#language-tools {
 div#user-actions,
 div#language-tools {
     position: absolute;
-    top: 143px;
+    bottom: 10px;
 }
 
 div#user-actions {
@@ -250,10 +254,10 @@ div#user-actions ul li a:hover {
 
 #site-actions {
     position: absolute;
-    top: 70px;
+    bottom: 5px;
     display: block;
     width: 50%;
-	margin-left: 2em;
+	margin-left: 1.5em;
 }
 
 #site-actions ul li{
@@ -265,6 +269,7 @@ div#user-actions ul li a:hover {
     color: #A3A3A3;
 	border: 1px dotted #808080;
 	padding: 1px 3px;
+    background-color: #2F2A12;
 }
 
 .blockBody .block {
