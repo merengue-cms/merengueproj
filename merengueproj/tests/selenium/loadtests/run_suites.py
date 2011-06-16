@@ -61,13 +61,13 @@ def run_all_suite():
             suite_file = os.path.join(directory_path, 'suite.html')
             results_file = os.path.join(pwd, 'results', directory + '.html')
             variables_copy = os.path.join(directory_path, 'variables.html')
-            shutil.copy(variables_file, variables_copy)
             if options.verbose:
                 print 'Launching Selenium RC in %s test suite...' % suite_file
 
             threads = []
             stop = False
             while not stop:
+                shutil.copy(variables_file, variables_copy)
                 for i in range(options.parallel):
                     cmd = 'java -jar %s -htmlSuite "*firefox" "%s" "%s" "%s" -userExtensions "%s" -port %d' \
                             % (selenium_file,
