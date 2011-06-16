@@ -27,6 +27,8 @@ def run_all_suite():
     parser.add_option("-q", "--quiet",
                   action="store_false", dest="verbose", default=True,
                   help="don't print status messages to stdout")
+    parser.add_option('-f', '--firefox-profile-directory', action='store', dest='firefox_profile',
+                        help="Use a firefox profile directory")
     (options, args) = parser.parse_args()
 
     directory_list = [i for i in os.listdir('.') if os.path.isdir(i) \
@@ -39,6 +41,10 @@ def run_all_suite():
     extensions_file = os.path.join(os.path.abspath('..'), 'extensions', 'user-extensions.js')
     selenium_file = os.path.join(pwd, 'selenium-server.jar')
     variables_file = os.path.join(pwd, 'variables.html')
+    if options.firefox_profile:
+        firefox_arg = '-firefoxProfileTemplate "%s"' % options.firefox_profile
+    else:
+        firefox_arg = ''
     if os.path.exists(extensions_file) and os.path.exists(selenium_file):
         for directory in directory_list:
             os.chdir(pwd)
@@ -49,12 +55,13 @@ def run_all_suite():
             shutil.copy(variables_file, variables_copy)
             if options.verbose:
                 print 'Launching Selenium RC in %s test suite...' % suite_file
-            os.system('java -jar %s -htmlSuite "*firefox" "%s" "%s" "%s" -userExtensions "%s"' \
-                            % (selenium_file,
-                            args[0],
-                            suite_file,
-                            results_file,
-                            extensions_file))
+            os.system('java -jar %s -htmlSuite "*firefox" "%s" "%s" "%s" -userExtensions "%s" %s' \
+                    % (selenium_file,
+                       args[0],
+                       suite_file,
+                       results_file,
+                       extensions_file,
+                       firefox_arg))
             os.remove(variables_copy)
     else:
         print 'ERROR: File selenium-server.jar/user-extensions.js can not be found.'

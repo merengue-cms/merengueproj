@@ -81,9 +81,17 @@ Also, it is necessary to run the script with the ``selenium-server.jar`` files o
 .. admonition:: Note for Non-English Browsers
 
     If your browser is configured to use a language other than English,
-    Merengue will use that language by default and the test will
-    fail. A quick workaround is to disable the ``'django.middleware.locale.LocaleMiddleware'``
-    from your project middlewares. The setting ``PRE_MERENGUE_MIDDLEWARE_CLASSES``
+    Merengue will use that language by default and the tests will
+    fail. You can create a english firefox profile in a directory and
+    execute the ``run_suites.py`` script with the ``-f`` option::
+
+    $ python run_suite.py http://localhost:8000/ -f ~/.mozilla/firefox/selenium
+
+    Also, if you don't want to use other profile, a quick workaround is to
+    disable the ``'django.middleware.locale.LocaleMiddleware'`` from your
+    project middlewares. The setting ``PRE_MERENGUE_MIDDLEWARE_CLASSES``
     is found in the `merengue/settings.py`_ file.
+
+    
 
 .. _`merengue/settings.py`: http://dev.merengueproject.org/browser/trunk/merengueproj/merengue/settings.py
