@@ -34,15 +34,15 @@ def run_all_suite():
                   action="store_false", dest="verbose", default=True,
                   help="don't print status messages to stdout")
     parser.add_option('-P', '--parallel', action='store', dest='parallel', default='1', type='int',
-                        help='Number of threads for parallel testing'),
+                        help='Number of threads for parallel testing')
     parser.add_option('-t', '--test', action='store', dest='testcase', default='viewer', type='string',
-                        help='Test case directory name to execute.'),
+                        help='Test case directory name to execute.')
     parser.add_option('-p', '--port', action='store', dest='port', default='4444', type='int',
-                        help='Selenium server port.'),
+                        help='Selenium server port.')
     parser.add_option('-f', '--firefox-profile-directory', action='store', dest='firefox_profile',
-                        help="Use a firefox profile directory"),
+                        help="Use a firefox profile directory")
     parser.add_option('-8', '--infinite', action='store_true', dest='infinite', default=False,
-                        help='Selenium server port.'),
+                        help='Selenium server port.')
 
     (options, args) = parser.parse_args()
 
