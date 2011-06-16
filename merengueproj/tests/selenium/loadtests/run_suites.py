@@ -39,6 +39,8 @@ def run_all_suite():
                         help='Test case directory name to execute.'),
     parser.add_option('-p', '--port', action='store', dest='port', default='4444', type='int',
                         help='Selenium server port.'),
+    parser.add_option('-f', '--firefox-profile-directory', action='store', dest='firefox_profile',
+                        help="Use a firefox profile directory"),
     parser.add_option('-8', '--infinite', action='store_true', dest='infinite', default=False,
                         help='Selenium server port.'),
 
@@ -54,6 +56,10 @@ def run_all_suite():
     extensions_file = os.path.join(os.path.abspath('..'), 'extensions', 'user-extensions.js')
     selenium_file = os.path.join(pwd, 'selenium-server.jar')
     variables_file = os.path.join(pwd, 'variables.html')
+    if options.firefox_profile:
+        firefox_arg = '-firefoxProfileTemplate "%s"' % options.firefox_profile
+    else:
+        firefox_arg = ''
     if os.path.exists(extensions_file) and os.path.exists(selenium_file):
         for directory in directory_list:
             os.chdir(pwd)
@@ -69,14 +75,14 @@ def run_all_suite():
             while not stop:
                 shutil.copy(variables_file, variables_copy)
                 for i in range(options.parallel):
-                    cmd = 'java -jar %s -htmlSuite "*firefox" "%s" "%s" "%s" -userExtensions "%s" -port %d' \
+                    cmd = 'java -jar %s -htmlSuite "*firefox" "%s" "%s" "%s" -userExtensions "%s" -port %d %s' \
                             % (selenium_file,
-                                    args[0],
-                                    suite_file,
-                                    results_file,
-                                    extensions_file,
-                                    int(options.port) + i)
-
+                               args[0],
+                               suite_file,
+                               results_file,
+                               extensions_file,
+                               int(options.port) + i,
+                               firefox_arg)
                     t = threading.Thread(target=execute, args=(cmd,))
                     threads.append(t)
                     t.start()
