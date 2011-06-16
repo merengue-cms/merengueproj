@@ -25,8 +25,8 @@ from django.utils.translation import ugettext
 from ajax_select.fields import AutoCompleteSelectField
 from transmeta import get_real_fieldname_in_each_language, get_fallback_fieldname
 
-from merengue.base.admin import BaseAdmin, BaseContentAdmin, RelatedModelAdmin, \
-                                BaseOrderableAdmin, OrderableRelatedModelAdmin
+from merengue.base.admin import (BaseAdmin, BaseContentAdmin,
+                                 RelatedModelAdmin, OrderableRelatedModelAdmin)
 from merengue.section.fields import CSSValidatorField
 from merengue.section.forms import MenuAdminModelForm
 from merengue.section.models import (Menu, BaseSection,
@@ -38,7 +38,7 @@ from merengue.perms import utils as perms_api
 from merengue.perms.admin import PermissionAdmin
 
 
-class BaseSectionAdmin(BaseOrderableAdmin, PermissionAdmin):
+class BaseSectionAdmin(BaseContentAdmin, PermissionAdmin):
     sortablefield = 'order'
     ordering = ('order', )
     list_display = ('name', 'slug', )
