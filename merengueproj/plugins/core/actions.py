@@ -77,8 +77,8 @@ class HotLinkAction(ContentTypeFilterProvider, ContentAction):
     verbose_name = _('Link to your section')
     active_by_default = True
 
-    def get_url(self, request):
-        return reverse('hotlink')
+    def get_url(self, request, content):
+        return reverse('hotlink', args=(content.pk,))
 
     def has_action(self, request, content):
         user = request.user
