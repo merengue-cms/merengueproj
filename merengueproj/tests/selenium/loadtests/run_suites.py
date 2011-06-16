@@ -18,7 +18,13 @@
 
 import os
 import shutil
+import threading
+import time
 from optparse import OptionParser
+
+
+def execute(cmd):
+    os.system(cmd)
 
 
 def run_all_suite():
@@ -27,10 +33,19 @@ def run_all_suite():
     parser.add_option("-q", "--quiet",
                   action="store_false", dest="verbose", default=True,
                   help="don't print status messages to stdout")
+    parser.add_option('-P', '--parallel', action='store', dest='parallel', default='1', type='int',
+                        help='Number of threads for parallel testing'),
+    parser.add_option('-t', '--test', action='store', dest='testcase', default='viewer', type='string',
+                        help='Test case directory name to execute.'),
+    parser.add_option('-p', '--port', action='store', dest='port', default='4444', type='int',
+                        help='Selenium server port.'),
+    parser.add_option('-8', '--infinite', action='store_true', dest='infinite', default=False,
+                        help='Selenium server port.'),
+
     (options, args) = parser.parse_args()
 
     directory_list = [i for i in os.listdir('.') if os.path.isdir(i) \
-                          and not i.startswith('.') \
+                          and not i.startswith('.') and i.startswith(options.testcase) \
                           and 'suite.html' in os.listdir(i)]
     if len(args) < 1:
         parser.error("You need to define a base URL to launch the test "
@@ -49,14 +64,33 @@ def run_all_suite():
             shutil.copy(variables_file, variables_copy)
             if options.verbose:
                 print 'Launching Selenium RC in %s test suite...' % suite_file
-            os.system('java -jar %s -htmlSuite "*firefox" "%s" "%s" "%s" -userExtensions "%s" -port %s' \
+
+            threads = []
+            stop = False
+            while not stop:
+                for i in range(options.parallel):
+                    cmd = 'java -jar %s -htmlSuite "*firefox" "%s" "%s" "%s" -userExtensions "%s" -port %d' \
                             % (selenium_file,
-                            args[0],
-                            suite_file,
-                            results_file,
-                            extensions_file,
-                            args[1]))
-            os.remove(variables_copy)
+                                    args[0],
+                                    suite_file,
+                                    results_file,
+                                    extensions_file,
+                                    int(options.port) + i)
+
+                    t = threading.Thread(target=execute, args=(cmd,))
+                    threads.append(t)
+                    t.start()
+
+                    while True:
+                        alive_threads = [t for t in threads if t.isAlive()]
+                        if not alive_threads:
+                            os.remove(variables_copy)
+                            break
+                        time.sleep(1)
+
+                if not options.infinite:
+                    stop = True
+
     else:
         print 'ERROR: File selenium-server.jar/user-extensions.js can not be found.'
 
