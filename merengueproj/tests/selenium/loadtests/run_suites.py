@@ -81,12 +81,12 @@ def run_all_suite():
                     threads.append(t)
                     t.start()
 
-                    while True:
-                        alive_threads = [t for t in threads if t.isAlive()]
-                        if not alive_threads:
-                            os.remove(variables_copy)
-                            break
-                        time.sleep(1)
+                while True:
+                    alive_threads = [t for t in threads if t.isAlive()]
+                    if not alive_threads:
+                        os.remove(variables_copy)
+                        break
+                    time.sleep(1)
 
                 if not options.infinite:
                     stop = True
