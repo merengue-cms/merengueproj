@@ -32,6 +32,11 @@ class CaptchaForumThreadCommentForm(BaseModelForm):
 
 
 class CreateThreadForm(BaseModelForm):
+
+    def __init__(self, forum, *args, **kwargs):
+        super(CreateThreadForm, self).__init__(*args, **kwargs)
+        self.forum = forum
+
     class Meta:
         model = Thread
         fields = (get_fallback_fieldname('name'), get_fallback_fieldname('description'), 'tags', )

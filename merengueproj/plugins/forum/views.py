@@ -1,13 +1,13 @@
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
-from django.template.defaultfilters import slugify
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
 
 from captcha.decorators import add_captcha
 
 from merengue.base.decorators import login_required
+from merengue.base.utils import get_unique_slug
 from merengue.base.views import content_list, content_view, render_content
 from merengue.perms.utils import has_permission
 from merengue.section.utils import get_section, filtering_in_section
@@ -43,7 +43,7 @@ def content_forum_view(request, content, template_name, extra_context):
 
 
 def thread_view(request, forum_slug, thread_slug, original_context=None):
-    thread = get_object_or_404(Thread, slug=thread_slug)
+    thread = get_object_or_404(Thread, slug=thread_slug, forum__slug=forum_slug)
     is_moderated = request.user and (request.user.is_superuser or has_permission(thread.forum, request.user, 'moderate_forum'))
     is_auth = request.user and request.user.is_authenticated()
     comments = thread.forumthreadcomment_set.filter(parent__isnull=True).order_by('date_submitted')
@@ -59,17 +59,17 @@ def create_new_thread(request, forum_slug):
     if http_response:
         return http_response
     if request.POST:
-        form = CreateThreadForm(request.POST)
+        form = CreateThreadForm(forum, request.POST)
         if form.is_valid():
             thread = form.save(commit=False)
-            thread.slug = slugify(thread.name)
+            thread.slug = get_unique_slug(thread.name, forum.thread_set.all())
             thread.forum = forum
             thread.user = request.user
             thread.status = 'published'
             thread.save()
             return HttpResponseRedirect(thread.get_absolute_url())
     else:
-        form = CreateThreadForm()
+        form = CreateThreadForm(forum)
 
     return render_to_response('forum/forum_create_thread.html', {
             'form': form, 'content': forum,

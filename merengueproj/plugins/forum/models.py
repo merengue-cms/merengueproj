@@ -2,8 +2,10 @@ import datetime
 
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import permalink
+from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.models import BaseContent, BaseCategory
@@ -72,6 +74,11 @@ class Thread(BaseContent):
     def save(self, *args, **kwargs):
         self.commentable = 'disabled'
         super(Thread, self).save(*args, **kwargs)
+
+    def validate_unique(self, exclude=None):
+        super(Thread, self).validate_unique(exclude)
+        if self.forum_id and self.forum.thread_set.filter(slug=self.slug).exclude(pk=self.pk).exists():
+            raise ValidationError({'slug': (ugettext('The slug already exists in other thread in this forum'),)})
 
     def get_last_comment(self):
         comments = ForumThreadComment.objects.filter(thread=self).order_by('-date_submitted')

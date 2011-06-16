@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.template.loader import render_to_string
-from django.template import RequestContext
+from django.template import RequestContext, defaultfilters
 
 from copy import deepcopy
 from django.db import connection
@@ -58,3 +58,15 @@ def get_login_url():
         return settings.LOGIN_URL
     else:
         return login_url_conf.get_value() or settings.LOGIN_URL
+
+
+def get_unique_slug(value, queryset, slug_field='slug'):
+    """ Get the first empty slug in the queryset """
+    slug = original_slug = defaultfilters.slugify(value)
+    n = 2
+    filters = {slug_field: slug}
+    while queryset.filter(**filters).exists():
+        slug = original_slug + u'-%s' % n
+        filters[slug_field] = slug
+        n += 1
+    return slug
