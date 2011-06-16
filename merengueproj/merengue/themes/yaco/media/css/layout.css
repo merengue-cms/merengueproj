@@ -170,6 +170,10 @@ div#portalmenu ul.menu_ul.menuDepth1 ul.menuDepth3 {
 	display: none;
 }
 
+div#portalmenu ul li#menu-1 {
+    padding-bottom: 10px;
+}
+
 
 /* end portalmenu */
 
