@@ -136,6 +136,7 @@ class AddBlockForm(BaseForm):
         choices = []
         scopes = [('global', _(u'Global'))]
         section_id = self.initial.get('sectionid', None) or self.data.get('sectionid', None)
+        section = None
         if section_id:
             try:
                 section = BaseSection.objects.get(id=section_id)
@@ -144,6 +145,7 @@ class AddBlockForm(BaseForm):
             except BaseSection.objects.DoesNotExist:
                 pass
         content_id = self.initial.get('contentid', None) or self.data.get('contentid', None)
+        content = None
         if content_id:
             try:
                 content = BaseContent.objects.get(id=content_id)
