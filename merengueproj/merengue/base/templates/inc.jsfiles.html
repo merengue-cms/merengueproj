@@ -52,7 +52,7 @@
             print.attr("href", "");	
         }
         {% if content %}
-        $("#action-export_content").click(function(){
+        $("#action-hotlink").click(function(){
             $.ajax({
                 url: "{% url hotlink content.id %}",
                 context: document.body,
