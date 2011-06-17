@@ -29,5 +29,9 @@ class ContentGroup(models.Model):
     contents = models.ManyToManyField(
         BaseContent, verbose_name=_('contents related to the group'))
 
+    class Meta:
+        verbose_name = _('Content Group')
+        verbose_name_plural = _('Content Groups')
+
     def __unicode__(self):
         return self.name
