@@ -74,6 +74,7 @@ You cannot see all in admin the plugins installed in ``plugins`` directory
 
 **Solution**: one of these:
 
+   * Click on ``Register new plugins`` button in the admin plugins view.
    * Define the ``DETECT_NEW_PLUGINS`` setting to ``True`` and go again admin plugins view.
    * Execute the ``register_new_plugins`` command with ``python manage.py register_new_plugins``.
 

@@ -178,7 +178,7 @@ your project.
 DETECT_NEW_PLUGINS
 ------------------
 
-Default: ``True``
+Default: ``False``
 
 Detect automatically new plugins when manager access to plugins admin view.
 
