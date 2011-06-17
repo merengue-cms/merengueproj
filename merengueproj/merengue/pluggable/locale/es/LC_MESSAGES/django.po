@@ -34,8 +34,8 @@ msgid "Not all dependencies are met"
 msgstr "No se cumplen todas las dependencias"
 
 #: admin.py:110
-msgid "Register new plugins"
-msgstr "Registrar nuevos plugins"
+msgid "Detect new plugins"
+msgstr "Detectar nuevos plugins"
 
 #: admin.py:118 templates/admin/plugin/plugin_change_form.html:12
 msgid "None"

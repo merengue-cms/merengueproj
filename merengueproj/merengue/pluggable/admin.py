@@ -113,7 +113,7 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
     def object_tools(self, request, mode, url_prefix):
         tools = super(RegisteredPluginAdmin, self).object_tools(request, mode, url_prefix)
         if mode == 'list':
-            tools = [{'url': url_prefix + 'register-new-plugins/', 'label': ugettext('Register new plugins'), 'class': 'default', 'permission': 'change'}] + tools
+            tools = [{'url': url_prefix + 'register-new-plugins/', 'label': ugettext('Detect new plugins'), 'class': 'default', 'permission': 'change'}] + tools
         return tools
 
     def has_add_permission(self, request):
