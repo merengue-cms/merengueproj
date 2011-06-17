@@ -371,6 +371,7 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
     inherit_actions = True
     form = BaseAdminModelForm
     basecontent = None
+    parent_modeladmin = None
 
     def __init__(self, model, admin_site):
         super(BaseAdmin, self).__init__(model, admin_site)
@@ -1176,6 +1177,7 @@ class RelatedModelAdmin(BaseAdmin):
         return urlpatterns
 
     def _update_extra_context(self, request, extra_context=None, parent_model_admin=None, parent_object=None):
+        self.parent_model_admin = parent_model_admin
         extra_context = extra_context or {}
         #basecontent = self._get_base_content(request)
         basecontent_type_id = ContentType.objects.get_for_model(self.basecontent).id
@@ -1287,6 +1289,18 @@ class RelatedModelAdmin(BaseAdmin):
         return BaseAdmin.object_tools(self, request, mode, url_prefix)
 
     def has_add_permission(self, request):
+        if self.parent_model_admin:
+            return self.parent_model_admin.has_change_permission(request, self.basecontent)
+        return perms_api.has_permission(self.basecontent, request.user, 'edit')
+
+    def has_change_permission(self, request, obj=None):
+        if self.parent_model_admin:
+            return self.parent_model_admin.has_change_permission(request, self.basecontent)
+        return perms_api.has_permission(self.basecontent, request.user, 'edit')
+
+    def has_delete_permission(self, request, obj=None):
+        if self.parent_model_admin:
+            return self.parent_model_admin.has_change_permission(request, self.basecontent)
         return perms_api.has_permission(self.basecontent, request.user, 'edit')
 
 
@@ -1401,6 +1415,21 @@ class PermissionRelatedAdmin(RelatedModelAdmin, PermissionAdmin):
         extra_context.update({'original': None,
                               'content': self.basecontent})
         return self.change_roles_permissions(request, self.basecontent.id, extra_context=extra_context)
+
+    def has_add_permission(self, request):
+        if self.parent_model_admin:
+            return self.parent_model_admin.has_change_permission(request, self.basecontent)
+        return perms_api.has_permission(self.basecontent, request.user, 'edit')
+
+    def has_change_permission(self, request, obj=None):
+        if self.parent_model_admin:
+            return self.parent_model_admin.has_change_permission(request, self.basecontent)
+        return perms_api.has_permission(self.basecontent, request.user, 'edit')
+
+    def has_delete_permission(self, request, obj=None):
+        if self.parent_model_admin:
+            return self.parent_model_admin.has_change_permission(request, self.basecontent)
+        return perms_api.has_permission(self.basecontent, request.user, 'edit')
 
 
 class AnnouncementAdmin(AnnouncementDefaultAdmin):
