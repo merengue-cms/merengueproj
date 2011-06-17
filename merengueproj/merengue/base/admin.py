@@ -396,6 +396,9 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
         return __media
     media = property(_media)
 
+    def get_accesible_states(self, status, user, obj):
+        return status.get_accesible_states(user, obj)
+
     def get_form(self, request, obj=None, **kwargs):
         form = super(BaseAdmin, self).get_form(request, obj, **kwargs)
         keys = form.base_fields.keys()
@@ -405,7 +408,7 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
                 status = workflow_api.workflow_by_model(form.Meta.model).get_initial_state()
             else:
                 status = obj.workflow_status
-            form.base_fields['workflow_status'].queryset = status.get_accesible_states(
+            form.base_fields['workflow_status'].queryset = self.get_accesible_states(status,
                 request.user, obj)
             form.base_fields['workflow_status'].initial = status
             if 'status' in keys:
@@ -908,7 +911,7 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
                 status = workflow_api.workflow_by_model(form.Meta.model).get_initial_state()
             else:
                 status = obj.workflow_status
-            form.base_fields['workflow_status'].queryset = status.get_accesible_states(
+            form.base_fields['workflow_status'].queryset = self.get_accesible_states(status,
                 request.user, obj)
             form.base_fields['workflow_status'].initial = status
             if 'status' in keys:
@@ -1284,6 +1287,11 @@ class RelatedModelAdmin(BaseAdmin):
         """
         for principal, lrole in perms_api.get_all_local_roles(self.basecontent):
             perms_api.add_local_role(obj, principal, lrole)
+
+    def get_accesible_states(self, status, user, obj):
+        if self.parent_model_admin:
+            return self.parent_model_admin.get_accesible_states(status, user, self.basecontent)
+        return status.get_accesible_states(user, self.basecontent)
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(RelatedModelAdmin, self).get_form(request, obj, **kwargs)
