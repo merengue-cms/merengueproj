@@ -23,7 +23,6 @@ from merengue.base.models import BaseContent
 from merengue.block.models import RegisteredBlock
 from merengue.block.filterspecs import ContentBlockFilterSpec
 from merengue.block.forms import BaseContentRelatedBlockAddForm, BaseContentRelatedBlockChangeForm
-from merengue.perms import utils as perms_api
 from merengue.registry.admin import RegisteredItemAdmin
 
 
@@ -89,9 +88,6 @@ class BaseContentRelatedBlockAdmin(RelatedModelAdmin, RegisteredBlockAdmin):
        (_('Visibility when duplicated blocks'),
             {'fields': ('overwrite_if_place', 'overwrite_always', )}),
     )
-
-    def has_add_permission(self, request):
-        return perms_api.has_global_permission(request.user, perms_api.MANAGE_BLOCK_PERMISSION)
 
     def get_fieldsets(self, request, obj=None):
         if obj is None:
