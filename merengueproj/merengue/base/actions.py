@@ -5,11 +5,13 @@ Built-in, globally-available admin actions.
 from django import template
 from django.core.exceptions import PermissionDenied
 from django.contrib.admin import helpers
-from django.contrib.admin.util import get_deleted_objects, model_ngettext
+from django.contrib.admin.util import model_ngettext
 from django.db import router
 from django.shortcuts import render_to_response
 from django.utils.encoding import force_unicode
 from django.utils.translation import ugettext_lazy, ugettext as _
+
+from merengue.base.admin_utils import get_deleted_contents
 
 
 def delete_selected(modeladmin, request, queryset):
@@ -33,13 +35,12 @@ def delete_selected(modeladmin, request, queryset):
 
     # Populate deletable_objects, a data structure of all related objects that
     # will also be deleted.
-    deletable_objects, perms_needed, protected = get_deleted_objects(
-        queryset, opts, request.user, modeladmin.admin_site, using)
+    (deletable_objects, objects_without_delete_perm, perms_needed, protected) = get_deleted_contents(queryset, opts, request.user, modeladmin.admin_site, using)
 
     # The user has already confirmed the deletion.
     # Do the deletion and return a None to display the change list view again.
     if request.POST.get('post'):
-        if perms_needed:
+        if perms_needed or objects_without_delete_perm or protected:
             raise PermissionDenied
         n = queryset.count()
         if n:
@@ -58,7 +59,7 @@ def delete_selected(modeladmin, request, queryset):
     else:
         objects_name = force_unicode(opts.verbose_name_plural)
 
-    if perms_needed or protected:
+    if perms_needed or objects_without_delete_perm or protected:
         title = _("Cannot delete %(name)s") % {"name": objects_name}
     else:
         title = _("Are you sure?")

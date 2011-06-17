@@ -38,6 +38,7 @@ from django.views.decorators.cache import never_cache
 from merengue.base.adminforms import UploadConfigForm, BackupForm
 from merengue.base.models import BaseContent
 from merengue.perms import utils as perms_api
+from merengue.base.actions import delete_selected
 
 OBJECT_ID_PREFIX = 'base_object_id_'
 MODEL_ADMIN_PREFIX = 'base_model_admin_'
@@ -56,6 +57,8 @@ class BaseAdminSite(DjangoAdminSite):
         self.related_registry = {}
         self.tools = {}
         super(BaseAdminSite, self).__init__(*args, **kwargs)
+        if hasattr(self, '_actions') and self._actions.get('delete_selected', None):
+            self._actions['delete_selected'] = delete_selected
 
     def admin_view(self, view, cacheable=False):
         def inner(request, *args, **kwargs):
