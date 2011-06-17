@@ -132,12 +132,12 @@ class PermissionAdmin(admin.ModelAdmin):
         return (msg, url_redirect)
 
     def change_roles_permissions(self, request, object_id, extra_context=None):
-        if not can_manage_user(request.user):
-            raise PermissionDenied
         opts = self.model._meta
         admin_site = self.admin_site
         has_perm = request.user.has_perm(opts.app_label + '.' + opts.get_change_permission())
         obj = get_object_or_404(self.model, pk=object_id)
+        if not self.has_change_permission(request, obj):
+            raise PermissionDenied
         prr_form = None
         if request.method == 'POST':
             if '_continue_role_relation' in request.POST:
