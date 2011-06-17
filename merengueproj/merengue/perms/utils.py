@@ -309,6 +309,24 @@ def get_local_roles(obj, principal):
             group=principal, content=obj)]
 
 
+def get_all_local_roles(obj):
+    roles = []
+    for relation in PrincipalRoleRelation.objects.filter(content=obj):
+        if relation.user:
+            roles.append((relation.user, relation.role))
+        elif relation.group:
+            roles.append((relation.group, relation.role))
+        else:
+            continue
+    owner_role = Role.objects.get(name=u'Owner')
+    for principal in _get_owners(obj):
+        roles.append((principal, owner_role))
+    participant_role = Role.objects.get(name=u'Participant')
+    for principal in _get_participants(obj):
+        roles.append((principal, participant_role))
+    return roles
+
+
 # Permissions ################################################################
 
 

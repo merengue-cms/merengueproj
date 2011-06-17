@@ -1282,9 +1282,8 @@ class RelatedModelAdmin(BaseAdmin):
         Custom function to inherit related basecontent local roles when creating
         a new obj via realted model admin
         """
-        user = request.user
-        for lrole in perms_api.get_local_roles(self.basecontent, user):
-            perms_api.add_local_role(obj, user, lrole)
+        for principal, lrole in perms_api.get_all_local_roles(self.basecontent):
+            perms_api.add_local_role(obj, principal, lrole)
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(RelatedModelAdmin, self).get_form(request, obj, **kwargs)
