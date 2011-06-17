@@ -117,6 +117,12 @@ class SectionAdmin(BaseSectionAdmin):
 
     change_list_template = 'admin/section/section/change_list.html'
 
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(SectionAdmin, self).get_form(request, obj, **kwargs)
+        if 'section' in form.base_fields:
+            del form.base_fields['section']
+        return form
+
     def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
         context['change_form_section'] = True
         return super(SectionAdmin, self).render_change_form(request, context, add, change, form_url, obj)
