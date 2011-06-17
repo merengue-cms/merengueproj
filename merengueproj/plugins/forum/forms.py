@@ -17,6 +17,8 @@
 
 from transmeta import get_fallback_fieldname
 
+from django.utils.translation import ugettext_lazy as _
+
 from merengue.base.forms import BaseModelForm
 from plugins.forum.models import ForumThreadComment, Thread
 
@@ -36,6 +38,8 @@ class CreateThreadForm(BaseModelForm):
     def __init__(self, forum, *args, **kwargs):
         super(CreateThreadForm, self).__init__(*args, **kwargs)
         self.forum = forum
+        self.fields[get_fallback_fieldname('name')].label = _('Name')
+        self.fields[get_fallback_fieldname('description')].label = _('Description')
 
     class Meta:
         model = Thread
