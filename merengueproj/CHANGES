@@ -1,6 +1,23 @@
 Changes
 =======
 
+Version 0.8.0-beta2 (r4957)
+---------------------------
+
+* Fixed a critical bug in 0.8.0-beta1 for newly created projects. See #2048.
+
+* Fixed the workflow unit tests. See #1832.
+
+* Improved Yaco theme layout. See #1990.
+
+* Fixed some Selenium tests which was broken. See #1938.
+
+* Hot link action for every content (disabled by default). See #2032.
+
+* Fix a bug when adding blocks in a specific scope. See #2011.
+
+* Other errors: #2037, #2038, #2039, #2036, #2040, #2041, #2043, #2046, #2039, #2047.
+
 Version 0.8.0-beta1 (r4880)
 ---------------------------
 
