@@ -981,12 +981,12 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
 
         # Populate deleted_objects, a data structure of all related objects that
         # will also be deleted.
-        (deleted_objects, objects_without_delete_perm, perms_needed) = get_deleted_contents((obj, ), opts, request.user, self.admin_site, using)
+        (deleted_objects, objects_without_delete_perm, perms_needed, protected) = get_deleted_contents((obj, ), opts, request.user, self.admin_site, using)
 
         # perms_needed
 
         if request.POST:  # The user has already confirmed the deletion.
-            if perms_needed or objects_without_delete_perm:
+            if perms_needed or objects_without_delete_perm or protected:
                 raise PermissionDenied
             obj_display = force_unicode(obj)
             self.log_deletion(request, obj, obj_display)
@@ -1005,6 +1005,7 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
             "deleted_objects": deleted_objects,
             "objects_without_delete_perm": objects_without_delete_perm,
             "perms_lacking": perms_needed,
+            "protected": protected,
             "opts": opts,
             "root_path": self.admin_site.root_path,
             "app_label": app_label,

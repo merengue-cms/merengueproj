@@ -82,4 +82,6 @@ def get_deleted_contents(objs, opts, user, admin_site, using):
 
     to_delete = collector.nested(format_callback)
 
-    return to_delete, objects_without_delete_perm, perms_needed
+    protected = [format_callback(obj) for obj in collector.protected]
+
+    return to_delete, objects_without_delete_perm, perms_needed, protected
