@@ -385,6 +385,15 @@ class MenuAdmin(BaseAdmin):
 class BaseSectionMenuRelatedAdmin(MenuAdmin, RelatedModelAdmin):
     change_list_template = "admin/section/menu/change_list.html"
 
+    def has_add_permission(self, request):
+        return RelatedModelAdmin.has_add_permission(self, request)
+
+    def has_change_permission(self, request, obj=None):
+        return RelatedModelAdmin.has_change_permission(self, request, obj)
+
+    def has_delete_permission(self, request, obj=None):
+        return RelatedModelAdmin.has_delete_permission(self, request, obj)
+
     def get_section_docs(self, request):
         section = getattr(self.get_menu(request), self.related_field)
         return section.content_set.all()
