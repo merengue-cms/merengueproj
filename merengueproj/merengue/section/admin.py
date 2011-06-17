@@ -47,7 +47,7 @@ class BaseSectionAdmin(BaseContentAdmin, PermissionAdmin):
     html_fields = ()
     removed_fields = ('description', )
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
-    exclude = ('commentable', )
+    exclude = BaseContentAdmin.exclude + ('commentable', )
 
     def has_add_permission(self, request):
         """
