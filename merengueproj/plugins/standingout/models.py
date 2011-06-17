@@ -72,6 +72,8 @@ class StandingOut(models.Model):
     class Meta:
         ordering = ('order', )
         translate = ('title', 'short_description')
+        verbose_name = _('standing out')
+        verbose_name_plural = _('standing outs')
 
     @property
     def name(self):
