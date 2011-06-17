@@ -269,13 +269,6 @@ def get_roles(principal, obj=None):
 
     if obj is not None:
         roles.extend(get_local_roles(obj, principal))
-
-        if principal in _get_owners(obj):
-            roles.append(Role.objects.get(name=u'Owner'))
-
-        if principal in _get_participants(obj):
-            roles.append(Role.objects.get(name=u'Participant'))
-
     if isinstance(principal, User):
         for group in principal.groups.all():
             if obj is not None:
@@ -302,8 +295,15 @@ def get_local_roles(obj, principal):
     """Returns local for passed user and content object.
     """
     if isinstance(principal, User):
-        return [prr.role for prr in PrincipalRoleRelation.objects.filter(
+        roles = [prr.role for prr in PrincipalRoleRelation.objects.filter(
             user=principal, content=obj)]
+
+        if principal in _get_owners(obj):
+            roles.append(Role.objects.get(name=u'Owner'))
+
+        if principal in _get_participants(obj):
+            roles.append(Role.objects.get(name=u'Participant'))
+        return roles
     else:
         return [prr.role for prr in PrincipalRoleRelation.objects.filter(
             group=principal, content=obj)]
