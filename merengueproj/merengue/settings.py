@@ -138,6 +138,7 @@ PRE_MERENGUE_MIDDLEWARE_CLASSES = (
     'pagination.middleware.PaginationMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'cmsutils.middleware.AutomatizedTestingMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
 )
 
 POST_MERENGUE_MIDDLEWARE_CLASSES = (
