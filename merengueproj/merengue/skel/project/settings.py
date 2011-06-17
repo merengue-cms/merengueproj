@@ -152,7 +152,7 @@ CACHES = {
 JOHNNY_MIDDLEWARE_KEY_PREFIX = '%s-cache' % DATABASES['default']['NAME']
 
 # if merengue will detect new plugins in file system
-DETECT_NEW_PLUGINS = True
+DETECT_NEW_PLUGINS = False
 # if merengue will detect broken plugins
 DETECT_BROKEN_PLUGINS = True
 

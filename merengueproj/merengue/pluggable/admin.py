@@ -17,7 +17,9 @@
 
 from django.conf import settings
 from django.utils.safestring import mark_safe
+from django.contrib import messages
 from django.core.management import call_command
+from django.core.urlresolvers import reverse
 from django.utils.functional import update_wrapper
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
@@ -51,7 +53,7 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
     )
 
     def get_urls(self):
-        from django.conf.urls.defaults import patterns
+        from django.conf.urls.defaults import patterns, url
 
         def wrap(view):
 
@@ -62,7 +64,8 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
 
         urls = super(RegisteredPluginAdmin, self).get_urls()
         my_urls = patterns('',
-            (r'^register-new-plugins/$', wrap(self.register_new_plugins)),)
+            url(r'^register-new-plugins/$', wrap(self.register_new_plugins),
+                name='register_plugins'))
         return my_urls + urls
 
     def register_new_plugins(self, request, extra_context=None):
@@ -125,6 +128,9 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
 
     def changelist_view(self, request, extra_context=None):
         check_plugins()
+        if RegisteredPlugin.objects.all().count() == len(settings.REQUIRED_PLUGINS):
+            messages.warning(request, _('You have not registered all the plugins. Click <a href="%(url)s">here</a> in order to register them') %
+                             {'url': reverse('admin:register_plugins')})
         return super(RegisteredPluginAdmin, self).changelist_view(request,
             extra_context)
 
