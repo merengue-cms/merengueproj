@@ -371,7 +371,7 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
     inherit_actions = True
     form = BaseAdminModelForm
     basecontent = None
-    parent_modeladmin = None
+    parent_model_admin = None
 
     def __init__(self, model, admin_site):
         super(BaseAdmin, self).__init__(model, admin_site)
@@ -1265,6 +1265,8 @@ class RelatedModelAdmin(BaseAdmin):
                 # we only know how handle many 2 many without intermediate models
                 manager.add(self.basecontent)
         self.custom_relate_content(request, obj, form, change)
+        if not change:
+            self.inherit_local_roles(request, obj)
 
     def custom_relate_content(self, request, obj, form, change):
         """
@@ -1273,6 +1275,15 @@ class RelatedModelAdmin(BaseAdmin):
         we don't know how to handle this.
         """
         pass
+
+    def inherit_local_roles(self, request, obj):
+        """
+        Custom function to inherit related basecontent local roles when creating
+        a new obj via realted model admin
+        """
+        user = request.user
+        for lrole in perms_api.get_local_roles(self.basecontent, user):
+            perms_api.add_local_role(obj, user, lrole)
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(RelatedModelAdmin, self).get_form(request, obj, **kwargs)
