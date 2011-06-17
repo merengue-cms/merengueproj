@@ -95,15 +95,15 @@ class Collection(BaseContent):
         null=True,
         )
 
+    reverse_order = models.BooleanField(
+        default=False,
+        verbose_name=_(u'Reverse order'),
+        )
+
     limit = models.PositiveIntegerField(
         verbose_name=_(u'Number of elements '),
         blank=True,
         null=True,
-        )
-
-    reverse_order = models.BooleanField(
-        default=False,
-        verbose_name=_(u'Reverse order'),
         )
 
     show_main_image = models.BooleanField(

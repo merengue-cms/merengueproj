@@ -103,8 +103,8 @@ class CollectionAdmin(BaseContentAdmin):
         return _('Collection Configuration')
 
     def get_configurations_fields(self, request, obj=None):
-        return ['content_types', 'group_by', 'order_by', 'limit',
-                'reverse_order', 'show_main_image', 'filtering_section']
+        return ['content_types', 'group_by', 'order_by', 'reverse_order', 'limit',
+                'show_main_image', 'filtering_section']
 
     def get_fieldsets(self, request, obj=None):
         return ((self.get_title_basic_info_fields(request, obj),
