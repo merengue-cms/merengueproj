@@ -30,6 +30,7 @@ from merengue.utils import is_last_application, classproperty
 class Plugin(RegistrableItem):
     singleton = True
     url_prefixes = ()
+    active_by_default = False
 
     def get_url_prefixes(self):
         prefixes = []
