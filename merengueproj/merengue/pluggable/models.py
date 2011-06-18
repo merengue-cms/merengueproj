@@ -82,7 +82,13 @@ def save_plugin_signal(sender, instance, **kwargs):
     if instance.installed and instance.active and instance.directory_name and not instance.broken:
         enable_plugin(app_name)
     elif not instance.active and instance.directory_name:
-        disable_plugin(app_name)
+        try:
+            disable_plugin(app_name)
+        except ImportError:
+            if instance.broken:
+                pass  # the plugin is broken
+            else:
+                raise
 signals.post_save.connect(save_plugin_signal, sender=RegisteredPlugin)
 
 # ----- adding south rules to help introspection -----

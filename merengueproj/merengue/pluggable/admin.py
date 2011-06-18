@@ -18,7 +18,6 @@
 from django.conf import settings
 from django.utils.safestring import mark_safe
 from django.contrib import messages
-from django.core.management import call_command
 from django.core.urlresolvers import reverse
 from django.utils.functional import update_wrapper
 from django.http import HttpResponseRedirect
@@ -70,8 +69,8 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
         return my_urls + urls
 
     def register_new_plugins(self, request, extra_context=None):
-        call_command('register_new_plugins')
-        send_info(request, _('New plugins have been registered'))
+        check_plugins(force_detect=True, force_broken_detect=True)
+        send_info(request, _('Plugins detections done'))
         return HttpResponseRedirect('..')
 
     def get_readonly_fields(self, request, obj=None):

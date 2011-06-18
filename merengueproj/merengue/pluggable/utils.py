@@ -220,10 +220,10 @@ def find_plugin_urls(plugin_name):
 def check_plugin_broken(plugin_name):
     """ Check if plugin is broken (i.e. not exist in file system) and raises an exception """
     try:
-        get_plugin_config(plugin_name, prepend_plugins_dir=False)
+        get_plugin_config(plugin_name)
         try:
             # try to import plugin modules (if exists) to validate those models
-            models_modname = '%s.models' % plugin_name
+            models_modname = '%s.models' % get_plugin_module_name(plugin_name)
             models_module = import_module(models_modname)
             s = StringIO()
             num_errors = get_validation_errors(s, models_module)
@@ -673,6 +673,19 @@ def unregister_middleware(middleware_path):
 def get_plugins_middleware_methods(midd_type):
     global _plugin_middlewares_cache
     return (t[1] for t in _plugin_middlewares_cache[midd_type])
+
+
+def register_dummy_plugin(plugin_name):
+    """ Register a dummy plugin. Useful when we cannot access to the PluginConfig """
+    registered_plugin, created = RegisteredPlugin.objects.get_or_create(
+        directory_name=plugin_name,
+        defaults={'broken': True},
+    )
+    registered_plugin.class_name = 'PluginConfig',
+    registered_plugin.module = '%s.%s' % (settings.PLUGINS_DIR, plugin_name)
+    registered_plugin.name = plugin_name
+    registered_plugin.save()
+    return registered_plugin
 
 
 from merengue.section.admin import register as register_section

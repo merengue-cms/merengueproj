@@ -23,10 +23,10 @@ from django.conf import settings
 
 from merengue.pluggable.exceptions import BrokenPlugin
 from merengue.pluggable.loading import load_plugins
-from merengue.pluggable.utils import check_plugin_broken, get_plugin_module_name
+from merengue.pluggable.utils import check_plugin_broken, register_dummy_plugin
 
 
-def check_plugins():
+def check_plugins(force_detect=False, force_broken_detect=False):
     """ check plugins found in file system and compare with registered
         one in database """
     # all process will be in a unique transaction, we don't want to get
@@ -38,7 +38,7 @@ def check_plugins():
 
     sys_executable = settings.SYS_EXECUTABLE or sys.executable
 
-    if settings.DETECT_NEW_PLUGINS:
+    if settings.DETECT_NEW_PLUGINS or force_detect:
         # now look for all plugins in filesystem and register them
         # we have to launch other process because broken plugin detection
         # tries to validate models and this register non valid meta information
@@ -49,7 +49,7 @@ def check_plugins():
         )
         process.wait()
 
-    if settings.DETECT_BROKEN_PLUGINS:
+    if settings.DETECT_BROKEN_PLUGINS or force_broken_detect:
         # we have to launch other process because broken plugin detection
         # tries to validate models and this register non valid meta information
         # (fields, m2m, etc.)
@@ -69,18 +69,22 @@ def mark_broken_plugins():
     with python modules deleted from file system or broken modules.
     """
     from merengue.pluggable.models import RegisteredPlugin
-    cleaned_items = []
     for registered_item in RegisteredPlugin.objects.inactives():
-        plugin_name = get_plugin_module_name(registered_item.directory_name)
-        try:
-            check_plugin_broken(plugin_name)
-        except BrokenPlugin, e:
-            registered_item.broken = True
-            registered_item.set_traceback(e.exc_type, e.exc_value, e.traceback)
-            registered_item.save()
-        else:
-            cleaned_items.append(registered_item)
-            if registered_item.broken:
-                # in past was broken but now is ok
-                registered_item.broken = False
-                registered_item.save()
+        plugin_name = registered_item.directory_name
+        mark_broken_plugin(plugin_name, registered_item)
+
+
+def mark_broken_plugin(plugin_name, registered_plugin=None):
+    if registered_plugin is None:
+        registered_plugin = register_dummy_plugin(plugin_name)
+    try:
+        check_plugin_broken(plugin_name)
+    except BrokenPlugin, e:
+        registered_plugin.broken = True
+        registered_plugin.set_traceback(e.exc_type, e.exc_value, e.traceback)
+        registered_plugin.save()
+    else:
+        if registered_plugin.broken:
+            # in past was broken but now is ok
+            registered_plugin.broken = False
+            registered_plugin.save()

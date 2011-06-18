@@ -178,6 +178,7 @@ def enable_active_plugins():
 
 def register_all_plugins(verbose=False):
     from merengue.pluggable.utils import get_plugin_directories, get_plugin_config
+    from merengue.pluggable.checker import mark_broken_plugin
     for plugin_dir in get_plugin_directories():
         try:
             if verbose:
@@ -191,6 +192,7 @@ def register_all_plugins(verbose=False):
                     print 'Error walking to plugin %s.' % plugin_dir
             register_plugin(plugin_dir)
         except:
+            mark_broken_plugin(plugin_dir)
             print 'Error registering %s plugin... go to next plugin.' % plugin_dir
 
 
