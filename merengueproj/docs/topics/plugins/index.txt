@@ -47,9 +47,9 @@ Only three steps are required to install a new plugin:
 
 2. Registering into Merengue. This can be done:
 
+  * manually, if you click on the ``detect new plugins`` link in the plugins admin view.
   * automatically, if you have set the :setting:`DETECT_BROKEN_PLUGINS` setting to ``True``
     (the default), and if you have access to the plugins admin page.
-  * manually, if you execute the ``mark_broken_plugins`` command.
 
 3. Activate it from plugins admin page. See the :ref:`plugins documentation <topics-userguide-plugins>`
    in the Merengue user guide.
