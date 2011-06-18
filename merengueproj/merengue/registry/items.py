@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.db.models import signals
 from django.utils.translation import ugettext, ugettext_lazy as _
 
 from merengue.registry.models import RegisteredItem
@@ -84,10 +83,6 @@ class RegistrableItem(object):
 
     def get_registered_item(self):
         return self.reg_item
-
-    def invalidate_cache(self):
-        if hasattr(self, '_cached_registered_item'):
-            del self._cached_registered_item
 
 
 def _get_children_classes(content_type):
@@ -194,12 +189,3 @@ class ViewLetQuerySetItemProvider(QuerySetItemProvider):
         if menu:
             section = menu.get_root().get_section()
         return section or super(ViewLetQuerySetItemProvider, self)._get_section(request, context)
-
-
-def post_save_handler(sender, instance, **kwargs):
-    if isinstance(instance, RegisteredItem):
-        # cache invalidation of registered item in a registrable item
-        instance.get_registry_item().invalidate_cache()
-
-
-signals.post_save.connect(post_save_handler)
