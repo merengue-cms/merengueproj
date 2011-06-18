@@ -48,7 +48,7 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
                         'required_plugins', ), }
         ),
         (_('Status'),
-            {'fields': ('installed', 'active', 'order', 'config'), },
+            {'fields': ('installed', 'active', 'config'), },
         )
     )
 
