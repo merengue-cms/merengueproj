@@ -31,7 +31,7 @@ class SearchBlock(ContentBlock):
     help_text = ugettext_lazy('Block represents search widget')
     verbose_name = ugettext_lazy('Search block')
     default_caching_params = {
-        'enabled': True,
+        'enabled': False,
         'timeout': 3600,
         'only_anonymous': True,
         'vary_on_user': False,

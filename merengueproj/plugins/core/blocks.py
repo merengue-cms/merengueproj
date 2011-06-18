@@ -33,7 +33,7 @@ class BaseMenuBlock(object):
         params.Integer(name='max_num_level',
                        label=_('maximum number of levels to show'), default=-1)]
     default_caching_params = {
-        'enabled': True,
+        'enabled': False,
         'only_anonymous': True,
         'vary_on_user': False,
         'timeout': 3600,
@@ -78,7 +78,7 @@ class NavigationBlock(BaseMenuBlock, Block):
     help_text = _('Renders the Navigation')
     verbose_name = _('Navigation Block')
     default_caching_params = {
-        'enabled': True,
+        'enabled': False,
         'only_anonymous': True,
         'vary_on_user': False,
         'timeout': 3600,
@@ -119,7 +119,7 @@ class LinkBaseBlock(Block):
     help_text = _('Abstract block that render portal links')
     verbose_name = _('Link Base Block')
     default_caching_params = {
-        'enabled': True,
+        'enabled': False,
         'only_anonymous': False,
         'vary_on_user': True,
         'timeout': 3600,
@@ -168,7 +168,7 @@ class ContactInfoBlock(ContentBlock):
     help_text = _('Block with contact info')
     verbose_name = _('Contact Info block')
     default_caching_params = {
-        'enabled': True,
+        'enabled': False,
         'only_anonymous': True,
         'vary_on_user': False,
         'timeout': 3600,

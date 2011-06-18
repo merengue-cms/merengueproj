@@ -26,7 +26,7 @@ class PiwikBlock(Block):
     help_text = ugettext_lazy('Block add piwik javascript')
     verbose_name = ugettext_lazy('Piwik Block')
     default_caching_params = {
-        'enabled': True,
+        'enabled': False,
         'timeout': 3600,
         'only_anonymous': False,
         'vary_on_user': False,

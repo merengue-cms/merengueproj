@@ -39,7 +39,7 @@ class TagCloudBlock(BlockQuerySetItemProvider, Block):
         ),
     ]
     default_caching_params = {
-        'enabled': True,
+        'enabled': False,
         'timeout': 3600,
         'only_anonymous': False,
         'vary_on_user': False,

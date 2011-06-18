@@ -27,7 +27,7 @@ class ContentGroupLinksBlock(Block):
     name = 'contentgrouplinks'
     default_place = 'aftercontenttitle'
     default_caching_params = {
-        'enabled': True,
+        'enabled': False,
         'timeout': 3600,
         'only_anonymous': True,
         'vary_on_user': False,

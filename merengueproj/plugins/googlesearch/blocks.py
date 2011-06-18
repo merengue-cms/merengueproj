@@ -28,7 +28,7 @@ class GoogleSearchBlock(Block):
     verbose_name = ugettext_lazy('Google Search Block')
     help_text = ugettext_lazy('The block represents the google search widget')
     default_caching_params = {
-        'enabled': True,
+        'enabled': False,
         'only_anonymous': False,
         'vary_on_user': False,
         'timeout': 5184000,
