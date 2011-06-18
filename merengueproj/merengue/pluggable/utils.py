@@ -682,10 +682,10 @@ def register_dummy_plugin(plugin_name):
     """ Register a dummy plugin. Useful when we cannot access to the PluginConfig """
     registered_plugin, created = RegisteredPlugin.objects.get_or_create(
         directory_name=plugin_name,
-        defaults={'broken': True},
     )
-    registered_plugin.class_name = 'PluginConfig',
-    registered_plugin.module = '%s.%s' % (settings.PLUGINS_DIR, plugin_name)
+    registered_plugin.broken = True
+    registered_plugin.class_name = 'PluginConfig'
+    registered_plugin.module = '%s.%s.config' % (settings.PLUGINS_DIR, plugin_name)
     registered_plugin.name = plugin_name
     registered_plugin.save()
     return registered_plugin
