@@ -28,6 +28,7 @@ from django import templatetags
 from django.conf import settings
 from django.conf.urls.defaults import include, url
 from django.contrib.admin.sites import NotRegistered
+from django.contrib.contenttypes.management import update_all_contenttypes
 from django.core.exceptions import ImproperlyConfigured, FieldError, MiddlewareNotUsed
 from django.core.management import call_command
 from django.core.management.color import no_style
@@ -174,6 +175,8 @@ def install_models(app_name):
         sql_commands = sql_all(app_module, style, connection)
         for sql_command in sql_commands:
             cursor.execute(sql_command)
+    # update all content types
+    update_all_contenttypes()
     transaction.commit()
 
 
