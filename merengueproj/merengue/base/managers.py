@@ -84,6 +84,12 @@ class BaseContentQuerySet:
             if has_permission(content, user, 'view'):
                 yield content
 
+    def editable_by_user(self, user):
+        from merengue.perms.utils import has_permission
+        for content in self:
+            if has_permission(content, user, 'edit'):
+                yield content
+
 
 class CommentsQuerySet:
     """ Base queryset class for comments """
