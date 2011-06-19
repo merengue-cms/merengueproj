@@ -35,4 +35,5 @@ class PluginConfig(Plugin):
     def get_perms(self):
         return (
             ('Moderate forum', 'moderate_forum', [Forum]),
-            ('Create new thread', 'create_new_thread', [Forum]), )
+            ('Create new thread', 'create_new_thread', [Forum]),
+        )
