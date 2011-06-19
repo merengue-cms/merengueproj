@@ -1,0 +1,19 @@
+{% extends "block.html" %}
+
+{% load media_tags inlinetrans inplace_edit %}
+
+
+{% block blockbody %}
+
+  {% addmedia "css" %}
+    <link href="{{ MEDIA_URL }}fooplugin/css/block_style.css" rel="stylesheet" type="text/css" />
+  {% endaddmedia %}
+
+  <ul>
+  {% for content in content_list %}
+    <li><a href="{{ content.get_absolute_url }}" title="{{ content }}">{% inplace_edit "content.name" %}</a></li>
+  {% empty %}
+    {% itrans "No published content" %}
+  {% endfor %}
+  </ul>
+{% endblock %}

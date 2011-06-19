@@ -1,0 +1,27 @@
+{% extends "content_view.html" %}
+
+{% load i18n inlinetrans action_tags datefilters inplace_edit permissions_tags %}
+
+{% block pagetitle %}{{ content }}{% endblock %}
+
+{% block extrabeforecontentblocks %}
+{% if content.publish_date %}
+<div class="date"><label>{% inline_trans "Publication date" %}:</label> {% inplace_edit "content.publish_date|transdate" adaptor="date",loads="datefilters" %}</div>
+{% endif %}
+{% include "inc.contentcategories.html" %}
+{% endblock %}
+
+{% block contentbody %}
+  <p>
+    <strong>{% itrans "Extra field" %}:</strong> {% inplace_edit "content.extra_field" %}
+  </p>
+
+  <p><strong>{% itrans "About extra permission" %}:</strong>
+  {% ifhasperm "foomodel_perm" content %}
+     {% itrans "You have extra permission for this content" %}
+  {% else %}
+     {% itrans "Sorry, you don't have extra permission for this content" %}
+  {% endifhasperm %}
+  </p>
+{% endblock %}
+

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% load i18n inlinetrans action_tags %}
+
+{% block content %}
+<h1>{% itrans "Foo listing" %}</h1>
+<ul>
+{% for content in content_list %}
+  <li><a href="{{ content.get_absolute_url }}">{{ content }}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}
