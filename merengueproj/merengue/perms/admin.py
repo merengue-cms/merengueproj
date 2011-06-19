@@ -135,7 +135,7 @@ class PermissionAdmin(admin.ModelAdmin):
         opts = self.model._meta
         admin_site = self.admin_site
         has_perm = request.user.has_perm(opts.app_label + '.' + opts.get_change_permission())
-        obj = get_object_or_404(self.model, pk=object_id)
+        obj = get_object_or_404(self.model, pk=object_id).get_real_instance()
         if not self.has_change_permission(request, obj):
             raise PermissionDenied
         prr_form = None
