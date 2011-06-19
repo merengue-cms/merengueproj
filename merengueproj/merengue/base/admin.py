@@ -1325,7 +1325,8 @@ class RelatedModelAdmin(BaseAdmin):
         return perms_api.has_permission(self.basecontent, request.user, 'edit')
 
 
-class BaseContentRelatedContactInfoAdmin(RelatedModelAdmin):
+class ContactInfoRelatedAdmin(RelatedModelAdmin):
+    """ Contact info related to a content """
     tool_name = 'contact_info'
     tool_label = _('contact info')
     one_to_one = True
@@ -1559,7 +1560,7 @@ def register(site):
 
 
 def register_related_base(site, related_to):
-    site.register_related(ContactInfo, BaseContentRelatedContactInfoAdmin, related_to=related_to)
+    site.register_related(ContactInfo, ContactInfoRelatedAdmin, related_to=related_to)
     site.register_related(BaseContent, PermissionRelatedAdmin, related_to=related_to)
 
 # ----- begin monkey patching -----
