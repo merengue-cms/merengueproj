@@ -1269,7 +1269,7 @@ class RelatedModelAdmin(BaseAdmin):
                 # we only know how handle many 2 many without intermediate models
                 manager.add(self.basecontent)
         self.custom_relate_content(request, obj, form, change)
-        if not change:
+        if not change and perms_api.can_use_permissions(obj):
             self.inherit_local_roles(request, obj)
 
     def custom_relate_content(self, request, obj, form, change):

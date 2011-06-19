@@ -524,6 +524,11 @@ def has_permission_in_queryset(queryset, user, codename, roles=None):
     return True
 
 
+def can_use_permissions(obj):
+    """ The obj can contains permissions """
+    from merengue.base.models import BaseContent
+    return isinstance(obj, BaseContent)
+
 # Inheritance ################################################################
 
 
