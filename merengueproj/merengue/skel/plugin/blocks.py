@@ -31,7 +31,7 @@ class FooBlock(Block):
     }
 
     def render(self, request, place, context, *args, **kwargs):
-        limit = self.get_config().get('limit', []).get_value()
+        limit = self.get_config().get('limit').get_value()
         content_list = FooModel.objects.published()[:limit]
         return self.render_block(request, template_name='foo_block.html',
                                  block_title=ugettext('Latest foo items'),
