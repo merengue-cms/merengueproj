@@ -99,7 +99,7 @@ class StandingOut(models.Model):
         return url
 
     def target_name(self):
-        target = None
+        target = ''
         if self.obj:
             target = unicode(self.obj)
         elif self.url:
