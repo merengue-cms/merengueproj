@@ -39,7 +39,7 @@
 
 {% block extrahead %}{% endblock %}
 </head>
-{% load i18n transhette_tags admin_tags %}
+{% load i18n admin_tags %}
 
 <body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}merengueadmin{% endblock %} {% block extrabodyclass %}{% endblock %}">
 
@@ -71,11 +71,6 @@
                 {% endfor %}
             </ul>
         {% block userlinks %}
-          {% block user_link_transhette %}
-            {% if_can_access_transhette %}
-                <a href="{% url transhette-home %}">Transhette</a> / 
-            {% endif_can_access_transhette %}
-          {% endblock %}
           {% url django-admindocs-docroot as docsroot %}
           {% if docsroot %}
             <a href="{{ docsroot }}">{% trans 'Documentation' %}</a> /
