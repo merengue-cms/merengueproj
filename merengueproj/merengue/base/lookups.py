@@ -28,7 +28,7 @@ class ContentLookup(object):
         name_fields = get_real_fieldname_in_each_language('name')
         filters = Q()  # query without filters
         for field_name in name_fields:
-            filters |= Q(**{'%s__contains' % field_name: q})
+            filters |= Q(**{'%s__icontains' % field_name: q})
         return filters
 
     def get_query(self, q, request):
