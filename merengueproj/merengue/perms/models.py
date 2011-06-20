@@ -22,6 +22,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.models import BaseContent
+from merengue.perms.managers import RoleManager
 
 
 class Permission(models.Model):
@@ -127,6 +128,7 @@ class Role(models.Model):
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(verbose_name=_('slug'), max_length=200,
                             db_index=True, unique=True)
+    objects = RoleManager()
 
     class Meta:
         ordering = ("name", )
