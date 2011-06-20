@@ -56,7 +56,10 @@
         {% block branding %}{% endblock %}
         </div>
         {% if user.is_authenticated and user.is_staff %}
-        <div id="user-tools">{% trans 'Welcome,' %} <strong>{% firstof user.first_name user.username %}</strong>. 
+        <div id="user-tools">
+            {% block userwelcome %}
+                {% trans 'Welcome,' %} <strong>{% firstof user.first_name user.username %}</strong>. 
+            {% endblock %}
             <ul id="global-languageselector">
                 {% for lang in LANGUAGES %}
                     <li {% ifequal lang.0 LANGUAGE_CODE %}class="currentLangItem"{% endifequal %}>
