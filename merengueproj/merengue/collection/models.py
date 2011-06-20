@@ -419,7 +419,7 @@ class FeedCollection(Collection):
             item.delete()
 
     def get_first_parents_of_content_types(self):
-        return None
+        return FeedItem
 
     def make_single_item(self, feed_item, entry):
         feed_item.item_cached = base64.encodestring(pickle.dumps(entry))
