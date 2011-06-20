@@ -369,7 +369,9 @@ class BaseContent(BaseClass):
 
     contact_info = models.ForeignKey(ContactInfo,
                                      verbose_name=_('contact info'),
-                                     null=True, blank=True, editable=False)
+                                     null=True, blank=True, editable=False,
+                                     on_delete=models.SET_NULL)
+    contact_info.delete_cascade = False
     related_items = models.ManyToManyField('BaseContent',
                                            verbose_name=_('related items'),
                                            null=True, blank=True, editable=False)
