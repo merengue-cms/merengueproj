@@ -646,18 +646,31 @@ body div#content-zone {
 }
 
 /* calendar */
-#eventsCalendar .ui-datepicker {
+#eventscalendar .ui-datepicker {
   border-color: white;
   width: 190px;
 }
 
-#eventsCalendar .ui-datepicker .ui-datepicker-prev,
-#eventsCalendar .ui-datepicker .ui-datepicker-next {
-  top: 6px;
+#eventscalendar .ui-datepicker .ui-datepicker-prev,
+#eventscalendar .ui-datepicker .ui-datepicker-next {
+    top: 6px;
+    cursor: pointer;
 }
 
-#eventsCalendar .ui-datepicker select.ui-datepicker-month,
-#eventsCalendar .ui-datepicker select.ui-datepicker-year {
+#eventscalendar .ui-datepicker .ui-state-hover {
+    border: none;
+}
+
+#eventscalendar .ui-datepicker .ui-datepicker-prev-hover {
+    left: 2px;
+}
+
+#eventscalendar .ui-datepicker .ui-datepicker-next-hover {
+    right: 2px;
+}
+
+#eventscalendar .ui-datepicker select.ui-datepicker-month,
+#eventscalendar .ui-datepicker select.ui-datepicker-year {
   width: 40%;
 }
 .ui-datepicker .ui-datepicker-header,
@@ -688,7 +701,7 @@ body div#content-zone {
   text-align: center !important;
 }
 
-#left-sidebar #eventsCalendar div {
+#left-sidebar #eventscalendar div {
 	font-size: 90%;
 }
 
@@ -696,7 +709,7 @@ body div#content-zone {
     font-size: 1.3em;
 }
 
-#left-sidebar #eventsCalendar div.ui-datepicker {
+#left-sidebar #eventscalendar div.ui-datepicker {
 	width: 150px;
 	padding: 0 !important;
 	margin-left: 0;
