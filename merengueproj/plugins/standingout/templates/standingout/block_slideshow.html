@@ -61,7 +61,9 @@
               {% if standingout.title %}
                 {% inplace_edit "standingout.title" %}
               {% else %}
+                {% if standingout.obj and sntandingout.obj.title %}
                 {% inplace_edit "standingout.obj.title" %}
+                {% endif %}
               {% endif %}
               {% if standingout.obj.get_absolute_url or standingout.url %}
                   </a>
