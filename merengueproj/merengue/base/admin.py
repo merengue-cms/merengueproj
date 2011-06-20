@@ -1329,6 +1329,9 @@ class ContactInfoRelatedAdmin(RelatedModelAdmin):
     one_to_one = True
     related_field = 'basecontent'
 
+    def has_delete_permission(self, *args, **kwargs):
+        return False
+
 
 class BaseOrderableInlines(admin.ModelAdmin):
 
