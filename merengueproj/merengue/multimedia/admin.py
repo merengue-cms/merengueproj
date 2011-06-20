@@ -30,7 +30,7 @@ from django.utils.translation import ugettext
 from merengue.base.admin import (OrderableRelatedModelAdmin, BaseContentAdmin, BaseAdmin,
                                  WorkflowBatchActionProvider, RelatedModelAdmin)
 from merengue.base.models import BaseContent, MultimediaRelation
-from merengue.multimedia.forms import VideoCheckerModelForm
+from merengue.multimedia.forms import AudioCheckerModelForm, VideoCheckerModelForm
 from merengue.multimedia.models import (Photo, Video, PanoramicView, Image3D,
                                         File, Audio, BaseMultimedia)
 from merengue.perms import utils as perms_api
@@ -273,7 +273,11 @@ class Image3DAdmin(BaseMultimediaAdmin):
         return form
 
 
-class AudioAdmin(BaseMultimediaAdmin):
+class AudioChecker(object):
+    form = AudioCheckerModelForm
+
+
+class AudioAdmin(AudioChecker, BaseMultimediaAdmin):
     search_fields = ('name', 'original_filename')
     list_display = ('__str__', 'status', 'last_editor')
 
@@ -322,7 +326,7 @@ class RelatedFileAdmin(RelatedBaseMultimediaAdmin):
     tool_label = _('files')
 
 
-class RelatedAudioAdmin(RelatedBaseMultimediaAdmin):
+class RelatedAudioAdmin(AudioChecker, RelatedBaseMultimediaAdmin):
     tool_name = 'audios'
     tool_label = _('audio files')
 

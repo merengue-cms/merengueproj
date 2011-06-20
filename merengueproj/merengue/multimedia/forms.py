@@ -24,6 +24,40 @@ from django.utils.translation import ugettext_lazy as _
 from merengue.base.forms import BaseAdminModelForm
 
 
+def validate_file(content, content_type='video'):
+    cmd = "ffmpeg"
+    cmd_args = " -i - -f null"
+    if content_type == 'audio':
+        cmd_args += " -vn"
+    pop = popen2.Popen3(cmd + cmd_args + " -", capturestderr=False)
+    chunks = content.chunks()
+    time.sleep(1)
+    while pop.poll() == -1:
+        try:
+            chunk = chunks.next()
+            pop.tochild.write(chunk)
+        except (StopIteration, IOError):
+            pop.tochild.close()
+            pop.fromchild.close()
+    cmd_exit_status = pop.wait()
+    if cmd_exit_status != 0:
+        return False
+    else:
+        return True
+
+
+class AudioCheckerModelForm(BaseAdminModelForm):
+
+    def clean_file(self):
+        value = self.cleaned_data.get('file', None)
+        if not value:
+            return value
+        content = value
+        if not validate_file(content, content_type='audio'):
+            raise ValidationError(_('The file is not a audio file or has a format not supported'))
+        return value
+
+
 class VideoCheckerModelForm(BaseAdminModelForm):
 
     def clean_file(self):
@@ -31,19 +65,7 @@ class VideoCheckerModelForm(BaseAdminModelForm):
         if not value or not value[0]:
             return value
         content = value[0]
-        ffmpeg = "ffmpeg -i - -f null -"
-        pop = popen2.Popen3(ffmpeg, capturestderr=False)
-        chunks = content.chunks()
-        time.sleep(1)
-        while pop.poll() == -1:
-            try:
-                chunk = chunks.next()
-                pop.tochild.write(chunk)
-            except (StopIteration, IOError):
-                pop.tochild.close()
-                pop.fromchild.close()
-        ffmpeg_exit_status = pop.wait()
-        if ffmpeg_exit_status != 0:
+        if not validate_file(content):
             raise ValidationError(_('The file is not a video file or has a format not supported'))
         return value
 
