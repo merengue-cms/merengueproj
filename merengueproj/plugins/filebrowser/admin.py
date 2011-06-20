@@ -11,6 +11,15 @@ class RepositoryModelAdmin(PluginAdmin):
 
 class RepositorySectionModelAdmin(RepositoryModelAdmin, RelatedModelAdmin):
 
+    def has_add_permission(self, request):
+        return RelatedModelAdmin.has_add_permission(self, request)
+
+    def has_change_permission(self, request, obj=None):
+        return RelatedModelAdmin.has_change_permission(self, request, obj)
+
+    def has_delete_permission(self, request, obj=None):
+        return RelatedModelAdmin.has_delete_permission(self, request, obj)
+
     def queryset(self, request, basecontent=None):
         base_qs = super(RelatedModelAdmin, self).queryset(request)
         if basecontent is None:
