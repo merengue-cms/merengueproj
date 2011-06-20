@@ -45,6 +45,8 @@ def do_file_replacements(file_path, plugin_name):
     contents = contents.replace('Foo listing', '%s listing' % plugin_name.capitalize())
     contents = contents.replace('foo items', '%s items' % plugin_name)
     contents = contents.replace('Foo plugin', '%s plugin' % plugin_name.capitalize())
+    contents = contents.replace('Foo panel', '%s panel' % plugin_name.capitalize())
+    contents = contents.replace('foo_panel', '%s_panel' % plugin_name)
     fp.write(contents)
     fp.close()
 
@@ -85,7 +87,7 @@ class Command(LabelCommand, MerengueCommand):
         for parent, directories, files in os.walk(plugin_directory):
             for filename in files:
                 file_path = os.path.join(plugin_directory, parent, filename)
-                if filename.endswith('.py') or filename.endswith('.html'):
+                if filename.endswith('.py') or filename.endswith('.html') or filename.endswith('.css'):
                     do_file_replacements(file_path, plugin_name)
             for path_name in directories + files:
                 path = os.path.join(plugin_directory, parent, path_name)

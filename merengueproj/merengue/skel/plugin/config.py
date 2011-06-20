@@ -1,10 +1,10 @@
 from merengue.pluggable import Plugin
 
 from plugins.fooplugin.actions import FooAction
-from plugins.fooplugin.blocks import FooBlock
-
-from plugins.fooplugin.models import FooModel
 from plugins.fooplugin.admin import FooModelAdmin, FooModelSectionAdmin
+from plugins.fooplugin.blocks import FooBlock
+from plugins.fooplugin.models import FooModel
+from plugins.fooplugin.panels import FooPanel
 
 
 class PluginConfig(Plugin):
@@ -32,3 +32,6 @@ class PluginConfig(Plugin):
         return (
             ('FooModel extra permission', 'foomodel_perm', [FooModel]),
         )
+
+    def get_toolbar_panels(self):
+        return [FooPanel]
