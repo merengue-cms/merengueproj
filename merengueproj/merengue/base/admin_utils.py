@@ -1,5 +1,5 @@
 from django.contrib.admin.util import NestedObjects, quote
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, NoReverseMatch
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.text import capfirst
@@ -53,11 +53,14 @@ def get_deleted_contents(objs, opts, user, admin_site, using):
         has_admin = obj.__class__ in admin_site._registry or is_managed_content
         opts = obj._meta
         if has_admin and not isinstance(obj, ObjectPermission):
-            admin_url = reverse('%s:%s_%s_change'
-                                % (admin_site.name,
-                                opts.app_label,
-                                opts.object_name.lower()),
-                                None, (quote(obj._get_pk_val()), ))
+            try:
+                admin_url = reverse('%s:%s_%s_change'
+                                    % (admin_site.name,
+                                    opts.app_label,
+                                    opts.object_name.lower()),
+                                    None, (quote(obj._get_pk_val()), ))
+            except NoReverseMatch:
+                admin_url = ''
             p = '%s.%s' % (opts.app_label,
                         opts.get_delete_permission())
             if is_managed_content:
@@ -67,10 +70,14 @@ def get_deleted_contents(objs, opts, user, admin_site, using):
             elif not user.has_perm(p):
                 perms_needed.add(opts.verbose_name)
             # Display a link to the admin page.
-            return mark_safe(u'%s: <a href="%s">%s</a>' %
-                             (escape(capfirst(opts.verbose_name)),
-                              admin_url,
-                              escape(obj)))
+            if admin_url:
+                return mark_safe(u'%s: <a href="%s">%s</a>' %
+                                 (escape(capfirst(opts.verbose_name)),
+                                  admin_url,
+                                  escape(obj)))
+            else:
+                return u'%s: %s' % (capfirst(opts.verbose_name),
+                                    force_unicode(obj))
         else:
             # Don't display link to edit, because it either has no
             # admin or is edited inline.
