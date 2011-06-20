@@ -26,7 +26,7 @@ class VoteAdmin(PluginAdmin):
     form = VoteForm
 
 
-class VoteRelatedModelAdmin(VoteAdmin, RelatedModelAdmin):
+class VoteRelatedModelAdmin(RelatedModelAdmin, VoteAdmin):
     related_field = 'content'
     one_to_one = True
 
