@@ -14,7 +14,7 @@ class NestedContents(NestedObjects):
     pass
 
 
-def get_deleted_contents(objs, opts, user, admin_site, using):
+def get_deleted_contents(objs, opts, user, admin_site, using, bypass_django_perms=False):
     """
     This is a copy of django.contrib.admin.util.get_deleted_objects.
 
@@ -67,7 +67,7 @@ def get_deleted_contents(objs, opts, user, admin_site, using):
                 obj = obj.get_real_instance()
                 if not has_permission(obj, user, 'delete'):
                     objects_without_delete_perm.add(obj)
-            elif not user.has_perm(p):
+            elif not bypass_django_perms and not user.has_perm(p):
                 perms_needed.add(opts.verbose_name)
             # Display a link to the admin page.
             if admin_url:
