@@ -216,7 +216,7 @@ class Menu(models.Model):
             else:
                 roles = Role.objects.filter(slug='anonymous_user')
             descendants = descendants.filter(Q(visible_by_roles__isnull=True) |
-                                             Q(visible_by_roles__in=roles))
+                                             Q(visible_by_roles__in=roles)).distinct()
         return descendants
 
 try:
