@@ -20,25 +20,29 @@ from plugins.forum.utils import can_create_new_thread
 PAGINATE_BY = 20
 
 
-def forum_index(request, extra_context={}):
+def forum_index(request, extra_context=None):
     section = get_section(request, extra_context)
     forum_list = Forum.objects.published()
     forum_list = filtering_in_section(forum_list, section)
     return content_list(request, forum_list, template_name='forum/forum_list.html', paginate_by=PAGINATE_BY)
 
 
-def forum_view(request, forum_slug, original_context=None):
+def forum_view(request, forum_slug, extra_context=None):
     forum = get_object_or_404(Forum, slug=forum_slug)
+    extra_context = extra_context or {}
     context = {'thread_list': forum.thread_set.published(),
                'paginate_threads_by': PAGINATE_BY,
               }
+    context.update(extra_context)
     return content_view(request, forum, extra_context=context)
 
 
-def content_forum_view(request, content, template_name, extra_context):
+def content_forum_view(request, content, template_name, extra_context=None):
+    extra_context = extra_context or {}
     context = {'thread_list': content.thread_set.published(),
                'paginate_threads_by': PAGINATE_BY,
               }
+    context.update(extra_context)
     return render_content(request, content, template_name, context)
 
 
@@ -101,7 +105,7 @@ def forum_comment_form(request, content, parent_id, form=None, template='forum/f
 
 @login_required
 def forum_comment_add(request, forum_slug, thread_slug, parent_id=None):
-    thread = get_object_or_404(Thread, slug=thread_slug)
+    thread = get_object_or_404(Thread, slug=thread_slug, forum__slug=forum_slug)
     if thread.closed:
         raise Http404
 
