@@ -18,7 +18,10 @@
 # django imports
 from django import template
 
-import merengue.perms.utils
+from merengue.base.templatetags import IfNode
+from merengue.perms.utils import has_permission, has_global_permission
+
+
 register = template.Library()
 
 
@@ -62,9 +65,9 @@ class PermissionComparisonNode(template.Node):
         request = context.get("request")
         permission = self.permission.resolve(context, True)
         if obj:
-            has_perm = merengue.perms.utils.has_permission(obj, request.user, permission)
+            has_perm = has_permission(obj, request.user, permission)
         else:
-            has_perm = merengue.perms.utils.has_global_permission(request.user, permission)
+            has_perm = has_global_permission(request.user, permission)
 
         if has_perm:
             return self.nodelist_true.render(context)
@@ -83,3 +86,26 @@ def ifhasperm(parser, token):
       {% ifhasperm "edit" obj %}
     """
     return PermissionComparisonNode.handle_token(parser, token)
+
+
+class IfCanEditNode(IfNode):
+
+    def __init__(self, user, content, *args):
+        self.content = content
+        self.user = user
+        super(IfCanEditNode, self).__init__(*args)
+
+    def check(self, context):
+        content = template.Variable(self.content).resolve(context)
+        user = template.Variable(self.user).resolve(context)
+        return bool(content.can_edit(user))
+
+
+def ifcanedit(parser, token):
+    bits = list(token.split_contents())
+    if len(bits) != 3:
+        raise template.TemplateSyntaxError, '%r takes two arguments' % bits[0]
+    user = bits[1]
+    content = bits[2]
+    return IfCanEditNode(user, content, parser, token)
+ifcanedit = register.tag(ifcanedit)
