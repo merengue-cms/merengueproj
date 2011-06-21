@@ -601,6 +601,13 @@ class BaseContent(BaseClass):
         """ Get link depending on user. To override in subclasses, if needed """
         raise NotImplementedError("Model %s has no implements a link_by_user method" % self._meta)
 
+    def get_owners(self):
+        owners = self.owners.all()
+        if getattr(settings, 'ACQUIRE_SECTION_OWNERSHIP', False):
+            for s in self.sections.all():
+                owners |= s.get_owners()
+        return owners
+
     def can_edit(self, user):
         """ Returns if the user can edit this content """
         from merengue.perms.utils import has_permission

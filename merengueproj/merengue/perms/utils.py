@@ -209,22 +209,20 @@ def _get_owners(obj):
     If the obj model does not support owners, returns the related basecontent owners.
     If ACQUIRE_SECTION_OWNERSHIP is set, the section owners are also added.
     """
-    if getattr(obj, 'owners', None):
-        owners = obj.owners.all()
+    if getattr(obj, 'get_owners', None):
+        owners = obj.get_owners()
     else:
         owners = User.objects.none()
         for bc in obj.basecontent_set.all():
             owners |= bc.owners.all()
 
     if getattr(settings, 'ACQUIRE_SECTION_OWNERSHIP', False):
-        if getattr(obj, 'sections', None):
-            sections = obj.sections.all()
-        else:
+        if not getattr(obj, 'sections', None):
             sections = BaseSection.objects.none()
             for bc in obj.basecontent_set.all():
                 sections |= bc.sections.all()
-        for s in sections.all():
-            owners |= s.owners.all()
+            for s in sections.all():
+                owners |= s.get_owners()
     return owners
 
 
