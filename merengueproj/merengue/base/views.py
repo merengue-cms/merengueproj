@@ -91,7 +91,7 @@ def render_content(request, content, template_name=None, extra_context=None):
     meta_tags = TaggedItem.objects.filter(content_type=ctype, object_id=content.id)
     context = {'content': content,
                'meta_tags': meta_tags,
-               'template_base': 'base.html'}
+               'base_template': 'content_view.html'}
     context.update(extra_context)
     if template_name is None:
         template_name = content._meta.content_view_template
@@ -131,7 +131,7 @@ def content_list(request, queryset, paginate_by=10, page=None,
 @never_cache
 def ajax_autocomplete_tags(request, app_name, model):
     cls = get_model(app_name, model)
-    query_string=request.GET.get("q", None)
+    query_string = request.GET.get("q", None)
     limit = request.GET.get("limit", None)
     tags = Tag.objects.usage_for_model(cls)
 
