@@ -48,8 +48,8 @@ def delete_selected(modeladmin, request, queryset, bypass_django_permissions=Fal
                 obj_display = force_unicode(obj)
                 modeladmin.log_deletion(request, obj, obj_display)
             queryset.delete()
-            modeladmin.message_user(request, _("Successfully deleted %(count)d %(items)s.") % {
-                "count": n, "items": model_ngettext(modeladmin.opts, n),
+            modeladmin.message_user(request, _('Successfully deleted %(count)d %(items)s.') % {
+                'count': n, 'items': model_ngettext(modeladmin.opts, n),
             })
         # Return None to display the change list page again.
         return None
@@ -60,33 +60,33 @@ def delete_selected(modeladmin, request, queryset, bypass_django_permissions=Fal
         objects_name = force_unicode(opts.verbose_name_plural)
 
     if perms_needed or objects_without_delete_perm or protected:
-        title = _("Cannot delete %(name)s") % {"name": objects_name}
+        title = _('Cannot delete %(name)s') % {'name': objects_name}
     else:
-        title = _("Are you sure?")
+        title = _('Are you sure?')
 
     context = {
-        "title": title,
-        "objects_name": objects_name,
-        "deletable_objects": [deletable_objects],
+        'title': title,
+        'objects_name': objects_name,
+        'deletable_objects': [deletable_objects],
         'queryset': queryset,
-        "perms_lacking": perms_needed,
-        "protected": protected,
-        "opts": opts,
-        "root_path": modeladmin.admin_site.root_path,
-        "app_label": app_label,
+        'perms_lacking': perms_needed,
+        'protected': protected,
+        'opts': opts,
+        'root_path': modeladmin.admin_site.root_path,
+        'app_label': app_label,
         'action_checkbox_name': helpers.ACTION_CHECKBOX_NAME,
     }
 
     # Display the confirmation page
     return render_to_response(modeladmin.delete_selected_confirmation_template or [
-        "admin/%s/%s/delete_selected_confirmation.html" % (app_label, opts.object_name.lower()),
-        "admin/%s/delete_selected_confirmation.html" % app_label,
-        "admin/delete_selected_confirmation.html",
+        'admin/%s/%s/delete_selected_confirmation.html' % (app_label, opts.object_name.lower()),
+        'admin/%s/delete_selected_confirmation.html' % app_label,
+        'admin/delete_selected_confirmation.html',
     ], context, context_instance=template.RequestContext(request))
 
-delete_selected.short_description = ugettext_lazy("Delete selected %(verbose_name_plural)s")
+delete_selected.short_description = ugettext_lazy('Delete selected %(verbose_name_plural)s')
 
 
 def related_delete_selected(modeladmin, request, queryset):
     return delete_selected(modeladmin, request, queryset, True)
-related_delete_selected.short_description = ugettext_lazy("Delete selected %(verbose_name_plural)s")
+related_delete_selected.short_description = ugettext_lazy('Delete selected %(verbose_name_plural)s')
