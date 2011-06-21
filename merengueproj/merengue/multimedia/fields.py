@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import os
-import popen2
 import re
 import subprocess
 import tempfile
@@ -47,7 +46,7 @@ class AutoEncodeFieldFile(VideoFile, models.fields.files.FieldFile):
     def save(self, name, content, save=True):
         try:
             dot_index = name.rindex('.')
-        except ValueError: # filename has no dot
+        except ValueError:  # filename has no dot
             pass
         else:
             name = name[:dot_index]
@@ -70,6 +69,7 @@ class AutoEncodeFieldFile(VideoFile, models.fields.files.FieldFile):
         """
         Resize and encode a video. Requires ffmpeg and yamdi.
         """
+        import popen2
         if codec is None:
             codec = 'flv'
         tempfd, tempfilename = tempfile.mkstemp()

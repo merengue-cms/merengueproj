@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-import popen2
 import time
 
 from django.forms.util import ErrorList, ValidationError
@@ -25,6 +24,7 @@ from merengue.base.forms import BaseAdminModelForm
 
 
 def validate_file(content, content_type='video'):
+    import popen2
     cmd = "ffmpeg"
     cmd_args = " -i - -f null"
     if content_type == 'audio':
