@@ -2,7 +2,7 @@
 {% if obj_tools %}
 <div class="change-tabs">
 {% for obj_tool in obj_tools %}
-        <ul id="change-tabs-ul" class="smart_relations_object_tool">
+        <ul id="change-tabs-ul" class="smart_relations_object_tool{% if obj_tool.base_object_opts %} smart-relations-model-{{ obj_tool.base_object_opts.app_label }}-{{ obj_tool.base_object_opts.module_name }}{% endif %}">
             <li class="edit-link"><a href="{{ obj_tool.base_url }}">{% trans "Edit" %}</a></li>
             <li class="content-link" style="display: none;"><a class="trigger" href="#">{% trans "Contents" %}</a><ul class="contents_parent"></ul></li>
             {% for tools_admin_site in obj_tool.tools %}
