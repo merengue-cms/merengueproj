@@ -916,7 +916,7 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
             if obj.no_deletable:
                 return False
             else:  # deletable
-                return perms_api.has_permission(obj, request.user, 'delete')
+                return obj.can_delete(request.user)
         else:  # obj = None
             if request.method == 'POST' and \
                request.POST.get('action', None) == u'delete_selected':

@@ -7,7 +7,6 @@ from django.utils.encoding import force_unicode
 
 from merengue.base.models import BaseContent
 from merengue.perms.models import ObjectPermission
-from merengue.perms.utils import has_permission
 
 
 class NestedContents(NestedObjects):
@@ -63,9 +62,10 @@ def get_deleted_contents(objs, opts, user, admin_site, using, bypass_django_perm
                 admin_url = ''
             p = '%s.%s' % (opts.app_label,
                         opts.get_delete_permission())
-            if is_managed_content:
-                obj = obj.get_real_instance()
-                if not has_permission(obj, user, 'delete'):
+            if is_managed_content or hasattr(obj, 'can_delete'):
+                if is_managed_content:
+                    obj = obj.get_real_instance()
+                if not obj.can_delete(user):  # maybe is not a BaseContent but implements can_delete
                     objects_without_delete_perm.add(obj)
             elif not bypass_django_perms and not user.has_perm(p):
                 perms_needed.add(opts.verbose_name)

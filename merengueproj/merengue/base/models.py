@@ -613,6 +613,11 @@ class BaseContent(BaseClass):
         from merengue.perms.utils import has_permission
         return has_permission(self, user, 'edit')
 
+    def can_delete(self, user):
+        """ Returns if the user can delete this content """
+        from merengue.perms.utils import has_permission
+        return has_permission(self, user, 'delete')
+
     def get_main_section(self):
         """ Get main section of a content """
         try:
