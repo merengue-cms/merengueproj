@@ -68,6 +68,7 @@ def delete_selected(modeladmin, request, queryset, bypass_django_permissions=Fal
         'title': title,
         'objects_name': objects_name,
         'deletable_objects': [deletable_objects],
+        'objects_without_delete_perm': objects_without_delete_perm,
         'queryset': queryset,
         'perms_lacking': perms_needed,
         'protected': protected,
