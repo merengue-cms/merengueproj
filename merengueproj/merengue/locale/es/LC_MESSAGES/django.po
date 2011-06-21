@@ -19,15 +19,15 @@ msgstr ""
 
 #: merengue/settings.py:157 merengue/workflow/models.py:352
 msgid "Draft"
-msgstr ""
+msgstr "Borrador"
 
 #: merengue/settings.py:158 merengue/workflow/models.py:355
 msgid "Pending"
-msgstr ""
+msgstr "Pendiente"
 
 #: merengue/settings.py:159 merengue/workflow/models.py:358
 msgid "Published"
-msgstr ""
+msgstr "Publicado"
 
 #: merengue/settings.py:343
 msgid "Primary link"
