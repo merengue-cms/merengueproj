@@ -18,6 +18,7 @@
 from django.core.cache import cache
 from django.template import RequestContext
 from django.template.loader import render_to_string
+from django.utils.http import urlquote
 from django.utils.translation import get_language, ugettext as _
 
 from merengue.block.models import RegisteredBlock
@@ -79,7 +80,7 @@ class BaseBlock(RegistrableItem):
         registered_block = self.reg_item
         key_prefix = 'blocks_cache_%d' % registered_block.id
         if registered_block.cache_vary_on_url:
-            key_prefix += '-%s' % request.META['PATH_INFO']
+            key_prefix += '-%s' % urlquote(request.META['PATH_INFO'])
             params = request.GET.urlencode()
             if params:
                 key_prefix += '?%s' % params
