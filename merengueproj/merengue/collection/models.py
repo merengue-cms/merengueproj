@@ -295,6 +295,14 @@ class FeedItem(BaseContent):
         self._real_item = real_item
         return real_item
 
+    def get_owners(self):
+        """
+        Override the default behavior. It does not use owners field because
+        the feed items are created automatically (have no owners). The owners
+        will be the same owners of the feed collection
+        """
+        return self.feed_collection.get_owners()
+
     def get_full_item(self, field_name=None):
         real_item = self.get_real_item()
         if hasattr(self, '_full_item'):
