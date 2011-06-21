@@ -38,10 +38,17 @@ class ContentGroupLinksBlock(Block):
     def render(self, request, place, context, *args, **kwargs):
         content_groups = ContentGroup.objects.filter(contents=context['content'])
         if content_groups:
-            filtered_contents = [[(child_cont.name, child_cont.public_link())
-                                  for child_cont in cont.contents.all()]
-                                 for cont in content_groups]
-            numchars = get_plugin('contentmenu').get_config().get('numchars', []).get_value()
+            filtered_contents = []
+            filtered_contents_len = 0
+            for cont in content_groups:
+                for child_cont in cont.contents.all():
+                    item = (child_cont.name, child_cont.get_absolute_url())
+                    if not item in filtered_contents:
+                        filtered_contents_len += 1
+                        filtered_contents.append(item)
+            filtered_contents_len = len(filtered_contents)
+            numchars_global = float(get_plugin('contentmenu').get_config().get('numchars', []).get_value())
+            numchars = (numchars_global - filtered_contents_len * 3) / filtered_contents_len
             return self.render_block(
                 request, template_name='contentmenu/contentlinks_block.html',
                 block_title=_('Content group links'),

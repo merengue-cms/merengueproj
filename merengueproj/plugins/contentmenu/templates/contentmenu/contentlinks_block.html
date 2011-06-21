@@ -6,12 +6,10 @@
 
 {% block blockbody %}
   <div id="content-group-links">
-    {% for content_group in contents %}
-       <ul>
-         {% for content in content_group %}
-	     <li><a href="{{ content.1 }}" title="{{ content.0 }}">{{ content.0|truncatechars:numchars }}</a></li>
-         {% endfor %}
-       </ul>
+    <ul>
+    {% for content in contents %}
+        <li><a href="{{ content.1 }}" title="{{ content.0 }}">{{ content.0|truncatechars:numchars }}</a></li>
     {% endfor %}
+    </ul>
   </div>
 {% endblock %}
