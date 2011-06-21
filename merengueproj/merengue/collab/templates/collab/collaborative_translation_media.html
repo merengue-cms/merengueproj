@@ -1,10 +1,12 @@
 {% if user.is_authenticated %}
 {% load compress media_tags %}
+
+<script src="{{ TINYMCE_JS }}" type="text/javascript"></script>
+
 {% addmedia "css" %}
   <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}merengue/css/collab/translation.css" />
 {% endaddmedia %}
 {% addmedia "js" %}
-  <script src="{{ TINYMCE_JS }}" type="text/javascript"></script>
   <script src="{{ MEDIA_URL }}merengue/js/collab/CollabTranslation.js" type="text/javascript"></script>
 {% endaddmedia %}
 {% compress js %}
