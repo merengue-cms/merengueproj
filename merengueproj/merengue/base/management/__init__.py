@@ -21,7 +21,7 @@ import sys
 from django.core import management as django_management
 from django.core.management.base import BaseCommand, handle_default_options
 
-from merengue.base.management.base import MerengueCommand
+from merengue.base.management.base import MerengueCommand  # pyflakes:ignore
 
 # cache of loaded Merengue commands
 _merengue_commands = None
@@ -109,7 +109,7 @@ class ManagementUtility(django_management.ManagementUtility):
             options, args = parser.parse_args(self.argv)
             handle_default_options(options)
         except:
-            pass # Ignore any option errors at this point.
+            pass  # Ignore any option errors at this point.
 
         try:
             subcommand = self.argv[1]
@@ -136,7 +136,7 @@ class ManagementUtility(django_management.ManagementUtility):
             command = self.fetch_command(subcommand)
             if subcommand not in ['migrate', 'syncdb', 'startproject', 'dbshell',
                                   'rebuild_db', 'restore_config', 'schemamigration',
-                                  'datamigration', 'backupdb']:
+                                  'datamigration', 'backupdb', 'startplugin']:
                 # This is override fragment of Django execute method
                 # only works if models have been created (not with syncdb, startproject neither migrate)
                 from merengue.pluggable import enable_active_plugins
