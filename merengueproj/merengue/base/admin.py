@@ -65,6 +65,7 @@ from transmeta import (canonical_fieldname, get_all_translatable_fields,
                        get_real_fieldname_in_each_language,
                        get_fallback_fieldname, get_real_fieldname)
 
+from merengue.base.actions import related_delete_selected
 from merengue.base.adminsite import site
 from merengue.base.admin_utils import get_deleted_contents
 from merengue.base.filterspecs import ClassnameFilterSpec
@@ -1320,6 +1321,15 @@ class RelatedModelAdmin(BaseAdmin):
         if self.parent_model_admin:
             return self.parent_model_admin.has_change_permission(request, self.basecontent)
         return perms_api.has_permission(self.basecontent, request.user, 'edit')
+
+    def get_actions(self, *args, **kwargs):
+        actions = super(RelatedModelAdmin, self).get_actions(*args, **kwargs)
+        if 'delete_selected' in actions.keys():
+            func = related_delete_selected
+            name = 'delete_selected'
+            description = getattr(func, 'short_description', name.replace('_', ' '))
+            actions['delete_selected'] = (func, name, description)
+        return actions
 
 
 class ContactInfoRelatedAdmin(RelatedModelAdmin):

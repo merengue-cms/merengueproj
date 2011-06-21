@@ -14,7 +14,7 @@ from django.utils.translation import ugettext_lazy, ugettext as _
 from merengue.base.admin_utils import get_deleted_contents
 
 
-def delete_selected(modeladmin, request, queryset):
+def delete_selected(modeladmin, request, queryset, bypass_django_permissions=False):
     """
     Default action which deletes the selected objects.
 
@@ -35,7 +35,7 @@ def delete_selected(modeladmin, request, queryset):
 
     # Populate deletable_objects, a data structure of all related objects that
     # will also be deleted.
-    (deletable_objects, objects_without_delete_perm, perms_needed, protected) = get_deleted_contents(queryset, opts, request.user, modeladmin.admin_site, using)
+    (deletable_objects, objects_without_delete_perm, perms_needed, protected) = get_deleted_contents(queryset, opts, request.user, modeladmin.admin_site, using, bypass_django_permissions)
 
     # The user has already confirmed the deletion.
     # Do the deletion and return a None to display the change list view again.
@@ -85,3 +85,8 @@ def delete_selected(modeladmin, request, queryset):
     ], context, context_instance=template.RequestContext(request))
 
 delete_selected.short_description = ugettext_lazy("Delete selected %(verbose_name_plural)s")
+
+
+def related_delete_selected(modeladmin, request, queryset):
+    return delete_selected(modeladmin, request, queryset, True)
+related_delete_selected.short_description = ugettext_lazy("Delete selected %(verbose_name_plural)s")
