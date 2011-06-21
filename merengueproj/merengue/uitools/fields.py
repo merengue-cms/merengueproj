@@ -87,6 +87,10 @@ class AdaptorTinyMCEField(AdaptorTextAreaField):
 
         extra_mce_settings = getattr(settings, 'EXTRA_MCE', {})
         extra_mce_settings.update(self._order_tinymce_buttons(tiny_mce_buttons, tiny_mce_selectors))
+        content_css = [i for i in settings.TINYMCE_EXTRA_MEDIA.get('css', [])]
+        content_js = [i for i in settings.TINYMCE_EXTRA_MEDIA.get('css', [])]
+        content_css.extend(["merengue/css/editorstyles.css"])
+        content_css = ','.join(["%s%s" % (settings.MEDIA_URL, css) for css in content_css])
         extra_mce_settings.update({'inplace_edit': True,
                               'theme_advanced_blockformats': 'h1,h2,h4,blockquote',
                               'file_browser_callback': 'CustomFileBrowser',
@@ -94,6 +98,8 @@ class AdaptorTinyMCEField(AdaptorTextAreaField):
                               'theme_advanced_resizing': True,
                               'theme_advanced_resize_horizontal': True,
                               'convert_on_click': True,
+                              'content_css': content_css,
+                              'content_js': content_js,
                              })
         extra_mce_settings.update(self.widget_options)
         field.field.widget = TinyMCE(extra_mce_settings=extra_mce_settings,
