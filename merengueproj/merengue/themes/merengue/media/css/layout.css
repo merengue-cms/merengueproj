@@ -540,6 +540,7 @@ div#right-sidebar {
 .breadcrumbSeparator {
   background: transparent url(../img/bread_arrow.jpg) no-repeat left center;
   font-size: 0;
+  color: transparent;
   padding: 8px 6px 0 4px;
 } 
 
