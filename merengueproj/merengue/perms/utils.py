@@ -15,13 +15,16 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from functools import wraps
 # django imports
 from django.conf import settings
 from django.db.models import Q
 from django.contrib.auth.models import User, AnonymousUser, Group
 from django.contrib.contenttypes.models import ContentType
+from django.core.cache import cache
 from django.core.exceptions import ObjectDoesNotExist, ImproperlyConfigured
 from django.template import defaultfilters
+from django.utils.decorators import available_attrs
 
 # permissions imports
 from merengue.perms import ANONYMOUS_ROLE_SLUG
@@ -39,6 +42,73 @@ MANAGE_MULTIMEDIA_PERMISSION = 'manage_multimedia'
 MANAGE_PLUGIN_PERMISSION = 'manage_plugin_content'
 MANAGE_BLOCK_PERMISSION = 'manage_block'
 
+
+# Cache stuff  #################################################################
+
+PERMS_CACHE_KEY = 'perms_cache'
+
+
+def get_from_cache(user, content, codename, roles):
+    if not settings.CACHE_PERMISSIONS:
+        return None
+    perms_cache = cache.get(PERMS_CACHE_KEY)
+    if perms_cache is None:
+        return None
+    roles_value = roles and tuple(r.id for r in roles) or None
+    return perms_cache.get(
+        (user.id, content, str(codename), roles_value),
+        None,
+    )
+
+
+def clear_cache():
+    cache.set(PERMS_CACHE_KEY, {})
+
+
+def set_permission_in_cache(global_perm=False):
+    """
+    Decorator for views makes store in cache after doing the logic
+    """
+    def decorator(view_func):
+        @wraps(view_func, assigned=available_attrs(view_func))
+        def _wrapped_func(*args, **kwargs):
+            has_permission = view_func(*args, **kwargs)
+            if isinstance(has_permission, tuple):
+                # a tuple (has_permission, "cached") has been returned
+                # this implies the permission was cached and there is no need
+                # to update cache again
+                return has_permission[0]
+            if not settings.CACHE_PERMISSIONS:
+                return has_permission
+            # update the permission cache
+            cache_values = {}
+            if global_perm:
+                cache_params = ('user', 'codename', 'roles')
+            else:
+                cache_params = ('content', 'user', 'codename', 'roles')
+            args_len = len(args)
+            for i, param in enumerate(cache_params):
+                if i < args_len:
+                    cache_values[param] = args[i]
+                else:  # is in kwargs
+                    cache_values[param] = kwargs.get(param, None)
+            if global_perm:
+                cache_values['content'] = None
+            perms_cache = cache.get(PERMS_CACHE_KEY, {})
+            roles = cache_values['roles'] and tuple(r.id for r in cache_values['roles']) or None
+            cache_key = (
+                getattr(cache_values['user'], 'id', None),
+                getattr(cache_values['content'], 'id', None),
+                str(cache_values['codename']),
+                roles,
+            )
+            perms_cache[cache_key] = has_permission
+            cache.set(PERMS_CACHE_KEY, perms_cache)
+            return has_permission
+        return _wrapped_func
+    return decorator
+
+
 # Roles ######################################################################
 
 
@@ -53,6 +123,7 @@ def add_role(principal, role):
     role
         The role which is assigned.
     """
+    clear_cache()
     if isinstance(principal, User):
         try:
             PrincipalRoleRelation.objects.get(user=principal, role=role, content__isnull=True)
@@ -83,6 +154,7 @@ def add_local_role(obj, principal, role):
     role
         The role which is assigned.
     """
+    clear_cache()
     if isinstance(principal, User):
         try:
             PrincipalRoleRelation.objects.get(user=principal, role=role, content=obj)
@@ -110,6 +182,7 @@ def remove_role(principal, role):
     role
         The role which is removed.
     """
+    clear_cache()
     try:
         if isinstance(principal, User):
             ppr = PrincipalRoleRelation.objects.get(
@@ -140,6 +213,7 @@ def remove_local_role(obj, principal, role):
     role
         The role which is removed.
     """
+    clear_cache()
     try:
         if isinstance(principal, User):
             ppr = PrincipalRoleRelation.objects.get(
@@ -164,6 +238,7 @@ def remove_roles(principal):
     principal
         The principal (user or group) from which all roles are removed.
     """
+    clear_cache()
     if isinstance(principal, User):
         ppr = PrincipalRoleRelation.objects.filter(
             user=principal, content__isnull=True)
@@ -190,6 +265,7 @@ def remove_local_roles(obj, principal):
     principal
         The principal (user or group) from which the roles are removed.
     """
+    clear_cache()
     if isinstance(principal, User):
         ppr = PrincipalRoleRelation.objects.filter(
             user=principal, content=obj)
@@ -346,6 +422,7 @@ def grant_permission(role, permission, obj=None):
         If obj is None, the permissions should be granted for all contents.
 
     """
+    clear_cache()
     if not isinstance(permission, Permission):
         try:
             permission = Permission.objects.get(codename=permission)
@@ -377,6 +454,7 @@ def remove_permission(role, permission, obj=None):
         The permission which should be removed. Either a permission object
         or the codename of a permission.
     """
+    clear_cache()
     if not isinstance(permission, Permission):
         try:
             permission = Permission.objects.get(codename=permission)
@@ -392,6 +470,7 @@ def remove_permission(role, permission, obj=None):
     return True
 
 
+@set_permission_in_cache(global_perm=True)
 def has_global_permission(user, codename, roles=None):
     """Checks whether the passed user has passed permission for passed object.
 
@@ -410,6 +489,11 @@ def has_global_permission(user, codename, roles=None):
 
     if user.is_superuser:
         return True
+
+    # try to get from cache
+    cached_perm = get_from_cache(user, None, codename, roles)
+    if cached_perm is not None:
+        return cached_perm, "cached"  # latest returned value never will reach the function which makes call
 
     if roles is None:
         roles = []
@@ -434,6 +518,7 @@ def has_global_permission(user, codename, roles=None):
     return False
 
 
+@set_permission_in_cache()
 def has_permission(obj, user, codename, roles=None):
     """Checks whether the passed user has passed permission for passed object.
 
@@ -455,6 +540,11 @@ def has_permission(obj, user, codename, roles=None):
 
     if user.is_superuser:
         return True
+
+    # try to get from cache
+    cached_perm = get_from_cache(user, obj, codename, roles)
+    if cached_perm is not None:
+        return cached_perm, "cached"  # latest returned value never will reach the function which makes call
 
     if roles is None:
         roles = []

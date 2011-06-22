@@ -190,6 +190,8 @@ CACHE_MIDDLEWARE_KEY_PREFIX = 'merengue'
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 JOHNNY_MIDDLEWARE_KEY_PREFIX = 'merengue'
 
+CACHE_PERMISSIONS = True
+
 # Google API Key for localhost:8000
 # http://code.google.com/apis/maps/signup.html
 GOOGLE_MAPS_API_KEY = 'ABQIAAAAddxuy_lt2uAk9Y30XD3MJhQCULP4XOMyhPd8d_NrQQEO8sT8XBRRmJjQjU4qrycwOKb_v70y1h_1GQ'
