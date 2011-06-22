@@ -1599,6 +1599,7 @@ if settings.USE_GIS:
     class LocationModelAdminMixin(object):
 
         title_first_fieldset = None
+        openlayers_url = '%smerengue/js/OpenLayers/OpenLayers.js' % settings.MEDIA_URL
 
         def set_fieldset(self):
             """Returns a BaseInlineFormSet class for use in admin add/change views."""
