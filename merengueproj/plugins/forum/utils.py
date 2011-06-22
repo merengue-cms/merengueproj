@@ -12,7 +12,7 @@ def can_create_new_thread(request, content):
         login_url = '%s?next=%s' % (get_login_url(),
                                     request.get_full_path())
         return HttpResponseRedirect(login_url)
-    elif not has_permission(content, user, 'create_new_thread'):
+    elif not has_permission(content, user, 'edit'):
         send_info(request, ugettext('You don\'t have permission to create a new thread'))
         return HttpResponseRedirect(content.get_absolute_url())
     return None
