@@ -42,7 +42,7 @@ class Repository(models.Model):
         self.rebuild_if_missing()
 
     def __unicode__(self):
-        return u'Repository at %s' % self.get_root_path()
+        return _(u'Repository at %s') % self.get_root_path()
 
     def get_absolute_url_with_out_section(self):
         return reverse('filebrowser_root', args=(self.name, ))
