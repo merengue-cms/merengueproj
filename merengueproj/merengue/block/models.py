@@ -20,7 +20,7 @@ from django.db.models import signals
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.models import BaseContent
-from merengue.registry.managers import RegisteredItemManager
+from merengue.block.managers import BlockManager
 from merengue.registry.models import RegisteredItem
 
 import re
@@ -95,7 +95,7 @@ class RegisteredBlock(RegisteredItem):
         verbose_name=_('overwrite generic block if is present on the actual page'),
         default=False)
 
-    objects = RegisteredItemManager()
+    objects = BlockManager()
 
     def show_in_url(self, url):
 

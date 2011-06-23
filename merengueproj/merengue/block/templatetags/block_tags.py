@@ -16,7 +16,6 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django import template
-from django.db.models import Q
 from django.conf import settings
 from django.template.loader import render_to_string
 
@@ -155,22 +154,7 @@ def _get_blocks_to_display(place=None, content=None):
     """
     Gets content related blocks excluding the ones overwritten by blocks within the same content
     """
-    if place:
-        placed_at = {'placed_at': place}
-    else:
-        placed_at = {}
-    if content:
-        blocks = content.registeredblock_set.all().filter(**placed_at)
-    else:
-        blocks = RegisteredBlock.objects.actives().filter(content__isnull=True).filter(**placed_at)
-
-    overwrite = Q(content__isnull=False) & (Q(placed_at=place, overwrite_if_place=True) | Q(overwrite_always=True))
-    excluders = RegisteredBlock.objects.filter(overwrite)
-    excluded = blocks.none()
-    for b in excluders:
-        excluded |= blocks.filter(~Q(id__in=[i.id for i in excluders]), module=b.module, class_name=b.class_name, overwrite_always=False)
-
-    return blocks.exclude(id__in=[b.id for b in excluded])
+    return RegisteredBlock.objects.all().placed_in(place).with_content(content).exclude_overrided()
 
 
 def _get_all_blocks_to_display(place=None, content=None, section=None):
@@ -180,23 +164,13 @@ def _get_all_blocks_to_display(place=None, content=None, section=None):
         - section related blocks
         - content related blocks
     """
-    overwrite = Q(placed_at=place, overwrite_if_place=True) | Q(overwrite_always=True)
-
-    blocks = _get_blocks_to_display(place)
-    content_blocks = RegisteredBlock.objects.none()
-    section_blocks = RegisteredBlock.objects.none()
+    blocks = _get_blocks_to_display(place, content)
+    section_blocks = []
     if section:
-        section_blocks = _get_blocks_to_display(place, section)
-        for b in section_blocks.filter(overwrite):
-            blocks = blocks.exclude(module=b.module, class_name=b.class_name)
-    if content:
-        content_blocks = _get_blocks_to_display(place, content)
-        for b in content_blocks.filter(overwrite):
-            blocks = blocks.exclude(module=b.module, class_name=b.class_name)
-            if section:
-                section_blocks = section_blocks.exclude(module=b.module, class_name=b.class_name)
-
-    return (blocks | content_blocks | section_blocks).order_by('order')
+        section_blocks = _get_blocks_to_display(place, section).exclude_overrided(content)
+    all_blocks = blocks + section_blocks
+    sorted(all_blocks, key=lambda b: b.order)
+    return all_blocks
 
 
 class RenderAllBlocksNode(template.Node):
