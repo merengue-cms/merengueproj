@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.utils.translation import ugettext_lazy as _
+
 from merengue.base.admin import PluginAdmin, RelatedModelAdmin
 from merengue.base.models import BaseContent
 
@@ -28,6 +30,7 @@ class VoteAdmin(PluginAdmin):
 
 class VoteRelatedModelAdmin(RelatedModelAdmin, VoteAdmin):
     related_field = 'content'
+    tool_label = _('votes')
     one_to_one = True
 
 
