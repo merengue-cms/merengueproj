@@ -17,7 +17,8 @@
 
 from django.conf import settings
 from django.core.cache import cache
-from django.http import Http404
+from django.core.exceptions import PermissionDenied
+from django.http import Http404, HttpResponseForbidden
 
 
 _section_prefixes = []
@@ -76,6 +77,8 @@ class ResponseSectionMiddleware(object):
         # is a middleware, we can't assume the errors will be caught elsewhere.
         except Http404:
             return response
+        except PermissionDenied:
+            return HttpResponseForbidden('<h1>Permission denied</h1>')
         except:
             if settings.DEBUG:
                 raise
