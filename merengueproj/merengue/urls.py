@@ -22,7 +22,9 @@ from merengue.urlresolvers import merengue_url as url
 
 
 js_info_dict = {
-        'packages': ('django.conf', ),
+        'packages': ('django.conf',
+                     'django.contrib.admin',
+                    ),
 }
 
 handler404 = 'merengue.perms.defaults.page_not_found'
@@ -40,7 +42,7 @@ urlpatterns = patterns('',
 
     # login and logout
     url(r'^login/$', 'merengue.portal.views.login', name="merengue_login"),
-    url(r'^logout/$','merengue.portal.views.logout', name="merengue_logout"),
+    url(r'^logout/$', 'merengue.portal.views.logout', name="merengue_logout"),
 
     url({'en': r'^password/reset/$',
          'es': r'^contrasena/cambiar/$'},
