@@ -16,6 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.db import models
+from django.db.models.signals import post_save, post_delete
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 from django.contrib.contenttypes.models import ContentType
@@ -198,3 +199,14 @@ class PrincipalRoleRelation(models.Model):
             return u"%s / %s / %s" % (self.user or self.group, self.role, self.content)
         else:
             return u"%s / %s" % (self.user or self.group, self.role)
+
+
+def clear_permission_cache_handler(sender, instance, **kwargs):
+    from merengue.perms.utils import clear_cache
+    clear_cache()
+
+
+post_save.connect(clear_permission_cache_handler, sender=ObjectPermission)
+post_save.connect(clear_permission_cache_handler, sender=PrincipalRoleRelation)
+post_delete.connect(clear_permission_cache_handler, sender=ObjectPermission)
+post_delete.connect(clear_permission_cache_handler, sender=PrincipalRoleRelation)
