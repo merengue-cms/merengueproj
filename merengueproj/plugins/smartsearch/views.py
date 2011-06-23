@@ -15,7 +15,11 @@ def search_is_valid(request, searcher_id):
     data = request.GET
     form_search_class.base_fields = get_fields(search)
     form_search = form_search_class(data=data, is_admin=False, search=search)
-    __full_path = "%s?%s" % (data.get('__path'), request.GET.urlencode().split('&__path')[0])
+
+    __full_path = "%s?" % data.get('__path')
+    del data['__path']
+    __full_path = "%s%s" % (__full_path, request.GET.urlencode())
+
     if not form_search.is_valid():
         __full_path = "%s&__ignore_filters=1" % __full_path
     return HttpResponseRedirect(__full_path)
