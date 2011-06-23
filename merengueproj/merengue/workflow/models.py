@@ -20,6 +20,7 @@ from django.db.models.signals import post_save
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext, ugettext_lazy as _
 
+from south.signals import post_migrate
 from transmeta import (TransMeta, get_fallback_fieldname, get_real_fieldname,
                        get_real_fieldname_in_each_language)
 
@@ -135,6 +136,9 @@ class State(models.Model):
         translate = ('name', )
         ordering = (get_fallback_fieldname('name'), )
 
+    def __unicode__(self):
+        return self.name
+
     def delete(self, *args, **kwargs):
         if self.workflow_state.count():
             self.workflow_state.clear()
@@ -187,8 +191,22 @@ class State(models.Model):
                 in StatePermissionRelation.objects.filter(
                     state=self, role=role)]
 
-    def __unicode__(self):
-        return self.name
+    def set_permissions(self, permission_dict):
+        """
+        Set the permission in the state passing a dict like this:
+
+        {'owner': ('view', 'edit', ),
+         'reviewer': ('view', 'edit', 'delete'),}
+        """
+        for role_slug, permission_codenames in permission_dict.items():
+            role = perms.models.Role.objects.get(slug=role_slug)
+            for codename in permission_codenames:
+                permission = perms.models.Permission.objects.get(codename=codename)
+                StatePermissionRelation.objects.get_or_create(
+                    state=self,
+                    permission=permission,
+                    role=role,
+                )
 
 
 class Transition(models.Model):
@@ -341,57 +359,107 @@ class StatePermissionRelation(models.Model):
                              self.permission.name)
 
 
-def create_default_states_handler(sender, instance, created, **kwargs):
+def populate_workflow(workflow):
+    """
+    Populate the workflow with states, transitions and permissions
+    """
+    from merengue.perms.models import Role, Permission
+
     name_fields = get_real_fieldname_in_each_language('name')
     for field in name_fields:
-        value = getattr(instance, field, True)
+        value = getattr(workflow, field, True)
         if value == '':
-            setattr(instance, field, None)
+            setattr(workflow, field, None)
+    data = {get_real_fieldname('name'): ugettext('Draft')}
+    draft = State.objects.create(slug='draft', workflow=workflow, **data)
+    draft.set_permissions({
+        perms.ANONYMOUS_ROLE_SLUG: ('view', ),
+        perms.OWNER_ROLE_SLUG: ('edit', 'delete', 'can_draft', 'can_pending', ),
+    })
+
+    data = {get_real_fieldname('name'): ugettext('Pending')}
+    pending = State.objects.create(slug='pending', workflow=workflow, **data)
+    pending.set_permissions({
+        perms.ANONYMOUS_ROLE_SLUG: ('view', ),
+        perms.OWNER_ROLE_SLUG: ('edit', 'delete', 'can_draft', 'can_pending', ),
+    })
+
+    data = {get_real_fieldname('name'): ugettext('Published')}
+    published = State.objects.create(slug='published', workflow=workflow, **data)
+    published.set_permissions({
+        perms.ANONYMOUS_ROLE_SLUG: ('view', ),
+        perms.OWNER_ROLE_SLUG: (),
+    })
+
+    data = {get_real_fieldname('name'): ugettext('Set as pending')}
+    set_as_pending = Transition.objects.create(
+        slug='set-as-pending', workflow=workflow, destination=pending, **data)
+
+    data = {get_real_fieldname('name'): ugettext('Set as draft')}
+    set_as_draft = Transition.objects.create(
+        slug='set-as-draft', workflow=workflow, destination=draft, **data)
+
+    data = {get_real_fieldname('name'): ugettext('Publish')}
+    publish = Transition.objects.create(
+        slug='publish', workflow=workflow, destination=published, **data)
+
+    draft.transitions.add(set_as_pending)
+    draft.transitions.add(publish)
+    pending.transitions.add(publish)
+    pending.transitions.add(set_as_draft)
+    published.transitions.add(set_as_pending)
+    published.transitions.add(set_as_draft)
+    try:
+        anonymous_role = Role.objects.get(slug=perms.ANONYMOUS_ROLE_SLUG)
+    except Role.DoesNotExist:
+        # maybe the role does not exist (for example when tests are running)
+        anonymous_role = Role.objects.create(id=1, slug=perms.ANONYMOUS_ROLE_SLUG)
+    try:
+        view_permission = Permission.objects.get(codename='view')
+    except Permission.DoesNotExist:
+        # maybe the permission does not exist (for example when tests are running)
+        view_permission = Permission.objects.create(id=1, codename='view')
+
+    StatePermissionRelation.objects.create(
+        state=published, permission=view_permission, role=anonymous_role,
+        )
+    for codename in ('view', 'edit', 'delete', 'can_draft', 'can_pending',
+                     'can_published', 'manage_category', 'manage_link',
+                     'manage_menu', 'manage_block', ):
+        WorkflowPermissionRelation.objects.create(
+            permission=Permission.objects.get(codename=codename),
+            workflow=workflow,
+        )
+    workflow.initial_state = draft
+    workflow.save()
+
+
+def create_default_states_handler(sender, instance, created, **kwargs):
     if created:
-        from merengue.perms.models import Role, Permission
-        data = {get_real_fieldname('name'): ugettext('Draft')}
-        draft = State.objects.create(slug='draft', workflow=instance, **data)
+        populate_workflow(instance)
 
-        data = {get_real_fieldname('name'): ugettext('Pending')}
-        pending = State.objects.create(slug='pending', workflow=instance, **data)
 
-        data = {get_real_fieldname('name'): ugettext('Published')}
-        published = State.objects.create(slug='published', workflow=instance, **data)
-
-        data = {get_real_fieldname('name'): ugettext('Set as pending')}
-        set_as_pending = Transition.objects.create(
-            slug='set-as-pending', workflow=instance, destination=pending, **data)
-
-        data = {get_real_fieldname('name'): ugettext('Set as draft')}
-        set_as_draft = Transition.objects.create(
-            slug='set-as-draft', workflow=instance, destination=draft, **data)
-
-        data = {get_real_fieldname('name'): ugettext('Publish')}
-        publish = Transition.objects.create(
-            slug='publish', workflow=instance, destination=published, **data)
-
-        draft.transitions.add(set_as_pending)
-        draft.transitions.add(publish)
-        pending.transitions.add(publish)
-        pending.transitions.add(set_as_draft)
-        published.transitions.add(set_as_pending)
-        published.transitions.add(set_as_draft)
+def populate_initial_workflow_handler(sender, **kwargs):
+    app = kwargs['app']
+    if app == 'workflow':
         try:
-            anonymous_role = Role.objects.get(slug='anonymous_user')
-        except Role.DoesNotExist:
-            # maybe the role does not exist (for example when tests are running)
-            anonymous_role = Role.objects.create(id=1, slug='anonymous_user')
+            workflow = Workflow.objects.get(slug='basic-workflow')
+            if not workflow.states.all().exists():  # never has been populated
+                populate_workflow(workflow)
+        except Workflow.DoesNotExist:
+            pass  # maybe has been deleted
+    elif app == 'base':
+        from merengue.base.models import BaseContent
         try:
-            view_permission = Permission.objects.get(codename='view')
-        except Permission.DoesNotExist:
-            # maybe the permission does not exist (for example when tests are running)
-            view_permission = Permission.objects.create(id=1, codename='view')
+            workflow = Workflow.objects.get(slug='basic-workflow')
+            if not WorkflowModelRelation.objects.filter(workflow=workflow).exists():
+                content_type = ContentType.objects.get_for_model(BaseContent)
+                WorkflowModelRelation.objects.create(
+                    content_type=content_type,
+                    workflow=workflow,
+                )
+        except Workflow.DoesNotExist:
+            pass  # maybe has been deleted
 
-        StatePermissionRelation.objects.create(
-            state=published, permission=view_permission, role=anonymous_role,
-            )
-        instance.initial_state = draft
-        instance.save()
-
-
+post_migrate.connect(populate_initial_workflow_handler)
 post_save.connect(create_default_states_handler, sender=Workflow)
