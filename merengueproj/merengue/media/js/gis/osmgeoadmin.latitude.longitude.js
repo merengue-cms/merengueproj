@@ -86,8 +86,10 @@
     // Update address events
     $("div.address input, div.postal_code input").keyup(function (){
             var thisJQuery = $(this);
-            var address = get_address(thisJQuery);
-            $(this).parent().parent().parent().parent().parent().parent().parent().find(".input_ajax").val(address);
+            var inputs_ajax =$(".input_ajax");
+            for (var i=0; i<inputs_ajax.length; i++){
+                $(inputs_ajax[i]).val(get_address($(inputs_ajax[i])));
+            }
     });
 
     // OSMGeoAdminLatitudeLongitude //
