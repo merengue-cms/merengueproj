@@ -284,6 +284,8 @@ class FeedItem(BaseContent):
     class Meta:
         content_view_function = 'merengue.collection.views.feeditem_view'
         content_view_template = 'feeditem_view.html'
+        verbose_name = _(u'Feed item')
+        verbose_name_plural = _(u'Feed items')
 
     def get_real_item(self):
         if hasattr(self, '_real_item'):
@@ -641,6 +643,10 @@ class IncludeCollectionFilter(CollectionFilter):
         verbose_name=_(u'Collection'),
         )
 
+    class Meta:
+        verbose_name = _(u'Include collection filter')
+        verbose_name_plural = _(u'Include collection filters')
+
 
 class ExcludeCollectionFilter(CollectionFilter):
     collection = models.ForeignKey(
@@ -648,6 +654,10 @@ class ExcludeCollectionFilter(CollectionFilter):
         related_name='exclude_filters',
         verbose_name=_(u'Collection'),
         )
+
+    class Meta:
+        verbose_name = _(u'Exclude collection filter')
+        verbose_name_plural = _(u'Exclude collection filters')
 
     def filter_query(self, query):
         custom_filter_method_name = '_filter_%s_query' % (self.filter_operator)
@@ -698,6 +708,10 @@ class CollectionDisplayField(models.Model):
         editable=False,
         )
 
+    class Meta:
+        verbose_name = _(u'Collection display field')
+        verbose_name_plural = _(u'Collection display fields')
+
     def __unicode__(self):
         return self.field_name
 
@@ -721,3 +735,7 @@ class CollectionDisplayFieldFilter(models.Model):
         default=0,
         verbose_name=_(u'Filter order'),
         )
+
+    class Meta:
+        verbose_name = _(u'Collection display field filter')
+        verbose_name_plural = _(u'Collection display field filters')
