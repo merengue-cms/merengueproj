@@ -17,12 +17,14 @@
 
 from django.conf import settings
 from django.core import urlresolvers
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 
+from merengue.perms import utils as perms_api
+from merengue.section.views import section_view, content_section_view
 
 from plugins.microsite.models import MicroSite
-from merengue.section.views import section_view, content_section_view
 
 
 def microsite_view(request, microsite_slug):
@@ -31,6 +33,9 @@ def microsite_view(request, microsite_slug):
 
 def microsite_url(request, microsite_slug, url):
     microsite = get_object_or_404(MicroSite, slug=microsite_slug)
+    has_view = perms_api.has_permission(microsite, request.user, 'view')
+    if not has_view:
+        raise PermissionDenied
     urlconf = getattr(request, "urlconf", settings.ROOT_URLCONF)
     urlresolvers.set_urlconf(urlconf)
     index_prefix = request.get_full_path().index(microsite_slug)
