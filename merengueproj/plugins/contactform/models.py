@@ -203,7 +203,7 @@ class ContactFormSelectOpt(models.Model):
     value = models.CharField(verbose_name=_('value'), max_length=200)
     option = models.ForeignKey(ContactFormOpt,
                                verbose_name=_('select option'),
-                               related_name=_('choices'))
+                               related_name='choices')
 
     class Meta:
         translate = ('label', )
