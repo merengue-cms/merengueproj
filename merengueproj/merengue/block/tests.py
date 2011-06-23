@@ -82,37 +82,53 @@ class BlockTestCase(TestCase):
 
     def setUp(self):
         self.maxDiff = None  # to get large diff when a test fail
-        register(LeftBlock)
-        register(RightBlock)
-        register(FooterBlock)
-        register(FooContentBlock)
-        register(FooSectionBlock)
+        reg_block = register(LeftBlock)
+        reg_block.order = 0
+        reg_block.save()
+        reg_block = register(RightBlock)
+        reg_block.order = 1
+        reg_block.save()
+        reg_block = register(FooterBlock)
+        reg_block.order = 2
+        reg_block.save()
+        reg_block = register(FooContentBlock)
+        reg_block.order = 3
+        reg_block.save()
+        reg_block = register(FooSectionBlock)
+        reg_block.order = 4
+        reg_block.save()
         self.content = BaseContent.objects.create(name_en='A content')
         content_reg_block = register(ContentRelatedBlock)
+        content_reg_block.order = 5
         content_reg_block.content = self.content
         content_reg_block.save()
+        self.content_2 = BaseContent.objects.create(name_en='Other content')
+        content_reg_block_2 = register(ContentRelatedBlock)
+        content_reg_block_2.order = 6
+        content_reg_block_2.content = self.content_2
+        content_reg_block_2.save()
 
     def test_rendering_places(self):
         """Test the blocks retrieved in every place are the block Merengue should display """
         left_blocks_rendered = [
             {'name': 'leftblock', 'place': u'leftsidebar', 'content': None, 'order': 0, 'overwrite_if_place': True, 'overwrite_always': False},
-            {'name': 'foocontentblock', 'place': u'leftsidebar', 'content': None, 'order': 0, 'overwrite_if_place': True, 'overwrite_always': False},
-            {'name': 'foosectionblock', 'place': u'leftsidebar', 'content': None, 'order': 0, 'overwrite_if_place': True, 'overwrite_always': False},
+            {'name': 'foocontentblock', 'place': u'leftsidebar', 'content': None, 'order': 3, 'overwrite_if_place': True, 'overwrite_always': False},
+            {'name': 'foosectionblock', 'place': u'leftsidebar', 'content': None, 'order': 4, 'overwrite_if_place': True, 'overwrite_always': False},
         ]
         right_blocks_rendered = [
-            {'name': 'rightblock', 'place': u'rightsidebar', 'content': None, 'order': 0, 'overwrite_if_place': True, 'overwrite_always': False},
+            {'name': 'rightblock', 'place': u'rightsidebar', 'content': None, 'order': 1, 'overwrite_if_place': True, 'overwrite_always': False},
         ]
         footer_blocks_rendered = [
-            {'name': 'footerblock', 'place': u'footer', 'content': None, 'order': 0, 'overwrite_if_place': True, 'overwrite_always': False},
+            {'name': 'footerblock', 'place': u'footer', 'content': None, 'order': 2, 'overwrite_if_place': True, 'overwrite_always': False},
         ]
         left_blocks_rendered_in_content = [
-            {'name': 'contentrelatedblock', 'place': u'leftsidebar', 'content': self.content.id, 'order': 0, 'overwrite_if_place': True, 'overwrite_always': False},
-            {'content': None, 'name': 'foocontentblock', 'order': 0, 'overwrite_always': False, 'overwrite_if_place': True, 'place': u'leftsidebar'},
-            {'content': None, 'name': 'foosectionblock', 'order': 0, 'overwrite_always': False, 'overwrite_if_place': True, 'place': u'leftsidebar'},
-            {'content': None, 'name': 'leftblock', 'order': 0, 'overwrite_always': False, 'overwrite_if_place': True, 'place': u'leftsidebar'}
+            {'content': None, 'name': 'leftblock', 'order': 0, 'overwrite_always': False, 'overwrite_if_place': True, 'place': u'leftsidebar'},
+            {'content': None, 'name': 'foocontentblock', 'order': 3, 'overwrite_always': False, 'overwrite_if_place': True, 'place': u'leftsidebar'},
+            {'content': None, 'name': 'foosectionblock', 'order': 4, 'overwrite_always': False, 'overwrite_if_place': True, 'place': u'leftsidebar'},
+            {'name': 'contentrelatedblock', 'place': u'leftsidebar', 'content': self.content.id, 'order': 5, 'overwrite_if_place': True, 'overwrite_always': False},
         ]
         right_blocks_rendered_in_content = [
-            {'name': 'rightblock', 'place': u'rightsidebar', 'content': None, 'order': 0, 'overwrite_if_place': True, 'overwrite_always': False},
+            {'name': 'rightblock', 'place': u'rightsidebar', 'content': None, 'order': 1, 'overwrite_if_place': True, 'overwrite_always': False},
         ]
         self.assertEqual(left_blocks_rendered, get_rendered_blocks('leftsidebar'))
         self.assertEqual(right_blocks_rendered, get_rendered_blocks('rightsidebar'))
@@ -130,6 +146,8 @@ class BlockTestCase(TestCase):
         content_reg_block.save()
         # this block will be placed in the "rightsidebar" and will hide the leftsidebar blocks
         self.assertTrue('leftblock' not in get_block_names('leftsidebar', self.content))
+        # the overriding should not affect to content_2
+        self.assertTrue('leftblock' in get_block_names('leftsidebar', self.content_2))
         content_reg_block.overwrite_always = False
         content_reg_block.save()
         # this block will be placed in the "rightsidebar" but wont hide the leftsidebar blocks
