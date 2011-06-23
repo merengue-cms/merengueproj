@@ -550,16 +550,24 @@ class CustomStyle(models.Model):
         blank=True,
     )
 
+    class Meta:
+        verbose_name = _('custom sytle')
+        verbose_name_plural = _('custom styles')
+
 
 class CustomStyleImage(models.Model):
     customstyle = models.ForeignKey(CustomStyle)
 
     custom_css_image = models.ImageField(
-        verbose_name=('Custom CSS image'),
+        verbose_name=_('Custom CSS image'),
         upload_to='section_images',
         null=True,
         blank=True,
     )
+
+    class Meta:
+        verbose_name = _('custom sytle image')
+        verbose_name_plural = _('custom style images')
 
 
 def create_menus(sender, **kwargs):
