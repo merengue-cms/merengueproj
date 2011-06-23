@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.contrib.contenttypes.models import ContentType
+from django.db.models import Q
 from django.utils.translation import ugettext as _, ugettext_lazy
 
 from merengue.registry import params
@@ -48,10 +48,17 @@ class StandingOutBlock(Block):
         standingout_categories = StandingOutCategory.objects.all()
         standingouts = None
         for standingout_category in standingout_categories:
-            varible_value = context.get(standingout_category.context_variable, None)
-            if varible_value:
-                contenttype = ContentType.objects.get_for_model(varible_value)
-                standingouts = StandingOut.objects.filter(related_id=varible_value.pk, related_content_type=contenttype)
+            variable_value = context.get(standingout_category.context_variable, None)
+            if variable_value:
+                variable_real_instance = getattr(variable_value, 'get_real_instance', None)
+                if variable_real_instance:
+                    variable_value = variable_real_instance()
+                ctypes = [(c._meta.app_label, c._meta.module_name)for c in variable_value.__class__.mro() if getattr(c, '_meta', None)]
+                filter_ctypes = Q()
+                for app_label, module_name in ctypes:
+                    filter_ctypes = filter_ctypes | Q(related_content_type__app_label=app_label,
+                                                      related_content_type__model=module_name)
+                standingouts = StandingOut.objects.filter(related_id=variable_value.pk).filter(filter_ctypes)
                 if standingouts:
                     break
         standingouts = standingouts or StandingOut.objects.filter(related_content_type__isnull=True, related_id__isnull=True)
