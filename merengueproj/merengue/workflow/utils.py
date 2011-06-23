@@ -18,13 +18,18 @@
 from django.contrib.contenttypes.models import ContentType
 
 from merengue.base.models import Base, BaseContent
-from merengue.workflow.models import State, WorkflowModelRelation
+from merengue.workflow.models import State, WorkflowModelRelation, Workflow
 
 
 def workflow_by_model(model):
     """Fetch what workflow is the one used by the given model,
     looking the parents if it's needed
     """
+    if model == Base:
+        # the recursion has not found any workflow (this can happend in testing environment
+        # because all the relations between workflow and models as been deleted. In this
+        # weird circunstances we will return the default workflow
+        return Workflow.objects.default_workflow()
     if model._meta.abstract:
         # find the first non abstract model because abstract models have not contenttypes
         for base in model.__bases__:
@@ -40,8 +45,7 @@ def workflow_by_model(model):
             for base in model.__bases__:
                 return workflow_by_model(base)
         else:  # this content type has no a workflow, and will not fetch from base content
-            return WorkflowModelRelation.objects.get(
-                content_type=ContentType.objects.get(model=BaseContent._meta.module_name)).workflow
+            return Workflow.objects.default_workflow()
 
 
 def get_workflow_parent_models(model=None):

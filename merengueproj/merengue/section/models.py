@@ -359,6 +359,10 @@ class BaseSection(BaseContent):
     def __unicode__(self):
         return unicode(self.name)
 
+    def get_parent_for_permissions(self):
+        """ The section has not parents. Returns None to avoid execute a uneeded SQL """
+        return None
+
     @property
     def check_attributes(self):
         return [subcl._meta.module_name for subcl in self.__class__.__subclasses__()]

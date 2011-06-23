@@ -34,6 +34,7 @@ from merengue.base.admin import RelatedModelAdmin, BaseAdmin, set_field_read_onl
 from merengue.base.models import Base
 from merengue.perms import utils as perms_api
 from merengue.perms.models import Permission, Role
+from merengue.workflow import DEFAULT_WORKFLOW
 from merengue.workflow.filterspecs import WorkflowModelRelatedFilterSpec
 from merengue.workflow.models import (Workflow, State, Transition,
                                       WorkflowPermissionRelation,
@@ -91,7 +92,7 @@ class WorkflowAdmin(BaseAdmin):
         return tools
 
     def has_delete_permission(self, request, obj=None):
-        if obj and obj.slug in settings.STATIC_WORKFLOW_DATA['workflow']:
+        if obj and obj.slug == DEFAULT_WORKFLOW:
             return False
         elif obj:
             return True
@@ -110,7 +111,7 @@ class WorkflowAdmin(BaseAdmin):
         form = super(WorkflowAdmin, self).get_form(request, obj, **kwargs)
         if obj:
             form.base_fields['initial_state'].queryset = obj.states.all()
-            if obj.slug in settings.STATIC_WORKFLOW_DATA['workflow']:
+            if obj.slug == DEFAULT_WORKFLOW:
                 set_field_read_only(form.base_fields['slug'], 'slug', obj)
         elif 'initial_state' in form.base_fields.keys():
             del form.base_fields['initial_state']

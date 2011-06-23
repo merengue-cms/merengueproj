@@ -25,6 +25,7 @@ from transmeta import (TransMeta, get_fallback_fieldname, get_real_fieldname,
                        get_real_fieldname_in_each_language)
 
 from merengue import perms  # pyflakes:ignore
+from merengue.workflow.managers import WorkflowManager
 
 
 class Workflow(models.Model):
@@ -59,6 +60,8 @@ class Workflow(models.Model):
     permissions = models.ManyToManyField('perms.Permission',
                                          symmetrical=False,
                                          through="WorkflowPermissionRelation")
+
+    objects = WorkflowManager()
 
     class Meta:
         verbose_name = _('Workflow')
@@ -446,7 +449,7 @@ def populate_initial_workflow_handler(sender, **kwargs):
     app = kwargs['app']
     if app == 'workflow':
         try:
-            workflow = Workflow.objects.get(slug='basic-workflow')
+            workflow = Workflow.objects.default_workflow()
             if not workflow.states.all().exists():  # never has been populated
                 populate_workflow(workflow)
         except Workflow.DoesNotExist:
@@ -454,7 +457,7 @@ def populate_initial_workflow_handler(sender, **kwargs):
     elif app == 'base':
         from merengue.base.models import BaseContent
         try:
-            workflow = Workflow.objects.get(slug='basic-workflow')
+            workflow = Workflow.objects.default_workflow()
             if not WorkflowModelRelation.objects.filter(workflow=workflow).exists():
                 content_type = ContentType.objects.get_for_model(BaseContent)
                 WorkflowModelRelation.objects.create(
