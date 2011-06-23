@@ -16,6 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf import settings
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -30,7 +31,6 @@ from merengue.section.models import AbsoluteLink, ContentLink, ViewletLink, Menu
 from merengue.section.utils import get_section
 
 from merengue.perms import utils as perms_api
-from merengue.base.utils import get_render_http_error
 
 
 def section_index(request):
@@ -44,9 +44,7 @@ def section_view(request, section_slug, original_context={},
     section = get_object_or_404(BaseSection, slug=section_slug)
     has_view = perms_api.has_permission(section, request.user, 'view')
     if not has_view:
-        forbidden_response = HttpResponse()
-        forbidden_response.write(get_render_http_error(request, 403))
-        return forbidden_response
+        raise PermissionDenied
     context = original_context or {}
     context['section'] = section.get_real_instance()
     main_content = section.main_content and section.main_content.get_real_instance() or None
