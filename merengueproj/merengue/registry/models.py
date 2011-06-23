@@ -28,11 +28,11 @@ from merengue.registry.managers import RegisteredItemManager
 
 
 class RegisteredItem(models.Model):
-    class_name = models.CharField(max_length=100, db_index=True)
-    module = models.CharField(max_length=200, db_index=True)
-    category = models.CharField(max_length=100, db_index=True)
-    active = models.BooleanField(default=False)
-    broken = models.BooleanField(default=False, editable=False)
+    class_name = models.CharField(_('class name'), max_length=100, db_index=True)
+    module = models.CharField(_('module'), max_length=200, db_index=True)
+    category = models.CharField(_('category'), max_length=100, db_index=True)
+    active = models.BooleanField(_('active'), default=False)
+    broken = models.BooleanField(_('broken'), default=False, editable=False)
     order = models.IntegerField(_("Order"), blank=True, null=True)
     traceback = models.TextField(_("Error traceback"), default='', editable=False,
                                  help_text=_("Error traceback on broken item"))
