@@ -338,7 +338,11 @@ form.inplace_description {
 
 .edit_over_merengue {
   cursor: pointer; 
-  background: #FFFFBB;
+  background: #ccf4ff;
+}
+
+#page-wrapper .edit_over {
+  background: #ddf4ff;
 }
 
 /* end inplaceedit */
