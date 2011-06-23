@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+import hashlib
+
 from django.core.cache import cache
 from django.template import RequestContext
 from django.template.loader import render_to_string
@@ -79,15 +81,18 @@ class BaseBlock(RegistrableItem):
     def _get_cache_key(self, request):
         registered_block = self.reg_item
         key_prefix = 'blocks_cache_%d' % registered_block.id
+        extra_cache_key = ''
         if registered_block.cache_vary_on_url:
-            key_prefix += '-%s' % urlquote(request.META['PATH_INFO'])
+            extra_cache_key += '-%s' % urlquote(request.META['PATH_INFO'])
             params = request.GET.urlencode()
             if params:
-                key_prefix += '?%s' % params
+                extra_cache_key += '?%s' % params
         if registered_block.cache_vary_on_language:
-            key_prefix += '-%s' % get_language()
+            extra_cache_key += '-%s' % get_language()
         if registered_block.cache_vary_on_user:
-            key_prefix += '-%s' % request.user.username
+            extra_cache_key += '-%s' % request.user.username
+        if extra_cache_key:
+            key_prefix += hashlib.md5(extra_cache_key).hexdigest()
         return key_prefix
 
     def _get_registry_cache_key(self):
