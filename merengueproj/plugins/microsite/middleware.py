@@ -16,8 +16,8 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf import settings
-from django.http import Http404
-from django.http import HttpResponseRedirect
+from django.core.exceptions import PermissionDenied
+from django.http import Http404, HttpResponseForbidden, HttpResponseRedirect
 from merengue.urlresolvers import get_url_default_lang
 
 
@@ -47,6 +47,8 @@ class MicrositeMiddleware(object):
         # is a middleware, we can't assume the errors will be caught elsewhere.
         except Http404:
             return response
+        except PermissionDenied:
+            return HttpResponseForbidden('<h1>Permission denied</h1>')
         except:
             if settings.DEBUG:
                 raise
