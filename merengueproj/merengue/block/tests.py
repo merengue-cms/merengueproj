@@ -22,6 +22,7 @@ from merengue.base.models import BaseContent
 from merengue.block.blocks import Block, ContentBlock, SectionBlock
 from merengue.block.templatetags.block_tags import _get_all_blocks_to_display
 from merengue.registry import register
+from merengue.section.models import BaseSection
 
 
 class BaseBlock(Block):
@@ -69,12 +70,12 @@ class ContentRelatedBlock(BaseBlock):
     default_place = 'leftsidebar'
 
 
-def get_block_names(place=None, content=None):
-    return [b['name'] for b in get_rendered_blocks(place, content)]
+def get_block_names(place=None, content=None, section=None):
+    return [b['name'] for b in get_rendered_blocks(place, content, section)]
 
 
-def get_rendered_blocks(place=None, content=None):
-    blocks = _get_all_blocks_to_display(place, content)
+def get_rendered_blocks(place=None, content=None, section=None):
+    blocks = _get_all_blocks_to_display(place, content, section)
     return [reg_block.get_registry_item().render(None, None, None) for reg_block in blocks]
 
 
@@ -107,6 +108,7 @@ class BlockTestCase(TestCase):
         content_reg_block_2.order = 6
         content_reg_block_2.content = self.content_2
         content_reg_block_2.save()
+        self.section = BaseSection.objects.create(name_en='A section')
 
     def test_rendering_places(self):
         """Test the blocks retrieved in every place are the block Merengue should display """
@@ -146,6 +148,8 @@ class BlockTestCase(TestCase):
         content_reg_block.save()
         # this block will be placed in the "rightsidebar" and will hide the leftsidebar blocks
         self.assertTrue('leftblock' not in get_block_names('leftsidebar', self.content))
+        # section should not affect to this
+        self.assertTrue('leftblock' not in get_block_names('leftsidebar', self.content, self.section))
         # the overriding should not affect to content_2
         self.assertTrue('leftblock' in get_block_names('leftsidebar', self.content_2))
         content_reg_block.overwrite_always = False
