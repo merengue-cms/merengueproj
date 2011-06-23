@@ -46,7 +46,7 @@ class FakeBlockQuerySet(QuerySetWrapper):
     def exclude_overrided(self, content=None):
         if content is None:
             content = self.content
-        excluders = [b for b in self.model.objects.all().excluders(self.place, content)]
+        excluders = [b for b in self.model.objects.actives().excluders(self.place, content)]
         excluders_classes = ['%s.%s' % (b.module, b.class_name) for b in excluders]
         non_overrided_blocks = []
         for block in self:

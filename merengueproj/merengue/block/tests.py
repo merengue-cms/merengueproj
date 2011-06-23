@@ -109,6 +109,9 @@ class BlockTestCase(TestCase):
         content_reg_block_2.content = self.content_2
         content_reg_block_2.save()
         self.section = BaseSection.objects.create(name_en='A section')
+        disabled_block = register(LeftBlock)
+        disabled_block.active = False  # this block should not be visible
+        disabled_block.save()
 
     def test_rendering_places(self):
         """Test the blocks retrieved in every place are the block Merengue should display """

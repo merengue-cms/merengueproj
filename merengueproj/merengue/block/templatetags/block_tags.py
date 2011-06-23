@@ -154,7 +154,7 @@ def _get_blocks_to_display(place=None, content=None):
     """
     Gets content related blocks excluding the ones overwritten by blocks within the same content
     """
-    return RegisteredBlock.objects.all().placed_in(place).with_content(content).exclude_overrided()
+    return RegisteredBlock.objects.actives().placed_in(place).with_content(content).exclude_overrided()
 
 
 def _get_all_blocks_to_display(place=None, content=None, section=None):
