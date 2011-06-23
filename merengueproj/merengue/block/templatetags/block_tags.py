@@ -164,13 +164,39 @@ def _get_blocks_to_display(place=None, content=None):
     else:
         blocks = RegisteredBlock.objects.actives().filter(content__isnull=True).filter(**placed_at)
 
-    overwrite = Q(placed_at=place, overwrite_if_place=True) | Q(overwrite_always=True)
-    excluders = blocks.filter(overwrite)
+    overwrite = Q(content__isnull=False) & (Q(placed_at=place, overwrite_if_place=True) | Q(overwrite_always=True))
+    excluders = RegisteredBlock.objects.filter(overwrite)
     excluded = blocks.none()
     for b in excluders:
         excluded |= blocks.filter(~Q(id__in=[i.id for i in excluders]), module=b.module, class_name=b.class_name, overwrite_always=False)
 
     return blocks.exclude(id__in=[b.id for b in excluded])
+
+
+def _get_all_blocks_to_display(place=None, content=None, section=None):
+    """
+    Three block groups are fetched separately in increasing priority:
+        - site blocks (no content)
+        - section related blocks
+        - content related blocks
+    """
+    overwrite = Q(placed_at=place, overwrite_if_place=True) | Q(overwrite_always=True)
+
+    blocks = _get_blocks_to_display(place)
+    content_blocks = RegisteredBlock.objects.none()
+    section_blocks = RegisteredBlock.objects.none()
+    if section:
+        section_blocks = _get_blocks_to_display(place, section)
+        for b in section_blocks.filter(overwrite):
+            blocks = blocks.exclude(module=b.module, class_name=b.class_name)
+    if content:
+        content_blocks = _get_blocks_to_display(place, content)
+        for b in content_blocks.filter(overwrite):
+            blocks = blocks.exclude(module=b.module, class_name=b.class_name)
+            if section:
+                section_blocks = section_blocks.exclude(module=b.module, class_name=b.class_name)
+
+    return (blocks | content_blocks | section_blocks).order_by('order')
 
 
 class RenderAllBlocksNode(template.Node):
@@ -191,23 +217,7 @@ class RenderAllBlocksNode(template.Node):
         try:
             content = context.get('content', None)
             section = context.get('section', None)
-            overwrite = Q(placed_at=self.place, overwrite_if_place=True) | Q(overwrite_always=True)
-
-            blocks = _get_blocks_to_display(self.place)
-            content_blocks = RegisteredBlock.objects.none()
-            section_blocks = RegisteredBlock.objects.none()
-            if section:
-                section_blocks = _get_blocks_to_display(self.place, section)
-                for b in section_blocks.filter(overwrite):
-                    blocks = blocks.exclude(module=b.module, class_name=b.class_name)
-            if content:
-                content_blocks = _get_blocks_to_display(self.place, content)
-                for b in content_blocks.filter(overwrite):
-                    blocks = blocks.exclude(module=b.module, class_name=b.class_name)
-                    if section:
-                        section_blocks = section_blocks.exclude(module=b.module, class_name=b.class_name)
-
-            blocks = (blocks | content_blocks | section_blocks).order_by('order')
+            blocks = _get_all_blocks_to_display(self.place, content, section)
             result = _render_blocks(request, blocks, content, section, self.place, "block", self.nondraggable, context, self.noncontained)
             return result
         except template.VariableDoesNotExist:
