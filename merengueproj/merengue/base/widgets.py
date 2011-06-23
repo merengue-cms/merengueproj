@@ -314,8 +314,8 @@ if settings.USE_GIS:
             if geom_type.name == 'Point':
                 value_latitude = (value and value.get_y()) or ''
                 value_longitude = (value and value.get_x()) or ''
-                latitude = self._emule_widget_django('latitude', 'latitude', name, value_latitude)
-                longitude = self._emule_widget_django('longitude', 'longitude', name, value_longitude)
+                latitude = self._emule_widget_django('latitude', _('latitude'), name, value_latitude)
+                longitude = self._emule_widget_django('longitude', _('longitude'), name, value_longitude)
                 view_on_map = "<input id='view_on_map_%s' class='view_on_map' type='button' value='%s'/>" % (name, _('View on map'))
                 return mark_safe("%s %s %s %s" % (html, latitude, longitude, view_on_map))
             return html
