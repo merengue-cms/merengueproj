@@ -17,6 +17,7 @@
 
 import hashlib
 
+from django.conf import settings
 from django.core.cache import cache
 from django.template import RequestContext
 from django.template.loader import render_to_string
@@ -81,18 +82,17 @@ class BaseBlock(RegistrableItem):
     def _get_cache_key(self, request):
         registered_block = self.reg_item
         key_prefix = 'blocks_cache_%d' % registered_block.id
-        extra_cache_key = ''
         if registered_block.cache_vary_on_url:
-            extra_cache_key += '-%s' % urlquote(request.META['PATH_INFO'])
+            key_prefix += '-%s' % urlquote(request.META['PATH_INFO'])
             params = request.GET.urlencode()
             if params:
-                extra_cache_key += '?%s' % params
+                key_prefix += '?%s' % params
         if registered_block.cache_vary_on_language:
-            extra_cache_key += '-%s' % get_language()
+            key_prefix += '-%s' % get_language()
         if registered_block.cache_vary_on_user:
-            extra_cache_key += '-%s' % request.user.username
-        if extra_cache_key:
-            key_prefix += hashlib.md5(extra_cache_key).hexdigest()
+            key_prefix += '-%s' % request.user.username
+        if len(key_prefix) > settings.CACHE_MAX_KEY:
+            key_prefix = hashlib.md5(key_prefix).hexdigest()
         return key_prefix
 
     def _get_registry_cache_key(self):
