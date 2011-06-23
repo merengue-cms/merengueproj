@@ -18,3 +18,4 @@
 ANONYMOUS_ROLE_SLUG = 'anonymous_user'
 OWNER_ROLE_SLUG = 'owner'
 PARTICIPANT_ROLE_SLUG = 'participant'
+REVIEWER_ROLE_SLUG = 'reviewer'

@@ -375,6 +375,7 @@ def populate_workflow(workflow):
     draft.set_permissions({
         perms.ANONYMOUS_ROLE_SLUG: ('view', ),
         perms.OWNER_ROLE_SLUG: ('edit', 'delete', 'can_draft', 'can_pending', ),
+        perms.REVIEWER_ROLE_SLUG: ('edit', 'delete', 'can_draft', 'can_pending', 'can_published'),
     })
 
     data = {get_real_fieldname('name'): ugettext('Pending')}
@@ -382,6 +383,7 @@ def populate_workflow(workflow):
     pending.set_permissions({
         perms.ANONYMOUS_ROLE_SLUG: ('view', ),
         perms.OWNER_ROLE_SLUG: ('edit', 'delete', 'can_draft', 'can_pending', ),
+        perms.REVIEWER_ROLE_SLUG: ('edit', 'delete', 'can_draft', 'can_pending', 'can_published'),
     })
 
     data = {get_real_fieldname('name'): ugettext('Published')}
@@ -389,6 +391,7 @@ def populate_workflow(workflow):
     published.set_permissions({
         perms.ANONYMOUS_ROLE_SLUG: ('view', ),
         perms.OWNER_ROLE_SLUG: (),
+        perms.REVIEWER_ROLE_SLUG: ('edit', 'delete', 'can_draft', 'can_pending', 'can_published'),
     })
 
     data = {get_real_fieldname('name'): ugettext('Set as pending')}

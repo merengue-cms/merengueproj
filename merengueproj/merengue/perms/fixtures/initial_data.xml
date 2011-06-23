@@ -92,4 +92,8 @@
         <field type="CharField" name="name">Participant</field>
         <field type="CharField" name="slug">participant</field>
     </object>
+    <object pk="10" model="perms.role">
+        <field type="CharField" name="name">Reviewer</field>
+        <field type="CharField" name="slug">reviewer</field>
+    </object>
 </django-objects>
