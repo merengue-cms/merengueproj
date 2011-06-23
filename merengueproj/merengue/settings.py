@@ -178,11 +178,8 @@ DETECT_BROKEN_PLUGINS = True
 # The module to store session data
 SESSION_ENGINE = 'merengue.backends.db'
 
-# Users can manage sections they own and their related objects
-ACQUIRE_SECTION_OWNERSHIP = False
-
-# Users can manage sections they participate and their related objects
-ACQUIRE_SECTION_PARTICIPATION = False
+# Roles which may be acquired by an user when visiting a content inside a section
+ACQUIRE_SECTION_ROLES = False
 
 # cache default settings
 CACHE_MIDDLEWARE_SECONDS = 3600 * 24

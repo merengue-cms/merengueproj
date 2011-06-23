@@ -16,3 +16,5 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 ANONYMOUS_ROLE_SLUG = 'anonymous_user'
+OWNER_ROLE_SLUG = 'owner'
+PARTICIPANT_ROLE_SLUG = 'participant'

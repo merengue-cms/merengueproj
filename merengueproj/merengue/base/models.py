@@ -576,6 +576,11 @@ class BaseContent(BaseClass):
                     return getattr(self, subcls_name, self).get_real_instance()
             return self
 
+    def get_parent_for_permissions(self):
+        if settings.ACQUIRE_SECTION_ROLES:
+            return self.get_main_section()
+        return None
+
     @permalink
     def get_absolute_url(self):
         return ('merengue.base.views.public_link', [self._meta.app_label, self._meta.module_name, self.id])
@@ -602,11 +607,10 @@ class BaseContent(BaseClass):
         raise NotImplementedError("Model %s has no implements a link_by_user method" % self._meta)
 
     def get_owners(self):
-        owners = self.owners.all()
-        if getattr(settings, 'ACQUIRE_SECTION_OWNERSHIP', False):
-            for s in self.sections.all():
-                owners |= s.get_owners()
-        return owners
+        return self.owners.all()
+
+    def get_participants(self):
+        return self.participants.all()
 
     def can_edit(self, user):
         """ Returns if the user can edit this content """

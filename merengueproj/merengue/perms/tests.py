@@ -16,12 +16,14 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 # django imports
+from django.conf import settings
 from django.contrib.auth.models import User, Group, AnonymousUser
 from django.contrib.contenttypes.models import ContentType
 from django.test import TestCase
 from django.test.client import Client
 
-from merengue.base.models import BaseContent, ContactInfo
+from merengue.base.models import BaseContent
+from merengue.section.models import BaseSection, SectionRelatedContent
 from merengue.perms import ANONYMOUS_ROLE_SLUG
 from merengue.perms.models import Permission
 from merengue.perms.models import ObjectPermission
@@ -46,6 +48,7 @@ class RoleTestCase(TestCase):
 
         self.page_1 = BaseContent.objects.create(slug="page-1", name_en="Page 1")
         self.page_2 = BaseContent.objects.create(slug="page-2", name_en="Page 2")
+        self.section = BaseSection.objects.create(slug="section", name_en="Section")
 
     def test_getter(self):
         """
@@ -80,14 +83,14 @@ class RoleTestCase(TestCase):
         self.assertEqual(result, False)
 
         result = merengue.perms.utils.get_roles(self.user)
-        self.assertEqual(result, [self.role_1])
+        self.assertEqual(list(result), [self.role_1])
 
         # Add role 2
         result = merengue.perms.utils.add_role(self.user, self.role_2)
         self.assertEqual(result, True)
 
         result = merengue.perms.utils.get_roles(self.user)
-        self.assertEqual(result, [self.role_1, self.role_2])
+        self.assertEqual(list(result), [self.role_1, self.role_2])
 
         # Remove role 1
         result = merengue.perms.utils.remove_role(self.user, self.role_1)
@@ -98,14 +101,14 @@ class RoleTestCase(TestCase):
         self.assertEqual(result, False)
 
         result = merengue.perms.utils.get_roles(self.user)
-        self.assertEqual(result, [self.role_2])
+        self.assertEqual(list(result), [self.role_2])
 
         # Remove role 2
         result = merengue.perms.utils.remove_role(self.user, self.role_2)
         self.assertEqual(result, True)
 
         result = merengue.perms.utils.get_roles(self.user)
-        self.assertEqual(result, [])
+        self.assertEqual(list(result), [])
 
         # AnonymousUser roles
         anon_user = AnonymousUser()
@@ -123,14 +126,14 @@ class RoleTestCase(TestCase):
         result = merengue.perms.utils.add_role(self.group, self.role_1)
         self.assertEqual(result, False)
 
-        result = merengue.perms.utils.get_roles(self.group)
+        result = merengue.perms.utils.get_global_roles(self.group)
         self.assertEqual(result, [self.role_1])
 
         # Add role 2
         result = merengue.perms.utils.add_role(self.group, self.role_2)
         self.assertEqual(result, True)
 
-        result = merengue.perms.utils.get_roles(self.group)
+        result = merengue.perms.utils.get_global_roles(self.group)
         self.assertEqual(result, [self.role_1, self.role_2])
 
         # Remove role 1
@@ -141,14 +144,14 @@ class RoleTestCase(TestCase):
         result = merengue.perms.utils.remove_role(self.group, self.role_1)
         self.assertEqual(result, False)
 
-        result = merengue.perms.utils.get_roles(self.group)
+        result = merengue.perms.utils.get_global_roles(self.group)
         self.assertEqual(result, [self.role_2])
 
         # Remove role 2
         result = merengue.perms.utils.remove_role(self.group, self.role_2)
         self.assertEqual(result, True)
 
-        result = merengue.perms.utils.get_roles(self.group)
+        result = merengue.perms.utils.get_global_roles(self.group)
         self.assertEqual(result, [])
 
     def test_remove_roles_user(self):
@@ -163,14 +166,14 @@ class RoleTestCase(TestCase):
         self.assertEqual(result, True)
 
         result = merengue.perms.utils.get_roles(self.user)
-        self.assertEqual(result, [self.role_1, self.role_2])
+        self.assertEqual(list(result), [self.role_1, self.role_2])
 
         # Remove roles
         result = merengue.perms.utils.remove_roles(self.user)
         self.assertEqual(result, True)
 
         result = merengue.perms.utils.get_roles(self.user)
-        self.assertEqual(result, [])
+        self.assertEqual(list(result), [])
 
         # Remove roles
         result = merengue.perms.utils.remove_roles(self.user)
@@ -187,14 +190,14 @@ class RoleTestCase(TestCase):
         result = merengue.perms.utils.add_role(self.group, self.role_2)
         self.assertEqual(result, True)
 
-        result = merengue.perms.utils.get_roles(self.group)
+        result = merengue.perms.utils.get_global_roles(self.group)
         self.assertEqual(result, [self.role_1, self.role_2])
 
         # Remove roles
         result = merengue.perms.utils.remove_roles(self.group)
         self.assertEqual(result, True)
 
-        result = merengue.perms.utils.get_roles(self.group)
+        result = merengue.perms.utils.get_global_roles(self.group)
         self.assertEqual(result, [])
 
         # Remove roles
@@ -303,6 +306,21 @@ class RoleTestCase(TestCase):
         # Remove all local roles again
         result = merengue.perms.utils.remove_local_roles(self.page_1, self.user)
         self.assertEqual(result, False)
+
+    def test_acquiring_roles(self):
+        """
+        """
+        SectionRelatedContent.objects.create(basesection=self.section, basecontent=self.page_1)
+        result = merengue.perms.utils.add_local_role(self.section, self.user, self.role_1)
+        self.assertEqual(result, True)
+        settings.ACQUIRE_SECTION_ROLES = False
+        section_roles = merengue.perms.utils.get_roles(self.user, self.section)
+        page_roles = merengue.perms.utils.get_roles(self.user, self.page_1)
+        self.assertNotEqual(list(page_roles), list(section_roles))
+        settings.ACQUIRE_SECTION_ROLES = True
+        section_roles = merengue.perms.utils.get_roles(self.user, self.section)
+        page_roles = merengue.perms.utils.get_roles(self.user, self.page_1)
+        self.assertEqual(list(page_roles), list(section_roles))
 
 
 class PermissionTestCase(TestCase):
@@ -487,24 +505,6 @@ class PermissionTestCase(TestCase):
         merengue.perms.utils.grant_permission(owner, "view_perm", self.page_1)
 
         result = merengue.perms.utils.has_permission(self.page_1, creator, "view_perm", [owner])
-        self.assertEqual(result, True)
-
-    def test_has_permission_related(self):
-        """
-        """
-        ci = ContactInfo()
-        ci.save()
-        result = merengue.perms.utils.has_permission(ci, self.user, 'view_perm')
-        self.assertEqual(result, False)
-
-        merengue.perms.utils.add_role(self.user, self.role_1)
-        result = merengue.perms.utils.grant_permission(self.role_1, "view_perm", self.page_1)
-        self.assertEqual(result, True)
-
-        self.page_1.contact_info = ci
-        self.page_1.save()
-
-        result = merengue.perms.utils.has_permission(ci, self.user, 'view_perm')
         self.assertEqual(result, True)
 
     def test_local_role(self):

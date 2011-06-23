@@ -18,6 +18,7 @@
 from functools import wraps
 # django imports
 from django.conf import settings
+from django.db import connection
 from django.db.models import Q
 from django.contrib.auth.models import User, AnonymousUser, Group
 from django.contrib.contenttypes.models import ContentType
@@ -27,14 +28,12 @@ from django.template import defaultfilters
 from django.utils.decorators import available_attrs
 
 # permissions imports
-from merengue.perms import ANONYMOUS_ROLE_SLUG
+from merengue.perms import ANONYMOUS_ROLE_SLUG, PARTICIPANT_ROLE_SLUG, OWNER_ROLE_SLUG
 from merengue.perms.models import ObjectPermission
 from merengue.perms.models import ObjectPermissionInheritanceBlock
 from merengue.perms.models import Permission
 from merengue.perms.models import PrincipalRoleRelation
 from merengue.perms.models import Role
-
-from merengue.section.models import BaseSection
 
 MANAGE_SITE_PERMISION = 'manage_site'
 MANAGE_USER_PERMISION = 'manage_user'
@@ -280,53 +279,7 @@ def remove_local_roles(obj, principal):
         return False
 
 
-def _get_owners(obj):
-    """Returns the object owners.
-    If the obj model does not support owners, returns the related basecontent owners.
-    If ACQUIRE_SECTION_OWNERSHIP is set, the section owners are also added.
-    """
-    if getattr(obj, 'get_owners', None):
-        owners = obj.get_owners()
-    else:
-        owners = User.objects.none()
-        for bc in obj.basecontent_set.all():
-            owners |= bc.owners.all()
-
-    if getattr(settings, 'ACQUIRE_SECTION_OWNERSHIP', False):
-        if not getattr(obj, 'sections', None):
-            sections = BaseSection.objects.none()
-            for bc in obj.basecontent_set.all():
-                sections |= bc.sections.all()
-            for s in sections.all():
-                owners |= s.get_owners()
-    return owners
-
-
-def _get_participants(obj):
-    """Returns the object participants.
-    If the obj model does not support participants, returns the related basecontent participants.
-    If ACQUIRE_SECTION_PARTICIPATION is set, the section participants are also added.
-    """
-    if getattr(obj, 'participants', None):
-        participants = obj.participants.all()
-    else:
-        participants = User.objects.none()
-        for bc in obj.basecontent_set.all():
-            participants |= bc.participants.all()
-
-    if getattr(settings, 'ACQUIRE_SECTION_PARTICIPATION', False):
-        if getattr(obj, 'sections', None):
-            sections = obj.sections.all()
-        else:
-            sections = BaseSection.objects.none()
-            for bc in obj.basecontent_set.all():
-                sections |= bc.sections.all()
-        for s in sections.all():
-            participants |= s.participants.all()
-    return participants
-
-
-def get_roles(principal, obj=None):
+def get_roles(user, obj=None):
     """Returns all roles of passed user for passed content object. This takes
     direct and roles via a group into account. If an object is passed local
     roles will also added.
@@ -334,22 +287,64 @@ def get_roles(principal, obj=None):
     **Parameters:**
 
     obj
-        The object from which the roles are removed.
+        The object from which the roles are returned.
 
-    principal
-        The principal (user or group) from which the roles are removed.
+    user
+        The user from which the roles are returned.
     """
-    roles = get_global_roles(principal)
+    if isinstance(user, AnonymousUser):
+        return Role.objects.filter(slug=ANONYMOUS_ROLE_SLUG)
 
-    if obj is not None:
-        roles.extend(get_local_roles(obj, principal))
-    if isinstance(principal, User):
-        for group in principal.groups.all():
-            if obj is not None:
-                roles.extend(get_local_roles(obj, group))
-            roles.extend(get_roles(group))
+    role_ids = []
+    groups = user.groups.all()
+    groups_ids_str = ", ".join([str(g.id) for g in groups])
 
-    return roles
+    # Gobal roles for user and the user's groups
+    cursor = connection.cursor()
+
+    if groups_ids_str:
+        cursor.execute("""SELECT role_id
+                          FROM perms_principalrolerelation
+                          WHERE (user_id=%s OR group_id IN (%s))
+                          AND content_id is Null""" % (user.id, groups_ids_str))
+    else:
+        cursor.execute("""SELECT role_id
+                          FROM perms_principalrolerelation
+                          WHERE user_id=%s
+                          AND content_id is Null""" % user.id)
+
+    for row in cursor.fetchall():
+        role_ids.append(row[0])
+
+    # Local roles for user and the user's groups and all ancestors of the
+    # passed object.
+    while obj:
+        if groups_ids_str:
+            cursor.execute("""SELECT role_id
+                              FROM perms_principalrolerelation
+                              WHERE (user_id='%s' OR group_id IN (%s))
+                              AND content_id='%s'""" % (user.id, groups_ids_str, obj.id))
+        else:
+            cursor.execute("""SELECT role_id
+                              FROM perms_principalrolerelation
+                              WHERE user_id='%s'
+                              AND content_id='%s'""" % (user.id, obj.id))
+
+        for row in cursor.fetchall():
+            role_ids.append(row[0])
+
+        if user in obj.get_owners():
+            role_ids.append(Role.objects.get(slug=OWNER_ROLE_SLUG).id)
+
+        if user in obj.get_participants():
+            role_ids.append(Role.objects.get(slug=PARTICIPANT_ROLE_SLUG).id)
+
+        try:
+            obj = obj.get_parent_for_permissions()
+        except AttributeError:
+            obj = None
+
+    return Role.objects.filter(pk__in=role_ids)
 
 
 def get_global_roles(principal):
@@ -372,11 +367,11 @@ def get_local_roles(obj, principal):
         roles = [prr.role for prr in PrincipalRoleRelation.objects.filter(
             user=principal, content=obj)]
 
-        if principal in _get_owners(obj):
-            roles.append(Role.objects.get(name=u'Owner'))
+        if principal in obj.get_owners():
+            roles.append(Role.objects.get(slug=OWNER_ROLE_SLUG))
 
-        if principal in _get_participants(obj):
-            roles.append(Role.objects.get(name=u'Participant'))
+        if principal in obj.get_participants():
+            roles.append(Role.objects.get(slug=PARTICIPANT_ROLE_SLUG))
         return roles
     else:
         return [prr.role for prr in PrincipalRoleRelation.objects.filter(
@@ -392,11 +387,11 @@ def get_all_local_roles(obj):
             roles.append((relation.group, relation.role))
         else:
             continue
-    owner_role = Role.objects.get(name=u'Owner')
-    for principal in _get_owners(obj):
+    owner_role = Role.objects.get(slug=OWNER_ROLE_SLUG)
+    for principal in obj.get_owners():
         roles.append((principal, owner_role))
-    participant_role = Role.objects.get(name=u'Participant')
-    for principal in _get_participants(obj):
+    participant_role = Role.objects.get(slug=PARTICIPANT_ROLE_SLUG)
+    for principal in obj.get_participants():
         roles.append((principal, participant_role))
     return roles
 
