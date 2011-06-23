@@ -1,4 +1,4 @@
-{% load adminmedia %}
+{% load adminmedia i18n %}
 {% block extrastyle %}
 <style type="text/css">
   #{{ id }}_map { width: {{ map_width }}px; height: {{ map_height }}px; }
@@ -31,7 +31,7 @@
 //]]>
 </script>
 <div id="{{ id }}_map"></div>
-<a href="javascript:{{ module }}.clearFeatures()">Delete all Features</a>
+<a href="javascript:{{ module }}.clearFeatures()">{% trans "Delete all Features" %}</a>
 {% if display_wkt %}<p> WKT debugging window:</p>{% endif %}
 <textarea id="{{ id }}" class="vWKTField required" cols="150" rows="10" name="{{ field_name }}">{{ wkt }}</textarea>
 <script type="text/javascript">{% block init_function %}{{ module }}.init();{% endblock %}</script>
