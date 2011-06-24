@@ -39,7 +39,7 @@ class AdminAction(UserAction):
 class LoginAction(UserAction):
     name = 'login'
     verbose_name = _('Login')
-    login_view = 'merengue_logout'
+    login_view = 'merengue_login'
 
     def get_url(self, request, user):
         login_url = get_login_url()
