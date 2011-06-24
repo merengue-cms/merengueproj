@@ -333,10 +333,12 @@ def get_roles(user, obj=None):
         for row in cursor.fetchall():
             role_ids.append(row[0])
 
-        if user in obj.get_owners():
+        get_owners = getattr(obj, 'get_owners', None)
+        get_participants = getattr(obj, 'get_participants', None)
+        if get_owners and callable(get_owners) and user in obj.get_owners():
             role_ids.append(Role.objects.get(slug=OWNER_ROLE_SLUG).id)
 
-        if user in obj.get_participants():
+        if get_participants and callable(get_participants) and user in obj.get_participants():
             role_ids.append(Role.objects.get(slug=PARTICIPANT_ROLE_SLUG).id)
 
         try:
@@ -567,6 +569,8 @@ def has_permission(obj, user, codename, roles=None):
         if getattr(obj, 'adquire_global_permissions', None) is None:
             try:
                 obj = obj.basecontent_set.all()[0]
+            except AttributeError:
+                return False
             except IndexError:
                 return False
 

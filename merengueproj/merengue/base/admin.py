@@ -1179,7 +1179,10 @@ class RelatedModelAdmin(BaseAdmin):
         return urlpatterns
 
     def _update_extra_context(self, request, extra_context=None, parent_model_admin=None, parent_object=None):
-        self.parent_model_admin = parent_model_admin
+        if parent_model_admin:
+            self.parent_model_admin = parent_model_admin
+        else:
+            self.parent_model_admin = getattr(self, 'parent_model_admin', parent_model_admin)
         extra_context = extra_context or {}
         #basecontent = self._get_base_content(request)
         basecontent_type_id = ContentType.objects.get_for_model(self.basecontent).id
