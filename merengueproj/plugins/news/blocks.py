@@ -52,7 +52,7 @@ class LatestNewsBlock(BlockQuerySetItemProvider, Block):
         return news_list
 
     def render(self, request, place, context, *args, **kwargs):
-        number_news = self.get_config().get('limit', []).get_value()
+        number_news = self.get_config().get('limit').get_value()
         news_list = self.get_queryset(request, context)[:number_news]
         if self.get_config().get('filtering_section', False) and not news_list:
             news_list = get_news(request, filtering_section=False)[:number_news]
