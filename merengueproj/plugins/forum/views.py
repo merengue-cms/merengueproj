@@ -71,6 +71,10 @@ def create_new_thread(request, forum_slug):
             thread.user = request.user
             thread.status = 'published'
             thread.save()
+            workflow_status = thread.workflow_status.get_all_states().filter(slug='published')
+            if workflow_status:
+                thread.workflow_status = workflow_status[0]
+                thread.save()
             return HttpResponseRedirect(thread.get_absolute_url())
     else:
         form = CreateThreadForm(forum)
