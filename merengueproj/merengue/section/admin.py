@@ -17,6 +17,8 @@
 
 from django.conf import settings
 from django.contrib import admin
+from django.db.models import Q
+from django.forms.util import ValidationError
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
@@ -47,6 +49,28 @@ class BaseSectionAdmin(BaseContentAdmin, PermissionAdmin):
     removed_fields = ('description', )
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
     exclude = BaseContentAdmin.exclude + ('commentable', )
+
+    def get_object(self, request, object_id):
+        """
+        Overrides the django behaviour
+        """
+        queryset = self.queryset(request, bypass_perms=True)
+        model = queryset.model
+        try:
+            object_id = model._meta.pk.to_python(object_id)
+            return queryset.get(pk=object_id)
+        except (model.DoesNotExist, ValidationError):
+            return None
+
+    def queryset(self, request, bypass_perms=False):
+        """
+        Overrides the Django behaviour to take permissions into account
+        """
+        qs = super(BaseSectionAdmin, self).queryset(request)
+        if not bypass_perms and not perms_api.can_manage_site(request.user) and \
+           not perms_api.has_global_permission(request.user, 'edit'):
+            qs = qs.filter(Q(owners=request.user))
+        return qs
 
     def has_add_permission(self, request):
         """

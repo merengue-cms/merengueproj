@@ -880,28 +880,6 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
                                        confirm_template='admin/basecontent/assign_owners.html')
     assign_owners.short_description = _("Assign owners")
 
-    def get_object(self, request, object_id):
-        """
-        Overrides the django behaviour
-        """
-        queryset = self.queryset(request, bypass_perms=True)
-        model = queryset.model
-        try:
-            object_id = model._meta.pk.to_python(object_id)
-            return queryset.get(pk=object_id)
-        except (model.DoesNotExist, ValidationError):
-            return None
-
-    def queryset(self, request, bypass_perms=False):
-        """
-        Overrides the Django behaviour to take permissions into account
-        """
-        qs = super(BaseContentAdmin, self).queryset(request)
-        if not bypass_perms and not perms_api.can_manage_site(request.user) and \
-           not perms_api.has_global_permission(request.user, 'edit'):
-            qs = qs.filter(Q(owners=request.user))
-        return qs
-
     def has_add_permission(self, request):
         """
         Overrides Django admin behaviour to add ownership based access control
@@ -1114,8 +1092,8 @@ class BaseContentViewAdmin(BaseContentAdmin):
         is_allowed = super(BaseContentViewAdmin, self).lookup_allowed(lookup, value)
         return is_allowed or lookup == u'id__in'
 
-    def queryset(self, request, bypass_perms=False):
-        qs = super(BaseContentAdmin, self).queryset(request, bypass_perms=bypass_perms)
+    def queryset(self, request):
+        qs = super(BaseContentAdmin, self).queryset(request)
         if perms_api.can_manage_site(request.user):
             return qs
         elif self.has_change_permission(request):
@@ -1241,7 +1219,7 @@ class RelatedModelAdmin(BaseAdmin):
             return HttpResponseRedirect('%sadd' % request.get_full_path())
         return super(RelatedModelAdmin, self).changelist_view(request, extra_context)
 
-    def queryset(self, request, basecontent=None, bypass_perms=False):
+    def queryset(self, request, basecontent=None):
         base_qs = super(RelatedModelAdmin, self).queryset(request)
         if basecontent is None:
             # we override our related content
