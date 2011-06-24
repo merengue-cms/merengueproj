@@ -285,7 +285,11 @@ class RelatedBaseContentWidget(RelatedFieldWidgetWrapper):
             params_str = '&widget_id=%s' % widget_id
         else:
             params_str = ''
-
+        try:
+            basesection_id = self.request.get_full_path().split('/')[-2]
+            params_str += '&sections=%s' % basesection_id
+        except IndexError:
+            pass
         output += u'<a id="lookup_id_%s" href="/admin/base/basecontent/?for_select=1%s" onclick="javascript:showRelatedObjectLookupPopup(this); return false;">%s</a>' % (name, params_str, _('Select content'))
         output += u'</div>'
         output += u'<br style="clear: left;" />'
