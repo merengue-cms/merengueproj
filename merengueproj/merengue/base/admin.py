@@ -351,7 +351,7 @@ class RelatedURLsModelAdmin(admin.ModelAdmin):
                         # add ourselves as parent model admin to be referred from child model admin
                         # add also parent object to be referred also in child model if needed
                         if callback.func_name in ('changelist_view', 'change_view',
-                                                  'add_view', 'history_view',
+                                                  'add_view', 'history_view', 'delete_view',
                                                   'parse_path', 'permissions_view'):
                             kwargs['parent_model_admin'] = self
                             kwargs['parent_object'] = basecontent
@@ -1288,11 +1288,6 @@ class RelatedModelAdmin(BaseAdmin):
         for principal, lrole in perms_api.get_all_local_roles(self.basecontent):
             perms_api.add_local_role(obj, principal, lrole)
 
-    def get_accesible_states(self, status, user, obj):
-        if self.parent_model_admin:
-            return self.parent_model_admin.get_accesible_states(status, user, self.basecontent)
-        return status.get_accesible_states(user, self.basecontent)
-
     def get_form(self, request, obj=None, **kwargs):
         form = super(RelatedModelAdmin, self).get_form(request, obj, **kwargs)
         self.remove_related_field_from_form(form)
@@ -1313,14 +1308,16 @@ class RelatedModelAdmin(BaseAdmin):
         return perms_api.has_permission(self.basecontent, request.user, 'edit')
 
     def has_change_permission(self, request, obj=None):
-        if self.parent_model_admin:
-            return self.parent_model_admin.has_change_permission(request, self.basecontent)
-        return perms_api.has_permission(self.basecontent, request.user, 'edit')
+        has_permission = perms_api.has_permission(obj, request.user, 'edit')
+        if not has_permission and self.parent_model_admin:
+            has_permission = self.parent_model_admin.has_change_permission(request, self.basecontent)
+        return has_permission
 
     def has_delete_permission(self, request, obj=None):
-        if self.parent_model_admin:
-            return self.parent_model_admin.has_change_permission(request, self.basecontent)
-        return perms_api.has_permission(self.basecontent, request.user, 'edit')
+        has_permission = perms_api.has_permission(obj, request.user, 'edit')
+        if not has_permission and self.parent_model_admin:
+            has_permission = self.parent_model_admin.has_change_permission(request, self.basecontent)
+        return has_permission
 
     def get_actions(self, *args, **kwargs):
         actions = super(RelatedModelAdmin, self).get_actions(*args, **kwargs)

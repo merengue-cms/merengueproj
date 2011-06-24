@@ -89,6 +89,7 @@ class BaseSectionAdmin(BaseContentAdmin, PermissionAdmin):
             return True
         elif obj is None:
             return True
+        return False
 
     def has_delete_permission(self, request, obj=None):
         """
