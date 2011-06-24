@@ -21,6 +21,7 @@ from django.template.loader import render_to_string
 
 from merengue.block.blocks import ContentBlock, SectionBlock
 from merengue.block.models import RegisteredBlock, PLACES_DICT
+from merengue.block.utils import get_all_blocks_to_display
 from merengue.registry import register as merengue_register, get_items_by_name
 
 
@@ -150,29 +151,6 @@ def _render_blocks(request, blocks, obj, section, place, block_type, nondraggabl
                             })
 
 
-def _get_blocks_to_display(place=None, content=None):
-    """
-    Gets content related blocks excluding the ones overwritten by blocks within the same content
-    """
-    return RegisteredBlock.objects.actives().placed_in(place).with_content(content).exclude_overrided()
-
-
-def _get_all_blocks_to_display(place=None, content=None, section=None):
-    """
-    Three block groups are fetched separately in increasing priority:
-        - site blocks (no content)
-        - section related blocks
-        - content related blocks
-    """
-    blocks = _get_blocks_to_display(place, content)
-    section_blocks = []
-    if section:
-        section_blocks = _get_blocks_to_display(place, section).exclude_overrided(content)
-    all_blocks = blocks + section_blocks
-    sorted(all_blocks, key=lambda b: b.order)
-    return all_blocks
-
-
 class RenderAllBlocksNode(template.Node):
 
     def __init__(self, place, nondraggable=False, noncontained=False):
@@ -191,7 +169,7 @@ class RenderAllBlocksNode(template.Node):
         try:
             content = context.get('content', None)
             section = context.get('section', None)
-            blocks = _get_all_blocks_to_display(self.place, content, section)
+            blocks = get_all_blocks_to_display(self.place, content, section)
             result = _render_blocks(request, blocks, content, section, self.place, "block", self.nondraggable, context, self.noncontained)
             return result
         except template.VariableDoesNotExist:

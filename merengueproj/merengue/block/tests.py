@@ -20,7 +20,7 @@ from django.test import TestCase
 
 from merengue.base.models import BaseContent
 from merengue.block.blocks import Block, ContentBlock, SectionBlock
-from merengue.block.templatetags.block_tags import _get_all_blocks_to_display
+from merengue.block.utils import get_all_blocks_to_display
 from merengue.registry import register
 from merengue.section.models import BaseSection
 
@@ -75,7 +75,7 @@ def get_block_names(place=None, content=None, section=None):
 
 
 def get_rendered_blocks(place=None, content=None, section=None):
-    blocks = _get_all_blocks_to_display(place, content, section)
+    blocks = get_all_blocks_to_display(place, content, section)
     return [reg_block.get_registry_item().render(None, None, None) for reg_block in blocks]
 
 

@@ -21,6 +21,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.models import BaseContent
 from merengue.block.managers import BlockManager
+from merengue.block.utils import clear_lookup_cache
 from merengue.registry.models import RegisteredItem
 
 import re
@@ -135,6 +136,7 @@ def post_save_handler(sender, instance, **kwargs):
     # invalidate block cache if exists
     block = instance.get_registry_item()
     block.invalidate_cache()
+    clear_lookup_cache()
     # marking related blocks
     content = instance.content
     if content and not content.has_related_blocks:
