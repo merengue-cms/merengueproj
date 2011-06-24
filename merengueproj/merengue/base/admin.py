@@ -1152,6 +1152,7 @@ class RelatedModelAdmin(BaseAdmin):
 
     def __init__(self, *args, **kwargs):
         super(RelatedModelAdmin, self).__init__(*args, **kwargs)
+        self.parent_model_admin = None
         if not self.tool_name:
             self.tool_name = self.model._meta.module_name
         if not self.tool_label:
@@ -1183,8 +1184,6 @@ class RelatedModelAdmin(BaseAdmin):
     def _update_extra_context(self, request, extra_context=None, parent_model_admin=None, parent_object=None):
         if parent_model_admin:
             self.parent_model_admin = parent_model_admin
-        else:
-            self.parent_model_admin = getattr(self, 'parent_model_admin', parent_model_admin)
         extra_context = extra_context or {}
         #basecontent = self._get_base_content(request)
         basecontent_type_id = ContentType.objects.get_for_model(self.basecontent).id
@@ -1195,7 +1194,7 @@ class RelatedModelAdmin(BaseAdmin):
                               'inside_basecontent': True,
                               'selected': self.tool_name,
                               'model_admin': self,
-                              'parent_model_admin': parent_model_admin,
+                              'parent_model_admin': self.parent_model_admin,
                               'parent_object': parent_object,
                               })
         return extra_context
