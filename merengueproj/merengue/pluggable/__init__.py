@@ -205,17 +205,18 @@ def active_default_plugins(*args, **kwargs):
         # register required plugins
         for plugin_dir in settings.REQUIRED_PLUGINS:
             active_plugin_with_deps(plugin_dir)
-            from merengue.section.models import Menu
-            name_attr = get_fallback_fieldname('name')
-            attrs = {name_attr: 'Portal menu', 'slug': settings.MENU_PORTAL_SLUG}
-            try:
-                portal_menu = Menu.objects.get(slug=settings.MENU_PORTAL_SLUG)
-            except Menu.DoesNotExist:
-                # creating portal menu if does not exist
-                portal_menu = Menu.objects.create(**attrs)
-                for lang_code, lang_text in settings.LANGUAGES:
-                    setattr(portal_menu, 'name_%s' % lang_code, ugettext('portal menu'))
-                portal_menu.save()
+        # populate menu
+        from merengue.section.models import Menu
+        name_attr = get_fallback_fieldname('name')
+        attrs = {name_attr: 'Portal menu', 'slug': settings.MENU_PORTAL_SLUG}
+        try:
+            portal_menu = Menu.objects.get(slug=settings.MENU_PORTAL_SLUG)
+        except Menu.DoesNotExist:
+            # creating portal menu if does not exist
+            portal_menu = Menu.objects.create(**attrs)
+            for lang_code, lang_text in settings.LANGUAGES:
+                setattr(portal_menu, 'name_%s' % lang_code, ugettext('portal menu'))
+            portal_menu.save()
 
 
 def active_plugin_with_deps(plugin_dir):
