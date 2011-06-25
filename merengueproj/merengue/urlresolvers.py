@@ -26,7 +26,7 @@ def get_url_default_lang():
 
 def merengue_url(regex, view, kwargs=None, name=None, prefix=''):
     if isinstance(regex, dict):
-        regex_translatable = regex.get(get_url_default_lang())
+        regex_translatable = regex.get(get_url_default_lang(), regex['en'])
     else:
         regex_translatable = regex
     return url(regex_translatable, view, kwargs, name, prefix)
