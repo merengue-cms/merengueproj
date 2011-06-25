@@ -100,6 +100,10 @@ class ContactInfo(models.Model):
     def __unicode__(self):
         return self.contact_email or ugettext('Without contact email')
 
+    def is_empty(self):
+        return not (self.name or self.contact_email or self.contact_email2 or self.url or \
+                    self.phone or self.phone2 or self.fax)
+
 
 class BaseCategory(models.Model):
     """
