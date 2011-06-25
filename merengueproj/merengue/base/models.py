@@ -701,10 +701,11 @@ class BaseContent(BaseClass):
         from merengue.perms.models import ObjectPermission
         self.objectpermission_set.all().delete()
         for perm in self.workflow_status.statepermissionrelation_set.all():
-            self.objectpermission_set.add(
-                ObjectPermission.objects.create(content=self,
-                                                role=perm.role,
-                                                permission=perm.permission))
+            ObjectPermission.objects.get_or_create(
+                content=self,
+                role=perm.role,
+                permission=perm.permission,
+            )
 
     def calculate_rank(self):
         return 100.0  # default implementation
