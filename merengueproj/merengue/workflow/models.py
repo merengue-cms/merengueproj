@@ -398,16 +398,22 @@ def populate_workflow(workflow):
     })
 
     data = {get_real_fieldname('name'): ugettext('Set as pending')}
+    pending_permission = Permission.objects.get(codename='can_pending')
     set_as_pending = Transition.objects.create(
-        slug='set-as-pending', workflow=workflow, destination=pending, **data)
+        slug='set-as-pending', workflow=workflow, destination=pending,
+        permission=pending_permission, **data)
 
     data = {get_real_fieldname('name'): ugettext('Set as draft')}
+    draft_permission = Permission.objects.get(codename='can_draft')
     set_as_draft = Transition.objects.create(
-        slug='set-as-draft', workflow=workflow, destination=draft, **data)
+        slug='set-as-draft', workflow=workflow, destination=draft,
+        permission=draft_permission, **data)
 
     data = {get_real_fieldname('name'): ugettext('Publish')}
+    publish_permission = Permission.objects.get(codename='can_published')
     publish = Transition.objects.create(
-        slug='publish', workflow=workflow, destination=published, **data)
+        slug='publish', workflow=workflow, destination=published,
+        permission=publish_permission, **data)
 
     draft.transitions.add(set_as_pending)
     draft.transitions.add(publish)
