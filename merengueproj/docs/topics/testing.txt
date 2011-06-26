@@ -22,10 +22,10 @@ every Merengue project, like this:
 
 .. code-block:: bash
 
-    $ python manage.py test
+    $ python manage.py testmerengue
 
-This will try to execute all tests in every application installed in the
-Merengue project.
+This will try to execute all tests in every application defined in the
+``APPS_TO_TEST`` setting.
 
 You can also launch the test for only one application by appending the application
 to the end of the command line, as follows:

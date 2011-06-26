@@ -288,8 +288,21 @@ LOGOUT_URL = '/%s/logout/' % MERENGUE_URLS_PREFIX
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = None
 
-# Merengue test runner
+# Test settings
 TEST_RUNNER = 'merengue.test.run_tests'
+APPS_TO_TEST = (
+    'action',
+    'base',
+    'block',
+    'registry',
+    'perms',
+    'portal',
+    'pluggable',
+    'section',
+    'theming',
+    'viewlet',
+    'workflow',
+)
 
 # Merengue manage file
 MANAGE_FILE = 'manage.py'
