@@ -7,7 +7,7 @@ from django.core.serializers import base, xml_serializer
 from django.db import models
 from django.db.models.fields import FieldDoesNotExist
 
-from transmeta import get_field_language
+from transmeta import get_fallback_fieldname, get_real_fieldname, get_field_language, get_all_translatable_fields
 
 from merengue.base.dbfields import JSONField
 from merengue.base.models import BaseContent
@@ -128,6 +128,18 @@ class Deserializer(xml_serializer.Deserializer):
                 else:
                     value = field.to_python(xml_serializer.getInnerText(field_node).strip())
                 data[field.name] = value
+
+        # check there is not any mandatory translatable fields in the fixtures without
+        # a value in the fallback language. In that case use the english language.
+        # This is to make the initial fixtures work in languages not included by default
+        # in fixtures
+        for trans_field in get_all_translatable_fields(Model):
+            fallback_fieldname = get_fallback_fieldname(trans_field)
+            if Model._meta.get_field(fallback_fieldname).null:
+                continue  # not a mandatory field
+            en_fieldname = get_real_fieldname(trans_field, 'en')
+            if data.get(fallback_fieldname, None) is None and data.get(en_fieldname, None) is not None:
+                data[fallback_fieldname] = data[en_fieldname]
 
         obj = Model(**data)
         for field in obj._meta.local_fields:

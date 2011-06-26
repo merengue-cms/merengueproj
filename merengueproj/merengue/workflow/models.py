@@ -56,7 +56,7 @@ class Workflow(models.Model):
     name = models.CharField(_("Name"), max_length=100)
     slug = models.CharField(_(u"Slug"), max_length=100)
     initial_state = models.ForeignKey("State", related_name="workflow_state",
-                                      blank=True, null=True)
+                                      blank=True, null=True, on_delete=models.SET_NULL)
     permissions = models.ManyToManyField('perms.Permission',
                                          symmetrical=False,
                                          through="WorkflowPermissionRelation")
@@ -107,6 +107,16 @@ class Workflow(models.Model):
         """
         WorkflowPermissionRelation.objects.create(workflow=self,
                                                   permission=perm)
+
+    def blank(self):
+        """ Removes all the transitions, permissions, and states """
+        self.states.all().delete()
+        self.initial_state.delete()
+        self.transitions.all().delete()
+        self.permissions.clear()
+
+    def is_empty(self):
+        return not self.states.all().exists() and not self.transitions.all().exists()
 
 
 class State(models.Model):
@@ -398,16 +408,22 @@ def populate_workflow(workflow):
     })
 
     data = {get_real_fieldname('name'): ugettext('Set as pending')}
+    pending_permission = Permission.objects.get(codename='can_pending')
     set_as_pending = Transition.objects.create(
-        slug='set-as-pending', workflow=workflow, destination=pending, **data)
+        slug='set-as-pending', workflow=workflow, destination=pending,
+        permission=pending_permission, **data)
 
     data = {get_real_fieldname('name'): ugettext('Set as draft')}
+    draft_permission = Permission.objects.get(codename='can_draft')
     set_as_draft = Transition.objects.create(
-        slug='set-as-draft', workflow=workflow, destination=draft, **data)
+        slug='set-as-draft', workflow=workflow, destination=draft,
+        permission=draft_permission, **data)
 
     data = {get_real_fieldname('name'): ugettext('Publish')}
+    publish_permission = Permission.objects.get(codename='can_published')
     publish = Transition.objects.create(
-        slug='publish', workflow=workflow, destination=published, **data)
+        slug='publish', workflow=workflow, destination=published,
+        permission=publish_permission, **data)
 
     draft.transitions.add(set_as_pending)
     draft.transitions.add(publish)
@@ -440,8 +456,9 @@ def populate_workflow(workflow):
     workflow.save()
 
 
-def create_default_states_handler(sender, instance, created, **kwargs):
-    if created:
+def create_default_states_handler(sender, instance, **kwargs):
+    created = kwargs.pop('created', False)
+    if created and instance.is_empty():
         populate_workflow(instance)
 
 

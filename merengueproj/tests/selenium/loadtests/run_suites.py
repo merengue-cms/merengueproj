@@ -39,6 +39,10 @@ def run_all_suite():
                         help='Test case directory name to execute.')
     parser.add_option('-p', '--port', action='store', dest='port', default='4444', type='int',
                         help='Selenium server port.')
+    parser.add_option('-s', '--server', action='store', dest='server', type='string',
+                        help='Location of selenium server jar.')
+    parser.add_option('--display', action='store', dest='display', type='int',
+                        help='Display number for framebuffer.')
     parser.add_option('-f', '--firefox-profile-directory', action='store', dest='firefox_profile',
                         help="Use a firefox profile directory")
     parser.add_option('-8', '--infinite', action='store_true', dest='infinite', default=False,
@@ -54,7 +58,10 @@ def run_all_suite():
                      "(i.e. http://localhost:8000/)""")
     pwd = os.path.dirname(os.path.abspath(__file__))
     extensions_file = os.path.join(os.path.abspath('..'), 'extensions', 'user-extensions.js')
-    selenium_file = os.path.join(pwd, 'selenium-server.jar')
+    if options.server:
+        selenium_file = options.server
+    else:
+        selenium_file = os.path.join(pwd, 'selenium-server.jar')
     variables_file = os.path.join(pwd, 'variables.html')
     if options.firefox_profile:
         firefox_arg = '-firefoxProfileTemplate "%s"' % options.firefox_profile
@@ -83,6 +90,8 @@ def run_all_suite():
                                extensions_file,
                                int(options.port) + i,
                                firefox_arg)
+                    if options.display:
+                        cmd = 'DISPLAY=:%s %s' % (options.display, cmd)
                     t = threading.Thread(target=execute, args=(cmd,))
                     threads.append(t)
                     t.start()

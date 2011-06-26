@@ -22,10 +22,10 @@ every Merengue project, like this:
 
 .. code-block:: bash
 
-    $ python manage.py test
+    $ python manage.py testmerengue
 
-This will try to execute all tests in every application installed in the
-Merengue project.
+This will try to execute all tests in every application defined in the
+``APPS_TO_TEST`` setting.
 
 You can also launch the test for only one application by appending the application
 to the end of the command line, as follows:
@@ -72,7 +72,21 @@ There is a script to execute all suites of selenium tests located in the
 ``basic_url`` is the basic url of the domain to test (i.e.
 http://localhost:8000/). All relative URL's depend on this URL.
 
-Also, it is necessary to run the script with the ``selenium-server.jar`` files on the same directory.
+It is necessary to run the script with the ``selenium-server.jar`` files on the same directory or to give the full path to it with the option ``--selenium-server``.
+
+To avoid launching all the browser windows when testing in your machine and also to allow to run tests in a server it is possible to use framebuffer. Framebuffer allows the allocation of headless displays. To install it run:
+
+.. code-block:: bash
+
+    $ sudo apt-get install xvfb
+
+and then, to launch it:
+
+.. code-block:: bash
+
+    $ sudo Xvfb :NUMBER
+
+Finally run the test suite with a non-default display number with the option ``--display NUMBER``.
 
 .. note::
 

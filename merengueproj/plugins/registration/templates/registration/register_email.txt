@@ -1,0 +1,10 @@
+{% load i18n %}{% blocktrans %}Hello,
+
+In order to complete your registration on {{ domain }}, please follow this link or copy it and paste it in your web browser:
+{% endblocktrans%}
+http://{{ domain }}{% url confirm_register_view instance.username instance.registration_hash %}
+{% blocktrans %}
+Best,
+
+Your {{ domain }} team.
+{% endblocktrans %}

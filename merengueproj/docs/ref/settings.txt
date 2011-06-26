@@ -230,3 +230,10 @@ When deployment is done is recommended to activate this variable.
 .. note::
 
     This variable will be activated by default if ``DEBUG`` is ``False``.
+
+APPS_TO_TEST
+------------
+
+Default: ``('action', 'base', 'block', 'registry', 'perms', 'portal', 'pluggable', 'section', 'theming', 'viewlet', 'workflow', )``
+
+This settings define the applications will be tested when the ``testmerengue`` command is executed.

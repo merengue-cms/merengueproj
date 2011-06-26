@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <dgarcia@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -15,18 +15,19 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf import settings
+from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext_lazy as _
 
-from django.conf.urls.defaults import url
-
-
-def get_url_default_lang():
-    return getattr(settings, 'URL_DEFAULT_LANG', settings.LANGUAGE_CODE)
+from merengue.action.actions import UserAction
 
 
-def merengue_url(regex, view, kwargs=None, name=None, prefix=''):
-    if isinstance(regex, dict):
-        regex_translatable = regex.get(get_url_default_lang(), regex['en'])
-    else:
-        regex_translatable = regex
-    return url(regex_translatable, view, kwargs, name, prefix)
+class RegisterAction(UserAction):
+    name = 'register'
+    verbose_name = _('Register')
+    help_text = _('Register page for new users')
+
+    def get_url(self, request, user):
+        return reverse('register_view')
+
+    def has_action(self, request, user):
+        return not user.is_authenticated()

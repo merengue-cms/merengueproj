@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% load i18n inlinetrans %}
+
+{% block extrabreadcrumbs %}
+  <span class="breadcrumbSeparator">→</span>
+  <a href="" title="{% trans "Register" %}">{% itrans "Register" %}</a>
+{% endblock %}
+
+{% block extrahead %}
+  {{ block.super }}
+<script type="text/javascript">
+(function($) {
+    var checkUsername = function() {
+        var field = $(this);
+        var url = $("#check_user_name_url").val();
+        var success = field.next('.username-success');
+        var error = success.next('.username-error');
+
+        $.ajax({
+            url: url,
+            data: {username: field.val()},
+            dataType: 'json',
+            success: function(response) {
+                if (response.error) {
+                   error.text(response.error);
+                   success.hide();
+                   error.show();
+                } else {
+                   error.hide();
+                   success.show();
+                }
+            }
+        });
+    }
+
+    $(document).ready(function(){
+        $('#id_username').after(' <span class="username-error" style="display: none;"></span>').after(' <span class="username-success" style="display: none;">{% trans "Valid and available username" %}</span>');
+        $('#id_username').keyup(checkUsername).blur(checkUsername);
+    });
+})(jQuery);
+
+</script>
+{% endblock %}
+
+{% block content %}
+<div id="register_page">
+<h1>{% itrans "Register" %}</h1>
+{% if success %}
+<p>{% itrans "Your registration request has been received successfully. We have sent you an email with instructions on how to finish the registration process." %}</p>
+<p>{% itrans "Thank you." %}</p>
+{% else %}
+<form action="" method="POST">
+  {{ form }}
+  <div class="submit_row">
+    <input type="hidden" id="check_user_name_url" value="{% url ajax_check_username %}" />
+    <input type="submit" value="{% trans "Register" %}" />
+  </div>
+</form>
+<p class="recover_password_description">
+{% itrans "I'm already registered but I forgot my password." %} <a href="{% url password_recovery_view %}">{% itrans "Please, help me recover my password." %}</a>
+</p>
+{% endif %}
+</div>
+{% endblock %}

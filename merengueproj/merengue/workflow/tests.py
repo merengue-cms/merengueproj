@@ -47,7 +47,7 @@ class WorkflowBasicTest(WorkflowBaseTestCase):
         self.assertEquals(Transition.objects.count(), 6)  # post_save creates 3 transitions per workflow
 
         work = Workflow.objects.get(slug='foo-workflow')
-        self.assertEquals(work.permissions.count(), 0)
+        self.assertTrue(work.permissions.count() > 0)
         self.assertEquals(work.states.count(), 3)
         self.assertEquals(work.transitions.count(), 3)
         self.assertEquals(work.initial_state, State.objects.get(
@@ -59,6 +59,7 @@ class WorkflowBasicTest(WorkflowBaseTestCase):
         """
         work = Workflow.objects.create(
             name_en='Foo Workflow', slug='foo-workflow')
+        work.blank()
 
         permissions = []
         permissions.append(Permission.objects.get(codename=u'can_draft'))
@@ -87,7 +88,7 @@ class WorkflowBasicTest(WorkflowBaseTestCase):
         self.assertEquals(WorkflowModelRelation.objects.count(), 0)
         work = Workflow.objects.create(
             name_en='Foo Workflow', slug='foo-workflow')
-        doc = ContentType.objects.get(name='document')
+        doc = ContentType.objects.get(name='document', app_label='section')
 
         # Set the workflow to the model
         self.assertEquals(WorkflowModelRelation.objects.count(), 0)
@@ -116,6 +117,7 @@ class WorkflowBasicTest(WorkflowBaseTestCase):
 
     def test_workflow_creation_and_delete(self):
         work = Workflow.objects.create(name_en='foo workflow')
+        work.blank()
 
         permissions = []
         permissions.append(Permission.objects.get(codename=u'can_draft'))
@@ -128,7 +130,7 @@ class WorkflowBasicTest(WorkflowBaseTestCase):
         for perm in permissions:
             work.add_permission(perm)
 
-        work.set_to_model(ContentType.objects.get(name='document'))
+        work.set_to_model(ContentType.objects.get(name='document', app_label='section'))
 
         self.assertEquals(work.permissions.count(), 6)
         self.assertEquals(WorkflowPermissionRelation.objects.count(), 6)
@@ -168,7 +170,7 @@ class WorkflowStatesBasicTest(WorkflowBaseTestCase):
         for perm in permissions:
             self.work.add_permission(perm)
 
-        self.work.set_to_model(ContentType.objects.get(name='document'))
+        self.work.set_to_model(ContentType.objects.get(name='document', app_label='section'))
 
     def test_basic_states_creation(self):
         """Test the creation of some states for the Workflow
@@ -218,7 +220,7 @@ class WorkflowStatesBasicTest(WorkflowBaseTestCase):
         self.work.initial_state = State.objects.get(slug="draft")
         self.work.save()
 
-        doc = ContentType.objects.get(name='document')
+        doc = ContentType.objects.get(name='document', app_label='section')
         obtained_workflow = WorkflowModelRelation.objects.get(
             content_type=doc).workflow
 
@@ -291,6 +293,8 @@ class WorkflowTransitionBasicTest(WorkflowBaseTestCase):
         super(WorkflowTransitionBasicTest, self).setUp()
         self.work = Workflow.objects.create(
             name_en='Foo Workflow', slug='foo-workflow')
+        # after save the workflow is populated. We want a blank workflow
+        self.work.blank()
 
         self.work.initial_state = None
         [state.delete() for state in self.work.states.all()]
@@ -307,7 +311,7 @@ class WorkflowTransitionBasicTest(WorkflowBaseTestCase):
         for perm in permissions:
             self.work.add_permission(perm)
 
-        self.work.set_to_model(ContentType.objects.get(name='document'))
+        self.work.set_to_model(ContentType.objects.get(name='document', app_label='section'))
 
         State.objects.create(name_en="Draft", slug='draft', workflow=self.work)
         State.objects.create(name_en="Reviewed", slug='reviewed', workflow=self.work)
@@ -583,6 +587,8 @@ class StatesAndPermissionTest(WorkflowBaseTestCase):
         super(StatesAndPermissionTest, self).setUp()
         self.work = Workflow.objects.create(
             name_en='Foo Workflow', slug='foo-workflow')
+        # after save the workflow is populated. We want a blank workflow
+        self.work.blank()
 
         self.work.initial_state = None
         [state.delete() for state in self.work.states.all()]
@@ -599,7 +605,7 @@ class StatesAndPermissionTest(WorkflowBaseTestCase):
         for perm in permissions:
             self.work.add_permission(perm)
 
-        self.work.set_to_model(ContentType.objects.get(name='document'))
+        self.work.set_to_model(ContentType.objects.get(name='document', app_label='section'))
 
         State.objects.create(name_en="Draft", slug='draft', workflow=self.work)
         State.objects.create(name_en="Reviewed", slug='reviewed', workflow=self.work)
@@ -649,7 +655,7 @@ class StatesAndPermissionTest(WorkflowBaseTestCase):
         # first, checks if the setUp is correct
         self.assertEquals(State.objects.count(), 5)
         self.assertEquals(Transition.objects.count(), 5)
-        self.assertEquals(self.work.permissions.count(), 6)
+        self.assertTrue(self.work.permissions.count() > 0)
 
         states = dict([(state.name_en, state)
                        for state in State.objects.all()])

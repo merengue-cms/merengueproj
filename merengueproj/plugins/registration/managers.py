@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <dgarcia@yaco.es>
+# Copyright (c) 2010 by Yaco Sistemas
 #
 # This file is part of Merengue.
 #
@@ -15,18 +15,20 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf import settings
+import datetime
 
-from django.conf.urls.defaults import url
-
-
-def get_url_default_lang():
-    return getattr(settings, 'URL_DEFAULT_LANG', settings.LANGUAGE_CODE)
+from django.db.models import Manager
+from merengue.pluggable.utils import get_plugin
 
 
-def merengue_url(regex, view, kwargs=None, name=None, prefix=''):
-    if isinstance(regex, dict):
-        regex_translatable = regex.get(get_url_default_lang(), regex['en'])
-    else:
-        regex_translatable = regex
-    return url(regex_translatable, view, kwargs, name, prefix)
+class RegistrationManager(Manager):
+
+    def actives(self):
+        plugin_config = get_plugin('registration').get_config()
+        caducity = plugin_config.get('caducity').get_value()
+        qs = self.all()
+        if caducity:
+            now = datetime.datetime.now()
+            from_date = now - datetime.timedelta(hours=caducity)
+            return qs.filter(registration_date__gte=from_date)
+        return qs

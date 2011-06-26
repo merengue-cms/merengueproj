@@ -29,6 +29,11 @@ def run_all_suite():
                   help="don't print status messages to stdout")
     parser.add_option('-f', '--firefox-profile-directory', action='store', dest='firefox_profile',
                         help="Use a firefox profile directory")
+    parser.add_option('-s', '--selenium-server', action='store', dest='selenium_server',
+                        help="Selenium server path")
+    parser.add_option('--display', action='store', dest='display', type='int',
+                        help='Display number for framebuffer.')
+
     (options, args) = parser.parse_args()
 
     directory_list = [i for i in os.listdir('.') if os.path.isdir(i) \
@@ -39,7 +44,10 @@ def run_all_suite():
                      "(i.e. http://localhost:8000/)""")
     pwd = os.path.dirname(os.path.abspath(__file__))
     extensions_file = os.path.join(os.path.abspath('..'), 'extensions', 'user-extensions.js')
-    selenium_file = os.path.join(pwd, 'selenium-server.jar')
+    if options.selenium_server:
+        selenium_file = options.selenium_server
+    else:
+        selenium_file = os.path.join(pwd, 'selenium-server.jar')
     variables_file = os.path.join(pwd, 'variables.html')
     if options.firefox_profile:
         firefox_arg = '-firefoxProfileTemplate "%s"' % options.firefox_profile
@@ -55,13 +63,17 @@ def run_all_suite():
             shutil.copy(variables_file, variables_copy)
             if options.verbose:
                 print 'Launching Selenium RC in %s test suite...' % suite_file
-            os.system('java -jar %s -htmlSuite "*firefox" "%s" "%s" "%s" -userExtensions "%s" %s' \
-                    % (selenium_file,
-                       args[0],
-                       suite_file,
-                       results_file,
-                       extensions_file,
-                       firefox_arg))
+            cmd = 'java -jar %s -htmlSuite "*firefox" "%s" "%s" "%s" -userExtensions "%s" %s' % (
+                selenium_file,
+                args[0],
+                suite_file,
+                results_file,
+                extensions_file,
+                firefox_arg,
+            )
+            if options.display:
+                cmd = 'DISPLAY=:%s %s' % (options.display, cmd)
+            os.system(cmd)
             os.remove(variables_copy)
     else:
         print 'ERROR: File selenium-server.jar/user-extensions.js can not be found.'

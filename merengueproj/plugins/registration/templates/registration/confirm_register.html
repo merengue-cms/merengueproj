@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% load i18n inlinetrans %}
+
+{% block extrabreadcrumbs %}
+  <span class="breadcrumbSeparator">→</span>
+  <a href="" title="{% trans "Register" %}">{% itrans "Register" %}</a>
+{% endblock %}
+
+{% block content %}
+<div id="confirm_register_page">
+<h1>{% itrans "Confirm registration" %}</h1>
+<p>{% itrans "Hello" %} {{ registration.username }}, {% itrans "your registration is almost complete. Please, fill the following information." %}</p>
+<form action="" method="POST">
+  {{ password_form }}
+  {{ profile_form }}
+  <div class="submit_row">
+    <input type="submit" value="{% trans "Register" %}" />
+  </div>
+</form>
+</div>
+{% endblock %}

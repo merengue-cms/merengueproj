@@ -43,6 +43,11 @@ class RegisteredItemAdmin(BaseOrderableAdmin):
     def has_add_permission(self, request):
         return False
 
+    def has_delete_permission(self, request, obj=None):
+        if obj:
+            return obj.can_delete(request.user)
+        return True
+
     def get_form(self, request, obj=None, **kwargs):
         form = super(RegisteredItemAdmin, self).get_form(request, obj,
                                                          **kwargs)

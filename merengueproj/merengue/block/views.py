@@ -22,6 +22,7 @@ from django.template import RequestContext
 from django.utils.simplejson import dumps
 from django.utils.translation import ugettext as _
 
+from merengue.block.blocks import SectionBlock, ContentBlock
 from merengue.block.forms import BlockConfigForm, AddBlockForm
 from merengue.block.models import RegisteredBlock
 from merengue.perms.utils import has_global_permission, MANAGE_BLOCK_PERMISSION
@@ -111,11 +112,12 @@ def add_block(request):
     if request.method == 'POST':
         form = AddBlockForm(request.POST)
         if form.is_valid():
-            block = form.save()
-            if block.tied:
-                result = block.get_registry_item().render(request, form.cleaned_data.get('place'), block.tied, RequestContext(request))
+            registered_block = form.save()
+            block = registered_block.get_registry_item()
+            if registered_block.tied and (isinstance(block, ContentBlock) or isinstance(block, SectionBlock)):
+                result = block.render(request, form.cleaned_data.get('place'), registered_block.tied, RequestContext(request))
             else:
-                result = block.get_registry_item().render(request, form.cleaned_data.get('place'), RequestContext(request))
+                result = block.render(request, form.cleaned_data.get('place'), RequestContext(request))
             result = '<div class="blockWrapper">%s</div>' % result
             return HttpResponse(result)
     else:

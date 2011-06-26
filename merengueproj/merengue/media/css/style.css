@@ -258,14 +258,6 @@ input#id_password {
     display: none;
 }
 
-/* ----- feedback plugin ----- */
-
-#feedback .required label {
-  display: inline; 
-  padding-right: 8px;
-  background: transparent url(../img/required.gif) no-repeat right center;
-}
-
 /* ----- contactform plugin ----- */
 
 form#contactform ul.errorlist{
@@ -348,22 +340,55 @@ form.inplace_description {
 /* end inplaceedit */
 
 /* content form */
+
+.error,
+#content form ul.errorlist {
+    background-color: #FCF5CA;
+}
+
+#content form ul.errorlist li {
+    padding-bottom: 0;
+}
+
+.error input {
+    border: 1px solid red;
+}
+
+.errorlist li {
+    color: red;
+}
+
 #content form ul {
     list-style: none;
+    margin-left: 0;
 }
 
-#content form ul li {
-    margin-bottom: 1.2em;
+#content form ul li,
+#content form p {
+    padding: 0.5em 0em 1.2em 0.5em;
 }
 
-#content form ul li label {
+#content form label {
     display: block;
     margin-bottom: 0.6em;
 }
 
-#content form ul li.required label {
+#content .required label {
+  padding-left: 8px;
+  background: transparent url(../img/required.gif) no-repeat left center;
+}
+
+#content form .required label
+{
     font-weight: bold;
 }
+
+#content form .helpText {
+    color: #888888;
+    font-size: 0.8em;
+    display: block;
+}
+
 /* end content form */
 
 /* end content*/

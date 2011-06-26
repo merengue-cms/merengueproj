@@ -46,6 +46,7 @@ from south.exceptions import NoMigrations
 
 from merengue import registry
 from merengue.base.adminsite import site
+from merengue.block.utils import clear_lookup_cache
 from merengue.registry.items import (NotRegistered as NotRegisteredItem)
 from merengue.section.models import BaseSection
 from merengue.section.middleware import register_section_prefix, unregister_section_prefix
@@ -392,14 +393,20 @@ def register_plugin_blocks(plugin_name):
     plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
     if not plugin:
         return
-    register_items(plugin.get_blocks())
+    plugin_blocks = plugin.get_blocks()
+    if plugin_blocks:
+        register_items(plugin_blocks)
+        clear_lookup_cache()
 
 
 def unregister_plugin_blocks(plugin_name):
     plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
     if not plugin:
         return
-    unregister_items(plugin.get_blocks())
+    plugin_blocks = plugin.get_blocks()
+    if plugin_blocks:
+        unregister_items(plugin_blocks)
+        clear_lookup_cache()
 
 
 def register_plugin_viewlets(plugin_name):
@@ -453,7 +460,12 @@ def register_plugin_section_models(plugin_name):
 
 
 def unregister_plugin_models(plugin_name):
-    pass
+    plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
+    if not plugin:
+        return
+    # next two lines are commented until #2123 will be fixed
+    #for model, model_admin in plugin.models():
+        #site.unregister_model(model)
 
 
 def unregister_plugin_section_models(plugin_name):

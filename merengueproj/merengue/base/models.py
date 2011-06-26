@@ -100,6 +100,10 @@ class ContactInfo(models.Model):
     def __unicode__(self):
         return self.contact_email or ugettext('Without contact email')
 
+    def is_empty(self):
+        return not (self.name or self.contact_email or self.contact_email2 or self.url or \
+                    self.phone or self.phone2 or self.fax)
+
 
 class BaseCategory(models.Model):
     """
@@ -697,10 +701,11 @@ class BaseContent(BaseClass):
         from merengue.perms.models import ObjectPermission
         self.objectpermission_set.all().delete()
         for perm in self.workflow_status.statepermissionrelation_set.all():
-            self.objectpermission_set.add(
-                ObjectPermission.objects.create(content=self,
-                                                role=perm.role,
-                                                permission=perm.permission))
+            ObjectPermission.objects.get_or_create(
+                content=self,
+                role=perm.role,
+                permission=perm.permission,
+            )
 
     def calculate_rank(self):
         return 100.0  # default implementation

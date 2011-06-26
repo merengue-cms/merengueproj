@@ -21,6 +21,8 @@ from merengue.viewlet.viewlets import Viewlet
 from merengue.registry import params
 from merengue.registry.items import ViewLetQuerySetItemProvider
 
+from plugins.news.models import NewsItem
+
 
 class LatestNewsViewlet(ViewLetQuerySetItemProvider, Viewlet):
     name = 'latestnews'
@@ -28,9 +30,13 @@ class LatestNewsViewlet(ViewLetQuerySetItemProvider, Viewlet):
     verbose_name = _('Latest news block')
 
     config_params = ViewLetQuerySetItemProvider.config_params + [
-        params.Single(name='limit', label=ugettext('limit for news viewlet'),
-                      default='3'),
+        params.PositiveInteger(name='limit', label=ugettext('limit for news viewlet'),
+                      default=3),
     ]
+
+    def queryset(self, request, context, section):
+        limit = self.get_config().get('limit').get_value()
+        return NewsItem.objects.published()[:limit]
 
     def render(self, request, context=None):
         if context is None:
@@ -45,6 +51,9 @@ class AllNewsViewlet(ViewLetQuerySetItemProvider, Viewlet):
     name = 'allnews'
     help_text = _('All news')
     verbose_name = _('All news block')
+
+    def queryset(self, request, context, section):
+        return NewsItem.objects.published()
 
     def render(self, request, context=None):
         if context is None:

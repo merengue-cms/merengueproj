@@ -10,52 +10,58 @@
 
 {% block blockbody %}
 <div id="contact-info">
-    {% if contact_info.name %}
-	<span  class="contactName">
+  {% if contact_info.name %}
+    <span  class="contactName">
     <strong>{% inline_trans "Name" %}:</strong>
     {% inplace_edit "contact_info.name" %}
     </span>
-    {% endif %}
-    {% if contact_info.phone %}
+  {% endif %}
+  {% if contact_info.phone %}
     <span class="contactPhone">
     <strong>{% inline_trans "Phone" %}:</strong>
     {% inplace_edit "contact_info.phone" %}
     </span>
-    {% endif %}
+  {% endif %}
 
-    {% if contact_info.phone2 %}
-    <span class="contactPhone">
+  {% if contact_info.phone2 %}
+    <span class="contactPhone"> 
     <strong>{% inline_trans "Phone 2" %}:</strong>
     {% inplace_edit "contact_info.phone2" %}
     </span>
-    {% endif %}
+  {% endif %}
 
-    {% if contact_info.fax %}
+  {% if contact_info.fax %}
     <span class="contactPhone">
     <strong>{% inline_trans "Fax" %}:</strong>
     {% inplace_edit "contact_info.fax" %}
     </span>
-    {% endif %}
+  {% endif %}
 
-    {% if contact_info.contact_email %}
+  {% if contact_info.contact_email %}
     <span class="contactEmail">
     <strong>{% inline_trans "Email" %}:</strong>
     <a href="mailto:{{ contact_info.contact_email }}" title="{{ contact_info.contact_email }}">{% inplace_edit "contact_info.contact_email" filters_to_show="|truncatechars:42" %}</a>
     </span>
-    {% endif %}
+  {% endif %}
 
-    {% if contact_info.contact_email2 %}
+  {% if contact_info.contact_email2 %}
     <span class="contactEmail">
     <strong>{% inline_trans "Email 2" %}:</strong>
     <a href="mailto:{{ contact_info.contact_email2 }}" title="{{ contact_info.contact_email2 }}" >{% inplace_edit "contact_info.contact_email2" filters_to_show="truncatechars:42" %}</a>
     </span>
-    {% endif %}
+  {% endif %}
 
-    {% if contact_info.url %}
+  {% if contact_info.url %}
     <span class="contactUrl">
     <strong>{% inline_trans "URL" %}:</strong>
         {% urlize contact_info.url 42 hide_protocol="1" target="_blank",rel="nofollow" %}
     </span>
-    {% endif %}
+  {% endif %}
+
+{% block emptycontact %}
+  {% if not contact_info or contact_info.is_empty %}
+    {% itrans "Empty contact info" %}
+  {% endif %}
+{% endblock %}
 </div>
 {% endblock %}
