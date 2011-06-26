@@ -61,7 +61,16 @@ def get_workflow_parent_models(model=None):
     return result
 
 
+def change_status(content, state):
+    """ change the status of a content """
+    workflow = workflow_by_model(content.__class__)
+    status = workflow.states.get(slug=state)
+    content.workflow_status = status
+    content.save()
+
+
 def update_objects_permissions():
+    """ update all the contents permissions """
     models = get_workflow_parent_models()
     for model in models:
         print 'Updating model: %s' % model
@@ -70,6 +79,7 @@ def update_objects_permissions():
 
 
 def update_queryset_permissions(queryset):
+    """ update all the permissions in the queryset objects """
     for content in queryset:
         print ' Updating permissions in content: %s' % content
         if not content.workflow_status:  # we need to set the proper state objetc

@@ -774,9 +774,10 @@ class WorkflowBatchActionProvider(object):
         if selected:
             if request.POST.get('post', False):
                 original_status_dict = dict(queryset.values_list('pk', 'status'))
-                updated = queryset.update(status=state)
+                for content in queryset:
+                    workflow_api.change_status(content, state)
                 obj_log = ugettext("Changed to %s") % state
-                msg_data = {'number': updated,
+                msg_data = {'number': queryset.count(),
                             'model_name': self.opts.verbose_name,
                             'state': state}
                 msg = ugettext(u"Successfully set %(number)d %(model_name)s as %(state)s.") % msg_data
