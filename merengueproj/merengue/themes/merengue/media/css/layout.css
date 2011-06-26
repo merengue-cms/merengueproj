@@ -726,6 +726,15 @@ div.errormessage, div#messagebox ul#info-list {
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
 }
 
+.error,
+.errorlist {
+   background-color: #FCF5CA;
+}
+
+.errorlist li {
+   color: #fa9391;
+}
+
 /* slideshow */
 .simpleImgGallery2 {
   background: #F4F0E5;
@@ -746,7 +755,7 @@ div.errormessage, div#messagebox ul#info-list {
   color: #aaa;  
 }
 
-.eventDates label{
+.eventDates label {
   color: #997B53;
 }
 

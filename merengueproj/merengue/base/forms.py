@@ -108,7 +108,7 @@ class FormRequiredFields(object):
             normal_row=u'<tr%(html_class_attr)s><th>%(label)s</th><td>%(errors)s%(field)s%(help_text)s</td></tr>',
             error_row=u'<tr><td colspan="2">%s</td></tr>',
             row_ender=u'</td></tr>',
-            help_text_html=u'<br />%s',
+            help_text_html=u'<br /><span class="helpText">%s</span>',
             errors_on_separate_row=False)
 
     def as_ul_required(self):
@@ -119,7 +119,7 @@ class FormRequiredFields(object):
             normal_row=u'<li%(html_class_attr)s>%(errors)s%(label)s %(field)s%(help_text)s</li>',
             error_row=u'<li>%s</li>',
             row_ender='</li>',
-            help_text_html=u' %s',
+            help_text_html=u'<span class="helpText">%s</span>',
             errors_on_separate_row=False)
 
     def as_p_required(self):
@@ -130,7 +130,7 @@ class FormRequiredFields(object):
             normal_row=u'<p%(html_class_attr)s>%(label)s %(field)s%(help_text)s</p>',
             error_row=u'%s',
             row_ender='</p>',
-            help_text_html=u' %s',
+            help_text_html=u'<span class="helpText">%s</span>',
             errors_on_separate_row=True)
 
     def css_classes(self, extra_classes=None):
@@ -165,8 +165,13 @@ class FormRequiredFields(object):
                 # Create a 'class="..."' atribute if the row should have any
                 # CSS classes applied.
                 html_class_attr = ''
+                field_classes = []
                 if field.required:
-                    html_class_attr = ' class="%s"' % self.required_css_class
+                    field_classes.append(self.required_css_class)
+                if bf_errors:
+                    field_classes.append('error')
+                if field_classes:
+                    html_class_attr = ' class="%s"' % " ".join(field_classes)
 
                 if errors_on_separate_row and bf_errors:
                     output.append(error_row % force_unicode(bf_errors))
@@ -334,9 +339,7 @@ class BaseModelForm(forms.ModelForm, FormAdminDjango, FormRequiredFields):
                 field.column_style = 'threeColumnsField'
 
     def __unicode__(self):
-        return self.as_div()
-
-    as_div = _as_div
+        return self.as_p_required()
 
 
 class CaptchaFreeThreadedCommentForm(BaseModelForm, FreeThreadedCommentForm):
