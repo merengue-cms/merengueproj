@@ -23,6 +23,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from south.modelsinspector import add_introspection_rules
 
+from merengue.perms import utils as perms_api
 from merengue.registry.dbfields import ConfigField
 from merengue.registry.managers import RegisteredItemManager
 
@@ -83,6 +84,10 @@ class RegisteredItem(models.Model):
             self.active = True
             if commit:
                 self.save()
+
+    def can_delete(self, user):
+        # user only can delete broken objects
+        return perms_api.can_manage_site(user) and self.broken
 
     def deactivate(self, commit=True):
         if self.active:

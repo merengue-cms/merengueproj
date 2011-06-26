@@ -39,7 +39,7 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
     readonly_fields = RegisteredItemAdmin.readonly_fields + ('name',
         'description', 'version', 'directory_name', )
     list_display = ('name', 'directory_name', 'installed', 'active', 'screenshot_link', )
-    list_filter = ('installed', 'active', )
+    list_filter = ('installed', 'active', 'broken', )
 
     fieldsets = (
         ('',
