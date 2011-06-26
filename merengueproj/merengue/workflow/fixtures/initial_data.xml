@@ -3,7 +3,6 @@
   <object pk="1" model="workflow.workflow">
     <field type="CharField" name="name_en">Basic workflow</field>
     <field type="CharField" name="name_es">Workflow básico</field>
-    <field type="CharField" name="name_it"><None></None></field>
     <field type="CharField" name="slug">basic-workflow</field>
   </object>
 </django-objects>
