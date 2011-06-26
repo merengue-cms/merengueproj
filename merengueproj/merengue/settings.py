@@ -292,7 +292,6 @@ LOGOUT_REDIRECT_URL = None
 TEST_RUNNER = 'merengue.test.run_tests'
 APPS_TO_TEST = (
     'action',
-    'base',
     'block',
     'registry',
     'perms',
@@ -302,6 +301,7 @@ APPS_TO_TEST = (
     'theming',
     'viewlet',
     'workflow',
+    'base',
 )
 
 # Merengue manage file
