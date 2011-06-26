@@ -63,23 +63,17 @@ def run_all_suite():
             shutil.copy(variables_file, variables_copy)
             if options.verbose:
                 print 'Launching Selenium RC in %s test suite...' % suite_file
+            cmd = 'java -jar %s -htmlSuite "*firefox" "%s" "%s" "%s" -userExtensions "%s" %s' % (
+                selenium_file,
+                args[0],
+                suite_file,
+                results_file,
+                extensions_file,
+                firefox_arg,
+            )
             if options.display:
-                os.system('DISPLAY=:%s java -jar %s -htmlSuite "*firefox" "%s" "%s" "%s" -userExtensions "%s" %s' \
-                        % (options.display,
-                           selenium_file,
-                           args[0],
-                           suite_file,
-                           results_file,
-                           extensions_file,
-                           firefox_arg))
-            else:
-                os.system('java -jar %s -htmlSuite "*firefox" "%s" "%s" "%s" -userExtensions "%s" %s' \
-                        % (selenium_file,
-                        args[0],
-                        suite_file,
-                        results_file,
-                        extensions_file,
-                        firefox_arg))
+                cmd = 'DISPLAY=:%s %s' % (options.display, cmd)
+            os.system(cmd)
             os.remove(variables_copy)
     else:
         print 'ERROR: File selenium-server.jar/user-extensions.js can not be found.'
