@@ -460,7 +460,11 @@ def register_plugin_section_models(plugin_name):
 
 
 def unregister_plugin_models(plugin_name):
-    pass
+    plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
+    if not plugin:
+        return
+    for model, model_admin in plugin.models():
+        site.unregister_model(model)
 
 
 def unregister_plugin_section_models(plugin_name):
