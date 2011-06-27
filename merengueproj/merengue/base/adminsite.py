@@ -190,6 +190,13 @@ class BaseAdminSite(DjangoAdminSite):
         for model in model_or_iterable:
             self._models_registry[model] = self._registry[model]
 
+    def unregister_model(self, model_or_iterable):
+        if isinstance(model_or_iterable, ModelBase):
+            model_or_iterable = [model_or_iterable]
+        for model in model_or_iterable:
+            if model in self._models_registry.keys():
+                del(self._models_registry[model])
+
     def admin_redirect(self, request, content_type_id, object_id, extra_url=''):
         """ redirect to content admin page or content related admin page in his section """
         try:
