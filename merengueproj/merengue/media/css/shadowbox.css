@@ -88,7 +88,7 @@ HTML snapshot:
   font-family: 'Arial', 'Lucida Grande', Tahoma, sans-serif;
   font-size: 22px;
   text-align: center;
-  line-height: 16px;
+  line-height: 24px;
   padding: 18px 5px 10px 10px;
   color: #999;
 }
@@ -284,4 +284,14 @@ div.shadowbox_message a:link,
 div.shadowbox_message a:visited {
   color: #fff;
   text-decoration: underline;
+}
+
+
+/* shadow box form */
+#shadowbox_body form label {
+    vertical-align: top;
+}
+
+#shadowbox_body form span.helptext {
+    display: block;
 }

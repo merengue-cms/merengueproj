@@ -74,6 +74,10 @@ table tr th {
     background: #F4F0E5;
 }
 
+form select {
+    max-width: 99%;
+}
+
 .hide {
     display: none;
 }
