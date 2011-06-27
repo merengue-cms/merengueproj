@@ -186,7 +186,7 @@ class CollectionDisplayFieldFilterInline(admin.TabularInline):
 
 class CollectionDisplayFieldAdmin(RelatedModelAdmin, BaseOrderableAdmin):
     tool_name = 'display_fields'
-    tool_label = _('fields to diaplay in the list')
+    tool_label = _('fields to display in the list')
     related_field = 'collection'
     sortablefield = 'field_order'
     ordering = ('field_order', )
