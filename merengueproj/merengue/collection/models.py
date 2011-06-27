@@ -133,6 +133,8 @@ class Collection(BaseContent):
 
     def _get_items_from_one_source(self, ct):
         model = ct.model_class()
+        if not model:
+            return []
         query = model.objects.all()
         return self._filter_query(query)
 
@@ -174,7 +176,10 @@ class Collection(BaseContent):
             items = self._get_items_from_one_source(content_types[0])
         else:
             for ct in content_types:
-                if not issubclass(ct.model_class(), BaseContent):
+                model = ct.model_class()
+                if not model:
+                    continue
+                if not issubclass(model, BaseContent):
                     items = self._get_items_from_multiple_sources(content_types)
                     return items
             items = self._get_items_from_basecontent(content_types)
@@ -191,10 +196,12 @@ class Collection(BaseContent):
             raise CollectionWithoutContentTypesException('The collection "%s" should have defined the content types to list' % self)
         elif ct_len == 1:
             return content_types[0].model_class()
-        parents_first = None
+        parents_first = []
         for i in range(ct_len - 1):
-            parents_first = parents_first or content_types[i].model_class().mro()
-            parents_second = content_types[i + 1].model_class().mro()
+            model = content_types[i].model_class()
+            next_model = content_types[i + 1].model_class()
+            parents_first = parents_first or (model and model.mro())
+            parents_second = (next_model and next_model.mro()) or []
             for i, parent_first in enumerate(parents_first):
                 if parent_first in parents_second:
                     parents_first = parents_first[i:]
