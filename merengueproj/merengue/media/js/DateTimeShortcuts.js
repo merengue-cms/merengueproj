@@ -13,15 +13,14 @@ var DateTimeShortcuts = {
     clockLinkName: 'clocklink',      // name of the link that is used to toggle
     admin_media_prefix: '',
     init: function() {
-        // Deduce admin_media_prefix by looking at the <script>s in the
-        // current document and finding the URL of *this* module.
-        var scripts = document.getElementsByTagName('script');
-        for (var i=0; i<scripts.length; i++) {
-            if (scripts[i].src.match(/DateTimeShortcuts/)) {
-                var idx = scripts[i].src.indexOf('js/DateTimeShortcuts');
-                DateTimeShortcuts.admin_media_prefix = scripts[i].src.substring(0, idx);
-                break;
-            }
+        // Get admin_media_prefix by grabbing it off the window object. It's
+        // set in the admin/base.html template, so if it's not there, someone's
+        // overridden the template. In that case, we'll set a clearly-invalid
+        // value in the hopes that someone will examine HTTP requests and see it.
+        if (window.__admin_media_prefix__ != undefined) {
+            DateTimeShortcuts.admin_media_prefix = window.__admin_media_prefix__;
+        } else {
+            DateTimeShortcuts.admin_media_prefix = '/missing-admin-media-prefix/';
         }
 
         var inputs = document.getElementsByTagName('input');
@@ -76,11 +75,7 @@ var DateTimeShortcuts = {
         clock_box.className = 'clockbox module';
         clock_box.setAttribute('id', DateTimeShortcuts.clockDivName + num);
         container.appendChild(clock_box);
-        if(typeof MooTools == 'undefined') {
-          addEvent(clock_box, 'click', DateTimeShortcuts.cancelEventPropagation);
-        } else {
-          $(clock_box).addEvent('click', function(event) { event.stopPropagation(); });
-        }
+        addEvent(clock_box, 'click', DateTimeShortcuts.cancelEventPropagation);
 
         quickElement('h2', clock_box, gettext('Choose a time'));
         time_list = quickElement('ul', clock_box, '');
@@ -114,11 +109,7 @@ var DateTimeShortcuts = {
     
         // Show the clock box
         clock_box.style.display = 'block';
-        if(typeof MooTools == 'undefined') {
-          addEvent(window.document, 'click', function() { DateTimeShortcuts.dismissClock(num); return true; });
-        } else {
-          $(window.document).addEvent('click', function() { DateTimeShortcuts.dismissClock(num); return true; });
-        }
+        addEvent(window.document, 'click', function() { DateTimeShortcuts.dismissClock(num); return true; });
     },
     dismissClock: function(num) {
        document.getElementById(DateTimeShortcuts.clockDivName + num).style.display = 'none';
@@ -126,6 +117,7 @@ var DateTimeShortcuts = {
     },
     handleClockQuicklink: function(num, val) {
        DateTimeShortcuts.clockInputs[num].value = val;
+       DateTimeShortcuts.clockInputs[num].focus();
        DateTimeShortcuts.dismissClock(num);
     },
     // Add calendar widget to a given field.
@@ -173,11 +165,7 @@ var DateTimeShortcuts = {
         cal_box.className = 'calendarbox module';
         cal_box.setAttribute('id', DateTimeShortcuts.calendarDivName1 + num);
         container.appendChild(cal_box);
-        if(typeof MooTools == 'undefined') {
-          addEvent(cal_box, 'click', DateTimeShortcuts.cancelEventPropagation);
-        } else {
-          $(cal_box).addEvent('click', function(event) { event.stopPropagation(); });
-        }
+        addEvent(cal_box, 'click', DateTimeShortcuts.cancelEventPropagation);
 
         // next-prev links
         var cal_nav = quickElement('div', cal_box, '');
@@ -282,8 +270,6 @@ var DateTimeShortcuts = {
     }
 }
 
-if(typeof MooTools == 'undefined') {
-  addEvent(window, 'load', DateTimeShortcuts.init);
-} else {
-  $(window).addEvent('load', DateTimeShortcuts.init);
-}
+jQuery(document).ready(function(){
+    DateTimeShortcuts.init();
+});

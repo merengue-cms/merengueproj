@@ -17,12 +17,12 @@
 
 from django.db import models
 
-from django.contrib.admin import widgets
 from django.forms.util import ValidationError
 from django.core.validators import email_re
 from django.utils.translation import ugettext as _
 from django import forms
 
+from merengue.base import widgets
 from merengue.pluggable.utils import get_plugin
 
 from plugins.contactform.recaptcha.client import captcha
@@ -37,11 +37,11 @@ class TextAreaField(forms.CharField):
 
 
 class DateTimeField(forms.DateTimeField):
-    widget = widgets.AdminSplitDateTime
+    widget = widgets.TranslatableSplitDateTimeWidget
 
 
 class DateField(forms.DateField):
-    widget = widgets.AdminDateWidget
+    widget = widgets.TranslatableInputDateWidget
 
 
 class MultiEmailField(forms.CharField):
