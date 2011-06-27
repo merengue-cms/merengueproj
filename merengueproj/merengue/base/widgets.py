@@ -186,7 +186,7 @@ class AdminDateOfDateTimeWidget(AdminDateWidget):
         return super(AdminDateOfDateTimeWidget, self).render(name, value, attrs)
 
 
-class TranslatableInputDateWidget(forms.DateInput):
+class InputDateWidget(forms.DateInput):
 
     class Media:
         js = (settings.MEDIA_URL + "admin/js/calendar.js",
@@ -194,7 +194,7 @@ class TranslatableInputDateWidget(forms.DateInput):
         css = {'all': ('%smerengue/css/event_calendar.css' % settings.MEDIA_URL, )}
 
     def __init__(self, attrs={}, format=None):
-        super(TranslatableInputDateWidget, self).__init__(attrs={'class': 'vDateField', 'size': '10'}, format=format)
+        super(InputDateWidget, self).__init__(attrs={'class': 'vDateField', 'size': '10'}, format=format)
 
 
 class InputTimeWidget(forms.TextInput):
@@ -207,10 +207,10 @@ class InputTimeWidget(forms.TextInput):
         super(InputTimeWidget, self).__init__(attrs={'class': 'vTimeField', 'size': '8'})
 
 
-class TranslatableSplitDateTimeWidget(AdminSplitDateTime):
+class SplitDateTimeWidget(AdminSplitDateTime):
 
     def __init__(self, attrs=None):
-        widgets = [TranslatableInputDateWidget, InputTimeWidget, ]
+        widgets = [InputDateWidget, InputTimeWidget, ]
         # Note that we're calling MultiWidget, not SplitDateTimeWidget, because
         # we want to define widgets.
         forms.MultiWidget.__init__(self, widgets, attrs)

@@ -37,11 +37,11 @@ class TextAreaField(forms.CharField):
 
 
 class DateTimeField(forms.DateTimeField):
-    widget = widgets.TranslatableSplitDateTimeWidget
+    widget = widgets.SplitDateTimeWidget
 
 
 class DateField(forms.DateField):
-    widget = widgets.TranslatableInputDateWidget
+    widget = widgets.InputDateWidget
 
 
 class MultiEmailField(forms.CharField):
