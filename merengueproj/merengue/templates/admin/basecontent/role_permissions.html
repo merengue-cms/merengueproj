@@ -54,7 +54,11 @@
                     <tr class="{% cycle 'row1' 'row2' %}">
                         <td>{{ perm }}</td>
                         {% for role, checked in roles %}
-                        <td><input type="checkbox" {% if checked %}checked="checked"{% endif %} class="action-select" value="{{ role.id}}_{{ perm.id }}" name="selected_perm" /></td>
+                        {% if enable_edit %}
+                          <td><input type="checkbox" {% if checked %}checked="checked"{% endif %} class="action-select" value="{{ role.id}}_{{ perm.id }}" name="selected_perm" /></td>
+                        {% else %}
+                          <td>{% if checked %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}</td>
+                        {% endif %}
                         {% endfor %}
                     </tr>
                 {% endfor %}
@@ -62,8 +66,10 @@
         </table>
     </div>
 </div>
-    <div class="module aligned"></div>
-    {% customize_submit_row "roles_" %}
+<div class="module aligned"></div>
+{% if enable_edit %}  
+  {% customize_submit_row "roles_" %}
+{% endif %}
 </form>
 {% if content %}
 <h2>{% trans "User and groups local roles" %} </h2>

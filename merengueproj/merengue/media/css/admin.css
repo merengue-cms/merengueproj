@@ -645,23 +645,14 @@ form .aligned p.errornote{
     margin-left: 0em;
 }
 
-div.warning-message { 
-    border: 1px solid #73d0ff;
-    margin: 1em 0px;
-    background: #cceeff;
+ul.messagelist li a {
+    color: #806446;
+    text-decoration: underline;
     font-weight: bold;
-} 
-
-div.warning-message ul {
-    margin: 0px;
-    padding-left: 12px;
 }
 
-div.warning-message ul li {
-    list-style: none;
-    background: url("../img/info_icon.gif") center left no-repeat;
-    line-height: 22px;
-    padding-left: 26px;
+div ul li.warning strong {
+    color: #cc0000;
 }
 
 input.withInternalLinkUrl {
