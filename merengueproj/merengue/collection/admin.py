@@ -186,7 +186,7 @@ class CollectionDisplayFieldFilterInline(admin.TabularInline):
 
 class CollectionDisplayFieldAdmin(RelatedModelAdmin, BaseOrderableAdmin):
     tool_name = 'display_fields'
-    tool_label = _('display fields')
+    tool_label = _('fields to diaplay in the list')
     related_field = 'collection'
     sortablefield = 'field_order'
     ordering = ('field_order', )
@@ -227,7 +227,7 @@ class CollectionDisplayFieldAdmin(RelatedModelAdmin, BaseOrderableAdmin):
 
 class FeedItemDisplayFieldAdmin(CollectionDisplayFieldAdmin):
     tool_name = 'display_fields_in_item'
-    tool_label = _('full item fields')
+    tool_label = _('fields in the detail view of the object')
 
     def get_default_fields(self, obj):
         if not obj:

@@ -126,7 +126,7 @@ class Menu(models.Model):
         verbose_name=_('visible menus'),
         blank=True,
         null=True,
-        help_text=_('The roles that you will see this menu')
+        help_text=_('The roles that will see this menu')
     )
 
     class Meta:
