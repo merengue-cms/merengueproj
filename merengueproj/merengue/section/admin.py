@@ -173,7 +173,7 @@ class SectionContentAdmin(OrderableRelatedModelAdmin):
         return form
 
     def get_accesible_states(self, status, user, obj):
-        if obj or not self.ACQUIRE_SECTION_ROLES:
+        if obj or not settings.ACQUIRE_SECTION_ROLES:
             return super(SectionContentAdmin, self).get_accesible_states(status, user, obj)
         else:
             return status.get_accesible_states(user, self.basecontent)
