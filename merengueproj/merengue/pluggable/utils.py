@@ -463,9 +463,8 @@ def unregister_plugin_models(plugin_name):
     plugin = get_plugin(plugin_name, prepend_plugins_dir=False)
     if not plugin:
         return
-    # next two lines are commented until #2123 will be fixed
-    #for model, model_admin in plugin.models():
-        #site.unregister_model(model)
+    for model, model_admin in plugin.models():
+        site.unregister_model(model)
 
 
 def unregister_plugin_section_models(plugin_name):
