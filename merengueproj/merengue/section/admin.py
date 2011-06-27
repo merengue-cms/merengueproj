@@ -172,6 +172,12 @@ class SectionContentAdmin(OrderableRelatedModelAdmin):
             del form.base_fields['section']
         return form
 
+    def get_accesible_states(self, status, user, obj):
+        if obj or not self.ACQUIRE_SECTION_ROLES:
+            return super(SectionContentAdmin, self).get_accesible_states(status, user, obj)
+        else:
+            return status.get_accesible_states(user, self.basecontent)
+
     def custom_relate_content(self, request, obj, form, change):
         if not change:
             SectionRelatedContent.objects.create(
