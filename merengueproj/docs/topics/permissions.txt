@@ -53,7 +53,6 @@ Groups
  * Groups has all permissions of their roles - global and local ones.
  * Users of a Group have the group’s roles and permissions.
 
-
 Builtin permissions on merengue
 -------------------------------
 
@@ -138,21 +137,18 @@ This step is same as above, except that the user is assigned in the group admin 
 Granting a permission to all contents
 -------------------------------------
 
-To guarantee a permission to all contents, you must assign a builin permission to a role. For example, if you want give edit permission for all contents to "editor" role, you must be assign the "edit" permission in role admin page.
+To guarantee a permission to all contents, you must assign a permission to a role. For example, if you want give edit permission for all contents to "editor" role, you must be assign the "edit" permission in role admin page.
 
 .. image:: _images/assign_edit_permission.png
-
-
 
 Granting a permission to a content
 ----------------------------------
 
-To guarantee a permission to a content, you have to go content admin page and click in "Permissions" button. Note this button is only shown if content type is basecontent.
+To see the permissions in a content, you have to go content admin page and click in "Permissions" button. Note this button is only shown if content type is basecontent.
 
-The content permission admin page show a table with permissions and roles availables, you can assign permission to current content for a given role.
+The content permission admin page show a table with permissions and roles availables. The best way to change the permission in an object is changing the permissions for the content state, in the workflow system (see :ref:`permissions and workflows <topics-permissions-workflows>`), because if the content state changes, the permissions you define in this form are cleared and reset to the permissions defined for the new state.
 
 .. image:: _images/assign_permission_content.png
-
 
 Local roles
 -----------
@@ -173,6 +169,22 @@ Manage all permissions
 There is a admin view to edit all builtin and global permissions for each role. To access to this view, you have to click on "Permissions" in the main admin page or go to the url http://localhost:8000/admin/perms/objectpermission/
 
 .. image:: _images/global_permissions.png
+
+Permission inheritance
+----------------------
+
+Permissions in Merengue can be inherited if the ``ACQUIRE_SECTION_ROLES`` setting is defined as ``True``. If so, every user who is accessing to an object will acquire the roles of the content' section. So, if you set the ``Reviewer`` local role to an user in a section, he will be also ``Reviewer`` in all the section contents (news items, documents, events, etc.). Of course he will acquire also all the permissions of the ``Reviewer`` role.
+
+.. _topics-permissions-workflows:
+
+Permissions and workflows
+-------------------------
+
+Usually, the permissions in the content are defined by its workflow. So, a content in ``draft`` status with the ``basic workflow`` workflow will have the permissions defined in the ``draft`` status inside the workflow admin view.
+
+This is an important fact because you have to think about workflow and statuses and not thinking about the content itself.
+
+So if for example you want to change the content permission to be visible only for the ``Reviewer`` role, the best task to do is create a new ``visible by reviewer`` status, define the permission for this status and create the transitions to make sure you can pass your content to this transition. So, doing that you will gain that if you have the same need in another content, you only have to put the content in this status.
 
 
 Using the python API

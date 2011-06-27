@@ -20,7 +20,9 @@ import datetime
 from django import forms
 from django import template
 from django.conf import settings
+from django.contrib import messages
 from django.core.exceptions import PermissionDenied
+from django.core.urlresolvers import reverse
 from django.db import models, router
 from django.db.models import Q
 
@@ -1442,9 +1444,19 @@ class PermissionRelatedAdmin(RelatedModelAdmin, PermissionAdmin):
     change_roles_template = 'admin/basecontent/role_permissions.html'
 
     def changelist_view(self, request, extra_context=None, parent_model_admin=None, parent_object=None):
+        if request.method == 'GET':
+            workflow = workflow_api.workflow_by_model(self.basecontent.__class__)
+            workflow_admin_link = reverse('admin:workflow_workflow_change', args=(workflow.id, ))
+            warn_msg = ugettext('''The permissions of the content should be changed in <a href="%(url)s">the workflow</a>, not in the content itself,
+    because if the status change, <strong>all the custom permission will be cleared</strong>. But,
+    if you are sure you want to edit the permissions, click <a href="?enable_edit=1">here</a>.''') % {
+                'url': '%sstates/%d/permissions/' % (workflow_admin_link, self.basecontent.workflow_status.id),
+            }
+            messages.warning(request, warn_msg)
         extra_context = self._update_extra_context(request, extra_context, parent_model_admin, parent_object)
         extra_context.update({'original': None,
-                              'content': self.basecontent})
+                              'content': self.basecontent,
+                              'enable_edit': request.GET.get('enable_edit', False)})
         return self.change_roles_permissions(request, self.basecontent.id, extra_context=extra_context)
 
     def has_add_permission(self, request):

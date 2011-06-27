@@ -3,16 +3,18 @@
 {% load media_tags %}
 
 {% block blockbody %}
-    <script type="text/javascript">window.__admin_media_prefix__ = "{{ ADMIN_MEDIA_PREFIX }}";</script>
-    <script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
-    <script type="text/javascript" src="{{ ADMIN_MEDIA_PREFIX }}js/core.js"></script>
+    <script type="text/javascript">window.__admin_media_prefix__ = "{{ MEDIA_URL }}admin/";</script>
+    <script type="text/javascript" src="{% url merengue_jsi18n %}"></script>
     {% addmedia "js" %}
+    <script type="text/javascript" src="{{ MEDIA_URL }}admin/js/core.js"></script>
         {% for form in forms %}
             {{ form.form.media }}
         {% endfor %}
     {% endaddmedia %}
 
-    <link href="{{ ADMIN_MEDIA_PREFIX }}css/widgets.css" rel="stylesheet" type="text/css" media="all" />
+    {% addmedia "css" %}
+      <link href="{{ MEDIA_URL }}admin/css/widgets.css" rel="stylesheet" type="text/css" media="all" />
+    {% endaddmedia %}
     <style>
         .calendarbox, .clockbox {
             background: white;

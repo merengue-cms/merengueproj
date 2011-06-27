@@ -23,14 +23,10 @@ import re
 from django import forms
 from django.db import models
 from django.conf import settings
-from django.contrib.admin.widgets import RelatedFieldWidgetWrapper, AdminDateWidget
+from django.contrib.admin.widgets import RelatedFieldWidgetWrapper, AdminDateWidget, AdminSplitDateTime
 from django.core.urlresolvers import reverse, NoReverseMatch
-from django.forms.util import flatatt
-from django.forms.widgets import DateTimeInput
-from django.utils import datetime_safe
-from django.utils.encoding import force_unicode, smart_unicode
+from django.utils.encoding import smart_unicode
 from django.utils.safestring import mark_safe
-from django.utils.translation import get_language
 from django.utils.translation import ugettext as _
 
 from cmsutils.forms.widgets import TinyMCE, TINYMCE_JS
@@ -190,58 +186,34 @@ class AdminDateOfDateTimeWidget(AdminDateWidget):
         return super(AdminDateOfDateTimeWidget, self).render(name, value, attrs)
 
 
-class TranslatableInputDateWidget(DateTimeInput):
+class InputDateWidget(forms.DateInput):
 
     class Media:
-        js = ('/%s/jsi18n/' % settings.MERENGUE_URLS_PREFIX,
-              '%smerengue/js/dates_l10n/dates_l10n.js' % settings.MEDIA_URL,
-              '%sjs/core.js' % settings.ADMIN_MEDIA_PREFIX,
-              '%sjs/calendar.js' % settings.ADMIN_MEDIA_PREFIX,
-              '%smerengue/js/DateTimeShortcuts.js' % settings.MEDIA_URL,
-                )
-
+        js = (settings.MEDIA_URL + "admin/js/calendar.js",
+              settings.MEDIA_URL + "merengue/js/DateTimeShortcuts.js")
         css = {'all': ('%smerengue/css/event_calendar.css' % settings.MEDIA_URL, )}
 
-    def render(self, name, value, attrs=None):
-        if value is None:
-            value = ''
-        elif hasattr(value, 'strftime'):
-            value = datetime_safe.new_datetime(value)
-            value = value.strftime(self.format)
-        hidden_final_attrs = self.build_attrs(attrs, type='hidden', name=name)
-        final_attrs = self.build_attrs(attrs, type=self.input_type, name='visual-' + name)
-        final_attrs.update({'id': 'visual-' + final_attrs.get('id', name)})
-        final_attrs.update({'class': 'vDateField TranslatableInputDateWidget'})
-        if value != '':
-            # Only add the 'value' attribute if a value is non-empty.
-            hidden_final_attrs['value'] = force_unicode(value)
-        jsdates = '<script type="text/javascript" src="%smerengue/js/dates_l10n/dates_l10n_%s.js"></script>' % (settings.MEDIA_URL, get_language())
-        jsdates = '<script type="text/javascript" src="%smerengue/js/translatable_input_date_widget.js"></script>' % settings.MEDIA_URL
-        return mark_safe(u'%s<input%s /><input%s />' % (jsdates, flatatt(final_attrs), flatatt(hidden_final_attrs)))
+    def __init__(self, attrs={}, format=None):
+        super(InputDateWidget, self).__init__(attrs={'class': 'vDateField', 'size': '10'}, format=format)
 
 
 class InputTimeWidget(forms.TextInput):
 
     class Media:
-        js = (settings.ADMIN_MEDIA_PREFIX + "js/calendar.js",
-              '%smerengue/js/DateTimeShortcuts.js' % settings.MEDIA_URL)
+        js = (settings.MEDIA_URL + "admin/js/calendar.js",
+              settings.MEDIA_URL + "merengue/js/DateTimeShortcuts.js")
 
     def __init__(self, attrs={}):
         super(InputTimeWidget, self).__init__(attrs={'class': 'vTimeField', 'size': '8'})
 
 
-class TranslatableSplitDateTimeWidget(forms.SplitDateTimeWidget):
-    """
-    TranslatableSplitDateTimeWidget widget
-    """
+class SplitDateTimeWidget(AdminSplitDateTime):
 
     def __init__(self, attrs=None):
-        widgets = [TranslatableInputDateWidget, InputTimeWidget]
+        widgets = [InputDateWidget, InputTimeWidget, ]
+        # Note that we're calling MultiWidget, not SplitDateTimeWidget, because
+        # we want to define widgets.
         forms.MultiWidget.__init__(self, widgets, attrs)
-
-    def format_output(self, rendered_widgets):
-        return mark_safe(u'<p class="datetime">%s %s<br />%s %s</p>' % \
-            (_('Date:'), rendered_widgets[0], _('Time:'), rendered_widgets[1]))
 
 
 class RelatedBaseContentWidget(RelatedFieldWidgetWrapper):

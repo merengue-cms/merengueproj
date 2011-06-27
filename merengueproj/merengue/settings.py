@@ -146,8 +146,8 @@ POST_MERENGUE_MIDDLEWARE_CLASSES = (
     'merengue.section.middleware.ResponseSectionMiddleware',
     'merengue.pluggable.middleware.PluginMiddlewaresProxy',
     'merengue.block.middleware.RenderBlockMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'merengue.cache.middleware.FetchFromAnonymousCacheMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 MIDDLEWARE_CLASSES = PRE_MERENGUE_MIDDLEWARE_CLASSES + MERENGUE_MIDDLEWARE_CLASSES + POST_MERENGUE_MIDDLEWARE_CLASSES

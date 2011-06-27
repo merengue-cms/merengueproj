@@ -40,6 +40,8 @@ def get_common_fields_for_cts(content_types):
     extrange = len(content_types) == 1
     for ct in content_types:
         model = ct.model_class()
+        if not model:
+            continue
         if not issubclass(model, BaseContent):
             extrange = True
         fields = set(model._meta.get_all_field_names())
@@ -104,6 +106,8 @@ def get_common_field_translated_name(collection, field):
     or the original field otherwise.
     """
     model = collection.get_first_parents_of_content_types()
+    if not model:
+        return field
     import transmeta
     translatables = transmeta.get_all_translatable_fields(model)
 

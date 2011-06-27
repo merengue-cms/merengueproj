@@ -75,7 +75,7 @@ urlpatterns = patterns('',
     url(r'^transhette/', include('transhette.urls')),
     url(r'^inlinetrans/', include('inlinetrans.urls')),
     (r'^i18n/setlang/$', 'merengue.portal.views.set_language'),
-    (r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict),
+    url(r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict, name='merengue_jsi18n'),
 
     # collaborative views
     (r'^collab/', include('merengue.collab.urls')),

@@ -1,8 +1,8 @@
 Changes
 =======
 
-Version 0.8.0-b3 (r5069)
-------------------------
+Version 0.8.0-rc1 (r5126)
+-------------------------
 
 * Permissions cache for speed up Merengue. See #2085.
 
@@ -11,6 +11,8 @@ Version 0.8.0-b3 (r5069)
 * Refactored the permission system to generalize the roles acquisition from a section. See #2094.
 
 * ``startplugin`` command to help developers to create plugins easily. See #2060.
+
+* A new ``register`` plugin for user registration. See #2000.
 
 * Enable inplace edit in the navigation block root elements. See #2055.
 
@@ -24,21 +26,33 @@ Version 0.8.0-b3 (r5069)
 
 * Direct link in the block configuration view to the admin view for this block. See #2061.
 
-* Make more flexible the owners lookup for a contect. See #2075.
+* Make more flexible the owners lookup for a content. See #2075.
+
+* Disable by default to the user the permission editing capabilities in the "permission" tab. See #2138.
 
 * Make the ``delete`` permission checking more flexible to be used in non ``BaseContent`` objects. See #2081.
 
-* Unit tests in the block mechanism. See #2089. 
+* Unit tests in the block mechanism. See #2089.
+
+* A new ``testmerengue`` command to test all the Merengue unit tests at once. See #2124.
+
+* Make more homogeneous the forms CSS. See #73.
+
+* Improved the selenium test runner to use frame buffer is needed. See #1999.
+
+* Allow deleting of broken registered items like broken plugins. See #2130.
 
 * Fixed a lot of bugs:
 
  * Reviewed permissions in related model admins. See #2042 and #2110.
  * Updating the open layers library to fix some FF3.0 errors. See #2084.
  * Custom permission in a content type are now visible in admin permissions view. See #2058.
+ * Error adding non content blocks in the content scope. See #2077.
  * Make sure that contenttypes are sync after installing the plugin. This could cause weird issues. See #2052.
  * Fixed the detection of broken plugins in all circunstances. See #2054.
+ * Workflows are loading without fixtures to avoid issues. See #2119.
  * Some translations. See #2045, #2097 and #2.
- * Others: #1772, #2063, #2064, #2066, #2067, #2042, #2074, #2076, #2077, #2080, #2082, #2086, #2088, #1744, #1989, #2092, #2096, #2098, #2100, #2101, #2102, #2103, #2104, #2105, #2106, #2109 and #2112.
+ * Others: #1772, #2063, #2064, #2066, #2067, #2042, #2074, #2076, #2077, #2080, #2082, #2086, #2088, #1744, #1989, #2092, #2096, #2098, #2100, #2101, #2102, #2103, #2104, #2105, #2106, #2109, #2112, #2114, #2045, #1923, #2117, #2118, #2120, #2121, #1982, #1972, #691, #2127, #2128, #2126, #2123, #2131, #2133.
 
 Version 0.8.0-b2 (r4957)
 ------------------------
