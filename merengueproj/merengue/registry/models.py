@@ -87,8 +87,7 @@ class RegisteredItem(models.Model):
                 self.save()
 
     def can_delete(self, user):
-        # user only can delete broken objects
-        return perms_api.can_manage_site(user) and self.broken
+        return perms_api.can_manage_site(user)
 
     def deactivate(self, commit=True):
         if self.active:

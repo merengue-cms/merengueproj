@@ -22,6 +22,7 @@ from django.utils.translation import ugettext_lazy as _
 from merengue.base.models import BaseContent
 from merengue.block.managers import BlockManager
 from merengue.block.utils import clear_lookup_cache
+from merengue.perms import utils as perms_api
 from merengue.registry.models import RegisteredItem
 
 import re
@@ -97,6 +98,10 @@ class RegisteredBlock(RegisteredItem):
         default=False)
 
     objects = BlockManager()
+
+    def can_delete(self, user):
+        return perms_api.has_global_permission(user, perms_api.MANAGE_BLOCK_PERMISSION) or \
+               (self.content_id is not None and self.content.can_edit(user))
 
     def show_in_url(self, url):
 
