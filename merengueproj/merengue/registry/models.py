@@ -73,12 +73,7 @@ class RegisteredItem(models.Model):
         return bool(self.get_registry_item().config_params)
 
     def get_config(self):
-        parent_instance = getattr(self, 'registereditem_ptr', None)
-        if parent_instance is not None:
-            # because a inheritance JSONField problem
-            return parent_instance.config
-        else:
-            return self.config
+        return self.config
 
     def activate(self, commit=True):
         if not self.active:
