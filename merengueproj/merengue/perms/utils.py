@@ -46,7 +46,26 @@ MANAGE_BLOCK_PERMISSION = 'manage_block'
 # Cache stuff  #################################################################
 
 PERMS_CACHE_KEY = 'perms_cache'
-_roles_cache = MemoizeCache('roles_cache')
+
+
+class RolesCache(MemoizeCache):
+
+    def clear(self, users_to_clear):
+        for k, v in self._cache.items():
+            if k[0] in users_to_clear:
+                del self._cache[k]
+        cache.set(self.cache_prefix, self._cache)
+
+_roles_cache = RolesCache('roles_cache')
+
+
+def clear_roles_cache(principal):
+    if isinstance(principal, User):
+        users_to_clear = [principal]
+    else:
+        users_to_clear = principal.user_set.all()
+    if users_to_clear:
+        _roles_cache.clear(users_to_clear)
 
 
 def get_from_cache(user, content, codename, roles):
@@ -64,7 +83,6 @@ def get_from_cache(user, content, codename, roles):
 
 def clear_cache():
     cache.set(PERMS_CACHE_KEY, {})
-    _roles_cache.clear()
 
 
 def set_permission_in_cache(global_perm=False):
@@ -126,6 +144,7 @@ def add_role(principal, role):
         The role which is assigned.
     """
     clear_cache()
+    clear_roles_cache(principal)
     if isinstance(principal, User):
         try:
             PrincipalRoleRelation.objects.get(user=principal, role=role, content__isnull=True)
@@ -138,7 +157,6 @@ def add_role(principal, role):
         except PrincipalRoleRelation.DoesNotExist:
             PrincipalRoleRelation.objects.create(group=principal, role=role)
             return True
-
     return False
 
 
@@ -157,6 +175,7 @@ def add_local_role(obj, principal, role):
         The role which is assigned.
     """
     clear_cache()
+    clear_roles_cache(principal)
     if isinstance(principal, User):
         try:
             PrincipalRoleRelation.objects.get(user=principal, role=role, content=obj)
@@ -185,6 +204,7 @@ def remove_role(principal, role):
         The role which is removed.
     """
     clear_cache()
+    clear_roles_cache(principal)
     try:
         if isinstance(principal, User):
             ppr = PrincipalRoleRelation.objects.get(
@@ -216,6 +236,7 @@ def remove_local_role(obj, principal, role):
         The role which is removed.
     """
     clear_cache()
+    clear_roles_cache(principal)
     try:
         if isinstance(principal, User):
             ppr = PrincipalRoleRelation.objects.get(
@@ -241,6 +262,7 @@ def remove_roles(principal):
         The principal (user or group) from which all roles are removed.
     """
     clear_cache()
+    clear_roles_cache(principal)
     if isinstance(principal, User):
         ppr = PrincipalRoleRelation.objects.filter(
             user=principal, content__isnull=True)
@@ -268,6 +290,7 @@ def remove_local_roles(obj, principal):
         The principal (user or group) from which the roles are removed.
     """
     clear_cache()
+    clear_roles_cache(principal)
     if isinstance(principal, User):
         ppr = PrincipalRoleRelation.objects.filter(
             user=principal, content=obj)
