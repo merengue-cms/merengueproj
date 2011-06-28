@@ -27,7 +27,8 @@ from django.core.exceptions import ObjectDoesNotExist, ImproperlyConfigured
 from django.template import defaultfilters
 from django.utils.decorators import available_attrs
 
-# permissions imports
+# merengue imports
+from merengue.cache import memoize, MemoizeCache
 from merengue.perms import ANONYMOUS_ROLE_SLUG, PARTICIPANT_ROLE_SLUG, OWNER_ROLE_SLUG
 from merengue.perms.models import ObjectPermission
 from merengue.perms.models import ObjectPermissionInheritanceBlock
@@ -45,6 +46,7 @@ MANAGE_BLOCK_PERMISSION = 'manage_block'
 # Cache stuff  #################################################################
 
 PERMS_CACHE_KEY = 'perms_cache'
+_roles_cache = MemoizeCache('roles_cache')
 
 
 def get_from_cache(user, content, codename, roles):
@@ -62,6 +64,7 @@ def get_from_cache(user, content, codename, roles):
 
 def clear_cache():
     cache.set(PERMS_CACHE_KEY, {})
+    _roles_cache.clear()
 
 
 def set_permission_in_cache(global_perm=False):
@@ -279,7 +282,7 @@ def remove_local_roles(obj, principal):
         return False
 
 
-def get_roles(user, obj=None):
+def _get_roles(user, obj=None):
     """Returns all roles of passed user for passed content object. This takes
     direct and roles via a group into account. If an object is passed local
     roles will also added.
@@ -347,6 +350,7 @@ def get_roles(user, obj=None):
             obj = None
 
     return Role.objects.filter(pk__in=role_ids)
+get_roles = memoize(_get_roles, _roles_cache, 2)
 
 
 def get_global_roles(principal):
