@@ -56,7 +56,7 @@ class Plugin(RegistrableItem):
 
     def _get_registered_items(self, item_classes):
         for item_class in item_classes:
-            reg_item = RegisteredItem.objects.by_item_class(item_class).get()
+            reg_item = RegisteredItem.objects.get_by_item_class(item_class)
             yield reg_item.get_registry_item()
 
     def get_actions(self):
@@ -121,7 +121,7 @@ def register_plugin(plugin_dir):
     if plugin_config:
         validate_plugin(plugin_config)
         try:
-            reg_plugin = RegisteredPlugin.objects.by_item_class(plugin_config).get()
+            reg_plugin = RegisteredPlugin.objects.get_by_item_class(plugin_config)
         except RegisteredPlugin.DoesNotExist:
             reg_plugin = register(plugin_config)
         plugin = reg_plugin.get_registry_item()

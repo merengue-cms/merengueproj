@@ -119,7 +119,7 @@ def unregister_all(item_class):
 
 
 def get_item(item_class):
-    return RegisteredItem.objects.by_item_class(item_class).get().get_registry_item()
+    return RegisteredItem.objects.get_by_item_class(item_class).get_registry_item()
 
 
 def get_items(item_class):

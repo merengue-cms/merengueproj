@@ -18,6 +18,7 @@
 import traceback
 
 from django.db import models
+from django.db.models import signals
 from django.utils.importlib import import_module
 from django.utils.translation import ugettext_lazy as _
 
@@ -25,7 +26,7 @@ from south.modelsinspector import add_introspection_rules
 
 from merengue.perms import utils as perms_api
 from merengue.registry.dbfields import ConfigField
-from merengue.registry.managers import RegisteredItemManager
+from merengue.registry.managers import RegisteredItemManager, clear_lookup_cache
 
 
 class RegisteredItem(models.Model):
@@ -103,6 +104,15 @@ class RegisteredItem(models.Model):
         traceback_frames = traceback.extract_tb(tb)
         formatted_exception += traceback.format_list(traceback_frames)
         self.traceback = '<br/>'.join(formatted_exception)
+
+
+# ----- signals handling -----
+
+def post_save_handler(sender, instance, **kwargs):
+    if isinstance(instance, RegisteredItem):
+        clear_lookup_cache()
+
+signals.post_save.connect(post_save_handler)
 
 
 # ----- adding south rules to help introspection -----

@@ -57,7 +57,6 @@ from merengue.pluggable.models import RegisteredPlugin
 
 # ----- internal attributes and methods -----
 
-
 _plugin_middlewares_cache = {
     'loaded_middlewares': [],
     'request_middleware': [],
@@ -128,7 +127,7 @@ def get_plugin_config(plugin_dir, prepend_plugins_dir=True):
 
 def get_plugin(plugin_dir, prepend_plugins_dir=True):
     plugin_config = get_plugin_config(plugin_dir, prepend_plugins_dir)
-    reg_plugin = RegisteredPlugin.objects.by_item_class(plugin_config).get()
+    reg_plugin = RegisteredPlugin.objects.get_by_item_class(plugin_config)
     return reg_plugin.get_registry_item()
 
 
