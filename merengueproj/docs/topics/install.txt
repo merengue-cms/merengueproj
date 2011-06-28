@@ -18,11 +18,11 @@ This document will get you up and running with Merengue.
 Previous Dependencies
 =====================
 
-* ``Python 2.5+``: The Python programming language.
+* ``Python``: The Python programming language. Supported 2.5, 2.6 and 2.7 versions. Python 3 not supported.
 
 .. code-block:: bash
 
-    $ sudo apt-get install python2.5
+    $ sudo apt-get install python
 
 * ``python-setuptools``: Required for installing Python packages.
 
@@ -38,6 +38,8 @@ Previous Dependencies
 
 * ``gettext``: A utility for managing translations catalogs.
 
+.. code-block:: bash
+
     $ sudo apt-get install gettext
 
 PIL Installation
@@ -48,7 +50,13 @@ install in a Python environment from Python packages, because it requires severa
 packages to properly compile all of the image manipulation libraries.
 
 To install PIL correctly (for an Ubuntu/Debian environment), install the
-following dependencies:
+following package:
+
+.. code-block:: bash
+
+    $ sudo apt-get install python-imaging
+
+By the way, you may try to install PIL dependences separately and install PIL from egg package:
 
 .. code-block:: bash
 
@@ -87,8 +95,14 @@ Go to the `project creation`_ section to continue.
 .. _`project creation`: #merengue-project-creation
 
 
-Manual Installation
-===================
+Development Installation
+========================
+
+In development installation Merengue will be installed from subversion
+repository. In this case, your project will be affected by any code updates to
+the Merengue subversion repository (including any new features and fixes that
+have been implemented, as well as any new errors or changes that may cause
+compatibility problems with your code).
 
 Installing Django
 -----------------
@@ -137,16 +151,17 @@ packages via the following command:
 Installing Merengue
 -------------------
 
-.. admonition:: Note
-
-    This part is mandatory in *production mode*, if you intend to
-    create projects in *development mode* skip this part.
-
 Execute ``setup.py`` to complete the manual install process:
 
 .. code-block:: bash
 
-    $ sudo python setup.py install
+    $ sudo python setup.py develop
+
+.. admonition:: Note
+
+    ``develop`` command in ``setup.py`` will create symlinks in your
+    ``site-packages`` directory. Then you can update your Merengue subversion
+    repository and the installed package will be updated too.
 
 
 Merengue Project Creation
@@ -155,29 +170,17 @@ Merengue Project Creation
 When beginning a Merengue project, you can begin your development in one of two
 modes: production mode or development mode.
 
-In production mode, your project will contain a "frozen" version of Merengue
-(the code will be copied). So, if you are using Merengue subversion code, any
-new (i.e. following) code updates will not affect your project.
-
-In development mode, your project will contain symbolic links back to the
-Merengue code in the subversion repository. In this case, your project will be
-affected by any code updates to the Merengue subversion repository (including any
-new features and fixes that have been implemented, as well as any new errors or
-changes that may cause compatibility problems with your code).
-
-* To create a project in *production mode*:
+By default, your project will contain symbolic links back to the
+Merengue code. In this case, your project will be affected by any code updates
+to the Merengue package (i.e. doing a ``easy_install -U Merengue``).
 
 .. code-block:: bash
 
     $ merengue-admin.py startproject myproject
 
-
-* To create a project in *development mode*:
-
-.. code-block:: bash
-
-    $ merengue-admin.py startproject myproject --develop
-
+If you want to freeze Merengue in your project, you can use the ``--copy``
+option and the Merengue code will be copied instead of linked. So, any new (i.e.
+following) code updates will not affect your project.
 
 Language(s) Configuration
 -------------------------
@@ -210,12 +213,15 @@ Database Installation and Configuration
 ---------------------------------------
 
 The database connection must be defined in the configuration file by setting
-the ``DATABASE_*`` parameters. You can use all `database engines supported by Django.`_
+the ``DATABASE`` setting. You can use all `database engines supported by Django.`_
+
+We will include in this documentation examples of configuring both PostgreSQL
+and SQLite databases.
 
 .. _`database engines supported by Django.`: http://docs.djangoproject.com/en/1.3/ref/settings/#database-engine
 
 SQLite
-------
+~~~~~~
 
 You can quickly setup a SQLite database by simply using the following
 parameters into the settings.py file:
@@ -235,8 +241,13 @@ parameters into the settings.py file:
 
 where ``NAME`` is the path of the database. 
 
+.. admonition:: Note
+
+    SQLite is not a recommended database for put your site in production, but
+    it is only useful in the developing process.
+
 PostgreSQL
-----------
+~~~~~~~~~~
 
 Let's suppose that you were configuring a PostgreSQL database with the
 following parameters:
@@ -269,8 +280,7 @@ Install the  database and the appropriate python dependencies: ``postgresql``, `
         $ apt-get install python-psycopg2
 
 
-Creating the Project Database in PostgreSQL
--------------------------------------------
+Now you have to creating the project Database
 
 .. admonition:: Note
 
@@ -491,8 +501,8 @@ compile it:
 
 .. admonition:: Note
 
-    Make sure that the file ``/etc/ld.so.conf`` is located in the directory
-    ``/usr/local/lib``
+    Make sure that the line ``/usr/local/lib`` is included in the file
+    ``/etc/ld.so.conf``
 
 .. _`GEOS`: http://trac.osgeo.org/geos/
 .. _`PROJ.4`: http://download.osgeo.org/proj/
@@ -565,12 +575,11 @@ included).
     $ createdb -T template_postgis --owner=myproject myproject
 
 
-Upgrading Merengue in Development Mode
-======================================
+Upgrading Merengue
+==================
 
-If your Merengue project is configured for development mode, your models may
-change when you update the Merengue code. To upgrade your models after a code
-update, you can use the South ``migrate`` command as follows:
+To upgrade your models after a Merengue update, you can use the South
+``migrate`` command as follows:
 
 .. code-block:: bash
 
@@ -583,6 +592,14 @@ the ``migrate_plugins`` command:
 .. code-block:: bash
 
     $ python manage.py migrate_plugins
+
+Sometimes new Merengue versions can include new applications will may need
+to install media files. The best way to ensure your system have all the media
+files you can execute this command:
+
+.. code-block:: bash
+
+    $ python manage.py sync_apps_media --link
 
 Also, we recommend following the `changes`_ on the Merengue `skel project`_. This
 documentation may be helpful in incorporating these changes into your own project.
