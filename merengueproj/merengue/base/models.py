@@ -577,7 +577,9 @@ class BaseContent(BaseClass):
             subclasses_names = [cls.__name__.lower() for cls in subclasses]
             for subcls_name in subclasses_names:
                 if hasattr(self, subcls_name):
-                    return getattr(self, subcls_name, self).get_real_instance()
+                    self._real_instance = getattr(self, subcls_name, self).get_real_instance()
+                    return self._real_instance
+            self._real_instance = self
             return self
 
     def get_parent_for_permissions(self):
