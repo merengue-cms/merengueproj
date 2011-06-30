@@ -140,31 +140,6 @@ be used in ``render`` method, if you want. Next example is self-explanatory:
 
 .. _`base/inc.leftsidebar.html`: http://dev.merengueproject.org/browser/trunk/merengueproj/merengue/base/templates/base/inc.leftsidebar.html
 
-
-Setting a block as fixed
-------------------------
-
-There are two ways you can prevent staff users from changing the way a block is displayed.
-
-The attribute ``is_fixed = True``, when set on the block definition, will prevent edition on the block order, place and active attributes. For example:
-
-.. code-block:: python
-
-    class AlwaysVisibleAtRight(Block):
-        name = 'alwaysright'
-        default_place = 'rightsidebar'
-        is_fixed = True
-        
-        def render(self, request, place, context):
-            # ...
-
-The defined block will always be shown when the rightsidebar blocks are rendered, and no admin user will be able to change its order, move it to another place, or disable it.
-
-A more relaxed way to avoid editing the place where the block will be rendered is to use the ``fixed_place`` attribute. When its set to ``True`` in the block definition, it will prevent the edition on the place, both from the admin and the visual drag and drop in the public view.
-
-Both ``is_fixed`` and ``fixed_place`` default to False when not set.
-
-
 Implementing the block template
 -------------------------------
 
@@ -185,6 +160,44 @@ create a template inside ``block_latest.html``:
 
 This template shows the title of the last published news. The number of news that is considered
 *last news* is specified in render function inside the ``blocks.py`` (five in this case).
+
+Setting a block as fixed
+------------------------
+
+There are two ways you can prevent staff users from changing the way a block is displayed.
+
+The attribute ``is_fixed = True``, when set on the block definition, will prevent edition on the block order, place and active attributes. For example:
+
+.. code-block:: python
+
+    class AlwaysVisibleAtRight(Block):
+        name = 'alwaysright'
+        default_place = 'rightsidebar'
+        is_fixed = True
+
+        def render(self, request, place, context):
+            # ...
+
+The defined block will always be shown when the rightsidebar blocks are rendered, and no admin user will be able to change its order, move it to another place, or disable it.
+
+A more relaxed way to avoid editing the place where the block will be rendered is to use the ``fixed_place`` attribute. When its set to ``True`` in the block definition, it will prevent the edition on the place, both from the admin and the visual drag and drop in the public view.
+
+Both ``is_fixed`` and ``fixed_place`` default to False when not set.
+
+Setting a block as non addable
+------------------------------
+
+A non addable block is a block that the manager user cannot add using the user interface.
+
+.. code-block:: python
+
+    class NonAddableBlock(Block):
+        name = 'nonaddableblock'
+        default_place = 'rightsidebar'
+        is_addable = False
+
+        def render(self, request, place, context):
+            # ...
 
 Showing and hiding blocks
 --------------------------
