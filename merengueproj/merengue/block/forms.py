@@ -46,7 +46,8 @@ class BaseContentRelatedBlockAddForm(forms.ModelForm):
         active_plugins = RegisteredPlugin.objects.actives().get_items()
         blocks_classes = []
         for plugin in active_plugins:
-            blocks_classes.extend(plugin.get_blocks())
+            addable_blocks = [b for b in plugin.get_blocks() if b.is_addable]
+            blocks_classes.extend(addable_blocks)
         self.fields['block_class'].choices = [
             ('%s.%s' % (b.get_module(), b.get_class_name()), b.verbose_name) for b in blocks_classes
         ]
