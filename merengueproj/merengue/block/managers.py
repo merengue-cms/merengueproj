@@ -71,7 +71,7 @@ class FakeBlockQuerySet(QuerySetWrapper):
 class BlockQuerySet(RegisteredItemQuerySet):
 
     def placed_in(self, place=None):
-        """ note: it not returns a real queryset """
+        # note: this method does not returns a real queryset
         blocks = self.all()
         if place is not None:
             blocks = [b for b in blocks if b.placed_at == place]

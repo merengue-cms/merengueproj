@@ -33,6 +33,7 @@ from merengue.registry.signals import item_registered
 class BaseBlock(RegistrableItem):
     model = RegisteredBlock
     singleton = False
+    is_addable = True
     cache_allowed = True
     default_caching_params = {
        'enabled': False,
