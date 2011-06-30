@@ -28,6 +28,11 @@ from merengue.cache import memoize, MemoizeCache
 _registry_lookup_cache = MemoizeCache('registry_lookup_cache')
 
 
+def _convert_cache_args(mem_args):
+    item_class = mem_args[0]
+    return ('%s.%s' % (item_class.get_module(), item_class.get_class_name()), )
+
+
 def clear_lookup_cache():
     _registry_lookup_cache.clear()
 
@@ -94,7 +99,7 @@ class RegisteredItemQuerySet(QuerySet):
             if item.module == item_class.get_module() and item.class_name == item_class.get_class_name():
                 items.append(item)
         return items
-    _by_item_class = memoize(_by_item_class_func, _registry_lookup_cache, 2, offset=1)
+    _by_item_class = memoize(_by_item_class_func, _registry_lookup_cache, 2, offset=1, convert_args_func=_convert_cache_args)
 
     def get_by_item_class(self, item_class):
         """ obtain registered items passing by param a RegistrableItem class """

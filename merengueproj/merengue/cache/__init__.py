@@ -99,7 +99,7 @@ class MemoizeCache(object):
         cache.set(self.cache_prefix, self._cache)
 
 
-def memoize(func, cache, num_args, offset=0):
+def memoize(func, cache, num_args, offset=0, convert_args_func=None):
     """
     It's like django.utils.functional.memoize but with an extra offset parameter
 
@@ -108,6 +108,8 @@ def memoize(func, cache, num_args, offset=0):
     """
     def wrapper(*args):
         mem_args = args[offset:num_args]
+        if convert_args_func is not None:
+            mem_args = convert_args_func(mem_args)
         if mem_args in cache:
             return cache[mem_args]
         result = func(*args)
