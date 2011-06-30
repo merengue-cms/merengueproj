@@ -152,6 +152,7 @@ def post_save_handler(sender, instance, **kwargs):
 
 def pre_delete_handler(sender, instance, **kwargs):
     content = instance.content
+    clear_lookup_cache()
     if content:
         other_content_blocks = RegisteredBlock.objects.filter(content=content).exclude(pk=instance.pk)
         if not other_content_blocks:
