@@ -125,7 +125,7 @@ def section_view_without_maincontent(request, context,
     user = request.user
     section = context['section']
     admin_absolute_url = False
-    if perms_api.has_permission(section, user, 'edit'):
+    if section.can_edit(user):
         admin_absolute_url = True
     context['admin_absolute_url'] = admin_absolute_url
     return render_to_response(template, context,
