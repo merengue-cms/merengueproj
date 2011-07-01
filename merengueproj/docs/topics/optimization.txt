@@ -32,6 +32,7 @@ You can compress these files by setting the ``COMPRESS`` setting to
     ``False`` when deploying the website (recomended practice), you do not have
     to explicitly change the ``COMPRESS`` setting to ``False``.
 
+.. _topics-optimization-configuring-caching:
 
 Configuring Caching
 ===================
