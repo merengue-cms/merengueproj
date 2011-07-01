@@ -56,12 +56,6 @@ Only three steps are required to install a new plugin:
 
 .. _topics-plugins-media-files:
 
-Media Files in Plugins
-----------------------
-
-(( To be completed. Talk about media conventions taken in Merengue,
-merengue.views.static.serve view and sync_plugins_media command. ))
-
 Broken Plugins
 --------------
 
@@ -109,17 +103,18 @@ topic for more details.
 Plugin Development
 ==================
 
-Writing a Custom Plugin
------------------------
+Creating a new plugin
+---------------------
 
-To write a custom plugin for Merengue, you need to create a Django application
-which will:
+Merengue has a ``startplugin`` command which generate the scaffold code to save
+time to the developer. You can use the command as follows:
 
-* have a specfic directory layout.
-* have a configuration file.
-* extend some components.
-* extend some base models.
+.. code-block:: bash
 
+    $ python manage.py startplugin myplugin
+
+This will create a new ``myplugin`` plugin in the ``plugins`` directory, with an
+example model, blocks, urls, actions etc.
 
 Plugin Tree
 -----------
@@ -360,7 +355,9 @@ A developer can do many things when developing a new plugin:
         # stuff ...
 
         def get_perms(self):
-            return [('Vote foo', 'vote_foo', [FooContent]), ), ]
+            return [
+                ('Vote foo', 'vote_foo', [FooContent]),
+            ]
 
 * **Define new viewlets**: Implement the ``get_viewlets(self)`` method in the
   ``PluginConfig`` class. See the :ref:`viewlets reference <topics-viewlets>` for
@@ -408,6 +405,28 @@ A developer can do many things when developing a new plugin:
         def hook_post_register(self):
             send_mail('Foo plugin enabled', 'The foo plugin has been enabled.', 'from@example.com',
                       'admin@example.com', fail_silently=True)
+
+Media Files in Plugins
+----------------------
+
+If a ``fooplugin`` plugin contains a ``media`` directory in the plugin
+directory, the resources inside this directory will be found by Merengue in the
+``fooplugin`` prefix inside ``MEDIA_URL``. So, if you have a ``image.gif``
+image and you want to link it in one template, the markup would be as follows:
+
+.. code-block:: html
+
+    <img src="{{ MEDIA_URL }}fooplugin/image.gif" />
+
+This image will be found by Merengue automatically. But, when you are deploying
+the website in a webserver, you need to collect the media inside your plugins
+in the media root where the webserver will find them. For doing that you have to
+execute this command (see :ref:`deploying Merengue <topics-deploying>` for more
+information):
+
+.. code-block:: bash
+
+    $ python manage.py sync_plugins_media --link --all
 
 Plugin Examples
 ---------------
