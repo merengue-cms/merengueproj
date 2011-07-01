@@ -18,6 +18,7 @@
 from django.contrib import admin
 from django.core.exceptions import PermissionDenied
 from django.contrib.admin.options import IncorrectLookupParameters
+from django.db.models import Q
 from django.forms.util import ErrorList
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -50,7 +51,12 @@ class MultimediaAddContentRelatedModelAdmin(BaseMultimediaContentRelatedModelAdm
 
     def queryset(self, request):
         multimedia = self.basecontent
-        return BaseContent.objects.exclude(multimediarelation__multimedia=multimedia)
+        qs = BaseContent.objects.exclude(multimediarelation__multimedia=multimedia)
+        user = request.user
+        if not perms_api.can_manage_site(user) and\
+           not perms_api.has_global_permission(user, 'edit'):
+            qs = qs.filter(Q(owners=request.user))
+        return qs
 
     def associate_contents(self, request, queryset):
         selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
