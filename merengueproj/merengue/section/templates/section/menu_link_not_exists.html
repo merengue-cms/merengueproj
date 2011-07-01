@@ -16,6 +16,9 @@
 {% endblock %}
 
 {% block content %}
-  <h1>{% inline_trans "This menu does not link to any target" %}</h1>
+  <div id="content-title" class="{{ content.class_name }}">
+    <h1 title="{{ content.name }}">{% inline_trans "Empty Menu" %}</h1>
+  </div>
+  <p class="emptyMenu">{% inline_trans "This menu does not link to any target" %}</p>
 {% endblock %}
 
