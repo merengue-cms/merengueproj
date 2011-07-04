@@ -496,10 +496,13 @@ class FeedCollection(Collection):
         for i in self.feeditem_set.exclude(item_id__in=entries_ids):
             item = i.get_real_item()
             self.make_single_item(i, item)
+        state_published = self.workflow_status.workflow.states.filter(slug='published')
         for entry in entries:
             (item, created) = FeedItem.objects.get_or_create(
                 item_id=entry.id,
                 feed_collection=self)
+            if created and state_published:
+                item.workflow_status = state_published[0]
             item.item_complete_cached = None  # Expire details of item if any
             self.make_single_item(item, entry)
 
