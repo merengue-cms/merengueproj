@@ -400,8 +400,7 @@ class BaseContent(BaseClass):
 
     # tagging info
     tags = TagField(verbose_name=_('Tags'),
-                    help_text=_('Tags will be splitted by spaces or commas if present. To force \
-                                tag names, use double quotes.'))
+                    help_text=_('Tags will be splitted by commas.'))
 
     # meta info
     meta_desc = models.TextField(verbose_name=_('meta description'),

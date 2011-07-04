@@ -834,7 +834,7 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
     autocomplete_fields = {'tags': {'url': '/%s/base/ajax/autocomplete/tags/base/basecontent/' % settings.MERENGUE_URLS_PREFIX,
                                     'multiple': True,
-                                    'multipleSeparator': " ",
+                                    'multipleSeparator': ",",
                                     'size': 100}, }
     exclude = ('adquire_global_permissions', )
 
