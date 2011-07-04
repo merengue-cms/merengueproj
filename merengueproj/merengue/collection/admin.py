@@ -252,7 +252,7 @@ class FeedItemAdmin(RelatedModelAdmin):
     tool_name = 'items'
     tool_label = _('feed items')
     related_field = 'feed_collection'
-    exclude = ('owners', 'participants', )
+    exclude = ('owners', 'participants', 'adquire_global_permissions')
 
 
 class FeedCollectionAdmin(CollectionAdmin):
