@@ -17,6 +17,7 @@
 
 from django.conf import settings
 from django.core.cache import cache
+from django.db.models.query import QuerySet
 from django.utils.cache import _generate_cache_header_key
 from django.utils.functional import wraps
 
@@ -91,6 +92,9 @@ class MemoizeCache(object):
         return self._cache.get(key)
 
     def __setitem__(self, key, value):
+        if isinstance(value, QuerySet):
+            # force the queryset evaluation for avoiding a deadlock. See #2152
+            len(value)
         self._cache[key] = value
         cache.set(self.cache_prefix, self._cache)
 
