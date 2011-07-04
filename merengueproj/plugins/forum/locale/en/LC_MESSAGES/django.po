@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-10 20:24+0200\n"
+"POT-Creation-Date: 2011-06-17 14:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,68 +21,84 @@ msgstr ""
 msgid "Create new thread"
 msgstr ""
 
-#: models.py:16
+#: forms.py:41
+msgid "Name"
+msgstr ""
+
+#: forms.py:42
+msgid "Description"
+msgstr ""
+
+#: models.py:18
 msgid "Forum category"
 msgstr ""
 
-#: models.py:17
+#: models.py:19
 msgid "Forum categories"
 msgstr ""
 
-#: models.py:27
+#: models.py:29
 msgid "Forum"
 msgstr ""
 
-#: models.py:28 templates/forum/forum_list.html:8
+#: models.py:30 templates/forum/forum_list.html:8
 #: templates/forum/forum_list.html.py:14 templates/forum/forum_list.html:16
 msgid "Forums"
 msgstr ""
 
-#: models.py:55
+#: models.py:57
 msgid "closed"
 msgstr ""
 
-#: models.py:61 templates/forum/forum_view.html:9
+#: models.py:63 templates/forum/forum_view.html:9
 msgid "Thread"
 msgstr ""
 
-#: models.py:62 templates/forum/forum_list.html:26
+#: models.py:64 templates/forum/forum_list.html:26
 msgid "Threads"
 msgstr ""
 
-#: models.py:102
-msgid "title"
-msgstr ""
-
-#: models.py:103
-msgid "comment"
-msgstr ""
-
-#: models.py:106
-msgid "banned"
-msgstr ""
-
-#: models.py:107
-msgid "date/time submitted"
-msgstr ""
-
-#: models.py:108
-msgid "date/time modified"
+#: models.py:81
+msgid "The slug already exists in other thread in this forum"
 msgstr ""
 
 #: models.py:109
-msgid "IP address"
+msgid "title"
+msgstr ""
+
+#: models.py:110
+msgid "comment"
 msgstr ""
 
 #: models.py:113
-msgid "Forum Thread Comment"
+msgid "banned"
 msgstr ""
 
 #: models.py:114
+msgid "date/time submitted"
+msgstr ""
+
+#: models.py:115
+msgid "date/time modified"
+msgstr ""
+
+#: models.py:116
+msgid "IP address"
+msgstr ""
+
+#: models.py:120
+msgid "Forum Thread Comment"
+msgstr ""
+
+#: models.py:121
 msgid "Forum Thread Comments"
 msgstr ""
 
-#: views.py:128
+#: utils.py:16
+msgid "You don't have permission to create a new thread"
+msgstr ""
+
+#: views.py:127
 msgid "Your message has been posted successfully."
 msgstr ""
 

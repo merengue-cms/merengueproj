@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-10 20:24+0200\n"
+"POT-Creation-Date: 2011-06-17 14:04+0200\n"
 "PO-Revision-Date: 2010-10-11 11:42\n"
 "Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,68 +21,84 @@ msgstr ""
 msgid "Create new thread"
 msgstr ""
 
-#: models.py:16
+#: forms.py:41
+msgid "Name"
+msgstr ""
+
+#: forms.py:42
+msgid "Description"
+msgstr ""
+
+#: models.py:18
 msgid "Forum category"
 msgstr "Categoría de foro"
 
-#: models.py:17
+#: models.py:19
 msgid "Forum categories"
 msgstr "Categorías de foro"
 
-#: models.py:27
+#: models.py:29
 msgid "Forum"
 msgstr "Foro"
 
-#: models.py:28 templates/forum/forum_list.html:8
+#: models.py:30 templates/forum/forum_list.html:8
 #: templates/forum/forum_list.html.py:14 templates/forum/forum_list.html:16
 msgid "Forums"
 msgstr "Foros"
 
-#: models.py:55
+#: models.py:57
 msgid "closed"
 msgstr "cerrado"
 
-#: models.py:61 templates/forum/forum_view.html:9
+#: models.py:63 templates/forum/forum_view.html:9
 msgid "Thread"
 msgstr "Hilo"
 
-#: models.py:62 templates/forum/forum_list.html:26
+#: models.py:64 templates/forum/forum_list.html:26
 msgid "Threads"
 msgstr "Hilos"
 
-#: models.py:102
+#: models.py:81
+msgid "The slug already exists in other thread in this forum"
+msgstr ""
+
+#: models.py:109
 msgid "title"
 msgstr ""
 
-#: models.py:103
+#: models.py:110
 msgid "comment"
 msgstr "comentario"
 
-#: models.py:106
+#: models.py:113
 msgid "banned"
 msgstr "baneado"
 
-#: models.py:107
+#: models.py:114
 msgid "date/time submitted"
 msgstr "fecha/hora de envio"
 
-#: models.py:108
+#: models.py:115
 msgid "date/time modified"
 msgstr "fecha/hora modificado"
 
-#: models.py:109
+#: models.py:116
 msgid "IP address"
 msgstr "dirección IP"
 
-#: models.py:113
+#: models.py:120
 msgid "Forum Thread Comment"
 msgstr "Comentario del Hilo"
 
-#: models.py:114
+#: models.py:121
 msgid "Forum Thread Comments"
 msgstr "Comentarios del Hilo"
 
-#: views.py:128
+#: utils.py:16
+msgid "You don't have permission to create a new thread"
+msgstr ""
+
+#: views.py:127
 msgid "Your message has been posted successfully."
 msgstr "Tu mensaje ha sido posteado satisfactoriamente."
 

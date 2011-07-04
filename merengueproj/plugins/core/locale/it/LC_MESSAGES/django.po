@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-10 20:24+0200\n"
+"POT-Creation-Date: 2011-06-17 14:04+0200\n"
 "PO-Revision-Date: 2011-04-12 19:12+0200\n"
 "Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
 "Language-Team: it <m.busico@ieee.org>\n"
@@ -17,113 +17,137 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: actions.py:26
+#: actions.py:30
 msgid "Admin site"
 msgstr "Amministra il sito"
 
-#: actions.py:37
+#: actions.py:41
 msgid "Login"
 msgstr "Login"
 
-#: actions.py:51
+#: actions.py:56
 msgid "Logout"
 msgstr "Logout"
 
-#: actions.py:62
+#: actions.py:72
 msgid "Print"
+msgstr ""
+
+#: actions.py:77
+msgid "Link to your section"
 msgstr ""
 
 #: blocks.py:34
 msgid "maximum number of levels to show"
 msgstr ""
 
-#: blocks.py:46
+#: blocks.py:54
 msgid "Renders the Menu"
 msgstr ""
 
-#: blocks.py:47
+#: blocks.py:55
 msgid "Core Menu Block"
 msgstr ""
 
-#: blocks.py:60
+#: blocks.py:68
 msgid "Menu"
 msgstr "Menu"
 
-#: blocks.py:70
+#: blocks.py:78
 msgid "Renders the Navigation"
 msgstr ""
 
-#: blocks.py:71
+#: blocks.py:79
 msgid "Navigation Block"
 msgstr ""
 
-#: blocks.py:79
+#: blocks.py:95
 msgid "Navigation"
 msgstr "Navigazione"
 
-#: blocks.py:88
+#: blocks.py:104
 msgid "Renders the Portal Menu"
 msgstr ""
 
-#: blocks.py:89
+#: blocks.py:105
 msgid "Portal Menu Block"
 msgstr ""
 
-#: blocks.py:94
+#: blocks.py:110
 msgid "Portal Menu"
 msgstr "Menu del portale"
 
-#: blocks.py:103
+#: blocks.py:119
 msgid "Abstract block that render portal links"
 msgstr ""
 
-#: blocks.py:104
+#: blocks.py:120
 msgid "Link Base Block"
 msgstr ""
 
-#: blocks.py:109
+#: blocks.py:133
 msgid "Portal links"
 msgstr "Link del portale"
 
-#: blocks.py:118
+#: blocks.py:142
 msgid "Generic block that renders portal links"
 msgstr ""
 
-#: blocks.py:119
+#: blocks.py:143
 msgid "Portal Links Block"
 msgstr ""
 
-#: blocks.py:124
+#: blocks.py:148
 msgid "Portal link category"
 msgstr ""
 
-#: blocks.py:144
+#: blocks.py:168
 msgid "Block with contact info"
 msgstr ""
 
-#: blocks.py:145
+#: blocks.py:169
 msgid "Contact Info block"
 msgstr ""
 
-#: blocks.py:150
+#: blocks.py:182
 msgid "Contact info"
 msgstr ""
 
-#: blocks.py:158
+#: blocks.py:190
 msgid "Block with the site announcements"
 msgstr ""
 
-#: blocks.py:159
+#: blocks.py:191
 msgid "Announcements block"
 msgstr ""
 
-#: blocks.py:168
+#: blocks.py:200
 msgid "Announcements"
 msgstr ""
 
-#: config.py:45
+#: config.py:48
 msgid "home initial content"
 msgstr "Contenuto iniziale della 'home'"
+
+#: config.py:50
+msgid "Login URL"
+msgstr ""
+
+#: forms.py:30
+msgid "Section"
+msgstr ""
+
+#: forms.py:32
+msgid "Choose a section where save the menu"
+msgstr ""
+
+#: forms.py:38 templates/core/block_contact_info.html:15
+msgid "Name"
+msgstr ""
+
+#: forms.py:55
+msgid "Already exits a menu in your section with this slug"
+msgstr ""
 
 #: panels.py:47
 #, python-format
@@ -132,10 +156,6 @@ msgstr ""
 
 #: templates/core/block_announcements.html:15
 msgid "Hide announcement"
-msgstr ""
-
-#: templates/core/block_contact_info.html:15
-msgid "Name"
 msgstr ""
 
 #: templates/core/block_contact_info.html:21
@@ -160,6 +180,14 @@ msgstr ""
 
 #: templates/core/block_contact_info.html:56
 msgid "URL"
+msgstr ""
+
+#: templates/core/hotlink.html:6
+msgid "Hot Link"
+msgstr ""
+
+#: templates/core/panels/addblock.html:7
+msgid "Add blocks"
 msgstr ""
 
 #: templates/core/panels/inplaceedit.html:34

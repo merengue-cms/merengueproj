@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-10 20:24+0200\n"
+"POT-Creation-Date: 2011-06-17 14:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "Events Calendar Block"
 msgstr ""
 
-#: blocks.py:45
+#: blocks.py:46
 msgid "Events calendar"
 msgstr ""
 
@@ -84,7 +84,7 @@ msgstr ""
 msgid "number of elements on a page"
 msgstr ""
 
-#: templates/event/block_calendar.html:24
+#: templates/event/block_calendar.html:29
 msgid "Loading..."
 msgstr ""
 

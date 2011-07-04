@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-10 20:24+0200\n"
+"POT-Creation-Date: 2011-06-17 14:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,15 +16,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: blocks.py:27
+#: blocks.py:30
 msgid "Block emulates the old browser "
 msgstr ""
 
-#: blocks.py:28
+#: blocks.py:31
 msgid "Old browser block"
 msgstr ""
 
-#: blocks.py:32
+#: blocks.py:41
+msgid "Your browser is too old. Please, update it."
+msgstr ""
+
+#: blocks.py:46
 msgid "Old Browser"
 msgstr ""
 
@@ -34,7 +38,7 @@ msgid ""
 "Firefox/2.*"
 msgstr ""
 
-#: templates/oldbrowser/block_oldbrowser.html:11
+#: templates/oldbrowser/block_oldbrowser.html:14
 msgid "More information"
 msgstr ""
 
@@ -48,8 +52,4 @@ msgid ""
 "\n"
 "  If you consider it as a old browser, add it on the admin site.\n"
 "  "
-msgstr ""
-
-#: templatetags/oldbrowser_tags.py:39
-msgid "Your browser is too old. Please, update it."
 msgstr ""

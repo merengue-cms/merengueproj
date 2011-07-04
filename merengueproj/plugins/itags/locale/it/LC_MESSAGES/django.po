@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-10 20:24+0200\n"
+"POT-Creation-Date: 2011-06-17 14:04+0200\n"
 "PO-Revision-Date: 2011-04-12 19:30+0200\n"
 "Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
 "Language-Team: it <m.busico@ieee.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Language: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: blocks.py:30 blocks.py:54 viewlets.py:32
+#: blocks.py:30 blocks.py:62 viewlets.py:32
 msgid "Tag cloud"
 msgstr "Nuvola dei Tag"
 
@@ -54,8 +54,8 @@ msgstr "Tag internazionalizzati"
 msgid "Tag cloud block"
 msgstr "Blocco della nuvola di Tag"
 
-#: templates/itags/itag_view.html:5 templates/itags/itag_view.html.py:9
-#: templates/itags/itag_view.html:12 templates/itags/itags_list.html:5
+#: templates/itags/itag_view.html:5 templates/itags/itag_view.html.py:10
+#: templates/itags/itag_view.html:13 templates/itags/itags_list.html:5
 #: templates/itags/itags_list.html.py:8 templates/itags/itags_list.html:11
 msgid "Tag"
 msgstr "Tag"

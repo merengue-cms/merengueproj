@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-10 20:24+0200\n"
+"POT-Creation-Date: 2011-06-17 14:04+0200\n"
 "PO-Revision-Date: 2010-10-05 10:55\n"
 "Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,19 +24,19 @@ msgstr ""
 msgid "The block represents the google search widget"
 msgstr ""
 
-#: blocks.py:32
+#: blocks.py:40
 msgid "Custom search control"
 msgstr "Control de búsqueda avanzada"
 
-#: blocks.py:33
+#: blocks.py:41
 msgid "Search result content (element's id of DOM)"
 msgstr "Resultados de la búsqueda (element's id of DOM)"
 
-#: blocks.py:34
+#: blocks.py:42
 msgid "Search form content (element's id of DOM)"
 msgstr "Formulario de busqueda (element's id of DOM)"
 
-#: blocks.py:44
+#: blocks.py:52
 msgid "Search"
 msgstr "Buscar"
 

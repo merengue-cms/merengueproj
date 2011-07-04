@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-10 20:24+0200\n"
+"POT-Creation-Date: 2011-06-17 14:04+0200\n"
 "PO-Revision-Date: 2011-04-12 20:52+0200\n"
 "Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
 "Language-Team: it <m.busico@ieee.org>\n"
@@ -17,42 +17,76 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: blocks.py:29
+#: blocks.py:30
 msgid "Banner Block"
 msgstr ""
 
-#: blocks.py:30
-msgid "Block that represents a banner"
+#: blocks.py:31
+msgid "Block that represents a list of banners"
 msgstr ""
 
-#: blocks.py:33
+#: blocks.py:35
 msgid "limit for banner block"
 msgstr "limite per il blocco delle bandiere"
 
-#: blocks.py:46 models.py:40
+#: blocks.py:38 blocks.py:87
+msgid "thumbnail maximum width"
+msgstr ""
+
+#: blocks.py:41 blocks.py:90
+msgid "thumbnail maximum heigh"
+msgstr ""
+
+#: blocks.py:73 models.py:50
 msgid "banners"
 msgstr "bandiere"
 
-#: models.py:31
+#: blocks.py:82
+msgid "Portlet Banner Block"
+msgstr ""
+
+#: blocks.py:83
+msgid "Block that represents a banner"
+msgstr ""
+
+#: blocks.py:93
+msgid "Choose a banner"
+msgstr ""
+
+#: blocks.py:113
+msgid "Click in \"configure block\" and choose a banner"
+msgstr ""
+
+#: models.py:32
+msgid "banner category"
+msgstr ""
+
+#: models.py:33
+msgid "banner categories"
+msgstr ""
+
+#: models.py:38
 msgid "Url Link"
 msgstr "Link dell'URL"
 
-#: models.py:32
-msgid "Portal name"
-msgstr "Nome del portale"
-
-#: models.py:33
+#: models.py:39
 msgid "image"
 msgstr "immagine"
 
-#: models.py:35
+#: models.py:41
 msgid ""
-"The system don't resize the icon. You need to upload with the final size"
+"The system won't resize the image. You need to upload it with its final size"
 msgstr ""
-"Il sistema non ridimensiona l'icona. Devi caricarla con la dimensione "
-"definitiva"
 
-#: models.py:39
+#: models.py:42
+msgid "Text alternative image"
+msgstr ""
+
+#: models.py:44
+msgid "category"
+msgstr ""
+
+#: models.py:49
 msgid "banner"
 msgstr "bandiera"
 
@@ -72,13 +106,22 @@ msgstr ""
 msgid "Banner history"
 msgstr "Storia della bandiera"
 
-#: templates/banner/block_banner.html:11
+#: templates/banner/block_banner.html:20
 msgid "History banner"
 msgstr "Babdiera della storia"
 
 #: templates/banner/viewlet_latest.html:17
 msgid "View more"
 msgstr "Vedi di più"
+
+#~ msgid "Portal name"
+#~ msgstr "Nome del portale"
+
+#~ msgid ""
+#~ "The system don't resize the icon. You need to upload with the final size"
+#~ msgstr ""
+#~ "Il sistema non ridimensiona l'icona. Devi caricarla con la dimensione "
+#~ "definitiva"
 
 #~ msgid "Banners"
 #~ msgstr "Bandiere"
