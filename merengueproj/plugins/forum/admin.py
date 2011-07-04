@@ -25,7 +25,7 @@ class ThreadRelatedAdmin(RelatedModelAdmin):
     html_fields = ('description', )
     removed_fields = ('map_icon', 'commentable', )
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
-    exclude = RelatedModelAdmin.exclude + ('adquire_global_permissions', )
+    exclude = ('adquire_global_permissions', )
     related_field = 'forum'
 
     def get_form(self, request, obj=None, **kwargs):
