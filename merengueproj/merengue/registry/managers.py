@@ -103,7 +103,10 @@ class RegisteredItemQuerySet(QuerySet):
 
     def get_by_item_class(self, item_class):
         """ obtain registered items passing by param a RegistrableItem class """
-        return self._by_item_class(item_class)[0]
+        try:
+            return self._by_item_class(item_class)[0]
+        except IndexError:
+            raise self.model.DoesNotExist()
 
     def by_item_class(self, item_class):
         """ obtain registered items passing by param a RegistrableItem class """
