@@ -338,6 +338,9 @@ class FeedItem(BaseContent):
         parent_content_type = ContentType.objects.get_for_model(self.feed_collection)
         return ('merengue.base.views.admin_link', [parent_content_type.id, self.feed_collection.id, 'items/%s/' % self.id])
 
+    def get_parent_for_permissions(self):
+        return self.feed_collection.get_parent_for_permissions()
+
 
 def handle_feed_item_pre_save(sender, instance, **kwargs):
     field_name = get_real_fieldname('name', fallback_language())
