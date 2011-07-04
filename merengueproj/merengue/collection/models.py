@@ -341,6 +341,24 @@ class FeedItem(BaseContent):
     def get_parent_for_permissions(self):
         return self.feed_collection.get_parent_for_permissions()
 
+    def get_main_section(self):
+        return self.feed_collection.get_main_section()
+
+    def breadcrumbs_items(self):
+        urls = []
+        try:
+            first_item = self.breadcrumbs_first_item()
+            if first_item:
+                urls.append(first_item)
+        except ImportError:
+            urls = []
+        urls.append((unicode(self.feed_collection),
+                     self.feed_collection.get_absolute_url()))
+        last_item = self.breadcrumbs_last_item()
+        if last_item:
+            urls.append(last_item)
+        return urls
+
 
 def handle_feed_item_pre_save(sender, instance, **kwargs):
     field_name = get_real_fieldname('name', fallback_language())
