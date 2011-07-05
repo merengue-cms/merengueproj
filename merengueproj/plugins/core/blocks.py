@@ -48,7 +48,20 @@ class BaseMenuBlock(object):
         return -1
 
 
-class CoreMenuBlock(BaseMenuBlock, Block):
+class BaseSingleMenuBlock(BaseMenuBlock):
+
+    config_params = BaseMenuBlock.config_params + [
+        params.Integer(name='max_num_items',
+                       label=_('maximum number of items without js collapsible'), default=-1)]
+
+    def get_max_num_items(self):
+        max_num_items = self.get_config().get('max_num_items', None)
+        if max_num_items:
+            return max_num_items.get_value()
+        return -1
+
+
+class CoreMenuBlock(BaseSingleMenuBlock, Block):
     name = 'coremenu'
     default_place = 'leftsidebar'
     help_text = _('Renders the Menu')
@@ -69,7 +82,8 @@ class CoreMenuBlock(BaseMenuBlock, Block):
                                  context={'section': section,
                                           'menu': main_menu,
                                           'descendants': descendants,
-                                          'max_num_level': self.get_max_level()})
+                                          'max_num_level': self.get_max_level(),
+                                          'max_num_items': self.get_max_num_items()})
 
 
 class NavigationBlock(BaseMenuBlock, Block):
@@ -98,7 +112,7 @@ class NavigationBlock(BaseMenuBlock, Block):
                                           'max_num_level': self.get_max_level()})
 
 
-class PortalMenuBlock(BaseMenuBlock, Block):
+class PortalMenuBlock(BaseSingleMenuBlock, Block):
     name = 'portalmenu'
     default_place = 'header'
     help_text = _('Renders the Portal Menu')
@@ -109,7 +123,8 @@ class PortalMenuBlock(BaseMenuBlock, Block):
         return self.render_block(request, template_name='core/block_portal_menu.html',
                                  block_title=ugettext('Portal Menu'),
                                  context={'portal_menu': portal_menu,
-                                          'max_num_level': self.get_max_level()})
+                                          'max_num_level': self.get_max_level(),
+                                          'max_num_items': self.get_max_num_items()})
 
 
 class LinkBaseBlock(Block):
