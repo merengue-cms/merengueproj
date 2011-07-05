@@ -3144,7 +3144,7 @@ msgstr "Guardar actual config"
 
 #: merengue/templates/admin/siteconfig.html.py:50
 msgid "Backups configuration"
-msgstr "Copias de seguridad de configuración"
+msgstr "Configuración de las Copias de seguridad"
 
 #: merengue/templates/admin/siteconfig.html.py:54
 #: merengue/templates/admin/siteconfig.html.py:57
