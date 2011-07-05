@@ -20,6 +20,9 @@ from django import db
 
 def get_section(request=None, context=None):
     section = (request and getattr(request, 'section', None)) or (context and context.get('section', None))
+    if section and request and not section.can_view(request.user):
+        setattr(request, 'section', None)
+        return None
     return section and section.get_real_instance()
 
 

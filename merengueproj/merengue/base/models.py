@@ -621,6 +621,11 @@ class BaseContent(BaseClass):
     def get_participants(self):
         return self.participants.all()
 
+    def can_view(self, user):
+        """ Returns if the user can edit this content """
+        from merengue.perms.utils import has_permission
+        return has_permission(self, user, 'view')
+
     def can_edit(self, user):
         """ Returns if the user can edit this content """
         from merengue.perms.utils import has_permission
