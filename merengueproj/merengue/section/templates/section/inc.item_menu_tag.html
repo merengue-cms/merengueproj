@@ -13,7 +13,9 @@
     {% else %}
         {% if max_level %}
             {% if node.level >= max_level %}
-                </li>
+                {% ifnotequal node menu_item %}
+                    </li>
+                {% endifnotequal %}
             {% endif %}
         {% endif %}
     {% endif %}
