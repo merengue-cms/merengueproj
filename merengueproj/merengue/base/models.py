@@ -548,6 +548,19 @@ class BaseContent(BaseClass):
         if errors:
             raise ValidationError(errors)
 
+    @classmethod
+    def get_subclasses(cls):
+        subclasses = cls.__subclasses__()
+        result = []
+        active_models = models.get_models()
+        for subclass in subclasses:
+            if subclass not in active_models:
+                continue
+            if not subclass._meta.abstract:
+                result.append(subclass)
+            result += subclass.get_subclasses()
+        return result
+
     def get_real_instance(self):
         """
         BaseContent objects are only "abstract" managed contents.
@@ -555,19 +568,10 @@ class BaseContent(BaseClass):
 
         Makes a SQL sentence which does the JOIN with its real model class
         """
-        def get_subclasses(cls):
-            subclasses = cls.__subclasses__()
-            result = []
-            for subclass in subclasses:
-                if not subclass._meta.abstract:
-                    result.append(subclass)
-                else:
-                    result += get_subclasses(subclass)
-            return result
 
         if hasattr(self, '_real_instance'):  # try looking in our cache
             return self._real_instance
-        subclasses = get_subclasses(self.__class__)
+        subclasses = self.__class__.get_subclasses()
         if not subclasses:  # already real_instance
             real_instance = getattr(self, self.class_name, self)
             self._real_instance = real_instance

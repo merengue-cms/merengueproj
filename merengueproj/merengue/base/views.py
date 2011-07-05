@@ -135,7 +135,7 @@ def ajax_autocomplete_tags(request, app_name, model):
     limit = request.GET.get("limit", None)
     tags = Tag.objects.usage_for_model(cls)
 
-    for subclass in cls.__subclasses__():
+    for subclass in cls.get_subclasses():
         tags.extend(Tag.objects.usage_for_model(subclass))
     if query_string:
         tags = [t for t in tags if query_string in t.name]

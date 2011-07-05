@@ -79,6 +79,7 @@ def install_plugin(registered_plugin):
     # Needed update installed apps in order
     # to get SQL command from merengue.pluggable
     add_to_installed_apps(plugin_name)
+    clear_plugin_module_cache(plugin_name)
     if load_app(plugin_name) and not are_installed_models(app_name):
         install_models(app_name)
         reload_models_cache()
@@ -554,10 +555,15 @@ def reload_models_cache():
     Reload Django internal cache for all models in installed apps.
     This includes model field mapping, related fields in _meta object, etc.
     """
+    installed_app_names = [app.split('.')[-1] for app in settings.INSTALLED_APPS]
+    for app_label in cache.app_models:
+        if app_label not in installed_app_names:
+            del cache.app_models[app_label]
     cache.loaded = False
     cache.handled = {}
     cache.app_store.clear()
     cache._populate()
+    cache._get_models_cache.clear()
     for model in get_models():
         opts = model._meta
         if hasattr(opts, '_related_many_to_many_cache'):
@@ -699,6 +705,12 @@ def register_dummy_plugin(plugin_name):
     registered_plugin.name = plugin_name
     registered_plugin.save()
     return registered_plugin
+
+
+def clear_plugin_module_cache(plugin_module):
+    for module_name, module in sys.modules.items():
+        if module_name.startswith(plugin_module):
+            del sys.modules[module_name]
 
 
 from merengue.section.admin import register as register_section

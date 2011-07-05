@@ -48,19 +48,6 @@ def workflow_by_model(model):
             return Workflow.objects.default_workflow()
 
 
-def get_workflow_parent_models(model=None):
-    if not model:
-        model = Base
-    subclasses = model.__subclasses__()
-    result = []
-    for submodel in subclasses:
-        if not submodel._meta.abstract:
-            result.append(submodel)
-        else:
-            result += get_workflow_parent_models(submodel)
-    return result
-
-
 def change_status(content, state):
     """ change the status of a content """
     workflow = workflow_by_model(content.__class__)
@@ -71,7 +58,7 @@ def change_status(content, state):
 
 def update_objects_permissions():
     """ update all the contents permissions """
-    models = get_workflow_parent_models()
+    models = BaseContent.get_subclasses()
     for model in models:
         print 'Updating model: %s' % model
         queryset = model.objects.all()

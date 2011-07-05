@@ -31,7 +31,7 @@ from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.admin import RelatedModelAdmin, BaseAdmin, set_field_read_only
-from merengue.base.models import Base
+from merengue.base.models import BaseContent
 from merengue.perms import utils as perms_api
 from merengue.perms.models import Permission, Role
 from merengue.workflow import DEFAULT_WORKFLOW
@@ -49,18 +49,6 @@ from transmeta import get_fallback_fieldname
 # otherwise, the AllFilterSpec will be taken first
 FilterSpec.filter_specs.insert(0, (lambda f: f.name == 'workflow:workflowmodelrelation',
                                WorkflowModelRelatedFilterSpec))
-
-
-def _get_all_children_models(model=None):
-    if not model:
-        model = Base
-    subclasses = model.__subclasses__()
-    result = []
-    for submodel in subclasses:
-        if not submodel._meta.abstract:
-            result.append(submodel)
-        result += _get_all_children_models(submodel)
-    return result
 
 
 class WorkflowAdmin(BaseAdmin):
@@ -377,7 +365,7 @@ class ContentTypeRelatedModelAdmin(RelatedModelAdmin):
         if request.GET.get('id__isnull', None) == 'false':
             return ContentType.objects.exclude(workflowmodelrelation__workflow=self.basecontent)
         else:
-            models = _get_all_children_models()
+            models = [BaseContent] + BaseContent.get_subclasses()
             return ContentType.objects.filter(model__in=[model._meta.module_name
                                                          for model in models])
 

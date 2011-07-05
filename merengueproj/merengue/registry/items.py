@@ -86,7 +86,7 @@ class RegistrableItem(object):
 
 
 def _get_children_classes(content_type):
-    subclasses = content_type.__subclasses__()
+    subclasses = content_type.get_subclasses()
     result = []
     for subclass in subclasses:
         result += _get_children_classes(subclass)
