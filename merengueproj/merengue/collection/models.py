@@ -397,7 +397,7 @@ class FeedCollection(Collection):
     expire_seconds = models.IntegerField(
         verbose_name=_(u'Seconds to expire cache'),
         help_text=_(u'Seconds from last update to do a new query. 0 to never query again.'),
-        default=0,
+        default=86400,  # 24 hours
         )
 
     remove_items = models.BooleanField(
