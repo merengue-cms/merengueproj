@@ -20,5 +20,6 @@
     <h1 title="{{ content.name }}">{% inline_trans "Empty Menu" %}</h1>
   </div>
   <p class="emptyMenu">{% inline_trans "This menu does not link to any target" %}</p>
+  {% if can_edit %}<p class="emptyMenu"><a href="{{ menu.get_admin_absolute_url }}">{% inline_trans "Admin this menu" %}</a></p>{% endif %}
 {% endblock %}
 
