@@ -397,6 +397,13 @@ form.inplace_description {
 
 /* end content*/
 
+/* event */
+.ui-datepicker td.ui-datepicker-other-month span {
+    background: transparent;
+    border: none;
+}
+/* end event*/
+
 /* extensible menu */
 li.extensibleMenu {
     position: relative;
