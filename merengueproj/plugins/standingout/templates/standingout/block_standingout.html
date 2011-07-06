@@ -10,13 +10,15 @@
   <ul>
     {% if standingouts %}
         {% for standingout in standingouts %}
-            <li>
-                {% if standingout.get_absolute_url %}
-                    <a href="{{ standingout.get_absolute_url }}">{{ standingout.name }}</a>
-                {% else %}
-                    {{ standingout.name }}
-                {% endif %}
-            </li>
+            {% if standingout.name %}
+                <li>
+                    {% if standingout.get_absolute_url %}
+                        <a href="{{ standingout.get_absolute_url }}">{{ standingout.name }}</a>
+                    {% else %}
+                        {{ standingout.name }}
+                    {% endif %}
+                </li>
+            {% endif %}
         {% endfor %}
         {% url standingout_list as standingout_list_url %}
         {% url_in_section_breadcrumbs_tag section standingout_list_url as standingout_list_section %}

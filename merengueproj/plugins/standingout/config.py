@@ -29,7 +29,8 @@ class PluginConfig(Plugin):
     version = '0.0.1a'
 
     url_prefixes = (
-        ('standingout', 'plugins.standingout.urls'),
+        ({'en': 'standingout',
+          'es': 'destacados'}, 'plugins.standingout.urls'),
     )
 
     def get_blocks(self):

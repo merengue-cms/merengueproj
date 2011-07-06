@@ -11,3 +11,8 @@
   <span class="breadcrumbSeparator">→</span><a href="">{% inline_trans "Highlights" %}</a>
 {% endblock %}
 
+{% block itemdetail %}
+    {% if content.name %}
+        {{ block.super }}
+    {% endif %}
+{% endblock %}

@@ -70,7 +70,7 @@ class StandingOut(models.Model):
     order = models.IntegerField(_("Order"), blank=True, null=True)
 
     class Meta:
-        ordering = ('order', )
+        ordering = ('-order', )
         translate = ('title', 'short_description')
         verbose_name = _('standing out')
         verbose_name_plural = _('standing outs')
@@ -107,9 +107,8 @@ class StandingOut(models.Model):
         return target
 
     def __unicode__(self):
-        res = u''
         if self.title:
-            res += u'[%s] ' % self.title
-        if not self.related_content_type or not self.related_id:
-            return res + (self.target_name() or '')
-        return "%s%s --> %s" % (res, unicode(self.obj), unicode(self.related))
+            return self.title
+        elif self.obj:
+            return unicode(self.obj)
+        return 'without content'

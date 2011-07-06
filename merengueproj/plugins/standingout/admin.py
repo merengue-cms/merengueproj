@@ -29,10 +29,11 @@ from transmeta import get_real_fieldname_in_each_language
 
 
 class StandingOutAdmin(BaseOrderableAdmin):
-    list_display = ('__unicode__', 'related', 'standing_out_category')
+    list_display = ('__unicode__', 'related', 'standing_out_category', 'order')
     list_filter = ('related_content_type', 'related_id', 'obj_content_type', 'id')
     form = StandingOutAdminModelForm
     sortablefield = 'order'
+    sortablereverse = True
     html_fields = ('short_description', )
     exclude = ('order', )
 
@@ -43,7 +44,7 @@ class StandingOutAdmin(BaseOrderableAdmin):
                 (_('Basic Options'), {
                                 'fields': get_real_fieldname_in_each_language('title') +\
                                           get_real_fieldname_in_each_language('short_description') +\
-                                          ['image', 'obj', 'url']}),
+                                          ['url', 'obj', 'image']}),
                 (_('Advanced Options'), {
                                 'fields': ('standing_out_category', 'related')}),
         )
@@ -59,7 +60,9 @@ class StandingOutAdmin(BaseOrderableAdmin):
 
 class StandingContentOutAdmin(OrderableRelatedModelAdmin, StandingOutAdmin):
 
-    list_display = ('obj', )
+    list_display = ('__unicode__', 'order')
+    sortablefield = 'order'
+    sortablereverse = True
 
     def get_form(self, request, obj=None):
         form_class = super(StandingContentOutAdmin, self).get_form(request, obj)
@@ -67,7 +70,11 @@ class StandingContentOutAdmin(OrderableRelatedModelAdmin, StandingOutAdmin):
         return form_class
 
     def get_ordering(self):
-        return ('order', 'asc')
+        return ('order', 'desc')
+
+    def changelist_view(self, request, extra_context=None, parent_model_admin=None, parent_object=None):
+        extra_context = self._update_extra_context(request, extra_context, parent_model_admin, parent_object)
+        return super(StandingOutAdmin, self).changelist_view(request, extra_context)
 
     def save_model(self, request, obj, form, change):
         if self.basecontent and isinstance(self.basecontent, BaseSection):
@@ -77,6 +84,7 @@ class StandingContentOutAdmin(OrderableRelatedModelAdmin, StandingOutAdmin):
         standingoutcategory = StandingOutCategory.objects.get(context_variable=category)
         obj.standing_out_category = standingoutcategory
         obj.related = self.basecontent
+        setattr(obj, self.sortablefield, self.queryset(request).count())
         super(RelatedModelAdmin, self).save_model(request, obj, form, change)
 
     def queryset(self, request, basecontent=None):
