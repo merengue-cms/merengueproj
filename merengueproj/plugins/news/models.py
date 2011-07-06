@@ -34,8 +34,14 @@ class NewsCategory(BaseCategory):
 
 class NewsItem(BaseContent):
 
-    publish_date = models.DateTimeField(blank=True, null=True, db_index=True)
-    expire_date = models.DateTimeField(blank=True, null=True, db_index=True)
+    publish_date = models.DateTimeField(verbose_name=_('publish date'),
+                                        blank=True,
+                                        null=True,
+                                        db_index=True)
+    expire_date = models.DateTimeField(verbose_name=_('expire date'),
+                                       blank=True,
+                                       null=True,
+                                       db_index=True)
     categories = models.ManyToManyField(NewsCategory,
                                         verbose_name=_('category'),
                                         blank=True, null=True, db_index=True)
