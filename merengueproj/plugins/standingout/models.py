@@ -111,5 +111,5 @@ class StandingOut(models.Model):
         if self.title:
             res += u'[%s] ' % self.title
         if not self.related_content_type or not self.related_id:
-            return res + self.target_name()
+            return res + (self.target_name() or '')
         return "%s%s --> %s" % (res, unicode(self.obj), unicode(self.related))
