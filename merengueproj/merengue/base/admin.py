@@ -799,6 +799,7 @@ class BaseOrderableAdmin(BaseAdmin):
     """ A model admin that can reorder content by a sortablefield """
     change_list_template = "admin/basecontent/sortable_change_list.html"
     sortablefield = 'position'
+    sortablereverse = False
 
     def changelist_view(self, request, extra_context=None):
         if request.method == 'POST':
@@ -807,6 +808,8 @@ class BaseOrderableAdmin(BaseAdmin):
             if neworder is None:
                 return super(BaseOrderableAdmin, self).changelist_view(request, extra_context)
             neworder = neworder.split(',')
+            if self.sortablereverse:
+                neworder.reverse()
             items = self.model.objects.filter(id__in=neworder)
             for item in items:
                 newposition = neworder.index(unicode(item.id)) + (int(page) * 50)
@@ -1398,6 +1401,7 @@ class OrderableRelatedModelAdmin(RelatedModelAdmin):
     """
     change_list_template = "admin/basecontent/related_sortable_change_list.html"
     sortablefield = 'position'
+    sortablereverse = False
 
     def get_ordering(self):
         """
@@ -1416,6 +1420,8 @@ class OrderableRelatedModelAdmin(RelatedModelAdmin):
             if neworder_list is None:
                 return super(OrderableRelatedModelAdmin, self).changelist_view(request, extra_context, parent_model_admin, parent_object)
             neworder_list = neworder_list.split(',')
+            if self.sortablereverse:
+                neworder_list.reverse()
             items = self.queryset(request).filter(id__in=neworder_list)
             for item in items:
                 field = item._meta.get_field_by_name(self.related_field)[0]
