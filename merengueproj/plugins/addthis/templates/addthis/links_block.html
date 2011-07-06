@@ -1,5 +1,5 @@
 {% extends "block.html" %}
-{% load i18n inlinetrans %}
+{% load i18n %}
 
 {% block blocktitle %}
 {% endblock %}
@@ -9,7 +9,8 @@
 <script type="text/javascript">
 // <![CDATA[
 var addthis_config = {
-     username: "merengue"
+     username: "merengue",
+     ui_language: "{{ LANGUAGE_CODE }}"
 };
 
 (function($) {
@@ -23,14 +24,15 @@ var addthis_config = {
 
 {% if services %}
 <div class="addthis_toolbox addthis_default_style ">
-<a href="http://www.addthis.com/bookmark.php?v=250&amp;username=merengue" class="addthis_button_compact">{% inline_trans "Share" %}</a>
-<span class="addthis_separator">|</span>
-{% for service in services %}<a class="addthis_button_{{ service }}"></a>{% endfor %}
+    {% for service in services %}<a class="addthis_button_{{ service }}"></a>{% endfor %}
+    <span class="addthis_separator">|</span>
+    <a href="http://www.addthis.com/bookmark.php?v=250&amp;username=merengue"
+        class="addthis_button_compact">
+    </a>
+    {% else %}
+        <a class="addthis_button"></a>
+    {% endif %}
 </div>
-{% else %}
-<a class="addthis_button"></a>
-{% endif %}
-
 <script type="text/javascript"
         src="http://s7.addthis.com/js/250/addthis_widget.js#async=1"></script>
 <!-- ADDTHIS BUTTON END -->
