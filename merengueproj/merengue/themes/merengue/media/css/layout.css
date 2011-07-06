@@ -49,8 +49,8 @@ ul {
 
 #header {
   background: transparent url(../img/header_bg.jpg) no-repeat center top;
-  margin-top: -15px;
 }
+
 span.translatable {
     background-image: none!important;
     padding: 0 !important;
@@ -92,6 +92,10 @@ span.translatable {
 #headerlogo {
   height: 36px;
   margin-left: 25px;
+}
+
+#headerlogo h1 {
+    margin-top: 0;
 }
 
 .ie6 #headerlogo {
