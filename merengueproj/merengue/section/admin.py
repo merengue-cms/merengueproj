@@ -43,8 +43,7 @@ from merengue.perms.admin import PermissionAdmin
 class BaseSectionAdmin(BaseContentAdmin, PermissionAdmin):
     sortablefield = 'order'
     ordering = ('order', )
-    list_display = ('name', 'slug', )
-    list_display_links = ('name', )
+    list_display = BaseContentAdmin.list_display[:-1]
     search_fields = tuple(get_real_fieldname_in_each_language('name'))
     html_fields = ()
     removed_fields = ('description', )
