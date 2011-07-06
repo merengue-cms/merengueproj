@@ -393,6 +393,7 @@ class BaseContent(BaseClass):
 
     last_editor = models.ForeignKey(User, null=True, blank=True, editable=False,
                                     related_name='last_edited_content',
+                                    verbose_name=_('last editor'),
                                     on_delete=models.SET_NULL)
 
     # permission global
