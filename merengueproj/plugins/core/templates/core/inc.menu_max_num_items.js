@@ -44,9 +44,9 @@ function getCollapsableMenu(menu) {
 
         for (j=0; j < excludeMenuItems.length; j++) {
             excludeMenuItems[j].slideToggle();
-            var iconCollapsable = "{{ MEDIA_URL }}merengue/img/flag-es.gif"
-            var altCollapsable = "{% trans "Collapsable" %}"
-            iconElementCollapsable = jQuery("<a href='#' class='collapsable'><img src='" + iconCollapsable +"' alt='"+ altCollapsable +"' title='"+ altCollapsable +"' /></a>");
+            var altCollapsable = '{% trans "Collapsable" %}';
+            iconElementCollapsable = jQuery('<a href="#" class="collapsable"' + ' alt="'+ altCollapsable +'" title="'+ altCollapsable +'">&nbsp;</a>');
+            excludeMenuItems[j].parent().addClass('extensibleMenu');
             iconElementCollapsable.insertBefore(excludeMenuItems[j].parent().find("a.item:first"));
             iconElementCollapsable.fadeOut();
 
@@ -57,10 +57,8 @@ function getCollapsableMenu(menu) {
                 return false;
             });
 
-
-            var iconExtensible = "{{ MEDIA_URL }}merengue/img/flag-en.gif"
-            var altExtensible = "{% trans "Extensible" %}"
-            iconElementExtensible = jQuery("<a href='#' class='extensible'><img src='" + iconExtensible +"' alt='"+ altExtensible +"' title='"+ altExtensible +"' /></a>");
+            var altExtensible = '{% trans "Extensible" %}';
+            iconElementExtensible = jQuery('<a href="#" class="extensible"' + ' alt="'+ altExtensible +'" title="'+ altExtensible +'">&nbsp;</a>');
             iconElementExtensible.insertBefore(excludeMenuItems[j].parent().find("a.item:first"));
 
             iconElementExtensible.click(function(){
