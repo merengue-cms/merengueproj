@@ -225,10 +225,9 @@ class Base(models.Model):
             if hasattr(self, 'objectpermission_set'):
                 self.objectpermission_set.all().delete()
                 for perm in self.workflow_status.statepermissionrelation_set.all():
-                    self.objectpermission_set.add(
-                        ObjectPermission.objects.create(content=self,
-                                                        role=perm.role,
-                                                        permission=perm.permission))
+                    ObjectPermission.objects.get_or_create(content=self,
+                                                    role=perm.role,
+                                                    permission=perm.permission)
             if raw:
                 # this avoid to emit signals. Useful when loading from fixtures
                 self.save_base(raw=True)
