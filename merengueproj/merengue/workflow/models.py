@@ -18,11 +18,11 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.contenttypes.models import ContentType
-from django.utils.translation import ugettext, ugettext_lazy as _
+from django.utils.translation import ugettext, get_language, activate, ugettext_lazy as _
 
 from south.signals import post_migrate
 from transmeta import (TransMeta, get_fallback_fieldname, get_real_fieldname,
-                       get_real_fieldname_in_each_language)
+                       get_real_fieldname_in_each_language, fallback_language)
 
 from merengue import perms  # pyflakes:ignore
 from merengue.workflow.managers import WorkflowManager
@@ -379,6 +379,8 @@ def populate_workflow(workflow):
     from merengue.perms.models import Role, Permission
 
     name_fields = get_real_fieldname_in_each_language('name')
+    old_lang = get_language()
+    activate(fallback_language())
     for field in name_fields:
         value = getattr(workflow, field, True)
         if value == '':
@@ -454,6 +456,7 @@ def populate_workflow(workflow):
         )
     workflow.initial_state = draft
     workflow.save()
+    activate(old_lang)
 
 
 def create_default_states_handler(sender, instance, **kwargs):
