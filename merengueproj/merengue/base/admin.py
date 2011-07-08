@@ -898,8 +898,6 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
         """
         Overrides Django admin behaviour to add ownership based access control
         """
-        if request.GET.get('pop', False):
-            return True
         if obj:
             if request.method == 'POST' and obj.no_changeable:
                 return False

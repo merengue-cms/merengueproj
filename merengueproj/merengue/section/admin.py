@@ -137,6 +137,12 @@ class SectionAdmin(BaseSectionAdmin):
         form = super(SectionAdmin, self).get_form(request, obj, **kwargs)
         if 'section' in form.base_fields:
             del form.base_fields['section']
+        if 'main_content' in form.base_fields.keys():
+            link_autocomplete = AutoCompleteSelectField(
+                'section_contentlink', label=ugettext('main content'),
+            )
+            link_autocomplete.widget.help_text = ugettext('content selected here will be shown when entering the section')
+            form.base_fields['main_content'] = link_autocomplete
         return form
 
     def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
