@@ -768,7 +768,7 @@ class WorkflowBatchActionProvider(object):
     def set_as_published(self, request, queryset):
         return self.change_state(request, queryset, 'published',
                                  ugettext(u'Are you sure you want to set this items as published?'),
-                                 'can_publish')
+                                 'can_published')
     set_as_published.short_description = _("Set as published")
 
     def change_state(self, request, queryset, state, confirm_msg, perm=None):
