@@ -27,7 +27,7 @@ except ImportError:
 from django import templatetags
 from django.conf import settings
 from django.conf.urls.defaults import include, url
-from django.contrib.admin.sites import NotRegistered
+from django.contrib.admin.sites import NotRegistered, AlreadyRegistered
 from django.contrib.contenttypes.management import update_all_contenttypes
 from django.core.exceptions import ImproperlyConfigured, FieldError, MiddlewareNotUsed
 from django.core.management import call_command
@@ -449,7 +449,10 @@ def register_plugin_models(plugin_name):
     if not plugin:
         return
     for model, model_admin in plugin.models():
-        site.register_model(model, model_admin)
+        try:
+            site.register_model(model, model_admin)
+        except AlreadyRegistered:
+            pass
 
 
 def register_plugin_section_models(plugin_name):
@@ -475,8 +478,11 @@ def register_plugin_section_models_in_admin_site(plugin, plugin_name, admin_site
     if not admin_site:
         return
     for model, admin_model in plugin.section_models():
-        site_related = admin_site.register_related(model, admin_model, related_to=BaseSection)
-        plugin.section_register_hook(site_related, model)
+        try:
+            site_related = admin_site.register_related(model, admin_model, related_to=BaseSection)
+            plugin.section_register_hook(site_related, model)
+        except AlreadyRegistered:
+            pass
 
 
 def register_plugin_in_plugin_admin_site(plugin_name):
@@ -488,7 +494,10 @@ def register_plugin_in_plugin_admin_site(plugin_name):
         return
     plugin_site = site.register_plugin_site(plugin_name)
     for model, admin_model in plugin.get_model_admins():
-        plugin_site.register(model, admin_model)
+        try:
+            plugin_site.register(model, admin_model)
+        except AlreadyRegistered:
+            pass
 
 
 def unregister_plugin_in_plugin_admin_site(plugin_name):
@@ -709,7 +718,7 @@ def register_dummy_plugin(plugin_name):
 
 def clear_plugin_module_cache(plugin_module):
     for module_name, module in sys.modules.items():
-        if module_name.startswith(plugin_module):
+        if module_name.startswith(plugin_module) and 'migrations' not in module_name:
             del sys.modules[module_name]
 
 
