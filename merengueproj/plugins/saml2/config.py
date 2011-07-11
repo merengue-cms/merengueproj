@@ -39,6 +39,7 @@ class PluginConfig(Plugin):
         )
 
     required_plugins = {'core': {}}
+    required_apps = {'djangosaml2': {}, }
 
     config_params = [
         params.Single(name='entity_name',
