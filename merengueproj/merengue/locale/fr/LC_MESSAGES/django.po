@@ -8,394 +8,415 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-27 17:06+0200\n"
+"POT-Creation-Date: 2011-07-11 08:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 
-#: merengue/settings.py:157 merengue/workflow/models.py:386
+#: /home/portaluma/portaluma/umawebsite/merengue/settings.py:157
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:388
 msgid "Draft"
 msgstr ""
 
-#: merengue/settings.py:158 merengue/workflow/models.py:394
+#: /home/portaluma/portaluma/umawebsite/merengue/settings.py:158
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:396
 msgid "Pending"
 msgstr ""
 
-#: merengue/settings.py:159 merengue/workflow/models.py:402
+#: /home/portaluma/portaluma/umawebsite/merengue/settings.py:159
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:404
 msgid "Published"
 msgstr ""
 
-#: merengue/settings.py:355
+#: /home/portaluma/portaluma/umawebsite/merengue/settings.py:355
 msgid "Primary link"
 msgstr ""
 
-#: merengue/settings.py:356
+#: /home/portaluma/portaluma/umawebsite/merengue/settings.py:356
 msgid "Secondary link"
 msgstr ""
 
-#: merengue/action/admin.py:32 merengue/block/admin.py:45
-#: merengue/pluggable/admin.py:50 merengue/registry/admin.py:35
+#: /home/portaluma/portaluma/umawebsite/merengue/action/admin.py:32
+#: /home/portaluma/portaluma/umawebsite/merengue/block/admin.py:45
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/admin.py:50
+#: /home/portaluma/portaluma/umawebsite/merengue/registry/admin.py:35
 msgid "Status"
 msgstr ""
 
-#: merengue/apps/captcha/fields.py:14
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/captcha/fields.py:14
 msgid "Typed characters does not match with the ones in the image"
 msgstr ""
 
-#: merengue/apps/captcha/models.py:6
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/captcha/models.py:6
 msgid "text"
 msgstr ""
 
-#: merengue/apps/captcha/models.py:8
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/captcha/models.py:8
 msgid ""
 "The image must upload at the size that is displayed is not automatically "
 "resize"
 msgstr ""
 
-#: merengue/apps/captcha/widgets.py:31
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/captcha/widgets.py:31
 msgid "Type the word that follows the image"
 msgstr ""
 
-#: merengue/apps/captcha/widgets.py:33
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/captcha/widgets.py:33
 msgid ""
 "You need to load images in your browser to be able to register, because of "
 "the captcha system."
 msgstr ""
 
-#: merengue/apps/rating/admin.py:25
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/rating/admin.py:25
 msgid "Vote"
 msgstr ""
 
-#: merengue/apps/rating/admin.py:26
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/rating/admin.py:26
 msgid "Votes"
 msgstr ""
 
-#: merengue/apps/rating/models.py:28
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/rating/models.py:28
 msgid "Very bad"
 msgstr ""
 
-#: merengue/apps/rating/models.py:28
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/rating/models.py:28
 msgid "Bad"
 msgstr ""
 
-#: merengue/apps/rating/models.py:28
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/rating/models.py:28
 msgid "OK"
 msgstr ""
 
-#: merengue/apps/rating/models.py:28
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/rating/models.py:28
 msgid "Good"
 msgstr ""
 
-#: merengue/apps/rating/models.py:28
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/rating/models.py:28
 msgid "Very good"
 msgstr ""
 
-#: merengue/apps/rating/models.py:183 merengue/collab/models.py:104
-#: merengue/collab/models.py:180
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/rating/models.py:183
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:104
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:180
 msgid "user"
 msgstr ""
 
-#: merengue/apps/rating/models.py:187 merengue/apps/rating/models.py:192
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/rating/models.py:187
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/rating/models.py:192
 msgid "vote"
 msgstr ""
 
-#: merengue/apps/rating/models.py:193
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/rating/models.py:193
 msgid "votes"
 msgstr ""
 
-#: merengue/apps/rating/templates/form.html.py:4
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/rating/templates/form.html.py:4
 #, python-format
 msgid "%(votes)s vote"
 msgid_plural "%(votes)s votes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: merengue/apps/rating/templates/form.html.py:6
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/rating/templates/form.html.py:6
 msgid "stars"
 msgstr ""
 
-#: merengue/apps/rating/templates/form.html.py:9
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/rating/templates/form.html.py:9
 msgid "Sign in to rate"
 msgstr ""
 
-#: merengue/apps/rating/templatetags/rating_tags.py:107
-#: merengue/apps/rating/templatetags/rating_tags.py:114
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/rating/templatetags/rating_tags.py:107
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/rating/templatetags/rating_tags.py:114
 msgid "Thanks for rating "
 msgstr ""
 
-#: merengue/apps/stdimage/fields.py:142
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/stdimage/fields.py:142
 msgid "Invalid image format"
 msgstr ""
 
-#: merengue/apps/stdimage/widgets.py:32
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/stdimage/widgets.py:32
 msgid "Currently:"
 msgstr ""
 
-#: merengue/apps/stdimage/widgets.py:33
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/stdimage/widgets.py:33
 msgid "Change:"
 msgstr ""
 
-#: merengue/apps/stdimage/widgets.py:43
-#: merengue/templates/admin/customize_submit_line.html.py:7
-#: merengue/templates/admin/customize_submit_line.html.py:9
-#: merengue/templates/admin/delete_confirmation.html.py:7
-#: merengue/templates/admin/delete_confirmation_various.html.py:8
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/stdimage/widgets.py:43
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/customize_submit_line.html.py:7
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/customize_submit_line.html.py:9
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/delete_confirmation.html.py:7
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/delete_confirmation_various.html.py:8
 msgid "Delete"
 msgstr ""
 
-#: merengue/apps/tinyimages/models.py:12
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/models.py:12
 msgid "Title"
 msgstr ""
 
-#: merengue/apps/tinyimages/models.py:29
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/models.py:29
 msgid "Image"
 msgstr ""
 
-#: merengue/apps/tinyimages/models.py:29
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/models.py:29
 msgid "Select a image to upload"
 msgstr ""
 
-#: merengue/apps/tinyimages/models.py:34
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/models.py:34
 msgid "File"
 msgstr ""
 
-#: merengue/apps/tinyimages/models.py:34
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/models.py:34
 msgid "Select a file to upload"
 msgstr ""
 
-#: merengue/apps/tinyimages/views.py:26
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/views.py:26
 msgid "Your file has been uploaded. "
 msgstr ""
 
-#: merengue/apps/tinyimages/views.py:29
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/views.py:27
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/views.py:30
+msgid "Now you can select it below to be added into editor"
+msgstr ""
+
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/views.py:29
 msgid "Your image has been uploaded. "
 msgstr ""
 
-#: merengue/apps/tinyimages/templates/tinyimages/base.html.py:5
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/templates/tinyimages/base.html.py:5
 msgid "TinyImages"
 msgstr ""
 
-#: merengue/apps/tinyimages/templates/tinyimages/base_list.html.py:10
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/templates/tinyimages/base_list.html.py:10
 msgid "Send"
 msgstr ""
 
-#: merengue/apps/tinyimages/templates/tinyimages/file.html.py:4
-#: merengue/apps/tinyimages/templates/tinyimages/file.html.py:15
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/templates/tinyimages/file.html.py:4
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/templates/tinyimages/file.html.py:15
 msgid "Insert file"
 msgstr ""
 
-#: merengue/apps/tinyimages/templates/tinyimages/file.html.py:23
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/templates/tinyimages/file.html.py:23
 msgid "Insert file src"
 msgstr ""
 
-#: merengue/apps/tinyimages/templates/tinyimages/file_delete.html.py:5
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/templates/tinyimages/file_delete.html.py:5
 msgid "Delete file:"
 msgstr ""
 
-#: merengue/apps/tinyimages/templates/tinyimages/file_delete.html.py:7
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/templates/tinyimages/file_delete.html.py:7
 msgid "Are you sure you want to delete the following file?"
 msgstr ""
 
-#: merengue/apps/tinyimages/templates/tinyimages/file_list.html.py:6
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/templates/tinyimages/file_list.html.py:6
 msgid "Your files. Select one to be inserted into editor"
 msgstr ""
 
-#: merengue/apps/tinyimages/templates/tinyimages/file_list.html.py:22
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/templates/tinyimages/file_list.html.py:22
 msgid "Delete file"
 msgstr ""
 
-#: merengue/apps/tinyimages/templates/tinyimages/image_delete.html.py:5
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/templates/tinyimages/image_delete.html.py:5
 msgid "Delete image:"
 msgstr ""
 
-#: merengue/apps/tinyimages/templates/tinyimages/image_delete.html.py:7
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/templates/tinyimages/image_delete.html.py:7
 msgid "Are you sure you want to delete the following image?"
 msgstr ""
 
-#: merengue/apps/tinyimages/templates/tinyimages/image_list.html.py:6
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/templates/tinyimages/image_list.html.py:6
 msgid "Your images. Select one to be inserted into editor"
 msgstr ""
 
-#: merengue/apps/tinyimages/templates/tinyimages/image_list.html.py:24
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/templates/tinyimages/image_list.html.py:24
 msgid "Delete image"
 msgstr ""
 
-#: merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:3
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:3
 msgid "Result"
 msgstr ""
 
-#: merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:5
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:5
 msgid "to"
 msgstr ""
 
-#: merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:7
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:7
 msgid "of"
 msgstr ""
 
-#: merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:10
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:10
 msgid "Current page"
 msgstr ""
 
-#: merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:17
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:17
 msgid "First Page"
 msgstr ""
 
-#: merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:20
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:20
 msgid "Previous Page"
 msgstr ""
 
-#: merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:42
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:42
 msgid "Next Page"
 msgstr ""
 
-#: merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:45
+#: /home/portaluma/portaluma/umawebsite/merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:45
 msgid "Last Page"
 msgstr ""
 
-#: merengue/base/actions.py:51
+#: /home/portaluma/portaluma/umawebsite/merengue/base/actions.py:51
 #, python-format
 msgid "Successfully deleted %(count)d %(items)s."
 msgstr ""
 
-#: merengue/base/actions.py:63
+#: /home/portaluma/portaluma/umawebsite/merengue/base/actions.py:63
 #, python-format
 msgid "Cannot delete %(name)s"
 msgstr ""
 
-#: merengue/base/actions.py:65 merengue/base/admin.py:606
-#: merengue/base/admin.py:681
+#: /home/portaluma/portaluma/umawebsite/merengue/base/actions.py:65
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:608
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:683
 msgid "Are you sure?"
 msgstr ""
 
-#: merengue/base/actions.py:88 merengue/base/actions.py:93
+#: /home/portaluma/portaluma/umawebsite/merengue/base/actions.py:88
+#: /home/portaluma/portaluma/umawebsite/merengue/base/actions.py:93
 #, python-format
 msgid "Delete selected %(verbose_name_plural)s"
 msgstr ""
 
-#: merengue/base/admin.py:453 merengue/base/admin.py:657
-#: merengue/workflow/admin.py:404
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:455
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:659
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/admin.py:392
 #, python-format
 msgid "%(name)s object with primary key %(key)r does not exist."
 msgstr ""
 
-#: merengue/base/admin.py:485
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:487
 msgid "This field is required."
 msgstr ""
 
-#: merengue/base/admin.py:674
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:676
 #, python-format
 msgid "The %(name)s \"%(obj)s\" was deleted successfully."
 msgstr ""
 
-#: merengue/base/admin.py:705 merengue/base/templatetags/admin_tags.py:91
-#: merengue/section/templates/admin/section/customstyle/change_form.html.py:9
-#: merengue/section/templates/admin/section/documentsection/change_form.html.py:9
-#: merengue/templates/admin/object_history.html.py:7
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:707
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templatetags/admin_tags.py:91
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/admin/section/customstyle/change_form.html.py:9
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/admin/section/documentsection/change_form.html.py:9
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/object_history.html.py:7
 msgid "History"
 msgstr ""
 
-#: merengue/base/admin.py:709
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:711
 #, python-format
 msgid "Add %s"
 msgstr ""
 
-#: merengue/base/admin.py:711
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:713
 msgid "Quick Report"
 msgstr ""
 
-#: merengue/base/admin.py:712
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:714
 msgid "Advanced Report"
 msgstr ""
 
-#: merengue/base/admin.py:713
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:715
 msgid "Reports"
 msgstr ""
 
-#: merengue/base/admin.py:714
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:716
 msgid "Wizard Report"
 msgstr ""
 
-#: merengue/base/admin.py:756
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:758
 msgid "Are you sure you want to set this items as draft?"
 msgstr ""
 
-#: merengue/base/admin.py:758 merengue/workflow/models.py:416
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:760
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:418
 msgid "Set as draft"
 msgstr ""
 
-#: merengue/base/admin.py:762
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:764
 msgid "Are you sure you want to set this items as pending?"
 msgstr ""
 
-#: merengue/base/admin.py:764 merengue/workflow/models.py:410
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:766
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:412
 msgid "Set as pending"
 msgstr ""
 
-#: merengue/base/admin.py:768
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:770
 msgid "Are you sure you want to set this items as published?"
 msgstr ""
 
-#: merengue/base/admin.py:770
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:772
 msgid "Set as published"
 msgstr ""
 
-#: merengue/base/admin.py:781
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:783
 #, python-format
 msgid "Changed to %s"
 msgstr ""
 
-#: merengue/base/admin.py:785
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:787
 #, python-format
 msgid "Successfully set %(number)d %(model_name)s as %(state)s."
 msgstr ""
 
-#: merengue/base/admin.py:795
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:797
 #, python-format
 msgid "Change state of selected %(verbose_name_plural)s"
 msgstr ""
 
-#: merengue/base/admin.py:859
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:864
 msgid "Assigned owners"
 msgstr ""
 
-#: merengue/base/admin.py:878
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:883
 msgid "Are you sure you want to assign these owners to these contents?"
 msgstr ""
 
-#: merengue/base/admin.py:884
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:889
 msgid "Assign owners"
 msgstr ""
 
-#: merengue/base/admin.py:990
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:993
 msgid "Section"
 msgstr ""
 
-#: merengue/base/admin.py:991
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:994
 msgid "Enter the section to which content belongs"
 msgstr ""
 
-#: merengue/base/admin.py:1049 merengue/multimedia/admin.py:216
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:1052
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/admin.py:222
 msgid "Database error"
 msgstr ""
 
-#: merengue/base/admin.py:1217
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:1221
 msgid "No contents found"
 msgstr ""
 
-#: merengue/base/admin.py:1342 merengue/base/models.py:97
-#: merengue/base/models.py:375
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:1346
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:97
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:374
 msgid "contact info"
 msgstr ""
 
-#: merengue/base/admin.py:1443 merengue/workflow/admin.py:282
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:1450
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/admin.py:270
 msgid "permissions"
 msgstr ""
 
-#: merengue/base/admin.py:1450
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:1457
 #, python-format
 msgid ""
 "The permissions of the content should be changed in <a href=\"%(url)s\">the "
@@ -406,704 +427,745 @@ msgid ""
 "enable_edit=1\">here</a>."
 msgstr ""
 
-#: merengue/base/admin.py:1496
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:1503
 msgid "Error in id"
 msgstr ""
 
-#: merengue/base/admin.py:1501
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:1508
 msgid "deleted"
 msgstr ""
 
-#: merengue/base/admin.py:1520
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:1527
 msgid "Log entry"
 msgstr ""
 
-#: merengue/base/admin.py:1526 merengue/perms/models.py:177
-#: merengue/templates/admin/object_history.html.py:29
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:1533
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/models.py:177
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/object_history.html.py:29
 msgid "User"
 msgstr ""
 
-#: merengue/base/admin.py:1531
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:1538
 msgid "Admin url"
 msgstr ""
 
-#: merengue/base/admin.py:1540
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:1547
 msgid "Public url"
 msgstr ""
 
-#: merengue/base/admin.py:1550
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:1557
 msgid "Content type"
 msgstr ""
 
-#: merengue/base/admin.py:1554
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:1561
 msgid "Added"
 msgstr ""
 
-#: merengue/base/admin.py:1556
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:1563
 msgid "Deleted"
 msgstr ""
 
-#: merengue/base/admin.py:1561
-#: merengue/templates/admin/object_history.html.py:30
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:1568
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/object_history.html.py:30
 msgid "Action"
 msgstr ""
 
-#: merengue/base/admin.py:1620
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:1627
 msgid "Click to Locate"
 msgstr ""
 
-#: merengue/base/admin.py:1623
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:1630
 msgid "Location Maps"
 msgstr ""
 
-#: merengue/base/admin.py:1689 merengue/base/models.py:257
-#: merengue/places/models.py:56
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:1696
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:256
+#: /home/portaluma/portaluma/umawebsite/merengue/places/models.py:56
 msgid "location"
 msgstr ""
 
-#: merengue/base/admin.py:1699 merengue/places/models.py:72
+#: /home/portaluma/portaluma/umawebsite/merengue/base/admin.py:1706
+#: /home/portaluma/portaluma/umawebsite/merengue/places/models.py:72
 msgid "Address"
 msgstr ""
 
-#: merengue/base/adminforms.py:28
+#: /home/portaluma/portaluma/umawebsite/merengue/base/adminforms.py:28
 msgid "Select a .zip file:"
 msgstr ""
 
-#: merengue/base/adminforms.py:37
+#: /home/portaluma/portaluma/umawebsite/merengue/base/adminforms.py:37
 msgid "Bad or too large .zip file"
 msgstr ""
 
-#: merengue/base/adminsite.py:104
+#: /home/portaluma/portaluma/umawebsite/merengue/base/adminsite.py:104
 #, python-format
 msgid "%s administration"
 msgstr ""
 
-#: merengue/base/adminsite.py:258
+#: /home/portaluma/portaluma/umawebsite/merengue/base/adminsite.py:258
 msgid "Content types"
 msgstr ""
 
-#: merengue/base/adminsite.py:279
+#: /home/portaluma/portaluma/umawebsite/merengue/base/adminsite.py:279
 msgid "Settings saved successfully"
 msgstr ""
 
-#: merengue/base/adminsite.py:285
+#: /home/portaluma/portaluma/umawebsite/merengue/base/adminsite.py:285
 msgid "Database created successfully"
 msgstr ""
 
-#: merengue/base/adminsite.py:317 merengue/base/adminsite.py:500
+#: /home/portaluma/portaluma/umawebsite/merengue/base/adminsite.py:317
+#: /home/portaluma/portaluma/umawebsite/merengue/base/adminsite.py:500
 msgid "Site administration"
 msgstr ""
 
-#: merengue/base/adminsite.py:328
-#: merengue/templates/admin/django_index.html.py:13
-#: merengue/templates/admin/index.html.py:16
-#: merengue/templates/admin/merengue_index_base.html.py:126
+#: /home/portaluma/portaluma/umawebsite/merengue/base/adminsite.py:328
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/django_index.html.py:13
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/index.html.py:16
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:126
 msgid "Django admin"
 msgstr ""
 
-#: merengue/base/adminsite.py:460
+#: /home/portaluma/portaluma/umawebsite/merengue/base/adminsite.py:460
 #, python-format
 msgid "%(plugin_name)s plugin administration"
 msgstr ""
 
-#: merengue/base/dbfields.py:40
+#: /home/portaluma/portaluma/umawebsite/merengue/base/dbfields.py:40
 msgid "Data that serializes and deserializes into and out of JSON."
 msgstr ""
 
-#: merengue/base/filterspecs.py:11 merengue/block/filterspecs.py:16
-#: merengue/multimedia/admin.py:221 merengue/workflow/filterspecs.py:20
+#: /home/portaluma/portaluma/umawebsite/merengue/base/filterspecs.py:11
+#: /home/portaluma/portaluma/umawebsite/merengue/block/filterspecs.py:16
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/admin.py:227
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/filterspecs.py:20
 msgid "All"
 msgstr ""
 
-#: merengue/base/forms.py:361 merengue/base/models.py:435
+#: /home/portaluma/portaluma/umawebsite/merengue/base/forms.py:361
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:434
 msgid "owners"
 msgstr ""
 
-#: merengue/base/models.py:61
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:61
 msgid "Lowest"
 msgstr ""
 
-#: merengue/base/models.py:62
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:62
 msgid "Very Low"
 msgstr ""
 
-#: merengue/base/models.py:63
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:63
 msgid "Low"
 msgstr ""
 
-#: merengue/base/models.py:64
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:64
 msgid "Medium"
 msgstr ""
 
-#: merengue/base/models.py:65
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:65
 msgid "High"
 msgstr ""
 
-#: merengue/base/models.py:66
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:66
 msgid "Very high"
 msgstr ""
 
-#: merengue/base/models.py:67
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:67
 msgid "Super high"
 msgstr ""
 
-#: merengue/base/models.py:68
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:68
 msgid "Highest"
 msgstr ""
 
-#: merengue/base/models.py:72
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:72
 msgid "disabled"
 msgstr ""
 
-#: merengue/base/models.py:73
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:73
 msgid "allowed"
 msgstr ""
 
-#: merengue/base/models.py:81 merengue/base/models.py:113
-#: merengue/base/models.py:137 merengue/block/models.py:45
-#: merengue/collab/models.py:38 merengue/multimedia/models.py:48
-#: merengue/multimedia/models.py:50 merengue/pluggable/models.py:34
-#: merengue/portal/models.py:37 merengue/section/models.py:82
-#: merengue/theming/models.py:36
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:81
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:113
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:137
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:46
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:38
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:48
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:50
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/models.py:35
+#: /home/portaluma/portaluma/umawebsite/merengue/portal/models.py:37
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:82
+#: /home/portaluma/portaluma/umawebsite/merengue/theming/models.py:36
 msgid "name"
 msgstr ""
 
-#: merengue/base/models.py:83
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:83
 msgid "contact email"
 msgstr ""
 
-#: merengue/base/models.py:85
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:85
 msgid "contact email2"
 msgstr ""
 
-#: merengue/base/models.py:87 merengue/multimedia/models.py:289
-#: merengue/portal/models.py:40 merengue/portal/models.py:43
-#: merengue/review/models.py:34 merengue/section/models.py:109
-#: merengue/section/models.py:255
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:87
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:289
+#: /home/portaluma/portaluma/umawebsite/merengue/portal/models.py:40
+#: /home/portaluma/portaluma/umawebsite/merengue/portal/models.py:43
+#: /home/portaluma/portaluma/umawebsite/merengue/review/models.py:34
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:109
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:262
 msgid "url"
 msgstr ""
 
-#: merengue/base/models.py:89
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:89
 msgid "phone"
 msgstr ""
 
-#: merengue/base/models.py:91
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:91
 msgid "phone2"
 msgstr ""
 
-#: merengue/base/models.py:93
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:93
 msgid "fax"
 msgstr ""
 
-#: merengue/base/models.py:98
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:98
 msgid "contacts info"
 msgstr ""
 
-#: merengue/base/models.py:101
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:101
 msgid "Without contact email"
 msgstr ""
 
-#: merengue/base/models.py:114 merengue/base/models.py:138
-#: merengue/perms/models.py:130 merengue/portal/models.py:48
-#: merengue/section/models.py:87
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:114
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:138
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/models.py:130
+#: /home/portaluma/portaluma/umawebsite/merengue/portal/models.py:48
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:87
 msgid "slug"
 msgstr ""
 
-#: merengue/base/models.py:117
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:117
 msgid "base category"
 msgstr ""
 
-#: merengue/base/models.py:118
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:118
 msgid "base categories"
 msgstr ""
 
-#: merengue/base/models.py:139
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:139
 msgid "plain text description"
 msgstr ""
 
-#: merengue/base/models.py:141 merengue/pluggable/models.py:35
-#: merengue/review/models.py:33 merengue/theming/models.py:37
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:141
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/models.py:36
+#: /home/portaluma/portaluma/umawebsite/merengue/review/models.py:33
+#: /home/portaluma/portaluma/umawebsite/merengue/theming/models.py:37
 msgid "description"
 msgstr ""
 
-#: merengue/base/models.py:144 merengue/multimedia/models.py:65
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:144
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:65
 msgid "Publication status"
 msgstr ""
 
-#: merengue/base/models.py:145 merengue/multimedia/models.py:66
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:145
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:66
 msgid "Enter the current status"
 msgstr ""
 
-#: merengue/base/models.py:147
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:147
 msgid "workflow status"
 msgstr ""
 
-#: merengue/base/models.py:149
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:149
 msgid "main image"
 msgstr ""
 
-#: merengue/base/models.py:161
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:161
 msgid "Without name"
 msgstr ""
 
-#: merengue/base/models.py:188
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:188
 msgid "Numeric fields can not be larger than"
 msgstr ""
 
-#: merengue/base/models.py:255
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:254
 msgid "map icon"
 msgstr ""
 
-#: merengue/base/models.py:296
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:295
 msgid "Without location"
 msgstr ""
 
-#: merengue/base/models.py:319 merengue/multimedia/admin.py:170
-#: merengue/multimedia/models.py:231 merengue/multimedia/models.py:272
-#: merengue/multimedia/models.py:309 merengue/theming/admin.py:35
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:318
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/admin.py:176
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:231
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:272
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:309
+#: /home/portaluma/portaluma/umawebsite/merengue/theming/admin.py:35
 msgid "Thumbnail"
 msgstr ""
 
-#: merengue/base/models.py:380
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:379
 msgid "related items"
 msgstr ""
 
-#: merengue/base/models.py:382
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:381
 msgid "creation date"
 msgstr ""
 
-#: merengue/base/models.py:385 merengue/base/models.py:389
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:384
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:388
 msgid "modification date"
 msgstr ""
 
-#: merengue/base/models.py:391
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:390
 msgid "cached plain text"
 msgstr ""
 
-#: merengue/base/models.py:399
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:395
+msgid "last editor"
+msgstr ""
+
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:399
 msgid "Adquire global permissions"
 msgstr ""
 
-#: merengue/base/models.py:402
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:402
 msgid "Tags"
 msgstr ""
 
-#: merengue/base/models.py:403
-msgid ""
-"Tags will be splitted by spaces or commas if present. To "
-"force                                 tag names, use double quotes."
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:403
+msgid "Tags will be splitted by commas."
 msgstr ""
 
-#: merengue/base/models.py:407
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:406
 msgid "meta description"
 msgstr ""
 
-#: merengue/base/models.py:410
-#: merengue/collab/templates/collab/collaborative_comments_view.html.py:18
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:409
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/templates/collab/collaborative_comments_view.html.py:18
 msgid "comments"
 msgstr ""
 
-#: merengue/base/models.py:412
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:411
 msgid "Is that content commentable"
 msgstr ""
 
-#: merengue/base/models.py:416 merengue/base/models.py:717
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:415
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:727
 msgid "multimedia"
 msgstr ""
 
-#: merengue/base/models.py:424 merengue/multimedia/models.py:61
-#: merengue/registry/models.py:32
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:423
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:61
+#: /home/portaluma/portaluma/umawebsite/merengue/registry/models.py:33
 msgid "class name"
 msgstr ""
 
-#: merengue/base/models.py:429
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:428
 msgid "rank value"
 msgstr ""
 
-#: merengue/base/models.py:440
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:439
 msgid "participants"
 msgstr ""
 
-#: merengue/base/models.py:444
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:443
 msgid "position"
 msgstr ""
 
-#: merengue/base/models.py:483
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:482
 msgid "base content"
 msgstr ""
 
-#: merengue/base/models.py:484
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:483
 msgid "base contents"
 msgstr ""
 
-#: merengue/base/models.py:494 merengue/internallinks/forms.py:30
-#: merengue/perms/models.py:49 merengue/places/forms.py:29
-#: merengue/workflow/models.py:56 merengue/workflow/models.py:137
-#: merengue/workflow/models.py:247
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:493
+#: /home/portaluma/portaluma/umawebsite/merengue/internallinks/forms.py:30
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/models.py:49
+#: /home/portaluma/portaluma/umawebsite/merengue/places/forms.py:29
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:56
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:137
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:247
 msgid "Name"
 msgstr ""
 
-#: merengue/base/models.py:548 merengue/section/forms.py:57
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:547
+#: /home/portaluma/portaluma/umawebsite/merengue/section/forms.py:57
 msgid "Please set other slug. This slug has been assigned"
 msgstr ""
 
-#: merengue/base/models.py:715
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:725
 msgid "content"
 msgstr ""
 
-#: merengue/base/models.py:719
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:729
 msgid "is featured"
 msgstr ""
 
-#: merengue/base/models.py:722 merengue/registry/models.py:37
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:732
+#: /home/portaluma/portaluma/umawebsite/merengue/registry/models.py:38
 msgid "Order"
 msgstr ""
 
-#: merengue/base/models.py:726
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:736
 msgid "multimedia relation"
 msgstr ""
 
-#: merengue/base/models.py:727
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:737
 msgid "multimedia relations"
 msgstr ""
 
-#: merengue/base/models.py:753
+#: /home/portaluma/portaluma/umawebsite/merengue/base/models.py:763
 msgid "Human Order"
 msgstr ""
 
-#: merengue/base/views.py:38
+#: /home/portaluma/portaluma/umawebsite/merengue/base/views.py:38
 #, python-format
 msgid "%(result_count)d %(msg_results)s found"
 msgstr ""
 
-#: merengue/base/views.py:39
-#: merengue/section/templates/section/search_results_view.html.py:16
+#: /home/portaluma/portaluma/umawebsite/merengue/base/views.py:39
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/section/search_results_view.html.py:16
 msgid "results"
 msgstr ""
 
-#: merengue/base/widgets.py:244
-msgid "Date:"
-msgstr ""
-
-#: merengue/base/widgets.py:244
-msgid "Time:"
-msgstr ""
-
-#: merengue/base/widgets.py:266
-#: merengue/templates/admin/edit_inline/tabular.html.py:116
+#: /home/portaluma/portaluma/umawebsite/merengue/base/widgets.py:238
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/edit_inline/tabular.html.py:116
 msgid "Remove"
 msgstr ""
 
-#: merengue/base/widgets.py:293
+#: /home/portaluma/portaluma/umawebsite/merengue/base/widgets.py:261
 msgid "Select content"
 msgstr ""
 
-#: merengue/base/widgets.py:321
+#: /home/portaluma/portaluma/umawebsite/merengue/base/widgets.py:289
 msgid "latitude"
 msgstr ""
 
-#: merengue/base/widgets.py:322
+#: /home/portaluma/portaluma/umawebsite/merengue/base/widgets.py:290
 msgid "longitude"
 msgstr ""
 
-#: merengue/base/widgets.py:323
+#: /home/portaluma/portaluma/umawebsite/merengue/base/widgets.py:291
 msgid "View on map"
 msgstr ""
 
-#: merengue/base/templates/403.html.py:5 merengue/base/templates/403.html.py:7
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/403.html.py:5
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/403.html.py:7
 msgid "Permission denied"
 msgstr ""
 
-#: merengue/base/templates/403.html.py:10
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/403.html.py:10
 msgid "403 Error - Forbidden. Sorry but it seems that you are not allowed."
 msgstr ""
 
-#: merengue/base/templates/403.html.py:16
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/403.html.py:16
 msgid "You tried to access a document for which you don't have privileges."
 msgstr ""
 
-#: merengue/base/templates/403.html.py:17
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/403.html.py:17
 msgid "We recommend you to return to <a href=\"/\">home</a>"
 msgstr ""
 
-#: merengue/base/templates/404.html.py:5 merengue/base/templates/404.html.py:7
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/404.html.py:5
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/404.html.py:7
 msgid "Page not found"
 msgstr ""
 
-#: merengue/base/templates/404.html.py:10
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/404.html.py:10
 msgid "404 Error - Sorry we can not find the page you are looking for."
 msgstr ""
 
-#: merengue/base/templates/404.html.py:16
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/404.html.py:16
 msgid ""
 "You may have mistyped the URL or the page may have been removed from our "
 "system."
 msgstr ""
 
-#: merengue/base/templates/404.html.py:17
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/404.html.py:17
 msgid "We recommend you to return to the <a href=\"/\">home</a>"
 msgstr ""
 
-#: merengue/base/templates/500.html.py:20
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/500.html.py:20
 msgid "Server Error"
 msgstr ""
 
-#: merengue/base/templates/error_base.html.py:14
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/error_base.html.py:14
 msgid "Ups!"
 msgstr ""
 
-#: merengue/base/templates/inc.breadcrumbs.html.py:2
-#: merengue/base/templatetags/related_admin_tags.py:85
-#: merengue/templates/admin/base.html.py:99
-#: merengue/templates/admin/delete_confirmation_various.html.py:6
-#: merengue/templates/admin/delete_selected_confirmation.html.py:6
-#: merengue/templates/admin/django_index.html.py:13
-#: merengue/templates/admin/index.html.py:14
-#: merengue/templates/admin/index.html.py:16
-#: merengue/templates/admin/model_index.html.py:9
-#: merengue/templates/admin/siteconfig.html.py:18
-#: merengue/templates/registration/password_reset_confirm.html.py:4
-#: merengue/themes/yaco/templates/inc.headerlogo.html.py:2
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/inc.breadcrumbs.html.py:2
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templatetags/related_admin_tags.py:85
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/base.html.py:99
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/delete_confirmation_various.html.py:6
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/delete_selected_confirmation.html.py:6
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/django_index.html.py:13
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/index.html.py:14
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/index.html.py:16
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/model_index.html.py:9
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/siteconfig.html.py:18
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/registration/password_reset_confirm.html.py:4
+#: /home/portaluma/portaluma/umawebsite/merengue/themes/yaco/templates/inc.headerlogo.html.py:2
 msgid "Home"
 msgstr ""
 
-#: merengue/base/templates/inc.contentcategories.html.py:5
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/inc.contentcategories.html.py:5
 msgid "categories"
 msgstr ""
 
-#: merengue/base/templates/inc.jsfiles.html.py:63
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/inc.jsfiles.html.py:77
 msgid "Export"
 msgstr ""
 
-#: merengue/base/templates/base/content_admin_action.html.py:4
-#: merengue/base/templates/base/content_admin_action.html.py:5
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/base/content_admin_action.html.py:4
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/base/content_admin_action.html.py:5
 msgid "Admin this content"
 msgstr ""
 
-#: merengue/base/templates/base/content_list.html.py:8
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/base/content_list.html.py:8
 msgid "Content listing"
 msgstr ""
 
-#: merengue/base/templates/base/content_related_items.html.py:4
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/base/content_related_items.html.py:4
 msgid "Related contents"
 msgstr ""
 
-#: merengue/base/templates/base/form_admin_django.html.py:3
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/base/form_admin_django.html.py:3
 msgid "Please correct the errors below."
 msgstr ""
 
-#: merengue/base/templates/base/google_map.html.py:3
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/base/google_map.html.py:3
 msgid "Map"
 msgstr ""
 
-#: merengue/base/templates/base/google_map.html.py:8
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/base/google_map.html.py:8
 msgid "How to get there?"
 msgstr ""
 
-#: merengue/base/templates/base/google_map.html.py:10
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/base/google_map.html.py:10
 msgid "Origin address"
 msgstr ""
 
-#: merengue/base/templates/base/google_map.html.py:12
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/base/google_map.html.py:12
 msgid "See route"
 msgstr ""
 
-#: merengue/base/templates/base/google_map.html.py:20
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/base/google_map.html.py:20
 msgid "Calculate travel route"
 msgstr ""
 
-#: merengue/base/templates/base/inc.footer.html.py:7
-#: merengue/base/templates/base/inc.footer.html.py:21
-#: merengue/themes/merengue/templates/inc.footer.html.py:15
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/base/inc.footer.html.py:7
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/base/inc.footer.html.py:21
+#: /home/portaluma/portaluma/umawebsite/merengue/themes/merengue/templates/inc.footer.html.py:15
 msgid "Merengue powered"
 msgstr ""
 
-#: merengue/base/templates/base/inc.footer.html.py:23
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/base/inc.footer.html.py:23
 msgid "General conditions"
 msgstr ""
 
-#: merengue/base/templates/base/inc.languagetools.html.py:6
-#: merengue/base/templates/base/inc.languagetools.html.py:7
-#: merengue/templates/admin/base.html.py:68
-#: merengue/themes/merengue/templates/inc.languagetools.html.py:6
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/base/inc.languagetools.html.py:6
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templates/base/inc.languagetools.html.py:7
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/base.html.py:68
+#: /home/portaluma/portaluma/umawebsite/merengue/themes/merengue/templates/inc.languagetools.html.py:6
 msgid "Change language"
 msgstr ""
 
-#: merengue/base/templatetags/admin_tags.py:95
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templatetags/admin_tags.py:95
 msgid "Add new"
 msgstr ""
 
-#: merengue/base/templatetags/content_filters.py:34
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templatetags/content_filters.py:34
 msgid "yes,no,maybe"
 msgstr ""
 
-#: merengue/base/templatetags/map_tags.py:284
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templatetags/map_tags.py:284
 msgid "What is there nearby?"
 msgstr ""
 
-#: merengue/base/templatetags/related_admin_tags.py:89
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templatetags/related_admin_tags.py:89
 #, python-format
 msgid "%(plugin_name)s plugin"
 msgstr ""
 
-#: merengue/base/templatetags/related_admin_tags.py:103
-#: merengue/base/templatetags/related_admin_tags.py:120
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templatetags/related_admin_tags.py:92
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templatetags/related_admin_tags.py:95
+msgid "opts"
+msgstr ""
+
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templatetags/related_admin_tags.py:103
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templatetags/related_admin_tags.py:120
 msgid "Add"
 msgstr ""
 
-#: merengue/block/admin.py:48
-#: merengue/block/templates/admin/block/change_form.html.py:8
+#: /home/portaluma/portaluma/umawebsite/merengue/base/templatetags/related_admin_tags.py:112
+msgid "admin"
+msgstr ""
+
+#: /home/portaluma/portaluma/umawebsite/merengue/block/admin.py:48
+#: /home/portaluma/portaluma/umawebsite/merengue/block/templates/admin/block/change_form.html.py:8
 msgid "Cache parameters"
 msgstr ""
 
-#: merengue/block/admin.py:83
+#: /home/portaluma/portaluma/umawebsite/merengue/block/admin.py:83
 msgid "block content related"
 msgstr ""
 
-#: merengue/block/admin.py:88
+#: /home/portaluma/portaluma/umawebsite/merengue/block/admin.py:88
 msgid "Visibility when duplicated blocks"
 msgstr ""
 
-#: merengue/block/blocks.py:47
+#: /home/portaluma/portaluma/umawebsite/merengue/block/blocks.py:48
 msgid "css class to add to this block"
 msgstr ""
 
-#: merengue/block/filterspecs.py:13
+#: /home/portaluma/portaluma/umawebsite/merengue/block/filterspecs.py:13
 msgid "content block"
 msgstr ""
 
-#: merengue/block/filterspecs.py:16
-#: merengue/templates/admin/basecontent/role_permissions.html.py:60
-#: merengue/workflow/filterspecs.py:20
+#: /home/portaluma/portaluma/umawebsite/merengue/block/filterspecs.py:16
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/basecontent/role_permissions.html.py:60
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/filterspecs.py:20
 msgid "Yes"
 msgstr ""
 
-#: merengue/block/filterspecs.py:16
-#: merengue/templates/admin/basecontent/role_permissions.html.py:60
-#: merengue/workflow/filterspecs.py:26
+#: /home/portaluma/portaluma/umawebsite/merengue/block/filterspecs.py:16
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/basecontent/role_permissions.html.py:60
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/filterspecs.py:26
 msgid "No"
 msgstr ""
 
-#: merengue/block/forms.py:38
+#: /home/portaluma/portaluma/umawebsite/merengue/block/forms.py:41
 msgid "Block to add"
 msgstr ""
 
-#: merengue/block/forms.py:98
+#: /home/portaluma/portaluma/umawebsite/merengue/block/forms.py:102
 msgid ""
 "Placing the block here will take no effect, as another related block is set "
 "to overwrite it"
 msgstr ""
 
-#: merengue/block/forms.py:99
+#: /home/portaluma/portaluma/umawebsite/merengue/block/forms.py:103
 msgid ""
 "Unmark this field to keep the block in the specified "
 "place                                       (even though it won't be "
 "displayed)"
 msgstr ""
 
-#: merengue/block/forms.py:101
+#: /home/portaluma/portaluma/umawebsite/merengue/block/forms.py:105
 msgid ""
 "A block is already set to overwrite others of this "
 "kind.                                Unmark this to save the block, even "
 "though it won't be displayed"
 msgstr ""
 
-#: merengue/block/forms.py:120
+#: /home/portaluma/portaluma/umawebsite/merengue/block/forms.py:124
 msgid "Select block type"
 msgstr ""
 
-#: merengue/block/forms.py:137
+#: /home/portaluma/portaluma/umawebsite/merengue/block/forms.py:128
+msgid "Scope"
+msgstr ""
+
+#: /home/portaluma/portaluma/umawebsite/merengue/block/forms.py:141
 msgid "Global"
 msgstr ""
 
-#: merengue/block/forms.py:144
+#: /home/portaluma/portaluma/umawebsite/merengue/block/forms.py:148
 #, python-format
 msgid "Section: %(section)s"
 msgstr ""
 
-#: merengue/block/forms.py:153
+#: /home/portaluma/portaluma/umawebsite/merengue/block/forms.py:157
 #, python-format
 msgid "Content: %(content)s"
 msgstr ""
 
-#: merengue/block/forms.py:176
-#: merengue/templates/admin/merengue_index_base.html.py:61
+#: /home/portaluma/portaluma/umawebsite/merengue/block/forms.py:181
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:61
 msgid "Blocks"
 msgstr ""
 
-#: merengue/block/forms.py:180
+#: /home/portaluma/portaluma/umawebsite/merengue/block/forms.py:185
 msgid "Content blocks"
 msgstr ""
 
-#: merengue/block/forms.py:184
+#: /home/portaluma/portaluma/umawebsite/merengue/block/forms.py:189
 msgid "Section blocks"
 msgstr ""
 
-#: merengue/block/forms.py:192
+#: /home/portaluma/portaluma/umawebsite/merengue/block/forms.py:197
 msgid "You can not select section scope cause your are not inside a section"
 msgstr ""
 
-#: merengue/block/forms.py:197
+#: /home/portaluma/portaluma/umawebsite/merengue/block/forms.py:202
 msgid "You can not select content scope cause your are not inside a content"
 msgstr ""
 
-#: merengue/block/forms.py:203
+#: /home/portaluma/portaluma/umawebsite/merengue/block/forms.py:208
 msgid "You can not insert a content block from a view without content"
 msgstr ""
 
-#: merengue/block/forms.py:216
+#: /home/portaluma/portaluma/umawebsite/merengue/block/forms.py:221
 msgid "You can not insert a section block from a view without section"
 msgstr ""
 
-#: merengue/block/models.py:30
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:31
 msgid "All places"
 msgstr ""
 
-#: merengue/block/models.py:31
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:32
 msgid "Left sidebar"
 msgstr ""
 
-#: merengue/block/models.py:32
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:33
 msgid "Right sidebar"
 msgstr ""
 
-#: merengue/block/models.py:33
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:34
 msgid "After content title"
 msgstr ""
 
-#: merengue/block/models.py:34
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:35
 msgid "Before content body"
 msgstr ""
 
-#: merengue/block/models.py:35
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:36
 msgid "Home page"
 msgstr ""
 
-#: merengue/block/models.py:36
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:37
 msgid "After content body"
 msgstr ""
 
-#: merengue/block/models.py:37
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:38
 msgid "Header"
 msgstr ""
 
-#: merengue/block/models.py:38
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:39
 msgid "Footer"
 msgstr ""
 
-#: merengue/block/models.py:39
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:40
 msgid "Meta-information, links, js..."
 msgstr ""
 
-#: merengue/block/models.py:46
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:47
 msgid "placed at"
 msgstr ""
 
-#: merengue/block/models.py:48
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:49
 msgid "shown in urls"
 msgstr ""
 
-#: merengue/block/models.py:50
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:51
 msgid ""
 "block will <em>only</em> be visible in urls matching these\n"
 "            regular expressions (one per line, using <a            "
@@ -1114,11 +1176,11 @@ msgid ""
 "            This field has preference over 'hidden in urls'."
 msgstr ""
 
-#: merengue/block/models.py:57
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:58
 msgid "hidden in urls"
 msgstr ""
 
-#: merengue/block/models.py:59
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:60
 msgid ""
 "block will be hidden in urls matching these regular\n"
 "            expressions (one per line, using <a\n"
@@ -1128,1719 +1190,1765 @@ msgid ""
 "syntax</a>)."
 msgstr ""
 
-#: merengue/block/models.py:64
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:65
 msgid "disable the activation and desactivation of the block"
 msgstr ""
 
-#: merengue/block/models.py:67
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:68
 msgid "block can't be moved from its default place"
 msgstr ""
 
-#: merengue/block/models.py:71
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:72
 msgid "activate cache"
 msgstr ""
 
-#: merengue/block/models.py:72
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:73
 msgid "Activate cache for this block. The HTML rendered will be cached"
 msgstr ""
 
-#: merengue/block/models.py:75
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:76
 msgid "timeout"
 msgstr ""
 
-#: merengue/block/models.py:76
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:77
 msgid "Time that block remained in cache in seconds. \"0\" means forever"
 msgstr ""
 
-#: merengue/block/models.py:79
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:80
 msgid "Cached is applied only for anonymous"
 msgstr ""
 
-#: merengue/block/models.py:82
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:83
 msgid "Cached vary on authenticated user"
 msgstr ""
 
-#: merengue/block/models.py:85
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:86
 msgid "Cache vary on the request URL"
 msgstr ""
 
-#: merengue/block/models.py:88
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:89
 msgid "Cache vary on language"
 msgstr ""
 
-#: merengue/block/models.py:91
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:92
 msgid "related content"
 msgstr ""
 
-#: merengue/block/models.py:93
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:94
 msgid "overwrite block if the place is the same"
 msgstr ""
 
-#: merengue/block/models.py:96
+#: /home/portaluma/portaluma/umawebsite/merengue/block/models.py:97
 msgid "overwrite generic block if is present on the actual page"
 msgstr ""
 
-#: merengue/block/views.py:79 merengue/registry/fields.py:30
-#: merengue/registry/models.py:40
+#: /home/portaluma/portaluma/umawebsite/merengue/block/views.py:79
+#: /home/portaluma/portaluma/umawebsite/merengue/registry/fields.py:30
+#: /home/portaluma/portaluma/umawebsite/merengue/registry/models.py:41
 msgid "Configuration"
 msgstr ""
 
-#: merengue/block/views.py:79
+#: /home/portaluma/portaluma/umawebsite/merengue/block/views.py:79
 msgid "Block specific configuration"
 msgstr ""
 
-#: merengue/block/templates/admin/block/change_form.html.py:10
+#: /home/portaluma/portaluma/umawebsite/merengue/block/templates/admin/block/change_form.html.py:10
 msgid "This block is defined as non cacheable. You cannot cache this block"
 msgstr ""
 
-#: merengue/block/templates/blocks/add_block.html.py:6
-#: merengue/block/templates/blocks/block_container.html.py:11
+#: /home/portaluma/portaluma/umawebsite/merengue/block/templates/blocks/add_block.html.py:6
+#: /home/portaluma/portaluma/umawebsite/merengue/block/templates/blocks/block_container.html.py:11
 msgid "Add new block"
 msgstr ""
 
-#: merengue/block/templates/blocks/block_config.html.py:9
+#: /home/portaluma/portaluma/umawebsite/merengue/block/templates/blocks/block_config.html.py:9
 msgid "Save configuration"
 msgstr ""
 
-#: merengue/block/templates/blocks/block_config.html.py:12
+#: /home/portaluma/portaluma/umawebsite/merengue/block/templates/blocks/block_config.html.py:12
 msgid "Go to admin"
 msgstr ""
 
-#: merengue/block/templates/blocks/header.html.py:62
+#: /home/portaluma/portaluma/umawebsite/merengue/block/templates/blocks/header.html.py:44
 msgid "Enable/disable blocks dragging"
 msgstr ""
 
-#: merengue/block/templates/blocks/header.html.py:74
+#: /home/portaluma/portaluma/umawebsite/merengue/block/templates/blocks/header.html.py:56
 msgid "Configure block"
 msgstr ""
 
-#: merengue/block/templates/blocks/header.html.py:82
+#: /home/portaluma/portaluma/umawebsite/merengue/block/templates/blocks/header.html.py:64
 msgid "Invalidate cache"
 msgstr ""
 
-#: merengue/block/templates/blocks/header.html.py:89
+#: /home/portaluma/portaluma/umawebsite/merengue/block/templates/blocks/header.html.py:71
 msgid "Remove block"
 msgstr ""
 
-#: merengue/block/templates/blocks/header.html.py:113
+#: /home/portaluma/portaluma/umawebsite/merengue/block/templates/blocks/header.html.py:95
 msgid "Are you sure you want to invalidate the cache of this block"
 msgstr ""
 
-#: merengue/block/templates/blocks/header.html.py:139
+#: /home/portaluma/portaluma/umawebsite/merengue/block/templates/blocks/header.html.py:121
 msgid "Are you sure you want to remove this block"
 msgstr ""
 
-#: merengue/collab/forms.py:78
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/forms.py:78
 msgid "translation language"
 msgstr ""
 
-#: merengue/collab/forms.py:79
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/forms.py:79
 msgid "translation"
 msgstr ""
 
-#: merengue/collab/models.py:28
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:28
 msgid "Just set status"
 msgstr ""
 
-#: merengue/collab/models.py:29
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:29
 msgid "Display an alternative comment in public view"
 msgstr ""
 
-#: merengue/collab/models.py:30
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:30
 msgid "Hide comment from public view"
 msgstr ""
 
-#: merengue/collab/models.py:43
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:43
 msgid "label"
 msgstr ""
 
-#: merengue/collab/models.py:62
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:62
 msgid "decorator"
 msgstr ""
 
-#: merengue/collab/models.py:69
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:69
 msgid "result"
 msgstr ""
 
-#: merengue/collab/models.py:73
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:73
 msgid "Select the resulting action this status trigger"
 msgstr ""
 
-#: merengue/collab/models.py:77
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:77
 msgid "reason"
 msgstr ""
 
-#: merengue/collab/models.py:90
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:90
 msgid "content type"
 msgstr ""
 
-#: merengue/collab/models.py:94
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:94
 msgid "object ID"
 msgstr ""
 
-#: merengue/collab/models.py:112
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:112
 msgid "user's name"
 msgstr ""
 
-#: merengue/collab/models.py:117
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:117
 msgid "user's email address"
 msgstr ""
 
-#: merengue/collab/models.py:121
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:121
 msgid "user's URL"
 msgstr ""
 
-#: merengue/collab/models.py:127
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:127
 msgid "comment user type"
 msgstr ""
 
-#: merengue/collab/models.py:131
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:131
 msgid "comment"
 msgstr ""
 
-#: merengue/collab/models.py:135
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:135
 msgid "date/time submitted"
 msgstr ""
 
-#: merengue/collab/models.py:140
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:140
 msgid "IP address"
 msgstr ""
 
-#: merengue/collab/models.py:148
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:148
 msgid "collaborative comment"
 msgstr ""
 
-#: merengue/collab/models.py:149
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:149
 msgid "collaborative comments"
 msgstr ""
 
-#: merengue/collab/models.py:174
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:174
 msgid "revised comment"
 msgstr ""
 
-#: merengue/collab/models.py:188
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:188
 msgid "revised comment status"
 msgstr ""
 
-#: merengue/collab/models.py:192
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:192
 msgid "date/time revised"
 msgstr ""
 
-#: merengue/collab/models.py:198
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/models.py:198
 msgid "short comment"
 msgstr ""
 
-#: merengue/collab/views.py:60
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/views.py:60
 msgid "Your comment has been added"
 msgstr ""
 
-#: merengue/collab/views.py:93
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/views.py:93
 msgid "Your revisor status has been added"
 msgstr ""
 
-#: merengue/collab/views.py:191
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/views.py:191
 msgid "Your translation has been saved"
 msgstr ""
 
-#: merengue/collab/templates/collab/collaborative_comments_add.html.py:9
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/templates/collab/collaborative_comments_add.html.py:9
 msgid "Add comment"
 msgstr ""
 
-#: merengue/collab/templates/collab/collaborative_comments_list.html.py:6
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/templates/collab/collaborative_comments_list.html.py:6
 msgid "There are no comments yet"
 msgstr ""
 
-#: merengue/collab/templates/collab/collaborative_comments_list_item.html.py:25
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/templates/collab/collaborative_comments_list_item.html.py:25
 msgid "By"
 msgstr ""
 
-#: merengue/collab/templates/collab/collaborative_comments_list_item.html.py:28
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/templates/collab/collaborative_comments_list_item.html.py:28
 msgid "Revision History"
 msgstr ""
 
-#: merengue/collab/templates/collab/collaborative_comments_list_item.html.py:46
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/templates/collab/collaborative_comments_list_item.html.py:46
 msgid "Revisor"
 msgstr ""
 
-#: merengue/collab/templates/collab/collaborative_comments_list_item.html.py:55
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/templates/collab/collaborative_comments_list_item.html.py:55
 msgid "Revise this comment"
 msgstr ""
 
-#: merengue/collab/templates/collab/collaborative_comments_revise.html.py:9
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/templates/collab/collaborative_comments_revise.html.py:9
 msgid "Add revision"
 msgstr ""
 
-#: merengue/collab/templates/collab/collaborative_comments_view.html.py:14
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/templates/collab/collaborative_comments_view.html.py:14
 msgid "Comments"
 msgstr ""
 
-#: merengue/collab/templates/collab/collaborative_comments_view.html.py:19
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/templates/collab/collaborative_comments_view.html.py:19
 msgid "add comment"
 msgstr ""
 
-#: merengue/collab/templates/collab/collaborative_translation.html.py:7
-#: merengue/collab/templates/collab/collaborative_translation_edit.html.py:15
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/templates/collab/collaborative_translation.html.py:7
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/templates/collab/collaborative_translation_edit.html.py:15
 msgid "Translate"
 msgstr ""
 
-#: merengue/collab/templates/collab/collaborative_translation_view.html.py:11
+#: /home/portaluma/portaluma/umawebsite/merengue/collab/templates/collab/collaborative_translation_view.html.py:11
 msgid "Translation for"
 msgstr ""
 
-#: merengue/collection/admin.py:46
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/admin.py:46
 msgid "Truncate words"
 msgstr ""
 
-#: merengue/collection/admin.py:47
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/admin.py:47
 msgid "Truncate words HTML"
 msgstr ""
 
-#: merengue/collection/admin.py:48
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/admin.py:48
 msgid "Truncate chars"
 msgstr ""
 
-#: merengue/collection/admin.py:49
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/admin.py:49
 msgid "Strip tags"
 msgstr ""
 
-#: merengue/collection/admin.py:92
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/admin.py:92
 msgid "Collection Basic Information"
 msgstr ""
 
-#: merengue/collection/admin.py:103
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/admin.py:103
 msgid "Collection Configuration"
 msgstr ""
 
-#: merengue/collection/admin.py:172
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/admin.py:175
 msgid "collections"
 msgstr ""
 
-#: merengue/collection/admin.py:189
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/admin.py:192
 msgid "fields to display in the list"
 msgstr ""
 
-#: merengue/collection/admin.py:230
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/admin.py:233
 msgid "fields in the detail view of the object"
 msgstr ""
 
-#: merengue/collection/admin.py:253
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/admin.py:256
 msgid "feed items"
 msgstr ""
 
-#: merengue/collection/admin.py:262
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/admin.py:265
 msgid "Single Item Configuration"
 msgstr ""
 
-#: merengue/collection/admin.py:318
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/admin.py:321
 msgid "feed collections"
 msgstr ""
 
-#: merengue/collection/models.py:43
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:43
 msgid "Exact (case-sensitive)"
 msgstr ""
 
-#: merengue/collection/models.py:44
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:44
 msgid "Exact (case-insensitive)"
 msgstr ""
 
-#: merengue/collection/models.py:45
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:45
 msgid "Contains (case-sensitive)"
 msgstr ""
 
-#: merengue/collection/models.py:46
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:46
 msgid "Contains (case-insensitive)"
 msgstr ""
 
-#: merengue/collection/models.py:47
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:47
 msgid "Starts with (case-sensitive)"
 msgstr ""
 
-#: merengue/collection/models.py:48
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:48
 msgid "Starts with (case-insensitive)"
 msgstr ""
 
-#: merengue/collection/models.py:49
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:49
 msgid "Ends with (case-sensitive)"
 msgstr ""
 
-#: merengue/collection/models.py:50
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:50
 msgid "Ends with (case-insensitive)"
 msgstr ""
 
-#: merengue/collection/models.py:51
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:51
 msgid "Less than"
 msgstr ""
 
-#: merengue/collection/models.py:52
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:52
 msgid "Less than or equal"
 msgstr ""
 
-#: merengue/collection/models.py:53
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:53
 msgid "Less than (for dates objects)"
 msgstr ""
 
-#: merengue/collection/models.py:54
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:54
 msgid "Greater than"
 msgstr ""
 
-#: merengue/collection/models.py:55
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:55
 msgid "Greater than or equal"
 msgstr ""
 
-#: merengue/collection/models.py:56
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:56
 msgid "Grater than (for dates objects)"
 msgstr ""
 
-#: merengue/collection/models.py:57
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:57
 msgid "In (coma separated list)"
 msgstr ""
 
-#: merengue/collection/models.py:58
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:58
 msgid "Is empty"
 msgstr ""
 
-#: merengue/collection/models.py:79 merengue/perms/models.py:52
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:79
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/models.py:52
 msgid "Content Types"
 msgstr ""
 
-#: merengue/collection/models.py:86
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:86
 msgid "Group by field name"
 msgstr ""
 
-#: merengue/collection/models.py:93
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:93
 msgid "Order by field name"
 msgstr ""
 
-#: merengue/collection/models.py:100
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:100
 msgid "Reverse order"
 msgstr ""
 
-#: merengue/collection/models.py:104
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:104
 msgid "Number of elements "
 msgstr ""
 
-#: merengue/collection/models.py:111
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:111
 msgid "Show main_image of collection items"
 msgstr ""
 
-#: merengue/collection/models.py:116
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:116
 msgid "Filtering section"
 msgstr ""
 
-#: merengue/collection/models.py:117 merengue/registry/items.py:139
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:117
+#: /home/portaluma/portaluma/umawebsite/merengue/registry/items.py:139
 msgid ""
 "If the collection is into a section, filter for the contents of this section"
 msgstr ""
 
-#: merengue/collection/models.py:121 merengue/collection/models.py:643
-#: merengue/collection/models.py:655 merengue/collection/models.py:695
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:121
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:674
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:686
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:726
 msgid "Collection"
 msgstr ""
 
-#: merengue/collection/models.py:122
-#: merengue/templates/admin/merengue_index_base.html.py:35
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:122
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:35
 msgid "Collections"
 msgstr ""
 
-#: merengue/collection/models.py:212 merengue/collection/models.py:490
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:219
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:521
 msgid "Content type name"
 msgstr ""
 
-#: merengue/collection/models.py:244
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:251
 msgid "Item id"
 msgstr ""
 
-#: merengue/collection/models.py:249
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:256
 msgid "Feed summary cached"
 msgstr ""
 
-#: merengue/collection/models.py:254
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:261
 msgid "Feed detail cached"
 msgstr ""
 
-#: merengue/collection/models.py:259 merengue/collection/models.py:363
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:266
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:391
 msgid "Last updated"
 msgstr ""
 
-#: merengue/collection/models.py:265
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:272
 msgid "Excluded"
 msgstr ""
 
-#: merengue/collection/models.py:271
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:278
 msgid "Order field"
 msgstr ""
 
-#: merengue/collection/models.py:278
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:285
 msgid "Group field"
 msgstr ""
 
-#: merengue/collection/models.py:287
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:294
 msgid "Feed item"
 msgstr ""
 
-#: merengue/collection/models.py:288
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:295
 msgid "Feed items"
 msgstr ""
 
-#: merengue/collection/models.py:358
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:386
 msgid "URL of the feed"
 msgstr ""
 
-#: merengue/collection/models.py:370
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:398
 msgid "Seconds to expire cache"
 msgstr ""
 
-#: merengue/collection/models.py:371
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:399
 msgid "Seconds from last update to do a new query. 0 to never query again."
 msgstr ""
 
-#: merengue/collection/models.py:376
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:404
 msgid "Remove items"
 msgstr ""
 
-#: merengue/collection/models.py:377
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:405
 msgid "Remove old items when overwritting cache"
 msgstr ""
 
-#: merengue/collection/models.py:382
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:410
 msgid "Title field"
 msgstr ""
 
-#: merengue/collection/models.py:384
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:412
 msgid "Field used for naming contents"
 msgstr ""
 
-#: merengue/collection/models.py:391
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:419
 msgid "Detailed link"
 msgstr ""
 
-#: merengue/collection/models.py:393
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:421
 msgid "Field that provides a link to a feed with the full content"
 msgstr ""
 
-#: merengue/collection/models.py:399
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:427
 msgid "External link"
 msgstr ""
 
-#: merengue/collection/models.py:401
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:429
 msgid "Field that provides an external link to the full content"
 msgstr ""
 
-#: merengue/collection/models.py:408
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:436
 msgid "Feed collection"
 msgstr ""
 
-#: merengue/collection/models.py:409
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:437
 msgid "Feed collections"
 msgstr ""
 
-#: merengue/collection/models.py:507
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:538
 msgid "Filter field name"
 msgstr ""
 
-#: merengue/collection/models.py:511
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:542
 msgid "Filter operator"
 msgstr ""
 
-#: merengue/collection/models.py:516
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:547
 msgid "Filter value"
 msgstr ""
 
-#: merengue/collection/models.py:647
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:678
 msgid "Include collection filter"
 msgstr ""
 
-#: merengue/collection/models.py:648
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:679
 msgid "Include collection filters"
 msgstr ""
 
-#: merengue/collection/models.py:659
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:690
 msgid "Exclude collection filter"
 msgstr ""
 
-#: merengue/collection/models.py:660
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:691
 msgid "Exclude collection filters"
 msgstr ""
 
-#: merengue/collection/models.py:687
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:718
 msgid "Field name"
 msgstr ""
 
-#: merengue/collection/models.py:691
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:722
 msgid "Display order"
 msgstr ""
 
-#: merengue/collection/models.py:700
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:731
 msgid "Safe html content"
 msgstr ""
 
-#: merengue/collection/models.py:704
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:735
 msgid "Show field label"
 msgstr ""
 
-#: merengue/collection/models.py:712
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:743
 msgid "Collection display field"
 msgstr ""
 
-#: merengue/collection/models.py:713
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:744
 msgid "Collection display fields"
 msgstr ""
 
-#: merengue/collection/models.py:724
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:755
 msgid "Filter module"
 msgstr ""
 
-#: merengue/collection/models.py:729
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:760
 msgid "Filter params"
 msgstr ""
 
-#: merengue/collection/models.py:736
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:767
 msgid "Filter order"
 msgstr ""
 
-#: merengue/collection/models.py:740
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:771
 msgid "Collection display field filter"
 msgstr ""
 
-#: merengue/collection/models.py:741
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/models.py:772
 msgid "Collection display field filters"
 msgstr ""
 
-#: merengue/collection/templates/collection/collection_view.html.py:19
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/templates/collection/collection_view.html.py:19
 msgid "Without grouper"
 msgstr ""
 
-#: merengue/collection/templates/collection/collection_view.html.py:41
+#: /home/portaluma/portaluma/umawebsite/merengue/collection/templates/collection/collection_view.html.py:41
 msgid "There are no contents to show"
 msgstr ""
 
-#: merengue/internallinks/forms.py:30
+#: /home/portaluma/portaluma/umawebsite/merengue/internallinks/forms.py:30
 msgid "The name"
 msgstr ""
 
-#: merengue/internallinks/forms.py:30
+#: /home/portaluma/portaluma/umawebsite/merengue/internallinks/forms.py:30
 msgid "which name"
 msgstr ""
 
-#: merengue/internallinks/forms.py:31
+#: /home/portaluma/portaluma/umawebsite/merengue/internallinks/forms.py:31
 msgid "The description"
 msgstr ""
 
-#: merengue/internallinks/forms.py:31
-#: merengue/internallinks/templates/internallinks/internal_links_search.html.py:56
+#: /home/portaluma/portaluma/umawebsite/merengue/internallinks/forms.py:31
+#: /home/portaluma/portaluma/umawebsite/merengue/internallinks/templates/internallinks/internal_links_search.html.py:56
 msgid "Description"
 msgstr ""
 
-#: merengue/internallinks/forms.py:31
+#: /home/portaluma/portaluma/umawebsite/merengue/internallinks/forms.py:31
 msgid "which description"
 msgstr ""
 
-#: merengue/internallinks/views.py:65
+#: /home/portaluma/portaluma/umawebsite/merengue/internallinks/views.py:65
 #, python-format
 msgid "%s contents found"
 msgstr ""
 
-#: merengue/internallinks/views.py:66 merengue/portal/models.py:38
-#: merengue/section/admin.py:294 merengue/section/models.py:284
+#: /home/portaluma/portaluma/umawebsite/merengue/internallinks/views.py:66
+#: /home/portaluma/portaluma/umawebsite/merengue/portal/models.py:38
+#: /home/portaluma/portaluma/umawebsite/merengue/section/admin.py:297
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:291
 msgid "Content"
 msgstr ""
 
-#: merengue/internallinks/views.py:67
+#: /home/portaluma/portaluma/umawebsite/merengue/internallinks/views.py:67
 msgid "Contents searcher"
 msgstr ""
 
-#: merengue/internallinks/templates/internallinks/internal_links_search.html.py:4
+#: /home/portaluma/portaluma/umawebsite/merengue/internallinks/templates/internallinks/internal_links_search.html.py:4
 msgid "Internal links"
 msgstr ""
 
-#: merengue/multimedia/admin.py:48
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/admin.py:49
 msgid "associate contents"
 msgstr ""
 
-#: merengue/multimedia/admin.py:65 merengue/multimedia/admin.py:96
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/admin.py:71
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/admin.py:102
 #, python-format
 msgid "%(content)s content associated to %(multimedia)s"
 msgstr ""
 
-#: merengue/multimedia/admin.py:70
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/admin.py:76
 #, python-format
 msgid "Successfully associated %(number)d %(model_name)s."
 msgstr ""
 
-#: merengue/multimedia/admin.py:73
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/admin.py:79
 msgid "Are you sure you want to associate these contents?"
 msgstr ""
 
-#: merengue/multimedia/admin.py:76
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/admin.py:82
 msgid "Associate contents"
 msgstr ""
 
-#: merengue/multimedia/admin.py:82
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/admin.py:88
 msgid "disassociate contents"
 msgstr ""
 
-#: merengue/multimedia/admin.py:101
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/admin.py:107
 #, python-format
 msgid "Successfully disassociated %(number)d %(model_name)s."
 msgstr ""
 
-#: merengue/multimedia/admin.py:104
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/admin.py:110
 msgid "Are you sure you want disassociate this contents?"
 msgstr ""
 
-#: merengue/multimedia/admin.py:107
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/admin.py:113
 msgid "Disassociate contents"
 msgstr ""
 
-#: merengue/multimedia/admin.py:263
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/admin.py:269
 msgid "Please specify at least a video file "
 msgstr ""
 
-#: merengue/multimedia/admin.py:269
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/admin.py:275
 msgid "This file must be in swf format"
 msgstr ""
 
-#: merengue/multimedia/admin.py:305 merengue/multimedia/models.py:198
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/admin.py:311
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:198
 msgid "photos"
 msgstr ""
 
-#: merengue/multimedia/admin.py:311 merengue/multimedia/models.py:259
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/admin.py:317
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:259
 msgid "videos"
 msgstr ""
 
-#: merengue/multimedia/admin.py:316 merengue/multimedia/models.py:296
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/admin.py:322
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:296
 msgid "panoramic views"
 msgstr ""
 
-#: merengue/multimedia/admin.py:321
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/admin.py:327
 msgid "3d images"
 msgstr ""
 
-#: merengue/multimedia/admin.py:326
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/admin.py:332
 msgid "files"
 msgstr ""
 
-#: merengue/multimedia/admin.py:331 merengue/multimedia/models.py:359
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/admin.py:337
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:359
 msgid "audio files"
 msgstr ""
 
-#: merengue/multimedia/forms.py:57
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/forms.py:57
 msgid "The file is not a audio file or has a format not supported"
 msgstr ""
 
-#: merengue/multimedia/forms.py:69
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/forms.py:69
 msgid "The file is not a video file or has a format not supported"
 msgstr ""
 
-#: merengue/multimedia/forms.py:79
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/forms.py:79
 msgid "Please specify at least a video file or a video url"
 msgstr ""
 
-#: merengue/multimedia/forms.py:83
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/forms.py:83
 msgid "If you want to remove the file, you can specify a video url"
 msgstr ""
 
-#: merengue/multimedia/models.py:53
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:53
 msgid "date added"
 msgstr ""
 
-#: merengue/multimedia/models.py:55
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:55
 msgid "tags"
 msgstr ""
 
-#: merengue/multimedia/models.py:69
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:69
 msgid "authors"
 msgstr ""
 
-#: merengue/multimedia/models.py:75
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:75
 msgid "base multimedia"
 msgstr ""
 
-#: merengue/multimedia/models.py:76
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:76
 msgid "base multimedias"
 msgstr ""
 
-#: merengue/multimedia/models.py:186 merengue/multimedia/models.py:318
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:186
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:318
 msgid "image"
 msgstr ""
 
-#: merengue/multimedia/models.py:190
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:190
 msgid "caption"
 msgstr ""
 
-#: merengue/multimedia/models.py:192 merengue/multimedia/models.py:253
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:192
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:253
 msgid "plone uid"
 msgstr ""
 
-#: merengue/multimedia/models.py:197
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:197
 msgid "photo"
 msgstr ""
 
-#: merengue/multimedia/models.py:239
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:239
 msgid "video file"
 msgstr ""
 
-#: merengue/multimedia/models.py:242
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:242
 msgid "The file will convert to flv format. It could lose a little of quality"
 msgstr ""
 
-#: merengue/multimedia/models.py:244 merengue/multimedia/models.py:284
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:244
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:284
 msgid "preview image"
 msgstr ""
 
-#: merengue/multimedia/models.py:249
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:249
 msgid "external url"
 msgstr ""
 
-#: merengue/multimedia/models.py:250
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:250
 msgid "The url of one video from youtube or google-video"
 msgstr ""
 
-#: merengue/multimedia/models.py:258
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:258
 msgid "video"
 msgstr ""
 
-#: merengue/multimedia/models.py:295
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:295
 msgid "panoramic view"
 msgstr ""
 
-#: merengue/multimedia/models.py:322
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:322
 msgid "image 3d"
 msgstr ""
 
-#: merengue/multimedia/models.py:323
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:323
 msgid "images 3d"
 msgstr ""
 
-#: merengue/multimedia/models.py:335 merengue/multimedia/models.py:340
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:335
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:340
 msgid "attached file"
 msgstr ""
 
-#: merengue/multimedia/models.py:341
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:341
 msgid "attached files"
 msgstr ""
 
-#: merengue/multimedia/models.py:353 merengue/multimedia/models.py:358
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:353
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/models.py:358
 msgid "audio file"
 msgstr ""
 
-#: merengue/multimedia/templates/multimedia/media_files.html.py:5
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/templates/multimedia/media_files.html.py:5
 msgid "Attached files"
 msgstr ""
 
-#: merengue/multimedia/templates/multimedia/media_slide.html.py:35
-#: merengue/multimedia/templates/multimedia/media_slide.html.py:36
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/templates/multimedia/media_slide.html.py:35
+#: /home/portaluma/portaluma/umawebsite/merengue/multimedia/templates/multimedia/media_slide.html.py:36
 msgid "Street view"
 msgstr ""
 
-#: merengue/perms/admin.py:65
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/admin.py:65
 msgid "The princial role relation was created successfully"
 msgstr ""
 
-#: merengue/perms/admin.py:79
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/admin.py:79
 msgid "The role permissions were changed successfully."
 msgstr ""
 
-#: merengue/perms/admin.py:103
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/admin.py:103
 msgid "The role users were changed successfully."
 msgstr ""
 
-#: merengue/perms/admin.py:127
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/admin.py:127
 msgid "The role groups were changed successfully."
 msgstr ""
 
-#: merengue/perms/admin.py:219
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/admin.py:219
 msgid "The role permissions was changed successfully."
 msgstr ""
 
-#: merengue/perms/admin.py:225
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/admin.py:225
 msgid "You may edit it again below."
 msgstr ""
 
-#: merengue/perms/admin.py:367
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/admin.py:367
 msgid "Personal info"
 msgstr ""
 
-#: merengue/perms/admin.py:368
-#: merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:42
-#: merengue/templates/admin/merengue_index_base.html.py:89
-#: merengue/templates/admin/basecontent/role_permissions.html.py:46
-#: merengue/workflow/admin.py:205
-#: merengue/workflow/templates/admin/workflow/state_permissions.html.py:26
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/admin.py:368
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:42
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:89
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/basecontent/role_permissions.html.py:46
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/admin.py:193
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/templates/admin/workflow/state_permissions.html.py:26
 msgid "Permissions"
 msgstr ""
 
-#: merengue/perms/admin.py:369
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/admin.py:369
 msgid "Important dates"
 msgstr ""
 
-#: merengue/perms/admin.py:370
-#: merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:118
-#: merengue/templates/admin/merengue_index_base.html.py:83
-#: merengue/templates/admin/basecontent/role_permissions.html.py:129
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/admin.py:370
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:118
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:83
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/basecontent/role_permissions.html.py:129
 msgid "Groups"
 msgstr ""
 
-#: merengue/perms/admin.py:371 merengue/perms/admin.py:408
-#: merengue/perms/forms.py:40
-#: merengue/templates/admin/merengue_index_base.html.py:87
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/admin.py:371
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/admin.py:408
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/forms.py:40
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:87
 msgid "Roles"
 msgstr ""
 
-#: merengue/perms/models.py:50
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/models.py:50
 msgid "Codename"
 msgstr ""
 
-#: merengue/perms/models.py:51
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/models.py:51
 msgid "Builtin permission"
 msgstr ""
 
-#: merengue/perms/models.py:75 merengue/perms/models.py:179
-#: merengue/workflow/models.py:364
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/models.py:75
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/models.py:179
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:364
 msgid "Role"
 msgstr ""
 
-#: merengue/perms/models.py:76 merengue/perms/models.py:113
-#: merengue/workflow/models.py:255 merengue/workflow/models.py:339
-#: merengue/workflow/models.py:363
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/models.py:76
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/models.py:113
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:255
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:339
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:363
 msgid "Permission"
 msgstr ""
 
-#: merengue/perms/models.py:178
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/models.py:178
 msgid "Group"
 msgstr ""
 
-#: merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:21
-#: merengue/templates/admin/basecontent/role_permissions.html.py:21
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:21
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/basecontent/role_permissions.html.py:21
 msgid "Update the permissions for each role for the content: "
 msgstr ""
 
-#: merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:23
-#: merengue/templates/admin/basecontent/role_permissions.html.py:23
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:23
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/basecontent/role_permissions.html.py:23
 msgid "Update the permissions for each role: "
 msgstr ""
 
-#: merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:31
-#: merengue/templates/admin/basecontent/role_permissions.html.py:35
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:31
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/basecontent/role_permissions.html.py:35
 msgid "Should this content adquire global permissions?"
 msgstr ""
 
-#: merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:65
-#: merengue/templates/admin/basecontent/role_permissions.html.py:75
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:65
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/basecontent/role_permissions.html.py:75
 msgid "User and groups local roles"
 msgstr ""
 
-#: merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:66
-#: merengue/templates/admin/basecontent/role_permissions.html.py:76
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:66
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/basecontent/role_permissions.html.py:76
 msgid "Create local roles for user or group for the content: "
 msgstr ""
 
-#: merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:67
-#: merengue/templates/admin/basecontent/role_permissions.html.py:77
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:67
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/basecontent/role_permissions.html.py:77
 msgid "Autocomplete the user or autocomplete the group and select a role"
 msgstr ""
 
-#: merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:70
-#: merengue/templates/admin/basecontent/role_permissions.html.py:80
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:70
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/basecontent/role_permissions.html.py:80
 msgid "Create"
 msgstr ""
 
-#: merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:80
-#: merengue/templates/admin/merengue_index_base.html.py:85
-#: merengue/templates/admin/basecontent/role_permissions.html.py:90
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:80
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:85
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/basecontent/role_permissions.html.py:90
 msgid "Users"
 msgstr ""
 
-#: merengue/perms/templates/admin/perms/role/change_form.html.py:14
+#: /home/portaluma/portaluma/umawebsite/merengue/perms/templates/admin/perms/role/change_form.html.py:14
 msgid "New Role"
 msgstr ""
 
-#: merengue/places/models.py:27
+#: /home/portaluma/portaluma/umawebsite/merengue/places/models.py:27
 msgid "main location"
 msgstr ""
 
-#: merengue/places/models.py:48
+#: /home/portaluma/portaluma/umawebsite/merengue/places/models.py:48
 msgid "address"
 msgstr ""
 
-#: merengue/places/models.py:50
+#: /home/portaluma/portaluma/umawebsite/merengue/places/models.py:50
 msgid "postal_code"
 msgstr ""
 
-#: merengue/places/models.py:57
+#: /home/portaluma/portaluma/umawebsite/merengue/places/models.py:57
 msgid "locations"
 msgstr ""
 
-#: merengue/places/models.py:65
+#: /home/portaluma/portaluma/umawebsite/merengue/places/models.py:65
 msgid "Without localization"
 msgstr ""
 
-#: merengue/places/templates/places/content_info.html.py:8
+#: /home/portaluma/portaluma/umawebsite/merengue/places/templates/places/content_info.html.py:8
 msgid "More Info"
 msgstr ""
 
-#: merengue/pluggable/__init__.py:218 merengue/section/admin.py:466
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/__init__.py:227
+#: /home/portaluma/portaluma/umawebsite/merengue/section/admin.py:469
 msgid "portal menu"
 msgstr ""
 
-#: merengue/pluggable/admin.py:73
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/admin.py:73
 msgid "Plugins detections done"
 msgstr ""
 
-#: merengue/pluggable/admin.py:93
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/admin.py:93
 msgid "Not all dependencies are met"
 msgstr ""
 
-#: merengue/pluggable/admin.py:116
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/admin.py:116
 msgid "Detect new plugins"
 msgstr ""
 
-#: merengue/pluggable/admin.py:124
-#: merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:24
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/admin.py:124
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:24
 msgid "None"
 msgstr ""
 
-#: merengue/pluggable/admin.py:125 merengue/pluggable/admin.py:127
-#: merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:18
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/admin.py:125
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/admin.py:127
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:18
 msgid "Screenshot"
 msgstr ""
 
-#: merengue/pluggable/admin.py:132
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/admin.py:132
 #, python-format
 msgid ""
 "You have not registered all the plugins. Click <a href=\"%(url)s\">here</a> "
 "in order to register them"
 msgstr ""
 
-#: merengue/pluggable/models.py:36
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/models.py:37
 msgid "version"
 msgstr ""
 
-#: merengue/pluggable/models.py:40 merengue/theming/models.py:40
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/models.py:41
+#: /home/portaluma/portaluma/umawebsite/merengue/theming/models.py:40
 msgid "directory name"
 msgstr ""
 
-#: merengue/pluggable/models.py:53
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/models.py:54
 msgid "registered plugin"
 msgstr ""
 
-#: merengue/pluggable/models.py:54
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/models.py:55
 msgid "registered plugins"
 msgstr ""
 
-#: merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:9
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:9
 msgid ""
 "This plugin has been set as required in settings.py so you can not install/"
 "uninstall from this admin interface. You can install it by running a migrate "
 "command"
 msgstr ""
 
-#: merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:32
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:32
 msgid "New blocks"
 msgstr ""
 
-#: merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:37
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:37
 msgid "Registered blocks"
 msgstr ""
 
-#: merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:50
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:50
 msgid "Has own admin"
 msgstr ""
 
-#: merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:60
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:60
 msgid "New Actions"
 msgstr ""
 
-#: merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:65
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:65
 msgid "Registered actions"
 msgstr ""
 
-#: merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:79
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:79
 msgid "New Viewlets"
 msgstr ""
 
-#: merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:92
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:92
 msgid "New Middlewares"
 msgstr ""
 
-#: merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:105
+#: /home/portaluma/portaluma/umawebsite/merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:105
 msgid "New content types addable in a section"
 msgstr ""
 
-#: merengue/portal/forms.py:15
+#: /home/portaluma/portaluma/umawebsite/merengue/portal/forms.py:15
 msgid "Link cannot point to an url if already points to content"
 msgstr ""
 
-#: merengue/portal/models.py:42 merengue/section/models.py:257
+#: /home/portaluma/portaluma/umawebsite/merengue/portal/models.py:42
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:264
 msgid "The absolute urls have to write complety: Protocol, domain, query"
 msgstr ""
 
-#: merengue/portal/models.py:45 merengue/section/models.py:310
+#: /home/portaluma/portaluma/umawebsite/merengue/portal/models.py:45
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:317
 msgid "order"
 msgstr ""
 
-#: merengue/portal/models.py:46 merengue/registry/models.py:34
+#: /home/portaluma/portaluma/umawebsite/merengue/portal/models.py:46
+#: /home/portaluma/portaluma/umawebsite/merengue/registry/models.py:35
 msgid "category"
 msgstr ""
 
-#: merengue/portal/models.py:52
+#: /home/portaluma/portaluma/umawebsite/merengue/portal/models.py:52
 msgid "icon"
 msgstr ""
 
-#: merengue/portal/models.py:55
+#: /home/portaluma/portaluma/umawebsite/merengue/portal/models.py:55
 msgid ""
 "The system don't resize the icon. You need to upload with the final size"
 msgstr ""
 
-#: merengue/portal/models.py:59
+#: /home/portaluma/portaluma/umawebsite/merengue/portal/models.py:59
 msgid "visible links"
 msgstr ""
 
-#: merengue/portal/models.py:60
+#: /home/portaluma/portaluma/umawebsite/merengue/portal/models.py:60
 msgid "Restrict visibility to some roles"
 msgstr ""
 
-#: merengue/portal/models.py:68
+#: /home/portaluma/portaluma/umawebsite/merengue/portal/models.py:68
 msgid "portal link"
 msgstr ""
 
-#: merengue/portal/models.py:69
+#: /home/portaluma/portaluma/umawebsite/merengue/portal/models.py:69
 msgid "portal links"
 msgstr ""
 
-#: merengue/portal/views.py:40
+#: /home/portaluma/portaluma/umawebsite/merengue/portal/views.py:40
 #, python-format
 msgid "Welcome %s"
 msgstr ""
 
-#: merengue/portal/views.py:47
-#: merengue/templates/registration/logged_out.html.py:8
+#: /home/portaluma/portaluma/umawebsite/merengue/portal/views.py:47
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/registration/logged_out.html.py:8
 msgid "Thanks for your visit"
 msgstr ""
 
-#: merengue/portal/views.py:84
+#: /home/portaluma/portaluma/umawebsite/merengue/portal/views.py:84
 msgid "Cache from this page was invalidated"
 msgstr ""
 
-#: merengue/portal/templates/portal/list_pending.html.py:5
-#: merengue/portal/templates/portal/list_pending.html.py:8
+#: /home/portaluma/portaluma/umawebsite/merengue/portal/templates/portal/list_pending.html.py:5
+#: /home/portaluma/portaluma/umawebsite/merengue/portal/templates/portal/list_pending.html.py:8
 msgid "Pending contents"
 msgstr ""
 
-#: merengue/portal/templates/portal/searchform.html.py:4
+#: /home/portaluma/portaluma/umawebsite/merengue/portal/templates/portal/searchform.html.py:4
 msgid "Search options"
 msgstr ""
 
-#: merengue/portal/templates/portal/searchform.html.py:7
-#: merengue/templates/admin/merengue_index_base.html.py:33
+#: /home/portaluma/portaluma/umawebsite/merengue/portal/templates/portal/searchform.html.py:7
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:33
 msgid "Search"
 msgstr ""
 
-#: merengue/portal/templates/portal/searchform.html.py:11
+#: /home/portaluma/portaluma/umawebsite/merengue/portal/templates/portal/searchform.html.py:11
 msgid "Search filters"
 msgstr ""
 
-#: merengue/registry/fields.py:41
+#: /home/portaluma/portaluma/umawebsite/merengue/registry/fields.py:41
 #, python-format
 msgid "Error in \"%(name)s\" field"
 msgstr ""
 
-#: merengue/registry/items.py:104
+#: /home/portaluma/portaluma/umawebsite/merengue/registry/items.py:104
 msgid "All content types"
 msgstr ""
 
-#: merengue/registry/items.py:113
+#: /home/portaluma/portaluma/umawebsite/merengue/registry/items.py:113
 msgid "Content types that whant to filter"
 msgstr ""
 
-#: merengue/registry/models.py:33
+#: /home/portaluma/portaluma/umawebsite/merengue/registry/models.py:34
 msgid "module"
 msgstr ""
 
-#: merengue/registry/models.py:35
+#: /home/portaluma/portaluma/umawebsite/merengue/registry/models.py:36
 msgid "active"
 msgstr ""
 
-#: merengue/registry/models.py:36
+#: /home/portaluma/portaluma/umawebsite/merengue/registry/models.py:37
 msgid "broken"
 msgstr ""
 
-#: merengue/registry/models.py:38
+#: /home/portaluma/portaluma/umawebsite/merengue/registry/models.py:39
 msgid "Error traceback"
 msgstr ""
 
-#: merengue/registry/models.py:39
+#: /home/portaluma/portaluma/umawebsite/merengue/registry/models.py:40
 msgid "Error traceback on broken item"
 msgstr ""
 
-#: merengue/registry/models.py:45
+#: /home/portaluma/portaluma/umawebsite/merengue/registry/models.py:46
 msgid "registered item"
 msgstr ""
 
-#: merengue/registry/models.py:46
+#: /home/portaluma/portaluma/umawebsite/merengue/registry/models.py:47
 msgid "registered items"
 msgstr ""
 
-#: merengue/registry/templates/admin/registry/change_form.html.py:8
+#: /home/portaluma/portaluma/umawebsite/merengue/registry/templates/admin/registry/change_form.html.py:8
 msgid ""
 "This item is broken. You cannot edit this object until problem was fixed"
 msgstr ""
 
-#: merengue/registry/templates/admin/registry/change_form.html.py:9
+#: /home/portaluma/portaluma/umawebsite/merengue/registry/templates/admin/registry/change_form.html.py:9
 msgid "Traceback error"
 msgstr ""
 
-#: merengue/review/admin.py:35 merengue/review/models.py:31
+#: /home/portaluma/portaluma/umawebsite/merengue/review/admin.py:35
+#: /home/portaluma/portaluma/umawebsite/merengue/review/models.py:31
 msgid "assigned to"
 msgstr ""
 
-#: merengue/review/admin.py:44
+#: /home/portaluma/portaluma/umawebsite/merengue/review/admin.py:44
 msgid "Task information"
 msgstr ""
 
-#: merengue/review/admin.py:46
+#: /home/portaluma/portaluma/umawebsite/merengue/review/admin.py:46
 msgid "Task status"
 msgstr ""
 
-#: merengue/review/admin.py:83
+#: /home/portaluma/portaluma/umawebsite/merengue/review/admin.py:83
 msgid "Mark selected tasks as done"
 msgstr ""
 
-#: merengue/review/admin.py:87
+#: /home/portaluma/portaluma/umawebsite/merengue/review/admin.py:87
 msgid "Mark selected tasks as not done"
 msgstr ""
 
-#: merengue/review/models.py:30
+#: /home/portaluma/portaluma/umawebsite/merengue/review/models.py:30
 msgid "owner"
 msgstr ""
 
-#: merengue/review/models.py:32
+#: /home/portaluma/portaluma/umawebsite/merengue/review/models.py:32
 msgid "title"
 msgstr ""
 
-#: merengue/review/models.py:35
+#: /home/portaluma/portaluma/umawebsite/merengue/review/models.py:35
 msgid "is done"
 msgstr ""
 
-#: merengue/review/models.py:37
+#: /home/portaluma/portaluma/umawebsite/merengue/review/models.py:37
 msgid "object type"
 msgstr ""
 
-#: merengue/review/models.py:39
+#: /home/portaluma/portaluma/umawebsite/merengue/review/models.py:39
 msgid "object id"
 msgstr ""
 
-#: merengue/review/models.py:48
+#: /home/portaluma/portaluma/umawebsite/merengue/review/models.py:48
 msgid "done"
 msgstr ""
 
-#: merengue/review/models.py:50
+#: /home/portaluma/portaluma/umawebsite/merengue/review/models.py:50
 msgid "not done"
 msgstr ""
 
-#: merengue/review/utils.py:19
+#: /home/portaluma/portaluma/umawebsite/merengue/review/utils.py:19
 #, python-format
 msgid "%s has been set as pending"
 msgstr ""
 
-#: merengue/review/management/commands/notify_pending_reviews.py:20
+#: /home/portaluma/portaluma/umawebsite/merengue/review/management/commands/notify_pending_reviews.py:20
 msgid "You have pending tasks"
 msgstr ""
 
-#: merengue/review/templates/review/email_as_pending.html.py:3
+#: /home/portaluma/portaluma/umawebsite/merengue/review/templates/review/email_as_pending.html.py:3
 msgid "Hello,"
 msgstr ""
 
-#: merengue/review/templates/review/email_as_pending.html.py:6
+#: /home/portaluma/portaluma/umawebsite/merengue/review/templates/review/email_as_pending.html.py:6
 msgid "The content"
 msgstr ""
 
-#: merengue/review/templates/review/email_as_pending.html.py:7
+#: /home/portaluma/portaluma/umawebsite/merengue/review/templates/review/email_as_pending.html.py:7
 msgid "has been set as pending and it's waiting for revision."
 msgstr ""
 
-#: merengue/review/templates/review/email_as_pending.html.py:11
+#: /home/portaluma/portaluma/umawebsite/merengue/review/templates/review/email_as_pending.html.py:11
 msgid "Link to the admin page"
 msgstr ""
 
-#: merengue/review/templates/review/email_as_pending.html.py:12
+#: /home/portaluma/portaluma/umawebsite/merengue/review/templates/review/email_as_pending.html.py:12
 msgid "Link to the review task admin page"
 msgstr ""
 
-#: merengue/review/templates/review/email_reminder_list.html.py:3
+#: /home/portaluma/portaluma/umawebsite/merengue/review/templates/review/email_reminder_list.html.py:3
 msgid "Hello"
 msgstr ""
 
-#: merengue/review/templates/review/email_reminder_list.html.py:5
+#: /home/portaluma/portaluma/umawebsite/merengue/review/templates/review/email_reminder_list.html.py:5
 msgid "It seems that you have some tasks to review"
 msgstr ""
 
-#: merengue/review/templates/review/email_reminder_list.html.py:15
+#: /home/portaluma/portaluma/umawebsite/merengue/review/templates/review/email_reminder_list.html.py:15
 msgid "Go to admin page for more info"
 msgstr ""
 
-#: merengue/section/admin.py:191 merengue/section/models.py:348
+#: /home/portaluma/portaluma/umawebsite/merengue/section/admin.py:142
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:336
+msgid "main content"
+msgstr ""
+
+#: /home/portaluma/portaluma/umawebsite/merengue/section/admin.py:144
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:337
+msgid "content selected here will be shown when entering the section"
+msgstr ""
+
+#: /home/portaluma/portaluma/umawebsite/merengue/section/admin.py:197
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:355
 msgid "custom style"
 msgstr ""
 
-#: merengue/section/admin.py:202
+#: /home/portaluma/portaluma/umawebsite/merengue/section/admin.py:208
 msgid ""
 "Custom style for the section. You can use the variables $media_url and "
 "$theme_url"
 msgstr ""
 
-#: merengue/section/admin.py:219 merengue/section/models.py:451
+#: /home/portaluma/portaluma/umawebsite/merengue/section/admin.py:225
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:458
 msgid "documents"
 msgstr ""
 
-#: merengue/section/admin.py:253
+#: /home/portaluma/portaluma/umawebsite/merengue/section/admin.py:259
 msgid "Menu Absolute Link"
 msgstr ""
 
-#: merengue/section/admin.py:254
+#: /home/portaluma/portaluma/umawebsite/merengue/section/admin.py:260
 msgid "Menu Absolute Links"
 msgstr ""
 
-#: merengue/section/admin.py:284
+#: /home/portaluma/portaluma/umawebsite/merengue/section/admin.py:287
 msgid "Menu Content Link"
 msgstr ""
 
-#: merengue/section/admin.py:285
+#: /home/portaluma/portaluma/umawebsite/merengue/section/admin.py:288
 msgid "Menu Content Links"
 msgstr ""
 
-#: merengue/section/admin.py:296
+#: /home/portaluma/portaluma/umawebsite/merengue/section/admin.py:299
 msgid "Enter text to search the content"
 msgstr ""
 
-#: merengue/section/admin.py:304
+#: /home/portaluma/portaluma/umawebsite/merengue/section/admin.py:307
 msgid "Menu Viewlet Link"
 msgstr ""
 
-#: merengue/section/admin.py:305
+#: /home/portaluma/portaluma/umawebsite/merengue/section/admin.py:308
 msgid "Menu Viewlet Links"
 msgstr ""
 
-#: merengue/section/admin.py:355
+#: /home/portaluma/portaluma/umawebsite/merengue/section/admin.py:358
 msgid "Move this menu"
 msgstr ""
 
-#: merengue/section/admin.py:356
+#: /home/portaluma/portaluma/umawebsite/merengue/section/admin.py:359
 msgid "Cancel move"
 msgstr ""
 
-#: merengue/section/admin.py:358
+#: /home/portaluma/portaluma/umawebsite/merengue/section/admin.py:361
 msgid "Before"
 msgstr ""
 
-#: merengue/section/admin.py:359
+#: /home/portaluma/portaluma/umawebsite/merengue/section/admin.py:362
 msgid "After"
 msgstr ""
 
-#: merengue/section/admin.py:360
+#: /home/portaluma/portaluma/umawebsite/merengue/section/admin.py:363
 msgid "Child"
 msgstr ""
 
-#: merengue/section/admin.py:456 merengue/section/models.py:318
+#: /home/portaluma/portaluma/umawebsite/merengue/section/admin.py:459
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:325
 msgid "main menu"
 msgstr ""
 
-#: merengue/section/admin.py:494 merengue/section/models.py:487
+#: /home/portaluma/portaluma/umawebsite/merengue/section/admin.py:497
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:494
 msgid "document sections"
 msgstr ""
 
-#: merengue/section/fields.py:51
+#: /home/portaluma/portaluma/umawebsite/merengue/section/fields.py:51
 #, python-format
 msgid "Syntax Error %s"
 msgstr ""
 
-#: merengue/section/models.py:94
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:94
 msgid "help text"
 msgstr ""
 
-#: merengue/section/models.py:95
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:95
 msgid ""
 "text for describing the menu target, usually placed as link title attribute"
 msgstr ""
 
-#: merengue/section/models.py:102
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:102
 msgid "Parent"
 msgstr ""
 
-#: merengue/section/models.py:116
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:116
 msgid "status"
 msgstr ""
 
-#: merengue/section/models.py:117
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:117
 msgid "status of the menu element"
 msgstr ""
 
-#: merengue/section/models.py:118
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:118
 msgid "public"
 msgstr ""
 
-#: merengue/section/models.py:118
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:118
 msgid "draft"
 msgstr ""
 
-#: merengue/section/models.py:126
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:126
 msgid "visible menus"
 msgstr ""
 
-#: merengue/section/models.py:129
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:129
 msgid "The roles that will see this menu"
 msgstr ""
 
-#: merengue/section/models.py:133 merengue/section/models.py:232
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:133
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:239
 msgid "menu"
 msgstr ""
 
-#: merengue/section/models.py:134
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:134
 msgid "menus"
 msgstr ""
 
-#: merengue/section/models.py:261
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:268
 msgid "open in new window"
 msgstr ""
 
-#: merengue/section/models.py:267
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:274
 msgid "css class for this link"
 msgstr ""
 
-#: merengue/section/models.py:297
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:304
 msgid "Viewlet"
 msgstr ""
 
-#: merengue/section/models.py:329
-msgid "main content"
-msgstr ""
-
-#: merengue/section/models.py:330
-msgid "content selected here will be shown when entering the section"
-msgstr ""
-
-#: merengue/section/models.py:338
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:345
 msgid "related contents"
 msgstr ""
 
-#: merengue/section/models.py:356
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:363
 msgid "section"
 msgstr ""
 
-#: merengue/section/models.py:450
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:457
 msgid "document"
 msgstr ""
 
-#: merengue/section/models.py:471
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:478
 msgid "Parent document"
 msgstr ""
 
-#: merengue/section/models.py:480
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:487
 msgid "body"
 msgstr ""
 
-#: merengue/section/models.py:486
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:493
 msgid "document section"
 msgstr ""
 
-#: merengue/section/models.py:506
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:513
 msgid "Can not move to non existing position"
 msgstr ""
 
-#: merengue/section/models.py:530
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:537
 msgid "Trying to save DocumentSection into an existing position"
 msgstr ""
 
-#: merengue/section/models.py:552
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:559
 msgid "css chunk"
 msgstr ""
 
-#: merengue/section/models.py:558
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:565
 msgid "custom sytle"
 msgstr ""
 
-#: merengue/section/models.py:559
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:566
 msgid "custom styles"
 msgstr ""
 
-#: merengue/section/models.py:566
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:573
 msgid "Custom CSS image"
 msgstr ""
 
-#: merengue/section/models.py:573
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:580
 msgid "custom sytle image"
 msgstr ""
 
-#: merengue/section/models.py:574
+#: /home/portaluma/portaluma/umawebsite/merengue/section/models.py:581
 msgid "custom style images"
 msgstr ""
 
-#: merengue/section/widgets.py:40
+#: /home/portaluma/portaluma/umawebsite/merengue/section/widgets.py:40
 msgid "Show all errors"
 msgstr ""
 
-#: merengue/section/widgets.py:41
+#: /home/portaluma/portaluma/umawebsite/merengue/section/widgets.py:41
 msgid "Normalize css"
 msgstr ""
 
-#: merengue/section/templates/admin/section/menu/change_list.html.py:7
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/admin/section/menu/change_list.html.py:7
 msgid "Saving"
 msgstr ""
 
-#: merengue/section/templates/admin/section/menu/change_list.html.py:12
-#: merengue/section/templates/admin/section/menu/change_list.html.py:13
-#: merengue/section/templates/admin/section/menu/change_list.html.py:16
-#: merengue/section/templates/admin/section/menu/change_list.html.py:17
-#: merengue/templates/admin/basecontent/sortable_change_list.html.py:13
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/admin/section/menu/change_list.html.py:12
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/admin/section/menu/change_list.html.py:13
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/admin/section/menu/change_list.html.py:16
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/admin/section/menu/change_list.html.py:17
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/basecontent/sortable_change_list.html.py:13
 msgid "Click and drag to reorder"
 msgstr ""
 
-#: merengue/section/templates/admin/section/section/change_list.html.py:11
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/admin/section/section/change_list.html.py:11
 msgid "Please wait, retrieving contents"
 msgstr ""
 
-#: merengue/section/templates/section/document_section_add.html.py:4
-#: merengue/section/templates/section/document_section_add.html.py:8
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/section/document_section_add.html.py:4
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/section/document_section_add.html.py:8
 msgid "Insert document section here"
 msgstr ""
 
-#: merengue/section/templates/section/document_section_view.html.py:12
-#: merengue/section/templates/section/document_section_view.html.py:13
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/section/document_section_view.html.py:12
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/section/document_section_view.html.py:13
 msgid "Document section actions"
 msgstr ""
 
-#: merengue/section/templates/section/document_section_view.html.py:17
-#: merengue/section/templates/section/document_section_view.html.py:18
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/section/document_section_view.html.py:17
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/section/document_section_view.html.py:18
 msgid "Drag and drop to reorder sections"
 msgstr ""
 
-#: merengue/section/templates/section/document_section_view.html.py:23
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/section/document_section_view.html.py:23
 msgid "Edit document section"
 msgstr ""
 
-#: merengue/section/templates/section/document_section_view.html.py:24
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/section/document_section_view.html.py:24
 msgid "Insert document section"
 msgstr ""
 
-#: merengue/section/templates/section/document_section_view.html.py:25
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/section/document_section_view.html.py:25
 msgid "Delete document section"
 msgstr ""
 
-#: merengue/section/templates/section/document_section_view.html.py:39
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/section/document_section_view.html.py:39
 msgid "Double click to edit"
 msgstr ""
 
-#: merengue/section/templates/section/document_section_view.html.py:43
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/section/document_section_view.html.py:43
 msgid "This section has no content"
 msgstr ""
 
-#: merengue/section/templates/section/document_view.html.py:19
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/section/document_view.html.py:19
 msgid "Are you sure you want to delete this section?"
 msgstr ""
 
-#: merengue/section/templates/section/document_view.html.py:21
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/section/document_view.html.py:21
 msgid ""
 "You are about to cancel the edition. All your changes will be lost.\n"
 "\n"
 "Do you want to cancel and lost your changes?\n"
 msgstr ""
 
-#: merengue/section/templates/section/document_view.html.py:28
-#: merengue/templates/admin/customize_submit_line.html.py:4
-#: merengue/templates/admin/reorder.html.py:60
-#: merengue/workflow/templates/admin/workflow/state_permissions.html.py:47
-#: merengue/workflow/templates/admin/workflow/workflow_models.html.py:34
-#: merengue/workflow/templates/admin/workflow/workflow_permissions.html.py:34
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/section/document_view.html.py:28
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/customize_submit_line.html.py:4
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/reorder.html.py:60
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/templates/admin/workflow/state_permissions.html.py:47
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/templates/admin/workflow/workflow_models.html.py:34
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/templates/admin/workflow/workflow_permissions.html.py:34
 msgid "Save"
 msgstr ""
 
-#: merengue/section/templates/section/document_view.html.py:29
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/section/document_view.html.py:29
 msgid "Cancel"
 msgstr ""
 
-#: merengue/section/templates/section/document_view.html.py:33
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/section/document_view.html.py:33
 msgid "Insert first section"
 msgstr ""
 
-#: merengue/section/templates/section/menu_link_not_exists.html.py:19
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/section/menu_link_not_exists.html.py:20
+msgid "Empty Menu"
+msgstr ""
+
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/section/menu_link_not_exists.html.py:22
 msgid "This menu does not link to any target"
 msgstr ""
 
-#: merengue/section/templates/section/search_results_view.html.py:14
-#: merengue/section/templates/section/section_agenda.html.py:22
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/section/menu_link_not_exists.html.py:23
+msgid "Admin this menu"
+msgstr ""
+
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/section/search_results_view.html.py:14
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/section/section_agenda.html.py:22
 msgid "agenda"
 msgstr ""
 
-#: merengue/section/templates/section/section_agenda.html.py:9
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/section/section_agenda.html.py:9
 msgid "Agenda"
 msgstr ""
 
-#: merengue/section/templates/section/section_view_without_maincontent.html.py:21
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/section/section_view_without_maincontent.html.py:21
 msgid "You can edit in"
 msgstr ""
 
-#: merengue/section/templates/section/section_view_without_maincontent.html.py:21
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templates/section/section_view_without_maincontent.html.py:21
 msgid "here"
 msgstr ""
 
-#: merengue/section/templatetags/section_tags.py:133
+#: /home/portaluma/portaluma/umawebsite/merengue/section/templatetags/section_tags.py:133
 msgid "Searcher"
 msgstr ""
 
-#: merengue/skel/plugin/actions.py:10 merengue/skel/plugin/actions.py:11
+#: /home/portaluma/portaluma/umawebsite/merengue/skel/plugin/actions.py:10
+#: /home/portaluma/portaluma/umawebsite/merengue/skel/plugin/actions.py:11
 msgid "Foo action"
 msgstr ""
 
-#: merengue/skel/plugin/blocks.py:12
+#: /home/portaluma/portaluma/umawebsite/merengue/skel/plugin/blocks.py:12
 msgid "Foo block"
 msgstr ""
 
-#: merengue/skel/plugin/blocks.py:13
+#: /home/portaluma/portaluma/umawebsite/merengue/skel/plugin/blocks.py:13
 msgid "Block with last foo items published"
 msgstr ""
 
-#: merengue/skel/plugin/blocks.py:19
+#: /home/portaluma/portaluma/umawebsite/merengue/skel/plugin/blocks.py:19
 msgid "number of foo items for the \"Foo block\" block"
 msgstr ""
 
-#: merengue/skel/plugin/blocks.py:37
+#: /home/portaluma/portaluma/umawebsite/merengue/skel/plugin/blocks.py:37
 msgid "Latest foo items"
 msgstr ""
 
-#: merengue/skel/plugin/models.py:11
+#: /home/portaluma/portaluma/umawebsite/merengue/skel/plugin/models.py:11
 msgid "extra field"
 msgstr ""
 
-#: merengue/skel/plugin/models.py:19
+#: /home/portaluma/portaluma/umawebsite/merengue/skel/plugin/models.py:19
 msgid "foomodel"
 msgstr ""
 
-#: merengue/skel/plugin/models.py:20
+#: /home/portaluma/portaluma/umawebsite/merengue/skel/plugin/models.py:20
 msgid "foomodels"
 msgstr ""
 
-#: merengue/skel/plugin/templates/fooplugin/foo_block.html.py:16
+#: /home/portaluma/portaluma/umawebsite/merengue/skel/plugin/templates/fooplugin/foo_block.html.py:16
 msgid "No published content"
 msgstr ""
 
-#: merengue/skel/plugin/templates/fooplugin/foomodel_index.html.py:6
+#: /home/portaluma/portaluma/umawebsite/merengue/skel/plugin/templates/fooplugin/foomodel_index.html.py:6
 msgid "Foo listing"
 msgstr ""
 
-#: merengue/skel/plugin/templates/fooplugin/foomodel_view.html.py:9
+#: /home/portaluma/portaluma/umawebsite/merengue/skel/plugin/templates/fooplugin/foomodel_view.html.py:9
 msgid "Publication date"
 msgstr ""
 
-#: merengue/skel/plugin/templates/fooplugin/foomodel_view.html.py:16
+#: /home/portaluma/portaluma/umawebsite/merengue/skel/plugin/templates/fooplugin/foomodel_view.html.py:16
 msgid "Extra field"
 msgstr ""
 
-#: merengue/skel/plugin/templates/fooplugin/foomodel_view.html.py:19
+#: /home/portaluma/portaluma/umawebsite/merengue/skel/plugin/templates/fooplugin/foomodel_view.html.py:19
 msgid "About extra permission"
 msgstr ""
 
-#: merengue/skel/plugin/templates/fooplugin/foomodel_view.html.py:21
+#: /home/portaluma/portaluma/umawebsite/merengue/skel/plugin/templates/fooplugin/foomodel_view.html.py:21
 msgid "You have extra permission for this content"
 msgstr ""
 
-#: merengue/skel/plugin/templates/fooplugin/foomodel_view.html.py:23
+#: /home/portaluma/portaluma/umawebsite/merengue/skel/plugin/templates/fooplugin/foomodel_view.html.py:23
 msgid "Sorry, you don't have extra permission for this content"
 msgstr ""
 
-#: merengue/skel/project/settings.py:53
+#: /home/portaluma/portaluma/umawebsite/merengue/skel/project/settings.py:53
 msgid "English"
 msgstr ""
 
-#: merengue/skel/project/settings.py:54
+#: /home/portaluma/portaluma/umawebsite/merengue/skel/project/settings.py:54
 msgid "Español"
 msgstr ""
 
-#: merengue/skel/project/settings.py:55
+#: /home/portaluma/portaluma/umawebsite/merengue/skel/project/settings.py:55
 msgid "Italiano"
 msgstr ""
 
-#: merengue/templates/admin/base.html.py:53
-#: merengue/templates/admin/base_site.html.py:7
-#: merengue/themes/merengue/templates/admin/base_site.html.py:11
-#: merengue/themes/yaco/templates/admin/base_site.html.py:11
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/base.html.py:53
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/base_site.html.py:7
+#: /home/portaluma/portaluma/umawebsite/merengue/themes/merengue/templates/admin/base_site.html.py:11
+#: /home/portaluma/portaluma/umawebsite/merengue/themes/yaco/templates/admin/base_site.html.py:11
 msgid "Merengue logo"
 msgstr ""
 
-#: merengue/templates/admin/base.html.py:61
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/base.html.py:61
 msgid "Welcome,"
 msgstr ""
 
-#: merengue/templates/admin/base.html.py:76
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/base.html.py:76
 msgid "Documentation"
 msgstr ""
 
-#: merengue/templates/admin/base.html.py:84
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/base.html.py:84
 msgid "Change password"
 msgstr ""
 
-#: merengue/templates/admin/base.html.py:91
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/base.html.py:91
 msgid "Log out"
 msgstr ""
 
-#: merengue/templates/admin/base_site.html.py:4
-#: merengue/themes/merengue/templates/admin/base_site.html.py:4
-#: merengue/themes/yaco/templates/admin/base_site.html.py:4
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/base_site.html.py:4
+#: /home/portaluma/portaluma/umawebsite/merengue/themes/merengue/templates/admin/base_site.html.py:4
+#: /home/portaluma/portaluma/umawebsite/merengue/themes/yaco/templates/admin/base_site.html.py:4
 msgid "Merengue site admin"
 msgstr ""
 
-#: merengue/templates/admin/base_site.html.py:11
-#: merengue/themes/merengue/templates/admin/base_site.html.py:15
-#: merengue/themes/yaco/templates/admin/base_site.html.py:15
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/base_site.html.py:11
+#: /home/portaluma/portaluma/umawebsite/merengue/themes/merengue/templates/admin/base_site.html.py:15
+#: /home/portaluma/portaluma/umawebsite/merengue/themes/yaco/templates/admin/base_site.html.py:15
 msgid "Merengue administration"
 msgstr ""
 
-#: merengue/templates/admin/change_form.html.py:52
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/change_form.html.py:52
 msgid ""
 "This content is set as 'no_deletable' so you can not delete it from the "
 "system"
 msgstr ""
 
-#: merengue/templates/admin/change_form.html.py:55
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/change_form.html.py:55
 msgid ""
 "This content is set as 'no_changeable' so you can not alter any of its data"
 msgstr ""
 
-#: merengue/templates/admin/change_form.html.py:71
-#: merengue/templates/admin/change_list.html.py:53
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/change_form.html.py:71
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/change_list.html.py:53
 msgid "Please correct the error below."
 msgid_plural "Please correct the errors below."
 msgstr[0] ""
 msgstr[1] ""
 
-#: merengue/templates/admin/change_list.html.py:64
-#: merengue/templates/admin/logentry/change_list.html.py:7
-#: merengue/templates/admin/multimedia/photo/change_list.html.py:7
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/change_list.html.py:64
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/logentry/change_list.html.py:7
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/multimedia/photo/change_list.html.py:7
 msgid "Filter"
 msgstr ""
 
-#: merengue/templates/admin/confirm_action.html.py:28
-#: merengue/templates/admin/delete_confirmation.html.py:43
-#: merengue/templates/admin/delete_confirmation_various.html.py:31
-#: merengue/templates/admin/delete_selected_confirmation.html.py:51
-#: merengue/templates/admin/basecontent/assign_owners.html.py:40
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/confirm_action.html.py:28
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/delete_confirmation.html.py:43
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/delete_confirmation_various.html.py:31
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/delete_selected_confirmation.html.py:51
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/basecontent/assign_owners.html.py:40
 msgid "Yes, I'm sure"
 msgstr ""
 
-#: merengue/templates/admin/customize_submit_line.html.py:12
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/customize_submit_line.html.py:12
 msgid "Save as new"
 msgstr ""
 
-#: merengue/templates/admin/customize_submit_line.html.py:14
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/customize_submit_line.html.py:14
 msgid "Save and add another"
 msgstr ""
 
-#: merengue/templates/admin/customize_submit_line.html.py:16
-#: merengue/templates/admin/reorder.html.py:61
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/customize_submit_line.html.py:16
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/reorder.html.py:61
 msgid "Save and continue editing"
 msgstr ""
 
-#: merengue/templates/admin/delete_confirmation.html.py:14
-#: merengue/templates/admin/delete_confirmation_various.html.py:14
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/delete_confirmation.html.py:14
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/delete_confirmation_various.html.py:14
 #, python-format
 msgid ""
 "Deleting the %(object_name)s '%(escaped_object)s' would result in deleting "
@@ -2848,7 +2956,7 @@ msgid ""
 "following types of objects:"
 msgstr ""
 
-#: merengue/templates/admin/delete_confirmation.html.py:22
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/delete_confirmation.html.py:22
 #, python-format
 msgid ""
 "Deleting the %(object_name)s '%(escaped_object)s' would result in deleting "
@@ -2856,26 +2964,26 @@ msgid ""
 "following objects:"
 msgstr ""
 
-#: merengue/templates/admin/delete_confirmation.html.py:30
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/delete_confirmation.html.py:30
 #, python-format
 msgid ""
 "Deleting the %(object_name)s '%(escaped_object)s' would require deleting the "
 "following protected related objects:"
 msgstr ""
 
-#: merengue/templates/admin/delete_confirmation.html.py:38
-#: merengue/templates/admin/delete_confirmation_various.html.py:21
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/delete_confirmation.html.py:38
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/delete_confirmation_various.html.py:21
 #, python-format
 msgid ""
 "Are you sure you want to delete the %(object_name)s \"%(escaped_object)s\"? "
 "All of the following related items will be deleted:"
 msgstr ""
 
-#: merengue/templates/admin/delete_selected_confirmation.html.py:9
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/delete_selected_confirmation.html.py:9
 msgid "Delete multiple objects"
 msgstr ""
 
-#: merengue/templates/admin/delete_selected_confirmation.html.py:16
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/delete_selected_confirmation.html.py:16
 #, python-format
 msgid ""
 "Deleting the selected %(objects_name)s would result in deleting related "
@@ -2883,14 +2991,14 @@ msgid ""
 "types of objects:"
 msgstr ""
 
-#: merengue/templates/admin/delete_selected_confirmation.html.py:24
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/delete_selected_confirmation.html.py:24
 #, python-format
 msgid ""
 "Deleting the selected %(objects_name)s would require deleting the following "
 "protected related objects:"
 msgstr ""
 
-#: merengue/templates/admin/delete_selected_confirmation.html.py:32
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/delete_selected_confirmation.html.py:32
 #, python-format
 msgid ""
 "Deleting the selected %(objects_name)s would result in deleting related "
@@ -2898,617 +3006,624 @@ msgid ""
 "objects:"
 msgstr ""
 
-#: merengue/templates/admin/delete_selected_confirmation.html.py:40
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/delete_selected_confirmation.html.py:40
 #, python-format
 msgid ""
 "Are you sure you want to delete the selected %(objects_name)s? All of the "
 "following objects and their related items will be deleted:"
 msgstr ""
 
-#: merengue/templates/admin/django_index.html.py:25
-#: merengue/templates/admin/inc.content_index.html.py:8
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/django_index.html.py:25
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/inc.content_index.html.py:8
 #, python-format
 msgid "%(name)s"
 msgstr ""
 
-#: merengue/templates/admin/django_index.html.py:40
-#: merengue/templates/admin/inc.content_index.html.py:23
-#: merengue/templates/admin/model_index.html.py:26
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/django_index.html.py:40
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/inc.content_index.html.py:23
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/model_index.html.py:26
 msgid "You don't have permission to edit anything."
 msgstr ""
 
-#: merengue/templates/admin/inc.recentactions.html.py:6
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/inc.recentactions.html.py:6
 msgid "Recent Actions"
 msgstr ""
 
-#: merengue/templates/admin/inc.recentactions.html.py:7
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/inc.recentactions.html.py:7
 msgid "My Actions"
 msgstr ""
 
-#: merengue/templates/admin/inc.recentactions.html.py:10
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/inc.recentactions.html.py:10
 msgid "None available"
 msgstr ""
 
-#: merengue/templates/admin/inc.recentactions.html.py:24
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/inc.recentactions.html.py:24
 msgid "Unknown content"
 msgstr ""
 
-#: merengue/templates/admin/index.html.py:14
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/index.html.py:14
 msgid "plugin"
 msgstr ""
 
-#: merengue/templates/admin/login.html.py:21
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/login.html.py:21
 msgid "Username:"
 msgstr ""
 
-#: merengue/templates/admin/login.html.py:24
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/login.html.py:24
 msgid "Password:"
 msgstr ""
 
-#: merengue/templates/admin/login.html.py:29
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/login.html.py:29
 msgid "Log in"
 msgstr ""
 
-#: merengue/templates/admin/main_admin_tabs.html.py:4
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/main_admin_tabs.html.py:4
 msgid "Content management"
 msgstr ""
 
-#: merengue/templates/admin/main_admin_tabs.html.py:5
-#: merengue/templates/admin/siteconfig.html.py:25
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/main_admin_tabs.html.py:5
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/siteconfig.html.py:25
 msgid "Site configuration"
 msgstr ""
 
-#: merengue/templates/admin/main_admin_tabs.html.py:6
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/main_admin_tabs.html.py:6
 msgid "User management"
 msgstr ""
 
-#: merengue/templates/admin/main_admin_tabs.html.py:7
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/main_admin_tabs.html.py:7
 msgid "Plugin administration"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:26
-#: merengue/templates/admin/smart_relations_object_tool.html.py:7
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:26
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/smart_relations_object_tool.html.py:7
 msgid "Contents"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:29
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:29
 msgid "Browse by hierarchy"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:30
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:30
 msgid "Browse the site's contents by hierarchy."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:31
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:31
 msgid "Browse by type"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:32
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:32
 msgid "Browse the site's contents by content type."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:33
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:33
 msgid "Search catalog"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:34
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:34
 msgid "Search the site's contents."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:36
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:36
 msgid "View, edit and delete the site's collections."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:39
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:39
 msgid "Navigation"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:43
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:43
 msgid "Portal Menu"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:44
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:44
 msgid "View, edit and delete the site's menus."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:47
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:47
 msgid "Portal links"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:48
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:48
 msgid "View, edit and delete the site's primary and secondary links."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:53
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:53
 msgid "Translate portal"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:53
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:53
 msgid "Translate site"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:54
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:54
 msgid "Translate the site messages."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:62
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:62
 msgid "View, edit and delete the site's blocks."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:63
-#: merengue/templates/admin/merengue_index_base.html.py:98
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:63
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:98
 msgid "Plugins"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:64
-#: merengue/templates/admin/merengue_index_base.html.py:99
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:64
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:99
 msgid "View, edit and delete the site's plugins."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:65
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:65
 msgid "Themes"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:66
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:66
 msgid "View, edit and delete the site's themes."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:67
-#: merengue/workflow/models.py:67 merengue/workflow/models.py:139
-#: merengue/workflow/models.py:249 merengue/workflow/models.py:285
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:67
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:67
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:139
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:249
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:285
 msgid "Workflow"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:68
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:68
 msgid "Manage the possible site's workflows."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:69
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:69
 msgid "Actions"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:70
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:70
 msgid "View, edit and delete the site's actions."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:71
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:71
 msgid "Registry"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:72
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:72
 msgid "Merengue registry"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:73
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:73
 msgid "Sites"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:74
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:74
 msgid "View, edit and delete the site's domains."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:75
-#: merengue/templates/admin/siteconfig.html.py:13
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:75
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/siteconfig.html.py:13
 msgid "Save/restore configuration"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:76
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:76
 msgid ""
 "Save/restore the site configuration (block, plugins, active theme, etc.)"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:84
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:84
 msgid "View, edit and delete the site's groups."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:86
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:86
 msgid "View, edit and delete the site's users."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:88
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:88
 msgid "View, edit and delete the site's roles."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:90
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:90
 msgid "View, edit and delete the site's role permissions."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:101
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:101
 msgid "Plugin custom administration interfaces"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:102
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:102
 msgid ""
 "Enabled plugins can define its own administration interfaces. These are the "
 "custom admins in your installed plugins:"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:124
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:124
 msgid "Review list"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:125
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/merengue_index_base.html.py:125
 msgid "Announcements"
 msgstr ""
 
-#: merengue/templates/admin/mini_google_map.html.py:15
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/mini_google_map.html.py:15
 msgid "Autolocalizated"
 msgstr ""
 
-#: merengue/templates/admin/mini_google_map.html.py:17
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/mini_google_map.html.py:17
 msgid "Localizated"
 msgstr ""
 
-#: merengue/templates/admin/mini_google_map.html.py:19
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/mini_google_map.html.py:19
 msgid "View map"
 msgstr ""
 
-#: merengue/templates/admin/object_history.html.py:28
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/object_history.html.py:28
 msgid "Date/time"
 msgstr ""
 
-#: merengue/templates/admin/object_history.html.py:36
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/object_history.html.py:36
 msgid "DATETIME_FORMAT"
 msgstr ""
 
-#: merengue/templates/admin/object_history.html.py:44
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/object_history.html.py:44
 msgid ""
 "This object doesn't have a change history. It probably wasn't added via this "
 "admin site."
 msgstr ""
 
-#: merengue/templates/admin/object_tools.html.py:61
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/object_tools.html.py:61
 #, python-format
 msgid "View %(model_name)s on site"
 msgstr ""
 
-#: merengue/templates/admin/siteconfig.html.py:19
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/siteconfig.html.py:19
 msgid "Save / Restore config"
 msgstr ""
 
-#: merengue/templates/admin/siteconfig.html.py:27
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/siteconfig.html.py:27
 msgid "Save/Restore configuration"
 msgstr ""
 
-#: merengue/templates/admin/siteconfig.html.py:30
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/siteconfig.html.py:30
 msgid "Upload saved configuration"
 msgstr ""
 
-#: merengue/templates/admin/siteconfig.html.py:31
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/siteconfig.html.py:31
 msgid "Upload and restore a .zip file containing a saved project configuration"
 msgstr ""
 
-#: merengue/templates/admin/siteconfig.html.py:34
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/siteconfig.html.py:34
 msgid "Submit config"
 msgstr ""
 
-#: merengue/templates/admin/siteconfig.html.py:43
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/siteconfig.html.py:43
 msgid "Save current configuration"
 msgstr ""
 
-#: merengue/templates/admin/siteconfig.html.py:44
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/siteconfig.html.py:44
 msgid ""
 "Save current project configuration into a .zip file that can be restored"
 msgstr ""
 
-#: merengue/templates/admin/siteconfig.html.py:46
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/siteconfig.html.py:46
 msgid "Save current config"
 msgstr ""
 
-#: merengue/templates/admin/siteconfig.html.py:50
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/siteconfig.html.py:50
 msgid "Backups configuration"
 msgstr ""
 
-#: merengue/templates/admin/siteconfig.html.py:54
-#: merengue/templates/admin/siteconfig.html.py:57
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/siteconfig.html.py:54
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/siteconfig.html.py:57
 msgid "Save current backup"
 msgstr ""
 
-#: merengue/templates/admin/siteconfig.html.py:55
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/siteconfig.html.py:55
 msgid "Save current backup configuration into a .zip file that can be restored"
 msgstr ""
 
-#: merengue/templates/admin/smart_relations_object_tool.html.py:6
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/smart_relations_object_tool.html.py:6
 msgid "Edit"
 msgstr ""
 
-#: merengue/templates/admin/smart_relations_object_tool.html.py:11
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/smart_relations_object_tool.html.py:11
 msgid "More"
 msgstr ""
 
-#: merengue/templates/admin/basecontent/role_permissions.html.py:97
-#: merengue/templates/admin/basecontent/role_permissions.html.py:136
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/basecontent/role_permissions.html.py:97
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/basecontent/role_permissions.html.py:136
 msgid "Remove all roles?"
 msgstr ""
 
-#: merengue/templates/admin/edit_inline/tabular.html.py:15
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/edit_inline/tabular.html.py:15
 msgid "Delete?"
 msgstr ""
 
-#: merengue/templates/admin/edit_inline/tabular.html.py:28
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/edit_inline/tabular.html.py:28
 msgid "View on site"
 msgstr ""
 
-#: merengue/templates/admin/edit_inline/tabular.html.py:113
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/edit_inline/tabular.html.py:113
 #, python-format
 msgid "Add another %(verbose_name)s"
 msgstr ""
 
-#: merengue/templates/admin/gis/openlayers.html.py:34
-#: merengue/templates/admin/gis/openlayers_inline.html.py:34
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/gis/openlayers.html.py:34
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/gis/openlayers_inline.html.py:34
 msgid "Delete all Features"
 msgstr ""
 
-#: merengue/templates/admin/logentry/change_list.html.py:9
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/logentry/change_list.html.py:9
 msgid "By status"
 msgstr ""
 
-#: merengue/templates/admin/logentry/changelog.html.py:7
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/logentry/changelog.html.py:7
 msgid "Changes log"
 msgstr ""
 
-#: merengue/templates/admin/multimedia/photo/change_list.html.py:9
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/admin/multimedia/photo/change_list.html.py:9
 msgid "By content class name"
 msgstr ""
 
-#: merengue/templates/genericforeignkey/object_list.html.py:18
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/genericforeignkey/object_list.html.py:18
 msgid "XX"
 msgstr ""
 
-#: merengue/templates/genericforeignkey/object_list.html.py:29
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/genericforeignkey/object_list.html.py:29
 msgid "No objects of this content type"
 msgstr ""
 
-#: merengue/templates/notification/notices.html.py:6
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/notification/notices.html.py:6
 msgid "Notices"
 msgstr ""
 
-#: merengue/templates/notification/notices.html.py:9
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/notification/notices.html.py:9
 msgid "Type"
 msgstr ""
 
-#: merengue/templates/notification/notices.html.py:10
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/notification/notices.html.py:10
 msgid "Message"
 msgstr ""
 
-#: merengue/templates/notification/notices.html.py:11
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/notification/notices.html.py:11
 msgid "Date of the Notice"
 msgstr ""
 
-#: merengue/templates/notification/notices.html.py:23
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/notification/notices.html.py:23
 msgid "ago"
 msgstr ""
 
-#: merengue/templates/registration/logged_out.html.py:12
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/registration/logged_out.html.py:12
 msgid "Log in again"
 msgstr ""
 
-#: merengue/templates/registration/login.html.py:19
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/registration/login.html.py:19
 msgid "Login"
 msgstr ""
 
-#: merengue/templates/registration/login.html.py:22
-#: merengue/templates/registration/password_reset.html.py:5
-#: merengue/templates/registration/password_reset.html.py:16
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/registration/login.html.py:22
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/registration/password_reset.html.py:5
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/registration/password_reset.html.py:16
 msgid "Reset password"
 msgstr ""
 
-#: merengue/templates/registration/password_reset.html.py:11
-#: merengue/templates/registration/password_reset.html.py:21
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/registration/password_reset.html.py:11
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/registration/password_reset.html.py:21
 msgid "Reset Password"
 msgstr ""
 
-#: merengue/templates/registration/password_reset_confirm.html.py:4
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/registration/password_reset_confirm.html.py:4
 msgid "Password reset confirmation"
 msgstr ""
 
-#: merengue/templates/registration/password_reset_confirm.html.py:6
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/registration/password_reset_confirm.html.py:6
 msgid "Password reset"
 msgstr ""
 
-#: merengue/templates/registration/password_reset_confirm.html.py:12
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/registration/password_reset_confirm.html.py:12
 msgid "Enter new password"
 msgstr ""
 
-#: merengue/templates/registration/password_reset_confirm.html.py:14
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/registration/password_reset_confirm.html.py:14
 msgid ""
 "Please enter your new password twice so we can verify you typed it in "
 "correctly."
 msgstr ""
 
-#: merengue/templates/registration/password_reset_confirm.html.py:18
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/registration/password_reset_confirm.html.py:18
 msgid "New password:"
 msgstr ""
 
-#: merengue/templates/registration/password_reset_confirm.html.py:20
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/registration/password_reset_confirm.html.py:20
 msgid "Confirm password:"
 msgstr ""
 
-#: merengue/templates/registration/password_reset_confirm.html.py:21
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/registration/password_reset_confirm.html.py:21
 msgid "Change my password"
 msgstr ""
 
-#: merengue/templates/registration/password_reset_confirm.html.py:26
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/registration/password_reset_confirm.html.py:26
 msgid "Password reset unsuccessful"
 msgstr ""
 
-#: merengue/templates/registration/password_reset_confirm.html.py:28
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/registration/password_reset_confirm.html.py:28
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used.  Please request a new password reset."
 msgstr ""
 
-#: merengue/templates/registration/password_reset_email.html.py:2
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/registration/password_reset_email.html.py:2
 msgid "You're receiving this e-mail because you requested a password reset"
 msgstr ""
 
-#: merengue/templates/registration/password_reset_email.html.py:3
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/registration/password_reset_email.html.py:3
 #, python-format
 msgid "for your user account at %(site_name)s"
 msgstr ""
 
-#: merengue/templates/registration/password_reset_email.html.py:5
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/registration/password_reset_email.html.py:5
 msgid "Please go to the following page and choose a new password:"
 msgstr ""
 
-#: merengue/templates/registration/password_reset_email.html.py:9
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/registration/password_reset_email.html.py:9
 msgid "Your username, in case you've forgotten:"
 msgstr ""
 
-#: merengue/templates/registration/password_reset_email.html.py:11
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/registration/password_reset_email.html.py:11
 msgid "Thanks for using our site!"
 msgstr ""
 
-#: merengue/templates/registration/password_reset_email.html.py:13
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/registration/password_reset_email.html.py:13
 #, python-format
 msgid "The %(site_name)s team"
 msgstr ""
 
-#: merengue/templates/transhette/base.html.py:20
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/transhette/base.html.py:20
 msgid "Restart web server"
 msgstr ""
 
-#: merengue/templates/transhette/base.html.py:23
+#: /home/portaluma/portaluma/umawebsite/merengue/templates/transhette/base.html.py:23
 msgid "Update a file"
 msgstr ""
 
-#: merengue/uitools/templates/uitools/toolbar.html.py:9
+#: /home/portaluma/portaluma/umawebsite/merengue/uitools/templates/uitools/toolbar.html.py:9
 msgid "Merengue toolbar"
 msgstr ""
 
-#: merengue/workflow/admin.py:89
-#: merengue/workflow/templates/admin/workflow/update_permissions.html.py:7
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/admin.py:77
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/templates/admin/workflow/update_permissions.html.py:7
 msgid "Update permissions"
 msgstr ""
 
-#: merengue/workflow/admin.py:91
-#: merengue/workflow/templates/admin/workflow/inc.graphic_breadcrumbs.html.py:4
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/admin.py:79
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/templates/admin/workflow/inc.graphic_breadcrumbs.html.py:4
 msgid "Graphic workflow"
 msgstr ""
 
-#: merengue/workflow/admin.py:156
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/admin.py:144
 msgid "states"
 msgstr ""
 
-#: merengue/workflow/admin.py:223
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/admin.py:211
 #, python-format
 msgid ""
 "State permissions were saved successfully. To make your changes effective "
 "you have to update permissions <a href=\"%(url)s\">here</a>"
 msgstr ""
 
-#: merengue/workflow/admin.py:238
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/admin.py:226
 msgid "Manage state permissions"
 msgstr ""
 
-#: merengue/workflow/admin.py:248
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/admin.py:236
 msgid "transitions"
 msgstr ""
 
-#: merengue/workflow/admin.py:313
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/admin.py:301
 msgid "Workflow permissions were saved successfully."
 msgstr ""
 
-#: merengue/workflow/admin.py:321
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/admin.py:309
 msgid "Manage workflow permissions"
 msgstr ""
 
-#: merengue/workflow/admin.py:331
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/admin.py:319
 msgid "models"
 msgstr ""
 
-#: merengue/workflow/admin.py:341
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/admin.py:329
 msgid "Current workflow"
 msgstr ""
 
-#: merengue/workflow/admin.py:346
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/admin.py:334
 msgid "Related to this workflow"
 msgstr ""
 
-#: merengue/workflow/admin.py:352
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/admin.py:340
 msgid "The workflow has been added to these models"
 msgstr ""
 
-#: merengue/workflow/admin.py:354 merengue/workflow/admin.py:420
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/admin.py:342
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/admin.py:408
 msgid "Are you sure you want to add the current workflow to these models?"
 msgstr ""
 
-#: merengue/workflow/admin.py:357
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/admin.py:345
 msgid "Add current workflow to selected models"
 msgstr ""
 
-#: merengue/workflow/admin.py:363
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/admin.py:351
 msgid "The workflow has been removed from these models"
 msgstr ""
 
-#: merengue/workflow/admin.py:365 merengue/workflow/admin.py:417
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/admin.py:353
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/admin.py:405
 msgid "Are you sure you want to remove the current workflow from these models?"
 msgstr ""
 
-#: merengue/workflow/admin.py:368
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/admin.py:356
 msgid "Remove current workflow from selected models"
 msgstr ""
 
-#: merengue/workflow/filterspecs.py:17
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/filterspecs.py:17
 msgid "related to this workflow"
 msgstr ""
 
-#: merengue/workflow/models.py:57 merengue/workflow/models.py:138
-#: merengue/workflow/models.py:248
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:57
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:138
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:248
 msgid "Slug"
 msgstr ""
 
-#: merengue/workflow/models.py:68
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:68
 msgid "Workflows"
 msgstr ""
 
-#: merengue/workflow/models.py:142 merengue/workflow/models.py:260
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:142
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:260
 msgid "Transitions"
 msgstr ""
 
-#: merengue/workflow/models.py:147 merengue/workflow/models.py:338
-#: merengue/workflow/models.py:362
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:147
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:338
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:362
 msgid "State"
 msgstr ""
 
-#: merengue/workflow/models.py:148
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:148
 msgid "States"
 msgstr ""
 
-#: merengue/workflow/models.py:251
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:251
 msgid "Destination"
 msgstr ""
 
-#: merengue/workflow/models.py:259
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:259
 msgid "Transition"
 msgstr ""
 
-#: merengue/workflow/models.py:283
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:283
 msgid "Content Type"
 msgstr ""
 
-#: merengue/workflow/models.py:422
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/models.py:424
 msgid "Publish"
 msgstr ""
 
-#: merengue/workflow/templates/admin/workflow/update_permissions.html.py:17
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/templates/admin/workflow/update_permissions.html.py:17
 msgid ""
 "Do you want to update the permissions related to workflows of all the portal "
 "objects?"
 msgstr ""
 
-#: merengue/workflow/templates/admin/workflow/update_permissions.html.py:20
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/templates/admin/workflow/update_permissions.html.py:20
 msgid "Yes, update all object permissions"
 msgstr ""
 
-#: merengue/workflow/templates/admin/workflow/update_permissions.html.py:20
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/templates/admin/workflow/update_permissions.html.py:20
 msgid "No, take me out of here"
 msgstr ""
 
-#: merengue/workflow/templates/admin/workflow/workflow_models.html.py:20
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/templates/admin/workflow/workflow_models.html.py:20
 msgid "Models that use this workflow"
 msgstr ""
 
-#: merengue/workflow/templates/admin/workflow/workflow_permissions.html.py:20
+#: /home/portaluma/portaluma/umawebsite/merengue/workflow/templates/admin/workflow/workflow_permissions.html.py:20
 msgid "Permissions managed by this workflow"
 msgstr ""
