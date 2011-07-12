@@ -95,6 +95,19 @@ div.action-buttons p {
     font-size: 12px;
 }
 
+#content div#files_list {
+    margin: 0.5em 0;
+}
+
+span.removeFile {
+    display: block;
+    float: left;
+    width: 16px;
+    height: 16px;
+    margin: 0 0.5em;
+    background: transparent url(../img/trash-icon.png) no-repeat left center;
+}
+
 table#webfs-table label {
     padding-left: 18px;
 }
