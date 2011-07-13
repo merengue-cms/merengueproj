@@ -103,17 +103,17 @@ topic for more details.
 Plugin Development
 ==================
 
-Creating a new plugin
+Creating a New Plugin
 ---------------------
 
-Merengue has a ``startplugin`` command which generate the scaffold code to save
-time to the developer. You can use the command as follows:
+Merengue has a ``startplugin`` command which generates "scaffold" code in order to
+save time for the developer. This command is used as follows:
 
 .. code-block:: bash
 
     $ python manage.py startplugin myplugin
 
-This will create a new ``myplugin`` plugin in the ``plugins`` directory, with an
+A new ``myplugin`` plugin will be created in the ``plugins`` directory, with an
 example model, blocks, urls, actions etc.
 
 Plugin Tree
@@ -409,18 +409,19 @@ A developer can do many things when developing a new plugin:
 Media Files in Plugins
 ----------------------
 
-If a ``fooplugin`` plugin contains a ``media`` directory in the plugin
+If the ``fooplugin`` plugin contains a ``media`` directory in the plugin
 directory, the resources inside this directory will be found by Merengue in the
-``fooplugin`` prefix inside ``MEDIA_URL``. So, if you have a ``image.gif``
+``fooplugin`` prefix via the ``MEDIA_URL``. So, if you have a ``image.gif``
 image and you want to link it in one template, the markup would be as follows:
 
 .. code-block:: html
 
     <img src="{{ MEDIA_URL }}fooplugin/image.gif" />
 
-This image will be found by Merengue automatically. But, when you are deploying
-the website in a webserver, you need to collect the media inside your plugins
-in the media root where the webserver will find them. For doing that you have to
+This image will be found by Merengue automatically. However, when you are deploying
+the website to a webserver, you need to link or copy the media files inside all of
+your plugins to the media root directory where the webserver will be able to find
+them. To link the media files in all of your plugins to the media root directory,
 execute this command (see :ref:`deploying Merengue <topics-deploying>` for more
 information):
 
