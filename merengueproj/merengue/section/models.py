@@ -31,6 +31,7 @@ from merengue.base.managers import WorkflowManager
 from merengue.base.models import BaseContent
 from merengue.section.managers import SectionManager
 from merengue.perms.models import Role
+from merengue.perms import utils as perms_api
 from merengue.viewlet.models import RegisteredViewlet
 from transmeta import TransMeta, get_fallback_fieldname
 
@@ -146,8 +147,14 @@ class Menu(models.Model):
     def get_admin_absolute_url(self):
         """ Link to the admin page for editing the object """
         section = self.get_section()
-        section_content_type = ContentType.objects.get_for_model(section)
-        return ('merengue.base.views.admin_link', [section_content_type.id, section.id, 'mainmenu/%s/' % self.id])
+        if section:
+            section_content_type = ContentType.objects.get_for_model(section)
+            return ('merengue.base.views.admin_link', [section_content_type.id, section.id, 'mainmenu/%s/' % self.id])
+        else:
+            menu_content_type = ContentType.objects.get_for_model(self)
+            print menu_content_type.id
+            print self.id
+            return ('merengue.base.views.admin_link', [menu_content_type.id, self.id, ''])
 
     @permalink
     def menu_public_link_with_out_section(self, ancestors_path):
@@ -225,6 +232,14 @@ class Menu(models.Model):
             descendants = descendants.filter(Q(visible_by_roles__isnull=True) |
                                              Q(visible_by_roles__in=roles)).distinct()
         return descendants
+
+    def can_edit(self, user):
+        section = self.get_section()
+        if section:
+            return section.can_edit(user)
+        else:
+            return perms_api.can_manage_site(user)
+
 
 try:
     mptt.register(Menu)
