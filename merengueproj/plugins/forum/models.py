@@ -21,7 +21,8 @@ class ForumCategory(BaseCategory):
 
 class Forum(BaseContent):
 
-    category = models.ForeignKey(ForumCategory)
+    category = models.ForeignKey(ForumCategory,
+                                 verbose_name=_('Category'))
 
     objects = BaseContentManager()
 
