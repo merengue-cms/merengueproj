@@ -170,6 +170,15 @@ DEBUG_TOOLBAR_PANELS = (
     #'debug_toolbar.panels.logger.LoggingPanel',
 )
 
+# File maximum size
+# You can restrict the maximum size of uploaded files using
+# MERENGUE_MAX_FILE_SIZE for any type of file or
+# MERENGUE_MAX_IMAGE_SIZE for image files.
+# You can use one, both or neither
+#
+#MERENGUE_MAX_FILE_SIZE = 10485760  # 10Mb
+#MERENGUE_MAX_IMAGE_SIZE = 5242880  # 5Mb
+
 # Allow overwriting any configuration in optional settings_local.py
 # (it can be used to set up your own database, debug and cache options, contact mails...)
 try:

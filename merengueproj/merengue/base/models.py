@@ -907,3 +907,21 @@ signals.post_save.connect(notify_status_changes)
 
 pre_migrate.connect(pre_migrate_handler)
 post_migrate.connect(post_migrate_handler)
+
+max_file_size = getattr(settings, 'MERENGUE_MAX_FILE_SIZE', None)
+max_image_size = getattr(settings, 'MERENGUE_MAX_IMAGE_SIZE', None)
+
+if max_file_size or max_image_size:
+    from django.forms.fields import FileField, ImageField, Field
+
+    class MerengueFileField(Field):
+
+        def clean(self, data):
+            max_size = getattr(self, 'merengue_max_file_size', None)
+            if max_size and len(data) > max_size:
+                raise ValidationError(_('File to large. Max size restricted to %s bytes') % max_size)
+            return super(MerengueFileField, self).clean(data)
+
+    FileField.__bases__ = (MerengueFileField, )
+    FileField.merengue_max_file_size = max_file_size
+    ImageField.merengue_max_file_size = max_image_size or max_file_size
