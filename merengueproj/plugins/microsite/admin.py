@@ -21,6 +21,7 @@ from plugins.microsite.forms import MicroSiteAdminForm
 
 
 class MicroSiteAdmin(SectionAdmin):
+    change_form_template = 'admin/section/basesection/change_form.html'
     form = MicroSiteAdminForm
 
 
