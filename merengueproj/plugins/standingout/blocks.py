@@ -15,12 +15,12 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.db.models import Q
 from django.utils.translation import ugettext as _, ugettext_lazy
 
 from merengue.registry import params
 from merengue.block.blocks import Block, BaseBlock
 from plugins.standingout.models import StandingOut, StandingOutCategory
+from plugins.standingout.utils import get_filter_ct
 from transmeta import get_fallback_fieldname
 
 
@@ -53,11 +53,7 @@ class StandingOutBlock(Block):
                 variable_real_instance = getattr(variable_value, 'get_real_instance', None)
                 if variable_real_instance:
                     variable_value = variable_real_instance()
-                ctypes = [(c._meta.app_label, c._meta.module_name)for c in variable_value.__class__.mro() if getattr(c, '_meta', None)]
-                filter_ctypes = Q()
-                for app_label, module_name in ctypes:
-                    filter_ctypes = filter_ctypes | Q(related_content_type__app_label=app_label,
-                                                      related_content_type__model=module_name)
+                filter_ctypes = get_filter_ct(variable_value)
                 standingouts = StandingOut.objects.filter(related_id=variable_value.pk).filter(filter_ctypes)
                 if standingouts:
                     break
