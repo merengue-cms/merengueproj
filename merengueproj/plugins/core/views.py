@@ -12,8 +12,8 @@ def hotlink(request, content_id):
         data = request.POST
     form = HotLinkForm(request.user, content, data=data)
     if form.is_valid():
-        menu = form.save()
-        return HttpResponseRedirect(menu.url)
+        link = form.save()
+        return HttpResponseRedirect(form.get_url_redirect(link))
     return HttpResponse(render_to_string('core/hotlink.html',
                         {'form': form,
                          'content': content}), mimetype='text/html')
