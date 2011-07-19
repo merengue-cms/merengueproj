@@ -21,7 +21,7 @@ from merengue.pluggable import Plugin
 from merengue.registry import params
 from merengue.registry.items import ContentTypeFilterProvider
 
-from plugins.rss.actions import GenerateRSS
+from plugins.rss.actions import GenerateRSS, GenerateSectionRSS
 from plugins.rss.blocks import RSSGlobalFeed
 
 
@@ -48,7 +48,7 @@ class PluginConfig(ContentTypeFilterProvider, Plugin):
     ]
 
     def get_actions(self):
-        return [GenerateRSS]
+        return [GenerateRSS, GenerateSectionRSS]
 
     def get_model_admins(self):
         return []

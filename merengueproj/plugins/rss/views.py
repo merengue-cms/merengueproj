@@ -21,5 +21,5 @@ from plugins.rss.utils import generate_feed_from_queryset
 
 
 def rss_views(request):
-    feed = generate_feed_from_queryset()
+    feed = generate_feed_from_queryset(request)
     return HttpResponse(feed, mimetype="application/atom+xml")

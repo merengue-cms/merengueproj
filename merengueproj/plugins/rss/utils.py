@@ -22,13 +22,15 @@ from django.contrib.sites.models import Site
 from django.utils import feedgenerator
 from django.template.loader import render_to_string
 
+from cmsutils.adminfilters import QueryStringManager
+
 from merengue.base.models import BaseContent
 from merengue.registry.items import ALL_TYPES
 
 from merengue.pluggable.utils import get_plugin
 
 
-def generate_feed_from_queryset(queryset=None):
+def generate_feed_from_queryset(request, queryset=None):
     plugin = get_plugin('rss')
 
     if not queryset:
@@ -37,14 +39,16 @@ def generate_feed_from_queryset(queryset=None):
         query = Q()
         if not contenttypes or ALL_TYPES in contenttypes:
             queryset = BaseContent.objects.filter(
-                status='published').order_by('modification_date')[::-1]
+                status='published').order_by('-modification_date')
         else:
             classnames = [x for x in contenttypes]
             for classname in classnames:
                 query = query | Q(class_name=classname.lower())
-                queryset = BaseContent.objects.filter(
-                    status='published').filter(
-                    query).order_by('modification_date')[::-1]
+            queryset = BaseContent.objects.filter(
+                            status='published').filter(
+                            query).order_by('-modification_date')
+        qsm = QueryStringManager(request)
+        queryset = queryset.filter(**qsm.get_filters())
 
     portal_title = plugin.get_config().get(
         'portal', '').get_value()
