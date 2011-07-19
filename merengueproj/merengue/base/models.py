@@ -918,7 +918,7 @@ if max_file_size or max_image_size:
 
         def clean(self, data):
             max_size = getattr(self, 'merengue_max_file_size', None)
-            if max_size and len(data) > max_size:
+            if data and max_size and len(data) > max_size:
                 raise ValidationError(_('File to large. Max size restricted to %s bytes') % max_size)
             return super(MerengueFileField, self).clean(data)
 
