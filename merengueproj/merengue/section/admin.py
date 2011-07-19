@@ -132,6 +132,7 @@ class ViewletLinkAdmin(BaseAdmin):
 class SectionAdmin(BaseSectionAdmin):
 
     change_list_template = 'admin/section/section/change_list.html'
+    change_form_template = 'admin/section/section/change_list.html'
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(SectionAdmin, self).get_form(request, obj, **kwargs)
