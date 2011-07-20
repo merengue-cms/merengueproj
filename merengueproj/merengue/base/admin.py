@@ -827,7 +827,7 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
     inherit from BaseContent
     """
     change_list_template = "admin/basecontent/sortable_change_list.html"
-    list_display = ('__unicode__', 'status', 'user_modification_date', 'last_editor')
+    list_display = ('__unicode__', '', 'user_modification_date', 'last_editor')
     list_display_for_select = ('name', 'status', 'user_modification_date', 'last_editor')
     search_fields = (get_fallback_fieldname('name'), )
     date_hierarchy = 'creation_date'
@@ -856,6 +856,10 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
             (r'^([^/]+)/permissions/$', self.admin_site.admin_view(self.changelist_view)))
 
         return my_urls + urls
+
+    def queryset(self, request):
+        queryset = super(BaseContentAdmin, self).queryset(request)
+        return queryset.select_related("workflow_status")
 
     def add_owners(self, request, queryset, owners):
         if self.has_change_permission(request):
@@ -1101,7 +1105,7 @@ class BaseContentViewAdmin(BaseContentAdmin):
         return is_allowed or lookup == u'id__in'
 
     def queryset(self, request):
-        qs = super(BaseContentAdmin, self).queryset(request)
+        qs = super(BaseContentViewAdmin, self).queryset(request)
         if perms_api.can_manage_site(request.user):
             return qs
         elif self.has_change_permission(request):
