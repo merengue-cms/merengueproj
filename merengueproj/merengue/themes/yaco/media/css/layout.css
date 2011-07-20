@@ -66,10 +66,7 @@ span.translatable {
 }
 
 body div#content-zone {
-    width: 745px;
-/*
     width: auto;
-*/
 }
 
 /* ----- header ----- */
@@ -136,7 +133,7 @@ div#portalmenu ul.menu_ul ul.menuDepth2 {
 div#portalmenu ul.menu_ul.menuDepth1 ul.menuDepth2 {
     margin-top: -1.5em;
     font-size: 12px;
-    padding-left: 8em;
+    padding-left: 12em;
 }
 
 div#portalmenu ul.menu_ul.menuDepth1 ul.menuDepth2 li {
