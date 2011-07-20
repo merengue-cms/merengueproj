@@ -15,6 +15,7 @@ a:hover { color: #666666 !important; }
 
 div#content {
 	float: none;
+    margin-top: 1em;
 }
 
 #content ul.operators {
@@ -26,6 +27,7 @@ div#content ul#search-sections {
     border-top: 1px solid black;
     clear: left;
 	margin-top: 0;
+    width: 121px;
 }
 
 ul#search-sections li {
@@ -33,7 +35,7 @@ ul#search-sections li {
     padding: 5px 10px;
     margin: 0px;
     border-top-width: 0px;
-    width: 86px;
+    width: 114px;
 	background-color: #f2f2f2;
 	list-style: none;
 }
@@ -94,4 +96,8 @@ ul#search-sections li.selected {
     border-left-width: 0px;
     border-right-width: 0px;
     margin-bottom: 1em;
+}
+
+input.radio {
+    float: left;
 }
