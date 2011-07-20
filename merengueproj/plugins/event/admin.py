@@ -32,7 +32,7 @@ class EventCategoryAdmin(BaseCategoryAdmin):
 class EventAdmin(BaseContentAdmin):
     ordering = (get_fallback_fieldname('name'), )
     exclude = ('expire_date', )
-    list_display = ('name', 'start', 'end', 'status', 'user_modification_date',
+    list_display = ('name', 'start', 'end', 'workflow_status', 'user_modification_date',
                     'last_editor')
     form = EventAdminForm
     if settings.USE_GIS:
