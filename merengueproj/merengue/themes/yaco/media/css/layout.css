@@ -65,8 +65,12 @@ span.translatable {
     position: relative;
 }
 
-body div#content-zone {
+div#content-zone {
     width: auto;
+}
+
+#content-zone .contentDescription {
+    float: left;
 }
 
 /* ----- header ----- */
@@ -92,6 +96,11 @@ body div#content-zone {
 
 #header-blocks ul {
     margin-top: 0;
+}
+
+#header-blocks ul li.first
+#header-blocks ul li.haveDescendants  {
+    width: 100px;
 }
 
 #header-blocks #portal-primary-links {
@@ -133,7 +142,7 @@ div#portalmenu ul.menu_ul ul.menuDepth2 {
 div#portalmenu ul.menu_ul.menuDepth1 ul.menuDepth2 {
     margin-top: -1.5em;
     font-size: 12px;
-    padding-left: 12em;
+    padding-left: 10em;
 }
 
 div#portalmenu ul.menu_ul.menuDepth1 ul.menuDepth2 li {
