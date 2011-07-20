@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-17 14:04+0200\n"
+"POT-Creation-Date: 2011-07-20 09:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.py:43
+#: admin.py:44
 msgid "Basic Options"
 msgstr ""
 
-#: admin.py:47
+#: admin.py:48
 msgid "Advanced Options"
 msgstr ""
 
@@ -32,23 +32,23 @@ msgstr ""
 msgid "Standing out block"
 msgstr ""
 
-#: blocks.py:34 blocks.py:73
+#: blocks.py:34 blocks.py:76
 msgid "limit for standingouts in block"
 msgstr ""
 
-#: blocks.py:62
+#: blocks.py:65
 msgid "Search"
 msgstr ""
 
-#: blocks.py:69
+#: blocks.py:72
 msgid "Block with a jquery slideshow of standingouts"
 msgstr ""
 
-#: blocks.py:70
+#: blocks.py:73
 msgid "Standing out Slide Show block"
 msgstr ""
 
-#: blocks.py:96
+#: blocks.py:99
 msgid "Slideshow"
 msgstr ""
 
@@ -139,12 +139,12 @@ msgstr ""
 msgid "Highlights"
 msgstr ""
 
-#: templates/standingout/block_standingout.html:24
 #: templates/standingout/block_standingout.html:26
+#: templates/standingout/block_standingout.html:28
 msgid "View all"
 msgstr ""
 
-#: templates/standingout/block_standingout.html:29
+#: templates/standingout/block_standingout.html:31
 msgid "Without highlights"
 msgstr ""
 

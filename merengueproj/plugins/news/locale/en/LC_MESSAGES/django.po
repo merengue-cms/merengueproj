@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-17 14:04+0200\n"
+"POT-Creation-Date: 2011-07-20 09:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "Index page with all news items"
 msgstr ""
 
-#: blocks.py:29 blocks.py:60 viewlets.py:27
+#: blocks.py:29 blocks.py:60 viewlets.py:29
 msgid "Latest news"
 msgstr ""
 
@@ -44,35 +44,43 @@ msgstr ""
 msgid "news categories"
 msgstr ""
 
-#: models.py:40
+#: models.py:37
+msgid "publish date"
+msgstr ""
+
+#: models.py:41
+msgid "expire date"
+msgstr ""
+
+#: models.py:46
 msgid "category"
 msgstr ""
 
-#: models.py:42
+#: models.py:48
 msgid "body"
 msgstr ""
 
-#: models.py:50
+#: models.py:56
 msgid "news item"
 msgstr ""
 
-#: models.py:51
+#: models.py:57
 msgid "news"
 msgstr ""
 
-#: viewlets.py:28
+#: viewlets.py:30
 msgid "Latest news block"
 msgstr ""
 
-#: viewlets.py:31
+#: viewlets.py:33
 msgid "limit for news viewlet"
 msgstr ""
 
-#: viewlets.py:46
+#: viewlets.py:52
 msgid "All news"
 msgstr ""
 
-#: viewlets.py:47
+#: viewlets.py:53
 msgid "All news block"
 msgstr ""
 

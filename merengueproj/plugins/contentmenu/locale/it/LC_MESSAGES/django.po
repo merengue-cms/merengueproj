@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-17 14:04+0200\n"
+"POT-Creation-Date: 2011-07-20 09:39+0200\n"
 "PO-Revision-Date: 2011-04-12 19:31+0200\n"
 "Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
 "Language-Team: it <m.busico@ieee.org>\n"
@@ -18,7 +18,19 @@ msgstr ""
 "Language: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: blocks.py:47
+#: admin.py:41
+msgid "content selected here will be shown when entering the section"
+msgstr ""
+
+#: blocks.py:29
+msgid "Content menu"
+msgstr ""
+
+#: blocks.py:30
+msgid "Block with the grouped content links"
+msgstr ""
+
+#: blocks.py:56
 msgid "Content group links"
 msgstr ""
 
