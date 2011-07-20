@@ -827,7 +827,7 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
     inherit from BaseContent
     """
     change_list_template = "admin/basecontent/sortable_change_list.html"
-    list_display = ('__unicode__', '', 'user_modification_date', 'last_editor')
+    list_display = ('__unicode__', 'workflow_status', 'user_modification_date', 'last_editor')
     list_display_for_select = ('name', 'status', 'user_modification_date', 'last_editor')
     search_fields = (get_fallback_fieldname('name'), )
     date_hierarchy = 'creation_date'
