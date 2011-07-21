@@ -201,6 +201,8 @@ DEFAULT_LONGITUDE = -5.753321
 PAGE_VARIABLE = 'page'
 
 # Default merengue options for tinyMCE
+TINYMCE_LANG = 'en'
+TINYMCE_LANG_SPELLCHECKER = '+English=en'
 TINYMCE_MEDIA = None  # set to something like: MEDIA_URL + "cmsutils/js/widgets/tiny_mce/"
 EXTRA_MCE = {
     'theme_advanced_buttons1': 'bold,italic,copy,paste,pasteword,underline,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,outdent,indent',
