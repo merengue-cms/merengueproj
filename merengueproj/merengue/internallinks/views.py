@@ -21,6 +21,7 @@ from django.utils.translation import ugettext as _
 from django.views.generic import list_detail
 
 from cmsutils.adminfilters import QueryStringManager
+from searchform.forms import sanitize_filters
 from merengue.base.models import BaseContent
 from merengue.internallinks.forms import BaseContentSearchForm
 
@@ -51,8 +52,8 @@ def _exclude_with_language(query, excluders, lang):
 
 def internal_links_search(request):
     qsm = QueryStringManager(request, [], 'page')
-    filters = qsm.get_filters()
-    excluders = qsm.get_excluders()
+    filters = sanitize_filters(qsm.get_filters())
+    excluders = sanitize_filters(qsm.get_excluders())
     lang = get_language_from_request(request)
     if filters or excluders:
         results = _filter_with_language(BaseContent.objects.all(), filters, lang)
@@ -63,12 +64,12 @@ def internal_links_search(request):
     extra_content = dict(
         query_string=qsm.get_query_string(),
         result_msg=_(u'%s contents found') % results.count(),
-        search_form = BaseContentSearchForm(_('Content'), qsm),
+        search_form=BaseContentSearchForm(_('Content'), qsm),
         title=_(u'Contents searcher'),
         )
 
     return list_detail.object_list(request, results,
-                                   template_name = 'internallinks/internal_links_search.html',
+                                   template_name='internallinks/internal_links_search.html',
                                    allow_empty=True,
                                    extra_context=extra_content,
                                    template_object_name='object')
