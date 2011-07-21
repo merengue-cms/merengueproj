@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-07-20 09:44+0200\n"
-"PO-Revision-Date: 2011-07-19 08:52\n"
+"PO-Revision-Date: 2011-07-21 08:36\n"
 "Last-Translator: Pablo Martin <pmartin@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -51,24 +51,16 @@ msgid "text"
 msgstr "texto"
 
 #: apps/captcha/models.py:8
-msgid ""
-"The image must upload at the size that is displayed is not automatically "
-"resize"
-msgstr ""
-"La imagen que debe cargar deber ser del tamaño que se indica ya que no "
-"cambian de tamaño automáticamente"
+msgid "The image must upload at the size that is displayed is not automatically resize"
+msgstr "La imagen que debe cargar deber ser del tamaño que se indica ya que no cambian de tamaño automáticamente"
 
 #: apps/captcha/widgets.py:31
 msgid "Type the word that follows the image"
 msgstr "Enlaces sociales"
 
 #: apps/captcha/widgets.py:33
-msgid ""
-"You need to load images in your browser to be able to register, because of "
-"the captcha system."
-msgstr ""
-"Es necesario poder cargar imágenes en su navegador para poder registrarse, "
-"debido al sistema de captcha."
+msgid "You need to load images in your browser to be able to register, because of the captcha system."
+msgstr "Es necesario poder cargar imágenes en su navegador para poder registrarse, debido al sistema de captcha."
 
 #: apps/rating/admin.py:25
 msgid "Vote"
@@ -180,8 +172,6 @@ msgstr "Su imagen ha sido subida."
 #: apps/tinyimages/templates/tinyimages/base.html:5
 msgid "TinyImages"
 msgstr ""
-"La imagen que debe cargar debe ser del tamaño que se indica ya que no "
-"cambian de tamaño automáticamente"
 
 #: apps/tinyimages/templates/tinyimages/base_list.html:10
 msgid "Send"
@@ -413,19 +403,13 @@ msgstr "permisos"
 #: base/admin.py:1457
 #, python-format
 msgid ""
-"The permissions of the content should be changed in <a href=\"%(url)s\">the "
-"workflow</a>, not in the content itself,\n"
-"    because if the status change, <strong>all the custom permission will be "
-"cleared</strong>. But,\n"
-"    if you are sure you want to edit the permissions, click <a href=\"?"
-"enable_edit=1\">here</a>."
+"The permissions of the content should be changed in <a href=\"%(url)s\">the workflow</a>, not in the content itself,\n"
+"    because if the status change, <strong>all the custom permission will be cleared</strong>. But,\n"
+"    if you are sure you want to edit the permissions, click <a href=\"?enable_edit=1\">here</a>."
 msgstr ""
-"Los permisos del contenido deberían ser cambiados en <a href=\"%(url)s\">el "
-"workflow</a>, no en el contenido,\n"
-"    porque si el estado cambia, <strong>todos los permisos personalizados "
-"serán borrados</strong>. Pero,\n"
-"    si estás seguro que quieres editar los permisos, haz click <a href=\"?"
-"enable_edit=1\">aquí</a>."
+"Los permisos del contenido deberían ser cambiados en <a href=\"%(url)s\">el workflow</a>, no en el contenido,\n"
+"    porque si el estado cambia, <strong>todos los permisos personalizados serán borrados</strong>. Pero,\n"
+"    si estás seguro que quieres editar los permisos, haz click <a href=\"?enable_edit=1\">aquí</a>."
 
 #: base/admin.py:1503
 msgid "Error in id"
@@ -466,7 +450,7 @@ msgstr "¿Está seguro que quiere pasar estos contenidos a borrador?"
 
 #: base/admin.py:1568 templates/admin/object_history.html:30
 msgid "Action"
-msgstr "Pasar a borrador"
+msgstr "Acción"
 
 #: base/admin.py:1627
 msgid "Click to Locate"
@@ -649,7 +633,7 @@ msgstr ""
 
 #: base/models.py:147
 msgid "workflow status"
-msgstr ""
+msgstr "Estados de publicación"
 
 #: base/models.py:149
 msgid "main image"
@@ -842,9 +826,7 @@ msgid "404 Error - Sorry we can not find the page you are looking for."
 msgstr ""
 
 #: base/templates/404.html:16
-msgid ""
-"You may have mistyped the URL or the page may have been removed from our "
-"system."
+msgid "You may have mistyped the URL or the page may have been removed from our system."
 msgstr ""
 
 #: base/templates/404.html:17
@@ -963,23 +945,15 @@ msgid "Block to add"
 msgstr ""
 
 #: block/forms.py:102
-msgid ""
-"Placing the block here will take no effect, as another related block is set "
-"to overwrite it"
+msgid "Placing the block here will take no effect, as another related block is set to overwrite it"
 msgstr ""
 
 #: block/forms.py:103
-msgid ""
-"Unmark this field to keep the block in the specified "
-"place                                       (even though it won't be "
-"displayed)"
+msgid "Unmark this field to keep the block in the specified place                                       (even though it won't be displayed)"
 msgstr ""
 
 #: block/forms.py:105
-msgid ""
-"A block is already set to overwrite others of this "
-"kind.                                Unmark this to save the block, even "
-"though it won't be displayed"
+msgid "A block is already set to overwrite others of this kind.                                Unmark this to save the block, even though it won't be displayed"
 msgstr ""
 
 #: block/forms.py:124
@@ -1085,10 +1059,8 @@ msgstr ""
 #: block/models.py:51
 msgid ""
 "block will <em>only</em> be visible in urls matching these\n"
-"            regular expressions (one per line, using <a            "
-"href='http://docs.python.org./library/re.html#regular-expression-syntax'\n"
-"            title='python regular expressions' target='_blank'>python re "
-"syntax</a>). <br/>\n"
+"            regular expressions (one per line, using <a            href='http://docs.python.org./library/re.html#regular-expression-syntax'\n"
+"            title='python regular expressions' target='_blank'>python re syntax</a>). <br/>\n"
 "            Please use relative paths.\n"
 "            This field has preference over 'hidden in urls'."
 msgstr ""
@@ -1101,10 +1073,8 @@ msgstr ""
 msgid ""
 "block will be hidden in urls matching these regular\n"
 "            expressions (one per line, using <a\n"
-"            href='http://docs.python.org/library/re.html#regular-expression-"
-"syntax'\n"
-"            title='python regular expressions' target='_blank'>python re "
-"syntax</a>)."
+"            href='http://docs.python.org/library/re.html#regular-expression-syntax'\n"
+"            title='python regular expressions' target='_blank'>python re syntax</a>)."
 msgstr ""
 
 #: block/models.py:65
@@ -1212,7 +1182,7 @@ msgstr "¿Está seguro que quiere eliminar este bloque?"
 
 #: block/templates/blocks/header.html:211
 msgid "Drag here"
-msgstr ""
+msgstr "Arrastre aquí"
 
 #: collab/forms.py:78
 msgid "translation language"
@@ -1512,11 +1482,8 @@ msgid "Filtering section"
 msgstr ""
 
 #: collection/models.py:117 registry/items.py:139
-msgid ""
-"If the collection is into a section, filter for the contents of this section"
-msgstr ""
-"Si la colección está en una sección, filtrar por los contenidos de dicha "
-"sección"
+msgid "If the collection is into a section, filter for the contents of this section"
+msgstr "Si la colección está en una sección, filtrar por los contenidos de dicha sección"
 
 #: collection/models.py:121 collection/models.py:674 collection/models.py:686
 #: collection/models.py:726
@@ -1577,9 +1544,7 @@ msgstr "Segundos para que expire la cache"
 
 #: collection/models.py:399
 msgid "Seconds from last update to do a new query. 0 to never query again."
-msgstr ""
-"Segundos desde la última actualización para hacer una nueva consulta. Cero "
-"significa no consultar más"
+msgstr "Segundos desde la última actualización para hacer una nueva consulta. Cero significa no consultar más"
 
 #: collection/models.py:404
 msgid "Remove items"
@@ -2078,9 +2043,7 @@ msgstr ""
 
 #: pluggable/admin.py:132
 #, python-format
-msgid ""
-"You have not registered all the plugins. Click <a href=\"%(url)s\">here</a> "
-"in order to register them"
+msgid "You have not registered all the plugins. Click <a href=\"%(url)s\">here</a> in order to register them"
 msgstr ""
 
 #: pluggable/models.py:37
@@ -2100,10 +2063,7 @@ msgid "registered plugins"
 msgstr ""
 
 #: pluggable/templates/admin/plugin/plugin_change_form.html:9
-msgid ""
-"This plugin has been set as required in settings.py so you can not install/"
-"uninstall from this admin interface. You can install it by running a migrate "
-"command"
+msgid "This plugin has been set as required in settings.py so you can not install/uninstall from this admin interface. You can install it by running a migrate command"
 msgstr ""
 
 #: pluggable/templates/admin/plugin/plugin_change_form.html:32
@@ -2144,8 +2104,7 @@ msgstr ""
 
 #: portal/models.py:42 section/models.py:279
 msgid "The absolute urls have to write complety: Protocol, domain, query"
-msgstr ""
-"Las urls absolutas tienen que estar completas: protocolo, dominio y consulta"
+msgstr "Las urls absolutas tienen que estar completas: protocolo, dominio y consulta"
 
 #: portal/models.py:45 section/models.py:332
 msgid "order"
@@ -2160,8 +2119,7 @@ msgid "icon"
 msgstr ""
 
 #: portal/models.py:55
-msgid ""
-"The system don't resize the icon. You need to upload with the final size"
+msgid "The system don't resize the icon. You need to upload with the final size"
 msgstr ""
 
 #: portal/models.py:59
@@ -2240,8 +2198,7 @@ msgid "registered items"
 msgstr ""
 
 #: registry/templates/admin/registry/change_form.html:8
-msgid ""
-"This item is broken. You cannot edit this object until problem was fixed"
+msgid "This item is broken. You cannot edit this object until problem was fixed"
 msgstr ""
 
 #: registry/templates/admin/registry/change_form.html:9
@@ -2343,20 +2300,15 @@ msgstr ""
 
 #: section/admin.py:145 section/models.py:352
 msgid "content selected here will be shown when entering the section"
-msgstr ""
-"El contenido aquí seleccionado se mostrará cuando se acceda a la sección"
+msgstr "El contenido aquí seleccionado se mostrará cuando se acceda a la sección"
 
 #: section/admin.py:198 section/models.py:370
 msgid "custom style"
 msgstr "estilo personalizado"
 
 #: section/admin.py:209
-msgid ""
-"Custom style for the section. You can use the variables $media_url and "
-"$theme_url"
-msgstr ""
-"Estilo personalizado para la sección. Puedes usar las variables $media_url y "
-"$theme_url"
+msgid "Custom style for the section. You can use the variables $media_url and $theme_url"
+msgstr "Estilo personalizado para la sección. Puedes usar las variables $media_url y $theme_url"
 
 #: section/admin.py:226 section/models.py:474
 msgid "documents"
@@ -2428,11 +2380,8 @@ msgid "help text"
 msgstr ""
 
 #: section/models.py:96
-msgid ""
-"text for describing the menu target, usually placed as link title attribute"
-msgstr ""
-"Texto para describir el destino del menú, normalmente se coloca como el "
-"atributo enlace del título"
+msgid "text for describing the menu target, usually placed as link title attribute"
+msgstr "Texto para describir el destino del menú, normalmente se coloca como el atributo enlace del título"
 
 #: section/models.py:103
 msgid "Parent"
@@ -2635,9 +2584,8 @@ msgid "Searcher"
 msgstr ""
 
 #: skel/plugin/actions.py:10 skel/plugin/actions.py:11
-#, fuzzy
 msgid "Foo action"
-msgstr "localización"
+msgstr ""
 
 #: skel/plugin/blocks.py:12
 msgid "Foo block"
@@ -2714,14 +2662,11 @@ msgid "Merengue administration"
 msgstr "Administración de Merengue"
 
 #: templates/admin/change_form.html:52
-msgid ""
-"This content is set as 'no_deletable' so you can not delete it from the "
-"system"
+msgid "This content is set as 'no_deletable' so you can not delete it from the system"
 msgstr ""
 
 #: templates/admin/change_form.html:55
-msgid ""
-"This content is set as 'no_changeable' so you can not alter any of its data"
+msgid "This content is set as 'no_changeable' so you can not alter any of its data"
 msgstr ""
 
 #: templates/admin/change_form.html:71 templates/admin/change_list.html:53
@@ -2760,42 +2705,24 @@ msgstr "Guardar y continuar editando"
 #: templates/admin/delete_confirmation.html:14
 #: templates/admin/delete_confirmation_various.html:14
 #, python-format
-msgid ""
-"Deleting the %(object_name)s '%(escaped_object)s' would result in deleting "
-"related objects, but your account doesn't have permission to delete the "
-"following types of objects:"
-msgstr ""
-"Eliminando %(object_name)s '%(escaped_object)s' podrían eliminarse objetos "
-"relacionados, pero su cuenta no tiene permisos para eliminar los siguientes "
-"tipos de objetos:"
+msgid "Deleting the %(object_name)s '%(escaped_object)s' would result in deleting related objects, but your account doesn't have permission to delete the following types of objects:"
+msgstr "Eliminando %(object_name)s '%(escaped_object)s' podrían eliminarse objetos relacionados, pero su cuenta no tiene permisos para eliminar los siguientes tipos de objetos:"
 
 #: templates/admin/delete_confirmation.html:22
 #, python-format
-msgid ""
-"Deleting the %(object_name)s '%(escaped_object)s' would result in deleting "
-"related objects, but your account doesn't have permission to delete the "
-"following objects:"
+msgid "Deleting the %(object_name)s '%(escaped_object)s' would result in deleting related objects, but your account doesn't have permission to delete the following objects:"
 msgstr ""
 
 #: templates/admin/delete_confirmation.html:30
 #, fuzzy, python-format
-msgid ""
-"Deleting the %(object_name)s '%(escaped_object)s' would require deleting the "
-"following protected related objects:"
-msgstr ""
-"Eliminando %(object_name)s '%(escaped_object)s' podrían eliminarse objetos "
-"relacionados, pero su cuenta no tiene permisos para eliminar los siguientes "
-"tipos de objetos:"
+msgid "Deleting the %(object_name)s '%(escaped_object)s' would require deleting the following protected related objects:"
+msgstr "Eliminando %(object_name)s '%(escaped_object)s' podrían eliminarse objetos relacionados, pero su cuenta no tiene permisos para eliminar los siguientes tipos de objetos:"
 
 #: templates/admin/delete_confirmation.html:38
 #: templates/admin/delete_confirmation_various.html:21
 #, python-format
-msgid ""
-"Are you sure you want to delete the %(object_name)s \"%(escaped_object)s\"? "
-"All of the following related items will be deleted:"
-msgstr ""
-"¿Está seguro que quiere eliminar el %(object_name)s \"%(escaped_object)s? "
-"Todos los siguientes elementos relacionados serán eliminados:"
+msgid "Are you sure you want to delete the %(object_name)s \"%(escaped_object)s\"? All of the following related items will be deleted:"
+msgstr "¿Está seguro que quiere eliminar el %(object_name)s \"%(escaped_object)s? Todos los siguientes elementos relacionados serán eliminados:"
 
 #: templates/admin/delete_selected_confirmation.html:9
 msgid "Delete multiple objects"
@@ -2803,41 +2730,23 @@ msgstr ""
 
 #: templates/admin/delete_selected_confirmation.html:16
 #, fuzzy, python-format
-msgid ""
-"Deleting the selected %(objects_name)s would result in deleting related "
-"objects, but your account doesn't have permission to delete the following "
-"types of objects:"
-msgstr ""
-"Eliminando %(object_name)s '%(escaped_object)s' podrían eliminarse objetos "
-"relacionados, pero su cuenta no tiene permisos para eliminar los siguientes "
-"tipos de objetos:"
+msgid "Deleting the selected %(objects_name)s would result in deleting related objects, but your account doesn't have permission to delete the following types of objects:"
+msgstr "Eliminando %(object_name)s '%(escaped_object)s' podrían eliminarse objetos relacionados, pero su cuenta no tiene permisos para eliminar los siguientes tipos de objetos:"
 
 #: templates/admin/delete_selected_confirmation.html:24
 #, python-format
-msgid ""
-"Deleting the selected %(objects_name)s would require deleting the following "
-"protected related objects:"
+msgid "Deleting the selected %(objects_name)s would require deleting the following protected related objects:"
 msgstr ""
 
 #: templates/admin/delete_selected_confirmation.html:32
 #, fuzzy, python-format
-msgid ""
-"Deleting the selected %(objects_name)s would result in deleting related "
-"objects, but your account doesn't have permission to delete the following "
-"objects:"
-msgstr ""
-"Eliminando %(object_name)s '%(escaped_object)s' podrían eliminarse objetos "
-"relacionados, pero su cuenta no tiene permisos para eliminar los siguientes "
-"tipos de objetos:"
+msgid "Deleting the selected %(objects_name)s would result in deleting related objects, but your account doesn't have permission to delete the following objects:"
+msgstr "Eliminando %(object_name)s '%(escaped_object)s' podrían eliminarse objetos relacionados, pero su cuenta no tiene permisos para eliminar los siguientes tipos de objetos:"
 
 #: templates/admin/delete_selected_confirmation.html:40
 #, fuzzy, python-format
-msgid ""
-"Are you sure you want to delete the selected %(objects_name)s? All of the "
-"following objects and their related items will be deleted:"
-msgstr ""
-"¿Está seguro que quiere eliminar el %(object_name)s \"%(escaped_object)s? "
-"Todos los siguientes elementos relacionados serán eliminados:"
+msgid "Are you sure you want to delete the selected %(objects_name)s? All of the following objects and their related items will be deleted:"
+msgstr "¿Está seguro que quiere eliminar el %(object_name)s \"%(escaped_object)s? Todos los siguientes elementos relacionados serán eliminados:"
 
 #: templates/admin/django_index.html:25
 #: templates/admin/inc.content_index.html:8
@@ -3025,8 +2934,7 @@ msgid "Save/restore configuration"
 msgstr "Guardar/restaurar la configuración"
 
 #: templates/admin/merengue_index_base.html:76
-msgid ""
-"Save/restore the site configuration (block, plugins, active theme, etc.)"
+msgid "Save/restore the site configuration (block, plugins, active theme, etc.)"
 msgstr ""
 
 #: templates/admin/merengue_index_base.html:84
@@ -3050,9 +2958,7 @@ msgid "Plugin custom administration interfaces"
 msgstr ""
 
 #: templates/admin/merengue_index_base.html:102
-msgid ""
-"Enabled plugins can define its own administration interfaces. These are the "
-"custom admins in your installed plugins:"
+msgid "Enabled plugins can define its own administration interfaces. These are the custom admins in your installed plugins:"
 msgstr ""
 
 #: templates/admin/merengue_index_base.html:124
@@ -3084,12 +2990,8 @@ msgid "DATETIME_FORMAT"
 msgstr ""
 
 #: templates/admin/object_history.html:44
-msgid ""
-"This object doesn't have a change history. It probably wasn't added via this "
-"admin site."
-msgstr ""
-"Este objeto no tiene un historial de cambios. Probablemente no se agregó a "
-"través de este sitio de administración."
+msgid "This object doesn't have a change history. It probably wasn't added via this admin site."
+msgstr "Este objeto no tiene un historial de cambios. Probablemente no se agregó a través de este sitio de administración."
 
 #: templates/admin/object_tools.html:61
 #, python-format
@@ -3110,9 +3012,7 @@ msgstr "Cargar la configuración guardada"
 
 #: templates/admin/siteconfig.html:31
 msgid "Upload and restore a .zip file containing a saved project configuration"
-msgstr ""
-"Cargar y restaurar un archivo .zip que contiene una configuración del "
-"proyecto guardado"
+msgstr "Cargar y restaurar un archivo .zip que contiene una configuración del proyecto guardado"
 
 #: templates/admin/siteconfig.html:34
 msgid "Submit config"
@@ -3123,11 +3023,8 @@ msgid "Save current configuration"
 msgstr "Guardar configuración actual"
 
 #: templates/admin/siteconfig.html:44
-msgid ""
-"Save current project configuration into a .zip file that can be restored"
-msgstr ""
-"Guardar configuración actual del proyecto en un archivo .zip que se pueda "
-"restaurar"
+msgid "Save current project configuration into a .zip file that can be restored"
+msgstr "Guardar configuración actual del proyecto en un archivo .zip que se pueda restaurar"
 
 #: templates/admin/siteconfig.html:46
 msgid "Save current config"
@@ -3143,9 +3040,7 @@ msgstr "Guardar la actual copia de seguridad"
 
 #: templates/admin/siteconfig.html:55
 msgid "Save current backup configuration into a .zip file that can be restored"
-msgstr ""
-"Guardar la configuración de la actual copia de seguridad en un archivo .zip "
-"para que pueda ser restaurada"
+msgstr "Guardar la configuración de la actual copia de seguridad en un archivo .zip para que pueda ser restaurada"
 
 #: templates/admin/smart_relations_object_tool.html:6
 msgid "Edit"
@@ -3249,12 +3144,8 @@ msgid "Enter new password"
 msgstr "Introduzca nueva contraseña"
 
 #: templates/registration/password_reset_confirm.html:14
-msgid ""
-"Please enter your new password twice so we can verify you typed it in "
-"correctly."
-msgstr ""
-"Por favor, introduzca su nueva contraseña dos veces para que podamos "
-"verificar que la ha escrito correctamente."
+msgid "Please enter your new password twice so we can verify you typed it in correctly."
+msgstr "Por favor, introduzca su nueva contraseña dos veces para que podamos verificar que la ha escrito correctamente."
 
 #: templates/registration/password_reset_confirm.html:18
 msgid "New password:"
@@ -3273,17 +3164,12 @@ msgid "Password reset unsuccessful"
 msgstr "Contraseña cambiada satisfactoriamente"
 
 #: templates/registration/password_reset_confirm.html:28
-msgid ""
-"The password reset link was invalid, possibly because it has already been "
-"used.  Please request a new password reset."
-msgstr ""
-"El enlace de cambio de contraseña es inválido, posiblemente porque ya ha "
-"sido usado. Por favor, solicite un cambio de contraseña nuevo."
+msgid "The password reset link was invalid, possibly because it has already been used.  Please request a new password reset."
+msgstr "El enlace de cambio de contraseña es inválido, posiblemente porque ya ha sido usado. Por favor, solicite un cambio de contraseña nuevo."
 
 #: templates/registration/password_reset_email.html:2
 msgid "You're receiving this e-mail because you requested a password reset"
-msgstr ""
-"Ha recibido este mail porque solicitó un restablecimiento de contraseña"
+msgstr "Ha recibido este mail porque solicitó un restablecimiento de contraseña"
 
 #: templates/registration/password_reset_email.html:3
 #, python-format
@@ -3335,9 +3221,7 @@ msgstr ""
 
 #: workflow/admin.py:211
 #, python-format
-msgid ""
-"State permissions were saved successfully. To make your changes effective "
-"you have to update permissions <a href=\"%(url)s\">here</a>"
+msgid "State permissions were saved successfully. To make your changes effective you have to update permissions <a href=\"%(url)s\">here</a>"
 msgstr ""
 
 #: workflow/admin.py:226
@@ -3433,9 +3317,7 @@ msgid "Publish"
 msgstr ""
 
 #: workflow/templates/admin/workflow/update_permissions.html:17
-msgid ""
-"Do you want to update the permissions related to workflows of all the portal "
-"objects?"
+msgid "Do you want to update the permissions related to workflows of all the portal objects?"
 msgstr ""
 
 #: workflow/templates/admin/workflow/update_permissions.html:20
@@ -3457,12 +3339,8 @@ msgstr ""
 #~ msgid "Admin this menu"
 #~ msgstr "Administrar este menú"
 
-#~ msgid ""
-#~ "Tags will be splitted by spaces or commas if present. To "
-#~ "force                                 tag names, use double quotes."
-#~ msgstr ""
-#~ "Las etiquetas serán divididas por espacios o comas si existen. Para "
-#~ "forzar los nombres de las etiquetas, usa dobles comillas."
+#~ msgid "Tags will be splitted by spaces or commas if present. To force                                 tag names, use double quotes."
+#~ msgstr "Las etiquetas serán divididas por espacios o comas si existen. Para forzar los nombres de las etiquetas, usa dobles comillas."
 
 #~ msgid "Add %(name)s"
 #~ msgstr "Añadir %(name)s"
