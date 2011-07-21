@@ -20,8 +20,8 @@ from django.utils.translation import get_language_from_request
 from django.utils.translation import ugettext as _
 from django.views.generic import list_detail
 
-from cmsutils.adminfilters import QueryStringManager
 from searchform.forms import sanitize_filters
+from searchform.utils import QueryStringManager
 from merengue.base.models import BaseContent
 from merengue.internallinks.forms import BaseContentSearchForm
 
