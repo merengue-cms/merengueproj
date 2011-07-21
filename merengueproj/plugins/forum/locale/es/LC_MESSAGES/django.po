@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-20 09:40+0200\n"
-"PO-Revision-Date: 2010-10-11 11:42\n"
-"Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
+"POT-Creation-Date: 2011-07-21 09:54+0200\n"
+"PO-Revision-Date: 2011-07-21 08:29\n"
+"Last-Translator: Pablo Martin <pmartin@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -39,7 +39,7 @@ msgstr "Categorías de foro"
 
 #: models.py:25
 msgid "Category"
-msgstr ""
+msgstr "Categoría"
 
 #: models.py:30
 msgid "Forum"

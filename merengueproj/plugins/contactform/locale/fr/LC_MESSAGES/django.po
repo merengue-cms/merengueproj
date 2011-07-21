@@ -1,0 +1,305 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-07-21 09:54+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin.py:61
+msgid "contact form option"
+msgstr ""
+
+#: admin.py:68
+msgid "sent contact form"
+msgstr ""
+
+#: admin.py:87 models.py:185 models.py:217
+msgid "contact form"
+msgstr ""
+
+#: admin.py:123
+msgid "associated content related"
+msgstr ""
+
+#: admin.py:135
+msgid "Successfully associated"
+msgstr ""
+
+#: admin.py:138
+msgid "Are you sure you want to associate this items?"
+msgstr ""
+
+#: admin.py:141
+msgid "Associated content related"
+msgstr ""
+
+#: admin.py:152
+msgid "disassociated content related"
+msgstr ""
+
+#: admin.py:164
+msgid "Successfully disassociated"
+msgstr ""
+
+#: admin.py:167
+msgid "Are you sure you want to disassociate this items?"
+msgstr ""
+
+#: admin.py:170
+msgid "Disassociated content related"
+msgstr ""
+
+#: blocks.py:29
+msgid "Block with contact form"
+msgstr ""
+
+#: blocks.py:30
+msgid "Contact Form Block"
+msgstr ""
+
+#: blocks.py:55
+msgid "Contact form"
+msgstr ""
+
+#: config.py:40
+msgid "recaptcha public key"
+msgstr ""
+
+#: config.py:41
+msgid "recaptcha private key"
+msgstr ""
+
+#: fields.py:59
+msgid "This is not a valid comma separated email list."
+msgstr ""
+
+#: fields.py:106
+msgid "The captcha was invalid, try again."
+msgstr ""
+
+#: forms.py:57
+msgid "Unset"
+msgstr ""
+
+#: forms.py:75
+msgid "Anonymous"
+msgstr ""
+
+#: models.py:36
+msgid "Text"
+msgstr ""
+
+#: models.py:37
+msgid "Text area"
+msgstr ""
+
+#: models.py:38
+msgid "Date"
+msgstr ""
+
+#: models.py:39
+msgid "Datetime"
+msgstr ""
+
+#: models.py:40
+msgid "Checkbox"
+msgstr ""
+
+#: models.py:41
+msgid "Radio"
+msgstr ""
+
+#: models.py:42
+msgid "Select"
+msgstr ""
+
+#: models.py:43
+msgid "File"
+msgstr ""
+
+#: models.py:51
+msgid "name"
+msgstr ""
+
+#: models.py:52
+msgid "description"
+msgstr ""
+
+#: models.py:54
+msgid "Sent message"
+msgstr ""
+
+#: models.py:55
+msgid "Message to show when the form is sent"
+msgstr ""
+
+#: models.py:57
+msgid "The form was sent correctly"
+msgstr ""
+
+#: models.py:58
+msgid "emails"
+msgstr ""
+
+#: models.py:60 models.py:62
+msgid "comma separated email list"
+msgstr ""
+
+#: models.py:61
+msgid "bcc emails"
+msgstr ""
+
+#: models.py:63
+msgid "redirect to"
+msgstr ""
+
+#: models.py:66
+msgid "redirect to with params"
+msgstr ""
+
+#: models.py:67
+msgid ""
+"If you set \"redirect_to"
+"\",                                                                 when the "
+"server redirect "
+"to                                                                a this "
+"URL, set some get params"
+msgstr ""
+
+#: models.py:71
+msgid "subject"
+msgstr ""
+
+#: models.py:72 models.py:141
+msgid "Subject"
+msgstr ""
+
+#: models.py:73
+msgid "fixed subject"
+msgstr ""
+
+#: models.py:74
+msgid "submit"
+msgstr ""
+
+#: models.py:75
+msgid "Send"
+msgstr ""
+
+#: models.py:76
+msgid "reset"
+msgstr ""
+
+#: models.py:77
+msgid "Reset"
+msgstr ""
+
+#: models.py:79
+msgid "reset button"
+msgstr ""
+
+#: models.py:83
+msgid "content"
+msgstr ""
+
+#: models.py:86
+msgid "captcha"
+msgstr ""
+
+#: models.py:87
+msgid "contact email"
+msgstr ""
+
+#: models.py:88
+msgid "Fixed contact email"
+msgstr ""
+
+#: models.py:89
+msgid ""
+"If you select \"contact email"
+"\",                                                                 you can "
+"choose if this field "
+"is                                                                editable "
+"in the public view "
+"when                                                                the user "
+"is authenticated"
+msgstr ""
+
+#: models.py:101
+msgid "Contact Form"
+msgstr ""
+
+#: models.py:102
+msgid "Contact Forms"
+msgstr ""
+
+#: models.py:127 models.py:135
+msgid "sender email"
+msgstr ""
+
+#: models.py:176 models.py:202
+msgid "label"
+msgstr ""
+
+#: models.py:177
+msgid "type"
+msgstr ""
+
+#: models.py:179
+msgid "help text"
+msgstr ""
+
+#: models.py:180
+msgid "order"
+msgstr ""
+
+#: models.py:182
+msgid "required"
+msgstr ""
+
+#: models.py:190
+msgid "Configurable field"
+msgstr ""
+
+#: models.py:191
+msgid "Configurable fields"
+msgstr ""
+
+#: models.py:203
+msgid "value"
+msgstr ""
+
+#: models.py:205
+msgid "select option"
+msgstr ""
+
+#: models.py:218
+msgid "sender"
+msgstr ""
+
+#: models.py:219
+msgid "response"
+msgstr ""
+
+#: models.py:220
+msgid "sent date"
+msgstr ""
+
+#: templates/contactform/email.html:3
+#, python-format
+msgid ""
+"\n"
+"Contact form sended from content: \"%(name)s\" by \"%(user)s (%(username)s)"
+"\"\n"
+msgstr ""
