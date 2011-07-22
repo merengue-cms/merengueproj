@@ -1,7 +1,10 @@
+import transmeta
+
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.utils import simplejson
+from django.utils.translation import get_language
 from django.utils.translation import ugettext as _
 
 from captcha.decorators import add_captcha
@@ -22,7 +25,8 @@ PAGINATE_BY = 20
 
 def forum_index(request, extra_context=None):
     section = get_section(request, extra_context)
-    forum_list = Forum.objects.published()
+    forum_list = Forum.objects.published().order_by(transmeta.get_real_fieldname('category__name', get_language()),
+                                                    transmeta.get_real_fieldname('name', get_language()))
     forum_list = filtering_in_section(forum_list, section)
     return content_list(request, forum_list, template_name='forum/forum_list.html', paginate_by=PAGINATE_BY)
 
