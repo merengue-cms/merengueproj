@@ -831,7 +831,7 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
     list_display_for_select = ('name', 'status', 'user_modification_date', 'last_editor')
     search_fields = (get_fallback_fieldname('name'), )
     date_hierarchy = 'creation_date'
-    list_filter = ('status', 'user_modification_date', 'last_editor', )
+    list_filter = ('workflow_status', 'user_modification_date', 'last_editor', )
     select_list_filter = ('class_name', 'status', 'user_modification_date', )
     actions = ['set_as_draft', 'set_as_pending', 'set_as_published', 'assign_owners']
     edit_related = ()

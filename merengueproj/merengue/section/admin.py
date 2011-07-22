@@ -215,7 +215,6 @@ class CustomStyleRelatedModelAdmin(RelatedModelAdmin):
 
 class DocumentAdmin(BaseContentAdmin):
     list_display = ('name', 'slug', 'workflow_status', )
-    list_filter = ('status', )
     html_fields = ('description', 'body', )
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
     actions = BaseAdmin.actions + ['set_as_published', 'set_as_draft']
