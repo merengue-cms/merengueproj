@@ -24,11 +24,16 @@ from merengue.perms import utils as perms_api
 
 class ReviewAdmin(BaseAdmin):
 
-    list_display = ('title', 'owner', 'get_assigned_to', 'is_done', 'url', 'task_object', )
+    list_display = ('title', 'owner', 'get_assigned_to', 'is_done', 'url_link', 'task_object', )
     list_filter = ('is_done', )
     search_fields = ('title', 'url', 'assigned_to__username', 'owner__username', )
     list_per_page = 50
     actions = ['mark_as_done', 'mark_as_not_done']
+
+    def url_link(self, obj):
+        return '<a href="%s" target="_blank">%s</a>' % (obj.url, obj.url)
+    url_link.short_description = _('URL')
+    url_link.allow_tags = True
 
     def get_assigned_to(self, obj):
         return ', '.join([i.username for i in obj.assigned_to.order_by('username')])
@@ -36,16 +41,17 @@ class ReviewAdmin(BaseAdmin):
 
     def get_form(self, request, obj=None):
         if not self.has_add_permission(request):
-            self.readonly_fields = ('owner', 'assigned_to', 'title', 'url', 'task_object', )
+            self.readonly_fields = ('owner', 'assigned_to', 'title', 'url_link', 'task_object', )
 
         self.fieldsets = None
         form = super(ReviewAdmin, self).get_form(request, obj)
         self.fieldsets = (
             (_('Task information'), {
-                'fields': ('owner', 'assigned_to', 'title', 'url', 'task_object', ), }),
+                'fields': ('owner', 'assigned_to', 'title', 'url_link', 'task_object', ), }),
             (_('Task status'), {
                 'fields': ('is_done', ), }),
         )
+        form.url_link = self.url_link  # URL to the object
         return form
 
     def add_view(self, request, form_url="", extra_context=None):
