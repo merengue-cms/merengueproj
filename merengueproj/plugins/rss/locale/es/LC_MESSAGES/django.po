@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-07-21 09:54+0200\n"
-"PO-Revision-Date: 2011-07-21 10:23\n"
+"PO-Revision-Date: 2011-07-22 13:58\n"
 "Last-Translator: Pablo Martin <pmartin@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr "Generar RSS de la sección"
 
 #: actions.py:44
 msgid "Creates the rss feed from a section"
-msgstr ""
+msgstr "Crea RSS desde una sección"
 
 #: blocks.py:30
 msgid "Block represents global RSS feed"
