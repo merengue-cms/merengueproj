@@ -777,7 +777,10 @@ class WorkflowBatchActionProvider(object):
         selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
         if selected:
             if request.POST.get('post', False):
-                original_status_dict = dict(queryset.values_list('pk', 'status'))
+                # we need loop because a weird error in Django ORM when you loop queryset before calling values_list
+                # this happens when a non superuser tries to change the status of some contents. See #2192
+                status_list = [(t[0], t[1]) for t in queryset.values_list('pk', 'status')]
+                original_status_dict = dict(status_list)
                 for content in queryset:
                     workflow_api.change_status(content, state)
                 obj_log = ugettext("Changed to %s") % state
