@@ -36,5 +36,11 @@ def create_review_task(owner, title=None, url=None, task_object=None, users=[], 
         rt.assigned_to.add(user)
 
 
+def get_publishers(content):
+    """ Get users who may publish a content """
+    from merengue.perms import utils as perms_api
+    return [u for u in User.objects.filter(is_staff=True) if perms_api.has_permission(content, u, 'can_published')]
+
+
 def get_review_tasks(**filters):
     return ReviewTask.objects.filter(**filters)

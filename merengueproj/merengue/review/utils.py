@@ -1,12 +1,30 @@
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
+from django.core.exceptions import ImproperlyConfigured
 from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
-from django.utils.translation import ugettext
 from django.template.loader import render_to_string
+from django.utils.translation import ugettext
+from django.utils.importlib import import_module
 
 from transmeta import get_real_fieldname
+
+
+def get_reviewers(obj):
+    path = settings.REVIEWERS_EXTRACTOR
+    try:
+        mod_name, function_name = path.rsplit('.', 1)
+        mod = import_module(mod_name)
+    except ImportError, e:
+        raise ImproperlyConfigured(('Error importing email backend module %s: "%s"'
+                                    % (mod_name, e)))
+    try:
+        function = getattr(mod, function_name)
+    except AttributeError:
+        raise ImproperlyConfigured(('Module "%s" does not define a '
+                                    '"%s" function' % (mod_name, function_name)))
+    return function(obj)
 
 
 def send_mail_content_as_pending(obj, review_task, users=None,

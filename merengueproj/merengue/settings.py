@@ -352,6 +352,9 @@ AUTOREPORTS_SUBFIX = True
 # Default workflow
 DEFAULT_WORKFLOW = 1
 
+# Reviewers fetching function
+REVIEWERS_EXTRACTOR = 'merengue.review.get_publishers'
+
 # Portal link categories
 PORTAL_LINK_CATEGORIES = (
     ('primary', ugettext('Primary link')),
