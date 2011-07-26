@@ -23,7 +23,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.review.utils import send_mail_content_as_pending
+from merengue.review.utils import send_mail_content_as_pending, get_reviewers
 
 
 class ReviewTask(models.Model):
@@ -55,12 +55,10 @@ def notify_review_task(sender, instance, created, **kwargs):
     if created and getattr(settings, 'SEND_MAIL_IF_PENDING', False):
         if not ReviewTask.objects.filter(
             is_done=False, task_object_id=instance.task_object_id).count() > 1:
-            from merengue.perms import utils as perms_api
             # disclaimer: the assigned users are not selected using instance
             # because they're not updated, because M2M fields are updated
             # after the post_save signal
-            assigned = [i for i in User.objects.all()
-                        if perms_api.has_permission(instance.task_object, i, 'can_published')]
+            assigned = get_reviewers(instance.task_object)
             send_mail_content_as_pending(instance.task_object, instance,
                                          [instance.owner] + assigned)
 
