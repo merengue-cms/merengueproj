@@ -589,8 +589,11 @@ div.contentFiles ul li {
     height:25px;
 }
 
-#eventsCalendar {
+#eeventscalendar {
     background-color: white;
+}
+#eventscalendar .ui-datepicker {
+    height: 182px;
 }
 
 /* ----- events view  ----- */
@@ -666,6 +669,7 @@ div.contentFiles ul li {
 #content .star-rating a span {
     left: 0;
     top:25px;
+    color: #54B848 !important;
 }
 
 /* ----- searcher  ----- */
