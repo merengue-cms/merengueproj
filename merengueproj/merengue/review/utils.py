@@ -38,11 +38,11 @@ def send_mail_content_as_pending(obj, review_task, users=None,
                                                                 obj.name)
     domain = 'http://%s' % Site.objects.get(id=settings.SITE_ID).domain
     body = render_to_string(template, {
-            'content': obj,
-            'content_url': '%s%s' % (domain, obj.get_absolute_url()),
-            'admin_content_url': '%s%s' % (domain, obj.get_admin_absolute_url()),
-            'task_admin_url': '%s%s' % (domain, reverse('admin:review_reviewtask_change',
-                                                        args=(review_task.pk,)))})
+        'content': obj,
+        'content_url': '%s%s' % (domain, obj.get_absolute_url()),
+        'admin_content_url': '%s%s' % (domain, obj.get_admin_absolute_url()),
+        'task_admin_url': '%s%s' % (domain, reverse('admin:review_reviewtask_change',
+                                                    args=(review_task.pk,)))})
     from_mail = settings.EMAIL_HOST_USER
     recipers = list(set([user.email for user in users if user.email]))
 
