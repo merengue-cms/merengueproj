@@ -68,6 +68,7 @@ ul#search-sections li.selected {
 
 .searchResultsItem h3 {
     font-size: 1.5em;
+    line-height: 1.55em;
     margin-bottom: 0.5em;
 }
 
