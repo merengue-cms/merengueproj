@@ -19,10 +19,10 @@
 from django.db.models import Q
 
 
-def get_filter_ct(obj):
+def get_filter_ct(obj, field='related'):
     ctypes = [(c._meta.app_label, c._meta.module_name)for c in obj.__class__.mro() if getattr(c, '_meta', None)]
     filter_ctypes = Q()
     for app_label, module_name in ctypes:
-        filter_ctypes = filter_ctypes | Q(related_content_type__app_label=app_label,
-                                          related_content_type__model=module_name)
+        filter_ctypes = filter_ctypes | Q(**{'%s_content_type__app_label' % field: app_label,
+                                             '%s_content_type__model' % field: module_name})
     return filter_ctypes

@@ -91,7 +91,10 @@ class HotLinkForm(forms.ModelForm):
             if menu:
                 raise forms.ValidationError(_(u'Already exits a menu in your section with this slug'))
         if self.is_standingout(cleaned_data) and section:
-            standingouts = self.get_standingout_of_section(section)
+            from plugins.standingout.utils import get_filter_ct
+            standingouts = self.get_standingout_of_section(section).filter(
+                                    obj_id=self.content.id).filter(
+                                    get_filter_ct(self.content, 'obj'))
             if standingouts:
                 raise forms.ValidationError(_(u'Already exits a standing out in your section with this content'))
         return cleaned_data
