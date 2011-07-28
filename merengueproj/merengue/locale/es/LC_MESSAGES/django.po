@@ -1783,7 +1783,7 @@ msgstr ""
 
 #: merengue/internallinks/forms.py:31
 msgid "The description"
-msgstr ""
+msgstr "La descripción"
 
 #: merengue/internallinks/forms.py:31
 #: merengue/internallinks/templates/internallinks/internal_links_search.html.py:56
@@ -1792,12 +1792,12 @@ msgstr "Descripción"
 
 #: merengue/internallinks/forms.py:31
 msgid "which description"
-msgstr ""
+msgstr "con descripción"
 
 #: merengue/internallinks/views.py:66
 #, python-format
 msgid "%s contents found"
-msgstr ""
+msgstr "%s contenidos encontrado"
 
 #: merengue/internallinks/views.py:67 merengue/portal/models.py:38
 #: merengue/section/admin.py:297 merengue/section/models.py:306
@@ -1865,7 +1865,7 @@ msgstr "fotos"
 
 #: merengue/multimedia/admin.py:321 merengue/multimedia/models.py:259
 msgid "videos"
-msgstr ""
+msgstr "vídeos"
 
 #: merengue/multimedia/admin.py:326 merengue/multimedia/models.py:296
 msgid "panoramic views"
@@ -1937,7 +1937,7 @@ msgstr "foto"
 
 #: merengue/multimedia/models.py:239
 msgid "video file"
-msgstr ""
+msgstr "archivo de vídeo"
 
 #: merengue/multimedia/models.py:242
 msgid "The file will convert to flv format. It could lose a little of quality"
