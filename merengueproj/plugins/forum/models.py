@@ -68,8 +68,7 @@ class Thread(BaseContent):
     def get_main_section(self):
         return self.forum.get_main_section()
 
-    @permalink
-    def public_link(self):
+    def _public_link_without_section(self):
         return ('thread_view', [self.forum.slug, self.slug])
 
     def save(self, *args, **kwargs):
