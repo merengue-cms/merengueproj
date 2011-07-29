@@ -571,6 +571,7 @@ HTML snapshot:
     var RE = {
         resize:         /(img|swf|flv)/, // file types to resize
         overlay:        /(img|iframe|html|inline)/, // content types to not use an overlay image for on FF Mac
+        rtmp:           /(rtmp):\/\/(.*)/,
         swf:            /\.swf\s*$/i, // swf file extension
         flv:            /\.flv\s*$/i, // flv file extension
         domain:         /:\/\/(.*?)[:\/]/, // domain prefix
@@ -1056,6 +1057,7 @@ HTML snapshot:
         if(url.indexOf('#') > -1 && this_domain) return 'inline';
         var q_index = url.indexOf('?');
         if(q_index > -1) url = url.substring(0, q_index); // strip query string for player detection purposes
+        if(RE.rtmp.test(url)) return plugins.fla ? 'rtmp' : 'unsupported-rtmp';
         if(RE.swf.test(url)) return plugins.fla ? 'swf' : 'unsupported-swf';
         if(RE.flv.test(url)) return plugins.fla ? 'flv' : 'unsupported-flv';
         if(RE.qt.test(url)) return plugins.qt ? 'qt' : 'unsupported-qt';
@@ -1470,6 +1472,7 @@ HTML snapshot:
             case 'qt':
             case 'wmp':
             case 'external':
+            case 'rtmp':
                 var markup = Shadowbox.movieMarkup(obj);
                 resizeContent(markup.height, markup.width, function(){
                     showBars(function(){
@@ -2279,7 +2282,7 @@ HTML snapshot:
     Shadowbox.open = function(obj, opts){
         if(activated) return; // already open
         activated = true;
-	jQuery('div.panoramic_visor iframe').hide();
+        jQuery('div.panoramic_visor iframe').hide();
 
         // is it a link?
         if(isLink(obj)){
@@ -2449,6 +2452,26 @@ HTML snapshot:
         cache = [];
     };
 
+    Shadowbox.parseJSON = function(json) {
+        try {
+            return JSON.parse(json);
+        } catch (errno1) {
+            try {
+                return jQuery.parseJSON(json)
+            }
+            catch(errno2) {
+                return  eval("( " + json + " )");
+            }
+        }
+    };
+
+    Shadowbox.toJSON = function (obj) {
+        try {
+            return JSON.stringify(obj);
+        } catch (errno) {
+            return jQuery.toJSON(obj)
+        }
+    };
     /**
      * Generates the markup necessary to embed the movie file with the given
      * link element. This markup will be browser-specific. Useful for generating
@@ -2479,7 +2502,6 @@ HTML snapshot:
             tag:    'object',
             name:   'shadowbox_content'
         };
-
         switch(obj.type){
             case 'swf':
                 var dims = getDimensions(h, w, true);
@@ -2502,22 +2524,37 @@ HTML snapshot:
                 var dims = getDimensions(h, h/a, true); // resize
                 h = dims.height;
                 w = (h-(controls?20:0))/a; // maintain aspect ratio
-                var flashvars = [
-                    'config=' + obj.content +
-                    '&height=' + h +
-                    '&width=' + w +
-                    '&autostart=' + autoplay,
-                    'displayheight=' + (h - (controls?20:0)),
-                    'showicons=' + showicons,
-                    'backcolor=0xFFFFFF&amp;frontcolor=0x484848&amp;lightcolor=0x557722',
-                    '&allowfullscreen=true'
-                ];
+                var flashvars = obj.el.getAttribute("flashvars");
                 markup.type = 'application/x-shockwave-flash';
                 markup.data = options.assetURL + options.flvPlayer;
                 markup.children = [
                     { tag: 'param', name: 'movie', value: options.assetURL + options.flvPlayer },
                     { tag: 'param', name: 'allowfullscreen', value: 'true' },
-                    { tag: 'param', name: 'flashvars', value: flashvars.join('&amp;') }
+                    { tag: 'param', name: 'flashvars', value: 'config=' + flashvars },
+                    { tag: 'param', name: 'autostart', value: 'false' }
+                ];
+            break;
+            case 'rtmp':
+                autoplay = autoplay ? 'true' : 'false';
+                var showicons = 'false';
+                var a = h/w; // aspect ratio
+                if(controls){
+                    showicons = 'true';
+                    h += 20; // height of JW FLV player controller
+                }
+                var dims = getDimensions(h, h/a, true); // resize
+                h = dims.height;
+                w = (h-(controls?20:0))/a; // maintain aspect ratio
+                var flashvars = Shadowbox.parseJSON(obj.el.getAttribute("flashvars"));
+                flashvars["plugins"] = {"rtmp": {"url":"/media/merengue/flash/flowplayer.rtmp-3.2.3.swf",}}
+                markup.type = 'application/x-shockwave-flash';
+                markup.data = options.assetURL + options.flvPlayer;
+                markup.children = [
+                    { tag: 'param', name: 'movie', value: options.assetURL + options.flvPlayer },
+                    { tag: 'param', name: 'allowfullscreen', value: 'true' },
+                    { tag: 'param', name: 'flashvars', value: 'config=' + Shadowbox.toJSON(flashvars).replace(/\"/g, "&quot;")},
+                    { tag: 'param', name: 'autostart', value: 'false' },
+                    { tag: 'param', name: 'quality', value: 'high' }
                 ];
             break;
             case 'flv':
@@ -2531,22 +2568,15 @@ HTML snapshot:
                 var dims = getDimensions(h, h/a, true); // resize
                 h = dims.height;
                 w = (h-(controls?20:0))/a; // maintain aspect ratio
-                var flashvars = [
-                    'file=' + obj.content,
-                    'height=' + h,
-                    'width=' + w,
-                    'autostart=' + autoplay,
-                    'displayheight=' + (h - (controls?20:0)),
-                    'showicons=' + showicons,
-                    'backcolor=0xFFFFFF&amp;frontcolor=0x484848&amp;lightcolor=0x557722',
-                    'allowfullscreen=true'
-                ];
+                var flashvars = Shadowbox.parseJSON(obj.el.getAttribute("flashvars"));
                 markup.type = 'application/x-shockwave-flash';
                 markup.data = options.assetURL + options.flvPlayer;
                 markup.children = [
                     { tag: 'param', name: 'movie', value: options.assetURL + options.flvPlayer },
                     { tag: 'param', name: 'allowfullscreen', value: 'true' },
-                    { tag: 'param', name: 'flashvars', value: flashvars.join('&amp;') }
+                    { tag: 'param', name: 'flashvars', value: 'config=' + Shadowbox.toJSON(flashvars).replace(/\"/g, "&quot;")  },
+                    { tag: 'param', name: 'autostart', value: 'false' },
+                    { tag: 'param', name: 'quality', value: 'high' }
                 ];
             break;
             case 'qt':
@@ -2561,7 +2591,8 @@ HTML snapshot:
                     { tag: 'param', name: 'src', value: obj.content },
                     { tag: 'param', name: 'scale', value: 'aspect' },
                     { tag: 'param', name: 'controller', value: controls },
-                    { tag: 'param', name: 'autoplay', value: autoplay }
+                    { tag: 'param', name: 'autoplay', value: autoplay },
+                    { tag: 'param', name: 'quality', value: 'high' }
                 ];
                 if(isIE){
                     markup.classid = 'clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B';

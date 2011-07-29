@@ -3,5 +3,13 @@
 {% block thumbnail %}
    {{ MEDIA_URL }}merengue/img/multimedia/previews/audio_preview.jpg
 {% endblock %}
-{% block fullview %}{% url merengue.multimedia.views.audio_xml multimedia.id %}{% endblock %}
+
+{% block extraattrs %}
+    flashvars="{{ multimedia.audio.get_configure }}"
+{% endblock %}
+
+{% block fullview %}
+    {{ multimedia.audio.get_absolute_url }}
+{% endblock %}
+
 {% block extraoptions %}type=external{% endblock %}
