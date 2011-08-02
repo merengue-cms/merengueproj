@@ -705,9 +705,14 @@ def get_plugins_middleware_methods(midd_type):
 
 def register_dummy_plugin(plugin_name):
     """ Register a dummy plugin. Useful when we cannot access to the PluginConfig """
-    registered_plugin, created = RegisteredPlugin.objects.get_or_create(
-        directory_name=plugin_name,
-    )
+    try:
+        registered_plugin = RegisteredPlugin.objects.get(
+            directory_name=plugin_name,
+        )
+    except RegisteredPlugin.DoesNotExist:
+        registered_plugin = RegisteredPlugin.objects.create(
+            directory_name=plugin_name, broken=True,  # it's important to create with broken=True
+        )
     registered_plugin.broken = True
     registered_plugin.class_name = 'PluginConfig'
     registered_plugin.module = '%s.%s.config' % (settings.PLUGINS_DIR, plugin_name)
