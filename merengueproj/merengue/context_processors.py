@@ -67,6 +67,10 @@ def is_homepage(request):
     return {'is_homepage': request.path == '/'}
 
 
+def public_server(request):
+    return {'PUBLIC_SERVER': settings.PUBLIC_SERVER}
+
+
 def all_context(request):
     """
     Add all template context
@@ -79,4 +83,7 @@ def all_context(request):
     context.update(merengue_urls_prefix(request))
     context.update(is_homepage(request))
     # add here more context dict to the request
+    if (settings.DEBUG):
+        context.update(public_server(request))
+
     return context

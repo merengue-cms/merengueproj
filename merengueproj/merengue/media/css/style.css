@@ -139,6 +139,11 @@ div.document-section {
     padding: 1em;
 }
 
+img.serverImage {
+    opacity: 0.7;
+    filter:alpha(opacity=7);
+}
+
 div.errormessage, div#messagebox ul#info-list {
     background: #FFCC1B  no-repeat scroll 5px 50%;
     border: 1px solid #FFA500;

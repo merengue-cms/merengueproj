@@ -51,6 +51,24 @@
       }
     </script>
   {% endif %}
+
+{% block debug %}
+  {% if debug %}
+    <script type="text/javascript">
+    (function($) {
+        $(document).ready(function () {
+          var server = '{{ PUBLIC_SERVER }}';
+          jQuery("img").filter(function (e, v) {
+            if (v.naturalHeight === 0 && v.naturalWidth === 0) {
+              v.setAttribute("src", server + v.getAttribute("src"));
+              v.addClass("serverImage");
+            }
+          });
+        });
+      }(jQuery));
+    </script>
+  {% endif %}
+{% endblock %}
 </head>
 
 <body dir="ltr" {% block extrabodytag %}{% endblock %}>
