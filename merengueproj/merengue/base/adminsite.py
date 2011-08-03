@@ -341,7 +341,7 @@ class RelatedModelRegistrable(object):
         model_tools = self.tools.get(related_to, {})
 
         if tool_name in model_tools and admin_class != model_tools[tool_name].__class__:
-            raise Exception('Already registered a modeladmin with %s as tool_name' % tool_name)
+            raise AlreadyRegistered('Already registered a modeladmin with %s as tool_name' % tool_name)
 
         model_admin = model_tools.get(tool_name, admin_class(model_or_iterable, self))
         model_tools[tool_name] = model_admin

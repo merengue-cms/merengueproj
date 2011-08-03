@@ -118,7 +118,7 @@ function MultiSelector( list_target, max ){
 		var new_row_button = document.createElement( 'a' );
         new_row_button.href = "#";
 // 		new_row_button.type = 'button';
-		new_row_button.innerHTML = '<img src="/site_media/img/user-trash.png"/> ';
+		new_row_button.innerHTML = '<span class="removeFile" /> ';
 //         new_row_button.style.visibility = 'hidden';
 
 		// References

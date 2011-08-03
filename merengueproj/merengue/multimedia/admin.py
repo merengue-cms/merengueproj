@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.conf import settings
 from django.contrib import admin
 from django.core.exceptions import PermissionDenied
 from django.contrib.admin.options import IncorrectLookupParameters
@@ -55,7 +56,10 @@ class MultimediaAddContentRelatedModelAdmin(BaseMultimediaContentRelatedModelAdm
         user = request.user
         if not perms_api.can_manage_site(user) and\
            not perms_api.has_global_permission(user, 'edit'):
-            qs = qs.filter(Q(owners=request.user))
+            owner_filter = Q(owners=request.user)
+            if settings.ACQUIRE_SECTION_ROLES:
+                owner_filter = owner_filter | Q(sections__owners=request.user)
+            qs = qs.filter(owner_filter)
         return qs
 
     def associate_contents(self, request, queryset):

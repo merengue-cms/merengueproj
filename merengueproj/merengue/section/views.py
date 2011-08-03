@@ -96,6 +96,8 @@ def menu_section_view(request, section_slug, menu_slug):
         can_edit = False
         if section:
             can_edit = section.can_edit(request.user)
+        else:
+            can_edit = menu.can_edit(request.user)
         return render_to_response('section/menu_link_not_exists.html',
             {'menu': menu, 'can_edit': can_edit}, context_instance=RequestContext(request))
     if isinstance(link, AbsoluteLink):

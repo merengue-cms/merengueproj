@@ -125,7 +125,7 @@ class AddBlockForm(BaseForm):
     place = forms.CharField(widget=forms.HiddenInput)
     contentid = forms.CharField(widget=forms.HiddenInput, required=False)
     sectionid = forms.CharField(widget=forms.HiddenInput, required=False)
-    scope = forms.ChoiceField(widget=forms.RadioSelect, initial='global')
+    scope = forms.ChoiceField(label=_('Scope'), widget=forms.RadioSelect, initial='global')
 
     def _find_subclasses(self, base, subclasses=None):
         subclasses = subclasses or []

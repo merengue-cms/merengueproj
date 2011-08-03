@@ -4,20 +4,20 @@
 Blocks
 ======
 
-This section is about blocks in Merengue. Merengue blocks are components
-which can be located in several places and render a fragment with information
-(usually HTML). Blocks are defined inside plugins and registered when plugin
+This section describes how blocks are used in Merengue. Merengue "blocks" are components
+which can be positioned in various locations and render a fragment with information
+(usually via HTML). Blocks are defined inside plugins and registered when the plugin
 is activated.
 
-The place of every block can be defined in admin site and you can even
-using the Merengue `block reordering interface`_ to change blocks location.
+The position or location of every block can be defined in the admin site. You can also
+use the Merengue `block reordering interface`_ to change a block's location.
 
 .. _`block reordering interface`: http://www.merengueproject.org/features/visual-blocks-management/
 
-Block kinds
------------
+Types of Blocks
+---------------
 
-* **Basic blocks**: plain blocks which are thought to be render in every Merengue page. Some examples:
+* **Basic blocks**: blocks of information which are rendered on every Merengue page. Some examples:
 
   * The calendar block.
 
@@ -31,12 +31,12 @@ Block kinds
 
 * **Section blocks**: blocks to be render inside a section, like the section menu block.
 
-Plugin tree with blocks
------------------------
+A Plugin With Blocks
+--------------------
 
-We know the conventional plugin tree (see :ref:`plugin development reference
-<topics-plugins-development>`). Here we emphasize the files on which we are
-going to work in this example:
+You should be familiar with the conventional plugin directory structure (if not,
+see :ref:`plugin development reference<topics-plugins-development>`). Here we want
+to notice the files which we are going to use in this example:
 
 .. code-block:: html
 
@@ -52,10 +52,10 @@ going to work in this example:
          ...
 
 
-Example plugin block
---------------------
+An Example Plugin Block
+-----------------------
 
-This is a ``blocks.py`` file code fragment:
+What follows is a ``blocks.py`` file code fragment:
 
 .. code-block:: python
 
@@ -73,25 +73,26 @@ This is a ``blocks.py`` file code fragment:
                                     context={'news_list': news_list})
 
 * ``name`` is the block name.
-* ``default_place`` indicates the place where the block will be showed by default.
-* ``render`` is a similar function to the ``render_to_response`` Django function. This function is the responsible for displaying the block.
-* ``news_list`` stores the number of news gotten by ``get_news``.
+* ``default_place`` indicates the position  where the block will be rendered by default.
+* ``render`` is a similar function to the ``render_to_response`` Django function.
+  This function is responsible for displaying the block.
+* ``news_list`` stores the number of news items retrieved by ``get_news``.
 * ``template_name`` is the full name of the block template.
 * ``block_title`` is the block title.
-* ``context`` is a dictionary of values to render the template with.
+* ``context`` is a dictionary of values used to render the template.
 
-About block rendering
----------------------
+Block Rendering
+---------------
 
-In a Merengue block, ``render`` method is a callback function which will be
-called when Merengue is rendering blocks in location defined for that block.
+In a Merengue block, the ``render`` method is a callback function which is
+called when Merengue renders blocks in the location defined for that particular block.
 
-For rendering block you can use several templatetags like ``render_blocks``,
+In the block rendering code you can use several templatetags like ``render_blocks``,
 ``render_content_blocks``, ``render_section_blocks`` and ``render_all_blocks``.
 
-The block rendering is done in some base templates. For example, in
-`base/inc.leftsidebar.html`_ template, the blocks placed at ``leftsidebar`` are
-rendered, using this ``render_all_blocks`` templatetags as follows:
+The block rendering is done using base templates. For example, in
+`base/inc.leftsidebar.html`_ template, the blocks placed in the ``leftsidebar`` are
+rendered using the ``render_all_blocks`` templatetag as follows:
 
 .. code-block:: html+django
 
@@ -102,9 +103,9 @@ rendered, using this ``render_all_blocks`` templatetags as follows:
     {# more stuff #}
   {% endblock %}
 
-This ``render_all_blocks`` templatetags will cause calling to ``render`` method
-with ``leftsidebar`` passed in ``place`` parameter. The ``render_all_blocks``
-method is in fact a shortcut of this HTML fragment:
+In the example above, the ``render_all_blocks`` templatetags initiates a call to
+the ``render`` method, passing ``leftsidebar`` as the ``place`` parameter. The ``render_all_blocks``
+method is, in fact, a shortcut for using this HTML fragment:
 
 .. code-block:: html+django
 
@@ -116,13 +117,15 @@ method is in fact a shortcut of this HTML fragment:
         {% render_section_blocks "leftsidebar" for section %}
     {% endif %}
 
-So, the first ``render_blocks`` call will render the plain blocks,
-``render_content_blocks`` call will render all content block and the
+So, the first ``render_blocks`` call will render the plain blocks. The
+``render_content_blocks`` call will render all content blocks and the
 ``render_section_blocks`` will render all section blocks.
 
-Every ``render_*_blocks`` templatetag will call to the ``render`` method of
-every registered block. Also, request and context will be passed by param, to
-be used in ``render`` method, if you want. Next example is self-explanatory:
+Every ``render_*_blocks`` templatetag will call the ``render`` method of
+every registered block. Also, the request and context will be passed via parameters, so
+that that information can be used in the ``render`` method, if you want.
+
+The next example is self-explanatory:
 
 .. code-block:: python
 
@@ -140,10 +143,10 @@ be used in ``render`` method, if you want. Next example is self-explanatory:
 
 .. _`base/inc.leftsidebar.html`: http://dev.merengueproject.org/browser/trunk/merengueproj/merengue/base/templates/base/inc.leftsidebar.html
 
-Implementing the block template
+Implementing the Block Template
 -------------------------------
 
-Let's back to ``LatestNewsBlock`` block. To finish block rendering we must
+Let's go back to the ``LatestNewsBlock`` block example. To finish block rendering we must
 create a template inside ``block_latest.html``:
 
 .. code-block:: html+django
@@ -158,15 +161,17 @@ create a template inside ``block_latest.html``:
     </ul>
     {% endblock %}
 
-This template shows the title of the last published news. The number of news that is considered
-*last news* is specified in render function inside the ``blocks.py`` (five in this case).
+This template shows the titles of the last published news items. The number of
+news items considered *last news* is specified in the render function inside the
+``blocks.py`` (five in this case).
 
-Setting a block as fixed
+Setting a Block as Fixed
 ------------------------
 
-There are two ways you can prevent staff users from changing the way a block is displayed.
+There are two ways you can prevent "staff" users from changing the way a block is displayed.
 
-The attribute ``is_fixed = True``, when set on the block definition, will prevent edition on the block order, place and active attributes. For example:
+The attribute ``is_fixed = True``, when set on the block definition, will prevent
+editing of the block order, location, and active attributes. For example:
 
 .. code-block:: python
 
@@ -178,16 +183,22 @@ The attribute ``is_fixed = True``, when set on the block definition, will preven
         def render(self, request, place, context):
             # ...
 
-The defined block will always be shown when the rightsidebar blocks are rendered, and no admin user will be able to change its order, move it to another place, or disable it.
+The block defined above will always be shown when the rightsidebar blocks are
+rendered, and no admin user will be able to change its order, move it to another
+place, or disable it.
 
-A more relaxed way to avoid editing the place where the block will be rendered is to use the ``fixed_place`` attribute. When its set to ``True`` in the block definition, it will prevent the edition on the place, both from the admin and the visual drag and drop in the public view.
+A simpler way of preventing the ability to edit the block location (i.e. where
+it will be rendered) is to use the ``fixed_place`` attribute. This attribute, when
+set to ``True`` in the block definition, will prevent the editing of the location,
+both from the admin interface as well as the from visual drag and drop GUI in
+the public view.
 
 Both ``is_fixed`` and ``fixed_place`` default to False when not set.
 
-Setting a block as non addable
-------------------------------
+Setting a Block as "Non-Addable"
+--------------------------------
 
-A non addable block is a block that the manager user cannot add using the user interface.
+A non-addable block is a block that the manager user cannot add using the user interface.
 
 .. code-block:: python
 
@@ -199,21 +210,22 @@ A non addable block is a block that the manager user cannot add using the user i
         def render(self, request, place, context):
             # ...
 
-Showing and hiding blocks
+Showing/Hiding Blocks
 --------------------------
 
-From Merengue v0.6, block rendering can be controlled using two additional parameters in the block configuration:
+Since Merengue v0.6, block rendering can be controlled using two additional
+parameters in the block configuration:
 
 * ``Shown in urls``
 * ``Hidden in urls``
 
-These parameters are used to decide wether to render or not the block. If both
-are empty, the block will always be rendered in its place. Otherwise, the block 
+These parameters are used to determine whether, or not, to render the block. If both
+are empty, the block will always be rendered at its location. Otherwise, the block 
 will be shown or hidden if the current url is found within the specified values.
 
-``hiden in urls`` does only take effect if ``shown in urls`` is *not set*.
+``hidden in urls`` only takes effect if ``shown in urls`` is *not set*.
 
-Both parameters accept a list of regular expressions, written one per line with
+Both parameters accept a list of regular expressions written, one per line, with
 the standard `python regular expression syntax <http://docs.python.org/library/re.html#regular-expression-syntax/>`_
 and no quotes.
 
@@ -226,15 +238,15 @@ For example:
   news/
 
 would show the block only in urls with *news/* in it. This means the block won't
-be displayed in any other place (such as the homepage).
+be displayed for any other URL (such as the homepage).
 
-The regular expressions are matched towards the site relative url, so leave out
+The regular expressions are matched relative to the site URL, so leave out
 the http and domain part. Nonetheless, make sure you provide complete 
 expressions in order to avoid undesired matches.
 
 For example:
 
-``hiden in urls``
+``hidden in urls``
 
 .. code-block:: python
 
@@ -250,12 +262,12 @@ the block in your home page, you should write:
   ^/$
 
 
-Configuring a block
+Configuring a Block
 -------------------
 
-Some blocks can be configured in public view. In example, you may configure a
-block which list latest contents added with a ``limit`` parameter to configure
-it:
+Some blocks can be configured in the public view. For example, you may use the
+``limit`` parameter to configure a block which lists the latest content added to
+the site:
 
 .. code-block:: python
 
@@ -279,21 +291,22 @@ it:
                                      block_title=ugettext('Latest added contents'),
                                      context={'content_list': content_list})
 
-The ``limit`` configuration parameter is used in render method to limit the
-queryset. If you are logged as admin user in public interface, you will see a
-configuration icon if you enter the mouse over the block:
+The ``limit``  parameter is used in the render method to limit the
+size of the queryset. If you are logged as the admin user in the public interface,
+you will see a configuration icon if you hover the mouse arrow over the block:
 
 .. image:: _images/latest_added_block.png
 
-If you click in configuration icon Merengue will show a form to config the
-block:
+If you click the configuration icon, Merengue will show a form which will allow
+you to configure the block:
 
 .. image:: _images/latest_added_block_config.png
 
-How to register the block
--------------------------
+Registering a Block
+-------------------
 
-Our ``LatestNewsBlock`` class must be referenced in the plugin configuration inside ``config.py`` file:
+Our ``LatestNewsBlock`` class must be referenced in the plugin configuration
+located inside the ``config.py`` file:
 
 .. code-block:: python
 
@@ -307,14 +320,14 @@ Our ``LatestNewsBlock`` class must be referenced in the plugin configuration ins
         def get_blocks(self):
             return [LatestNewsBlock]
 
-* ``get_blocks`` is a method that returns the specified blocks that we want to register.
+* ``get_blocks`` is a method that returns the specific blocks that we want to register.
 
 
-Multimedia assets in blocks
+Multimedia Assets in Blocks
 ---------------------------
 
-If block you are implemented need to use some Javascript or CSS files in the
-block template. The direct way was to do something like this:
+If the block you are implementing needs to use some Javascript or CSS files in the
+block template, use the following example as a way was to handle this situation:
 
 .. code-block:: html+django
 
@@ -330,10 +343,13 @@ block template. The direct way was to do something like this:
 
 The previous solution has two inconveniences:
 
-* Mix media assets with HTML content. The CSS files are recommended to put into ``<head>...</head>`` section, and Javascript files should be just before ``</body>`` tag, for performance reasons.
-* You cannot do features like compression or merging, because Merengue does know the blocks which uses Javascript or CSS (because there is no registration).
+* Mix media assets with HTML content. The recommended location for the CSS files
+is in the ``<head>...</head>`` section, and Javascript files should be placed just
+before the ``</body>`` tag, for performance reasons.
+* You cannot do features like compression or merging, because Merengue does know
+which blocks use Javascript or CSS (because there is no registration).
 
-Merengue came with multimedia features to add CSS or Javascript files like this:
+Merengue comes with the following template features to add CSS or Javascript files like this:
 
 .. code-block:: html+django
 
@@ -353,23 +369,23 @@ Merengue came with multimedia features to add CSS or Javascript files like this:
     # stuff that uses these assets
     {% endblock %}
 
-All the media definitions declared into ``{% addmedia "css" %}`` block will be
-included in ``<head>`` section and the ``{% addmedia "js" %}`` stuff will before
-``</body>`` tag.
+All of the media definitions declared in the ``{% addmedia "css" %}`` block will be
+included in the ``<head>`` section and the ``{% addmedia "js" %}`` stuff will be
+inserted before the ``</body>`` tag.
 
-Also, those media assets will be merged and compressed if ``DEBUG`` is ``False``
-or ``COMPRESS`` setting is set to ``True``.
+Also, these media assets will be merged and compressed if ``DEBUG`` is ``False``
+or the ``COMPRESS`` setting is set to ``True``.
 
 
-Blocks Caching
---------------
+Block Caching
+-------------
 
-The HTML rendered in all the blocks can be cached in the management interface.
-Look at the :ref:`block caching section <topics-userguide-block_caching>` in
-the user guide for more information.
+The HTML rendered in all blocks can be cached in the management interface.
+Check out the :ref:`block caching section <topics-userguide-block_caching>` in
+the User Guide for more information.
 
 You can define default block parameters for your blocks by including a
-``default_caching_params`` parameter in block definition:
+``default_caching_params`` parameter in your block definition:
 
 .. code-block:: python
 
@@ -384,8 +400,8 @@ You can define default block parameters for your blocks by including a
             'vary_on_user': False,
         }
 
-The previous block will be cached by default only for anonymous people, with a 
-timeout of one hour and this cache will not vary on URL and user, but will vary
+The previous block will be cached by default only for anonymous users, with a 
+timeout of one hour. This cache will not vary by URL and user, but will vary
 on the current language.
 
 Of course, these default cache settings can be overriden by managers in the

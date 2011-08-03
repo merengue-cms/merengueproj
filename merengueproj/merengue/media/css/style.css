@@ -422,11 +422,11 @@ a.collapsable {
 
 a.collapsable,
 a.collapsable:hover {
-    background: transparent url(../img/drop_down_arrow2.png) no-repeat left top !important;
+    background: transparent url(../img/drop_down_arrow.png) no-repeat left top !important;
 }
 
 a.extensible,
 a.extensible:hover {
-    background: transparent url(../img/drop_down_arrow.png) no-repeat left top  !important;
+    background: transparent url(../img/drop_down_arrow2.png) no-repeat left top  !important;
 }
 /* end extensible menu */

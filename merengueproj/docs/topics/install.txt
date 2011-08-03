@@ -703,10 +703,10 @@ from source code)::
 
 .. admonition:: Assumptions
 
-    Supposing ``/home/user/yoursite`` is a usual Merengue project, created with
-    ``merengue-admin.py startproject`` command, following the installation docs.
-    Also we suppose we have used ``virtualenv`` for installing Merengue package,
-    and the virtualenv is placed in ``/home/user/venvs/merengue``
+    We assume that ``/home/user/yoursite`` is a typical Merengue project, created with the
+    ``merengue-admin.py startproject`` command, per the installation docs.
+    Also we assume that ``virtualenv`` was used to install the Merengue package,
+    and that the virtualenv environment is located at the path ``/home/user/venvs/merengue``.
 
 Finally, for starting the uWSGI server, you need a script similar to this:
 
@@ -758,13 +758,13 @@ Finally, for starting the uWSGI server, you need a script similar to this:
 .. admonition:: Note
 
     The above instructions will launch four uwsgi worker processes in parallel
-    (``-p 4`` argument). The number of workers depends of your site load. By
-    the way, if you have more than one working process, you will need use
-    Memcache as the cache backend to get invalidation cache working properly in
-    all the processes. See :ref:`configuring caching <topics-optimization-configuring-caching>`
+    (``-p 4`` argument). The number of workers depends on your site load. By
+    the way, if you have more than one working process, you will need to use
+    Memcache as the cache backend to get the invalidation cache working properly in
+    all of the processes. See :ref:`configuring caching <topics-optimization-configuring-caching>`
     for more information.
 
-Finally, you have to create a ``wsgi.py`` file inside your Merengue project
+Finally, create a ``wsgi.py`` file inside your Merengue project
 directory with the following content:
 
 .. code-block:: python
@@ -785,8 +785,8 @@ directory with the following content:
 Optimizing Merengue
 ===================
 
-Merengue is quite flexible and optimizable and allows you to improve a lot
-your site performance. See :ref:`optimizing a Merengue installation <topics-optimization>`
+Merengue is quite flexible and optimizable and allows you to significantly improve
+your site's performance. See :ref:`optimizing a Merengue installation <topics-optimization>`
 for more information.
 
 .. _`Deploying Django`: http://docs.djangoproject.com/en/dev/howto/deployment/

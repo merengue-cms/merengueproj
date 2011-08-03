@@ -352,9 +352,11 @@ class RelatedURLsModelAdmin(admin.ModelAdmin):
                         callback, args, kwargs = resolved
                         # add ourselves as parent model admin to be referred from child model admin
                         # add also parent object to be referred also in child model if needed
+                        tool.parent_model_admin = self
                         if callback.func_name in ('changelist_view', 'change_view',
                                                   'add_view', 'history_view', 'delete_view',
-                                                  'parse_path', 'permissions_view'):
+                                                  'parse_path', 'permissions_view',
+                                                  'ajax_changelist_view'):
                             kwargs['parent_model_admin'] = self
                             kwargs['parent_object'] = basecontent
                         return callback(request, *args, **kwargs)
@@ -766,7 +768,7 @@ class WorkflowBatchActionProvider(object):
     def set_as_published(self, request, queryset):
         return self.change_state(request, queryset, 'published',
                                  ugettext(u'Are you sure you want to set this items as published?'),
-                                 'can_publish')
+                                 'can_published')
     set_as_published.short_description = _("Set as published")
 
     def change_state(self, request, queryset, state, confirm_msg, perm=None):
@@ -896,8 +898,6 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
         """
         Overrides Django admin behaviour to add ownership based access control
         """
-        if request.GET.get('pop', False):
-            return True
         if obj:
             if request.method == 'POST' and obj.no_changeable:
                 return False
@@ -1211,7 +1211,8 @@ class RelatedModelAdmin(BaseAdmin):
             return obj[0]
         return None
 
-    def ajax_changelist_view(self, request, model_admin=None, parent_model_admin=None, parent_object=None):
+    def ajax_changelist_view(self, request, extra_context=None, model_admin=None, parent_model_admin=None, parent_object=None):
+        extra_context = self._update_extra_context(request, extra_context, parent_model_admin, parent_object)
         if not self.has_change_permission(request, None):
             raise PermissionDenied
         contents = [{'name': unicode(i), 'url': i.get_admin_absolute_url()} for i in self.queryset(request)]

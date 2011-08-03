@@ -1,7 +1,7 @@
 .. _topics-actions:
 
 ====================
-Working with actions
+Working with Actions
 ====================
 
 .. highlightlang:: html+django
@@ -10,28 +10,29 @@ Working with actions
 Overview
 ========
 
-What is an action?
+What is an Action?
 ------------------
 
-An action is a task that user can do with portal site, or with some content.
+An action is a task that a user can perform with the portal site, or with some
+specific content on that site.
 
-Examples was:
+Examples of actions include:
 
-* PDF export of a content.
-* Send actual URL viewing to a somebody.
-* Add actual URL to facebook.
+* PDF export of a content item.
+* Send an URL to someone.
+* Add an URL to Facebook.
 
-Actions categories
+Actions Categories
 ------------------
 
-Actions are usually placed in different places in a site layout. The default categories are:
+Actions are usually placed in different locations in a site layout. The default categories are:
 
-* ``Site actions``: actions enabled in all portal.
-* ``Content actions``: actions enabled in a content view page.
-* ``User actions``: usually user tools, only for logged users.
+* ``Site actions``: actions enabled for the entire portal.
+* ``Content actions``: actions enabled for a content view page.
+* ``User actions``: usually user tools, only for logged-in users.
 
 
-Actions rendering
+Rendering Actions
 -----------------
 
 This would be an example rendering:
@@ -88,24 +89,28 @@ This would be an example rendering:
 Actions URLs
 ------------
 
-By default, all actions go to ``action.urls`` dispatcher, for perform one action. The URL was:
+By default, each action is handled through the  ``action.urls`` dispatcher which
+performs the action. The URLs are as follows:
 
 * for all site actions: ``/actions/site/$action_name/``
 * for all content actions ``/actions/content/$content_type_id/$content_id/$action_name/``
 * for all user actions ``/actions/user/$username/$action_name/``
 
-All this URLs will call to views defined in ``actions.views``. These views will call to ``perform`` method in action dispatcher, which is a class definition for this action. See next point for more information.
+All of the above URLs will call the views defined in ``actions.views``. These views
+will then call the ``perform`` method in the action dispatcher, which is a class
+definition for this action. See the next point for more information.
 
 
-Programming actions
+Programming Actions
 ===================
 
-Actions definition
-------------------
+Action Definition
+-----------------
 
-Action perform usually will occurs in some plugin views. For this reason, an action usually will redirect to one view, with right parameters.
+An action is normally executed as part of a plugin's views. For this reason, an
+action will usually redirect a single view, with the correct parameters.
 
-This fragment would be an example for action definitions:
+The following fragment is an example of some action definitions:
 
 .. code-block: python
 
@@ -134,7 +139,10 @@ This fragment would be an example for action definitions:
 
 .. note::
 
-    Why dont perform action in action definition class itself? Because less coupling principle: you can have some utility views that make some process (maybe in other apps)... This is independent from actions links. Think in a third app reusable view like this:
+    Why not perform the action within the action's class definition? Because of
+    the less coupling principle: you can have some utility views that initiate
+    some process (maybe in other apps)... This is independent from the actions links.
+    Think about a third app reusable view like this:
 
 .. code-block: python
 
@@ -145,14 +153,15 @@ This fragment would be an example for action definitions:
            from_email = settings.DEFAULT_FROM_EMAIL
        # ... more stuff
 
-If you find a view like previous, you can use it as usual.
+If you find a view like the previous, you can use it as usual.
 
-Actions registry and configuration
-----------------------------------
+Action Registry and Configuration
+---------------------------------
 
 .. _`registry documentation`: http://
 
-Actions registry and configuration setup are implemented using ``registry`` application (more info in :ref:`registry documentation <topics-plugins-registration>`). See this example:
+Action registry and configuration are implemented with the ``registry`` application
+(more info in :ref:`registry documentation <topics-plugins-registration>`). An example:
 
 .. code-block:: python
 
@@ -178,9 +187,9 @@ Actions registry and configuration setup are implemented using ``registry`` appl
                        verbose_name=_('CC email addresses'))
        ]
 
-This config parameters would be customized in merengue admin interface.
+These configuration parameters would be customized in the Merengue admin interface.
 
-For accessing to configuration inside an app, you can do like this:
+In order to access the configuration inside an app, you can do this:
 
 .. code-block:: bash
 
@@ -192,7 +201,7 @@ For accessing to configuration inside an app, you can do like this:
     >>> sendpage_action.get_config()['cc_emails'].label
     'CC email addresses'
 
-Then, you can have a decoupled actions from a reusable view with this code:
+Then, you can decouple the action from a reusable view with the following code:
 
 .. code-block:: python
 
@@ -206,7 +215,7 @@ Then, you can have a decoupled actions from a reusable view with this code:
                                'cc_emails': self.get_config()['cc_emails'].get_value(),}),
            )
 
-Or inside view:
+Or inside the view:
 
 .. code-block:: python
 
@@ -218,7 +227,7 @@ Or inside view:
        from_email = sendpage_action.get_config()['from_email'].get_value()
        # ... do stuff
 
-Other way is using ``actions.get_action`` function:
+Another way is to use the ``actions.get_action`` function:
 
 .. code-block:: python
 

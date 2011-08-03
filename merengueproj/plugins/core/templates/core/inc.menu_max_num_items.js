@@ -22,7 +22,7 @@ function getCollapsableMenu(menu) {
         currentDepth = null;
         itemSelected = menu.find("li.selected");
         if (itemSelected.length == 0) {
-            currentDepth = 1;
+            currentDepth = 2;
         } else {
             currentDepth = getDepthOfItem(itemSelected);
         }

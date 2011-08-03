@@ -1,6 +1,6 @@
 from django.utils.datastructures import SortedDict
 
-from autoreports.utils import get_field_from_model, get_adaptor
+from autoreports.utils import get_field_from_model, get_adaptor, get_ordered_fields
 
 
 def get_fields(search):
@@ -8,7 +8,8 @@ def get_fields(search):
     fields_form_filter = SortedDict({})
     fields_form_display = SortedDict({})
 
-    for field_name, opts in search.options.items():
+    ordered_fields = get_ordered_fields(search)
+    for field_name, opts in ordered_fields:
         model_field, field = get_field_from_model(model, field_name)
         adaptor = get_adaptor(field)(model_field, field, field_name)
         adaptor.get_field_form(opts, default=True,
