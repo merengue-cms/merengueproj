@@ -56,7 +56,7 @@ class Plugin(RegistrableItem):
 
     def _get_registered_items(self, item_classes):
         for item_class in item_classes:
-            reg_item = RegisteredItem.objects.by_item_class(item_class).get()
+            reg_item = RegisteredItem.objects.get_by_item_class(item_class)
             yield reg_item.get_registry_item()
 
     def get_actions(self):
@@ -121,7 +121,7 @@ def register_plugin(plugin_dir):
     if plugin_config:
         validate_plugin(plugin_config)
         try:
-            reg_plugin = RegisteredPlugin.objects.by_item_class(plugin_config).get()
+            reg_plugin = RegisteredPlugin.objects.get_by_item_class(plugin_config)
         except RegisteredPlugin.DoesNotExist:
             reg_plugin = register(plugin_config)
         plugin = reg_plugin.get_registry_item()
@@ -177,23 +177,32 @@ def enable_active_plugins():
 
 
 def register_all_plugins(verbose=False):
-    from merengue.pluggable.utils import get_plugin_directories, get_plugin_config
+    from merengue.pluggable.models import RegisteredPlugin
+    from merengue.pluggable.utils import (get_plugin_directories, get_plugin_config,
+                                          reload_models_cache, remove_from_installed_apps,
+                                          clear_plugin_module_cache, get_plugin_module_name)
     from merengue.pluggable.checker import mark_broken_plugin
-    for plugin_dir in get_plugin_directories():
-        try:
-            if verbose:
-                plugin_config = get_plugin_config(plugin_dir)
-                if plugin_config:
-                    if not have_registered_items(plugin_config):
-                        print 'Registering new plugin %s...' % plugin_dir
+    try:
+        for plugin_dir in get_plugin_directories():
+            try:
+                if verbose:
+                    plugin_config = get_plugin_config(plugin_dir)
+                    if plugin_config:
+                        if not have_registered_items(plugin_config):
+                            print 'Registering new plugin %s...' % plugin_dir
+                        else:
+                            print 'Re-registering plugin %s...' % plugin_dir
                     else:
-                        print 'Re-registering plugin %s...' % plugin_dir
-                else:
-                    print 'Error walking to plugin %s.' % plugin_dir
-            register_plugin(plugin_dir)
-        except:
-            mark_broken_plugin(plugin_dir)
-            print 'Error registering %s plugin... go to next plugin.' % plugin_dir
+                        print 'Error walking to plugin %s.' % plugin_dir
+                register_plugin(plugin_dir)
+            except:
+                mark_broken_plugin(plugin_dir)
+                print 'Error registering %s plugin... go to next plugin.' % plugin_dir
+    finally:
+        for plugin in RegisteredPlugin.objects.inactives():
+            clear_plugin_module_cache(get_plugin_module_name(plugin.directory_name))
+            remove_from_installed_apps(plugin.directory_name)
+        reload_models_cache()
 
 
 def active_default_plugins(*args, **kwargs):

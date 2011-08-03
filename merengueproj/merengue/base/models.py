@@ -392,6 +392,7 @@ class BaseContent(BaseClass):
 
     last_editor = models.ForeignKey(User, null=True, blank=True, editable=False,
                                     related_name='last_edited_content',
+                                    verbose_name=_('last editor'),
                                     on_delete=models.SET_NULL)
 
     # permission global
@@ -399,8 +400,7 @@ class BaseContent(BaseClass):
 
     # tagging info
     tags = TagField(verbose_name=_('Tags'),
-                    help_text=_('Tags will be splitted by spaces or commas if present. To force \
-                                tag names, use double quotes.'))
+                    help_text=_('Tags will be splitted by commas.'))
 
     # meta info
     meta_desc = models.TextField(verbose_name=_('meta description'),
@@ -548,6 +548,19 @@ class BaseContent(BaseClass):
         if errors:
             raise ValidationError(errors)
 
+    @classmethod
+    def get_subclasses(cls):
+        subclasses = cls.__subclasses__()
+        result = []
+        active_models = models.get_models()
+        for subclass in subclasses:
+            if subclass not in active_models:
+                continue
+            if not subclass._meta.abstract:
+                result.append(subclass)
+            result += subclass.get_subclasses()
+        return result
+
     def get_real_instance(self):
         """
         BaseContent objects are only "abstract" managed contents.
@@ -555,19 +568,10 @@ class BaseContent(BaseClass):
 
         Makes a SQL sentence which does the JOIN with its real model class
         """
-        def get_subclasses(cls):
-            subclasses = cls.__subclasses__()
-            result = []
-            for subclass in subclasses:
-                if not subclass._meta.abstract:
-                    result.append(subclass)
-                else:
-                    result += get_subclasses(subclass)
-            return result
 
         if hasattr(self, '_real_instance'):  # try looking in our cache
             return self._real_instance
-        subclasses = get_subclasses(self.__class__)
+        subclasses = self.__class__.get_subclasses()
         if not subclasses:  # already real_instance
             real_instance = getattr(self, self.class_name, self)
             self._real_instance = real_instance
@@ -576,7 +580,9 @@ class BaseContent(BaseClass):
             subclasses_names = [cls.__name__.lower() for cls in subclasses]
             for subcls_name in subclasses_names:
                 if hasattr(self, subcls_name):
-                    return getattr(self, subcls_name, self).get_real_instance()
+                    self._real_instance = getattr(self, subcls_name, self).get_real_instance()
+                    return self._real_instance
+            self._real_instance = self
             return self
 
     def get_parent_for_permissions(self):
@@ -614,6 +620,11 @@ class BaseContent(BaseClass):
 
     def get_participants(self):
         return self.participants.all()
+
+    def can_view(self, user):
+        """ Returns if the user can edit this content """
+        from merengue.perms.utils import has_permission
+        return has_permission(self, user, 'view')
 
     def can_edit(self, user):
         """ Returns if the user can edit this content """

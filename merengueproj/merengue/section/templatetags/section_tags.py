@@ -75,7 +75,7 @@ def menu_tag(context, menu, max_num_level=-1, descendants=None):
         max_level = None
     context = copy.copy(context)
     context.update({'menu': menu,
-            'menu_items': descendants,
+            'menu_items': descendants.select_related('baselink__absolutelink', 'baselink__contentlink', 'baselink__viewletlink'),
             'menu_item': menu_item,
             'menu_item__level': menu_item and menu_item.level or 1,
             'ancestors': ancestors,

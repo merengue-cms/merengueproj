@@ -396,3 +396,37 @@ form.inplace_description {
 /* end content form */
 
 /* end content*/
+
+/* event */
+.ui-datepicker td.ui-datepicker-other-month span {
+    background: transparent;
+    border: none;
+}
+/* end event*/
+
+/* extensible menu */
+li.extensibleMenu {
+    position: relative;
+}
+
+a.extensible,
+a.collapsable {
+    display: block;
+    width: 10px !important;
+    float:left;
+    height: 10px;
+    position: absolute;
+    top: 10px;
+    left: 1px;
+} 
+
+a.collapsable,
+a.collapsable:hover {
+    background: transparent url(../img/drop_down_arrow2.png) no-repeat left top !important;
+}
+
+a.extensible,
+a.extensible:hover {
+    background: transparent url(../img/drop_down_arrow.png) no-repeat left top  !important;
+}
+/* end extensible menu */

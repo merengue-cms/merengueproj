@@ -18,6 +18,7 @@
 from django.conf import settings
 from django.contrib import admin
 from django.db.models import Q
+from django import forms
 from django.forms.util import ValidationError
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
@@ -42,8 +43,7 @@ from merengue.perms.admin import PermissionAdmin
 class BaseSectionAdmin(BaseContentAdmin, PermissionAdmin):
     sortablefield = 'order'
     ordering = ('order', )
-    list_display = ('name', 'slug', )
-    list_display_links = ('name', )
+    list_display = BaseContentAdmin.list_display[:-1]
     search_fields = tuple(get_real_fieldname_in_each_language('name'))
     html_fields = ()
     removed_fields = ('description', )
@@ -254,9 +254,6 @@ class AbsoluteLinkInline(BaseLinkInline):
     verbose_name_plural = _('Menu Absolute Links')
 
     def _media(self):
-        from django import forms
-
-        #js = ['%sjs/tiny_mce_internal_links/no_tiny_mce_internal_links.js' % settings.MEDIA_URL]
         js = []
         if self.prepopulated_fields:
             js.append('%sjs/urlify.js' % settings.ADMIN_MEDIA_PREFIX)

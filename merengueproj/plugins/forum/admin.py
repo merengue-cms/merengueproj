@@ -21,10 +21,11 @@ class ForumSectionAdmin(SectionContentAdmin, ForumAdmin):
     manage_contents = True
 
 
-class ThreadRelatedAdmin(RelatedModelAdmin, BaseContentAdmin):
+class ThreadRelatedAdmin(RelatedModelAdmin):
     html_fields = ('description', )
     removed_fields = ('map_icon', 'commentable', )
     prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
+    exclude = ('adquire_global_permissions', )
     related_field = 'forum'
 
     def get_form(self, request, obj=None, **kwargs):

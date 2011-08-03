@@ -15,15 +15,13 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-import os
-import sys
-import subprocess
-
 from django.conf import settings
 
+from merengue.pluggable import register_all_plugins
 from merengue.pluggable.exceptions import BrokenPlugin
 from merengue.pluggable.loading import load_plugins
-from merengue.pluggable.utils import check_plugin_broken, register_dummy_plugin
+from merengue.pluggable.utils import (check_plugin_broken, register_dummy_plugin,
+                                      reload_models_cache)
 
 
 def check_plugins(force_detect=False, force_broken_detect=False):
@@ -31,33 +29,12 @@ def check_plugins(force_detect=False, force_broken_detect=False):
         one in database """
     # all process will be in a unique transaction, we don't want to get
     # self committed
-    process_environ = {
-        'PYTHONPATH': ':'.join(sys.path),
-        'DJANGO_SETTINGS_MODULE': os.environ['DJANGO_SETTINGS_MODULE'],
-    }
-
-    sys_executable = settings.SYS_EXECUTABLE or sys.executable
 
     if settings.DETECT_NEW_PLUGINS or force_detect:
-        # now look for all plugins in filesystem and register them
-        # we have to launch other process because broken plugin detection
-        # tries to validate models and this register non valid meta information
-        # (fields, m2m, etc.)
-        process = subprocess.Popen(
-            [sys_executable, settings.MANAGE_FILE, "register_new_plugins"],
-            cwd=settings.BASEDIR, env=process_environ,
-        )
-        process.wait()
+        register_all_plugins()
 
     if settings.DETECT_BROKEN_PLUGINS or force_broken_detect:
-        # we have to launch other process because broken plugin detection
-        # tries to validate models and this register non valid meta information
-        # (fields, m2m, etc.)
-        process = subprocess.Popen(
-            [sys_executable, settings.MANAGE_FILE, "mark_broken_plugins"],
-            cwd=settings.BASEDIR, env=process_environ,
-        )
-        process.wait()
+        mark_broken_plugins()
 
     # finally, we reload active plugins
     load_plugins()
@@ -69,9 +46,12 @@ def mark_broken_plugins():
     with python modules deleted from file system or broken modules.
     """
     from merengue.pluggable.models import RegisteredPlugin
-    for registered_item in RegisteredPlugin.objects.inactives():
-        plugin_name = registered_item.directory_name
-        mark_broken_plugin(plugin_name, registered_item)
+    try:
+        for registered_item in RegisteredPlugin.objects.inactives():
+            plugin_name = registered_item.directory_name
+            mark_broken_plugin(plugin_name, registered_item)
+    finally:
+        reload_models_cache()
 
 
 def mark_broken_plugin(plugin_name, registered_plugin=None):

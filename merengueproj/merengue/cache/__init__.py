@@ -17,7 +17,9 @@
 
 from django.conf import settings
 from django.core.cache import cache
+from django.db.models.query import QuerySet
 from django.utils.cache import _generate_cache_header_key
+from django.utils.functional import wraps
 
 
 def invalidate_cache_for_path(request_path):
@@ -60,3 +62,61 @@ def invalidate_johnny_cache(model, invalidate_parent=False, parent_finish=None):
             if parent_finish and not issubclass(model, parent_finish):
                 continue
             invalidate_johnny_cache(model_parent, invalidate_parent, parent_finish)
+
+
+class MemoizeCache(object):
+    """
+    A cache class to be used with merengue.cache.memoize
+
+    It allows you to memoize functions using Django caching system.
+
+    Example::
+
+        _cache = MemoizeCache('cache_prefix')
+
+        def _heavyfunction(arg1, arg2):
+            ... # a long process
+        heavyfunction = memoize(_heavyfunction, _cache, 2)
+    """
+
+    def __init__(self, cache_prefix):
+        self.cache_prefix = cache_prefix
+        self._cache = cache.get(cache_prefix)
+        if self._cache is None:
+            self._cache = {}
+
+    def __contains__(self, name):
+        return name in self._cache
+
+    def __getitem__(self, key):
+        return self._cache.get(key)
+
+    def __setitem__(self, key, value):
+        if isinstance(value, QuerySet):
+            # force the queryset evaluation for avoiding a deadlock. See #2152
+            len(value)
+        self._cache[key] = value
+        cache.set(self.cache_prefix, self._cache)
+
+    def clear(self):
+        self._cache = {}
+        cache.set(self.cache_prefix, self._cache)
+
+
+def memoize(func, cache, num_args, offset=0, convert_args_func=None):
+    """
+    It's like django.utils.functional.memoize but with an extra offset parameter
+
+    Only the first num_args are considered when creating the key, but starting
+    from offset.
+    """
+    def wrapper(*args):
+        mem_args = args[offset:num_args]
+        if convert_args_func is not None:
+            mem_args = convert_args_func(mem_args)
+        if mem_args in cache:
+            return cache[mem_args]
+        result = func(*args)
+        cache[mem_args] = result
+        return result
+    return wraps(func)(wrapper)

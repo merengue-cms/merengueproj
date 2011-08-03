@@ -137,7 +137,10 @@ class CollectionAdmin(BaseContentAdmin):
             if _seen is None:
                 _seen = set()
             try:
-                subs = cls.__subclasses__()
+                if issubclass(cls, BaseContent):
+                    subs = cls.get_subclasses()
+                else:
+                    subs = cls.__subclasses__()
             except TypeError:  # fails only when cls is type
                 subs = cls.__subclasses__(cls)
             for sub in subs:
@@ -252,7 +255,7 @@ class FeedItemAdmin(RelatedModelAdmin):
     tool_name = 'items'
     tool_label = _('feed items')
     related_field = 'feed_collection'
-    exclude = ('owners', 'participants', )
+    exclude = ('owners', 'participants', 'adquire_global_permissions')
 
 
 class FeedCollectionAdmin(CollectionAdmin):

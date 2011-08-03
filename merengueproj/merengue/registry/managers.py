@@ -18,6 +18,45 @@
 from django.db import models
 from django.db.models.query import QuerySet
 
+from cmsutils.utils import QuerySetWrapper
+
+from merengue.cache import memoize, MemoizeCache
+
+
+# ----- cache stuff -----
+
+_registry_lookup_cache = MemoizeCache('registry_lookup_cache')
+
+
+def _convert_cache_args(mem_args):
+    item_class = mem_args[0]
+    return ('%s.%s' % (item_class.get_module(), item_class.get_class_name()), )
+
+
+def clear_lookup_cache():
+    _registry_lookup_cache.clear()
+
+
+# ----- querysets ------
+
+class FakeRegisteredItemQuerySet(QuerySetWrapper):
+
+    def __init__(self, items):
+        super(FakeRegisteredItemQuerySet, self).__init__(items)
+        if not hasattr(self, 'model'):
+            from merengue.registry.models import RegisteredItem
+            self.model = RegisteredItem
+
+    def get_items(self):
+        for item in self:
+            yield item.get_registry_item()
+
+    def get(self):
+        try:
+            return self[0]
+        except IndexError:
+            raise self.model.DoesNotExist()
+
 
 class RegisteredItemQuerySet(QuerySet):
 
@@ -54,12 +93,24 @@ class RegisteredItemQuerySet(QuerySet):
         """ obtain registered item passing by param a RegistrableItem """
         return self.get(id=item.reg_item.id)
 
+    def _by_item_class_func(self, item_class):
+        items = []
+        for item in self.all().order_by('-active'):
+            if item.module == item_class.get_module() and item.class_name == item_class.get_class_name():
+                items.append(item)
+        return items
+    _by_item_class = memoize(_by_item_class_func, _registry_lookup_cache, 2, offset=1, convert_args_func=_convert_cache_args)
+
+    def get_by_item_class(self, item_class):
+        """ obtain registered items passing by param a RegistrableItem class """
+        try:
+            return self._by_item_class(item_class)[0]
+        except IndexError:
+            raise self.model.DoesNotExist()
+
     def by_item_class(self, item_class):
         """ obtain registered items passing by param a RegistrableItem class """
-        return self.filter(
-            module=item_class.get_module(),
-            class_name=item_class.get_class_name(),
-        )
+        return FakeRegisteredItemQuerySet(self._by_item_class(item_class))
 
     def by_name(self, name):
         """ obtains registered items passing a full dotted name to RegistrableItem class """
@@ -71,6 +122,8 @@ class RegisteredItemQuerySet(QuerySet):
             class_name=class_name,
         )
 
+
+# ----- managers -----
 
 class RegisteredItemManager(models.Manager):
     """ Registered item manager """
@@ -92,6 +145,10 @@ class RegisteredItemManager(models.Manager):
     def get_by_item(self, item):
         """ obtain registered item passing by param a RegistrableItem """
         return self.get_query_set().get_by_item(item)
+
+    def get_by_item_class(self, item_class):
+        """ obtain registered item passing by param a RegistrableItem class """
+        return self.get_query_set().get_by_item_class(item_class)
 
     def by_item_class(self, item_class):
         """ obtain registered items passing by param a RegistrableItem class """

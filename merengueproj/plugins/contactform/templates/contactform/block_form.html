@@ -27,9 +27,11 @@
         <form id="contactform" method="POST" action="{% url contact_form_submit content.pk form.contact_form.pk %}" enctype="multipart/form-data">
             <fieldset>
                 <legend>{{ form.contact_form.title }}</legend>
-                <p>
-                {{ form.contact_form.description|safe }}
-                </p>
+                {% if form.contact_form.description %}
+                  <div>
+                    {{ form.contact_form.description|safe }}
+                  </div>
+                {% endif %}
                 <table>{{ form.form }}</table>
                 <input class="button" type="submit" value="{{ form.contact_form.submit_msg }}"/>
                 {% if form.contact_form.reset_button %}

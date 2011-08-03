@@ -143,6 +143,13 @@ class Menu(models.Model):
         return self.url
 
     @permalink
+    def get_admin_absolute_url(self):
+        """ Link to the admin page for editing the object """
+        section = self.get_section()
+        section_content_type = ContentType.objects.get_for_model(section)
+        return ('merengue.base.views.admin_link', [section_content_type.id, section.id, 'mainmenu/%s/' % self.id])
+
+    @permalink
     def menu_public_link_with_out_section(self, ancestors_path):
         return self._menu_public_link_without_section(self, ancestors_path)
 

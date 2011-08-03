@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-10 20:24+0200\n"
+"POT-Creation-Date: 2011-06-17 14:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,40 +16,76 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: blocks.py:29
+#: blocks.py:30
 msgid "Banner Block"
 msgstr ""
 
-#: blocks.py:30
-msgid "Block that represents a banner"
+#: blocks.py:31
+msgid "Block that represents a list of banners"
 msgstr ""
 
-#: blocks.py:33
+#: blocks.py:35
 msgid "limit for banner block"
 msgstr ""
 
-#: blocks.py:46 models.py:40
+#: blocks.py:38 blocks.py:87
+msgid "thumbnail maximum width"
+msgstr ""
+
+#: blocks.py:41 blocks.py:90
+msgid "thumbnail maximum heigh"
+msgstr ""
+
+#: blocks.py:73 models.py:50
 msgid "banners"
 msgstr ""
 
-#: models.py:31
-msgid "Url Link"
+#: blocks.py:82
+msgid "Portlet Banner Block"
+msgstr ""
+
+#: blocks.py:83
+msgid "Block that represents a banner"
+msgstr ""
+
+#: blocks.py:93
+msgid "Choose a banner"
+msgstr ""
+
+#: blocks.py:113
+msgid "Click in \"configure block\" and choose a banner"
 msgstr ""
 
 #: models.py:32
-msgid "Portal name"
+msgid "banner category"
 msgstr ""
 
 #: models.py:33
-msgid "image"
+msgid "banner categories"
 msgstr ""
 
-#: models.py:35
-msgid ""
-"The system don't resize the icon. You need to upload with the final size"
+#: models.py:38
+msgid "Url Link"
 msgstr ""
 
 #: models.py:39
+msgid "image"
+msgstr ""
+
+#: models.py:41
+msgid ""
+"The system won't resize the image. You need to upload it with its final size"
+msgstr ""
+
+#: models.py:42
+msgid "Text alternative image"
+msgstr ""
+
+#: models.py:44
+msgid "category"
+msgstr ""
+
+#: models.py:49
 msgid "banner"
 msgstr ""
 
@@ -69,7 +105,7 @@ msgstr ""
 msgid "Banner history"
 msgstr ""
 
-#: templates/banner/block_banner.html:11
+#: templates/banner/block_banner.html:20
 msgid "History banner"
 msgstr ""
 

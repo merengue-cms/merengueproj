@@ -30,8 +30,8 @@ class Command(LabelCommand, MerengueCommand):
     """Based on django.core.management.commands.starproject, but handling the
     copy of the skeleton project differently."""
     option_list = LabelCommand.option_list + (
-        make_option('-d', '--develop', action='store_true', dest='develop',
-            help="For development of Merengue's core, symlink instead of copy."),
+        make_option('-d', '--copy', action='store_false', dest='develop', default=True,
+            help="Copy Merengue instead of link."),
     )
     help = "Creates a Merengue project directory structure for the given project name in the current directory."
     args = "[projectname]"

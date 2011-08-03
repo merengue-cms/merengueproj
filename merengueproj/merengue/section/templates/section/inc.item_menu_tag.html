@@ -4,7 +4,7 @@
     <ul class="menu_ul menu{{node.level}}  menuDepth{{ node.level|menu_less:min_level }}">
 {% endif %}
 {% with node.baselink.real_instance as baselink %}
-{% with node.get_descendants as node_descendants %}
+{% with node.get_descendant_count as node_descendants %}
     <li id="{{ node.slug }}" class="item {% if structure.new_level %}first{% endif %} {% if node_descendants %}haveDescendants{% endif %} {% ifequal node menu_item %}selected{% endifequal %}{% if node in ancestors %}selectedAncestors{% endif %}">
         <a href="{{ node.get_absolute_url }}" title="{% if node.help_text %}{{ node.help_text }}{% else %}{{ node.name }}{% endif %}"
            {% if baselink.target_blank %}target="_blank"{% endif %}class="{{ baselink.link_class }} item {% ifequal node menu_item %}selected{% endifequal %}{% if node in ancestors %}selectedAncestors{% endif %}  menu{{node.level}}">{% inplace_edit "node.name" %}</a>
@@ -13,7 +13,9 @@
     {% else %}
         {% if max_level %}
             {% if node.level >= max_level %}
-                </li>
+                {% ifnotequal node menu_item %}
+                    </li>
+                {% endifnotequal %}
             {% endif %}
         {% endif %}
     {% endif %}

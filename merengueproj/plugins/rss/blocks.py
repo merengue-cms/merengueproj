@@ -26,6 +26,7 @@ class RSSGlobalFeed(Block):
     name = 'RSSGlobalFeed'
     default_place = 'meta'
     fixed_place = True
+    is_addable = False
     help_text = ugettext_lazy('Block represents global RSS feed')
     verbose_name = ugettext_lazy('Global RSS feed block')
     cache_allowed = False

@@ -2,10 +2,19 @@
 
 {% load i18n section_tags %}
 
-
 {% block blockbody %}
-  {% if section %}
-    {% menu_tag menu max_num_level descendants %}
-  {% endif %}
+    {% if max_num_items > 0 %}
+        <script type="text/javascript">
+            (function($){
+                $(document).ready(function () {
+                    var menu = $("#coremenu");
+                    {% include "core/inc.menu_max_num_items.js" %}
+                    getCollapsableMenu(menu);
+                });
+            })(jQuery);
+        </script>
+    {% endif %}
+    {% if section %}
+        {% menu_tag menu max_num_level descendants %}
+    {% endif %}
 {% endblock %}
-

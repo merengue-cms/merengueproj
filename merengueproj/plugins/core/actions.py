@@ -89,6 +89,6 @@ class HotLinkAction(ContentTypeFilterProvider, ContentAction):
         if user.is_superuser:
             return True
         class_names = ['basesection']
-        subclasses = BaseSection.__subclasses__()
+        subclasses = BaseSection.get_subclasses()
         class_names += [subclass.__name__.lower() for subclass in subclasses]
         return user.contents_owned.filter(class_name__in=class_names).exists()

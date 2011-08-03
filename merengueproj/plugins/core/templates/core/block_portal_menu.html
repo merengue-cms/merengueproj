@@ -5,6 +5,17 @@
 {% block blocktitle %}{# removed title #}{% endblock %}
 
 {% block blockbody %}
+    {% if max_num_items > 0 %}
+        <script type="text/javascript">
+            (function($){
+                $(document).ready(function () {
+                    var menu = $("#portalmenu");
+                    {% include "core/inc.menu_max_num_items.js" %}
+                    getCollapsableMenu(menu);
+                });
+            })(jQuery);
+        </script>
+    {% endif %}
     {% menu_portal_tag portal_menu max_num_level %}
 {% endblock %}
 

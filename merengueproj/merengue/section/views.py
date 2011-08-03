@@ -93,8 +93,11 @@ def menu_section_view(request, section_slug, menu_slug):
     try:
         link = menu.baselink.real_instance
     except BaseLink.DoesNotExist:
+        can_edit = False
+        if section:
+            can_edit = section.can_edit(request.user)
         return render_to_response('section/menu_link_not_exists.html',
-            {'menu': menu}, context_instance=RequestContext(request))
+            {'menu': menu, 'can_edit': can_edit}, context_instance=RequestContext(request))
     if isinstance(link, AbsoluteLink):
         url_redirect = link.get_absolute_url()
         if  url_redirect != request.get_full_path():
@@ -125,11 +128,8 @@ def section_view_without_maincontent(request, context,
     user = request.user
     section = context['section']
     admin_absolute_url = False
-    if user.is_authenticated():
-        if user.is_superuser or (user.is_staff and
-                                 (user.has_perm('section.change_%s' % section._meta.module_name) or
-                                  user.has_perm('section.change_basesection'))):
-            admin_absolute_url = True
+    if section.can_edit(user):
+        admin_absolute_url = True
     context['admin_absolute_url'] = admin_absolute_url
     return render_to_response(template, context,
                               context_instance=RequestContext(request))

@@ -25,6 +25,7 @@ from django.utils.translation import ugettext_lazy as _
 from south.modelsinspector import add_introspection_rules
 
 from merengue.base.dbfields import JSONField
+from merengue.perms import utils as perms_api
 from merengue.pluggable.managers import PluginManager
 from merengue.pluggable.dbfields import RequiredPluginsField, RequiredAppsField
 from merengue.registry.models import RegisteredItem
@@ -62,6 +63,10 @@ class RegisteredPlugin(RegisteredItem):
 
     def __unicode__(self):
         return self.name
+
+    def can_delete(self, user):
+        # user only can delete broken objects
+        return perms_api.can_manage_site(user) and self.broken
 
     def get_path(self):
         """Full absolute path to the plugin root, including

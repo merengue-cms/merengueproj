@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-10 20:24+0200\n"
+"POT-Creation-Date: 2011-06-17 14:04+0200\n"
 "PO-Revision-Date: 2010-10-05 10:48\n"
 "Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,15 +24,7 @@ msgstr " Indice de noticias"
 msgid "Index page with all news items"
 msgstr ""
 
-#: actions.py:36
-msgid "News RSS"
-msgstr ""
-
-#: actions.py:37
-msgid "News RSS for all feeds"
-msgstr ""
-
-#: blocks.py:29 blocks.py:51 viewlets.py:27
+#: blocks.py:29 blocks.py:60 viewlets.py:27
 msgid "Latest news"
 msgstr "Últimas noticias"
 
@@ -82,6 +74,10 @@ msgstr "Todas las noticias"
 
 #: viewlets.py:47
 msgid "All news block"
+msgstr ""
+
+#: templates/news/block_latest.html:10
+msgid "No published news"
 msgstr ""
 
 #: templates/news/news_index.html:5 templates/news/news_index.html.py:7

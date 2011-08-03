@@ -27,7 +27,8 @@ from django.core.exceptions import ObjectDoesNotExist, ImproperlyConfigured
 from django.template import defaultfilters
 from django.utils.decorators import available_attrs
 
-# permissions imports
+# merengue imports
+from merengue.cache import memoize, MemoizeCache
 from merengue.perms import ANONYMOUS_ROLE_SLUG, PARTICIPANT_ROLE_SLUG, OWNER_ROLE_SLUG
 from merengue.perms.models import ObjectPermission
 from merengue.perms.models import ObjectPermissionInheritanceBlock
@@ -45,6 +46,26 @@ MANAGE_BLOCK_PERMISSION = 'manage_block'
 # Cache stuff  #################################################################
 
 PERMS_CACHE_KEY = 'perms_cache'
+
+
+class RolesCache(MemoizeCache):
+
+    def clear(self, users_to_clear):
+        for k, v in self._cache.items():
+            if k[0] in users_to_clear:
+                del self._cache[k]
+        cache.set(self.cache_prefix, self._cache)
+
+_roles_cache = RolesCache('roles_cache')
+
+
+def clear_roles_cache(principal):
+    if isinstance(principal, User):
+        users_to_clear = [principal]
+    else:
+        users_to_clear = principal.user_set.all()
+    if users_to_clear:
+        _roles_cache.clear(users_to_clear)
 
 
 def get_from_cache(user, content, codename, roles):
@@ -123,6 +144,7 @@ def add_role(principal, role):
         The role which is assigned.
     """
     clear_cache()
+    clear_roles_cache(principal)
     if isinstance(principal, User):
         try:
             PrincipalRoleRelation.objects.get(user=principal, role=role, content__isnull=True)
@@ -135,7 +157,6 @@ def add_role(principal, role):
         except PrincipalRoleRelation.DoesNotExist:
             PrincipalRoleRelation.objects.create(group=principal, role=role)
             return True
-
     return False
 
 
@@ -154,6 +175,7 @@ def add_local_role(obj, principal, role):
         The role which is assigned.
     """
     clear_cache()
+    clear_roles_cache(principal)
     if isinstance(principal, User):
         try:
             PrincipalRoleRelation.objects.get(user=principal, role=role, content=obj)
@@ -182,6 +204,7 @@ def remove_role(principal, role):
         The role which is removed.
     """
     clear_cache()
+    clear_roles_cache(principal)
     try:
         if isinstance(principal, User):
             ppr = PrincipalRoleRelation.objects.get(
@@ -213,6 +236,7 @@ def remove_local_role(obj, principal, role):
         The role which is removed.
     """
     clear_cache()
+    clear_roles_cache(principal)
     try:
         if isinstance(principal, User):
             ppr = PrincipalRoleRelation.objects.get(
@@ -238,6 +262,7 @@ def remove_roles(principal):
         The principal (user or group) from which all roles are removed.
     """
     clear_cache()
+    clear_roles_cache(principal)
     if isinstance(principal, User):
         ppr = PrincipalRoleRelation.objects.filter(
             user=principal, content__isnull=True)
@@ -265,6 +290,7 @@ def remove_local_roles(obj, principal):
         The principal (user or group) from which the roles are removed.
     """
     clear_cache()
+    clear_roles_cache(principal)
     if isinstance(principal, User):
         ppr = PrincipalRoleRelation.objects.filter(
             user=principal, content=obj)
@@ -279,7 +305,7 @@ def remove_local_roles(obj, principal):
         return False
 
 
-def get_roles(user, obj=None):
+def _get_roles(user, obj=None):
     """Returns all roles of passed user for passed content object. This takes
     direct and roles via a group into account. If an object is passed local
     roles will also added.
@@ -347,6 +373,7 @@ def get_roles(user, obj=None):
             obj = None
 
     return Role.objects.filter(pk__in=role_ids)
+get_roles = memoize(_get_roles, _roles_cache, 2)
 
 
 def get_global_roles(principal):

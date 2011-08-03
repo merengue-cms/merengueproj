@@ -15,34 +15,11 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.core.cache import cache
-from django.utils.functional import memoize
-
+from merengue.cache import MemoizeCache, memoize
 
 # block cache stuff  --------------------
 
-class BlockCache(object):
-
-    def __init__(self):
-        self._cache = cache.get('displayed_blocks_cache')
-        if self._cache is None:
-            self._cache = {}
-
-    def __contains__(self, name):
-        return name in self._cache
-
-    def __getitem__(self, key):
-        return self._cache.get(key)
-
-    def __setitem__(self, key, value):
-        self._cache[key] = value
-        cache.set('displayed_blocks_cache', self._cache)
-
-    def clear(self):
-        self._cache = {}
-        cache.set('displayed_blocks_cache', self._cache)
-
-_blocks_lookup_cache = BlockCache()
+_blocks_lookup_cache = MemoizeCache('displayed_blocks_cache')
 
 
 # public functions   --------------------

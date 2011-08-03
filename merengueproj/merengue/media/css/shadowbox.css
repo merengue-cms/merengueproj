@@ -288,10 +288,21 @@ div.shadowbox_message a:visited {
 
 
 /* shadow box form */
+#shadowbox_body form div.field {
+    margin-bottom: 1em;
+}
+
 #shadowbox_body form label {
+    display: block;
     vertical-align: top;
+    margin-bottom: 0.5em;
 }
 
 #shadowbox_body form span.helptext {
     display: block;
+}
+
+#shadowbox_body form ul {
+    list-style: none;
+    padding-left: 0;
 }

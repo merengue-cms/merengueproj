@@ -34,6 +34,9 @@ from merengue.section.models import BaseSection
 
 
 class BaseContentRelatedBlockAddForm(forms.ModelForm):
+    """
+    Form for adding blocks related to one content in the admin page
+    """
     block_class = forms.ChoiceField(
         label=_('Block to add'),
     )
@@ -43,9 +46,10 @@ class BaseContentRelatedBlockAddForm(forms.ModelForm):
         active_plugins = RegisteredPlugin.objects.actives().get_items()
         blocks_classes = []
         for plugin in active_plugins:
-            blocks_classes.extend(plugin.get_blocks())
+            addable_blocks = [b for b in plugin.get_blocks() if b.is_addable]
+            blocks_classes.extend(addable_blocks)
         self.fields['block_class'].choices = [
-            ('%s.%s' % (b.get_module(), b.get_class_name()), b.name) for b in blocks_classes
+            ('%s.%s' % (b.get_module(), b.get_class_name()), b.verbose_name) for b in blocks_classes
         ]
 
     def save(self, *args, **kwargs):
@@ -156,8 +160,9 @@ class AddBlockForm(BaseForm):
         blocks = []
         content_blocks = []
         section_blocks = []
-        for plugin in RegisteredPlugin.objects.filter(active=True):
-            for block in plugin.get_registry_item().get_blocks():
+        for plugin in RegisteredPlugin.objects.actives():
+            addable_blocks = [b for b in plugin.get_registry_item().get_blocks() if b.is_addable]
+            for block in addable_blocks:
                 if issubclass(block, SectionBlock):
                     if not section:
                         continue

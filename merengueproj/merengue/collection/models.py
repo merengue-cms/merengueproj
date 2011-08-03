@@ -338,6 +338,27 @@ class FeedItem(BaseContent):
         parent_content_type = ContentType.objects.get_for_model(self.feed_collection)
         return ('merengue.base.views.admin_link', [parent_content_type.id, self.feed_collection.id, 'items/%s/' % self.id])
 
+    def get_parent_for_permissions(self):
+        return self.feed_collection.get_parent_for_permissions()
+
+    def get_main_section(self):
+        return self.feed_collection.get_main_section()
+
+    def breadcrumbs_items(self):
+        urls = []
+        try:
+            first_item = self.breadcrumbs_first_item()
+            if first_item:
+                urls.append(first_item)
+        except ImportError:
+            urls = []
+        urls.append((unicode(self.feed_collection),
+                     self.feed_collection.get_absolute_url()))
+        last_item = self.breadcrumbs_last_item()
+        if last_item:
+            urls.append(last_item)
+        return urls
+
 
 def handle_feed_item_pre_save(sender, instance, **kwargs):
     field_name = get_real_fieldname('name', fallback_language())
@@ -376,7 +397,7 @@ class FeedCollection(Collection):
     expire_seconds = models.IntegerField(
         verbose_name=_(u'Seconds to expire cache'),
         help_text=_(u'Seconds from last update to do a new query. 0 to never query again.'),
-        default=0,
+        default=86400,  # 24 hours
         )
 
     remove_items = models.BooleanField(
@@ -475,10 +496,13 @@ class FeedCollection(Collection):
         for i in self.feeditem_set.exclude(item_id__in=entries_ids):
             item = i.get_real_item()
             self.make_single_item(i, item)
+        state_published = self.workflow_status.workflow.states.filter(slug='published')
         for entry in entries:
             (item, created) = FeedItem.objects.get_or_create(
                 item_id=entry.id,
                 feed_collection=self)
+            if created and state_published:
+                item.workflow_status = state_published[0]
             item.item_complete_cached = None  # Expire details of item if any
             self.make_single_item(item, entry)
 

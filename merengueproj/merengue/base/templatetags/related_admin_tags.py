@@ -155,6 +155,7 @@ def _smart_relations_object_tool_admin_site(admin_site, model_admin, obj, tool_n
                             'manage_contents': getattr(model_admin, 'manage_contents', False),
                             })
     if tools_admin_site:
+        tools_admin_site = sorted(tools_admin_site, key=lambda e: e.get('tool_name', ''))
         tools += tools_admin_site
 
     return tools

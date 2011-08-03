@@ -26,6 +26,8 @@ from plugins.contentmenu.models import ContentGroup
 class ContentGroupLinksBlock(Block):
     name = 'contentgrouplinks'
     default_place = 'aftercontenttitle'
+    verbose_name = _('Content menu')
+    help_text = _('Block with the grouped content links')
     default_caching_params = {
         'enabled': False,
         'timeout': 3600,

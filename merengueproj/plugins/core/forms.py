@@ -17,7 +17,7 @@ class HotLinkForm(forms.ModelForm):
             choices = BaseSection.objects.all()
         else:
             class_names = ['basesection']
-            subclasses = BaseSection.__subclasses__()
+            subclasses = BaseSection.get_subclasses()
             class_names += [subclass.__name__.lower() for subclass in subclasses]
             choices = user.contents_owned.filter(class_name__in=class_names)
         if choices.count() == 1:

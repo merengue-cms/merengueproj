@@ -3,13 +3,6 @@
 
 {% addmedia "css" %}
   <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}merengue/css/render_blocks.css"/>
-  <link href="{{ MEDIA_URL }}merengue/css/shadowbox.css" rel="stylesheet" type="text/css" />
-{% endaddmedia %}
-
-{% addmedia "js" %}
-  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/mootools.v1.11.js"></script>
-  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/shadowbox/shadowbox-mootools.js"></script>
-  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/shadowbox/shadowbox.js"></script>
 {% endaddmedia %}
 
 {% compress js %}
@@ -38,17 +31,6 @@
         function initBlockTools() {
             $(".block").each(function() {
                 initBlock($(this));
-            });
-            // initialize shadowbox (if not initialized with multimedia slide)
-            var mediaurl = '{{ MEDIA_URL }}';
-            Shadowbox.init({
-                assetUrl: mediaurl,
-                loadingImage: mediaurl + 'merengue/img/multimedia/loading.gif',
-                displayNav: true,
-                skipSetup: true,
-                displayClose: true,
-                continuous: true,
-                enableKeys: false
             });
         }
 
