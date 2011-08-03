@@ -23,7 +23,7 @@ MERENGUEDIR = path.dirname(path.abspath(__file__))
 
 #This line is usefull when you copy your server data base for develop in your
 #local machine but you do not copy all content images (used in DEBUG mode only)
-PUBLIC_SERVER = 'http://www.merengueproject.org/'
+PUBLIC_SERVER = 'false'
 
 # List  of  callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (

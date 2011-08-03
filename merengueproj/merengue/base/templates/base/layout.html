@@ -58,12 +58,19 @@
     (function($) {
         $(document).ready(function () {
           var server = '{{ PUBLIC_SERVER }}';
+          var i=0;
           jQuery("img").filter(function (e, v) {
             if (v.naturalHeight === 0 && v.naturalWidth === 0) {
-              v.setAttribute("src", server + v.getAttribute("src"));
-              v.addClass("serverImage");
+              if (server != 'false') {
+                  v.setAttribute("src", server + v.getAttribute("src"));
+                  v.addClass("serverImage");
+              }
+              i+=1;
             }
           });
+          if (server === 'false' && i>0){
+              alert('There are ' + i + ' images broken, you could configure settings.PUBLIC_SERVER to take them from your server.');
+          }
         });
       }(jQuery));
     </script>
