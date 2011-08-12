@@ -139,9 +139,27 @@ div.document-section {
     padding: 1em;
 }
 
+div.serverImageInfo {
+    position: fixed;
+    top: 75px;
+    left: 0px;
+    width: 100px;
+    padding: 1em 2em;
+    border: 1px solid gray;
+    border-left-width: 0px;
+    font-size: 10px;
+    background: #ffffdd;
+    opacity: 0.7;
+    filter:alpha(opacity=7);
+}
+
 img.serverImage {
     opacity: 0.7;
     filter:alpha(opacity=7);
+}
+
+img.serverImageHover {
+    outline: 2px dotted red;
 }
 
 div.errormessage, div#messagebox ul#info-list {

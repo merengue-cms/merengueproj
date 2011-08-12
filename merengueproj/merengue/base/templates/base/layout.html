@@ -53,23 +53,33 @@
   {% endif %}
 
 {% block debug %}
-  {% if debug %}
+  {% if debug and PUBLIC_SERVER %}
     <script type="text/javascript">
     (function($) {
         $(document).ready(function () {
           var server = '{{ PUBLIC_SERVER }}';
-          var i=0;
+          var i = 0;
+          if (server.slice(-1) != '/') {
+              server = server + '/';
+          }
           jQuery("img").filter(function (e, v) {
             if (v.naturalHeight === 0 && v.naturalWidth === 0) {
-              if (server != 'false') {
-                  v.setAttribute("src", server + v.getAttribute("src"));
+              var src = v.getAttribute("src");
+              if (src[0] == '/') {
+                  v.setAttribute("src", server + src.slice(1));
                   v.addClass("serverImage");
+                  i += 1;
               }
-              i+=1;
             }
           });
-          if (server === 'false' && i>0){
-              alert('There are ' + i + ' images broken, you could configure settings.PUBLIC_SERVER to take them from your server.');
+          if (i) {
+              jQuery("body").append('<div class="serverImageInfo">' + i + ' {% trans "images are retrived from your defined PUBLIC_SERVER" %}: ' + server + '</div>');
+              jQuery(".serverImageInfo").mouseenter(function () {
+                  jQuery(".serverImage").addClass('serverImageHover');
+              });
+              jQuery(".serverImageInfo").mouseleave(function () {
+                  jQuery(".serverImage").removeClass('serverImageHover');
+              });
           }
         });
       }(jQuery));
