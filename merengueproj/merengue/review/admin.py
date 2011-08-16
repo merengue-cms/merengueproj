@@ -41,16 +41,19 @@ class ReviewAdmin(BaseAdmin):
 
     def get_form(self, request, obj=None):
         if not self.has_add_permission(request):
-            self.readonly_fields = ('owner', 'assigned_to', 'title', 'url', 'task_object', )
+            self.readonly_fields = ('owner', 'assigned_to', 'title', 'url_link', 'task_object', )
+        else:
+            self.readonly_fields = ('owner', 'title', 'url_link', 'task_object', )
 
         self.fieldsets = None
         form = super(ReviewAdmin, self).get_form(request, obj)
         self.fieldsets = (
             (_('Task information'), {
-                'fields': ('owner', 'assigned_to', 'title', 'url', 'task_object', ), }),
+                'fields': ('owner', 'assigned_to', 'title', 'url_link', 'task_object', ), }),
             (_('Task status'), {
                 'fields': ('is_done', ), }),
         )
+        form.url_link = self.url_link  # URL to the object
         return form
 
     def add_view(self, request, form_url="", extra_context=None):
