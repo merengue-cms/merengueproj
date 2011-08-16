@@ -34,6 +34,29 @@ input.ac_loading {
     border: 0;
 }
 
+/* IE7 hack */
+.results_on_deck .iconic,
+.results_on_deck .iconic:hover {
+    *font-size: 1px!important;
+    *color: white!important;
+    *font-family: arial;
+    *display: inline-block;
+    *width: 14px;
+    *height: 14px;
+ }
+
+/* IE8 hack */
+.results_on_deck .iconic,
+.results_on_deck .iconic:hover {
+    font-size/*\**/: 1px\9;
+    color/*\**/: white\9;
+    font-family/*\**/: arial\9;
+    display/*\**/: inline-block\9;
+    width/*\**/: 14px\9;
+    height/*\**/: 14px\9;
+ }
+
+
 /* specific to a site I worked on. the formatted results were tables.  I sized them and floated them left, next to the icon */
 .results_on_deck div table {
     float: left;
