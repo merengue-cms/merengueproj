@@ -2,19 +2,19 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-07-25 14:03+0200\n"
-"PO-Revision-Date: 2011-07-25 09:42\n"
+"PO-Revision-Date: 2011-08-02 11:20\n"
 "Last-Translator: Pablo Martin <pmartin@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "X-Translated-Using: django-transhette 0.1.SVN\n"
 
 #: merengue/settings.py:157 merengue/workflow/models.py:388
@@ -52,24 +52,16 @@ msgid "text"
 msgstr "texto"
 
 #: merengue/apps/captcha/models.py:8
-msgid ""
-"The image must upload at the size that is displayed is not automatically "
-"resize"
-msgstr ""
-"La imagen que debe cargar deber ser del tamaño que se indica ya que no "
-"cambian de tamaño automáticamente"
+msgid "The image must upload at the size that is displayed is not automatically resize"
+msgstr "La imagen que debe cargar deber ser del tamaño que se indica ya que no cambian de tamaño automáticamente"
 
 #: merengue/apps/captcha/widgets.py:31
 msgid "Type the word that follows the image"
 msgstr "Enlaces sociales"
 
 #: merengue/apps/captcha/widgets.py:33
-msgid ""
-"You need to load images in your browser to be able to register, because of "
-"the captcha system."
-msgstr ""
-"Es necesario poder cargar imágenes en su navegador para poder registrarse, "
-"debido al sistema de captcha."
+msgid "You need to load images in your browser to be able to register, because of the captcha system."
+msgstr "Es necesario poder cargar imágenes en su navegador para poder registrarse, debido al sistema de captcha."
 
 #: merengue/apps/rating/admin.py:25
 msgid "Vote"
@@ -417,19 +409,13 @@ msgstr "permisos"
 #: merengue/base/admin.py:1464
 #, python-format
 msgid ""
-"The permissions of the content should be changed in <a href=\"%(url)s\">the "
-"workflow</a>, not in the content itself,\n"
-"    because if the status change, <strong>all the custom permission will be "
-"cleared</strong>. But,\n"
-"    if you are sure you want to edit the permissions, click <a href=\"?"
-"enable_edit=1\">here</a>."
+"The permissions of the content should be changed in <a href=\"%(url)s\">the workflow</a>, not in the content itself,\n"
+"    because if the status change, <strong>all the custom permission will be cleared</strong>. But,\n"
+"    if you are sure you want to edit the permissions, click <a href=\"?enable_edit=1\">here</a>."
 msgstr ""
-"Los permisos del contenido deberían ser cambiados en <a href=\"%(url)s\">el "
-"workflow</a>, no en el contenido,\n"
-"    porque si el estado cambia, <strong>todos los permisos personalizados "
-"serán borrados</strong>. Pero,\n"
-"    si estás seguro que quieres editar los permisos, haz click <a href=\"?"
-"enable_edit=1\">aquí</a>."
+"Los permisos del contenido deberían ser cambiados en <a href=\"%(url)s\">el workflow</a>, no en el contenido,\n"
+"    porque si el estado cambia, <strong>todos los permisos personalizados serán borrados</strong>. Pero,\n"
+"    si estás seguro que quieres editar los permisos, haz click <a href=\"?enable_edit=1\">aquí</a>."
 
 #: merengue/base/admin.py:1510
 msgid "Error in id"
@@ -865,9 +851,7 @@ msgid "404 Error - Sorry we can not find the page you are looking for."
 msgstr ""
 
 #: merengue/base/templates/404.html.py:16
-msgid ""
-"You may have mistyped the URL or the page may have been removed from our "
-"system."
+msgid "You may have mistyped the URL or the page may have been removed from our system."
 msgstr ""
 
 #: merengue/base/templates/404.html.py:17
@@ -1021,23 +1005,15 @@ msgid "Block to add"
 msgstr ""
 
 #: merengue/block/forms.py:102 merengue/block_old/forms.py:98
-msgid ""
-"Placing the block here will take no effect, as another related block is set "
-"to overwrite it"
+msgid "Placing the block here will take no effect, as another related block is set to overwrite it"
 msgstr ""
 
 #: merengue/block/forms.py:103 merengue/block_old/forms.py:99
-msgid ""
-"Unmark this field to keep the block in the specified "
-"place                                       (even though it won't be "
-"displayed)"
+msgid "Unmark this field to keep the block in the specified place                                       (even though it won't be displayed)"
 msgstr ""
 
 #: merengue/block/forms.py:105 merengue/block_old/forms.py:101
-msgid ""
-"A block is already set to overwrite others of this "
-"kind.                                Unmark this to save the block, even "
-"though it won't be displayed"
+msgid "A block is already set to overwrite others of this kind.                                Unmark this to save the block, even though it won't be displayed"
 msgstr ""
 
 #: merengue/block/forms.py:124 merengue/block_old/forms.py:120
@@ -1144,10 +1120,8 @@ msgstr ""
 #: merengue/block/models.py:51 merengue/block_old/models.py:49
 msgid ""
 "block will <em>only</em> be visible in urls matching these\n"
-"            regular expressions (one per line, using <a            "
-"href='http://docs.python.org./library/re.html#regular-expression-syntax'\n"
-"            title='python regular expressions' target='_blank'>python re "
-"syntax</a>). <br/>\n"
+"            regular expressions (one per line, using <a            href='http://docs.python.org./library/re.html#regular-expression-syntax'\n"
+"            title='python regular expressions' target='_blank'>python re syntax</a>). <br/>\n"
 "            Please use relative paths.\n"
 "            This field has preference over 'hidden in urls'."
 msgstr ""
@@ -1160,10 +1134,8 @@ msgstr ""
 msgid ""
 "block will be hidden in urls matching these regular\n"
 "            expressions (one per line, using <a\n"
-"            href='http://docs.python.org/library/re.html#regular-expression-"
-"syntax'\n"
-"            title='python regular expressions' target='_blank'>python re "
-"syntax</a>)."
+"            href='http://docs.python.org/library/re.html#regular-expression-syntax'\n"
+"            title='python regular expressions' target='_blank'>python re syntax</a>)."
 msgstr ""
 
 #: merengue/block/models.py:65 merengue/block_old/models.py:63
@@ -1221,7 +1193,7 @@ msgstr ""
 #: merengue/block/views.py:79 merengue/block_old/views.py:78
 #: merengue/registry/fields.py:30 merengue/registry/models.py:41
 msgid "Configuration"
-msgstr ""
+msgstr "Configuración"
 
 #: merengue/block/views.py:79 merengue/block_old/views.py:78
 msgid "Block specific configuration"
@@ -1583,11 +1555,8 @@ msgid "Filtering section"
 msgstr ""
 
 #: merengue/collection/models.py:117 merengue/registry/items.py:139
-msgid ""
-"If the collection is into a section, filter for the contents of this section"
-msgstr ""
-"Si la colección está en una sección, filtrar por los contenidos de dicha "
-"sección"
+msgid "If the collection is into a section, filter for the contents of this section"
+msgstr "Si la colección está en una sección, filtrar por los contenidos de dicha sección"
 
 #: merengue/collection/models.py:121 merengue/collection/models.py:674
 #: merengue/collection/models.py:686 merengue/collection/models.py:726
@@ -1649,9 +1618,7 @@ msgstr "Segundos para que expire la cache"
 
 #: merengue/collection/models.py:399
 msgid "Seconds from last update to do a new query. 0 to never query again."
-msgstr ""
-"Segundos desde la última actualización para hacer una nueva consulta. Cero "
-"significa no consultar más"
+msgstr "Segundos desde la última actualización para hacer una nueva consulta. Cero significa no consultar más"
 
 #: merengue/collection/models.py:404
 msgid "Remove items"
@@ -2167,9 +2134,7 @@ msgstr ""
 
 #: merengue/pluggable/admin.py:132
 #, python-format
-msgid ""
-"You have not registered all the plugins. Click <a href=\"%(url)s\">here</a> "
-"in order to register them"
+msgid "You have not registered all the plugins. Click <a href=\"%(url)s\">here</a> in order to register them"
 msgstr ""
 
 #: merengue/pluggable/models.py:37
@@ -2189,10 +2154,7 @@ msgid "registered plugins"
 msgstr ""
 
 #: merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:9
-msgid ""
-"This plugin has been set as required in settings.py so you can not install/"
-"uninstall from this admin interface. You can install it by running a migrate "
-"command"
+msgid "This plugin has been set as required in settings.py so you can not install/uninstall from this admin interface. You can install it by running a migrate command"
 msgstr ""
 
 #: merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:32
@@ -2233,8 +2195,7 @@ msgstr ""
 
 #: merengue/portal/models.py:42 merengue/section/models.py:279
 msgid "The absolute urls have to write complety: Protocol, domain, query"
-msgstr ""
-"Las urls absolutas tienen que estar completas: protocolo, dominio y consulta"
+msgstr "Las urls absolutas tienen que estar completas: protocolo, dominio y consulta"
 
 #: merengue/portal/models.py:45 merengue/section/models.py:332
 msgid "order"
@@ -2249,8 +2210,7 @@ msgid "icon"
 msgstr ""
 
 #: merengue/portal/models.py:55
-msgid ""
-"The system don't resize the icon. You need to upload with the final size"
+msgid "The system don't resize the icon. You need to upload with the final size"
 msgstr ""
 
 #: merengue/portal/models.py:59
@@ -2338,8 +2298,7 @@ msgid "registered items"
 msgstr ""
 
 #: merengue/registry/templates/admin/registry/change_form.html.py:8
-msgid ""
-"This item is broken. You cannot edit this object until problem was fixed"
+msgid "This item is broken. You cannot edit this object until problem was fixed"
 msgstr ""
 
 #: merengue/registry/templates/admin/registry/change_form.html.py:9
@@ -2445,20 +2404,15 @@ msgstr ""
 
 #: merengue/section/admin.py:145 merengue/section/models.py:352
 msgid "content selected here will be shown when entering the section"
-msgstr ""
-"El contenido aquí seleccionado se mostrará cuando se acceda a la sección"
+msgstr "El contenido aquí seleccionado se mostrará cuando se acceda a la sección"
 
 #: merengue/section/admin.py:198 merengue/section/models.py:370
 msgid "custom style"
 msgstr "estilo personalizado"
 
 #: merengue/section/admin.py:209
-msgid ""
-"Custom style for the section. You can use the variables $media_url and "
-"$theme_url"
-msgstr ""
-"Estilo personalizado para la sección. Puedes usar las variables $media_url y "
-"$theme_url"
+msgid "Custom style for the section. You can use the variables $media_url and $theme_url"
+msgstr "Estilo personalizado para la sección. Puedes usar las variables $media_url y $theme_url"
 
 #: merengue/section/admin.py:225 merengue/section/models.py:474
 msgid "documents"
@@ -2530,11 +2484,8 @@ msgid "help text"
 msgstr "campo de ayuda"
 
 #: merengue/section/models.py:96
-msgid ""
-"text for describing the menu target, usually placed as link title attribute"
-msgstr ""
-"Texto para describir el destino del menú, normalmente se coloca como el "
-"atributo enlace del título"
+msgid "text for describing the menu target, usually placed as link title attribute"
+msgstr "Texto para describir el destino del menú, normalmente se coloca como el atributo enlace del título"
 
 #: merengue/section/models.py:103
 msgid "Parent"
@@ -2734,7 +2685,7 @@ msgstr "Insertar la primera sección"
 
 #: merengue/section/templates/section/menu_link_not_exists.html.py:20
 msgid "Empty Menu"
-msgstr ""
+msgstr "Menú Vacío"
 
 #: merengue/section/templates/section/menu_link_not_exists.html.py:22
 msgid "This menu does not link to any target"
@@ -2873,14 +2824,11 @@ msgid "Merengue administration"
 msgstr "Administración de Merengue"
 
 #: merengue/templates/admin/change_form.html.py:52
-msgid ""
-"This content is set as 'no_deletable' so you can not delete it from the "
-"system"
+msgid "This content is set as 'no_deletable' so you can not delete it from the system"
 msgstr ""
 
 #: merengue/templates/admin/change_form.html.py:55
-msgid ""
-"This content is set as 'no_changeable' so you can not alter any of its data"
+msgid "This content is set as 'no_changeable' so you can not alter any of its data"
 msgstr ""
 
 #: merengue/templates/admin/change_form.html.py:71
@@ -2920,42 +2868,24 @@ msgstr "Guardar y continuar editando"
 #: merengue/templates/admin/delete_confirmation.html.py:14
 #: merengue/templates/admin/delete_confirmation_various.html.py:14
 #, python-format
-msgid ""
-"Deleting the %(object_name)s '%(escaped_object)s' would result in deleting "
-"related objects, but your account doesn't have permission to delete the "
-"following types of objects:"
-msgstr ""
-"Eliminando %(object_name)s '%(escaped_object)s' podrían eliminarse objetos "
-"relacionados, pero su cuenta no tiene permisos para eliminar los siguientes "
-"tipos de objetos:"
+msgid "Deleting the %(object_name)s '%(escaped_object)s' would result in deleting related objects, but your account doesn't have permission to delete the following types of objects:"
+msgstr "Eliminando %(object_name)s '%(escaped_object)s' podrían eliminarse objetos relacionados, pero su cuenta no tiene permisos para eliminar los siguientes tipos de objetos:"
 
 #: merengue/templates/admin/delete_confirmation.html.py:22
 #, python-format
-msgid ""
-"Deleting the %(object_name)s '%(escaped_object)s' would result in deleting "
-"related objects, but your account doesn't have permission to delete the "
-"following objects:"
+msgid "Deleting the %(object_name)s '%(escaped_object)s' would result in deleting related objects, but your account doesn't have permission to delete the following objects:"
 msgstr ""
 
 #: merengue/templates/admin/delete_confirmation.html.py:30
 #, fuzzy, python-format
-msgid ""
-"Deleting the %(object_name)s '%(escaped_object)s' would require deleting the "
-"following protected related objects:"
-msgstr ""
-"Eliminando %(object_name)s '%(escaped_object)s' podrían eliminarse objetos "
-"relacionados, pero su cuenta no tiene permisos para eliminar los siguientes "
-"tipos de objetos:"
+msgid "Deleting the %(object_name)s '%(escaped_object)s' would require deleting the following protected related objects:"
+msgstr "Eliminando %(object_name)s '%(escaped_object)s' podrían eliminarse objetos relacionados, pero su cuenta no tiene permisos para eliminar los siguientes tipos de objetos:"
 
 #: merengue/templates/admin/delete_confirmation.html.py:38
 #: merengue/templates/admin/delete_confirmation_various.html.py:21
 #, python-format
-msgid ""
-"Are you sure you want to delete the %(object_name)s \"%(escaped_object)s\"? "
-"All of the following related items will be deleted:"
-msgstr ""
-"¿Está seguro que quiere eliminar el %(object_name)s \"%(escaped_object)s? "
-"Todos los siguientes elementos relacionados serán eliminados:"
+msgid "Are you sure you want to delete the %(object_name)s \"%(escaped_object)s\"? All of the following related items will be deleted:"
+msgstr "¿Está seguro que quiere eliminar el %(object_name)s \"%(escaped_object)s? Todos los siguientes elementos relacionados serán eliminados:"
 
 #: merengue/templates/admin/delete_selected_confirmation.html.py:9
 msgid "Delete multiple objects"
@@ -2963,41 +2893,23 @@ msgstr ""
 
 #: merengue/templates/admin/delete_selected_confirmation.html.py:16
 #, fuzzy, python-format
-msgid ""
-"Deleting the selected %(objects_name)s would result in deleting related "
-"objects, but your account doesn't have permission to delete the following "
-"types of objects:"
-msgstr ""
-"Eliminando %(object_name)s '%(escaped_object)s' podrían eliminarse objetos "
-"relacionados, pero su cuenta no tiene permisos para eliminar los siguientes "
-"tipos de objetos:"
+msgid "Deleting the selected %(objects_name)s would result in deleting related objects, but your account doesn't have permission to delete the following types of objects:"
+msgstr "Eliminando %(object_name)s '%(escaped_object)s' podrían eliminarse objetos relacionados, pero su cuenta no tiene permisos para eliminar los siguientes tipos de objetos:"
 
 #: merengue/templates/admin/delete_selected_confirmation.html.py:24
 #, python-format
-msgid ""
-"Deleting the selected %(objects_name)s would require deleting the following "
-"protected related objects:"
+msgid "Deleting the selected %(objects_name)s would require deleting the following protected related objects:"
 msgstr ""
 
 #: merengue/templates/admin/delete_selected_confirmation.html.py:32
 #, fuzzy, python-format
-msgid ""
-"Deleting the selected %(objects_name)s would result in deleting related "
-"objects, but your account doesn't have permission to delete the following "
-"objects:"
-msgstr ""
-"Eliminando %(object_name)s '%(escaped_object)s' podrían eliminarse objetos "
-"relacionados, pero su cuenta no tiene permisos para eliminar los siguientes "
-"tipos de objetos:"
+msgid "Deleting the selected %(objects_name)s would result in deleting related objects, but your account doesn't have permission to delete the following objects:"
+msgstr "Eliminando %(object_name)s '%(escaped_object)s' podrían eliminarse objetos relacionados, pero su cuenta no tiene permisos para eliminar los siguientes tipos de objetos:"
 
 #: merengue/templates/admin/delete_selected_confirmation.html.py:40
 #, fuzzy, python-format
-msgid ""
-"Are you sure you want to delete the selected %(objects_name)s? All of the "
-"following objects and their related items will be deleted:"
-msgstr ""
-"¿Está seguro que quiere eliminar el %(object_name)s \"%(escaped_object)s? "
-"Todos los siguientes elementos relacionados serán eliminados:"
+msgid "Are you sure you want to delete the selected %(objects_name)s? All of the following objects and their related items will be deleted:"
+msgstr "¿Está seguro que quiere eliminar el %(object_name)s \"%(escaped_object)s? Todos los siguientes elementos relacionados serán eliminados:"
 
 #: merengue/templates/admin/django_index.html.py:25
 #: merengue/templates/admin/inc.content_index.html.py:8
@@ -3187,8 +3099,7 @@ msgid "Save/restore configuration"
 msgstr "Guardar/restaurar la configuración"
 
 #: merengue/templates/admin/merengue_index_base.html.py:76
-msgid ""
-"Save/restore the site configuration (block, plugins, active theme, etc.)"
+msgid "Save/restore the site configuration (block, plugins, active theme, etc.)"
 msgstr ""
 
 #: merengue/templates/admin/merengue_index_base.html.py:84
@@ -3212,9 +3123,7 @@ msgid "Plugin custom administration interfaces"
 msgstr ""
 
 #: merengue/templates/admin/merengue_index_base.html.py:102
-msgid ""
-"Enabled plugins can define its own administration interfaces. These are the "
-"custom admins in your installed plugins:"
+msgid "Enabled plugins can define its own administration interfaces. These are the custom admins in your installed plugins:"
 msgstr ""
 
 #: merengue/templates/admin/merengue_index_base.html.py:124
@@ -3246,12 +3155,8 @@ msgid "DATETIME_FORMAT"
 msgstr ""
 
 #: merengue/templates/admin/object_history.html.py:44
-msgid ""
-"This object doesn't have a change history. It probably wasn't added via this "
-"admin site."
-msgstr ""
-"Este objeto no tiene un historial de cambios. Probablemente no se agregó a "
-"través de este sitio de administración."
+msgid "This object doesn't have a change history. It probably wasn't added via this admin site."
+msgstr "Este objeto no tiene un historial de cambios. Probablemente no se agregó a través de este sitio de administración."
 
 #: merengue/templates/admin/object_tools.html.py:61
 #, python-format
@@ -3272,9 +3177,7 @@ msgstr "Cargar la configuración guardada"
 
 #: merengue/templates/admin/siteconfig.html.py:31
 msgid "Upload and restore a .zip file containing a saved project configuration"
-msgstr ""
-"Cargar y restaurar un archivo .zip que contiene una configuración del "
-"proyecto guardado"
+msgstr "Cargar y restaurar un archivo .zip que contiene una configuración del proyecto guardado"
 
 #: merengue/templates/admin/siteconfig.html.py:34
 msgid "Submit config"
@@ -3285,11 +3188,8 @@ msgid "Save current configuration"
 msgstr "Guardar configuración actual"
 
 #: merengue/templates/admin/siteconfig.html.py:44
-msgid ""
-"Save current project configuration into a .zip file that can be restored"
-msgstr ""
-"Guardar configuración actual del proyecto en un archivo .zip que se pueda "
-"restaurar"
+msgid "Save current project configuration into a .zip file that can be restored"
+msgstr "Guardar configuración actual del proyecto en un archivo .zip que se pueda restaurar"
 
 #: merengue/templates/admin/siteconfig.html.py:46
 msgid "Save current config"
@@ -3306,9 +3206,7 @@ msgstr "Guardar la actual copia de seguridad"
 
 #: merengue/templates/admin/siteconfig.html.py:55
 msgid "Save current backup configuration into a .zip file that can be restored"
-msgstr ""
-"Guardar la configuración de la actual copia de seguridad en un archivo .zip "
-"para que pueda ser restaurada"
+msgstr "Guardar la configuración de la actual copia de seguridad en un archivo .zip para que pueda ser restaurada"
 
 #: merengue/templates/admin/smart_relations_object_tool.html.py:6
 msgid "Edit"
@@ -3413,12 +3311,8 @@ msgid "Enter new password"
 msgstr "Introduzca nueva contraseña"
 
 #: merengue/templates/registration/password_reset_confirm.html.py:14
-msgid ""
-"Please enter your new password twice so we can verify you typed it in "
-"correctly."
-msgstr ""
-"Por favor, introduzca su nueva contraseña dos veces para que podamos "
-"verificar que la ha escrito correctamente."
+msgid "Please enter your new password twice so we can verify you typed it in correctly."
+msgstr "Por favor, introduzca su nueva contraseña dos veces para que podamos verificar que la ha escrito correctamente."
 
 #: merengue/templates/registration/password_reset_confirm.html.py:18
 msgid "New password:"
@@ -3437,17 +3331,12 @@ msgid "Password reset unsuccessful"
 msgstr "Contraseña cambiada satisfactoriamente"
 
 #: merengue/templates/registration/password_reset_confirm.html.py:28
-msgid ""
-"The password reset link was invalid, possibly because it has already been "
-"used.  Please request a new password reset."
-msgstr ""
-"El enlace de cambio de contraseña es inválido, posiblemente porque ya ha "
-"sido usado. Por favor, solicite un cambio de contraseña nuevo."
+msgid "The password reset link was invalid, possibly because it has already been used.  Please request a new password reset."
+msgstr "El enlace de cambio de contraseña es inválido, posiblemente porque ya ha sido usado. Por favor, solicite un cambio de contraseña nuevo."
 
 #: merengue/templates/registration/password_reset_email.html.py:2
 msgid "You're receiving this e-mail because you requested a password reset"
-msgstr ""
-"Ha recibido este mail porque solicitó un restablecimiento de contraseña"
+msgstr "Ha recibido este mail porque solicitó un restablecimiento de contraseña"
 
 #: merengue/templates/registration/password_reset_email.html.py:3
 #, python-format
@@ -3499,9 +3388,7 @@ msgstr ""
 
 #: merengue/workflow/admin.py:211
 #, python-format
-msgid ""
-"State permissions were saved successfully. To make your changes effective "
-"you have to update permissions <a href=\"%(url)s\">here</a>"
+msgid "State permissions were saved successfully. To make your changes effective you have to update permissions <a href=\"%(url)s\">here</a>"
 msgstr ""
 
 #: merengue/workflow/admin.py:226
@@ -3599,9 +3486,7 @@ msgid "Publish"
 msgstr ""
 
 #: merengue/workflow/templates/admin/workflow/update_permissions.html.py:17
-msgid ""
-"Do you want to update the permissions related to workflows of all the portal "
-"objects?"
+msgid "Do you want to update the permissions related to workflows of all the portal objects?"
 msgstr ""
 
 #: merengue/workflow/templates/admin/workflow/update_permissions.html.py:20
@@ -3620,12 +3505,8 @@ msgstr ""
 msgid "Permissions managed by this workflow"
 msgstr ""
 
-#~ msgid ""
-#~ "Tags will be splitted by spaces or commas if present. To "
-#~ "force                                 tag names, use double quotes."
-#~ msgstr ""
-#~ "Las etiquetas serán divididas por espacios o comas si existen. Para "
-#~ "forzar los nombres de las etiquetas, usa dobles comillas."
+#~ msgid "Tags will be splitted by spaces or commas if present. To force                                 tag names, use double quotes."
+#~ msgstr "Las etiquetas serán divididas por espacios o comas si existen. Para forzar los nombres de las etiquetas, usa dobles comillas."
 
 #~ msgid "Add %(name)s"
 #~ msgstr "Añadir %(name)s"
