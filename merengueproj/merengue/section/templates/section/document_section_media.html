@@ -14,7 +14,9 @@
     $(document).ready(function () {
         var new_tinymce_settings = {
             content_css: '{{ tinymce_extra_media.css }}',
-            content_js: '{{ tinymce_extra_media.js }}'
+            content_js: '{{ tinymce_extra_media.js }}',
+            spellchecker_languages: '{{ TINYMCE_LANG_SPELLCHECKER }}',
+            language: '{{ TINYMCE_LANG }}'
         };
         $.fn.MerengueDocument.set_tinymce_settings(new_tinymce_settings);
         $(".merengue-document").MerengueDocument();

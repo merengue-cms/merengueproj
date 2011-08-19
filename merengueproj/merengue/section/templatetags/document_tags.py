@@ -34,6 +34,9 @@ def document_section_media(context):
         'tinymce_extra_media': tinymce_extra_media,
         'user': context['user'],
         'request': context['request'],
+        'TINYMCE_LANG_SPELLCHECKER': getattr(settings, 'TINYMCE_LANG_SPELLCHECKER', '+English=en'),
+        'TINYMCE_LANG': getattr(settings, 'TINYMCE_LANG', 'en'),
+
     }
 register.inclusion_tag("section/document_section_media.html", takes_context=True)(document_section_media)
 
