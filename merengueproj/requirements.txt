@@ -1,6 +1,6 @@
 # python libraries
 PIL
-BeautifulSoup
+BeautifulSoup==3.2.0
 encutils
 feedparser
 # for twitter plugin
