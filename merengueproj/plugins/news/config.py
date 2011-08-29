@@ -56,8 +56,3 @@ class PluginConfig(Plugin):
         collection = create_normalize_collection('news', u'News', NewsItem,
                                                  create_display_field=True,
                                                  create_filter_field=True)
-        IncludeCollectionFilter.objects.get_or_create(
-            collection=collection,
-            filter_field='expire_date',
-            filter_operator='date_gt',
-            )  # this way, we won't have in count the expired news
