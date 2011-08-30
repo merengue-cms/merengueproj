@@ -37,7 +37,7 @@ class EventAdmin(BaseContentAdmin):
     form = EventAdminForm
     if settings.USE_GIS:
         list_display = list_display + ('google_minimap', )
-    list_filter = ('categories', 'status', 'user_modification_date', )
+    list_filter = ('categories', 'workflow_status', 'user_modification_date', )
 
 
 class EventSectionAdmin(SectionContentAdmin, EventAdmin):
