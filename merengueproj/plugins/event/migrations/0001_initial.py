@@ -1,13 +1,17 @@
 # encoding: utf-8
-import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+from merengue.base.utils import table_exists
+
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+        if table_exists('event_category'):
+            return  # already migrated
+
         # Adding model 'Category'
         db.create_table('event_category', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -36,9 +40,7 @@ class Migration(SchemaMigration):
         ))
         db.create_unique('event_event_categories', ['event_id', 'category_id'])
 
-
     def backwards(self, orm):
-        
         # Deleting model 'Category'
         db.delete_table('event_category')
 
@@ -47,7 +49,6 @@ class Migration(SchemaMigration):
 
         # Removing M2M table for field categories on 'Event'
         db.delete_table('event_event_categories')
-
 
     models = {
         'auth.group': {
