@@ -23,6 +23,7 @@ from django.conf import settings
 
 
 class Migration(SchemaMigration):
+    no_dry_run = True
 
     def forwards(self, orm):
         # Adding unique constraint on 'ObjectPermission', fields ['content', 'role', 'permission']
