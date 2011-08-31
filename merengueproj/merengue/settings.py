@@ -133,6 +133,7 @@ MERENGUE_MIDDLEWARE_CLASSES = (
 PRE_MERENGUE_MIDDLEWARE_CLASSES = (
     'johnny.middleware.LocalStoreClearMiddleware',  # this has to be first
     'merengue.cache.middleware.UpdateAnonymousCacheMiddleware',
+    'merengue.cache.middleware.CheckMemoizeCaches',
     #'cmsutils.middleware.ProfileMiddleware',  # remove comment if you want to profile your website
     'johnny.middleware.QueryCacheMiddleware',
     'django.middleware.common.CommonMiddleware',

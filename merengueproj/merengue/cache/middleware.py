@@ -19,6 +19,19 @@ from django.conf import settings
 from django.middleware.cache import FetchFromCacheMiddleware, UpdateCacheMiddleware
 
 
+class CheckMemoizeCaches(object):
+
+    def process_request(self, request):
+        if not request.get_full_path().startswith(settings.MEDIA_URL):
+            from merengue.registry.managers import _registry_lookup_cache
+            from merengue.block.utils import _blocks_lookup_cache
+            from merengue.perms.utils import _roles_cache
+            _registry_lookup_cache.reload_if_dirty()
+            _blocks_lookup_cache.reload_if_dirty()
+            _roles_cache.reload_if_dirty()
+        return None
+
+
 class UpdateAnonymousCacheMiddleware(UpdateCacheMiddleware):
 
     def __init__(self):
