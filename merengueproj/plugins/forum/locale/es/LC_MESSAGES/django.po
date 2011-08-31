@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-17 14:04+0200\n"
+"POT-Creation-Date: 2011-07-20 09:40+0200\n"
 "PO-Revision-Date: 2010-10-11 11:42\n"
 "Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,60 +37,64 @@ msgstr "Categoría de foro"
 msgid "Forum categories"
 msgstr "Categorías de foro"
 
-#: models.py:29
+#: models.py:25
+msgid "Category"
+msgstr ""
+
+#: models.py:30
 msgid "Forum"
 msgstr "Foro"
 
-#: models.py:30 templates/forum/forum_list.html:8
+#: models.py:31 templates/forum/forum_list.html:8
 #: templates/forum/forum_list.html.py:14 templates/forum/forum_list.html:16
 msgid "Forums"
 msgstr "Foros"
 
-#: models.py:57
+#: models.py:58
 msgid "closed"
 msgstr "cerrado"
 
-#: models.py:63 templates/forum/forum_view.html:9
+#: models.py:64 templates/forum/forum_view.html:9
 msgid "Thread"
 msgstr "Hilo"
 
-#: models.py:64 templates/forum/forum_list.html:26
+#: models.py:65 templates/forum/forum_list.html:26
 msgid "Threads"
 msgstr "Hilos"
 
-#: models.py:81
+#: models.py:82
 msgid "The slug already exists in other thread in this forum"
 msgstr ""
 
-#: models.py:109
+#: models.py:110
 msgid "title"
 msgstr ""
 
-#: models.py:110
+#: models.py:111
 msgid "comment"
 msgstr "comentario"
 
-#: models.py:113
+#: models.py:114
 msgid "banned"
 msgstr "baneado"
 
-#: models.py:114
+#: models.py:115
 msgid "date/time submitted"
 msgstr "fecha/hora de envio"
 
-#: models.py:115
+#: models.py:116
 msgid "date/time modified"
 msgstr "fecha/hora modificado"
 
-#: models.py:116
+#: models.py:117
 msgid "IP address"
 msgstr "dirección IP"
 
-#: models.py:120
+#: models.py:121
 msgid "Forum Thread Comment"
 msgstr "Comentario del Hilo"
 
-#: models.py:121
+#: models.py:122
 msgid "Forum Thread Comments"
 msgstr "Comentarios del Hilo"
 
@@ -98,7 +102,7 @@ msgstr "Comentarios del Hilo"
 msgid "You don't have permission to create a new thread"
 msgstr ""
 
-#: views.py:127
+#: views.py:135
 msgid "Your message has been posted successfully."
 msgstr "Tu mensaje ha sido posteado satisfactoriamente."
 

@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-11 08:52+0200\n"
-"PO-Revision-Date: 2011-07-18 11:04\n"
+"POT-Creation-Date: 2011-07-20 08:55+0200\n"
+"PO-Revision-Date: 2011-07-19 08:52\n"
 "Last-Translator: Pablo Martin <pmartin@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,3463 +17,3448 @@ msgstr ""
 "Language: \n"
 "X-Translated-Using: django-transhette 0.1.SVN\n"
 
-#: merengue/settings.py:157 merengue/workflow/models.py:388
+#: settings.py:157 workflow/models.py:388
 msgid "Draft"
 msgstr "Borrador"
 
-#: merengue/settings.py:158 merengue/workflow/models.py:396
+#: settings.py:158 workflow/models.py:396
 msgid "Pending"
 msgstr "Pendiente"
 
-#: merengue/settings.py:159 merengue/workflow/models.py:404
+#: settings.py:159 workflow/models.py:404
 msgid "Published"
 msgstr "Publicado"
 
-#: merengue/settings.py:355
+#: settings.py:355
 msgid "Primary link"
 msgstr "Enlaces primarios"
 
-#: merengue/settings.py:356
+#: settings.py:356
 msgid "Secondary link"
 msgstr "Enlaces secundarios"
 
-#: merengue/action/admin.py:32 merengue/block/admin.py:45
-#: merengue/pluggable/admin.py:50 merengue/registry/admin.py:35
+#: action/admin.py:32 block/admin.py:45 pluggable/admin.py:50
+#: registry/admin.py:35
 msgid "Status"
 msgstr "Estado"
 
-#: merengue/apps/captcha/fields.py:14
+#: apps/captcha/fields.py:14
 msgid "Typed characters does not match with the ones in the image"
 msgstr "Los caracteres escritos no concuerdan con los de la imagen"
 
-#: merengue/apps/captcha/models.py:6
+#: apps/captcha/models.py:6
 msgid "text"
 msgstr "texto"
 
-#: merengue/apps/captcha/models.py:8
-msgid "The image must upload at the size that is displayed is not automatically resize"
-msgstr "La imagen que debe cargar deber ser del tamaño que se indica ya que no cambian de tamaño automáticamente"
+#: apps/captcha/models.py:8
+msgid ""
+"The image must upload at the size that is displayed is not automatically "
+"resize"
+msgstr ""
+"La imagen que debe cargar deber ser del tamaño que se indica ya que no "
+"cambian de tamaño automáticamente"
 
-#: merengue/apps/captcha/widgets.py:31
+#: apps/captcha/widgets.py:31
 msgid "Type the word that follows the image"
 msgstr "Enlaces sociales"
 
-#: merengue/apps/captcha/widgets.py:33
-msgid "You need to load images in your browser to be able to register, because of the captcha system."
-msgstr "Es necesario poder cargar imágenes en su navegador para poder registrarse, debido al sistema de captcha."
+#: apps/captcha/widgets.py:33
+msgid ""
+"You need to load images in your browser to be able to register, because of "
+"the captcha system."
+msgstr ""
+"Es necesario poder cargar imágenes en su navegador para poder registrarse, "
+"debido al sistema de captcha."
 
-#: merengue/apps/rating/admin.py:25
+#: apps/rating/admin.py:25
 msgid "Vote"
 msgstr "Voto"
 
-#: merengue/apps/rating/admin.py:26
+#: apps/rating/admin.py:26
 msgid "Votes"
 msgstr "Votos"
 
-#: merengue/apps/rating/models.py:28
+#: apps/rating/models.py:28
 msgid "Very bad"
 msgstr "Muy mal"
 
-#: merengue/apps/rating/models.py:28
+#: apps/rating/models.py:28
 msgid "Bad"
 msgstr "Mal"
 
-#: merengue/apps/rating/models.py:28
+#: apps/rating/models.py:28
 msgid "OK"
 msgstr ""
 
-#: merengue/apps/rating/models.py:28
+#: apps/rating/models.py:28
 msgid "Good"
 msgstr ""
 
-#: merengue/apps/rating/models.py:28
+#: apps/rating/models.py:28
 msgid "Very good"
 msgstr "Muy bien"
 
-#: merengue/apps/rating/models.py:183 merengue/collab/models.py:104
-#: merengue/collab/models.py:180
+#: apps/rating/models.py:183 collab/models.py:104 collab/models.py:180
 msgid "user"
 msgstr "usuario"
 
-#: merengue/apps/rating/models.py:187 merengue/apps/rating/models.py:192
+#: apps/rating/models.py:187 apps/rating/models.py:192
 msgid "vote"
 msgstr "voto"
 
-#: merengue/apps/rating/models.py:193
+#: apps/rating/models.py:193
 msgid "votes"
 msgstr "votos"
 
-#: merengue/apps/rating/templates/form.html.py:4
+#: apps/rating/templates/form.html:4
 #, python-format
 msgid "%(votes)s vote"
 msgid_plural "%(votes)s votes"
 msgstr[0] "%(votes)s voto"
 msgstr[1] "%(votes)s votos"
 
-#: merengue/apps/rating/templates/form.html.py:6
+#: apps/rating/templates/form.html:6
 msgid "stars"
 msgstr "estrellas"
 
-#: merengue/apps/rating/templates/form.html.py:9
+#: apps/rating/templates/form.html:9
 msgid "Sign in to rate"
 msgstr "Lóguese para votar"
 
-#: merengue/apps/rating/templatetags/rating_tags.py:107
-#: merengue/apps/rating/templatetags/rating_tags.py:114
+#: apps/rating/templatetags/rating_tags.py:107
+#: apps/rating/templatetags/rating_tags.py:114
 msgid "Thanks for rating "
 msgstr "Gracias por votar"
 
-#: merengue/apps/stdimage/fields.py:142
+#: apps/stdimage/fields.py:142
 msgid "Invalid image format"
 msgstr "Formato de imagen inválido"
 
-#: merengue/apps/stdimage/widgets.py:32
+#: apps/stdimage/widgets.py:32
 msgid "Currently:"
 msgstr "Actualmente:"
 
-#: merengue/apps/stdimage/widgets.py:33
+#: apps/stdimage/widgets.py:33
 msgid "Change:"
 msgstr "Cambiado:"
 
-#: merengue/apps/stdimage/widgets.py:43
-#: merengue/templates/admin/customize_submit_line.html.py:7
-#: merengue/templates/admin/customize_submit_line.html.py:9
-#: merengue/templates/admin/delete_confirmation.html.py:7
-#: merengue/templates/admin/delete_confirmation_various.html.py:8
+#: apps/stdimage/widgets.py:43 templates/admin/customize_submit_line.html:7
+#: templates/admin/customize_submit_line.html:9
+#: templates/admin/delete_confirmation.html:7
+#: templates/admin/delete_confirmation_various.html:8
 msgid "Delete"
 msgstr "Eliminar"
 
-#: merengue/apps/tinyimages/models.py:12
+#: apps/tinyimages/models.py:12
 msgid "Title"
 msgstr "Título"
 
-#: merengue/apps/tinyimages/models.py:29
+#: apps/tinyimages/models.py:29
 msgid "Image"
-msgstr "Borrador"
+msgstr "Imagen"
 
-#: merengue/apps/tinyimages/models.py:29
+#: apps/tinyimages/models.py:29
 msgid "Select a image to upload"
 msgstr "Seleccione una imagen para subir"
 
-#: merengue/apps/tinyimages/models.py:34
+#: apps/tinyimages/models.py:34
 msgid "File"
 msgstr "Archivo"
 
-#: merengue/apps/tinyimages/models.py:34
+#: apps/tinyimages/models.py:34
 msgid "Select a file to upload"
 msgstr ""
 
-#: merengue/apps/tinyimages/views.py:26
+#: apps/tinyimages/views.py:40
 msgid "Your file has been uploaded. "
 msgstr "Su archivo ha sido subido."
 
-#: merengue/apps/tinyimages/views.py:27 merengue/apps/tinyimages/views.py:30
-msgid "Now you can select it below to be added into editor"
-msgstr ""
-
-#: merengue/apps/tinyimages/views.py:29
+#: apps/tinyimages/views.py:43
 msgid "Your image has been uploaded. "
 msgstr "Su imagen ha sido subida."
 
-#: merengue/apps/tinyimages/templates/tinyimages/base.html.py:5
+#: apps/tinyimages/templates/tinyimages/base.html:5
 msgid "TinyImages"
-msgstr "La imagen que debe cargar debe ser del tamaño que se indica ya que no cambian de tamaño automáticamente"
+msgstr ""
+"La imagen que debe cargar debe ser del tamaño que se indica ya que no "
+"cambian de tamaño automáticamente"
 
-#: merengue/apps/tinyimages/templates/tinyimages/base_list.html.py:10
+#: apps/tinyimages/templates/tinyimages/base_list.html:10
 msgid "Send"
 msgstr "Enviar"
 
-#: merengue/apps/tinyimages/templates/tinyimages/file.html.py:4
-#: merengue/apps/tinyimages/templates/tinyimages/file.html.py:15
+#: apps/tinyimages/templates/tinyimages/base_list.html:16
+#: portal/templates/portal/searchform.html:7
+#: templates/admin/merengue_index_base.html:33
+msgid "Search"
+msgstr ""
+
+#: apps/tinyimages/templates/tinyimages/base_list.html:28
+msgid "Showing files that contains"
+msgstr ""
+
+#: apps/tinyimages/templates/tinyimages/base_list.html:28
+msgid "Show all"
+msgstr ""
+
+#: apps/tinyimages/templates/tinyimages/file.html:4
+#: apps/tinyimages/templates/tinyimages/file.html:15
 msgid "Insert file"
 msgstr "Insertar archivo"
 
-#: merengue/apps/tinyimages/templates/tinyimages/file.html.py:23
+#: apps/tinyimages/templates/tinyimages/file.html:23
 msgid "Insert file src"
 msgstr "Insertar archivo src"
 
-#: merengue/apps/tinyimages/templates/tinyimages/file_delete.html.py:5
+#: apps/tinyimages/templates/tinyimages/file_delete.html:5
 msgid "Delete file:"
 msgstr "Eliminar archivo:"
 
-#: merengue/apps/tinyimages/templates/tinyimages/file_delete.html.py:7
+#: apps/tinyimages/templates/tinyimages/file_delete.html:7
 msgid "Are you sure you want to delete the following file?"
 msgstr "¿Estás seguro que quieres eliminar el siguiente archivo?"
 
-#: merengue/apps/tinyimages/templates/tinyimages/file_list.html.py:6
+#: apps/tinyimages/templates/tinyimages/file_list.html:6
 msgid "Your files. Select one to be inserted into editor"
 msgstr "Sus archivos. Seleccione uno para insertar en el editor"
 
-#: merengue/apps/tinyimages/templates/tinyimages/file_list.html.py:22
+#: apps/tinyimages/templates/tinyimages/file_list.html:22
 msgid "Delete file"
 msgstr "Eliminar archivo"
 
-#: merengue/apps/tinyimages/templates/tinyimages/image_delete.html.py:5
+#: apps/tinyimages/templates/tinyimages/image_delete.html:5
 msgid "Delete image:"
 msgstr "Eliminar imagen:"
 
-#: merengue/apps/tinyimages/templates/tinyimages/image_delete.html.py:7
+#: apps/tinyimages/templates/tinyimages/image_delete.html:7
 msgid "Are you sure you want to delete the following image?"
 msgstr "¿Está seguro que quiere eliminar la siguiente imagen?"
 
-#: merengue/apps/tinyimages/templates/tinyimages/image_list.html.py:6
+#: apps/tinyimages/templates/tinyimages/image_list.html:6
 msgid "Your images. Select one to be inserted into editor"
 msgstr "Sus imágenes. Seleccione una para insertar en el editor"
 
-#: merengue/apps/tinyimages/templates/tinyimages/image_list.html.py:24
+#: apps/tinyimages/templates/tinyimages/image_list.html:24
 msgid "Delete image"
 msgstr "Eliminar imagen"
 
-#: merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:3
+#: apps/tinyimages/templates/tinyimages/paginator.html:3
 msgid "Result"
 msgstr "Resultado"
 
-#: merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:5
+#: apps/tinyimages/templates/tinyimages/paginator.html:5
 msgid "to"
 msgstr "a"
 
-#: merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:7
+#: apps/tinyimages/templates/tinyimages/paginator.html:7
 msgid "of"
 msgstr "de"
 
-#: merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:10
+#: apps/tinyimages/templates/tinyimages/paginator.html:10
 msgid "Current page"
 msgstr "Página actual"
 
-#: merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:17
+#: apps/tinyimages/templates/tinyimages/paginator.html:17
 msgid "First Page"
 msgstr "Primera Página"
 
-#: merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:20
+#: apps/tinyimages/templates/tinyimages/paginator.html:20
 msgid "Previous Page"
 msgstr "Página Previa"
 
-#: merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:42
+#: apps/tinyimages/templates/tinyimages/paginator.html:42
 msgid "Next Page"
 msgstr "Siguiente Página"
 
-#: merengue/apps/tinyimages/templates/tinyimages/paginator.html.py:45
+#: apps/tinyimages/templates/tinyimages/paginator.html:45
 msgid "Last Page"
 msgstr "Última Página"
 
-#: merengue/base/actions.py:51
+#: base/actions.py:51
 #, python-format
 msgid "Successfully deleted %(count)d %(items)s."
 msgstr "Borrado satisfactoriamente %(count)d %(items)s."
 
-#: merengue/base/actions.py:63
+#: base/actions.py:63
 #, python-format
 msgid "Cannot delete %(name)s"
 msgstr ""
 
-#: merengue/base/actions.py:65 merengue/base/admin.py:608
-#: merengue/base/admin.py:683
+#: base/actions.py:65 base/admin.py:608 base/admin.py:683
 msgid "Are you sure?"
 msgstr ""
 
-#: merengue/base/actions.py:88 merengue/base/actions.py:93
+#: base/actions.py:88 base/actions.py:93
 #, python-format
 msgid "Delete selected %(verbose_name_plural)s"
 msgstr ""
 
-#: merengue/base/admin.py:455 merengue/base/admin.py:659
-#: merengue/workflow/admin.py:392
+#: base/admin.py:455 base/admin.py:659 workflow/admin.py:392
 #, python-format
 msgid "%(name)s object with primary key %(key)r does not exist."
 msgstr ""
 
-#: merengue/base/admin.py:487
+#: base/admin.py:487
 msgid "This field is required."
 msgstr "Este campo es obligatorio"
 
-#: merengue/base/admin.py:676
+#: base/admin.py:676
 #, python-format
 msgid "The %(name)s \"%(obj)s\" was deleted successfully."
 msgstr "El %(name)s \"%(obj)s\" fue eliminada satisfactoriamente."
 
-#: merengue/base/admin.py:707 merengue/base/templatetags/admin_tags.py:91
-#: merengue/section/templates/admin/section/customstyle/change_form.html.py:9
-#: merengue/section/templates/admin/section/documentsection/change_form.html.py:9
-#: merengue/templates/admin/object_history.html.py:7
+#: base/admin.py:707 base/templatetags/admin_tags.py:91
+#: section/templates/admin/section/customstyle/change_form.html:9
+#: section/templates/admin/section/documentsection/change_form.html:9
+#: templates/admin/object_history.html:7
 msgid "History"
 msgstr "Historia"
 
-#: merengue/base/admin.py:711
+#: base/admin.py:711
 #, python-format
 msgid "Add %s"
 msgstr ""
 
-#: merengue/base/admin.py:713
+#: base/admin.py:713
 msgid "Quick Report"
 msgstr "Informe Rápido"
 
-#: merengue/base/admin.py:714
+#: base/admin.py:714
 msgid "Advanced Report"
 msgstr "Informe Avanzado"
 
-#: merengue/base/admin.py:715
+#: base/admin.py:715
 msgid "Reports"
 msgstr ""
 
-#: merengue/base/admin.py:716
+#: base/admin.py:716
 msgid "Wizard Report"
 msgstr ""
 
-#: merengue/base/admin.py:758
+#: base/admin.py:758
 msgid "Are you sure you want to set this items as draft?"
 msgstr "¿Está seguro que quiere pasar este contenido a borrador?"
 
-#: merengue/base/admin.py:760 merengue/workflow/models.py:418
+#: base/admin.py:760 workflow/models.py:418
 msgid "Set as draft"
 msgstr "Pasar a borrador"
 
-#: merengue/base/admin.py:764
+#: base/admin.py:764
 msgid "Are you sure you want to set this items as pending?"
 msgstr "¿Estás seguro que quieres pasar estos contenidos a pendientes?"
 
-#: merengue/base/admin.py:766 merengue/workflow/models.py:412
+#: base/admin.py:766 workflow/models.py:412
 msgid "Set as pending"
 msgstr "Pasar a pendiente"
 
-#: merengue/base/admin.py:770
+#: base/admin.py:770
 msgid "Are you sure you want to set this items as published?"
 msgstr "¿Está seguro que quieres pasar estos contenidos a publicado?"
 
-#: merengue/base/admin.py:772
+#: base/admin.py:772
 msgid "Set as published"
 msgstr "Pasar a publicado"
 
-#: merengue/base/admin.py:783
+#: base/admin.py:783
 #, python-format
 msgid "Changed to %s"
 msgstr "Cambiado a %s"
 
-#: merengue/base/admin.py:787
+#: base/admin.py:787
 #, python-format
 msgid "Successfully set %(number)d %(model_name)s as %(state)s."
 msgstr "Satisfactoriamente cambiado de %(number)d %(model_name)s a %(state)s."
 
-#: merengue/base/admin.py:797
+#: base/admin.py:797
 #, python-format
 msgid "Change state of selected %(verbose_name_plural)s"
 msgstr ""
 
-#: merengue/base/admin.py:864
+#: base/admin.py:864
 msgid "Assigned owners"
 msgstr "Propietarios asignados"
 
-#: merengue/base/admin.py:883
+#: base/admin.py:883
 msgid "Are you sure you want to assign these owners to these contents?"
 msgstr "¿Está seguro que quiere asignar estos propietarios a estos contenidos?"
 
-#: merengue/base/admin.py:889
+#: base/admin.py:889
 msgid "Assign owners"
 msgstr "Asignar propietarios"
 
-#: merengue/base/admin.py:993
+#: base/admin.py:993
 msgid "Section"
 msgstr "Sección"
 
-#: merengue/base/admin.py:994
+#: base/admin.py:994
 msgid "Enter the section to which content belongs"
 msgstr "Introduzca la sección a la que pertenece el contenido"
 
-#: merengue/base/admin.py:1052 merengue/multimedia/admin.py:222
+#: base/admin.py:1052 multimedia/admin.py:226
 msgid "Database error"
 msgstr "Error en la base de datos"
 
-#: merengue/base/admin.py:1221
+#: base/admin.py:1221
 msgid "No contents found"
 msgstr "Ningún contenido encontrado "
 
-#: merengue/base/admin.py:1346 merengue/base/models.py:97
-#: merengue/base/models.py:374
+#: base/admin.py:1346 base/models.py:97 base/models.py:374
 msgid "contact info"
 msgstr "información de contacto"
 
-#: merengue/base/admin.py:1450 merengue/workflow/admin.py:270
+#: base/admin.py:1450 workflow/admin.py:270
 msgid "permissions"
 msgstr "permisos"
 
-#: merengue/base/admin.py:1457
+#: base/admin.py:1457
 #, python-format
 msgid ""
-"The permissions of the content should be changed in <a href=\"%(url)s\">the workflow</a>, not in the content itself,\n"
-"    because if the status change, <strong>all the custom permission will be cleared</strong>. But,\n"
-"    if you are sure you want to edit the permissions, click <a href=\"?enable_edit=1\">here</a>."
+"The permissions of the content should be changed in <a href=\"%(url)s\">the "
+"workflow</a>, not in the content itself,\n"
+"    because if the status change, <strong>all the custom permission will be "
+"cleared</strong>. But,\n"
+"    if you are sure you want to edit the permissions, click <a href=\"?"
+"enable_edit=1\">here</a>."
 msgstr ""
-"Los permisos del contenido deberían ser cambiados en <a href=\"%(url)s\">el workflow</a>, no en el contenido,\n"
-"    porque si el estado cambia, <strong>todos los permisos personalizados serán borrados</strong>. Pero,\n"
-"    si estás seguro que quieres editar los permisos, haz click <a href=\"?enable_edit=1\">aquí</a>."
+"Los permisos del contenido deberían ser cambiados en <a href=\"%(url)s\">el "
+"workflow</a>, no en el contenido,\n"
+"    porque si el estado cambia, <strong>todos los permisos personalizados "
+"serán borrados</strong>. Pero,\n"
+"    si estás seguro que quieres editar los permisos, haz click <a href=\"?"
+"enable_edit=1\">aquí</a>."
 
-#: merengue/base/admin.py:1503
+#: base/admin.py:1503
 msgid "Error in id"
 msgstr "Error en id"
 
-#: merengue/base/admin.py:1508
+#: base/admin.py:1508
 msgid "deleted"
 msgstr "eliminado"
 
-#: merengue/base/admin.py:1527
+#: base/admin.py:1527
 msgid "Log entry"
 msgstr "Registro del sistema"
 
-#: merengue/base/admin.py:1533 merengue/perms/models.py:177
-#: merengue/templates/admin/object_history.html.py:29
+#: base/admin.py:1533 perms/models.py:177
+#: templates/admin/object_history.html:29
 msgid "User"
 msgstr "Usuario"
 
-#: merengue/base/admin.py:1538
+#: base/admin.py:1538
 msgid "Admin url"
 msgstr ""
 
-#: merengue/base/admin.py:1547
+#: base/admin.py:1547
 msgid "Public url"
 msgstr "Url pública"
 
-#: merengue/base/admin.py:1557
+#: base/admin.py:1557
 msgid "Content type"
 msgstr "Tipo de contenido"
 
-#: merengue/base/admin.py:1561
+#: base/admin.py:1561
 msgid "Added"
 msgstr "Añadido"
 
-#: merengue/base/admin.py:1563
+#: base/admin.py:1563
 msgid "Deleted"
 msgstr "¿Está seguro que quiere pasar estos contenidos a borrador?"
 
-#: merengue/base/admin.py:1568
-#: merengue/templates/admin/object_history.html.py:30
+#: base/admin.py:1568 templates/admin/object_history.html:30
 msgid "Action"
 msgstr "Pasar a borrador"
 
-#: merengue/base/admin.py:1627
+#: base/admin.py:1627
 msgid "Click to Locate"
 msgstr "Click para localizar"
 
-#: merengue/base/admin.py:1630
+#: base/admin.py:1630
 msgid "Location Maps"
 msgstr "Mapas de localización"
 
-#: merengue/base/admin.py:1696 merengue/base/models.py:256
-#: merengue/places/models.py:56
+#: base/admin.py:1696 base/models.py:256 places/models.py:56
 msgid "location"
 msgstr "localización"
 
-#: merengue/base/admin.py:1706 merengue/places/models.py:72
+#: base/admin.py:1706 places/models.py:72
 msgid "Address"
 msgstr "Dirección "
 
-#: merengue/base/adminforms.py:28
+#: base/adminforms.py:28
 msgid "Select a .zip file:"
 msgstr "Seleccione un archivo .zip"
 
-#: merengue/base/adminforms.py:37
+#: base/adminforms.py:37
 msgid "Bad or too large .zip file"
 msgstr "Archivo .zip corrupto o demasiado pesado"
 
-#: merengue/base/adminsite.py:104
+#: base/adminsite.py:104
 #, python-format
 msgid "%s administration"
 msgstr "%s administración"
 
-#: merengue/base/adminsite.py:258
+#: base/adminsite.py:258
 msgid "Content types"
 msgstr "Tipos de contenido"
 
-#: merengue/base/adminsite.py:279
+#: base/adminsite.py:279
 msgid "Settings saved successfully"
 msgstr "Configuración guardada con éxito"
 
-#: merengue/base/adminsite.py:285
+#: base/adminsite.py:285
 msgid "Database created successfully"
 msgstr "Base de datos creada con éxito"
 
-#: merengue/base/adminsite.py:317 merengue/base/adminsite.py:500
+#: base/adminsite.py:317 base/adminsite.py:500
 msgid "Site administration"
 msgstr "Administración del portal"
 
-#: merengue/base/adminsite.py:328
-#: merengue/templates/admin/django_index.html.py:13
-#: merengue/templates/admin/index.html.py:16
-#: merengue/templates/admin/merengue_index_base.html.py:126
+#: base/adminsite.py:328 templates/admin/django_index.html:13
+#: templates/admin/index.html:16 templates/admin/merengue_index_base.html:126
 msgid "Django admin"
 msgstr "Admin Django"
 
-#: merengue/base/adminsite.py:460
+#: base/adminsite.py:460
 #, python-format
 msgid "%(plugin_name)s plugin administration"
 msgstr ""
 
-#: merengue/base/dbfields.py:40
+#: base/dbfields.py:40
 msgid "Data that serializes and deserializes into and out of JSON."
 msgstr ""
 
-#: merengue/base/filterspecs.py:11 merengue/block/filterspecs.py:16
-#: merengue/multimedia/admin.py:227 merengue/workflow/filterspecs.py:20
+#: base/filterspecs.py:11 block/filterspecs.py:16 multimedia/admin.py:231
+#: workflow/filterspecs.py:20
 msgid "All"
 msgstr "Todo"
 
-#: merengue/base/forms.py:361 merengue/base/models.py:434
+#: base/forms.py:361 base/models.py:434
 msgid "owners"
 msgstr "propietarios"
 
-#: merengue/base/models.py:61
+#: base/models.py:61
 msgid "Lowest"
 msgstr "Más bajo"
 
-#: merengue/base/models.py:62
+#: base/models.py:62
 msgid "Very Low"
 msgstr "Muy bajo"
 
-#: merengue/base/models.py:63
+#: base/models.py:63
 msgid "Low"
 msgstr "Bajo"
 
-#: merengue/base/models.py:64
+#: base/models.py:64
 msgid "Medium"
 msgstr "Medio"
 
-#: merengue/base/models.py:65
+#: base/models.py:65
 msgid "High"
 msgstr "Alto"
 
-#: merengue/base/models.py:66
+#: base/models.py:66
 msgid "Very high"
 msgstr ""
 
-#: merengue/base/models.py:67
+#: base/models.py:67
 msgid "Super high"
 msgstr ""
 
-#: merengue/base/models.py:68
+#: base/models.py:68
 msgid "Highest"
 msgstr ""
 
-#: merengue/base/models.py:72
+#: base/models.py:72
 msgid "disabled"
 msgstr "no permitido"
 
-#: merengue/base/models.py:73
+#: base/models.py:73
 msgid "allowed"
 msgstr ""
 
-#: merengue/base/models.py:81 merengue/base/models.py:113
-#: merengue/base/models.py:137 merengue/block/models.py:46
-#: merengue/collab/models.py:38 merengue/multimedia/models.py:48
-#: merengue/multimedia/models.py:50 merengue/pluggable/models.py:35
-#: merengue/portal/models.py:37 merengue/section/models.py:82
-#: merengue/theming/models.py:36
+#: base/models.py:81 base/models.py:113 base/models.py:137 block/models.py:46
+#: collab/models.py:38 multimedia/models.py:48 multimedia/models.py:50
+#: pluggable/models.py:35 portal/models.py:37 section/models.py:83
+#: theming/models.py:36
 msgid "name"
 msgstr "Nombre"
 
-#: merengue/base/models.py:83
+#: base/models.py:83
 msgid "contact email"
 msgstr ""
 
-#: merengue/base/models.py:85
+#: base/models.py:85
 msgid "contact email2"
 msgstr ""
 
-#: merengue/base/models.py:87 merengue/multimedia/models.py:289
-#: merengue/portal/models.py:40 merengue/portal/models.py:43
-#: merengue/review/models.py:34 merengue/section/models.py:109
-#: merengue/section/models.py:262
+#: base/models.py:87 multimedia/models.py:289 portal/models.py:40
+#: portal/models.py:43 review/models.py:34 section/models.py:110
+#: section/models.py:277
 msgid "url"
 msgstr ""
 
-#: merengue/base/models.py:89
+#: base/models.py:89
 msgid "phone"
 msgstr ""
 
-#: merengue/base/models.py:91
+#: base/models.py:91
 msgid "phone2"
 msgstr ""
 
-#: merengue/base/models.py:93
+#: base/models.py:93
 msgid "fax"
 msgstr ""
 
-#: merengue/base/models.py:98
+#: base/models.py:98
 msgid "contacts info"
 msgstr ""
 
-#: merengue/base/models.py:101
+#: base/models.py:101
 msgid "Without contact email"
 msgstr ""
 
-#: merengue/base/models.py:114 merengue/base/models.py:138
-#: merengue/perms/models.py:130 merengue/portal/models.py:48
-#: merengue/section/models.py:87
+#: base/models.py:114 base/models.py:138 perms/models.py:130
+#: portal/models.py:48 section/models.py:88
 msgid "slug"
 msgstr ""
 
-#: merengue/base/models.py:117
+#: base/models.py:117
 msgid "base category"
 msgstr ""
 
-#: merengue/base/models.py:118
+#: base/models.py:118
 msgid "base categories"
 msgstr ""
 
-#: merengue/base/models.py:139
+#: base/models.py:139
 msgid "plain text description"
 msgstr ""
 
-#: merengue/base/models.py:141 merengue/pluggable/models.py:36
-#: merengue/review/models.py:33 merengue/theming/models.py:37
+#: base/models.py:141 pluggable/models.py:36 review/models.py:33
+#: theming/models.py:37
 msgid "description"
 msgstr ""
 
-#: merengue/base/models.py:144 merengue/multimedia/models.py:65
+#: base/models.py:144 multimedia/models.py:65
 msgid "Publication status"
 msgstr ""
 
-#: merengue/base/models.py:145 merengue/multimedia/models.py:66
+#: base/models.py:145 multimedia/models.py:66
 msgid "Enter the current status"
 msgstr ""
 
-#: merengue/base/models.py:147
+#: base/models.py:147
 msgid "workflow status"
 msgstr ""
 
-#: merengue/base/models.py:149
+#: base/models.py:149
 msgid "main image"
 msgstr ""
 
-#: merengue/base/models.py:161
+#: base/models.py:161
 msgid "Without name"
 msgstr ""
 
-#: merengue/base/models.py:188
+#: base/models.py:188
 msgid "Numeric fields can not be larger than"
 msgstr ""
 
-#: merengue/base/models.py:254
+#: base/models.py:254
 msgid "map icon"
 msgstr ""
 
-#: merengue/base/models.py:295
+#: base/models.py:295
 msgid "Without location"
 msgstr ""
 
-#: merengue/base/models.py:318 merengue/multimedia/admin.py:176
-#: merengue/multimedia/models.py:231 merengue/multimedia/models.py:272
-#: merengue/multimedia/models.py:309 merengue/theming/admin.py:35
+#: base/models.py:318 multimedia/admin.py:180 multimedia/models.py:231
+#: multimedia/models.py:272 multimedia/models.py:309 theming/admin.py:35
 msgid "Thumbnail"
 msgstr ""
 
-#: merengue/base/models.py:379
+#: base/models.py:379
 msgid "related items"
 msgstr ""
 
-#: merengue/base/models.py:381
+#: base/models.py:381
 msgid "creation date"
 msgstr ""
 
-#: merengue/base/models.py:384 merengue/base/models.py:388
+#: base/models.py:384 base/models.py:388
 msgid "modification date"
 msgstr "Fecha de modificación"
 
-#: merengue/base/models.py:390
+#: base/models.py:390
 msgid "cached plain text"
 msgstr ""
 
-#: merengue/base/models.py:395
+#: base/models.py:395
 msgid "last editor"
 msgstr "último editor"
 
-#: merengue/base/models.py:399
+#: base/models.py:399
 msgid "Adquire global permissions"
 msgstr ""
 
-#: merengue/base/models.py:402
+#: base/models.py:402
 msgid "Tags"
 msgstr ""
 
-#: merengue/base/models.py:403
+#: base/models.py:403
 msgid "Tags will be splitted by commas."
 msgstr "Las etiquetas deberán ser separadas por comas."
 
-#: merengue/base/models.py:406
+#: base/models.py:406
 msgid "meta description"
 msgstr ""
 
-#: merengue/base/models.py:409
-#: merengue/collab/templates/collab/collaborative_comments_view.html.py:18
+#: base/models.py:409
+#: collab/templates/collab/collaborative_comments_view.html:18
 msgid "comments"
 msgstr ""
 
-#: merengue/base/models.py:411
+#: base/models.py:411
 msgid "Is that content commentable"
 msgstr ""
 
-#: merengue/base/models.py:415 merengue/base/models.py:727
+#: base/models.py:415 base/models.py:727
 msgid "multimedia"
 msgstr ""
 
-#: merengue/base/models.py:423 merengue/multimedia/models.py:61
-#: merengue/registry/models.py:33
+#: base/models.py:423 multimedia/models.py:61 registry/models.py:33
 msgid "class name"
 msgstr "Nombre de la clase"
 
-#: merengue/base/models.py:428
+#: base/models.py:428
 msgid "rank value"
 msgstr ""
 
-#: merengue/base/models.py:439
+#: base/models.py:439
 msgid "participants"
 msgstr "Participantes"
 
-#: merengue/base/models.py:443
+#: base/models.py:443
 msgid "position"
 msgstr ""
 
-#: merengue/base/models.py:482
+#: base/models.py:482
 msgid "base content"
 msgstr ""
 
-#: merengue/base/models.py:483
+#: base/models.py:483
 msgid "base contents"
 msgstr ""
 
-#: merengue/base/models.py:493 merengue/internallinks/forms.py:30
-#: merengue/perms/models.py:49 merengue/places/forms.py:29
-#: merengue/workflow/models.py:56 merengue/workflow/models.py:137
-#: merengue/workflow/models.py:247
+#: base/models.py:493 internallinks/forms.py:30 perms/models.py:49
+#: places/forms.py:29 workflow/models.py:56 workflow/models.py:137
+#: workflow/models.py:247
 msgid "Name"
 msgstr "Nombre"
 
-#: merengue/base/models.py:547 merengue/section/forms.py:57
+#: base/models.py:547 section/forms.py:57
 msgid "Please set other slug. This slug has been assigned"
 msgstr ""
 
-#: merengue/base/models.py:725
+#: base/models.py:725
 msgid "content"
 msgstr "contenido"
 
-#: merengue/base/models.py:729
+#: base/models.py:729
 msgid "is featured"
 msgstr ""
 
-#: merengue/base/models.py:732 merengue/registry/models.py:38
+#: base/models.py:732 registry/models.py:38
 msgid "Order"
 msgstr ""
 
-#: merengue/base/models.py:736
+#: base/models.py:736
 msgid "multimedia relation"
 msgstr ""
 
-#: merengue/base/models.py:737
+#: base/models.py:737
 msgid "multimedia relations"
 msgstr ""
 
-#: merengue/base/models.py:763
+#: base/models.py:763
 msgid "Human Order"
 msgstr ""
 
-#: merengue/base/views.py:38
+#: base/models.py:922
+#, python-format
+msgid "File to large. Max size restricted to %s bytes"
+msgstr ""
+
+#: base/views.py:38
 #, python-format
 msgid "%(result_count)d %(msg_results)s found"
 msgstr ""
 
-#: merengue/base/views.py:39
-#: merengue/section/templates/section/search_results_view.html.py:16
+#: base/views.py:39
 msgid "results"
 msgstr ""
 
-#: merengue/base/widgets.py:238
-#: merengue/templates/admin/edit_inline/tabular.html.py:116
+#: base/widgets.py:238 templates/admin/edit_inline/tabular.html:116
 msgid "Remove"
 msgstr "Eliminar"
 
-#: merengue/base/widgets.py:261
+#: base/widgets.py:261
 msgid "Select content"
 msgstr ""
 
-#: merengue/base/widgets.py:289
+#: base/widgets.py:289
 msgid "latitude"
 msgstr "latitud"
 
-#: merengue/base/widgets.py:290
+#: base/widgets.py:290
 msgid "longitude"
 msgstr "longitud"
 
-#: merengue/base/widgets.py:291
+#: base/widgets.py:291
 msgid "View on map"
 msgstr ""
 
-#: merengue/base/templates/403.html.py:5 merengue/base/templates/403.html.py:7
+#: base/templates/403.html:5 base/templates/403.html.py:7
 msgid "Permission denied"
 msgstr ""
 
-#: merengue/base/templates/403.html.py:10
+#: base/templates/403.html:10
 msgid "403 Error - Forbidden. Sorry but it seems that you are not allowed."
 msgstr ""
 
-#: merengue/base/templates/403.html.py:16
+#: base/templates/403.html:16
 msgid "You tried to access a document for which you don't have privileges."
 msgstr ""
 
-#: merengue/base/templates/403.html.py:17
+#: base/templates/403.html:17
 msgid "We recommend you to return to <a href=\"/\">home</a>"
 msgstr ""
 
-#: merengue/base/templates/404.html.py:5 merengue/base/templates/404.html.py:7
+#: base/templates/404.html:5 base/templates/404.html.py:7
 msgid "Page not found"
 msgstr ""
 
-#: merengue/base/templates/404.html.py:10
+#: base/templates/404.html:10
 msgid "404 Error - Sorry we can not find the page you are looking for."
 msgstr ""
 
-#: merengue/base/templates/404.html.py:16
-msgid "You may have mistyped the URL or the page may have been removed from our system."
+#: base/templates/404.html:16
+msgid ""
+"You may have mistyped the URL or the page may have been removed from our "
+"system."
 msgstr ""
 
-#: merengue/base/templates/404.html.py:17
+#: base/templates/404.html:17
 msgid "We recommend you to return to the <a href=\"/\">home</a>"
 msgstr ""
 
-#: merengue/base/templates/500.html.py:20
+#: base/templates/500.html:20
 msgid "Server Error"
 msgstr ""
 
-#: merengue/base/templates/error_base.html.py:14
+#: base/templates/error_base.html:14
 msgid "Ups!"
 msgstr ""
 
-#: merengue/base/templates/inc.breadcrumbs.html.py:2
-#: merengue/base/templatetags/related_admin_tags.py:85
-#: merengue/templates/admin/base.html.py:99
-#: merengue/templates/admin/delete_confirmation_various.html.py:6
-#: merengue/templates/admin/delete_selected_confirmation.html.py:6
-#: merengue/templates/admin/django_index.html.py:13
-#: merengue/templates/admin/index.html.py:14
-#: merengue/templates/admin/index.html.py:16
-#: merengue/templates/admin/model_index.html.py:9
-#: merengue/templates/admin/siteconfig.html.py:18
-#: merengue/templates/registration/password_reset_confirm.html.py:4
-#: merengue/themes/yaco/templates/inc.headerlogo.html.py:2
-msgid "Home"
-msgstr "Inicio"
-
-#: merengue/base/templates/inc.contentcategories.html.py:5
-msgid "categories"
-msgstr ""
-
-#: merengue/base/templates/inc.jsfiles.html.py:77
+#: base/templates/inc.jsfiles.html:77
 msgid "Export"
 msgstr "Exportar"
 
-#: merengue/base/templates/base/content_admin_action.html.py:4
-#: merengue/base/templates/base/content_admin_action.html.py:5
+#: base/templates/base/content_admin_action.html:4
 msgid "Admin this content"
 msgstr ""
 
-#: merengue/base/templates/base/content_list.html.py:8
-msgid "Content listing"
-msgstr ""
-
-#: merengue/base/templates/base/content_related_items.html.py:4
-msgid "Related contents"
-msgstr ""
-
-#: merengue/base/templates/base/form_admin_django.html.py:3
+#: base/templates/base/form_admin_django.html:3
 msgid "Please correct the errors below."
 msgstr ""
 
-#: merengue/base/templates/base/google_map.html.py:3
-msgid "Map"
-msgstr ""
-
-#: merengue/base/templates/base/google_map.html.py:8
-msgid "How to get there?"
-msgstr ""
-
-#: merengue/base/templates/base/google_map.html.py:10
-msgid "Origin address"
-msgstr ""
-
-#: merengue/base/templates/base/google_map.html.py:12
+#: base/templates/base/google_map.html:12
 msgid "See route"
 msgstr ""
 
-#: merengue/base/templates/base/google_map.html.py:20
-msgid "Calculate travel route"
-msgstr ""
-
-#: merengue/base/templates/base/inc.footer.html.py:7
-#: merengue/base/templates/base/inc.footer.html.py:21
-#: merengue/themes/merengue/templates/inc.footer.html.py:15
+#: base/templates/base/inc.footer.html:7
 msgid "Merengue powered"
 msgstr ""
 
-#: merengue/base/templates/base/inc.footer.html.py:23
-msgid "General conditions"
-msgstr ""
-
-#: merengue/base/templates/base/inc.languagetools.html.py:6
-#: merengue/base/templates/base/inc.languagetools.html.py:7
-#: merengue/templates/admin/base.html.py:68
-#: merengue/themes/merengue/templates/inc.languagetools.html.py:6
+#: base/templates/base/inc.languagetools.html:6
+#: base/templates/base/inc.languagetools.html:7 templates/admin/base.html:68
+#: themes/merengue/templates/inc.languagetools.html:6
 msgid "Change language"
 msgstr "Cambiar lenguaje"
 
-#: merengue/base/templatetags/admin_tags.py:95
+#: base/templatetags/admin_tags.py:95
 msgid "Add new"
 msgstr ""
 
-#: merengue/base/templatetags/content_filters.py:34
+#: base/templatetags/content_filters.py:34
 msgid "yes,no,maybe"
 msgstr ""
 
-#: merengue/base/templatetags/map_tags.py:284
+#: base/templatetags/map_tags.py:284
 msgid "What is there nearby?"
 msgstr ""
 
-#: merengue/base/templatetags/related_admin_tags.py:89
+#: base/templatetags/related_admin_tags.py:85 templates/admin/base.html:99
+#: templates/admin/delete_confirmation_various.html:6
+#: templates/admin/delete_selected_confirmation.html:6
+#: templates/admin/django_index.html:13 templates/admin/index.html:14
+#: templates/admin/index.html.py:16 templates/admin/model_index.html:9
+#: templates/admin/siteconfig.html:18
+#: templates/registration/password_reset_confirm.html:4
+msgid "Home"
+msgstr "Inicio"
+
+#: base/templatetags/related_admin_tags.py:89
 #, python-format
 msgid "%(plugin_name)s plugin"
 msgstr ""
 
-#: merengue/base/templatetags/related_admin_tags.py:92
-#: merengue/base/templatetags/related_admin_tags.py:95
+#: base/templatetags/related_admin_tags.py:92
+#: base/templatetags/related_admin_tags.py:95
 msgid "opts"
 msgstr ""
 
-#: merengue/base/templatetags/related_admin_tags.py:103
-#: merengue/base/templatetags/related_admin_tags.py:120
+#: base/templatetags/related_admin_tags.py:103
+#: base/templatetags/related_admin_tags.py:120
 msgid "Add"
 msgstr "Añadir"
 
-#: merengue/base/templatetags/related_admin_tags.py:112
+#: base/templatetags/related_admin_tags.py:112
 msgid "admin"
 msgstr ""
 
-#: merengue/block/admin.py:48
-#: merengue/block/templates/admin/block/change_form.html.py:8
+#: block/admin.py:48 block/templates/admin/block/change_form.html:8
 msgid "Cache parameters"
 msgstr ""
 
-#: merengue/block/admin.py:83
+#: block/admin.py:83
 msgid "block content related"
 msgstr ""
 
-#: merengue/block/admin.py:88
+#: block/admin.py:88
 msgid "Visibility when duplicated blocks"
 msgstr ""
 
-#: merengue/block/blocks.py:48
+#: block/blocks.py:48
 msgid "css class to add to this block"
 msgstr "Clase css para añadir a este bloque"
 
-#: merengue/block/filterspecs.py:13
+#: block/filterspecs.py:13
 msgid "content block"
 msgstr ""
 
-#: merengue/block/filterspecs.py:16
-#: merengue/templates/admin/basecontent/role_permissions.html.py:60
-#: merengue/workflow/filterspecs.py:20
+#: block/filterspecs.py:16
+#: templates/admin/basecontent/role_permissions.html:60
+#: workflow/filterspecs.py:20
 msgid "Yes"
 msgstr ""
 
-#: merengue/block/filterspecs.py:16
-#: merengue/templates/admin/basecontent/role_permissions.html.py:60
-#: merengue/workflow/filterspecs.py:26
+#: block/filterspecs.py:16
+#: templates/admin/basecontent/role_permissions.html:60
+#: workflow/filterspecs.py:26
 msgid "No"
 msgstr ""
 
-#: merengue/block/forms.py:41
+#: block/forms.py:41
 msgid "Block to add"
 msgstr ""
 
-#: merengue/block/forms.py:102
-msgid "Placing the block here will take no effect, as another related block is set to overwrite it"
+#: block/forms.py:102
+msgid ""
+"Placing the block here will take no effect, as another related block is set "
+"to overwrite it"
 msgstr ""
 
-#: merengue/block/forms.py:103
-msgid "Unmark this field to keep the block in the specified place                                       (even though it won't be displayed)"
+#: block/forms.py:103
+msgid ""
+"Unmark this field to keep the block in the specified "
+"place                                       (even though it won't be "
+"displayed)"
 msgstr ""
 
-#: merengue/block/forms.py:105
-msgid "A block is already set to overwrite others of this kind.                                Unmark this to save the block, even though it won't be displayed"
+#: block/forms.py:105
+msgid ""
+"A block is already set to overwrite others of this "
+"kind.                                Unmark this to save the block, even "
+"though it won't be displayed"
 msgstr ""
 
-#: merengue/block/forms.py:124
+#: block/forms.py:124
 msgid "Select block type"
 msgstr ""
 
-#: merengue/block/forms.py:128
+#: block/forms.py:128
 msgid "Scope"
 msgstr "Ámbito"
 
-#: merengue/block/forms.py:141
+#: block/forms.py:141
 msgid "Global"
 msgstr ""
 
-#: merengue/block/forms.py:148
+#: block/forms.py:148
 #, python-format
 msgid "Section: %(section)s"
 msgstr ""
 
-#: merengue/block/forms.py:157
+#: block/forms.py:157
 #, python-format
 msgid "Content: %(content)s"
 msgstr "Contenido: %(content)s"
 
-#: merengue/block/forms.py:181
-#: merengue/templates/admin/merengue_index_base.html.py:61
+#: block/forms.py:181 templates/admin/merengue_index_base.html:61
 msgid "Blocks"
 msgstr "Bloques"
 
-#: merengue/block/forms.py:185
+#: block/forms.py:185
 #, fuzzy
 msgid "Content blocks"
 msgstr "Contenidos"
 
-#: merengue/block/forms.py:189
+#: block/forms.py:189
 #, fuzzy
 msgid "Section blocks"
 msgstr "Sección"
 
-#: merengue/block/forms.py:197
+#: block/forms.py:197
 msgid "You can not select section scope cause your are not inside a section"
 msgstr ""
 
-#: merengue/block/forms.py:202
+#: block/forms.py:202
 msgid "You can not select content scope cause your are not inside a content"
 msgstr ""
 
-#: merengue/block/forms.py:208
+#: block/forms.py:208
 msgid "You can not insert a content block from a view without content"
 msgstr ""
 
-#: merengue/block/forms.py:221
+#: block/forms.py:221
 msgid "You can not insert a section block from a view without section"
 msgstr ""
 
-#: merengue/block/models.py:31
+#: block/models.py:31
 msgid "All places"
 msgstr ""
 
-#: merengue/block/models.py:32
+#: block/models.py:32
 msgid "Left sidebar"
 msgstr ""
 
-#: merengue/block/models.py:33
+#: block/models.py:33
 msgid "Right sidebar"
 msgstr ""
 
-#: merengue/block/models.py:34
+#: block/models.py:34
 msgid "After content title"
 msgstr ""
 
-#: merengue/block/models.py:35
+#: block/models.py:35
 msgid "Before content body"
 msgstr "Antes del cuerpo del contenido"
 
-#: merengue/block/models.py:36
+#: block/models.py:36
 msgid "Home page"
 msgstr ""
 
-#: merengue/block/models.py:37
+#: block/models.py:37
 msgid "After content body"
 msgstr ""
 
-#: merengue/block/models.py:38
+#: block/models.py:38
 msgid "Header"
 msgstr ""
 
-#: merengue/block/models.py:39
+#: block/models.py:39
 msgid "Footer"
 msgstr ""
 
-#: merengue/block/models.py:40
+#: block/models.py:40
 msgid "Meta-information, links, js..."
 msgstr ""
 
-#: merengue/block/models.py:47
+#: block/models.py:47
 msgid "placed at"
 msgstr ""
 
-#: merengue/block/models.py:49
+#: block/models.py:49
 msgid "shown in urls"
 msgstr ""
 
-#: merengue/block/models.py:51
+#: block/models.py:51
 msgid ""
 "block will <em>only</em> be visible in urls matching these\n"
-"            regular expressions (one per line, using <a            href='http://docs.python.org./library/re.html#regular-expression-syntax'\n"
-"            title='python regular expressions' target='_blank'>python re syntax</a>). <br/>\n"
+"            regular expressions (one per line, using <a            "
+"href='http://docs.python.org./library/re.html#regular-expression-syntax'\n"
+"            title='python regular expressions' target='_blank'>python re "
+"syntax</a>). <br/>\n"
 "            Please use relative paths.\n"
 "            This field has preference over 'hidden in urls'."
 msgstr ""
 
-#: merengue/block/models.py:58
+#: block/models.py:58
 msgid "hidden in urls"
 msgstr ""
 
-#: merengue/block/models.py:60
+#: block/models.py:60
 msgid ""
 "block will be hidden in urls matching these regular\n"
 "            expressions (one per line, using <a\n"
-"            href='http://docs.python.org/library/re.html#regular-expression-syntax'\n"
-"            title='python regular expressions' target='_blank'>python re syntax</a>)."
+"            href='http://docs.python.org/library/re.html#regular-expression-"
+"syntax'\n"
+"            title='python regular expressions' target='_blank'>python re "
+"syntax</a>)."
 msgstr ""
 
-#: merengue/block/models.py:65
+#: block/models.py:65
 msgid "disable the activation and desactivation of the block"
 msgstr ""
 
-#: merengue/block/models.py:68
+#: block/models.py:68
 msgid "block can't be moved from its default place"
 msgstr ""
 
-#: merengue/block/models.py:72
+#: block/models.py:72
 msgid "activate cache"
 msgstr ""
 
-#: merengue/block/models.py:73
+#: block/models.py:73
 msgid "Activate cache for this block. The HTML rendered will be cached"
 msgstr ""
 
-#: merengue/block/models.py:76
+#: block/models.py:76
 msgid "timeout"
 msgstr ""
 
-#: merengue/block/models.py:77
+#: block/models.py:77
 msgid "Time that block remained in cache in seconds. \"0\" means forever"
 msgstr ""
 
-#: merengue/block/models.py:80
+#: block/models.py:80
 msgid "Cached is applied only for anonymous"
 msgstr ""
 
-#: merengue/block/models.py:83
+#: block/models.py:83
 msgid "Cached vary on authenticated user"
 msgstr ""
 
-#: merengue/block/models.py:86
+#: block/models.py:86
 msgid "Cache vary on the request URL"
 msgstr ""
 
-#: merengue/block/models.py:89
+#: block/models.py:89
 msgid "Cache vary on language"
 msgstr ""
 
-#: merengue/block/models.py:92
+#: block/models.py:92
 msgid "related content"
 msgstr ""
 
-#: merengue/block/models.py:94
+#: block/models.py:94
 msgid "overwrite block if the place is the same"
 msgstr ""
 
-#: merengue/block/models.py:97
+#: block/models.py:97
 msgid "overwrite generic block if is present on the actual page"
 msgstr ""
 
-#: merengue/block/views.py:79 merengue/registry/fields.py:30
-#: merengue/registry/models.py:41
+#: block/views.py:79 registry/fields.py:30 registry/models.py:41
 msgid "Configuration"
 msgstr ""
 
-#: merengue/block/views.py:79
+#: block/views.py:79
 msgid "Block specific configuration"
 msgstr ""
 
-#: merengue/block/templates/admin/block/change_form.html.py:10
+#: block/templates/admin/block/change_form.html:10
 msgid "This block is defined as non cacheable. You cannot cache this block"
 msgstr ""
 
-#: merengue/block/templates/blocks/add_block.html.py:6
-#: merengue/block/templates/blocks/block_container.html.py:11
+#: block/templates/blocks/add_block.html:6
+#: block/templates/blocks/block_container.html:11
 msgid "Add new block"
 msgstr "Añadir nuevo bloque"
 
-#: merengue/block/templates/blocks/block_config.html.py:9
+#: block/templates/blocks/block_config.html:9
 msgid "Save configuration"
 msgstr ""
 
-#: merengue/block/templates/blocks/block_config.html.py:12
+#: block/templates/blocks/block_config.html:12
 msgid "Go to admin"
 msgstr "Ir a la administración"
 
-#: merengue/block/templates/blocks/header.html.py:44
+#: block/templates/blocks/header.html:44
 msgid "Enable/disable blocks dragging"
 msgstr ""
 
-#: merengue/block/templates/blocks/header.html.py:56
+#: block/templates/blocks/header.html:56
 msgid "Configure block"
 msgstr ""
 
-#: merengue/block/templates/blocks/header.html.py:64
+#: block/templates/blocks/header.html:64
 #, fuzzy
 msgid "Invalidate cache"
 msgstr "Formato de imagen inválido"
 
-#: merengue/block/templates/blocks/header.html.py:71
+#: block/templates/blocks/header.html:71
 msgid "Remove block"
 msgstr "Eliminar bloque"
 
-#: merengue/block/templates/blocks/header.html.py:95
+#: block/templates/blocks/header.html:95
 #, fuzzy
 msgid "Are you sure you want to invalidate the cache of this block"
 msgstr "¿Estás seguro que quieres eliminar el siguiente archivo?"
 
-#: merengue/block/templates/blocks/header.html.py:121
+#: block/templates/blocks/header.html:121
 msgid "Are you sure you want to remove this block"
 msgstr "¿Está seguro que quiere eliminar este bloque?"
 
-#: merengue/collab/forms.py:78
+#: collab/forms.py:78
 msgid "translation language"
 msgstr ""
 
-#: merengue/collab/forms.py:79
+#: collab/forms.py:79
 msgid "translation"
 msgstr ""
 
-#: merengue/collab/models.py:28
+#: collab/models.py:28
 msgid "Just set status"
 msgstr ""
 
-#: merengue/collab/models.py:29
+#: collab/models.py:29
 msgid "Display an alternative comment in public view"
 msgstr ""
 
-#: merengue/collab/models.py:30
+#: collab/models.py:30
 msgid "Hide comment from public view"
 msgstr ""
 
-#: merengue/collab/models.py:43
+#: collab/models.py:43
 msgid "label"
 msgstr ""
 
-#: merengue/collab/models.py:62
+#: collab/models.py:62
 msgid "decorator"
 msgstr ""
 
-#: merengue/collab/models.py:69
+#: collab/models.py:69
 msgid "result"
 msgstr ""
 
-#: merengue/collab/models.py:73
+#: collab/models.py:73
 msgid "Select the resulting action this status trigger"
 msgstr ""
 
-#: merengue/collab/models.py:77
+#: collab/models.py:77
 msgid "reason"
 msgstr ""
 
-#: merengue/collab/models.py:90
+#: collab/models.py:90
 msgid "content type"
 msgstr ""
 
-#: merengue/collab/models.py:94
+#: collab/models.py:94
 msgid "object ID"
 msgstr ""
 
-#: merengue/collab/models.py:112
+#: collab/models.py:112
 msgid "user's name"
 msgstr ""
 
-#: merengue/collab/models.py:117
+#: collab/models.py:117
 msgid "user's email address"
 msgstr ""
 
-#: merengue/collab/models.py:121
+#: collab/models.py:121
 msgid "user's URL"
 msgstr ""
 
-#: merengue/collab/models.py:127
+#: collab/models.py:127
 msgid "comment user type"
 msgstr "Tipo de comentario"
 
-#: merengue/collab/models.py:131
+#: collab/models.py:131
 msgid "comment"
 msgstr ""
 
-#: merengue/collab/models.py:135
+#: collab/models.py:135
 msgid "date/time submitted"
 msgstr ""
 
-#: merengue/collab/models.py:140
+#: collab/models.py:140
 msgid "IP address"
 msgstr ""
 
-#: merengue/collab/models.py:148
+#: collab/models.py:148
 msgid "collaborative comment"
 msgstr ""
 
-#: merengue/collab/models.py:149
+#: collab/models.py:149
 msgid "collaborative comments"
 msgstr ""
 
-#: merengue/collab/models.py:174
+#: collab/models.py:174
 msgid "revised comment"
 msgstr ""
 
-#: merengue/collab/models.py:188
+#: collab/models.py:188
 msgid "revised comment status"
 msgstr ""
 
-#: merengue/collab/models.py:192
+#: collab/models.py:192
 msgid "date/time revised"
 msgstr ""
 
-#: merengue/collab/models.py:198
+#: collab/models.py:198
 msgid "short comment"
 msgstr ""
 
-#: merengue/collab/views.py:60
+#: collab/views.py:60
 msgid "Your comment has been added"
 msgstr ""
 
-#: merengue/collab/views.py:93
+#: collab/views.py:93
 msgid "Your revisor status has been added"
 msgstr ""
 
-#: merengue/collab/views.py:191
+#: collab/views.py:191
 msgid "Your translation has been saved"
 msgstr ""
 
-#: merengue/collab/templates/collab/collaborative_comments_add.html.py:9
+#: collab/templates/collab/collaborative_comments_add.html:9
 msgid "Add comment"
 msgstr ""
 
-#: merengue/collab/templates/collab/collaborative_comments_list.html.py:6
+#: collab/templates/collab/collaborative_comments_list.html:6
 msgid "There are no comments yet"
 msgstr ""
 
-#: merengue/collab/templates/collab/collaborative_comments_list_item.html.py:25
+#: collab/templates/collab/collaborative_comments_list_item.html:25
 msgid "By"
 msgstr ""
 
-#: merengue/collab/templates/collab/collaborative_comments_list_item.html.py:28
+#: collab/templates/collab/collaborative_comments_list_item.html:28
 msgid "Revision History"
 msgstr ""
 
-#: merengue/collab/templates/collab/collaborative_comments_list_item.html.py:46
+#: collab/templates/collab/collaborative_comments_list_item.html:46
 msgid "Revisor"
 msgstr ""
 
-#: merengue/collab/templates/collab/collaborative_comments_list_item.html.py:55
+#: collab/templates/collab/collaborative_comments_list_item.html:55
 msgid "Revise this comment"
 msgstr ""
 
-#: merengue/collab/templates/collab/collaborative_comments_revise.html.py:9
+#: collab/templates/collab/collaborative_comments_revise.html:9
 msgid "Add revision"
 msgstr ""
 
-#: merengue/collab/templates/collab/collaborative_comments_view.html.py:14
+#: collab/templates/collab/collaborative_comments_view.html:14
 msgid "Comments"
 msgstr ""
 
-#: merengue/collab/templates/collab/collaborative_comments_view.html.py:19
+#: collab/templates/collab/collaborative_comments_view.html:19
 msgid "add comment"
 msgstr ""
 
-#: merengue/collab/templates/collab/collaborative_translation.html.py:7
-#: merengue/collab/templates/collab/collaborative_translation_edit.html.py:15
+#: collab/templates/collab/collaborative_translation.html:7
+#: collab/templates/collab/collaborative_translation_edit.html:15
 msgid "Translate"
 msgstr "Traducir"
 
-#: merengue/collab/templates/collab/collaborative_translation_view.html.py:11
+#: collab/templates/collab/collaborative_translation_view.html:11
 msgid "Translation for"
 msgstr "Traducción para"
 
-#: merengue/collection/admin.py:46
+#: collection/admin.py:46
 msgid "Truncate words"
 msgstr "Truncar palabras"
 
-#: merengue/collection/admin.py:47
+#: collection/admin.py:47
 msgid "Truncate words HTML"
 msgstr ""
 
-#: merengue/collection/admin.py:48
+#: collection/admin.py:48
 msgid "Truncate chars"
 msgstr ""
 
-#: merengue/collection/admin.py:49
+#: collection/admin.py:49
 msgid "Strip tags"
 msgstr ""
 
-#: merengue/collection/admin.py:92
+#: collection/admin.py:92
 msgid "Collection Basic Information"
 msgstr "Información básica de la colección"
 
-#: merengue/collection/admin.py:103
+#: collection/admin.py:103
 msgid "Collection Configuration"
 msgstr "Configuración de la colección"
 
-#: merengue/collection/admin.py:175
+#: collection/admin.py:175
 msgid "collections"
 msgstr "colecciones"
 
-#: merengue/collection/admin.py:192
+#: collection/admin.py:192
 msgid "fields to display in the list"
 msgstr "Campos a mostrar en el listado"
 
-#: merengue/collection/admin.py:233
+#: collection/admin.py:233
 msgid "fields in the detail view of the object"
 msgstr "Campos de la vista detalle del objeto"
 
-#: merengue/collection/admin.py:256
+#: collection/admin.py:256
 msgid "feed items"
 msgstr "elementos de fuente"
 
-#: merengue/collection/admin.py:265
+#: collection/admin.py:265
 msgid "Single Item Configuration"
 msgstr ""
 
-#: merengue/collection/admin.py:321
+#: collection/admin.py:321
 msgid "feed collections"
 msgstr "colecciones de fuente"
 
-#: merengue/collection/models.py:43
+#: collection/models.py:43
 msgid "Exact (case-sensitive)"
 msgstr ""
 
-#: merengue/collection/models.py:44
+#: collection/models.py:44
 msgid "Exact (case-insensitive)"
 msgstr ""
 
-#: merengue/collection/models.py:45
+#: collection/models.py:45
 msgid "Contains (case-sensitive)"
 msgstr ""
 
-#: merengue/collection/models.py:46
+#: collection/models.py:46
 msgid "Contains (case-insensitive)"
 msgstr ""
 
-#: merengue/collection/models.py:47
+#: collection/models.py:47
 msgid "Starts with (case-sensitive)"
 msgstr ""
 
-#: merengue/collection/models.py:48
+#: collection/models.py:48
 msgid "Starts with (case-insensitive)"
 msgstr ""
 
-#: merengue/collection/models.py:49
+#: collection/models.py:49
 msgid "Ends with (case-sensitive)"
 msgstr ""
 
-#: merengue/collection/models.py:50
+#: collection/models.py:50
 msgid "Ends with (case-insensitive)"
 msgstr ""
 
-#: merengue/collection/models.py:51
+#: collection/models.py:51
 msgid "Less than"
 msgstr "Menor que"
 
-#: merengue/collection/models.py:52
+#: collection/models.py:52
 msgid "Less than or equal"
 msgstr "Menor que o igual"
 
-#: merengue/collection/models.py:53
+#: collection/models.py:53
 msgid "Less than (for dates objects)"
 msgstr "Menor que (para fechas de objetos)"
 
-#: merengue/collection/models.py:54
+#: collection/models.py:54
 msgid "Greater than"
 msgstr "Mayor que"
 
-#: merengue/collection/models.py:55
+#: collection/models.py:55
 msgid "Greater than or equal"
 msgstr "Mayor que o igual"
 
-#: merengue/collection/models.py:56
+#: collection/models.py:56
 msgid "Grater than (for dates objects)"
 msgstr "Menor que (para fechas de objetos)"
 
-#: merengue/collection/models.py:57
+#: collection/models.py:57
 msgid "In (coma separated list)"
 msgstr "En (listado separados en comas)"
 
-#: merengue/collection/models.py:58
+#: collection/models.py:58
 msgid "Is empty"
 msgstr "Está vacío"
 
-#: merengue/collection/models.py:79 merengue/perms/models.py:52
+#: collection/models.py:79 perms/models.py:52
 msgid "Content Types"
 msgstr "Tipos de Contenido"
 
-#: merengue/collection/models.py:86
+#: collection/models.py:86
 msgid "Group by field name"
 msgstr "Agrupar por nombre del campo"
 
-#: merengue/collection/models.py:93
+#: collection/models.py:93
 msgid "Order by field name"
 msgstr "Ordenar por nombre del campo"
 
-#: merengue/collection/models.py:100
+#: collection/models.py:100
 msgid "Reverse order"
 msgstr ""
 
-#: merengue/collection/models.py:104
+#: collection/models.py:104
 msgid "Number of elements "
 msgstr ""
 
-#: merengue/collection/models.py:111
+#: collection/models.py:111
 msgid "Show main_image of collection items"
 msgstr "Mostrar la imagen principal de los elementos de la colección"
 
-#: merengue/collection/models.py:116
+#: collection/models.py:116
 msgid "Filtering section"
 msgstr ""
 
-#: merengue/collection/models.py:117 merengue/registry/items.py:139
-msgid "If the collection is into a section, filter for the contents of this section"
-msgstr "Si la colección está en una sección, filtrar por los contenidos de dicha sección"
+#: collection/models.py:117 registry/items.py:139
+msgid ""
+"If the collection is into a section, filter for the contents of this section"
+msgstr ""
+"Si la colección está en una sección, filtrar por los contenidos de dicha "
+"sección"
 
-#: merengue/collection/models.py:121 merengue/collection/models.py:674
-#: merengue/collection/models.py:686 merengue/collection/models.py:726
+#: collection/models.py:121 collection/models.py:674 collection/models.py:686
+#: collection/models.py:726
 msgid "Collection"
 msgstr "Colección"
 
-#: merengue/collection/models.py:122
-#: merengue/templates/admin/merengue_index_base.html.py:35
+#: collection/models.py:122 templates/admin/merengue_index_base.html:35
 msgid "Collections"
 msgstr "Colecciones"
 
-#: merengue/collection/models.py:219 merengue/collection/models.py:521
+#: collection/models.py:219 collection/models.py:521
 msgid "Content type name"
 msgstr ""
 
-#: merengue/collection/models.py:251
+#: collection/models.py:251
 msgid "Item id"
 msgstr ""
 
-#: merengue/collection/models.py:256
+#: collection/models.py:256
 msgid "Feed summary cached"
 msgstr ""
 
-#: merengue/collection/models.py:261
+#: collection/models.py:261
 msgid "Feed detail cached"
 msgstr ""
 
-#: merengue/collection/models.py:266 merengue/collection/models.py:391
+#: collection/models.py:266 collection/models.py:391
 msgid "Last updated"
 msgstr ""
 
-#: merengue/collection/models.py:272
+#: collection/models.py:272
 msgid "Excluded"
 msgstr ""
 
-#: merengue/collection/models.py:278
+#: collection/models.py:278
 msgid "Order field"
 msgstr ""
 
-#: merengue/collection/models.py:285
+#: collection/models.py:285
 msgid "Group field"
 msgstr ""
 
-#: merengue/collection/models.py:294
+#: collection/models.py:294
 msgid "Feed item"
 msgstr ""
 
-#: merengue/collection/models.py:295
+#: collection/models.py:295
 msgid "Feed items"
 msgstr ""
 
-#: merengue/collection/models.py:386
+#: collection/models.py:386
 msgid "URL of the feed"
 msgstr "URL del feed"
 
-#: merengue/collection/models.py:398
+#: collection/models.py:398
 msgid "Seconds to expire cache"
 msgstr "Segundos para que expire la cache"
 
-#: merengue/collection/models.py:399
+#: collection/models.py:399
 msgid "Seconds from last update to do a new query. 0 to never query again."
-msgstr "Segundos desde la última actualización para hacer una nueva consulta. Cero significa no consultar más"
+msgstr ""
+"Segundos desde la última actualización para hacer una nueva consulta. Cero "
+"significa no consultar más"
 
-#: merengue/collection/models.py:404
+#: collection/models.py:404
 msgid "Remove items"
 msgstr ""
 
-#: merengue/collection/models.py:405
+#: collection/models.py:405
 msgid "Remove old items when overwritting cache"
 msgstr ""
 
-#: merengue/collection/models.py:410
+#: collection/models.py:410
 msgid "Title field"
 msgstr ""
 
-#: merengue/collection/models.py:412
+#: collection/models.py:412
 msgid "Field used for naming contents"
 msgstr ""
 
-#: merengue/collection/models.py:419
+#: collection/models.py:419
 msgid "Detailed link"
 msgstr ""
 
-#: merengue/collection/models.py:421
+#: collection/models.py:421
 msgid "Field that provides a link to a feed with the full content"
 msgstr ""
 
-#: merengue/collection/models.py:427
+#: collection/models.py:427
 msgid "External link"
 msgstr ""
 
-#: merengue/collection/models.py:429
+#: collection/models.py:429
 msgid "Field that provides an external link to the full content"
 msgstr ""
 
-#: merengue/collection/models.py:436
+#: collection/models.py:436
 msgid "Feed collection"
 msgstr "Colección de fuente"
 
-#: merengue/collection/models.py:437
+#: collection/models.py:437
 msgid "Feed collections"
 msgstr "Colecciones de fuente"
 
-#: merengue/collection/models.py:538
+#: collection/models.py:538
 msgid "Filter field name"
 msgstr "Agrupar por nombre del campo"
 
-#: merengue/collection/models.py:542
+#: collection/models.py:542
 msgid "Filter operator"
 msgstr "Operador por el que se filtra"
 
-#: merengue/collection/models.py:547
+#: collection/models.py:547
 msgid "Filter value"
 msgstr "Valor del filtro"
 
-#: merengue/collection/models.py:678
+#: collection/models.py:678
 msgid "Include collection filter"
 msgstr "Filtro de inclusión para la colección"
 
-#: merengue/collection/models.py:679
+#: collection/models.py:679
 msgid "Include collection filters"
 msgstr "Filtros de inclusión para la colección"
 
-#: merengue/collection/models.py:690
+#: collection/models.py:690
 msgid "Exclude collection filter"
 msgstr "Filtro de exclusión para la colección"
 
-#: merengue/collection/models.py:691
+#: collection/models.py:691
 msgid "Exclude collection filters"
 msgstr "Filtros de exclusión para la colección"
 
-#: merengue/collection/models.py:718
+#: collection/models.py:718
 msgid "Field name"
 msgstr ""
 
-#: merengue/collection/models.py:722
+#: collection/models.py:722
 msgid "Display order"
 msgstr ""
 
-#: merengue/collection/models.py:731
+#: collection/models.py:731
 msgid "Safe html content"
 msgstr ""
 
-#: merengue/collection/models.py:735
+#: collection/models.py:735
 msgid "Show field label"
 msgstr ""
 
-#: merengue/collection/models.py:743
+#: collection/models.py:743
 msgid "Collection display field"
 msgstr "Campo de visualización de la colección"
 
-#: merengue/collection/models.py:744
+#: collection/models.py:744
 msgid "Collection display fields"
 msgstr "Campos de visualización de la colección"
 
-#: merengue/collection/models.py:755
+#: collection/models.py:755
 msgid "Filter module"
 msgstr ""
 
-#: merengue/collection/models.py:760
+#: collection/models.py:760
 msgid "Filter params"
 msgstr ""
 
-#: merengue/collection/models.py:767
+#: collection/models.py:767
 msgid "Filter order"
 msgstr ""
 
-#: merengue/collection/models.py:771
+#: collection/models.py:771
 msgid "Collection display field filter"
 msgstr ""
 
-#: merengue/collection/models.py:772
+#: collection/models.py:772
 msgid "Collection display field filters"
 msgstr ""
 
-#: merengue/collection/templates/collection/collection_view.html.py:19
-msgid "Without grouper"
-msgstr ""
-
-#: merengue/collection/templates/collection/collection_view.html.py:41
-msgid "There are no contents to show"
-msgstr ""
-
-#: merengue/internallinks/forms.py:30
+#: internallinks/forms.py:30
 msgid "The name"
 msgstr ""
 
-#: merengue/internallinks/forms.py:30
+#: internallinks/forms.py:30
 msgid "which name"
 msgstr ""
 
-#: merengue/internallinks/forms.py:31
+#: internallinks/forms.py:31
 msgid "The description"
 msgstr ""
 
-#: merengue/internallinks/forms.py:31
-#: merengue/internallinks/templates/internallinks/internal_links_search.html.py:56
+#: internallinks/forms.py:31
+#: internallinks/templates/internallinks/internal_links_search.html:56
 msgid "Description"
 msgstr ""
 
-#: merengue/internallinks/forms.py:31
+#: internallinks/forms.py:31
 msgid "which description"
 msgstr ""
 
-#: merengue/internallinks/views.py:65
+#: internallinks/views.py:65
 #, python-format
 msgid "%s contents found"
 msgstr ""
 
-#: merengue/internallinks/views.py:66 merengue/portal/models.py:38
-#: merengue/section/admin.py:297 merengue/section/models.py:291
+#: internallinks/views.py:66 portal/models.py:38 section/admin.py:298
+#: section/models.py:306
 msgid "Content"
 msgstr "Contenido"
 
-#: merengue/internallinks/views.py:67
+#: internallinks/views.py:67
 msgid "Contents searcher"
 msgstr ""
 
-#: merengue/internallinks/templates/internallinks/internal_links_search.html.py:4
+#: internallinks/templates/internallinks/internal_links_search.html:4
 msgid "Internal links"
 msgstr ""
 
-#: merengue/multimedia/admin.py:49
+#: multimedia/admin.py:50
 msgid "associate contents"
 msgstr "asociar contenidos"
 
-#: merengue/multimedia/admin.py:71 merengue/multimedia/admin.py:102
+#: multimedia/admin.py:75 multimedia/admin.py:106
 #, python-format
 msgid "%(content)s content associated to %(multimedia)s"
 msgstr ""
 
-#: merengue/multimedia/admin.py:76
+#: multimedia/admin.py:80
 #, python-format
 msgid "Successfully associated %(number)d %(model_name)s."
 msgstr ""
 
-#: merengue/multimedia/admin.py:79
+#: multimedia/admin.py:83
 msgid "Are you sure you want to associate these contents?"
 msgstr ""
 
-#: merengue/multimedia/admin.py:82
+#: multimedia/admin.py:86
 msgid "Associate contents"
 msgstr "Asociar contenidos"
 
-#: merengue/multimedia/admin.py:88
+#: multimedia/admin.py:92
 msgid "disassociate contents"
 msgstr "desasociar contenidos"
 
-#: merengue/multimedia/admin.py:107
+#: multimedia/admin.py:111
 #, python-format
 msgid "Successfully disassociated %(number)d %(model_name)s."
 msgstr ""
 
-#: merengue/multimedia/admin.py:110
+#: multimedia/admin.py:114
 msgid "Are you sure you want disassociate this contents?"
 msgstr ""
 
-#: merengue/multimedia/admin.py:113
+#: multimedia/admin.py:117
 msgid "Disassociate contents"
 msgstr "Desasociar contenidos"
 
-#: merengue/multimedia/admin.py:269
+#: multimedia/admin.py:273
 msgid "Please specify at least a video file "
 msgstr ""
 
-#: merengue/multimedia/admin.py:275
+#: multimedia/admin.py:279
 msgid "This file must be in swf format"
 msgstr ""
 
-#: merengue/multimedia/admin.py:311 merengue/multimedia/models.py:198
+#: multimedia/admin.py:315 multimedia/models.py:198
 msgid "photos"
 msgstr ""
 
-#: merengue/multimedia/admin.py:317 merengue/multimedia/models.py:259
+#: multimedia/admin.py:321 multimedia/models.py:259
 msgid "videos"
 msgstr ""
 
-#: merengue/multimedia/admin.py:322 merengue/multimedia/models.py:296
+#: multimedia/admin.py:326 multimedia/models.py:296
 msgid "panoramic views"
 msgstr ""
 
-#: merengue/multimedia/admin.py:327
+#: multimedia/admin.py:331
 msgid "3d images"
 msgstr ""
 
-#: merengue/multimedia/admin.py:332
+#: multimedia/admin.py:336
 msgid "files"
 msgstr ""
 
-#: merengue/multimedia/admin.py:337 merengue/multimedia/models.py:359
+#: multimedia/admin.py:341 multimedia/models.py:359
 msgid "audio files"
 msgstr ""
 
-#: merengue/multimedia/forms.py:57
+#: multimedia/forms.py:57
 msgid "The file is not a audio file or has a format not supported"
 msgstr ""
 
-#: merengue/multimedia/forms.py:69
+#: multimedia/forms.py:69
 msgid "The file is not a video file or has a format not supported"
 msgstr ""
 
-#: merengue/multimedia/forms.py:79
+#: multimedia/forms.py:79
 msgid "Please specify at least a video file or a video url"
 msgstr ""
 
-#: merengue/multimedia/forms.py:83
+#: multimedia/forms.py:83
 msgid "If you want to remove the file, you can specify a video url"
 msgstr ""
 
-#: merengue/multimedia/models.py:53
+#: multimedia/models.py:53
 msgid "date added"
 msgstr ""
 
-#: merengue/multimedia/models.py:55
+#: multimedia/models.py:55
 msgid "tags"
 msgstr ""
 
-#: merengue/multimedia/models.py:69
+#: multimedia/models.py:69
 msgid "authors"
 msgstr "autores"
 
-#: merengue/multimedia/models.py:75
+#: multimedia/models.py:75
 msgid "base multimedia"
 msgstr ""
 
-#: merengue/multimedia/models.py:76
+#: multimedia/models.py:76
 msgid "base multimedias"
 msgstr ""
 
-#: merengue/multimedia/models.py:186 merengue/multimedia/models.py:318
+#: multimedia/models.py:186 multimedia/models.py:318
 msgid "image"
 msgstr ""
 
-#: merengue/multimedia/models.py:190
+#: multimedia/models.py:190
 msgid "caption"
 msgstr ""
 
-#: merengue/multimedia/models.py:192 merengue/multimedia/models.py:253
+#: multimedia/models.py:192 multimedia/models.py:253
 msgid "plone uid"
 msgstr ""
 
-#: merengue/multimedia/models.py:197
+#: multimedia/models.py:197
 msgid "photo"
 msgstr ""
 
-#: merengue/multimedia/models.py:239
+#: multimedia/models.py:239
 msgid "video file"
 msgstr ""
 
-#: merengue/multimedia/models.py:242
+#: multimedia/models.py:242
 msgid "The file will convert to flv format. It could lose a little of quality"
 msgstr ""
 
-#: merengue/multimedia/models.py:244 merengue/multimedia/models.py:284
+#: multimedia/models.py:244 multimedia/models.py:284
 msgid "preview image"
 msgstr ""
 
-#: merengue/multimedia/models.py:249
+#: multimedia/models.py:249
 msgid "external url"
 msgstr ""
 
-#: merengue/multimedia/models.py:250
+#: multimedia/models.py:250
 msgid "The url of one video from youtube or google-video"
 msgstr ""
 
-#: merengue/multimedia/models.py:258
+#: multimedia/models.py:258
 msgid "video"
 msgstr ""
 
-#: merengue/multimedia/models.py:295
+#: multimedia/models.py:295
 msgid "panoramic view"
 msgstr ""
 
-#: merengue/multimedia/models.py:322
+#: multimedia/models.py:322
 msgid "image 3d"
 msgstr ""
 
-#: merengue/multimedia/models.py:323
+#: multimedia/models.py:323
 msgid "images 3d"
 msgstr ""
 
-#: merengue/multimedia/models.py:335 merengue/multimedia/models.py:340
+#: multimedia/models.py:335 multimedia/models.py:340
 msgid "attached file"
 msgstr ""
 
-#: merengue/multimedia/models.py:341
+#: multimedia/models.py:341
 msgid "attached files"
 msgstr ""
 
-#: merengue/multimedia/models.py:353 merengue/multimedia/models.py:358
+#: multimedia/models.py:353 multimedia/models.py:358
 msgid "audio file"
 msgstr ""
 
-#: merengue/multimedia/templates/multimedia/media_files.html.py:5
+#: multimedia/templates/multimedia/media_files.html:5
 msgid "Attached files"
 msgstr ""
 
-#: merengue/multimedia/templates/multimedia/media_slide.html.py:35
-#: merengue/multimedia/templates/multimedia/media_slide.html.py:36
+#: multimedia/templates/multimedia/media_slide.html:35
 msgid "Street view"
 msgstr ""
 
-#: merengue/perms/admin.py:65
+#: perms/admin.py:65
 msgid "The princial role relation was created successfully"
 msgstr ""
 
-#: merengue/perms/admin.py:79
+#: perms/admin.py:79
 msgid "The role permissions were changed successfully."
 msgstr ""
 
-#: merengue/perms/admin.py:103
+#: perms/admin.py:103
 msgid "The role users were changed successfully."
 msgstr ""
 
-#: merengue/perms/admin.py:127
+#: perms/admin.py:127
 msgid "The role groups were changed successfully."
 msgstr ""
 
-#: merengue/perms/admin.py:219
+#: perms/admin.py:219
 msgid "The role permissions was changed successfully."
 msgstr ""
 
-#: merengue/perms/admin.py:225
+#: perms/admin.py:225
 msgid "You may edit it again below."
 msgstr ""
 
-#: merengue/perms/admin.py:367
+#: perms/admin.py:367
 msgid "Personal info"
 msgstr ""
 
-#: merengue/perms/admin.py:368
-#: merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:42
-#: merengue/templates/admin/merengue_index_base.html.py:89
-#: merengue/templates/admin/basecontent/role_permissions.html.py:46
-#: merengue/workflow/admin.py:193
-#: merengue/workflow/templates/admin/workflow/state_permissions.html.py:26
+#: perms/admin.py:368
+#: perms/templates/admin/perms/objectpermission/role_permissions.html:42
+#: templates/admin/merengue_index_base.html:89
+#: templates/admin/basecontent/role_permissions.html:46 workflow/admin.py:193
+#: workflow/templates/admin/workflow/state_permissions.html:26
 msgid "Permissions"
 msgstr "Permisos"
 
-#: merengue/perms/admin.py:369
+#: perms/admin.py:369
 msgid "Important dates"
 msgstr ""
 
-#: merengue/perms/admin.py:370
-#: merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:118
-#: merengue/templates/admin/merengue_index_base.html.py:83
-#: merengue/templates/admin/basecontent/role_permissions.html.py:129
+#: perms/admin.py:370
+#: perms/templates/admin/perms/objectpermission/role_permissions.html:118
+#: templates/admin/merengue_index_base.html:83
+#: templates/admin/basecontent/role_permissions.html:129
 msgid "Groups"
 msgstr "Grupos"
 
-#: merengue/perms/admin.py:371 merengue/perms/admin.py:408
-#: merengue/perms/forms.py:40
-#: merengue/templates/admin/merengue_index_base.html.py:87
+#: perms/admin.py:371 perms/admin.py:408 perms/forms.py:40
+#: templates/admin/merengue_index_base.html:87
 msgid "Roles"
 msgstr ""
 
-#: merengue/perms/models.py:50
+#: perms/models.py:50
 msgid "Codename"
 msgstr ""
 
-#: merengue/perms/models.py:51
+#: perms/models.py:51
 msgid "Builtin permission"
 msgstr ""
 
-#: merengue/perms/models.py:75 merengue/perms/models.py:179
-#: merengue/workflow/models.py:364
+#: perms/models.py:75 perms/models.py:179 workflow/models.py:364
 msgid "Role"
 msgstr ""
 
-#: merengue/perms/models.py:76 merengue/perms/models.py:113
-#: merengue/workflow/models.py:255 merengue/workflow/models.py:339
-#: merengue/workflow/models.py:363
+#: perms/models.py:76 perms/models.py:113 workflow/models.py:255
+#: workflow/models.py:339 workflow/models.py:363
 msgid "Permission"
 msgstr ""
 
-#: merengue/perms/models.py:178
+#: perms/models.py:178
 msgid "Group"
 msgstr ""
 
-#: merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:21
-#: merengue/templates/admin/basecontent/role_permissions.html.py:21
+#: perms/templates/admin/perms/objectpermission/role_permissions.html:21
+#: templates/admin/basecontent/role_permissions.html:21
 msgid "Update the permissions for each role for the content: "
 msgstr "Actualizar los permisos para cada rol del contenido:"
 
-#: merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:23
-#: merengue/templates/admin/basecontent/role_permissions.html.py:23
+#: perms/templates/admin/perms/objectpermission/role_permissions.html:23
+#: templates/admin/basecontent/role_permissions.html:23
 msgid "Update the permissions for each role: "
 msgstr "Actualizar los permisos para cada rol:"
 
-#: merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:31
-#: merengue/templates/admin/basecontent/role_permissions.html.py:35
+#: perms/templates/admin/perms/objectpermission/role_permissions.html:31
+#: templates/admin/basecontent/role_permissions.html:35
 msgid "Should this content adquire global permissions?"
 msgstr "¿Debería este contenido adquirir permisos globales?"
 
-#: merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:65
-#: merengue/templates/admin/basecontent/role_permissions.html.py:75
+#: perms/templates/admin/perms/objectpermission/role_permissions.html:65
+#: templates/admin/basecontent/role_permissions.html:75
 msgid "User and groups local roles"
 msgstr "Usuarios y grupos de roles locales"
 
-#: merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:66
-#: merengue/templates/admin/basecontent/role_permissions.html.py:76
+#: perms/templates/admin/perms/objectpermission/role_permissions.html:66
+#: templates/admin/basecontent/role_permissions.html:76
 msgid "Create local roles for user or group for the content: "
 msgstr "Crear roles locales para usuario y grupo para el contenido:"
 
-#: merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:67
-#: merengue/templates/admin/basecontent/role_permissions.html.py:77
+#: perms/templates/admin/perms/objectpermission/role_permissions.html:67
+#: templates/admin/basecontent/role_permissions.html:77
 msgid "Autocomplete the user or autocomplete the group and select a role"
 msgstr "Autocompletar el usuario y autocompletar el grupo y seleccionar un rol"
 
-#: merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:70
-#: merengue/templates/admin/basecontent/role_permissions.html.py:80
+#: perms/templates/admin/perms/objectpermission/role_permissions.html:70
+#: templates/admin/basecontent/role_permissions.html:80
 msgid "Create"
 msgstr "Crear"
 
-#: merengue/perms/templates/admin/perms/objectpermission/role_permissions.html.py:80
-#: merengue/templates/admin/merengue_index_base.html.py:85
-#: merengue/templates/admin/basecontent/role_permissions.html.py:90
+#: perms/templates/admin/perms/objectpermission/role_permissions.html:80
+#: templates/admin/merengue_index_base.html:85
+#: templates/admin/basecontent/role_permissions.html:90
 msgid "Users"
 msgstr "Usuarios"
 
-#: merengue/perms/templates/admin/perms/role/change_form.html.py:14
+#: perms/templates/admin/perms/role/change_form.html:14
 msgid "New Role"
 msgstr "Nuevo Rol"
 
-#: merengue/places/models.py:27
+#: places/models.py:27
 msgid "main location"
 msgstr ""
 
-#: merengue/places/models.py:48
+#: places/models.py:48
 msgid "address"
 msgstr ""
 
-#: merengue/places/models.py:50
+#: places/models.py:50
 msgid "postal_code"
 msgstr " Código postal"
 
-#: merengue/places/models.py:57
+#: places/models.py:57
 msgid "locations"
 msgstr ""
 
-#: merengue/places/models.py:65
+#: places/models.py:65
 msgid "Without localization"
 msgstr ""
 
-#: merengue/places/templates/places/content_info.html.py:8
-msgid "More Info"
-msgstr ""
-
-#: merengue/pluggable/__init__.py:227 merengue/section/admin.py:469
+#: pluggable/__init__.py:227 section/admin.py:470
 msgid "portal menu"
 msgstr ""
 
-#: merengue/pluggable/admin.py:73
+#: pluggable/admin.py:73
 #, fuzzy
 msgid "Plugins detections done"
 msgstr "Administración de plugins"
 
-#: merengue/pluggable/admin.py:93
+#: pluggable/admin.py:93
 msgid "Not all dependencies are met"
 msgstr ""
 
-#: merengue/pluggable/admin.py:116
+#: pluggable/admin.py:116
 msgid "Detect new plugins"
 msgstr ""
 
-#: merengue/pluggable/admin.py:124
-#: merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:24
+#: pluggable/admin.py:124
+#: pluggable/templates/admin/plugin/plugin_change_form.html:24
 msgid "None"
 msgstr ""
 
-#: merengue/pluggable/admin.py:125 merengue/pluggable/admin.py:127
-#: merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:18
+#: pluggable/admin.py:125 pluggable/admin.py:127
+#: pluggable/templates/admin/plugin/plugin_change_form.html:18
 msgid "Screenshot"
 msgstr ""
 
-#: merengue/pluggable/admin.py:132
+#: pluggable/admin.py:132
 #, python-format
-msgid "You have not registered all the plugins. Click <a href=\"%(url)s\">here</a> in order to register them"
+msgid ""
+"You have not registered all the plugins. Click <a href=\"%(url)s\">here</a> "
+"in order to register them"
 msgstr ""
 
-#: merengue/pluggable/models.py:37
+#: pluggable/models.py:37
 msgid "version"
 msgstr ""
 
-#: merengue/pluggable/models.py:41 merengue/theming/models.py:40
+#: pluggable/models.py:41 theming/models.py:40
 msgid "directory name"
 msgstr ""
 
-#: merengue/pluggable/models.py:54
+#: pluggable/models.py:54
 msgid "registered plugin"
 msgstr ""
 
-#: merengue/pluggable/models.py:55
+#: pluggable/models.py:55
 msgid "registered plugins"
 msgstr ""
 
-#: merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:9
-msgid "This plugin has been set as required in settings.py so you can not install/uninstall from this admin interface. You can install it by running a migrate command"
+#: pluggable/templates/admin/plugin/plugin_change_form.html:9
+msgid ""
+"This plugin has been set as required in settings.py so you can not install/"
+"uninstall from this admin interface. You can install it by running a migrate "
+"command"
 msgstr ""
 
-#: merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:32
+#: pluggable/templates/admin/plugin/plugin_change_form.html:32
 msgid "New blocks"
 msgstr ""
 
-#: merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:37
+#: pluggable/templates/admin/plugin/plugin_change_form.html:37
 msgid "Registered blocks"
 msgstr "Bloques registrados"
 
-#: merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:50
+#: pluggable/templates/admin/plugin/plugin_change_form.html:50
 msgid "Has own admin"
 msgstr ""
 
-#: merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:60
+#: pluggable/templates/admin/plugin/plugin_change_form.html:60
 msgid "New Actions"
 msgstr ""
 
-#: merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:65
+#: pluggable/templates/admin/plugin/plugin_change_form.html:65
 msgid "Registered actions"
 msgstr ""
 
-#: merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:79
+#: pluggable/templates/admin/plugin/plugin_change_form.html:79
 msgid "New Viewlets"
 msgstr ""
 
-#: merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:92
+#: pluggable/templates/admin/plugin/plugin_change_form.html:92
 msgid "New Middlewares"
 msgstr ""
 
-#: merengue/pluggable/templates/admin/plugin/plugin_change_form.html.py:105
+#: pluggable/templates/admin/plugin/plugin_change_form.html:105
 msgid "New content types addable in a section"
 msgstr ""
 
-#: merengue/portal/forms.py:15
+#: portal/forms.py:15
 msgid "Link cannot point to an url if already points to content"
 msgstr ""
 
-#: merengue/portal/models.py:42 merengue/section/models.py:264
+#: portal/models.py:42 section/models.py:279
 msgid "The absolute urls have to write complety: Protocol, domain, query"
-msgstr "Las urls absolutas tienen que estar completas: protocolo, dominio y consulta"
+msgstr ""
+"Las urls absolutas tienen que estar completas: protocolo, dominio y consulta"
 
-#: merengue/portal/models.py:45 merengue/section/models.py:317
+#: portal/models.py:45 section/models.py:332
 msgid "order"
 msgstr ""
 
-#: merengue/portal/models.py:46 merengue/registry/models.py:35
+#: portal/models.py:46 registry/models.py:35
 msgid "category"
 msgstr "categoría"
 
-#: merengue/portal/models.py:52
+#: portal/models.py:52
 msgid "icon"
 msgstr ""
 
-#: merengue/portal/models.py:55
-msgid "The system don't resize the icon. You need to upload with the final size"
+#: portal/models.py:55
+msgid ""
+"The system don't resize the icon. You need to upload with the final size"
 msgstr ""
 
-#: merengue/portal/models.py:59
+#: portal/models.py:59
 msgid "visible links"
 msgstr ""
 
-#: merengue/portal/models.py:60
+#: portal/models.py:60
 msgid "Restrict visibility to some roles"
 msgstr ""
 
-#: merengue/portal/models.py:68
+#: portal/models.py:68
 msgid "portal link"
 msgstr ""
 
-#: merengue/portal/models.py:69
+#: portal/models.py:69
 msgid "portal links"
 msgstr ""
 
-#: merengue/portal/views.py:40
+#: portal/views.py:40
 #, python-format
 msgid "Welcome %s"
 msgstr ""
 
-#: merengue/portal/views.py:47
-#: merengue/templates/registration/logged_out.html.py:8
+#: portal/views.py:47 templates/registration/logged_out.html:8
 msgid "Thanks for your visit"
 msgstr "Gracias por su visita"
 
-#: merengue/portal/views.py:84
+#: portal/views.py:84
 msgid "Cache from this page was invalidated"
 msgstr ""
 
-#: merengue/portal/templates/portal/list_pending.html.py:5
-#: merengue/portal/templates/portal/list_pending.html.py:8
+#: portal/templates/portal/list_pending.html:5
+#: portal/templates/portal/list_pending.html:8
 msgid "Pending contents"
 msgstr ""
 
-#: merengue/portal/templates/portal/searchform.html.py:4
-msgid "Search options"
-msgstr ""
-
-#: merengue/portal/templates/portal/searchform.html.py:7
-#: merengue/templates/admin/merengue_index_base.html.py:33
-msgid "Search"
-msgstr ""
-
-#: merengue/portal/templates/portal/searchform.html.py:11
-msgid "Search filters"
-msgstr ""
-
-#: merengue/registry/fields.py:41
+#: registry/fields.py:41
 #, python-format
 msgid "Error in \"%(name)s\" field"
 msgstr ""
 
-#: merengue/registry/items.py:104
+#: registry/items.py:104
 msgid "All content types"
 msgstr ""
 
-#: merengue/registry/items.py:113
+#: registry/items.py:113
 msgid "Content types that whant to filter"
 msgstr "Tipos de contenido que quiere filtrar"
 
-#: merengue/registry/models.py:34
+#: registry/models.py:34
 msgid "module"
 msgstr "módulo"
 
-#: merengue/registry/models.py:36
+#: registry/models.py:36
 msgid "active"
 msgstr ""
 
-#: merengue/registry/models.py:37
+#: registry/models.py:37
 msgid "broken"
 msgstr ""
 
-#: merengue/registry/models.py:39
+#: registry/models.py:39
 msgid "Error traceback"
 msgstr ""
 
-#: merengue/registry/models.py:40
+#: registry/models.py:40
 msgid "Error traceback on broken item"
 msgstr ""
 
-#: merengue/registry/models.py:46
+#: registry/models.py:46
 msgid "registered item"
 msgstr ""
 
-#: merengue/registry/models.py:47
+#: registry/models.py:47
 msgid "registered items"
 msgstr ""
 
-#: merengue/registry/templates/admin/registry/change_form.html.py:8
-msgid "This item is broken. You cannot edit this object until problem was fixed"
+#: registry/templates/admin/registry/change_form.html:8
+msgid ""
+"This item is broken. You cannot edit this object until problem was fixed"
 msgstr ""
 
-#: merengue/registry/templates/admin/registry/change_form.html.py:9
+#: registry/templates/admin/registry/change_form.html:9
 msgid "Traceback error"
 msgstr ""
 
-#: merengue/review/admin.py:35 merengue/review/models.py:31
+#: review/admin.py:35 review/models.py:31
 msgid "assigned to"
 msgstr ""
 
-#: merengue/review/admin.py:44
+#: review/admin.py:44
 msgid "Task information"
 msgstr ""
 
-#: merengue/review/admin.py:46
+#: review/admin.py:46
 msgid "Task status"
 msgstr ""
 
-#: merengue/review/admin.py:83
+#: review/admin.py:83
 msgid "Mark selected tasks as done"
 msgstr ""
 
-#: merengue/review/admin.py:87
+#: review/admin.py:87
 msgid "Mark selected tasks as not done"
 msgstr ""
 
-#: merengue/review/models.py:30
+#: review/models.py:30
 msgid "owner"
 msgstr "propietario"
 
-#: merengue/review/models.py:32
+#: review/models.py:32
 msgid "title"
 msgstr "título"
 
-#: merengue/review/models.py:35
+#: review/models.py:35
 msgid "is done"
 msgstr ""
 
-#: merengue/review/models.py:37
+#: review/models.py:37
 msgid "object type"
 msgstr ""
 
-#: merengue/review/models.py:39
+#: review/models.py:39
 msgid "object id"
 msgstr ""
 
-#: merengue/review/models.py:48
+#: review/models.py:48
 msgid "done"
 msgstr ""
 
-#: merengue/review/models.py:50
+#: review/models.py:50
 msgid "not done"
 msgstr ""
 
-#: merengue/review/utils.py:19
+#: review/utils.py:19
 #, python-format
 msgid "%s has been set as pending"
 msgstr ""
 
-#: merengue/review/management/commands/notify_pending_reviews.py:20
+#: review/management/commands/notify_pending_reviews.py:20
 msgid "You have pending tasks"
 msgstr ""
 
-#: merengue/review/templates/review/email_as_pending.html.py:3
+#: review/templates/review/email_as_pending.html:3
 msgid "Hello,"
 msgstr ""
 
-#: merengue/review/templates/review/email_as_pending.html.py:6
+#: review/templates/review/email_as_pending.html:6
 msgid "The content"
 msgstr ""
 
-#: merengue/review/templates/review/email_as_pending.html.py:7
+#: review/templates/review/email_as_pending.html:7
 msgid "has been set as pending and it's waiting for revision."
 msgstr ""
 
-#: merengue/review/templates/review/email_as_pending.html.py:11
+#: review/templates/review/email_as_pending.html:11
 msgid "Link to the admin page"
 msgstr ""
 
-#: merengue/review/templates/review/email_as_pending.html.py:12
+#: review/templates/review/email_as_pending.html:12
 msgid "Link to the review task admin page"
 msgstr ""
 
-#: merengue/review/templates/review/email_reminder_list.html.py:3
+#: review/templates/review/email_reminder_list.html:3
 msgid "Hello"
 msgstr ""
 
-#: merengue/review/templates/review/email_reminder_list.html.py:5
+#: review/templates/review/email_reminder_list.html:5
 msgid "It seems that you have some tasks to review"
 msgstr ""
 
-#: merengue/review/templates/review/email_reminder_list.html.py:15
+#: review/templates/review/email_reminder_list.html:15
 msgid "Go to admin page for more info"
 msgstr ""
 
-#: merengue/section/admin.py:142 merengue/section/models.py:336
+#: section/admin.py:143 section/models.py:351
 msgid "main content"
 msgstr ""
 
-#: merengue/section/admin.py:144 merengue/section/models.py:337
+#: section/admin.py:145 section/models.py:352
 msgid "content selected here will be shown when entering the section"
-msgstr "El contenido aquí seleccionado se mostrará cuando se acceda a la sección"
+msgstr ""
+"El contenido aquí seleccionado se mostrará cuando se acceda a la sección"
 
-#: merengue/section/admin.py:197 merengue/section/models.py:355
+#: section/admin.py:198 section/models.py:370
 msgid "custom style"
 msgstr "estilo personalizado"
 
-#: merengue/section/admin.py:208
-msgid "Custom style for the section. You can use the variables $media_url and $theme_url"
-msgstr "Estilo personalizado para la sección. Puedes usar las variables $media_url y $theme_url"
+#: section/admin.py:209
+msgid ""
+"Custom style for the section. You can use the variables $media_url and "
+"$theme_url"
+msgstr ""
+"Estilo personalizado para la sección. Puedes usar las variables $media_url y "
+"$theme_url"
 
-#: merengue/section/admin.py:225 merengue/section/models.py:458
+#: section/admin.py:226 section/models.py:474
 msgid "documents"
 msgstr ""
 
-#: merengue/section/admin.py:259
+#: section/admin.py:260
 msgid "Menu Absolute Link"
 msgstr ""
 
-#: merengue/section/admin.py:260
+#: section/admin.py:261
 msgid "Menu Absolute Links"
 msgstr ""
 
-#: merengue/section/admin.py:287
+#: section/admin.py:288
 msgid "Menu Content Link"
 msgstr ""
 
-#: merengue/section/admin.py:288
+#: section/admin.py:289
 msgid "Menu Content Links"
 msgstr ""
 
-#: merengue/section/admin.py:299
+#: section/admin.py:300
 msgid "Enter text to search the content"
 msgstr "Introduce el texto a buscar en el contenido"
 
-#: merengue/section/admin.py:307
+#: section/admin.py:308
 msgid "Menu Viewlet Link"
 msgstr ""
 
-#: merengue/section/admin.py:308
+#: section/admin.py:309
 msgid "Menu Viewlet Links"
 msgstr ""
 
-#: merengue/section/admin.py:358
+#: section/admin.py:359
 msgid "Move this menu"
 msgstr ""
 
-#: merengue/section/admin.py:359
+#: section/admin.py:360
 msgid "Cancel move"
 msgstr ""
 
-#: merengue/section/admin.py:361
+#: section/admin.py:362
 msgid "Before"
 msgstr ""
 
-#: merengue/section/admin.py:362
+#: section/admin.py:363
 msgid "After"
 msgstr ""
 
-#: merengue/section/admin.py:363
+#: section/admin.py:364
 msgid "Child"
 msgstr ""
 
-#: merengue/section/admin.py:459 merengue/section/models.py:325
+#: section/admin.py:460 section/models.py:340
 msgid "main menu"
 msgstr ""
 
-#: merengue/section/admin.py:497 merengue/section/models.py:494
+#: section/admin.py:498 section/models.py:510
 msgid "document sections"
 msgstr ""
 
-#: merengue/section/fields.py:51
+#: section/fields.py:51
 #, python-format
 msgid "Syntax Error %s"
 msgstr ""
 
-#: merengue/section/models.py:94
+#: section/models.py:95
 msgid "help text"
 msgstr ""
 
-#: merengue/section/models.py:95
-msgid "text for describing the menu target, usually placed as link title attribute"
-msgstr "Texto para describir el destino del menú, normalmente se coloca como el atributo enlace del título"
+#: section/models.py:96
+msgid ""
+"text for describing the menu target, usually placed as link title attribute"
+msgstr ""
+"Texto para describir el destino del menú, normalmente se coloca como el "
+"atributo enlace del título"
 
-#: merengue/section/models.py:102
+#: section/models.py:103
 msgid "Parent"
 msgstr ""
 
-#: merengue/section/models.py:116
+#: section/models.py:117
 msgid "status"
 msgstr "Estado"
 
-#: merengue/section/models.py:117
+#: section/models.py:118
 msgid "status of the menu element"
 msgstr "Estado del elemento de menú"
 
-#: merengue/section/models.py:118
+#: section/models.py:119
 msgid "public"
 msgstr "público"
 
-#: merengue/section/models.py:118
+#: section/models.py:119
 msgid "draft"
 msgstr "borrador"
 
-#: merengue/section/models.py:126
+#: section/models.py:127
 msgid "visible menus"
 msgstr "Menús visibles"
 
-#: merengue/section/models.py:129
+#: section/models.py:130
 msgid "The roles that will see this menu"
 msgstr "Roles que verán este menú"
 
-#: merengue/section/models.py:133 merengue/section/models.py:239
+#: section/models.py:134 section/models.py:254
 msgid "menu"
 msgstr ""
 
-#: merengue/section/models.py:134
+#: section/models.py:135
 msgid "menus"
 msgstr ""
 
-#: merengue/section/models.py:268
+#: section/models.py:283
 msgid "open in new window"
 msgstr "Abrir en una nueva ventana"
 
-#: merengue/section/models.py:274
+#: section/models.py:289
 msgid "css class for this link"
 msgstr "Clase css para este enlace"
 
-#: merengue/section/models.py:304
+#: section/models.py:319
 msgid "Viewlet"
 msgstr ""
 
-#: merengue/section/models.py:345
+#: section/models.py:360
 msgid "related contents"
 msgstr ""
 
-#: merengue/section/models.py:363
+#: section/models.py:378
 msgid "section"
 msgstr "sección"
 
-#: merengue/section/models.py:457
+#: section/models.py:379
+#, fuzzy
+msgid "sections"
+msgstr "sección"
+
+#: section/models.py:473
 msgid "document"
 msgstr ""
 
-#: merengue/section/models.py:478
+#: section/models.py:494
 msgid "Parent document"
 msgstr ""
 
-#: merengue/section/models.py:487
+#: section/models.py:503
 msgid "body"
 msgstr ""
 
-#: merengue/section/models.py:493
+#: section/models.py:509
 msgid "document section"
 msgstr "sección de documento"
 
-#: merengue/section/models.py:513
+#: section/models.py:529
 msgid "Can not move to non existing position"
 msgstr ""
 
-#: merengue/section/models.py:537
+#: section/models.py:553
 msgid "Trying to save DocumentSection into an existing position"
 msgstr ""
 
-#: merengue/section/models.py:559
+#: section/models.py:575
 msgid "css chunk"
 msgstr ""
 
-#: merengue/section/models.py:565
+#: section/models.py:581
 msgid "custom sytle"
 msgstr ""
 
-#: merengue/section/models.py:566
+#: section/models.py:582
 msgid "custom styles"
 msgstr ""
 
-#: merengue/section/models.py:573
+#: section/models.py:589
 msgid "Custom CSS image"
 msgstr "Personalizar CSS de imagen"
 
-#: merengue/section/models.py:580
+#: section/models.py:596
 msgid "custom sytle image"
 msgstr "Estilo personalizado de imagen"
 
-#: merengue/section/models.py:581
+#: section/models.py:597
 msgid "custom style images"
 msgstr "estilo personalizado de imágenes"
 
-#: merengue/section/widgets.py:40
+#: section/widgets.py:40
 msgid "Show all errors"
 msgstr ""
 
-#: merengue/section/widgets.py:41
+#: section/widgets.py:41
 msgid "Normalize css"
 msgstr ""
 
-#: merengue/section/templates/admin/section/menu/change_list.html.py:7
+#: section/templates/admin/section/menu/change_list.html:7
 msgid "Saving"
 msgstr ""
 
-#: merengue/section/templates/admin/section/menu/change_list.html.py:12
-#: merengue/section/templates/admin/section/menu/change_list.html.py:13
-#: merengue/section/templates/admin/section/menu/change_list.html.py:16
-#: merengue/section/templates/admin/section/menu/change_list.html.py:17
-#: merengue/templates/admin/basecontent/sortable_change_list.html.py:13
+#: section/templates/admin/section/menu/change_list.html:12
+#: section/templates/admin/section/menu/change_list.html:13
+#: section/templates/admin/section/menu/change_list.html:16
+#: section/templates/admin/section/menu/change_list.html:17
+#: templates/admin/basecontent/sortable_change_list.html:13
 msgid "Click and drag to reorder"
 msgstr "Haga click y arrastre para reordenar"
 
-#: merengue/section/templates/admin/section/section/change_list.html.py:11
+#: section/templates/admin/section/section/change_list.html:11
 msgid "Please wait, retrieving contents"
 msgstr "borrador"
 
-#: merengue/section/templates/section/document_section_add.html.py:4
-#: merengue/section/templates/section/document_section_add.html.py:8
+#: section/templates/section/document_section_add.html:4
+#: section/templates/section/document_section_add.html:8
 msgid "Insert document section here"
 msgstr "Insertar sección aquí"
 
-#: merengue/section/templates/section/document_section_view.html.py:12
-#: merengue/section/templates/section/document_section_view.html.py:13
+#: section/templates/section/document_section_view.html:12
+#: section/templates/section/document_section_view.html:13
 msgid "Document section actions"
 msgstr "Acciones para documento de sección"
 
-#: merengue/section/templates/section/document_section_view.html.py:17
-#: merengue/section/templates/section/document_section_view.html.py:18
+#: section/templates/section/document_section_view.html:17
+#: section/templates/section/document_section_view.html:18
 msgid "Drag and drop to reorder sections"
 msgstr ""
 
-#: merengue/section/templates/section/document_section_view.html.py:23
+#: section/templates/section/document_section_view.html:23
 msgid "Edit document section"
 msgstr "Editar sección del documento"
 
-#: merengue/section/templates/section/document_section_view.html.py:24
+#: section/templates/section/document_section_view.html:24
 msgid "Insert document section"
 msgstr "Insertar sección"
 
-#: merengue/section/templates/section/document_section_view.html.py:25
+#: section/templates/section/document_section_view.html:25
 msgid "Delete document section"
 msgstr "Eliminar sección"
 
-#: merengue/section/templates/section/document_section_view.html.py:39
+#: section/templates/section/document_section_view.html:39
 msgid "Double click to edit"
 msgstr ""
 
-#: merengue/section/templates/section/document_section_view.html.py:43
+#: section/templates/section/document_section_view.html:43
 msgid "This section has no content"
 msgstr ""
 
-#: merengue/section/templates/section/document_view.html.py:19
+#: section/templates/section/document_view.html:19
 msgid "Are you sure you want to delete this section?"
 msgstr ""
 
-#: merengue/section/templates/section/document_view.html.py:21
+#: section/templates/section/document_view.html:21
 msgid ""
 "You are about to cancel the edition. All your changes will be lost.\n"
 "\n"
 "Do you want to cancel and lost your changes?\n"
 msgstr ""
 
-#: merengue/section/templates/section/document_view.html.py:28
-#: merengue/templates/admin/customize_submit_line.html.py:4
-#: merengue/templates/admin/reorder.html.py:60
-#: merengue/workflow/templates/admin/workflow/state_permissions.html.py:47
-#: merengue/workflow/templates/admin/workflow/workflow_models.html.py:34
-#: merengue/workflow/templates/admin/workflow/workflow_permissions.html.py:34
+#: section/templates/section/document_view.html:28
+#: templates/admin/customize_submit_line.html:4
+#: templates/admin/reorder.html:60
+#: workflow/templates/admin/workflow/state_permissions.html:47
+#: workflow/templates/admin/workflow/workflow_models.html:34
+#: workflow/templates/admin/workflow/workflow_permissions.html:34
 msgid "Save"
 msgstr "Guardar"
 
-#: merengue/section/templates/section/document_view.html.py:29
+#: section/templates/section/document_view.html:29
 msgid "Cancel"
 msgstr ""
 
-#: merengue/section/templates/section/document_view.html.py:33
+#: section/templates/section/document_view.html:33
 msgid "Insert first section"
 msgstr "Insertar la primera sección"
 
-#: merengue/section/templates/section/menu_link_not_exists.html.py:20
-msgid "Empty Menu"
-msgstr ""
-
-#: merengue/section/templates/section/menu_link_not_exists.html.py:22
-msgid "This menu does not link to any target"
-msgstr ""
-
-#: merengue/section/templates/section/menu_link_not_exists.html.py:23
-msgid "Admin this menu"
-msgstr "Administrar este menú"
-
-#: merengue/section/templates/section/search_results_view.html.py:14
-#: merengue/section/templates/section/section_agenda.html.py:22
-msgid "agenda"
-msgstr ""
-
-#: merengue/section/templates/section/section_agenda.html.py:9
-msgid "Agenda"
-msgstr ""
-
-#: merengue/section/templates/section/section_view_without_maincontent.html.py:21
-msgid "You can edit in"
-msgstr ""
-
-#: merengue/section/templates/section/section_view_without_maincontent.html.py:21
-msgid "here"
-msgstr ""
-
-#: merengue/section/templatetags/section_tags.py:133
+#: section/templatetags/section_tags.py:133
 msgid "Searcher"
 msgstr ""
 
-#: merengue/skel/plugin/actions.py:10 merengue/skel/plugin/actions.py:11
+#: skel/plugin/actions.py:10 skel/plugin/actions.py:11
 #, fuzzy
 msgid "Foo action"
 msgstr "localización"
 
-#: merengue/skel/plugin/blocks.py:12
+#: skel/plugin/blocks.py:12
 msgid "Foo block"
 msgstr ""
 
-#: merengue/skel/plugin/blocks.py:13
+#: skel/plugin/blocks.py:13
 msgid "Block with last foo items published"
 msgstr ""
 
-#: merengue/skel/plugin/blocks.py:19
+#: skel/plugin/blocks.py:19
 msgid "number of foo items for the \"Foo block\" block"
 msgstr ""
 
-#: merengue/skel/plugin/blocks.py:37
+#: skel/plugin/blocks.py:37
 msgid "Latest foo items"
 msgstr ""
 
-#: merengue/skel/plugin/models.py:11
+#: skel/plugin/models.py:11
 msgid "extra field"
 msgstr ""
 
-#: merengue/skel/plugin/models.py:19
+#: skel/plugin/models.py:19
 msgid "foomodel"
 msgstr ""
 
-#: merengue/skel/plugin/models.py:20
+#: skel/plugin/models.py:20
 msgid "foomodels"
 msgstr ""
 
-#: merengue/skel/plugin/templates/fooplugin/foo_block.html.py:16
-msgid "No published content"
-msgstr ""
-
-#: merengue/skel/plugin/templates/fooplugin/foomodel_index.html.py:6
-msgid "Foo listing"
-msgstr ""
-
-#: merengue/skel/plugin/templates/fooplugin/foomodel_view.html.py:9
-msgid "Publication date"
-msgstr ""
-
-#: merengue/skel/plugin/templates/fooplugin/foomodel_view.html.py:16
-msgid "Extra field"
-msgstr ""
-
-#: merengue/skel/plugin/templates/fooplugin/foomodel_view.html.py:19
-msgid "About extra permission"
-msgstr ""
-
-#: merengue/skel/plugin/templates/fooplugin/foomodel_view.html.py:21
-msgid "You have extra permission for this content"
-msgstr ""
-
-#: merengue/skel/plugin/templates/fooplugin/foomodel_view.html.py:23
-msgid "Sorry, you don't have extra permission for this content"
-msgstr ""
-
-#: merengue/skel/project/settings.py:53
+#: skel/project/settings.py:53
 msgid "English"
 msgstr ""
 
-#: merengue/skel/project/settings.py:54
+#: skel/project/settings.py:54
 msgid "Español"
 msgstr ""
 
-#: merengue/skel/project/settings.py:55
+#: skel/project/settings.py:55
 msgid "Italiano"
 msgstr ""
 
-#: merengue/templates/admin/base.html.py:53
-#: merengue/templates/admin/base_site.html.py:7
-#: merengue/themes/merengue/templates/admin/base_site.html.py:11
-#: merengue/themes/yaco/templates/admin/base_site.html.py:11
+#: templates/admin/base.html:53 templates/admin/base_site.html:7
+#: themes/merengue/templates/admin/base_site.html:11
+#: themes/yaco/templates/admin/base_site.html:11
 msgid "Merengue logo"
 msgstr "Logo de Merengue"
 
-#: merengue/templates/admin/base.html.py:61
+#: templates/admin/base.html:61
 msgid "Welcome,"
 msgstr "Bienvenido,"
 
-#: merengue/templates/admin/base.html.py:76
+#: templates/admin/base.html:76
 msgid "Documentation"
 msgstr "Documentación"
 
-#: merengue/templates/admin/base.html.py:84
+#: templates/admin/base.html:84
 msgid "Change password"
 msgstr "Cambiar contraseña"
 
-#: merengue/templates/admin/base.html.py:91
+#: templates/admin/base.html:91
 msgid "Log out"
 msgstr "Deslogarse"
 
-#: merengue/templates/admin/base_site.html.py:4
-#: merengue/themes/merengue/templates/admin/base_site.html.py:4
-#: merengue/themes/yaco/templates/admin/base_site.html.py:4
+#: templates/admin/base_site.html:4
+#: themes/merengue/templates/admin/base_site.html:4
+#: themes/yaco/templates/admin/base_site.html:4
 msgid "Merengue site admin"
 msgstr "Administración del Sitio de Merengue"
 
-#: merengue/templates/admin/base_site.html.py:11
-#: merengue/themes/merengue/templates/admin/base_site.html.py:15
-#: merengue/themes/yaco/templates/admin/base_site.html.py:15
+#: templates/admin/base_site.html:11
+#: themes/merengue/templates/admin/base_site.html:15
+#: themes/yaco/templates/admin/base_site.html:15
 msgid "Merengue administration"
 msgstr "Administración de Merengue"
 
-#: merengue/templates/admin/change_form.html.py:52
-msgid "This content is set as 'no_deletable' so you can not delete it from the system"
+#: templates/admin/change_form.html:52
+msgid ""
+"This content is set as 'no_deletable' so you can not delete it from the "
+"system"
 msgstr ""
 
-#: merengue/templates/admin/change_form.html.py:55
-msgid "This content is set as 'no_changeable' so you can not alter any of its data"
+#: templates/admin/change_form.html:55
+msgid ""
+"This content is set as 'no_changeable' so you can not alter any of its data"
 msgstr ""
 
-#: merengue/templates/admin/change_form.html.py:71
-#: merengue/templates/admin/change_list.html.py:53
+#: templates/admin/change_form.html:71 templates/admin/change_list.html:53
 msgid "Please correct the error below."
 msgid_plural "Please correct the errors below."
 msgstr[0] "Por favor corrija el siguiente error."
 msgstr[1] "Por favor corrija los siguientes errores."
 
-#: merengue/templates/admin/change_list.html.py:64
-#: merengue/templates/admin/logentry/change_list.html.py:7
-#: merengue/templates/admin/multimedia/photo/change_list.html.py:7
+#: templates/admin/change_list.html:64
+#: templates/admin/logentry/change_list.html:7
+#: templates/admin/multimedia/photo/change_list.html:7
 msgid "Filter"
 msgstr "Filtro"
 
-#: merengue/templates/admin/confirm_action.html.py:28
-#: merengue/templates/admin/delete_confirmation.html.py:43
-#: merengue/templates/admin/delete_confirmation_various.html.py:31
-#: merengue/templates/admin/delete_selected_confirmation.html.py:51
-#: merengue/templates/admin/basecontent/assign_owners.html.py:40
+#: templates/admin/confirm_action.html:28
+#: templates/admin/delete_confirmation.html:43
+#: templates/admin/delete_confirmation_various.html:31
+#: templates/admin/delete_selected_confirmation.html:51
+#: templates/admin/basecontent/assign_owners.html:40
 msgid "Yes, I'm sure"
 msgstr "Sí, estoy seguro"
 
-#: merengue/templates/admin/customize_submit_line.html.py:12
+#: templates/admin/customize_submit_line.html:12
 msgid "Save as new"
 msgstr "Guardar como nuevo"
 
-#: merengue/templates/admin/customize_submit_line.html.py:14
+#: templates/admin/customize_submit_line.html:14
 msgid "Save and add another"
 msgstr "Guardar y añadir otro"
 
-#: merengue/templates/admin/customize_submit_line.html.py:16
-#: merengue/templates/admin/reorder.html.py:61
+#: templates/admin/customize_submit_line.html:16
+#: templates/admin/reorder.html:61
 msgid "Save and continue editing"
 msgstr "Guardar y continuar editando"
 
-#: merengue/templates/admin/delete_confirmation.html.py:14
-#: merengue/templates/admin/delete_confirmation_various.html.py:14
+#: templates/admin/delete_confirmation.html:14
+#: templates/admin/delete_confirmation_various.html:14
 #, python-format
-msgid "Deleting the %(object_name)s '%(escaped_object)s' would result in deleting related objects, but your account doesn't have permission to delete the following types of objects:"
-msgstr "Eliminando %(object_name)s '%(escaped_object)s' podrían eliminarse objetos relacionados, pero su cuenta no tiene permisos para eliminar los siguientes tipos de objetos:"
+msgid ""
+"Deleting the %(object_name)s '%(escaped_object)s' would result in deleting "
+"related objects, but your account doesn't have permission to delete the "
+"following types of objects:"
+msgstr ""
+"Eliminando %(object_name)s '%(escaped_object)s' podrían eliminarse objetos "
+"relacionados, pero su cuenta no tiene permisos para eliminar los siguientes "
+"tipos de objetos:"
 
-#: merengue/templates/admin/delete_confirmation.html.py:22
+#: templates/admin/delete_confirmation.html:22
 #, python-format
-msgid "Deleting the %(object_name)s '%(escaped_object)s' would result in deleting related objects, but your account doesn't have permission to delete the following objects:"
+msgid ""
+"Deleting the %(object_name)s '%(escaped_object)s' would result in deleting "
+"related objects, but your account doesn't have permission to delete the "
+"following objects:"
 msgstr ""
 
-#: merengue/templates/admin/delete_confirmation.html.py:30
+#: templates/admin/delete_confirmation.html:30
 #, fuzzy, python-format
-msgid "Deleting the %(object_name)s '%(escaped_object)s' would require deleting the following protected related objects:"
-msgstr "Eliminando %(object_name)s '%(escaped_object)s' podrían eliminarse objetos relacionados, pero su cuenta no tiene permisos para eliminar los siguientes tipos de objetos:"
+msgid ""
+"Deleting the %(object_name)s '%(escaped_object)s' would require deleting the "
+"following protected related objects:"
+msgstr ""
+"Eliminando %(object_name)s '%(escaped_object)s' podrían eliminarse objetos "
+"relacionados, pero su cuenta no tiene permisos para eliminar los siguientes "
+"tipos de objetos:"
 
-#: merengue/templates/admin/delete_confirmation.html.py:38
-#: merengue/templates/admin/delete_confirmation_various.html.py:21
+#: templates/admin/delete_confirmation.html:38
+#: templates/admin/delete_confirmation_various.html:21
 #, python-format
-msgid "Are you sure you want to delete the %(object_name)s \"%(escaped_object)s\"? All of the following related items will be deleted:"
-msgstr "¿Está seguro que quiere eliminar el %(object_name)s \"%(escaped_object)s? Todos los siguientes elementos relacionados serán eliminados:"
+msgid ""
+"Are you sure you want to delete the %(object_name)s \"%(escaped_object)s\"? "
+"All of the following related items will be deleted:"
+msgstr ""
+"¿Está seguro que quiere eliminar el %(object_name)s \"%(escaped_object)s? "
+"Todos los siguientes elementos relacionados serán eliminados:"
 
-#: merengue/templates/admin/delete_selected_confirmation.html.py:9
+#: templates/admin/delete_selected_confirmation.html:9
 msgid "Delete multiple objects"
 msgstr ""
 
-#: merengue/templates/admin/delete_selected_confirmation.html.py:16
+#: templates/admin/delete_selected_confirmation.html:16
 #, fuzzy, python-format
-msgid "Deleting the selected %(objects_name)s would result in deleting related objects, but your account doesn't have permission to delete the following types of objects:"
-msgstr "Eliminando %(object_name)s '%(escaped_object)s' podrían eliminarse objetos relacionados, pero su cuenta no tiene permisos para eliminar los siguientes tipos de objetos:"
+msgid ""
+"Deleting the selected %(objects_name)s would result in deleting related "
+"objects, but your account doesn't have permission to delete the following "
+"types of objects:"
+msgstr ""
+"Eliminando %(object_name)s '%(escaped_object)s' podrían eliminarse objetos "
+"relacionados, pero su cuenta no tiene permisos para eliminar los siguientes "
+"tipos de objetos:"
 
-#: merengue/templates/admin/delete_selected_confirmation.html.py:24
+#: templates/admin/delete_selected_confirmation.html:24
 #, python-format
-msgid "Deleting the selected %(objects_name)s would require deleting the following protected related objects:"
+msgid ""
+"Deleting the selected %(objects_name)s would require deleting the following "
+"protected related objects:"
 msgstr ""
 
-#: merengue/templates/admin/delete_selected_confirmation.html.py:32
+#: templates/admin/delete_selected_confirmation.html:32
 #, fuzzy, python-format
-msgid "Deleting the selected %(objects_name)s would result in deleting related objects, but your account doesn't have permission to delete the following objects:"
-msgstr "Eliminando %(object_name)s '%(escaped_object)s' podrían eliminarse objetos relacionados, pero su cuenta no tiene permisos para eliminar los siguientes tipos de objetos:"
+msgid ""
+"Deleting the selected %(objects_name)s would result in deleting related "
+"objects, but your account doesn't have permission to delete the following "
+"objects:"
+msgstr ""
+"Eliminando %(object_name)s '%(escaped_object)s' podrían eliminarse objetos "
+"relacionados, pero su cuenta no tiene permisos para eliminar los siguientes "
+"tipos de objetos:"
 
-#: merengue/templates/admin/delete_selected_confirmation.html.py:40
+#: templates/admin/delete_selected_confirmation.html:40
 #, fuzzy, python-format
-msgid "Are you sure you want to delete the selected %(objects_name)s? All of the following objects and their related items will be deleted:"
-msgstr "¿Está seguro que quiere eliminar el %(object_name)s \"%(escaped_object)s? Todos los siguientes elementos relacionados serán eliminados:"
+msgid ""
+"Are you sure you want to delete the selected %(objects_name)s? All of the "
+"following objects and their related items will be deleted:"
+msgstr ""
+"¿Está seguro que quiere eliminar el %(object_name)s \"%(escaped_object)s? "
+"Todos los siguientes elementos relacionados serán eliminados:"
 
-#: merengue/templates/admin/django_index.html.py:25
-#: merengue/templates/admin/inc.content_index.html.py:8
+#: templates/admin/django_index.html:25
+#: templates/admin/inc.content_index.html:8
 #, python-format
 msgid "%(name)s"
 msgstr "%(name)s"
 
-#: merengue/templates/admin/django_index.html.py:40
-#: merengue/templates/admin/inc.content_index.html.py:23
-#: merengue/templates/admin/model_index.html.py:26
+#: templates/admin/django_index.html:40
+#: templates/admin/inc.content_index.html:23
+#: templates/admin/model_index.html:26
 msgid "You don't have permission to edit anything."
 msgstr "No tiene permiso para editar nada"
 
-#: merengue/templates/admin/inc.recentactions.html.py:6
+#: templates/admin/inc.recentactions.html:6
 msgid "Recent Actions"
 msgstr "Acciones Recientes"
 
-#: merengue/templates/admin/inc.recentactions.html.py:7
+#: templates/admin/inc.recentactions.html:7
 msgid "My Actions"
 msgstr "Mis Acciones"
 
-#: merengue/templates/admin/inc.recentactions.html.py:10
+#: templates/admin/inc.recentactions.html:10
 msgid "None available"
 msgstr "Ninguno disponible"
 
-#: merengue/templates/admin/inc.recentactions.html.py:24
+#: templates/admin/inc.recentactions.html:24
 msgid "Unknown content"
 msgstr "Contenido desconocido"
 
-#: merengue/templates/admin/index.html.py:14
+#: templates/admin/index.html:14
 msgid "plugin"
 msgstr ""
 
-#: merengue/templates/admin/login.html.py:21
+#: templates/admin/login.html:21
 msgid "Username:"
 msgstr "Nombre de usuario:"
 
-#: merengue/templates/admin/login.html.py:24
+#: templates/admin/login.html:24
 msgid "Password:"
 msgstr ""
 
-#: merengue/templates/admin/login.html.py:29
+#: templates/admin/login.html:29
 msgid "Log in"
 msgstr ""
 
-#: merengue/templates/admin/main_admin_tabs.html.py:4
+#: templates/admin/main_admin_tabs.html:4
 msgid "Content management"
 msgstr "Gestión de Contenido"
 
-#: merengue/templates/admin/main_admin_tabs.html.py:5
-#: merengue/templates/admin/siteconfig.html.py:25
+#: templates/admin/main_admin_tabs.html:5 templates/admin/siteconfig.html:25
 msgid "Site configuration"
 msgstr "Configuración del sitio"
 
-#: merengue/templates/admin/main_admin_tabs.html.py:6
+#: templates/admin/main_admin_tabs.html:6
 msgid "User management"
 msgstr "Administración de usuario"
 
-#: merengue/templates/admin/main_admin_tabs.html.py:7
+#: templates/admin/main_admin_tabs.html:7
 msgid "Plugin administration"
 msgstr "Administración de plugins"
 
-#: merengue/templates/admin/merengue_index_base.html.py:26
-#: merengue/templates/admin/smart_relations_object_tool.html.py:7
+#: templates/admin/merengue_index_base.html:26
+#: templates/admin/smart_relations_object_tool.html:7
 msgid "Contents"
 msgstr "Contenidos"
 
-#: merengue/templates/admin/merengue_index_base.html.py:29
+#: templates/admin/merengue_index_base.html:29
 msgid "Browse by hierarchy"
 msgstr "Ver por jerarquía"
 
-#: merengue/templates/admin/merengue_index_base.html.py:30
+#: templates/admin/merengue_index_base.html:30
 msgid "Browse the site's contents by hierarchy."
 msgstr "Ver los contenidos del sitio por jerarquía."
 
-#: merengue/templates/admin/merengue_index_base.html.py:31
+#: templates/admin/merengue_index_base.html:31
 msgid "Browse by type"
 msgstr "Ver por tipo"
 
-#: merengue/templates/admin/merengue_index_base.html.py:32
+#: templates/admin/merengue_index_base.html:32
 msgid "Browse the site's contents by content type."
 msgstr "Ver los contenidos del sitio por tipo de contenido."
 
-#: merengue/templates/admin/merengue_index_base.html.py:33
+#: templates/admin/merengue_index_base.html:33
 msgid "Search catalog"
 msgstr "Buscar en catálogo"
 
-#: merengue/templates/admin/merengue_index_base.html.py:34
+#: templates/admin/merengue_index_base.html:34
 msgid "Search the site's contents."
 msgstr "Buscar los contenidos del sitio."
 
-#: merengue/templates/admin/merengue_index_base.html.py:36
+#: templates/admin/merengue_index_base.html:36
 msgid "View, edit and delete the site's collections."
 msgstr "Ver, editar y borrar las colecciones del sitio."
 
-#: merengue/templates/admin/merengue_index_base.html.py:39
+#: templates/admin/merengue_index_base.html:39
 msgid "Navigation"
 msgstr "Navegación"
 
-#: merengue/templates/admin/merengue_index_base.html.py:43
+#: templates/admin/merengue_index_base.html:43
 msgid "Portal Menu"
 msgstr "Menú del portal"
 
-#: merengue/templates/admin/merengue_index_base.html.py:44
+#: templates/admin/merengue_index_base.html:44
 msgid "View, edit and delete the site's menus."
 msgstr "Ver, editar y eliminar los menús del sitio."
 
-#: merengue/templates/admin/merengue_index_base.html.py:47
+#: templates/admin/merengue_index_base.html:47
 msgid "Portal links"
 msgstr "Enlaces del portal"
 
-#: merengue/templates/admin/merengue_index_base.html.py:48
+#: templates/admin/merengue_index_base.html:48
 msgid "View, edit and delete the site's primary and secondary links."
 msgstr "Ver, editar y borrar los enlaces primarios y secundarios"
 
-#: merengue/templates/admin/merengue_index_base.html.py:53
+#: templates/admin/merengue_index_base.html:53
 msgid "Translate portal"
 msgstr "Traducir el portal"
 
-#: merengue/templates/admin/merengue_index_base.html.py:53
+#: templates/admin/merengue_index_base.html:53
 msgid "Translate site"
 msgstr "Traducir el sitio"
 
-#: merengue/templates/admin/merengue_index_base.html.py:54
+#: templates/admin/merengue_index_base.html:54
 msgid "Translate the site messages."
 msgstr "Traducir los mensajes del sitio."
 
-#: merengue/templates/admin/merengue_index_base.html.py:62
+#: templates/admin/merengue_index_base.html:62
 msgid "View, edit and delete the site's blocks."
 msgstr "Ver, editar y eliminar los bloques del sitio."
 
-#: merengue/templates/admin/merengue_index_base.html.py:63
-#: merengue/templates/admin/merengue_index_base.html.py:98
+#: templates/admin/merengue_index_base.html:63
+#: templates/admin/merengue_index_base.html:98
 msgid "Plugins"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:64
-#: merengue/templates/admin/merengue_index_base.html.py:99
+#: templates/admin/merengue_index_base.html:64
+#: templates/admin/merengue_index_base.html:99
 msgid "View, edit and delete the site's plugins."
 msgstr "Ver, editar y eliminar los plugins del sitio."
 
-#: merengue/templates/admin/merengue_index_base.html.py:65
+#: templates/admin/merengue_index_base.html:65
 msgid "Themes"
 msgstr "Temas"
 
-#: merengue/templates/admin/merengue_index_base.html.py:66
+#: templates/admin/merengue_index_base.html:66
 msgid "View, edit and delete the site's themes."
 msgstr "Ver, editar y eliminar los temas del sitio."
 
-#: merengue/templates/admin/merengue_index_base.html.py:67
-#: merengue/workflow/models.py:67 merengue/workflow/models.py:139
-#: merengue/workflow/models.py:249 merengue/workflow/models.py:285
+#: templates/admin/merengue_index_base.html:67 workflow/models.py:67
+#: workflow/models.py:139 workflow/models.py:249 workflow/models.py:285
 msgid "Workflow"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:68
+#: templates/admin/merengue_index_base.html:68
 msgid "Manage the possible site's workflows."
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:69
+#: templates/admin/merengue_index_base.html:69
 msgid "Actions"
 msgstr "Acciones"
 
-#: merengue/templates/admin/merengue_index_base.html.py:70
+#: templates/admin/merengue_index_base.html:70
 msgid "View, edit and delete the site's actions."
 msgstr "Ver, editar y eliminar las acciones del sitio."
 
-#: merengue/templates/admin/merengue_index_base.html.py:71
+#: templates/admin/merengue_index_base.html:71
 msgid "Registry"
 msgstr "Registro"
 
-#: merengue/templates/admin/merengue_index_base.html.py:72
+#: templates/admin/merengue_index_base.html:72
 msgid "Merengue registry"
 msgstr "Registro de Merengue"
 
-#: merengue/templates/admin/merengue_index_base.html.py:73
+#: templates/admin/merengue_index_base.html:73
 msgid "Sites"
 msgstr "Sitios"
 
-#: merengue/templates/admin/merengue_index_base.html.py:74
+#: templates/admin/merengue_index_base.html:74
 msgid "View, edit and delete the site's domains."
 msgstr "Ver, editar y eliminar los dominios del sitio."
 
-#: merengue/templates/admin/merengue_index_base.html.py:75
-#: merengue/templates/admin/siteconfig.html.py:13
+#: templates/admin/merengue_index_base.html:75
+#: templates/admin/siteconfig.html:13
 msgid "Save/restore configuration"
 msgstr "Guardar/restaurar la configuración"
 
-#: merengue/templates/admin/merengue_index_base.html.py:76
-msgid "Save/restore the site configuration (block, plugins, active theme, etc.)"
+#: templates/admin/merengue_index_base.html:76
+msgid ""
+"Save/restore the site configuration (block, plugins, active theme, etc.)"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:84
+#: templates/admin/merengue_index_base.html:84
 msgid "View, edit and delete the site's groups."
 msgstr "Ver, editar y eliminar los grupos del sitio."
 
-#: merengue/templates/admin/merengue_index_base.html.py:86
+#: templates/admin/merengue_index_base.html:86
 msgid "View, edit and delete the site's users."
 msgstr "Ver, ediar y eliminar los usuarios del sitio."
 
-#: merengue/templates/admin/merengue_index_base.html.py:88
+#: templates/admin/merengue_index_base.html:88
 msgid "View, edit and delete the site's roles."
 msgstr "Ver, editar y eliminar los roles del sitio."
 
-#: merengue/templates/admin/merengue_index_base.html.py:90
+#: templates/admin/merengue_index_base.html:90
 msgid "View, edit and delete the site's role permissions."
 msgstr "Ver, editar y eliminar permisos del sitio"
 
-#: merengue/templates/admin/merengue_index_base.html.py:101
+#: templates/admin/merengue_index_base.html:101
 msgid "Plugin custom administration interfaces"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:102
-msgid "Enabled plugins can define its own administration interfaces. These are the custom admins in your installed plugins:"
+#: templates/admin/merengue_index_base.html:102
+msgid ""
+"Enabled plugins can define its own administration interfaces. These are the "
+"custom admins in your installed plugins:"
 msgstr ""
 
-#: merengue/templates/admin/merengue_index_base.html.py:124
+#: templates/admin/merengue_index_base.html:124
 msgid "Review list"
 msgstr "Lista de revisión"
 
-#: merengue/templates/admin/merengue_index_base.html.py:125
+#: templates/admin/merengue_index_base.html:125
 msgid "Announcements"
 msgstr "Anuncios"
 
-#: merengue/templates/admin/mini_google_map.html.py:15
+#: templates/admin/mini_google_map.html:15
 msgid "Autolocalizated"
 msgstr "Autolocalizado"
 
-#: merengue/templates/admin/mini_google_map.html.py:17
+#: templates/admin/mini_google_map.html:17
 msgid "Localizated"
 msgstr "Localizado"
 
-#: merengue/templates/admin/mini_google_map.html.py:19
+#: templates/admin/mini_google_map.html:19
 msgid "View map"
 msgstr "Ver mapa"
 
-#: merengue/templates/admin/object_history.html.py:28
+#: templates/admin/object_history.html:28
 msgid "Date/time"
 msgstr "Fecha/hora"
 
-#: merengue/templates/admin/object_history.html.py:36
+#: templates/admin/object_history.html:36
 msgid "DATETIME_FORMAT"
 msgstr ""
 
-#: merengue/templates/admin/object_history.html.py:44
-msgid "This object doesn't have a change history. It probably wasn't added via this admin site."
-msgstr "Este objeto no tiene un historial de cambios. Probablemente no se agregó a través de este sitio de administración."
+#: templates/admin/object_history.html:44
+msgid ""
+"This object doesn't have a change history. It probably wasn't added via this "
+"admin site."
+msgstr ""
+"Este objeto no tiene un historial de cambios. Probablemente no se agregó a "
+"través de este sitio de administración."
 
-#: merengue/templates/admin/object_tools.html.py:61
+#: templates/admin/object_tools.html:61
 #, python-format
 msgid "View %(model_name)s on site"
 msgstr ""
 
-#: merengue/templates/admin/siteconfig.html.py:19
+#: templates/admin/siteconfig.html:19
 msgid "Save / Restore config"
 msgstr "Guardar/restaurar conf"
 
-#: merengue/templates/admin/siteconfig.html.py:27
+#: templates/admin/siteconfig.html:27
 msgid "Save/Restore configuration"
 msgstr "Guardar/restaurar configuración"
 
-#: merengue/templates/admin/siteconfig.html.py:30
+#: templates/admin/siteconfig.html:30
 msgid "Upload saved configuration"
 msgstr "Cargar la configuración guardada"
 
-#: merengue/templates/admin/siteconfig.html.py:31
+#: templates/admin/siteconfig.html:31
 msgid "Upload and restore a .zip file containing a saved project configuration"
-msgstr "Cargar y restaurar un archivo .zip que contiene una configuración del proyecto guardado"
+msgstr ""
+"Cargar y restaurar un archivo .zip que contiene una configuración del "
+"proyecto guardado"
 
-#: merengue/templates/admin/siteconfig.html.py:34
+#: templates/admin/siteconfig.html:34
 msgid "Submit config"
 msgstr "Enviar config"
 
-#: merengue/templates/admin/siteconfig.html.py:43
+#: templates/admin/siteconfig.html:43
 msgid "Save current configuration"
 msgstr "Guardar configuración actual"
 
-#: merengue/templates/admin/siteconfig.html.py:44
-msgid "Save current project configuration into a .zip file that can be restored"
-msgstr "Guardar configuración actual del proyecto en un archivo .zip que se pueda restaurar"
+#: templates/admin/siteconfig.html:44
+msgid ""
+"Save current project configuration into a .zip file that can be restored"
+msgstr ""
+"Guardar configuración actual del proyecto en un archivo .zip que se pueda "
+"restaurar"
 
-#: merengue/templates/admin/siteconfig.html.py:46
+#: templates/admin/siteconfig.html:46
 msgid "Save current config"
 msgstr "Guardar actual config"
 
-#: merengue/templates/admin/siteconfig.html.py:50
+#: templates/admin/siteconfig.html:50
 msgid "Backups configuration"
 msgstr "Configuración de las Copias de seguridad"
 
-#: merengue/templates/admin/siteconfig.html.py:54
-#: merengue/templates/admin/siteconfig.html.py:57
+#: templates/admin/siteconfig.html:54 templates/admin/siteconfig.html.py:57
 msgid "Save current backup"
 msgstr "Guardar la actual copia de seguridad"
 
-#: merengue/templates/admin/siteconfig.html.py:55
+#: templates/admin/siteconfig.html:55
 msgid "Save current backup configuration into a .zip file that can be restored"
-msgstr "Guardar la configuración de la actual copia de seguridad en un archivo .zip para que pueda ser restaurada"
+msgstr ""
+"Guardar la configuración de la actual copia de seguridad en un archivo .zip "
+"para que pueda ser restaurada"
 
-#: merengue/templates/admin/smart_relations_object_tool.html.py:6
+#: templates/admin/smart_relations_object_tool.html:6
 msgid "Edit"
 msgstr "Editar"
 
-#: merengue/templates/admin/smart_relations_object_tool.html.py:11
+#: templates/admin/smart_relations_object_tool.html:11
 msgid "More"
 msgstr "Más"
 
-#: merengue/templates/admin/basecontent/role_permissions.html.py:97
-#: merengue/templates/admin/basecontent/role_permissions.html.py:136
+#: templates/admin/basecontent/role_permissions.html:97
+#: templates/admin/basecontent/role_permissions.html:136
 msgid "Remove all roles?"
 msgstr "¿Borrar todos los roles?"
 
-#: merengue/templates/admin/edit_inline/tabular.html.py:15
+#: templates/admin/edit_inline/tabular.html:15
 msgid "Delete?"
 msgstr "¿Borrar?"
 
-#: merengue/templates/admin/edit_inline/tabular.html.py:28
+#: templates/admin/edit_inline/tabular.html:28
 msgid "View on site"
 msgstr "Ver en el sitio"
 
-#: merengue/templates/admin/edit_inline/tabular.html.py:113
+#: templates/admin/edit_inline/tabular.html:113
 #, python-format
 msgid "Add another %(verbose_name)s"
 msgstr ""
 
-#: merengue/templates/admin/gis/openlayers.html.py:34
-#: merengue/templates/admin/gis/openlayers_inline.html.py:34
+#: templates/admin/gis/openlayers.html:34
+#: templates/admin/gis/openlayers_inline.html:34
 msgid "Delete all Features"
 msgstr "Eliminar todas las características"
 
-#: merengue/templates/admin/logentry/change_list.html.py:9
+#: templates/admin/logentry/change_list.html:9
 msgid "By status"
 msgstr "Por estado"
 
-#: merengue/templates/admin/logentry/changelog.html.py:7
+#: templates/admin/logentry/changelog.html:7
 msgid "Changes log"
 msgstr ""
 
-#: merengue/templates/admin/multimedia/photo/change_list.html.py:9
+#: templates/admin/multimedia/photo/change_list.html:9
 msgid "By content class name"
 msgstr "Por nombre de contenido"
 
-#: merengue/templates/genericforeignkey/object_list.html.py:18
+#: templates/genericforeignkey/object_list.html:18
 msgid "XX"
 msgstr ""
 
-#: merengue/templates/genericforeignkey/object_list.html.py:29
+#: templates/genericforeignkey/object_list.html:29
 msgid "No objects of this content type"
 msgstr "No hay objetos para este tipo de contenido"
 
-#: merengue/templates/notification/notices.html.py:6
+#: templates/notification/notices.html:6
 msgid "Notices"
 msgstr "Notificaciones"
 
-#: merengue/templates/notification/notices.html.py:9
+#: templates/notification/notices.html:9
 msgid "Type"
 msgstr "Tipo"
 
-#: merengue/templates/notification/notices.html.py:10
+#: templates/notification/notices.html:10
 msgid "Message"
 msgstr "Mensaje"
 
-#: merengue/templates/notification/notices.html.py:11
+#: templates/notification/notices.html:11
 msgid "Date of the Notice"
 msgstr "Fecha de la notificación"
 
-#: merengue/templates/notification/notices.html.py:23
+#: templates/notification/notices.html:23
 msgid "ago"
 msgstr "hace"
 
-#: merengue/templates/registration/logged_out.html.py:12
+#: templates/registration/logged_out.html:12
 msgid "Log in again"
 msgstr "Entrar de nuevo"
 
-#: merengue/templates/registration/login.html.py:19
+#: templates/registration/login.html:19
 msgid "Login"
 msgstr "Entrar"
 
-#: merengue/templates/registration/login.html.py:22
-#: merengue/templates/registration/password_reset.html.py:5
-#: merengue/templates/registration/password_reset.html.py:16
+#: templates/registration/password_reset.html:5
+#: templates/registration/password_reset.html:16
 msgid "Reset password"
 msgstr "Restablecer contraseña"
 
-#: merengue/templates/registration/password_reset.html.py:11
-#: merengue/templates/registration/password_reset.html.py:21
+#: templates/registration/password_reset.html:11
+#: templates/registration/password_reset.html:21
 msgid "Reset Password"
 msgstr "Restablecer Contraseña"
 
-#: merengue/templates/registration/password_reset_confirm.html.py:4
+#: templates/registration/password_reset_confirm.html:4
 msgid "Password reset confirmation"
 msgstr "Confirmación de restablecimiento de contraseña"
 
-#: merengue/templates/registration/password_reset_confirm.html.py:6
+#: templates/registration/password_reset_confirm.html:6
 msgid "Password reset"
 msgstr "Restablecer contraseña"
 
-#: merengue/templates/registration/password_reset_confirm.html.py:12
+#: templates/registration/password_reset_confirm.html:12
 msgid "Enter new password"
 msgstr "Introduzca nueva contraseña"
 
-#: merengue/templates/registration/password_reset_confirm.html.py:14
-msgid "Please enter your new password twice so we can verify you typed it in correctly."
-msgstr "Por favor, introduzca su nueva contraseña dos veces para que podamos verificar que la ha escrito correctamente."
+#: templates/registration/password_reset_confirm.html:14
+msgid ""
+"Please enter your new password twice so we can verify you typed it in "
+"correctly."
+msgstr ""
+"Por favor, introduzca su nueva contraseña dos veces para que podamos "
+"verificar que la ha escrito correctamente."
 
-#: merengue/templates/registration/password_reset_confirm.html.py:18
+#: templates/registration/password_reset_confirm.html:18
 msgid "New password:"
 msgstr "Nueva contraseña:"
 
-#: merengue/templates/registration/password_reset_confirm.html.py:20
+#: templates/registration/password_reset_confirm.html:20
 msgid "Confirm password:"
 msgstr "Confirmar contraseña:"
 
-#: merengue/templates/registration/password_reset_confirm.html.py:21
+#: templates/registration/password_reset_confirm.html:21
 msgid "Change my password"
 msgstr "Cambiar mi contraseña"
 
-#: merengue/templates/registration/password_reset_confirm.html.py:26
+#: templates/registration/password_reset_confirm.html:26
 msgid "Password reset unsuccessful"
 msgstr "Contraseña cambiada satisfactoriamente"
 
-#: merengue/templates/registration/password_reset_confirm.html.py:28
-msgid "The password reset link was invalid, possibly because it has already been used.  Please request a new password reset."
-msgstr "El enlace de cambio de contraseña es inválido, posiblemente porque ya ha sido usado. Por favor, solicite un cambio de contraseña nuevo."
+#: templates/registration/password_reset_confirm.html:28
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a new password reset."
+msgstr ""
+"El enlace de cambio de contraseña es inválido, posiblemente porque ya ha "
+"sido usado. Por favor, solicite un cambio de contraseña nuevo."
 
-#: merengue/templates/registration/password_reset_email.html.py:2
+#: templates/registration/password_reset_email.html:2
 msgid "You're receiving this e-mail because you requested a password reset"
-msgstr "Ha recibido este mail porque solicitó un restablecimiento de contraseña"
+msgstr ""
+"Ha recibido este mail porque solicitó un restablecimiento de contraseña"
 
-#: merengue/templates/registration/password_reset_email.html.py:3
+#: templates/registration/password_reset_email.html:3
 #, python-format
 msgid "for your user account at %(site_name)s"
 msgstr "para su cuenta de usuario en %(site_name)s"
 
-#: merengue/templates/registration/password_reset_email.html.py:5
+#: templates/registration/password_reset_email.html:5
 msgid "Please go to the following page and choose a new password:"
 msgstr "Por favor vaya a la siguiente página y escoja una nueva contraseña:"
 
-#: merengue/templates/registration/password_reset_email.html.py:9
+#: templates/registration/password_reset_email.html:9
 msgid "Your username, in case you've forgotten:"
 msgstr "Tu nombre de usuario, es caso de que la haya olvidado:"
 
-#: merengue/templates/registration/password_reset_email.html.py:11
+#: templates/registration/password_reset_email.html:11
 msgid "Thanks for using our site!"
 msgstr "¡Gracias por usar nuestro sitio!"
 
-#: merengue/templates/registration/password_reset_email.html.py:13
+#: templates/registration/password_reset_email.html:13
 #, python-format
 msgid "The %(site_name)s team"
 msgstr "El %(site_name)s equipo"
 
-#: merengue/templates/transhette/base.html.py:20
+#: templates/transhette/base.html:20
 msgid "Restart web server"
 msgstr "Reiniciar servidor web"
 
-#: merengue/templates/transhette/base.html.py:23
+#: templates/transhette/base.html:23
 msgid "Update a file"
 msgstr "Actualizar un fichero"
 
-#: merengue/uitools/templates/uitools/toolbar.html.py:9
+#: uitools/templates/uitools/toolbar.html:9
 msgid "Merengue toolbar"
 msgstr ""
 
-#: merengue/workflow/admin.py:77
-#: merengue/workflow/templates/admin/workflow/update_permissions.html.py:7
+#: workflow/admin.py:77
+#: workflow/templates/admin/workflow/update_permissions.html:7
 msgid "Update permissions"
 msgstr ""
 
-#: merengue/workflow/admin.py:79
-#: merengue/workflow/templates/admin/workflow/inc.graphic_breadcrumbs.html.py:4
+#: workflow/admin.py:79
+#: workflow/templates/admin/workflow/inc.graphic_breadcrumbs.html:4
 msgid "Graphic workflow"
 msgstr ""
 
-#: merengue/workflow/admin.py:144
+#: workflow/admin.py:144
 msgid "states"
 msgstr ""
 
-#: merengue/workflow/admin.py:211
+#: workflow/admin.py:211
 #, python-format
-msgid "State permissions were saved successfully. To make your changes effective you have to update permissions <a href=\"%(url)s\">here</a>"
+msgid ""
+"State permissions were saved successfully. To make your changes effective "
+"you have to update permissions <a href=\"%(url)s\">here</a>"
 msgstr ""
 
-#: merengue/workflow/admin.py:226
+#: workflow/admin.py:226
 msgid "Manage state permissions"
 msgstr ""
 
-#: merengue/workflow/admin.py:236
+#: workflow/admin.py:236
 msgid "transitions"
 msgstr ""
 
-#: merengue/workflow/admin.py:301
+#: workflow/admin.py:301
 msgid "Workflow permissions were saved successfully."
 msgstr ""
 
-#: merengue/workflow/admin.py:309
+#: workflow/admin.py:309
 msgid "Manage workflow permissions"
 msgstr ""
 
-#: merengue/workflow/admin.py:319
+#: workflow/admin.py:319
 msgid "models"
 msgstr ""
 
-#: merengue/workflow/admin.py:329
+#: workflow/admin.py:329
 msgid "Current workflow"
 msgstr ""
 
-#: merengue/workflow/admin.py:334
+#: workflow/admin.py:334
 msgid "Related to this workflow"
 msgstr ""
 
-#: merengue/workflow/admin.py:340
+#: workflow/admin.py:340
 msgid "The workflow has been added to these models"
 msgstr ""
 
-#: merengue/workflow/admin.py:342 merengue/workflow/admin.py:408
+#: workflow/admin.py:342 workflow/admin.py:408
 msgid "Are you sure you want to add the current workflow to these models?"
 msgstr ""
 
-#: merengue/workflow/admin.py:345
+#: workflow/admin.py:345
 msgid "Add current workflow to selected models"
 msgstr ""
 
-#: merengue/workflow/admin.py:351
+#: workflow/admin.py:351
 msgid "The workflow has been removed from these models"
 msgstr ""
 
-#: merengue/workflow/admin.py:353 merengue/workflow/admin.py:405
+#: workflow/admin.py:353 workflow/admin.py:405
 msgid "Are you sure you want to remove the current workflow from these models?"
 msgstr ""
 
-#: merengue/workflow/admin.py:356
+#: workflow/admin.py:356
 msgid "Remove current workflow from selected models"
 msgstr ""
 
-#: merengue/workflow/filterspecs.py:17
+#: workflow/filterspecs.py:17
 msgid "related to this workflow"
 msgstr ""
 
-#: merengue/workflow/models.py:57 merengue/workflow/models.py:138
-#: merengue/workflow/models.py:248
+#: workflow/models.py:57 workflow/models.py:138 workflow/models.py:248
 msgid "Slug"
 msgstr ""
 
-#: merengue/workflow/models.py:68
+#: workflow/models.py:68
 msgid "Workflows"
 msgstr ""
 
-#: merengue/workflow/models.py:142 merengue/workflow/models.py:260
+#: workflow/models.py:142 workflow/models.py:260
 msgid "Transitions"
 msgstr ""
 
-#: merengue/workflow/models.py:147 merengue/workflow/models.py:338
-#: merengue/workflow/models.py:362
+#: workflow/models.py:147 workflow/models.py:338 workflow/models.py:362
 msgid "State"
 msgstr ""
 
-#: merengue/workflow/models.py:148
+#: workflow/models.py:148
 msgid "States"
 msgstr ""
 
-#: merengue/workflow/models.py:251
+#: workflow/models.py:251
 msgid "Destination"
 msgstr ""
 
-#: merengue/workflow/models.py:259
+#: workflow/models.py:259
 msgid "Transition"
 msgstr ""
 
-#: merengue/workflow/models.py:283
+#: workflow/models.py:283
 msgid "Content Type"
 msgstr ""
 
-#: merengue/workflow/models.py:424
+#: workflow/models.py:424
 msgid "Publish"
 msgstr ""
 
-#: merengue/workflow/templates/admin/workflow/update_permissions.html.py:17
-msgid "Do you want to update the permissions related to workflows of all the portal objects?"
+#: workflow/templates/admin/workflow/update_permissions.html:17
+msgid ""
+"Do you want to update the permissions related to workflows of all the portal "
+"objects?"
 msgstr ""
 
-#: merengue/workflow/templates/admin/workflow/update_permissions.html.py:20
+#: workflow/templates/admin/workflow/update_permissions.html:20
 msgid "Yes, update all object permissions"
 msgstr ""
 
-#: merengue/workflow/templates/admin/workflow/update_permissions.html.py:20
+#: workflow/templates/admin/workflow/update_permissions.html:20
 msgid "No, take me out of here"
 msgstr ""
 
-#: merengue/workflow/templates/admin/workflow/workflow_models.html.py:20
+#: workflow/templates/admin/workflow/workflow_models.html:20
 msgid "Models that use this workflow"
 msgstr ""
 
-#: merengue/workflow/templates/admin/workflow/workflow_permissions.html.py:20
+#: workflow/templates/admin/workflow/workflow_permissions.html:20
 msgid "Permissions managed by this workflow"
 msgstr ""
 
-#~ msgid "Tags will be splitted by spaces or commas if present. To force                                 tag names, use double quotes."
-#~ msgstr "Las etiquetas serán divididas por espacios o comas si existen. Para forzar los nombres de las etiquetas, usa dobles comillas."
+#~ msgid "Admin this menu"
+#~ msgstr "Administrar este menú"
+
+#~ msgid ""
+#~ "Tags will be splitted by spaces or commas if present. To "
+#~ "force                                 tag names, use double quotes."
+#~ msgstr ""
+#~ "Las etiquetas serán divididas por espacios o comas si existen. Para "
+#~ "forzar los nombres de las etiquetas, usa dobles comillas."
 
 #~ msgid "Add %(name)s"
 #~ msgstr "Añadir %(name)s"

@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-17 14:04+0200\n"
+"POT-Creation-Date: 2011-07-20 09:39+0200\n"
 "PO-Revision-Date: 2011-06-21 18:56\n"
 "Last-Translator: Pablo Martin <pmartin@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,19 @@ msgstr ""
 "Language: \n"
 "X-Translated-Using: django-transhette 0.1.SVN\n"
 
-#: blocks.py:47
+#: admin.py:41
+msgid "content selected here will be shown when entering the section"
+msgstr ""
+
+#: blocks.py:29
+msgid "Content menu"
+msgstr ""
+
+#: blocks.py:30
+msgid "Block with the grouped content links"
+msgstr ""
+
+#: blocks.py:56
 msgid "Content group links"
 msgstr ""
 

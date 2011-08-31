@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-17 14:04+0200\n"
+"POT-Creation-Date: 2011-07-20 09:40+0200\n"
 "PO-Revision-Date: 2011-05-10 12:54\n"
 "Last-Translator: Manuel Saelices <rdurante@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,6 +15,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Translated-Using: django-transhette 0.1.SVN\n"
+
+#: admin.py:33
+msgid "votes"
+msgstr ""
 
 #: blocks.py:31
 msgid "Block that provides the voting functionality"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-17 14:04+0200\n"
+"POT-Creation-Date: 2011-07-20 09:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,87 +40,91 @@ msgstr ""
 msgid "maximum number of levels to show"
 msgstr ""
 
-#: blocks.py:54
+#: blocks.py:55
+msgid "maximum number of items without js collapsible"
+msgstr ""
+
+#: blocks.py:67
 msgid "Renders the Menu"
 msgstr ""
 
-#: blocks.py:55
+#: blocks.py:68
 msgid "Core Menu Block"
 msgstr ""
 
-#: blocks.py:68
+#: blocks.py:81
 msgid "Menu"
 msgstr ""
 
-#: blocks.py:78
+#: blocks.py:92
 msgid "Renders the Navigation"
 msgstr ""
 
-#: blocks.py:79
+#: blocks.py:93
 msgid "Navigation Block"
 msgstr ""
 
-#: blocks.py:95
+#: blocks.py:109
 msgid "Navigation"
 msgstr ""
 
-#: blocks.py:104
+#: blocks.py:118
 msgid "Renders the Portal Menu"
 msgstr ""
 
-#: blocks.py:105
+#: blocks.py:119
 msgid "Portal Menu Block"
 msgstr ""
 
-#: blocks.py:110
+#: blocks.py:124
 msgid "Portal Menu"
 msgstr ""
 
-#: blocks.py:119
+#: blocks.py:134
 msgid "Abstract block that render portal links"
 msgstr ""
 
-#: blocks.py:120
+#: blocks.py:135
 msgid "Link Base Block"
 msgstr ""
 
-#: blocks.py:133
+#: blocks.py:148
 msgid "Portal links"
 msgstr ""
 
-#: blocks.py:142
+#: blocks.py:157
 msgid "Generic block that renders portal links"
 msgstr ""
 
-#: blocks.py:143
+#: blocks.py:158
 msgid "Portal Links Block"
 msgstr ""
 
-#: blocks.py:148
+#: blocks.py:163
 msgid "Portal link category"
 msgstr ""
 
-#: blocks.py:168
+#: blocks.py:183
 msgid "Block with contact info"
 msgstr ""
 
-#: blocks.py:169
+#: blocks.py:184
 msgid "Contact Info block"
 msgstr ""
 
-#: blocks.py:182
+#: blocks.py:197
 msgid "Contact info"
 msgstr ""
 
-#: blocks.py:190
+#: blocks.py:205
 msgid "Block with the site announcements"
 msgstr ""
 
-#: blocks.py:191
+#: blocks.py:206
 msgid "Announcements block"
 msgstr ""
 
-#: blocks.py:200
+#: blocks.py:215
 msgid "Announcements"
 msgstr ""
 
@@ -132,20 +136,42 @@ msgstr ""
 msgid "Login URL"
 msgstr ""
 
-#: forms.py:30
+#: forms.py:32
 msgid "Section"
 msgstr ""
 
-#: forms.py:32
+#: forms.py:34
 msgid "Choose a section where save the menu"
 msgstr ""
 
-#: forms.py:38 templates/core/block_contact_info.html:15
+#: forms.py:40 templates/core/block_contact_info.html:15
 msgid "Name"
 msgstr ""
 
-#: forms.py:55
+#: forms.py:44
+msgid "How do you want link?"
+msgstr ""
+
+#: forms.py:45
+msgid "menu"
+msgstr ""
+
+#: forms.py:46
+msgid "standing out"
+msgstr ""
+
+#: forms.py:47
+msgid ""
+"The roles that will see this menu. Only if you select the choice link like "
+"menu"
+msgstr ""
+
+#: forms.py:92
 msgid "Already exits a menu in your section with this slug"
+msgstr ""
+
+#: forms.py:96
+msgid "Already exits a standing out in your section with this content"
 msgstr ""
 
 #: panels.py:47
@@ -179,6 +205,10 @@ msgstr ""
 
 #: templates/core/block_contact_info.html:56
 msgid "URL"
+msgstr ""
+
+#: templates/core/block_contact_info.html:63
+msgid "Empty contact info"
 msgstr ""
 
 #: templates/core/hotlink.html:6

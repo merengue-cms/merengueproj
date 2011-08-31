@@ -1,0 +1,6 @@
+{% extends "admin/change_form.html" %}
+
+{% block extra-context %}
+    {{ block.super }}
+    {% if original %}<span id="section">{{ original.id }}</span>{% endif %}
+{% endblock %}

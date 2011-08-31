@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-17 14:04+0200\n"
+"POT-Creation-Date: 2011-07-20 09:40+0200\n"
 "PO-Revision-Date: 2011-04-12 19:44+0200\n"
 "Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
 "Language-Team: it <m.busico@ieee.org>\n"
@@ -25,7 +25,7 @@ msgstr "Indice delle notizie"
 msgid "Index page with all news items"
 msgstr ""
 
-#: blocks.py:29 blocks.py:60 viewlets.py:27
+#: blocks.py:29 blocks.py:60 viewlets.py:29
 msgid "Latest news"
 msgstr "Ultime notizie"
 
@@ -45,35 +45,43 @@ msgstr "categoria delle notizie"
 msgid "news categories"
 msgstr "categorie delle notizie"
 
-#: models.py:40
+#: models.py:37
+msgid "publish date"
+msgstr ""
+
+#: models.py:41
+msgid "expire date"
+msgstr ""
+
+#: models.py:46
 msgid "category"
 msgstr "categoria"
 
-#: models.py:42
+#: models.py:48
 msgid "body"
 msgstr "corpo"
 
-#: models.py:50
+#: models.py:56
 msgid "news item"
 msgstr ""
 
-#: models.py:51
+#: models.py:57
 msgid "news"
 msgstr ""
 
-#: viewlets.py:28
+#: viewlets.py:30
 msgid "Latest news block"
 msgstr ""
 
-#: viewlets.py:31
+#: viewlets.py:33
 msgid "limit for news viewlet"
 msgstr ""
 
-#: viewlets.py:46
+#: viewlets.py:52
 msgid "All news"
 msgstr "Tutte le notizie"
 
-#: viewlets.py:47
+#: viewlets.py:53
 msgid "All news block"
 msgstr ""
 

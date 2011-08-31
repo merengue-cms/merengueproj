@@ -75,7 +75,7 @@ class PrintAction(SiteAction):
 class HotLinkAction(ContentTypeFilterProvider, ContentAction):
     name = 'hotlink'
     verbose_name = _('Link to your section')
-    active_by_default = True
+    active_by_default = False
 
     def get_url(self, request, content):
         return reverse('hotlink', args=(content.pk,))

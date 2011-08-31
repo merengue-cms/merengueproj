@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-17 14:04+0200\n"
+"POT-Creation-Date: 2011-07-20 09:39+0200\n"
 "PO-Revision-Date: 2011-04-12 20:05+0200\n"
 "Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
 "Language-Team: it <m.busico@ieee.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: admin.py:43
+#: admin.py:44
 msgid "Basic Options"
 msgstr "Opzioni di base"
 
-#: admin.py:47
+#: admin.py:48
 msgid "Advanced Options"
 msgstr "Opzioni avanzate"
 
@@ -33,23 +33,23 @@ msgstr ""
 msgid "Standing out block"
 msgstr ""
 
-#: blocks.py:34 blocks.py:73
+#: blocks.py:34 blocks.py:76
 msgid "limit for standingouts in block"
 msgstr "Limite per i 'In risalto' nel blocco"
 
-#: blocks.py:62
+#: blocks.py:65
 msgid "Search"
 msgstr "Cerca"
 
-#: blocks.py:69
+#: blocks.py:72
 msgid "Block with a jquery slideshow of standingouts"
 msgstr ""
 
-#: blocks.py:70
+#: blocks.py:73
 msgid "Standing out Slide Show block"
 msgstr ""
 
-#: blocks.py:96
+#: blocks.py:99
 msgid "Slideshow"
 msgstr ""
 
@@ -140,12 +140,12 @@ msgstr ""
 msgid "Highlights"
 msgstr "Evidenziati"
 
-#: templates/standingout/block_standingout.html:24
 #: templates/standingout/block_standingout.html:26
+#: templates/standingout/block_standingout.html:28
 msgid "View all"
 msgstr "Vedi tutti"
 
-#: templates/standingout/block_standingout.html:29
+#: templates/standingout/block_standingout.html:31
 msgid "Without highlights"
 msgstr "Senza evidenziatura"
 

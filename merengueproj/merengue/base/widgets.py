@@ -75,7 +75,7 @@ class CustomTinyMCE(TinyMCE):
                                                          bullist,numlist,outdent,indent,separator,
                                                          preformatted_text,tablecontrols"""
         self.mce_settings['theme_advanced_buttons2'] = """styleselect,formatselect,fontselect,fontsizeselect,separator,
-                                                          forecolor,link,code,internal_links,iframes,image,file,removeformat"""
+                                                          forecolor,link,anchor,code,internal_links,iframes,image,file,removeformat"""
         self.mce_settings['theme_advanced_blockformats'] = 'h1,h2,h4,blockquote'
         self.mce_settings['plugins'] = "preview,paste,table,-internal_links,-iframes,-preformatted_text,-file"
         self.mce_settings['plugin_internal_links_base_url'] = '%smerengue/js/tiny_mce_internal_links/' % settings.MEDIA_URL
