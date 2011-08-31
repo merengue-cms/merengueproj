@@ -111,6 +111,8 @@ class MemoizeCache(object):
     def reload_if_dirty(self):
         if cache.get(self.cache_version_key) != self._cache_version:
             self._cache = cache.get(self.cache_prefix)
+            if self._cache is None:
+                self._cache = {}
 
     def clear(self):
         self._cache = {}
