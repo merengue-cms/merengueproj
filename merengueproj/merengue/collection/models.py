@@ -53,7 +53,7 @@ FILTER_OPERATORS = (
     ('date_lt', _('Less than (for dates objects)')),
     ('gt', _('Greater than')),
     ('gte', _('Greater than or equal')),
-    ('date_gt', _('Grater than (for dates objects)')),
+    ('date_gt', _('Greater than (for dates objects)')),
     ('in', _('In (coma separated list)')),
     ('isnull', _('Is empty')),
 )
