@@ -50,13 +50,13 @@
 <div id="mapblock_{{ reg_block.id }}" style="width: {{ width }}px; height: {{ height }}px;">
   <div class="mapParameters hide">
     <span class="zoom">{{ zoom }}</span> 
-    <span class="longitude">{{ longitude }}</span>
-    <span class="latitude">{{ latitude }}</span>
+    <span class="longitude">{{ longitude|safe }}</span>
+    <span class="latitude">{{ latitude|safe }}</span>
     <span class="markersShownInitially">1</span>
   </div>
   <div class="mapPoint hide">
-    <span class="longitude">{{ longitude }}</span>
-    <span class="latitude">{{ latitude }}</span>
+    <span class="longitude">{{ longitude|safe }}</span>
+    <span class="latitude">{{ latitude|safe }}</span>
     <span class="iconImage">{{ MEDIA_URL }}merengue/img/map/default_map_icon.png</span>
   </div>
 </div>

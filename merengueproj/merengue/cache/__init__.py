@@ -81,9 +81,14 @@ class MemoizeCache(object):
 
     def __init__(self, cache_prefix):
         self.cache_prefix = cache_prefix
+        self.cache_version_key = '%s_version' % cache_prefix
         self._cache = cache.get(cache_prefix)
         if self._cache is None:
             self._cache = {}
+        self._cache_version = cache.get(self.cache_version_key)
+        if self._cache_version is None:
+            self._cache_version = 1
+            cache.get(self.cache_version_key, self._cache_version)
 
     def __contains__(self, name):
         return name in self._cache
@@ -97,10 +102,22 @@ class MemoizeCache(object):
             len(value)
         self._cache[key] = value
         cache.set(self.cache_prefix, self._cache)
+        self._incr_cache_version()
+
+    def _incr_cache_version(self):
+        self._cache_version += 1
+        cache.set(self.cache_version_key, self._cache_version)
+
+    def reload_if_dirty(self):
+        if cache.get(self.cache_version_key) != self._cache_version:
+            self._cache = cache.get(self.cache_prefix)
+            if self._cache is None:
+                self._cache = {}
 
     def clear(self):
         self._cache = {}
         cache.set(self.cache_prefix, self._cache)
+        self._incr_cache_version()
 
 
 def memoize(func, cache, num_args, offset=0, convert_args_func=None):

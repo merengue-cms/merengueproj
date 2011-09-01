@@ -7,7 +7,7 @@
       href="{% block fullview %}{{ bigth.url }}{% endblock %}"
       title="{{ multimedia_name }}"
       destino="{{ multimedia.get_absoulte_url }}"
-      rel="shadowbox[{{ multimedia.class_name }}];{% block extraoptions %}{% endblock %}"
+      rel="{% if multimedia.gallery %}{{ multimedia.gallery }}{% else %}shadowbox{% endif %}[{{ multimedia.class_name }}];{% block extraoptions %}{% endblock %}"
       {% block extraattrs %}{% endblock %}>
 
      <img src="{% block thumbnail %}{{ th.url }}{% endblock %}" alt="{{ multimedia_name }}" title="{{ multimedia_name }}" />

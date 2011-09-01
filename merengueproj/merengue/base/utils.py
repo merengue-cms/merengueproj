@@ -1,10 +1,10 @@
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.template import RequestContext, defaultfilters
+from django.utils.translation import ugettext_lazy as _
 
 from copy import deepcopy
 from django.db import connection
-from merengue.pluggable.utils import get_plugin
 from south.db import db
 from transmeta import (get_real_fieldname_in_each_language, get_field_language,
                        fallback_language)
@@ -52,6 +52,7 @@ def get_render_http_error(request, http_error):
 
 
 def get_login_url():
+    from merengue.pluggable.utils import get_plugin
     core_config = get_plugin('core').get_config()
     login_url_conf = core_config.get('login_url', None)
     if not login_url_conf:
@@ -70,3 +71,7 @@ def get_unique_slug(value, queryset, slug_field='slug'):
         filters[slug_field] = slug
         n += 1
     return slug
+
+
+def get_translate_status_list():
+    return ((status_code, _(status_text)) for status_code, status_text in settings.STATUS_LIST)

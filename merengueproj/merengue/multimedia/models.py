@@ -34,6 +34,7 @@ from transmeta import TransMeta
 import sorl
 
 from merengue.base.managers import WorkflowManager
+from merengue.base.utils import get_translate_status_list
 from merengue.multimedia.managers import MultimediaManager
 from merengue.multimedia.fields import VideoField
 
@@ -63,7 +64,7 @@ class BaseMultimedia(models.Model):
                                   max_length=100, db_index=True,
                                   editable=False, null=True)
 
-    status = models.CharField(_('Publication status'), max_length=20, choices=settings.STATUS_LIST,
+    status = models.CharField(_('Publication status'), max_length=20, choices=get_translate_status_list(),
                               default='draft', help_text=_('Enter the current status'), db_index=True,
                               editable=True)
     last_editor = models.ForeignKey(User, null=True, blank=True, editable=False)

@@ -35,7 +35,7 @@ class BannerCategory(BaseCategory):
 
 class Banner(BaseContent):
 
-    url_link = models.URLField(verbose_name=_('Url Link'))
+    url_link = models.URLField(verbose_name=_('Url Link'), verify_exists=False)
     image = StdImageField(verbose_name=_('image'),
                               upload_to=BANNER_MEDIA_PREFIX,
                               help_text=_('The system won\'t resize the image. You need to upload it with its final size'))

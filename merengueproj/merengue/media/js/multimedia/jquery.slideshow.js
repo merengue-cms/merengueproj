@@ -23,7 +23,7 @@
             }
 
             var configureShadowBox = function() {
-                Shadowbox.setup($('.MultimediaItemThumbnail a'), {
+                Shadowbox.setup(slide.find('.MultimediaItemThumbnail a'), {
                     flvPlayer: mediaurl + 'merengue/flash/flowplayer-3.2.7.swf'
                 });
             }

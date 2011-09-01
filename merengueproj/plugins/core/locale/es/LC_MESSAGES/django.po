@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-07-21 09:53+0200\n"
-"PO-Revision-Date: 2011-07-20 12:22\n"
+"PO-Revision-Date: 2011-08-26 12:00\n"
 "Last-Translator: Pablo Martin <pmartin@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -161,10 +161,8 @@ msgid "standing out"
 msgstr ""
 
 #: forms.py:47
-msgid ""
-"The roles that will see this menu. Only if you select the choice link like "
-"menu"
-msgstr ""
+msgid "The roles that will see this menu. Only if you select the choice link like menu"
+msgstr "Los roles que verán este menú. Sólo si escoges en \"¿Cómo quiere enlazar?\" la opción menú"
 
 #: forms.py:92
 msgid "Already exits a menu in your section with this slug"
