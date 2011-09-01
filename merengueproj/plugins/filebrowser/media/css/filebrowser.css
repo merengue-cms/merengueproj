@@ -57,6 +57,15 @@ div.object-buttons ul li {
     margin-right: 0.5em;
 }
 
+.ie7 div.object-buttons ul {
+    overflow: auto;
+}
+
+.ie7 div.object-buttons ul li {
+    display: block;
+    float: left;
+}
+
 div.object-buttons ul li a {
     display: inline-block;
     line-height: 22px;

@@ -42,6 +42,8 @@ class ReviewAdmin(BaseAdmin):
     def get_form(self, request, obj=None):
         if not self.has_add_permission(request):
             self.readonly_fields = ('owner', 'assigned_to', 'title', 'url_link', 'task_object', )
+        else:
+            self.readonly_fields = ('owner', 'title', 'url_link', 'task_object', )
 
         self.fieldsets = None
         form = super(ReviewAdmin, self).get_form(request, obj)

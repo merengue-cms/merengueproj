@@ -17,14 +17,15 @@
 
 import os
 
+from django.conf import settings
+from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import ObjectDoesNotExist, SuspiciousOperation
+from django.core.files.uploadedfile import UploadedFile
 from django.db import models
 from django.db.models import signals, permalink
-from django.conf import settings
+from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
-from django.core.files.uploadedfile import UploadedFile
-from django.core.exceptions import ObjectDoesNotExist, SuspiciousOperation
-from django.contrib.auth.models import User
 
 from south.modelsinspector import add_introspection_rules
 from stdimage import StdImageField
@@ -245,10 +246,9 @@ class Video(BaseMultimedia):
                             upload_to=VIDEO_MEDIA_PREFIX,
                             thumbnail_size=(200, 200),
                             blank=True, null=True)
-    external_url = models.URLField(verify_exists=False,
-                                   verbose_name=_('external url'),
-                                   help_text=_('The url of one video from youtube or google-video'),
-                                   blank=True, null=True, max_length=255)
+    external_url = models.CharField(verbose_name=_('external url'),
+                                     help_text=_('The url of one video from youtube or google-video'),
+                                     blank=True, null=True, max_length=255)
     # only for migration purposes
     plone_uid = models.CharField(verbose_name=_('plone uid'),
                                  max_length=100, db_index=True,
@@ -261,6 +261,18 @@ class Video(BaseMultimedia):
     def save(self, **kwargs):
         self._save_original_filename(self.file)
         super(Video, self).save(**kwargs)
+
+    def get_absolute_url(self):
+        if self.file:
+            return self.file.url
+        return self.external_url
+
+    def get_configure(self):
+        from merengue.theming.models import Theme
+        return render_to_string('multimedia/video.js',
+                                {'video_info': self,
+                                 'MEDIA_URL': settings.MEDIA_URL,
+                                 'THEME_MEDIA_URL': Theme.objects.active().get_theme_media_url()})
 
 #@FIXME: Duplicate code. line 292
     def admin_thumbnail(self):
@@ -357,6 +369,18 @@ class Audio(BaseMultimedia):
     class Meta:
         verbose_name = _('audio file')
         verbose_name_plural = _('audio files')
+
+    def get_absolute_url(self):
+        if self.file:
+            return self.file.url
+        return ''
+
+    def get_configure(self):
+        from merengue.theming.models import Theme
+        return render_to_string('multimedia/audio.js',
+                                {'audio_info': self,
+                                 'MEDIA_URL': settings.MEDIA_URL,
+                                 'THEME_MEDIA_URL': Theme.objects.active().get_theme_media_url()})
 
     def save(self, **kwargs):
         self._save_original_filename(self.file)

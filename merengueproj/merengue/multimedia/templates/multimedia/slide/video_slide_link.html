@@ -11,7 +11,7 @@
 {% endblock %}
 {% block fullview %}{% spaceless %}
   {% if multimedia.video.file %}
-    {% url merengue.multimedia.views.video_xml multimedia.id %}
+    {{ multimedia.video.get_absolute_url }}
   {% else %}
   {% extra_oembed 500x400 as oembed_url %}{{ multimedia.video.external_url }}{% endoembed %}
   {% ifequal oembed_url multimedia.video.external_url %}
@@ -21,13 +21,18 @@
   {% endifequal %}
   {% endif %}
 {% endspaceless %}{% endblock %}
+
+{% block extraattrs %}
+    flashvars="{{ multimedia.video.get_configure }}"
+{% endblock %}
+
 {% block extraoptions %}{% spaceless %}
   {% if multimedia.video.file %}
-    type=external;autoplayMovies=true;flvPlayer={{ MEDIA_URL }}merengue/flash/flvplayer.swf
+    type=external;autoplayMovies=true;
   {% else %}
     {% extra_oembed 500x410 as oembed_url %}{{ multimedia.video.external_url }}{% endoembed %}
     {% ifequal oembed_url multimedia.video.external_url %}
-        height=410;width=500;
+        height=410;width=500
     {% else %}
       type=inline;height=410;width=500;
     {% endifequal %}

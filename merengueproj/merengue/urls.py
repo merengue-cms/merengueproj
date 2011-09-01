@@ -57,9 +57,6 @@ urlpatterns = patterns('',
     # base urls
     (r'^base/', include('merengue.base.urls')),
 
-    # multimedia
-    (r'^multimedia/', include('merengue.multimedia.urls')),
-
     # section
     url({'en': r'^sections/',
          'es': r'^secciones/'},

@@ -87,7 +87,7 @@ def copy_merengue_dirs(style, name, merengue_root, top_dir, symlink, remove_if_e
 
     if sys.platform == 'win32':
         message = "Linking is not supported by this platform (%s), copying instead." % sys.platform
-        sys.stderr.write(style.NOTICE(message % sys.platform))
+        sys.stderr.write(style.NOTICE(message))
         symlink = False
         symlink_possible = False
     else:
