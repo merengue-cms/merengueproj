@@ -1,6 +1,83 @@
 Changes
 =======
 
+Version 0.8.0-rc2 (r5269)
+-------------------------
+
+* Fixed migration in MySQL databases. See #2215.
+
+* New non addable blocks. See #2147.
+
+* Optimized Merengue registry. See #2142.
+
+* Optimized permissions system. See #1322.
+
+* Optimized SQL sentences. See #2144.
+
+* Changed plugin detection implementation to make it works in all environments (deployments). This approach removes using a external process. See #2158.
+
+* Removed the ``--develop`` option in ``startproject`` command. By default the merengue will be symlinked. See #2148.
+
+* Completed spanish translations. See #2.
+
+* Completed and reviewed the documentation. See #377.
+
+* Changed JW Player to flowplayer, which is completely free. See #2199.
+
+* New ``MERENGUE_MAX_FILE_SIZE`` and ``MERENGUE_MAX_IMAGE_SIZE`` parameters to restrict the size of uploaded files. See #2185.
+
+* Reduced size of test data. See #2141.
+
+* Added ``anchor`` button to the tinyMCE.
+
+* Improved and fixing the Yaco theme look&feel. See #1990.
+
+* Include spellchecking in the visual editor, that will be in English by default.
+
+* Selenium tests for permission system. See #2136.
+
+* Make customizable the reviewers who will receive the review task notifications. See #2193.
+
+* The tags are now comma separated. See #2155.
+
+* Sortable fields for search form. See #2175.
+
+* Used autocompletion widget to select the main content of a section. See #2115.
+
+* New ``max_num_items`` parameter to the ``MenuBlock`` which collapse any menú branch if the number of children became higher than the parameter. See #2161.
+
+* Make a revision of all the CSS. See #2135.
+
+* Make the workflow statuses translatables. See #2212.
+
+* Allowed categories in the slideshow. See #2213. See #1983.
+
+* A lot of bugfixes:
+
+ * Fixed an error in contentmenu. See #2083.
+ * Removed by default a not very useful action (can be activated later). See #2032.
+ * Sanitize internal links filters. See #2190.
+ * Fixed the order in the forum index. See #2191.
+ * Fixed the ``change_status`` admin action, which fails when it is done by a non superuser. See #2192.
+ * Make piwik plugin more robust when piwik doesn't return nothing. See #1573.
+ * Fixed error detecting saml plugin when no have python-saml2 installed. See #2201.
+ * Restrict selectable multimedia contents to the owned ones. See #2150.
+ * Feed items automatically created should be published. See #2157.
+ * Fixed itags listing which fails in some circunstances. See #2162.
+ * Fixed some errors in ``standingout`` plugin. See #2167.
+ * Fixed addthis plugin language. See #2168.
+ * Fixed CSRF problem in inplace edit form.
+ * Fixed the ``syncdb --migrate`` command when a migration saves a plugin. See #2178.
+ * Restrict by permissions the content you can link to a multimedia asset. See #2150.
+ * Make ``djangosaml2`` application required for installing ``saml2`` plugin. See #2180.
+ * Showed an admin link when menu view doesn't point to anywhere. See #2164
+ * Some IE CSS bugfixes.
+ * Fixed a problem with the latest ``BeautifulSoap`` version. See #2209. Thanks to Paul Sabou.
+ * Make ``MemoizeCache`` (used for permissions, roles and registry cache) consistent in multithread environments. See #2214.
+ * The url of the banner should not be verifiable. See #2219
+
+* (( continue ))
+
 Version 0.8.0-rc1 (r5126)
 -------------------------
 
