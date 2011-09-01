@@ -777,7 +777,10 @@ class WorkflowBatchActionProvider(object):
         selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
         if selected:
             if request.POST.get('post', False):
-                original_status_dict = dict(queryset.values_list('pk', 'status'))
+                # we need loop because a weird error in Django ORM when you loop queryset before calling values_list
+                # this happens when a non superuser tries to change the status of some contents. See #2192
+                status_list = [(t[0], t[1]) for t in queryset.values_list('pk', 'status')]
+                original_status_dict = dict(status_list)
                 for content in queryset:
                     workflow_api.change_status(content, state)
                 obj_log = ugettext("Changed to %s") % state
@@ -827,11 +830,11 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
     inherit from BaseContent
     """
     change_list_template = "admin/basecontent/sortable_change_list.html"
-    list_display = ('__unicode__', 'status', 'user_modification_date', 'last_editor')
+    list_display = ('__unicode__', 'workflow_status', 'user_modification_date', 'last_editor')
     list_display_for_select = ('name', 'status', 'user_modification_date', 'last_editor')
     search_fields = (get_fallback_fieldname('name'), )
     date_hierarchy = 'creation_date'
-    list_filter = ('status', 'user_modification_date', 'last_editor', )
+    list_filter = ('workflow_status', 'user_modification_date', 'last_editor', )
     select_list_filter = ('class_name', 'status', 'user_modification_date', )
     actions = ['set_as_draft', 'set_as_pending', 'set_as_published', 'assign_owners']
     edit_related = ()
@@ -856,6 +859,10 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
             (r'^([^/]+)/permissions/$', self.admin_site.admin_view(self.changelist_view)))
 
         return my_urls + urls
+
+    def queryset(self, request):
+        queryset = super(BaseContentAdmin, self).queryset(request)
+        return queryset.select_related("workflow_status")
 
     def add_owners(self, request, queryset, owners):
         if self.has_change_permission(request):
@@ -1101,7 +1108,7 @@ class BaseContentViewAdmin(BaseContentAdmin):
         return is_allowed or lookup == u'id__in'
 
     def queryset(self, request):
-        qs = super(BaseContentAdmin, self).queryset(request)
+        qs = super(BaseContentViewAdmin, self).queryset(request)
         if perms_api.can_manage_site(request.user):
             return qs
         elif self.has_change_permission(request):

@@ -208,7 +208,7 @@
                 if ($(this).children().length < 2 || $(this).height() == 0) {
                     var child;
                     child = $("<div>");
-                    child.html("Drag here");
+                    child.html("{% trans "Drag here" %}");
                     child.addClass("blockDrag");
                     $(this).append(child);
                 }

@@ -37,6 +37,8 @@ class CreateThreadAction(ContentAction):
                                                 kwargs={'forum_slug': content.slug}))
 
     def has_action(self, request, content):
+        if request.user.is_anonymous():
+            return False
         if type(content) == Forum:
             return content
         else:

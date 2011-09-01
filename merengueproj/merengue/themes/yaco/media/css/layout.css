@@ -65,12 +65,15 @@ span.translatable {
     position: relative;
 }
 
-body div#content-zone {
-    width: 745px;
-/*
-    width: auto;
-*/
+div#content-zone {
+    width: auto !important;
 }
+
+
+#content-zone .contentDescription {
+    float: left;
+}
+
 
 /* ----- header ----- */
 #header {
@@ -121,6 +124,11 @@ body div#content-zone {
     padding: 0.1em 0.5em;
 }
 
+#header-blocks ul li.first
+.haveDescendants  {
+    width: 100px;
+}
+
 /* portalmenu */
 
 #portalmenu {
@@ -136,7 +144,7 @@ div#portalmenu ul.menu_ul ul.menuDepth2 {
 div#portalmenu ul.menu_ul.menuDepth1 ul.menuDepth2 {
     margin-top: -1.5em;
     font-size: 12px;
-    padding-left: 8em;
+    padding-left: 12em;
 }
 
 div#portalmenu ul.menu_ul.menuDepth1 ul.menuDepth2 li {
@@ -315,6 +323,7 @@ div#content {
 #content-title h1 {
     margin-top: 0.2em;
     font-size: 2.2em;
+    float: left;
 }
 
 div#content ul {
@@ -580,8 +589,11 @@ div.contentFiles ul li {
     height:25px;
 }
 
-#eventsCalendar {
+#eeventscalendar {
     background-color: white;
+}
+#eventscalendar .ui-datepicker {
+    height: 182px;
 }
 
 /* ----- events view  ----- */
@@ -617,8 +629,9 @@ div.contentFiles ul li {
 
 .blockContainer div#voting  {
     float:right;
-    margin: 0.2em 1.5em 0 0.5em;
-    padding: 0.7em;
+    margin: 0.2em 0.5em 0 0.5em;
+    padding: 0.7em 1.3em;
+    color: #54B848;
     border: 1px dotted #54B848;
 }
 
@@ -651,6 +664,12 @@ div.contentFiles ul li {
 
 #content .star-rating a:hover span {
     color: #54B848;
+}
+
+#content .star-rating a span {
+    left: 0;
+    top:25px;
+    color: #54B848 !important;
 }
 
 /* ----- searcher  ----- */

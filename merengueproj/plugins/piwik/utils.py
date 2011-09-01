@@ -194,11 +194,12 @@ def get_sections_from_customvariables():
 def get_contents(username=None, expanded=1):
     base_contents = None
     data = get_pagetitle_stats(expanded)
-    if username:
-        filters = {'owners__username': username}
-        base_contents = get_basecontents(data, filters)
-    else:
-        base_contents = get_basecontents(data)
-    if base_contents:
-        return sort_contents_recursive(base_contents)
+    if data:
+        if username:
+            filters = {'owners__username': username}
+            base_contents = get_basecontents(data, filters)
+        else:
+            base_contents = get_basecontents(data)
+        if base_contents:
+            return sort_contents_recursive(base_contents)
     return []
