@@ -76,8 +76,6 @@ Version 0.8.0-rc2 (r5269)
  * Make ``MemoizeCache`` (used for permissions, roles and registry cache) consistent in multithread environments. See #2214.
  * The url of the banner should not be verifiable. See #2219
 
-* (( continue ))
-
 Version 0.8.0-rc1 (r5126)
 -------------------------
 
