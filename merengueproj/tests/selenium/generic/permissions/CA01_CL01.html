@@ -1,0 +1,691 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://beta.merengue.yaco.es/" />
+<title>CA01_Cl01</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CA01_Cl01</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/cms/logout/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/admin/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_username</td>
+	<td>admin</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_password</td>
+	<td>admin</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=submit]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=User management</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Users</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Add new</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_username</td>
+	<td>user1</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_password1</td>
+	<td>user1</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_password2</td>
+	<td>user1</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_continue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id_is_staff</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_addanother</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_username</td>
+	<td>user2</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_password1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_password1</td>
+	<td>user2</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_password2</td>
+	<td>user2</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_continue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id_is_staff</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_addanother</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_username</td>
+	<td>user3</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_password1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_password1</td>
+	<td>user3</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_password2</td>
+	<td>user3</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_continue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id_is_staff</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Content management</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Browse by type</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Microsites</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Add microsite</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=label.required</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>Microsite test</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_continue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>100</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//*[@id=&quot;id_owners_text&quot;]</td>
+	<td>user1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id_owners_text</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>100</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=li.ac_event &gt; strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>100</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//*[@id=&quot;id_owners_text&quot;]</td>
+	<td>user2</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id_owners_text</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=li.ac_event &gt; strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>100</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//*[@id=&quot;id_owners_text&quot;]</td>
+	<td>user3</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id_owners_text</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=li.ac_event &gt; strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>100000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>100</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Log out</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/admin</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_username</td>
+	<td>user1</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_password</td>
+	<td>user1</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=submit]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Browse by type</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Microsites</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Microsite test</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Microsite test</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Draft</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Pending</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextNotPresent</td>
+	<td>Published</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Contents</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=news</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Add news item</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>http://beta.merengue.yaco.es/admin/microsite/microsite/322/newsitem/add/?testing=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=label.required</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_name_en</td>
+	<td>News1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id_body_en</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=label.required</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_body_en</td>
+	<td>This is a test</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_continue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Draft</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Pending</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Log out</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/admin</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_username</td>
+	<td>user2</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_password</td>
+	<td>user2</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=submit]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Browse by type</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Microsites</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Microsite test</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Microsite test</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Draft</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Pending</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Contents</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=news</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>News1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=News1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Draft</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Pending</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//form[@id='newsitem_form']/div[3]/fieldset/div[11]/div/span/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_continue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>The news item &quot;News1&quot; was changed successfully. You may edit it again below.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Log out</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/admin</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_username</td>
+	<td>user3</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_password</td>
+	<td>user3</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=submit]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Browse by type</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Microsites</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Microsite test</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Microsite test</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Contents</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=news</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=News1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=submit]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>The news item &quot;News1&quot; was deleted successfully.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Log out</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Login</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_username</td>
+	<td>admin</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_password</td>
+	<td>admin</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=submit]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>page-wrapper</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Admin site</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Browse by type</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Microsites</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Microsite test</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=submit]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=User management</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Users</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=user1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=submit]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=user2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=submit]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=user3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=submit]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Log out</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>
