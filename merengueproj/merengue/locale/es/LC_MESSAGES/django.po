@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-07-25 14:03+0200\n"
-"PO-Revision-Date: 2011-08-02 11:20\n"
+"PO-Revision-Date: 2011-09-01 10:10\n"
 "Last-Translator: Pablo Martin <pmartin@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1416,19 +1416,19 @@ msgstr "Traducción para"
 
 #: merengue/collection/admin.py:46
 msgid "Truncate words"
-msgstr "Truncar palabras"
+msgstr "Palabras truncadas"
 
 #: merengue/collection/admin.py:47
 msgid "Truncate words HTML"
-msgstr ""
+msgstr "Palabras truncadas HTML"
 
 #: merengue/collection/admin.py:48
 msgid "Truncate chars"
-msgstr ""
+msgstr "Caracteres truncados"
 
 #: merengue/collection/admin.py:49
 msgid "Strip tags"
-msgstr ""
+msgstr "Franja de etiquetas"
 
 #: merengue/collection/admin.py:92
 msgid "Collection Basic Information"
@@ -1456,7 +1456,7 @@ msgstr "elementos de fuente"
 
 #: merengue/collection/admin.py:265
 msgid "Single Item Configuration"
-msgstr ""
+msgstr "Configuración de un elemento único"
 
 #: merengue/collection/admin.py:321
 msgid "feed collections"
@@ -1464,35 +1464,35 @@ msgstr "colecciones de fuente"
 
 #: merengue/collection/models.py:43
 msgid "Exact (case-sensitive)"
-msgstr ""
+msgstr "Exacto (sensible al caso)"
 
 #: merengue/collection/models.py:44
 msgid "Exact (case-insensitive)"
-msgstr ""
+msgstr "Exacto (insensible al caso)"
 
 #: merengue/collection/models.py:45
 msgid "Contains (case-sensitive)"
-msgstr ""
+msgstr "Contiene (sensible al caso)"
 
 #: merengue/collection/models.py:46
 msgid "Contains (case-insensitive)"
-msgstr ""
+msgstr "Contiene (insensible al caso)"
 
 #: merengue/collection/models.py:47
 msgid "Starts with (case-sensitive)"
-msgstr ""
+msgstr "Empieza con (sensible al caso)"
 
 #: merengue/collection/models.py:48
 msgid "Starts with (case-insensitive)"
-msgstr ""
+msgstr "Empieza con (insensible al caso)"
 
 #: merengue/collection/models.py:49
 msgid "Ends with (case-sensitive)"
-msgstr ""
+msgstr "Termina con (sensible al caso)"
 
 #: merengue/collection/models.py:50
 msgid "Ends with (case-insensitive)"
-msgstr ""
+msgstr "Termina con (insensible al caso)"
 
 #: merengue/collection/models.py:51
 msgid "Less than"
@@ -1516,7 +1516,7 @@ msgstr "Mayor que o igual"
 
 #: merengue/collection/models.py:56
 msgid "Grater than (for dates objects)"
-msgstr "Menor que (para fechas de objetos)"
+msgstr "Mayor que (para fechas de objetos)"
 
 #: merengue/collection/models.py:57
 msgid "In (coma separated list)"
@@ -1540,11 +1540,11 @@ msgstr "Ordenar por nombre del campo"
 
 #: merengue/collection/models.py:100
 msgid "Reverse order"
-msgstr ""
+msgstr "Revertir orden"
 
 #: merengue/collection/models.py:104
 msgid "Number of elements "
-msgstr ""
+msgstr "Número de elementos"
 
 #: merengue/collection/models.py:111
 msgid "Show main_image of collection items"
@@ -1552,7 +1552,7 @@ msgstr "Mostrar la imagen principal de los elementos de la colección"
 
 #: merengue/collection/models.py:116
 msgid "Filtering section"
-msgstr ""
+msgstr "Filtrado de la sección"
 
 #: merengue/collection/models.py:117 merengue/registry/items.py:139
 msgid "If the collection is into a section, filter for the contents of this section"
@@ -1570,43 +1570,43 @@ msgstr "Colecciones"
 
 #: merengue/collection/models.py:219 merengue/collection/models.py:521
 msgid "Content type name"
-msgstr ""
+msgstr "Nombre del tipo de contenido"
 
 #: merengue/collection/models.py:251
 msgid "Item id"
-msgstr ""
+msgstr "identificador del elemento"
 
 #: merengue/collection/models.py:256
 msgid "Feed summary cached"
-msgstr ""
+msgstr "Elemento resumido cacheado"
 
 #: merengue/collection/models.py:261
 msgid "Feed detail cached"
-msgstr ""
+msgstr "Elemento completo cacheado"
 
 #: merengue/collection/models.py:266 merengue/collection/models.py:391
 msgid "Last updated"
-msgstr ""
+msgstr "Última actualización"
 
 #: merengue/collection/models.py:272
 msgid "Excluded"
-msgstr ""
+msgstr "Excluido"
 
 #: merengue/collection/models.py:278
 msgid "Order field"
-msgstr ""
+msgstr "Campo por el que ordenar"
 
 #: merengue/collection/models.py:285
 msgid "Group field"
-msgstr ""
+msgstr "Campo por el que agrupar"
 
 #: merengue/collection/models.py:294
 msgid "Feed item"
-msgstr ""
+msgstr "Elemento de fuente"
 
 #: merengue/collection/models.py:295
 msgid "Feed items"
-msgstr ""
+msgstr "Elementos de fuente"
 
 #: merengue/collection/models.py:386
 msgid "URL of the feed"
@@ -1622,35 +1622,35 @@ msgstr "Segundos desde la última actualización para hacer una nueva consulta. 
 
 #: merengue/collection/models.py:404
 msgid "Remove items"
-msgstr ""
+msgstr "Eliminar elementos"
 
 #: merengue/collection/models.py:405
 msgid "Remove old items when overwritting cache"
-msgstr ""
+msgstr "Eliminar antiguos elementos cuando la caché sobreescribe"
 
 #: merengue/collection/models.py:410
 msgid "Title field"
-msgstr ""
+msgstr "Título"
 
 #: merengue/collection/models.py:412
 msgid "Field used for naming contents"
-msgstr ""
+msgstr "Campo usado para nombrar contenidos"
 
 #: merengue/collection/models.py:419
 msgid "Detailed link"
-msgstr ""
+msgstr "Enlace detallado"
 
 #: merengue/collection/models.py:421
 msgid "Field that provides a link to a feed with the full content"
-msgstr ""
+msgstr "Campo que proporciona un enlace a la fuente del contenido completo"
 
 #: merengue/collection/models.py:427
 msgid "External link"
-msgstr ""
+msgstr "Enlace externo"
 
 #: merengue/collection/models.py:429
 msgid "Field that provides an external link to the full content"
-msgstr ""
+msgstr "Campo que ofrece un enlace externo a todo el contenido"
 
 #: merengue/collection/models.py:436
 msgid "Feed collection"
@@ -1690,15 +1690,15 @@ msgstr "Filtros de exclusión para la colección"
 
 #: merengue/collection/models.py:718
 msgid "Field name"
-msgstr ""
+msgstr "Nombre del campo"
 
 #: merengue/collection/models.py:722
 msgid "Display order"
-msgstr ""
+msgstr "Orden de visualización"
 
 #: merengue/collection/models.py:731
 msgid "Safe html content"
-msgstr ""
+msgstr "Guardar contenido html"
 
 #: merengue/collection/models.py:735
 msgid "Show field label"
@@ -1714,31 +1714,31 @@ msgstr "Campos de visualización de la colección"
 
 #: merengue/collection/models.py:755
 msgid "Filter module"
-msgstr ""
+msgstr "Módulo del filtro"
 
 #: merengue/collection/models.py:760
 msgid "Filter params"
-msgstr ""
+msgstr "Parámetros de los filtros"
 
 #: merengue/collection/models.py:767
 msgid "Filter order"
-msgstr ""
+msgstr "Orden de los filtros"
 
 #: merengue/collection/models.py:771
 msgid "Collection display field filter"
-msgstr ""
+msgstr "Filtro sobre los campos visibles de la colección"
 
 #: merengue/collection/models.py:772
 msgid "Collection display field filters"
-msgstr ""
+msgstr "Filtros sobre los campos visibles de la colección"
 
 #: merengue/collection/templates/collection/collection_view.html.py:19
 msgid "Without grouper"
-msgstr ""
+msgstr "Sin agrupar"
 
 #: merengue/collection/templates/collection/collection_view.html.py:41
 msgid "There are no contents to show"
-msgstr ""
+msgstr "No hay contenidos para mostrar"
 
 #: merengue/internallinks/forms.py:30
 msgid "The name"
