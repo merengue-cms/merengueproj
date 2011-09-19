@@ -21,7 +21,6 @@ from django.template.loader import render_to_string
 from inplaceeditform.fields import AdaptorTextAreaField, AdaptorImageField
 from cmsutils.forms.widgets import TinyMCE
 
-from merengue.base.models import BaseContent
 from merengue.section.models import Menu
 from merengue.perms.utils import has_permission
 
@@ -42,13 +41,14 @@ class AdaptorEditInline(object):
                 request.cache_edit_inline = {}
             if obj in request.cache_edit_inline:
                 can_edit = request.cache_edit_inline.get(obj)
-            elif isinstance(obj, BaseContent):
-                can_edit = has_permission(obj, request.user, 'edit')
-                request.cache_edit_inline[obj] = can_edit
-            elif isinstance(obj, Menu):
+            can_edit = has_permission(obj, request.user, 'edit')
+            if not can_edit and isinstance(obj, Menu):
                 section = obj.get_section()
                 if section:
                     can_edit = has_permission(section, request.user, 'edit')
+            elif not can_edit:
+                can_edit = has_permission(obj, request.user, 'edit')
+            request.cache_edit_inline[obj] = can_edit
         return can_edit
 
 
