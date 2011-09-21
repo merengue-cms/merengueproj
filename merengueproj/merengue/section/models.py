@@ -29,11 +29,20 @@ import mptt
 
 from merengue.base.managers import WorkflowManager
 from merengue.base.models import BaseContent
+from merengue.cache import memoize, MemoizeCache
 from merengue.section.managers import SectionManager
 from merengue.perms.models import Role
 from merengue.perms import utils as perms_api
 from merengue.viewlet.models import RegisteredViewlet
 from transmeta import TransMeta, get_fallback_fieldname
+
+
+_menu_sections_cache = MemoizeCache('menu_sections')
+
+
+def _convert_cache_args(mem_args):
+    item_class = mem_args[0]
+    return item_class.pk
 
 
 class RealInstanceMixin(object):
@@ -188,7 +197,7 @@ class Menu(models.Model):
         except BaseLink.DoesNotExist:
             return True
 
-    def get_section(self):
+    def _get_section(self):
         try:
             return getattr(self, 'main_menu_section')
         except BaseSection.DoesNotExist:
@@ -196,6 +205,7 @@ class Menu(models.Model):
 
         if self.parent is not None:
             return self.parent.get_section()
+    get_section = memoize(_get_section, _menu_sections_cache, 1, convert_args_func=_convert_cache_args)
 
     def get_breadcrumbs(self):
         """ Menu breadcrumbs (not included itself) """
