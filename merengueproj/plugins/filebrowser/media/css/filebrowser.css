@@ -96,16 +96,6 @@ div.object-buttons ul li.docEdit a {
     padding-left: 20px;
 }
 
-#content div.action-buttons p {
-    background: transparent url(../img/info-icon.png) no-repeat left center;
-    padding: 0 0 0 21px;
-    font-style: italic;
-    color: #717171;
-    margin-top: 1em;
-    font-size: 12px;
-}
-
-
 .ie7 #content div.action-buttons p {
     background: white url(../img/info-icon.png) no-repeat left center;
 }
