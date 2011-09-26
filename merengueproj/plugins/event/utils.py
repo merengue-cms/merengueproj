@@ -31,7 +31,7 @@ def getEventsMonthYear(month, year, events):
         events = events.model.objects.filter(id__in=events.values('id').query)
     events.filter(*filters)
     events_dic = {}
-    for event in (i for i in events if i.is_published()):
+    for event in events:
         event_date = event.start
         while (event.start.month <= month <= event.end.month
             and event_date <= event.end):
@@ -46,7 +46,7 @@ def getEventsMonthYear(month, year, events):
             if key not in events_dic:
                 events_dic[key] = {}
                 events_dic[key]['name'] = []
-                events_dic[key]['url'] = event.public_link()
+                events_dic[key]['url'] = event.get_absolute_url()
             else:
                 events_dic[key]['url'] = reverse("plugins.event.views.event_list",
                                             args=(event_date.year,
