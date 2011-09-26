@@ -132,8 +132,11 @@ def _render_blocks(request, blocks, obj, section, place, block_type, nondraggabl
             render_args.append(section)
         render_args.append(context)
         # append the block rendering to list
-        rendered_blocks.append(block.render(*render_args))
-
+        rendered_content = block.get_cached_content(request)
+        if rendered_content is None:
+            rendered_content = block.render(*render_args)
+            block.set_cached_content(rendered_content, request)
+        rendered_blocks.append(rendered_content)
     if noncontained:
         wrapped_blocks = ['%s' % s for s in rendered_blocks]
     else:

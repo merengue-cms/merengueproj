@@ -58,26 +58,23 @@ class BaseBlock(RegistrableItem):
 
     def render_block(self, request, template_name='block.html', block_title=None,
                      context=None):
-        rendered_content = self.get_cached_content(request)
-        if rendered_content is None:
-            if context is None:
-                context = {}
-            registered_block = self.get_registered_item()
-            css_class = self.get_config().get('css_class', None)
-            css_class = css_class and css_class.get_value() or ''
-            block_context = {
-                'block_name': registered_block.name,
-                'placed_at': registered_block.placed_at,
-                'fixed_place': getattr(registered_block, 'fixed_place', False),
-                'block_title': block_title or registered_block.name,
-                'block': registered_block,
-                'css_class': css_class,
-                'has_config': self.has_config(),
-            }
-            block_context.update(context)
-            rendered_content = render_to_string(template_name, block_context,
-                                                context_instance=RequestContext(request))
-            self.set_cached_content(rendered_content, request)
+        if context is None:
+            context = {}
+        registered_block = self.get_registered_item()
+        css_class = self.get_config().get('css_class', None)
+        css_class = css_class and css_class.get_value() or ''
+        block_context = {
+            'block_name': registered_block.name,
+            'placed_at': registered_block.placed_at,
+            'fixed_place': getattr(registered_block, 'fixed_place', False),
+            'block_title': block_title or registered_block.name,
+            'block': registered_block,
+            'css_class': css_class,
+            'has_config': self.has_config(),
+        }
+        block_context.update(context)
+        rendered_content = render_to_string(template_name, block_context,
+                                            context_instance=RequestContext(request))
         return rendered_content
 
     def _get_cache_key(self, request):
