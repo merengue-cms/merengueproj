@@ -75,19 +75,19 @@ class RegisteredBlock(RegisteredItem):
     cache_timeout = models.IntegerField(
         verbose_name=_('timeout'),
         help_text=_('Time that block remained in cache in seconds. "0" means forever'),
-        default=0)
+        default=0, blank=True, null=True)
     cache_only_anonymous = models.BooleanField(
         verbose_name=_('Cached is applied only for anonymous'),
-        default=False)
+        default=False, blank=True)
     cache_vary_on_user = models.BooleanField(
         verbose_name=_('Cached vary on authenticated user'),
-        default=False)
+        default=False, blank=True)
     cache_vary_on_url = models.BooleanField(
         verbose_name=_('Cache vary on the request URL'),
-        default=False)
+        default=False, blank=True)
     cache_vary_on_language = models.BooleanField(
         verbose_name=_('Cache vary on language'),
-        default=True)
+        default=True, blank=True)
     # fields for blocks related to contents
     content = models.ForeignKey(BaseContent, verbose_name=_(u'related content'), null=True)
     overwrite_if_place = models.BooleanField(
