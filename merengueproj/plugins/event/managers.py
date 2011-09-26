@@ -16,6 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 # -*- coding: utf-8 -*-
+import calendar
 from datetime import datetime, timedelta
 
 from django.db.models import Q
@@ -23,6 +24,15 @@ from django.db.models import Q
 from cmsutils.managers import ActiveManager
 
 from merengue.base.managers import BaseContentManager
+
+
+def get_first_day_of_month(month, year):
+    return datetime(year=year, month=month, day=1)
+
+
+def get_last_day_of_month(month, year):
+    last_day = calendar.monthrange(month=month, year=year)[1]
+    return datetime(year=year, month=month, day=last_day)
 
 
 class EventManager(ActiveManager, BaseContentManager):
@@ -53,8 +63,16 @@ class EventManager(ActiveManager, BaseContentManager):
              b) events with day between initial and end date """
         weekday = day.weekday()
         first_week_day = datetime(day.year, day.month, day.day, hour=0, minute=0) - timedelta(weekday)
-        last_week_day = datetime(day.year, day.month, day.day, hour=23, minute=59) + timedelta(6-weekday)
+        last_week_day = datetime(day.year, day.month, day.day, hour=23, minute=59) + timedelta(6 - weekday)
         this_week_filter = Q(start__lte=last_week_day,
                              start__gte=first_week_day) | \
                            Q(start__lte=day, end__gte=day)
         return self.published().filter(this_week_filter)
+
+    def by_month(self, month, year):
+        start_date = get_first_day_of_month(month, year)
+        end_date = get_last_day_of_month(month, year)
+        this_month_filter = Q(start__lte=start_date, end__gte=start_date) | \
+                            Q(start__gte=start_date, end__lte=end_date) | \
+                            Q(start__lte=end_date, end__gte=end_date)
+        return self.published().filter(this_month_filter)
