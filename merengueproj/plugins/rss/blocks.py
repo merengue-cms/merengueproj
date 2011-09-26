@@ -29,7 +29,15 @@ class RSSGlobalFeed(Block):
     is_addable = False
     help_text = ugettext_lazy('Block represents global RSS feed')
     verbose_name = ugettext_lazy('Global RSS feed block')
-    cache_allowed = False
+
+    default_caching_params = {
+        'enabled': True,
+        'timeout': 604800,
+        'only_anonymous': False,
+        'vary_on_user': False,
+        'vary_on_url': False,
+        'vary_on_language': False,
+    }
 
     def render(self, request, place, context, *args, **kwargs):
         plugin = get_plugin("rss")
