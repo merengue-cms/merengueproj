@@ -236,7 +236,7 @@ class Menu(models.Model):
         descendants = self.get_descendants().filter(status='public')  # uses mptt function
         if user and not can_manage_site(user):
             if not user.is_anonymous():
-                roles = [x.role for x in user.principalrolerelation_set.all()]
+                roles = Role.objects.filter(principalrolerelation__user=user)
             else:
                 roles = Role.objects.filter(slug='anonymous_user')
             descendants = descendants.filter(Q(visible_by_roles__isnull=True) |
