@@ -40,18 +40,20 @@ def menu_tag(context, menu, max_num_level=-1, descendants=None):
         descendants = menu.get_descendants_by_user(user)
     try:
         allmenuitems = [e for e in context['request'].META['PATH_INFO'].split('/') if e]
-        menuitem_slug = allmenuitems[-1]
-        try:
-            menu_item = descendants.get(slug=menuitem_slug)
-            ancestors = menu_item.get_ancestors_by_user(user)[1:]
-        except Menu.DoesNotExist:
-            # Try to get the last item in path which will be the selected menu item.
-            for item in allmenuitems:
-                try:
-                    menu_item = descendants.get(slug=item)
-                    ancestors = menu_item.get_ancestors_by_user(user)[1:]
-                except Menu.DoesNotExist:
-                    pass
+        menu_items_slug = descendants.filter(slug__in=allmenuitems)
+        if menu_items_slug:
+            menuitem_slug = allmenuitems[-1]
+            try:
+                menu_item = descendants.get(slug=menuitem_slug)
+                ancestors = menu_item.get_ancestors_by_user(user)
+            except Menu.DoesNotExist:
+                # Try to get the last item in path which will be the selected menu item.
+                for item in allmenuitems[:-1]:
+                    try:
+                        menu_item = descendants.get(slug=item)
+                        ancestors = menu_item.get_ancestors_by_user(user)
+                    except Menu.DoesNotExist:
+                        pass
     except IndexError:
         pass
 
@@ -64,7 +66,7 @@ def menu_tag(context, menu, max_num_level=-1, descendants=None):
             if current_level == 0:
                 current_level = 1
             min_level = current_level - (current_level - 1) % max_num_level
-            menu = menu_item.get_ancestors_by_user(user).get(level=min_level - 1)
+            menu = ancestors.get(level=min_level - 1)
         max_level = min_level + max_num_level - 1
         descendants = menu.get_descendants_by_user(user).filter(Q(level__gte=min_level,
                                                                   level__lte=max_level) |
