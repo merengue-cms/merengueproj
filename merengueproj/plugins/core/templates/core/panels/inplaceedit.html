@@ -5,11 +5,20 @@
   <script type="text/javascript"> 
     (function($){
         var inplaceManager = null;
+        $(".inplaceedit").each(function(){
+            var block = $(this).parents(".blockBody").first();
+            var blockId = block.next(".blockId").val();
+            if (blockId) {
+                var blockConfig = $("<span class='block_id' style='display:none'>" + blockId + "</span>");
+                blockConfig.appendTo($(this).find(".config"));
+            }
+        });
+
         $("a#activate-inline-edit").click(function () {
             if (!$(".inplaceedit").hasClass("edit_over_merengue")) {
                 if (inplaceManager == null) {
                     var getFieldUrl = "{% url inplace_get_field %}";
-                    var saveURL = "{% url inplace_save %}";
+                    var saveURL = "{% url inplace_merengue_save %}";
                     inplaceManager = $(".inplaceedit").inplaceeditform({"getFieldUrl": getFieldUrl,
                                                                         "saveURL": saveURL});
                 }
