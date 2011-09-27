@@ -104,6 +104,7 @@ urlpatterns = patterns('',
 
     # other
     (r'^internal-links/', include('merengue.internallinks.urls')),
+    (r'^uitools/', include('merengue.uitools.urls')),
     (r'^threadedcomments/', include('threadedcomments.urls')),
     url(r'^invalidate/$', 'merengue.portal.views.invalidate_cache', name='invalidate_cache'),
     (r'^inplaceeditform/', include('inplaceeditform.urls')),
