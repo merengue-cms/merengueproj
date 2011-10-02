@@ -49,7 +49,7 @@ class BaseSubscription(models.Model):
     email = models.EmailField(_('e-mail address'))
     phone = models.CharField(_('phone'), max_length=30)
     suggestions = models.TextField(_('comments or suggestions'), null=True, blank=True)
-    subscribable = models.ForeignKey(Subscribable, verbose_name=_('subscribable'))
+    subscribable = models.ForeignKey(Subscribable, verbose_name=_('subscribable'), editable=False)
 
     class Meta:
         verbose_name = _('base subscription')

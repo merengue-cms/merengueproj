@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load i18n columnize inlinetrans %}
+{% load i18n columnize inlinetrans adminmedia %}
 
 {% block extrahead %}
     {% if form.media_order %}
@@ -9,6 +9,7 @@
     {{ form.media }}
     {% endif %}
     {{ block.super }}
+    <script type="text/javascript">window.__admin_media_prefix__ = "{% filter escapejs %}{% admin_media_prefix %}{% endfilter %}";</script>
 {% endblock %}
 
 {% block extrabreadcrumbs %}
