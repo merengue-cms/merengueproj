@@ -201,6 +201,16 @@ class PrincipalRoleRelation(models.Model):
             return u"%s / %s" % (self.user or self.group, self.role)
 
 
+class AccessRequest(models.Model):
+
+    url = models.CharField(verbose_name=_(u"Url"), max_length=250)
+    access_time = models.DateTimeField(verbose_name=_(u"Access Time"))
+    content = models.ForeignKey(BaseContent, verbose_name=_(u"content"), blank=True, null=True)
+    user = models.ForeignKey(User, verbose_name=_(u"User"), blank=True, null=True)
+    request_notes = models.TextField(verbose_name=_('Request notes'),
+                                     null=True, blank=True)
+
+
 def clear_permission_cache_handler(sender, instance, **kwargs):
     from merengue.perms.utils import clear_cache
     clear_cache()
