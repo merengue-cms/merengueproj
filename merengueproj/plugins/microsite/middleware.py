@@ -17,11 +17,13 @@
 
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
-from django.http import Http404, HttpResponseForbidden, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect
+
+from merengue.middleware import HttpStatusCode403Provider
 from merengue.urlresolvers import get_url_default_lang
 
 
-class MicrositeMiddleware(object):
+class MicrositeMiddleware(HttpStatusCode403Provider):
     """This middleware autodiscovers the current section from the url"""
 
     def process_request(self, request):
@@ -47,8 +49,8 @@ class MicrositeMiddleware(object):
         # is a middleware, we can't assume the errors will be caught elsewhere.
         except Http404:
             return response
-        except PermissionDenied:
-            return HttpResponseForbidden('<h1>Permission denied</h1>')
+        except PermissionDenied, exception:
+            return self.process_exception(request, exception)
         except:
             if settings.DEBUG:
                 raise
