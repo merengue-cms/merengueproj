@@ -18,7 +18,6 @@
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
-#from django.db import connection
 from django.db.models import get_model
 from django.http import (HttpResponseRedirect, HttpResponsePermanentRedirect,
                          Http404, HttpResponse)
