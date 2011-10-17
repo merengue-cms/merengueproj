@@ -18,8 +18,9 @@
 from django.conf import settings
 from django.core.cache import cache
 from django.core.exceptions import PermissionDenied
-from django.http import Http404, HttpResponseForbidden
+from django.http import Http404
 
+from merengue.middleware import HttpStatusCode403Provider
 
 _section_prefixes = []
 
@@ -64,7 +65,7 @@ class RequestSectionMiddleware(object):
         request.section = section
 
 
-class ResponseSectionMiddleware(object):
+class ResponseSectionMiddleware(HttpStatusCode403Provider):
     """This middleware autodiscovers the current section from the url"""
 
     def process_response(self, request, response):
@@ -77,8 +78,8 @@ class ResponseSectionMiddleware(object):
         # is a middleware, we can't assume the errors will be caught elsewhere.
         except Http404:
             return response
-        except PermissionDenied:
-            return HttpResponseForbidden('<h1>Permission denied</h1>')
+        except PermissionDenied, exception:
+            return self.process_exception(request, exception)
         except:
             if settings.DEBUG:
                 raise

@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+import datetime
+
 from django import forms
 from django.contrib.auth.forms import UserChangeForm as DjangoUserChangeForm
 
@@ -22,7 +24,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from merengue.perms import ANONYMOUS_ROLE_SLUG
-from merengue.perms.models import Role, PrincipalRoleRelation
+from merengue.perms.models import Role, PrincipalRoleRelation, AccessRequest
 from merengue.perms.utils import get_global_roles, add_local_role
 
 from ajax_select.fields import AutoCompleteSelectField
@@ -84,3 +86,25 @@ class PrincipalRoleRelationForm(forms.ModelForm):
         if not user and not group:
             raise forms.ValidationError("User and group fields are empty, you must enter or user or group")
         return cleaned_data
+
+
+class AccessRequestForm(forms.ModelForm):
+
+    def __init__(self, request, exception, *args, **kwargs):
+        super(AccessRequestForm, self).__init__(*args, **kwargs)
+        if exception:
+            self.fields['url'].initial = request.get_full_path()
+            self.fields['user'].initial = request.user
+            format = self.fields['access_time'].widget.format
+            self.fields['access_time'].initial = datetime.datetime.now().strftime(format)
+            content = getattr(exception, 'content', None)
+            if content:
+                self.fields['content'].initial = content
+                del self.fields['request_notes']
+        self.fields['url'].widget = forms.HiddenInput()
+        self.fields['user'].widget = forms.HiddenInput()
+        self.fields['access_time'].widget = forms.HiddenInput()
+        self.fields['content'].widget = forms.HiddenInput()
+
+    class Meta:
+        model = AccessRequest

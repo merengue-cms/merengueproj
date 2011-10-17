@@ -102,6 +102,12 @@ urlpatterns = patterns('',
     # announcements
     (r'^announcements/', include('announcements.urls')),
 
+    # perms
+    url({'en': r'^perms/',
+         'es': r'^permisos/'},
+        include('merengue.perms.urls')),
+
+
     # other
     (r'^internal-links/', include('merengue.internallinks.urls')),
     (r'^uitools/', include('merengue.uitools.urls')),

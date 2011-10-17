@@ -32,7 +32,8 @@ from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
 
 from merengue.perms import ANONYMOUS_ROLE_SLUG
-from merengue.perms.models import ObjectPermission, Permission, PrincipalRoleRelation, Role
+from merengue.perms.models import (ObjectPermission, Permission, PrincipalRoleRelation,
+                                   Role, AccessRequest)
 from merengue.perms.forms import UserChangeForm, GroupForm, PrincipalRoleRelationForm
 from merengue.perms.utils import add_role, remove_role, can_manage_user
 from merengue.base.widgets import ReadOnlyWidget
@@ -420,8 +421,18 @@ class GroupAdmin(DjangoGroupAdmin):
                 remove_role(obj, role)
 
 
+class AccessRequestAdmin(admin.ModelAdmin):
+
+    list_display = ('content', 'access_time', 'user', )
+    list_filter = ('access_time', 'user', )
+
+    def has_add_permission(self, request):
+        return False
+
+
 def register(site):
     site.register(ObjectPermission, ObjectPermissionAdmin)
     site.register(Role, RoleAdmin)
     site.register(User, UserAdmin)
     site.register(Group, GroupAdmin)
+    site.register(AccessRequest, AccessRequestAdmin)

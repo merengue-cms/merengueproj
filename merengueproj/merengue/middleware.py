@@ -22,18 +22,18 @@ from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.utils import translation
 
+from merengue.perms.views import access_request
 
-from merengue.perms.exceptions import PermissionDenied as MerenguePermissionDenied
 
-
-class HttpStatusCodeRendererMiddleware(object):
-    """This middleware render a template when an error code (not 500) is found"""
+class HttpStatusCode403Provider(object):
 
     def process_exception(self, request, exception):
-        if isinstance(exception, MerenguePermissionDenied):
-            pass
-        elif isinstance(exception, PermissionDenied):
-            pass
+        if isinstance(exception, PermissionDenied):
+            return access_request(request, exception)
+
+
+class HttpStatusCodeRendererMiddleware(HttpStatusCode403Provider):
+    """This middleware render a template when an error code (not 500) is found"""
 
     def process_response(self, request, response):
         if getattr(settings, 'HTTP_ERRORS_DEBUG', settings.DEBUG):
