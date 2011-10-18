@@ -18,13 +18,14 @@
 import datetime
 
 from django import forms
+from django.utils import formats
 from django.contrib.auth.forms import UserChangeForm as DjangoUserChangeForm
 
 from django.utils.translation import ugettext_lazy as _
 
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from merengue.perms import ANONYMOUS_ROLE_SLUG
-from merengue.perms.models import Role, PrincipalRoleRelation, AccessRequest
+from merengue.perms.models import Role, PrincipalRoleRelation, Permission, AccessRequest
 from merengue.perms.utils import get_global_roles, add_local_role
 
 from ajax_select.fields import AutoCompleteSelectField
@@ -95,16 +96,24 @@ class AccessRequestForm(forms.ModelForm):
         if exception:
             self.fields['url'].initial = request.get_full_path()
             self.fields['user'].initial = request.user
-            format = self.fields['access_time'].widget.format
-            self.fields['access_time'].initial = datetime.datetime.now().strftime(format)
+            self.fields['access_time'].initial = datetime.datetime.now().strftime(formats.get_format('DATETIME_INPUT_FORMATS')[0])
             content = getattr(exception, 'content', None)
             if content:
                 self.fields['content'].initial = content
-                del self.fields['request_notes']
+            perm = getattr(exception, 'perm', None)
+            if perm:
+                self.fields['permission'].initial = Permission.objects.get(codename=perm)
         self.fields['url'].widget = forms.HiddenInput()
+        self.fields['permission'].widget = forms.HiddenInput()
         self.fields['user'].widget = forms.HiddenInput()
         self.fields['access_time'].widget = forms.HiddenInput()
         self.fields['content'].widget = forms.HiddenInput()
+
+    #def get_
+
+    def save(self, *args, **kwargs):
+        obj = super(AccessRequestForm, self).save(*args, **kwargs)
+        return obj
 
     class Meta:
         model = AccessRequest

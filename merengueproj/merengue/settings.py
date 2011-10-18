@@ -373,5 +373,7 @@ PORTAL_LINK_POSITIONS = {
 }
 
 # sitemap
-
 SMAP_EXCLUDE_CLASS_NAME = ('collection', 'feedcollection', 'feeditem')
+
+# Access request 403
+ACCESS_REQUEST_REDIRECT = LOGIN_REDIRECT_URL

@@ -423,8 +423,25 @@ class GroupAdmin(DjangoGroupAdmin):
 
 class AccessRequestAdmin(admin.ModelAdmin):
 
-    list_display = ('content', 'access_time', 'user', )
+    list_display = ('access_request', 'access_time', 'user', )
     list_filter = ('access_time', 'user', )
+    exclude = ('url',)
+    readonly_fields = ('access_request', 'access_time', 'user',
+                       'request_notes', 'content', 'url_link', 'permission')
+
+    def access_request(self, obj):
+        return unicode(obj)
+    access_request.short_description = _('Content')
+
+    def url_link(self, obj):
+        return '<a href="%s" target="_blank">%s</a>' % (obj.url, obj.url)
+    url_link.short_description = _('URL')
+    url_link.allow_tags = True
+
+    def get_form(self, request, obj=None):
+        form = super(AccessRequestAdmin, self).get_form(request, obj)
+        form.url_link = self.url_link
+        return form
 
     def has_add_permission(self, request):
         return False

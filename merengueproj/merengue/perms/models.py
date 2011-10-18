@@ -203,12 +203,18 @@ class PrincipalRoleRelation(models.Model):
 
 class AccessRequest(models.Model):
 
-    url = models.CharField(verbose_name=_(u"Url"), max_length=250)
+    url = models.CharField(verbose_name=_(u"URL"), max_length=250)
     access_time = models.DateTimeField(verbose_name=_(u"Access Time"))
     content = models.ForeignKey(BaseContent, verbose_name=_(u"content"), blank=True, null=True)
     user = models.ForeignKey(User, verbose_name=_(u"User"), blank=True, null=True)
+    permission = models.ForeignKey(Permission, verbose_name=_(u"Permission"), blank=True, null=True)
     request_notes = models.TextField(verbose_name=_('Request notes'),
                                      null=True, blank=True)
+
+    def __unicode__(self):
+        if self.content:
+            return unicode(self.content)
+        return self.url
 
 
 def clear_permission_cache_handler(sender, instance, **kwargs):
