@@ -17,7 +17,6 @@
 
 from django.conf import settings
 from django.contrib import admin
-from django.core.exceptions import PermissionDenied
 from django.contrib.admin.options import IncorrectLookupParameters
 from django.db.models import Q
 from django.forms.util import ErrorList
@@ -27,8 +26,6 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
-#from batchadmin.util import model_ngettext
-
 from merengue.base.admin import (OrderableRelatedModelAdmin, BaseContentAdmin, BaseAdmin,
                                  WorkflowBatchActionProvider, RelatedModelAdmin)
 from merengue.base.models import BaseContent, MultimediaRelation
@@ -36,6 +33,7 @@ from merengue.multimedia.forms import AudioCheckerModelForm, VideoCheckerModelFo
 from merengue.multimedia.models import (Photo, Video, PanoramicView, Image3D,
                                         File, Audio, BaseMultimedia)
 from merengue.perms import utils as perms_api
+from merengue.perms.exceptions import PermissionDenied
 
 
 class BaseMultimediaContentRelatedModelAdmin(RelatedModelAdmin, BaseContentAdmin):
@@ -66,7 +64,7 @@ class MultimediaAddContentRelatedModelAdmin(BaseMultimediaContentRelatedModelAdm
         selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
         if selected:
             if not perms_api.has_permission_in_queryset(queryset, request.user, 'edit') or not self.has_change_permission(request):
-                    raise PermissionDenied
+                    raise PermissionDenied(content=queryset, user=request.user, perm='edit')
             if request.POST.get('post'):
                 multimedia = self.basecontent
                 for content in queryset:
@@ -98,7 +96,7 @@ class MultimediaRemoveContentRelatedModelAdmin(BaseMultimediaContentRelatedModel
         selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
         if selected:
             if not perms_api.has_permission_in_queryset(queryset, request.user, 'edit') or not self.has_change_permission(request):
-                    raise PermissionDenied
+                    raise PermissionDenied(content=queryset, user=request.user, perm='edit')
             if request.POST.get('post'):
                 multimedia = self.basecontent
                 for content in queryset:

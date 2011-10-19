@@ -21,7 +21,6 @@ from django import forms
 from django import template
 from django.conf import settings
 from django.contrib import messages
-from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.db import models, router
 from django.db.models import Q
@@ -76,6 +75,7 @@ from merengue.base.models import BaseContent, ContactInfo
 from merengue.base.widgets import CustomTinyMCE, RelatedBaseContentWidget
 from merengue.perms.admin import PermissionAdmin
 from merengue.perms import utils as perms_api
+from merengue.perms.exceptions import PermissionDenied
 from merengue.section.models import BaseSection, SectionRelatedContent
 from merengue.workflow import utils as workflow_api
 from genericforeignkey.admin import GenericAdmin
@@ -599,7 +599,9 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
                         }
         for i, obj in enumerate(queryset):
             if not self.has_change_permission(request, obj):
-                raise PermissionDenied
+                raise PermissionDenied(content=obj,
+                                       user=request.user,
+                                       perm=perms_api.MANAGE_SITE_PERMISION)
             checkbox_data['object_name'] = escape(obj)
             checkbox_data['object_id'] = obj.id
             selected_objects.append([mark_safe(checkbox % checkbox_data), []])
@@ -653,7 +655,9 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
         obj = self.get_object(request, unquote(object_id))
 
         if not self.has_delete_permission(request, obj):
-            raise PermissionDenied
+            raise PermissionDenied(content=obj,
+                                   user=request.user,
+                                   perm=perms_api.MANAGE_SITE_PERMISION)
 
         if obj is None:
             raise Http404(_('%(name)s object with primary key %(key)r does not exist.') % {'name': force_unicode(opts.verbose_name), 'key': escape(object_id)})
@@ -668,7 +672,7 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
 
         if request.POST:  # The user has already confirmed the deletion.
             if perms_needed or objects_without_delete_perm or protected:
-                raise PermissionDenied
+                raise PermissionDenied(content=obj, user=request.user)
             obj_display = force_unicode(obj)
             self.log_deletion(request, obj, obj_display)
             obj.delete()
@@ -773,7 +777,7 @@ class WorkflowBatchActionProvider(object):
 
     def change_state(self, request, queryset, state, confirm_msg, perm=None):
         if perm and not perms_api.has_permission_in_queryset(queryset, request.user, perm, None) or not self.has_change_permission(request):
-            raise PermissionDenied
+            raise PermissionDenied(content=queryset, user=request.user, perm=perm or 'edit')
         selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
         if selected:
             if request.POST.get('post', False):
@@ -880,7 +884,7 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
 
     def assign_owners(self, request, queryset):
         if not request.user.is_superuser:
-            raise PermissionDenied
+            raise PermissionDenied(user=request.user)
         selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
         if selected:
             if request.POST.get('post', False):
@@ -1221,7 +1225,7 @@ class RelatedModelAdmin(BaseAdmin):
     def ajax_changelist_view(self, request, extra_context=None, model_admin=None, parent_model_admin=None, parent_object=None):
         extra_context = self._update_extra_context(request, extra_context, parent_model_admin, parent_object)
         if not self.has_change_permission(request, None):
-            raise PermissionDenied
+            raise PermissionDenied(user=request.user, perm='edit')
         contents = [{'name': unicode(i), 'url': i.get_admin_absolute_url()} for i in self.queryset(request)]
         json_dict = simplejson.dumps({'contents': contents,
                                       'size': len(contents),

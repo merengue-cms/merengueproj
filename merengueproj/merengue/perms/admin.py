@@ -24,7 +24,6 @@ from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.contrib.auth.admin import GroupAdmin as DjangoGroupAdmin
 from django.contrib.auth.models import User, Group
 from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
@@ -34,10 +33,11 @@ from django.utils.translation import ugettext as _
 
 from merengue.base.widgets import ReadOnlyWidget
 from merengue.perms import ANONYMOUS_ROLE_SLUG
+from merengue.perms.exceptions import PermissionDenied
 from merengue.perms.forms import UserChangeForm, GroupForm, PrincipalRoleRelationForm
 from merengue.perms.models import (ObjectPermission, Permission, PrincipalRoleRelation,
                                    Role, AccessRequest)
-from merengue.perms.utils import add_role, remove_role, can_manage_user, get_roles
+from merengue.perms.utils import add_role, remove_role, can_manage_user, get_roles, MANAGE_USER_PERMISION
 
 
 class PermissionAdmin(admin.ModelAdmin):
@@ -139,7 +139,9 @@ class PermissionAdmin(admin.ModelAdmin):
         has_perm = request.user.has_perm(opts.app_label + '.' + opts.get_change_permission())
         obj = get_object_or_404(self.model, pk=object_id).get_real_instance()
         if not self.has_change_permission(request, obj):
-            raise PermissionDenied
+            raise PermissionDenied(content=obj,
+                                   user=request.user,
+                                   perm=MANAGE_USER_PERMISION)
         prr_form = None
         if request.method == 'POST':
             if '_continue_role_relation' in request.POST:
@@ -249,7 +251,8 @@ class ObjectPermissionAdmin(PermissionAdmin):
 
     def change_roles_permissions(self, request):
         if not can_manage_user(request.user):
-            raise PermissionDenied
+            raise PermissionDenied(user=request.user,
+                                   perm=MANAGE_USER_PERMISION)
         opts = self.model._meta
         admin_site = self.admin_site
         has_perm = request.user.has_perm(opts.app_label + '.' + opts.get_change_permission())

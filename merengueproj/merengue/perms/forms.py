@@ -24,6 +24,7 @@ from django.contrib.auth.forms import UserChangeForm as DjangoUserChangeForm
 from django.utils.translation import ugettext_lazy as _
 
 from django.contrib.admin.widgets import FilteredSelectMultiple
+from merengue.base.models import BaseContent
 from merengue.perms import ANONYMOUS_ROLE_SLUG
 from merengue.perms.models import Role, PrincipalRoleRelation, Permission, AccessRequest
 from merengue.perms.utils import get_global_roles, add_local_role, get_roles
@@ -98,7 +99,7 @@ class AccessRequestForm(forms.ModelForm):
             self.fields['user'].initial = request.user
             self.fields['access_time'].initial = datetime.datetime.now().strftime(formats.get_format('DATETIME_INPUT_FORMATS')[0])
             content = getattr(exception, 'content', None)
-            if content:
+            if content and isinstance(content, BaseContent):
                 self.fields['content'].initial = content
             perm = getattr(exception, 'perm', None)
             if perm:

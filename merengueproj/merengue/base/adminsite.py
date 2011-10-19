@@ -22,7 +22,7 @@ from django.contrib.admin import ModelAdmin
 from django.contrib.admin.sites import AdminSite as DjangoAdminSite
 from django.contrib.admin.sites import AlreadyRegistered
 from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db.models.base import ModelBase
@@ -38,6 +38,7 @@ from django.views.decorators.cache import never_cache
 from merengue.base.adminforms import UploadConfigForm, BackupForm
 from merengue.base.models import BaseContent
 from merengue.perms import utils as perms_api
+from merengue.perms.exceptions import PermissionDenied
 from merengue.base.actions import delete_selected
 
 OBJECT_ID_PREFIX = 'base_object_id_'
@@ -267,7 +268,7 @@ class BaseAdminSite(DjangoAdminSite):
 
     def site_configuration(self, request):
         if not perms_api.can_manage_site(request.user):
-            raise PermissionDenied
+            raise PermissionDenied(user=request.user, perm=perms_api.MANAGE_SITE_PERMISION)
         from merengue.utils import restore_config
         form_configuration = UploadConfigForm()
         form_backup = BackupForm()
