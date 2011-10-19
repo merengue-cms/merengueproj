@@ -427,8 +427,8 @@ class GroupAdmin(DjangoGroupAdmin):
 
 class AccessRequestAdmin(admin.ModelAdmin):
 
-    list_display = ('access_request', 'access_time', 'user', )
-    list_filter = ('access_time', 'user', )
+    list_display = ('access_request', 'access_time', 'user', 'is_done', )
+    list_filter = ('is_done', 'access_time', 'user', )
     exclude = ('url',)
     access_fields = ('url_link', 'access_time', 'permission', )
     content_fields = ('content', 'state', 'current_permission_by_roles', )
@@ -455,8 +455,10 @@ class AccessRequestAdmin(admin.ModelAdmin):
 
     def current_roles(self, obj):
         role_ano = unicode(Role.objects.get(slug=ANONYMOUS_ROLE_SLUG))
-        roles = get_roles(obj.user, obj.content)
-        roles_str = ', '.join([unicode(role) for role in roles])
+        roles_str = None
+        if obj.user:
+            roles = get_roles(obj.user, obj.content)
+            roles_str = ', '.join([unicode(role) for role in roles])
         if not roles_str:
             return role_ano
         return u'%s, %s' % (role_ano, roles_str)
@@ -478,8 +480,8 @@ class AccessRequestAdmin(admin.ModelAdmin):
         context['roles'] = roles
         context['role_permissions'] = role_permissions
         return render_to_string('admin/perms/inc.table_permission_by_roles.html', context)
-    current_roles.short_description = _('Current permission by roles')
-    current_roles.allow_tags = True
+    current_permission_by_roles.short_description = _('Current permission by roles')
+    current_permission_by_roles.allow_tags = True
 
     def url_admin_perms(self, obj):
         if obj.content:
@@ -496,6 +498,23 @@ class AccessRequestAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):
         return False
+
+    def has_change_permission(self, request, obj=None):
+        user = request.user
+        if user.is_superuser:
+            return True
+        elif not user.is_authenticated():
+            return False
+        elif not obj and user.is_staff:
+            return True
+        return user in obj.owners.all()
+
+    def queryset(self, request):
+        queryset = super(AccessRequestAdmin, self).queryset(request)
+        user = request.user
+        if not user.is_superuser:
+            queryset = queryset.filter(owners=user)
+        return queryset
 
 
 def register(site):

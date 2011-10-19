@@ -99,7 +99,7 @@ class AccessRequestForm(forms.ModelForm):
 
     def __init__(self, request, exception, *args, **kwargs):
         super(AccessRequestForm, self).__init__(*args, **kwargs)
-        self.user = request.user
+        self.user = request.user.is_authenticated() and request.user or None
         if exception:
             self.fields['url'].initial = request.get_full_path()
             self.fields['access_time'].initial = datetime.datetime.now().strftime(formats.get_format('DATETIME_INPUT_FORMATS')[0])
@@ -142,11 +142,12 @@ class AccessRequestForm(forms.ModelForm):
     def save(self, *args, **kwargs):
         obj = super(AccessRequestForm, self).save(*args, **kwargs)
         obj.state = obj.content.workflow_status
-        obj.user = self.user
-        roles = get_roles(obj.user, obj.content)
+        if self.user:
+            obj.user = self.user
+            roles = get_roles(obj.user, obj.content)
+            for rol in roles:
+                obj.roles.add(rol)
         obj.roles.add(Role.objects.get(slug=ANONYMOUS_ROLE_SLUG))
-        for rol in roles:
-            obj.roles.add(rol)
         owners = self.get_owners_of_content(obj)
         for owner in owners:
             obj.owners.add(owner)
