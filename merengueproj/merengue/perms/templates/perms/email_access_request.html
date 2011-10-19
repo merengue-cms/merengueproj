@@ -1,0 +1,10 @@
+{% load i18n %}
+
+{% if tags %}<p>{% endif%}{% trans "Hello" %}{% if tags %}</p>{% endif%}
+{% if obj.user %}
+{% if tags %}<p>{% endif%}{% if obj.get_full_name %}{{ obj.get_full_name }}({{ obj.username }}){% else %}{{ obj.username }}{% endif %}{% trans "want to access to:" %}{% if tags %}</p>{% endif%}{% endif %}
+
+{% if tags %}<p><a href="{{ domain }}{{ obj.url }}">{% endif%}{{ domain }}{{ obj.url }}{% if tags %}</a></p>{% endif %}
+
+{% if tags %}<p><a href="{{ domain }}{% url admin_index %}perms/accessrequest/">{% endif %}
+{% trans "Access to see the problem" %}{% if tags %}</a></p>{% else %} {{ domain }}{% url admin_index %}perms/accessrequest/{% endif %}
