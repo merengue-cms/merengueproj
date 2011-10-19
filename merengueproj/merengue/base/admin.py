@@ -600,8 +600,7 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
         for i, obj in enumerate(queryset):
             if not self.has_change_permission(request, obj):
                 raise PermissionDenied(content=obj,
-                                       user=request.user,
-                                       perm=perms_api.MANAGE_SITE_PERMISION)
+                                       user=request.user)
             checkbox_data['object_name'] = escape(obj)
             checkbox_data['object_id'] = obj.id
             selected_objects.append([mark_safe(checkbox % checkbox_data), []])
@@ -656,8 +655,7 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
 
         if not self.has_delete_permission(request, obj):
             raise PermissionDenied(content=obj,
-                                   user=request.user,
-                                   perm=perms_api.MANAGE_SITE_PERMISION)
+                                   user=request.user)
 
         if obj is None:
             raise Http404(_('%(name)s object with primary key %(key)r does not exist.') % {'name': force_unicode(opts.verbose_name), 'key': escape(object_id)})
@@ -776,8 +774,10 @@ class WorkflowBatchActionProvider(object):
     set_as_published.short_description = _("Set as published")
 
     def change_state(self, request, queryset, state, confirm_msg, perm=None):
-        if perm and not perms_api.has_permission_in_queryset(queryset, request.user, perm, None) or not self.has_change_permission(request):
-            raise PermissionDenied(content=queryset, user=request.user, perm=perm or 'edit')
+        if perm:
+            perms_api.assert_has_permission_in_queryset(queryset, request.user, perm, None)
+        if not self.has_change_permission(request):
+            raise PermissionDenied(content=queryset, user=request.user)
         selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
         if selected:
             if request.POST.get('post', False):
@@ -1225,7 +1225,7 @@ class RelatedModelAdmin(BaseAdmin):
     def ajax_changelist_view(self, request, extra_context=None, model_admin=None, parent_model_admin=None, parent_object=None):
         extra_context = self._update_extra_context(request, extra_context, parent_model_admin, parent_object)
         if not self.has_change_permission(request, None):
-            raise PermissionDenied(user=request.user, perm='edit')
+            raise PermissionDenied(user=request.user)
         contents = [{'name': unicode(i), 'url': i.get_admin_absolute_url()} for i in self.queryset(request)]
         json_dict = simplejson.dumps({'contents': contents,
                                       'size': len(contents),

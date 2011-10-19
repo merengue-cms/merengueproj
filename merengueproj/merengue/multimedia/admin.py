@@ -63,8 +63,9 @@ class MultimediaAddContentRelatedModelAdmin(BaseMultimediaContentRelatedModelAdm
     def associate_contents(self, request, queryset):
         selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
         if selected:
-            if not perms_api.has_permission_in_queryset(queryset, request.user, 'edit') or not self.has_change_permission(request):
-                    raise PermissionDenied(content=queryset, user=request.user, perm='edit')
+            perms_api.assert_has_permission_in_queryset(queryset, request.user, 'edit')
+            if not self.has_change_permission(request):
+                raise PermissionDenied(user=request.user, perm='edit')
             if request.POST.get('post'):
                 multimedia = self.basecontent
                 for content in queryset:
@@ -95,8 +96,9 @@ class MultimediaRemoveContentRelatedModelAdmin(BaseMultimediaContentRelatedModel
     def disassociate_contents(self, request, queryset):
         selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
         if selected:
-            if not perms_api.has_permission_in_queryset(queryset, request.user, 'edit') or not self.has_change_permission(request):
-                    raise PermissionDenied(content=queryset, user=request.user, perm='edit')
+            perms_api.assert_has_permission_in_queryset(queryset, request.user, 'edit')
+            if not self.has_change_permission(request):
+                raise PermissionDenied(user=request.user, perm='edit')
             if request.POST.get('post'):
                 multimedia = self.basecontent
                 for content in queryset:
