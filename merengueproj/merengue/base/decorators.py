@@ -17,9 +17,9 @@
 
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required as login_required_django
-from django.core.exceptions import PermissionDenied
 
 from merengue.base.utils import get_login_url
+from merengue.perms.exceptions import PermissionDenied
 
 
 def login_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url=None):
@@ -32,6 +32,6 @@ def login_required_or_permission_denied(view_func):
 
     def _decorator(request, *args, **kwargs):
         if not request.user.is_authenticated():
-            raise PermissionDenied
+            raise PermissionDenied(user=request.user)
         return view_func(request, *args, **kwargs)
     return _decorator

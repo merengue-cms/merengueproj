@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from merengue.perms.exceptions import PermissionDenied
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -25,7 +24,7 @@ from django.utils.translation import ugettext as _
 from merengue.block.blocks import SectionBlock, ContentBlock
 from merengue.block.forms import BlockConfigForm, AddBlockForm
 from merengue.block.models import RegisteredBlock
-from merengue.perms.utils import has_global_permission, MANAGE_BLOCK_PERMISSION
+from merengue.perms.utils import assert_has_global_permission, MANAGE_BLOCK_PERMISSION
 
 
 def blocks_index(request):
@@ -34,8 +33,7 @@ def blocks_index(request):
 
 
 def blocks_reorder(request):
-    if not has_global_permission(request.user, MANAGE_BLOCK_PERMISSION):
-        raise PermissionDenied(user=request.user, perms=MANAGE_BLOCK_PERMISSION)
+    assert_has_global_permission(user=request.user, perm=MANAGE_BLOCK_PERMISSION)
 
     def relocate_blocks(items, cls):
         for order, item in enumerate(items):
@@ -63,8 +61,7 @@ def blocks_reorder(request):
 
 
 def generate_blocks_configuration_for_content(request, block_id):
-    if not has_global_permission(request.user, MANAGE_BLOCK_PERMISSION):
-        raise PermissionDenied(user=request.user, perm=MANAGE_BLOCK_PERMISSION)
+    assert_has_global_permission(user=request.user, perm=MANAGE_BLOCK_PERMISSION)
     try:
         reg_block = RegisteredBlock.objects.get(id=block_id)
         block = reg_block.get_registry_item()
@@ -84,8 +81,7 @@ def generate_blocks_configuration_for_content(request, block_id):
 
 
 def generate_blocks_configuration(request, block_id):
-    if not has_global_permission(request.user, MANAGE_BLOCK_PERMISSION):
-        raise PermissionDenied(user=request.user, perm=MANAGE_BLOCK_PERMISSION)
+    assert_has_global_permission(user=request.user, perm=MANAGE_BLOCK_PERMISSION)
     reg_block = RegisteredBlock.objects.get(id=block_id)
     block = reg_block.get_registry_item()
     config = block.get_config()
@@ -107,8 +103,7 @@ def generate_blocks_configuration(request, block_id):
 
 
 def add_block(request):
-    if not has_global_permission(request.user, MANAGE_BLOCK_PERMISSION):
-        raise PermissionDenied(user=request.user, perm=MANAGE_BLOCK_PERMISSION)
+    assert_has_global_permission(user=request.user, perm=MANAGE_BLOCK_PERMISSION)
     if request.method == 'POST':
         form = AddBlockForm(request.POST)
         if form.is_valid():
@@ -134,16 +129,14 @@ def add_block(request):
 
 
 def remove_block(request, block_id):
-    if not has_global_permission(request.user, MANAGE_BLOCK_PERMISSION):
-        raise PermissionDenied(user=request.user, perm=MANAGE_BLOCK_PERMISSION)
+    assert_has_global_permission(user=request.user, perm=MANAGE_BLOCK_PERMISSION)
     reg_block = RegisteredBlock.objects.get(id=block_id)
     reg_block.delete()
     return HttpResponse('ok')
 
 
 def invalidate_cache(request, block_id):
-    if not has_global_permission(request.user, MANAGE_BLOCK_PERMISSION):
-        raise PermissionDenied(user=request.user, perm=MANAGE_BLOCK_PERMISSION)
+    assert_has_global_permission(user=request.user, perm=MANAGE_BLOCK_PERMISSION)
     reg_block = RegisteredBlock.objects.get(id=block_id)
     reg_block.get_registry_item().invalidate_cache()
     return HttpResponse('ok')

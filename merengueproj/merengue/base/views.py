@@ -30,7 +30,6 @@ from django.views.decorators.cache import never_cache
 
 from merengue.base.models import BaseContent
 from merengue.perms import utils as perms_api
-from merengue.perms.exceptions import PermissionDenied
 from tagging.models import TaggedItem, Tag
 
 
@@ -101,9 +100,7 @@ def render_content(request, content, template_name=None, extra_context=None):
 
 def content_view(request, content, template_name=None, extra_context=None):
     """ Generic view for a content detail page """
-    has_view = perms_api.has_permission(content, request.user, 'view')
-    if not has_view:
-        raise PermissionDenied(content=content, user=request.user)
+    perms_api.assert_has_permission(content, request.user, 'view')
     if content._meta.content_view_function is not None:
         func_path = content._meta.content_view_function
         func_path_join = func_path.split('.')

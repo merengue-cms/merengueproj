@@ -26,7 +26,6 @@ from merengue.section.models import BaseSection, Document, \
                                     DocumentSection, BaseLink
 from merengue.base.decorators import login_required
 from merengue.base.views import content_view
-from merengue.perms.exceptions import PermissionDenied
 from merengue.section.models import AbsoluteLink, ContentLink, ViewletLink, Menu
 from merengue.section.utils import get_section
 
@@ -42,9 +41,8 @@ def section_view(request, section_slug, original_context={},
                  template='section/section_view_without_maincontent.html'):
     section_slug = section_slug.strip('/')
     section = get_object_or_404(BaseSection, slug=section_slug)
-    has_view = perms_api.has_permission(section, request.user, 'view')
-    if not has_view:
-        raise PermissionDenied(content=section, user=request.user)
+
+    perms_api.assert_has_permission(section, request.user, 'view')
     context = original_context or {}
     context['section'] = section.get_real_instance()
     main_content = section.main_content and section.main_content.get_real_instance() or None
