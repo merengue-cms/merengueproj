@@ -18,12 +18,17 @@
 import datetime
 
 from django import forms
-from django.utils import formats
+from django.conf import settings
 from django.contrib.auth.forms import UserChangeForm as DjangoUserChangeForm
-
+from django.contrib.auth.models import User
+from django.contrib.admin.widgets import FilteredSelectMultiple
+from django.contrib.sites.models import Site
+from django.core.mail import EmailMultiAlternatives
+from django.db.models import Q
+from django.template.loader import render_to_string
+from django.utils import formats
 from django.utils.translation import ugettext_lazy as _
 
-from django.contrib.admin.widgets import FilteredSelectMultiple
 from merengue.base.models import BaseContent
 from merengue.perms import ANONYMOUS_ROLE_SLUG
 from merengue.perms.models import Role, PrincipalRoleRelation, Permission, AccessRequest
@@ -94,9 +99,9 @@ class AccessRequestForm(forms.ModelForm):
 
     def __init__(self, request, exception, *args, **kwargs):
         super(AccessRequestForm, self).__init__(*args, **kwargs)
+        self.user = request.user
         if exception:
             self.fields['url'].initial = request.get_full_path()
-            self.fields['user'].initial = request.user
             self.fields['access_time'].initial = datetime.datetime.now().strftime(formats.get_format('DATETIME_INPUT_FORMATS')[0])
             content = getattr(exception, 'content', None)
             if content and isinstance(content, BaseContent):
@@ -106,22 +111,49 @@ class AccessRequestForm(forms.ModelForm):
                 self.fields['permission'].initial = Permission.objects.get(codename=perm)
         self.fields['url'].widget = forms.HiddenInput()
         self.fields['permission'].widget = forms.HiddenInput()
-        self.fields['user'].widget = forms.HiddenInput()
         self.fields['access_time'].widget = forms.HiddenInput()
         self.fields['content'].widget = forms.HiddenInput()
 
-    #def get_
+    def get_owners_of_content(self, obj):
+        content = obj.content
+        if not content:
+            return None
+        owners_content = content.get_owners()
+        owner_filter = Q(id__in=owners_content.values('id').query)
+        sections = content.sections.all()
+        for section in sections:
+            owners_section = section.get_owners()
+            owner_filter = owner_filter | Q(id__in=owners_section.values('id').query)
+        return User.objects.filter(owner_filter).filter(email__isnull=False).exclude(email='')
+
+    def notification_access_request(self, obj, owners):
+        owners = owners or User.objects.filter(is_superuser=True)
+        subject = _(u'You have a access request')
+        from_email = settings.EMAIL_HOST_USER
+        to_email = [user.email for user in owners]
+        site = Site.objects.get_current()
+        domain = 'http://%s' % site.domain
+        text_content = render_to_string('perms/email_access_request.html', {'obj': obj, 'domain': domain, 'tags': False})
+        html_content = render_to_string('perms/email_access_request.html', {'obj': obj, 'domain': domain, 'tags': True})
+        msg = EmailMultiAlternatives(subject, text_content, from_email, to_email)
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
 
     def save(self, *args, **kwargs):
         obj = super(AccessRequestForm, self).save(*args, **kwargs)
         obj.state = obj.content.workflow_status
+        obj.user = self.user
         roles = get_roles(obj.user, obj.content)
         obj.roles.add(Role.objects.get(slug=ANONYMOUS_ROLE_SLUG))
         for rol in roles:
             obj.roles.add(rol)
+        owners = self.get_owners_of_content(obj)
+        for owner in owners:
+            obj.owners.add(owner)
         obj.save()
+        self.notification_access_request(obj, owners)
         return obj
 
     class Meta:
         model = AccessRequest
-        exclude = ('state', 'roles', 'is_done')
+        exclude = ('state', 'roles', 'is_done', 'owners', 'user')

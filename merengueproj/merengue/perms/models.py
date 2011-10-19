@@ -217,6 +217,7 @@ class AccessRequest(models.Model):
                                    help_text=_('Roles of the user in the moment of access request, for this content'))
     request_notes = models.TextField(verbose_name=_('Request notes'),
                                      null=True, blank=True)
+    owners = models.ManyToManyField(User, verbose_name=_(u"Owners"), blank=True, null=True, related_name='access_review')
     is_done = models.BooleanField(verbose_name=_(u'is done'), default=False)
 
     def __unicode__(self):
