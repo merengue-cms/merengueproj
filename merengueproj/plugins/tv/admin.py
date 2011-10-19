@@ -21,7 +21,6 @@ import os
 
 from django import template
 from django.contrib.admin.options import IncorrectLookupParameters
-from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response
 from django.utils import simplejson
@@ -31,6 +30,7 @@ from django.utils.dates import WEEKDAYS, MONTHS
 
 from merengue.base.admin import PluginAdmin
 from merengue.multimedia.admin import BaseMultimediaAdmin, VideoAdmin
+from merengue.perms.exceptions import PermissionDenied
 from plugins.tv.models import Channel, Schedule, VideoStreaming
 
 
