@@ -206,10 +206,18 @@ class AccessRequest(models.Model):
     url = models.CharField(verbose_name=_(u"URL"), max_length=250)
     access_time = models.DateTimeField(verbose_name=_(u"Access Time"))
     content = models.ForeignKey(BaseContent, verbose_name=_(u"content"), blank=True, null=True)
+    state = models.ForeignKey('workflow.State', verbose_name=_(u"State"),
+                              blank=True, null=True,
+                              help_text=_('State of the content in that moment of access request'))
     user = models.ForeignKey(User, verbose_name=_(u"User"), blank=True, null=True)
-    permission = models.ForeignKey(Permission, verbose_name=_(u"Permission"), blank=True, null=True)
+    permission = models.ForeignKey(Permission, verbose_name=_(u"Permission requested"),
+                                   blank=True, null=True,
+                                   help_text=_('Permission requested by the user'))
+    roles = models.ManyToManyField(Role, verbose_name=_(u"Roles"), blank=True, null=True,
+                                   help_text=_('Roles of the user in the moment of access request, for this content'))
     request_notes = models.TextField(verbose_name=_('Request notes'),
                                      null=True, blank=True)
+    is_done = models.BooleanField(verbose_name=_(u'is done'), default=False)
 
     def __unicode__(self):
         if self.content:

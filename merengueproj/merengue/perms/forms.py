@@ -26,7 +26,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from merengue.perms import ANONYMOUS_ROLE_SLUG
 from merengue.perms.models import Role, PrincipalRoleRelation, Permission, AccessRequest
-from merengue.perms.utils import get_global_roles, add_local_role
+from merengue.perms.utils import get_global_roles, add_local_role, get_roles
 
 from ajax_select.fields import AutoCompleteSelectField
 
@@ -113,7 +113,14 @@ class AccessRequestForm(forms.ModelForm):
 
     def save(self, *args, **kwargs):
         obj = super(AccessRequestForm, self).save(*args, **kwargs)
+        obj.state = obj.content.workflow_status
+        roles = get_roles(obj.user, obj.content)
+        obj.roles.add(Role.objects.get(slug=ANONYMOUS_ROLE_SLUG))
+        for rol in roles:
+            obj.roles.add(rol)
+        obj.save()
         return obj
 
     class Meta:
         model = AccessRequest
+        exclude = ('state', 'roles', 'is_done')

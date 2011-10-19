@@ -426,8 +426,31 @@ class AccessRequestAdmin(admin.ModelAdmin):
     list_display = ('access_request', 'access_time', 'user', )
     list_filter = ('access_time', 'user', )
     exclude = ('url',)
-    readonly_fields = ('access_request', 'access_time', 'user',
-                       'request_notes', 'content', 'url_link', 'permission')
+    access_fields = ('url_link', 'access_time', 'permission', )
+    content_fields = ('content', 'state', )
+    user_fields = ('user', 'roles', )
+    info_fields = ('request_notes', )
+    action_fields = ('is_done', )
+
+    readonly_fields = access_fields + content_fields + user_fields + info_fields
+
+    fieldsets = (
+        (_('Access data'), {
+            'fields': access_fields
+        }),
+        (_('User data'), {
+            'fields': user_fields
+        }),
+        (_('Content data'), {
+            'fields': content_fields
+        }),
+        (_('Info data'), {
+            'fields': info_fields
+        }),
+        (_('Actions'), {
+            'fields': action_fields
+        })
+    )
 
     def access_request(self, obj):
         return unicode(obj)
@@ -437,6 +460,20 @@ class AccessRequestAdmin(admin.ModelAdmin):
         return '<a href="%s" target="_blank">%s</a>' % (obj.url, obj.url)
     url_link.short_description = _('URL')
     url_link.allow_tags = True
+
+    def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
+        if obj and obj.content:
+            roles = Role.objects.all()
+            role_permissions = {}
+            for perm in [obj.permission]:
+                role_permissions[perm] = []
+                for role in roles:
+                    role_permissions[perm].append((role, perm.objectpermission_set.filter(role=role, content=obj) and True or False))
+            context['roles'] = roles
+            context['role_permissions'] = role_permissions
+        return super(AccessRequestAdmin, self).render_change_form(request, context,
+                                                                  add=add, change=change,
+                                                                  form_url=form_url, obj=obj)
 
     def get_form(self, request, obj=None):
         form = super(AccessRequestAdmin, self).get_form(request, obj)
