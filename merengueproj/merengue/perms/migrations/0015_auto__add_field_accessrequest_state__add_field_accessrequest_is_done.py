@@ -7,6 +7,10 @@ from south.v2 import SchemaMigration
 
 class Migration(SchemaMigration):
 
+    depends_on = (
+        ("workflow", "0001_initial"),
+    )
+
     def forwards(self, orm):
         # Adding field 'AccessRequest.state'
         db.add_column('perms_accessrequest', 'state', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['workflow.State'], null=True, blank=True), keep_default=False)
