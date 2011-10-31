@@ -99,7 +99,7 @@ class RegisteredItemQuerySet(QuerySet):
             if item.module == item_class.get_module() and item.class_name == item_class.get_class_name():
                 items.append(item)
         return items
-    _by_item_class = memoize(_by_item_class_func, _registry_lookup_cache, 2, offset=1, convert_args_func=_convert_cache_args)
+    _by_item_class = memoize(_by_item_class_func, _registry_lookup_cache, 2, offset=1, convert_args_func=_convert_cache_args, update_cache_if_empty=False)
 
     def get_by_item_class(self, item_class):
         """ obtain registered items passing by param a RegistrableItem class """
