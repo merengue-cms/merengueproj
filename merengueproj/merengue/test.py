@@ -25,6 +25,10 @@ def run_tests(test_labels, verbosity=1, interactive=True, extra_tests=[]):
     query_cache_backend = cache.get_backend()
     query_cache_backend.unpatch()
     query_cache_backend.flush_query_cache()
-    settings.CACHE_BACKEND = 'dummy://'
+    settings.CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        }
+    }
 
     return django_run_tests(test_labels, verbosity, interactive, extra_tests)
