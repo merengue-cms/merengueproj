@@ -96,7 +96,7 @@ def add_models(zip_config, models_to_save):
         model = model_to_save[0]
         file_name = model_to_save[1]
         fixtures = get_fixtures(model)
-        format = 'json'
+        format = 'xml'
         fixtures_file = "%s.%s" % (file_name, format)
         zip_config.writestr(fixtures_file, "\n".join(fixtures))
 
@@ -159,12 +159,12 @@ def add_fixtures(zip_config, plugin, plugin_path, plugin_path_zip):
     plugin_mod = load_app(plugin_modname)
     plugin_models = get_models(plugin_mod)
     fixtures = get_fixtures(plugin_models)
-    format = 'json'
+    format = 'xml'
     fixtures_file = os.path.join(plugin_path_zip, "fixtures.%s" % format)
     zip_config.writestr(fixtures_file, "\n".join(fixtures))
 
 
-def get_fixtures(model_or_models, format='json'):
+def get_fixtures(model_or_models, format='xml'):
     data = []
     format = format.lower()
     if not isinstance(model_or_models, (list, tuple)):
@@ -193,7 +193,7 @@ def add_folder(zip_config, path_root, path_zip):
                 dirnames.remove(dirname)
         for filename in filenames:
             # Exclude compiled, hidden and temporal files
-            if not (filename.endswith(".pyc") or dirname.endswith("~") or
+            if not (filename.endswith(".pyc") or filename.endswith("~") or
                 filename.startswith(".")):
                 file_path = os.path.join(dirpath, filename)
                 dir_path = dirpath.replace(path_root, path_zip)
@@ -206,6 +206,7 @@ def restore_config(zip_config):
     from merengue.block.models import RegisteredBlock
     from merengue.registry import RegisteredItem
     from merengue.pluggable.models import RegisteredPlugin
+    from merengue.pluggable.utils import install_plugin
     from merengue.theming.models import Theme
     config = get_config(zip_config)
     restore_all = (config.get("mode", "fixtures") == "all")
@@ -224,6 +225,8 @@ def restore_config(zip_config):
     if restore_all:
         # TODO: Implement "all" mode restore
         pass
+    for plugin in RegisteredPlugin.objects.filter(installed=True):
+        install_plugin(plugin)
     zip_config.close()
     print 'File restored successfully'
 
@@ -253,7 +256,7 @@ def restore_models(zip_config, models_to_restore):
         models = set()
         for model_to_restore, file_name in models_to_restore:
             model_to_restore.objects.all().delete()  # we first delete all objects to avoid duplication problems
-            format = 'json'
+            format = 'xml'
             fixtures_file_name = "%s.%s" % (file_name, format)
             fixtures_data = zip_config.read(fixtures_file_name)
             fixtures = serializers.deserialize(format, fixtures_data)
@@ -261,16 +264,15 @@ def restore_models(zip_config, models_to_restore):
             for fixture in fixtures:
                 if fixture:
                     has_objects = True
-                fixture.save()
+                    fixture.save()
                 models.add(fixture.object.__class__)
         # HACK: If we found even one object in a fixture, we need to reset
         # the database sequences.
         if has_objects:
             sequence_reset_sql(models)
-    except Exception, e:
+    except:
         transaction.savepoint_rollback(sid)
-        raise CommandError("Unable to restore models from fixtures: %s" \
-                               % e)
+        raise
     else:
         transaction.savepoint_commit(sid)
 

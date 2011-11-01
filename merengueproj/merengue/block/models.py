@@ -132,12 +132,16 @@ class RegisteredBlock(RegisteredItem):
 
 
 def pre_save_handler(sender, instance, **kwargs):
+    if kwargs.get('raw', False):
+        return  # when loading from fixtures, the registry model data maybe is not present
     block = instance.get_registry_item()
     if instance.id is None:
         block.set_default_caching()
 
 
 def post_save_handler(sender, instance, **kwargs):
+    if kwargs.get('raw', False):
+        return  # when loading from fixtures, the registry model data maybe is not present
     # invalidate block cache if exists
     block = instance.get_registry_item()
     block.invalidate_cache()
