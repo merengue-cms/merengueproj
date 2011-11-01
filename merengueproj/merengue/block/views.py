@@ -33,7 +33,7 @@ def blocks_index(request):
 
 
 def blocks_reorder(request):
-    assert_has_global_permission(user=request.user, perm=MANAGE_BLOCK_PERMISSION)
+    assert_has_global_permission(user=request.user, codename=MANAGE_BLOCK_PERMISSION)
 
     def relocate_blocks(items, cls):
         for order, item in enumerate(items):
@@ -61,7 +61,7 @@ def blocks_reorder(request):
 
 
 def generate_blocks_configuration_for_content(request, block_id):
-    assert_has_global_permission(user=request.user, perm=MANAGE_BLOCK_PERMISSION)
+    assert_has_global_permission(user=request.user, codename=MANAGE_BLOCK_PERMISSION)
     try:
         reg_block = RegisteredBlock.objects.get(id=block_id)
         block = reg_block.get_registry_item()
@@ -81,7 +81,7 @@ def generate_blocks_configuration_for_content(request, block_id):
 
 
 def generate_blocks_configuration(request, block_id):
-    assert_has_global_permission(user=request.user, perm=MANAGE_BLOCK_PERMISSION)
+    assert_has_global_permission(user=request.user, codename=MANAGE_BLOCK_PERMISSION)
     reg_block = RegisteredBlock.objects.get(id=block_id)
     block = reg_block.get_registry_item()
     config = block.get_config()
@@ -103,7 +103,7 @@ def generate_blocks_configuration(request, block_id):
 
 
 def add_block(request):
-    assert_has_global_permission(user=request.user, perm=MANAGE_BLOCK_PERMISSION)
+    assert_has_global_permission(user=request.user, codename=MANAGE_BLOCK_PERMISSION)
     if request.method == 'POST':
         form = AddBlockForm(request.POST)
         if form.is_valid():
@@ -129,14 +129,14 @@ def add_block(request):
 
 
 def remove_block(request, block_id):
-    assert_has_global_permission(user=request.user, perm=MANAGE_BLOCK_PERMISSION)
+    assert_has_global_permission(user=request.user, codename=MANAGE_BLOCK_PERMISSION)
     reg_block = RegisteredBlock.objects.get(id=block_id)
     reg_block.delete()
     return HttpResponse('ok')
 
 
 def invalidate_cache(request, block_id):
-    assert_has_global_permission(user=request.user, perm=MANAGE_BLOCK_PERMISSION)
+    assert_has_global_permission(user=request.user, codename=MANAGE_BLOCK_PERMISSION)
     reg_block = RegisteredBlock.objects.get(id=block_id)
     reg_block.get_registry_item().invalidate_cache()
     return HttpResponse('ok')
