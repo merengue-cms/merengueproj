@@ -22,7 +22,7 @@ msgstr ""
 
 #: blocks.py:33
 msgid "Events Calendar Block"
-msgstr ""
+msgstr "Bloque de calendario de eventos"
 
 #: blocks.py:46
 msgid "Events calendar"
@@ -30,7 +30,7 @@ msgstr "Calendario de Eventos"
 
 #: forms.py:35
 msgid "The end date has to be after the start date"
-msgstr ""
+msgstr "La fecha de fin debe ser posterior a la fecha de inicio"
 
 #: models.py:32
 msgid "event category"
@@ -50,7 +50,7 @@ msgstr "Fecha final"
 
 #: models.py:46
 msgid "category"
-msgstr ""
+msgstr "categoría"
 
 #: models.py:52
 msgid "event"
@@ -66,7 +66,7 @@ msgstr "Últimos eventos"
 
 #: viewlets.py:29
 msgid "Latest Event"
-msgstr ""
+msgstr "Últimos eventos"
 
 #: viewlets.py:34
 msgid "limit for event viewlet"
@@ -76,30 +76,21 @@ msgstr ""
 msgid "All events"
 msgstr "Todos los eventos"
 
-#: viewlets.py:52
-msgid "All Events"
-msgstr ""
-
 #: viewlets.py:57
 msgid "number of elements on a page"
-msgstr ""
+msgstr "número de elementos en una página"
 
 #: templates/event/block_calendar.html:29
 msgid "Loading..."
-msgstr "Cargando"
+msgstr "Cargando..."
 
 #: templates/event/event_historic.html:5
-msgid "Past Events"
-msgstr ""
-
-#: templates/event/event_historic.html:7 templates/event/event_historic.html:9
-#: templates/event/event_historic.html:15
 msgid "Past events"
-msgstr ""
+msgstr "Eventos pasados"
 
 #: templates/event/event_historic.html:13
 msgid "Events"
-msgstr ""
+msgstr "Eventos"
 
 #: templates/event/event_historic.html:13
 msgid "Event"
@@ -107,7 +98,7 @@ msgstr "Evento"
 
 #: templates/event/event_historic.html:15
 msgid "Past"
-msgstr ""
+msgstr "Pasado"
 
 #: templates/event/event_list.html:5 templates/event/event_list.html.py:7
 msgid "Events index"
@@ -119,7 +110,7 @@ msgstr "Para cualquier fecha"
 
 #: templates/event/event_list.html:13
 msgid "Events historic"
-msgstr ""
+msgstr "Eventos históricos"
 
 #: templates/event/event_view.html:11
 msgid "start date"
