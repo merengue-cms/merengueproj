@@ -46,11 +46,11 @@ msgstr ""
 
 #: blocks.py:67
 msgid "Renders the Menu"
-msgstr ""
+msgstr "Muestra el menú"
 
 #: blocks.py:68
 msgid "Core Menu Block"
-msgstr ""
+msgstr "Bloque de menú de sección"
 
 #: blocks.py:81
 msgid "Menu"
@@ -58,11 +58,11 @@ msgstr "Menú"
 
 #: blocks.py:92
 msgid "Renders the Navigation"
-msgstr ""
+msgstr "Muestra la navegación"
 
 #: blocks.py:93
 msgid "Navigation Block"
-msgstr ""
+msgstr "Bloque de navegación"
 
 #: blocks.py:109
 msgid "Navigation"
@@ -70,7 +70,7 @@ msgstr "Navegación"
 
 #: blocks.py:118
 msgid "Renders the Portal Menu"
-msgstr ""
+msgstr "Muestra el menú del portal"
 
 #: blocks.py:119
 msgid "Portal Menu Block"
@@ -94,39 +94,39 @@ msgstr "Enlaces del Portal"
 
 #: blocks.py:157
 msgid "Generic block that renders portal links"
-msgstr ""
+msgstr "Bloque genérico que muestra los enlaces del portal"
 
 #: blocks.py:158
 msgid "Portal Links Block"
-msgstr ""
+msgstr "Bloque de enlaces del portal"
 
 #: blocks.py:163
 msgid "Portal link category"
-msgstr ""
+msgstr "Categoría del enlace del portal"
 
 #: blocks.py:183
 msgid "Block with contact info"
-msgstr ""
+msgstr "Bloque con la información de contacto"
 
 #: blocks.py:184
 msgid "Contact Info block"
-msgstr ""
+msgstr "Bloque de información de contacto"
 
 #: blocks.py:197
 msgid "Contact info"
-msgstr ""
+msgstr "Información de contacto"
 
 #: blocks.py:205
 msgid "Block with the site announcements"
-msgstr ""
+msgstr "Bloque con los anuncios del portal"
 
 #: blocks.py:206
 msgid "Announcements block"
-msgstr ""
+msgstr "Bloque de anuncios"
 
 #: blocks.py:215
 msgid "Announcements"
-msgstr ""
+msgstr "Anuncios"
 
 #: config.py:48
 msgid "home initial content"
@@ -134,11 +134,11 @@ msgstr "inicio del contenido"
 
 #: config.py:50
 msgid "Login URL"
-msgstr ""
+msgstr "URL de Login"
 
 #: forms.py:32
 msgid "Section"
-msgstr ""
+msgstr "Sección"
 
 #: forms.py:34
 msgid "Choose a section where save the menu"
@@ -146,7 +146,7 @@ msgstr ""
 
 #: forms.py:40 templates/core/block_contact_info.html:15
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: forms.py:44
 msgid "How do you want link?"
@@ -170,24 +170,24 @@ msgstr ""
 
 #: forms.py:96
 msgid "Already exits a standing out in your section with this content"
-msgstr ""
+msgstr "Ya existe un elemento destacado en tu sección con este contenido"
 
 #: panels.py:47
 #, python-format
 msgid "Version: %s"
-msgstr ""
+msgstr "Versión: %s"
 
 #: templates/core/block_announcements.html:15
 msgid "Hide announcement"
-msgstr ""
+msgstr "Ocultar anuncio"
 
 #: templates/core/block_contact_info.html:21
 msgid "Phone"
-msgstr ""
+msgstr "Teléfono"
 
 #: templates/core/block_contact_info.html:28
 msgid "Phone 2"
-msgstr ""
+msgstr "Teléfono 2"
 
 #: templates/core/block_contact_info.html:35
 msgid "Fax"
@@ -207,7 +207,7 @@ msgstr ""
 
 #: templates/core/block_contact_info.html:63
 msgid "Empty contact info"
-msgstr ""
+msgstr "Información de contacto vacía"
 
 #: templates/core/hotlink.html:6
 msgid "Hot Link"
@@ -215,12 +215,12 @@ msgstr ""
 
 #: templates/core/panels/addblock.html:7
 msgid "Add blocks"
-msgstr ""
+msgstr "Añadir bloques"
 
 #: templates/core/panels/inplaceedit.html:34
 msgid "activate inline edit"
-msgstr ""
+msgstr "Edición en línea"
 
 #: templates/core/panels/invalidate_cache.html:3
 msgid "Invalidate cache"
-msgstr ""
+msgstr "Invalidar caché"
