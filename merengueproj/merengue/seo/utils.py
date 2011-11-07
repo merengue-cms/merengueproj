@@ -12,6 +12,14 @@ PRIORITY_CHOICES = {'low': 0.3,
                     'high': 1}
 
 
+def true_by_default(param):
+    return param is None or param == '1'
+
+
+def false_by_default(param):
+    return param == '1'
+
+
 def _treatment_url(domain, url):
     if url and url.startswith('/'):
         return "%s%s" % (domain, url)
