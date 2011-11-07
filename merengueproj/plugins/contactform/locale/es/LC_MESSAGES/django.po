@@ -183,7 +183,7 @@ msgstr ""
 
 #: models.py:72 models.py:141
 msgid "Subject"
-msgstr ""
+msgstr "Asunto"
 
 #: models.py:73
 msgid "fixed subject"
