@@ -35,7 +35,7 @@ from django.utils.text import capfirst
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
 
-from merengue.base.adminforms import UploadConfigForm, BackupForm
+from merengue.base.adminforms import UploadConfigForm
 from merengue.base.models import BaseContent
 from merengue.perms import utils as perms_api
 from merengue.base.actions import delete_selected
@@ -269,7 +269,6 @@ class BaseAdminSite(DjangoAdminSite):
         perms_api.assert_manage_site(request.user)
         from merengue.utils import restore_config
         form_configuration = UploadConfigForm()
-        form_backup = BackupForm()
         if request.method == 'POST':
             if request.POST.get('_submit_configuration', None):
                 form_configuration = UploadConfigForm(request.POST, request.FILES)
@@ -277,16 +276,8 @@ class BaseAdminSite(DjangoAdminSite):
                     restore_config(form_configuration.cleaned_data['zipfile'])
                     request.user.message_set.create(message=_('Settings saved successfully'))
                     form_configuration = UploadConfigForm()
-            elif request.POST.get('_submit_backup', None):
-                form_backup = BackupForm(request.POST, request.FILES)
-                if form_backup.is_valid():
-                    form_backup.save()
-                    request.user.message_set.create(message=_('Database created successfully'))
-                    form_backup = BackupForm()
         return render_to_response('admin/siteconfig.html',
-                                      {'form_configuration': form_configuration,
-                                       'form_backup': form_backup,
-                                      },
+                                      {'form_configuration': form_configuration},
                                       context_instance=RequestContext(request))
 
     def save_configuration(self, request):
