@@ -30,7 +30,7 @@ class Command(LabelCommand, MerengueCommand):
     """Based on django.core.management.commands.starproject, but handling the
     copy of the skeleton project differently."""
     option_list = LabelCommand.option_list + (
-        make_option('-d', '--copy', action='store_false', dest='develop', default=True,
+        make_option('-d', '--copy', action='store_false', dest='symlink', default=True,
             help="Copy Merengue instead of link."),
     )
     help = "Creates a Merengue project directory structure for the given project name in the current directory."
@@ -52,7 +52,7 @@ class Command(LabelCommand, MerengueCommand):
         else:
             raise CommandError("%r conflicts with the name of an existing Python module and cannot be used as a project name. Please try another name." % project_name)
 
-        copy_helper(self.style, project_name, directory, symlink=options['develop'])
+        copy_helper(self.style, project_name, directory, symlink=options['symlink'])
 
         # Create a random SECRET_KEY hash, and put it in the main settings.
         main_settings_file = os.path.join(directory, project_name, 'settings.py')

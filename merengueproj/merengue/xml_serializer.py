@@ -17,7 +17,6 @@ class Serializer(xml_serializer.Serializer):
     """
     Serializes a QuerySet to XML.
     """
-
     pass
 
 

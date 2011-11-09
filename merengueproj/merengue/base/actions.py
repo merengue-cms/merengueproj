@@ -3,7 +3,6 @@ Built-in, globally-available admin actions.
 """
 
 from django import template
-from django.core.exceptions import PermissionDenied
 from django.contrib.admin import helpers
 from django.contrib.admin.util import model_ngettext
 from django.db import router
@@ -12,6 +11,7 @@ from django.utils.encoding import force_unicode
 from django.utils.translation import ugettext_lazy, ugettext as _
 
 from merengue.base.admin_utils import get_deleted_contents
+from merengue.perms.exceptions import PermissionDenied
 
 
 def delete_selected(modeladmin, request, queryset, bypass_django_permissions=False):
@@ -29,7 +29,7 @@ def delete_selected(modeladmin, request, queryset, bypass_django_permissions=Fal
 
     # Check that the user has delete permission for the actual model
     if not modeladmin.has_delete_permission(request):
-        raise PermissionDenied
+        raise PermissionDenied(user=request.user)
 
     using = router.db_for_write(modeladmin.model)
 
@@ -41,7 +41,7 @@ def delete_selected(modeladmin, request, queryset, bypass_django_permissions=Fal
     # Do the deletion and return a None to display the change list view again.
     if request.POST.get('post'):
         if perms_needed or objects_without_delete_perm or protected:
-            raise PermissionDenied
+            raise PermissionDenied(user=request.user)
         n = queryset.count()
         if n:
             for obj in queryset:

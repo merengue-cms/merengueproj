@@ -120,7 +120,7 @@ class MemoizeCache(object):
         self._incr_cache_version()
 
 
-def memoize(func, cache, num_args, offset=0, convert_args_func=None):
+def memoize(func, cache, num_args, offset=0, convert_args_func=None, update_cache_if_empty=True):
     """
     It's like django.utils.functional.memoize but with an extra offset parameter
 
@@ -134,6 +134,18 @@ def memoize(func, cache, num_args, offset=0, convert_args_func=None):
         if mem_args in cache:
             return cache[mem_args]
         result = func(*args)
-        cache[mem_args] = result
+        if update_cache_if_empty or result:
+            cache[mem_args] = result
         return result
     return wraps(func)(wrapper)
+
+
+def reload_memoize_caches():
+    from merengue.registry.managers import _registry_lookup_cache
+    from merengue.block.utils import _blocks_lookup_cache
+    from merengue.perms.utils import _roles_cache
+    from merengue.section.models import _menu_sections_cache
+    _registry_lookup_cache.reload_if_dirty()
+    _blocks_lookup_cache.reload_if_dirty()
+    _roles_cache.reload_if_dirty()
+    _menu_sections_cache.reload_if_dirty()

@@ -1,0 +1,22 @@
+{% extends base_template %}
+
+{% load inlinetrans i18n %}
+
+{% block pagetitle %}{{ block.super }}{% trans "Access request" %}{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    {{ form.media }}
+{% endblock %}
+
+{% block content %}
+    <div id="content-title">
+      <h1 title="{% trans "Access Request"%}">{% itrans "Access request"%}</h1>
+    </div>
+    {{ block.super }}
+    <p>{% itrans "If you think you should access to this page, you can 'ask to the webmasters'" %}</p>
+    <form id="contactform" method="POST" action="{% url access_request %}" enctype="multipart/form-data">
+        {{ form.as_p }}
+        <input class="button" type="submit" value="{% trans "Access Request" %}"/>
+    </form>
+{% endblock%}

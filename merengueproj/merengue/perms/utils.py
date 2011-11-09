@@ -30,6 +30,7 @@ from django.utils.decorators import available_attrs
 # merengue imports
 from merengue.cache import memoize, MemoizeCache
 from merengue.perms import ANONYMOUS_ROLE_SLUG, PARTICIPANT_ROLE_SLUG, OWNER_ROLE_SLUG
+from merengue.perms.exceptions import PermissionDenied
 from merengue.perms.models import ObjectPermission
 from merengue.perms.models import ObjectPermissionInheritanceBlock
 from merengue.perms.models import Permission
@@ -642,6 +643,25 @@ def has_permission_in_queryset(queryset, user, codename, roles=None):
     return True
 
 
+def assert_has_permission(obj, user, codename, roles=None):
+    if not has_permission(obj, user, codename, roles):
+        raise PermissionDenied(content=obj, user=user, perm=codename)
+    return True
+
+
+def assert_has_global_permission(user, codename, roles=None):
+    if not has_global_permission(user, codename, roles):
+        raise PermissionDenied(user=user, perm=codename)
+    return True
+
+
+def assert_has_permission_in_queryset(queryset, user, codename, roles=None):
+    for obj in queryset:
+        if not has_permission(obj, user, codename, roles):
+            raise PermissionDenied(content=obj, user=user, perm=codename)
+    return True
+
+
 def can_use_permissions(obj):
     """ The obj can contains permissions """
     from merengue.base.models import BaseContent
@@ -739,6 +759,30 @@ def can_manage_multimedia(user):
 
 def can_manage_plugin_content(user):
     return has_global_permission(user, MANAGE_PLUGIN_PERMISSION)
+
+
+def assert_manage_site(user):
+    if not has_global_permission(user, MANAGE_SITE_PERMISION):
+        raise PermissionDenied(user=user, perm=MANAGE_SITE_PERMISION)
+    return True
+
+
+def assert_manage_user(user):
+    if not has_global_permission(user, MANAGE_USER_PERMISION):
+        raise PermissionDenied(user=user, perm=MANAGE_SITE_PERMISION)
+    return True
+
+
+def assert_manage_multimedia(user):
+    if not has_global_permission(user, MANAGE_MULTIMEDIA_PERMISSION):
+        raise PermissionDenied(user=user, perm=MANAGE_SITE_PERMISION)
+    return True
+
+
+def assert_manage_plugin_content(user):
+    if not has_global_permission(user, MANAGE_PLUGIN_PERMISSION):
+        raise PermissionDenied(user=user, perm=MANAGE_SITE_PERMISION)
+    return True
 
 
 def get_group(id):

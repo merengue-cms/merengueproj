@@ -228,12 +228,12 @@ class RenderSingleBlockNode(template.Node):
         if not self.block:
             return ''
         try:
-            obj = None
+            content = context.get('content', None)
             place = ''
             if not ContentBlock in self.block.__class__.mro() and not SectionBlock in self.block.__class__.mro():
                 return self.block.render(request, place, context)
             else:
-                return self.block.render(request, obj, place, context)
+                return self.block.render(request, place, content, context)
         except template.VariableDoesNotExist:
             return ''
 

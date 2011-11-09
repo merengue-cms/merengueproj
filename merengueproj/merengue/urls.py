@@ -88,7 +88,7 @@ urlpatterns = patterns('',
     # ajax_select
     (r'^ajax_select/', include('ajax_select.urls')),
 
-   # genericforeignkey
+    # genericforeignkey
     (r'^genericforeignkey/', include('genericforeignkey.urls')),
 
     # collections
@@ -101,6 +101,11 @@ urlpatterns = patterns('',
 
     # announcements
     (r'^announcements/', include('announcements.urls')),
+
+    # perms
+    url({'en': r'^perms/',
+         'es': r'^permisos/'},
+        include('merengue.perms.urls')),
 
     # other
     (r'^internal-links/', include('merengue.internallinks.urls')),

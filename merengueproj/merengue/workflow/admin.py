@@ -20,7 +20,6 @@ from django.conf import settings
 from django.contrib.admin.filterspecs import FilterSpec
 from django.contrib.admin.util import unquote
 from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
@@ -33,6 +32,7 @@ from django.utils.translation import ugettext_lazy as _
 from merengue.base.admin import RelatedModelAdmin, BaseAdmin, set_field_read_only
 from merengue.base.models import BaseContent
 from merengue.perms import utils as perms_api
+from merengue.perms.exceptions import PermissionDenied
 from merengue.perms.models import Permission, Role
 from merengue.workflow import DEFAULT_WORKFLOW
 from merengue.workflow.filterspecs import WorkflowModelRelatedFilterSpec
@@ -386,7 +386,9 @@ class ContentTypeRelatedModelAdmin(RelatedModelAdmin):
         obj = self.get_object(request, unquote(object_id))
 
         if not self.has_change_permission(request, obj):
-            raise PermissionDenied
+            raise PermissionDenied(content=obj,
+                                   user=request.user,
+                                   perm=perms_api.MANAGE_SITE_PERMISION)
 
         if obj is None or (object_ids and object_ids != [object_id]):
             raise Http404(_('%(name)s object with primary key %(key)r does not exist.') % {'name': force_unicode(self.model._meta.verbose_name), 'key': escape(object_id)})

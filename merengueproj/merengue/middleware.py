@@ -16,13 +16,23 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf import settings
+from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.utils import translation
 
+from merengue.perms.views import access_request
 
-class HttpStatusCodeRendererMiddleware(object):
+
+class HttpStatusCode403Provider(object):
+
+    def process_exception(self, request, exception):
+        if isinstance(exception, PermissionDenied):
+            return access_request(request, exception)
+
+
+class HttpStatusCodeRendererMiddleware(HttpStatusCode403Provider):
     """This middleware render a template when an error code (not 500) is found"""
 
     def process_response(self, request, response):

@@ -1,0 +1,29 @@
+{% load i18n %}
+<div>
+    <div id="changeform" class="module">
+        <table cellspacing="0">
+            <thead>
+                <tr>
+                <th>{% trans "Permissions"%}</th>
+                {% for role in roles %}
+                <th>{{ role }}</th>
+                {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for perm, roles in role_permissions.items %}
+                    <tr class="{% cycle 'row1' 'row2' %}">
+                        <td>{{ perm }}</td>
+                        {% for role, checked in roles %}
+                        {% if enable_edit %}
+                          <td><input type="checkbox" {% if checked %}checked="checked"{% endif %} class="action-select" value="{{ role.id}}_{{ perm.id }}" name="selected_perm" /></td>
+                        {% else %}
+                          <td>{% if checked %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}</td>
+                        {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

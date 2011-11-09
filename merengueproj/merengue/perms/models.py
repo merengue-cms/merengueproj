@@ -201,6 +201,31 @@ class PrincipalRoleRelation(models.Model):
             return u"%s / %s" % (self.user or self.group, self.role)
 
 
+class AccessRequest(models.Model):
+
+    url = models.CharField(verbose_name=_(u"URL"), max_length=250)
+    access_time = models.DateTimeField(verbose_name=_(u"Access Time"))
+    content = models.ForeignKey(BaseContent, verbose_name=_(u"content"), blank=True, null=True)
+    state = models.ForeignKey('workflow.State', verbose_name=_(u"State"),
+                              blank=True, null=True,
+                              help_text=_('State of the content in that moment of access request'))
+    user = models.ForeignKey(User, verbose_name=_(u"User"), blank=True, null=True)
+    permission = models.ForeignKey(Permission, verbose_name=_(u"Permission requested"),
+                                   blank=True, null=True,
+                                   help_text=_('Permission requested by the user'))
+    roles = models.ManyToManyField(Role, verbose_name=_(u"Roles"), blank=True, null=True,
+                                   help_text=_('Roles of the user in the moment of access request, for this content'))
+    request_notes = models.TextField(verbose_name=_('Request notes'),
+                                     null=True, blank=True)
+    owners = models.ManyToManyField(User, verbose_name=_(u"Owners"), blank=True, null=True, related_name='access_review')
+    is_done = models.BooleanField(verbose_name=_(u'is done'), default=False)
+
+    def __unicode__(self):
+        if self.content:
+            return unicode(self.content)
+        return self.url
+
+
 def clear_permission_cache_handler(sender, instance, **kwargs):
     from merengue.perms.utils import clear_cache
     clear_cache()

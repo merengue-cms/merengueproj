@@ -15,10 +15,9 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
-#from django.db import connection
 from django.db.models import get_model
 from django.http import (HttpResponseRedirect, HttpResponsePermanentRedirect,
                          Http404, HttpResponse)
@@ -101,9 +100,7 @@ def render_content(request, content, template_name=None, extra_context=None):
 
 def content_view(request, content, template_name=None, extra_context=None):
     """ Generic view for a content detail page """
-    has_view = perms_api.has_permission(content, request.user, 'view')
-    if not has_view:
-        raise PermissionDenied
+    perms_api.assert_has_permission(content, request.user, 'view')
     if content._meta.content_view_function is not None:
         func_path = content._meta.content_view_function
         func_path_join = func_path.split('.')

@@ -36,6 +36,5 @@ class PluginConfig(Plugin):
         return [(ImageSize, ImageSizeAdmin)]
 
     def get_notifications(self):
-        _("Invitation Received"), _("you have received an invitation")
         return [('imagesize_images', _('Images bigger thant expected'), _('Images bigger thant expected')),
                 ('imagesize_broken', _("Image directory doesn't exists"), _("Image directory doesn't exists"))]

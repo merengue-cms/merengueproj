@@ -22,7 +22,7 @@ from django.contrib.admin import ModelAdmin
 from django.contrib.admin.sites import AdminSite as DjangoAdminSite
 from django.contrib.admin.sites import AlreadyRegistered
 from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db.models.base import ModelBase
@@ -266,8 +266,7 @@ class BaseAdminSite(DjangoAdminSite):
         )
 
     def site_configuration(self, request):
-        if not perms_api.can_manage_site(request.user):
-            raise PermissionDenied
+        perms_api.assert_manage_site(request.user)
         from merengue.utils import restore_config
         form_configuration = UploadConfigForm()
         form_backup = BackupForm()

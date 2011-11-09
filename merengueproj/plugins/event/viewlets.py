@@ -49,7 +49,7 @@ class LatestEventViewlet(ViewLetQuerySetItemProvider, Viewlet):
 class AllEventViewlet(ViewLetQuerySetItemProvider, Viewlet):
     name = 'allevent'
     help_text = _('All events')
-    verbose_name = _('All Events')
+    verbose_name = _('All events')
 
     config_params = ViewLetQuerySetItemProvider.config_params + [
         params.Single(

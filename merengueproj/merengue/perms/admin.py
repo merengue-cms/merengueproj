@@ -20,22 +20,24 @@ from django.conf import settings
 from django.conf.urls.defaults import patterns
 from django.contrib import admin
 from django.contrib.admin.widgets import FilteredSelectMultiple
-from django.core.exceptions import PermissionDenied
-from django.shortcuts import render_to_response, get_object_or_404
-from django.template import RequestContext
-from django.http import HttpResponseRedirect
-from django.utils.translation import ugettext as _
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.contrib.auth.admin import GroupAdmin as DjangoGroupAdmin
 from django.contrib.auth.models import User, Group
-from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
+from django.db.models import Q
+from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response, get_object_or_404
+from django.template import RequestContext
+from django.template.loader import render_to_string
+from django.utils.translation import ugettext as _
 
-from merengue.perms import ANONYMOUS_ROLE_SLUG
-from merengue.perms.models import ObjectPermission, Permission, PrincipalRoleRelation, Role
-from merengue.perms.forms import UserChangeForm, GroupForm, PrincipalRoleRelationForm
-from merengue.perms.utils import add_role, remove_role, can_manage_user
 from merengue.base.widgets import ReadOnlyWidget
+from merengue.perms import ANONYMOUS_ROLE_SLUG
+from merengue.perms.exceptions import PermissionDenied
+from merengue.perms.forms import UserChangeForm, GroupForm, PrincipalRoleRelationForm
+from merengue.perms.models import (ObjectPermission, Permission, PrincipalRoleRelation,
+                                   Role, AccessRequest)
+from merengue.perms.utils import add_role, remove_role, can_manage_user, get_roles, MANAGE_USER_PERMISION
 
 
 class PermissionAdmin(admin.ModelAdmin):
@@ -137,7 +139,9 @@ class PermissionAdmin(admin.ModelAdmin):
         has_perm = request.user.has_perm(opts.app_label + '.' + opts.get_change_permission())
         obj = get_object_or_404(self.model, pk=object_id).get_real_instance()
         if not self.has_change_permission(request, obj):
-            raise PermissionDenied
+            raise PermissionDenied(content=obj,
+                                   user=request.user,
+                                   perm=MANAGE_USER_PERMISION)
         prr_form = None
         if request.method == 'POST':
             if '_continue_role_relation' in request.POST:
@@ -247,7 +251,8 @@ class ObjectPermissionAdmin(PermissionAdmin):
 
     def change_roles_permissions(self, request):
         if not can_manage_user(request.user):
-            raise PermissionDenied
+            raise PermissionDenied(user=request.user,
+                                   perm=MANAGE_USER_PERMISION)
         opts = self.model._meta
         admin_site = self.admin_site
         has_perm = request.user.has_perm(opts.app_label + '.' + opts.get_change_permission())
@@ -420,8 +425,101 @@ class GroupAdmin(DjangoGroupAdmin):
                 remove_role(obj, role)
 
 
+class AccessRequestAdmin(admin.ModelAdmin):
+
+    list_display = ('access_request', 'access_time', 'user', 'is_done', )
+    list_filter = ('is_done', 'access_time', 'user', )
+    exclude = ('url',)
+    access_fields = ('url_link', 'access_time', 'permission', )
+    content_fields = ('content', 'state', 'current_permission_by_roles', )
+    user_fields = ('user', 'roles', 'current_roles')
+    info_fields = ('request_notes', )
+    action_fields = ('url_admin_perms', 'is_done',)
+
+    readonly_fields = access_fields + content_fields + user_fields + info_fields + ('url_admin_perms', )
+
+    fieldsets = ((_('Access data'), {
+                    'fields': access_fields}),
+                 (_('User data'), {
+                    'fields': user_fields}),
+                 (_('Info data'), {
+                    'fields': info_fields}),
+                 (_('Content data'), {
+                    'fields': content_fields}),
+                 (_('Actions'), {
+                    'fields': action_fields}))
+
+    def access_request(self, obj):
+        return unicode(obj)
+    access_request.short_description = _('Content')
+
+    def current_roles(self, obj):
+        role_ano = unicode(Role.objects.get(slug=ANONYMOUS_ROLE_SLUG))
+        roles_str = None
+        if obj.user:
+            roles = get_roles(obj.user, obj.content)
+            roles_str = ', '.join([unicode(role) for role in roles])
+        if not roles_str:
+            return role_ano
+        return u'%s, %s' % (role_ano, roles_str)
+    current_roles.short_description = _('Current roles')
+    current_roles.help_text = _('Roles of the user in this moment, for this content')
+
+    def current_permission_by_roles(self, obj):
+        if obj.permission:
+            permissions = [obj.permission]
+        else:
+            permissions = Permission.objects.all()
+        roles = Role.objects.all()
+        role_permissions = {}
+        for perm in permissions:
+            role_permissions[perm] = []
+            for role in roles:
+                role_permissions[perm].append((role, perm.objectpermission_set.filter(role=role, content=obj) and True or False))
+        context = {}
+        context['roles'] = roles
+        context['role_permissions'] = role_permissions
+        return render_to_string('admin/perms/inc.table_permission_by_roles.html', context)
+    current_permission_by_roles.short_description = _('Current permission by roles')
+    current_permission_by_roles.allow_tags = True
+
+    def url_admin_perms(self, obj):
+        if obj.content:
+            url = '%smanage_permissions/' % obj.content.get_admin_absolute_url()
+            return '<a href="%s" target="_blank">%s</a>' % (url, _('Change permissions'))
+        return ''
+    url_admin_perms.short_description = _('Change permissions')
+    url_admin_perms.allow_tags = True
+
+    def url_link(self, obj):
+        return '<a href="%s" target="_blank">%s</a>' % (obj.url, obj.url)
+    url_link.short_description = _('URL')
+    url_link.allow_tags = True
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        user = request.user
+        if user.is_superuser:
+            return True
+        elif not user.is_authenticated():
+            return False
+        elif not obj and user.is_staff:
+            return True
+        return user in obj.owners.all()
+
+    def queryset(self, request):
+        queryset = super(AccessRequestAdmin, self).queryset(request)
+        user = request.user
+        if not user.is_superuser:
+            queryset = queryset.filter(owners=user)
+        return queryset
+
+
 def register(site):
     site.register(ObjectPermission, ObjectPermissionAdmin)
     site.register(Role, RoleAdmin)
     site.register(User, UserAdmin)
     site.register(Group, GroupAdmin)
+    site.register(AccessRequest, AccessRequestAdmin)
