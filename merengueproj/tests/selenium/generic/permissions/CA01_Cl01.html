@@ -38,6 +38,36 @@
 </tr>
 <tr>
 	<td>click</td>
+	<td>link=Plugin administration</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#plugins &gt; dl &gt; dt &gt; a[title=Plugins]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Micro Sites</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id_installed</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Content management</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
 	<td>link=User management</td>
 	<td></td>
 </tr>
@@ -158,7 +188,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Browser by type</td>
+	<td>link=Browse by type</td>
 	<td></td>
 </tr>
 <tr>
@@ -328,7 +358,7 @@
 </tr>
 <tr>
 	<td>open</td>
-	<td>http://beta.merengue.yaco.es/admin/microsite/microsite/323/newsitem/add/?testing=1</td>
+	<td>/admin/microsite/microsite/323/newsitem/add/?testing=1</td>
 	<td></td>
 </tr>
 <tr>
@@ -458,7 +488,7 @@
 </tr>
 <tr>
 	<td>verifyTextPresent</td>
-	<td>The news item "News1" was changed successfully. You may edit it again below.</td>
+	<td>The news item &quot;News1&quot; was changed successfully. You may edit it again below.</td>
 	<td></td>
 </tr>
 <tr>
@@ -533,7 +563,7 @@
 </tr>
 <tr>
 	<td>verifyTextPresent</td>
-	<td>The news item "News1" was deleted successfully.</td>
+	<td>The news item &quot;News1&quot; was deleted successfully.</td>
 	<td></td>
 </tr>
 <tr>
@@ -548,7 +578,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Browse by type </td>
+	<td>link=Browse by type</td>
 	<td></td>
 </tr>
 <tr>
@@ -628,10 +658,39 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
+	<td>link=Plugin administration</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#plugins &gt; dl &gt; dt &gt; a[title=Plugins]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Micro Sites</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id_installed</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id_active</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>_save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
 	<td>link=Log out</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>
