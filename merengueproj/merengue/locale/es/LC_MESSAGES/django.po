@@ -894,15 +894,15 @@ msgstr ""
 
 #: base/templatetags/admin_tags.py:95
 msgid "Add new"
-msgstr ""
+msgstr "Añadir nuevo"
 
 #: base/templatetags/content_filters.py:34
 msgid "yes,no,maybe"
-msgstr ""
+msgstr "sí,no,quizás"
 
 #: base/templatetags/map_tags.py:284
 msgid "What is there nearby?"
-msgstr ""
+msgstr "¿Qué hay cerca?"
 
 #: base/templatetags/related_admin_tags.py:85 templates/admin/base.html:99
 #: templates/admin/delete_confirmation_various.html:6
@@ -917,7 +917,7 @@ msgstr "Inicio"
 #: base/templatetags/related_admin_tags.py:89
 #, python-format
 msgid "%(plugin_name)s plugin"
-msgstr ""
+msgstr "plugin %(plugin_name)s"
 
 #: base/templatetags/related_admin_tags.py:92
 #: base/templatetags/related_admin_tags.py:95
@@ -931,21 +931,20 @@ msgid "Add"
 msgstr "Añadir"
 
 #: base/templatetags/related_admin_tags.py:112
-#, fuzzy
 msgid "admin"
-msgstr "Ir a la administración"
+msgstr "admin"
 
 #: block/admin.py:48 block/templates/admin/block/change_form.html:8
 msgid "Cache parameters"
-msgstr ""
+msgstr "Parámetros de caché"
 
 #: block/admin.py:83
 msgid "block content related"
-msgstr ""
+msgstr "Bloques relacionados"
 
 #: block/admin.py:88
 msgid "Visibility when duplicated blocks"
-msgstr ""
+msgstr "Visibilidad cuando hay bloques duplicados"
 
 #: block/blocks.py:48
 msgid "css class to add to this block"
@@ -993,7 +992,7 @@ msgstr ""
 
 #: block/forms.py:124
 msgid "Select block type"
-msgstr ""
+msgstr "Seleccionar tipo de bloque"
 
 #: block/forms.py:128
 msgid "Scope"
@@ -1057,7 +1056,7 @@ msgstr ""
 
 #: block/models.py:34
 msgid "After content title"
-msgstr ""
+msgstr "Después del título del contenido"
 
 #: block/models.py:35
 msgid "Before content body"
@@ -1065,31 +1064,31 @@ msgstr "Antes del cuerpo del contenido"
 
 #: block/models.py:36
 msgid "Home page"
-msgstr ""
+msgstr "Página de inicio"
 
 #: block/models.py:37
 msgid "After content body"
-msgstr ""
+msgstr "Después del cuerpo del contenido"
 
 #: block/models.py:38
 msgid "Header"
-msgstr ""
+msgstr "Cabecera"
 
 #: block/models.py:39
 msgid "Footer"
-msgstr ""
+msgstr "Pié"
 
 #: block/models.py:40
 msgid "Meta-information, links, js..."
-msgstr ""
+msgstr "Meta-información, links, js..."
 
 #: block/models.py:47
 msgid "placed at"
-msgstr ""
+msgstr "situado en"
 
 #: block/models.py:49
 msgid "shown in urls"
-msgstr ""
+msgstr "mostrado en URLs"
 
 #: block/models.py:51
 msgid ""
@@ -1118,7 +1117,7 @@ msgstr ""
 
 #: block/models.py:65
 msgid "disable the activation and desactivation of the block"
-msgstr ""
+msgstr "deactivar la activación y desactivación del bloque"
 
 #: block/models.py:68
 msgid "block can't be moved from its default place"
@@ -1130,7 +1129,7 @@ msgstr ""
 
 #: block/models.py:73
 msgid "Activate cache for this block. The HTML rendered will be cached"
-msgstr ""
+msgstr "Activar caché para el bloque. El HTML renderizado será cacheado"
 
 #: block/models.py:76
 msgid "timeout"
@@ -1138,35 +1137,35 @@ msgstr ""
 
 #: block/models.py:77
 msgid "Time that block remained in cache in seconds. \"0\" means forever"
-msgstr ""
+msgstr "Tiempo que el bloque permanecerá cacheado en segundos. \"0\" significa para siempre"
 
 #: block/models.py:80
 msgid "Cached is applied only for anonymous"
-msgstr ""
+msgstr "La caché se aplica sólo para anónimos"
 
 #: block/models.py:83
 msgid "Cached vary on authenticated user"
-msgstr ""
+msgstr "La caché varía según el usuario autenticado"
 
 #: block/models.py:86
 msgid "Cache vary on the request URL"
-msgstr ""
+msgstr "La caché varía según la URL solicitada"
 
 #: block/models.py:89
 msgid "Cache vary on language"
-msgstr ""
+msgstr "La caché varía según el idioma"
 
 #: block/models.py:92
 msgid "related content"
-msgstr ""
+msgstr "contenido relacionado"
 
 #: block/models.py:94
 msgid "overwrite block if the place is the same"
-msgstr ""
+msgstr "sobreescribir bloque si el lugar es el mismo"
 
 #: block/models.py:97
 msgid "overwrite generic block if is present on the actual page"
-msgstr ""
+msgstr "sobreescribir bloque si está presente en la misma página"
 
 #: block/views.py:79 registry/fields.py:30 registry/models.py:41
 msgid "Configuration"
@@ -1174,11 +1173,11 @@ msgstr "Configuración"
 
 #: block/views.py:79
 msgid "Block specific configuration"
-msgstr ""
+msgstr "Configuración específica del bloque"
 
 #: block/templates/admin/block/change_form.html:10
 msgid "This block is defined as non cacheable. You cannot cache this block"
-msgstr ""
+msgstr "Este bloque está definido como no cacheable. No puedes cachear este bloque"
 
 #: block/templates/blocks/add_block.html:6
 #: block/templates/blocks/block_container.html:11
@@ -1187,7 +1186,7 @@ msgstr "Añadir nuevo bloque"
 
 #: block/templates/blocks/block_config.html:9
 msgid "Save configuration"
-msgstr ""
+msgstr "Guardar configuración"
 
 #: block/templates/blocks/block_config.html:12
 msgid "Go to admin"
@@ -1195,25 +1194,23 @@ msgstr "Ir a la administración"
 
 #: block/templates/blocks/header.html:44
 msgid "Enable/disable blocks dragging"
-msgstr ""
+msgstr "Activar/desactivar el arrastre del bloque"
 
 #: block/templates/blocks/header.html:56
 msgid "Configure block"
-msgstr ""
+msgstr "Configurar bloque"
 
 #: block/templates/blocks/header.html:64
-#, fuzzy
 msgid "Invalidate cache"
-msgstr "Formato de imagen inválido"
+msgstr "Invalidar caché"
 
 #: block/templates/blocks/header.html:71
 msgid "Remove block"
 msgstr "Eliminar bloque"
 
 #: block/templates/blocks/header.html:95
-#, fuzzy
 msgid "Are you sure you want to invalidate the cache of this block"
-msgstr "¿Estás seguro que quieres eliminar el siguiente archivo?"
+msgstr "¿Estás seguro que quieres eliminar la caché de este bloque?"
 
 #: block/templates/blocks/header.html:121
 msgid "Are you sure you want to remove this block"
@@ -1225,23 +1222,23 @@ msgstr "Arrastre aquí"
 
 #: collab/forms.py:78
 msgid "translation language"
-msgstr ""
+msgstr "idioma de traducción"
 
 #: collab/forms.py:79
 msgid "translation"
-msgstr ""
+msgstr "traducción"
 
 #: collab/models.py:28
 msgid "Just set status"
-msgstr ""
+msgstr "Sólo define el estado"
 
 #: collab/models.py:29
 msgid "Display an alternative comment in public view"
-msgstr ""
+msgstr "Muestra un comentario alternativo en la vista pública"
 
 #: collab/models.py:30
 msgid "Hide comment from public view"
-msgstr ""
+msgstr "Oculta comentario en la vista pública"
 
 #: collab/models.py:43
 msgid "label"
@@ -1249,11 +1246,11 @@ msgstr "etiqueta"
 
 #: collab/models.py:62
 msgid "decorator"
-msgstr ""
+msgstr "decorador"
 
 #: collab/models.py:69
 msgid "result"
-msgstr ""
+msgstr "resultado"
 
 #: collab/models.py:73
 msgid "Select the resulting action this status trigger"
@@ -1261,27 +1258,27 @@ msgstr ""
 
 #: collab/models.py:77
 msgid "reason"
-msgstr ""
+msgstr "razón"
 
 #: collab/models.py:90
 msgid "content type"
-msgstr ""
+msgstr "tipo de contenido"
 
 #: collab/models.py:94
 msgid "object ID"
-msgstr ""
+msgstr "ID del objeto"
 
 #: collab/models.py:112
 msgid "user's name"
-msgstr ""
+msgstr "nombre del usuario"
 
 #: collab/models.py:117
 msgid "user's email address"
-msgstr ""
+msgstr "dirección de correo del usuario"
 
 #: collab/models.py:121
 msgid "user's URL"
-msgstr ""
+msgstr "URL del usuario"
 
 #: collab/models.py:127
 msgid "comment user type"
@@ -1289,87 +1286,87 @@ msgstr "Tipo de comentario"
 
 #: collab/models.py:131
 msgid "comment"
-msgstr ""
+msgstr "comentario"
 
 #: collab/models.py:135
 msgid "date/time submitted"
-msgstr ""
+msgstr "fecha/hora enviada"
 
 #: collab/models.py:140
 msgid "IP address"
-msgstr ""
+msgstr "dirección IP"
 
 #: collab/models.py:148
 msgid "collaborative comment"
-msgstr ""
+msgstr "comentario colaborativo"
 
 #: collab/models.py:149
 msgid "collaborative comments"
-msgstr ""
+msgstr "comentarios colaborativos"
 
 #: collab/models.py:174
 msgid "revised comment"
-msgstr ""
+msgstr "comentario revisado"
 
 #: collab/models.py:188
 msgid "revised comment status"
-msgstr ""
+msgstr "estado del comentario revisado"
 
 #: collab/models.py:192
 msgid "date/time revised"
-msgstr ""
+msgstr "fecha/hora de revisión"
 
 #: collab/models.py:198
 msgid "short comment"
-msgstr ""
+msgstr "comentario corto"
 
 #: collab/views.py:60
 msgid "Your comment has been added"
-msgstr ""
+msgstr "Tu comentario ha sido añadido"
 
 #: collab/views.py:93
 msgid "Your revisor status has been added"
-msgstr ""
+msgstr "Tu estado de revisión ha sido añadido"
 
 #: collab/views.py:191
 msgid "Your translation has been saved"
-msgstr ""
+msgstr "Tu traducción ha sido guardada"
 
 #: collab/templates/collab/collaborative_comments_add.html:9
 msgid "Add comment"
-msgstr ""
+msgstr "Añadir comentario"
 
 #: collab/templates/collab/collaborative_comments_list.html:6
 msgid "There are no comments yet"
-msgstr ""
+msgstr "No hay más comentarios aún"
 
 #: collab/templates/collab/collaborative_comments_list_item.html:25
 msgid "By"
-msgstr ""
+msgstr "Por"
 
 #: collab/templates/collab/collaborative_comments_list_item.html:28
 msgid "Revision History"
-msgstr ""
+msgstr "Historia de revisión"
 
 #: collab/templates/collab/collaborative_comments_list_item.html:46
 msgid "Revisor"
-msgstr ""
+msgstr "Revisor"
 
 #: collab/templates/collab/collaborative_comments_list_item.html:55
 msgid "Revise this comment"
-msgstr ""
+msgstr "Revisa este comentario"
 
 #: collab/templates/collab/collaborative_comments_revise.html:9
 msgid "Add revision"
-msgstr ""
+msgstr "Añadir revisión"
 
 #: collab/templates/collab/collaborative_comments_view.html:14
 msgid "Comments"
-msgstr ""
+msgstr "Comentarios"
 
 #: collab/templates/collab/collaborative_comments_view.html:19
 msgid "add comment"
-msgstr ""
+msgstr "añadir comentario"
 
 #: collab/templates/collab/collaborative_translation.html:7
 #: collab/templates/collab/collaborative_translation_edit.html:15
@@ -1429,9 +1426,8 @@ msgid "feed collections"
 msgstr "colecciones de fuente"
 
 #: collection/admin_bk.py:183
-#, fuzzy
 msgid "display fields"
-msgstr "Campos de visualización de la colección"
+msgstr "campos de visualización"
 
 #: collection/admin_bk.py:224
 #, fuzzy
@@ -2479,7 +2475,7 @@ msgstr "borrador"
 
 #: section/models.py:127
 msgid "visible menus"
-msgstr "Menús visibles"
+msgstr "Roles que ven el menú"
 
 #: section/models.py:130
 msgid "The roles that will see this menu"
@@ -2514,21 +2510,20 @@ msgid "section"
 msgstr "sección"
 
 #: section/models.py:379
-#, fuzzy
 msgid "sections"
-msgstr "sección"
+msgstr "secciones"
 
 #: section/models.py:473
 msgid "document"
-msgstr ""
+msgstr "documento"
 
 #: section/models.py:494
 msgid "Parent document"
-msgstr ""
+msgstr "Documento padre"
 
 #: section/models.py:503
 msgid "body"
-msgstr ""
+msgstr "cuerpo"
 
 #: section/models.py:509
 msgid "document section"
@@ -2536,19 +2531,19 @@ msgstr "sección de documento"
 
 #: section/models.py:529
 msgid "Can not move to non existing position"
-msgstr ""
+msgstr "No puede moverlo a una posición no existente"
 
 #: section/models.py:553
 msgid "Trying to save DocumentSection into an existing position"
-msgstr ""
+msgstr "Intentando guardar una sección de documento en una posición existente"
 
 #: section/models.py:575
 msgid "css chunk"
-msgstr ""
+msgstr "fragmento CSS"
 
 #: section/models.py:581
 msgid "custom sytle"
-msgstr ""
+msgstr "estilo personalizado"
 
 #: section/models.py:582
 msgid "custom styles"
@@ -3015,7 +3010,7 @@ msgstr ""
 
 #: templates/admin/merengue_index_base.html:68
 msgid "Manage the possible site's workflows."
-msgstr ""
+msgstr "Gestiona los posibles workflows del sitio."
 
 #: templates/admin/merengue_index_base.html:69
 msgid "Actions"
@@ -3049,7 +3044,7 @@ msgstr "Guardar/restaurar la configuración"
 #: templates/admin/merengue_index_base.html:76
 msgid ""
 "Save/restore the site configuration (block, plugins, active theme, etc.)"
-msgstr ""
+msgstr "Guardar/restaurar la configuración (bloques, plugins, temas gráficos, etc.)"
 
 #: templates/admin/merengue_index_base.html:84
 msgid "View, edit and delete the site's groups."
