@@ -1,5 +1,11 @@
 {% load i18n media_tags compress %}
 
+{% compress js %}
+  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/mootools.v1.11.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/shadowbox/shadowbox-mootools.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/shadowbox/shadowbox.js"></script>
+{% endcompress %}
+
 <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript">
  jQuery.noConflict();
@@ -11,9 +17,6 @@
 {% endaddmedia %}
 
 {% addmedia "js" %}
-  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/mootools.v1.11.js"></script>
-  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/shadowbox/shadowbox-mootools.js"></script>
-  <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/shadowbox/shadowbox.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/jquery-notify/src/jquery.notify.min.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/multimedia/jquery.slideshow.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/jquery.form.js" type="text/javascript"></script>

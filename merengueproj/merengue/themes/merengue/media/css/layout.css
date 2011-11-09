@@ -55,6 +55,10 @@ span.translatable {
     background-image: none!important;
     padding: 0 !important;
     margin: 0 !important;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    right: 0;
 }
 
 
@@ -959,12 +963,18 @@ table.gsc-search-box td.gsc-input {
 #right-sidebar .blockContainer div#voting {
     border: none;
     padding: 0;
+    float: none;
+    margin: 0.2em auto 0 auto;
+}
+
+#right-sidebar #voting span.current-votes {
+    margin-left: 1em;
 }
 
 .blockContainer div#voting {
   float: right;
   margin: 0.2em 0 0 0.5em;
-  padding: 0.7em 0.7em 1em 0.7em;;
+  padding: 0.7em 0.7em 1em 0.7em;
   border: 1px dotted #CDA873;
 }
 
@@ -978,13 +988,28 @@ table.gsc-search-box td.gsc-input {
   left: 17px;
   bottom: -10px;
 }
+
+#right-sidebar #voting .star-rating ol {
+    left: 55px;
+}
+
+#right-sidebar #voting div.blockBody {
+    padding-bottom: 1.6em;
+}
+
+#right-sidebar #voting .star-rating a span {
+    left: 0;
+    bottom: -18px;
+}
+
 .star-rating {
   font-size: 11px;
   padding:0.2em;
 }
-.star-rating ol {
-  left: 4em !important;
-  top: -2px !important;
+
+#voting .star-rating ol {
+  left: 4em;
+  top: -2px;
 }
 
 /*---- pagination ----*/

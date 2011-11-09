@@ -687,10 +687,12 @@ from source code)::
         access_log  logs/yoursite.yourdomain.access.log;
 
         location /media/ {
+            expires max;
             alias /home/user/yoursite/media/;
         }
 
         location /admin_media/ {
+            expires max;
             alias /home/user/yoursite/media/admin/;
         }
 

@@ -74,7 +74,7 @@ class Command(AppCommand, MerengueCommand):
             apps = app_labels
         else:
             apps = [app for app in settings.INSTALLED_APPS \
-                    if not app.startswith('plugins.')]
+                    if not app.startswith('plugins.')] + ['merengue']
 
         print "Traversing apps: %s" % get_text_list(apps, 'and')
         for app in apps:

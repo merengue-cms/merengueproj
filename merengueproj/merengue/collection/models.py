@@ -35,6 +35,7 @@ from django.utils.translation import ugettext_lazy as _
 from transmeta import get_real_fieldname, fallback_language
 
 from merengue.base.models import BaseContent
+from merengue.section.models import BaseSection
 from merengue.collection import filter_funcs
 from merengue.collection.exceptions import CollectionWithoutContentTypesException
 
@@ -140,8 +141,10 @@ class Collection(BaseContent):
 
     def _reduce_to_section(self, query, section=None):
         try:
-            if section:
+            if isinstance(section, BaseSection):
                 query = query.filter(sections=section)
+            elif isinstance(section, basestring):
+                query = query.filter(sections__slug=section)
         except FieldError:
             pass
         return query

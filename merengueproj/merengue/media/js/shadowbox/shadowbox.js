@@ -2546,7 +2546,7 @@ HTML snapshot:
                 h = dims.height;
                 w = (h-(controls?20:0))/a; // maintain aspect ratio
                 var flashvars = Shadowbox.parseJSON(obj.el.getAttribute("flashvars"));
-                flashvars["plugins"] = {"rtmp": {"url":"/media/merengue/flash/flowplayer.rtmp-3.2.3.swf",}}
+                flashvars["plugins"] = {"rtmp": {"url":"/media/merengue/flash/flowplayer.rtmp-3.2.3.swf"}}
                 markup.type = 'application/x-shockwave-flash';
                 markup.data = options.assetURL + options.flvPlayer;
                 markup.children = [

@@ -565,10 +565,6 @@ def has_permission(obj, user, codename, roles=None):
     if user.is_superuser:
         return True
 
-    if not can_use_permissions(obj):
-        # object does not support permissions
-        return False
-
     # try to get from cache
     cached_perm = get_from_cache(user, obj, codename, roles)
     if cached_perm is not None:
@@ -585,6 +581,10 @@ def has_permission(obj, user, codename, roles=None):
         # which adquire global permissions and global_perm is True and there is
         # not need to further processing
         return global_perm
+
+    if not can_use_permissions(obj):
+        # object does not support permissions
+        return False
 
     if user.is_anonymous():
         user = None

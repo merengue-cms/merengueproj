@@ -1,6 +1,6 @@
 {% extends "block.html" %}
 
-{% load thumbnail inlinetrans %}
+{% load thumbnail inlinetrans inplace_edit %}
 
 {% block blocktitle %}{% endblock %}
 
@@ -14,7 +14,7 @@
         <img src="{{ thumb.url }}" alt="{{ highlight }}" class="floatImage"/>
        {% endthumbnail %}
       {% endif %}
-      <p>{{ highlight.description|safe }}</p>
+      <p>{% inplace_edit "highlight.description|safe" %}</p>
       <div class="visualClear"></div>
     {% endwith %}
     </div>

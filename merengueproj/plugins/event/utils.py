@@ -15,47 +15,30 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-import datetime
-
-from django.db.models import Q
 from django.core.urlresolvers import reverse
+
+from plugins.event.managers import get_first_day_of_month, get_last_day_of_month
 
 
 def getEventsMonthYear(month, year, events):
-    filters = (
-        Q(start__month=month, start__year=year) |
-        Q(end__month=month, end__year=year),
-        Q(status='published'),
-        )
-    if not events.query.can_filter():
-        events = events.model.objects.filter(id__in=events.values('id').query)
-    events.filter(*filters)
+    events = events.model.objects.by_month(month=month, year=year).filter(id__in=events.values('id').query)
+    start_date = get_first_day_of_month(month, year)
+    end_date = get_last_day_of_month(month, year)
     events_dic = {}
-    for event in (i for i in events if i.is_published()):
-        event_date = event.start
-        while (event.start.month <= month <= event.end.month
-            and event_date <= event.end):
-            if event_date.month < month:
-                event_date += datetime.timedelta(1)
-                continue
-            elif event_date.month > month:
-                break
-
-            key = "%s-%s-%s" % (event_date.year, event_date.month,
-                                event_date.day)
+    for event in events:
+        days = event.get_days_actives(start_date, end_date)
+        event_url = event.get_absolute_url()
+        for day in days:
+            key = "%s-%s-%s" % (day.year, day.month,
+                                day.day)
             if key not in events_dic:
                 events_dic[key] = {}
-                events_dic[key]['name'] = []
-                events_dic[key]['url'] = event.public_link()
+                events_dic[key]['name'] = event.name
+                events_dic[key]['url'] = event_url
             else:
+                events_dic[key]['name'] += '<br/> %s' % event.name
                 events_dic[key]['url'] = reverse("plugins.event.views.event_list",
-                                            args=(event_date.year,
-                                                  event_date.month,
-                                                  event_date.day))
-
-            events_dic[key]['name'].append(event.name)
-            event_date += datetime.timedelta(1)
-    for key in events_dic:
-        html = '<br/>'.join('%s' % i for i in events_dic[key]['name'])
-        events_dic[key]['name'] = html
+                                                  args=(day.year,
+                                                        day.month,
+                                                        day.day))
     return events_dic

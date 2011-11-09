@@ -2,10 +2,14 @@
 from south.db import db
 from south.v2 import SchemaMigration
 
+from merengue.base.utils import table_exists
+
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
+        if table_exists('review_reviewtask'):
+            return  # already migrated
 
         # Adding model 'ReviewTask'
         db.create_table('review_reviewtask', (

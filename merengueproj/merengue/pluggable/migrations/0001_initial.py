@@ -2,10 +2,14 @@
 from south.db import db
 from south.v2 import SchemaMigration
 
+from merengue.base.utils import table_exists
+
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
+        if table_exists('plugins_registeredplugin'):
+            return  # already migrated
         # Adding model 'RegisteredPlugin'
         db.create_table('plugins_registeredplugin', (
             ('registereditem_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['registry.RegisteredItem'], unique=True, primary_key=True)),

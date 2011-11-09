@@ -58,6 +58,22 @@ class Event(BaseContent):
     def _public_link_without_section(self):
         return ('event_view', [self.slug])
 
+    def get_days_actives(self, start_date=None, end_date=None):
+        if not start_date or start_date < self.start:
+            start_date = datetime.datetime(year=self.start.year,
+                                           month=self.start.month,
+                                           day=self.start.day)
+        if not end_date or end_date > self.end:
+            end_date = datetime.datetime(year=self.end.year,
+                                           month=self.end.month,
+                                           day=self.end.day)
+        list_days = [start_date]
+        current_date = start_date
+        while current_date < end_date:
+            current_date += datetime.timedelta(1)
+            list_days.append(current_date)
+        return list_days
+
     def __unicode__(self):
         return self.name or u''
 

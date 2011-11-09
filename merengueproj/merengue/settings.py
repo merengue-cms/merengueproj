@@ -65,6 +65,7 @@ MERENGUE_APPS = (
     'merengue.review',
     'merengue.uitools',
     'merengue.cache',
+    'merengue.seo',
     'merengue.collab',  # Please, keep this application in last place cause it's used to know when activate plugins after migration
 )
 
@@ -366,3 +367,7 @@ PORTAL_LINK_POSITIONS = {
     'primary': 'header',
     'secondary': 'header',
 }
+
+# sitemap
+
+SMAP_EXCLUDE_CLASS_NAME = ('collection', 'feedcollection', 'feeditem')
