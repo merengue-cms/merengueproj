@@ -49,7 +49,7 @@
         </form>
     <h2>{% trans "Backups configuration" %}</h2>
 
-    <form method="get" action="backup" action=".">{% csrf_token %}
+    <form method="get" action="backup">{% csrf_token %}
         <fieldset class="module">
             <h2>{% trans 'Save current backup' %}</h2>
             <div class="form-row"> {% trans 'Save current backup configuration into a .zip file that can be restored' %} </div>
