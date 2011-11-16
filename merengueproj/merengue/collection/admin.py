@@ -173,6 +173,7 @@ class CollectionAdmin(BaseContentAdmin):
 class CollectionRelatedModelAdmin(SectionContentAdmin, CollectionAdmin):
     tool_name = 'collections'
     tool_label = _('collections')
+    change_form_template = CollectionAdmin.change_form_template
 
 
 class CollectionDisplayFieldFilterInline(admin.TabularInline):
