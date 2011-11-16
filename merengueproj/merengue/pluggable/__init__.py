@@ -14,6 +14,8 @@
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
+from os import path
+
 
 from django.conf import settings
 from django.utils.translation import ugettext
@@ -40,7 +42,7 @@ class Plugin(RegistrableItem):
                 prefix = url_prefix.get(
                     getattr(settings, 'URL_DEFAULT_LANG', settings.LANGUAGE_CODE),
                 )
-            prefixes.append((prefix, url))
+            prefixes.append((path.join(settings.BASE_URL[1:], prefix), url))
 
         return prefixes
 
