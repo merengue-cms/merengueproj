@@ -24,7 +24,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                       # Or path to database file if using sqlite3.
+        'NAME': '{{ project_name }}',                       # Or path to database file if using sqlite3.
         'USER': '',                       # Not used with sqlite3.
         'PASSWORD': '',                   # Not used with sqlite3.
         'HOST': '',                       # Set to empty string for localhost. Not used with sqlite3.
@@ -82,15 +82,31 @@ if USE_GIS:
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = path.join(BASEDIR, 'media/')
 
+# Prefix for all project
+BASE_URL = '/'
+
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = '/media/'
+MEDIA_URL = path.join(BASE_URL, 'media/')
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/admin_media/'
+ADMIN_MEDIA_PREFIX = path.join(BASE_URL, 'admin_media/')
+
+# Login and logout settings
+LOGIN_URL = path.join(BASE_URL, LOGIN_URL[1:])
+LOGOUT_URL = path.join(BASE_URL, LOGOUT_URL[1:])
+LOGIN_REDIRECT_URL = path.join(BASE_URL, LOGIN_REDIRECT_URL[1:])
+LOGOUT_REDIRECT_URL = path.join(BASE_URL, LOGOUT_REDIRECT_URL[1:])
+
+
+# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
+# trailing slash.
+# Examples: "http://foo.com/media/", "/media/".
+ADMIN_MEDIA_PREFIX = '/mapa-conocimiento/admin_media/'
+
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = ''
@@ -102,7 +118,10 @@ MIDDLEWARE_CLASSES = PRE_MERENGUE_MIDDLEWARE_CLASSES + MERENGUE_MIDDLEWARE_CLASS
     # put here aditional middlewares
 )
 
-ROOT_URLCONF = '{{ project_name }}.urls'
+if BASE_URL == '/':
+    ROOT_URLCONF = '{{ project_name }}.urls'
+else:
+    ROOT_URLCONF = '{{ project_name }}.urls_with_base'
 
 TEMPLATE_DIRS = (
     path.join(BASEDIR, 'templates'),
