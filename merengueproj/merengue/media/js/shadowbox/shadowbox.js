@@ -75,7 +75,7 @@ if(typeof Shadowbox == 'undefined'){
          *
          * @var     {String}    loadingImage
          */
-        loadingImage:       '/media/merengue/img/multimedia/loading.gif',
+        loadingImage:       '{assetURL}merengue/img/multimedia/loading.gif',
 
 
         appendImg: '',
@@ -265,7 +265,7 @@ if(typeof Shadowbox == 'undefined'){
          * @var     {Function}
          */
         onOpen:        null,
-        
+
         /**
          * A hook function to be fired when Shadowbox finishes loading its
          * content. The single argument will be the current gallery element on
@@ -311,8 +311,7 @@ if(typeof Shadowbox == 'undefined'){
          * @var     {Boolean}   skipSetup
          */
         skipSetup:          true,
-        
-        
+
         minWidth: 200,
 
         /**
@@ -321,25 +320,6 @@ if(typeof Shadowbox == 'undefined'){
          *
          * @var     {Object}    text
          */
-/*         LANG:           { */
-
-/*             cancel:     'Cancel', */
-
-/*             loading:    'loading', */
-
-/*             close:      '<span class="shortcut">C</span>lose', */
-
-/*             next:       '<span class="shortcut">N</span>ext', */
-
-/*             prev:       '<span class="shortcut">P</span>revious', */
-
-/*             errors:     { */
-/*                 single: 'You must install the <a href="{0}">{1}</a> browser plugin to view this content.', */
-/*                 shared: 'You must install both the <a href="{0}">{1}</a> and <a href="{2}">{3}</a> browser plugins to view this content.', */
-/*                 either: 'You must install either the <a href="{0}">{1}</a> or the <a href="{2}">{3}</a> browser plugin to view this content.' */
-/*             } */
-
-/*         }, */
 
         LANG:           {
 
@@ -398,66 +378,27 @@ if(typeof Shadowbox == 'undefined'){
          *
          * @var     {Object}    skin
          */
-/*         skin:           { */
-
-/*             main:       '<div id="shadowbox_overlay"></div>' + */
-/*                         '<div id="shadowbox_container">' + */
-/*                             '<div id="shadowbox">' + */
-/*                                 '<div id="shadowbox_title">' + */
-/*                                     '<div id="shadowbox_title_inner"></div>' + */
-/*                                 '</div>' + */
-/*                                 '<div id="shadowbox_body">' + */
-/*                                     '<div id="shadowbox_body_inner"></div>' + */
-/*                                     '<div id="shadowbox_loading"></div>' + */
-/*                                 '</div>' + */
-/*                                 '<div id="shadowbox_toolbar">' + */
-/*                                     '<div id="shadowbox_toolbar_inner"></div>' + */
-/*                                 '</div>' + */
-/*                             '</div>' + */
-/*                         '</div>', */
-
-/*             loading:    '<img src="{0}" alt="{1}" />' + */
-/*                         '<span><a href="javascript:Shadowbox.close();">{2}</a></span>', */
-
-/*             counter:    '<div id="shadowbox_counter">{0}</div>', */
-
-/*             close:      '<div id="shadowbox_nav_close">' + */
-/*                             '<a href="javascript:Shadowbox.close();">{0}</a>' + */
-/*                         '</div>', */
-
-/*             next:       '<div id="shadowbox_nav_next">' + */
-/*                             '<a href="javascript:Shadowbox.next();">{0}</a>' + */
-/*                         '</div>', */
-
-/*             prev:       '<div id="shadowbox_nav_previous">' + */
-/*                             '<a href="javascript:Shadowbox.previous();">{0}</a>' + */
-/*                         '</div>' */
-
-/*         }, */
-
-
-
-/*
-HTML snapshot:
-<div id="shadowbox_toolbar">
-  <div id="shadowbox_toolbar_inner">
-    <div id="shadowbox_nav_close" class="shadowbox_nav">
-      <a onclick="Shadowbox.close();" title="Close" style="background-image: url(close.png); background-repeat: no-repeat;"></a>
-    </div>
-    <div id="shadowbox_nav_next" class="shadowbox_nav">
-      <a onclick="Shadowbox.next();" title="Next" style="background-image: url(next.png); background-repeat: no-repeat;"></a>
-    </div>
-    <div id="shadowbox_nav_previous" class="shadowbox_nav">
-      <a onclick="Shadowbox.previous();" title="Previous" style="background-image: url(previous.png); background-repeat: no-repeat;"></a>
-    </div>
-    <div id="shadowbox_counter">
-      <a href="javascript:Shadowbox.change(0);">1</a>
-      <a href="javascript:Shadowbox.change(1);" class="shadowbox_counter_current">2</a>
-      <a href="javascript:Shadowbox.change(2);">3</a>
-    </div>
-  </div>
-</div>
-*/
+        /*
+        HTML snapshot:
+        <div id="shadowbox_toolbar">
+        <div id="shadowbox_toolbar_inner">
+            <div id="shadowbox_nav_close" class="shadowbox_nav">
+            <a onclick="Shadowbox.close();" title="Close" style="background-image: url(close.png); background-repeat: no-repeat;"></a>
+            </div>
+            <div id="shadowbox_nav_next" class="shadowbox_nav">
+            <a onclick="Shadowbox.next();" title="Next" style="background-image: url(next.png); background-repeat: no-repeat;"></a>
+            </div>
+            <div id="shadowbox_nav_previous" class="shadowbox_nav">
+            <a onclick="Shadowbox.previous();" title="Previous" style="background-image: url(previous.png); background-repeat: no-repeat;"></a>
+            </div>
+            <div id="shadowbox_counter">
+            <a href="javascript:Shadowbox.change(0);">1</a>
+            <a href="javascript:Shadowbox.change(1);" class="shadowbox_counter_current">2</a>
+            <a href="javascript:Shadowbox.change(2);">3</a>
+            </div>
+        </div>
+        </div>
+        */
 
         skin:           {
 
@@ -467,7 +408,7 @@ HTML snapshot:
                                 '<div id="shadowbox_title">' +
                                   '<div id="shadowbox_title_close">' +
                                     '<a href="javascript:Shadowbox.close();">' +
-                                    '  <img src="/media/merengue/img/multimedia/close.png"/>' + 
+                                    '  <img src="{assetURL}merengue/img/multimedia/close.png"/>' + 
                                     '</a> '+ 
                                    '</div>' + 
                                    '<div id="shadowbox_title_inner"></div>' +
@@ -497,15 +438,15 @@ HTML snapshot:
                         '</span>',
 
             close:      '<a href="javascript:Shadowbox.close();">' +
-                        '  <img src="/media/merengue/img/multimedia/close.gif"/>' +
+                        '  <img src="{assetURL}merengue/img/multimedia/close.gif"/>' +
                         '</a> ',
 
             next:       '<a href="javascript:Shadowbox.next();" >' +
-                        '        <img src="/media/merengue/img/multimedia/slide_next.gif"/>' +
+                        '        <img src="{assetURL}merengue/img/multimedia/slide_next.gif"/>' +
                         '</a> ',
 
             prev:       '<a href="javascript:Shadowbox.previous();" >'+
-                        '        <img src="/media/merengue/img/multimedia/slide_previous.gif"/>'+
+                        '        <img src="{assetURL}merengue/img/multimedia/slide_previous.gif"/>'+
                         '</a> ',
 
             caption:    '<div class="shadowbox_nav_caption">' +
@@ -513,7 +454,7 @@ HTML snapshot:
                         '</div>',
 
             logo: '<span id="shadowbox_nav_image" style="text-align:center;">'+
-                  '  <img src="/media/merengue/img/multimedia/blanco.jpg"/>' +
+                  '  <img src="{assetURL}merengue/img/multimedia/blanco.jpg"/>' +
                   '</span>'
         },
 
@@ -1588,7 +1529,6 @@ HTML snapshot:
                         }catch(e){}
                         // stop QT audio stream for movies that have not yet loaded
                         content.innerHTML = '';
-                        // console.log(document.shadowbox_content);
                     }
                     setTimeout(function(){ // using setTimeout prevents browser crashes with WMP
                         SL.remove(content);
@@ -2057,6 +1997,20 @@ HTML snapshot:
         }
     };
 
+    var replaceAssetUrl = function(options, field, template, value) {
+        var fieldList = field.split(".")
+        var ops = options;
+        var opt = null;
+        var i;
+        for (i=0; i< fieldList.length; i++) {
+            if (opt !=null) {
+                ops = opt;
+            }
+            opt = ops[fieldList[i]];
+        }
+        return opt.replace(template, value);
+    };
+
     /**
      * Initializes the Shadowbox environment. Appends Shadowbox' HTML to the
      * document and sets up listeners on the window and overlay element.
@@ -2066,9 +2020,18 @@ HTML snapshot:
      * @public
      * @static
      */
-    Shadowbox.init = function(opts){
+
+    Shadowbox.init = function(opts) {
         if(initialized) return; // don't initialize twice
         options = apply(options, opts || {});
+        var template = '{assetURL}';
+        var assetUrl = options.assetUrl;
+        options.loadingImage = replaceAssetUrl(options, 'loadingImage', template, assetUrl);
+        options.skin.main = replaceAssetUrl(options, 'skin.main', template, assetUrl);
+        options.skin.close = replaceAssetUrl(options, 'skin.close', template, assetUrl);
+        options.skin.next = replaceAssetUrl(options, 'skin.next', template, assetUrl);
+        options.skin.prev = replaceAssetUrl(options, 'skin.prev', template, assetUrl);
+        options.skin.logo = replaceAssetUrl(options, 'skin.logo', template, assetUrl);
 
         // add markup
         appendHTML(document.body, options.skin.main);
@@ -2546,7 +2509,7 @@ HTML snapshot:
                 h = dims.height;
                 w = (h-(controls?20:0))/a; // maintain aspect ratio
                 var flashvars = Shadowbox.parseJSON(obj.el.getAttribute("flashvars"));
-                flashvars["plugins"] = {"rtmp": {"url":"/media/merengue/flash/flowplayer.rtmp-3.2.3.swf"}}
+                flashvars["plugins"] = {"rtmp": {"url": options.assetUrl + "merengue/flash/flowplayer.rtmp-3.2.3.swf"}}
                 markup.type = 'application/x-shockwave-flash';
                 markup.data = options.assetURL + options.flvPlayer;
                 markup.children = [

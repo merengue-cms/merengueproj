@@ -143,11 +143,11 @@ span.playbutton {
     height: 100%;
     top: 0px;
     left: 0px;
-    background: transparent url(/media/merengue/img/multimedia/video_play.png) no-repeat center center;
+    background: transparent url(../img/multimedia/video_play.png) no-repeat center center;
 }
 
 .ie6 span.playbutton {
-    background: transparent url(/media/merengue/img/multimedia/video_play.gif) no-repeat center center;
+    background: transparent url(../img/multimedia/video_play.gif) no-repeat center center;
 }
 
 .MultimediaItemThumbnail {
