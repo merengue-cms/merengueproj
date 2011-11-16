@@ -16,7 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 # -*- coding: utf-8 -*-
-
+from os import path
 from django.conf import settings
 from django.contrib.sites.models import Site
 
@@ -60,7 +60,8 @@ def coming_from_buildbot(request):
 
 
 def merengue_urls_prefix(request):
-    return {'MERENGUE_URLS_PREFIX': settings.MERENGUE_URLS_PREFIX}
+    return {'MERENGUE_URLS_PREFIX': path.join(settings.BASE_URL,
+                                              settings.MERENGUE_URLS_PREFIX)}
 
 
 def is_homepage(request):

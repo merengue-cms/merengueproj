@@ -2,7 +2,7 @@
 {% load i18n admin_modify customize_admin_modify adminmedia admin_tags related_admin_tags %}
 
 {% block extrahead %}{{ block.super }}
-<script type="text/javascript" src="/{{ MERENGUE_URLS_PREFIX}}/jsi18n/"></script>
+<script type="text/javascript" src="{{ MERENGUE_URLS_PREFIX }}/jsi18n/"></script>
 {{ media }}
 <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/jquery.transmeta-fields.js"></script>
 {% endblock %}

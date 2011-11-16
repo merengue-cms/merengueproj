@@ -287,6 +287,9 @@ SERIALIZATION_MODULES = {
     "xml": "merengue.xml_serializer",
 }
 
+# Prefix for all project
+BASE_URL = '/'
+
 # Prefix for all merengue URLs
 MERENGUE_URLS_PREFIX = 'cms'
 
