@@ -68,3 +68,5 @@ def register(site):
 def unregister(site):
     """ Merengue admin unregistration callback """
     site.unregister(ContentGroup)
+    site.unregister_related(ContentGroup, ContentGroupSectionAdmin,
+                          related_to=BaseSection)

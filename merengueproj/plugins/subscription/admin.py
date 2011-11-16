@@ -31,7 +31,7 @@ class SubscribableAdmin(RelatedModelAdmin):
     def formfield_for_dbfield(self, db_field, **kwargs):
         field = super(SubscribableAdmin, self).formfield_for_dbfield(db_field, **kwargs)
         if db_field.name == 'class_name':
-            field.widget= forms.Select(choices=tuple(self.get_choices_class_name(BaseSubscription)))
+            field.widget = forms.Select(choices=tuple(self.get_choices_class_name(BaseSubscription)))
         return field
 
     def get_choices_class_name(self, cls, choices=None):
@@ -54,10 +54,9 @@ class BaseSubscriptionAdmin(PluginAdmin):
 
 def register(site):
     """ Merengue admin registration callback """
-    site.register(BaseSubscription, BaseSubscriptionAdmin)
     site.register_related(Subscribable, SubscribableAdmin, related_to=BaseContent)
 
 
 def unregister(site):
     """ Merengue admin unregistration callback """
-    site.register(Subscribable, SubscribableAdmin)
+    site.unregister_related(Subscribable, SubscribableAdmin, related_to=BaseContent)

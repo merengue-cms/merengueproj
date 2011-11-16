@@ -95,4 +95,4 @@ def register(site):
 
 def unregister(site):
     """ Merengue admin unregistration callback """
-    pass
+    site.unregister_related(Searcher, SearcherRelatedCollectionAdmin, related_to=Collection)

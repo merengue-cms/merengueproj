@@ -63,3 +63,10 @@ def register(site):
     site.register(ForumThreadComment, admin.ModelAdmin)
     site.register_related(Thread, ThreadRelatedAdmin, related_to=Forum)
     site.register_related(ForumThreadComment, ForumThreadCommentRelatedAdmin, related_to=Thread)
+
+
+def unregister(site):
+    """ Merengue admin unregistration callback """
+    site.unregister(ForumThreadComment)
+    site.unregister_related(Thread, ThreadRelatedAdmin, related_to=Forum)
+    site.unregister_related(ForumThreadComment, ForumThreadCommentRelatedAdmin, related_to=Thread)

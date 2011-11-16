@@ -36,5 +36,9 @@ class VoteRelatedModelAdmin(RelatedModelAdmin, VoteAdmin):
 
 def register(site):
     """ Merengue admin registration callback """
-    site.register(Vote, VoteAdmin)
     site.register_related(Vote, VoteRelatedModelAdmin, related_to=BaseContent)
+
+
+def unregister(site):
+    """ Merengue admin unregistration callback """
+    site.unregister_related(Vote, VoteRelatedModelAdmin, related_to=BaseContent)

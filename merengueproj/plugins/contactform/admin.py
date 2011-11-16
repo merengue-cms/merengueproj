@@ -178,12 +178,15 @@ class BaseContentRelatedDisassociatedContactFormAdmin(ContactFormRelatedBaseCont
 
 def register(site):
     """ Merengue ServiceRequest registration callback """
-    site.register(ContactForm, ContactFormAdmin)
-    site.register(SentContactForm, SentContactFormAdmin)
-
     site.register_related(ContactForm, BaseContentRelatedContactFormAdmin, related_to=BaseContent)
     site.register_related(ContactFormOpt, ContactFormRelatedContactFormOptAdmin, related_to=ContactForm)
     site.register_related(SentContactForm, ContactFormRelatedSentContactFormAdmin, related_to=ContactForm)
 
     site.register_related(BaseContent, BaseContentRelatedAssociatedContactFormAdmin, related_to=ContactForm)
     site.register_related(BaseContent, BaseContentRelatedDisassociatedContactFormAdmin, related_to=ContactForm)
+
+
+def unregister(site):
+    site.unregister_related(ContactForm, BaseContentRelatedContactFormAdmin, related_to=BaseContent)
+    site.unregister_related(ContactFormOpt, ContactFormRelatedContactFormOptAdmin, related_to=ContactForm)
+    site.unregister_related(SentContactForm, ContactFormRelatedSentContactFormAdmin, related_to=ContactForm)

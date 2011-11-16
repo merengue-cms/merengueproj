@@ -103,13 +103,11 @@ class StandingOutCategoryAdmin(BaseCategoryAdmin):
 
 def register(site):
     """ Merengue admin registration callback """
-    site.register(StandingOut, StandingOutAdmin)
-    site.register(StandingOutCategory, StandingOutCategoryAdmin)
     site.register_related(StandingOut, StandingContentOutAdmin,
                           related_to=BaseContent)
 
 
 def unregister(site):
     """ Merengue admin unregistration callback """
-    site.unregister(StandingOut)
-    site.unregister(StandingOutCategory)
+    site.unregister_related(StandingOut, StandingContentOutAdmin,
+                            related_to=BaseContent)
