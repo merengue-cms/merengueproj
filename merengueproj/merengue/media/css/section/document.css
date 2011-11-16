@@ -103,27 +103,27 @@
 }
 
 .document-section-edit {
-    background: url(/media/merengue/img/section/section_edit.png) no-repeat center left;
+    background: url(../../img/section/section_edit.png) no-repeat center left;
 }
 
 .document-section-delete {
-    background: url(/media/merengue/img/section/section_delete.png) no-repeat center left;
+    background: url(../../img/section/section_delete.png) no-repeat center left;
 }
 
 .document-section-insert {
-    background: url(/media/merengue/img/section/section_insert.png) no-repeat center left;
+    background: url(../../img/section/section_insert.png) no-repeat center left;
 }
 
 .document-section-comments-wrap1 {
     float: left;
-    background: url(/media/merengue/img/section/section_comment2.gif) no-repeat top right;
+    background: url(../../img/section/section_comment2.gif) no-repeat top right;
     margin-right: 1em;
 }
 
 .document-section-comments-wrap2 {
     float: left;
     height: 24px;
-    background: url(/media/merengue/img/section/section_comment1.gif) no-repeat top left;
+    background: url(../../img/section/section_comment1.gif) no-repeat top left;
     text-align: center;
     padding: 0px 8px;
     font-size: 12px;
@@ -134,7 +134,7 @@
 }
 
 .collab-translation-trigger a {
-    background: url(/media/merengue/img/section/section_translate.png) no-repeat center left;
+    background: url(../../img/section/section_translate.png) no-repeat center left;
 }
 
 .document-section-body-editable-over {
