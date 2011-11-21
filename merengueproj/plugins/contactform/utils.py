@@ -1,4 +1,4 @@
-# Copyright (c) 2010 by Yaco Sistemas <dgarcia@yaco.es>
+# Copyright (c) 2011 by Yaco Sistemas <pmartin@yaco.es>
 #
 # This file is part of Merengue.
 #
