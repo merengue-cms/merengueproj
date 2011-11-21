@@ -25,7 +25,7 @@ from django import forms
 from merengue.base import widgets
 from merengue.pluggable.utils import get_plugin
 
-from plugins.contactform.recaptcha.client import captcha
+from recaptcha.client import captcha
 
 
 class RadioField(forms.ChoiceField):
