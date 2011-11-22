@@ -62,7 +62,7 @@
     {% customize_submit_row "roles_" %}
 </form>
 {% if original %}
-<h2>{% trans "User and groups local roles" %} </h2>
+<h2>{% trans "Users and groups local roles" %} </h2>
 <p>{% trans "Create local roles for user or group for the content: " %}'{{ original }}'</p>
 <p class="noteUser">{% trans "Autocomplete the user or autocomplete the group and select a role" %}</p>
 <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">
