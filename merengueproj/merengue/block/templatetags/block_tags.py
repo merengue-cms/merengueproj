@@ -225,15 +225,24 @@ class RenderSingleBlockNode(template.Node):
 
     def render(self, context):
         request = context.get('request', None)
-        if not self.block:
+        block = self.block
+        if not block:
             return ''
         try:
             content = context.get('content', None)
+            section = context.get('section', None)
             place = ''
-            if not ContentBlock in self.block.__class__.mro() and not SectionBlock in self.block.__class__.mro():
-                return self.block.render(request, place, context)
-            else:
-                return self.block.render(request, place, content, context)
+            render_args = [request, place]
+            if isinstance(block, ContentBlock):
+                render_args.append(content)
+            elif isinstance(block, SectionBlock):
+                render_args.append(section)
+            render_args.append(context)
+            rendered_content = block.get_cached_content(request)
+            if rendered_content is None:
+                rendered_content = block.render(*render_args)
+                block.set_cached_content(rendered_content, request)
+            return rendered_content
         except template.VariableDoesNotExist:
             return ''
 
