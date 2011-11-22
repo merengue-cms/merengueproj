@@ -61,7 +61,8 @@ def coming_from_buildbot(request):
 
 def merengue_urls_prefix(request):
     return {'MERENGUE_URLS_PREFIX': path.join(settings.BASE_URL,
-                                              settings.MERENGUE_URLS_PREFIX)}
+                                              settings.MERENGUE_URLS_PREFIX),
+            'BASE_URL': settings.BASE_URL}
 
 
 def is_homepage(request):

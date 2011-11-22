@@ -50,7 +50,7 @@
     <!-- Header -->
     <div id="header">
         {% block headerlogo %}
-        <a href="/"><img id="merengue_logo" src="{{ MEDIA_URL }}merengue/img/admin/admin_logo.jpg" alt="{% trans "Merengue logo" %}" title="{% trans "Merengue logo" %}" /></a>
+        <a href="{{ BASE_URL }}"><img id="merengue_logo" src="{{ MEDIA_URL }}merengue/img/admin/admin_logo.jpg" alt="{% trans "Merengue logo" %}" title="{% trans "Merengue logo" %}" /></a>
         {% endblock %}
         <div id="branding">
         {% block branding %}{% endblock %}
