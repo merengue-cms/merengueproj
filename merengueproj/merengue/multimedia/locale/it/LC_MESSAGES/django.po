@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-25 14:16+0100\n"
+"POT-Creation-Date: 2011-11-25 14:47+0100\n"
 "PO-Revision-Date: 2011-04-11 14:32+0200\n"
 "Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
 "Language-Team: it <m.busico@ieee.org>\n"
@@ -139,6 +139,10 @@ msgstr "Stato di pubblicazione"
 #: models.py:68
 msgid "Enter the current status"
 msgstr "Entra nello stato corrente"
+
+#: models.py:70
+msgid "last editor"
+msgstr ""
 
 #: models.py:71
 msgid "authors"

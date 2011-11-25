@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-25 14:16+0100\n"
+"POT-Creation-Date: 2011-11-25 14:47+0100\n"
 "PO-Revision-Date: 2010-10-05 10:09\n"
 "Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,7 +113,8 @@ msgstr "Por favor, especifique al menos un archivo de vídeo o una url de vídeo
 
 #: forms.py:83
 msgid "If you want to remove the file, you can specify a video url"
-msgstr "Si tu quieres eliminar el archivo, tu puedes especificar una url de video"
+msgstr ""
+"Si tu quieres eliminar el archivo, tu puedes especificar una url de video"
 
 #: models.py:50 models.py:52
 msgid "name"
@@ -138,6 +139,10 @@ msgstr "Estado de publicación"
 #: models.py:68
 msgid "Enter the current status"
 msgstr "Introduce el estado actual"
+
+#: models.py:70
+msgid "last editor"
+msgstr "último editor"
 
 #: models.py:71
 msgid "authors"
@@ -173,7 +178,8 @@ msgstr "archivo de vídeo"
 
 #: models.py:244
 msgid "The file will convert to flv format. It could lose a little of quality"
-msgstr "El archivo se convertirá a formato flv. Podría perder un poco de calidad"
+msgstr ""
+"El archivo se convertirá a formato flv. Podría perder un poco de calidad"
 
 #: models.py:246 models.py:297
 msgid "preview image"

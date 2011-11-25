@@ -67,7 +67,7 @@ class BaseMultimedia(models.Model):
     status = models.CharField(_('Publication status'), max_length=20, choices=get_translate_status_list(),
                               default='draft', help_text=_('Enter the current status'), db_index=True,
                               editable=True)
-    last_editor = models.ForeignKey(User, null=True, blank=True, editable=False)
+    last_editor = models.ForeignKey(User, verbose_name=_('last editor'), null=True, blank=True, editable=False)
     authors = models.CharField(verbose_name=_('authors'), max_length=200,
                                null=True, blank=True)
 

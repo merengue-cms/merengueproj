@@ -126,6 +126,10 @@ msgstr ""
 msgid "Enter the current status"
 msgstr ""
 
+#: models.py:70
+msgid "last editor"
+msgstr ""
+
 #: models.py:71
 msgid "authors"
 msgstr ""
