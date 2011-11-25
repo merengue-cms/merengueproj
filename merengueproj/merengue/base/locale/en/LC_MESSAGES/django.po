@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-21 14:10+0200\n"
+"POT-Creation-Date: 2011-11-25 14:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,369 +16,524 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.py:331
+#: actions.py:51
+#, python-format
+msgid "Successfully deleted %(count)d %(items)s."
+msgstr ""
+
+#: actions.py:63
+#, python-format
+msgid "Cannot delete %(name)s"
+msgstr ""
+
+#: actions.py:65 admin.py:609 admin.py:685
+msgid "Are you sure?"
+msgstr ""
+
+#: actions.py:88 actions.py:93
+#, python-format
+msgid "Delete selected %(verbose_name_plural)s"
+msgstr ""
+
+#: admin.py:455 admin.py:661
 #, python-format
 msgid "%(name)s object with primary key %(key)r does not exist."
 msgstr "El objeto %(name)s con clave primaria %(key)r no existe"
 
-#: admin.py:368
+#: admin.py:487
 msgid "This field is required."
 msgstr "Este campo es obligatorio."
 
-#: admin.py:479
-msgid "Are you sure?"
+#: admin.py:678
+#, python-format
+msgid "The %(name)s \"%(obj)s\" was deleted successfully."
 msgstr ""
 
-#: admin.py:549
+#: admin.py:709 templatetags/admin_tags.py:91
+msgid "History"
+msgstr ""
+
+#: admin.py:713
+#, python-format
+msgid "Add %s"
+msgstr ""
+
+#: admin.py:715
+msgid "Quick Report"
+msgstr ""
+
+#: admin.py:716
+msgid "Advanced Report"
+msgstr ""
+
+#: admin.py:717
+msgid "Reports"
+msgstr ""
+
+#: admin.py:718
+msgid "Wizard Report"
+msgstr ""
+
+#: admin.py:760
 msgid "Are you sure you want to set this items as draft?"
 msgstr ""
 
-#: admin.py:551
+#: admin.py:762
 msgid "Set as draft"
 msgstr ""
 
-#: admin.py:555
+#: admin.py:766
 msgid "Are you sure you want to set this items as pending?"
 msgstr ""
 
-#: admin.py:557
+#: admin.py:768
 msgid "Set as pending"
 msgstr ""
 
-#: admin.py:561
+#: admin.py:772
 msgid "Are you sure you want to set this items as published?"
 msgstr ""
 
-#: admin.py:563
+#: admin.py:774
 msgid "Set as published"
 msgstr ""
 
-#: admin.py:572
+#: admin.py:790
 #, python-format
 msgid "Changed to %s"
 msgstr ""
 
-#: admin.py:576
+#: admin.py:794
 #, python-format
 msgid "Successfully set %(number)d %(model_name)s as %(state)s."
 msgstr ""
 
-#: admin.py:585
+#: admin.py:804
 #, python-format
 msgid "Change state of selected %(verbose_name_plural)s"
 msgstr ""
 
-#: admin.py:628
+#: admin.py:875
 msgid "Assigned owners"
 msgstr ""
 
-#: admin.py:647
+#: admin.py:894
 msgid "Are you sure you want to assign these owners to these contents?"
 msgstr ""
 
-#: admin.py:653
+#: admin.py:900
 msgid "Assign owners"
 msgstr ""
 
-#: admin.py:748
+#: admin.py:1004
+msgid "Section"
+msgstr ""
+
+#: admin.py:1005
+msgid "Enter the section to which content belongs"
+msgstr ""
+
+#: admin.py:1063
 msgid "Database error"
 msgstr ""
 
-#: admin.py:925 models.py:90 models.py:273
+#: admin.py:1232
+msgid "No contents found"
+msgstr ""
+
+#: admin.py:1357 models.py:97 models.py:374
 msgid "contact info"
 msgstr ""
 
-#: admin.py:1091
+#: admin.py:1461
+msgid "permissions"
+msgstr ""
+
+#: admin.py:1468
+#, python-format
+msgid ""
+"The permissions of the content should be changed in <a href=\"%(url)s\">the "
+"workflow</a>, not in the content itself,\n"
+"    because if the status change, <strong>all the custom permission will be "
+"cleared</strong>. But,\n"
+"    if you are sure you want to edit the permissions, click <a href=\"?"
+"enable_edit=1\">here</a>."
+msgstr ""
+
+#: admin.py:1514
+msgid "Error in id"
+msgstr ""
+
+#: admin.py:1519
+msgid "deleted"
+msgstr ""
+
+#: admin.py:1538
+msgid "Log entry"
+msgstr ""
+
+#: admin.py:1544
+msgid "User"
+msgstr ""
+
+#: admin.py:1549
+msgid "Admin url"
+msgstr ""
+
+#: admin.py:1558
+msgid "Public url"
+msgstr ""
+
+#: admin.py:1568
+msgid "Content type"
+msgstr ""
+
+#: admin.py:1572
+msgid "Added"
+msgstr ""
+
+#: admin.py:1574
+msgid "Deleted"
+msgstr ""
+
+#: admin.py:1579
+msgid "Action"
+msgstr ""
+
+#: admin.py:1638
 msgid "Click to Locate"
 msgstr ""
 
-#: admin.py:1094
+#: admin.py:1641
 msgid "Location Maps"
 msgstr ""
 
-#: admin.py:1160 models.py:178
+#: admin.py:1707 models.py:256
 msgid "location"
 msgstr ""
 
-#: admin.py:1170
+#: admin.py:1717
 msgid "Address"
 msgstr ""
 
-#: adminforms.py:28
+#: adminforms.py:26
 msgid "Select a .zip file:"
 msgstr ""
 
-#: adminforms.py:37
+#: adminforms.py:35
 msgid "Bad or too large .zip file"
 msgstr ""
 
-#: adminsite.py:100
+#: adminsite.py:104
 #, python-format
 msgid "%s administration"
 msgstr ""
 
-#: adminsite.py:228
+#: adminsite.py:259
+msgid "Content types"
+msgstr ""
+
+#: adminsite.py:278
 msgid "Settings saved successfully"
 msgstr ""
 
-#: adminsite.py:233
-msgid "Database created successfully"
-msgstr ""
-
-#: adminsite.py:266
+#: adminsite.py:308 adminsite.py:513
 msgid "Site administration"
 msgstr ""
 
-#: adminsite.py:277
-msgid "Control Panel"
+#: adminsite.py:319
+msgid "Django admin"
 msgstr ""
 
-#: adminsite.py:416 templatetags/related_admin_tags.py:71
-msgid "Plugin administration"
+#: adminsite.py:473
+#, python-format
+msgid "%(plugin_name)s plugin administration"
 msgstr ""
 
-#: forms.py:352 models.py:324
+#: dbfields.py:40
+msgid "Data that serializes and deserializes into and out of JSON."
+msgstr ""
+
+#: filterspecs.py:11
+msgid "All"
+msgstr ""
+
+#: forms.py:361 models.py:434
 msgid "owners"
 msgstr ""
 
-#: forms.py:486 forms.py:508
-msgid "Base contents"
-msgstr ""
-
-#: forms.py:492 forms.py:493 forms.py:511 forms.py:512
-msgid "Name"
-msgstr ""
-
-#: forms.py:494 forms.py:513
-msgid "which name"
-msgstr ""
-
-#: forms.py:532
-msgid "Base Content Quick Search Form"
-msgstr ""
-
-#: forms.py:536
-msgid "Base Content Advanced Search Form"
-msgstr ""
-
-#: models.py:58
+#: models.py:61
 msgid "Lowest"
 msgstr ""
 
-#: models.py:59
+#: models.py:62
 msgid "Very Low"
 msgstr ""
 
-#: models.py:60
+#: models.py:63
 msgid "Low"
 msgstr ""
 
-#: models.py:61
+#: models.py:64
 msgid "Medium"
 msgstr ""
 
-#: models.py:62
+#: models.py:65
 msgid "High"
 msgstr ""
 
-#: models.py:63
+#: models.py:66
 msgid "Very high"
 msgstr ""
 
-#: models.py:64
+#: models.py:67
 msgid "Super high"
 msgstr ""
 
-#: models.py:65
+#: models.py:68
 msgid "Highest"
 msgstr ""
 
-#: models.py:70
+#: models.py:72
 msgid "disabled"
 msgstr ""
 
-#: models.py:71
+#: models.py:73
 msgid "allowed"
 msgstr ""
 
-#: models.py:76
-msgid "contact email"
-msgstr ""
-
-#: models.py:78
-msgid "contact email2"
-msgstr ""
-
-#: models.py:80
-msgid "url"
-msgstr ""
-
-#: models.py:82
-msgid "phone"
-msgstr ""
-
-#: models.py:84
-msgid "phone2"
-msgstr ""
-
-#: models.py:86
-msgid "fax"
-msgstr ""
-
-#: models.py:91
-msgid "contacts info"
-msgstr ""
-
-#: models.py:94
-msgid "Without contact email"
-msgstr ""
-
-#: models.py:99 models.py:119
+#: models.py:81 models.py:113 models.py:137
 msgid "name"
 msgstr ""
 
-#: models.py:100 models.py:120
+#: models.py:83
+msgid "contact email"
+msgstr ""
+
+#: models.py:85
+msgid "contact email2"
+msgstr ""
+
+#: models.py:87
+msgid "url"
+msgstr ""
+
+#: models.py:89
+msgid "phone"
+msgstr ""
+
+#: models.py:91
+msgid "phone2"
+msgstr ""
+
+#: models.py:93
+msgid "fax"
+msgstr ""
+
+#: models.py:98
+msgid "contacts info"
+msgstr ""
+
+#: models.py:101
+msgid "Without contact email"
+msgstr ""
+
+#: models.py:114 models.py:138
 msgid "slug"
 msgstr ""
 
-#: models.py:103
+#: models.py:117
 msgid "base category"
 msgstr ""
 
-#: models.py:104
+#: models.py:118
 msgid "base categories"
 msgstr ""
 
-#: models.py:121 models.py:123
-msgid "description"
-msgstr ""
-
-#: models.py:126
-msgid "Publication status"
-msgstr ""
-
-#: models.py:127
-msgid "Enter the current status"
-msgstr ""
-
-#: models.py:129
-msgid "main image"
+#: models.py:139
+msgid "plain text description"
 msgstr ""
 
 #: models.py:141
+msgid "description"
+msgstr ""
+
+#: models.py:144
+msgid "Publication status"
+msgstr ""
+
+#: models.py:145
+msgid "Enter the current status"
+msgstr ""
+
+#: models.py:147
+msgid "workflow status"
+msgstr ""
+
+#: models.py:149
+msgid "main image"
+msgstr ""
+
+#: models.py:161
 msgid "Without name"
 msgstr ""
 
-#: models.py:176
+#: models.py:188
+msgid "Numeric fields can not be larger than"
+msgstr ""
+
+#: models.py:254
 msgid "map icon"
 msgstr ""
 
-#: models.py:215
+#: models.py:295
 msgid "Without location"
 msgstr ""
 
-#: models.py:237
+#: models.py:318
 msgid "Thumbnail"
 msgstr ""
 
-#: models.py:276
+#: models.py:379
 msgid "related items"
 msgstr ""
 
-#: models.py:278
+#: models.py:381
 msgid "creation date"
 msgstr ""
 
-#: models.py:281 models.py:285
+#: models.py:384 models.py:388
 msgid "modification date"
 msgstr ""
 
-#: models.py:293
+#: models.py:390
+msgid "cached plain text"
+msgstr ""
+
+#: models.py:395
+msgid "last editor"
+msgstr ""
+
+#: models.py:399
+msgid "Adquire global permissions"
+msgstr ""
+
+#: models.py:402
 msgid "Tags"
 msgstr ""
 
-#: models.py:296
+#: models.py:403
+msgid "Tags will be splitted by commas."
+msgstr ""
+
+#: models.py:406
 msgid "meta description"
 msgstr ""
 
-#: models.py:298
+#: models.py:409
 msgid "comments"
 msgstr ""
 
-#: models.py:299
+#: models.py:411
 msgid "Is that content commentable"
 msgstr ""
 
-#: models.py:304 models.py:442
+#: models.py:415 models.py:727
 msgid "multimedia"
 msgstr ""
 
-#: models.py:313
+#: models.py:423
 msgid "class name"
 msgstr ""
 
-#: models.py:318
+#: models.py:428
 msgid "rank value"
 msgstr ""
 
-#: models.py:331
+#: models.py:439
+msgid "participants"
+msgstr ""
+
+#: models.py:443
+msgid "position"
+msgstr ""
+
+#: models.py:482
 msgid "base content"
 msgstr ""
 
-#: models.py:332
+#: models.py:483
 msgid "base contents"
 msgstr ""
 
-#: models.py:440
+#: models.py:493
+msgid "Name"
+msgstr ""
+
+#: models.py:547
+msgid "Please set other slug. This slug has been assigned"
+msgstr ""
+
+#: models.py:725
 msgid "content"
 msgstr ""
 
-#: models.py:444
+#: models.py:729
 msgid "is featured"
 msgstr ""
 
-#: models.py:447
+#: models.py:732
 msgid "Order"
 msgstr ""
 
-#: models.py:451
+#: models.py:736
 msgid "multimedia relation"
 msgstr ""
 
-#: models.py:452
+#: models.py:737
 msgid "multimedia relations"
 msgstr ""
 
-#: models.py:478
+#: models.py:763
 msgid "Human Order"
 msgstr ""
 
-#: views.py:35
+#: models.py:922
+#, python-format
+msgid "File to large. Max size restricted to %s bytes"
+msgstr ""
+
+#: review_tasks.py:13
+#, python-format
+msgid "%s set to pending state"
+msgstr ""
+
+#: views.py:37
 #, python-format
 msgid "%(result_count)d %(msg_results)s found"
 msgstr ""
 
-#: views.py:36
+#: views.py:38
 msgid "results"
 msgstr ""
 
-#: widgets.py:201
-msgid "Date:"
-msgstr ""
-
-#: widgets.py:201
-msgid "Time:"
-msgstr ""
-
-#: widgets.py:222
+#: widgets.py:238
 msgid "Remove"
 msgstr ""
 
-#: widgets.py:243
+#: widgets.py:261
 msgid "Select content"
 msgstr ""
 
-#: widgets.py:273
+#: widgets.py:289
+msgid "latitude"
+msgstr ""
+
+#: widgets.py:290
+msgid "longitude"
+msgstr ""
+
+#: widgets.py:291
 msgid "View on map"
 msgstr ""
 
@@ -420,12 +575,20 @@ msgstr ""
 msgid "Server Error"
 msgstr ""
 
-#: templates/error_base.html:13
+#: templates/error_base.html:14
 msgid "Ups!"
 msgstr ""
 
-#: templates/inc.breadcrumbs.html:2 templatetags/related_admin_tags.py:67
+#: templates/inc.breadcrumbs.html:2 templatetags/related_admin_tags.py:85
 msgid "Home"
+msgstr ""
+
+#: templates/inc.contentcategories.html:5
+msgid "categories"
+msgstr ""
+
+#: templates/inc.jsfiles.html:80
+msgid "Export"
 msgstr ""
 
 #: templates/base/content_admin_action.html:4
@@ -478,25 +641,38 @@ msgstr ""
 msgid "Change language"
 msgstr ""
 
-#: templatetags/content_filters.py:30
+#: templates/base/layout.html:76
+msgid "images are retrived from your defined PUBLIC_SERVER"
+msgstr ""
+
+#: templatetags/admin_tags.py:95
+msgid "Add new"
+msgstr ""
+
+#: templatetags/content_filters.py:34
 msgid "yes,no,maybe"
 msgstr ""
 
-#: templatetags/map_tags.py:319
+#: templatetags/map_tags.py:284
 msgid "What is there nearby?"
 msgstr ""
 
-#: templatetags/related_admin_tags.py:74 templatetags/related_admin_tags.py:77
+#: templatetags/related_admin_tags.py:89
+#, python-format
+msgid "%(plugin_name)s plugin"
+msgstr ""
+
+#: templatetags/related_admin_tags.py:92 templatetags/related_admin_tags.py:95
 msgid "opts"
 msgstr ""
 
-#: templatetags/related_admin_tags.py:85
-#: templatetags/related_admin_tags.py:102
+#: templatetags/related_admin_tags.py:103
+#: templatetags/related_admin_tags.py:120
 msgid "Add"
 msgstr ""
 
-#: templatetags/related_admin_tags.py:94
-msgid "site"
+#: templatetags/related_admin_tags.py:112
+msgid "admin"
 msgstr ""
 
 #~ msgid "Username"
