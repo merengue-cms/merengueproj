@@ -37,7 +37,7 @@ class RegisteredPlugin(RegisteredItem):
     version = models.CharField(_('version'), max_length=25)
     required_apps = RequiredAppsField()
     required_plugins = RequiredPluginsField()
-    installed = models.BooleanField(default=False)
+    installed = models.BooleanField(_('installed'), default=False)
     directory_name = models.CharField(_('directory name'), max_length=100,
                                       unique=True)
     meta_info = JSONField(null=True)
