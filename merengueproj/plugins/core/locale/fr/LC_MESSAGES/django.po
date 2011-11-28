@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-21 09:53+0200\n"
+"POT-Creation-Date: 2011-11-28 16:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -170,7 +170,7 @@ msgstr ""
 msgid "Already exits a menu in your section with this slug"
 msgstr ""
 
-#: forms.py:96
+#: forms.py:99
 msgid "Already exits a standing out in your section with this content"
 msgstr ""
 
@@ -219,7 +219,7 @@ msgstr ""
 msgid "Add blocks"
 msgstr ""
 
-#: templates/core/panels/inplaceedit.html:34
+#: templates/core/panels/inplaceedit.html:43
 msgid "activate inline edit"
 msgstr ""
 
