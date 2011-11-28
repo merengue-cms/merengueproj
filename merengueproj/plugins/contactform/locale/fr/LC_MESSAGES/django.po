@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-22 18:29+0100\n"
+"POT-Creation-Date: 2011-11-28 16:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "sent contact form"
 msgstr ""
 
-#: admin.py:87 models.py:190 models.py:222
+#: admin.py:87 models.py:190 models.py:225
 msgid "contact form"
 msgstr ""
 
@@ -264,16 +264,32 @@ msgstr ""
 msgid "select option"
 msgstr ""
 
-#: models.py:223
+#: models.py:215
+msgid "Contact Form Select Option"
+msgstr ""
+
+#: models.py:216
+msgid "Contact Form Select Options"
+msgstr ""
+
+#: models.py:226
 msgid "sender"
 msgstr ""
 
-#: models.py:224
+#: models.py:227
 msgid "response"
 msgstr ""
 
-#: models.py:225
+#: models.py:228
 msgid "sent date"
+msgstr ""
+
+#: models.py:231
+msgid "Sent Contact Form"
+msgstr ""
+
+#: models.py:232
+msgid "Sents Contact Form"
 msgstr ""
 
 #: templates/contactform/email.html:3

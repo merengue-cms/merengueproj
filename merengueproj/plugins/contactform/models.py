@@ -212,6 +212,8 @@ class ContactFormSelectOpt(models.Model):
 
     class Meta:
         translate = ('label', )
+        verbose_name = _('Contact Form Select Option')
+        verbose_name_plural = _('Contact Form Select Options')
 
     def __unicode__(self):
         return self.label
@@ -223,6 +225,10 @@ class SentContactForm(models.Model):
     sender = models.ForeignKey(User, verbose_name=_('sender'), blank=True, null=True)
     sent_msg = JSONField(verbose_name=_(u'response'))
     sent_date = models.DateTimeField(verbose_name=_('sent date'), auto_now_add=True)
+
+    class Meta:
+        verbose_name = _('Sent Contact Form')
+        verbose_name_plural = _('Sents Contact Form')
 
     def __unicode__(self):
         return self.contact_form.title
