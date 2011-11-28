@@ -58,12 +58,14 @@ def public_link(request, app_label, model_name, content_id):
     if isinstance(content, BaseContent):
         try:
             # first we try find out if content has an user dependant URL
-            return HttpResponsePermanentRedirect(content.link_by_user(request.user))
+            response = HttpResponsePermanentRedirect(content.link_by_user(request.user))
         except NotImplementedError:
             # we use public link
-            return HttpResponsePermanentRedirect(content.public_link())
-
-    return HttpResponsePermanentRedirect(content.get_absolute_url())
+            response = HttpResponsePermanentRedirect(content.public_link())
+    else:
+        response = HttpResponsePermanentRedirect(content.get_absolute_url())
+    response['Cache-Control'] = 'no-cache'  # avoid 301 caching in some browsers like Firefox 3.5+ or Chrome
+    return response
 
 
 def admin_link(request, content_type, content_id, url=''):

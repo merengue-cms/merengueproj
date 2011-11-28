@@ -196,6 +196,7 @@ class BaseAdminSite(DjangoAdminSite):
         for model in model_or_iterable:
             if model in self._models_registry.keys():
                 del(self._models_registry[model])
+                del(self._registry[model])
 
     def admin_redirect(self, request, content_type_id, object_id, extra_url=''):
         """ redirect to content admin page or content related admin page in his section """
@@ -340,6 +341,28 @@ class RelatedModelRegistrable(object):
         if model_admin not in related_modeladmins:
             related_modeladmins += [model_admin]
         base_model_registry[model_or_iterable] = related_modeladmins
+        self.related_registry[related_to] = base_model_registry
+        self.tools[related_to] = model_tools
+
+    def unregister_related(self, model_or_iterable, admin_class=None, related_to=None, **options):
+
+        if not model_or_iterable or not admin_class or not related_to:
+            return
+        tool_name = admin_class and (getattr(admin_class, 'tool_name', None) or getattr(model_or_iterable._meta, 'module_name', None))
+        if not tool_name:
+            raise Exception('Can not unregister %s modeladmin without a tool_name' % admin_class.__name__)
+
+        model_tools = self.tools.get(related_to, {})
+        if tool_name in model_tools and admin_class != model_tools[tool_name].__class__:
+            raise AlreadyRegistered('Already registered a modeladmin with %s as tool_name' % tool_name)
+
+        model_admin = model_tools.get(tool_name, admin_class(model_or_iterable, self))
+        del model_tools[tool_name]
+        base_model_registry = self.related_registry.get(related_to, {})
+        related_modeladmins = base_model_registry.get(model_or_iterable, [])
+        if model_admin not in related_modeladmins:
+            related_modeladmins += [model_admin]
+        del base_model_registry[model_or_iterable]
         self.related_registry[related_to] = base_model_registry
         self.tools[related_to] = model_tools
 

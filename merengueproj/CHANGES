@@ -1,6 +1,42 @@
 Changes
 =======
 
+Version 0.8.0 (r5418)
+---------------------
+
+* More Selenium tests. See #2136 and #1746.
+* Invalid the block cache when user edit a block using inline edit. See #2242.
+* SEO improvements, with ``sitemap.xml`` generation. See #2248.
+* Included ``merengue/media`` in the synchronized media when you executes ``sync_apps_media`` command. See #2243.
+* Including expire headers in nginx configuration in the install documentation. See #377.
+* Incluiding inline edit to highlight plugin. See #2246.
+* Complete view for reporting a permission denied to the user and manager. See #2151.
+* More translations. See #2.
+* Vast improvement in Merengue performance:
+
+ * ``Menu.get_section`` improvement. See #2233.
+ * Edit inline improvement. See #2234.
+ * RSS plugin caching. See #2235.
+ * Block cache is more efficient. See #2236.
+ * ``getEventsMonthYear`` improvement. See #2238.
+ * ``MenuBlock`` improvement. See #2241.
+
+* Bugfixes:
+
+ * Fixed inplaceeditform error with text fields whose font size is not integer. See #2222.
+ * Flowplayer error fixed in IE. See #2224.
+ * Fixed error when CSS and JS compression is enabled. See #2223.
+ * Fixed permission error in object when the passed object is None. See #2110.
+ * Improved the inplace edit logic to check the "edit" permission. See #2230.
+ * Some layout error. See #2217.
+ * User is able to edit the blocks that are non cacheables. See #2237.
+ * Fixed some migrations when executed in very old merengue sites. See #2244.
+ * Now the ``render_single_block`` works with ``ContentBlock``. See #2252.
+ * Make sure the unit tests run with dummy cache. See #2254.
+ * Registry cache should not set cache when empty elements found. See #2255.
+ * Fixed "save and restore config" issues. See #2189 and #918.
+ * Fixed the inline edit when it's used with the intro button to save changes. See #2256.
+
 Version 0.8.0-rc2 (r5269)
 -------------------------
 

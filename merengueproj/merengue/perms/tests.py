@@ -318,6 +318,7 @@ class RoleTestCase(TestCase):
         page_roles = merengue.perms.utils.get_roles(self.user, self.page_1)
         self.assertNotEqual(list(page_roles), list(section_roles))
         settings.ACQUIRE_SECTION_ROLES = True
+        merengue.perms.utils._roles_cache.clear([self.user])
         section_roles = merengue.perms.utils.get_roles(self.user, self.section)
         page_roles = merengue.perms.utils.get_roles(self.user, self.page_1)
         self.assertEqual(list(page_roles), list(section_roles))

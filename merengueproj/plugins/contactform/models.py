@@ -48,6 +48,8 @@ class ContactForm(models.Model):
 
     __metaclass__ = TransMeta
 
+    from plugins.contactform import fields as custom_fields
+
     title = models.CharField(verbose_name=_('name'), max_length=200)
     description = models.TextField(verbose_name=_('description'),
                                    blank=True)
