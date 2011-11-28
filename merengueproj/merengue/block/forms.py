@@ -100,10 +100,8 @@ class BaseContentRelatedBlockChangeForm(BaseAdminModelForm):
                                                             overwrite_always=True,
                                                             **same_block_filters).count()
             place_error = _("Placing the block here will take no effect, as another related block is set to overwrite it")
-            place_overwrite_error = _("Unmark this field to keep the block in the specified place\
-                                       (even though it won't be displayed)")
-            noeffect_error = _("A block is already set to overwrite others of this kind.\
-                                Unmark this to save the block, even though it won't be displayed")
+            place_overwrite_error = _("Unmark this field to keep the block in the specified place (even though it won't be displayed)")
+            noeffect_error = _("A block is already set to overwrite others of this kind. Unmark this to save the block, even though it won't be displayed")
             if has_generic and overwrite_if_place:
                 self._errors['overwrite_if_place'] = self.error_class([noeffect_error])
             elif has_generic and overwrite_always:

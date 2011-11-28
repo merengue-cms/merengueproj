@@ -315,7 +315,7 @@ msgstr "Historia"
 #: base/admin.py:713
 #, python-format
 msgid "Add %s"
-msgstr ""
+msgstr "Añadir %s"
 
 #: base/admin.py:715
 msgid "Quick Report"
@@ -3398,7 +3398,7 @@ msgstr "Ver en el sitio"
 #: templates/admin/edit_inline/tabular.html:113
 #, python-format
 msgid "Add another %(verbose_name)s"
-msgstr ""
+msgstr "Añadir otro %(verbose_name)s"
 
 #: templates/admin/gis/openlayers.html:34
 #: templates/admin/gis/openlayers_inline.html:34

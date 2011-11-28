@@ -8,25 +8,33 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-27 19:07+0200\n"
+"POT-Creation-Date: 2011-11-28 12:45+0100\n"
 "PO-Revision-Date: 2011-04-11 18:02+0200\n"
 "Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
 "Language-Team: it <m.busico@ieee.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 
 #: admin.py:45
 msgid "Status"
 msgstr ""
 
-#: admin.py:63
+#: admin.py:48 templates/admin/block/change_form.html:8
+msgid "Cache parameters"
+msgstr ""
+
+#: admin.py:83
 msgid "block content related"
 msgstr ""
 
-#: admin.py:68
+#: admin.py:88
 msgid "Visibility when duplicated blocks"
+msgstr ""
+
+#: blocks.py:48
+msgid "css class to add to this block"
 msgstr ""
 
 #: filterspecs.py:13
@@ -46,84 +54,132 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: forms.py:34
+#: forms.py:41
 msgid "Block to add"
 msgstr ""
 
-#: forms.py:94
+#: forms.py:102
 msgid ""
 "Placing the block here will take no effect, as another related block is set "
 "to overwrite it"
 msgstr ""
 
-#: forms.py:95
+#: forms.py:103
 msgid ""
-"Unmark this field to keep the block in the specified "
-"place                                       (even though it won't be "
-"displayed)"
+"Unmark this field to keep the block in the specified place (even though it "
+"won't be displayed)"
 msgstr ""
 
-#: forms.py:97
+#: forms.py:104
 msgid ""
-"A block is already set to overwrite others of this "
-"kind.                                Unmark this to save the block, even "
-"though it won't be displayed"
+"A block is already set to overwrite others of this kind. Unmark this to save "
+"the block, even though it won't be displayed"
 msgstr ""
 
-#: models.py:29
+#: forms.py:122
+msgid "Select block type"
+msgstr ""
+
+#: forms.py:126
+msgid "Scope"
+msgstr ""
+
+#: forms.py:139
+msgid "Global"
+msgstr ""
+
+#: forms.py:146
+#, python-format
+msgid "Section: %(section)s"
+msgstr ""
+
+#: forms.py:155
+#, python-format
+msgid "Content: %(content)s"
+msgstr ""
+
+#: forms.py:179
+msgid "Blocks"
+msgstr ""
+
+#: forms.py:183
+msgid "Content blocks"
+msgstr ""
+
+#: forms.py:187
+msgid "Section blocks"
+msgstr ""
+
+#: forms.py:195
+msgid "You can not select section scope cause your are not inside a section"
+msgstr ""
+
+#: forms.py:200
+msgid "You can not select content scope cause your are not inside a content"
+msgstr ""
+
+#: forms.py:206
+msgid "You can not insert a content block from a view without content"
+msgstr ""
+
+#: forms.py:219
+msgid "You can not insert a section block from a view without section"
+msgstr ""
+
+#: models.py:31
 msgid "All places"
 msgstr ""
 
-#: models.py:30
+#: models.py:32
 msgid "Left sidebar"
 msgstr "Colonna laterale sinistra"
 
-#: models.py:31
+#: models.py:33
 msgid "Right sidebar"
 msgstr "Colonna laterale destra"
 
-#: models.py:32
+#: models.py:34
 #, fuzzy
 msgid "After content title"
 msgstr "Dopo il contenuto del corpo"
 
-#: models.py:33
+#: models.py:35
 msgid "Before content body"
 msgstr "Prima del contenuto del corpo"
 
-#: models.py:34
+#: models.py:36
 msgid "Home page"
 msgstr "Pagina Home"
 
-#: models.py:35
+#: models.py:37
 msgid "After content body"
 msgstr "Dopo il contenuto del corpo"
 
-#: models.py:36
+#: models.py:38
 msgid "Header"
 msgstr "Testata"
 
-#: models.py:37
+#: models.py:39
 msgid "Footer"
 msgstr "Piè di pagina"
 
-#: models.py:38
+#: models.py:40
 msgid "Meta-information, links, js..."
 msgstr ""
 
-#: models.py:42
+#: models.py:46
 msgid "name"
 msgstr ""
 
-#: models.py:43
+#: models.py:47
 msgid "placed at"
 msgstr ""
 
-#: models.py:45
+#: models.py:49
 msgid "shown in urls"
 msgstr "mostrato negli url"
 
-#: models.py:47
+#: models.py:51
 #, fuzzy
 msgid ""
 "block will <em>only</em> be visible in urls matching these\n"
@@ -140,11 +196,11 @@ msgstr ""
 "expressions'>sintassi di python re</a>). <br/> Utilizzare i path relativi. "
 "Questo campo ha la precedenza rispetto a 'hidden in urls'."
 
-#: models.py:54
+#: models.py:58
 msgid "hidden in urls"
 msgstr "hidden in urls"
 
-#: models.py:56
+#: models.py:60
 #, fuzzy
 msgid ""
 "block will be hidden in urls matching these regular\n"
@@ -159,43 +215,107 @@ msgstr ""
 "library/re.html#regular-expression-syntax' title='python regular "
 "expressions'>sintassi di python re</a>)."
 
-#: models.py:61
+#: models.py:65
 msgid "disable the activation and desactivation of the block"
 msgstr ""
 
-#: models.py:64
+#: models.py:68
 msgid "block can't be moved from its default place"
 msgstr ""
 
-#: models.py:67
+#: models.py:72
+msgid "activate cache"
+msgstr ""
+
+#: models.py:73
+msgid "Activate cache for this block. The HTML rendered will be cached"
+msgstr ""
+
+#: models.py:76
+msgid "timeout"
+msgstr ""
+
+#: models.py:77
+msgid "Time that block remained in cache in seconds. \"0\" means forever"
+msgstr ""
+
+#: models.py:80
+msgid "Cached is applied only for anonymous"
+msgstr ""
+
+#: models.py:83
+msgid "Cached vary on authenticated user"
+msgstr ""
+
+#: models.py:86
+msgid "Cache vary on the request URL"
+msgstr ""
+
+#: models.py:89
+msgid "Cache vary on language"
+msgstr ""
+
+#: models.py:92
 #, fuzzy
 msgid "related content"
 msgstr "Dopo il contenuto del corpo"
 
-#: models.py:69
+#: models.py:94
 msgid "overwrite block if the place is the same"
 msgstr ""
 
-#: models.py:72
+#: models.py:97
 msgid "overwrite generic block if is present on the actual page"
 msgstr ""
 
-#: views.py:72
+#: views.py:76
 msgid "Configuration"
 msgstr ""
 
-#: views.py:72
+#: views.py:76
 msgid "Block specific configuration"
+msgstr ""
+
+#: templates/admin/block/change_form.html:10
+msgid "This block is defined as non cacheable. You cannot cache this block"
+msgstr ""
+
+#: templates/blocks/add_block.html:6 templates/blocks/block_container.html:11
+msgid "Add new block"
 msgstr ""
 
 #: templates/blocks/block_config.html:9
 msgid "Save configuration"
 msgstr ""
 
-#: templates/blocks/header.html:62
+#: templates/blocks/block_config.html:12
+msgid "Go to admin"
+msgstr ""
+
+#: templates/blocks/header.html:44
 msgid "Enable/disable blocks dragging"
 msgstr ""
 
-#: templates/blocks/header.html:74
+#: templates/blocks/header.html:56
 msgid "Configure block"
+msgstr ""
+
+#: templates/blocks/header.html:64
+msgid "Invalidate cache"
+msgstr ""
+
+#: templates/blocks/header.html:71
+msgid "Remove block"
+msgstr ""
+
+#: templates/blocks/header.html:95
+msgid "Are you sure you want to invalidate the cache of this block"
+msgstr ""
+
+#: templates/blocks/header.html:121
+msgid "Are you sure you want to remove this block"
+msgstr ""
+
+#: templates/blocks/header.html:211
+msgid "Drag here"
 msgstr ""
