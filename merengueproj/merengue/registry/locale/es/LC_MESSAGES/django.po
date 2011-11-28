@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-10 19:49+0200\n"
+"POT-Creation-Date: 2011-11-28 14:27+0100\n"
 "PO-Revision-Date: 2010-10-05 10:10\n"
 "Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,10 +16,81 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Translated-Using: django-transhette 0.1.SVN\n"
 
-#: models.py:17
+#: admin.py:35
+msgid "Status"
+msgstr "Estado"
+
+#: fields.py:30 models.py:41
+msgid "Configuration"
+msgstr "Configuración"
+
+#: fields.py:41
+#, python-format
+msgid "Error in \"%(name)s\" field"
+msgstr "Error en el campo \"%(name)s\""
+
+#: items.py:104
+msgid "All content types"
+msgstr "Todos los tipos de contenidos"
+
+#: items.py:113
+msgid "Content types that whant to filter"
+msgstr "Tipos de contenidos que quieres filtrar"
+
+#: items.py:139
+msgid ""
+"If the collection is into a section, filter for the contents of this section"
+msgstr ""
+"Si la colección está dentro de una sección, filtra por los contenidos de la "
+"sección"
+
+#: models.py:33
+msgid "class name"
+msgstr "nombre de la clase"
+
+#: models.py:34
+msgid "module"
+msgstr "modulo"
+
+#: models.py:35
+msgid "category"
+msgstr "categoría"
+
+#: models.py:36
+msgid "active"
+msgstr "activo"
+
+#: models.py:37
+msgid "broken"
+msgstr "roto"
+
+#: models.py:38
 msgid "Order"
 msgstr "Orden"
 
+#: models.py:39
+msgid "Error traceback"
+msgstr "Traza del error"
+
+#: models.py:40
+msgid "Error traceback on broken item"
+msgstr "Traza del error en el elemento roto"
+
+#: models.py:46
+msgid "registered item"
+msgstr "elemento registrado"
+
+#: models.py:47
+msgid "registered items"
+msgstr "elementos registrados"
+
 #: templates/admin/registry/change_form.html:8
-msgid "This item is broken. You cannot edit this object until problem was fixed"
-msgstr "Este elemento está roto. No puedes modificarlo hasta que se haya resuelto el problema"
+msgid ""
+"This item is broken. You cannot edit this object until problem was fixed"
+msgstr ""
+"Este elemento está roto. No puedes modificarlo hasta que se haya resuelto el "
+"problema"
+
+#: templates/admin/registry/change_form.html:9
+msgid "Traceback error"
+msgstr "Traza del error"

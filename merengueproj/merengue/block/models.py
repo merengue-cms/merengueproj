@@ -99,6 +99,10 @@ class RegisteredBlock(RegisteredItem):
 
     objects = BlockManager()
 
+    class Meta:
+        verbose_name = _('registered block')
+        verbose_name_plural = _('registered blocks')
+
     def can_delete(self, user):
         return perms_api.has_global_permission(user, perms_api.MANAGE_BLOCK_PERMISSION) or \
                (self.content_id is not None and self.content.can_edit(user))

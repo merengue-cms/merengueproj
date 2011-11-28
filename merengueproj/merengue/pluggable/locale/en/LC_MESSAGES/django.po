@@ -8,95 +8,113 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-29 20:26+0200\n"
+"POT-Creation-Date: 2011-11-28 14:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 
-#: __init__.py:214
+#: __init__.py:229
 msgid "portal menu"
 msgstr ""
 
-#: admin.py:48
+#: admin.py:50
 msgid "Status"
 msgstr ""
 
-#: admin.py:70
-msgid "New plugins have been registered"
+#: admin.py:73
+msgid "Plugins detections done"
 msgstr ""
 
-#: admin.py:90
+#: admin.py:93
 msgid "Not all dependencies are met"
 msgstr "dsadsa"
 
-#: admin.py:110
-msgid "Register new plugins"
+#: admin.py:116
+msgid "Detect new plugins"
 msgstr ""
 
-#: admin.py:118 templates/admin/plugin/plugin_change_form.html:12
+#: admin.py:124 templates/admin/plugin/plugin_change_form.html:24
 msgid "None"
 msgstr ""
 
-#: admin.py:119 admin.py:121 templates/admin/plugin/plugin_change_form.html:6
+#: admin.py:125 admin.py:127 templates/admin/plugin/plugin_change_form.html:18
 msgid "Screenshot"
 msgstr ""
 
-#: models.py:34
-msgid "name"
+#: admin.py:132
+#, python-format
+msgid ""
+"You have not registered all the plugins. Click <a href=\"%(url)s\">here</a> "
+"in order to register them"
 msgstr ""
 
 #: models.py:35
-msgid "description"
+msgid "name"
 msgstr ""
 
 #: models.py:36
+msgid "description"
+msgstr ""
+
+#: models.py:37
 msgid "version"
 msgstr ""
 
 #: models.py:40
+msgid "installed"
+msgstr ""
+
+#: models.py:41
 msgid "directory name"
 msgstr ""
 
-#: models.py:53
+#: models.py:54
 msgid "registered plugin"
 msgstr ""
 
-#: models.py:54
+#: models.py:55
 msgid "registered plugins"
 msgstr ""
 
-#: templates/admin/plugin/plugin_change_form.html:20
+#: templates/admin/plugin/plugin_change_form.html:9
+msgid ""
+"This plugin has been set as required in settings.py so you can not install/"
+"uninstall from this admin interface. You can install it by running a migrate "
+"command"
+msgstr ""
+
+#: templates/admin/plugin/plugin_change_form.html:32
 msgid "New blocks"
 msgstr ""
 
-#: templates/admin/plugin/plugin_change_form.html:25
+#: templates/admin/plugin/plugin_change_form.html:37
 msgid "Registered blocks"
 msgstr ""
 
-#: templates/admin/plugin/plugin_change_form.html:38
+#: templates/admin/plugin/plugin_change_form.html:50
 msgid "Has own admin"
 msgstr ""
 
-#: templates/admin/plugin/plugin_change_form.html:48
+#: templates/admin/plugin/plugin_change_form.html:60
 msgid "New Actions"
 msgstr ""
 
-#: templates/admin/plugin/plugin_change_form.html:53
+#: templates/admin/plugin/plugin_change_form.html:65
 msgid "Registered actions"
 msgstr ""
 
-#: templates/admin/plugin/plugin_change_form.html:67
+#: templates/admin/plugin/plugin_change_form.html:79
 msgid "New Viewlets"
 msgstr ""
 
-#: templates/admin/plugin/plugin_change_form.html:80
+#: templates/admin/plugin/plugin_change_form.html:92
 msgid "New Middlewares"
 msgstr ""
 
-#: templates/admin/plugin/plugin_change_form.html:93
+#: templates/admin/plugin/plugin_change_form.html:105
 msgid "New content types addable in a section"
 msgstr ""

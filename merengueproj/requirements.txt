@@ -39,3 +39,4 @@ django-autoreports>=0.8.3
 django_compressor==0.5.3
 django-classy-tags==0.3.0
 django-inplaceedit>=0.74
+recaptcha-client>=1.0.6

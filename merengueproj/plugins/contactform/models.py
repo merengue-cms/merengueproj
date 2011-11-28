@@ -66,9 +66,9 @@ class ContactForm(models.Model):
                                    max_length=200,
                                    blank=True)
     redirect_to_with_params = models.BooleanField(verbose_name=_('redirect to with params'),
-                                                  help_text=_('If you set "redirect_to", \
-                                                                when the server redirect to\
-                                                                a this URL, set some get params'),
+                                                  help_text=_(('If you set "redirect_to",'
+                                                              'when the server redirect to'
+                                                              'a this URL, set some get params')),
                                                   default=False)
     subject = models.CharField(verbose_name=_('subject'), max_length=200,
                                default=_('Subject'))
@@ -88,10 +88,10 @@ class ContactForm(models.Model):
     captcha = models.BooleanField(verbose_name=_('captcha'), default=True)
     sender_email = models.BooleanField(verbose_name=_('contact email'), default=False)
     is_sender_email_editable = models.BooleanField(verbose_name=_('Fixed contact email'),
-                                                   help_text=_('If you select "contact email", \
-                                                                you can choose if this field is\
-                                                                editable in the public view when\
-                                                                the user is authenticated'),
+                                                   help_text=_(('If you select "contact email",'
+                                                                'you can choose if this field is '
+                                                                'editable in the public view when '
+                                                                'the user is authenticated')),
                                                    default=False)
 
     def __unicode__(self):
@@ -165,7 +165,10 @@ class ContactForm(models.Model):
             index += 1
 
         if self.captcha and not request.user.is_authenticated():
-            captcha_field = custom_fields.CaptchaField(request.META['REMOTE_ADDR'])
+            if request.is_ajax():
+                captcha_field = custom_fields.CaptchaAjaxField(request.META['REMOTE_ADDR'])
+            else:
+                captcha_field = custom_fields.CaptchaField(request.META['REMOTE_ADDR'])
             f.fields.insert(index, 'captcha', captcha_field)
 
         return f
@@ -209,6 +212,8 @@ class ContactFormSelectOpt(models.Model):
 
     class Meta:
         translate = ('label', )
+        verbose_name = _('Contact Form Select Option')
+        verbose_name_plural = _('Contact Form Select Options')
 
     def __unicode__(self):
         return self.label
@@ -220,6 +225,10 @@ class SentContactForm(models.Model):
     sender = models.ForeignKey(User, verbose_name=_('sender'), blank=True, null=True)
     sent_msg = JSONField(verbose_name=_(u'response'))
     sent_date = models.DateTimeField(verbose_name=_('sent date'), auto_now_add=True)
+
+    class Meta:
+        verbose_name = _('Sent Contact Form')
+        verbose_name_plural = _('Sents Contact Form')
 
     def __unicode__(self):
         return self.contact_form.title

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-12 12:00+0200\n"
+"POT-Creation-Date: 2011-11-25 14:47+0100\n"
 "PO-Revision-Date: 2011-04-11 14:32+0200\n"
 "Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
 "Language-Team: it <m.busico@ieee.org>\n"
@@ -16,198 +16,222 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.py:27
+#: admin.py:48
 msgid "associate contents"
 msgstr "contenuti associati"
 
-#: admin.py:43 admin.py:72
+#: admin.py:74 admin.py:106
 #, python-format
 msgid "%(content)s content associated to %(multimedia)s"
 msgstr "%(content)s contenuti associati a %(multimedia)s"
 
-#: admin.py:48
+#: admin.py:79
 #, python-format
 msgid "Successfully associated %(number)d %(model_name)s."
 msgstr "%(number)d %(model_name)s associati con successo"
 
-#: admin.py:51
+#: admin.py:82
 msgid "Are you sure you want to associate these contents?"
 msgstr "Sei sicuro di voler associare questi contenuti?"
 
-#: admin.py:54
+#: admin.py:85
 msgid "Associate contents"
 msgstr "Associa i contenuti"
 
-#: admin.py:60
+#: admin.py:91
 msgid "disassociate contents"
 msgstr "rimuovi l'associazione dei contenuti"
 
-#: admin.py:77
+#: admin.py:111
 #, python-format
 msgid "Successfully disassociated %(number)d %(model_name)s."
 msgstr ""
 "L'associazione per %(number)d %(model_name)s. è stata rimossa con successo"
 
-#: admin.py:80
+#: admin.py:114
 msgid "Are you sure you want disassociate this contents?"
 msgstr "Sei sicuro di voler rimuovere l'associazione di questi contenuti?"
 
-#: admin.py:83
+#: admin.py:117
 msgid "Disassociate contents"
 msgstr "Rimuovi l'associazione dei contenuti"
 
-#: admin.py:128 models.py:204 models.py:243 models.py:279
+#: admin.py:180 models.py:233 models.py:285 models.py:322
 msgid "Thumbnail"
 msgstr "Miniature"
 
-#: admin.py:174
+#: admin.py:226
 msgid "Database error"
 msgstr "Errore del database"
 
-#: admin.py:179
+#: admin.py:231
 msgid "All"
 msgstr "Tutti"
 
-#: admin.py:207
-msgid "Please specify at least a video file or a video url"
-msgstr "Prego specificare almeno un file video o un URL di un video"
-
-#: admin.py:213
-msgid "Video file must be in flv format"
-msgstr "Il file video deve essere nel formato flv"
-
-#: admin.py:244
+#: admin.py:273
 msgid "Please specify at least a video file "
 msgstr "Prego specificare almeno un file video"
 
-#: admin.py:250
+#: admin.py:279
 msgid "This file must be in swf format"
 msgstr "Questo file deve essere nel formato swf"
 
-#: admin.py:281 models.py:180
+#: admin.py:315 models.py:200
 msgid "photos"
 msgstr "foto"
 
-#: admin.py:287 models.py:231
+#: admin.py:321 models.py:260
 msgid "videos"
 msgstr "video"
 
-#: admin.py:292 models.py:267
+#: admin.py:326 models.py:309
 msgid "panoramic views"
 msgstr "vedute panoramiche"
 
-#: admin.py:297
+#: admin.py:331
 msgid "3d images"
 msgstr "immagini in 3D"
 
-#: admin.py:302
+#: admin.py:336
 msgid "files"
 msgstr "file"
 
-#: admin.py:307 models.py:329
+#: admin.py:341 models.py:372
 msgid "audio files"
 msgstr "file audio"
 
-#: models.py:28 models.py:30
+#: forms.py:57
+msgid "The file is not a audio file or has a format not supported"
+msgstr ""
+
+#: forms.py:69
+msgid "The file is not a video file or has a format not supported"
+msgstr ""
+
+#: forms.py:79
+msgid "Please specify at least a video file or a video url"
+msgstr "Prego specificare almeno un file video o un URL di un video"
+
+#: forms.py:83
+msgid "If you want to remove the file, you can specify a video url"
+msgstr ""
+
+#: models.py:50 models.py:52
 msgid "name"
 msgstr "nome"
 
-#: models.py:33
+#: models.py:55
 msgid "date added"
 msgstr "aggiunto in data"
 
-#: models.py:35
+#: models.py:57
 msgid "tags"
 msgstr "tag"
 
-#: models.py:41
+#: models.py:63
 msgid "class name"
 msgstr "nome della classe"
 
-#: models.py:45
+#: models.py:67
 msgid "Publication status"
 msgstr "Stato di pubblicazione"
 
-#: models.py:46
+#: models.py:68
 msgid "Enter the current status"
 msgstr "Entra nello stato corrente"
 
-#: models.py:49
+#: models.py:70
+msgid "last editor"
+msgstr ""
+
+#: models.py:71
 msgid "authors"
 msgstr "autori"
 
-#: models.py:55
+#: models.py:77
 msgid "base multimedia"
 msgstr "base multimediale"
 
-#: models.py:56
+#: models.py:78
 msgid "base multimedias"
 msgstr "basi multimediali"
 
-#: models.py:168 models.py:288
+#: models.py:188 models.py:331
 msgid "image"
 msgstr "immagine"
 
-#: models.py:172
+#: models.py:192
 msgid "caption"
 msgstr "didascalia"
 
-#: models.py:174 models.py:225
+#: models.py:194 models.py:254
 msgid "plone uid"
 msgstr "plone uid"
 
-#: models.py:179
+#: models.py:199
 msgid "photo"
 msgstr "foto"
 
-#: models.py:213
+#: models.py:241
 msgid "video file"
 msgstr "file video"
 
-#: models.py:216 models.py:255
+#: models.py:244
+msgid "The file will convert to flv format. It could lose a little of quality"
+msgstr ""
+
+#: models.py:246 models.py:297
 msgid "preview image"
 msgstr "immagine di anteprima"
 
-#: models.py:221
+#: models.py:250
 msgid "external url"
 msgstr "url esterno"
 
-#: models.py:222
+#: models.py:251
 msgid "The url of one video from youtube or google-video"
 msgstr "L'url di un video proveniente da youtube o google-video"
 
-#: models.py:230
+#: models.py:259
 msgid "video"
 msgstr "video"
 
-#: models.py:260
+#: models.py:302
 msgid "url"
 msgstr "url"
 
-#: models.py:266
+#: models.py:308
 msgid "panoramic view"
 msgstr "vista panoramica"
 
-#: models.py:292
+#: models.py:335
 msgid "image 3d"
 msgstr "immagine in 3D"
 
-#: models.py:293
+#: models.py:336
 msgid "images 3d"
 msgstr "immagini in 3D"
 
-#: models.py:305 models.py:310
+#: models.py:348 models.py:353
 msgid "attached file"
 msgstr "file allegato"
 
-#: models.py:311
+#: models.py:354
 msgid "attached files"
 msgstr "file allegati"
 
-#: models.py:323 models.py:328
+#: models.py:366 models.py:371
 msgid "audio file"
 msgstr "file audio"
 
 #: templates/multimedia/media_files.html:5
 msgid "Attached files"
 msgstr "file allegati"
+
+#: templates/multimedia/media_slide.html:35
+#: templates/multimedia/media_slide.html:36
+msgid "Street view"
+msgstr ""
+
+#~ msgid "Video file must be in flv format"
+#~ msgstr "Il file video deve essere nel formato flv"

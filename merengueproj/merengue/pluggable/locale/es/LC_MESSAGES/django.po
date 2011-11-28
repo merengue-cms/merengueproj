@@ -7,96 +7,122 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-29 20:26+0200\n"
+"POT-Creation-Date: 2011-11-28 14:28+0100\n"
 "PO-Revision-Date: 2010-10-05 10:10\n"
 "Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "X-Translated-Using: django-transhette 0.1.SVN\n"
 
-#: __init__.py:214
+#: __init__.py:229
 msgid "portal menu"
-msgstr ""
+msgstr "menú del portal"
 
-#: admin.py:48
+#: admin.py:50
 msgid "Status"
-msgstr ""
+msgstr "Estado"
 
-#: admin.py:70
-msgid "New plugins have been registered"
-msgstr "Nuevos plugins han sido registrados"
+#: admin.py:73
+msgid "Plugins detections done"
+msgstr "Detección de plugins realizada"
 
-#: admin.py:90
+#: admin.py:93
 msgid "Not all dependencies are met"
 msgstr "No se cumplen todas las dependencias"
 
-#: admin.py:110
+#: admin.py:116
 msgid "Detect new plugins"
 msgstr "Detectar nuevos plugins"
 
-#: admin.py:118 templates/admin/plugin/plugin_change_form.html:12
+#: admin.py:124 templates/admin/plugin/plugin_change_form.html:24
 msgid "None"
 msgstr ""
 
-#: admin.py:119 admin.py:121 templates/admin/plugin/plugin_change_form.html:6
+#: admin.py:125 admin.py:127 templates/admin/plugin/plugin_change_form.html:18
 msgid "Screenshot"
-msgstr ""
+msgstr "Captura"
 
-#: models.py:34
+#: admin.py:132
+#, python-format
+msgid ""
+"You have not registered all the plugins. Click <a href=\"%(url)s\">here</a> "
+"in order to register them"
+msgstr ""
+"No tiene registrados todos los plugins. Click <a href=\"%(url)s\">aquí</a> "
+"para registrarlos"
+
+#: models.py:35
 msgid "name"
 msgstr "nombre"
 
-#: models.py:35
+#: models.py:36
 msgid "description"
 msgstr "descripción"
 
-#: models.py:36
+#: models.py:37
 msgid "version"
 msgstr "versión"
 
 #: models.py:40
+msgid "installed"
+msgstr "instalado"
+
+#: models.py:41
 msgid "directory name"
 msgstr "directorio"
 
-#: models.py:53
-msgid "registered plugin"
-msgstr ""
-
 #: models.py:54
+msgid "registered plugin"
+msgstr "plugin registrado"
+
+#: models.py:55
 msgid "registered plugins"
-msgstr ""
+msgstr "plugins registrados"
 
-#: templates/admin/plugin/plugin_change_form.html:20
+#: templates/admin/plugin/plugin_change_form.html:9
+msgid ""
+"This plugin has been set as required in settings.py so you can not install/"
+"uninstall from this admin interface. You can install it by running a migrate "
+"command"
+msgstr ""
+"Este plugin ha sido configurado como requerido en el settings.py por tanto "
+"no puede no instalarlo/desinstalarlo desde la interfaz de administración. Tu "
+"puedes instalarlo ejecutando el comando de migración(migrate)"
+
+#: templates/admin/plugin/plugin_change_form.html:32
 msgid "New blocks"
-msgstr ""
+msgstr "Nuevos bloques"
 
-#: templates/admin/plugin/plugin_change_form.html:25
+#: templates/admin/plugin/plugin_change_form.html:37
 msgid "Registered blocks"
-msgstr ""
+msgstr "Bloques registrados"
 
-#: templates/admin/plugin/plugin_change_form.html:38
+#: templates/admin/plugin/plugin_change_form.html:50
 msgid "Has own admin"
-msgstr ""
+msgstr "Tiene admin propia"
 
-#: templates/admin/plugin/plugin_change_form.html:48
+#: templates/admin/plugin/plugin_change_form.html:60
 msgid "New Actions"
-msgstr ""
+msgstr "Nuevas acciones"
 
-#: templates/admin/plugin/plugin_change_form.html:53
+#: templates/admin/plugin/plugin_change_form.html:65
 msgid "Registered actions"
-msgstr ""
+msgstr "Acciones registradas"
 
-#: templates/admin/plugin/plugin_change_form.html:67
+#: templates/admin/plugin/plugin_change_form.html:79
 msgid "New Viewlets"
-msgstr ""
+msgstr "Nuevos Viewlets"
 
-#: templates/admin/plugin/plugin_change_form.html:80
+#: templates/admin/plugin/plugin_change_form.html:92
 msgid "New Middlewares"
-msgstr ""
+msgstr "Nuevos Middlewares"
 
-#: templates/admin/plugin/plugin_change_form.html:93
+#: templates/admin/plugin/plugin_change_form.html:105
 msgid "New content types addable in a section"
-msgstr ""
+msgstr "Nuevo tipo de contenido añadido en una sección"
+
+#~ msgid "New plugins have been registered"
+#~ msgstr "Nuevos plugins han sido registrados"

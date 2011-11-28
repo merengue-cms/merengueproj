@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-10 19:49+0200\n"
+"POT-Creation-Date: 2011-11-28 14:27+0100\n"
 "PO-Revision-Date: 2011-04-11 18:09+0200\n"
 "Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
 "Language-Team: it <m.busico@ieee.org>\n"
@@ -16,9 +16,71 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: models.py:17
+#: admin.py:35
+msgid "Status"
+msgstr ""
+
+#: fields.py:30 models.py:41
+msgid "Configuration"
+msgstr ""
+
+#: fields.py:41
+#, python-format
+msgid "Error in \"%(name)s\" field"
+msgstr ""
+
+#: items.py:104
+msgid "All content types"
+msgstr ""
+
+#: items.py:113
+msgid "Content types that whant to filter"
+msgstr ""
+
+#: items.py:139
+msgid ""
+"If the collection is into a section, filter for the contents of this section"
+msgstr ""
+
+#: models.py:33
+msgid "class name"
+msgstr ""
+
+#: models.py:34
+msgid "module"
+msgstr ""
+
+#: models.py:35
+msgid "category"
+msgstr ""
+
+#: models.py:36
+msgid "active"
+msgstr ""
+
+#: models.py:37
+msgid "broken"
+msgstr ""
+
+#: models.py:38
 msgid "Order"
 msgstr "Ordine"
+
+#: models.py:39
+msgid "Error traceback"
+msgstr ""
+
+#: models.py:40
+msgid "Error traceback on broken item"
+msgstr ""
+
+#: models.py:46
+msgid "registered item"
+msgstr ""
+
+#: models.py:47
+msgid "registered items"
+msgstr ""
 
 #: templates/admin/registry/change_form.html:8
 msgid ""
@@ -26,3 +88,7 @@ msgid ""
 msgstr ""
 "Questo elemento è corrotto. Non puoi modificare questo elemento finchè il "
 "problema non viene risolto"
+
+#: templates/admin/registry/change_form.html:9
+msgid "Traceback error"
+msgstr ""

@@ -25,7 +25,9 @@ from django import forms
 from merengue.base import widgets
 from merengue.pluggable.utils import get_plugin
 
-from plugins.contactform.recaptcha.client import captcha
+from plugins.contactform.utils import captcha_displayajaxhtml
+
+from recaptcha.client import captcha
 
 
 class RadioField(forms.ChoiceField):
@@ -104,3 +106,19 @@ class CaptchaField(forms.Field):
                                             privkey, self.client_addr)
         if not recaptcha_response.is_valid:
             raise ValidationError(_("The captcha was invalid, try again."))
+
+
+class CaptchaAjaxWidget(CaptchaWidget):
+
+    def render(self, name, value, attrs=None):
+        plugin = get_plugin('contactform')
+        pubkey = plugin.get_config().get('rpubk', None)
+        if pubkey:
+            pubkey = pubkey.value
+        else:
+            pubkey = ''
+        return captcha_displayajaxhtml(pubkey)
+
+
+class CaptchaAjaxField(CaptchaField):
+    widget = CaptchaAjaxWidget

@@ -124,7 +124,7 @@ class RegisteredPluginAdmin(RegisteredItemAdmin):
             return ugettext('None')
         return mark_safe(u'<a href="%s" target="_blank">%s</a>' % (obj.screenshot, ugettext('Screenshot')))
     screenshot_link.allow_tags = True
-    screenshot_link.label = _('Screenshot')
+    screenshot_link.short_description = _('Screenshot')
 
     def changelist_view(self, request, extra_context=None):
         check_plugins()

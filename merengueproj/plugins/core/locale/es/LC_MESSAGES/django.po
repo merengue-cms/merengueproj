@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-21 09:53+0200\n"
+"POT-Creation-Date: 2011-11-28 16:31+0100\n"
 "PO-Revision-Date: 2011-08-26 12:00\n"
 "Last-Translator: Pablo Martin <pmartin@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,19 +30,19 @@ msgstr "Salir"
 
 #: actions.py:72
 msgid "Print"
-msgstr ""
+msgstr "Imprimir"
 
 #: actions.py:77
 msgid "Link to your section"
-msgstr ""
+msgstr "Enlaza a tu sección"
 
 #: blocks.py:34
 msgid "maximum number of levels to show"
-msgstr ""
+msgstr "máximo número de niveles a mostrar"
 
 #: blocks.py:55
 msgid "maximum number of items without js collapsible"
-msgstr ""
+msgstr "máximo número de niveles sin plegar con js"
 
 #: blocks.py:67
 msgid "Renders the Menu"
@@ -74,7 +74,7 @@ msgstr "Muestra el menú del portal"
 
 #: blocks.py:119
 msgid "Portal Menu Block"
-msgstr ""
+msgstr "Bloque del Menú del Portal"
 
 #: blocks.py:124
 msgid "Portal Menu"
@@ -82,11 +82,11 @@ msgstr "Menú del Portal"
 
 #: blocks.py:134
 msgid "Abstract block that render portal links"
-msgstr ""
+msgstr "Bloque abstracto que renderizará los enlaces del portal"
 
 #: blocks.py:135
 msgid "Link Base Block"
-msgstr ""
+msgstr "Bloque Base de Enlaces"
 
 #: blocks.py:148
 msgid "Portal links"
@@ -142,7 +142,7 @@ msgstr "Sección"
 
 #: forms.py:34
 msgid "Choose a section where save the menu"
-msgstr ""
+msgstr "Elige una sección donde guardar el menú"
 
 #: forms.py:40 templates/core/block_contact_info.html:15
 msgid "Name"
@@ -154,21 +154,25 @@ msgstr "¿Cómo quiere enlazar?"
 
 #: forms.py:45
 msgid "menu"
-msgstr ""
+msgstr "menú"
 
 #: forms.py:46
 msgid "standing out"
-msgstr ""
+msgstr "destacado"
 
 #: forms.py:47
-msgid "The roles that will see this menu. Only if you select the choice link like menu"
-msgstr "Los roles que verán este menú. Sólo si escoges en \"¿Cómo quiere enlazar?\" la opción menú"
+msgid ""
+"The roles that will see this menu. Only if you select the choice link like "
+"menu"
+msgstr ""
+"Los roles que verán este menú. Sólo si escoges en \"¿Cómo quiere enlazar?\" "
+"la opción menú"
 
 #: forms.py:92
 msgid "Already exits a menu in your section with this slug"
-msgstr ""
+msgstr "Ya existe un menu en tu sección con este slug"
 
-#: forms.py:96
+#: forms.py:99
 msgid "Already exits a standing out in your section with this content"
 msgstr "Ya existe un elemento destacado en tu sección con este contenido"
 
@@ -211,13 +215,13 @@ msgstr "Información de contacto vacía"
 
 #: templates/core/hotlink.html:6
 msgid "Hot Link"
-msgstr ""
+msgstr "Enlazar"
 
 #: templates/core/panels/addblock.html:7
 msgid "Add blocks"
 msgstr "Añadir bloques"
 
-#: templates/core/panels/inplaceedit.html:34
+#: templates/core/panels/inplaceedit.html:43
 msgid "activate inline edit"
 msgstr "Edición en línea"
 
