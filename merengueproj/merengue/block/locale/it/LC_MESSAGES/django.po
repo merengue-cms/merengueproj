@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-28 12:45+0100\n"
+"POT-Creation-Date: 2011-11-28 12:51+0100\n"
 "PO-Revision-Date: 2011-04-11 18:02+0200\n"
 "Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
 "Language-Team: it <m.busico@ieee.org>\n"
@@ -266,6 +266,14 @@ msgstr ""
 
 #: models.py:97
 msgid "overwrite generic block if is present on the actual page"
+msgstr ""
+
+#: models.py:103
+msgid "registered block"
+msgstr ""
+
+#: models.py:104
+msgid "registered blocks"
 msgstr ""
 
 #: views.py:76

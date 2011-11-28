@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-28 12:45+0100\n"
+"POT-Creation-Date: 2011-11-28 12:51+0100\n"
 "PO-Revision-Date: 2011-04-27 19:08+0200\n"
 "Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -69,14 +69,16 @@ msgstr ""
 msgid ""
 "Unmark this field to keep the block in the specified place (even though it "
 "won't be displayed)"
-msgstr "Desmarcar este campo para mantener el bloque en el lugar especificado"
-"(aunque no será mostrado)"
+msgstr ""
+"Desmarcar este campo para mantener el bloque en el lugar especificado(aunque "
+"no será mostrado)"
 
 #: forms.py:104
 msgid ""
 "A block is already set to overwrite others of this kind. Unmark this to save "
 "the block, even though it won't be displayed"
-msgstr "Un bloque ya está configurado para sobrescribir los demás de este tipo."
+msgstr ""
+"Un bloque ya está configurado para sobrescribir los demás de este tipo."
 "Desmarcar esta opción para guardar el bloque, aunque no se mostrará"
 
 #: forms.py:122
@@ -273,6 +275,14 @@ msgid "overwrite generic block if is present on the actual page"
 msgstr ""
 "sobreescribir configuración genérica del bloque si este está presente en la "
 "página actual"
+
+#: models.py:103
+msgid "registered block"
+msgstr "bloque registrado"
+
+#: models.py:104
+msgid "registered blocks"
+msgstr "bloques registrados"
 
 #: views.py:76
 msgid "Configuration"
