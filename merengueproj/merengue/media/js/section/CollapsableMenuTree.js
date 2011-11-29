@@ -370,6 +370,7 @@
                     }
                 });
                 $("#changelist table tbody").show();
+                $(".loading-list").hide();
             }
         };
         setTimeout(finish, 10);

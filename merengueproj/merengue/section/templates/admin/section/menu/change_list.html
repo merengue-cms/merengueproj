@@ -17,3 +17,10 @@
         title="{% trans "Click and drag to reorder" %}" />
   </div>
 {% endblock %}
+
+{% block result_list %}
+  {{ block.super }}
+<div class="loading-list">
+  <img src="{{ MEDIA_URL }}merengue/img/ajax-loader-admin.gif" /> {% trans "Loading" %}
+</div>
+{% endblock %}
