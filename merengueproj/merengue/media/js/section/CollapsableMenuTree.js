@@ -6,13 +6,12 @@
     var span15 = '<span class="span15">&nbsp;</span>';
     var span50 = '<span class="span50">&nbsp;</span>';
     var save_url = '/cms/sections/ajax/save_menu_order/';
+    var painting = 0;
 
     function recalculateRows() {
-        var index=0;
-        $('#changelist table tbody tr:visible').each(function() {
+        $('#changelist table tbody tr:visible').each(function(index) {
             $(this).removeClass('row1').removeClass('row2');
             $(this).addClass('row' + (index%2+1));
-            index += 1;
         });
     }
 
@@ -23,36 +22,41 @@
         this.opened = false;
         this.expand = false;
         this.parent = null;
-        this.getRoot = function() {
+    }
+
+
+    Node.prototype.getRoot = function() {
             if (!this.parent) return this;
             return this.parent.getRoot();
-        }
-        this.getLevel = function() {
+        };
+    Node.prototype.getLevel = function() {
             if (!this.parent) return 0;
             return this.parent.getLevel()+1;
-        }
-        this.open = function() {
+        };
+    Node.prototype.open = function() {
             this.opened = true;
             this.paintNodes();
-        }
-        this.close = function() {
+            recalculateRows();
+        };
+    Node.prototype.close = function() {
             this.closeChildren();
             this.paintNodes(true);
-        }
-        this.addChild = function(node) {
+            recalculateRows();
+        };
+    Node.prototype.addChild = function(node) {
             this.children.push(node);
             node.parent = this;
-        }
-        this.getChildren = function() {
+        };
+    Node.prototype.getChildren = function() {
             return this.children;
-        }
-        this.setChildren = function(children) {
+        };
+    Node.prototype.setChildren = function(children) {
             this.children = children;
             for (var i in children) {
                 children[i].parent = this;
             }
-        }
-        this.findLastLevelNode = function(level, lastnode) {
+        };
+    Node.prototype.findLastLevelNode = function(level, lastnode) {
             var children = this.getChildren();
             var newnode = null;
             if (this.getLevel() === level) {
@@ -65,17 +69,12 @@
                 lastnode = newnode
             }
             return newnode
-        }
-        this.undecorate = function() {
+        };
+    Node.prototype.undecorate = function() {
             var element = this.domelement;
-            element.find('.plusMenu').remove();
-            element.find('.minusMenu').remove();
-            element.find('.span15').remove();
-            element.find('.span50').remove();
-            element.find('.draggable-icon').remove();
-            element.find('.draggable-icon-disabled').remove();
-        }
-        this.decorate = function() {
+            element.find('.plusMenu,.minusMenu,.span15,.span50,.draggable-icon,.draggable-icon-disabled').remove();
+        };
+    Node.prototype.decorate = function() {
             var element = this.domelement;
             if (this.children.length) {
                 element.children("th").eq(0).prepend(minus.clone()).prepend(plus.clone().show());
@@ -101,15 +100,15 @@
                 element.find('.plusMenu').trigger('click');
                 this.expand=false;
             }
-        }
-        this.closeChildren = function() {
+        };
+    Node.prototype.closeChildren = function() {
             var children = this.children;
             for (var i in children) {
                 children[i].closeChildren();
             }
             this.opened = false;
-        }
-        this.setListeners = function() {
+        };
+    Node.prototype.setListeners = function() {
             var element = this.domelement;
             var node = this;
 	    element.find(".plusMenu").click(function() {
@@ -118,8 +117,8 @@
 	    element.find(".minusMenu").click(function() {
                node.close();
             });
-        }
-        this.paintNode = function(moving) {
+        };
+    Node.prototype.paintNode = function(moving) {
             if (typeof(moving) == 'undefined') moving = false;
             var element = this.domelement;
             if (!element) return;
@@ -139,17 +138,18 @@
                     element.find(".plusMenu").show();
                 }
             }
-        }
-        this.paintNodes = function(moving) {
+        };
+    Node.prototype.paintNodes = function(moving) {
             if (typeof(moving) == 'undefined') moving = false;
             var children = this.children;
             for (var i in children) {
                 children[i].paintNodes(moving);
             }
-            this.paintNode(moving);
-            recalculateRows();
-        }
-        this.findNodeByElement = function(element) {
+            var node = this;
+            node.paintNode(moving);
+            //recalculateRows();
+        };
+    Node.prototype.findNodeByElement = function(element) {
             var node = null;
             if (this.domelement && this.domelement.get(0) === element.get(0)) {
                 return this;
@@ -161,20 +161,20 @@
                 }
             }
             return null;
-        }
-        this.unParent = function() {
+        };
+    Node.prototype.unParent = function() {
             var siblings = this.parent.getChildren();
             var newsiblings = [];
             for (var i in siblings) {
                 if (siblings[i] !== this) newsiblings.push(siblings[i]);
             }
             this.parent.setChildren(newsiblings);
-        }
-        this.moveLastChild = function(node) {
+        };
+    Node.prototype.moveLastChild = function(node) {
             this.unParent();
             node.addChild(this);
-        }
-        this.moveFirstChild = function(node) {
+        };
+    Node.prototype.moveFirstChild = function(node) {
             this.unParent();
             this.parent = node;
             var siblings = this.parent.getChildren();
@@ -184,8 +184,8 @@
                 newsiblings.push(siblings[i]);
             }
             this.parent.setChildren(newsiblings);
-        }
-        this.moveAfterWithLevel = function(node, level, recurse) {
+        };
+    Node.prototype.moveAfterWithLevel = function(node, level, recurse) {
             if (node.getLevel() < level) {
                 this.unParent();
                 node.addChild(this);
@@ -197,8 +197,8 @@
             } else {
                 this.moveAfter(node);
             }
-        }
-        this.moveAfter = function(node) {
+        };
+    Node.prototype.moveAfter = function(node) {
             this.unParent();
             this.parent = node.parent;
             var siblings = this.parent.getChildren();
@@ -210,8 +210,8 @@
                 }
             }
             this.parent.setChildren(newsiblings);
-        }
-        this.moveBefore = function(node) {
+        };
+    Node.prototype.moveBefore = function(node) {
             this.unParent();
             this.parent = node.parent;
             var siblings = this.parent.getChildren();
@@ -223,8 +223,8 @@
                 newsiblings.push(siblings[i]);
             }
             this.parent.setChildren(newsiblings);
-        }
-        this.getQueryString = function() {
+        };
+    Node.prototype.getQueryString = function() {
             var children = this.children;
             var str = '';
             var parent_val;
@@ -240,43 +240,44 @@
             }
             return str
         }
-    }
 
     function Tree() {
         this.root = new Node(null, 0);
-        this.findLastLevelNode = function(node, level) {
-            var children = node.getChildren();
-            for (i in children) {
-                newnode = (children[i], level)
-            }
-        }
-        this.insertIntoLastLevel = function(node, level) {
+        this.finished = false;
+    }
+    Tree.prototype.insertIntoLastLevel = function(node, level) {
             var parent_node = this.root.findLastLevelNode(level);
             if (parent_node) {
                 parent_node.addChild(node);
             }
-        }
-        this.paintTree = function() {
+        };
+    Tree.prototype.paintTree = function() {
             this.root.paintNodes();
-        }
-        this.findNodeByElement = function(element) {
+            recalculateRows();
+        };
+    Tree.prototype.findNodeByElement = function(element) {
             return this.root.findNodeByElement(element);
-        }
-        this.getQueryString = function() {
+        };
+    Tree.prototype.getQueryString = function() {
             return this.root.getQueryString();
-        }
-    }
+        };
 
 
     function make_tree() {
     	var main_tree = new Tree();
+        var rows = $("#changelist table tbody tr").length;
         $("#changelist table tbody tr").each(function(i) {
-            var td_level = $(this).children("td").eq(0);
-            var level = parseInt(td_level.text());
-            var node = new Node($(this), level);
-            main_tree.insertIntoLastLevel(node, level-1);
+            var tr = $(this);
+            setTimeout(function() {
+                var td_level = tr.children("td").eq(0);
+                var level = parseInt(td_level.text());
+                var node = new Node(tr, level);
+                main_tree.insertIntoLastLevel(node, level-1);
+                if (i==rows-1) {
+                    main_tree.finished=true;
+                }
+            }, 10 * i);
         });
-        main_tree.root.open();
         return main_tree;
     }
   
@@ -316,53 +317,62 @@
         save_url = $('#collapsableSaveURL').html() || save_url;
         $("#changelist table thead tr").children("th").eq(0).hide();
         $("#changelist table thead tr").children("th").eq(1).hide();
+        $("#changelist table tbody").hide();
         var tree = make_tree();
-        tree.paintTree();
-        redo_table(tree);
-        $('#changelist table tbody').sortable({
-            items: 'tr',
-            tolerance: 'pointer',
-            placeholder: 'row1',
-            forceHelperSize: true,
-            forcePlaceholderSize: true,
-            handle: '.draggable-icon',
-            over: function() {
-            },
-            start: function(e, ui) {
-                var current = tree.findNodeByElement(ui.item);
-                current.close();
-                ui.helper.find('.span50').remove();
-                $(this).find('.draggable-icon').hide();
-                $(this).find('.draggable-icon-disabled').show();
-                ui.helper.find('.draggable-icon').show();
-                ui.helper.find('.draggable-icon-disabled').hide();
-            },
-            stop: function(e, ui) {
-                var current = tree.findNodeByElement(ui.item);
-                var previous = tree.findNodeByElement(ui.item.prevAll('tr:visible').eq(0));
-                var next = tree.findNodeByElement(ui.item.nextAll('tr:visible').eq(0));
 
-                if (!previous) {
-                    current.moveFirstChild(tree.root);
-                } else  {
-                    if (!next) {
-                        next_level = -1;
-                    } else {
-                        next_level = next.getLevel();
-                    }
-                    prev_level = previous.getLevel();
-                    if (next_level > prev_level) {
-                        current.moveBefore(next); 
-                    } else if (next_level === prev_level) {
-                        current.moveAfterWithLevel(previous, parseInt(ui.position.left/50)+1, false); 
-                    } else {
-                        current.moveAfterWithLevel(previous, parseInt(ui.position.left/50)+1, true); 
-                    }
-                }
+        var finish = function () {
+            if (!tree.finished) {
+                setTimeout(finish, 10);
+            } else {
+                tree.root.open();
+                tree.paintTree();
                 redo_table(tree);
-                save_tree(tree);
+                $('#changelist table tbody').sortable({
+                    items: 'tr',
+                    tolerance: 'pointer',
+                    placeholder: 'row1',
+                    forceHelperSize: true,
+                    forcePlaceholderSize: true,
+                    handle: '.draggable-icon',
+                    start: function(e, ui) {
+                        var current = tree.findNodeByElement(ui.item);
+                        current.close();
+                        ui.helper.find('.span50').remove();
+                        $(this).find('.draggable-icon').hide();
+                        $(this).find('.draggable-icon-disabled').show();
+                        ui.helper.find('.draggable-icon').show();
+                        ui.helper.find('.draggable-icon-disabled').hide();
+                    },
+                    stop: function(e, ui) {
+                        var current = tree.findNodeByElement(ui.item);
+                        var previous = tree.findNodeByElement(ui.item.prevAll('tr:visible').eq(0));
+                        var next = tree.findNodeByElement(ui.item.nextAll('tr:visible').eq(0));
+        
+                        if (!previous) {
+                            current.moveFirstChild(tree.root);
+                        } else  {
+                            if (!next) {
+                                next_level = -1;
+                            } else {
+                                next_level = next.getLevel();
+                            }
+                            prev_level = previous.getLevel();
+                            if (next_level > prev_level) {
+                                current.moveBefore(next); 
+                            } else if (next_level === prev_level) {
+                                current.moveAfterWithLevel(previous, parseInt(ui.position.left/50)+1, false); 
+                            } else {
+                                current.moveAfterWithLevel(previous, parseInt(ui.position.left/50)+1, true); 
+                            }
+                        }
+                        redo_table(tree);
+                        save_tree(tree);
+                    }
+                });
+                $("#changelist table tbody").show();
             }
-        });
+        };
+        setTimeout(finish, 10);
     });
 
 })(jQuery);
