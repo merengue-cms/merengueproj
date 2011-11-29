@@ -14,6 +14,7 @@ Version 0.8.0 (r5471)
 * More translations. See #2.
 * Unfrozen recaptcha client dependence in ``contactform`` plugin. See #2267.
 * Added cache block in ``render_single_block`` tag. See #2269.
+* Hided 3d images and panoramic views, because are not fully implemented in Merengue. See #2275.
 * Vast improvement in Merengue performance:
 
  * ``Menu.get_section`` improvement. See #2233.
