@@ -1,7 +1,7 @@
 Changes
 =======
 
-Version 0.8.0 (r5418)
+Version 0.8.0 (r5471)
 ---------------------
 
 * More Selenium tests. See #2136 and #1746.
@@ -12,6 +12,8 @@ Version 0.8.0 (r5418)
 * Incluiding inline edit to highlight plugin. See #2246.
 * Complete view for reporting a permission denied to the user and manager. See #2151.
 * More translations. See #2.
+* Unfrozen recaptcha client dependence in ``contactform`` plugin. See #2267.
+* Added cache block in ``render_single_block`` tag. See #2269.
 * Vast improvement in Merengue performance:
 
  * ``Menu.get_section`` improvement. See #2233.
@@ -36,7 +38,14 @@ Version 0.8.0 (r5418)
  * Registry cache should not set cache when empty elements found. See #2255.
  * Fixed "save and restore config" issues. See #2189 and #918.
  * Fixed the inline edit when it's used with the intro button to save changes. See #2256.
-
+ * Fixed permission test suite, related to a caching invalidation error. See #2253.
+ * Avoid 301 redirect caching by some browser like Chrome or Firefox 3.5+. See #2220.
+ * Error in AJAX request in the collection admin when the collection is inside a section. See #2260.
+ * Error when installing some plugins after uninstalling them without server reloading. See #2262.
+ * Removing some absolute references between CSS and the images. See #2264.
+ * Now the ``contactform`` plugin works if this loaded with ajax, although this is not a default behaviour. See #2268.
+ * Fixed a migration when GIS is disabled. See #2271.
+ 
 Version 0.8.0-rc2 (r5269)
 -------------------------
 

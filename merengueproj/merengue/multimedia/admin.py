@@ -348,8 +348,9 @@ def register(site):
 def register_related_multimedia(site, related_to):
     site.register_related(Photo, RelatedPhotoAdmin, related_to=related_to)
     site.register_related(Video, RelatedVideoAdmin, related_to=related_to)
-    site.register_related(PanoramicView, RelatedPanoramicViewAdmin, related_to=related_to)
-    site.register_related(Image3D, RelatedImage3DAdmin, related_to=related_to)
+    # PanoramicView and Image3D are not fully implemented, so we hide them
+    #site.register_related(PanoramicView, RelatedPanoramicViewAdmin, related_to=related_to)
+    #site.register_related(Image3D, RelatedImage3DAdmin, related_to=related_to)
     site.register_related(File, RelatedFileAdmin, related_to=related_to)
     site.register_related(Audio, RelatedAudioAdmin, related_to=related_to)
 
