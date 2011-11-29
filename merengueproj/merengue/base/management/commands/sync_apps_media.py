@@ -178,13 +178,13 @@ class Command(AppCommand, MerengueCommand):
                 # but if not, we'll find out when copying or linking anyway.
                 pass
             else:
-                if None not in (uid, gid):
+                if None not in (uid, gid) and hasattr(os, 'lchown'):
                     os.lchown(destination_dir, uid, gid)
         if link:
             success = self.link_file(source, destination, interactive, dry_run)
         else:
             success = self.copy_file(source, destination, interactive, dry_run)
-        if success and None not in (uid, gid):
+        if success and None not in (uid, gid) and hasattr(os, 'lchown'):
             # Try to use the same ownership as `root`.
             os.lchown(destination, uid, gid)
 
