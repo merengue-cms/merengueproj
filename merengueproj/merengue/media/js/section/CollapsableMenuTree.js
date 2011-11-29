@@ -266,6 +266,9 @@
     function make_tree() {
     	var main_tree = new Tree();
         var rows = $("#changelist table tbody tr").length;
+        if (!rows) {
+            main_tree.finished=true;
+        }
         $("#changelist table tbody tr").each(function(i) {
             var tr = $(this);
             setTimeout(function() {
