@@ -181,6 +181,7 @@ DEBUG_TOOLBAR_PANELS = (
     #'debug_toolbar.panels.cache.CacheDebugPanel',
     'debug_toolbar.panels.template.TemplateDebugPanel',
     #'debug_toolbar.panels.logger.LoggingPanel',
+    'merengue.dbtoolbar.BlockDebugPanel',
 )
 
 # File maximum size
