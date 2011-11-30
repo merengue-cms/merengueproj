@@ -20,7 +20,9 @@ from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
 
 import merengue
-from merengue.perms.utils import can_manage_site, has_global_permission, MANAGE_BLOCK_PERMISSION
+from merengue.perms.utils import (can_manage_site, has_global_permission,
+                                  MANAGE_BLOCK_PERMISSION,
+                                  MANAGE_CACHE_INVALIDATION_PERMISSION)
 from merengue.uitools import panels
 
 
@@ -52,7 +54,10 @@ class InvalidateCachePanel(panels.Panel):
     def show(self, context):
         cache_site = getattr(settings, 'CACHE_SITE_FOR_ANONYMOUS', False)
         user = getattr(context.get('request', None), 'user', None)
-        return cache_site and user and can_manage_site(user)
+        print 'hola: %s' % has_global_permission(user, MANAGE_CACHE_INVALIDATION_PERMISSION)
+        print cache_site
+        return cache_site and user and \
+            has_global_permission(user, MANAGE_CACHE_INVALIDATION_PERMISSION)
 
     def render(self, context):
         return render_to_string('core/panels/invalidate_cache.html', context)

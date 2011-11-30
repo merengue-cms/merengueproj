@@ -42,6 +42,7 @@ MANAGE_USER_PERMISION = 'manage_user'
 MANAGE_MULTIMEDIA_PERMISSION = 'manage_multimedia'
 MANAGE_PLUGIN_PERMISSION = 'manage_plugin_content'
 MANAGE_BLOCK_PERMISSION = 'manage_block'
+MANAGE_CACHE_INVALIDATION_PERMISSION = 'cache_invalidation'
 
 
 # Cache stuff  #################################################################
