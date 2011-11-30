@@ -1,0 +1,19 @@
+{% load i18n %}
+<table>
+  <thead>
+    <tr>
+      <th>{% trans "Time" %}&nbsp;(ms)</th>
+      <th>{% trans "Block" %}</th>
+      <th>{% trans "Is cached" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for info in block_info %}
+    <tr class="{% cycle 'djDebugOdd' 'djDebugEven' %}">
+      <td>{{ info.time|floatformat:"2" }}</td>
+      <td>{{ info.block }}</td>
+      <td>{{ info.is_cached }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

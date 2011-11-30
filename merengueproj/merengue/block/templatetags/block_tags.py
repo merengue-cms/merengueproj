@@ -132,11 +132,7 @@ def _render_blocks(request, blocks, obj, section, place, block_type, nondraggabl
             render_args.append(section)
         render_args.append(context)
         # append the block rendering to list
-        rendered_content = block.get_cached_content(request)
-        if rendered_content is None:
-            rendered_content = block.render(*render_args)
-            block.set_cached_content(rendered_content, request)
-        rendered_blocks.append(rendered_content)
+        rendered_blocks.append(block.get_rendered_content(request, render_args))
     if noncontained:
         wrapped_blocks = ['%s' % s for s in rendered_blocks]
     else:
@@ -238,11 +234,7 @@ class RenderSingleBlockNode(template.Node):
             elif isinstance(block, SectionBlock):
                 render_args.append(section)
             render_args.append(context)
-            rendered_content = block.get_cached_content(request)
-            if rendered_content is None:
-                rendered_content = block.render(*render_args)
-                block.set_cached_content(rendered_content, request)
-            return rendered_content
+            return block.get_rendered_content(request, render_args)
         except template.VariableDoesNotExist:
             return ''
 

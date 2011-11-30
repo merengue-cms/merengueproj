@@ -16,18 +16,27 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 import hashlib
+from time import time
 
 from django.conf import settings
+from django.core import signals
 from django.core.cache import cache
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.utils.http import urlquote
+from django.utils.log import getLogger
 from django.utils.translation import get_language, ugettext as _
 
 from merengue.block.models import RegisteredBlock
 from merengue.registry import params
 from merengue.registry.items import RegistrableItem
 from merengue.registry.signals import item_registered
+
+
+logger = getLogger('merengue.block')
+
+# block information for debugging purposes
+block_debug_info = {}
 
 
 class BaseBlock(RegistrableItem):
@@ -55,6 +64,35 @@ class BaseBlock(RegistrableItem):
     @classmethod
     def get_category(cls):
         return 'block'
+
+    def get_rendered_content(self, request, render_args):
+        """ render the block content, using cached content is needed """
+        #import ipdb; ipdb.set_trace()
+        if settings.DEBUG:
+            start = time()
+        rendered_content = self.get_cached_content(request)
+        if rendered_content is None:
+            is_cached = False
+            rendered_content = self.render(*render_args)
+            self.set_cached_content(rendered_content, request)
+        else:
+            is_cached = True
+        if settings.DEBUG:
+            block_debug_info
+            stop = time()
+            duration = stop - start
+            block_id = '%s.%s:%d' % (self.get_module(), self.get_class_name(), self.reg_item.id)
+            block_debug_info[block_id] = {
+                'block': block_id,
+                'module': self.get_module(),
+                'class_name': self.get_class_name(),
+                'is_cached': is_cached,
+                'time': duration,
+            }
+            logger.debug('(%.3f) %s; cached=%s' % (duration, block_id, is_cached),
+                extra={'duration': duration, 'block': block_id, 'is_cached': is_cached}
+            )
+        return rendered_content
 
     def render_block(self, request, template_name='block.html', block_title=None,
                      context=None):
@@ -191,3 +229,10 @@ def registered_block(sender, **kwargs):
 
 
 item_registered.connect(registered_block)
+
+
+def reset_block_debug_info(**kwargs):
+    """ Resets the block information (for debug) when a Django request is started."""
+    global block_debug_info
+    block_debug_info = {}
+signals.request_started.connect(reset_block_debug_info)
