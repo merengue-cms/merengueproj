@@ -16,7 +16,6 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf import settings
-from django.contrib.auth.decorators import user_passes_test
 from django.core.urlresolvers import reverse
 from django.contrib.auth.views import logout as auth_logout
 from django.contrib.auth.views import login as auth_login
@@ -29,6 +28,8 @@ from django.views.decorators.cache import never_cache
 from django.views.i18n import set_language as django_set_language
 
 from merengue.cache import invalidate_cache_for_path
+from merengue.perms.decorators import permission_required
+from merengue.perms.utils import MANAGE_CACHE_INVALIDATION_PERMISSION
 
 from cmsutils.log import send_info
 
@@ -76,7 +77,7 @@ def set_language(request):
     return response
 
 
-@user_passes_test(lambda u: u.is_superuser)
+@permission_required(codename=MANAGE_CACHE_INVALIDATION_PERMISSION)
 @never_cache
 def invalidate_cache(request):
     path = request.REQUEST.get('path', None)
