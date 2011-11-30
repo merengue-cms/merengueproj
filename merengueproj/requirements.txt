@@ -20,7 +20,7 @@ template_utils
 django-debug-toolbar
 django-mptt
 django-oembed
-django-ajax-selects
+django-ajax-selects==1.1.4
 django-threadedcomments==0.5.3
 django-notification==0.1.5
 django-announcements>=0.1.2
