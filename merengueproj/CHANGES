@@ -1,7 +1,7 @@
 Changes
 =======
 
-Version 0.8.0 (r5471)
+Version 0.8.0 (r5492)
 ---------------------
 
 * More Selenium tests. See #2136 and #1746.
@@ -48,6 +48,7 @@ Version 0.8.0 (r5471)
  * Removing some absolute references between CSS and the images. See #2264.
  * Now the ``contactform`` plugin works if this loaded with ajax, although this is not a default behaviour. See #2268.
  * Fixed a migration when GIS is disabled. See #2271.
+ * Frozen ``django-mptt`` and ``django-ajax-selects`` packages because are now backward incompatibles. See #2278 and #2279.
  
 Version 0.8.0-rc2 (r5269)
 -------------------------
