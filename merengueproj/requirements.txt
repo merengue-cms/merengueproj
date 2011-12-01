@@ -18,7 +18,7 @@ django-pagination
 johnny-cache>=0.3.0
 template_utils
 django-debug-toolbar
-django-mptt
+django-mptt==0.4.2
 django-oembed
 django-ajax-selects==1.1.4
 django-threadedcomments==0.5.3
