@@ -1,8 +1,8 @@
 Changes
 =======
 
-Version 0.8.0 (r5492)
----------------------
+Version 0.8.0-final
+-------------------
 
 * More Selenium tests. See #2136 and #1746.
 * Invalid the block cache when user edit a block using inline edit. See #2242.
