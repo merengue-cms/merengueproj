@@ -196,6 +196,7 @@ class BaseAdminSite(DjangoAdminSite):
         for model in model_or_iterable:
             if model in self._models_registry.keys():
                 del(self._models_registry[model])
+            if model in self._registry.keys():
                 del(self._registry[model])
 
     def admin_redirect(self, request, content_type_id, object_id, extra_url=''):
