@@ -86,6 +86,7 @@ setup(
         'Programming Language :: Python',
     ],
     packages=find_packages(),
+    keywords="django,django cms,pluggable,cms,collaborative edition, geolocation, translatable models",
     data_files=data_files,
     scripts=['bin/merengue-admin.py'],
 )
