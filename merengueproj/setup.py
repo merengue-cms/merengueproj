@@ -70,6 +70,7 @@ setup(
     author_email="msaelices@yaco.es",
     description="Django-based CMS on steroids",
     long_description=(read('README') + '\n\n' + read('CHANGES')),
+    keywords="merengue,django,django cms,pluggable,cms,collaborative edition,geolocation,translatable models",
     url="http://www.merengueproject.org/",
     include_package_data=True,
     classifiers=[
@@ -86,7 +87,6 @@ setup(
         'Programming Language :: Python',
     ],
     packages=find_packages(),
-    keywords="django,django cms,pluggable,cms,collaborative edition,geolocation,translatable models",
     data_files=data_files,
     scripts=['bin/merengue-admin.py'],
 )
