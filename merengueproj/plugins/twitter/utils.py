@@ -51,40 +51,26 @@ class twitter_api():
         return (tweets, u"There aren't results for the hashtag defined")
 
     def convert_tweet_html(self, tweet):
-        # check if exists a link on tweet
-        if 'http' in tweet:
-            pattern_url = re.compile("https?://[a-zA-Z0-9./-_]+")
-            url = pattern_url.search(tweet)
-            while url is not None:
-                rpl = "<a href='" + url.group() + "'>" + url.group() + "</a>"
-                pos = int(url.end()) + len(rpl) - len(url.group())
+        tweet_parsing = [
+            {
+                'regular_expresion': "https?://[a-zA-Z0-9./-_]+",
+                'replacement': "<a href='%s'>%s</a>",
+            },
+            {
+                'regular_expresion': "#[a-zA-Z0-9]+",
+                'replacement': "<a href='http://twitter.com/#!/search/%s'>%s</a>",
+            },
+            {
+                'regular_expresion': "@[a-zA-Z0-9_]+",
+                'replacement': "<a href='http://twitter.com/#!/%s'>%s</a>",
+            },
+        ]
 
-                tweet = tweet.replace(url.group(), rpl)
-                url = pattern_url.search(tweet, pos)
-
-        # check if exists '#' on tweet
-        if '#' in tweet:
-            pattern_tag = re.compile("#[a-zA-Z0-9]+")
-            tag = pattern_tag.search(tweet)
-            while tag is not None:
-                rpl = "<a href='http://twitter.com/#!/search/" + tag.group()[1:] + \
-                    "'>" + tag.group() + "</a>"
-                pos = int(tag.end()) + len(rpl) - len(tag.group())
-
-                tweet = tweet.replace(tag.group(), rpl)
-                tag = pattern_tag.search(tweet, pos)
-
-        # check if exists '@' on tweet
-        if '@' in tweet:
-            pattern_user = re.compile("@[a-zA-Z0-9_]+")
-            user = pattern_user.search(tweet)
-            while user is not None:
-                rpl = "<a href='http://twitter.com/#!/" + user.group()[1:] + \
-                    "'>" + user.group() + "</a>"
-                pos = int(user.end()) + len(rpl) - len(user.group())
-
-                tweet = tweet.replace(user.group(), rpl)
-                user = pattern_user.search(tweet, pos)
+        for element in tweet_parsing:
+            tweet = re.sub(
+                element['regular_expresion'],
+                lambda m: element['replacement'] % (
+                    m.group(), m.group()), tweet, 10)
 
         return tweet
 
