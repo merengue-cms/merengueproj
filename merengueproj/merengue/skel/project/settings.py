@@ -196,6 +196,6 @@ DEBUG_TOOLBAR_PANELS = (
 # Allow overwriting any configuration in optional settings_local.py
 # (it can be used to set up your own database, debug and cache options, contact mails...)
 try:
-    from settings_local import *
+    from settings_local import *  # pyflakes:ignore
 except ImportError:
     pass
