@@ -120,14 +120,17 @@
 <div id="content-related">
   <div class="module" id="administrator-menu">
     <h2>{{ user.username }}</h2>
+    {% block sidebaractionwrapper %}
     <ul class="level1">
+      {% block sidebaraction %}
       <li><a href="review/reviewtask/">{% trans 'Review list' %}</a></li>
       <li><a href="perms/accessrequest/">{% trans 'Access request' %}</a></li>
       <li><a href="announcements/announcement/">{% trans 'Announcements' %}</a></li>
       <li><a href="{% url admin:django_admin %}">{% trans "Django admin" %}</a></li>
+      {% endblock %}
     </ul>
+    {% endblock %}
   </div>
-
   {% include "admin/inc.recentactions.html" %}
 </div>
 
