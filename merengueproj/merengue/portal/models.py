@@ -17,7 +17,7 @@
 
 from django.conf import settings
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext, ugettext_lazy as _
 
 from transmeta import TransMeta
 
@@ -28,6 +28,11 @@ from stdimage import StdImageField
 
 
 LINK_MEDIA_PREFIX = 'links'
+
+
+def get_category_links():
+    return [(category[0], ugettext(category[1]))
+            for category in settings.PORTAL_LINK_CATEGORIES]
 
 
 class PortalLink(models.Model):
@@ -44,7 +49,7 @@ class PortalLink(models.Model):
                                   blank=True, null=True, editable=False)
     order = models.IntegerField(_('order'), blank=True, null=True)
     category = models.CharField(_('category'), max_length=100,
-                                choices=settings.PORTAL_LINK_CATEGORIES)
+                                choices=get_category_links())
     slug = models.SlugField(verbose_name=_('slug'),
                             max_length=200,
                             blank=False,
