@@ -169,17 +169,24 @@ def pre_delete_handler(sender, instance, **kwargs):
             content.save()
 
 
-def models_refresh_cache_handler(sender, instance, **kwargs):
+def models_refresh_cache_by_class(cls):
     from merengue.block.utils import _blocks_models_cache
-    for cls in instance.__class__.mro():
+    for cls in cls.mro():
         blocks = _blocks_models_cache[cls]
-        print (cls, blocks)
         if not blocks:
             continue
         for block in blocks:
             registeredblocks = RegisteredBlock.objects.by_item_class(block)
             for rblock in registeredblocks:
                 rblock.get_registry_item().invalidate_cache()
+
+
+def models_refresh_cache_handler(sender, instance, **kwargs):
+    from merengue.collection.models import Collection
+    models_refresh_cache_by_class(instance.__class__)
+    if isinstance(instance, Collection):
+        for ct in instance.content_types.all():
+            models_refresh_cache_by_class(ct.model_class())
 
 
 signals.pre_save.connect(pre_save_handler, sender=RegisteredBlock)
