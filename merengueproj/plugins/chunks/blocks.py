@@ -27,6 +27,10 @@ class ChunksBlock(Block):
     help_text = ugettext_lazy('Chunks Block')
     verbose_name = ugettext_lazy('Chunks Block')
 
+    @classmethod
+    def get_models_refresh_cache(self):
+        return [Chunk]
+
     def render(self, request, place, context, *args, **kwargs):
         chunks = Chunk.objects.placed_at(place, request.get_full_path())
         return self.render_block(request, template_name='chunks/chunks_block.html',

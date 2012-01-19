@@ -21,7 +21,7 @@ from django.utils.translation import ugettext_lazy as _
 from merengue.block.blocks import Block, BaseBlock
 from merengue.registry import params
 from merengue.registry.items import BlockQuerySetItemProvider
-from plugins.news.models import NewsItem
+from plugins.news.models import NewsItem, NewsCategory
 from plugins.news.views import get_news
 
 
@@ -50,7 +50,7 @@ class LatestNewsBlock(BlockQuerySetItemProvider, Block):
 
     @classmethod
     def get_models_refresh_cache(self):
-        return [NewsItem]
+        return [NewsItem, NewsCategory]
 
     def get_contents(self, request=None, context=None, section=None):
         news_list = get_news(request, filtering_section=False)

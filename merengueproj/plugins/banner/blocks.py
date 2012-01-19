@@ -20,6 +20,7 @@ from django.utils.translation import ugettext_lazy as _, ugettext
 from merengue.block.blocks import Block, BaseBlock
 from merengue.registry import params
 from merengue.registry.items import BlockQuerySetItemProvider
+from plugins.banner.models import Banner, BannerCategory
 from plugins.banner.params import BannerParam
 from plugins.banner.views import get_banners
 
@@ -50,6 +51,10 @@ class BannerBlock(BlockQuerySetItemProvider, Block):
         'vary_on_url': True,
         'vary_on_language': True,
     }
+
+    @classmethod
+    def get_models_refresh_cache(self):
+        return [Banner, BannerCategory]
 
     def get_contents(self, request=None, context=None, section=None):
         banners_list = get_banners(request, filtering_section=False)
