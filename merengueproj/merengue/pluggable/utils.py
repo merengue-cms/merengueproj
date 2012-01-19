@@ -396,6 +396,13 @@ def register_plugin_blocks(plugin_name):
     plugin_blocks = plugin.get_blocks()
     if plugin_blocks:
         register_items(plugin_blocks)
+        from merengue.block.utils import _blocks_models_cache
+        for plugin_block in plugin_blocks:
+            for model in plugin_block.get_models_refresh_cache():
+                if not _blocks_models_cache[model]:
+                    _blocks_models_cache[model] = []
+                if not plugin_block in _blocks_models_cache[model]:
+                    _blocks_models_cache[model].append(plugin_block)
         clear_lookup_cache()
 
 

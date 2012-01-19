@@ -94,6 +94,10 @@ class BaseBlock(RegistrableItem):
             )
         return rendered_content
 
+    @classmethod
+    def get_models_refresh_cache(self):
+        return []
+
     def render_block(self, request, template_name='block.html', block_title=None,
                      context=None):
         if context is None:

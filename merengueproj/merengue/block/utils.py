@@ -19,6 +19,7 @@ from merengue.cache import MemoizeCache, memoize
 
 # block cache stuff  --------------------
 
+_blocks_models_cache = MemoizeCache('models_blocks_cache')
 _blocks_lookup_cache = MemoizeCache('displayed_blocks_cache')
 
 

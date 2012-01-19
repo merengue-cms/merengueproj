@@ -149,3 +149,4 @@ def reload_memoize_caches():
     _blocks_lookup_cache.reload_if_dirty()
     _roles_cache.reload_if_dirty()
     _menu_sections_cache.reload_if_dirty()
+    _blocks_lookup_cache.reload_if_dirty()
