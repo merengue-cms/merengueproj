@@ -166,21 +166,20 @@ class Menu(models.Model):
             return ('merengue.base.views.admin_link', [menu_content_type.id, self.id, ''])
 
     @permalink
-    def menu_public_link_with_out_section(self, ancestors_path):
-        return self._menu_public_link_without_section(self, ancestors_path)
+    def menu_public_link_without_section(self, ancestors_path):
+        return self._menu_public_link_without_section(ancestors_path)
 
     def _menu_public_link_without_section(self, ancestors_path):
         return ('menu_view', (ancestors_path, self.slug))
 
-    @permalink
     def public_link(self):
         menus_ancestors = [menu.slug for menu in self.get_ancestors()][1:]  # first is a dummy root menu and we discard it
         ancestors_path = menus_ancestors and '/%s' % '/'.join(menus_ancestors) or ''
         section = self.get_section()
         if section:
-            return section.get_real_instance()._menu_public_link(ancestors_path, self)
+            return section.get_real_instance().menu_public_link(ancestors_path, self)
         else:
-            return self._menu_public_link_without_section(ancestors_path)
+            return self.menu_public_link_without_section(ancestors_path)
 
     def update_url(self, commit=True):
         try:
