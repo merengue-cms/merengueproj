@@ -23,6 +23,7 @@ from django.utils.translation import ugettext
 from south.signals import post_migrate
 from transmeta import get_fallback_fieldname
 
+from merengue.urlresolvers import get_url_default_lang
 from merengue.registry import register, have_registered_items
 from merengue.registry.items import RegistrableItem
 from merengue.registry.models import RegisteredItem
@@ -39,9 +40,7 @@ class Plugin(RegistrableItem):
         for url_prefix, url in self.url_prefixes:
             prefix = url_prefix
             if isinstance(url_prefix, dict):
-                prefix = url_prefix.get(
-                    getattr(settings, 'URL_DEFAULT_LANG', settings.LANGUAGE_CODE),
-                )
+                prefix = url_prefix.get(get_url_default_lang())
             prefixes.append((path.join(settings.BASE_URL[1:], prefix), url))
 
         return prefixes
