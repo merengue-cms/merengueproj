@@ -20,7 +20,7 @@ from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpResponseRedirect
 
 from merengue.middleware import HttpStatusCode403Provider
-from merengue.urlresolvers import get_url_default_lang
+from plugins.microsite.utils import treatment_middelware_microsite
 
 
 class MicrositeMiddleware(HttpStatusCode403Provider):
@@ -28,14 +28,8 @@ class MicrositeMiddleware(HttpStatusCode403Provider):
 
     def process_request(self, request):
         path_info = request.get_full_path()
-        url_args = [item for item in path_info.split('/') if item]
-        from plugins.microsite.config import PluginConfig
-        url_prefixes = PluginConfig.url_prefixes[0][0]
-        prefix_microsite = url_prefixes.get(get_url_default_lang(), 'en')
-        if len(url_args) > 1 and url_args[0] == prefix_microsite:
-            del url_args[0]
-            url_new = '/'.join(url_args)
-            url_new = '/%s/' % url_new
+        url_new = treatment_middelware_microsite(path_info)
+        if url_new != path_info:
             return HttpResponseRedirect(url_new)
 
     def process_response(self, request, response):

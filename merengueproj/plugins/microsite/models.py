@@ -15,10 +15,11 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, NoReverseMatch
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 from merengue.section.models import BaseSection
+from plugins.microsite.utils import treatment_middelware_microsite
 
 
 class MicroSite(BaseSection):
@@ -35,10 +36,18 @@ class MicroSite(BaseSection):
 
     def _menu_public_link(self, ancestors_path, menu):
         reverse_tuple = menu._menu_public_link_without_section(ancestors_path)
-        url_external = reverse(reverse_tuple[0], args=reverse_tuple[1])
-        if url_external and url_external[0] == '/':
-            url_external = url_external[1:]
+        try:
+            url_external = reverse(reverse_tuple[0], args=reverse_tuple[1])
+            if url_external and url_external[0] == '/':
+                url_external = url_external[1:]
+        except NoReverseMatch:
+            url_external = '/'
         return ('microsite_url', [self.slug, url_external])
+
+    def menu_public_link(self, ancestors_path, menu):
+        view, args = self._menu_public_link(ancestors_path, menu)
+        url = reverse(view, args=args)
+        return treatment_middelware_microsite(url)
 
     def url_in_section(self, url):
         return '/%s%s' % (self.slug, url)
