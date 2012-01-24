@@ -71,6 +71,10 @@ class MicroSite(BaseSection):
     def _public_link_without_section(self):
         return ('microsite_view', (self.slug, ))
 
+    def public_link(self):
+        url = super(MicroSite, self).public_link()
+        return treatment_middelware_microsite(url)
+
     class Meta:
         verbose_name = _('microsite')
         verbose_name_plural = _('microsites')
