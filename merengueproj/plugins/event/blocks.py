@@ -22,6 +22,7 @@ from django.utils.translation import ugettext as _, ugettext_lazy
 from merengue.block.blocks import Block
 from merengue.registry.items import BlockQuerySetItemProvider
 
+from plugins.event.models import Event
 from plugins.event.utils import getEventsMonthYear
 from plugins.event.views import get_events
 
@@ -32,6 +33,10 @@ class EventsCalendarBlock(BlockQuerySetItemProvider, Block):
     help_text = ugettext_lazy('Block that renders calendar with events')
     verbose_name = ugettext_lazy('Events Calendar Block')
     cache_allowed = False
+
+    @classmethod
+    def get_models_refresh_cache(self):
+        return [Event]
 
     def get_contents(self, request=None, context=None, section=None):
         return get_events(request, filtering_section=False)

@@ -99,6 +99,10 @@ class PortletBannerBlock(Block):
                     default=None),
     ]
 
+    @classmethod
+    def get_models_refresh_cache(self):
+        return [Banner, BannerCategory]
+
     def render(self, request, place, context, *args, **kwargs):
         width = self.get_config().get('width', []).get_value() or None
         height = self.get_config().get('height', []).get_value() or None

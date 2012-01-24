@@ -21,10 +21,11 @@ from django.utils.translation import ugettext_lazy as _
 
 from merengue.block.blocks import Block, ContentBlock, BaseBlock
 from merengue.registry import params
+from merengue.base.models import ContactInfo
 from merengue.section.models import BaseSection, Menu
 from merengue.section.utils import get_section
 from merengue.portal.models import PortalLink
-from announcements.models import current_announcements_for_request
+from announcements.models import Announcement, current_announcements_for_request
 
 
 class BaseMenuBlock(object):
@@ -40,6 +41,10 @@ class BaseMenuBlock(object):
         'vary_on_url': True,
         'vary_on_language': True,
     }
+
+    @classmethod
+    def get_models_refresh_cache(self):
+        return [Menu]
 
     def get_max_level(self):
         max_value = self.get_config().get('max_num_level', None)
@@ -142,6 +147,10 @@ class LinkBaseBlock(Block):
         'vary_on_language': True,
     }
 
+    @classmethod
+    def get_models_refresh_cache(self):
+        return [PortalLink]
+
     def render(self, request, place, context, *args, **kwargs):
         links = PortalLink.objects.filter(category=self.category).visible_by_user(request.user)
         return self.render_block(request, template_name=self.template_name,
@@ -191,6 +200,10 @@ class ContactInfoBlock(ContentBlock):
         'vary_on_language': True,
     }
 
+    @classmethod
+    def get_models_refresh_cache(self):
+        return [ContactInfo]
+
     def render(self, request, place, content, context, *args, **kwargs):
         return self.render_block(
             request, template_name='core/block_contact_info.html',
@@ -204,6 +217,10 @@ class AnnouncementsBlock(ContentBlock):
     default_place = 'header'
     help_text = _('Block with the site announcements')
     verbose_name = _('Announcements block')
+
+    @classmethod
+    def get_models_refresh_cache(self):
+        return [Announcement]
 
     def render(self, request, place, content, context, *args, **kwargs):
         announcements = current_announcements_for_request(request, site_wide=True)

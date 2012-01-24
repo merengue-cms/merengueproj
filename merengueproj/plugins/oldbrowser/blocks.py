@@ -31,6 +31,10 @@ class OldBrowserBlock(Block):
     verbose_name = _('Old browser block')
     cache_allowed = False
 
+    @classmethod
+    def get_models_refresh_cache(self):
+        return [OldBrowser]
+
     def render(self, request, place, context, *args, **kwargs):
         user_agent = request.META.get('HTTP_USER_AGENT', None)
         if not user_agent:

@@ -21,7 +21,7 @@ from django.utils.translation import ugettext as _, ugettext_lazy
 from merengue.block.blocks import ContentBlock
 
 from plugins.contactform.models import (ContactForm, ContactFormOpt,
-                                        ContactFormSelectOpt, SentContactForm)
+                                        ContactFormSelectOpt)
 
 
 class ContactFormBlock(ContentBlock):
@@ -41,7 +41,7 @@ class ContactFormBlock(ContentBlock):
     @classmethod
     def get_models_refresh_cache(self):
         return [ContactForm, ContactFormOpt,
-                ContactFormSelectOpt, SentContactForm]
+                ContactFormSelectOpt]
 
     def render(self, request, place, content, context, *args, **kwargs):
         contact_forms = ContactForm.objects.filter(content=content)

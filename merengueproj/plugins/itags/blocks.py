@@ -22,6 +22,7 @@ from merengue.block.blocks import Block, BaseBlock
 from merengue.registry import params
 from merengue.registry.items import BlockQuerySetItemProvider
 from merengue.viewlet.models import RegisteredViewlet
+from plugins.itags.models import ITag
 from plugins.itags.viewlets import TagCloudViewlet
 
 
@@ -46,6 +47,10 @@ class TagCloudBlock(BlockQuerySetItemProvider, Block):
         'vary_on_url': True,
         'vary_on_language': True,
     }
+
+    @classmethod
+    def get_models_refresh_cache(self):
+        return [ITag]
 
     def render(self, request, place, context, block_content_relation=None,
                *args, **kwargs):

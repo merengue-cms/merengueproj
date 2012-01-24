@@ -19,6 +19,7 @@ from django.utils.translation import ugettext as _, ugettext_lazy
 
 from merengue.block.blocks import ContentBlock
 from merengue.registry.items import ContentTypeFilterProvider
+from threadedcomments.models import FreeThreadedComment
 
 
 class FeedbackBlock(ContentTypeFilterProvider, ContentBlock):
@@ -26,6 +27,10 @@ class FeedbackBlock(ContentTypeFilterProvider, ContentBlock):
     default_place = 'aftercontent'
     verbose_name = ugettext_lazy('Feedback block')
     help_text = ugettext_lazy('The block represents the feedback widget')
+
+    @classmethod
+    def get_models_refresh_cache(self):
+        return [FreeThreadedComment]
 
     def render(self, request, place, content, context, *args, **kwargs):
         if content.is_commentable() and self.match_type(content):

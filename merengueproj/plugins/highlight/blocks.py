@@ -36,6 +36,10 @@ class HighlightBlock(Block):
         'vary_on_language': True,
     }
 
+    @classmethod
+    def get_models_refresh_cache(self):
+        return [Highlight]
+
     def render(self, request, place, context, block_content_relation=None,
                *args, **kwargs):
         highlight_items = Highlight.objects.published()

@@ -43,6 +43,10 @@ class StandingOutBlock(Block):
         'vary_on_language': True,
     }
 
+    @classmethod
+    def get_models_refresh_cache(self):
+        return [StandingOut, StandingOutCategory]
+
     def render(self, request, place, context, block_content_relation=None,
                *args, **kwargs):
         standingout_categories = StandingOutCategory.objects.all()
@@ -83,6 +87,10 @@ class StandingOutSlideShowBlock(Block):
         'vary_on_url': True,
         'vary_on_language': True,
     }
+
+    @classmethod
+    def get_models_refresh_cache(self):
+        return [StandingOut, StandingOutCategory]
 
     def render(self, request, place, context, block_content_relation=None,
                *args, **kwargs):

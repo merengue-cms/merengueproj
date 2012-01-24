@@ -21,6 +21,7 @@ from django.utils.translation import ugettext as _, ugettext_lazy
 
 from merengue.block.blocks import ContentBlock
 from plugins.smartsearch.forms import SearcherForm
+from plugins.smartsearch.models import Searcher
 from plugins.smartsearch.utils import get_fields
 from merengue.collection.models import Collection
 
@@ -38,6 +39,10 @@ class SearchBlock(ContentBlock):
         'vary_on_url': True,
         'vary_on_language': True,
     }
+
+    @classmethod
+    def get_models_refresh_cache(self):
+        return [Searcher]
 
     def render(self, request, place, content, context, *args, **kwargs):
         if not isinstance(content, Collection):

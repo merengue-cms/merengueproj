@@ -18,6 +18,7 @@
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _, ugettext_lazy
 
+from merengue.base.models import BaseContent
 from merengue.block.blocks import Block
 from merengue.pluggable.utils import get_plugin
 
@@ -38,6 +39,10 @@ class RSSGlobalFeed(Block):
         'vary_on_url': False,
         'vary_on_language': False,
     }
+
+    @classmethod
+    def get_models_refresh_cache(self):
+        return [BaseContent]
 
     def render(self, request, place, context, *args, **kwargs):
         plugin = get_plugin("rss")

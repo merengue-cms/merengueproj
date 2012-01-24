@@ -21,7 +21,7 @@ from merengue.block.blocks import ContentBlock, BaseBlock
 from merengue.registry import params
 from merengue.registry.items import (BlockSectionFilterItemProvider,
                                      ContentTypeFilterProvider)
-
+from plugins.voting.models import Vote
 from plugins.voting.utils import get_can_vote
 
 
@@ -37,6 +37,10 @@ class VotingBlock(BlockSectionFilterItemProvider, ContentTypeFilterProvider, Con
                      [params.Bool(name='readonly', label=_('is readonly?'),
                                   default=False)])
     cache_allowed = False
+
+    @classmethod
+    def get_models_refresh_cache(self):
+        return [Vote]
 
     def render(self, request, place, content, context, *args, **kwargs):
         readonly = self.get_config().get('readonly').get_value()
