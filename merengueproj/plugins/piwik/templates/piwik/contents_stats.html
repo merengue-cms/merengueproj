@@ -39,8 +39,11 @@
     {% endfor %}
     </ul>
 {% endif %}
-
-{% if not contents and not sections %}
-  {% inline_trans "there are no statistics to show"|capfirst %}
+{% if message %}
+    {% inline_trans "there was a error:"|capfirst %} {{ message }}
+{% else %}
+    {% if not contents and not sections %}
+        {% inline_trans "there are no statistics to show"|capfirst %}
+    {% endif %}
 {% endif %}
 </div>

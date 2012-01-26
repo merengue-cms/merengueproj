@@ -1,0 +1,16 @@
+{% load i18n inlinetrans permissions_tags %}
+
+
+<div id="stats">
+    {% ifhasperm 'view_all_stats' %}
+    <div class="piwik"><h4><a href="{{ piwik_url }}"> {% inline_trans "Go to Piwik to view stats details" %}</a></h4>
+        <p>{% inline_trans "Access to monitoring statistics platform of the University of Malaga web site" %}</p>
+    </div>
+    <div class="statsRanking"><h4><a href="{% url stats_ranking %}"> {% inline_trans "View stats ranking" %}</a></h4>
+        <p>{%inline_trans "View the statistics ranking of the sections and contents of the University of Malaga web site" %} </p>
+    </div>
+    {% endifhasperm %}
+    <div class="mySection"><h4><a href="{% url ranking_by_owner %}"> {% inline_trans "View stats ranking of my contents" %}</a></h4>
+            <p>{%inline_trans "View the statistics ranking of the sections and contents you own"%}</p>
+    </div>
+</div>

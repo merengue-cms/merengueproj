@@ -47,11 +47,16 @@ def contents_stats(context, user=None, expanded=1):
     section_classes = [BaseSection] + BaseSection.get_subclasses()
     section_class_names = [section_class._meta.module_name
                                 for section_class in section_classes]
-    for content, visit in basecontents:
-        if content.class_name in section_class_names:
-            sections.append((content, visit))
-        else:
-            contents.append((content, visit))
+    message = None
+    if isinstance(basecontents, list):
+        for content, visit in basecontents:
+            if content.class_name in section_class_names:
+                sections.append((content, visit))
+            else:
+                contents.append((content, visit))
+    elif isinstance(basecontents, dict) and basecontents['result'] == 'error':
+        message = basecontents.get('message', basecontents['result'])
     return {'contents': contents,
             'sections': sections,
+            'message': message,
             'request': context.get('request')}

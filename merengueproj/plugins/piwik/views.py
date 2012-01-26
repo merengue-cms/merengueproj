@@ -32,13 +32,16 @@ def index(request):
 
 @permission_required(codename='view_all_stats')
 def ranking(request):
+    piwik_url = get_plugin('piwik').get_config().get('url').get_value()
     return render_to_response('piwik/ranking_stats.html',
-                              {},
+                              {'piwik_url': piwik_url},
                               context_instance=RequestContext(request))
 
 
 @permission_required(codename='view_my_stats')
 def ranking_by_owner(request):
+    piwik_url = get_plugin('piwik').get_config().get('url').get_value()
     return render_to_response('piwik/ranking_stats.html',
-                              {'by_owner': True},
+                              {'by_owner': True,
+                               'piwik_url': piwik_url},
                               context_instance=RequestContext(request))
