@@ -40,8 +40,8 @@ def piwik_script(context):
 
 
 @register.inclusion_tag('piwik/contents_stats.html', takes_context=True)
-def contents_stats(context, username=None, expanded=1):
-    basecontents = get_contents(username, expanded)
+def contents_stats(context, user=None, expanded=1):
+    basecontents = get_contents(user, expanded)
     contents = []
     sections = []
     section_classes = [BaseSection] + BaseSection.get_subclasses()

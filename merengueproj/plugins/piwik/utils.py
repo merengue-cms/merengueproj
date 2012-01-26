@@ -68,7 +68,7 @@ def get_basecontents(data, extra_filters=None):
     return contents
 
 
-def get_contents(username=None, expanded=1):
+def get_contents(user=None, expanded=1):
     base_contents = None
     piwik_api = get_piwik_api()
     data = piwik_api.call('Actions.getPageTitles',
@@ -76,12 +76,15 @@ def get_contents(username=None, expanded=1):
                           'filter_column_recursive': 'label',
                           'expanded': expanded})
     if data and isinstance(data, list):
-        if username:
-            filters = {'owners__username': username}
-            base_contents = get_basecontents(data, filters)
+        if user:
+            if user.is_authenticated():
+                filters = {'owners': user}
+                base_contents = get_basecontents(data, filters)
+            else:
+                base_contents = {}
         else:
             base_contents = get_basecontents(data)
-        if base_contents:
+        if base_contents is not None:
             return sort_contents_recursive(base_contents)
     elif data and isinstance(data, dict):
         return data
