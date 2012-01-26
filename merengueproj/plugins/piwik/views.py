@@ -19,14 +19,12 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 from merengue.perms.decorators import permission_required
-
-from plugins.piwik.utils import get_plugin_config
+from merengue.pluggable.utils import get_plugin
 
 
 @permission_required(codename='view_my_stats')
 def index(request):
-    plugin_config = get_plugin_config()
-    piwik_url = plugin_config.get('url').get_value()
+    piwik_url = get_plugin('piwik').get_config().get('url').get_value()
     return render_to_response('piwik/index.html',
                               {'piwik_url': piwik_url},
                               context_instance=RequestContext(request))

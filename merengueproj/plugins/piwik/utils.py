@@ -17,128 +17,26 @@
 
 import re
 
-from merengue.pluggable.utils import get_plugin
 from merengue.base.models import BaseContent
+from merengue.pluggable.utils import get_plugin
 
 from plugins.piwik.api import PiwikAPI
-from plugins.piwik.settings import PERIOD, DATE, METRIC
-
-# don't change, this is used to track stats in piwik by javascript
-# if you change it, stats in piwik can be changed
-SECTION_PIWIK_VARIABLE = 'Secciones'
-CONTENT_PIWIK_VARIABLE = 'Contenidos'
+from plugins.piwik.settings import METRIC
 
 _piwik_api = None
-
-
-def get_plugin_config():
-    return get_plugin('piwik').get_config()
 
 
 def get_piwik_api(reload=True):
     global _piwik_api
     if _piwik_api is None or reload:
-        plugin_config = get_plugin_config()
-        url = plugin_config.get('url').get_value()
-        token = plugin_config.get('token').get_value()
-
-        _piwik_api = PiwikAPI(url, token)
-
+        _piwik_api = PiwikAPI()
     return _piwik_api
-
-
-def get_period():
-    plugin_config = get_plugin_config()
-    return plugin_config.get('period').get_value() or PERIOD
-
-
-def get_date():
-    plugin_config = get_plugin_config()
-    return plugin_config.get('date').get_value() or DATE
-
-
-def get_metric():
-    plugin_config = get_plugin_config()
-    return plugin_config.get('metric').get_value() or METRIC
-
-
-def get_site_id():
-    plugin_config = get_plugin_config()
-    return plugin_config.get('site_id').get_value()
-
-
-def get_piwik_url():
-    plugin_config = get_plugin_config()
-    return plugin_config.get('url').get_value()
-
-
-def get_token():
-    plugin_config = get_plugin_config()
-    return plugin_config.get('token').get_value()
-
-
-def get_variable_stats(custom_variable):
-    id_subtable = None
-    data = []
-    piwik_api = get_piwik_api()
-    site_id = get_site_id()
-    period = get_period()
-    date = get_date()
-    variables_data = piwik_api.call('CustomVariables.getCustomVariables',
-                                    params={'idSite': site_id,
-                                            'period': period,
-                                            'date': date}, format='json')
-
-    for variable in variables_data:
-        if variable['label'] == custom_variable:
-            id_subtable = variable['idsubdatatable']
-            break
-
-    if id_subtable:
-        data = piwik_api.call('CustomVariables.getCustomVariablesValuesFromNameId',
-                              params={'idSite': site_id,
-                                      'period': period,
-                                      'date': date,
-                                      'idSubtable': id_subtable}, format='json')
-    return data
-
-
-def get_pagetitle_stats(expanded=1):
-    piwik_api = get_piwik_api()
-    site_id = get_site_id()
-    period = get_period()
-    date = get_date()
-    data = piwik_api.call('Actions.getPageTitles', params={'idSite': site_id,
-                                                           'period': period,
-                                                           'date': date,
-                                                           'filter_pattern_recursive': 'id:',
-                                                           'filter_column_recursive': 'label',
-                                                           'expanded': expanded}, format='json')
-    return data
-
-
-def get_basecontents_from_customvariables(data=None):
-    pattern = ".*id:(\d).*"
-    contents = {}
-    metric = get_metric()
-    for entry in data:
-        match = re.match(pattern, entry['label'])
-        id = None
-        if match:
-            id = match.groups()[0]
-        if id:
-            content = BaseContent.objects.get(id=id)
-            if content in contents:
-                contents[content] = contents[content] + entry[metric]
-            else:
-                contents[content] = entry[metric]
-    return contents
 
 
 def get_basecontents(data, extra_filters=None):
     pattern = ".*id:(\d+).*"
     contents = {}
-    metric = get_metric()
+    metric = get_plugin('piwik').get_config().get('metric').get_value() or METRIC
     for entry in data:
         match = re.match(pattern, entry['label'])
         id = None
@@ -170,6 +68,26 @@ def get_basecontents(data, extra_filters=None):
     return contents
 
 
+def get_contents(username=None, expanded=1):
+    base_contents = None
+    piwik_api = get_piwik_api()
+    data = piwik_api.call('Actions.getPageTitles',
+                  params={'filter_pattern_recursive': 'id:',
+                          'filter_column_recursive': 'label',
+                          'expanded': expanded})
+    if data and isinstance(data, list):
+        if username:
+            filters = {'owners__username': username}
+            base_contents = get_basecontents(data, filters)
+        else:
+            base_contents = get_basecontents(data)
+        if base_contents:
+            return sort_contents_recursive(base_contents)
+    elif data and isinstance(data, dict):
+        return data
+    return data
+
+
 def sort_contents(contents):
     return sorted(contents.iteritems(), key=lambda k: k[1]['visits'], reverse=True)
 
@@ -179,27 +97,3 @@ def sort_contents_recursive(contents):
         if 'children' in data:
             data['children'] = sort_contents_recursive(data['children'])
     return sort_contents(contents)
-
-
-def get_contents_from_customvariables():
-    data = get_variable_stats(CONTENT_PIWIK_VARIABLE)
-    return sort_contents(get_basecontents_from_customvariables(data))
-
-
-def get_sections_from_customvariables():
-    data = get_variable_stats(SECTION_PIWIK_VARIABLE)
-    return sort_contents(get_basecontents_from_customvariables(data))
-
-
-def get_contents(username=None, expanded=1):
-    base_contents = None
-    data = get_pagetitle_stats(expanded)
-    if data:
-        if username:
-            filters = {'owners__username': username}
-            base_contents = get_basecontents(data, filters)
-        else:
-            base_contents = get_basecontents(data)
-        if base_contents:
-            return sort_contents_recursive(base_contents)
-    return []

@@ -20,8 +20,7 @@ from django import template
 from merengue.pluggable.utils import get_plugin
 from merengue.section.models import BaseSection
 
-from plugins.piwik.settings import CUSTOM_VARIABLES
-from plugins.piwik.utils import SECTION_PIWIK_VARIABLE, CONTENT_PIWIK_VARIABLE, get_contents
+from plugins.piwik.utils import get_contents
 
 register = template.Library()
 
@@ -35,11 +34,8 @@ def piwik_script(context):
     return {'url': url,
             'token': token,
             'site_id': site_id,
-            'section_piwik_variable': SECTION_PIWIK_VARIABLE,
-            'content_piwik_variable': CONTENT_PIWIK_VARIABLE,
             'section': context.get('section'),
             'content': context.get('content'),
-            'custom_variables': CUSTOM_VARIABLES,
             'request': context.get('request')}
 
 
