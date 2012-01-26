@@ -176,7 +176,6 @@ def models_refresh_cache_by_class(cls, exclude_classes=None):
         classes = list(set(classes).difference(set(exclude_classes)))
     for cls in classes:
         blocks = _blocks_models_cache[cls]
-        print (cls, blocks)
         if not blocks:
             continue
         for block in blocks:
