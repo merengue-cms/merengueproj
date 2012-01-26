@@ -67,7 +67,6 @@ class BaseBlock(RegistrableItem):
 
     def get_rendered_content(self, request, render_args):
         """ render the block content, using cached content is needed """
-        #import ipdb; ipdb.set_trace()
         if settings.DEBUG:
             start = time()
         rendered_content = self.get_cached_content(request)

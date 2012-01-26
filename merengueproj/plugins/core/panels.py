@@ -54,8 +54,6 @@ class InvalidateCachePanel(panels.Panel):
     def show(self, context):
         cache_site = getattr(settings, 'CACHE_SITE_FOR_ANONYMOUS', False)
         user = getattr(context.get('request', None), 'user', None)
-        print 'hola: %s' % has_global_permission(user, MANAGE_CACHE_INVALIDATION_PERMISSION)
-        print cache_site
         return cache_site and user and \
             has_global_permission(user, MANAGE_CACHE_INVALIDATION_PERMISSION)
 
