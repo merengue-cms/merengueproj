@@ -42,8 +42,16 @@ def piwik_script(context):
 @register.inclusion_tag('piwik/contents_stats.html', takes_context=True)
 def contents_stats(context, username=None, expanded=1):
     basecontents = get_contents(username, expanded)
-    contents = [content for content in basecontents if not isinstance(content[0].get_real_instance(), BaseSection)]
-    sections = [content for content in basecontents if isinstance(content[0].get_real_instance(), BaseSection)]
+    contents = []
+    sections = []
+    section_classes = [BaseSection] + BaseSection.get_subclasses()
+    section_class_names = [section_class._meta.module_name
+                                for section_class in section_classes]
+    for content, visit in basecontents:
+        if content.class_name in section_class_names:
+            sections.append((content, visit))
+        else:
+            contents.append((content, visit))
     return {'contents': contents,
             'sections': sections,
             'request': context.get('request')}
