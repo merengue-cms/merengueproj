@@ -22,6 +22,7 @@
 <div id="content-main">
 <div id="content-merengue">
     <div class="module-merengue" id="contentmanagement">
+    {% block contenttab %}
       <dl>
         <dt>{% trans "Contents" %}</dt>
         <dd>
@@ -54,9 +55,11 @@
           <dd>{% trans "Translate the site messages." %}</dd>
         {% endif_can_access_transhette %}
       </dl>
+    {% endblock contenttab %}
     </div>
     {% ifhasperm 'manage_site' %}
     <div class="module-merengue" id="sitebuilding">
+    {% block sitebuildingtab %}
       <dl>
         <dt><a href="block/registeredblock/?content__isnull=true" title="{% trans "Blocks" %}">{% trans "Blocks" %}</a></dt>
         <dd>{% trans "View, edit and delete the site's blocks." %}</dd>
@@ -75,10 +78,12 @@
         <dt><a href="siteconfig/" title="{% trans "Save/restore configuration" %}">{% trans "Save/restore configuration" %}</a></dt>
         <dd>{% trans "Save/restore the site configuration (block, plugins, active theme, etc.)" %}</dd>
       </dl>
+    {% endblock sitebuildingtab %}
     </div>
     {% endifhasperm %}
     {% ifhasperm 'manage_user' %}
     <div class="module-merengue" id="usermanagement">
+    {% block usermanagementtab %}
       <dl>
         <dt><a href="auth/group" title="{% trans "Groups" %}">{% trans "Groups" %}</a></dt>
         <dd>{% trans "View, edit and delete the site's groups." %}</dd>
@@ -89,15 +94,17 @@
         <dt><a href="perms/objectpermission/" title="{% trans "Permissions" %}">{% trans "Permissions" %}</a></dt>
         <dd>{% trans "View, edit and delete the site's role permissions." %}</dd>
       </dl>
+    {% endblock usermanagementtab %}
     </div>
     {% endifhasperm %}
 
 {% ifhasperm 'manage_plugin_content' %}
     <div class="module-merengue" id="plugins">
+    {% block pluginstab %}
      <dl>
       <dt><a href="pluggable/registeredplugin/" title="{% trans "Plugins" %}">{% trans "Plugins" %}</a></dt>
       <dd>{% trans "View, edit and delete the site's plugins." %}</dd>
-  {% if plugins %}
+     {% if plugins %}
       <dt>{% trans "Plugin custom administration interfaces" %}</dt>
       <dd>{% trans "Enabled plugins can define its own administration interfaces. These are the custom admins in your installed plugins:" %}
         <dl>
@@ -107,9 +114,10 @@
         {% endfor %}
         </dl>
       </dd>
+     {% endif %}
      </dl>
+    {% endblock pluginstab %}
     </div>
-  {% endif %}
 {% endifhasperm %}
 
 </div> <!--- end content-merengue -->
