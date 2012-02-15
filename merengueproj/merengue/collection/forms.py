@@ -84,4 +84,10 @@ class CollectionAdminModelForm(BaseAdminModelForm):
     def __init__(self, *args, **kwargs):
         super(CollectionAdminModelForm, self).__init__(*args, **kwargs)
         if 'content_types' in self.fields:
+            self.fields['content_types'].choices = ((model.pk, self._parse_model_name(model))
+                                                    for model in self.fields['content_types'].queryset)
             self.fields['content_types'].required = True
+
+    def _parse_model_name(self, model):
+        label = u'%s' % model.model_class()._meta.verbose_name
+        return label.capitalize()

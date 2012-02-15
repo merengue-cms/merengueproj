@@ -7,15 +7,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-28 11:34+0100\n"
+"POT-Creation-Date: 2012-02-15 11:22+0100\n"
 "PO-Revision-Date: 2011-09-01 10:10\n"
 "Last-Translator: Pablo Martin <pmartin@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "X-Translated-Using: django-transhette 0.1.SVN\n"
+
+#: dbtoolbar.py:22 block/forms.py:179
+#: templates/admin/merengue_index_base.html:61
+msgid "Blocks"
+msgstr "Bloques"
+
+#: dbtoolbar.py:25
+msgid "Blocks information"
+msgstr ""
 
 #: settings.py:163 workflow/models.py:388
 msgid "Draft"
@@ -88,11 +97,11 @@ msgstr "Mal"
 
 #: apps/rating/models.py:28
 msgid "OK"
-msgstr ""
+msgstr "regular"
 
 #: apps/rating/models.py:28
 msgid "Good"
-msgstr ""
+msgstr "Bien"
 
 #: apps/rating/models.py:28
 msgid "Very good"
@@ -167,7 +176,7 @@ msgstr "Archivo"
 
 #: apps/tinyimages/models.py:34
 msgid "Select a file to upload"
-msgstr ""
+msgstr "Selecciona un fichero para subir"
 
 #: apps/tinyimages/views.py:40
 msgid "Your file has been uploaded. "
@@ -189,15 +198,15 @@ msgstr "Enviar"
 #: portal/templates/portal/searchform.html:7
 #: templates/admin/merengue_index_base.html:33
 msgid "Search"
-msgstr ""
+msgstr "Buscar"
 
 #: apps/tinyimages/templates/tinyimages/base_list.html:28
 msgid "Showing files that contains"
-msgstr ""
+msgstr "Mostrando ficheros que contienen"
 
 #: apps/tinyimages/templates/tinyimages/base_list.html:28
 msgid "Show all"
-msgstr ""
+msgstr "Mostrar todos"
 
 #: apps/tinyimages/templates/tinyimages/file.html:4
 #: apps/tinyimages/templates/tinyimages/file.html:15
@@ -280,11 +289,11 @@ msgstr "Borrado satisfactoriamente %(count)d %(items)s."
 #: base/actions.py:63
 #, python-format
 msgid "Cannot delete %(name)s"
-msgstr ""
+msgstr "No se pueden borrar %(name)s"
 
 #: base/actions.py:65 base/admin.py:609 base/admin.py:685
 msgid "Are you sure?"
-msgstr ""
+msgstr "¿Está usted seguro?"
 
 #: base/actions.py:88 base/actions.py:93
 #, python-format
@@ -495,24 +504,24 @@ msgstr "Archivo .zip corrupto o demasiado pesado"
 msgid "%s administration"
 msgstr "%s administración"
 
-#: base/adminsite.py:259
+#: base/adminsite.py:260
 msgid "Content types"
 msgstr "Tipos de contenido"
 
-#: base/adminsite.py:278
+#: base/adminsite.py:279
 msgid "Settings saved successfully"
 msgstr "Configuración guardada con éxito"
 
-#: base/adminsite.py:308 base/adminsite.py:513
+#: base/adminsite.py:309 base/adminsite.py:514
 msgid "Site administration"
 msgstr "Administración del portal"
 
-#: base/adminsite.py:319 templates/admin/django_index.html:13
-#: templates/admin/index.html:16 templates/admin/merengue_index_base.html:127
+#: base/adminsite.py:320 templates/admin/django_index.html:13
+#: templates/admin/index.html:16 templates/admin/merengue_index_base.html:129
 msgid "Django admin"
 msgstr "Admin Django"
 
-#: base/adminsite.py:473
+#: base/adminsite.py:474
 #, python-format
 msgid "%(plugin_name)s plugin administration"
 msgstr ""
@@ -572,7 +581,7 @@ msgstr ""
 
 #: base/models.py:81 base/models.py:113 base/models.py:137 block/models.py:46
 #: collab/models.py:38 multimedia/models.py:50 multimedia/models.py:52
-#: pluggable/models.py:35 portal/models.py:37 section/models.py:92
+#: pluggable/models.py:35 portal/models.py:42 section/models.py:92
 #: theming/models.py:36
 msgid "name"
 msgstr "Nombre"
@@ -585,9 +594,9 @@ msgstr "email de contacto"
 msgid "contact email2"
 msgstr "email de contacto 2"
 
-#: base/models.py:87 multimedia/models.py:302 portal/models.py:40
-#: portal/models.py:43 review/models.py:34 section/models.py:119
-#: section/models.py:287
+#: base/models.py:87 multimedia/models.py:302 portal/models.py:45
+#: portal/models.py:48 review/models.py:34 section/models.py:119
+#: section/models.py:286
 msgid "url"
 msgstr ""
 
@@ -612,7 +621,7 @@ msgid "Without contact email"
 msgstr "Sin email de contacto"
 
 #: base/models.py:114 base/models.py:138 perms/models.py:130
-#: portal/models.py:48 section/models.py:97
+#: portal/models.py:53 section/models.py:97
 msgid "slug"
 msgstr ""
 
@@ -737,11 +746,11 @@ msgstr ""
 
 #: base/models.py:482
 msgid "base content"
-msgstr ""
+msgstr "Contenido básico"
 
 #: base/models.py:483
 msgid "base contents"
-msgstr ""
+msgstr "Contenidos básicos"
 
 #: base/models.py:493 internallinks/forms.py:30 perms/models.py:49
 #: places/forms.py:29 workflow/models.py:56 workflow/models.py:137
@@ -952,20 +961,10 @@ msgstr "¿Qué hay cerca?"
 msgid "%(plugin_name)s plugin"
 msgstr "plugin %(plugin_name)s"
 
-#: base/templatetags/related_admin_tags.py:92
-#: base/templatetags/related_admin_tags.py:95
-#, fuzzy
-msgid "opts"
-msgstr "Votos"
-
 #: base/templatetags/related_admin_tags.py:103
 #: base/templatetags/related_admin_tags.py:120
 msgid "Add"
 msgstr "Añadir"
-
-#: base/templatetags/related_admin_tags.py:112
-msgid "admin"
-msgstr "admin"
 
 #: block/admin.py:48 block/templates/admin/block/change_form.html:8
 msgid "Cache parameters"
@@ -979,7 +978,7 @@ msgstr "Bloques relacionados"
 msgid "Visibility when duplicated blocks"
 msgstr "Visibilidad cuando hay bloques duplicados"
 
-#: block/blocks.py:48
+#: block/blocks.py:57
 msgid "css class to add to this block"
 msgstr "Clase css para añadir a este bloque"
 
@@ -1013,67 +1012,60 @@ msgstr ""
 
 #: block/forms.py:103
 msgid ""
-"Unmark this field to keep the block in the specified "
-"place                                       (even though it won't be "
-"displayed)"
+"Unmark this field to keep the block in the specified place (even though it "
+"won't be displayed)"
 msgstr ""
 
-#: block/forms.py:105
+#: block/forms.py:104
 msgid ""
-"A block is already set to overwrite others of this "
-"kind.                                Unmark this to save the block, even "
-"though it won't be displayed"
+"A block is already set to overwrite others of this kind. Unmark this to save "
+"the block, even though it won't be displayed"
 msgstr ""
 
-#: block/forms.py:124
+#: block/forms.py:122
 msgid "Select block type"
 msgstr "Seleccionar tipo de bloque"
 
-#: block/forms.py:128
+#: block/forms.py:126
 msgid "Scope"
 msgstr "Ámbito"
 
-#: block/forms.py:141
+#: block/forms.py:139
 msgid "Global"
 msgstr ""
 
-#: block/forms.py:148
+#: block/forms.py:146
 #, python-format
 msgid "Section: %(section)s"
 msgstr ""
 
-#: block/forms.py:157
+#: block/forms.py:155
 #, python-format
 msgid "Content: %(content)s"
 msgstr "Contenido: %(content)s"
 
-#: block/forms.py:181 templates/admin/merengue_index_base.html:61
-msgid "Blocks"
-msgstr "Bloques"
-
-#: block/forms.py:185
-#, fuzzy
+#: block/forms.py:183
 msgid "Content blocks"
 msgstr "Contenidos"
 
-#: block/forms.py:189
-#, fuzzy
+#: block/forms.py:187
+
 msgid "Section blocks"
 msgstr "Sección"
 
-#: block/forms.py:197
+#: block/forms.py:195
 msgid "You can not select section scope cause your are not inside a section"
 msgstr ""
 
-#: block/forms.py:202
+#: block/forms.py:200
 msgid "You can not select content scope cause your are not inside a content"
 msgstr ""
 
-#: block/forms.py:208
+#: block/forms.py:206
 msgid "You can not insert a content block from a view without content"
 msgstr ""
 
-#: block/forms.py:221
+#: block/forms.py:219
 msgid "You can not insert a section block from a view without section"
 msgstr ""
 
@@ -1203,6 +1195,14 @@ msgstr "sobreescribir bloque si el lugar es el mismo"
 #: block/models.py:97
 msgid "overwrite generic block if is present on the actual page"
 msgstr "sobreescribir bloque si está presente en la misma página"
+
+#: block/models.py:103
+msgid "registered block"
+msgstr ""
+
+#: block/models.py:104
+msgid "registered blocks"
+msgstr ""
 
 #: block/views.py:76 registry/fields.py:30 registry/models.py:41
 msgid "Configuration"
@@ -1771,8 +1771,8 @@ msgstr "con descripción"
 msgid "%s contents found"
 msgstr "%s contenidos encontrado"
 
-#: internallinks/views.py:67 perms/admin.py:454 portal/models.py:38
-#: section/admin.py:297 section/models.py:316
+#: internallinks/views.py:67 perms/admin.py:454 portal/models.py:43
+#: section/admin.py:297 section/models.py:315
 msgid "Content"
 msgstr "Contenido"
 
@@ -2169,7 +2169,7 @@ msgstr "Nuevo Rol"
 
 #: perms/templates/perms/access_request.html:5
 #: perms/templates/perms/access_request.html:14
-#: templates/admin/merengue_index_base.html:125
+#: templates/admin/merengue_index_base.html:127
 msgid "Access request"
 msgstr ""
 
@@ -2220,12 +2220,12 @@ msgstr ""
 msgid "More Info"
 msgstr ""
 
-#: pluggable/__init__.py:229 section/admin.py:469
+#: pluggable/__init__.py:228 section/admin.py:469
 msgid "portal menu"
 msgstr ""
 
 #: pluggable/admin.py:73
-#, fuzzy
+
 msgid "Plugins detections done"
 msgstr "Administración de plugins"
 
@@ -2256,6 +2256,10 @@ msgstr ""
 
 #: pluggable/models.py:37
 msgid "version"
+msgstr ""
+
+#: pluggable/models.py:40
+msgid "installed"
 msgstr ""
 
 #: pluggable/models.py:41 theming/models.py:40
@@ -2313,54 +2317,54 @@ msgstr ""
 msgid "Link cannot point to an url if already points to content"
 msgstr ""
 
-#: portal/models.py:42 section/models.py:289
+#: portal/models.py:47 section/models.py:288
 msgid "The absolute urls have to write complety: Protocol, domain, query"
 msgstr ""
 "Las urls absolutas tienen que estar completas: protocolo, dominio y consulta"
 
-#: portal/models.py:45 section/models.py:342
+#: portal/models.py:50 section/models.py:341
 msgid "order"
 msgstr "orden"
 
-#: portal/models.py:46 registry/models.py:35
+#: portal/models.py:51 registry/models.py:35
 msgid "category"
 msgstr "categoría"
 
-#: portal/models.py:52
+#: portal/models.py:57
 msgid "icon"
 msgstr ""
 
-#: portal/models.py:55
+#: portal/models.py:60
 msgid ""
 "The system don't resize the icon. You need to upload with the final size"
 msgstr ""
 
-#: portal/models.py:59
+#: portal/models.py:64
 msgid "visible links"
 msgstr ""
 
-#: portal/models.py:60
+#: portal/models.py:65
 msgid "Restrict visibility to some roles"
 msgstr ""
 
-#: portal/models.py:68
+#: portal/models.py:73
 msgid "portal link"
 msgstr ""
 
-#: portal/models.py:69
+#: portal/models.py:74
 msgid "portal links"
 msgstr ""
 
-#: portal/views.py:40
+#: portal/views.py:41
 #, python-format
 msgid "Welcome %s"
 msgstr ""
 
-#: portal/views.py:48 templates/registration/logged_out.html:8
+#: portal/views.py:49 templates/registration/logged_out.html:8
 msgid "Thanks for your visit"
 msgstr "Gracias por su visita"
 
-#: portal/views.py:85
+#: portal/views.py:86
 msgid "Cache from this page was invalidated"
 msgstr ""
 
@@ -2508,16 +2512,16 @@ msgstr "Parece que tienes algunas tareas que revisar"
 msgid "Go to admin page for more info"
 msgstr "Ir a la página de administración para más información"
 
-#: section/admin.py:143 section/models.py:361
+#: section/admin.py:143 section/models.py:360
 msgid "main content"
 msgstr ""
 
-#: section/admin.py:145 section/models.py:362
+#: section/admin.py:145 section/models.py:361
 msgid "content selected here will be shown when entering the section"
 msgstr ""
 "El contenido aquí seleccionado se mostrará cuando se acceda a la sección"
 
-#: section/admin.py:198 section/models.py:380
+#: section/admin.py:198 section/models.py:379
 msgid "custom style"
 msgstr "estilo personalizado"
 
@@ -2529,7 +2533,7 @@ msgstr ""
 "Estilo personalizado para la sección. Puedes usar las variables $media_url y "
 "$theme_url"
 
-#: section/admin.py:225 section/models.py:484
+#: section/admin.py:225 section/models.py:483
 msgid "documents"
 msgstr ""
 
@@ -2581,11 +2585,11 @@ msgstr ""
 msgid "Child"
 msgstr ""
 
-#: section/admin.py:459 section/models.py:350
+#: section/admin.py:459 section/models.py:349
 msgid "main menu"
 msgstr ""
 
-#: section/admin.py:497 section/models.py:520
+#: section/admin.py:497 section/models.py:519
 msgid "document sections"
 msgstr ""
 
@@ -2633,7 +2637,7 @@ msgstr "Roles que ven el menú"
 msgid "The roles that will see this menu"
 msgstr "Roles que verán este menú"
 
-#: section/models.py:143 section/models.py:264
+#: section/models.py:143 section/models.py:263
 msgid "menu"
 msgstr ""
 
@@ -2641,75 +2645,75 @@ msgstr ""
 msgid "menus"
 msgstr ""
 
-#: section/models.py:293
+#: section/models.py:292
 msgid "open in new window"
 msgstr "Abrir en una nueva ventana"
 
-#: section/models.py:299
+#: section/models.py:298
 msgid "css class for this link"
 msgstr "Clase css para este enlace"
 
-#: section/models.py:329
+#: section/models.py:328
 msgid "Viewlet"
 msgstr ""
 
-#: section/models.py:370
+#: section/models.py:369
 msgid "related contents"
 msgstr ""
 
-#: section/models.py:388
+#: section/models.py:387
 msgid "section"
 msgstr "sección"
 
-#: section/models.py:389
+#: section/models.py:388
 msgid "sections"
 msgstr "secciones"
 
-#: section/models.py:483
+#: section/models.py:482
 msgid "document"
 msgstr "documento"
 
-#: section/models.py:504
+#: section/models.py:503
 msgid "Parent document"
 msgstr "Documento padre"
 
-#: section/models.py:513
+#: section/models.py:512
 msgid "body"
 msgstr "cuerpo"
 
-#: section/models.py:519
+#: section/models.py:518
 msgid "document section"
 msgstr "sección de documento"
 
-#: section/models.py:539
+#: section/models.py:538
 msgid "Can not move to non existing position"
 msgstr "No puede moverlo a una posición no existente"
 
-#: section/models.py:563
+#: section/models.py:562
 msgid "Trying to save DocumentSection into an existing position"
 msgstr "Intentando guardar una sección de documento en una posición existente"
 
-#: section/models.py:585
+#: section/models.py:584
 msgid "css chunk"
 msgstr "fragmento CSS"
 
-#: section/models.py:591
+#: section/models.py:590
 msgid "custom sytle"
 msgstr "estilo personalizado"
 
-#: section/models.py:592
+#: section/models.py:591
 msgid "custom styles"
 msgstr ""
 
-#: section/models.py:599
+#: section/models.py:598
 msgid "Custom CSS image"
 msgstr "Personalizar CSS de imagen"
 
-#: section/models.py:606
+#: section/models.py:605
 msgid "custom sytle image"
 msgstr "Estilo personalizado de imagen"
 
-#: section/models.py:607
+#: section/models.py:606
 msgid "custom style images"
 msgstr "estilo personalizado de imágenes"
 
@@ -2732,6 +2736,10 @@ msgstr ""
 #: templates/admin/basecontent/sortable_change_list.html:13
 msgid "Click and drag to reorder"
 msgstr "Haga click y arrastre para reordenar"
+
+#: section/templates/admin/section/menu/change_list.html:24
+msgid "Loading"
+msgstr ""
 
 #: section/templates/admin/section/section/change_list.html:11
 msgid "Please wait, retrieving contents"
@@ -2895,7 +2903,7 @@ msgstr ""
 
 #: skel/project/settings.py:53
 msgid "English"
-msgstr ""
+msgstr "Inglés"
 
 #: skel/project/settings.py:54
 msgid "Español"
@@ -2904,6 +2912,10 @@ msgstr ""
 #: skel/project/settings.py:55
 msgid "Italiano"
 msgstr ""
+
+#: templates/manualtrans.html:4
+msgid "(None)"
+msgstr "(Ninguno)"
 
 #: templates/admin/base.html:53
 #: themes/merengue/templates/admin/base_site.html:11
@@ -3004,7 +3016,7 @@ msgid ""
 msgstr ""
 
 #: templates/admin/delete_confirmation.html:30
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Deleting the %(object_name)s '%(escaped_object)s' would require deleting the "
 "following protected related objects:"
@@ -3028,7 +3040,7 @@ msgid "Delete multiple objects"
 msgstr ""
 
 #: templates/admin/delete_selected_confirmation.html:16
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Deleting the selected %(objects_name)s would result in deleting related "
 "objects, but your account doesn't have permission to delete the following "
@@ -3046,7 +3058,7 @@ msgid ""
 msgstr ""
 
 #: templates/admin/delete_selected_confirmation.html:32
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Deleting the selected %(objects_name)s would result in deleting related "
 "objects, but your account doesn't have permission to delete the following "
@@ -3057,7 +3069,7 @@ msgstr ""
 "tipos de objetos:"
 
 #: templates/admin/delete_selected_confirmation.html:40
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Are you sure you want to delete the selected %(objects_name)s? All of the "
 "following objects and their related items will be deleted:"
@@ -3278,11 +3290,11 @@ msgid ""
 "custom admins in your installed plugins:"
 msgstr ""
 
-#: templates/admin/merengue_index_base.html:124
+#: templates/admin/merengue_index_base.html:126
 msgid "Review list"
 msgstr "Lista de revisión"
 
-#: templates/admin/merengue_index_base.html:126
+#: templates/admin/merengue_index_base.html:128
 msgid "Announcements"
 msgstr "Anuncios"
 
@@ -3416,6 +3428,18 @@ msgstr ""
 #: templates/admin/multimedia/photo/change_list.html:9
 msgid "By content class name"
 msgstr "Por nombre de contenido"
+
+#: templates/dbtoolbar/block_panel.html:5
+msgid "Time"
+msgstr ""
+
+#: templates/dbtoolbar/block_panel.html:6
+msgid "Block"
+msgstr ""
+
+#: templates/dbtoolbar/block_panel.html:7
+msgid "Is cached"
+msgstr ""
 
 #: templates/genericforeignkey/object_list.html:18
 msgid "XX"
@@ -3677,6 +3701,13 @@ msgstr ""
 #: workflow/templates/admin/workflow/workflow_permissions.html:20
 msgid "Permissions managed by this workflow"
 msgstr ""
+
+#, fuzzy
+#~ msgid "opts"
+#~ msgstr "Votos"
+
+#~ msgid "admin"
+#~ msgstr "admin"
 
 #~ msgid "Database created successfully"
 #~ msgstr "Base de datos creada con éxito"
