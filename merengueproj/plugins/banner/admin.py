@@ -26,6 +26,7 @@ class BannerCategoryAdmin(BaseCategoryAdmin):
 
 
 class BannerAdmin(BaseContentAdmin):
+    list_filter = BaseContentAdmin.list_filter + ('sections', )
 
     def save_model(self, request, obj, form, change):
         saved = super(BannerAdmin, self).save_model(request, obj, form, change)

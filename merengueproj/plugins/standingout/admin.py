@@ -30,7 +30,7 @@ from transmeta import get_real_fieldname_in_each_language
 
 class StandingOutAdmin(BaseOrderableAdmin):
     list_display = ('__unicode__', 'related', 'standing_out_category', 'order')
-    list_filter = ('related_content_type', 'related_id', 'obj_content_type', 'id')
+    list_filter = ('standing_out_category', 'related_content_type', 'related_id', 'obj_content_type', 'id')
     form = StandingOutAdminModelForm
     sortablefield = 'order'
     sortablereverse = True
