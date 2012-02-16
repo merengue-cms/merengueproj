@@ -1,5 +1,5 @@
 {% extends "admin/base_site.html" %}
-{% load i18n l10n repl %}
+{% load i18n l10n %}
 
 {% block breadcrumbs %}
 <div class="breadcrumbs">
@@ -40,7 +40,6 @@
     </ul>
   {% endif %}
 {% else %}
-    {% repl pdb %}
     <p>{% blocktrans %}Are you sure you want to delete the selected {{ objects_name }}? All of the following objects and their related items will be deleted:{% endblocktrans %}</p>
     {% for deletable_object in deletable_objects %}
         <ul>{{ deletable_object|unordered_list }}</ul>
