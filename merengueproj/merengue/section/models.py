@@ -183,6 +183,7 @@ class Menu(models.Model):
 
     def update_url(self, commit=True):
         try:
+            _menu_sections_cache.reload_if_dirty()
             self.url = self.public_link()
         except BaseLink.DoesNotExist:
             self.url = ''
@@ -643,6 +644,7 @@ post_save.connect(handle_link_url_post_save)
 def handle_menu_url_post_save(sender, instance, **kwargs):
     url = instance.url
     instance.update_url(commit=False)
+    _menu_sections_cache.clear()
     if instance and url != instance.url:
         instance.save()
 
