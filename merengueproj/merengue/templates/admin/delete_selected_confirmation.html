@@ -1,5 +1,5 @@
 {% extends "admin/base_site.html" %}
-{% load i18n l10n %}
+{% load i18n l10n repl %}
 
 {% block breadcrumbs %}
 <div class="breadcrumbs">
@@ -13,6 +13,7 @@
 {% block content %}
 {% if perms_lacking or protected or objects_without_delete_perm %}
     {% if perms_lacking %}
+        {% repl pdb %}
         <p>{% blocktrans %}Deleting the selected {{ objects_name }} would result in deleting related objects, but your account doesn't have permission to delete the following types of objects:{% endblocktrans %}</p>
         <ul>
         {% for obj in perms_lacking %}
@@ -21,6 +22,7 @@
         </ul>
     {% endif %}
     {% if protected %}
+        {% repl pdb %}
         <p>{% blocktrans %}Deleting the selected {{ objects_name }} would require deleting the following protected related objects:{% endblocktrans %}</p>
         <ul>
         {% for obj in protected %}
@@ -29,6 +31,7 @@
         </ul>
     {% endif %}
   {% if objects_without_delete_perm %}
+    {% repl pdb %}
     <p>{% blocktrans %}Deleting the selected {{ objects_name }} would result in deleting related objects, but your account doesn't have permission to delete the following objects:{% endblocktrans %}</p>
     <ul>
     {% for obj in objects_without_delete_perm %}
@@ -37,6 +40,7 @@
     </ul>
   {% endif %}
 {% else %}
+    {% repl pdb %}
     <p>{% blocktrans %}Are you sure you want to delete the selected {{ objects_name }}? All of the following objects and their related items will be deleted:{% endblocktrans %}</p>
     {% for deletable_object in deletable_objects %}
         <ul>{{ deletable_object|unordered_list }}</ul>
