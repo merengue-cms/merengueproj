@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-20 12:33+0100\n"
+"POT-Creation-Date: 2012-02-20 14:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1889,6 +1889,10 @@ msgstr ""
 msgid "photo"
 msgstr ""
 
+#: multimedia/models.py:228
+msgid "file not exists in filesystem"
+msgstr ""
+
 #: multimedia/models.py:241
 msgid "video file"
 msgstr ""
@@ -2237,6 +2241,14 @@ msgstr ""
 
 #: pluggable/models.py:37
 msgid "version"
+msgstr ""
+
+#: pluggable/models.py:38
+msgid "required apps"
+msgstr ""
+
+#: pluggable/models.py:39
+msgid "required plugins"
 msgstr ""
 
 #: pluggable/models.py:40
@@ -3037,7 +3049,6 @@ msgid ""
 msgstr ""
 
 #: templates/admin/django_index.html:25
-#: templates/admin/inc.content_index.html:8
 #, python-format
 msgid "%(name)s"
 msgstr ""

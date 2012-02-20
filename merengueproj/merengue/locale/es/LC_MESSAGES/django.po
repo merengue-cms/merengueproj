@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-20 12:33+0100\n"
+"POT-Creation-Date: 2012-02-20 14:03+0100\n"
 "PO-Revision-Date: 2011-09-01 10:10\n"
 "Last-Translator: Pablo Martin <pmartin@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1147,11 +1147,11 @@ msgstr "deactivar la activación y desactivación del bloque"
 
 #: block/models.py:68
 msgid "block can't be moved from its default place"
-msgstr ""
+msgstr "El bloque no puede ser movido de su posición por defecto"
 
 #: block/models.py:72
 msgid "activate cache"
-msgstr ""
+msgstr "activar cache"
 
 #: block/models.py:73
 msgid "Activate cache for this block. The HTML rendered will be cached"
@@ -1159,7 +1159,7 @@ msgstr "Activar caché para el bloque. El HTML renderizado será cacheado"
 
 #: block/models.py:76
 msgid "timeout"
-msgstr ""
+msgstr "Tiempo límite"
 
 #: block/models.py:77
 msgid "Time that block remained in cache in seconds. \"0\" means forever"
@@ -1892,7 +1892,7 @@ msgstr ""
 
 #: multimedia/models.py:188 multimedia/models.py:331
 msgid "image"
-msgstr ""
+msgstr "imágen"
 
 #: multimedia/models.py:192
 msgid "caption"
@@ -1906,6 +1906,10 @@ msgstr ""
 msgid "photo"
 msgstr "foto"
 
+#: multimedia/models.py:228
+msgid "file not exists in filesystem"
+msgstr "El fichero no existe en el sistema de ficheros"
+
 #: multimedia/models.py:241
 msgid "video file"
 msgstr "archivo de vídeo"
@@ -1913,14 +1917,15 @@ msgstr "archivo de vídeo"
 #: multimedia/models.py:244
 msgid "The file will convert to flv format. It could lose a little of quality"
 msgstr ""
+"El fichero será convertido a formato flv. Podría perder un poco de calidad"
 
 #: multimedia/models.py:246 multimedia/models.py:297
 msgid "preview image"
-msgstr ""
+msgstr "Previsualizar la imagen"
 
 #: multimedia/models.py:250
 msgid "external url"
-msgstr ""
+msgstr "Url externa"
 
 #: multimedia/models.py:251
 msgid "The url of one video from youtube or google-video"
@@ -2256,7 +2261,15 @@ msgstr ""
 
 #: pluggable/models.py:37
 msgid "version"
-msgstr ""
+msgstr "versión"
+
+#: pluggable/models.py:38
+msgid "required apps"
+msgstr "aplicaciones requeridas"
+
+#: pluggable/models.py:39
+msgid "required plugins"
+msgstr "plugins requeridos"
 
 #: pluggable/models.py:40
 msgid "installed"
@@ -2332,33 +2345,35 @@ msgstr "categoría"
 
 #: portal/models.py:57
 msgid "icon"
-msgstr ""
+msgstr "icono"
 
 #: portal/models.py:60
 msgid ""
 "The system don't resize the icon. You need to upload with the final size"
 msgstr ""
+"El sistema no redimensiona los iconos. Usted debe añadirlos con el tamaño "
+"final"
 
 #: portal/models.py:64
 msgid "visible links"
-msgstr ""
+msgstr "Enlace visible"
 
 #: portal/models.py:65
 msgid "Restrict visibility to some roles"
-msgstr ""
+msgstr "Para restringir la visibilidad para algunos permisos"
 
 #: portal/models.py:73
 msgid "portal link"
-msgstr ""
+msgstr "Enlace del portal"
 
 #: portal/models.py:74
 msgid "portal links"
-msgstr ""
+msgstr "Enlaces del portal"
 
 #: portal/views.py:41
 #, python-format
 msgid "Welcome %s"
-msgstr ""
+msgstr "Bienvenido %s"
 
 #: portal/views.py:49 templates/registration/logged_out.html:8
 msgid "Thanks for your visit"
@@ -2404,7 +2419,7 @@ msgstr ""
 
 #: registry/models.py:37
 msgid "broken"
-msgstr ""
+msgstr "roto"
 
 #: registry/models.py:39
 msgid "Error traceback"
@@ -3076,7 +3091,6 @@ msgstr ""
 "elementos relacionados serán eliminados:"
 
 #: templates/admin/django_index.html:25
-#: templates/admin/inc.content_index.html:8
 #, python-format
 msgid "%(name)s"
 msgstr "%(name)s"

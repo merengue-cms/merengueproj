@@ -225,7 +225,7 @@ class Photo(BaseMultimedia):
         if file_access_failed:
             # in development server may not exists thumbnails from
             # production db. See ticket #1659
-            return 'file not exists in filesystem'
+            return _('file not exists in filesystem')
 
         thumb_url = self.image.thumbnail.url()
         return u'<a href="%s"><img src="%s" alt="%s" /></a>' % \
