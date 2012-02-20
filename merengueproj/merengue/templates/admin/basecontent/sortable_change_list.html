@@ -17,7 +17,7 @@
 {% if not request.GET.q %}
 <form id="save-order-form" method="post" action="" style="display:none">
     <input type="hidden" name="neworder" value=""/>
-    <button value="1" name="save_order" title="Save new order" type="submit">Save new order</button>
+    <button value="1" name="save_order" title="Save new order" type="submit">{% trans "Save new order" %}</button>
 </form>
 {% endif %}
 {% endblock %}
