@@ -2431,11 +2431,11 @@ msgstr ""
 
 #: registry/models.py:46
 msgid "registered item"
-msgstr ""
+msgstr "Elemento registrado"
 
 #: registry/models.py:47
 msgid "registered items"
-msgstr ""
+msgstr "Elementos registrados"
 
 #: registry/templates/admin/registry/change_form.html:8
 msgid ""
@@ -3447,11 +3447,11 @@ msgstr "Por nombre de contenido"
 
 #: templates/dbtoolbar/block_panel.html:5
 msgid "Time"
-msgstr ""
+msgstr "tiempo"
 
 #: templates/dbtoolbar/block_panel.html:6
 msgid "Block"
-msgstr ""
+msgstr "bloque"
 
 #: templates/dbtoolbar/block_panel.html:7
 msgid "Is cached"
