@@ -36,11 +36,13 @@ class Theme(models.Model):
     name = models.CharField(_('name'), max_length=100)
     description = models.TextField(_('description'))
     installed = models.BooleanField(default=False)
-    active = models.BooleanField(default=False)
+    active = models.BooleanField(_('active'), default=False)
     directory_name = models.CharField(_('directory name'), max_length=100)
 
     class Meta:
         db_table = 'themes_theme'
+        verbose_name = _('theme', )
+        verbose_name_plural = _('themes', )
 
     objects = ThemeManager()
 

@@ -2,28 +2,45 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-12 11:58+0200\n"
-"PO-Revision-Date: 2010-10-05 10:10\n"
-"Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
+"POT-Creation-Date: 2012-02-23 12:51+0100\n"
+"PO-Revision-Date: 2012-02-23 12:52\n"
+"Last-Translator: Jorge Correa <jcorrea@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Translated-Using: django-transhette 0.1.SVN\n"
 
-#: models.py:13
+#: admin.py:35
+msgid "Thumbnail"
+msgstr "miniatura"
+
+#: models.py:36
 msgid "name"
 msgstr "nombre"
 
-#: models.py:14
+#: models.py:37
 msgid "description"
 msgstr "descripción"
 
-#: models.py:17
+#: models.py:39
+msgid "active"
+msgstr "activo"
+
+#: models.py:40
 msgid "directory name"
 msgstr "directorio"
+
+#: models.py:44
+msgid "theme"
+msgstr "tema"
+
+#: models.py:45
+msgid "themes"
+msgstr "temas"

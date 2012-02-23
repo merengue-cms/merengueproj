@@ -991,7 +991,7 @@ msgstr ""
 #: templates/admin/basecontent/role_permissions.html:60
 #: workflow/filterspecs.py:20
 msgid "Yes"
-msgstr ""
+msgstr "Sí"
 
 #: block/filterspecs.py:16
 #: perms/templates/admin/perms/inc.table_permission_by_roles.html:21
@@ -1002,7 +1002,7 @@ msgstr ""
 
 #: block/forms.py:41
 msgid "Block to add"
-msgstr ""
+msgstr "Bloque para añadir"
 
 #: block/forms.py:102
 msgid ""
@@ -2415,7 +2415,7 @@ msgstr "módulo"
 
 #: registry/models.py:36
 msgid "active"
-msgstr ""
+msgstr "activo"
 
 #: registry/models.py:37
 msgid "broken"
