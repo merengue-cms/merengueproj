@@ -169,19 +169,20 @@ class PermissionAdmin(admin.ModelAdmin):
         pprs = PrincipalRoleRelation.objects.filter(content=obj).exclude(role__slug=ANONYMOUS_ROLE_SLUG)
         user_roles = {}
         group_roles = {}
+        filters = Q(content=obj) | Q(content__isnull=True)
         for ppr in pprs:
             if  ppr.user and not ppr.user in user_roles:
                 user_roles[ppr.user] = []
             if  ppr.group and not ppr.group in group_roles:
                 group_roles[ppr.group] = []
+            roles_of_user = [prin.role for prin in ppr.user.principalrolerelation_set.filter(filters)]
             for role in roles:
-                filters = Q(role=role, content=obj) | Q(role=role, content__isnull=True)
                 if ppr.user:
-                    user_rol = (role, ppr.user.principalrolerelation_set.filter(filters) and True or False)
+                    user_rol = (role, role in roles_of_user)
                     if not user_rol in user_roles[ppr.user]:
                         user_roles[ppr.user].append(user_rol)
                 if ppr.group:
-                    group_rol = (role, ppr.group.principalrolerelation_set.filter(filters) and True or False)
+                    group_rol = (role, role in roles_of_user)
                     if not group_rol in group_roles[ppr.group]:
                         group_roles[ppr.group].append(group_rol)
         context = {'original': obj,
