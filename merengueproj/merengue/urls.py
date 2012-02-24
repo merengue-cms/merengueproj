@@ -116,6 +116,9 @@ urlpatterns = patterns('',
     (r'^inplaceeditform/', include('inplaceeditform.urls')),
     (r'^reports/', include('autoreports.urls')),
     (r'^captcha/', include('captcha.urls')),
+
+    # django-su
+    (r"^su/", include("django_su.urls")),
 )
 
 if settings.USE_GIS:

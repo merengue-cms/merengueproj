@@ -1,0 +1,28 @@
+{% extends "admin/base_site.html" %}
+
+{% load i18n adminmedia %}
+
+{% block extrahead %}
+    {{ block.super }}
+    {% if form.need_jquery %}
+        <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/ajaxautocompletion/jquery.autocomplete.js"></script>
+        <script type="text/javascript" src="{{ MEDIA_URL }}merengue/js/ajax_select/ajax_select.js"></script>
+        <link href="{{ MEDIA_URL }}merengue/css/ajax_select/iconic.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="{{ MEDIA_URL }}merengue/css/ajaxautocompletion/jquery.autocomplete.css" rel="stylesheet"  type="text/css" media="all" />
+    {% endif %}
+    {{ form.media }}
+    <link href="{% admin_media_prefix %}css/forms.css" type="text/css" rel="stylesheet">
+{% endblock %}
+
+
+{% block breadcrumbs %}
+{% endblock %}
+
+{% block content %}
+    <form action="." method="POST">
+        {{ form }}
+        <div class="submit-row">
+            <input type="submit" name="submit" class="default" value="{% trans "Change Login" %}"/>
+        </div>
+    </form>
+{% endblock %}

@@ -114,6 +114,7 @@ INSTALLED_APPS = (
     'notification',
     'compressor',
     'announcements',
+    'django_su',
 ) + MERENGUE_APPS
 
 # Merengue specific middlewares.
@@ -265,6 +266,7 @@ AJAX_LOOKUP_CHANNELS = {
     'perms_group': ('merengue.perms.lookups', 'GroupLookup'),
     'base_content': ('merengue.base.lookups', 'ContentLookup'),
     'user': ('merengue.base.lookups', 'UserLookup'),
+    'django_su': ('merengue.base.lookups', 'UserLookup'),
     'section_contentlink': ('merengue.section.lookups', 'ContentLinkLookup'),
 }
 
