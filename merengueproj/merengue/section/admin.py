@@ -449,6 +449,7 @@ class BaseSectionMenuRelatedAdmin(MenuAdmin, RelatedModelAdmin):
     def save_model(self, request, obj, form, change):
         if not obj.parent:
             obj.parent = self.get_menu(request)
+            obj._mptt_meta.update_mptt_cached_fields(obj)
         super(BaseSectionMenuRelatedAdmin, self).save_model(
             request, obj, form, change,
         )
@@ -484,6 +485,7 @@ class PortalMenuAdmin(MenuAdmin):
         if not getattr(menu, self.related_field, None):
             basecontent = Menu.objects.get(slug=self.menu_slug or settings.MENU_PORTAL_SLUG)
             setattr(menu, self.related_field, basecontent)
+            menu._mptt_meta.update_mptt_cached_fields(menu)
         return menu
 
 
