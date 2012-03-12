@@ -2,7 +2,7 @@
 {% load i18n inlinetrans forum_tags slide_tags content_tags %}
 
 {% block pagetitle %}{% trans "Send comment to" %} {{ thread }}{% endblock %}
-{% block bodycolorclass %}comments{% endblock %}
+{% block bodyextraclasses %}comments{% endblock %}
 {% block breadcrumbs %}
     {{ block.super }}
     <span class="breadcrumbSeparator">→</span>
