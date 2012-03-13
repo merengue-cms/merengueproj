@@ -67,7 +67,11 @@ _plugin_middlewares_cache = {
 
 
 def _get_url_resolver():
-    return urlresolvers.get_resolver(import_module(urlresolvers.get_urlconf(settings.ROOT_URLCONF)))
+    try:
+        return urlresolvers.get_resolver(import_module(urlresolvers.get_urlconf(settings.ROOT_URLCONF)))
+    except AttributeError:
+        # A weird error we can't reproduce but which is solved with this patch. See #2229
+        return urlresolvers.get_resolver(import_module(settings.ROOT_URLCONF))
 
 
 # ----- public methods -----
