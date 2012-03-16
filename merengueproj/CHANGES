@@ -1,6 +1,12 @@
 Changes
 =======
 
+Version 0.8.1
+-------------
+
+* Fixed a weird error when registering new plugins. See #2229.
+* Improved setup.py keywords to improve searching on pypi. See #2284.
+
 Version 0.8.0-final
 -------------------
 
