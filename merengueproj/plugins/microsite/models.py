@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.db import models
 from django.core.urlresolvers import reverse, NoReverseMatch
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
@@ -23,6 +24,12 @@ from plugins.microsite.utils import treatment_middelware_microsite
 
 
 class MicroSite(BaseSection):
+
+    exclude_places = models.TextField(
+        _('Exclude template places'),
+        blank=True, null=True,
+        help_text=_('Select wich template places you want to exclude from your microsite')
+        )
 
     def _content_public_link(self, section, content):
         url_external = reverse(content._public_link_without_section()[0],
@@ -74,6 +81,12 @@ class MicroSite(BaseSection):
     def public_link(self):
         url = super(MicroSite, self).public_link()
         return treatment_middelware_microsite(url)
+
+    def body_classes(self):
+        bc = super(MicroSite, self).body_classes()
+        if self.exclude_places:
+            bc += ['hide-%s' % i for i in self.exclude_places.split('\n')]
+        return bc
 
     class Meta:
         verbose_name = _('microsite')

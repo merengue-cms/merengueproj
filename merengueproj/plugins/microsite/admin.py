@@ -18,10 +18,23 @@
 from merengue.section.admin import SectionAdmin
 from plugins.microsite.models import MicroSite
 from plugins.microsite.forms import MicroSiteAdminForm
+from django.conf import settings
+from django.contrib.admin.widgets import FilteredSelectMultiple
 
 
 class MicroSiteAdmin(SectionAdmin):
     form = MicroSiteAdminForm
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(MicroSiteAdmin, self).get_form(request, obj, **kwargs)
+        choices = getattr(settings, 'MICROSITE_AVAILABLE_EXCLUDE_PLACES', [])
+        if not choices:
+            del(form.base_fields['exclude_places'])
+        else:
+            form.base_fields['exclude_places'].widget = FilteredSelectMultiple(
+                '', False,
+                choices=[(i, i) for i in choices])
+        return form
 
 
 def register(site):

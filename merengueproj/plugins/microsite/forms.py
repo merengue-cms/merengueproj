@@ -23,6 +23,11 @@ from django.utils.translation import ugettext_lazy as _
 
 class MicroSiteAdminForm(BaseAdminModelForm):
 
+    def clean_exclude_places(self):
+        value = self.fields['exclude_places'].widget.value_from_datadict(self.data, self.files, self.add_prefix('exclude_places'))
+        value = value or []
+        return '\n'.join(value)
+
     def clean(self):
         # because of Django limitations, unicity constraints are only
         # checked against direct parents, so MicroSite's slug could not
