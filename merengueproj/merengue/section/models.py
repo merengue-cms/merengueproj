@@ -451,6 +451,9 @@ class BaseSection(BaseContent):
     def url_in_section(self, url):
         return url
 
+    def body_classes(self):
+        return []
+
 
 def strip_section_prefix(link):
     section_index_url = reverse('section_index')[:-1]
