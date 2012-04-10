@@ -1384,7 +1384,7 @@ class BaseOrderableInlines(admin.ModelAdmin):
 
 class OrderableRelatedModelAdmin(RelatedModelAdmin):
     """
-    A model admin that can reorder related content.
+    A model admin that can reorder related content using a through model.
 
     Example use::
 
@@ -1451,6 +1451,63 @@ class OrderableRelatedModelAdmin(RelatedModelAdmin):
         To override in subclasses. See example implementation above.
         """
         raise NotImplementedError('You have to override this method')
+
+
+class SimpleOrderableRelatedModelAdmin(RelatedModelAdmin):
+    """
+    A model admin that can reorder related content.
+
+    Example use::
+
+      class Book(models.Model):
+          ...
+
+      class Page(models.Model):
+          book = models.ForeignKey(Book)
+          page_number = models.PositiveIntegerField()
+
+      class PageOrderableRelatedAdmin(SimpleOrderableRelatedModelAdmin):
+          model = Page
+          tool_name = 'pages'
+          tool_label = 'book pages'
+          related_field = 'books'
+          sortablefield = 'page_number'
+
+      >>> site.register_related(Page, PageOrderableRelatedAdmin, related_to=Book)
+    """
+    change_list_template = "admin/basecontent/related_sortable_change_list.html"
+    sortablefield = 'position'
+    sortablereverse = False
+
+    def __init__(self, *args, **kwargs):
+        super(SimpleOrderableRelatedModelAdmin, self).__init__(*args, **kwargs)
+        self.exclude = self.exclude or []
+        if self.sortablefield not in self.exclude:
+            self.exclude = [i for i in self.exclude] + [self.sortablefield]
+
+    def get_ordering(self):
+        """
+        Returns ordering by sortablefield
+        """
+        return (self.sortablefield, 'asc')
+
+    def changelist_view(self, request, extra_context=None, parent_model_admin=None, parent_object=None):
+        extra_context = self._update_extra_context(request, extra_context, parent_model_admin, parent_object)
+        if request.method == 'POST':
+            neworder_list = request.POST.get('neworder', None)
+            page = request.GET.get('p', 0)
+            if neworder_list is None:
+                return super(SimpleOrderableRelatedModelAdmin, self).changelist_view(request, extra_context, parent_model_admin, parent_object)
+            neworder_list = neworder_list.split(',')
+            if self.sortablereverse:
+                neworder_list.reverse()
+            items = self.queryset(request).filter(id__in=neworder_list)
+            for item in items:
+                neworder = neworder_list.index(unicode(item.id)) + (int(page) * 50)
+                setattr(item, self.sortablefield, neworder)
+                item.save()
+
+        return super(SimpleOrderableRelatedModelAdmin, self).changelist_view(request, extra_context, parent_model_admin, parent_object)
 
 
 class PermissionRelatedAdmin(RelatedModelAdmin, PermissionAdmin):
