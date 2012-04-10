@@ -34,6 +34,13 @@ class MicroSiteAdmin(SectionAdmin):
             form.base_fields['exclude_places'].widget = FilteredSelectMultiple(
                 '', False,
                 choices=[(i, i) for i in choices])
+            if obj:
+                if isinstance(obj.exclude_places, list):
+                    initial = obj.exclude_places
+                else:
+                    initial = obj.exclude_places and obj.exclude_places.split('\n')
+                    obj.exclude_places = initial
+                form.base_fields['exclude_places'].initial = initial
         return form
 
 
