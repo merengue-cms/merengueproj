@@ -20,6 +20,7 @@ from merengue.pluggable import Plugin
 
 from plugins.microsite.models import MicroSite
 from plugins.microsite.admin import MicroSiteAdmin
+from plugins.microsite.blocks import HighlightMenu
 
 
 class PluginConfig(Plugin):
@@ -38,3 +39,6 @@ class PluginConfig(Plugin):
 
     def get_section_prefixes(self):
         return (u'/%s/' % self.url_prefixes[0][0][get_url_default_lang()], )
+
+    def get_blocks(self):
+        return [HighlightMenu]

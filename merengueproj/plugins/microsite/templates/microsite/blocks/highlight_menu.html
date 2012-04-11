@@ -1,0 +1,43 @@
+{% load inlinetrans inplace_edit %}
+{% if microsite %}
+<style type="text/css">
+    #{{ block_name }} {
+        background-color: {{ conf.background }};
+    }
+
+    #{{ block_name }} a.micrositelink {
+        color: {{ conf.link_color }};
+    }
+    #{{ block_name }} a.micrositelink:hover {
+        color: {{ conf.over_color }};
+    }
+</style>
+<div id="{{ block_name }}{% if block_content_relation %}-related{% endif %}"
+     class="{{ placed_at }}Block block {% if not block_content_relation %}blockGlobal{% else %}blockRelated{% endif %} {% if not has_config %}noconfig{% endif %} {% if fixed_place %}fixed{% endif %} {{ css_class }}">
+   <h1>{{ block_title }}</h1>
+ <span class="blockHiddenTitle">{{ block_title }}</span>
+ <div class="blockBody">
+<div>
+  <ul>
+  {% for link in links %}
+    <li id="microsite-link-{{ link.slug }}" class="{% if forloop.last %} last{% endif %}">
+        <a class="microsite-link" href="{{ link.get_absolute_url }}" title="{{ link }}"><span>
+            {% if link.image %}
+                <img src="{{ MEDIA_URL }}{{ link.image }}" alt="{{ link }}" title="{{ link }}"/>
+            {% else %}
+                {% inplace_edit "link.name" %}
+            {% endif %}
+        </span></a>
+    </li>
+  {% endfor %}
+  </ul>
+  <input type="hidden" value="{{ block.id }}" id="{{ block.name }}Order" class="blockOrder" />
+</div>
+ </div>
+ {% if not block_content_relation %}
+   <input type="hidden" value="{{ block.id }}" class="blockId" />
+ {% else %}
+   <input type="hidden" value="{{ block_content_relation.id }}" class="blockId" />
+ {% endif %}
+</div>
+{% endif %}
