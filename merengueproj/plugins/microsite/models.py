@@ -15,12 +15,17 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.db import models
 from django.core.urlresolvers import reverse, NoReverseMatch
+from django.db import models
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
+from merengue.base.models import BaseContent
+from merengue.perms.models import Role
 from merengue.section.models import BaseSection
+from plugins.microsite.managers import MicroSiteLinkManager
 from plugins.microsite.utils import treatment_middelware_microsite
+from stdimage import StdImageField
+from transmeta import TransMeta
 
 
 class MicroSite(BaseSection):
@@ -92,3 +97,55 @@ class MicroSite(BaseSection):
         verbose_name = _('microsite')
         verbose_name_plural = _('microsites')
         check_slug_uniqueness = True
+
+
+class MicroSiteLink(models.Model):
+
+    __metaclass__ = TransMeta
+    microsite = models.ForeignKey(MicroSite, related_name='micrositelinks')
+    name = models.CharField(verbose_name=_('name'), max_length=200)
+    content = models.ForeignKey(BaseContent, verbose_name=_('Content'),
+                                   blank=True, null=True)
+    external_url = models.CharField(verbose_name=_('url'), max_length=200,
+                                    blank=True, null=True,
+                                    help_text=_('The absolute urls have to write complety: Protocol, domain, query'))
+    cached_url = models.CharField(verbose_name=_('url'), max_length=200,
+                                  blank=True, null=True, editable=False)
+    order = models.IntegerField(_('order'), blank=True, null=True)
+    slug = models.SlugField(verbose_name=_('slug'),
+                            max_length=200,
+                            blank=False,
+                            null=False)
+    image = StdImageField(verbose_name=_('icon'),
+                              null=True, blank=True,
+                              upload_to='micrositelinks',
+                              help_text=_('The system don\'t resize the icon. You need to upload with the final size'))
+    visible_by_roles = models.ManyToManyField(
+        Role,
+        related_name='visible_micrositelinks',
+        verbose_name=_('visible links'),
+        help_text=_('Restrict visibility to some roles'),
+        blank=True,
+        null=True,
+    )
+
+    objects = MicroSiteLinkManager()
+
+    class Meta:
+        verbose_name = _('microsite link')
+        verbose_name_plural = _('microsite links')
+        translate = ('name', )
+        ordering = ('order', )
+
+    def __unicode__(self):
+        return unicode(self.name)
+
+    def get_absolute_url(self):
+        return self.cached_url
+
+    def save(self, force_insert=False, force_update=False, using=None):
+        if self.content is not None:
+            self.cached_url = self.content.public_link()
+        else:
+            self.cached_url = self.external_url
+        super(MicroSiteLink, self).save(force_insert, force_update)

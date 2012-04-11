@@ -16,10 +16,13 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from merengue.section.admin import SectionAdmin
-from plugins.microsite.models import MicroSite
+from plugins.microsite.models import MicroSite, MicroSiteLink
 from plugins.microsite.forms import MicroSiteAdminForm
 from django.conf import settings
 from django.contrib.admin.widgets import FilteredSelectMultiple
+from merengue.base.admin import SimpleOrderableRelatedModelAdmin, BaseAdmin
+from transmeta import get_fallback_fieldname
+from django.utils.translation import ugettext_lazy as _
 
 
 class MicroSiteAdmin(SectionAdmin):
@@ -44,11 +47,23 @@ class MicroSiteAdmin(SectionAdmin):
         return form
 
 
+class MicroSiteLinkAdmin(SimpleOrderableRelatedModelAdmin):
+
+    list_display = BaseAdmin.list_display
+    list_filter = ('visible_by_roles', )
+    related_field = 'microsite'
+    sortablefield = 'order'
+    tool_label = _('highlight menu')
+    prepopulated_fields = {'slug': (get_fallback_fieldname('name'), )}
+
+
 def register(site):
     """ Merengue admin registration callback """
     site.register(MicroSite, MicroSiteAdmin)
+    site.register_related(MicroSiteLink, MicroSiteLinkAdmin, related_to=MicroSite)
 
 
 def unregister(site):
     """ Merengue admin unregistration callback """
     site.unregister(MicroSite)
+    site.unregister_related(MicroSiteLink, MicroSiteLinkAdmin, related_to=MicroSite)
