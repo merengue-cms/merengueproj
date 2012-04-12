@@ -2,6 +2,7 @@
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
+from merengue.base.utils import add_south_trans_column, add_south_trans_fields
 
 
 class Migration(SchemaMigration):
@@ -12,9 +13,6 @@ class Migration(SchemaMigration):
         db.create_table('microsite_micrositelink', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('microsite', self.gf('django.db.models.fields.related.ForeignKey')(related_name='micrositelinks', to=orm['microsite.MicroSite'])),
-            ('name_es', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('name_en', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
-            ('name_fr', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
             ('content', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['base.BaseContent'], null=True, blank=True)),
             ('external_url', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
             ('cached_url', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
@@ -23,6 +21,13 @@ class Migration(SchemaMigration):
             ('image', self.gf('stdimage.fields.StdImageField')(max_length=100, null=True, blank=True)),
         ))
         db.send_create_signal('microsite', ['MicroSiteLink'])
+
+        add_south_trans_column(
+            table='microsite_micrositelink',
+            model_name='microsite.MicroSiteLink',
+            field_name='name',
+            orm=orm,
+        )
 
         # Adding M2M table for field visible_by_roles on 'MicroSiteLink'
         db.create_table('microsite_micrositelink_visible_by_roles', (
@@ -71,18 +76,12 @@ class Migration(SchemaMigration):
             'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
         },
         'base.basecontent': {
-            'Meta': {'ordering': "('position', 'name_es')", 'object_name': 'BaseContent'},
+            'Meta': {'object_name': 'BaseContent'},
             'adquire_global_permissions': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'cached_plain_text_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'cached_plain_text_es': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'cached_plain_text_fr': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'class_name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'db_index': 'True'}),
             'commentable': ('django.db.models.fields.CharField', [], {'default': "'allowed'", 'max_length': '20'}),
             'contact_info': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['base.ContactInfo']", 'null': 'True', 'blank': 'True'}),
             'creation_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'null': 'True', 'blank': 'True'}),
-            'description_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'description_es': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'description_fr': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'has_related_blocks': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'db_index': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_editor': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'last_edited_content'", 'null': 'True', 'to': "orm['auth.User']"}),
@@ -92,17 +91,11 @@ class Migration(SchemaMigration):
             'meta_desc': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'modification_date': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'null': 'True', 'blank': 'True'}),
             'multimedia': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['multimedia.BaseMultimedia']", 'symmetrical': 'False', 'through': "orm['base.MultimediaRelation']", 'blank': 'True'}),
-            'name_en': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200', 'db_index': 'True'}),
-            'name_fr': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'no_changeable': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'no_changeable_fields': ('merengue.base.dbfields.JSONField', [], {'null': 'True', 'blank': 'True'}),
             'no_deletable': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'owners': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'contents_owned'", 'null': 'True', 'symmetrical': 'False', 'to': "orm['auth.User']"}),
             'participants': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'contents_participated'", 'null': 'True', 'symmetrical': 'False', 'to': "orm['auth.User']"}),
-            'plain_description_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'plain_description_es': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'plain_description_fr': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'position': ('django.db.models.fields.PositiveIntegerField', [], {'null': 'True'}),
             'rank': ('django.db.models.fields.FloatField', [], {'default': '100.0', 'db_index': 'True'}),
             'related_items': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': "orm['base.BaseContent']", 'null': 'True', 'blank': 'True'}),
@@ -151,9 +144,6 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'image': ('stdimage.fields.StdImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'microsite': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'micrositelinks'", 'to': "orm['microsite.MicroSite']"}),
-            'name_en': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'name_fr': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'order': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '200', 'db_index': 'True'}),
             'visible_by_roles': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'visible_micrositelinks'", 'null': 'True', 'symmetrical': 'False', 'to': "orm['perms.Role']"})
@@ -207,15 +197,9 @@ class Migration(SchemaMigration):
         },
         'section.menu': {
             'Meta': {'object_name': 'Menu'},
-            'help_text_en': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'help_text_es': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'help_text_fr': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'level': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'lft': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
-            'name_en': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'name_fr': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'parent': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'child_set'", 'null': 'True', 'to': "orm['section.Menu']"}),
             'rght': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '200', 'db_index': 'True'}),
@@ -232,11 +216,8 @@ class Migration(SchemaMigration):
             'order': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'})
         },
         'workflow.state': {
-            'Meta': {'ordering': "('name_es',)", 'object_name': 'State'},
+            'Meta': {'object_name': 'State'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name_en': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'name_fr': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'transitions': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'states'", 'null': 'True', 'symmetrical': 'False', 'to': "orm['workflow.Transition']"}),
             'workflow': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'states'", 'to': "orm['workflow.Workflow']"})
@@ -245,9 +226,6 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Transition'},
             'destination': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'destination_state'", 'null': 'True', 'to': "orm['workflow.State']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name_en': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'name_fr': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'permission': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['perms.Permission']", 'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'workflow': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'transitions'", 'to': "orm['workflow.Workflow']"})
@@ -256,9 +234,6 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Workflow'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'initial_state': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'workflow_state'", 'null': 'True', 'to': "orm['workflow.State']"}),
-            'name_en': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'name_fr': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['perms.Permission']", 'through': "orm['workflow.WorkflowPermissionRelation']", 'symmetrical': 'False'}),
             'slug': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
@@ -269,5 +244,10 @@ class Migration(SchemaMigration):
             'workflow': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['workflow.Workflow']"})
         }
     }
+    add_south_trans_fields(models, {
+        'microsite.micrositelink': {
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+        },
+    })
 
     complete_apps = ['microsite']
