@@ -8,22 +8,110 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-21 09:54+0200\n"
+"POT-Creation-Date: 2012-04-18 09:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: forms.py:35
+#: admin.py:56
+msgid "highlight menu"
+msgstr "menú destacado"
+
+#: blocks.py:30 blocks.py:87
+msgid "Highlight menu"
+msgstr "Menú destacado"
+
+#: blocks.py:31
+msgid "Block with the microsite links"
+msgstr "Bloque con los enlaces del micrositio"
+
+#: blocks.py:37
+msgid "number of links for the \"Highlight menu\" block"
+msgstr "número de enlaces para el bloque \"Menú destacado\""
+
+#: blocks.py:42
+msgid "background color for the \"Highlight menu\" block"
+msgstr "color de fondo para el bloque \"Menú destacado\""
+
+#: blocks.py:47
+msgid "color of the links inside the \"Highlight menu\" block"
+msgstr "color de los enlaces para el bloque \"Menú destacado\""
+
+#: blocks.py:52
+msgid ""
+"color of the links (when the mouse is over) inside the \"Highlight menu\" "
+"block"
+msgstr "color de los enlaces (cuando el raton está encima) para el bloque \"Menú destacado\""
+
+#: forms.py:40
 msgid "A MicroSite or Section with this slug already exists"
-msgstr ""
+msgstr "Un Micrositio o una Seccion con ese slug ya existe"
 
-#: models.py:66
+#: models.py:34
+msgid "Exclude template places"
+msgstr "Lugares de la plantilla a excluir"
+
+#: models.py:36
+msgid "Select wich template places you want to exclude from your microsite"
+msgstr "Selecciona que lugares de la plantilla quieres excluir de tu micrositio"
+
+#: models.py:97
 msgid "microsite"
-msgstr ""
+msgstr "micrositio"
 
-#: models.py:67
+#: models.py:98
 msgid "microsites"
-msgstr ""
+msgstr "micrositios"
+
+#: models.py:106
+msgid "name"
+msgstr "nombre"
+
+#: models.py:107
+msgid "Content"
+msgstr "Contenido"
+
+#: models.py:109 models.py:112
+msgid "url"
+msgstr "url"
+
+#: models.py:111
+msgid "The absolute urls have to write complety: Protocol, domain, query"
+msgstr "Las urls absolutas deben ser escritas por completo: Protocolo, dominio, direccion"
+
+#: models.py:114
+msgid "order"
+msgstr "orden"
+
+#: models.py:115
+msgid "slug"
+msgstr "slug"
+
+#: models.py:119
+msgid "icon"
+msgstr "icono"
+
+#: models.py:122
+msgid ""
+"The system don't resize the icon. You need to upload with the final size"
+msgstr "El sistema no redimensiona el icono. Necesitas subirlo con el tamaño definitivo"
+
+#: models.py:126
+msgid "visible links"
+msgstr "enlaces visibles"
+
+#: models.py:127
+msgid "Restrict visibility to some roles"
+msgstr "Restringir visibilidad a algunos roles"
+
+#: models.py:135
+msgid "microsite link"
+msgstr "enlace de micrositio"
+
+#: models.py:136
+msgid "microsite links"
+msgstr "enlaces de micrositio"
