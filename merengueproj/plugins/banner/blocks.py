@@ -81,6 +81,23 @@ class BannerBlock(BlockQuerySetItemProvider, Block):
                                           })
 
 
+class CategorizedBannerBlock(BannerBlock):
+
+    config_params = BannerBlock.config_params + [
+        params.Single(name='category',
+                      label=ugettext('slug of the category to filter'),
+                      default=''),
+    ]
+
+    def get_contents(self, request=None, context=None, section=None):
+        banners_list = super(CategorizedBannerBlock, self).get_contents(request, context, section)
+        category_name = self.get_config().get(
+            'category', '').get_value() or None
+        if category_name:
+            banners_list = banners_list.filter(categories__slug=category_name)
+        return banners_list
+
+
 class PortletBannerBlock(Block):
     name = 'portlet_banner'
     default_place = 'rightsidebar'
