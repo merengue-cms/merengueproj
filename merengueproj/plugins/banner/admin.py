@@ -19,6 +19,7 @@ import sorl
 from merengue.base.admin import BaseCategoryAdmin, BaseContentAdmin
 from merengue.section.admin import SectionContentAdmin
 from plugins.banner.models import Banner
+from django.utils.translation import ugettext as _
 
 
 class BannerCategoryAdmin(BaseCategoryAdmin):
@@ -26,7 +27,12 @@ class BannerCategoryAdmin(BaseCategoryAdmin):
 
 
 class BannerAdmin(BaseContentAdmin):
-    list_filter = BaseContentAdmin.list_filter + ('sections', )
+    list_display = BaseContentAdmin.list_display + ('get_categories', )
+    list_filter = BaseContentAdmin.list_filter + ('sections', 'categories')
+
+    def get_categories(self, obj):
+        return ', '.join([i.name for i in obj.categories.all()])
+    get_categories.short_description = _('banner categories')
 
     def save_model(self, request, obj, form, change):
         saved = super(BannerAdmin, self).save_model(request, obj, form, change)
