@@ -57,6 +57,7 @@ FILTER_OPERATORS = (
     ('date_gt', _('Greater than (for dates objects)')),
     ('in', _('In (coma separated list)')),
     ('isnull', _('Is empty')),
+    ('custom', _('Custom filter (use if you now what are you doing)')),
 )
 
 
@@ -580,6 +581,12 @@ class CollectionFilter(models.Model):
         """
         return datetime.datetime.now()
 
+    def _prepare_custom_value(self):
+        """
+        Custom method that add a new filter 'custom'
+        """
+        return [i.split('=') for i in self.filter_value.split(',')]
+
     def _prepare_value(self):
         """
         The property that returns the actually prepared value of the filter.
@@ -658,6 +665,13 @@ class CollectionFilter(models.Model):
         else:
             return query.filter(self._prepare_q_object())
 
+    def _filter_custom_query(self, query):
+        try:
+            query = query.filter(*self.value)
+        except:
+            pass
+        return query
+
     def filter_query(self, query):
         custom_filter_method_name = '_filter_%s_query' % (self.filter_operator)
         if hasattr(self, custom_filter_method_name):
@@ -713,6 +727,13 @@ class ExcludeCollectionFilter(CollectionFilter):
         else:
             # Excluding a Q object whith isnull doesn't work as expected so we have to exclude by kwarg filter
             return query.exclude(**{'%s__%s' % (str(self.filter_field), str(self.filter_operator)): self.value})
+
+    def _filter_custom_query(self, query):
+        try:
+            query = query.exclude(*self.value)
+        except:
+            pass
+        return query
 
 
 class CollectionDisplayField(models.Model):
