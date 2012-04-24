@@ -28,7 +28,7 @@ class BannerCategoryAdmin(BaseCategoryAdmin):
 
 class BannerAdmin(BaseContentAdmin):
     list_display = BaseContentAdmin.list_display + ('get_categories', )
-    list_filter = BaseContentAdmin.list_filter + ('sections', 'categories')
+    list_filter = ('categories', ) + BaseContentAdmin.list_filter + ('sections', )
 
     def get_categories(self, obj):
         return ', '.join([i.name for i in obj.categories.all()])

@@ -20,6 +20,7 @@ from django.utils.translation import ugettext_lazy as _, ugettext
 from merengue.block.blocks import Block, BaseBlock
 from merengue.registry import params
 from merengue.registry.items import BlockQuerySetItemProvider
+from merengue.section.utils import filtering_in_section
 from plugins.banner.models import Banner, BannerCategory
 from plugins.banner.params import BannerParam
 from plugins.banner.views import get_banners
@@ -90,7 +91,9 @@ class CategorizedBannerBlock(BannerBlock):
     ]
 
     def get_contents(self, request=None, context=None, section=None):
-        banners_list = super(CategorizedBannerBlock, self).get_contents(request, context, section)
+        banners_list = Banner.objects.published()
+        if section and self.get_config().get('filtering_section', False).get_value():
+            banners_list = filtering_in_section(banners_list, section)
         category_name = self.get_config().get(
             'category', '').get_value() or None
         if category_name:
