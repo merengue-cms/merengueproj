@@ -274,6 +274,7 @@ JQUERY_BASE_MEDIA = 'merengue/js/'
 
 # Customization Comment app for merengue, feedback
 # COMMENTS_APP = 'plugins.feedback'
+CONTENT_COMMENTABLE_BY_DEFAULT = 'allowed'
 
 MENU_PORTAL_SLUG = 'portal_menu'
 

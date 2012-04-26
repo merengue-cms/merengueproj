@@ -406,7 +406,7 @@ class BaseContent(BaseClass):
     meta_desc = models.TextField(verbose_name=_('meta description'),
                                  null=True, blank=True)
 
-    commentable = models.CharField(_('comments'), max_length=20, default='allowed',
+    commentable = models.CharField(_('comments'), max_length=20, default=settings.CONTENT_COMMENTABLE_BY_DEFAULT,
                                    choices=COMMENTABLE_CHOICES, editable=True,
                                    help_text=_('Is that content commentable'))
 
