@@ -15,6 +15,10 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+
 def section(request):
     # simplest context processor ever :-)
-    return {'section': getattr(request, 'section', None)}
+    section = getattr(request, 'section', None)
+    if section and hasattr(section, 'get_real_instance'):
+        section = section.get_real_instance()
+    return {'section': section}
