@@ -114,6 +114,31 @@ Global permissions on merengue
 
     Manage user (``manage_user``)
       If user has this permission, user will be able to manage groups, users, roles and permissions.
+   
+    Manage review tasks (``manage_review``)
+      If user has this permission, user will be able to view, add, assign and mark as done the review tasks.
+ 
+   Moderate forum (``moderate_forum``)
+      If user has this permission, user will be able to create forum, threads, create comments, replay, publish, censure, delete and edit.
+
+   Submit redirects (``submit_redirects``)
+      If user has this permission, user will be able to submit redirects in forums.
+
+   Create news thread (``create_new_thread``)
+      If user has this permission, user will be able to create news thread in forums.
+
+   View all stats  (``view_all_stats``)
+      If user has this permission, user will be able to see all stats of elements create in the portal.
+
+   View my stats  (``view_my_stats``)
+      If user has this permission, user will be able to see the stats of elements create by the same.
+
+   Manage redirects  (``manage_redirects``)
+      If user has this permission, user will be able to manage redirects.
+
+   Cache invalidation  (``cache_invalidation``)
+      If user has this permission, user will be able to invalidate the cache site.
+
 
 
 Admin interface
