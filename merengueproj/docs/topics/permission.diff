@@ -1,0 +1,15 @@
+Index: permissions.txt
+===================================================================
+--- permissions.txt	(revisión: 5580)
++++ permissions.txt	(copia de trabajo)
+@@ -81,6 +81,10 @@
+     Can set as published (``can_published``)
+         If user has this permission in a content, user will can to change the content status to published.
+ 
++    Can set as private (``can_private``)
++        If user has this permission in a content, user will can to change the content status to private.
++
++
+ Global permissions on merengue
+ -------------------------------
+ 
