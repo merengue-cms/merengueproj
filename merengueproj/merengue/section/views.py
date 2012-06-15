@@ -20,6 +20,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils import simplejson
+from django.utils.importlib import import_module
 from django.utils.translation import get_language_from_request
 
 from merengue.section.models import BaseSection, Document, \
@@ -37,19 +38,32 @@ def section_index(request):
     return HttpResponse('')
 
 
-def section_view(request, section_slug, original_context={},
-                 template='section/section_view_without_maincontent.html'):
-    section_slug = section_slug.strip('/')
-    section = get_object_or_404(BaseSection, slug=section_slug)
-
-    perms_api.assert_has_permission(section, request.user, 'view')
-    context = original_context or {}
-    context['section'] = section.get_real_instance()
+def merengue_section_view(request, section, template, extra_context):
+    context = extra_context or {}
     main_content = section.main_content and section.main_content.get_real_instance() or None
     if not main_content:
         return section_view_without_maincontent(request, context, template)
     template_name = getattr(main_content._meta, 'content_view_template')
     return content_view(request, main_content, template_name=template_name, extra_context=context)
+
+
+def section_view(request, section_slug, original_context=None,
+                 template='section/section_view_without_maincontent.html'):
+    section_slug = section_slug.strip('/')
+    section = get_object_or_404(BaseSection, slug=section_slug)
+    perms_api.assert_has_permission(section, request.user, 'view')
+
+    section = section.get_real_instance()
+    context = original_context or {}
+    context['section'] = section
+
+    if section._meta.content_view_function is not None:
+        func_path = section._meta.content_view_function
+        func_path_join = func_path.split('.')
+        render_section_view = getattr(import_module('.'.join(func_path_join[:-1])), func_path_join[-1])
+    else:
+        render_section_view = merengue_section_view
+    return render_section_view(request, section, template, original_context)
 
 
 def content_section_view(request, section_slug, content_id, content_slug):
