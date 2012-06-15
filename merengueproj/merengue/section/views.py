@@ -63,7 +63,7 @@ def section_view(request, section_slug, original_context=None,
         render_section_view = getattr(import_module('.'.join(func_path_join[:-1])), func_path_join[-1])
     else:
         render_section_view = merengue_section_view
-    return render_section_view(request, section, template, original_context)
+    return render_section_view(request, section, template, context)
 
 
 def content_section_view(request, section_slug, content_id, content_slug):
