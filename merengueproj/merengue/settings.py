@@ -119,6 +119,7 @@ INSTALLED_APPS = (
 
 # Merengue specific middlewares.
 MERENGUE_MIDDLEWARE_CLASSES = (
+    'merengue.pluggable.middleware.ActivePluginsMiddleware',
     'merengue.middleware.RemoveRandomAjaxParameter',
     'merengue.section.middleware.RequestSectionMiddleware',
     'merengue.section.middleware.DebugSectionMiddleware',
@@ -126,7 +127,6 @@ MERENGUE_MIDDLEWARE_CLASSES = (
     'merengue.middleware.SimplifiedLayoutMiddleware',
     'merengue.middleware.LocaleMiddleware',
     'merengue.middleware.HttpStatusCodeRendererMiddleware',
-    'merengue.pluggable.middleware.ActivePluginsMiddleware',
     'django.middleware.csrf.CsrfResponseMiddleware',
 )
 
