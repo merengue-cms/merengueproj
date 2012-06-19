@@ -16,6 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 import transmeta
 
+from django import forms
 from django.core.mail import EmailMultiAlternatives
 from django.core.serializers.json import DateTimeAwareJSONEncoder
 from django.conf import settings
@@ -54,7 +55,8 @@ class ContactFormForm(BaseForm):
         opts_to_send = {}
         files = {}
         for opt in contact_form.opts.all():
-            val = data.get('option_%s' % opt.id, _('Unset'))
+            name = opt.name or 'option_%s' % opt.id
+            val = data.get(name, _('Unset'))
             if val is None:
                 val = ''
             label_field = transmeta.get_real_fieldname('label', settings.LANGUAGE_CODE)
@@ -125,3 +127,14 @@ class SentContactAdminModelForm(BaseAdminModelForm):
                     config[key] = Single(name=key, label=key, default=val)
                 config[key].value = val
             self.fields['sent_msg'].set_config(config)
+
+
+class ContactFormOptAdminModelForm(BaseAdminModelForm):
+
+    def clean_name(self):
+        name = self.cleaned_data.get('name', None)
+        if not name:
+            return name
+        if self.instance.contact_form.opts.filter(name=name).count() > 1:
+            raise forms.ValidationError(_('This form already contains an option with this name'))
+        return name

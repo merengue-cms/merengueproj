@@ -23,7 +23,8 @@ from merengue.base.admin import (RelatedModelAdmin, BaseAdmin,
                                  BaseOrderableAdmin, BaseContentAdmin)
 from merengue.base.models import BaseContent
 
-from plugins.contactform.forms import SentContactAdminModelForm
+from plugins.contactform.forms import (SentContactAdminModelForm,
+                                       ContactFormOptAdminModelForm)
 from plugins.contactform.models import (ContactForm, ContactFormOpt,
                                         SentContactForm,
                                         ContactFormSelectOpt)
@@ -43,6 +44,7 @@ class ContactFormOptAdmin(BaseOrderableAdmin, BaseAdmin):
 
     sortablefield = 'order'
     html_fields = ('help_text', )
+    form = ContactFormOptAdminModelForm
 
     inlines = [
         SelectInline,

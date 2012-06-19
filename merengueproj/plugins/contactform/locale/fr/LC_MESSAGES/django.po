@@ -8,67 +8,68 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-28 16:14+0100\n"
+"POT-Creation-Date: 2012-06-19 11:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.py:61
+#: admin.py:63
 msgid "contact form option"
 msgstr ""
 
-#: admin.py:68
+#: admin.py:70
 msgid "sent contact form"
 msgstr ""
 
-#: admin.py:87 models.py:190 models.py:225
+#: admin.py:89 models.py:192 models.py:226
 msgid "contact form"
 msgstr ""
 
-#: admin.py:123
+#: admin.py:125
 msgid "associated content related"
 msgstr ""
 
-#: admin.py:135
+#: admin.py:137
 msgid "Successfully associated"
 msgstr ""
 
-#: admin.py:138
+#: admin.py:140
 msgid "Are you sure you want to associate this items?"
 msgstr ""
 
-#: admin.py:141
+#: admin.py:143
 msgid "Associated content related"
 msgstr ""
 
-#: admin.py:152
+#: admin.py:154
 msgid "disassociated content related"
 msgstr ""
 
-#: admin.py:164
+#: admin.py:166
 msgid "Successfully disassociated"
 msgstr ""
 
-#: admin.py:167
+#: admin.py:169
 msgid "Are you sure you want to disassociate this items?"
 msgstr ""
 
-#: admin.py:170
+#: admin.py:172
 msgid "Disassociated content related"
 msgstr ""
 
-#: blocks.py:29
+#: blocks.py:30
 msgid "Block with contact form"
 msgstr ""
 
-#: blocks.py:30
+#: blocks.py:31
 msgid "Contact Form Block"
 msgstr ""
 
-#: blocks.py:55
+#: blocks.py:61
 msgid "Contact form"
 msgstr ""
 
@@ -88,12 +89,16 @@ msgstr ""
 msgid "The captcha was invalid, try again."
 msgstr ""
 
-#: forms.py:57
+#: forms.py:59
 msgid "Unset"
 msgstr ""
 
-#: forms.py:75
+#: forms.py:77
 msgid "Anonymous"
+msgstr ""
+
+#: forms.py:139
+msgid "This form already contains an option with this name"
 msgstr ""
 
 #: models.py:36
@@ -128,7 +133,7 @@ msgstr ""
 msgid "File"
 msgstr ""
 
-#: models.py:53
+#: models.py:53 models.py:183
 msgid "name"
 msgstr ""
 
@@ -228,67 +233,67 @@ msgstr ""
 msgid "sender email"
 msgstr ""
 
-#: models.py:181 models.py:207
+#: models.py:182 models.py:209
 msgid "label"
 msgstr ""
 
-#: models.py:182
+#: models.py:184
 msgid "type"
 msgstr ""
 
-#: models.py:184
+#: models.py:186
 msgid "help text"
 msgstr ""
 
-#: models.py:185
+#: models.py:187
 msgid "order"
 msgstr ""
 
-#: models.py:187
+#: models.py:189
 msgid "required"
 msgstr ""
 
-#: models.py:195
+#: models.py:197
 msgid "Configurable field"
 msgstr ""
 
-#: models.py:196
+#: models.py:198
 msgid "Configurable fields"
 msgstr ""
 
-#: models.py:208
+#: models.py:210
 msgid "value"
 msgstr ""
 
-#: models.py:210
+#: models.py:212
 msgid "select option"
 msgstr ""
 
-#: models.py:215
+#: models.py:217
 msgid "Contact Form Select Option"
 msgstr ""
 
-#: models.py:216
+#: models.py:218
 msgid "Contact Form Select Options"
 msgstr ""
 
-#: models.py:226
+#: models.py:227
 msgid "sender"
 msgstr ""
 
-#: models.py:227
+#: models.py:228
 msgid "response"
 msgstr ""
 
-#: models.py:228
+#: models.py:229
 msgid "sent date"
 msgstr ""
 
-#: models.py:231
+#: models.py:232
 msgid "Sent Contact Form"
 msgstr ""
 
-#: models.py:232
+#: models.py:233
 msgid "Sents Contact Form"
 msgstr ""
 
@@ -296,6 +301,6 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"Contact form sended from content: \"%(name)s\" by \"%(user)s (%(username)s)"
-"\"\n"
+"Contact form sended from content: \"%(name)s\" by \"%(user)s "
+"(%(username)s)\"\n"
 msgstr ""
