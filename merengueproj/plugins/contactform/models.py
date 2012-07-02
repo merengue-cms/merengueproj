@@ -126,7 +126,7 @@ class ContactForm(models.Model):
 
         if self.sender_email:
             if request.user.is_authenticated():
-                sender_email = forms.EmailField(label=_('sender email'),
+                sender_email = forms.EmailField(label=_('Sender email'),
                                                 initial=request.user.email)
                 if not self.is_sender_email_editable:
                     attrs = sender_email.widget.attrs or {}
@@ -134,7 +134,7 @@ class ContactForm(models.Model):
                     editable_attrs.update(attrs)
                     sender_email.widget.attrs = editable_attrs
             else:
-                sender_email = forms.EmailField(label=_('sender email'))
+                sender_email = forms.EmailField(label=_('Sender email'))
             f.fields.insert(index, 'sender_email', sender_email)
             index += 1
 
