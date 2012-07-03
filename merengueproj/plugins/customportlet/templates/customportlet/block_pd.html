@@ -8,9 +8,9 @@
   <div id="customportlet">
   {% for pd in customportlets %}
   <div id="{{pd.name|slugify}}" style="background-image: url({{MEDIA_URL}}{{pd.background}});" class="customPortletItem">
-    <a href="{{pd.link}}" class="portlet-title">
-      <span style="color: {{pd.link_color}}">{% inplace_edit "pd.name" %}</span>
-    </a>
+    {% if pd.link %}<a href="{{pd.link}}">{% endif %}
+      <span style="color: {{pd.link_color}}" class="portlet-title">{% inplace_edit "pd.name" %}</span>
+    {% if pd.link %}</a>{% endif %}
     <div class="portlet-description">
     {% inplace_edit "pd.description|safe" %}
     </div>

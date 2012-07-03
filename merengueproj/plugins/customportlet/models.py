@@ -8,7 +8,8 @@ class CustomPortlet(Base):
     link = models.CharField(
         verbose_name=_('link'), max_length=200,
         help_text=_("Add the link for the block. It can be a internal or external link. " \
-                    "Add 'http://' to render the link as external"))
+                    "Add 'http://' to render the link as external"),
+        null=True, blank=True)
     link_color = models.CharField(verbose_name=_(u'link color'),
                                   max_length=10)
     order = models.IntegerField(verbose_name=_(u'block order'),
