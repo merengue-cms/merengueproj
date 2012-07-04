@@ -19,13 +19,14 @@ import time
 from urllib2 import URLError
 
 from django import template
+from django.conf import settings
 from django.core.cache import cache
 
 from classytags.arguments import Argument
 from classytags.core import Tag, Options
 from classytags.parser import Parser
-from compressor import CssCompressor, JsCompressor
-from compressor.conf.settings import COMPRESS
+from compressor.js import JsCompressor
+from compressor.css import CssCompressor
 from oembed.templatetags.oembed_tags import OEmbedNode
 
 register = template.Library()
@@ -178,7 +179,7 @@ class RenderBundledMedia(Tag):
         request = context['request']
         rendered_contents = nodelist.render(context)
         content = request.media_holder[name].render()
-        if COMPRESS:
+        if settings.COMPRESS:
             if name == 'css':
                 compressor = CssCompressor(content)
             elif name == 'js':
