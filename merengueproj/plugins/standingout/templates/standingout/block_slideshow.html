@@ -7,15 +7,18 @@
 {% block blockbody %}
 
 {% if standingouts %}
-{% addmedia "css" %}
-  <link href="{{ MEDIA_URL }}merengue/css/shadowbox.css" rel="stylesheet" type="text/css" />
-  <link href="{{ MEDIA_URL }}standingout/css/slideshow.css" rel="stylesheet" type="text/css"/>
-{% endaddmedia %}
 
-{% addmedia "js" %}
-  <script language="javascript" src="{{ MEDIA_URL }}standingout/js/jquery.tools.tabs.min.js"></script>
-  <script language="javascript" src="{{ MEDIA_URL }}standingout/js/jquery.standingout-slideshow.js"></script>
-{% endaddmedia %}
+{% block standingoutmedia %}
+    {% addmedia "css" %}
+        <link href="{{ MEDIA_URL }}merengue/css/shadowbox.css" rel="stylesheet" type="text/css" />
+        <link href="{{ MEDIA_URL }}standingout/css/slideshow.css" rel="stylesheet" type="text/css"/>
+    {% endaddmedia %}
+
+    {% addmedia "js" %}
+        <script language="javascript" src="{{ MEDIA_URL }}standingout/js/jquery.tools.tabs.min.js"></script>
+        <script language="javascript" src="{{ MEDIA_URL }}standingout/js/jquery.standingout-slideshow.js"></script>
+    {% endaddmedia %}
+{% endblock %}
 
 <div class="standingout-slideshow">
   <div class="standing-out-media-url" style="display: none;">{{ MEDIA_URL }}</div>
