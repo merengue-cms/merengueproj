@@ -43,6 +43,11 @@ class ContactFormBlock(ContentBlock):
         return [ContactForm, ContactFormOpt,
                 ContactFormSelectOpt]
 
+    def is_cacheable(self, request):
+        if request.GET.get('e', None):
+            return False
+        return super(ContactFormBlock, self).is_cacheable(request)
+
     def render(self, request, place, content, context, *args, **kwargs):
         contact_forms = ContactForm.objects.filter(content=content)
         if not contact_forms:

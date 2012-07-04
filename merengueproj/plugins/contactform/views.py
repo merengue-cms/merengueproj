@@ -60,4 +60,5 @@ def errors_to_session(request, content, form, contact_form_id):
     request.session['form_data_%s' % contact_form_id] = form.data
     redirect = request.META.get('HTTP_REFERER',
                                 content.public_link())
+    redirect = '%s?e=1' % redirect
     return HttpResponseRedirect(redirect)
