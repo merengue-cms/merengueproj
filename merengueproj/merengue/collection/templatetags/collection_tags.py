@@ -171,7 +171,10 @@ class CollectionItemsNode(Node):
     def render(self, context):
         collection = self.collection.resolve(context)
         if isinstance(collection, FeedCollection):
-            context.update({self.var_name: collection.get_items()})
+            items = collection.get_items()
+            if collection.limit:
+                items = items[:collection.limit]
+            context.update({self.var_name: items})
             return ''
         items = self._get_items(collection, context)
         context.update({self.var_name: items})
@@ -185,6 +188,9 @@ class CollectionItemsNode(Node):
             can_reversed = True
 
         if not group_by_attr and not order_by_attr:
+            if collection.limit:
+                items = items[:collection.limit]
+            context.update({self.var_name: items})
             return ''
         if not order_by_attr and group_by_attr:
             items = items.order_by(group_by_attr)
