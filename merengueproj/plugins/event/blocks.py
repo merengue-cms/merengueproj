@@ -46,7 +46,12 @@ class EventsCalendarBlock(BlockQuerySetItemProvider, Block):
         current_year = date.today().year
         events = self.get_queryset(request, context)
         events_dic = getEventsMonthYear(current_month, current_year, events)
+        section_id = 0
+        section = self._get_section(request, context)
+        if section and self.get_config().get('filtering_section', False).get_value():
+            section_id = section.id
         return self.render_block(request,
                                 template_name='event/block_calendar.html',
                                 block_title=_('Events calendar'),
-                                context={'events_dic': events_dic})
+                                context={'events_dic': events_dic,
+                                         'section_id': section_id})

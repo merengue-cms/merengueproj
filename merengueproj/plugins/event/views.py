@@ -25,6 +25,7 @@ from django.utils.simplejson import dumps
 from merengue.base.views import content_view
 from merengue.collection.models import Collection
 from merengue.collection.views import collection_view
+from merengue.section.models import BaseSection
 
 from plugins.event.models import Event, Category
 from plugins.event.utils import getEventsMonthYear
@@ -90,7 +91,12 @@ def events_calendar(request):
         and 'year' in request.GET):
         month = int(request.GET['month'])
         year = int(request.GET['year'])
-        events = get_events(request)
+        section_id = int(request.GET.get('section_id', None))
+        if not section_id:
+            events = get_events(request)
+        else:
+            collection = get_collection_event()
+            events = collection.get_items(BaseSection.objects.get(id=section_id), True)
         events_dic = getEventsMonthYear(month, year, events)
         return HttpResponse(dumps(events_dic), mimetype=mimetype)
     return HttpResponseBadRequest(mimetype=mimetype)

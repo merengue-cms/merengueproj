@@ -93,7 +93,7 @@
                 $.ajax({
                     url: "{% url events_calendar %}",
                     type: "GET",
-                    data: ({month: month, year: year}),
+                    data: ({month: month, year: year, section_id: {{ section_id }}}),
                     dataType: "json",
                     success: function(events) {
                         $('.datepicker-loading').fadeOut("slow");
