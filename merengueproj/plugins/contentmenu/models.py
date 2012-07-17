@@ -21,13 +21,25 @@ from django.utils.translation import ugettext_lazy as _
 from merengue.base.models import BaseContent
 
 
+class ContentGroupContent(models.Model):
+    basecontent = models.ForeignKey(BaseContent)
+    contentgroup = models.ForeignKey('ContentGroup')
+    order = models.IntegerField(
+        verbose_name=_('order'),
+        default=1)
+
+    class Meta:
+        ordering = ('order', )
+
+
 class ContentGroup(models.Model):
 
     name = models.CharField(
         verbose_name=_('identifier name of this content group'),
         max_length=200)
     contents = models.ManyToManyField(
-        BaseContent, verbose_name=_('contents related to the group'))
+        BaseContent, verbose_name=_('contents related to the group'),
+        through=ContentGroupContent)
 
     class Meta:
         verbose_name = _('Content Group')

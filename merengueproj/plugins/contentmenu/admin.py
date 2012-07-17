@@ -15,8 +15,9 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-from ajax_select.fields import AutoCompleteSelectMultipleField
+from ajax_select.fields import AutoCompleteSelectField
 
+from django.contrib import admin
 from django.utils.translation import ugettext
 
 from merengue.base.admin import BaseAdmin, RelatedModelAdmin
@@ -24,23 +25,31 @@ from merengue.base.forms import BaseAdminModelForm
 
 from merengue.section.models import BaseSection
 
-from plugins.contentmenu.models import ContentGroup
+from plugins.contentmenu.models import ContentGroup, ContentGroupContent
+
+
+class BaseContentInline(admin.TabularInline):
+    model = ContentGroupContent
+    extra = 1
+
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        if db_field.name == 'basecontent':
+            return AutoCompleteSelectField('section_contentlink',
+                label=ugettext('basecontent'),
+                help_text=ugettext('content selected here will be shown when entering the section'))
+        return super(BaseContentInline, self).formfield_for_dbfield(db_field, **kwargs)
 
 
 class ContentGroupAdmin(BaseAdmin):
     form = BaseAdminModelForm
     filter_horizontal = ('contents', )
+    inlines = [BaseContentInline, ]
 
-    def get_form(self, request, obj=None, **kwargs):
-        form = super(ContentGroupAdmin, self).get_form(request, obj, **kwargs)
-        if 'contents' in form.base_fields.keys():
-            field = form.base_fields['contents']
-            link_autocomplete = AutoCompleteSelectMultipleField(
-                'section_contentlink', label=field.label,
-            )
-            link_autocomplete.widget.help_text = ugettext('content selected here will be shown when entering the section')
-            form.base_fields['contents'] = link_autocomplete
-        return form
+    def _media(self):
+        __media = super(ContentGroupAdmin, self)._media()
+        __media.add_js(['contentmenu/js/menu-sort-tabular.js'])
+        return __media
+    media = property(_media)
 
 
 class ContentGroupSectionAdmin(RelatedModelAdmin, ContentGroupAdmin):

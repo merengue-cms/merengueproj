@@ -47,12 +47,13 @@ class ContentGroupLinksBlock(Block):
             filtered_contents = []
             filtered_contents_len = 0
             for cont in content_groups:
-                for child_cont in cont.contents.all():
+                for child_cont in cont.contents.order_by('contentgroupcontent__order'):
                     item = (child_cont.name, child_cont.get_absolute_url())
                     if not item in filtered_contents:
                         filtered_contents_len += 1
                         filtered_contents.append(item)
             filtered_contents_len = len(filtered_contents)
+            print filtered_contents
             numchars_global = float(get_plugin('contentmenu').get_config().get('numchars', []).get_value())
             numchars = (numchars_global - filtered_contents_len * 3) / filtered_contents_len
             return self.render_block(
