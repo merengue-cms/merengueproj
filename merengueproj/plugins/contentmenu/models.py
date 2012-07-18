@@ -22,14 +22,19 @@ from merengue.base.models import BaseContent
 
 
 class ContentGroupContent(models.Model):
-    basecontent = models.ForeignKey(BaseContent)
-    contentgroup = models.ForeignKey('ContentGroup')
+    basecontent = models.ForeignKey(BaseContent,
+        verbose_name=_('content'))
+    contentgroup = models.ForeignKey('ContentGroup',
+        verbose_name=_('Content Group'))
     order = models.IntegerField(
         verbose_name=_('order'),
         default=1)
 
     class Meta:
         ordering = ('order', )
+        unique_together = ('basecontent', 'contentgroup')
+        verbose_name = _('Content Group')
+        verbose_name_plural = _('Content Groups')
 
 
 class ContentGroup(models.Model):
