@@ -108,6 +108,14 @@
                 }
             });
         }
+        var reinitAjaxSelect = function(row) {
+            var html = $("#{{ inline_admin_formset.formset.prefix }}-empty").find('script').get(0).outerHTML;
+            var num = $(row).attr('id').replace('{{ inline_admin_formset.formset.prefix }}-', '');
+            html = html.replace(/__prefix__/g, num);
+            html = html.replace('jQuery(document).ready(function($){', '');
+            html = html.replace("});\n<\/script>", "<\/script>");
+            $("body").append(html);
+        }
         $(rows).formset({
             prefix: "{{ inline_admin_formset.formset.prefix }}",
             addText: "{% blocktrans with inline_admin_formset.opts.verbose_name|title as verbose_name %}Add another {{ verbose_name }}{% endblocktrans %}",
@@ -120,6 +128,7 @@
                 initPrepopulatedFields(row);
                 reinitDateTimeShortCuts();
                 updateSelectFilter();
+                reinitAjaxSelect(row);
                 alternatingRows(row);
             })
         });
