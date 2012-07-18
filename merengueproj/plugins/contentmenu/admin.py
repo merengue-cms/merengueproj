@@ -36,7 +36,7 @@ class BaseContentInline(admin.TabularInline):
     def formfield_for_dbfield(self, db_field, **kwargs):
         if db_field.name == 'basecontent':
             return AutoCompleteSelectField('section_contentlink',
-                label=ugettext('basecontent'),
+                label=ugettext('content'),
                 help_text=ugettext('content selected here will be shown when entering the section'))
         return super(BaseContentInline, self).formfield_for_dbfield(db_field, **kwargs)
 
