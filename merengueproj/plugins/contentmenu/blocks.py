@@ -53,7 +53,6 @@ class ContentGroupLinksBlock(Block):
                         filtered_contents_len += 1
                         filtered_contents.append(item)
             filtered_contents_len = len(filtered_contents)
-            print filtered_contents
             numchars_global = float(get_plugin('contentmenu').get_config().get('numchars', []).get_value())
             numchars = (numchars_global - filtered_contents_len * 3) / filtered_contents_len
             return self.render_block(

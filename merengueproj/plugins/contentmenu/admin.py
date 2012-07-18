@@ -31,6 +31,7 @@ from plugins.contentmenu.models import ContentGroup, ContentGroupContent
 class BaseContentInline(admin.TabularInline):
     model = ContentGroupContent
     extra = 1
+    template = 'contentmenu/admin/tabular.html'
 
     def formfield_for_dbfield(self, db_field, **kwargs):
         if db_field.name == 'basecontent':
