@@ -26,8 +26,8 @@ urlpatterns = patterns(
         kwargs=dict(config_loader='plugins.saml2.saml_config_loader.merengue_config_loader')),
     url(r'^acs/$', 'assertion_consumer_service', name='saml2_acs',
         kwargs=dict(config_loader='plugins.saml2.saml_config_loader.merengue_config_loader',
-                    attribute_mapping=get_attribute_mapping,
-                    create_unknown_user=get_create_unknown_user)),
+                    attribute_mapping=get_attribute_mapping(),
+                    create_unknown_user=get_create_unknown_user())),
     url(r'^metadata/$', 'metadata', name='saml2_metadata',
         kwargs=dict(config_loader='plugins.saml2.saml_config_loader.merengue_config_loader')),
     )
