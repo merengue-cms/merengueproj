@@ -24,7 +24,7 @@ from plugins.saml2.saml_config_loader import get_create_unknown_user
 urlpatterns = patterns(
     'djangosaml2.views',
     url(r'^login/$', 'login', name='saml2_login',
-        kwargs=dict(config_loader=merengue_config_loader)),
+        kwargs=dict(config_loader='plugins.saml2.saml_config_loader.merengue_config_loader')),
     url(r'^acs/$', 'assertion_consumer_service', name='saml2_acs',
         kwargs=dict(config_loader=merengue_config_loader,
                     attribute_mapping=get_attribute_mapping,

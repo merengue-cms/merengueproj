@@ -71,7 +71,7 @@ def get_organization():
         return {}
 
 
-def merengue_config_loader():
+def merengue_config_loader(request):
     site = Site.objects.get_current()
     site_url = 'http://' + site.domain + '/saml2/'
     entity_id = site_url + 'metadata/'
