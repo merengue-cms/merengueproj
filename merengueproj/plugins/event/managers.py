@@ -69,10 +69,13 @@ class EventManager(ActiveManager, BaseContentManager):
                            Q(start__lte=day, end__gte=day)
         return self.published().filter(this_week_filter)
 
-    def by_month(self, month, year):
+    def by_month(self, month, year, finished=False):
         start_date = get_first_day_of_month(month, year)
         end_date = get_last_day_of_month(month, year)
         this_month_filter = Q(start__lte=start_date, end__gte=start_date) | \
                             Q(start__gte=start_date, end__lte=end_date) | \
                             Q(start__lte=end_date, end__gte=end_date)
-        return self.published().filter(this_month_filter)
+        if finished:
+            return self.allpublished().filter(this_month_filter)
+        else:
+            return self.published().filter(this_month_filter)

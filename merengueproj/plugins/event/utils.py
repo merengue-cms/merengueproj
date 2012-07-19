@@ -20,8 +20,8 @@ from django.core.urlresolvers import reverse
 from plugins.event.managers import get_first_day_of_month, get_last_day_of_month
 
 
-def getEventsMonthYear(month, year, events):
-    events = events.model.objects.by_month(month=month, year=year).filter(id__in=events.values('id').query)
+def getEventsMonthYear(month, year, events, finished=False):
+    events = events.model.objects.by_month(month=month, year=year, finished=finished).filter(id__in=events.values('id').query)
     start_date = get_first_day_of_month(month, year)
     end_date = get_last_day_of_month(month, year)
     events_dic = {}

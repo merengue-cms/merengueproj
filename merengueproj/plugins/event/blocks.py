@@ -45,7 +45,7 @@ class EventsCalendarBlock(BlockQuerySetItemProvider, Block):
         current_month = date.today().month
         current_year = date.today().year
         events = self.get_queryset(request, context)
-        events_dic = getEventsMonthYear(current_month, current_year, events)
+        events_dic = getEventsMonthYear(current_month, current_year, events, True)
         section_id = 0
         section = self._get_section(request, context)
         if section and self.get_config().get('filtering_section', False).get_value():
