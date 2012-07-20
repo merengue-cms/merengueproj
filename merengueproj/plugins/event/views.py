@@ -97,7 +97,7 @@ def events_calendar(request):
         else:
             collection = get_collection_event()
             events = collection.get_items(BaseSection.objects.get(id=section_id), True)
-        events_dic = getEventsMonthYear(month, year, events)
+        events_dic = getEventsMonthYear(month, year, events, True)
         return HttpResponse(dumps(events_dic), mimetype=mimetype)
     return HttpResponseBadRequest(mimetype=mimetype)
 
