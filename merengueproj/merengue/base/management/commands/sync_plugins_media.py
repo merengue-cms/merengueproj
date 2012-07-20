@@ -31,7 +31,7 @@ from merengue.pluggable.models import RegisteredPlugin
 try:
     set
 except NameError:
-    from sets import Set as set # Python 2.3 fallback
+    from sets import Set as set  # Python 2.3 fallback
 
 
 class Command(AppCommand, MerengueCommand):
@@ -137,26 +137,35 @@ class Command(AppCommand, MerengueCommand):
             else:
                 app, source = first_source
             print "\nSelected %r provided by %r." % (destination, app)
-            self.process_file(source, destination, media_root, **options)
+            if os.path.islink(os.path.join(media_root, destination.split(os.path.sep)[0])):
+                print "Link already exists at %s, ignoring." % os.path.join(media_root, destination.split(os.path.sep)[0])
+            else:
+                self.process_file(source, destination, media_root, **options)
 
     def handle_app(self, plugin, **options):
         exclude = options.get('exclude')
         app_label = plugin.directory_name
         app_root = plugin.get_path()
         app_media = os.path.join(app_root, 'media')
+        link = options.get('link')
         if os.path.isdir(app_media):
-            self.add_media_files(app_label, app_media, exclude)
+            self.add_media_files(app_label, app_media, exclude, link)
 
-    def add_media_files(self, app, location, exclude):
+    def add_media_files(self, app, location, exclude, link):
         prefix_length = len(location) + len(os.sep)
-        for root, dirs, files in os.walk(location, topdown=True):
-            # Filter files and dirs based on the exclusion pattern.
-            dirs[:] = self.filter_names(dirs, exclude=exclude)
-            for filename in self.filter_names(files, exclude=exclude):
-                absolute_path = os.path.join(root, filename)
-                relative_path = os.path.join(app, absolute_path[prefix_length:])
-                self.media_files.setdefault(
-                    relative_path, []).append((app, absolute_path))
+        if link:
+            # only links to media folder in every app
+            self.media_files.setdefault(
+                    app, []).append((app, location))
+        else:
+            for root, dirs, files in os.walk(location, topdown=True):
+                # Filter files and dirs based on the exclusion pattern.
+                dirs[:] = self.filter_names(dirs, exclude=exclude)
+                for filename in self.filter_names(files, exclude=exclude):
+                    absolute_path = os.path.join(root, filename)
+                    relative_path = os.path.join(app, absolute_path[prefix_length:])
+                    self.media_files.setdefault(
+                        relative_path, []).append((app, absolute_path))
 
     def process_file(self, source, destination, root, link=False, **options):
         dry_run = options.get('dry_run', False)
@@ -166,8 +175,8 @@ class Command(AppCommand, MerengueCommand):
             # Get permission bits and ownership of `root`.
             try:
                 root_stat = os.stat(root)
-            except os.error, e:
-                mode = 0777 # Default for `os.makedirs` anyway.
+            except os.error:
+                mode = 0777  # Default for `os.makedirs` anyway.
                 uid = gid = None
             else:
                 mode = root_stat.st_mode
@@ -177,7 +186,7 @@ class Command(AppCommand, MerengueCommand):
                 # Recursively create all the required directories, attempting
                 # to use the same mode as `root`.
                 os.makedirs(destination_dir, mode)
-            except os.error, e:
+            except os.error:
                 # This probably just means the leaf directory already exists,
                 # but if not, we'll find out when copying or linking anyway.
                 pass
@@ -204,7 +213,7 @@ class Command(AppCommand, MerengueCommand):
         if not dry_run:
             try:
                 os.remove(destination)
-            except os.error, e:
+            except os.error:
                 pass
             shutil.copy2(source, destination)
             return True
@@ -224,7 +233,7 @@ class Command(AppCommand, MerengueCommand):
         if not dry_run:
             try:
                 os.remove(destination)
-            except os.error, e:
+            except os.error:
                 pass
         print "Linking to %r from %r." % (source, destination)
         if not dry_run:
