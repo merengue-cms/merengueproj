@@ -22,19 +22,17 @@ from djangosaml2.views import logout, logout_service
 
 from cmsutils.log import send_info
 
-from plugins.saml2.saml_config_loader import merengue_config_loader
-
 
 def merengue_logout(request):
     if '_saml2_subject_id' in request.session:
-        return logout(request, config_loader=merengue_config_loader)
+        return logout(request, config_loader='plugins.saml2.saml_config_loader.merengue_config_loader')
     else:
         return django_logout(request)
 
 
 def merengue_logout_service(request):
     """Do the logout and then send a message to the user"""
-    response = logout_service(request, config_loader=merengue_config_loader,
+    response = logout_service(request, config_loader='plugins.saml2.saml_config_loader.merengue_config_loader',
                               next_page='/')
     if 'SAMLResponse' in request.GET:  # we started the logout
         send_info(request, _('Thank you for your visit'))
