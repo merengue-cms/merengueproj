@@ -9,7 +9,7 @@
             var block = $(this).parents(".blockBody").first();
             var blockId = block.next(".blockId").val();
             if (blockId) {
-                var blockConfig = $("<span class='block_id' style='display:none'>" + blockId + "</span>");
+                var blockConfig = $("{% filter escapejs %}<span class='block_id' style='display:none'>{% endfilter %}" + blockId + "{% filter escapejs %}</span>{% endfilter %}");
                 blockConfig.appendTo($(this).find(".config"));
             }
         });
