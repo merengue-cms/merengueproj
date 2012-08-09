@@ -1,7 +1,7 @@
 {% load i18n %}
 
 {% blocktrans with content.name as name and contactuser.name as user and contactuser.username as username %}
-Contact form sended from content: "{{ name }}" by "{{ user }} ({{ username }})"
+Contact form sended from content: "{{ content }}" by "{{ user }} ({{ username }})"
 {% endblocktrans %}
 
 <h1>{{ contact_form.title|safe }}</h1>

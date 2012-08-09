@@ -103,7 +103,7 @@ class ContactForm(models.Model):
         verbose_name = _('Contact Form')
         verbose_name_plural = _('Contact Forms')
 
-    def get_form(self, request):
+    def get_form(self, request, prefix=''):
         from plugins.contactform.forms import ContactFormForm
         from django import forms
         from django.utils.translation import ugettext as _
@@ -119,10 +119,16 @@ class ContactForm(models.Model):
         }
 
         if request.method == 'POST':
-            f = ContactFormForm(request.POST, request.FILES)
+            if request.POST.get('%scontactform_id_%s' % (prefix, self.id), None) == str(self.id):
+                f = ContactFormForm(request.POST, request.FILES)
+            else:
+                f = ContactFormForm(initial=request.POST)
         else:
             f = ContactFormForm(initial=request.GET)
         index = 0
+
+        f.fields.insert(index, '%scontactform_id_%s' % (prefix, self.id), forms.CharField(widget=forms.HiddenInput, initial=self.id))
+        index += 1
 
         if self.sender_email:
             if request.user.is_authenticated():
