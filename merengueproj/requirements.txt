@@ -38,6 +38,6 @@ django-form-admin>=0.3.2
 django-autoreports>=0.8.3
 django_compressor==1.1.2
 django-classy-tags==0.3.0
-django-inplaceedit>=0.74
+django-inplaceedit==0.74
 recaptcha-client>=1.0.6
 django-su
