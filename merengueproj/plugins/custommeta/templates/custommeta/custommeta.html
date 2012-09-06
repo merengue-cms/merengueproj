@@ -1,0 +1,29 @@
+{% if custom.title %}
+  <title>{{ custom.title }}</title>
+{% else %}
+  <title>{% include "base/inc.pagetitle.html" %}</title>
+{% endif %}
+
+{% if custom.description %}
+    <meta name="description" content="{{ custom.description }}" />
+{% else %}
+  {% if content.meta_desc %}
+    <meta name="description" content="{{ content.meta_desc }}" />
+  {% else %}
+    {% if content.short_description %}
+        <meta name="description" content="{{ content.short_description|striptags|safe }}" />
+    {% else %}
+        {% if content.description %}
+            <meta name="description" content="{{ content.description|striptags|safe }}" />
+        {% else %}
+            <meta name="description" content="" />
+        {% endif %}
+    {% endif %}
+  {% endif %}
+{% endif %}
+
+{% if custom.get_keywords %}
+<meta name="keywords" content="{% for key in custom.get_keywords %}{% if not forloop.first %},{% endif %} {{ key }}{% endfor %}" />
+{% else %}
+<meta name="keywords" content="{% for tag in meta_tags %}{% if not forloop.first %},{% endif %} {{ tag.tag.name }}{% endfor %}" />
+{% endif %}
