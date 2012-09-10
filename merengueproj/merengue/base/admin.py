@@ -928,7 +928,8 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
                     if not self.has_change_permission(request, sel_obj):
                         return False
             else:
-                return self.has_modeladminview_permission(request)
+                return (perms_api.has_global_permission(request.user, 'edit') or
+                        self.has_modeladminview_permission(request))
         return perms_api.has_global_permission(request.user, 'edit')
 
     def has_delete_permission(self, request, obj=None):
