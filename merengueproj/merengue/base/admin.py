@@ -866,6 +866,8 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
 
     def queryset(self, request):
         queryset = super(BaseContentAdmin, self).queryset(request)
+        if not perms_api.has_global_permission(request.user, 'edit'):
+            queryset = queryset.filter(owners=request.user)
         return queryset.select_related("workflow_status")
 
     def add_owners(self, request, queryset, owners):
@@ -925,6 +927,8 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
                 for sel_obj in selected_objs:
                     if not self.has_change_permission(request, sel_obj):
                         return False
+            else:
+                return self.has_modeladminview_permission(request)
         return perms_api.has_global_permission(request.user, 'edit')
 
     def has_delete_permission(self, request, obj=None):
@@ -952,6 +956,9 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
         Overrides Django admin behaviour to add ownership based access control
         """
         return super(BaseContentAdmin, self).has_change_permission(request, None)
+
+    def has_modeladminview_permission(self, request):
+        return bool(self.model._default_manager.filter(owners=request.user))
 
     def get_readonly_fields(self, request, obj=None):
         """
