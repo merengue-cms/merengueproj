@@ -44,6 +44,7 @@ def merengue_section_view(request, section, template, extra_context):
     if not main_content:
         return section_view_without_maincontent(request, context, template)
     template_name = getattr(main_content._meta, 'content_view_template')
+    context.update({'is_main_document_of_section': True})
     return content_view(request, main_content, template_name=template_name, extra_context=context)
 
 

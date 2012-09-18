@@ -153,9 +153,9 @@ class SectionBreadcrumbsNode(template.Node):
         section = self.section and context.get(self.section, None)
         content = self.content and context.get(self.content, None)
         if section:
-            return section.get_real_instance().breadcrumbs(content)
+            return section.get_real_instance().breadcrumbs(content, context=context)
         else:
-            return content.get_real_instance().breadcrumbs()
+            return content.get_real_instance().breadcrumbs(context=context)
 
 
 def section_breadcrumbs(parser, token):

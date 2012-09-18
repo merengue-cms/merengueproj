@@ -442,11 +442,13 @@ class BaseSection(BaseContent):
     def breadcrumbs_items(self):
         return [(unicode(self), self.get_absolute_url())]
 
-    def breadcrumbs(self, content=None):
+    def breadcrumbs(self, content=None, context=None):
         urls = self.breadcrumbs_items()
         if content:
             urls.append((unicode(content), ''))
-        return render_to_string('section/breadcrumbs.html', {'urls': urls})
+        context = context or {}
+        context.update({'urls': urls})
+        return render_to_string('section/breadcrumbs.html', context)
 
     def url_in_section(self, url):
         return url
