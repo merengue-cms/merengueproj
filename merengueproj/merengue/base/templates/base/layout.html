@@ -12,11 +12,14 @@
   {% block shortcut %}
   <link rel="shortcut icon" href="{{ THEME_MEDIA_URL }}img/favicon.ico" type="image/gif" />
   {% endblock %}
+
+  {% if_not_custommeta %}
   <title>{% block sitetitlewrapper %}{% block pagetitle %}{% include "base/inc.pagetitle.html" %}{% endblock %} - {% block sitetitle %}Merengue powered site{% endblock %}{% endblock %}</title>
 
   {% block metainfo %}
     {% include "inc.meta.html" %}
   {% endblock %}
+  {% end_if_not_custommeta %}
 
   {% compress css %}
     {% block cssstyles %}
