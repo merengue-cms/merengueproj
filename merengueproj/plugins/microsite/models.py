@@ -64,7 +64,7 @@ class MicroSite(BaseSection):
     def url_in_section(self, url):
         return '/%s%s' % (self.slug, url)
 
-    def breadcrumbs(self, content=None):
+    def breadcrumbs(self, content=None, context=None):
         if not content:
             # breadcrumbs end here
             return super(MicroSite, self).breadcrumbs()
@@ -75,10 +75,12 @@ class MicroSite(BaseSection):
             url_section.append((name, reverse("microsite_url", args=(self.slug, url))))
         if url_section:
             url_section[-1] = (url_section[-1][0], '')
-        return render_to_string('microsite/breadcrumbs.html', {
+        context = context or {}
+        context.update({
             'section': self,
             'urls': url_section,
         })
+        return render_to_string('microsite/breadcrumbs.html', context)
 
     def _public_link_without_section(self):
         return ('microsite_view', (self.slug, ))
