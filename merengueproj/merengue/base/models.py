@@ -700,9 +700,11 @@ class BaseContent(BaseClass):
             urls.append(last_item)
         return urls
 
-    def breadcrumbs(self):
+    def breadcrumbs(self, context=None):
         urls = self.breadcrumbs_items()
-        return render_to_string('base/breadcrumbs.html', {'urls': urls})
+        context = context or {}
+        context.update({'urls': urls})
+        return render_to_string('base/breadcrumbs.html', context)
 
     def update_status(self, raw=True):
         """We assume that State is changed
