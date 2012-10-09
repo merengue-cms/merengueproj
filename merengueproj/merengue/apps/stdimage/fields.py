@@ -129,6 +129,8 @@ class StdImageField(ImageField):
                     img.save(filenamedst)
             else:
                 try:
+                    if img.mode == 'CMYK':
+                        img = img.convert('RGBA')
                     img.save(filenamedst)
                 except KeyError:
                     # PIL no sabe guardar en este formato
