@@ -61,7 +61,7 @@ def get_basecontents(data, extra_filters=None):
                         if child in contents[content]['children']:
                             contents[content]['children'][child]['visits'] += child_metric['visits']
                         else:
-                            contents[content]['children'].update(child)
+                            contents[content]['children'].update({child: {'visits': child_metric['visits']}})
                 else:
                     contents[content]['children'] = children
 
