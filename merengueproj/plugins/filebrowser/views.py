@@ -1,3 +1,4 @@
+import unicodedata
 import mimetypes
 from os.path import join, isdir, isfile
 from django.http import HttpResponseRedirect, HttpResponse
@@ -5,6 +6,7 @@ from django.shortcuts import render_to_response, Http404, get_object_or_404
 from django.template import RequestContext
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
+from django.utils.encoding import force_unicode
 
 from merengue.base.decorators import login_required_or_permission_denied
 from merengue.base.views import content_list
@@ -119,7 +121,8 @@ def upload(request, repository_name, path='',
     if request.method == 'POST':
         for k, f in request.FILES.items():
             if k.startswith('file_'):
-                fout = repository.create_file(join(path, f.name))
+                file_name = unicodedata.normalize('NFKD', force_unicode(f.name)).encode('ascii', 'ignore')
+                fout = repository.create_file(join(path, file_name))
                 for chunk in f.chunks():
                     fout.write(chunk)
                 fout.close()
