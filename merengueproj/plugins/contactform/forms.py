@@ -22,6 +22,7 @@ from django.core.serializers.json import DateTimeAwareJSONEncoder
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils import simplejson
+from django.utils.datastructures import SortedDict
 from django.template import defaultfilters, RequestContext
 from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
@@ -52,7 +53,7 @@ class ContactFormForm(BaseForm):
                 from_mail = settings.DEFAULT_FROM_EMAIL
 
         opts_to_save = {}
-        opts_to_send = {}
+        opts_to_send = SortedDict()
         files = {}
         for opt in contact_form.opts.all():
             name = opt.name or 'option_%s' % opt.id
