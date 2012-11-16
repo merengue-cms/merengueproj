@@ -4,7 +4,7 @@
 (function ($) {
 
     var debug = function (msg) {
-        if (typeof console !== "undefined" && false ) { // remove '&& false' to get some debugging info
+        if (typeof console != "undefined" && false ) { // remove '&& false' to get some debugging info
             console.debug(msg);
         }
     };
@@ -80,10 +80,10 @@
             lon = $(".mapParameters .longitude", element).html();
         return {
             bounds: [b0, b1, b2, b3],
-            has_bounds: b0 !== null && b1 !== null && b2 !== null && b3 !== null,
+            has_bounds: b0 != null && b1 != null && b2 != null && b3 != null,
             latitude: lat,
             longitude: lon,
-            has_center: lat !== null && lon !== null,
+            has_center: lat != null && lon != null,
             zoom: $(".mapParameters .zoom", element).html(),
             markers_url: $(".mapParameters .markersUrl", element).html(),
             show_areas: $(".mapParameters .showAreas", element).html(),
@@ -103,8 +103,8 @@
            yaw: yaw,
            pitch: pitch,
            panozoom: panozoom,
-           get_nearest: yaw === null || pitch === null || panozoom === null,
-           has_panorama: has_panorama !== null
+           get_nearest: yaw == null || pitch == null || panozoom == null,
+           has_panorama: has_panorama != null
         }
     };
 
@@ -170,7 +170,7 @@
                                         var max_height = 120;
                                         for (var i = 0; i < parts.length; i += 1) {
                                             var text = parts[i];
-                                            if (text !== "") {
+                                            if (text != "") {
                                                 text = '<div class="merengueContentInfo"' + text;
                                                 tabs.push(new google.maps.InfoWindowTab("" + counter, text));
                                                 counter += 1;
@@ -298,7 +298,7 @@
                     show_markers = true;
                 }
 
-                if (opts.map_type !== null) {
+                if (opts.map_type != null) {
                     debug("setMapType " + opts.map_type);
                     map.setMapType(opts.map_type);
                 }
@@ -321,7 +321,7 @@
                 // Bind optional events
                 $(this).bind('openinmap', function (ev, data) {
                     debug("Received openinamp event");
-                    if (typeof markers[data.point_id] !== "undefined") {
+                    if (typeof markers[data.point_id] != "undefined") {
                         var mk = markers[data.point_id];
                         GEvent.trigger(mk, 'click', mk.getPoint());
                     }
