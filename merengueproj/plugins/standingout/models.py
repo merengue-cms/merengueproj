@@ -29,8 +29,10 @@ from stdimage import StdImageField
 class StandingOutCategory(BaseCategory):
 
     context_variable = models.CharField(verbose_name=_('context variable'), max_length=200)
+    order = models.IntegerField(_("Order"), blank=True, null=True)
 
     class Meta:
+        ordering = ('order', )
         verbose_name = _('standingout category')
         verbose_name_plural = _('standingout categories')
 
