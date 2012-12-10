@@ -165,6 +165,12 @@ class SectionAdmin(BaseSectionAdmin):
         extra_context.update({'section_tools': section_tools})
         return super(SectionAdmin, self).changelist_view(request, extra_context)
 
+    def queryset(self, request, bypass_perms=False):
+        qs = super(BaseSectionAdmin, self).queryset(request)
+        if self.__class__.__name__ == 'SectionAdmin' and settings.ADMIN_PURE_SECTIONS:
+            qs = qs.filter(class_name='basesection')
+        return qs
+
 
 class SectionContentAdmin(OrderableRelatedModelAdmin):
     related_field = 'sections'

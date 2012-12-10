@@ -185,6 +185,9 @@ DETECT_BROKEN_PLUGINS = True
 # The module to store session data
 SESSION_ENGINE = 'merengue.backends.db'
 
+# Admin only pure basesection objects under /admin/section/basesection/
+ADMIN_PURE_SECTIONS = True
+
 # Roles which may be acquired by an user when visiting a content inside a section
 ACQUIRE_SECTION_ROLES = False
 
