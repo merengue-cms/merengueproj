@@ -136,6 +136,10 @@ class ContactFormOptAdminModelForm(BaseAdminModelForm):
         name = self.cleaned_data.get('name', None)
         if not name:
             return name
-        if self.instance.contact_form.opts.filter(name=name).count() > 1:
+        contactform = getattr(self, 'contactform', None)
+        exclude = {}
+        if self.instance.id:
+            exclude = {'id': self.instance.id}
+        if contactform and contactform.opts.filter(name=name).exclude(**exclude).count() >= 1:
             raise forms.ValidationError(_('This form already contains an option with this name'))
         return name

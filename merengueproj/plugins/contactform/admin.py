@@ -64,6 +64,11 @@ class ContactFormRelatedContactFormOptAdmin(RelatedModelAdmin,
     one_to_one = False
     related_field = 'contact_form'
 
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(ContactFormRelatedContactFormOptAdmin, self).get_form(request, obj, **kwargs)
+        form.contactform = self.basecontent
+        return form
+
 
 class ContactFormRelatedSentContactFormAdmin(SentContactFormAdmin, RelatedModelAdmin):
     tool_name = 'sent_contact'
