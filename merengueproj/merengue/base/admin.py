@@ -867,7 +867,7 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
     def queryset(self, request):
         queryset = super(BaseContentAdmin, self).queryset(request)
         if not perms_api.has_global_permission(request.user, 'edit'):
-            queryset = queryset.filter(owners=request.user)
+            queryset = queryset.filter(Q(owners=request.user) | Q(sections__owners=request.user))
         return queryset.select_related("workflow_status")
 
     def add_owners(self, request, queryset, owners):
