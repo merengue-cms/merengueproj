@@ -16,25 +16,26 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 from merengue.base.views import content_list
+from django.core.urlresolvers import reverse
 
 from cmsutils.adminfilters import QueryStringManager
 
 from plugins.standingout.models import StandingOut
-from plugins.standingout.utils import get_filter_ct
+from plugins.standingout.utils import get_section_standingouts
 
 
 def standingout_list(request, filters=None, extra_context=None):
     filters = filters or {}
-    filters_section = {}
     section = None
     standingouts = None
     standingouts_base = get_standingouts().filter(**filters)
     if extra_context and 'section' in extra_context:
         section = extra_context['section']
-        filters_section['related_id'] = section.id
-        filters_section.update(filters)
-        standingouts = standingouts_base.filter(**filters_section).filter(get_filter_ct(section))
-    if not standingouts:
+        standingouts = get_section_standingouts(standingouts_base, section)
+        global_url = reverse('standingout_list')
+        if global_url != request.META['PATH_INFO']:
+            extra_context.update({'global_url': global_url})
+    else:
         standingouts = standingouts_base.filter(related_content_type__isnull=True,
                                                         related_id__isnull=True)
     return content_list(request, standingouts,

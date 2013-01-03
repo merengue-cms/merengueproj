@@ -4,15 +4,35 @@
 
 {% block pagetitle %}{% trans "Highlights index" %}{% endblock %}
 
-{% block listtitle %}{% inline_trans "Highlights index" %}{% endblock %}
+{% block listtitle %}{% inline_trans "Highlights index" %}{% if section %} - {{ section }}{% endif %}{% endblock %}
 
 {% block extrabreadcrumbs %}
   {{ section.breadcrumbs }}
   <span class="breadcrumbSeparator">→</span><a href="">{% inline_trans "Highlights" %}</a>
 {% endblock %}
 
+{% block listingclass %}contentList standingoutList{% endblock %}
+
+{% block toppagination %}
+{% if not content_list %}
+<div class="contentDescription">
+<p>{% itrans "There are no highlights" %}</p>
+</div>
+{% endif %}
+{{ block.super }}
+{% endblock %}
+
 {% block itemdetail %}
     {% if content.name %}
         {{ block.super }}
     {% endif %}
+{% endblock %}
+
+{% block bottompagination %}
+{{ block.super }}
+{% if global_url %}
+<div class="contentDescription">
+<p><a href="{{ global_url }}">{% itrans "View global highlights" %}</a></p>
+</div>
+{% endif %}
 {% endblock %}

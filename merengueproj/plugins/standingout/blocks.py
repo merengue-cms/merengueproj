@@ -20,7 +20,7 @@ from django.utils.translation import ugettext as _, ugettext_lazy
 from merengue.registry import params
 from merengue.block.blocks import Block, BaseBlock
 from plugins.standingout.models import StandingOut, StandingOutCategory
-from plugins.standingout.utils import get_filter_ct
+from plugins.standingout.utils import get_filter_ct, get_section_standingouts
 from transmeta import get_fallback_fieldname
 
 
@@ -49,6 +49,8 @@ class StandingOutBlock(Block):
 
     def render(self, request, place, context, block_content_relation=None,
                *args, **kwargs):
+        section = None
+        content = None
         standingout_categories = StandingOutCategory.objects.all()
         standingouts = None
         for standingout_category in standingout_categories:
@@ -57,8 +59,13 @@ class StandingOutBlock(Block):
                 variable_real_instance = getattr(variable_value, 'get_real_instance', None)
                 if variable_real_instance:
                     variable_value = variable_real_instance()
-                filter_ctypes = get_filter_ct(variable_value)
-                standingouts = StandingOut.objects.filter(related_id=variable_value.pk).filter(filter_ctypes)
+                if standingout_category.context_variable == 'section':
+                    standingouts = get_section_standingouts(StandingOut.objects.all(), variable_value)
+                    section = standingouts and variable_value
+                else:
+                    filter_ctypes = get_filter_ct(variable_value)
+                    standingouts = StandingOut.objects.filter(related_id=variable_value.pk).filter(filter_ctypes)
+                    content = standingouts and variable_value
                 if standingouts:
                     break
         standingouts = standingouts or StandingOut.objects.filter(related_content_type__isnull=True, related_id__isnull=True)
@@ -67,7 +74,9 @@ class StandingOutBlock(Block):
             standingouts = standingouts[:limit.get_value()]
         return self.render_block(request, template_name='block_standingout.html',
                                  block_title=_('Search'),
-                                 context={'standingouts': standingouts})
+                                 context={'standingouts': standingouts,
+                                          'section': section,
+                                          'content': content})
 
 
 class StandingOutSlideShowBlock(Block):

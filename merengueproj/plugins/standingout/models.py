@@ -21,6 +21,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.models import BaseCategory
+from merengue.section.models import BaseSection
 
 from transmeta import TransMeta
 from stdimage import StdImageField
@@ -71,6 +72,8 @@ class StandingOut(models.Model):
     # The order goes from 0 to n - 1
     order = models.IntegerField(_("Order"), blank=True, null=True)
 
+    belongs_to_section = models.ForeignKey(BaseSection, blank=True, null=True, editable=False)
+
     class Meta:
         ordering = ('-order', )
         translate = ('title', 'short_description')
@@ -114,3 +117,11 @@ class StandingOut(models.Model):
         elif self.obj:
             return unicode(self.obj)
         return 'without content'
+
+    def save(self, *args, **kwargs):
+        content = self.obj
+        if content and getattr(content, 'sections', None):
+            sections = content.sections.all()
+            if sections.count():
+                self.belongs_to_section = sections[0]
+        super(StandingOut, self).save(*args, **kwargs)

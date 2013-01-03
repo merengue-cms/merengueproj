@@ -26,3 +26,9 @@ def get_filter_ct(obj, field='related'):
         filter_ctypes = filter_ctypes | Q(**{'%s_content_type__app_label' % field: app_label,
                                              '%s_content_type__model' % field: module_name})
     return filter_ctypes
+
+
+def get_section_standingouts(standingouts_base, section):
+    standingouts = standingouts_base.filter(related_id=section.id).filter(get_filter_ct(section))
+    standingouts = standingouts | standingouts_base.filter(belongs_to_section=section)
+    return standingouts

@@ -21,8 +21,8 @@
             {% endif %}
         {% endfor %}
         {% url standingout_list as standingout_list_url %}
-        {% url_in_section_breadcrumbs_tag section standingout_list_url as standingout_list_section %}
-        {% if standingout_list_section %}
+        {% if content or section %}
+            {% url_in_section_breadcrumbs_tag section standingout_list_url as standingout_list_section %}
             <li class="viewAll"><a href="{{ standingout_list_section }}">{% inline_trans "View all" %}</a></li>
         {% else %}
             <li class="viewAll"><a href="{{ standingout_list_url }}">{% inline_trans "View all" %}</a></li>
