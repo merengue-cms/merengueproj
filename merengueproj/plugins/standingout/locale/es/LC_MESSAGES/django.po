@@ -153,6 +153,15 @@ msgstr "Sin destacados"
 msgid "Highlights index"
 msgstr "Índice de destacados "
 
+
+msgid "There are no highlights"
+msgstr "No hay ningún contenido destacado"
+
+
+msgid "View global highlights"
+msgstr "Ver destacados globales"
+
+
 #~ msgid ""
 #~ "If you select the option in field standing out category you have to "
 #~ "select a option in related field"
