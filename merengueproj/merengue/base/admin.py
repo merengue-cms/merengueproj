@@ -22,6 +22,7 @@ from django import template
 from django.conf import settings
 from django.contrib import messages
 from django.core.urlresolvers import reverse
+from django.core.exceptions import FieldError
 from django.db import models, router
 from django.db.models import Q
 
@@ -959,7 +960,15 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
         return super(BaseContentAdmin, self).has_change_permission(request, None)
 
     def has_modeladminview_permission(self, request):
-        return bool(self.model._default_manager.filter(owners=request.user))
+        check_section_owner = False
+        if hasattr(self.model, 'sections'):
+            try:
+                check_section_owner = bool(self.model._default_manager.filter(sections__owners=request.user))
+                if not check_section_owner:
+                    check_section_owner = bool(request.user.contents_owned.filter(class_name='microsite'))  # Force check if the user is owner of a microsite
+            except FieldError:
+                pass
+        return check_section_owner or bool(self.model._default_manager.filter(owners=request.user))
 
     def get_readonly_fields(self, request, obj=None):
         """
