@@ -24,6 +24,8 @@ from merengue.urlresolvers import merengue_url as url
 js_info_dict = {
         'packages': ('django.conf',
                      'django.contrib.admin',
+                     'searchform',
+                     'pataiosdfsdkj',
                     ),
 }
 
@@ -83,7 +85,7 @@ urlpatterns = patterns('',
          include('searchform.urls')),
     url({'en': r'^searchform_jsi18n/',
          'es': r'^formulario_de_busqueda_jsi18n/'},
-        include('searchform.jsi18n_urls')),
+               'django.views.i18n.javascript_catalog', js_info_dict, name="searchform_jsi18n"),
 
     # ajax_select
     (r'^ajax_select/', include('ajax_select.urls')),
