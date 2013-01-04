@@ -25,7 +25,6 @@ js_info_dict = {
         'packages': ('django.conf',
                      'django.contrib.admin',
                      'searchform',
-                     'pataiosdfsdkj',
                     ),
 }
 
