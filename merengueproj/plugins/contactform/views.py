@@ -33,6 +33,8 @@ def contact_form_submit(request, content_id, contact_form_id):
         form = contact_form.get_form(request)
         if form.is_valid():
             sentcontactform = form.save(request, content, contact_form)
+            if not sentcontactform:
+                return errors_to_session(request, content, form, contact_form_id)
             if contact_form.redirect_to:
                 redirect = contact_form.redirect_to
                 if contact_form.redirect_to_with_params:

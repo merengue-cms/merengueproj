@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 import transmeta
+from smtplib import SMTPException
 
 from django import forms
 from django.core.mail import EmailMultiAlternatives
@@ -26,6 +27,8 @@ from django.utils.datastructures import SortedDict
 from django.template import defaultfilters, RequestContext
 from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
+
+from cmsutils.log import send_error
 
 from merengue.base.forms import BaseAdminModelForm, BaseForm
 from merengue.registry.fields import ConfigFormField
@@ -106,7 +109,11 @@ class ContactFormForm(BaseForm):
                                         to_mail, bcc=bcc_mail,
                                         attachments=attachs)
         email.attach_alternative(html_content, "text/html")
-        email.send()
+        try:
+            email.send()
+        except SMTPException, e:
+            send_error(request, _('Mail Server Error: %s') % e)
+            return None
         return sent
 
 
