@@ -19,6 +19,7 @@
 import os
 import re
 import sorl
+import unicodedata
 
 from django.conf import settings
 if settings.USE_GIS:
@@ -44,7 +45,7 @@ if settings.USE_GIS:
 from south.modelsinspector import add_introspection_rules
 from south.signals import pre_migrate, post_migrate
 from stdimage import StdImageField
-from transmeta import TransMeta, get_fallback_fieldname
+from transmeta import TransMeta, get_fallback_fieldname, get_all_translatable_fields
 from tagging.models import Tag
 from tagging.fields import TagField
 
@@ -459,20 +460,45 @@ class BaseContent(BaseClass):
                                      editable=False)
 
     objects = BaseContentManager()
+    store_plain = ('name', 'description', )
 
     def __init__(self, *args, **kwargs):
         super(BaseContent, self).__init__(*args, **kwargs)
         self._original_status = self.status
 
-    def generate_plain_text(self):
-        return strip_tags(self.description)
+    def _generate_cached_plain_text(self):
+        instance = self.get_real_instance()
+        to_store = instance.store_plain
+        translated_fields = get_all_translatable_fields(instance.__class__)
+
+        for lang in settings.LANGUAGES:
+            setattr(self, 'cached_plain_text_%s' % lang[0], '')
+
+        for field_name in to_store:
+            for lang_code, lang_name in settings.LANGUAGES:
+                cached = getattr(self, 'cached_plain_text_%s' % lang_code, '')
+                if field_name in translated_fields:
+                    cached += self._convert_to_plain(getattr(self, '%s_%s' % (field_name, lang_code), ''))
+                else:
+                    cached += self._convert_to_plain(getattr(self, field_name, ''))
+                if cached:
+                    cached += " "
+                setattr(self, 'cached_plain_text_%s' % lang_code, cached)
+
+    def _convert_to_plain(self, value):
+        if value:
+            value = force_unicode(value)
+            text = re.sub('<br[^>]*>', u'\n', value)
+            text = unescape_entities(text)
+            text = strip_tags(text)
+            text = text.strip()
+            text = unicodedata.normalize('NFKD', text.lower()).encode('ascii', 'ignore')
+            return text
+        return ''
 
     def _plain_text(self):
         if not self.cached_plain_text:
-            for lang in settings.LANGUAGES:
-                from_field = 'description_%s' % lang[0]
-                to_field = 'cached_plain_text_%s' % lang[0]
-                self._prepare_plain_text(from_field, to_field)
+            self._generate_cached_plain_text()
             self.save()
         return self.cached_plain_text
 
@@ -503,6 +529,7 @@ class BaseContent(BaseClass):
             except IndexError:
                 pass
 
+        self._generate_cached_plain_text()
         super(BaseContent, self).save(**kwargs)
         object_update_again = False
 
