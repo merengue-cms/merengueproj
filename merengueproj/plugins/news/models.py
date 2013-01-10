@@ -48,6 +48,7 @@ class NewsItem(BaseContent):
     body = models.TextField(_('body'))
 
     objects = NewsItemManager()
+    store_plain = BaseContent.store_plain + ('body', )
 
     class Meta:
         translate = ('body', )
