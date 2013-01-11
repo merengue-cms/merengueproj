@@ -31,7 +31,7 @@ from merengue.cache import invalidate_cache_for_path
 from merengue.perms.decorators import permission_required
 from merengue.perms.utils import MANAGE_CACHE_INVALIDATION_PERMISSION
 
-from cmsutils.log import send_info
+from merengue.base.log import send_info
 
 
 @never_cache

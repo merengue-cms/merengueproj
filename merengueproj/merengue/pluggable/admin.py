@@ -24,7 +24,7 @@ from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
-from cmsutils.log import send_info
+from merengue.base.log import send_info
 
 from merengue.base.admin import set_field_read_only
 from merengue.pluggable.checker import check_plugins

@@ -1,4 +1,4 @@
-{% load i18n inlinetrans breadcrumbs messagebox block_tags section_tags compress media_tags uitools_tags custommeta_tags %}
+{% load i18n inlinetrans breadcrumbs merengue_messagebox block_tags section_tags compress media_tags uitools_tags custommeta_tags %}
 {% block doctype %}<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">{% endblock %}
 <html>
 <head>
@@ -197,7 +197,7 @@
   <div id="content" class="{% block contentclass %}withsidebar{% endblock %}">
     {% block messagebox %}
     <div id="messagebox">
-      {% messagebox %}
+      {% merengue_messagebox %}
     </div>
     {% endblock %}
     <div id="content-inner">

@@ -1,5 +1,5 @@
 {% extends "base/layout.html" %}
-{% load i18n inlinetrans breadcrumbs messagebox section_tags %}
+{% load i18n inlinetrans breadcrumbs merengue_messagebox section_tags %}
 
 {% block shortcut %}
  <link rel="shortcut icon" href="{{ THEME_MEDIA_URL }}img/favicon.ico" type="image/gif" />
@@ -110,7 +110,7 @@
       {% endblock %}
     </div>
     <div id="messagebox">
-      {% messagebox %}
+      {% merengue_messagebox %}
     </div>
     {% block content %}
     {% endblock %}
