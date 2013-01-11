@@ -20,7 +20,7 @@ from django.utils.translation import gettext as _
 
 from djangosaml2.views import logout, logout_service
 
-from cmsutils.log import send_info
+from merengue.base.log import send_info
 
 
 def merengue_logout(request):

@@ -28,7 +28,7 @@ from django.template import defaultfilters, RequestContext
 from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
 
-from cmsutils.log import send_error
+from merengue.base.log import send_error
 
 from merengue.base.forms import BaseAdminModelForm, BaseForm
 from merengue.registry.fields import ConfigFormField

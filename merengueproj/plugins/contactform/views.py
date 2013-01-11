@@ -19,7 +19,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 
-from cmsutils.log import send_info
+from merengue.base.log import send_info
 from merengue.base.models import BaseContent
 from plugins.contactform.models import ContactForm
 

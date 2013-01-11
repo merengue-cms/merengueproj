@@ -22,7 +22,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext_lazy as _
 
-from cmsutils.log import send_info
+from merengue.base.log import send_info
 from merengue.base.models import BaseContent
 from merengue.cache import invalidate_cache_for_path
 

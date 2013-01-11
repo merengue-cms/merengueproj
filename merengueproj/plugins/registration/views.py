@@ -31,7 +31,7 @@ from plugins.registration.models import Registration
 from plugins.registration.forms import (RegistrationForm, PasswordForm,
                                         get_profile_form, RecoverPasswordForm)
 
-from cmsutils.log import send_info
+from merengue.base.log import send_info
 
 
 def register_view(request):

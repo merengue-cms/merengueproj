@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext
 
-from cmsutils.log import send_info
+from merengue.base.log import send_info
 from merengue.base.utils import get_login_url
 from merengue.perms.utils import has_permission
 

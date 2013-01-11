@@ -16,7 +16,7 @@ from plugins.filebrowser.forms import EditDocForm, AddDocForm
 from plugins.filebrowser.models import Repository, Document, FileDocument, ImageDocument
 from plugins.filebrowser.templatetags.filebrowser_tags import filebrowser_reverse
 
-from cmsutils.log import send_info, send_error
+from merengue.base.log import send_info, send_error
 
 
 FILEBROWSER_BASE_TEMPLATE = 'base.html'
