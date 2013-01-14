@@ -119,7 +119,7 @@ class StandingOut(models.Model):
         return 'without content'
 
     def save(self, *args, **kwargs):
-        content = self.obj
+        content = self.related
         if content and getattr(content, 'sections', None):
             sections = content.sections.all()
             if sections.count():

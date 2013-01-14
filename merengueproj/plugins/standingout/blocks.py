@@ -66,6 +66,10 @@ class StandingOutBlock(Block):
                     filter_ctypes = get_filter_ct(variable_value)
                     standingouts = StandingOut.objects.filter(related_id=variable_value.pk).filter(filter_ctypes)
                     content = standingouts and variable_value
+                    if content:
+                        sections = content.sections.all()
+                        if sections.count():
+                            section = sections[0]
                 if standingouts:
                     break
         standingouts = standingouts or StandingOut.objects.filter(related_content_type__isnull=True, related_id__isnull=True)
