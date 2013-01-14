@@ -467,7 +467,10 @@ class BaseContent(BaseClass):
         self._original_status = self.status
 
     def _generate_cached_plain_text(self):
-        instance = self.get_real_instance()
+        if self.id:
+            instance = self.get_real_instance()
+        else:
+            instance = self
         to_store = instance.store_plain
         translated_fields = get_all_translatable_fields(instance.__class__)
 
