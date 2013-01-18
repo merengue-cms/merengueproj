@@ -175,14 +175,19 @@ class PermissionAdmin(admin.ModelAdmin):
                 user_roles[ppr.user] = []
             if  ppr.group and not ppr.group in group_roles:
                 group_roles[ppr.group] = []
-            roles_of_user = [prin.role for prin in ppr.user.principalrolerelation_set.filter(filters)]
+            if ppr.user:
+                roles_of_user = [prin.role for prin in ppr.user.principalrolerelation_set.filter(filters)]
+                roles_of_group = None
+            if ppr.group:
+                roles_of_user = []
+                roles_of_group = [prin.role for prin in ppr.group.principalrolerelation_set.filter(filters)]
             for role in roles:
                 if ppr.user:
                     user_rol = (role, role in roles_of_user)
                     if not user_rol in user_roles[ppr.user]:
                         user_roles[ppr.user].append(user_rol)
                 if ppr.group:
-                    group_rol = (role, role in roles_of_user)
+                    group_rol = (role, role in roles_of_group)
                     if not group_rol in group_roles[ppr.group]:
                         group_roles[ppr.group].append(group_rol)
         context = {'original': obj,
