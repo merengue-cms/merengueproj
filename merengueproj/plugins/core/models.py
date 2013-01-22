@@ -53,7 +53,8 @@ class CustomMeta(models.Model):
         return self.url_regexp
 
     def get_keywords(self):
-        for i in self.keywords.split('\n'):
-            keyword = i.strip()
-            if keyword:
-                yield keyword
+        if self.keywords:
+            for i in self.keywords.split('\n'):
+                keyword = i.strip()
+                if keyword:
+                    yield keyword
