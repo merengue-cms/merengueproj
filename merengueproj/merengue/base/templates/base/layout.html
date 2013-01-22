@@ -1,4 +1,4 @@
-{% load i18n inlinetrans breadcrumbs merengue_messagebox block_tags section_tags compress media_tags uitools_tags custommeta_tags %}
+{% load i18n inlinetrans breadcrumbs merengue_messagebox block_tags section_tags compress media_tags uitools_tags core_tags %}
 {% block doctype %}<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">{% endblock %}
 <html>
 <head>
@@ -6,20 +6,21 @@
   {% if LANGUAGE_CODE %}
     <meta http-equiv="content-language" content="{{ LANGUAGE_CODE }}">
   {% endif %}
+  {% if_not_custommeta %}
+  <title>{% block sitetitlewrapper %}{% block pagetitle %}{% include "base/inc.pagetitle.html" %}{% endblock %} - {% block sitetitle %}Merengue powered site{% endblock %}{% endblock %}</title>
+
   {% block metatags %}
     {% include "inc.metatags.html" %}
   {% endblock %}
+  {% end_if_not_custommeta %}
+
   {% block shortcut %}
   <link rel="shortcut icon" href="{{ THEME_MEDIA_URL }}img/favicon.ico" type="image/gif" />
   {% endblock %}
 
-  {% if_not_custommeta %}
-  <title>{% block sitetitlewrapper %}{% block pagetitle %}{% include "base/inc.pagetitle.html" %}{% endblock %} - {% block sitetitle %}Merengue powered site{% endblock %}{% endblock %}</title>
-
   {% block metainfo %}
     {% include "inc.meta.html" %}
   {% endblock %}
-  {% end_if_not_custommeta %}
 
   {% compress css %}
     {% block cssstyles %}
