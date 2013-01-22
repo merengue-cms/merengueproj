@@ -15,4 +15,45 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
-# this models file is necessary to say Django that this is a normal app
+from django.db import models
+from django.utils.translation import ugettext_lazy as _
+
+
+class CustomMeta(models.Model):
+
+    url_regexp = models.CharField(
+        verbose_name=_('url regular expression'),
+        max_length=255,
+        blank=False,
+        null=False,
+        )
+    title = models.CharField(
+        verbose_name=_('title'),
+        max_length=255,
+        blank=True,
+        null=True,
+        )
+    description = models.TextField(
+        verbose_name=_('description'),
+        blank=True,
+        null=True,
+        )
+    keywords = models.TextField(
+        verbose_name=_('keywords'),
+        help_text=_('input one keyword per row'),
+        blank=True,
+        null=True,
+        )
+
+    class Meta:
+        verbose_name = _('Custom Meta Information')
+        verbose_name_plural = _('Custon Meta Informations')
+
+    def __unicode__(self):
+        return self.url_regexp
+
+    def get_keywords(self):
+        for i in self.keywords.split('\n'):
+            keyword = i.strip()
+            if keyword:
+                yield keyword

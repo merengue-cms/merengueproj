@@ -27,9 +27,11 @@ from merengue.section.admin import DocumentRelatedModelAdmin, DocumentAdmin
 from merengue.section.models import Document
 
 from plugins.core.actions import AdminAction, LoginAction, LogoutAction, PrintAction, HotLinkAction
+from plugins.core.admin import CustomMetaAdmin
 from plugins.core.blocks import (CoreMenuBlock, NavigationBlock,
                                  PortalMenuBlock, ContactInfoBlock,
                                  AnnouncementsBlock, PortalLinksBlock)
+from plugins.core.models import CustomMeta
 from plugins.core.panels import (InplaceEditPanel, InlineTransPanel, VersionPanel,
                                  InvalidateCachePanel, AddBlockPanel)
 
@@ -38,6 +40,13 @@ class PluginConfig(Plugin):
     name = 'Core'
     description = 'Core plugin'
     version = '0.0.1a'
+    model_admins = [
+        (CustomMeta, CustomMetaAdmin),
+        (Document, DocumentAdmin),
+        (Photo, PhotoAdmin),
+        (Video, VideoAdmin),
+        (Audio, AudioAdmin),
+    ]
 
     url_prefixes = (
         ('core', 'plugins.core.urls'),
@@ -61,12 +70,10 @@ class PluginConfig(Plugin):
                 InvalidateCachePanel, VersionPanel, ]
 
     def models(self):
-        return [
-            (Document, DocumentAdmin),
-            (Photo, PhotoAdmin),
-            (Video, VideoAdmin),
-            (Audio, AudioAdmin),
-        ]
+        return self.model_admins
+
+    def get_model_admins(self):
+        return self.model_admins
 
     def section_models(self):
         return [(Document, DocumentRelatedModelAdmin)]
