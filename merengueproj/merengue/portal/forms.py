@@ -1,13 +1,8 @@
 from django.utils.translation import ugettext_lazy as _
 from merengue.base.forms import BaseAdminModelForm
-from merengue.perms.models import Role
 
 
 class PortalLinkForm(BaseAdminModelForm):
-
-    def __init__(self, *args, **kwargs):
-        super(PortalLinkForm, self).__init__(*args, **kwargs)
-        self.fields['visible_by_roles'].queryset = Role.objects.without_anonymoususer()
 
     def clean(self):
         cleaned_data = super(PortalLinkForm, self).clean()

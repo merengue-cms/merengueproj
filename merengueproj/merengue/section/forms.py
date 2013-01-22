@@ -21,7 +21,6 @@ from django.forms.util import ErrorList
 from django.utils.translation import ugettext_lazy as _
 
 from merengue.base.forms import BaseAdminModelForm
-from merengue.perms.models import Role
 from merengue.section.models import DocumentSection, Menu
 from cmsutils.forms import widgets
 
@@ -39,10 +38,6 @@ class DocumentSectionForm(forms.ModelForm):
 
 
 class MenuAdminModelForm(BaseAdminModelForm):
-
-    def __init__(self, *args, **kwargs):
-        super(MenuAdminModelForm, self).__init__(*args, **kwargs)
-        self.fields['visible_by_roles'].queryset = Role.objects.without_anonymoususer()
 
     def clean(self):
         cleaned_data = super(MenuAdminModelForm, self).clean()
