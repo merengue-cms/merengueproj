@@ -1,7 +1,7 @@
 Changes
 =======
 
-Version 0.8.3
+Version 0.9.0
 -------------
 
 * Merge custommeta plugin into core plugin and refactor merengue so every portal will be able to use custom meta pages. See #2365.
@@ -13,6 +13,32 @@ Version 0.8.3
 * Catch SMTP exceptions, which are sent to the user. See #2361.
 * Extend global model admins (no related ones) change permission to users that own contents or are owners of a section/microsite. See #2360.
 * Add searchform to merengue jsi18n catalog. See #2359.
+* Section owners now are able to edit any related content to the section. See #2357.
+* Fix contactform opts bug when filling name field. See #2355.
+* Restricted admin of basesection. See #2356.
+* Add order in standingout categories. See #2354.
+* Fix javascript comparisons. See #2352.
+* In ``contactform`` plugin fields order is the same that admin interface. See #2351.
+* Rename file names with accents in ``filebrowser`` plugin to avoid problems. See #2349.
+* Fixed statistics error in ``piwik`` plugin. See #2348.
+* Avoid problems when trying to save a CMYK image as PNG. See #2347.
+* Fix breadcrumbs signature in plugins and base objects. See #2345.
+* Create plugins to set meta title, description and keywords to any page. See #2341.
+* Updated saml2 plugin to work with djangosaml2-0.6.1. See #2335.
+* Allow staff users to access model admins of the objects they own. See #2343.
+* Sort contents inside a contentgroup in ``contentmenu`` plugin. See #2334.
+* Fix bug in collection limit. See #2331.
+* Now the contact form block if the form has error is not cacheable. See #2329.
+* Fix calendar block when changing months. See #2330.
+* Customizable section views for developers. See #2324.
+* Enable plugins before any other merengue middleware. See #2325.
+* Improve ``contactform`` plugin. Add a name field to the options of a contact form so you can identify options by using their name instead of 'option_N'. See #2326.
+* The link of the custom portlet plugin is now optional. See #2327.
+* Update django-compressor to the 1.1.2 release. See #2328.
+* Allow to overwrite the default content commentable behaviour with a ``CONTENT_COMMENTABLE_BY_DEFAULT`` setting. See #2317.
+* Add a category filtered block in banner plugin. See #2316.
+* Add links into a microsite. See #2312.
+* Implement a method that allows sections to insert css classes into body.
 
 Version 0.8.2
 -------------
@@ -72,7 +98,7 @@ Version 0.8.0-final
  * Removing some absolute references between CSS and the images. See #2264.
  * Now the ``contactform`` plugin works if this loaded with ajax, although this is not a default behaviour. See #2268.
  * Fixed a migration when GIS is disabled. See #2271.
- * Frozen ``django-mptt`` and ``django-ajax-selects`` packages because are now backward incompatibles. See #2278 and #2279.
+ * Frozen ``django-mptt`` and ``django-ajax-selects`` packages because are now backward incompatibles. See #2278 and #2279
  
 Version 0.8.0-rc2 (r5269)
 -------------------------
