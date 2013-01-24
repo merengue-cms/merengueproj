@@ -1,6 +1,19 @@
 Changes
 =======
 
+Version 0.8.3
+-------------
+
+* Merge custommeta plugin into core plugin and refactor merengue so every portal will be able to use custom meta pages. See #2365.
+* Add the anonymous user of view of the menus. See #2366.
+* Fix adding group to roles when settings the permissions of an object. See #2364.
+* Support configurable plain text generation for all contents, useful for indexing in search engines. See #1088.
+* Refactor standingout plugin to improve its use inside sections or microsites. See #2358.
+* Add support for django message framework instead of using the old cmsutils.log. See #2362.
+* Catch SMTP exceptions, which are sent to the user. See #2361.
+* Extend global model admins (no related ones) change permission to users that own contents or are owners of a section/microsite. See #2360.
+* Add searchform to merengue jsi18n catalog. See #2359.
+
 Version 0.8.2
 -------------
 
