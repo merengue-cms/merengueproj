@@ -19,7 +19,6 @@ from django import template
 from django.utils.datastructures import SortedDict
 from django.utils.functional import curry
 
-from merengue.base.models import BaseContent
 from merengue.multimedia.models import Photo
 
 register = template.Library()
@@ -28,19 +27,10 @@ register = template.Library()
 def _add_main_photos_relative_content(relative_contents, *args, **kwargs):
     for content in relative_contents:
         if content.main_image:
-            photo_url = content.main_image.url
             yield dict(content_name=content.name,
                        content_url=content.get_absolute_url(),
                        photo_url=content.main_image.url,
                        photo_url_thumb=content.main_image.thumbnail.url(),
-                       )
-
-        else:
-            photo_url = content.plone_image_link
-            yield dict(content_name=content.name,
-                       content_url=content.get_absolute_url(),
-                       photo_url=photo_url,
-                       photo_url_thumb=photo_url + '/image_thumb',
                        )
 
 
@@ -134,8 +124,6 @@ def carousel(context, contents, min_photos=5, max_photos=50):
     """
 
     excludes = {'main_image': ''}
-    if BaseContent == contents.model or BaseContent in contents.model._meta.parents:
-        excludes['plone_image_link__isnull'] = True
 
     relative_contents = contents.exclude(**excludes).extra(select={'RANDOM': "RANDOM()"}).distinct().order_by("?")
     photos_bag = PhotosBag(min_photos, max_photos)
@@ -164,13 +152,12 @@ def carousel_simply(context, contents, min_photos=5, max_photos=50):
         {% endblock %}
     """
 
-    contents = contents.exclude(plone_image_link__isnull=True, main_image='').distinct()
+    contents = contents.exclude(main_image='').distinct()
 
     if len(contents) < min_photos:
         contents = []
     elif len(contents) > max_photos:
         contents = contents.extra(select={'RANDOM': 'RANDOM()'}).order_by("?")[:max_photos]
-
 
     return {'contents': contents,
             'MEDIA_URL': context.get('MEDIA_URL', '/media/'),
