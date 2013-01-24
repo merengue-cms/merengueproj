@@ -23,7 +23,7 @@ django-oembed
 django-ajax-selects==1.1.4
 django-threadedcomments==0.5.3
 django-notification==0.1.5
-django-announcements>=0.1.2
+django-announcements==0.1.2
 django-oot
 django-genericforeignkey>=0.60.4
 django-stdfile
@@ -38,6 +38,6 @@ django-form-admin>=0.3.2
 django-autoreports>=0.8.3
 django_compressor==1.1.2
 django-classy-tags==0.3.0
-django-inplaceedit==0.74
+django-inplaceedit==0.82
 recaptcha-client>=1.0.6
 django-su
