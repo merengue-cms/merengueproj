@@ -1,5 +1,5 @@
 # python libraries
-PIL
+Pillow
 BeautifulSoup==3.2.0
 encutils
 feedparser
