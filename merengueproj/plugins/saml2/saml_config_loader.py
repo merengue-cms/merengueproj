@@ -136,7 +136,7 @@ def get_attribute_mapping():
         'email': plugin_config['email_attribute'].get_value(),
         }
     # reverse the mapping
-    return dict([(v, k) for k, v in mapping.items() if v])
+    return dict([(str(v), (k,)) for k, v in mapping.items() if v])
 
 
 def get_create_unknown_user():
