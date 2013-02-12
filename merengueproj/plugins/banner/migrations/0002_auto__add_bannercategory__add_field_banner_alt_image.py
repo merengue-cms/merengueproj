@@ -3,17 +3,28 @@ import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
+from merengue.base.utils import table_exists, south_trans_data, add_south_trans_fields
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
-        # Adding model 'BannerCategory'
-        db.create_table('banner_bannercategory', (
+        if table_exists('banner_bannercategory'):
+            return  # already migrated
+
+
+        bannercategory_data = (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name_es', self.gf('django.db.models.fields.CharField')(max_length=200)),
             ('slug', self.gf('django.db.models.fields.SlugField')(max_length=200, db_index=True)),
-        ))
+        )
+
+        bannercategory_data = bannercategory_data + south_trans_data(
+            orm=orm,
+            trans_data={
+                'banner.BannerCategory': ('name', ),
+            },
+        )
+        # Adding model 'BannerCategory'
+        db.create_table('banner_bannercategory', bannercategory_data)
         db.send_create_signal('banner', ['BannerCategory'])
 
         # Adding M2M table for field categories on 'Banner'
@@ -75,7 +86,6 @@ class Migration(SchemaMigration):
         'banner.bannercategory': {
             'Meta': {'object_name': 'BannerCategory'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name_es': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '200', 'db_index': 'True'})
         },
         'base.basecontent': {
@@ -188,5 +198,10 @@ class Migration(SchemaMigration):
             'workflow': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['workflow.Workflow']"})
         }
     }
+    add_south_trans_fields(models, {
+      'banner.bannercategory': {
+          'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+      },
+    })
 
     complete_apps = ['banner']
