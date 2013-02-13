@@ -96,6 +96,9 @@
 {% block toolbar %}
   {% render_toolbar %}
 {% endblock %}
+
+{% block beforepage %}{% endblock %}
+
 {% block page %}
 <div id="page-wrapper">
 
@@ -235,7 +238,7 @@
 {% endblock %}
 </div>
 {% endblock %}
-
+{% block aferpage %}{% endblock %}
 {# placeholder to allow plugins and other templates to add javascript assets #}
 {% render_bundled_media "js" %}
 </body>
