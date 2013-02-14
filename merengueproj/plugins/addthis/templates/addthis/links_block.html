@@ -22,8 +22,8 @@ var addthis_config = {
 //]]
 </script>
 
-{% if services %}
 <div class="addthis_toolbox addthis_default_style ">
+{% if services %}
     {% for service in services %}<a class="addthis_button_{{ service }}"></a>{% endfor %}
     <span class="addthis_separator">|</span>
     <a href="http://www.addthis.com/bookmark.php?v=250&amp;username=merengue"
