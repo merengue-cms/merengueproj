@@ -7,10 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-21 09:54+0200\n"
+"POT-Creation-Date: 2013-02-13 11:13+0100\n"
 "PO-Revision-Date: 2010-10-05 13:46\n"
 "Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,29 +19,31 @@ msgstr ""
 
 #: admin.py:37
 msgid "Repository"
-msgstr ""
+msgstr "Repositorio"
 
 #: admin.py:41
 msgid "The repository folder exists"
-msgstr ""
+msgstr "Ya existe una carpeta con ese nombre"
 
 #: admin.py:49
 msgid ""
 "The location folder does not exist in the database. Save the document to "
 "create it."
 msgstr ""
+"La carpeta no existe en la base de datos. Guarda el documento "
+"para crearla."
 
 #: config.py:33
 msgid "Root below MEDIA_ROOT"
-msgstr ""
+msgstr "Raiz bajo MEDIA_ROOT"
 
 #: config.py:34
 msgid "Docs root below MEDIA_ROOT"
-msgstr ""
+msgstr "Docs raiz bajo MEDIA_ROOT"
 
 #: config.py:35
 msgid "Docs url below MEDIA_URL"
-msgstr "Francés"
+msgstr "Docs url bajo MEDIA_ROOT"
 
 #: forms.py:13
 msgid "Save"
@@ -50,98 +53,98 @@ msgstr "Guardar"
 msgid "Create Document"
 msgstr "Crear Documento"
 
-#: models.py:30
+#: models.py:31
 msgid "name"
 msgstr "nombre"
 
-#: models.py:37
+#: models.py:38
 msgid "repository"
 msgstr "repositorio"
 
-#: models.py:38
+#: models.py:39
 msgid "repositories"
 msgstr "repositorios"
 
-#: models.py:45
+#: models.py:46
 #, python-format
 msgid "Repository at %s"
-msgstr ""
+msgstr "Repositorio en %s"
 
-#: models.py:158
+#: models.py:187
 msgid "title"
 msgstr "título"
 
-#: models.py:159
+#: models.py:188
 msgid "content"
 msgstr "contenido"
 
-#: models.py:160
+#: models.py:189
 msgid "modification date"
 msgstr "fecha de modificación"
 
-#: models.py:162
+#: models.py:191
 msgid "location"
 msgstr "localización"
 
-#: models.py:167 models.py:206 models.py:230
+#: models.py:196 models.py:235 models.py:259
 msgid "document"
 msgstr "documento"
 
-#: models.py:168
+#: models.py:197
 msgid "documents"
 msgstr "documentos"
 
-#: models.py:207 models.py:231 templates/filebrowser/document.html:43
+#: models.py:236 models.py:260 templates/filebrowser/document.html:43
 #: templates/filebrowser/rename.html:41 templates/filebrowser/rename.html:47
 msgid "file"
 msgstr "fichero"
 
-#: models.py:209
+#: models.py:238
 msgid "indexed"
 msgstr "indexado"
 
-#: models.py:213
+#: models.py:242
 msgid "document file attachment"
 msgstr "fichero adjunto al documento"
 
-#: models.py:214
+#: models.py:243
 msgid "document file attachments"
 msgstr "ficheros adjuntos al documento"
 
-#: models.py:235
+#: models.py:264
 msgid "document image attachment"
 msgstr "imagen adjunta al documento"
 
-#: models.py:236
+#: models.py:265
 msgid "document image attachments"
 msgstr "imágenes adjuntas al documento"
 
-#: views.py:86
+#: views.py:106
 msgid "You must introduce the name of the new folder"
 msgstr "Usted debe introducir el nombre de la nueva carpeta"
 
-#: views.py:88
+#: views.py:108
 #, python-format
 msgid "Folder %(dirname)s already exists"
 msgstr "El nombre %(dirname)s ya existe"
 
-#: views.py:98
+#: views.py:118
 msgid "Folder created successfully"
 msgstr "La carpeta se ha creado con exito"
 
-#: views.py:126
+#: views.py:158
 msgid "Files uploaded successfully"
 msgstr "Los ficheros se han subido con exito"
 
-#: views.py:190
+#: views.py:222
 msgid "You didn't selected any element"
 msgstr "Usted no seleccionó ningun elemento"
 
-#: views.py:227
+#: views.py:259
 msgid "Elements renamed successfully"
 msgstr "Elementos renombrados con exito"
 
-#: views.py:234
+#: views.py:266
 msgid "Elements deleted successfully"
 msgstr "Elementos borrados con exito"
 
@@ -152,8 +155,9 @@ msgstr "Repositorio de documentos"
 #: templates/filebrowser/base.html:14 templates/filebrowser/listing.html:14
 #: templates/filebrowser/repository_list.html:5
 #: templates/filebrowser/repository_list.html:7
+#: templates/filebrowser/search.html:14
 msgid "Repository List"
-msgstr ""
+msgstr "Listado de repositorios"
 
 #: templates/filebrowser/createdir.html:4
 #: templates/filebrowser/createdir.html:8
@@ -185,8 +189,8 @@ msgstr "Confirmar borrado"
 #: templates/filebrowser/doc_edit.html:27
 #: templates/filebrowser/doc_edit.html:29
 #: templates/filebrowser/doc_edit.html:42 templates/filebrowser/rename.html:20
-#: templates/filebrowser/rename.html:22 templates/filebrowser/upload.html:26
-#: templates/filebrowser/upload.html:28
+#: templates/filebrowser/rename.html:22 templates/filebrowser/upload.html:27
+#: templates/filebrowser/upload.html:29
 msgid "Back to content"
 msgstr "Volver al contenido"
 
@@ -263,25 +267,25 @@ msgstr "Subir fichero"
 
 #: templates/filebrowser/listing.html:35
 msgid "Create document"
-msgstr ""
+msgstr "Crear documento"
 
-#: templates/filebrowser/listing.html:48
+#: templates/filebrowser/listing.html:48 templates/filebrowser/search.html:31
 msgid "This table contains a list of objects"
 msgstr "Esta tabla contiene una lista de objetos"
 
-#: templates/filebrowser/listing.html:52
+#: templates/filebrowser/listing.html:52 templates/filebrowser/search.html:34
 msgid "Name"
 msgstr "Nombre"
 
-#: templates/filebrowser/listing.html:53
+#: templates/filebrowser/listing.html:53 templates/filebrowser/search.html:35
 msgid "Size"
 msgstr "Tamaño"
 
-#: templates/filebrowser/listing.html:54
+#: templates/filebrowser/listing.html:54 templates/filebrowser/search.html:36
 msgid "Date"
 msgstr "Fecha"
 
-#: templates/filebrowser/listing.html:54
+#: templates/filebrowser/listing.html:54 templates/filebrowser/search.html:36
 msgid "Modification date"
 msgstr "Fecha de modificación"
 
@@ -297,7 +301,7 @@ msgstr ""
 
 #: templates/filebrowser/listing.html:111
 msgid "The current directory is empty."
-msgstr ""
+msgstr "La carpeta está vacía"
 
 #: templates/filebrowser/rename.html:8
 msgid "Confirm rename"
@@ -311,15 +315,43 @@ msgstr "Renombrar estos elementos"
 msgid "folder"
 msgstr "carpeta"
 
-#: templates/filebrowser/upload.html:14 templates/filebrowser/upload.html:45
+#: templates/filebrowser/search.html:4
+msgid "Search repositories"
+msgstr "Buscar en repositorios"
+
+#: templates/filebrowser/search.html:15
+msgid "Search"
+msgstr "Buscar"
+
+#: templates/filebrowser/search.html:20
+msgid "Search document repository"
+msgstr "Buscar en repositorio de documentos"
+
+#: templates/filebrowser/search.html:26
+msgid "search"
+msgstr "buscar"
+
+#: templates/filebrowser/search.html:57
+msgid "Your search matched no results."
+msgstr "No se han encontrado resultados"
+
+#: templates/filebrowser/upload.html:15 templates/filebrowser/upload.html:45
 msgid "Upload"
 msgstr "Subir"
 
-#: templates/filebrowser/upload.html:19
+#: templates/filebrowser/upload.html:20
 msgid "Upload files"
 msgstr "Subir ficheros"
 
-#: templates/filebrowser/upload.html:40
+#: templates/filebrowser/upload.html:56
+msgid "Title"
+msgstr "Título"
+
+#: templates/filebrowser/upload.html:60
+msgid "Description"
+msgstr "Descripción"
+
+#: templates/filebrowser/upload.html:64
 msgid "File to upload"
 msgstr "Fichero a subir"
 

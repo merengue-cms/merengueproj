@@ -38,7 +38,7 @@ class PluginConfig(Plugin):
     url_prefixes = (
         ({'en': 'filebrowser',
           'es': 'navegador_de_ficheros'},
-          'plugins.filebrowser.urls'),
+         'plugins.filebrowser.urls'),
     )
 
     def models(self):

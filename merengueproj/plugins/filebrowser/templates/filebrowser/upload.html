@@ -6,7 +6,8 @@
 {% block titlepage %}{% inline_trans "Upload file" %}{% endblock %}
 
 {% block extrascripts %}
-    <script src="{{ MEDIA_URL }}filebrowser/js/multifile.js" language="javascript" type="text/javascript"></script>
+    <script src="{{ MEDIA_URL }}merengue/js/jquery-1.4.2.min.js" language="javascript" type="text/javascript"></script>
+    <script src="{{ MEDIA_URL }}filebrowser/js/jqmultifile.js" language="javascript" type="text/javascript"></script>
 {% endblock %}
 
 {% block extrabreadcrumbs %}
@@ -36,9 +37,8 @@
 
 <!-- This is the form -->
 <form class="filebrowserForm" enctype="multipart/form-data" action="." method="post">
-    <div class="form-row">
-        <label for="name" class="required file">{% inline_trans "File to upload" %}</label>
-        <input id="file_element" type="file" name="file_1" >
+    <div id="file-set">
+      <!-- placeholder for rows -->
     </div>
     <div class="submit-row">
         <div id="files_list"></div>
@@ -46,10 +46,22 @@
     </div>
 </form>
 
-<script>
-    var multi_selector = new MultiSelector(document.getElementById('files_list'), 100 );
-    multi_selector.addElement(document.getElementById('file_element'));
-</script>
+<!-- this is a template for the file upload form -->
+<div id="multiselector-template">
+      <div class="form-row">
+          <label for="title_0" class="required text">{% inline_trans "Title" %}</label>
+          <input id="title_0" type="text" name="title_0" >
+      </div>
+      <div class="form-row">
+          <label for="description_0" class="textarea">{% inline_trans "Description" %}</label>
+          <textarea id="description_0" name="description_0"></textarea>
+      </div>
+      <div class="form-row">
+          <label for="file_0" class="required file">{% inline_trans "File to upload" %}</label>
+          <input class="file_element" id="file_0" type="file" name="file_0" >
+      </div>
+</div>
+<!-- END this is a template for the file upload form -->
 
 </div>
 

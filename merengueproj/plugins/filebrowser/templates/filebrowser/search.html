@@ -1,0 +1,62 @@
+{% extends "filebrowser/base.html" %}
+{% load i18n inlinetrans truncate_filter filebrowser_tags %}
+
+{% block pagetitle %}{{ block.super }} - {% trans "Search repositories" %}{% endblock %}
+
+{% block parentextrabreadcrumbs %}
+
+{% endblock %}
+
+{% block extrabreadcrumbs %}
+    {% if section %}
+        {{ section.breadcrumbs }}
+    {% endif %}
+    <span class="breadcrumbSeparator">→</span><a href="{% filebrowser_url filebrowser_repositories %}">{% inline_trans "Repository List" %}</a>
+    <span class="breadcrumbSeparator">→</span><a href="{% filebrowser_url filebrowser_search %}">{% inline_trans "Search" %}</a>
+{% endblock %}
+
+{% block content %}
+<div id="content-title">
+    <h1 title="{% trans "Search document repository" %}">{% inline_trans "Search document repository" %}</h1>
+</div>
+
+<div id="search-form">
+  <form class="filebrowserSearch" action="{% filebrowser_url filebrowser_search %}" method="post">
+    <input name="q" type="text" />
+    <input type="submit" name="{% trans "search" %}" value="{% trans "search" %}" />
+  </form>
+</div>
+
+{% if files %}
+    <table id="webfs-table" title="{% trans "This table contains a list of objects" %}">
+        <thead>
+            <tr>
+                <th class="name">{% inline_trans "Name" %}</th>
+                <th class="size">{% inline_trans "Size" %}</th>
+                <th class="modification-date" abbr="{% trans "Date" %}">{% inline_trans "Modification date" %}</th>
+                <th class="last-empty"></th>
+            </tr>
+        </thead>
+        <tbody>
+         {% for f in files %}
+            <tr class="{% cycle row1,row2 %}">
+              <td class="contentTitle">
+               <label for="file_{{ forloop.counter }}" class="file">
+                 <a href="{% filebrowser_url filebrowser_download repository_name=f.repository.name,path=f.path %}" title="{{ f.description }}">{{ f.title|inline_truncate:40 }}</a>
+               </label>
+              </td>
+              <td>{{ f.size|filesizeformat }}</td>
+              <td colspan="2">{{ f.modificated|date:"d/m/Y" }}</td>
+            </tr>
+         {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+  {% if request.method == "POST" %}
+  <div class="action-buttons">
+    <p class="noContent">{% inline_trans "Your search matched no results." %}</p>
+  </div>
+  {% endif %}
+{% endif %}
+
+{% endblock %}

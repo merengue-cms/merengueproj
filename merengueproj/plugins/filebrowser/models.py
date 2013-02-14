@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import re
 import shutil
 
 from django.db import models
@@ -91,8 +92,8 @@ class Repository(models.Model):
         absolute_path = smart_str(self.get_absolute_path(path))
         for l in os.listdir(absolute_path):
             fullpath = os.path.join(absolute_path, l)
-            if l.startswith('.'):
-                continue  # is hidden
+            if l.startswith('.') or l.endswith('.metadata'):
+                continue  # is hidden or metadata
             if os.path.isdir(fullpath):
                 item_path = os.path.join(path, l)
                 desc = DirDesc(root_path, item_path)
@@ -149,6 +150,34 @@ class Repository(models.Model):
                 # it should be a document
                 doc = self.document_set.get(repository=self, slug=elem['id'])
                 doc.delete()
+
+    def search_files(self, q):
+        topdir = self.get_absolute_path('')
+        if not topdir.endswith('/'):
+            topdir += '/'
+
+        def grepfiles(arg, dirname, fnames):
+            pattern, results = arg
+            for fname in fnames:
+                if fname.endswith('.metadata'):
+                    absname = os.path.join(dirname, fname)
+                    try:
+                        f = open(absname, 'r')
+                    except IOError:
+                        continue
+                    data = f.read()
+                    f.close()
+                    data = data.split('\n')
+                    for line in data:
+                        if pattern.search(line):
+                            path = absname[len(topdir):-9]
+                            results.append(FileDesc(topdir, path, self))
+                            break
+
+        pattern = re.compile(q)
+        results = []
+        os.path.walk(topdir, grepfiles, (pattern, results))
+        return results
 
 
 class Document(models.Model):

@@ -77,6 +77,24 @@ def listing(request, repository_name, path='',
 
 
 @login_required_or_permission_denied
+def search(request, base_template=FILEBROWSER_BASE_TEMPLATE):
+    files = ()
+    if request.method == 'POST':
+        q = request.POST.get('q').encode('utf8')
+        repos = Repository.objects
+        section = getattr(request, 'section', None)
+        if section is not None:
+            repos = repos.filter(section=section)
+        files = [f for repo in repos.all() for f in repo.search_files(q)]
+    edit_permission = request.user.is_staff
+    return render_to_response('filebrowser/search.html',
+                            {'base_template': base_template,
+                            'files': files,
+                            'edit_permission': edit_permission},
+                            context_instance=RequestContext(request))
+
+
+@login_required_or_permission_denied
 def createdir(request, repository_name, path='',
               base_template=FILEBROWSER_BASE_TEMPLATE, url_prefix=None):
     repository = get_object_or_404(Repository, name=repository_name)
@@ -121,11 +139,22 @@ def upload(request, repository_name, path='',
     if request.method == 'POST':
         for k, f in request.FILES.items():
             if k.startswith('file_'):
+                idx = k[5:]
+                title = request.POST.get('title_' + idx).encode('utf8')
+                description = request.POST.get('description_' + idx).encode('utf8')
                 file_name = unicodedata.normalize('NFKD', force_unicode(f.name)).encode('ascii', 'ignore')
                 fout = repository.create_file(join(path, file_name))
                 for chunk in f.chunks():
                     fout.write(chunk)
                 fout.close()
+                metadata_name = join(path, file_name + '.metadata')
+                metadata_path = repository.encode_path(repository.get_absolute_path(metadata_name))
+                mout = open(metadata_path, 'w')
+                mout.write(title)
+                mout.write('\n\n')
+                mout.write(description)
+                mout.write('\n')
+                mout.close()
         send_info(request, _('Files uploaded successfully'))
         return HttpResponseRedirect(filebrowser_reverse(request, "filebrowser_dir_listing",
                         kwargs={'repository_name': repository.name,

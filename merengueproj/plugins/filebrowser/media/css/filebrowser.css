@@ -169,3 +169,13 @@ div.action-buttons {
     margin-top: 1.5em;
     text-align: center;
 }
+
+div#multiselector-template {
+  display: none;
+}
+
+div.multiselector-row {
+    background-color: #fffaf0;
+    margin-bottom: 10px;
+    padding: 7px;
+}

@@ -32,5 +32,17 @@ class DirDesc(PathDesc):
 class FileDesc(PathDesc):
     """ File descriptor class """
 
-    def __init__(self, root, path):
+    def __init__(self, root, path, repo=None):
         super(FileDesc, self).__init__(root, path)
+        metadata_name = os.path.join(root, path + '.metadata')
+        self.repository = repo
+        if os.path.exists(metadata_name):
+            metadata_file = open(metadata_name, 'r')
+            metadata = metadata_file.read()
+            metadata_file.close()
+            metadata_lines = metadata.split('\n')
+            self.title = metadata_lines[0]
+            self.description = '\n'.join(metadata_lines[2:])
+        else:
+            self.title = ''
+            self.description = ''

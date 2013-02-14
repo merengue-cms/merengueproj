@@ -24,6 +24,9 @@ urlpatterns = patterns('plugins.filebrowser.views',
     url({'en': r'^(?P<repository_name>[\w-]+)/action/(?P<path>.*)$',
          'es': r'^(?P<repository_name>[\w-]+)/accion/(?P<path>.*)$'},
          'action', name='filebrowser_action'),
+    url({'en': r'^search/files$',
+         'es': r'^buscar/ficheros$'},
+         'search', name='filebrowser_search'),
 
     # documents
     url({'en': r'^(?P<repository_name>[\w-]+)/create/document/(?P<path>.*)$',
