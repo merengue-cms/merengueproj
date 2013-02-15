@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-13 11:13+0100\n"
+"POT-Creation-Date: 2013-02-13 16:17+0100\n"
 "PO-Revision-Date: 2010-10-05 13:46\n"
 "Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,8 +30,7 @@ msgid ""
 "The location folder does not exist in the database. Save the document to "
 "create it."
 msgstr ""
-"La carpeta no existe en la base de datos. Guarda el documento "
-"para crearla."
+"La carpeta no existe en la base de datos. Guarda el documento para crearla."
 
 #: config.py:33
 msgid "Root below MEDIA_ROOT"
@@ -119,32 +118,32 @@ msgstr "imagen adjunta al documento"
 msgid "document image attachments"
 msgstr "imágenes adjuntas al documento"
 
-#: views.py:106
+#: views.py:111
 msgid "You must introduce the name of the new folder"
 msgstr "Usted debe introducir el nombre de la nueva carpeta"
 
-#: views.py:108
+#: views.py:113
 #, python-format
 msgid "Folder %(dirname)s already exists"
 msgstr "El nombre %(dirname)s ya existe"
 
-#: views.py:118
+#: views.py:123
 msgid "Folder created successfully"
 msgstr "La carpeta se ha creado con exito"
 
-#: views.py:158
+#: views.py:163
 msgid "Files uploaded successfully"
 msgstr "Los ficheros se han subido con exito"
 
-#: views.py:222
+#: views.py:227
 msgid "You didn't selected any element"
 msgstr "Usted no seleccionó ningun elemento"
 
-#: views.py:259
+#: views.py:264
 msgid "Elements renamed successfully"
 msgstr "Elementos renombrados con exito"
 
-#: views.py:266
+#: views.py:271
 msgid "Elements deleted successfully"
 msgstr "Elementos borrados con exito"
 
@@ -269,23 +268,23 @@ msgstr "Subir fichero"
 msgid "Create document"
 msgstr "Crear documento"
 
-#: templates/filebrowser/listing.html:48 templates/filebrowser/search.html:31
+#: templates/filebrowser/listing.html:48 templates/filebrowser/search.html:26
 msgid "This table contains a list of objects"
 msgstr "Esta tabla contiene una lista de objetos"
 
-#: templates/filebrowser/listing.html:52 templates/filebrowser/search.html:34
+#: templates/filebrowser/listing.html:52 templates/filebrowser/search.html:29
 msgid "Name"
 msgstr "Nombre"
 
-#: templates/filebrowser/listing.html:53 templates/filebrowser/search.html:35
+#: templates/filebrowser/listing.html:53 templates/filebrowser/search.html:30
 msgid "Size"
 msgstr "Tamaño"
 
-#: templates/filebrowser/listing.html:54 templates/filebrowser/search.html:36
+#: templates/filebrowser/listing.html:54 templates/filebrowser/search.html:31
 msgid "Date"
 msgstr "Fecha"
 
-#: templates/filebrowser/listing.html:54 templates/filebrowser/search.html:36
+#: templates/filebrowser/listing.html:54 templates/filebrowser/search.html:31
 msgid "Modification date"
 msgstr "Fecha de modificación"
 
@@ -315,6 +314,10 @@ msgstr "Renombrar estos elementos"
 msgid "folder"
 msgstr "carpeta"
 
+#: templates/filebrowser/repository_list.html:11
+msgid "Search in repositories"
+msgstr "Buscar en repositorios"
+
 #: templates/filebrowser/search.html:4
 msgid "Search repositories"
 msgstr "Buscar en repositorios"
@@ -327,11 +330,7 @@ msgstr "Buscar"
 msgid "Search document repository"
 msgstr "Buscar en repositorio de documentos"
 
-#: templates/filebrowser/search.html:26
-msgid "search"
-msgstr "buscar"
-
-#: templates/filebrowser/search.html:57
+#: templates/filebrowser/search.html:63
 msgid "Your search matched no results."
 msgstr "No se han encontrado resultados"
 
@@ -343,17 +342,20 @@ msgstr "Subir"
 msgid "Upload files"
 msgstr "Subir ficheros"
 
-#: templates/filebrowser/upload.html:56
+#: templates/filebrowser/upload.html:52
 msgid "Title"
 msgstr "Título"
 
-#: templates/filebrowser/upload.html:60
+#: templates/filebrowser/upload.html:56
 msgid "Description"
 msgstr "Descripción"
 
-#: templates/filebrowser/upload.html:64
+#: templates/filebrowser/upload.html:60
 msgid "File to upload"
 msgstr "Fichero a subir"
+
+#~ msgid "search"
+#~ msgstr "buscar"
 
 #~ msgid "You don't have permission to do that."
 #~ msgstr "Usted no tiene permisos para realizar esta acción"

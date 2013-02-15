@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-13 11:13+0100\n"
+"POT-Creation-Date: 2013-02-13 16:17+0100\n"
 "PO-Revision-Date: 2011-04-12 20:47+0200\n"
 "Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
 "Language-Team: it <m.busico@ieee.org>\n"
@@ -118,32 +118,32 @@ msgstr "immagine allegata al documento"
 msgid "document image attachments"
 msgstr "immagini allegate al documento"
 
-#: views.py:106
+#: views.py:111
 msgid "You must introduce the name of the new folder"
 msgstr "Devi inserire il nome della nuova cartella"
 
-#: views.py:108
+#: views.py:113
 #, python-format
 msgid "Folder %(dirname)s already exists"
 msgstr "La cartella %(dirname)s esiste già"
 
-#: views.py:118
+#: views.py:123
 msgid "Folder created successfully"
 msgstr "Cartella creata con successo"
 
-#: views.py:158
+#: views.py:163
 msgid "Files uploaded successfully"
 msgstr "File caricati con successo"
 
-#: views.py:222
+#: views.py:227
 msgid "You didn't selected any element"
 msgstr "Non hai selezionato nessun elemento"
 
-#: views.py:259
+#: views.py:264
 msgid "Elements renamed successfully"
 msgstr "Gli elementi sono stati rinominati con successo"
 
-#: views.py:266
+#: views.py:271
 msgid "Elements deleted successfully"
 msgstr "Gli elementi sono stati cancellati con successo"
 
@@ -268,23 +268,23 @@ msgstr "Carica file"
 msgid "Create document"
 msgstr ""
 
-#: templates/filebrowser/listing.html:48 templates/filebrowser/search.html:31
+#: templates/filebrowser/listing.html:48 templates/filebrowser/search.html:26
 msgid "This table contains a list of objects"
 msgstr "Questa tabella contiene una lista di oggetti"
 
-#: templates/filebrowser/listing.html:52 templates/filebrowser/search.html:34
+#: templates/filebrowser/listing.html:52 templates/filebrowser/search.html:29
 msgid "Name"
 msgstr "Nome"
 
-#: templates/filebrowser/listing.html:53 templates/filebrowser/search.html:35
+#: templates/filebrowser/listing.html:53 templates/filebrowser/search.html:30
 msgid "Size"
 msgstr "Dimensione"
 
-#: templates/filebrowser/listing.html:54 templates/filebrowser/search.html:36
+#: templates/filebrowser/listing.html:54 templates/filebrowser/search.html:31
 msgid "Date"
 msgstr "Data"
 
-#: templates/filebrowser/listing.html:54 templates/filebrowser/search.html:36
+#: templates/filebrowser/listing.html:54 templates/filebrowser/search.html:31
 msgid "Modification date"
 msgstr "Data di modifica"
 
@@ -314,6 +314,10 @@ msgstr "Rinomia questi elementi"
 msgid "folder"
 msgstr "cartella"
 
+#: templates/filebrowser/repository_list.html:11
+msgid "Search in repositories"
+msgstr ""
+
 #: templates/filebrowser/search.html:4
 msgid "Search repositories"
 msgstr ""
@@ -326,11 +330,7 @@ msgstr ""
 msgid "Search document repository"
 msgstr ""
 
-#: templates/filebrowser/search.html:26
-msgid "search"
-msgstr ""
-
-#: templates/filebrowser/search.html:57
+#: templates/filebrowser/search.html:63
 msgid "Your search matched no results."
 msgstr ""
 
@@ -342,15 +342,15 @@ msgstr "Carica"
 msgid "Upload files"
 msgstr "Carica i file"
 
-#: templates/filebrowser/upload.html:56
+#: templates/filebrowser/upload.html:52
 msgid "Title"
 msgstr ""
 
-#: templates/filebrowser/upload.html:60
+#: templates/filebrowser/upload.html:56
 msgid "Description"
 msgstr ""
 
-#: templates/filebrowser/upload.html:64
+#: templates/filebrowser/upload.html:60
 msgid "File to upload"
 msgstr "File da caricare"
 

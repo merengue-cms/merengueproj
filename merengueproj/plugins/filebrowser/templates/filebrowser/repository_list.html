@@ -6,6 +6,14 @@
 
 {% block listtitle %}{% inline_trans "Repository List" %}{% endblock %}
 
+{% block listing %}
+  <div id="search-repos">
+    <span>{% trans "Search in repositories" %}</span>
+    {% include "filebrowser/search.html.inc" %}
+  </div>
+  {{ block.super }}
+{% endblock %}
+
 {% block itemtitle %}
     {{ content.name }}
 {% endblock %}

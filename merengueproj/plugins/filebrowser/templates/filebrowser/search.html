@@ -20,12 +20,7 @@
     <h1 title="{% trans "Search document repository" %}">{% inline_trans "Search document repository" %}</h1>
 </div>
 
-<div id="search-form">
-  <form class="filebrowserSearch" action="{% filebrowser_url filebrowser_search %}" method="post">
-    <input name="q" type="text" />
-    <input type="submit" name="{% trans "search" %}" value="{% trans "search" %}" />
-  </form>
-</div>
+{% include "filebrowser/search.html.inc" %}
 
 {% if files or documents %}
     <table id="webfs-table" title="{% trans "This table contains a list of objects" %}">
