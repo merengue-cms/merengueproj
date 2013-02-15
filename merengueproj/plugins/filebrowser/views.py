@@ -7,6 +7,7 @@ from django.template import RequestContext
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.utils.encoding import force_unicode
+from django.db.models import Q
 
 from merengue.base.decorators import login_required_or_permission_denied
 from merengue.base.views import content_list
@@ -78,18 +79,22 @@ def listing(request, repository_name, path='',
 
 @login_required_or_permission_denied
 def search(request, base_template=FILEBROWSER_BASE_TEMPLATE):
-    files = ()
+    files, documents = (), ()
     if request.method == 'POST':
         q = request.POST.get('q').encode('utf8')
         repos = Repository.objects
+        documents = Document.objects
         section = getattr(request, 'section', None)
         if section is not None:
             repos = repos.filter(section=section)
+            documents = documents.filter(repository__in=repos)
         files = [f for repo in repos.all() for f in repo.search_files(q)]
+        documents = documents.filter(Q(title__regex=q) | Q(content__regex=q))
     edit_permission = request.user.is_staff
     return render_to_response('filebrowser/search.html',
                             {'base_template': base_template,
                             'files': files,
+                            'documents': documents,
                             'edit_permission': edit_permission},
                             context_instance=RequestContext(request))
 

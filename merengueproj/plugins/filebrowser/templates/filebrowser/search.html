@@ -49,6 +49,17 @@
               <td colspan="2">{{ f.modificated|date:"d/m/Y" }}</td>
             </tr>
          {% endfor %}
+         {% for doc in documents %}
+            <tr class="{% cycle row1,row2 %}">
+              <td class="contentTitle">
+                <label for="doc_{{ forloop.counter }}" class="document">
+                  <a href="{% filebrowser_url filebrowser_viewdoc repository_name=doc.repository.name,doc_slug=doc.slug %}" title="{{ doc.content }}">{{ doc.title|inline_truncate:40 }}</a>
+                </label>
+              </td>
+              <td>{{ doc.get_size|filesizeformat }}</td>
+              <td colspan="2">{{ doc.modification_date|date:"d/m/Y" }}</td>
+            </tr>
+         {% endfor %}
         </tbody>
     </table>
 {% else %}
