@@ -14,26 +14,31 @@
     new_row.attr('id', 'multiselector-row-' + this.count);
     new_row.attr('class', 'multiselector-row');
     title = 'title_' + this.count;
-    title_label = $($(new_row.children()[0]).children()[0]);
+    title_label = $($(new_row.children()[1]).children()[0]);
     title_label.attr('for', title);
-    title_input = $($(new_row.children()[0]).children()[1]);
+    title_input = $($(new_row.children()[1]).children()[1]);
     title_input.attr('id', title);
     title_input.attr('name', title);
     desc = 'description_' + this.count;
-    desc_label = $($(new_row.children()[1]).children()[0]);
+    desc_label = $($(new_row.children()[2]).children()[0]);
     desc_label.attr('for', desc);
-    desc_input = $($(new_row.children()[1]).children()[1]);
+    desc_input = $($(new_row.children()[2]).children()[1]);
     desc_input.attr('id', desc);
     desc_input.attr('name', desc);
     file = 'file_' + this.count;
-    file_label = $($(new_row.children()[2]).children()[0]);
+    file_label = $($(new_row.children()[3]).children()[0]);
     file_label.attr('for', file);
-    file_input = $($(new_row.children()[2]).children()[1]);
+    file_input = $($(new_row.children()[3]).children()[1]);
     file_input.attr('id', file);
     file_input.attr('name', file);
     this.count++;
     this.elem.append(new_row);
-    new_row.show();
+    new_row.show('slow');
+    closer = $($(new_row.children()[0]).children()[0]);
+    closer.click(function (e) {
+      new_row.remove();
+      return false;
+    });
   };
 
   $(document).ready(function () {

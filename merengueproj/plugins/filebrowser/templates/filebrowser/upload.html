@@ -49,18 +49,19 @@
 
 <!-- this is a template for the file upload form -->
 <div id="multiselector-template">
-      <div class="form-row">
-          <label for="title_0" class="required text">{% inline_trans "Title" %}</label>
-          <input id="title_0" type="text" name="title_0" >
-      </div>
-      <div class="form-row">
-          <label for="description_0" class="textarea">{% inline_trans "Description" %}</label>
-          <textarea id="description_0" name="description_0"></textarea>
-      </div>
-      <div class="form-row">
-          <label for="file_0" class="required file">{% inline_trans "File to upload" %}</label>
-          <input class="file_element" id="file_0" type="file" name="file_0" >
-      </div>
+  <div class="close-row"><a href="#" class="remove-row">X</a></div>
+  <div class="form-row">
+      <label for="title_0" class="required text">{% inline_trans "Title" %}</label>
+      <input id="title_0" type="text" name="title_0" >
+  </div>
+  <div class="form-row">
+      <label for="description_0" class="textarea">{% inline_trans "Description" %}</label>
+      <textarea id="description_0" name="description_0"></textarea>
+  </div>
+  <div class="form-row">
+      <label for="file_0" class="required file">{% inline_trans "File to upload" %}</label>
+      <input class="file_element" id="file_0" type="file" name="file_0" >
+  </div>
 </div>
 <!-- END this is a template for the file upload form -->
 

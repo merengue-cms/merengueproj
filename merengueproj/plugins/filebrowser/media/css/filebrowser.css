@@ -181,5 +181,15 @@ div.multiselector-row {
 }
 
 a#new-file {
-  margin-left: 40px;
+    margin-left: 40px;
+}
+
+a.remove-row {
+    margin-right: 30px;
+    color: #f4b8a1;
+}
+
+div.close-row {
+    width: 100%;
+    text-align: right;
 }
