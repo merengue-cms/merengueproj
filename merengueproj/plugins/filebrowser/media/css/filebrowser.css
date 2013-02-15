@@ -179,3 +179,7 @@ div.multiselector-row {
     margin-bottom: 10px;
     padding: 7px;
 }
+
+a#new-file {
+  margin-left: 40px;
+}

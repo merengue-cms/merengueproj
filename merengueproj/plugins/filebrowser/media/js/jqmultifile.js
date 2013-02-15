@@ -31,20 +31,19 @@
     file_input = $($(new_row.children()[2]).children()[1]);
     file_input.attr('id', file);
     file_input.attr('name', file);
-    var that = this;
-    file_input.change(function (e) {
-      if (that.count < that.max) {
-        that.new_input();
-      }
-    });
     this.count++;
-    this.elem.prepend(new_row);
+    this.elem.append(new_row);
     new_row.show();
   };
 
   $(document).ready(function () {
     window.multiselector = new MultiSelector($('#file-set'), 20);
     window.multiselector.new_input();
+    var new_file = $('#new-file');
+    new_file.click(function (e) {
+      window.multiselector.new_input();
+      return false;
+    });
   });
 
 })(jQuery);

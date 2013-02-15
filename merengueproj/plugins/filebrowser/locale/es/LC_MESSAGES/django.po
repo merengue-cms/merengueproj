@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-13 16:17+0100\n"
+"POT-Creation-Date: 2013-02-13 16:47+0100\n"
 "PO-Revision-Date: 2010-10-05 13:46\n"
 "Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -334,7 +334,7 @@ msgstr "Buscar en repositorio de documentos"
 msgid "Your search matched no results."
 msgstr "No se han encontrado resultados"
 
-#: templates/filebrowser/upload.html:15 templates/filebrowser/upload.html:45
+#: templates/filebrowser/upload.html:15 templates/filebrowser/upload.html:46
 msgid "Upload"
 msgstr "Subir"
 
@@ -342,15 +342,19 @@ msgstr "Subir"
 msgid "Upload files"
 msgstr "Subir ficheros"
 
-#: templates/filebrowser/upload.html:52
+#: templates/filebrowser/upload.html:43
+msgid "Add another file"
+msgstr "Añadir otro fichero"
+
+#: templates/filebrowser/upload.html:53
 msgid "Title"
 msgstr "Título"
 
-#: templates/filebrowser/upload.html:56
+#: templates/filebrowser/upload.html:57
 msgid "Description"
 msgstr "Descripción"
 
-#: templates/filebrowser/upload.html:60
+#: templates/filebrowser/upload.html:61
 msgid "File to upload"
 msgstr "Fichero a subir"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-13 16:17+0100\n"
+"POT-Creation-Date: 2013-02-13 16:47+0100\n"
 "PO-Revision-Date: 2011-04-12 20:47+0200\n"
 "Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
 "Language-Team: it <m.busico@ieee.org>\n"
@@ -334,7 +334,7 @@ msgstr ""
 msgid "Your search matched no results."
 msgstr ""
 
-#: templates/filebrowser/upload.html:15 templates/filebrowser/upload.html:45
+#: templates/filebrowser/upload.html:15 templates/filebrowser/upload.html:46
 msgid "Upload"
 msgstr "Carica"
 
@@ -342,15 +342,19 @@ msgstr "Carica"
 msgid "Upload files"
 msgstr "Carica i file"
 
-#: templates/filebrowser/upload.html:52
+#: templates/filebrowser/upload.html:43
+msgid "Add another file"
+msgstr ""
+
+#: templates/filebrowser/upload.html:53
 msgid "Title"
 msgstr ""
 
-#: templates/filebrowser/upload.html:56
+#: templates/filebrowser/upload.html:57
 msgid "Description"
 msgstr ""
 
-#: templates/filebrowser/upload.html:60
+#: templates/filebrowser/upload.html:61
 msgid "File to upload"
 msgstr "File da caricare"
 
