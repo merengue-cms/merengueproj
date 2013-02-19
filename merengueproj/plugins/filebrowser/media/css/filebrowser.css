@@ -193,3 +193,8 @@ div.close-row {
     width: 100%;
     text-align: right;
 }
+
+div.elemento_descarga {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

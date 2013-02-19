@@ -23,40 +23,27 @@
 {% include "filebrowser/search.html.inc" %}
 
 {% if files or documents %}
-    <table id="webfs-table" title="{% trans "This table contains a list of objects" %}">
-        <thead>
-            <tr>
-                <th class="name">{% inline_trans "Name" %}</th>
-                <th class="size">{% inline_trans "Size" %}</th>
-                <th class="modification-date" abbr="{% trans "Date" %}">{% inline_trans "Modification date" %}</th>
-                <th class="last-empty"></th>
-            </tr>
-        </thead>
-        <tbody>
-         {% for f in files %}
-            <tr class="{% cycle row1,row2 %}">
-              <td class="contentTitle">
-               <label for="file_{{ forloop.counter }}" class="file">
-                 <a href="{% filebrowser_url filebrowser_download repository_name=f.repository.name,path=f.path %}" title="{{ f.description }}">{{ f.title|inline_truncate:40 }}</a>
-               </label>
-              </td>
-              <td>{{ f.size|filesizeformat }}</td>
-              <td colspan="2">{{ f.modificated|date:"d/m/Y" }}</td>
-            </tr>
-         {% endfor %}
-         {% for doc in documents %}
-            <tr class="{% cycle row1,row2 %}">
-              <td class="contentTitle">
-                <label for="doc_{{ forloop.counter }}" class="document">
-                  <a href="{% filebrowser_url filebrowser_viewdoc repository_name=doc.repository.name,doc_slug=doc.slug %}" title="{{ doc.content }}">{{ doc.title|inline_truncate:40 }}</a>
-                </label>
-              </td>
-              <td>{{ doc.get_size|filesizeformat }}</td>
-              <td colspan="2">{{ doc.modification_date|date:"d/m/Y" }}</td>
-            </tr>
-         {% endfor %}
-        </tbody>
-    </table>
+
+  {% for f in files %}
+  <div class="elemento_descarga">
+    <img src="{{ MEDIA_URL }}filebrowser/img/file.png">
+    <a href="{% filebrowser_url filebrowser_download repository_name=f.repository.name,path=f.path %}">
+      {{ f.title }}
+    </a>
+    <span class="filesize">({{ f.size|filesizeformat }})</span>
+    <div class="descripcion">{{ f.description }}</div>
+  </div>
+  {% endfor %}
+  {% for doc in documents %}
+  <div class="elemento_descarga">
+    <img src="{{ MEDIA_URL }}filebrowser/img/text-x-generic.png">
+    <a href="{% filebrowser_url filebrowser_viewdoc repository_name=doc.repository.name,doc_slug=doc.slug %}">
+      {{ doc.title }}
+    </a>
+    <span class="filesize">({{ doc.get_size|filesizeformat }})</span>
+    <div class="descripcion">{{ doc.content }}</div>
+  </div>
+  {% endfor %}
 {% else %}
   {% if request.method == "POST" %}
   <div class="action-buttons">
