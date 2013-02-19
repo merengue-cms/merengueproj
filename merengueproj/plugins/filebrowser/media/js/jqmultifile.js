@@ -41,6 +41,22 @@
     });
   };
 
+  MultiSelector.prototype.validate = function () {
+    var ok = true;
+    this.elem.children().each(function (index) {
+      var file_value = $(this).find('input.file_element').val();
+      if (file_value) {
+        var title = $(this).find('input.title_element').val();
+        if (!title) {
+          var label = $(this).find('label.text');
+          label.css('color', 'red');
+          ok = false;
+        }
+      }
+    });
+    return ok;
+  };
+
   $(document).ready(function () {
     window.multiselector = new MultiSelector($('#file-set'), 20);
     window.multiselector.new_input();
@@ -48,6 +64,16 @@
     new_file.click(function (e) {
       window.multiselector.new_input();
       return false;
+    });
+    var submit = $('button#subir');
+    submit.click(function (e) {
+      e.preventDefault();
+      ok = window.multiselector.validate();
+      if (ok) {
+        $('form#files').submit();
+      } else {
+        alert($('span#translation-title-required').html());
+      }
     });
   });
 

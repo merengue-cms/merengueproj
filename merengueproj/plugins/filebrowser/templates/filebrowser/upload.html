@@ -36,14 +36,16 @@
 <div id="content-main">
 
 <!-- This is the form -->
-<form class="filebrowserForm" enctype="multipart/form-data" action="." method="post">
+<form class="filebrowserForm" id="files"  enctype="multipart/form-data" action="." method="post">
     <div id="file-set">
       <!-- placeholder for rows -->
     </div>
     <a href="#" id="new-file">{% trans "Add another file" %}</a>
     <div class="submit-row">
-        <div id="files_list"></div>
-        <input type="submit" class="submit upload-button spacing" value="{% trans 'Upload' %}" id="subir" name="subir" class="default" />
+      <div id="files_list"></div>
+      <button class="submit upload-button spacing" value="{% trans 'Upload' %}" id="subir" name="subir">
+        {% trans 'Upload' %}
+      </button>
     </div>
 </form>
 
@@ -52,7 +54,7 @@
   <div class="close-row"><a href="#" class="remove-row">X</a></div>
   <div class="form-row">
       <label for="title_0" class="required text">{% inline_trans "Title" %}</label>
-      <input id="title_0" type="text" name="title_0" >
+      <input class="title_element" id="title_0" type="text" name="title_0" >
   </div>
   <div class="form-row">
       <label for="description_0" class="textarea">{% inline_trans "Description" %}</label>
@@ -64,6 +66,9 @@
   </div>
 </div>
 <!-- END this is a template for the file upload form -->
+<!-- translation of title required -->
+<span id="translation-title-required" style="display:none;">{% trans "The title for each file is required" %}</span>
+<!-- END translation of title required -->
 
 </div>
 
