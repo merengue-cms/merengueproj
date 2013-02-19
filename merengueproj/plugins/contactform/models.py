@@ -186,7 +186,7 @@ class ContactFormOpt(models.Model):
     __metaclass__ = TransMeta
 
     label = models.CharField(verbose_name=_('label'), max_length=200)
-    name = models.CharField(verbose_name=_('name'), max_length=200, blank=True, null=True)
+    name = models.SlugField(verbose_name=_('name'), max_length=200, blank=True, null=True)
     field_type = models.CharField(verbose_name=_('type'), max_length=20,
                                 choices=FIELD_TYPE_CHOICES)
     help_text = models.TextField(verbose_name=_('help text'), blank=True)

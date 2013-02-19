@@ -19,6 +19,8 @@ from django.contrib import admin
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
+from transmeta import get_fallback_fieldname
+
 from merengue.base.admin import (RelatedModelAdmin, BaseAdmin,
                                  BaseOrderableAdmin, BaseContentAdmin)
 from merengue.base.models import BaseContent
@@ -63,6 +65,7 @@ class ContactFormRelatedContactFormOptAdmin(RelatedModelAdmin,
     tool_label = _('contact form option')
     one_to_one = False
     related_field = 'contact_form'
+    prepopulated_fields = {'name': (get_fallback_fieldname('label'), )}
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(ContactFormRelatedContactFormOptAdmin, self).get_form(request, obj, **kwargs)
