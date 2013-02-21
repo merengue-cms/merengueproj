@@ -38,9 +38,21 @@
     {% endfor %}
     {% for f in files %}
     <div class="spacing">
-      <label class="file">{% inline_trans 'file' %}: </label> <input name="file_{{ forloop.counter }}" type="text" value="{{ f.title }}" />
       <input name="oldfile_{{ forloop.counter }}" type="hidden" value="{{ f.id }}" />
+      <div class="form-row">
+          <label for="title_{{ forloop.counter }}" class="text">{% inline_trans "Title" %}</label>
+          <input class="title_element" id="title_{{ forloop.counter }}" type="text" name="title_{{ forloop.counter }}" value="{{ f.title }}" />
+      </div>
+      <div class="form-row">
+          <label for="description_{{ forloop.counter }}" class="textarea">{% inline_trans "Description" %}</label>
+          <textarea id="description_{{ forloop.counter }}" name="description_{{ forloop.counter }}">{{ f.description }}</textarea>
+      </div>
+      <div class="form-row">
+          <label for="file_{{ forloop.counter }}" class="required file">{% inline_trans "File name" %}</label>
+          <input class="file_element" id="file_{{ forloop.counter }}" type="text" name="file_{{ forloop.counter }}" value="{{ f.name }}" />
+      </div>
     </div>
+
     {% endfor %}
     {% for d in docs %}
     <div class="spacing">

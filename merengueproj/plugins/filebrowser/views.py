@@ -1,6 +1,6 @@
 import unicodedata
 import mimetypes
-from os.path import join, isdir, isfile
+from os.path import join, isdir, isfile, exists
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response, Http404, get_object_or_404
 from django.template import RequestContext
@@ -214,6 +214,14 @@ def action(request, repository_name, path,
                 except:
                     title = v
                 elems.append({'id': v, 'title': title})
+            elif k.startswith('file_'):
+                post_id = k[len('file_'):]
+                new_file = {}
+                new_file['id'] = v
+                new_file['name'] = v
+                new_file['title'] = request.POST.get('title_%s' % post_id, '').encode('utf8')
+                new_file['description'] = request.POST.get('description_%s' % post_id, '').encode('utf8')
+                elems.append(new_file)
             else:
                 elems.append({'id': v, 'title': v})
             if action == 'rename':
@@ -244,6 +252,14 @@ def action(request, repository_name, path,
             if isdir(file):
                 dirs.append(e)
             elif isfile(file):
+                mfile = file + '.metadata'
+                if exists(mfile):
+                    mf = open(mfile, 'r')
+                    mdata = mf.read()
+                    mf.close()
+                    mdata = mdata.split('\n\n')
+                    e['title'] = mdata[0]
+                    e['description'] = '\n\n'.join(mdata[1:])
                 files.append(e)
             else:
                 docs.append(e)

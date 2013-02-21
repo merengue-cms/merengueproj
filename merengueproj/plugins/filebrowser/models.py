@@ -130,13 +130,23 @@ class Repository(models.Model):
         for i, elem in enumerate(elems):
             oldfile = os.path.join(basepath, old_elems[i])
             newfile = os.path.join(basepath, elem['id'])
-            if oldfile != newfile:
-                if os.path.exists(oldfile):
-                    shutil.move(oldfile, newfile)
-                else:
-                    doc = self.document_set.get(slug=old_elems[i])
-                    doc.title = elem['title']
-                    doc.save()
+            if os.path.exists(oldfile):
+                shutil.move(oldfile, newfile)
+                metadata_file = oldfile + '.metadata'
+                if os.path.exists(metadata_file):
+                    os.remove(metadata_file)
+                if elem.get('description', None) is not None:
+                    new_metadata_file = newfile + '.metadata'
+                    f = open(new_metadata_file, 'w')
+                    f.write(elem['title'])
+                    f.write('\n\n')
+                    f.write(elem['description'])
+                    f.write('\n')
+                    f.close()
+            else:
+                doc = self.document_set.get(slug=old_elems[i])
+                doc.title = elem['title']
+                doc.save()
 
     def delete_elems(self, path, elems):
         basepath = self.get_absolute_path(path)
@@ -146,6 +156,9 @@ class Repository(models.Model):
                 shutil.rmtree(file)
             elif os.path.isfile(file):
                 os.remove(file)
+                metadata_file = file + '.metadata'
+                if os.path.exists(metadata_file):
+                    os.remove(metadata_file)
             else:
                 # it should be a document
                 doc = self.document_set.get(repository=self, slug=elem['id'])
