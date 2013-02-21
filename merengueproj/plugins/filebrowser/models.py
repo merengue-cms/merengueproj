@@ -184,7 +184,10 @@ class Repository(models.Model):
                     for line in data:
                         if pattern.search(line):
                             path = absname[len(topdir):-9]
-                            results.append(FileDesc(topdir, path, self))
+                            try:
+                                results.append(FileDesc(topdir, path, self))
+                            except OSError:
+                                pass
                             break
 
         pattern = re.compile(q)
