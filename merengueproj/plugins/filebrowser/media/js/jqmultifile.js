@@ -46,10 +46,14 @@
     this.elem.children().each(function (index) {
       var file_value = $(this).find('input.file_element').val();
       if (file_value) {
-        var title = $(this).find('input.title_element').val();
+        var title_input = $(this).find('input.title_element');
+        var title = title_input.val();
         if (!title) {
-          var label = $(this).find('label.text');
-          label.css('color', 'red');
+          var border = title_input.css('border');
+          title_input.css('border', 'solid orange');
+          title_input.focus(function (e) {
+            title_input.css('border', border);
+          });
           ok = false;
         }
       }
