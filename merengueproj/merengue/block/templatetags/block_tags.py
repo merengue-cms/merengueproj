@@ -267,7 +267,7 @@ def do_render_single_block(parser, token):
             reg_block.name = block_name
             reg_block.save()
             block = reg_block.get_registry_item()
-        except RegisteredBlock.DoesNotExist:
+        except (RegisteredBlock.DoesNotExist, StopIteration):
             block = None
     return RenderSingleBlockNode(block)
 
