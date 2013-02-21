@@ -86,7 +86,7 @@ def save_plugin_signal(sender, instance, **kwargs):
         instance = instance._default_manager.get(pk=instance.pk)
     if instance.installed and instance.active and instance.directory_name and not instance.broken:
         enable_plugin(app_name)
-    elif not instance.active and instance.directory_name:
+    elif not instance.active and instance.directory_name and instance.config:
         try:
             disable_plugin(app_name)
         except ImportError:
