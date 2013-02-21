@@ -42,7 +42,7 @@
     </div>
     {% endfor %}
     {% for f in files %}
-    <div class="spacing">
+    <div class="spacing multiselector-row">
       <input name="oldfile_{{ forloop.counter }}" type="hidden" value="{{ f.id }}" />
       <div class="form-row">
           <label for="title_{{ forloop.counter }}" class="text">{% inline_trans "Title" %}</label>
