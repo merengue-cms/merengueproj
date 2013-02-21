@@ -1,6 +1,11 @@
 {% extends "filebrowser/base.html" %}
 {% load i18n inlinetrans filebrowser_tags %}
 
+{% block extrascripts %}
+    <script src="{{ MEDIA_URL }}merengue/js/jquery-1.4.2.min.js" language="javascript" type="text/javascript"></script>
+    <script src="{{ MEDIA_URL }}filebrowser/js/validate-title.js" language="javascript" type="text/javascript"></script>
+{% endblock %}
+
 {% block pagetitle %}{{ block.super }} - {% trans "Rename" %}{% endblock %}
 
 {% block extrabreadcrumbs %}
@@ -28,7 +33,7 @@
 
 <div id="content-main">
   <h2 class="element-action">{% inline_trans "Rename these elements" %}</h2>
-  <form class="filebrowserForm" action="{% filebrowser_url filebrowser_action repository_name=repository.name,path=path %}" method="post" enctype="multipart/form-data">
+  <form id="rename-form" class="filebrowserForm" action="{% filebrowser_url filebrowser_action repository_name=repository.name,path=path %}" method="post" enctype="multipart/form-data">
   <div>
     {% for d in dirs %}
     <div class="spacing">
@@ -63,9 +68,14 @@
 
   </div>
     <div class="submit-row">
-      <input name="rename" type="submit" value="{% trans 'Rename' %}" class="rename-button" />
+      <input id="rename-button" name="rename" type="button" value="{% trans 'Rename' %}" class="rename-button" />
     </div>
  </form>
 </div>
+
+<!-- translation of title, filename required -->
+<span id="translation-title-required" style="display:none;">{% trans "The title for each file is required" %}</span>
+<span id="translation-file-required" style="display:none;">{% trans "The file name for each file is required" %}</span>
+<!-- END translation of title required -->
 
 {% endblock %}
