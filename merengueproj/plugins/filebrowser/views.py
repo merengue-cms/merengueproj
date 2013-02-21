@@ -82,14 +82,16 @@ def search(request, base_template=FILEBROWSER_BASE_TEMPLATE):
     files, documents = (), ()
     if request.method == 'POST':
         q = request.POST.get('q').encode('utf8')
-        repos = Repository.objects
-        documents = Document.objects
-        section = getattr(request, 'section', None)
-        if section is not None:
-            repos = repos.filter(section=section)
-            documents = documents.filter(repository__in=repos)
-        files = [f for repo in repos.all() for f in repo.search_files(q)]
-        documents = documents.filter(Q(title__regex=q) | Q(content__regex=q))
+    else:
+        q = ''
+    repos = Repository.objects
+    documents = Document.objects
+    section = getattr(request, 'section', None)
+    if section is not None:
+        repos = repos.filter(section=section)
+        documents = documents.filter(repository__in=repos)
+    files = [f for repo in repos.all() for f in repo.search_files(q)]
+    documents = documents.filter(Q(title__regex=q) | Q(content__regex=q))
     edit_permission = request.user.is_staff
     return render_to_response('filebrowser/search.html',
                             {'base_template': base_template,
