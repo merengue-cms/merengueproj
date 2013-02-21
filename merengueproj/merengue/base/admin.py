@@ -338,6 +338,8 @@ class RelatedURLsModelAdmin(admin.ModelAdmin):
         basecontent = self._get_base_content(request, object_id)
         tool_name = path[1]
         for cl in self.model.__mro__:
+            if cl in getattr(self, 'exclude_tools_from_classes', []):
+                continue
             tool = self.admin_site.tools.get(cl, {}).get(tool_name, None)
             if tool:
                 pathstr = '/'.join(path[2:])

@@ -138,21 +138,23 @@ def _smart_relations_object_tool_admin_site(admin_site, model_admin, obj, tool_n
     tools_url = tools_url or []
 
     for cl in obj.__class__.__mro__:
+        if cl in getattr(model_admin, 'exclude_tools_from_classes', []):
+            continue
         related = admin_site.related_registry.get(cl, None)
         if not related:
             continue
         for model, model_admin_list in related.items():
             tool_url = _get_url_for_model(model)
             tools_url.append(tool_url)
-            for model_admin in model_admin_list:
-                tool_url = getattr(model_admin, 'tool_name', model_admin.model._meta.module_name)
+            for related_model_admin in model_admin_list:
+                tool_url = getattr(related_model_admin, 'tool_name', related_model_admin.model._meta.module_name)
                 if not tool_url.endswith('/'):
                     tool_url += '/'
-                tools_admin_site.append({'tool_name': model_admin.tool_name,
-                            'tool_label': getattr(model_admin, 'tool_label', model_admin.model._meta.verbose_name_plural),
+                tools_admin_site.append({'tool_name': related_model_admin.tool_name,
+                            'tool_label': getattr(related_model_admin, 'tool_label', related_model_admin.model._meta.verbose_name_plural),
                             'tool_url': tool_url,
-                            'selected': model_admin.tool_name == tool_name,
-                            'manage_contents': getattr(model_admin, 'manage_contents', False),
+                            'selected': related_model_admin.tool_name == tool_name,
+                            'manage_contents': getattr(related_model_admin, 'manage_contents', False),
                             })
     if tools_admin_site:
         tools_admin_site = sorted(tools_admin_site, key=lambda e: e.get('tool_name', ''))
