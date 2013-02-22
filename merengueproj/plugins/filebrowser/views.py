@@ -77,7 +77,6 @@ def listing(request, repository_name, path='',
                               context_instance=RequestContext(request))
 
 
-@login_required_or_permission_denied
 def search(request, base_template=FILEBROWSER_BASE_TEMPLATE):
     files, documents = (), ()
     if request.method == 'POST':
@@ -178,7 +177,6 @@ def upload(request, repository_name, path='',
                                   context_instance=RequestContext(request))
 
 
-@login_required_or_permission_denied
 def download(request, repository_name, path,
              base_template=FILEBROWSER_BASE_TEMPLATE, url_prefix=None):
     repository = get_object_or_404(Repository, name=repository_name)
