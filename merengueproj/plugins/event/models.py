@@ -39,12 +39,12 @@ class Event(BaseContent):
                                         editable=False)
     expire_date = models.DateTimeField(blank=True, null=True, db_index=True)
     start = models.DateTimeField(_('Start date'), null=True, editable=True,
-                                db_index=True)
+                                 db_index=True)
     end = models.DateTimeField(_('End date'), null=True, editable=True,
                                db_index=True)
     categories = models.ManyToManyField(Category,
-                                      verbose_name=_('category'),
-                                      blank=True, null=True, db_index=True)
+                                        verbose_name=_('category'),
+                                        blank=True, null=True, db_index=True)
 
     objects = EventManager()
 
@@ -65,14 +65,26 @@ class Event(BaseContent):
                                            day=self.start.day)
         if not end_date or end_date > self.end:
             end_date = datetime.datetime(year=self.end.year,
-                                           month=self.end.month,
-                                           day=self.end.day)
+                                         month=self.end.month,
+                                         day=self.end.day)
         list_days = [start_date]
         current_date = start_date
         while current_date < end_date:
             current_date += datetime.timedelta(1)
             list_days.append(current_date)
         return list_days
+
+    def somedays(self):
+        res = False
+        start = datetime.datetime(year=self.start.year,
+                                  month=self.start.month,
+                                  day=self.start.day)
+        end = datetime.datetime(year=self.end.year,
+                                month=self.end.month,
+                                day=self.end.day)
+        if end > start:
+            res = True
+        return res
 
     def __unicode__(self):
         return self.name or u''

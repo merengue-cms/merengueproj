@@ -1,0 +1,34 @@
+{% extends "block.html" %}
+
+{% load inlinetrans stringfilters thumbnail %}
+
+{% block blockbody %}
+  <ul>
+  {% for e in events_list %}
+    <li>
+        {% if e.main_image %}
+            <div class="eventImage">
+                {% thumbnail e.main_image "170x106" crop="center" as content_thumb %}
+                <img title="{{ e.main_image.name }}" alt="{{ e.main_image.caption }}"  src="{{ content_thumb.url }}" >
+                {% endthumbnail %}
+            </div>
+        {% endif %}
+        <a href="{{ e.get_absolute_url }}" title="{{ e }}">{{ e }}</a>
+        {% if e.description %}
+         {{ e.description|truncatechars:"25"|striptags }}
+        {% endif %}
+        {% if e.somedays %}
+        <div class="eventDate">
+            {{ e.start|date:"j F" }} | {{ e.end|date:"j F Y" }}
+        </div>
+        {% else %}
+        <div class="eventDate">
+            {{ e.start|date:"j F Y" }}
+        </div>
+        {% endif %}
+    </li>
+  {% empty %}
+    {% itrans "No published news" %}
+  {% endfor %}
+  </ul>
+{% endblock %}

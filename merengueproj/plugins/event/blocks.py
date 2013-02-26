@@ -19,7 +19,8 @@ from datetime import date
 
 from django.utils.translation import ugettext as _, ugettext_lazy
 
-from merengue.block.blocks import Block
+from merengue.block.blocks import Block, BaseBlock
+from merengue.registry import params
 from merengue.registry.items import BlockQuerySetItemProvider
 
 from plugins.event.models import Event
@@ -51,7 +52,48 @@ class EventsCalendarBlock(BlockQuerySetItemProvider, Block):
         if section and self.get_config().get('filtering_section', False).get_value():
             section_id = section.id
         return self.render_block(request,
-                                template_name='event/block_calendar.html',
-                                block_title=_('Events calendar'),
-                                context={'events_dic': events_dic,
-                                         'section_id': section_id})
+                                 template_name='event/block_calendar.html',
+                                 block_title=_('Events calendar'),
+                                 context={'events_dic': events_dic,
+                                          'section_id': section_id})
+
+
+class LatestEventsBlock(BlockQuerySetItemProvider, Block):
+    name = 'latestevents'
+    verbose_name = _('Latest events')
+    help_text = _('Block with last events items published')
+    default_place = 'rightsidebar'
+
+    config_params = BaseBlock.config_params + BlockQuerySetItemProvider.config_params + [
+        params.PositiveInteger(
+            name='limit',
+            label=_('number of events for the "Latest events" block'),
+            default=3,
+        ),
+    ]
+
+    default_caching_params = {
+        'enabled': False,
+        'timeout': 3600,
+        'only_anonymous': True,
+        'vary_on_user': False,
+        'vary_on_url': True,
+        'vary_on_language': True,
+    }
+
+    @classmethod
+    def get_models_refresh_cache(self):
+        return [Event]
+
+    def get_contents(self, request=None, context=None, section=None):
+        events_list = get_events(request, filtering_section=False)
+        return events_list
+
+    def render(self, request, place, context, *args, **kwargs):
+        number_events = self.get_config().get('limit').get_value()
+        events_list = self.get_queryset(request, context)[:number_events]
+        if self.get_config().get('filtering_section', False) and not events_list:
+            events_list = get_events(request, filtering_section=False)[:number_events]
+        return self.render_block(request, template_name='event/block_latest.html',
+                                 block_title=_('Latest events'),
+                                 context={'events_list': events_list})

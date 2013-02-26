@@ -20,7 +20,7 @@ from merengue.collection.utils import create_normalize_collection
 from merengue.pluggable import Plugin
 
 from plugins.event.admin import EventAdmin, EventCategoryAdmin, EventSectionAdmin
-from plugins.event.blocks import EventsCalendarBlock
+from plugins.event.blocks import EventsCalendarBlock, LatestEventsBlock
 from plugins.event.models import Event, Category
 from plugins.event.viewlets import LatestEventViewlet, AllEventViewlet
 
@@ -29,11 +29,9 @@ class PluginConfig(Plugin):
     name = 'Events'
     description = 'Events plugin'
     version = '0.0.1a'
-    url_prefixes = (
-        ({'en': 'event',
-          'es': 'eventos'},
-          'plugins.event.urls'),
-    )
+    url_prefixes = (({'en': 'event',
+                     'es': 'eventos'},
+                     'plugins.event.urls'), )
 
     def models(self):
         return [
@@ -45,7 +43,7 @@ class PluginConfig(Plugin):
         return [(Event, EventSectionAdmin)]
 
     def get_blocks(self):
-        return [EventsCalendarBlock]
+        return [EventsCalendarBlock, LatestEventsBlock]
 
     def get_viewlets(self):
         return [LatestEventViewlet, AllEventViewlet]
