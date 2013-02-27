@@ -16,7 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
 
 from merengue.base.log import send_info
@@ -29,6 +29,7 @@ def contact_form_submit(request, content_id, contact_form_id):
     contact_form = get_object_or_404(ContactForm, pk=contact_form_id,
                                      content__pk=content_id)
 
+    redirect = None
     if request.method == 'POST':
         form = contact_form.get_form(request)
         if form.is_valid():
@@ -50,6 +51,8 @@ def contact_form_submit(request, content_id, contact_form_id):
         else:
             return errors_to_session(request, content, form, contact_form_id)
 
+    if not redirect:
+        raise Http404
     return HttpResponseRedirect(redirect)
 
 
