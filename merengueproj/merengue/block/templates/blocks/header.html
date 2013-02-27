@@ -163,7 +163,7 @@
 
             // when block config was loaded by AJAX (previous function)
             // we change usual submit by a AJAX submit (without refreshing browser)
-            $('#config-block-form').live("submit", function(event) {
+            $(document).on('submit', '#config-block-form', function(event) {
                 event.preventDefault();
                 var block_id = $(this).find('[name=blockid]').val();
                 var block_name = $(this).find('[name=blockname]').val();
@@ -291,7 +291,7 @@
                         });
                     }
                 });
-                $('#add-block-form').live("submit", function(event) {
+                $(document).on('submit', '#add-block-form', function(event) {
                     event.preventDefault();
                     $.ajax({
                         type: 'POST',
