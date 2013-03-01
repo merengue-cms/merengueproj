@@ -32,9 +32,11 @@
 <div id="webfs-document-view">
 {{ document.content|safe }}
 
+{% if edit_permission %}
 <form id="removeattachmentform"  action="" method="post" style="display:none">
 <!-- empty form to be filled for ajax request and csrf middleware -->
 </form>
+{% endif %}
 
 <h2>{% inline_trans "Files" %}</h2>
 {% for file in doc_files %}
@@ -44,7 +46,7 @@
     <a href="{{ file.file.url }}">{{ file.file.name|inline_truncate:18 }}</a>
     <span>{{ file.file.size|filesizeformat }}
     </div>
-    {% if request.user.is_superuser %}
+    {% if edit_permission %}
     <div>
       <button onclick="javascript:removeAttachment('{% filebrowser_url filebrowser_remove_attachment repository_name=repository.name type="file" objId=file.id %}', 'file', {{file.id}})">{% inline_trans "Remove" %}</button></span>
     </div>
@@ -52,6 +54,7 @@
   </div>
 {% endfor %}
 
+{% if edit_permission %}
 <div class="addlink">
   <button id="filebtn" onclick="javascript:showForm('file')">{% inline_trans "New file" %}</button>
 </div>
@@ -61,6 +64,7 @@
   <input type="submit" class="submitButton" id="addfile" name="addfile" value="{% trans 'Add file' %}"/>
   <button type="button" onclick="javascript:hideForm('file')">{% inline_trans "Cancel" %}</button>
 </form>
+{% endif %}
 
 <h2>{% inline_trans "Images" %}</h2>
 {% for image in doc_images %}
@@ -74,12 +78,15 @@
     </p>
     <p>
     <span>{{ image.file.size|filesizeformat }}
+    {% if edit_permission %}
         <button onclick="javascript:removeAttachment('{% filebrowser_url filebrowser_remove_attachment repository_name=repository.name type="image" objId=image.id %}', 'image', {{image.id}})">{% inline_trans "Remove" %}</button>
+    {% endif %}
     </span>
     </p>
   </div>
 {% endfor %}
 
+{% if edit_permission %}
 <div class="addlink">
   <button id="imagebtn" onclick="javascript:showForm('image')">{% trans "New image" %}</button>
 </div>
@@ -89,5 +96,6 @@
   <input type="submit" class="submitbutton" id="addimage" name="addimage" value="{% trans 'Add image' %}"/>
   <button type="button" onclick="javascript:hideForm('image')">{% trans "Cancel" %}</button>
 </form>
+{% endif %}
 </div>
 {% endblock %}

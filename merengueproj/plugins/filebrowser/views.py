@@ -23,7 +23,6 @@ from merengue.base.log import send_info, send_error
 FILEBROWSER_BASE_TEMPLATE = 'base.html'
 
 
-@login_required_or_permission_denied
 def repositories(request, extra_context=None):
     filters = {}
     section = get_section(request, extra_context)
@@ -38,14 +37,12 @@ def repositories(request, extra_context=None):
                         template_name='filebrowser/repository_list.html')
 
 
-@login_required_or_permission_denied
 def root(request, repository_name,
          base_template=FILEBROWSER_BASE_TEMPLATE, url_prefix=None):
     return listing(request, repository_name, path='',
                    base_template=base_template, url_prefix=url_prefix)
 
 
-@login_required_or_permission_denied
 def listing(request, repository_name, path='',
             base_template=FILEBROWSER_BASE_TEMPLATE, url_prefix=None, errornote=''):
     repository = get_object_or_404(Repository, name=repository_name)
@@ -319,14 +316,14 @@ def editdoc(request, repository_name, doc_slug,
                     doc_slug=doc_slug, parents=parents, url_prefix=url_prefix)
 
 
-@login_required_or_permission_denied
 def viewdoc(request, repository_name, doc_slug,
             base_template=FILEBROWSER_BASE_TEMPLATE, url_prefix=None):
     repository = get_object_or_404(Repository, name=repository_name)
     document = get_object_or_404(Document, repository=repository,
                                     slug=doc_slug)
     file_field = None
-    if request.method == 'POST':
+    edit_permission = request.user.is_staff
+    if edit_permission and request.method == 'POST':
         if 'addfile' in request.POST:
             file_field = 'file'
             model_class = FileDocument
@@ -334,7 +331,7 @@ def viewdoc(request, repository_name, doc_slug,
             file_field = 'image'
             model_class = ImageDocument
 
-    if file_field and file_field in request.FILES:
+    if edit_permission and file_field and file_field in request.FILES:
         file = request.FILES[file_field]
         instance = model_class()
         instance.document = document
@@ -351,6 +348,7 @@ def viewdoc(request, repository_name, doc_slug,
                                 'document': document,
                                 'doc_files': files,
                                 'doc_images': images,
+                                'edit_permission': edit_permission,
                                 'url_prefix': url_prefix},
                                 context_instance=RequestContext(request))
 
