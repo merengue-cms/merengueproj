@@ -77,7 +77,11 @@
               <td><input type="checkbox" name="file_{{ forloop.counter }}" id="file_{{ forloop.counter }}" value="{{ f.name }}" /></td>
               <td class="contentTitle">
                <label for="file_{{ forloop.counter }}" class="file">
+                 {% if f.title %}
                  <a href="{% filebrowser_url filebrowser_download repository_name=repository.name,path=f.path %}" title="{{ f.description }}">{{ f.title|inline_truncate:40 }}</a>
+                 {% else %}
+                 <a href="{% filebrowser_url filebrowser_download repository_name=repository.name,path=f.path %}">{{ f.name|inline_truncate:40 }}</a>
+                 {% endif %}
                </label>
               </td>
               <td>{{ f.size|filesizeformat }}</td>
