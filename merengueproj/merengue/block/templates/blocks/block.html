@@ -10,7 +10,7 @@
  {% endblock %}
  </div>
  {% if not block_content_relation %}
-   <input type="hidden" value="{{ block.id }}" class="blockId" />
+   <input type="hidden" value="{{ registered_block.id }}" class="blockId" />
  {% else %}
    <input type="hidden" value="{{ block_content_relation.id }}" class="blockId" />
  {% endif %}
