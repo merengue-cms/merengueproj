@@ -1,0 +1,37 @@
+{% load media_tags i18n %}
+{% if multimedia.video.file %}
+    <div class="video_player{% if extended %} video_player_extended{% endif %}">
+      <object type="application/x-shockwave-flash" data="{{ MEDIA_URL }}flash/flvplayer.swf" {% if extended %}width="544" height="304"{% else %}width="{{ width }}" height="{{ height }}"{% endif %} allowFullScreen="true">
+        <param name="movie" value="{{ MEDIA_URL }}flash/flvplayer.swf" />
+        <param name="allowFullScreen" value="true" />
+        <param name="wmode" value="transparent" />
+        <param name="FlashVars" value="config={% url video_xml multimedia.id %}" />
+      </object>
+    </div>
+{% else %}
+  {% if extended %}
+      {% extra_oembed size as oembed_url %}{{ multimedia.video.get_external_url }}{% endoembed %}
+  {% else %}
+      {% extra_oembed size as oembed_url %}{{ multimedia.video.get_external_url }}{% endoembed %}
+  {% endif %}
+  {% ifequal oembed_url multimedia.video.get_external_url %}
+        <iframe src="{{ multimedia.video.get_external_url }}"
+                frameborder="0" border="0" width="{{ width }}" height="{{ height }}">
+        </iframe>
+  {% else %}
+    {% ifequal oembed_url "HTTPERROR" %}
+    <div class="video_player{% if extended %} video_player_extended{% endif %}">
+    <table align="center" style="widht: 100%; height: 100%;"><tr><td valign="middle">
+    {% trans "Sorry, this video cannot be embedded. Please, see it at:" %}
+    <a href="{{ multimedia.video.external_url }}">{{ multimedia.video.external_url }}</a>
+    </td></tr></table>
+    </div>
+    {% else %}
+    <div class="video_player{% if extended %} video_player_extended{% endif %}">
+    <table align="center" style="widht: {{ width }}; height: {{ height }}"><tr><td valign="middle">
+    {{ oembed_url }}
+    </td></tr></table>
+    </div>
+    {% endifequal %}
+  {% endifequal %}
+{% endif %}

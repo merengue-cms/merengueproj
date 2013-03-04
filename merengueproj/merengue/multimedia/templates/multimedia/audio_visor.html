@@ -1,0 +1,19 @@
+{% load thumbnail %}
+
+{% if multimedia.preview %}
+<div class="audio_preview">
+   <img src="{% thumbnail multimedia.preview "545x545" %}" alt="{{ multimedia.name }}" />
+</div>
+{% else %}
+<div class="audio_preview">
+   <img src="{{ MEDIA_URL }}img/tourismvideo_preview.jpg" alt="{{ multimedia.name }}" />
+</div>
+{% endif %}
+
+<div class="audio_player">
+   <object type="application/x-shockwave-flash" width="545" height="15" 
+           data="/media/flash/xspf_player_slim.swf?song_url={{ multimedia.file.url }}&song_title={{ multimedia.name }}&player_title={{ multimedia.name }}&autoplay=1">
+      <param name="movie" value="/media/flash/xspf_player_slim.swf?song_url={{ multimedia.file.ulr }}&song_title={{ multimedia.name }}&player_title={{ multimedia.name }}&autoplay=1" />
+      <embed type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
+   </object>
+</div>

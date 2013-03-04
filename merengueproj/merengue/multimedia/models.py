@@ -16,6 +16,7 @@
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
+import urlparse
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -25,6 +26,7 @@ from django.core.files.uploadedfile import UploadedFile
 from django.db import models
 from django.db.models import signals, permalink
 from django.template.loader import render_to_string
+from django.utils.datastructures import SortedDict
 from django.utils.translation import ugettext_lazy as _
 
 from south.modelsinspector import add_introspection_rules
@@ -37,6 +39,8 @@ from merengue.base.managers import WorkflowManager
 from merengue.base.utils import get_translate_status_list
 from merengue.multimedia.managers import MultimediaManager
 from merengue.multimedia.fields import VideoField
+from merengue.urlparsecompat import parse_qsl
+
 
 PHOTO_MEDIA_PREFIX = 'fotos'
 VIDEO_MEDIA_PREFIX = 'videos'
@@ -216,8 +220,7 @@ class Photo(BaseMultimedia):
     def admin_thumbnail(self):
         file_access_failed = False
         try:
-            if not self.image or not self.image.thumbnail or \
-               not os.path.exists(self.image.thumbnail.path()):
+            if not self.image or not self.image.thumbnail or not os.path.exists(self.image.thumbnail.path()):
                 file_access_failed = True
         except SuspiciousOperation:
             file_access_failed = True
@@ -228,8 +231,7 @@ class Photo(BaseMultimedia):
             return _('file not exists in filesystem')
 
         thumb_url = self.image.thumbnail.url()
-        return u'<a href="%s"><img src="%s" alt="%s" /></a>' % \
-                    (self.image.url, thumb_url, self.caption)
+        return u'<a href="%s"><img src="%s" alt="%s" /></a>' % (self.image.url, thumb_url, self.caption)
     admin_thumbnail.short_description = _('Thumbnail')
     admin_thumbnail.allow_tags = True
 
@@ -248,8 +250,8 @@ class Video(BaseMultimedia):
                             thumbnail_size=(200, 200),
                             blank=True, null=True)
     external_url = models.CharField(verbose_name=_('external url'),
-                                     help_text=_('The url of one video from youtube or google-video'),
-                                     blank=True, null=True, max_length=255)
+                                    help_text=_('The url of one video from youtube or google-video'),
+                                    blank=True, null=True, max_length=255)
     # only for migration purposes
     plone_uid = models.CharField(verbose_name=_('plone uid'),
                                  max_length=100, db_index=True,
@@ -262,6 +264,15 @@ class Video(BaseMultimedia):
     def save(self, **kwargs):
         self._save_original_filename(self.file)
         super(Video, self).save(**kwargs)
+
+    def get_external_url(self):
+        parts = urlparse.urlparse(self.external_url)
+        # for avoiding IE errors we have to parse the URL query string to set wmode=transparent
+        scheme, netloc, path, params, query, fragment = parts[:6]
+        querydict = SortedDict(parse_qsl(query))
+        querydict['wmode'] = 'transparent'
+        query = '&'.join(['%s=%s' % (key, value) for (key, value) in querydict.items()])
+        return urlparse.urlunparse((scheme, netloc, path, params, query, fragment))
 
     def get_absolute_url(self):
         if self.file:
@@ -279,8 +290,7 @@ class Video(BaseMultimedia):
     def admin_thumbnail(self):
         if self.preview:
             thumb_url = self.preview.thumbnail.url()
-            return u'<a href="%s"><img src="%s" alt="video" /></a>' % \
-                        (self.preview.url, thumb_url)
+            return u'<a href="%s"><img src="%s" alt="video" /></a>' % (self.preview.url, thumb_url)
         return self
     admin_thumbnail.short_description = _('Thumbnail')
     admin_thumbnail.allow_tags = True
@@ -316,8 +326,7 @@ class PanoramicView(BaseMultimedia):
     def admin_thumbnail(self):
         if self.preview:
             thumb_url = self.preview.thumbnail.url()
-            return u'<a href="%s"><img src="%s" alt="panoramic view" /></a>' % \
-                        (self.preview.url, thumb_url)
+            return u'<a href="%s"><img src="%s" alt="panoramic view" /></a>' % (self.preview.url, thumb_url)
         return self
     admin_thumbnail.short_description = _('Thumbnail')
     admin_thumbnail.allow_tags = True
@@ -393,11 +402,11 @@ class Audio(BaseMultimedia):
 # ----- adding south rules to help introspection -----
 
 rules = [
-  (
-    (StdImageField, ),
-    [],
-    {},
-  ),
+    (
+        (StdImageField, ),
+        [],
+        {},
+    ),
 ]
 
 add_introspection_rules(rules, ["^stdimage\.fields\.StdImageField"])

@@ -129,8 +129,8 @@ def extra_oembed(parser, token):
     if size:
         width, height = size.lower().split('x')
         if not width and height:
-            raise template.TemplateSyntaxError("Oembed's optional WIDTHxHEIGH" \
-                "T argument requires WIDTH and HEIGHT to be positive integers.")
+            raise template.TemplateSyntaxError("Oembed's optional WIDTHxHEIGH"
+                                               "T argument requires WIDTH and HEIGHT to be positive integers.")
     else:
         width, height = None, None
     nodelist = parser.parse(('endoembed', ))
@@ -223,3 +223,20 @@ class AddMedia(Tag):
         return ""
 
 register.tag(AddMedia)
+
+
+@register.inclusion_tag('multimedia/multimedia_visor.html', takes_context=True)
+def multimedia_visor(context, multimedia, extended=1, width=320, height=262):
+    class_name = multimedia.class_name
+    inc_template = template.loader.select_template(['multimedia/%s_visor.html' % class_name,
+                                                    'multimedia/basemultimedia_visor.html']).name
+    size = str(width) + 'x' + str(height)
+    return {'multimedia': multimedia,
+            'extended': extended,
+            'width': width,
+            'height': height,
+            'size': size,
+            'inc_template': inc_template,
+            'request': context.get('request', None),
+            'MEDIA_URL': context.get('MEDIA_URL', '/media/'),
+            'LANGUAGE_CODE': context.get('LANGUAGE_CODE', 'es'), }

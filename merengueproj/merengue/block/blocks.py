@@ -44,18 +44,16 @@ class BaseBlock(RegistrableItem):
     singleton = False
     is_addable = True
     cache_allowed = True
-    default_caching_params = {
-       'enabled': False,
-       'only_anonymous': False,
-       'timeout': 0,
-       'vary_on_url': False,
-       'vary_on_language': True,
-       'vary_on_user': False,
-    }
+    default_caching_params = {'enabled': False,
+                              'only_anonymous': False,
+                              'timeout': 0,
+                              'vary_on_url': False,
+                              'vary_on_language': True,
+                              'vary_on_user': False,
+                              }
 
     config_params = [
-        params.Single(name='css_class', label=_('css class to add to this block'), default=''),
-        ]
+        params.Single(name='css_class', label=_('css class to add to this block'), default=''), ]
 
     def __init__(self, reg_item):
         super(BaseBlock, self).__init__(reg_item)
@@ -89,8 +87,8 @@ class BaseBlock(RegistrableItem):
                 'time': duration,
             }
             logger.debug('(%.3f) %s; cached=%s' % (duration, block_id, is_cached),
-                extra={'duration': duration, 'block': block_id, 'is_cached': is_cached}
-            )
+                         extra={'duration': duration, 'block': block_id, 'is_cached': is_cached}
+                         )
         return rendered_content
 
     @classmethod
@@ -109,7 +107,7 @@ class BaseBlock(RegistrableItem):
             'placed_at': registered_block.placed_at,
             'fixed_place': getattr(registered_block, 'fixed_place', False),
             'block_title': block_title or registered_block.name,
-            'block': registered_block,
+            'registered_block': registered_block,
             'css_class': css_class,
             'has_config': self.has_config(),
         }
@@ -140,7 +138,7 @@ class BaseBlock(RegistrableItem):
     def is_cacheable(self, request):
         registered_block = self.reg_item
         return registered_block.is_cached and \
-               not (not request.user.is_anonymous() and registered_block.cache_only_anonymous)
+            not (not request.user.is_anonymous() and registered_block.cache_only_anonymous)
 
     def get_cached_content(self, request):
         if not self.is_cacheable(request):
