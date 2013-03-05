@@ -388,3 +388,10 @@ SMAP_EXCLUDE_CLASS_NAME = ('collection', 'feedcollection', 'feeditem')
 
 # Access request 403
 ACCESS_REQUEST_REDIRECT = LOGIN_REDIRECT_URL
+
+
+# Block extra places
+# example of use
+#EXTRA_BLOCK_PLACES =(('rightsidebar', _('Right sidebar')),
+#                     ('aftercontenttitle', _('After content title')))
+EXTRA_BLOCK_PLACES = (())

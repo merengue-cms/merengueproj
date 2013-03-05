@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.conf import settings
 from django.db import models
 from django.db.models import signals
 from django.utils.translation import ugettext_lazy as _
@@ -37,7 +38,7 @@ PLACES = (('all', _('All places')),
           ('aftercontent', _('After content body')),
           ('header', _('Header')),
           ('footer', _('Footer')),
-          ('meta', _('Meta-information, links, js...')))
+          ('meta', _('Meta-information, links, js...'))) + settings.EXTRA_BLOCK_PLACES
 
 PLACES_DICT = dict(PLACES)
 
@@ -104,8 +105,8 @@ class RegisteredBlock(RegisteredItem):
         verbose_name_plural = _('registered blocks')
 
     def can_delete(self, user):
-        return perms_api.has_global_permission(user, perms_api.MANAGE_BLOCK_PERMISSION) or \
-               (self.content_id is not None and self.content.can_edit(user))
+        return (perms_api.has_global_permission(user, perms_api.MANAGE_BLOCK_PERMISSION) or
+                (self.content_id is not None and self.content.can_edit(user)))
 
     def show_in_url(self, url):
 
@@ -193,7 +194,7 @@ def models_refresh_cache_handler(sender, instance, **kwargs):
             if ct.model_class() in exclude_classes:
                 continue
             classes_collection = models_refresh_cache_by_class(ct.model_class(),
-                                                    exclude_classes=exclude_classes)
+                                                               exclude_classes=exclude_classes)
             exclude_classes = list(set(exclude_classes).union(set(classes_collection)))
 
 
