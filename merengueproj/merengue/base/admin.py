@@ -39,7 +39,7 @@ from django.contrib.admin.util import unquote, flatten_fieldsets
 from django.contrib.admin.models import LogEntry
 from django.contrib.sites.admin import Site, SiteAdmin
 from django.forms.models import ModelForm, BaseInlineFormSet, \
-                                fields_for_model, save_instance, modelformset_factory
+    fields_for_model, save_instance, modelformset_factory
 from django.forms.util import ValidationError
 from django.forms.widgets import Media
 from django.http import HttpResponseRedirect, Http404, HttpResponse
@@ -308,22 +308,22 @@ class RelatedURLsModelAdmin(admin.ModelAdmin):
 
         info = self.model._meta.app_label, self.model._meta.module_name
         urlpatterns = patterns('',
-            url(r'^$',
-                wrap(self.changelist_view),
-                name='%s_%s_changelist' % info),
-            url(r'^add/$',
-                wrap(self.add_view),
-                name='%s_%s_add' % info),
-            url(r'^([^/]+)/history/$',
-                wrap(self.history_view),
-                name='%s_%s_history' % info),
-            url(r'^([^/]+)/delete/$',
-                wrap(self.delete_view),
-                name='%s_%s_delete' % info),
-            url(r'^(.+)/$',
-                wrap(self.parse_path),
-                name='%s_%s_change' % info)
-        )
+                               url(r'^$',
+                                   wrap(self.changelist_view),
+                                   name='%s_%s_changelist' % info),
+                               url(r'^add/$',
+                                   wrap(self.add_view),
+                                   name='%s_%s_add' % info),
+                               url(r'^([^/]+)/history/$',
+                                   wrap(self.history_view),
+                                   name='%s_%s_history' % info),
+                               url(r'^([^/]+)/delete/$',
+                                   wrap(self.delete_view),
+                                   name='%s_%s_delete' % info),
+                               url(r'^(.+)/$',
+                                   wrap(self.parse_path),
+                                   name='%s_%s_change' % info)
+                               )
         return urlpatterns
 
     def parse_path(self, request, pathstr, extra_context=None, basecontent=None, parent_model_admin=None, parent_object=None):
@@ -380,6 +380,7 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
     form = BaseAdminModelForm
     basecontent = None
     parent_model_admin = None
+    exclude = ()
 
     def __init__(self, model, admin_site):
         super(BaseAdmin, self).__init__(model, admin_site)
@@ -416,8 +417,7 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
                 status = workflow_api.workflow_by_model(form.Meta.model).get_initial_state()
             else:
                 status = obj.workflow_status
-            form.base_fields['workflow_status'].queryset = self.get_accesible_states(status,
-                request.user, obj)
+            form.base_fields['workflow_status'].queryset = self.get_accesible_states(status, request.user, obj)
             form.base_fields['workflow_status'].initial = status
             if 'status' in keys:
                 form.base_fields['workflow_status'].label = form.base_fields['status'].label
@@ -542,11 +542,10 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
                         related_obj_dict['selected'] = True
                     related_objects.append(related_obj_dict)
 
-                related_field_dict = {
-                                'field_name': related_field,
-                                'field_label': field_label,
-                                'related_objects': related_objects,
-                }
+                related_field_dict = {'field_name': related_field,
+                                      'field_label': field_label,
+                                      'related_objects': related_objects,
+                                      }
                 edit_related_fields.append(related_field_dict)
             media = Media()
             media.add_js([settings.ADMIN_MEDIA_PREFIX + "js/SelectBox.js",
@@ -599,7 +598,7 @@ class BaseAdmin(GenericAdmin, ReportAdmin, RelatedURLsModelAdmin):
                     value="%(object_id)s" checked="true"/>%(model_name)s: %(object_name)s'''
         checkbox_data = {'name': admin.ACTION_CHECKBOX_NAME,
                          'model_name': escape(force_unicode(capfirst(opts.verbose_name))),
-                        }
+                         }
         for i, obj in enumerate(queryset):
             if not self.has_change_permission(request, obj):
                 raise PermissionDenied(content=obj,
@@ -862,8 +861,10 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
         from django.conf.urls.defaults import patterns
         urls = super(BaseContentAdmin, self).get_urls()
         # override objectpermissions root path
-        my_urls = patterns('',
-            (r'^([^/]+)/permissions/$', self.admin_site.admin_view(self.changelist_view)))
+        my_urls = patterns('', (r'^([^/]+)/permissions/$',
+                                self.admin_site.admin_view(self.changelist_view)
+                                )
+                           )
 
         return my_urls + urls
 
@@ -899,7 +900,7 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
             extra_context = {'title': _('Are you sure you want to assign these owners to these contents?'),
                              'action_submit': 'assign_owners',
                              'form': form,
-                            }
+                             }
             return self.confirm_action(request, queryset, extra_context,
                                        confirm_template='admin/basecontent/assign_owners.html')
     assign_owners.short_description = _("Assign owners")
@@ -920,11 +921,7 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
             else:  # changeable or GET
                 return perms_api.has_permission(obj, request.user, 'edit')
         else:  # obj = None
-            if request.method == 'POST' and \
-               (request.POST.get('action', None) == u'set_as_pending' or \
-                request.POST.get('action', None) == u'set_as_published' or \
-                request.POST.get('action', None) == u'set_as_draft'):
-
+            if request.method == 'POST' and request.POST.get('action', None) in [u'set_as_pending', u'set_as_published', u'set_as_draft']:
                 selected_objs = [BaseContent.objects.get(id=int(key))
                                  for key in request.POST.getlist('_selected_action')]
                 for sel_obj in selected_objs:
@@ -945,8 +942,7 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
             else:  # deletable
                 return obj.can_delete(request.user)
         else:  # obj = None
-            if request.method == 'POST' and \
-               request.POST.get('action', None) == u'delete_selected':
+            if request.method == 'POST' and request.POST.get('action', None) == u'delete_selected':
                 selected_objs = [BaseContent.objects.get(id=int(key))
                                  for key in request.POST.getlist('_selected_action')]
                 for sel_obj in selected_objs:
@@ -1004,7 +1000,7 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
             else:
                 status = obj.workflow_status
             form.base_fields['workflow_status'].queryset = self.get_accesible_states(status,
-                request.user, obj)
+                                                                                     request.user, obj)
             form.base_fields['workflow_status'].initial = status
             if 'status' in keys:
                 form.base_fields['workflow_status'].label = form.base_fields['status'].label
@@ -1076,7 +1072,8 @@ class BaseContentAdmin(BaseOrderableAdmin, WorkflowBatchActionProvider, Permissi
 
         try:
             cl = ChangeList(request, self.model, list_display, list_display[0], self.select_list_filter,
-                self.date_hierarchy, self.search_fields, self.list_select_related, self.list_per_page, self.list_editable, self)
+                            self.date_hierarchy, self.search_fields, self.list_select_related, self.list_per_page,
+                            self.list_editable, self)
         except IncorrectLookupParameters:
             if ERROR_FLAG in request.GET.keys():
                 return render_to_response('admin/invalid_setup.html', {'title': _('Database error')})
@@ -1210,10 +1207,10 @@ class RelatedModelAdmin(BaseAdmin):
 
         info = self.model._meta.app_label, self.model._meta.module_name
         urlpatterns = patterns('',
-            url(r'^ajax/$',
-                wrap(self.ajax_changelist_view),
-                name='ajax_%s_%s_changelist' % info),
-        )
+                               url(r'^ajax/$',
+                                   wrap(self.ajax_changelist_view),
+                                   name='ajax_%s_%s_changelist' % info),
+                               )
         urlpatterns += super(RelatedModelAdmin, self).get_urls()
         return urlpatterns
 
@@ -1291,19 +1288,17 @@ class RelatedModelAdmin(BaseAdmin):
         super(RelatedModelAdmin, self).save_model(request, obj, form, change)
         opts = obj._meta
         field = opts.get_field_by_name(self.related_field)[0]
-        if isinstance(field, RelatedObject) and \
-           not isinstance(field.field, models.OneToOneField):
+        if isinstance(field, RelatedObject) and not isinstance(field.field, models.OneToOneField):
             # if related_field related foreign key (n elements)
             # we associate related object here
             manager = getattr(obj, field.get_accessor_name())
             manager_reverse = None
             if self.reverse_related_field:
                 reverse_field = opts.get_field_by_name(self.reverse_related_field)[0]
-                if isinstance(reverse_field, RelatedObject) and \
-                    not isinstance(field.field, models.OneToOneField):
+                if isinstance(reverse_field, RelatedObject) and not isinstance(field.field, models.OneToOneField):
                     manager_reverse = getattr(self.basecontent, reverse_field.get_accessor_name())
             through_model = getattr(manager, 'through', None) or \
-                            (self.reverse_related_field and getattr(manager_reverse, 'through', None))
+                (self.reverse_related_field and getattr(manager_reverse, 'through', None))
             if through_model is None:
                 # we only know how handle many 2 many without intermediate models
                 manager.add(self.basecontent)
@@ -1637,7 +1632,7 @@ class LogEntryRelatedContentModelAdmin(admin.ModelAdmin):
         model_class = logentry.content_type.model_class()
         return self.get_url(logentry,
                             url='/admin/%s/%s/' %
-                               (model_class._meta.app_label,
+                            (model_class._meta.app_label,
                                 model_class._meta.module_name),
                             label=logentry.content_type.__unicode__())
     get_link_contenttype.allow_tags = True
@@ -1700,7 +1695,7 @@ if settings.USE_GIS:
     from django.contrib.gis.maps.google import GoogleMap
     from merengue.places.models import Location
     from merengue.base.widgets import (OpenLayersWidgetLatitudeLongitude,
-                                   OpenLayersInlineLatitudeLongitude)
+                                       OpenLayersInlineLatitudeLongitude)
 
     GMAP = GoogleMap(key=settings.GOOGLE_MAPS_API_KEY)
 
@@ -1720,7 +1715,7 @@ if settings.USE_GIS:
                 (self.title_first_fieldset, {'fields': ('address', 'postal_code', )}),
                 (title_fieldset,
                     {'fields': ('main_location', )}
-                ),
+                 ),
             )
 
         def get_form(self, request, obj=None):
