@@ -141,7 +141,8 @@ class AccessRequestForm(forms.ModelForm):
 
     def save(self, *args, **kwargs):
         obj = super(AccessRequestForm, self).save(*args, **kwargs)
-        obj.state = obj.content.workflow_status
+        if obj.content and isinstance(obj.content, BaseContent):
+            obj.state = obj.content.workflow_status
         if self.user:
             obj.user = self.user
             roles = get_roles(obj.user, obj.content)
