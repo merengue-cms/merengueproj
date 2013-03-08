@@ -39,10 +39,15 @@
            {{ forum.get_all_comments.count }}
          </td>
          <td class="lastMessage">
-           {% with forum.get_last_comment as comment %}
-           {% if comment %}
+           {% with forum.get_last_comment_or_thread as comment %}
+           {% if comment.date_submitted %}
            <a href="{{ comment.thread.get_absolute_url }}#comment-{{ comment.id }}">{{ comment.title }}</a><br />
            {{ comment.date_submitted|transdate }} {% inline_trans "by" %} {{ comment.user.get_full_name|default:comment.user.username }}
+           {% else %}
+             {% if comment %}
+               <a href="{{ comment.get_absolute_url }}">{{ comment.name }}</a><br />
+               {{ comment.creation_date|transdate }} {% inline_trans "by" %} {{ comment.user.get_full_name|default:comment.user.username }}
+             {% endif %}
            {% endif %}
            {% endwith %}
          </td>

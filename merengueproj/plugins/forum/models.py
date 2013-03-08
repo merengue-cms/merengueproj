@@ -51,6 +51,15 @@ class Forum(BaseContent):
         comments = self.get_all_comments()
         return comments and comments[0] or None
 
+    def get_last_comment_or_thread(self):
+        comment = self.get_last_comment()
+        if not comment:
+            threads = self.thread_set.order_by('-creation_date')
+            if threads:
+                return threads[0]
+            return None
+        return comment
+
 
 class Thread(BaseContent):
 
