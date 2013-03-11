@@ -96,7 +96,10 @@ def menu_section_view(request, section_slug, menu_slug):
         try:
             if not section_slug:
                 # Other tree menu, different of menu portal slug
-                menu = Menu.tree.get(slug=menu_slug)
+                try:
+                    menu = Menu.tree.get(slug=menu_slug)
+                except Menu.MultipleObjectsReturned:
+                    menu = Menu.tree.filter(slug=menu_slug)[0]
                 root_menu = menu.get_root()
             else:
                 raise Http404
