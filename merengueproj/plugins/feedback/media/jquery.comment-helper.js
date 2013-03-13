@@ -2,9 +2,6 @@
 
 (function($) {
         var error_message = $('#comment-error').html();
-        if ($.browser.msie){
-            $.ajaxSetup({cache:false});
-        }
         var postJSON = function(options){
             $.ajax({
                type: "POST",
