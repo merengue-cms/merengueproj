@@ -41,8 +41,10 @@ def content_comments(context, content):
     show_children = plugin_config.get('show_children').get_value()
     show_links = plugin_config.get('show_links').get_value()
     has_pagination = number_of_comments > 0
+    print '>>>>>>>>>>', has_pagination, number_of_comments
     return {'content': content,
             'MEDIA_URL': context['MEDIA_URL'],
+            'THEME_MEDIA_URL': context['THEME_MEDIA_URL'],
             'request': context['request'],
             'comments': comments,
             'content_type_id': content_type.id,
@@ -73,6 +75,7 @@ def content_comment(context, content, comment, show_links=True, show_children=Fa
             'is_moderated': is_moderated,
             'content_type_id': content_type.id,
             'MEDIA_URL': context['MEDIA_URL'],
+            'THEME_MEDIA_URL': context['THEME_MEDIA_URL'],
             'request': context['request'],
             'show_children': show_children,
             'children_comments': children_comments,
@@ -95,6 +98,7 @@ def content_comment_add_form(context, content, parent_id=None):
             'parent_id': parent_id,
             'form': form,
             'MEDIA_URL': context['MEDIA_URL'],
+            'THEME_MEDIA_URL': context['THEME_MEDIA_URL'],
             'request': context['request'],
            }
 
@@ -102,6 +106,7 @@ def content_comment_add_form(context, content, parent_id=None):
 @register.inclusion_tag('feedback/comments_media.html', takes_context=True)
 def comments_media(context):
     return {'MEDIA_URL': context['MEDIA_URL'],
+            'THEME_MEDIA_URL': context['THEME_MEDIA_URL'],
             'request': context['request'],
            }
 
