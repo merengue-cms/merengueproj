@@ -55,7 +55,7 @@ class LatestFilesBlock(BlockQuerySetItemProvider, Block):
             files = []
             for repo in repolist:
                 files += repo.latest_files(limit)
-        files = sorted(files, 'modificated')[:limit]
+        files = sorted(files, key=lambda f: f.modificated)[:limit]
         return self.render_block(request,
                                  template_name='filebrowser/blocks/latestfiles.html',
                                  block_title=ugettext('Downloads'),
