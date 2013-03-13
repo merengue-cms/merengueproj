@@ -195,6 +195,28 @@ class Repository(models.Model):
         os.path.walk(topdir, grepfiles, (pattern, results))
         return results
 
+    def latest_files(self, limit):
+        topdir = self.get_absolute_path('')
+        if not topdir.endswith('/'):
+            topdir += '/'
+
+        files = []
+        for (dirpath, dirnames, filenames) in os.walk(topdir):
+            for filename in filenames:
+                if filename.endswith('.metadata'):
+                    continue
+                files.append(os.path.join(dirpath, filename))
+        files = sorted(files, key=os.path.getctime)[:limit]
+
+        results = []
+        for fullpath in files:
+            path = fullpath[len(topdir):]
+            try:
+                results.append(FileDesc(topdir, path, self))
+            except OSError:
+                pass
+        return results
+
 
 class Document(models.Model):
     """ Document model """

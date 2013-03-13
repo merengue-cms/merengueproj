@@ -1,0 +1,16 @@
+{% extends "block.html" %}
+
+{% load inlinetrans filebrowser_tags %}
+
+{% block blockbody %}
+  {% for f in files %}
+  <div class="elemento_descarga">
+    <img src="{{ MEDIA_URL }}filebrowser/img/file.png">
+    <a href="{% filebrowser_url filebrowser_download repository_name=f.repository.name,path=f.path %}">
+      {{ f.title }}
+    </a>
+    <span class="filesize">({{ f.size|filesizeformat }})</span>
+    <div class="descripcion">{{ f.description }}</div>
+  </div>
+  {% endfor %}
+{% endblock %}

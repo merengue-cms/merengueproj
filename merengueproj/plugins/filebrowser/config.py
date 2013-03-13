@@ -22,6 +22,7 @@ from merengue.registry import params
 
 from plugins.filebrowser.models import Repository, Document
 from plugins.filebrowser.admin import RepositoryModelAdmin, DocumentModelAdmin, RepositorySectionModelAdmin
+from plugins.filebrowser.blocks import LatestFilesBlock
 
 
 class PluginConfig(Plugin):
@@ -47,3 +48,6 @@ class PluginConfig(Plugin):
 
     def section_models(self):
         return [(Repository, RepositorySectionModelAdmin)]
+
+    def get_blocks(self):
+        return [LatestFilesBlock]
