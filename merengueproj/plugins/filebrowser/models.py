@@ -206,7 +206,7 @@ class Repository(models.Model):
                 if filename.endswith('.metadata'):
                     continue
                 files.append(os.path.join(dirpath, filename))
-        files = sorted(files, key=os.path.getctime)[:limit]
+        files = sorted(files, key=os.path.getctime, reverse=True)[:limit]
 
         results = []
         for fullpath in files:

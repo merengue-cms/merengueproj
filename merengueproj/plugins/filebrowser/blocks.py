@@ -39,6 +39,12 @@ class LatestFilesBlock(BlockQuerySetItemProvider, Block):
         repos = Repository.objects.all()
         return repos
 
+    def queryset(self, request=None, context=None, section=None):
+        queryset = self.get_contents(request, context, section)
+        if section and self.get_config().get('filtering_section', False).get_value():
+            queryset = queryset.filter(section=section)
+        return queryset
+
     def render(self, request, place, context, *args, **kwargs):
         repolist = self.get_queryset(request, context)
         limit = self.get_config().get('limit').get_value()
@@ -52,10 +58,14 @@ class LatestFilesBlock(BlockQuerySetItemProvider, Block):
         if main:
             files = main.latest_files(limit)
         else:
+            if not repolist:
+                return ''
             files = []
             for repo in repolist:
                 files += repo.latest_files(limit)
-        files = sorted(files, key=lambda f: f.modificated)[:limit]
+        if not files:
+            return ''
+        files = sorted(files, key=lambda f: f.modificated, reverse=True)[:limit]
         return self.render_block(request,
                                  template_name='filebrowser/blocks/latestfiles.html',
                                  block_title=ugettext('Downloads'),
