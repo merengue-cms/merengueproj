@@ -15,8 +15,13 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.shortcuts import get_object_or_404
+
+from merengue.base.views import content_view
 from merengue.collection.models import Collection
 from merengue.collection.views import collection_view
+
+from plugins.banner.models import Banner
 
 BANNER_COLLECTION_SLUG = 'banners'
 
@@ -37,3 +42,8 @@ def get_banners(request=None, limit=None, filtering_section=None):
 def get_collection_banner():
     return Collection.objects.get(
         slug=BANNER_COLLECTION_SLUG)
+
+
+def banner_view(request, banner_slug):
+    banner = get_object_or_404(Banner, slug=banner_slug)
+    return content_view(request, banner, 'banner/banner_view.html')

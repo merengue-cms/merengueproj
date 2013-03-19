@@ -35,7 +35,8 @@ class BannerCategory(BaseCategory):
 
 class Banner(BaseContent):
 
-    url_link = models.URLField(verbose_name=_('Url Link'), verify_exists=False)
+    url_link = models.URLField(verbose_name=_('Url Link'), verify_exists=False,
+                               blank=True, null=True)
     image = StdImageField(verbose_name=_('image'),
                               upload_to=BANNER_MEDIA_PREFIX,
                               help_text=_('The system won\'t resize the image. You need to upload it with its final size'))
@@ -49,6 +50,12 @@ class Banner(BaseContent):
         verbose_name = _('banner')
         verbose_name_plural = _('banners')
         content_view_template = 'banner/banner_view.html'
+        check_slug_uniqueness = True
 
     def get_absolute_url(self):
-        return self.url_link
+        if self.url_link:
+            return self.url_link
+        return self.public_link()
+
+    def _public_link_without_section(self):
+        return ('banner_view', [self.slug])

@@ -20,4 +20,5 @@ from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('plugins.banner.views',
     url(r'^$', 'banner_index', name='banner_index'),
+    url(r'^(?P<banner_slug>[\w-]+)/$', 'banner_view', name='banner_view'),
 )
