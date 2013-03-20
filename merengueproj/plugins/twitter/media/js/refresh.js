@@ -16,21 +16,35 @@
 // # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
 
-function refresh_usertimeline() {
-	block_id_usertimeline = jQuery("#usertimeline input").val();
-	jQuery.get("twitter/ajax/get_user_tweets/" + block_id_usertimeline, 
-			   function(data){
-				   jQuery('#usertimeline div#tweetlist').html(data);
-			   });
-}(jQuery);
+(function($) {
+    var refresh_usertimeline = function() {
+        $('.refresh-usertimeline').each(function() {
+            var container = $(this);
+            block_id_usertimeline = container.find("input").val();
+            $.get("twitter/ajax/get_user_tweets/" + block_id_usertimeline, function(data){
+                container.find('div#tweetlist').html(data);
+            });
+        });
+    };
 
-function refresh_hashtagtimeline() {
-	block_id_hashtagtimeline = jQuery("#hashtagtimeline input").val();
-	jQuery.get("twitter/ajax/get_hashtag_tweets/" + block_id_hashtagtimeline,
-			   function(data){
-				   jQuery('#hashtagtimeline div#tweetlist').html(data);
-			   });
-}(jQuery);
+    var refresh_hashtagtimeline = function() {
+        $('.refresh-hashtagtimeline').each(function() {
+            var container = $(this);
+            block_id_hashtagtimeline = container.find("input").val();
+            $.get("twitter/ajax/get_hashtag_tweets/" + block_id_hashtagtimeline, function(data){
+                container.find('div#tweetlist').html(data);
+            });
+        });
+    };
 
-setInterval("refresh_usertimeline()", 1000 * 60 * 5);
-setInterval("refresh_hashtagtimeline()", 1000 * 90);
+    $(document).ready(function() {
+        if ($(".refresh-usertimeline").length) {
+            refresh_usertimeline();
+            setInterval(refresh_usertimeline, 1000 * 60 * 5);
+        }
+        if ($(".refresh-hashtagtimeline").length) {
+            refresh_hashtagtimeline();
+            setInterval(refresh_hashtagtimeline, 1000 * 90);
+        }
+    });
+})(jQuery);

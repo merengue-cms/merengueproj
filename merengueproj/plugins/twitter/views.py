@@ -18,39 +18,51 @@
 
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.utils.translation import ugettext_lazy as _
+from django.views.decorators.cache import cache_page
 
 from merengue.block.models import RegisteredBlock
 
 from plugins.twitter.utils import twitter_api
 
 
+@cache_page(60 * 5)
 def get_user_tweets(request, block_id):
     block = RegisteredBlock.objects.get(id=block_id)
 
     limit = block.get_config().get('limit', [])
     user = block.get_config().get('user', [])
 
-    api = twitter_api(limit, user)
-    (user_tweets, error) = api.get_user_tweets()
+    (user_tweets, error) = twitter_api.get_user_tweets(user, limit)
 
-    tweets = {'error': error, 'list': api.render_tweets(user_tweets, False)}
+    tweets = {'error': error, 'list': twitter_api.render_tweets(user_tweets, True)}
+
+    if "doesn't exists" in error:
+        link = (_('Twitter Mainpage'), 'http://www.twitter.com/')
+    else:
+        link = (_('Follow %(username)s on Twitter!') % {'username': user}, 'http://www.twitter.com/#!/' + user + '/')
 
     return HttpResponse(render(request=request,
                                template_name='twitter/list_tweets.html',
-                               dictionary={'tweets': tweets}), 'text/html')
+                               dictionary={'tweets': tweets, 'link': link}), 'text/html')
 
 
+@cache_page(90)
 def get_hashtag_tweets(request, block_id):
     block = RegisteredBlock.objects.get(id=block_id)
 
     limit = block.get_config().get('limit', [])
     hashtag = block.get_config().get('hashtag', [])
 
-    api = twitter_api(limit, hashtag)
-    (hashtag_tweets, error) = api.get_hashtags_tweets()
+    (hashtag_tweets, error) = twitter_api.get_hashtags_tweets(hashtag, limit)
 
-    tweets = {'error': error, 'list': api.render_tweets(hashtag_tweets)}
+    tweets = {'error': error, 'list': twitter_api.render_tweets(hashtag_tweets)}
+
+    if hashtag.startswith('#'):
+        link = (_('Search %(hashtag)s on Twitter!') % {'hashtag': hashtag}, 'http://www.twitter.com/#!/search/%23' + hashtag[1:] + '/')
+    else:
+        link = (_('Search %(hashtag)s on Twitter!') % {'hashtag': hashtag}, 'http://www.twitter.com/#!/search/' + hashtag + '/')
 
     return HttpResponse(render(request=request,
                             template_name='twitter/list_tweets.html',
-                            dictionary={'tweets': tweets}), 'text/html')
+                            dictionary={'tweets': tweets, 'link': link}), 'text/html')

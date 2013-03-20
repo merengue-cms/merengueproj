@@ -19,19 +19,17 @@ import re
 import twitter
 
 
-class twitter_api():
-    def __init__(self, limit, value):
+class TwitterApi():
+    def __init__(self):
         self.api = twitter.Api()
-        self.limit = limit
-        self.value = value
 
-    def get_user_tweets(self):
+    def get_user_tweets(self, username, limit):
         try:
-            if self.api.GetUser(self.value).protected:
+            if self.api.GetUser(username).protected:
                 return ([], u'This user has protected his tweets')
             else:
-                tweets = self.api.GetUserTimeline(screen_name=self.value,
-                                                  count=self.limit,
+                tweets = self.api.GetUserTimeline(screen_name=username,
+                                                  count=limit,
                                                   include_rts=True)
                 if not tweets:
                     return ([], u"This user hasn't tweets yet")
@@ -42,10 +40,10 @@ class twitter_api():
         except twitter.TwitterError:
             return ([], u"This user doesn't exists")
 
-    def get_hashtags_tweets(self):
-        tweets = self.api.GetSearch(term=self.value,
+    def get_hashtags_tweets(self, hashtag, limit):
+        tweets = self.api.GetSearch(term=hashtag,
                                     lang='all',
-                                    per_page=self.limit,
+                                    per_page=limit,
                                     show_user=True)
 
         return (tweets, u"There aren't results for the hashtag defined")
@@ -93,3 +91,5 @@ class twitter_api():
                                 'time': tweet.relative_created_at})
 
         return tweets_dict
+
+twitter_api = TwitterApi()

@@ -19,28 +19,16 @@ from django.utils.translation import ugettext_lazy as _, ugettext
 
 from merengue.block.blocks import Block, BaseBlock
 from merengue.registry import params
-from plugins.twitter.utils import twitter_api
 
 
 class TimelineProvider:
     template_name = ''
     block_title = ''
 
-    def get_tweets(self):
-        raise NotImplementedError('Abstact method')
-
-    def get_link(self):
-        raise NotImplementedError('Abstact method')
-
     def render(self, request, place, context, *args, **kwargs):
-        tweets_list = self.get_tweets()
-        link_twitter = self.get_link()
         return self.render_block(request, template_name=self.template_name,
-                                 block_title=self.block_title,
-                                 context={'tweets': {'error': tweets_list[1],
-                                                     'list': tweets_list[0]},
-                                          'link': {'title': link_twitter[0],
-                                                   'http': link_twitter[1]}})
+                                 block_title=self.get_block_title(),
+                                 context={})
 
 
 class UserTimelineBlock(TimelineProvider, Block):
@@ -58,17 +46,10 @@ class UserTimelineBlock(TimelineProvider, Block):
                                    default='merengueproject'),
                      ]
 
-    def get_tweets(self):
+    def get_block_title(self):
 
-        limit = self.get_config().get('limit', []).get_value()
         user = self.get_config().get('user', []).get_value()
-
-        self.block_title = "@" + user
-
-        api = twitter_api(limit, user)
-        (user_tweets, error) = api.get_user_tweets()
-
-        return (api.render_tweets(user_tweets, False), error)
+        return "@%s" % user
 
     def get_link(self):
         error = self.get_tweets()
@@ -84,7 +65,7 @@ class HashtagTimelineBlock(TimelineProvider, Block):
     default_place = 'rightsidebar'
     verbose_name = _('Timeline of Tag in Twitter ')
     help_text = _('Block to show a timeline of Twitter for a hashtag.')
-    template_name = 'twitter/timeline_block.html'
+    template_name = 'twitter/hashtag_timeline_block.html'
 
     config_params = BaseBlock.config_params + [params.PositiveInteger(name='limit',
                                             label=ugettext('Limit for twitter block'),
@@ -94,16 +75,9 @@ class HashtagTimelineBlock(TimelineProvider, Block):
                                    default='#merengueproject'),
                      ]
 
-    def get_tweets(self):
-        limit = self.get_config().get('limit', []).get_value()
+    def get_block_title(self):
         hashtag = self.get_config().get('hashtag', []).get_value()
-
-        self.block_title = hashtag
-
-        api = twitter_api(limit, hashtag)
-        (hashtag_tweets, no_tweet_found) = api.get_hashtags_tweets()
-
-        return (api.render_tweets(hashtag_tweets), no_tweet_found)
+        return hashtag
 
     def get_link(self):
         hashtag = self.get_config().get('hashtag', []).get_value()

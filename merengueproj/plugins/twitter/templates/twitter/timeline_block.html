@@ -1,6 +1,9 @@
 {% extends "block.html" %}
 {% load i18n media_tags %}
 
+{% block blockclass %}class="{{ placed_at }}Block block {% if not block_content_relation %}blockGlobal{% else %}blockRelated{% endif %} {% if not has_config %}noconfig{% endif %} {% if fixed_place %}fixed{% endif %} {% block extraclass %}refresh-usertimeline{% endblock %} {{ css_class }}"{% endblock %}>
+
+
 {% block blockbody %}
 {% addmedia "css" %}
     <link href="{{ MEDIA_URL }}twitter/css/twitter.css" rel="stylesheet" type="text/css" />
@@ -10,10 +13,6 @@
 {% endaddmedia %}
 
 <div id='tweetlist'>
-{% include "twitter/list_tweets.html" %}
+<span class="loading">{% trans "Loading tweets" %}</span>
 </div>
-
-<div class="bar_space"></div>
-<div class="link_twitter"><a href="{{ link.http }}">{{ link.title }}</a></div>
 {% endblock %}
-
