@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.core.urlresolvers import reverse
 from django.db.models import BooleanField, CharField, Model
 from django.utils.translation import ugettext_lazy as _
 
@@ -51,3 +52,16 @@ class Redirect(Model):
 
     def __unicode__(self):
         return "%s ---> %s" % (self.old_path, self.new_path)
+
+    @property
+    def name(self):
+        return self.__unicode__()
+
+    def get_main_section(self):
+        return None
+
+    def get_admin_absolute_url(self):
+        return reverse('admin:redirects_redirect_change', None, (self.id, ))
+
+    def get_absolute_url(self):
+        return self.get_admin_absolute_url()

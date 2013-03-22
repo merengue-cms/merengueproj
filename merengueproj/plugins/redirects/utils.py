@@ -24,10 +24,10 @@ from django.contrib.auth.models import User, Group
 
 def create_redirect_review_task(user, obj):
     config = get_plugin('redirects').get_config()
-    usernames = config.get('review_users', []).get_value()
-    groupnames = config.get('review_groups', []).get_value()
+    usernames = config.get('review_users', []).get_value() or []
+    groupnames = config.get('review_groups', []).get_value() or []
     create_review_task(user,
-        title=config['review_title'].value or _('Review this redirection'),
+        title=config['review_title'].get_value() or _('Review this redirection'),
         url=obj.old_path,
         task_object=obj,
         users=[u for u in User.objects.filter(username__in=usernames)],
