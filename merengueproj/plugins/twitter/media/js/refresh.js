@@ -21,7 +21,7 @@
         $('.refresh-usertimeline').each(function() {
             var container = $(this);
             block_id_usertimeline = container.find("input").val();
-            $.get("twitter/ajax/get_user_tweets/" + block_id_usertimeline, function(data){
+            $.get("/twitter/ajax/get_user_tweets/" + block_id_usertimeline, function(data){
                 container.find('div#tweetlist').html(data);
             });
         });
@@ -31,7 +31,7 @@
         $('.refresh-hashtagtimeline').each(function() {
             var container = $(this);
             block_id_hashtagtimeline = container.find("input").val();
-            $.get("twitter/ajax/get_hashtag_tweets/" + block_id_hashtagtimeline, function(data){
+            $.get("/twitter/ajax/get_hashtag_tweets/" + block_id_hashtagtimeline, function(data){
                 container.find('div#tweetlist').html(data);
             });
         });
