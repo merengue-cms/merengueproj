@@ -32,6 +32,8 @@ class BannerParam(params.Param):
             self.choices = get_banners_choices
 
     def is_valid(self, value):
+        if not value:
+            return True
         return super(BannerParam, self).is_valid(value) and \
                Banner.objects.filter(pk=value)
 
