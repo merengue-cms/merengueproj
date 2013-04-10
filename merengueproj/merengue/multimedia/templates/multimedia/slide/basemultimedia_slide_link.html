@@ -3,7 +3,7 @@
 
    {% thumbnail default size as th %}
    {% thumbnail default "640x480" as bigth %}
-   <a 
+   <a
       href="{% block fullview %}{{ bigth.url }}{% endblock %}"
       title="{{ multimedia_name }}"
       destino="{{ multimedia.get_absoulte_url }}"
@@ -14,5 +14,5 @@
    </a>
    {% endthumbnail %}
    {% endthumbnail %}
-   <div class="hidden-caption" style="display:none">{% block caption %}{% endblock %}</div>
+   <div class="hidden-caption hidden" >{% block caption %}{% endblock %}</div>
    {% block inline-content %}{% endblock %}
