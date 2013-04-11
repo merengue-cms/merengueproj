@@ -41,7 +41,7 @@
                 typeorder = typeorder.split(" ");
             };
 
-            var initSlide = function() { 
+            var initSlide = function() {
 	        configureSlide();
                 initShadowBox();
                 if ($('.MultimediaItemThumbnail a').length) {
@@ -91,7 +91,7 @@
                 var count = 0;
                 $.each(typeorder, function(index, t) {
                     if (typeof(types[t]) != 'undefined') {
-                        menu.append('<span class="galleryButton galleryButton-'+ t +'"><img src="' + mediaurl + 'merengue/img/multimedia/mediacontents/' + t + '_action_link.png" /></span>')
+                        menu.append('<span class="galleryButton galleryButton-'+ t +'"><img src="' + mediaurl + 'img/multimedia/mediacontents/' + t + '_action_link.png" /></span>')
                         types[t].order=index;
                         count += types[t].items.length;
                     }
@@ -136,7 +136,7 @@
                     menu.prepend(action_link);
                     menu.find('.activeButton').removeClass('activeButton');
                     action_link.addClass('activeButton');
-                    current = type;  
+                    current = type;
                 }
             };
 
