@@ -1,8 +1,11 @@
 {% load i18n media_tags inplace_edit %}
 
+
+{% include "inplaceeditform/inc.csrf_token.html" %}
+
 {% addmedia "js" %}
   {% inplace_js 0 %}
-  <script type="text/javascript"> 
+  <script type="text/javascript">
     (function($){
         var inplaceManager = null;
         $(".inplaceedit").each(function(){
@@ -20,7 +23,9 @@
                     var getFieldUrl = "{% url inplace_get_field %}";
                     var saveURL = "{% url inplace_merengue_save %}";
                     inplaceManager = $(".inplaceedit").inplaceeditform({"getFieldUrl": getFieldUrl,
-                                                                        "saveURL": saveURL});
+                                                                        "saveURL": saveURL,
+                                                                        "successText": "{% trans "Successfully saved" %}",
+                                                                        "unsavedChanges": "{% trans "You have unsaved changes!" %}"});
                 }
                 inplaceManager.enable();
                 $(".inplaceedit").addClass("edit_over_merengue");
