@@ -15,7 +15,7 @@
   </span>
   <ul class="section-tools toolList">
   {% for tool in section_tools|dictsort:"tool_label" %}
-  <li class="tool">
+  <li class="tool {{ tool.tool_name }}">
   <div class="tool-configuration" style="display: none;">
     <span class="tool-name">{{ tool.tool_name }}</span>
   </div>

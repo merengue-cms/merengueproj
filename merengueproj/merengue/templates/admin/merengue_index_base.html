@@ -27,14 +27,14 @@
         <dt>{% trans "Contents" %}</dt>
         <dd>
           <dl>
-            <dt><a href="section/basesection/" title="{% trans "Browse by hierarchy" %}">{% trans "Browse by hierarchy" %}</a></dt>
-            <dd>{% trans "Browse the site's contents by hierarchy." %}</dd>
-            <dt><a href="{% url admin:models_index %}" title="{% trans "Browse by type" %}">{% trans "Browse by type" %}</a></dt>
-            <dd>{% trans "Browse the site's contents by content type." %}</dd>
-            <dt><a href="base/basecontent/" title="{% trans "Search" %}">{% trans "Search catalog" %}</a></dt>
-            <dd>{% trans "Search the site's contents." %}</dd>
-            <dt><a href="collection/" title="{% trans "Collections" %}">{% trans "Collections" %}</a></dt>
-            <dd>{% trans "View, edit and delete the site's collections." %}</dd>
+            <dt class="browseByHierachy"><a href="section/basesection/" title="{% trans "Browse by hierarchy" %}">{% trans "Browse by hierarchy" %}</a></dt>
+            <dd class="browseByHierachy">{% trans "Browse the site's contents by hierarchy." %}</dd>
+            <dt class="browseByType"><a href="{% url admin:models_index %}" title="{% trans "Browse by type" %}">{% trans "Browse by type" %}</a></dt>
+            <dd class="browseByType">{% trans "Browse the site's contents by content type." %}</dd>
+            <dt class="searchInCatalog"><a href="base/basecontent/" title="{% trans "Search" %}">{% trans "Search catalog" %}</a></dt>
+            <dd class="searchInCatalog">{% trans "Search the site's contents." %}</dd>
+            <dt class="collections"><a href="collection/" title="{% trans "Collections" %}">{% trans "Collections" %}</a></dt>
+            <dd class="collections">{% trans "View, edit and delete the site's collections." %}</dd>
           </dl>
         </dd>
         <dt>{% trans "Navigation" %}</dt>
