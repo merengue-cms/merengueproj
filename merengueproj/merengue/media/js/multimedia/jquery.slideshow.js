@@ -8,6 +8,7 @@
             var types = {};
             var current = null;
             var mediaurl;
+            var swfLocation;
             var typeorder;
 
             var initShadowBox = function() {
@@ -24,7 +25,7 @@
 
             var configureShadowBox = function() {
                 Shadowbox.setup(slide.find('.MultimediaItemThumbnail a'), {
-                    flvPlayer: mediaurl + 'merengue/flash/flowplayer-3.2.7.swf'
+                    flvPlayer: swfLocation + 'merengue/flash/flowplayer-3.2.7.swf'
                 });
             }
 
@@ -37,6 +38,7 @@
 
             var configureSlide = function() {
                 mediaurl = slide.find('.MultimediaConfigurationMediaURL').text();
+                swfLocation = slide.find('.MultimediaConfigurationSWFMediaURL').text();
                 typeorder = slide.find('.MultimediaConfigurationActionLinksOrder').text();
                 typeorder = typeorder.split(" ");
             };
