@@ -65,7 +65,8 @@ urlpatterns = patterns('',
 
     # menu
     url(r'^menu(/[\w\-]+)*/(?P<menu_slug>[\w-]+)/$', 'merengue.section.views.menu_view', name='menu_view'),
-
+    #multimedia
+    (r'^multimedia/', include('multimedia.urls')),
     # tinyimages
     (r'^tinyimages/', include('tinyimages.urls')),
 

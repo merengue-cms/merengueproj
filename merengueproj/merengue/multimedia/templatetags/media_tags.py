@@ -28,6 +28,8 @@ from classytags.parser import Parser
 from compressor.js import JsCompressor
 from compressor.css import CssCompressor
 from oembed.templatetags.oembed_tags import OEmbedNode
+from PIL import Image, ImageChops
+import os.path
 
 register = template.Library()
 
@@ -225,17 +227,53 @@ class AddMedia(Tag):
 register.tag(AddMedia)
 
 
+def trim(im, border):
+    bg = Image.new(im.mode, im.size, border)
+    diff = ImageChops.difference(im, bg)
+    bbox = diff.getbbox()
+    if bbox:
+        return im.crop(bbox)
+
+
 @register.inclusion_tag('multimedia/multimedia_visor.html', takes_context=True)
 def multimedia_visor(context, multimedia, extended=1, width=320, height=262):
     class_name = multimedia.class_name
     inc_template = template.loader.select_template(['multimedia/%s_visor.html' % class_name,
                                                     'multimedia/basemultimedia_visor.html']).name
     size = str(width) + 'x' + str(height)
+    config = None
+    if class_name == 'video' and multimedia.file:
+        preview_img = '/media/merengue/img/video_preview.png'
+        left = 10
+        top = 10
+        if multimedia.preview:
+            preview_img = multimedia.preview.url
+            x = multimedia.preview.height
+            y = multimedia.preview.width
+            if height < y or width < x:
+                image = Image.open(multimedia.preview.file.name)
+                if image.mode not in ("L", "RGB"):
+                    image = image.convert("RGB")
+
+                image.thumbnail((width, height), Image.ANTIALIAS)
+                thumb = trim(image, 255)
+                x, y = thumb.size
+                path, ext = os.path.splitext(multimedia.preview.file.name)
+                filename = '%s_%sx%s%s' % (path, width, height, ext)
+                thumb.save(filename, thumb.format)
+                startPath = preview_img.split('/')[1]
+                preview_img = '/%s%s' % (startPath, filename.split('/%s' % preview_img.split('/')[1])[1])
+
+            top = (height - y) / 2
+            left = (width - x) / 2
+
+        config = "{'clip': {'url': '%s', 'scaling':'fit', 'autoPlay': false, 'screencolor': '0x666666', 'thumbsinplaylist': true, 'allowfullscreen': true, 'volume': 50, 'height': %s, 'width': %s},'canvas': {'background': '#cccccc url(%s) no-repeat %s %s'}}" % (multimedia.file.url, height, width, preview_img, left, top)
     return {'multimedia': multimedia,
             'extended': extended,
             'width': width,
             'height': height,
             'size': size,
+            'config': config,
             'inc_template': inc_template,
             'request': context.get('request', None),
             'MEDIA_URL': context.get('MEDIA_URL', '/media/'),
