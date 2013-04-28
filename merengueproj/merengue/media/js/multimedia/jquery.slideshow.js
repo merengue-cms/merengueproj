@@ -25,7 +25,7 @@
 
             var configureShadowBox = function() {
                 Shadowbox.setup(slide.find('.MultimediaItemThumbnail a'), {
-                    flvPlayer: swfLocation + 'merengue/flash/flowplayer-3.2.7.swf'
+                    flvPlayer: swfLocation + 'flash/flowplayer-3.2.7.swf'
                 });
             }
 
