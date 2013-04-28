@@ -20,6 +20,6 @@ from django.conf.urls.defaults import patterns
 from merengue.urlresolvers import merengue_url as url
 
 
-urlpatterns = patterns('multimedia.views',
+urlpatterns = patterns('merengue.multimedia.views',
     url(r'^videos/(?P<video_id>[\w-]+)/video.xml$', 'video_xml', name='video_xml'),
 )
