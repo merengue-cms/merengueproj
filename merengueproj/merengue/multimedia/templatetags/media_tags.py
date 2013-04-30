@@ -28,8 +28,13 @@ from classytags.parser import Parser
 from compressor.js import JsCompressor
 from compressor.css import CssCompressor
 from oembed.templatetags.oembed_tags import OEmbedNode
-from PIL import Image, ImageChops
 import os.path
+
+try:
+    from PIL import Image, ImageChops
+except ImportError:
+    import Image  # pyflakes:ignore
+    import ImageChops  # pyflakes:ignore
 
 register = template.Library()
 
