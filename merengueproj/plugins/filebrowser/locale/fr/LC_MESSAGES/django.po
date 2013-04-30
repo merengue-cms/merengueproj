@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-14 12:13+0100\n"
+"POT-Creation-Date: 2013-04-30 19:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,15 +31,35 @@ msgid ""
 "create it."
 msgstr ""
 
-#: config.py:33
-msgid "Root below MEDIA_ROOT"
+#: blocks.py:13
+msgid "Latest Files Block"
+msgstr ""
+
+#: blocks.py:14
+msgid "Block that represents a list of recent files of the filebrowser"
+msgstr ""
+
+#: blocks.py:19
+msgid "number of files for the \"Latest Files\" block"
+msgstr ""
+
+#: blocks.py:24
+msgid "Name of the repository to show files from it"
+msgstr ""
+
+#: blocks.py:71
+msgid "Downloads"
 msgstr ""
 
 #: config.py:34
-msgid "Docs root below MEDIA_ROOT"
+msgid "Root below MEDIA_ROOT"
 msgstr ""
 
 #: config.py:35
+msgid "Docs root below MEDIA_ROOT"
+msgstr ""
+
+#: config.py:36
 msgid "Docs url below MEDIA_URL"
 msgstr ""
 
@@ -68,81 +88,81 @@ msgstr ""
 msgid "Repository at %s"
 msgstr ""
 
-#: models.py:203
+#: models.py:225
 msgid "title"
 msgstr ""
 
-#: models.py:204
+#: models.py:226
 msgid "content"
 msgstr ""
 
-#: models.py:205
+#: models.py:227
 msgid "modification date"
 msgstr ""
 
-#: models.py:207
+#: models.py:229
 msgid "location"
 msgstr ""
 
-#: models.py:212 models.py:251 models.py:275
+#: models.py:234 models.py:273 models.py:297
 msgid "document"
 msgstr ""
 
-#: models.py:213
+#: models.py:235
 msgid "documents"
 msgstr ""
 
-#: models.py:252 models.py:276 templates/filebrowser/document.html:43
+#: models.py:274 models.py:298 templates/filebrowser/document.html:45
 #: templates/filebrowser/rename.html:64
 msgid "file"
 msgstr ""
 
-#: models.py:254
+#: models.py:276
 msgid "indexed"
 msgstr ""
 
-#: models.py:258
+#: models.py:280
 msgid "document file attachment"
 msgstr ""
 
-#: models.py:259
+#: models.py:281
 msgid "document file attachments"
 msgstr ""
 
-#: models.py:280
+#: models.py:302
 msgid "document image attachment"
 msgstr ""
 
-#: models.py:281
+#: models.py:303
 msgid "document image attachments"
 msgstr ""
 
-#: views.py:113
+#: views.py:109
 msgid "You must introduce the name of the new folder"
 msgstr ""
 
-#: views.py:115
+#: views.py:111
 #, python-format
 msgid "Folder %(dirname)s already exists"
 msgstr ""
 
-#: views.py:125
+#: views.py:121
 msgid "Folder created successfully"
 msgstr ""
 
-#: views.py:165
+#: views.py:161
 msgid "Files uploaded successfully"
 msgstr ""
 
-#: views.py:237
+#: views.py:232
 msgid "You didn't selected any element"
 msgstr ""
 
-#: views.py:282
+#: views.py:277
 msgid "Elements renamed successfully"
 msgstr ""
 
-#: views.py:289
+#: views.py:284
 msgid "Elements deleted successfully"
 msgstr ""
 
@@ -166,8 +186,8 @@ msgstr ""
 
 #: templates/filebrowser/createdir.html:21
 #: templates/filebrowser/createdir.html:25
-#: templates/filebrowser/document.html:62
-#: templates/filebrowser/document.html:90
+#: templates/filebrowser/document.html:65
+#: templates/filebrowser/document.html:97
 msgid "Cancel"
 msgstr ""
 
@@ -196,7 +216,7 @@ msgstr ""
 msgid "Are you sure to delete these elements?"
 msgstr ""
 
-#: templates/filebrowser/delete.html:57 templates/filebrowser/listing.html:104
+#: templates/filebrowser/delete.html:57 templates/filebrowser/listing.html:108
 msgid "Delete"
 msgstr ""
 
@@ -225,33 +245,37 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: templates/filebrowser/document.html:39
+#: templates/filebrowser/document.html:41
 msgid "Files"
 msgstr ""
 
-#: templates/filebrowser/document.html:49
-#: templates/filebrowser/document.html:77
+#: templates/filebrowser/document.html:51
+#: templates/filebrowser/document.html:82
 msgid "Remove"
 msgstr ""
 
-#: templates/filebrowser/document.html:56
+#: templates/filebrowser/document.html:59
 msgid "New file"
 msgstr ""
 
-#: templates/filebrowser/document.html:61
+#: templates/filebrowser/document.html:64
 msgid "Add file"
 msgstr ""
 
-#: templates/filebrowser/document.html:65
+#: templates/filebrowser/document.html:69
 msgid "Images"
 msgstr ""
 
-#: templates/filebrowser/document.html:84
+#: templates/filebrowser/document.html:91
 msgid "New image"
 msgstr ""
 
-#: templates/filebrowser/document.html:89
+#: templates/filebrowser/document.html:96
 msgid "Add image"
+msgstr ""
+
+#: templates/filebrowser/inc.search.html:7
+msgid "search"
 msgstr ""
 
 #: templates/filebrowser/listing.html:4
@@ -287,16 +311,16 @@ msgstr ""
 msgid "Modification date"
 msgstr ""
 
-#: templates/filebrowser/listing.html:103 templates/filebrowser/rename.html:9
+#: templates/filebrowser/listing.html:107 templates/filebrowser/rename.html:9
 #: templates/filebrowser/rename.html:18 templates/filebrowser/rename.html:71
 msgid "Rename"
 msgstr ""
 
-#: templates/filebrowser/listing.html:105
+#: templates/filebrowser/listing.html:109
 msgid "Select one or more files or folders and click the desired button"
 msgstr ""
 
-#: templates/filebrowser/listing.html:111
+#: templates/filebrowser/listing.html:115
 msgid "The current directory is empty."
 msgstr ""
 
@@ -367,4 +391,8 @@ msgstr ""
 
 #: templates/filebrowser/upload.html:64
 msgid "File to upload"
+msgstr ""
+
+#: templates/filebrowser/blocks/latestfiles.html:17
+msgid "More files"
 msgstr ""
