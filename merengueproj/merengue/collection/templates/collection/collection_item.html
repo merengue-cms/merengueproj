@@ -1,4 +1,4 @@
-{% load content_tags %}
+{% load content_tags thumbnail %}
 
 <li class="itemCollection itemCollection-{{ item.content_type_name }}">
 {% block itemCollection %}
@@ -7,6 +7,10 @@
     <div class="itemCollectionImage">
       <img src="{{ item.main_image.thumbnail.url }}" alt="{{ item }}" />
     </div>
+    {% else %}
+    <div class="itemCollectionImage default">
+        <img src="{{ THEME_MEDIA_URL }}img/default_thumbnail.jpg" alt="" />
+    </div>
     {% endif %}
   {% endblock %}
   <div class="itemCollectionTitle">
@@ -14,7 +18,7 @@
     {% if listing %}
     {% if item.get_absolute_url %}
     <a href="{{ item.get_absolute_url }}" title="{{ item }}" class="contentLink">
-        {% cutrender 100 %}{{ item }}{% endcutrender %}
+      {% cutrender 100 %}{{ item }}{% endcutrender %}
     </a>
     {% else %}
         {% cutrender 100 %}{{ item }}{% endcutrender %}
