@@ -39,6 +39,8 @@ from merengue.section.formsets import BaseLinkInlineFormSet
 from merengue.perms import utils as perms_api
 from merengue.perms.admin import PermissionAdmin
 
+ENABLE_DOCUMENT_SECTIONS = getattr(settings, 'ENABLE_DOCUMENT_SECTIONS', True)
+
 
 class BaseSectionAdmin(BaseContentAdmin, PermissionAdmin):
     sortablefield = 'order'
@@ -514,7 +516,8 @@ def register_related(site):
     site.register_related(Document, DocumentRelatedModelAdmin, related_to=BaseSection)
     site.register_related(CustomStyle, CustomStyleRelatedModelAdmin, related_to=BaseSection)
     site.register_related(Menu, MainMenuRelatedAdmin, related_to=BaseSection)
-    site.register_related(DocumentSection, DocumentSectionRelatedModelAdmin, related_to=Document)
+    if ENABLE_DOCUMENT_SECTIONS:
+        site.register_related(DocumentSection, DocumentSectionRelatedModelAdmin, related_to=Document)
 
 
 def register(site):

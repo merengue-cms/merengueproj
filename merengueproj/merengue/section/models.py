@@ -481,6 +481,8 @@ class SectionRelatedContent(models.Model):
 
 
 class Document(BaseContent):
+  
+    body = models.TextField(verbose_name=_('body'), blank=True, default='')
 
     objects = WorkflowManager()
 
@@ -488,6 +490,7 @@ class Document(BaseContent):
         verbose_name = _('document')
         verbose_name_plural = _('documents')
         content_view_template = 'section/document_view.html'
+        translate = ('body', )
 
     def __unicode__(self):
         return unicode(self.name)

@@ -15,10 +15,14 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Merengue.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.conf import settings
+
 
 def section(request):
     # simplest context processor ever :-)
+    enable_document_sections = getattr(settings, 'ENABLE_DOCUMENT_SECTIONS', True)
     section = getattr(request, 'section', None)
     if section and hasattr(section, 'get_real_instance'):
         section = section.get_real_instance()
-    return {'section': section}
+    return {'section': section,
+            'enable_document_sections': enable_document_sections}

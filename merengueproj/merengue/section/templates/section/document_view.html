@@ -10,30 +10,38 @@
 {% endblock %}
 
 {% block contentbody %}
-<div class="merengue-document">
-  <div class="merengue-document-conf" style="display: none;">
-    <span class="section-insert-url">{% url insert_document_section_after %}</span>
-    <span class="section-delete-url">{% url document_section_delete %}</span>
-    <span class="section-edit-url">{% url document_section_edit %}</span>
-    <span class="section-move-url">{% url document_section_move %}</span>
-    <span class="section-delete-message">{% trans "Are you sure you want to delete this section?" %}</span>
-    <span class="document_id">{{ content.id }}</span>
-    <span class="section-edit-cancel">{% blocktrans %}You are about to cancel the edition. All your changes will be lost.
-
-Do you want to cancel and lost your changes?
-{% endblocktrans %}</span>
-  </div>
-  <div class="merengue-document-helpers" style="display: none;">
-    <div class="document-section-edition">
-        <input type="button" class="save-edition" value="{% trans "Save" %}" />
-        <input type="button" class="cancel-edition" value="{% trans "Cancel" %}" />
-    </div>
-  </div>
-  {% ifcanedit user content %}
-    <a href="#" class="insert-first-section">{% trans "Insert first section" %}</a>
-  {% endifcanedit %}
-  {% for document_section in content.document_sections.all %}
-    {% include "section/document_section_view.html" %}
-  {% endfor %}
+{% if content.body %}
+<div class="contentbody">
+  {% inplace_edit "content.body|safe" class_inplace="inplace_description" %}
 </div>
+{% endif %}
+
+{% if enable_document_sections %}
+  <div class="merengue-document">
+    <div class="merengue-document-conf" style="display: none;">
+      <span class="section-insert-url">{% url insert_document_section_after %}</span>
+      <span class="section-delete-url">{% url document_section_delete %}</span>
+      <span class="section-edit-url">{% url document_section_edit %}</span>
+      <span class="section-move-url">{% url document_section_move %}</span>
+      <span class="section-delete-message">{% trans "Are you sure you want to delete this section?" %}</span>
+      <span class="document_id">{{ content.id }}</span>
+      <span class="section-edit-cancel">{% blocktrans %}You are about to cancel the edition. All your changes will be lost.
+
+  Do you want to cancel and lost your changes?
+  {% endblocktrans %}</span>
+    </div>
+    <div class="merengue-document-helpers" style="display: none;">
+      <div class="document-section-edition">
+          <input type="button" class="save-edition" value="{% trans "Save" %}" />
+          <input type="button" class="cancel-edition" value="{% trans "Cancel" %}" />
+      </div>
+    </div>
+    {% ifcanedit user content %}
+      <a href="#" class="insert-first-section">{% trans "Insert first section" %}</a>
+    {% endifcanedit %}
+    {% for document_section in content.document_sections.all %}
+      {% include "section/document_section_view.html" %}
+    {% endfor %}
+  </div>
+{% endif %}
 {% endblock %}
