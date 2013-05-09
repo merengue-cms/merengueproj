@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-30 19:31+0200\n"
+"POT-Creation-Date: 2013-05-09 14:16+0200\n"
 "PO-Revision-Date: 2010-10-05 13:46\n"
 "Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -140,32 +140,32 @@ msgstr "imagen adjunta al documento"
 msgid "document image attachments"
 msgstr "imágenes adjuntas al documento"
 
-#: views.py:109
+#: views.py:110
 msgid "You must introduce the name of the new folder"
 msgstr "Usted debe introducir el nombre de la nueva carpeta"
 
-#: views.py:111
+#: views.py:112
 #, python-format
 msgid "Folder %(dirname)s already exists"
 msgstr "El nombre %(dirname)s ya existe"
 
-#: views.py:121
+#: views.py:122
 msgid "Folder created successfully"
 msgstr "La carpeta se ha creado con exito"
 
-#: views.py:161
+#: views.py:162
 msgid "Files uploaded successfully"
 msgstr "Los ficheros se han subido con exito"
 
-#: views.py:232
+#: views.py:233
 msgid "You didn't selected any element"
 msgstr "Usted no seleccionó ningun elemento"
 
-#: views.py:277
+#: views.py:278
 msgid "Elements renamed successfully"
 msgstr "Elementos renombrados con exito"
 
-#: views.py:284
+#: views.py:285
 msgid "Elements deleted successfully"
 msgstr "Elementos borrados con exito"
 
@@ -315,7 +315,7 @@ msgid "Modification date"
 msgstr "Fecha de modificación"
 
 #: templates/filebrowser/listing.html:107 templates/filebrowser/rename.html:9
-#: templates/filebrowser/rename.html:18 templates/filebrowser/rename.html:71
+#: templates/filebrowser/rename.html:18 templates/filebrowser/rename.html:72
 msgid "Rename"
 msgstr "Renombrar"
 
@@ -352,11 +352,11 @@ msgstr "Descripción"
 msgid "File name"
 msgstr "Nombre del fichero"
 
-#: templates/filebrowser/rename.html:77 templates/filebrowser/upload.html:70
+#: templates/filebrowser/rename.html:78 templates/filebrowser/upload.html:70
 msgid "The title for each file is required"
 msgstr "El título de cada fichero es obligatorio"
 
-#: templates/filebrowser/rename.html:78
+#: templates/filebrowser/rename.html:79
 msgid "The file name for each file is required"
 msgstr "El nombre de cada fichero es obligatorio"
 
@@ -376,7 +376,15 @@ msgstr "Buscar"
 msgid "Search document repository"
 msgstr "Buscar en repositorio de documentos"
 
-#: templates/filebrowser/search.html:50
+#: templates/filebrowser/search.html:30
+msgid "result"
+msgstr "resultado"
+
+#: templates/filebrowser/search.html:30
+msgid "for"
+msgstr "para"
+
+#: templates/filebrowser/search.html:58
 msgid "Your search matched no results."
 msgstr "No se han encontrado resultados"
 

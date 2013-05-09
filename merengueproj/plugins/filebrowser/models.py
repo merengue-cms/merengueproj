@@ -180,7 +180,7 @@ class Repository(models.Model):
                         continue
                     data = f.read()
                     f.close()
-                    data = data.split('\n')
+                    data = data.lower().split('\n')
                     for line in data:
                         if pattern.search(line):
                             path = absname[len(topdir):-9]
@@ -190,7 +190,7 @@ class Repository(models.Model):
                                 pass
                             break
 
-        pattern = re.compile(q)
+        pattern = re.compile(q.lower())
         results = []
         os.path.walk(topdir, grepfiles, (pattern, results))
         return results

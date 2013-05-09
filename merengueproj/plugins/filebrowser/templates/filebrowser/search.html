@@ -24,6 +24,14 @@
 
 {% if files or documents %}
 
+  {% with files|length as totalfiles %}
+  {% with documents|length as totaldocuments %}
+  {% with totalfiles|add:totaldocuments as total %}
+  <h2>{{ total }} {% itrans "result" %}{{ total|pluralize }} {% itrans "for" %} "{{ query }}"</h2>
+  {% endwith %}
+  {% endwith %}
+  {% endwith %}
+
   {% for f in files %}
   <div class="elemento_descarga">
     <img src="{{ MEDIA_URL }}filebrowser/img/file.png">

@@ -91,6 +91,7 @@ def search(request, base_template=FILEBROWSER_BASE_TEMPLATE):
     edit_permission = request.user.is_staff
     return render_to_response('filebrowser/search.html',
                             {'base_template': base_template,
+                            'query': q,
                             'files': files,
                             'documents': documents,
                             'edit_permission': edit_permission},
