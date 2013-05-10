@@ -2,6 +2,7 @@
 import os
 import re
 import shutil
+import unicodedata
 
 from django.db import models
 from django.core.urlresolvers import reverse
@@ -180,7 +181,7 @@ class Repository(models.Model):
                         continue
                     data = f.read()
                     f.close()
-                    data = data.lower().split('\n')
+                    data = unicodedata.normalize('NFKD', force_unicode(data)).lower().split('\n')
                     for line in data:
                         if pattern.search(line):
                             path = absname[len(topdir):-9]
@@ -190,7 +191,8 @@ class Repository(models.Model):
                                 pass
                             break
 
-        pattern = re.compile(q.lower())
+        nq = unicodedata.normalize('NFKD', force_unicode(q.encode('utf8'))).encode('ascii', 'ignore').lower()
+        pattern = re.compile(nq)
         results = []
         os.path.walk(topdir, grepfiles, (pattern, results))
         return results
