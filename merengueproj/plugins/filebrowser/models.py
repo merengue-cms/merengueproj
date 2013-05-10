@@ -191,7 +191,7 @@ class Repository(models.Model):
                                 pass
                             break
 
-        nq = unicodedata.normalize('NFKD', force_unicode(q.encode('utf8'))).encode('ascii', 'ignore').lower()
+        nq = unicodedata.normalize('NFKD', force_unicode(q)).encode('ascii', 'ignore').lower()
         pattern = re.compile(nq)
         results = []
         os.path.walk(topdir, grepfiles, (pattern, results))

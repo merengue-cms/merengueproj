@@ -77,9 +77,9 @@ def listing(request, repository_name, path='',
 def search(request, base_template=FILEBROWSER_BASE_TEMPLATE):
     files, documents = (), ()
     if request.method == 'POST':
-        q = request.POST.get('q')
+        q = request.POST.get('q').encode('utf8')
     else:
-        q = u''
+        q = ''
     repos = Repository.objects
     documents = Document.objects
     section = getattr(request, 'section', None)
