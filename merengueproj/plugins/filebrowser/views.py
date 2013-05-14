@@ -9,10 +9,10 @@ from django.utils.translation import ugettext as _
 from django.utils.encoding import force_unicode
 from django.db.models import Q
 
-from merengue.base.decorators import login_required_or_permission_denied
 from merengue.base.views import content_list
 from merengue.section.utils import get_section
 
+from plugins.filebrowser.decorators import owner_or_superuser_required, is_owner_or_superuser
 from plugins.filebrowser.forms import EditDocForm, AddDocForm
 from plugins.filebrowser.models import Repository, Document, FileDocument, ImageDocument
 from plugins.filebrowser.templatetags.filebrowser_tags import filebrowser_reverse
@@ -57,7 +57,7 @@ def listing(request, repository_name, path='',
     documents = Document.objects.filter(repository=repository,
                                         location=location)
 
-    edit_permission = request.user.is_staff
+    edit_permission = is_owner_or_superuser(request)
 
     return render_to_response('filebrowser/listing.html',
                               {'repository': repository,
@@ -88,7 +88,7 @@ def search(request, base_template=FILEBROWSER_BASE_TEMPLATE):
         documents = documents.filter(repository__in=repos)
     files = [f for repo in repos.all() for f in repo.search_files(q)]
     documents = documents.filter(Q(title__regex=q) | Q(content__regex=q))
-    edit_permission = request.user.is_staff
+    edit_permission = is_owner_or_superuser(request)
     return render_to_response('filebrowser/search.html',
                             {'base_template': base_template,
                             'query': q,
@@ -98,7 +98,7 @@ def search(request, base_template=FILEBROWSER_BASE_TEMPLATE):
                             context_instance=RequestContext(request))
 
 
-@login_required_or_permission_denied
+@owner_or_superuser_required
 def createdir(request, repository_name, path='',
               base_template=FILEBROWSER_BASE_TEMPLATE, url_prefix=None):
     repository = get_object_or_404(Repository, name=repository_name)
@@ -136,7 +136,7 @@ def createdir(request, repository_name, path='',
                                   context_instance=RequestContext(request))
 
 
-@login_required_or_permission_denied
+@owner_or_superuser_required
 def upload(request, repository_name, path='',
            base_template=FILEBROWSER_BASE_TEMPLATE, url_prefix=None):
     repository = get_object_or_404(Repository, name=repository_name)
@@ -188,7 +188,7 @@ def download(request, repository_name, path,
         return HttpResponse(f.read())
 
 
-@login_required_or_permission_denied
+@owner_or_superuser_required
 def action(request, repository_name, path,
            base_template=FILEBROWSER_BASE_TEMPLATE, url_prefix=None):
     """ process rename, delete, etc. actions in files and directories """
@@ -291,7 +291,7 @@ def action(request, repository_name, path,
         return Http404
 
 
-@login_required_or_permission_denied
+@owner_or_superuser_required
 def createdoc(request, repository_name, path,
               base_template=FILEBROWSER_BASE_TEMPLATE, url_prefix=None):
     repository = get_object_or_404(Repository, name=repository_name)
@@ -303,7 +303,7 @@ def createdoc(request, repository_name, path,
                     parents=parents, url_prefix=url_prefix)
 
 
-@login_required_or_permission_denied
+@owner_or_superuser_required
 def editdoc(request, repository_name, doc_slug,
             base_template=FILEBROWSER_BASE_TEMPLATE, url_prefix=None):
     repository = get_object_or_404(Repository, name=repository_name)
@@ -323,7 +323,7 @@ def viewdoc(request, repository_name, doc_slug,
     document = get_object_or_404(Document, repository=repository,
                                     slug=doc_slug)
     file_field = None
-    edit_permission = request.user.is_staff
+    edit_permission = is_owner_or_superuser(request)
     if edit_permission and request.method == 'POST':
         if 'addfile' in request.POST:
             file_field = 'file'
@@ -354,7 +354,7 @@ def viewdoc(request, repository_name, doc_slug,
                                 context_instance=RequestContext(request))
 
 
-@login_required_or_permission_denied
+@owner_or_superuser_required
 def remove_attachment(request, repository_name, type, objId,
                       base_template=FILEBROWSER_BASE_TEMPLATE, url_prefix=None):
     obj = None
