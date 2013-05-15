@@ -181,15 +181,13 @@ class Repository(models.Model):
                         continue
                     data = f.read()
                     f.close()
-                    data = unicodedata.normalize('NFKD', force_unicode(data)).lower().split('\n')
-                    for line in data:
-                        if pattern.search(line):
-                            path = absname[len(topdir):-9]
-                            try:
-                                results.append(FileDesc(topdir, path, self))
-                            except OSError:
-                                pass
-                            break
+                    data = unicodedata.normalize('NFKD', force_unicode(data)).encode('ascii', 'ignore').lower()
+                    if pattern.search(data):
+                        path = absname[len(topdir):-9]
+                        try:
+                            results.append(FileDesc(topdir, path, self))
+                        except OSError:
+                            pass
 
         nq = unicodedata.normalize('NFKD', force_unicode(q)).encode('ascii', 'ignore').lower()
         pattern = re.compile(nq)
