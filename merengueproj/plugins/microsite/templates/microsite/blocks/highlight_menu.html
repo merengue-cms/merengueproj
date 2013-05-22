@@ -31,11 +31,11 @@
     </li>
   {% endfor %}
   </ul>
-  <input type="hidden" value="{{ block.id }}" id="{{ block.name }}Order" class="blockOrder" />
+  <input type="hidden" value="{{ registered_block.id }}" id="{{ registered_block.name }}Order" class="blockOrder" />
 </div>
  </div>
  {% if not block_content_relation %}
-   <input type="hidden" value="{{ block.id }}" class="blockId" />
+   <input type="hidden" value="{{ registered_block.id }}" class="blockId" />
  {% else %}
    <input type="hidden" value="{{ block_content_relation.id }}" class="blockId" />
  {% endif %}
