@@ -73,7 +73,7 @@ def media_files(context, content):
 
 
 @register.inclusion_tag('multimedia/slide/multimedia_slide_link.html', takes_context=True)
-def multimedia_slide_link(context, multimedia, content, size=None):
+def multimedia_slide_link(context, multimedia, content=None, size=None):
     size = size or '200x150'
     class_name = multimedia.class_name
     default = multimedia.get_default_preview()

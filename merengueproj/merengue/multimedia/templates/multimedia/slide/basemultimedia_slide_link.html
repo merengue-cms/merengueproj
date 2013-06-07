@@ -11,6 +11,7 @@
       {% block extraattrs %}{% endblock %}>
 
      <img src="{% block thumbnail %}{{ th.url }}{% endblock %}" alt="{{ multimedia_name }}" title="{{ multimedia_name }}" />
+     {% block extra-link-content %}{% endblock %}
    </a>
    {% endthumbnail %}
    {% endthumbnail %}

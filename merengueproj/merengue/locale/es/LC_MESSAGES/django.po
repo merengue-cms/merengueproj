@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-20 14:03+0100\n"
+"POT-Creation-Date: 2013-06-03 11:40+0200\n"
 "PO-Revision-Date: 2011-09-01 10:10\n"
 "Last-Translator: Pablo Martin <pmartin@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,23 +26,23 @@ msgstr "Bloques"
 msgid "Blocks information"
 msgstr ""
 
-#: settings.py:163 workflow/models.py:388
+#: settings.py:166 workflow/models.py:388
 msgid "Draft"
 msgstr "Borrador"
 
-#: settings.py:164 workflow/models.py:396
+#: settings.py:167 workflow/models.py:396
 msgid "Pending"
 msgstr "Pendiente"
 
-#: settings.py:165 workflow/models.py:404
+#: settings.py:168 workflow/models.py:404
 msgid "Published"
 msgstr "Publicado"
 
-#: settings.py:369
+#: settings.py:380
 msgid "Primary link"
 msgstr "Enlaces primarios"
 
-#: settings.py:370
+#: settings.py:381
 msgid "Secondary link"
 msgstr "Enlaces secundarios"
 
@@ -139,7 +139,7 @@ msgstr "Lóguese para votar"
 msgid "Thanks for rating "
 msgstr "Gracias por votar"
 
-#: apps/stdimage/fields.py:142
+#: apps/stdimage/fields.py:144
 msgid "Invalid image format"
 msgstr "Formato de imagen inválido"
 
@@ -162,19 +162,19 @@ msgstr "Eliminar"
 msgid "Title"
 msgstr "Título"
 
-#: apps/tinyimages/models.py:29
+#: apps/tinyimages/models.py:32
 msgid "Image"
 msgstr "Imagen"
 
-#: apps/tinyimages/models.py:29
+#: apps/tinyimages/models.py:32
 msgid "Select a image to upload"
 msgstr "Seleccione una imagen para subir"
 
-#: apps/tinyimages/models.py:34
+#: apps/tinyimages/models.py:40
 msgid "File"
 msgstr "Archivo"
 
-#: apps/tinyimages/models.py:34
+#: apps/tinyimages/models.py:40
 msgid "Select a file to upload"
 msgstr "Selecciona un fichero para subir"
 
@@ -229,7 +229,11 @@ msgstr "¿Estás seguro que quieres eliminar el siguiente archivo?"
 msgid "Your files. Select one to be inserted into editor"
 msgstr "Sus archivos. Seleccione uno para insertar en el editor"
 
-#: apps/tinyimages/templates/tinyimages/file_list.html:22
+#: apps/tinyimages/templates/tinyimages/file_list.html:24
+msgid "This file is no longer in the filesystem"
+msgstr ""
+
+#: apps/tinyimages/templates/tinyimages/file_list.html:30
 msgid "Delete file"
 msgstr "Eliminar archivo"
 
@@ -245,7 +249,15 @@ msgstr "¿Está seguro que quiere eliminar la siguiente imagen?"
 msgid "Your images. Select one to be inserted into editor"
 msgstr "Sus imágenes. Seleccione una para insertar en el editor"
 
-#: apps/tinyimages/templates/tinyimages/image_list.html:24
+#: apps/tinyimages/templates/tinyimages/image_list.html:28
+msgid "This image is no longer in the filesystem"
+msgstr ""
+
+#: apps/tinyimages/templates/tinyimages/image_list.html:31
+msgid "Broken image"
+msgstr ""
+
+#: apps/tinyimages/templates/tinyimages/image_list.html:36
 msgid "Delete image"
 msgstr "Eliminar imagen"
 
@@ -291,7 +303,7 @@ msgstr "Borrado satisfactoriamente %(count)d %(items)s."
 msgid "Cannot delete %(name)s"
 msgstr "No se pueden borrar %(name)s"
 
-#: base/actions.py:65 base/admin.py:609 base/admin.py:685
+#: base/actions.py:65 base/admin.py:611 base/admin.py:687
 msgid "Are you sure?"
 msgstr "¿Está usted seguro?"
 
@@ -300,124 +312,124 @@ msgstr "¿Está usted seguro?"
 msgid "Delete selected %(verbose_name_plural)s"
 msgstr ""
 
-#: base/admin.py:455 base/admin.py:661 workflow/admin.py:394
+#: base/admin.py:458 base/admin.py:663 workflow/admin.py:394
 #, python-format
 msgid "%(name)s object with primary key %(key)r does not exist."
 msgstr ""
 
-#: base/admin.py:487
+#: base/admin.py:490
 msgid "This field is required."
 msgstr "Este campo es obligatorio"
 
-#: base/admin.py:678
+#: base/admin.py:680
 #, python-format
 msgid "The %(name)s \"%(obj)s\" was deleted successfully."
 msgstr "El %(name)s \"%(obj)s\" fue eliminada satisfactoriamente."
 
-#: base/admin.py:709 base/templatetags/admin_tags.py:91
+#: base/admin.py:711 base/templatetags/admin_tags.py:91
 #: section/templates/admin/section/customstyle/change_form.html:9
 #: section/templates/admin/section/documentsection/change_form.html:9
 #: templates/admin/object_history.html:7
 msgid "History"
 msgstr "Historia"
 
-#: base/admin.py:713
+#: base/admin.py:715
 #, python-format
 msgid "Add %s"
 msgstr "Añadir %s"
 
-#: base/admin.py:715
+#: base/admin.py:717
 msgid "Quick Report"
 msgstr "Informe Rápido"
 
-#: base/admin.py:716
+#: base/admin.py:718
 msgid "Advanced Report"
 msgstr "Informe Avanzado"
 
-#: base/admin.py:717
+#: base/admin.py:719
 msgid "Reports"
 msgstr ""
 
-#: base/admin.py:718
+#: base/admin.py:720
 msgid "Wizard Report"
 msgstr ""
 
-#: base/admin.py:760
+#: base/admin.py:762
 msgid "Are you sure you want to set this items as draft?"
 msgstr "¿Está seguro que quiere pasar este contenido a borrador?"
 
-#: base/admin.py:762 workflow/models.py:418
+#: base/admin.py:764 workflow/models.py:418
 msgid "Set as draft"
 msgstr "Pasar a borrador"
 
-#: base/admin.py:766
+#: base/admin.py:768
 msgid "Are you sure you want to set this items as pending?"
 msgstr "¿Estás seguro que quieres pasar estos contenidos a pendientes?"
 
-#: base/admin.py:768 workflow/models.py:412
+#: base/admin.py:770 workflow/models.py:412
 msgid "Set as pending"
 msgstr "Pasar a pendiente"
 
-#: base/admin.py:772
+#: base/admin.py:774
 msgid "Are you sure you want to set this items as published?"
 msgstr "¿Está seguro que quieres pasar estos contenidos a publicado?"
 
-#: base/admin.py:774
+#: base/admin.py:776
 msgid "Set as published"
 msgstr "Pasar a publicado"
 
-#: base/admin.py:790
+#: base/admin.py:792
 #, python-format
 msgid "Changed to %s"
 msgstr "Cambiado a %s"
 
-#: base/admin.py:794
+#: base/admin.py:796
 #, python-format
 msgid "Successfully set %(number)d %(model_name)s as %(state)s."
 msgstr "Satisfactoriamente cambiado de %(number)d %(model_name)s a %(state)s."
 
-#: base/admin.py:804
+#: base/admin.py:806
 #, python-format
 msgid "Change state of selected %(verbose_name_plural)s"
 msgstr ""
 
-#: base/admin.py:875
+#: base/admin.py:881
 msgid "Assigned owners"
 msgstr "Propietarios asignados"
 
-#: base/admin.py:894
+#: base/admin.py:900
 msgid "Are you sure you want to assign these owners to these contents?"
 msgstr "¿Está seguro que quiere asignar estos propietarios a estos contenidos?"
 
-#: base/admin.py:900
+#: base/admin.py:906
 msgid "Assign owners"
 msgstr "Asignar propietarios"
 
-#: base/admin.py:1004
+#: base/admin.py:1019
 msgid "Section"
 msgstr "Sección"
 
-#: base/admin.py:1005
+#: base/admin.py:1020
 msgid "Enter the section to which content belongs"
 msgstr "Introduzca la sección a la que pertenece el contenido"
 
-#: base/admin.py:1063 multimedia/admin.py:226
+#: base/admin.py:1079 multimedia/admin.py:226
 msgid "Database error"
 msgstr "Error en la base de datos"
 
-#: base/admin.py:1232
+#: base/admin.py:1248
 msgid "No contents found"
 msgstr "Ningún contenido encontrado "
 
-#: base/admin.py:1357 base/models.py:97 base/models.py:374
+#: base/admin.py:1371 base/models.py:98 base/models.py:375
 msgid "contact info"
 msgstr "información de contacto"
 
-#: base/admin.py:1461 workflow/admin.py:270
+#: base/admin.py:1532 workflow/admin.py:270
 msgid "permissions"
 msgstr "permisos"
 
-#: base/admin.py:1468
+#: base/admin.py:1539
 #, python-format
 msgid ""
 "The permissions of the content should be changed in <a href=\"%(url)s\">the "
@@ -434,60 +446,60 @@ msgstr ""
 "    si estás seguro que quieres editar los permisos, haz click <a href=\"?"
 "enable_edit=1\">aquí</a>."
 
-#: base/admin.py:1514
+#: base/admin.py:1585
 msgid "Error in id"
 msgstr "Error en id"
 
-#: base/admin.py:1519
+#: base/admin.py:1590
 msgid "deleted"
 msgstr "eliminado"
 
-#: base/admin.py:1538
+#: base/admin.py:1609
 msgid "Log entry"
 msgstr "Registro del sistema"
 
-#: base/admin.py:1544 perms/models.py:177 perms/models.py:212
+#: base/admin.py:1615 perms/models.py:177 perms/models.py:212
 #: templates/admin/object_history.html:29
 msgid "User"
 msgstr "Usuario"
 
-#: base/admin.py:1549
+#: base/admin.py:1620
 msgid "Admin url"
 msgstr ""
 
-#: base/admin.py:1558
+#: base/admin.py:1629
 msgid "Public url"
 msgstr "Url pública"
 
-#: base/admin.py:1568
+#: base/admin.py:1639
 msgid "Content type"
 msgstr "Tipo de contenido"
 
-#: base/admin.py:1572
+#: base/admin.py:1643
 msgid "Added"
 msgstr "Añadido"
 
-#: base/admin.py:1574
+#: base/admin.py:1645
 msgid "Deleted"
 msgstr "¿Está seguro que quiere pasar estos contenidos a borrador?"
 
-#: base/admin.py:1579 templates/admin/object_history.html:30
+#: base/admin.py:1650 templates/admin/object_history.html:30
 msgid "Action"
 msgstr "Acción"
 
-#: base/admin.py:1638
+#: base/admin.py:1709
 msgid "Click to Locate"
 msgstr "Click para localizar"
 
-#: base/admin.py:1641
+#: base/admin.py:1712
 msgid "Location Maps"
 msgstr "Mapas de localización"
 
-#: base/admin.py:1707 base/models.py:256 places/models.py:56
+#: base/admin.py:1778 base/models.py:257 places/models.py:56
 msgid "location"
 msgstr "localización"
 
-#: base/admin.py:1717 places/models.py:72
+#: base/admin.py:1788 places/models.py:72
 msgid "Address"
 msgstr "Dirección "
 
@@ -535,258 +547,258 @@ msgstr ""
 msgid "All"
 msgstr "Todo"
 
-#: base/forms.py:361 base/models.py:434
+#: base/forms.py:361 base/models.py:435
 msgid "owners"
 msgstr "propietarios"
 
-#: base/models.py:61
+#: base/models.py:62
 msgid "Lowest"
 msgstr "Más bajo"
 
-#: base/models.py:62
+#: base/models.py:63
 msgid "Very Low"
 msgstr "Muy bajo"
 
-#: base/models.py:63
+#: base/models.py:64
 msgid "Low"
 msgstr "Bajo"
 
-#: base/models.py:64
+#: base/models.py:65
 msgid "Medium"
 msgstr "Medio"
 
-#: base/models.py:65
+#: base/models.py:66
 msgid "High"
 msgstr "Alto"
 
-#: base/models.py:66
+#: base/models.py:67
 msgid "Very high"
 msgstr ""
 
-#: base/models.py:67
+#: base/models.py:68
 msgid "Super high"
 msgstr ""
 
-#: base/models.py:68
+#: base/models.py:69
 msgid "Highest"
 msgstr ""
 
-#: base/models.py:72
+#: base/models.py:73
 msgid "disabled"
 msgstr "no permitido"
 
-#: base/models.py:73
+#: base/models.py:74
 msgid "allowed"
 msgstr ""
 
-#: base/models.py:81 base/models.py:113 base/models.py:137 block/models.py:46
-#: collab/models.py:38 multimedia/models.py:50 multimedia/models.py:52
+#: base/models.py:82 base/models.py:114 base/models.py:138 block/models.py:47
+#: collab/models.py:38 multimedia/models.py:54 multimedia/models.py:56
 #: pluggable/models.py:35 portal/models.py:42 section/models.py:92
 #: theming/models.py:36
 msgid "name"
 msgstr "Nombre"
 
-#: base/models.py:83
+#: base/models.py:84
 msgid "contact email"
 msgstr "email de contacto"
 
-#: base/models.py:85
+#: base/models.py:86
 msgid "contact email2"
 msgstr "email de contacto 2"
 
-#: base/models.py:87 multimedia/models.py:302 portal/models.py:45
+#: base/models.py:88 multimedia/models.py:312 portal/models.py:45
 #: portal/models.py:48 review/models.py:34 section/models.py:119
 #: section/models.py:287
 msgid "url"
 msgstr ""
 
-#: base/models.py:89
+#: base/models.py:90
 msgid "phone"
 msgstr ""
 
-#: base/models.py:91
+#: base/models.py:92
 msgid "phone2"
 msgstr ""
 
-#: base/models.py:93
+#: base/models.py:94
 msgid "fax"
 msgstr ""
 
-#: base/models.py:98
+#: base/models.py:99
 msgid "contacts info"
 msgstr ""
 
-#: base/models.py:101
+#: base/models.py:102
 msgid "Without contact email"
 msgstr "Sin email de contacto"
 
-#: base/models.py:114 base/models.py:138 perms/models.py:130
+#: base/models.py:115 base/models.py:139 perms/models.py:130
 #: portal/models.py:53 section/models.py:97
 msgid "slug"
 msgstr ""
 
-#: base/models.py:117
+#: base/models.py:118
 msgid "base category"
 msgstr ""
 
-#: base/models.py:118
+#: base/models.py:119
 msgid "base categories"
 msgstr ""
 
-#: base/models.py:139
+#: base/models.py:140
 msgid "plain text description"
 msgstr ""
 
-#: base/models.py:141 pluggable/models.py:36 review/models.py:33
+#: base/models.py:142 pluggable/models.py:36 review/models.py:33
 #: theming/models.py:37
 msgid "description"
 msgstr "descripción"
 
-#: base/models.py:144 multimedia/models.py:67
+#: base/models.py:145 multimedia/models.py:71
 msgid "Publication status"
 msgstr ""
 
-#: base/models.py:145 multimedia/models.py:68
+#: base/models.py:146 multimedia/models.py:72
 msgid "Enter the current status"
 msgstr ""
 
-#: base/models.py:147
+#: base/models.py:148
 msgid "workflow status"
 msgstr "Estados de publicación"
 
-#: base/models.py:149
+#: base/models.py:150
 msgid "main image"
 msgstr ""
 
-#: base/models.py:161
+#: base/models.py:162
 msgid "Without name"
 msgstr ""
 
-#: base/models.py:188
+#: base/models.py:189
 msgid "Numeric fields can not be larger than"
 msgstr ""
 
-#: base/models.py:254
+#: base/models.py:255
 msgid "map icon"
 msgstr ""
 
-#: base/models.py:295
+#: base/models.py:296
 msgid "Without location"
 msgstr ""
 
-#: base/models.py:318 multimedia/admin.py:180 multimedia/models.py:233
-#: multimedia/models.py:285 multimedia/models.py:322 theming/admin.py:35
+#: base/models.py:319 multimedia/admin.py:180 multimedia/models.py:235
+#: multimedia/models.py:295 multimedia/models.py:331 theming/admin.py:35
 msgid "Thumbnail"
 msgstr ""
 
-#: base/models.py:379
+#: base/models.py:380
 msgid "related items"
 msgstr ""
 
-#: base/models.py:381
+#: base/models.py:382
 msgid "creation date"
 msgstr ""
 
-#: base/models.py:384 base/models.py:388
+#: base/models.py:385 base/models.py:389
 msgid "modification date"
 msgstr "Fecha de modificación"
 
-#: base/models.py:390
+#: base/models.py:391
 msgid "cached plain text"
 msgstr ""
 
-#: base/models.py:395 multimedia/models.py:70
+#: base/models.py:396 multimedia/models.py:74
 msgid "last editor"
 msgstr "último editor"
 
-#: base/models.py:399
+#: base/models.py:400
 msgid "Adquire global permissions"
 msgstr ""
 
-#: base/models.py:402
+#: base/models.py:403
 msgid "Tags"
 msgstr ""
 
-#: base/models.py:403
+#: base/models.py:404
 msgid "Tags will be splitted by commas."
 msgstr "Las etiquetas deberán ser separadas por comas."
 
-#: base/models.py:406
+#: base/models.py:407
 msgid "meta description"
 msgstr ""
 
-#: base/models.py:409
+#: base/models.py:410
 #: collab/templates/collab/collaborative_comments_view.html:18
 msgid "comments"
 msgstr ""
 
-#: base/models.py:411
+#: base/models.py:412
 msgid "Is that content commentable"
 msgstr ""
 
-#: base/models.py:415 base/models.py:727
+#: base/models.py:416 base/models.py:759
 msgid "multimedia"
 msgstr ""
 
-#: base/models.py:423 multimedia/models.py:63 registry/models.py:33
+#: base/models.py:424 multimedia/models.py:67 registry/models.py:33
 msgid "class name"
 msgstr "Nombre de la clase"
 
-#: base/models.py:428
+#: base/models.py:429
 msgid "rank value"
 msgstr ""
 
-#: base/models.py:439
+#: base/models.py:440
 msgid "participants"
 msgstr "Participantes"
 
-#: base/models.py:443
+#: base/models.py:444
 msgid "position"
 msgstr ""
 
-#: base/models.py:482
+#: base/models.py:511
 msgid "base content"
 msgstr "Contenido básico"
 
-#: base/models.py:483
+#: base/models.py:512
 msgid "base contents"
 msgstr "Contenidos básicos"
 
-#: base/models.py:493 internallinks/forms.py:30 perms/models.py:49
+#: base/models.py:522 internallinks/forms.py:30 perms/models.py:49
 #: places/forms.py:29 workflow/models.py:56 workflow/models.py:137
 #: workflow/models.py:247
 msgid "Name"
 msgstr "Nombre"
 
-#: base/models.py:547 section/forms.py:57
+#: base/models.py:577 section/forms.py:52
 msgid "Please set other slug. This slug has been assigned"
 msgstr ""
 
-#: base/models.py:725 perms/models.py:208
+#: base/models.py:757 perms/models.py:208
 msgid "content"
 msgstr "contenido"
 
-#: base/models.py:729
+#: base/models.py:761
 msgid "is featured"
 msgstr ""
 
-#: base/models.py:732 registry/models.py:38
+#: base/models.py:764 registry/models.py:38
 msgid "Order"
 msgstr "Orden"
 
-#: base/models.py:736
+#: base/models.py:768
 msgid "multimedia relation"
 msgstr ""
 
-#: base/models.py:737
+#: base/models.py:769
 msgid "multimedia relations"
 msgstr ""
 
-#: base/models.py:763
+#: base/models.py:795
 msgid "Human Order"
 msgstr ""
 
-#: base/models.py:922
+#: base/models.py:954
 #, python-format
 msgid "File to large. Max size restricted to %s bytes"
 msgstr ""
@@ -805,23 +817,23 @@ msgstr ""
 msgid "results"
 msgstr ""
 
-#: base/widgets.py:238 templates/admin/edit_inline/tabular.html:116
+#: base/widgets.py:240 templates/admin/edit_inline/tabular.html:116
 msgid "Remove"
 msgstr "Eliminar"
 
-#: base/widgets.py:261
+#: base/widgets.py:263
 msgid "Select content"
 msgstr ""
 
-#: base/widgets.py:289
+#: base/widgets.py:291
 msgid "latitude"
 msgstr "latitud"
 
-#: base/widgets.py:290
+#: base/widgets.py:292
 msgid "longitude"
 msgstr "longitud"
 
-#: base/widgets.py:291
+#: base/widgets.py:293
 msgid "View on map"
 msgstr ""
 
@@ -940,7 +952,7 @@ msgstr ""
 msgid "Change language"
 msgstr "Cambiar lenguaje"
 
-#: base/templates/base/layout.html:76
+#: base/templates/base/layout.html:80
 msgid "images are retrived from your defined PUBLIC_SERVER"
 msgstr ""
 
@@ -955,6 +967,10 @@ msgstr "sí,no,quizás"
 #: base/templatetags/map_tags.py:284
 msgid "What is there nearby?"
 msgstr "¿Qué hay cerca?"
+
+#: base/templatetags/merengue_messagebox.py:21
+msgid "Form filled has errors. Please correct"
+msgstr ""
 
 #: base/templatetags/related_admin_tags.py:89
 #, python-format
@@ -978,7 +994,7 @@ msgstr "Bloques relacionados"
 msgid "Visibility when duplicated blocks"
 msgstr "Visibilidad cuando hay bloques duplicados"
 
-#: block/blocks.py:57
+#: block/blocks.py:56
 msgid "css class to add to this block"
 msgstr "Clase css para añadir a este bloque"
 
@@ -1068,55 +1084,55 @@ msgstr ""
 msgid "You can not insert a section block from a view without section"
 msgstr ""
 
-#: block/models.py:31
+#: block/models.py:32
 msgid "All places"
 msgstr ""
 
-#: block/models.py:32
+#: block/models.py:33
 msgid "Left sidebar"
 msgstr ""
 
-#: block/models.py:33
+#: block/models.py:34
 msgid "Right sidebar"
 msgstr ""
 
-#: block/models.py:34
+#: block/models.py:35
 msgid "After content title"
 msgstr "Después del título del contenido"
 
-#: block/models.py:35
+#: block/models.py:36
 msgid "Before content body"
 msgstr "Antes del cuerpo del contenido"
 
-#: block/models.py:36
+#: block/models.py:37
 msgid "Home page"
 msgstr "Página de inicio"
 
-#: block/models.py:37
+#: block/models.py:38
 msgid "After content body"
 msgstr "Después del cuerpo del contenido"
 
-#: block/models.py:38
+#: block/models.py:39
 msgid "Header"
 msgstr "Cabecera"
 
-#: block/models.py:39
+#: block/models.py:40
 msgid "Footer"
 msgstr "Pié"
 
-#: block/models.py:40
+#: block/models.py:41
 msgid "Meta-information, links, js..."
 msgstr "Meta-información, links, js..."
 
-#: block/models.py:47
+#: block/models.py:48
 msgid "placed at"
 msgstr "situado en"
 
-#: block/models.py:49
+#: block/models.py:50
 msgid "shown in urls"
 msgstr "mostrado en URLs"
 
-#: block/models.py:51
+#: block/models.py:52
 msgid ""
 "block will <em>only</em> be visible in urls matching these\n"
 "            regular expressions (one per line, using <a            "
@@ -1127,11 +1143,11 @@ msgid ""
 "            This field has preference over 'hidden in urls'."
 msgstr ""
 
-#: block/models.py:58
+#: block/models.py:59
 msgid "hidden in urls"
 msgstr ""
 
-#: block/models.py:60
+#: block/models.py:61
 msgid ""
 "block will be hidden in urls matching these regular\n"
 "            expressions (one per line, using <a\n"
@@ -1141,65 +1157,65 @@ msgid ""
 "syntax</a>)."
 msgstr ""
 
-#: block/models.py:65
+#: block/models.py:66
 msgid "disable the activation and desactivation of the block"
 msgstr "deactivar la activación y desactivación del bloque"
 
-#: block/models.py:68
+#: block/models.py:69
 msgid "block can't be moved from its default place"
 msgstr "El bloque no puede ser movido de su posición por defecto"
 
-#: block/models.py:72
+#: block/models.py:73
 msgid "activate cache"
 msgstr "activar cache"
 
-#: block/models.py:73
+#: block/models.py:74
 msgid "Activate cache for this block. The HTML rendered will be cached"
 msgstr "Activar caché para el bloque. El HTML renderizado será cacheado"
 
-#: block/models.py:76
+#: block/models.py:77
 msgid "timeout"
 msgstr "Tiempo límite"
 
-#: block/models.py:77
+#: block/models.py:78
 msgid "Time that block remained in cache in seconds. \"0\" means forever"
 msgstr ""
 "Tiempo que el bloque permanecerá cacheado en segundos. \"0\" significa para "
 "siempre"
 
-#: block/models.py:80
+#: block/models.py:81
 msgid "Cached is applied only for anonymous"
 msgstr "La caché se aplica sólo para anónimos"
 
-#: block/models.py:83
+#: block/models.py:84
 msgid "Cached vary on authenticated user"
 msgstr "La caché varía según el usuario autenticado"
 
-#: block/models.py:86
+#: block/models.py:87
 msgid "Cache vary on the request URL"
 msgstr "La caché varía según la URL solicitada"
 
-#: block/models.py:89
+#: block/models.py:90
 msgid "Cache vary on language"
 msgstr "La caché varía según el idioma"
 
-#: block/models.py:92
+#: block/models.py:93
 msgid "related content"
 msgstr "contenido relacionado"
 
-#: block/models.py:94
+#: block/models.py:95
 msgid "overwrite block if the place is the same"
 msgstr "sobreescribir bloque si el lugar es el mismo"
 
-#: block/models.py:97
+#: block/models.py:98
 msgid "overwrite generic block if is present on the actual page"
 msgstr "sobreescribir bloque si está presente en la misma página"
 
-#: block/models.py:103
+#: block/models.py:104
 msgid "registered block"
 msgstr ""
 
-#: block/models.py:104
+#: block/models.py:105
 msgid "registered blocks"
 msgstr ""
 
@@ -1229,31 +1245,31 @@ msgstr "Guardar configuración"
 msgid "Go to admin"
 msgstr "Ir a la administración"
 
-#: block/templates/blocks/header.html:44
+#: block/templates/blocks/header.html:43
 msgid "Enable/disable blocks dragging"
 msgstr "Activar/desactivar el arrastre del bloque"
 
-#: block/templates/blocks/header.html:56
+#: block/templates/blocks/header.html:55
 msgid "Configure block"
 msgstr "Configurar bloque"
 
-#: block/templates/blocks/header.html:64
+#: block/templates/blocks/header.html:63
 msgid "Invalidate cache"
 msgstr "Invalidar caché"
 
-#: block/templates/blocks/header.html:71
+#: block/templates/blocks/header.html:70
 msgid "Remove block"
 msgstr "Eliminar bloque"
 
-#: block/templates/blocks/header.html:95
+#: block/templates/blocks/header.html:94
 msgid "Are you sure you want to invalidate the cache of this block"
 msgstr "¿Estás seguro que quieres eliminar la caché de este bloque?"
 
-#: block/templates/blocks/header.html:121
+#: block/templates/blocks/header.html:120
 msgid "Are you sure you want to remove this block"
 msgstr "¿Está seguro que quiere eliminar este bloque?"
 
-#: block/templates/blocks/header.html:211
+#: block/templates/blocks/header.html:210
 msgid "Drag here"
 msgstr "Arrastre aquí"
 
@@ -1526,213 +1542,217 @@ msgstr "En (listado separados en comas)"
 msgid "Is empty"
 msgstr "Está vacío"
 
-#: collection/models.py:80 perms/models.py:52
+#: collection/models.py:60
+msgid "Custom filter (use if you now what are you doing)"
+msgstr ""
+
+#: collection/models.py:81 perms/models.py:52
 msgid "Content Types"
 msgstr "Tipos de Contenido"
 
-#: collection/models.py:87
+#: collection/models.py:88
 msgid "Group by field name"
 msgstr "Agrupar por nombre del campo"
 
-#: collection/models.py:94
+#: collection/models.py:95
 msgid "Order by field name"
 msgstr "Ordenar por nombre del campo"
 
-#: collection/models.py:101
+#: collection/models.py:102
 msgid "Reverse order"
 msgstr "Revertir orden"
 
-#: collection/models.py:105
+#: collection/models.py:106
 msgid "Number of elements "
 msgstr "Número de elementos"
 
-#: collection/models.py:112
+#: collection/models.py:113
 msgid "Show main_image of collection items"
 msgstr "Mostrar la imagen principal de los elementos de la colección"
 
-#: collection/models.py:117
+#: collection/models.py:118
 msgid "Filtering section"
 msgstr "Filtrado de la sección"
 
-#: collection/models.py:118 registry/items.py:139
+#: collection/models.py:119 registry/items.py:139
 msgid ""
 "If the collection is into a section, filter for the contents of this section"
 msgstr ""
 "Si la colección está en una sección, filtrar por los contenidos de dicha "
 "sección"
 
-#: collection/models.py:122 collection/models.py:677 collection/models.py:689
-#: collection/models.py:729
+#: collection/models.py:123 collection/models.py:691 collection/models.py:703
+#: collection/models.py:750
 msgid "Collection"
 msgstr "Colección"
 
-#: collection/models.py:123 templates/admin/merengue_index_base.html:36
+#: collection/models.py:124 templates/admin/merengue_index_base.html:36
 msgid "Collections"
 msgstr "Colecciones"
 
-#: collection/models.py:222 collection/models.py:524
+#: collection/models.py:223 collection/models.py:525
 msgid "Content type name"
 msgstr "Nombre del tipo de contenido"
 
-#: collection/models.py:254
+#: collection/models.py:255
 msgid "Item id"
 msgstr "identificador del elemento"
 
-#: collection/models.py:259
+#: collection/models.py:260
 msgid "Feed summary cached"
 msgstr "Elemento resumido cacheado"
 
-#: collection/models.py:264
+#: collection/models.py:265
 msgid "Feed detail cached"
 msgstr "Elemento completo cacheado"
 
-#: collection/models.py:269 collection/models.py:394
+#: collection/models.py:270 collection/models.py:395
 msgid "Last updated"
 msgstr "Última actualización"
 
-#: collection/models.py:275
+#: collection/models.py:276
 msgid "Excluded"
 msgstr "Excluido"
 
-#: collection/models.py:281
+#: collection/models.py:282
 msgid "Order field"
 msgstr "Campo por el que ordenar"
 
-#: collection/models.py:288
+#: collection/models.py:289
 msgid "Group field"
 msgstr "Campo por el que agrupar"
 
-#: collection/models.py:297
+#: collection/models.py:298
 msgid "Feed item"
 msgstr "Elemento de fuente"
 
-#: collection/models.py:298
+#: collection/models.py:299
 msgid "Feed items"
 msgstr "Elementos de fuente"
 
-#: collection/models.py:389
+#: collection/models.py:390
 msgid "URL of the feed"
 msgstr "URL del feed"
 
-#: collection/models.py:401
+#: collection/models.py:402
 msgid "Seconds to expire cache"
 msgstr "Segundos para que expire la cache"
 
-#: collection/models.py:402
+#: collection/models.py:403
 msgid "Seconds from last update to do a new query. 0 to never query again."
 msgstr ""
 "Segundos desde la última actualización para hacer una nueva consulta. Cero "
 "significa no consultar más"
 
-#: collection/models.py:407
+#: collection/models.py:408
 msgid "Remove items"
 msgstr "Eliminar elementos"
 
-#: collection/models.py:408
+#: collection/models.py:409
 msgid "Remove old items when overwritting cache"
 msgstr "Eliminar antiguos elementos cuando la caché sobreescribe"
 
-#: collection/models.py:413
+#: collection/models.py:414
 msgid "Title field"
 msgstr "Título"
 
-#: collection/models.py:415
+#: collection/models.py:416
 msgid "Field used for naming contents"
 msgstr "Campo usado para nombrar contenidos"
 
-#: collection/models.py:422
+#: collection/models.py:423
 msgid "Detailed link"
 msgstr "Enlace detallado"
 
-#: collection/models.py:424
+#: collection/models.py:425
 msgid "Field that provides a link to a feed with the full content"
 msgstr "Campo que proporciona un enlace a la fuente del contenido completo"
 
-#: collection/models.py:430
+#: collection/models.py:431
 msgid "External link"
 msgstr "Enlace externo"
 
-#: collection/models.py:432
+#: collection/models.py:433
 msgid "Field that provides an external link to the full content"
 msgstr "Campo que ofrece un enlace externo a todo el contenido"
 
-#: collection/models.py:439
+#: collection/models.py:440
 msgid "Feed collection"
 msgstr "Colección de fuente"
 
-#: collection/models.py:440
+#: collection/models.py:441
 msgid "Feed collections"
 msgstr "Colecciones de fuente"
 
-#: collection/models.py:541
+#: collection/models.py:542
 msgid "Filter field name"
 msgstr "Agrupar por nombre del campo"
 
-#: collection/models.py:545
+#: collection/models.py:546
 msgid "Filter operator"
 msgstr "Operador por el que se filtra"
 
-#: collection/models.py:550
+#: collection/models.py:551
 msgid "Filter value"
 msgstr "Valor del filtro"
 
-#: collection/models.py:681
+#: collection/models.py:695
 msgid "Include collection filter"
 msgstr "Filtro de inclusión para la colección"
 
-#: collection/models.py:682
+#: collection/models.py:696
 msgid "Include collection filters"
 msgstr "Filtros de inclusión para la colección"
 
-#: collection/models.py:693
+#: collection/models.py:707
 msgid "Exclude collection filter"
 msgstr "Filtro de exclusión para la colección"
 
-#: collection/models.py:694
+#: collection/models.py:708
 msgid "Exclude collection filters"
 msgstr "Filtros de exclusión para la colección"
 
-#: collection/models.py:721
+#: collection/models.py:742
 msgid "Field name"
 msgstr "Nombre del campo"
 
-#: collection/models.py:725
+#: collection/models.py:746
 msgid "Display order"
 msgstr "Orden de visualización"
 
-#: collection/models.py:734
+#: collection/models.py:755
 msgid "Safe html content"
 msgstr "Guardar contenido html"
 
-#: collection/models.py:738
+#: collection/models.py:759
 msgid "Show field label"
 msgstr "Mostrar campo etiqueta"
 
-#: collection/models.py:746
+#: collection/models.py:767
 msgid "Collection display field"
 msgstr "Campo de visualización de la colección"
 
-#: collection/models.py:747
+#: collection/models.py:768
 msgid "Collection display fields"
 msgstr "Campos de visualización de la colección"
 
-#: collection/models.py:758
+#: collection/models.py:779
 msgid "Filter module"
 msgstr "Módulo del filtro"
 
-#: collection/models.py:763
+#: collection/models.py:784
 msgid "Filter params"
 msgstr "Parámetros de los filtros"
 
-#: collection/models.py:770
+#: collection/models.py:791
 msgid "Filter order"
 msgstr "Orden de los filtros"
 
-#: collection/models.py:774
+#: collection/models.py:795
 msgid "Collection display field filter"
 msgstr "Filtro sobre los campos visibles de la colección"
 
-#: collection/models.py:775
+#: collection/models.py:796
 msgid "Collection display field filters"
 msgstr "Filtros sobre los campos visibles de la colección"
 
@@ -1770,8 +1790,8 @@ msgstr "con descripción"
 msgid "%s contents found"
 msgstr "%s contenidos encontrado"
 
-#: internallinks/views.py:67 perms/admin.py:454 portal/models.py:43
-#: section/admin.py:297 section/models.py:316
+#: internallinks/views.py:67 perms/admin.py:460 portal/models.py:43
+#: section/admin.py:305 section/models.py:316
 msgid "Content"
 msgstr "Contenido"
 
@@ -1830,15 +1850,15 @@ msgstr ""
 msgid "This file must be in swf format"
 msgstr ""
 
-#: multimedia/admin.py:315 multimedia/models.py:200
+#: multimedia/admin.py:315 multimedia/models.py:204
 msgid "photos"
 msgstr "fotos"
 
-#: multimedia/admin.py:321 multimedia/models.py:260
+#: multimedia/admin.py:321 multimedia/models.py:262
 msgid "videos"
 msgstr "vídeos"
 
-#: multimedia/admin.py:326 multimedia/models.py:309
+#: multimedia/admin.py:326 multimedia/models.py:319
 msgid "panoramic views"
 msgstr ""
 
@@ -1850,7 +1870,7 @@ msgstr ""
 msgid "files"
 msgstr ""
 
-#: multimedia/admin.py:341 multimedia/models.py:372
+#: multimedia/admin.py:341 multimedia/models.py:381
 msgid "audio files"
 msgstr ""
 
@@ -1870,92 +1890,92 @@ msgstr ""
 msgid "If you want to remove the file, you can specify a video url"
 msgstr ""
 
-#: multimedia/models.py:55
+#: multimedia/models.py:59
 msgid "date added"
 msgstr ""
 
-#: multimedia/models.py:57
+#: multimedia/models.py:61
 msgid "tags"
 msgstr ""
 
-#: multimedia/models.py:71
+#: multimedia/models.py:75
 msgid "authors"
 msgstr "autores"
 
-#: multimedia/models.py:77
+#: multimedia/models.py:81
 msgid "base multimedia"
 msgstr ""
 
-#: multimedia/models.py:78
+#: multimedia/models.py:82
 msgid "base multimedias"
 msgstr ""
 
-#: multimedia/models.py:188 multimedia/models.py:331
+#: multimedia/models.py:192 multimedia/models.py:340
 msgid "image"
 msgstr "imágen"
 
-#: multimedia/models.py:192
+#: multimedia/models.py:196
 msgid "caption"
 msgstr ""
 
-#: multimedia/models.py:194 multimedia/models.py:254
+#: multimedia/models.py:198 multimedia/models.py:256
 msgid "plone uid"
 msgstr ""
 
-#: multimedia/models.py:199
+#: multimedia/models.py:203
 msgid "photo"
 msgstr "foto"
 
-#: multimedia/models.py:228
+#: multimedia/models.py:231
 msgid "file not exists in filesystem"
 msgstr "El fichero no existe en el sistema de ficheros"
 
-#: multimedia/models.py:241
+#: multimedia/models.py:243
 msgid "video file"
 msgstr "archivo de vídeo"
 
-#: multimedia/models.py:244
+#: multimedia/models.py:246
 msgid "The file will convert to flv format. It could lose a little of quality"
 msgstr ""
 "El fichero será convertido a formato flv. Podría perder un poco de calidad"
 
-#: multimedia/models.py:246 multimedia/models.py:297
+#: multimedia/models.py:248 multimedia/models.py:307
 msgid "preview image"
 msgstr "Previsualizar la imagen"
 
-#: multimedia/models.py:250
+#: multimedia/models.py:252
 msgid "external url"
 msgstr "Url externa"
 
-#: multimedia/models.py:251
+#: multimedia/models.py:253
 msgid "The url of one video from youtube or google-video"
 msgstr ""
 
-#: multimedia/models.py:259
+#: multimedia/models.py:261
 msgid "video"
 msgstr "vídeo"
 
-#: multimedia/models.py:308
+#: multimedia/models.py:318
 msgid "panoramic view"
 msgstr ""
 
-#: multimedia/models.py:335
+#: multimedia/models.py:344
 msgid "image 3d"
 msgstr ""
 
-#: multimedia/models.py:336
+#: multimedia/models.py:345
 msgid "images 3d"
 msgstr ""
 
-#: multimedia/models.py:348 multimedia/models.py:353
+#: multimedia/models.py:357 multimedia/models.py:362
 msgid "attached file"
 msgstr ""
 
-#: multimedia/models.py:354
+#: multimedia/models.py:363
 msgid "attached files"
 msgstr ""
 
-#: multimedia/models.py:366 multimedia/models.py:371
+#: multimedia/models.py:375 multimedia/models.py:380
 msgid "audio file"
 msgstr ""
 
@@ -1966,6 +1986,10 @@ msgstr ""
 #: multimedia/templates/multimedia/media_slide.html:35
 #: multimedia/templates/multimedia/media_slide.html:36
 msgid "Street view"
+msgstr ""
+
+#: multimedia/templates/multimedia/video_visor.html:25
+msgid "Sorry, this video cannot be embedded. Please, see it at:"
 msgstr ""
 
 #: perms/admin.py:67
@@ -1984,19 +2008,19 @@ msgstr ""
 msgid "The role groups were changed successfully."
 msgstr ""
 
-#: perms/admin.py:223
+#: perms/admin.py:229
 msgid "The role permissions was changed successfully."
 msgstr ""
 
-#: perms/admin.py:229
+#: perms/admin.py:235
 msgid "You may edit it again below."
 msgstr ""
 
-#: perms/admin.py:372
+#: perms/admin.py:378
 msgid "Personal info"
 msgstr ""
 
-#: perms/admin.py:373
+#: perms/admin.py:379
 #: perms/templates/admin/perms/inc.table_permission_by_roles.html:7
 #: perms/templates/admin/perms/objectpermission/role_permissions.html:42
 #: templates/admin/merengue_index_base.html:94
@@ -2005,59 +2029,59 @@ msgstr ""
 msgid "Permissions"
 msgstr "Permisos"
 
-#: perms/admin.py:374
+#: perms/admin.py:380
 msgid "Important dates"
 msgstr ""
 
-#: perms/admin.py:375
+#: perms/admin.py:381
 #: perms/templates/admin/perms/objectpermission/role_permissions.html:118
 #: templates/admin/merengue_index_base.html:88
 #: templates/admin/basecontent/role_permissions.html:129
 msgid "Groups"
 msgstr "Grupos"
 
-#: perms/admin.py:376 perms/admin.py:413 perms/forms.py:49 perms/models.py:216
+#: perms/admin.py:382 perms/admin.py:419 perms/forms.py:49 perms/models.py:216
 #: templates/admin/merengue_index_base.html:92
 msgid "Roles"
 msgstr ""
 
-#: perms/admin.py:441
+#: perms/admin.py:447
 msgid "Access data"
 msgstr ""
 
-#: perms/admin.py:443
+#: perms/admin.py:449
 msgid "User data"
 msgstr ""
 
-#: perms/admin.py:445
+#: perms/admin.py:451
 msgid "Info data"
 msgstr ""
 
-#: perms/admin.py:447
+#: perms/admin.py:453
 msgid "Content data"
 msgstr ""
 
-#: perms/admin.py:449 templates/admin/merengue_index_base.html:72
+#: perms/admin.py:455 templates/admin/merengue_index_base.html:72
 msgid "Actions"
 msgstr "Acciones"
 
-#: perms/admin.py:465
+#: perms/admin.py:471
 msgid "Current roles"
 msgstr ""
 
-#: perms/admin.py:466
+#: perms/admin.py:472
 msgid "Roles of the user in this moment, for this content"
 msgstr ""
 
-#: perms/admin.py:483
+#: perms/admin.py:489
 msgid "Current permission by roles"
 msgstr ""
 
-#: perms/admin.py:489 perms/admin.py:491
+#: perms/admin.py:495 perms/admin.py:497
 msgid "Change permissions"
 msgstr ""
 
-#: perms/admin.py:496 perms/models.py:206 review/admin.py:35
+#: perms/admin.py:502 perms/models.py:206 review/admin.py:35
 msgid "URL"
 msgstr ""
 
@@ -2226,7 +2250,7 @@ msgstr "Sin localización"
 msgid "More Info"
 msgstr "Mas información"
 
-#: pluggable/__init__.py:228 section/admin.py:469
+#: pluggable/__init__.py:228 section/admin.py:479
 msgid "portal menu"
 msgstr ""
 
@@ -2326,7 +2350,7 @@ msgstr ""
 msgid "New content types addable in a section"
 msgstr ""
 
-#: portal/forms.py:15
+#: portal/forms.py:10
 msgid "Link cannot point to an url if already points to content"
 msgstr ""
 
@@ -2413,7 +2437,7 @@ msgstr "Tipos de contenido que quiere filtrar"
 msgid "module"
 msgstr "módulo"
 
-#: registry/models.py:36
+#: registry/models.py:36 theming/models.py:39
 msgid "active"
 msgstr "activo"
 
@@ -2527,20 +2551,20 @@ msgstr "Parece que tienes algunas tareas que revisar"
 msgid "Go to admin page for more info"
 msgstr "Ir a la página de administración para más información"
 
-#: section/admin.py:143 section/models.py:361
+#: section/admin.py:145 section/models.py:361
 msgid "main content"
 msgstr ""
 
-#: section/admin.py:145 section/models.py:362
+#: section/admin.py:147 section/models.py:362
 msgid "content selected here will be shown when entering the section"
 msgstr ""
 "El contenido aquí seleccionado se mostrará cuando se acceda a la sección"
 
-#: section/admin.py:198 section/models.py:380
+#: section/admin.py:206 section/models.py:380
 msgid "custom style"
 msgstr "estilo personalizado"
 
-#: section/admin.py:209
+#: section/admin.py:217
 msgid ""
 "Custom style for the section. You can use the variables $media_url and "
 "$theme_url"
@@ -2548,63 +2572,63 @@ msgstr ""
 "Estilo personalizado para la sección. Puedes usar las variables $media_url y "
 "$theme_url"
 
-#: section/admin.py:225 section/models.py:484
+#: section/admin.py:233 section/models.py:491
 msgid "documents"
 msgstr ""
 
-#: section/admin.py:259
+#: section/admin.py:267
 msgid "Menu Absolute Link"
 msgstr ""
 
-#: section/admin.py:260
+#: section/admin.py:268
 msgid "Menu Absolute Links"
 msgstr ""
 
-#: section/admin.py:287
+#: section/admin.py:295
 msgid "Menu Content Link"
 msgstr ""
 
-#: section/admin.py:288
+#: section/admin.py:296
 msgid "Menu Content Links"
 msgstr ""
 
-#: section/admin.py:299
+#: section/admin.py:307
 msgid "Enter text to search the content"
 msgstr "Introduce el texto a buscar en el contenido"
 
-#: section/admin.py:307
+#: section/admin.py:315
 msgid "Menu Viewlet Link"
 msgstr ""
 
-#: section/admin.py:308
+#: section/admin.py:316
 msgid "Menu Viewlet Links"
 msgstr ""
 
-#: section/admin.py:358
+#: section/admin.py:366
 msgid "Move this menu"
 msgstr ""
 
-#: section/admin.py:359
+#: section/admin.py:367
 msgid "Cancel move"
 msgstr ""
 
-#: section/admin.py:361
+#: section/admin.py:369
 msgid "Before"
 msgstr ""
 
-#: section/admin.py:362
+#: section/admin.py:370
 msgid "After"
 msgstr ""
 
-#: section/admin.py:363
+#: section/admin.py:371
 msgid "Child"
 msgstr ""
 
-#: section/admin.py:459 section/models.py:350
+#: section/admin.py:469 section/models.py:350
 msgid "main menu"
 msgstr ""
 
-#: section/admin.py:497 section/models.py:520
+#: section/admin.py:509 section/models.py:528
 msgid "document sections"
 msgstr ""
 
@@ -2684,51 +2708,51 @@ msgstr "sección"
 msgid "sections"
 msgstr "secciones"
 
-#: section/models.py:483
-msgid "document"
-msgstr "documento"
-
-#: section/models.py:504
-msgid "Parent document"
-msgstr "Documento padre"
-
-#: section/models.py:513
+#: section/models.py:485 section/models.py:521
 msgid "body"
 msgstr "cuerpo"
 
-#: section/models.py:519
+#: section/models.py:490
+msgid "document"
+msgstr "documento"
+
+#: section/models.py:512
+msgid "Parent document"
+msgstr "Documento padre"
+
+#: section/models.py:527
 msgid "document section"
 msgstr "sección de documento"
 
-#: section/models.py:539
+#: section/models.py:547
 msgid "Can not move to non existing position"
 msgstr "No puede moverlo a una posición no existente"
 
-#: section/models.py:563
+#: section/models.py:571
 msgid "Trying to save DocumentSection into an existing position"
 msgstr "Intentando guardar una sección de documento en una posición existente"
 
-#: section/models.py:585
+#: section/models.py:593
 msgid "css chunk"
 msgstr "fragmento CSS"
 
-#: section/models.py:591
+#: section/models.py:599
 msgid "custom sytle"
 msgstr "estilo personalizado"
 
-#: section/models.py:592
+#: section/models.py:600
 msgid "custom styles"
 msgstr ""
 
-#: section/models.py:599
+#: section/models.py:607
 msgid "Custom CSS image"
 msgstr "Personalizar CSS de imagen"
 
-#: section/models.py:606
+#: section/models.py:614
 msgid "custom sytle image"
 msgstr "Estilo personalizado de imagen"
 
-#: section/models.py:607
+#: section/models.py:615
 msgid "custom style images"
 msgstr "estilo personalizado de imágenes"
 
@@ -2795,18 +2819,19 @@ msgstr ""
 msgid "This section has no content"
 msgstr ""
 
-#: section/templates/section/document_view.html:19
+#: section/templates/section/document_view.html:26
 msgid "Are you sure you want to delete this section?"
 msgstr ""
 
-#: section/templates/section/document_view.html:21
+#: section/templates/section/document_view.html:28
 msgid ""
 "You are about to cancel the edition. All your changes will be lost.\n"
 "\n"
-"Do you want to cancel and lost your changes?\n"
+"  Do you want to cancel and lost your changes?\n"
+"  "
 msgstr ""
 
-#: section/templates/section/document_view.html:28
+#: section/templates/section/document_view.html:35
 #: templates/admin/customize_submit_line.html:4
 #: templates/admin/reorder.html:60
 #: workflow/templates/admin/workflow/state_permissions.html:47
@@ -2815,11 +2840,11 @@ msgstr ""
 msgid "Save"
 msgstr "Guardar"
 
-#: section/templates/section/document_view.html:29
+#: section/templates/section/document_view.html:36
 msgid "Cancel"
 msgstr ""
 
-#: section/templates/section/document_view.html:33
+#: section/templates/section/document_view.html:40
 msgid "Insert first section"
 msgstr "Insertar la primera sección"
 
@@ -2992,7 +3017,7 @@ msgstr "Filtro"
 #: templates/admin/confirm_action.html:28
 #: templates/admin/delete_confirmation.html:43
 #: templates/admin/delete_confirmation_various.html:31
-#: templates/admin/delete_selected_confirmation.html:54
+#: templates/admin/delete_selected_confirmation.html:51
 #: templates/admin/basecontent/assign_owners.html:40
 msgid "Yes, I'm sure"
 msgstr "Sí, estoy seguro"
@@ -3054,7 +3079,7 @@ msgstr ""
 msgid "Delete multiple objects"
 msgstr ""
 
-#: templates/admin/delete_selected_confirmation.html:17
+#: templates/admin/delete_selected_confirmation.html:16
 #, python-format
 msgid ""
 "Deleting the selected %(objects_name)s would result in deleting related "
@@ -3064,14 +3089,14 @@ msgstr ""
 "Eliminando %(objects_name)s podrían eliminarse objetos relacionados, pero su "
 "cuenta no tiene permisos para eliminar los siguientes tipos de objetos:"
 
-#: templates/admin/delete_selected_confirmation.html:26
+#: templates/admin/delete_selected_confirmation.html:24
 #, python-format
 msgid ""
 "Deleting the selected %(objects_name)s would require deleting the following "
 "protected related objects:"
 msgstr ""
 
-#: templates/admin/delete_selected_confirmation.html:35
+#: templates/admin/delete_selected_confirmation.html:32
 #, python-format
 msgid ""
 "Deleting the selected %(objects_name)s would result in deleting related "
@@ -3081,7 +3106,7 @@ msgstr ""
 "Eliminando %(objects_name)s podrían eliminarse objetos relacionados, pero su "
 "cuenta no tiene permisos para eliminar los siguientes tipos de objetos:"
 
-#: templates/admin/delete_selected_confirmation.html:43
+#: templates/admin/delete_selected_confirmation.html:40
 #, python-format
 msgid ""
 "Are you sure you want to delete the selected %(objects_name)s? All of the "
@@ -3575,6 +3600,10 @@ msgstr "¡Gracias por usar nuestro sitio!"
 msgid "The %(site_name)s team"
 msgstr "El %(site_name)s equipo"
 
+#: templates/su/login.html:25
+msgid "Change Login"
+msgstr ""
+
 #: templates/transhette/base.html:20
 msgid "Restart web server"
 msgstr "Reiniciar servidor web"
@@ -3582,6 +3611,14 @@ msgstr "Reiniciar servidor web"
 #: templates/transhette/base.html:23
 msgid "Update a file"
 msgstr "Actualizar un fichero"
+
+#: theming/models.py:44
+msgid "theme"
+msgstr ""
+
+#: theming/models.py:45
+msgid "themes"
+msgstr ""
 
 #: uitools/templates/uitools/toolbar.html:9
 msgid "Merengue toolbar"
