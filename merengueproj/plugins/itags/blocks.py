@@ -18,12 +18,13 @@
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
-from merengue.block.blocks import Block, BaseBlock
+from merengue.block.blocks import Block, BaseBlock, ContentBlock
 from merengue.registry import params
 from merengue.registry.items import BlockQuerySetItemProvider
 from merengue.viewlet.models import RegisteredViewlet
 from plugins.itags.models import ITag
 from plugins.itags.viewlets import TagCloudViewlet
+from tagging.utils import get_tag_list
 
 
 class TagCloudBlock(BlockQuerySetItemProvider, Block):
@@ -67,3 +68,28 @@ class TagCloudBlock(BlockQuerySetItemProvider, Block):
                                  block_title=ugettext('Tag cloud'),
                                  context={'taglist': tag_cloud,
                                          'filter_section': filter_section})
+
+
+class ContentTagsBlock(ContentBlock):
+
+    name = 'contenttags'
+    verbose_name = _('Content tags')
+    help_text = _('Block with the tags of a content')
+    default_place = 'aftercontenttitle'
+
+    default_caching_params = {
+        'enabled': False,
+        'timeout': 3600,
+        'only_anonymous': False,
+        'vary_on_user': False,
+        'vary_on_url': True,
+        'vary_on_language': True,
+    }
+
+    def render(self, request, place, content, context, *args, **kwargs):
+        if content and content.tags:
+            content_tags = [i.name for i in get_tag_list(content.tags)]
+            taglist = ITag.objects.filter(name__in=content_tags)
+            return self.render_block(request, template_name='itags/blocks/content_tags.html',
+                                     context={'taglist': taglist})
+        return ''

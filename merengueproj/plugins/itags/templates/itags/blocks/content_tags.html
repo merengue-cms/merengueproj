@@ -1,0 +1,8 @@
+{% extends "block.html" %}
+{% load l10n inlinetrans %}
+{% block blocktitle %}<h1>{% itrans "Related tags" %}</h1>{% endblock %}
+{% block blockbody %}
+  <ul>
+      {% for tag in taglist|dictsort:"name" %}<li{% if forloop.last %} class="last"{% endif %}><a href="{% url tag_view tag.name %}{% if filter_section and section %}?section={{ section.id }}{% endif %}">{{ tag.tag_name }}</a></li>{% endfor %}
+  </ul>
+{% endblock %}

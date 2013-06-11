@@ -24,7 +24,7 @@ from merengue.registry import params
 from plugins.itags.models import ITag
 from plugins.itags.admin import ITagAdmin
 from plugins.itags.viewlets import TagCloudViewlet
-from plugins.itags.blocks import TagCloudBlock
+from plugins.itags.blocks import TagCloudBlock, ContentTagsBlock
 
 
 class PluginConfig(Plugin):
@@ -47,7 +47,7 @@ class PluginConfig(Plugin):
         return [TagCloudViewlet]
 
     def get_blocks(self):
-        return [TagCloudBlock]
+        return [TagCloudBlock, ContentTagsBlock]
 
     def post_install(self):
         from tagging.models import Tag
