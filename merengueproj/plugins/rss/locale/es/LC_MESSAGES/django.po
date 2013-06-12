@@ -1,15 +1,15 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Pablo Martin <pmartin@yaco.es>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-06-12 09:49+0200\n"
-"PO-Revision-Date: 2011-07-26 09:49\n"
-"Last-Translator: Pablo Martin <pmartin@yaco.es>\n"
+"PO-Revision-Date: 2013-06-12 11:32\n"
+"Last-Translator: Jorge Correa <jcorrea@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -19,11 +19,11 @@ msgstr ""
 
 #: actions.py:37
 msgid "Generate RSS feed"
-msgstr ""
+msgstr "RSS"
 
 #: actions.py:38
 msgid "Creates the rss feed"
-msgstr ""
+msgstr "Crea el rss"
 
 #: actions.py:43
 msgid "Generate Section RSS feed"
@@ -47,15 +47,15 @@ msgstr ""
 
 #: config.py:40
 msgid "number of elements to show at the feed"
-msgstr ""
+msgstr "Número de elementos a mostrar"
 
 #: config.py:45
 msgid "portal name that will be shown as RSS title"
-msgstr ""
+msgstr "Nombre del portal que será mostrado como título RSS"
 
 #: templates/rss/author_name.html:2
 msgid "Any author feed"
-msgstr ""
+msgstr "Cualquier autor"
 
 #: templates/rss/description.html:2
 msgid "Merengue portal feed"
