@@ -78,7 +78,7 @@
         var add_reply = function(){
             var action = $(this);
             var actions = $(this).parent();
-            var container = $(this).parent().parent();
+            var container = $(action.parents('.comment')[0]);
             var comment_url = action.attr('href');
             var reply_action = $(this);
             container.children("div.commentform").hide();
