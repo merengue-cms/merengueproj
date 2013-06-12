@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-28 16:31+0100\n"
+"POT-Creation-Date: 2013-06-12 09:49+0200\n"
 "PO-Revision-Date: 2011-04-12 19:12+0200\n"
 "Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
 "Language-Team: it <m.busico@ieee.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -37,103 +38,103 @@ msgstr ""
 msgid "Link to your section"
 msgstr ""
 
-#: blocks.py:34
+#: blocks.py:35
 msgid "maximum number of levels to show"
 msgstr ""
 
-#: blocks.py:55
+#: blocks.py:60
 msgid "maximum number of items without js collapsible"
 msgstr ""
 
-#: blocks.py:67
+#: blocks.py:72
 msgid "Renders the Menu"
 msgstr ""
 
-#: blocks.py:68
+#: blocks.py:73
 msgid "Core Menu Block"
 msgstr ""
 
-#: blocks.py:81
+#: blocks.py:86
 msgid "Menu"
 msgstr "Menu"
 
-#: blocks.py:92
+#: blocks.py:97
 msgid "Renders the Navigation"
 msgstr ""
 
-#: blocks.py:93
+#: blocks.py:98
 msgid "Navigation Block"
 msgstr ""
 
-#: blocks.py:109
+#: blocks.py:114
 msgid "Navigation"
 msgstr "Navigazione"
 
-#: blocks.py:118
+#: blocks.py:123
 msgid "Renders the Portal Menu"
 msgstr ""
 
-#: blocks.py:119
+#: blocks.py:124
 msgid "Portal Menu Block"
 msgstr ""
 
-#: blocks.py:124
+#: blocks.py:129
 msgid "Portal Menu"
 msgstr "Menu del portale"
 
-#: blocks.py:134
+#: blocks.py:139
 msgid "Abstract block that render portal links"
 msgstr ""
 
-#: blocks.py:135
+#: blocks.py:140
 msgid "Link Base Block"
 msgstr ""
 
-#: blocks.py:148
+#: blocks.py:157
 msgid "Portal links"
 msgstr "Link del portale"
 
-#: blocks.py:157
+#: blocks.py:166
 msgid "Generic block that renders portal links"
 msgstr ""
 
-#: blocks.py:158
+#: blocks.py:167
 msgid "Portal Links Block"
 msgstr ""
 
-#: blocks.py:163
+#: blocks.py:172
 msgid "Portal link category"
 msgstr ""
 
-#: blocks.py:183
+#: blocks.py:192
 msgid "Block with contact info"
 msgstr ""
 
-#: blocks.py:184
+#: blocks.py:193
 msgid "Contact Info block"
 msgstr ""
 
-#: blocks.py:197
+#: blocks.py:210
 msgid "Contact info"
 msgstr ""
 
-#: blocks.py:205
+#: blocks.py:218
 msgid "Block with the site announcements"
 msgstr ""
 
-#: blocks.py:206
+#: blocks.py:219
 msgid "Announcements block"
 msgstr ""
 
-#: blocks.py:215
+#: blocks.py:232
 msgid "Announcements"
 msgstr ""
 
-#: config.py:48
+#: config.py:57
 msgid "home initial content"
 msgstr "Contenuto iniziale della 'home'"
 
-#: config.py:50
+#: config.py:59
 msgid "Login URL"
 msgstr ""
 
@@ -175,7 +176,35 @@ msgstr ""
 msgid "Already exits a standing out in your section with this content"
 msgstr ""
 
-#: panels.py:47
+#: models.py:25
+msgid "url regular expression"
+msgstr ""
+
+#: models.py:31
+msgid "title"
+msgstr ""
+
+#: models.py:37
+msgid "description"
+msgstr ""
+
+#: models.py:42
+msgid "keywords"
+msgstr ""
+
+#: models.py:43
+msgid "input one keyword per row"
+msgstr ""
+
+#: models.py:49
+msgid "Custom Meta Information"
+msgstr ""
+
+#: models.py:50
+msgid "Custon Meta Informations"
+msgstr ""
+
+#: panels.py:49
 #, python-format
 msgid "Version: %s"
 msgstr ""
@@ -220,7 +249,15 @@ msgstr ""
 msgid "Add blocks"
 msgstr ""
 
-#: templates/core/panels/inplaceedit.html:43
+#: templates/core/panels/inplaceedit.html:27
+msgid "Successfully saved"
+msgstr ""
+
+#: templates/core/panels/inplaceedit.html:28
+msgid "You have unsaved changes!"
+msgstr ""
+
+#: templates/core/panels/inplaceedit.html:48
 msgid "activate inline edit"
 msgstr ""
 

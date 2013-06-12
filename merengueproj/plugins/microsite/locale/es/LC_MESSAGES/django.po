@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-18 09:54+0200\n"
+"POT-Creation-Date: 2013-06-12 09:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,7 +45,9 @@ msgstr "color de los enlaces para el bloque \"Menú destacado\""
 msgid ""
 "color of the links (when the mouse is over) inside the \"Highlight menu\" "
 "block"
-msgstr "color de los enlaces (cuando el raton está encima) para el bloque \"Menú destacado\""
+msgstr ""
+"color de los enlaces (cuando el raton está encima) para el bloque \"Menú "
+"destacado\""
 
 #: forms.py:40
 msgid "A MicroSite or Section with this slug already exists"
@@ -57,61 +59,66 @@ msgstr "Lugares de la plantilla a excluir"
 
 #: models.py:36
 msgid "Select wich template places you want to exclude from your microsite"
-msgstr "Selecciona que lugares de la plantilla quieres excluir de tu micrositio"
+msgstr ""
+"Selecciona que lugares de la plantilla quieres excluir de tu micrositio"
 
-#: models.py:97
+#: models.py:99
 msgid "microsite"
 msgstr "micrositio"
 
-#: models.py:98
+#: models.py:100
 msgid "microsites"
 msgstr "micrositios"
 
-#: models.py:106
+#: models.py:108
 msgid "name"
 msgstr "nombre"
 
-#: models.py:107
+#: models.py:109
 msgid "Content"
 msgstr "Contenido"
 
-#: models.py:109 models.py:112
+#: models.py:111 models.py:114
 msgid "url"
 msgstr "url"
 
-#: models.py:111
+#: models.py:113
 msgid "The absolute urls have to write complety: Protocol, domain, query"
-msgstr "Las urls absolutas deben ser escritas por completo: Protocolo, dominio, direccion"
+msgstr ""
+"Las urls absolutas deben ser escritas por completo: Protocolo, dominio, "
+"direccion"
 
-#: models.py:114
+#: models.py:116
 msgid "order"
 msgstr "orden"
 
-#: models.py:115
+#: models.py:117
 msgid "slug"
 msgstr "slug"
 
-#: models.py:119
+#: models.py:121
 msgid "icon"
 msgstr "icono"
 
-#: models.py:122
+#: models.py:124
 msgid ""
 "The system don't resize the icon. You need to upload with the final size"
-msgstr "El sistema no redimensiona el icono. Necesitas subirlo con el tamaño definitivo"
+msgstr ""
+"El sistema no redimensiona el icono. Necesitas subirlo con el tamaño "
+"definitivo"
 
-#: models.py:126
+#: models.py:128
 msgid "visible links"
 msgstr "enlaces visibles"
 
-#: models.py:127
+#: models.py:129
 msgid "Restrict visibility to some roles"
 msgstr "Restringir visibilidad a algunos roles"
 
-#: models.py:135
+#: models.py:137
 msgid "microsite link"
 msgstr "enlace de micrositio"
 
-#: models.py:136
+#: models.py:138
 msgid "microsite links"
 msgstr "enlaces de micrositio"

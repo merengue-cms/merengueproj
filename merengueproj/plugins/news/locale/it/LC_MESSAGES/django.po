@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-21 09:54+0200\n"
+"POT-Creation-Date: 2013-06-12 09:49+0200\n"
 "PO-Revision-Date: 2011-04-12 19:44+0200\n"
 "Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
 "Language-Team: it <m.busico@ieee.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,15 +26,15 @@ msgstr "Indice delle notizie"
 msgid "Index page with all news items"
 msgstr ""
 
-#: blocks.py:29 blocks.py:60 viewlets.py:29
+#: blocks.py:30 blocks.py:65 viewlets.py:29
 msgid "Latest news"
 msgstr "Ultime notizie"
 
-#: blocks.py:30
+#: blocks.py:31
 msgid "Block with last news items published"
 msgstr ""
 
-#: blocks.py:36
+#: blocks.py:37
 msgid "number of news for the \"Latest news\" block"
 msgstr ""
 
@@ -61,11 +62,11 @@ msgstr "categoria"
 msgid "body"
 msgstr "corpo"
 
-#: models.py:56
+#: models.py:57
 msgid "news item"
 msgstr ""
 
-#: models.py:57
+#: models.py:58
 msgid "news"
 msgstr ""
 

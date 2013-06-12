@@ -7,26 +7,39 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-21 09:54+0200\n"
+"POT-Creation-Date: 2013-06-12 09:49+0200\n"
 "PO-Revision-Date: 2010-10-11 11:38\n"
 "Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Translated-Using: django-transhette 0.1.SVN\n"
 
-#: blocks.py:32
+#: blocks.py:34
 msgid "Block that renders calendar with events"
 msgstr ""
 
-#: blocks.py:33
+#: blocks.py:35
 msgid "Events Calendar Block"
 msgstr "Bloque de calendario de eventos"
 
-#: blocks.py:46
+#: blocks.py:56
 msgid "Events calendar"
 msgstr "Calendario de Eventos"
+
+#: blocks.py:63 blocks.py:98 viewlets.py:28
+msgid "Latest events"
+msgstr "Últimos eventos"
+
+#: blocks.py:64
+msgid "Block with last events items published"
+msgstr ""
+
+#: blocks.py:70
+msgid "number of events for the \"Latest events\" block"
+msgstr ""
 
 #: forms.py:35
 msgid "The end date has to be after the start date"
@@ -60,10 +73,6 @@ msgstr "evento"
 msgid "events"
 msgstr "eventos"
 
-#: viewlets.py:28
-msgid "Latest events"
-msgstr "Últimos eventos"
-
 #: viewlets.py:29
 msgid "Latest Event"
 msgstr "Últimos eventos"
@@ -72,7 +81,7 @@ msgstr "Últimos eventos"
 msgid "limit for event viewlet"
 msgstr ""
 
-#: viewlets.py:51
+#: viewlets.py:51 viewlets.py:52
 msgid "All events"
 msgstr "Todos los eventos"
 
@@ -84,7 +93,13 @@ msgstr "número de elementos en una página"
 msgid "Loading..."
 msgstr "Cargando..."
 
-#: templates/event/event_historic.html:5
+#: templates/event/block_latest.html:31
+msgid "No published news"
+msgstr ""
+
+#: templates/event/event_historic.html:5 templates/event/event_historic.html:7
+#: templates/event/event_historic.html:9
+#: templates/event/event_historic.html:15
 msgid "Past events"
 msgstr "Eventos pasados"
 

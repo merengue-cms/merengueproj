@@ -7,17 +7,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-21 09:53+0200\n"
+"POT-Creation-Date: 2013-06-12 09:49+0200\n"
 "PO-Revision-Date: 2011-06-21 18:56\n"
 "Last-Translator: Pablo Martin <pmartin@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "X-Translated-Using: django-transhette 0.1.SVN\n"
 
-#: admin.py:41
+#: admin.py:39 models.py:26
+msgid "content"
+msgstr ""
+
+#: admin.py:40
 msgid "content selected here will be shown when entering the section"
 msgstr ""
 
@@ -29,7 +33,7 @@ msgstr ""
 msgid "Block with the grouped content links"
 msgstr ""
 
-#: blocks.py:56
+#: blocks.py:60
 msgid "Content group links"
 msgstr ""
 
@@ -37,18 +41,35 @@ msgstr ""
 msgid "number of chars that should have the link as maximum"
 msgstr ""
 
-#: models.py:27
-msgid "identifier name of this content group"
-msgstr "nombre identificativo para este grupo de contenidos"
-
-#: models.py:30
-msgid "contents related to the group"
-msgstr "contenidos relacionados con este grupo"
-
-#: models.py:33
+#: models.py:28 models.py:36 models.py:50
 msgid "Content Group"
 msgstr "Agrupación de contenidos"
 
-#: models.py:34
+#: models.py:30
+msgid "order"
+msgstr ""
+
+#: models.py:37 models.py:51
 msgid "Content Groups"
 msgstr "Agrupaciones de contenidos"
+
+#: models.py:43
+msgid "identifier name of this content group"
+msgstr "nombre identificativo para este grupo de contenidos"
+
+#: models.py:46
+msgid "contents related to the group"
+msgstr "contenidos relacionados con este grupo"
+
+#: templates/contentmenu/admin/tabular.html:15
+msgid "Delete?"
+msgstr ""
+
+#: templates/contentmenu/admin/tabular.html:117
+#, python-format
+msgid "Add another %(verbose_name)s"
+msgstr ""
+
+#: templates/contentmenu/admin/tabular.html:120
+msgid "Remove"
+msgstr ""

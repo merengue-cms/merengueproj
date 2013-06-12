@@ -7,10 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-28 16:31+0100\n"
+"POT-Creation-Date: 2013-06-12 09:49+0200\n"
 "PO-Revision-Date: 2011-08-26 12:00\n"
 "Last-Translator: Pablo Martin <pmartin@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -36,103 +37,103 @@ msgstr "Imprimir"
 msgid "Link to your section"
 msgstr "Enlaza a tu sección"
 
-#: blocks.py:34
+#: blocks.py:35
 msgid "maximum number of levels to show"
 msgstr "máximo número de niveles a mostrar"
 
-#: blocks.py:55
+#: blocks.py:60
 msgid "maximum number of items without js collapsible"
 msgstr "máximo número de niveles sin plegar con js"
 
-#: blocks.py:67
+#: blocks.py:72
 msgid "Renders the Menu"
 msgstr "Muestra el menú"
 
-#: blocks.py:68
+#: blocks.py:73
 msgid "Core Menu Block"
 msgstr "Bloque de menú de sección"
 
-#: blocks.py:81
+#: blocks.py:86
 msgid "Menu"
 msgstr "Menú"
 
-#: blocks.py:92
+#: blocks.py:97
 msgid "Renders the Navigation"
 msgstr "Muestra la navegación"
 
-#: blocks.py:93
+#: blocks.py:98
 msgid "Navigation Block"
 msgstr "Bloque de navegación"
 
-#: blocks.py:109
+#: blocks.py:114
 msgid "Navigation"
 msgstr "Navegación"
 
-#: blocks.py:118
+#: blocks.py:123
 msgid "Renders the Portal Menu"
 msgstr "Muestra el menú del portal"
 
-#: blocks.py:119
+#: blocks.py:124
 msgid "Portal Menu Block"
 msgstr "Bloque del Menú del Portal"
 
-#: blocks.py:124
+#: blocks.py:129
 msgid "Portal Menu"
 msgstr "Menú del Portal"
 
-#: blocks.py:134
+#: blocks.py:139
 msgid "Abstract block that render portal links"
 msgstr "Bloque abstracto que renderizará los enlaces del portal"
 
-#: blocks.py:135
+#: blocks.py:140
 msgid "Link Base Block"
 msgstr "Bloque Base de Enlaces"
 
-#: blocks.py:148
+#: blocks.py:157
 msgid "Portal links"
 msgstr "Enlaces del Portal"
 
-#: blocks.py:157
+#: blocks.py:166
 msgid "Generic block that renders portal links"
 msgstr "Bloque genérico que muestra los enlaces del portal"
 
-#: blocks.py:158
+#: blocks.py:167
 msgid "Portal Links Block"
 msgstr "Bloque de enlaces del portal"
 
-#: blocks.py:163
+#: blocks.py:172
 msgid "Portal link category"
 msgstr "Categoría del enlace del portal"
 
-#: blocks.py:183
+#: blocks.py:192
 msgid "Block with contact info"
 msgstr "Bloque con la información de contacto"
 
-#: blocks.py:184
+#: blocks.py:193
 msgid "Contact Info block"
 msgstr "Bloque de información de contacto"
 
-#: blocks.py:197
+#: blocks.py:210
 msgid "Contact info"
 msgstr "Información de contacto"
 
-#: blocks.py:205
+#: blocks.py:218
 msgid "Block with the site announcements"
 msgstr "Bloque con los anuncios del portal"
 
-#: blocks.py:206
+#: blocks.py:219
 msgid "Announcements block"
 msgstr "Bloque de anuncios"
 
-#: blocks.py:215
+#: blocks.py:232
 msgid "Announcements"
 msgstr "Anuncios"
 
-#: config.py:48
+#: config.py:57
 msgid "home initial content"
 msgstr "inicio del contenido"
 
-#: config.py:50
+#: config.py:59
 msgid "Login URL"
 msgstr "URL de Login"
 
@@ -176,7 +177,35 @@ msgstr "Ya existe un menu en tu sección con este slug"
 msgid "Already exits a standing out in your section with this content"
 msgstr "Ya existe un elemento destacado en tu sección con este contenido"
 
-#: panels.py:47
+#: models.py:25
+msgid "url regular expression"
+msgstr ""
+
+#: models.py:31
+msgid "title"
+msgstr ""
+
+#: models.py:37
+msgid "description"
+msgstr ""
+
+#: models.py:42
+msgid "keywords"
+msgstr ""
+
+#: models.py:43
+msgid "input one keyword per row"
+msgstr ""
+
+#: models.py:49
+msgid "Custom Meta Information"
+msgstr ""
+
+#: models.py:50
+msgid "Custon Meta Informations"
+msgstr ""
+
+#: panels.py:49
 #, python-format
 msgid "Version: %s"
 msgstr "Versión: %s"
@@ -221,7 +250,15 @@ msgstr "Enlazar"
 msgid "Add blocks"
 msgstr "Añadir bloques"
 
-#: templates/core/panels/inplaceedit.html:43
+#: templates/core/panels/inplaceedit.html:27
+msgid "Successfully saved"
+msgstr ""
+
+#: templates/core/panels/inplaceedit.html:28
+msgid "You have unsaved changes!"
+msgstr ""
+
+#: templates/core/panels/inplaceedit.html:48
 msgid "activate inline edit"
 msgstr "Edición en línea"
 
