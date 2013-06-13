@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-12 09:49+0200\n"
+"POT-Creation-Date: 2013-06-13 16:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,15 +26,15 @@ msgstr "Bloque con una nube de etiquetas"
 
 #: blocks.py:39 viewlets.py:38
 msgid "Max number of tags in cloud"
-msgstr ""
+msgstr "Máximo número de etiquetas en la nube"
 
 #: blocks.py:76
 msgid "Content tags"
-msgstr ""
+msgstr "Etiquetas de contenidos"
 
 #: blocks.py:77
 msgid "Block with the tags of a content"
-msgstr ""
+msgstr "Bloque con las etiquetas de un contenido"
 
 #: config.py:36
 msgid "Main language for tags"
@@ -43,7 +42,7 @@ msgstr "Lenguaje principal para las etiquetas"
 
 #: forms.py:21
 msgid "This tag name already exists"
-msgstr ""
+msgstr "Este nombre de etiqueta ya existe"
 
 #: models.py:32
 msgid "tag name"
@@ -69,7 +68,4 @@ msgstr "Etiqueta"
 
 #: templates/itags/blocks/content_tags.html:3
 msgid "Related tags"
-msgstr ""
-
-#~ msgid "Max number of tags in cloud block/viewlet"
-#~ msgstr "Numero máximo de etiquetas en el bloque/viewlet nube de etiquetas"
+msgstr "Etiquetas relacionadas"
