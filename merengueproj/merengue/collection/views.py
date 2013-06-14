@@ -45,7 +45,7 @@ def feeditem_view(request, content, template_name=None, extra_context=None):
 def collection_view(request, content, template_name=None, extra_context=None):
     context = {}
     model_collection = content.get_first_parents_of_content_types()
-    if template_name is None:
+    if template_name is None or template_name == 'collection_view.html':
         template_name = []
         if model_collection:
             template_name += ['%s/collection_view.html' % m._meta.module_name for m in model_collection.mro() if getattr(m, '_meta', None) and not m._meta.abstract]
