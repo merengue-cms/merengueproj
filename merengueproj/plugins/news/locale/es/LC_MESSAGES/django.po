@@ -1,15 +1,15 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# FIRST AUTHOR Manuel saelices <msaelices@yaco.es>, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-06-12 09:49+0200\n"
-"PO-Revision-Date: 2010-10-05 10:48\n"
-"Last-Translator: Manuel Saelices <msaelices@yaco.es>\n"
+"PO-Revision-Date: 2013-06-14 12:08\n"
+"Last-Translator: Jorge Correa <jcorrea@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr " Indice de noticias"
 
 #: actions.py:28
 msgid "Index page with all news items"
-msgstr ""
+msgstr "Página inicial con todas las noticias"
 
 #: blocks.py:30 blocks.py:65 viewlets.py:29
 msgid "Latest news"
@@ -31,11 +31,11 @@ msgstr "Últimas noticias"
 
 #: blocks.py:31
 msgid "Block with last news items published"
-msgstr ""
+msgstr "Bloque con las últimas noticias publicadas"
 
 #: blocks.py:37
 msgid "number of news for the \"Latest news\" block"
-msgstr ""
+msgstr "Número de noticias a mostrar en el bloque de útimas noticias"
 
 #: models.py:31
 msgid "news category"
@@ -47,11 +47,11 @@ msgstr "Categorías de la noticia"
 
 #: models.py:37
 msgid "publish date"
-msgstr ""
+msgstr "Fecha de publicación"
 
 #: models.py:41
 msgid "expire date"
-msgstr ""
+msgstr "Fecha de caducidad"
 
 #: models.py:46
 msgid "category"
@@ -67,11 +67,11 @@ msgstr "noticia"
 
 #: models.py:58
 msgid "news"
-msgstr ""
+msgstr "noticias"
 
 #: viewlets.py:30
 msgid "Latest news block"
-msgstr ""
+msgstr "Bloque de últimas noticias"
 
 #: viewlets.py:33
 msgid "limit for news viewlet"
@@ -83,16 +83,16 @@ msgstr "Todas las noticias"
 
 #: viewlets.py:53
 msgid "All news block"
-msgstr ""
+msgstr "Bloque de todas las noticias"
 
 #: templates/news/block_latest.html:10
 msgid "No published news"
-msgstr ""
+msgstr "No hay noticias publicadas"
 
 #: templates/news/news_index.html:5 templates/news/news_index.html.py:7
 #: templates/news/newsitem/section_breadcrumbs.html:9
 msgid "News"
-msgstr "Noticia"
+msgstr "Noticias"
 
 #: templates/news/newsitem_by_category.html:15
 msgid "No Image"
@@ -104,7 +104,7 @@ msgstr "leer más"
 
 #: templates/news/newsitem_view.html:9
 msgid "Publication date"
-msgstr ""
+msgstr "Fecha de publicación"
 
 #~ msgid "News rss"
 #~ msgstr "Rss de noticias"
