@@ -31,6 +31,11 @@ from merengue.section.models import Menu
 register = template.Library()
 
 
+@register.simple_tag
+def get_content_publik_link(section, content):
+    return section.content_public_link(section, content)
+
+
 @register.inclusion_tag('section/menu_tag.html', takes_context=True)
 def menu_tag(context, menu, max_num_level=-1, descendants=None):
     ancestors = []
