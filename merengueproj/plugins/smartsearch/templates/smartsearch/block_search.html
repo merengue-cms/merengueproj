@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block blockbody %}
+  <script type="text/javascript">window.__admin_media_prefix__ = "{% admin_media_prefix %}";</script>
   <link href="{% admin_media_prefix %}css/forms.css" type="text/css" rel="stylesheet">
   <script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
   <script type="text/javascript" src="{% admin_media_prefix %}js/core.js"></script>

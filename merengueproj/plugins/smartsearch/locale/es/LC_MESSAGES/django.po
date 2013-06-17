@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-06-12 09:49+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2013-06-17 10:49+0200\n"
+"Last-Translator: Jorge Correa <jcorrea@yaco.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -27,23 +27,23 @@ msgstr ""
 
 #: blocks.py:33
 msgid "Search block"
-msgstr ""
+msgstr "Bloque buscador"
 
 #: blocks.py:69
 msgid "Searchers"
-msgstr ""
+msgstr "Buscar"
 
 #: forms.py:28
 msgid "name"
-msgstr ""
+msgstr "nombre"
 
 #: models.py:29
 msgid "Collections"
-msgstr ""
+msgstr "Colecciones"
 
 #: models.py:36
 msgid "searcher"
-msgstr ""
+msgstr "Buscador"
 
 #: models.py:37
 msgid "searchers"
