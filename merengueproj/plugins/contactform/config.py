@@ -47,3 +47,7 @@ class PluginConfig(Plugin):
     def get_model_admins(self):
         return [(ContactForm, ContactFormAdmin),
                 (SentContactForm, SentContactFormAdmin)]
+
+    def models(self):
+        return [(ContactForm, ContactFormAdmin),
+                (SentContactForm, SentContactFormAdmin)]
