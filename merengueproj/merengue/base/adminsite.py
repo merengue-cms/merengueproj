@@ -252,6 +252,7 @@ class BaseAdminSite(DjangoAdminSite):
                 'name': capfirst(model._meta.verbose_name_plural),
                 'admin_url': reverse('admin:%s_%s_changelist' % (model._meta.app_label, model._meta.module_name)),
                 'model': model,
+                'app_label': model._meta.app_label.title()
             }
             model_list.append(model_dict)
             # Sort the models alphabetically

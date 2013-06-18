@@ -12,19 +12,23 @@
 {% endblock %}
 
 {% block content %}
-<div id="content" class="module-merengue">
-{% if model_list %}
-    <dl>
-    {% for model_dict in model_list %}
-        <dt>
-            <a href="{{ relative_path }}{{ model_dict.admin_url }}">{{ model_dict.name }}</a>
-        </dt>
-        <dd></dd>
+
+<div id="content-main" class="module-merengue">
+  {% if model_list %}
+  {% regroup model_list|dictsort:"app_label" by app_label as app_list %}
+    {% for app in  app_list %}
+      <h2>{% blocktrans with app.grouper as name %}{{ name }}{% endblocktrans %}</h2>
+      <dl>
+      {% for model_dict in app.list %}
+          <dt>
+              <a href="{{ relative_path }}{{ model_dict.admin_url }}">{{ model_dict.name }}</a>
+          </dt>
+          <dd></dd>
+      {% endfor %}
+      </dl>
     {% endfor %}
-    </dl>
-{% else %}
-    <p>{% trans "You don't have permission to edit anything." %}</p>
-{% endif %}
-</div>
+  {% else %}
+      <p>{% trans "You don't have permission to edit anything." %}</p>
+  {% endif %}
 </div>
 {% endblock %}
