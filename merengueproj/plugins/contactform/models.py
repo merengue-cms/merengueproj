@@ -154,7 +154,7 @@ class ContactForm(models.Model):
             Field = fields[opt.field_type]
             help_text = opt.help_text
 
-            if opt.field_type == 'select':
+            if opt.field_type in ['select', 'radio']:
                 choices = []
                 for choice in opt.choices.all():
                     choices.append((choice.value, choice.label))
