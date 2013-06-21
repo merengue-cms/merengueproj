@@ -22,7 +22,7 @@ class DirDesc(PathDesc):
         super(DirDesc, self).__init__(root, path)
         childs = []
         for i in os.listdir(join(root, path)):
-            if os.path.exists(os.path.join(join(root, path), i)):
+            if not i.endswith('.metadata') and os.path.exists(os.path.join(join(root, path), i)):
                 childs.append(i)
         self.childnumber = len(childs)
         if not self.path.endswith('/'):
