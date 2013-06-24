@@ -33,10 +33,12 @@
                   </div>
                 {% endif %}
                 <table>{{ form.form }}</table>
-                <input class="button" type="submit" value="{{ form.contact_form.submit_msg }}"/>
-                {% if form.contact_form.reset_button %}
-                    <input class="button" type="reset" value="{{ form.contact_form.reset_msg }}"/>
-                {% endif %}
+                <div class="submitRow">
+                  <input class="button" type="submit" value="{{ form.contact_form.submit_msg }}"/>
+                  {% if form.contact_form.reset_button %}
+                      <input class="button" type="reset" value="{{ form.contact_form.reset_msg }}"/>
+                  {% endif %}
+                </div>
             </fieldset>
         </form>
     {% endfor %}
