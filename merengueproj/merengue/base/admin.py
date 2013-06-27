@@ -70,7 +70,7 @@ from transmeta import (canonical_fieldname, get_all_translatable_fields,
 from merengue.base.actions import related_delete_selected
 from merengue.base.adminsite import site
 from merengue.base.admin_utils import get_deleted_contents
-from merengue.base.filterspecs import ClassnameFilterSpec
+from merengue.base.filterspecs import ClassnameFilterSpec, WorkflowStatusSpec
 from merengue.base.forms import AdminBaseContentOwnersForm, BaseAdminModelForm
 from merengue.base.models import BaseContent, ContactInfo
 from merengue.base.widgets import CustomTinyMCE, RelatedBaseContentWidget
@@ -87,8 +87,10 @@ LOADING = False
 
 # Don't call register but insert it at the beginning of the registry
 # otherwise, the AllFilterSpec will be taken first
-FilterSpec.filter_specs.insert(0, (lambda f: f.name == 'class_name',
-                                   ClassnameFilterSpec))
+custom_filters = [(lambda f: f.name == 'class_name', ClassnameFilterSpec),
+                  (lambda f: f.name == 'workflow_status', WorkflowStatusSpec)]
+
+FilterSpec.filter_specs = custom_filters + FilterSpec.filter_specs
 
 
 def register_app(app_name, admin_site=None):
