@@ -43,6 +43,7 @@ class FileDesc(PathDesc):
             metadata_lines = metadata.split('\n')
             self.title = metadata_lines[0]
             self.description = '\n'.join(metadata_lines[2:])
+            self.ftype = path.split('.')[-1]
         else:
             self.title = ''
             self.description = ''
