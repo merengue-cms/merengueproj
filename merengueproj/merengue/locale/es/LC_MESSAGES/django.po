@@ -893,7 +893,7 @@ msgstr "Inicio"
 
 #: base/templates/inc.contentcategories.html:5
 msgid "categories"
-msgstr ""
+msgstr "categorías"
 
 #: base/templates/inc.jsfiles.html:80
 msgid "Export"
