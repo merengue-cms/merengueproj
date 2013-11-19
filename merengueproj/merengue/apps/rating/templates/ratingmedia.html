@@ -1,0 +1,11 @@
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}rating/css/rating.css" />
+{% if not readonly %}
+    <script type="text/javascript" src="{{ MEDIA_URL }}rating/js/jquery.rating.js"> </script>
+    <script type="text/javascript">
+    (function ($){
+        $(function(){
+        $(".star-rating").rating('{{ thanks|escapejs }}');
+    });
+    })(jQuery);
+    </script>
+{% endif %}

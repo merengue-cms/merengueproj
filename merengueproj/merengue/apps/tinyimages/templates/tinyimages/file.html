@@ -1,0 +1,63 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+{% load i18n %}
+<head>
+	<title>{% trans "Insert file" %}</title>
+	<script language="javascript" type="text/javascript" src="{{ TINYMCE_MEDIA }}tiny_mce_popup.js"></script>
+	<script language="javascript" type="text/javascript" src="{{ TINYMCE_MEDIA }}utils/mctabs.js"></script>
+	<script language="javascript" type="text/javascript" src="{{ TINYMCE_MEDIA }}utils/form_utils.js"></script>
+	<script language="javascript" type="text/javascript" src="/media/tinyimages/js/file.js"></script>
+	<base target="_self" />
+</head>
+<body id="image" onload="tinyMCEPopup.executeOnLoad('init();');" style="display: none">
+<form onsubmit="insertImage();return false;" action="#">
+	<div class="tabs">
+		<ul>
+			<li id="general_tab" class="current"><span><a href="javascript:mcTabs.displayTab('general_tab','general_panel');" onmousedown="return false;">{% trans "Insert file" %}</a></span></li>
+		</ul>
+	</div>
+
+	<div class="panel_wrapper">
+		<div id="general_panel" class="panel current">
+     <table border="0" cellpadding="4" cellspacing="0">
+          <tr>
+            <td nowrap="nowrap"><label for="src">{% trans "Insert file src" %}:</label></td>
+            <td><table border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td><input id="src" name="src" type="text" value="" style="width: 200px" onchange="getImageData();"></td>
+                  <td id="srcbrowsercontainer">&nbsp;</td>
+                </tr>
+              </table></td>
+          </tr>
+		  <!-- Image list -->
+		  <script language="javascript">
+			if (typeof(tinyMCEImageList) != "undefined" && tinyMCEImageList.length > 0) {
+				var html = "";
+
+				html += '<tr><td><label for="image_list">{$lang_image_list}</label></td>';
+				html += '<td><select id="image_list" name="image_list" style="width: 200px" onchange="this.form.src.value=this.options[this.selectedIndex].value;resetImageData();getImageData();">';
+				html += '<option value="">---</option>';
+
+				for (var i=0; i<tinyMCEImageList.length; i++)
+					html += '<option value="' + tinyMCEImageList[i][1] + '">' + tinyMCEImageList[i][0] + '</option>';
+
+				html += '</select></td></tr>';
+
+				document.write(html);
+			}
+		  </script>
+        </table>
+		</div>
+	</div>
+
+	<div class="mceActionPanel">
+		<div style="float: left">
+			<input type="button" id="insert" name="insert" value="{$lang_insert}" onclick="insertImage();" />
+		</div>
+
+		<div style="float: right">
+			<input type="button" id="cancel" name="cancel" value="{$lang_cancel}" onclick="tinyMCEPopup.close();" />
+		</div>
+	</div>
+</form>
+</body>
+</html>

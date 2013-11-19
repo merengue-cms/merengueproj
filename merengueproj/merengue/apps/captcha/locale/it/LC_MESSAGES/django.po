@@ -1,0 +1,47 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Mirto Silvio Busico <m.busico@ieee.org>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-01-19 11:10+0100\n"
+"PO-Revision-Date: 2011-04-11 14:39+0200\n"
+"Last-Translator: Mirto Silvio Busico <m.busico@ieee.org>\n"
+"Language-Team: it <m.busico@ieee.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: fields.py:14
+msgid "Typed characters does not match with the ones in the image"
+msgstr "I caratteri digitati non corrispondono a quelli dell'immagine"
+
+#: models.py:6
+msgid "text"
+msgstr "testo"
+
+#: models.py:8
+msgid ""
+"The image must upload at the size that is displayed is not automatically "
+"resize"
+msgstr ""
+"L'immagine deve essere caricata nelle dimensioni in cui deve essere "
+"visualizzata; non verrà ridimensionata automaticamente"
+
+#: widgets.py:18
+msgid "Type the word that follows the image"
+msgstr "Digitare la parola che contenuta nell'immagine"
+
+#: widgets.py:20
+msgid ""
+"You need to load images in your browser to be able to register, because of "
+"the captcha system."
+msgstr ""
+"Devi caricare le immagini nel tuo browser per essere in grado di "
+"registrarti, queto è richiesto dal sistema capcha"

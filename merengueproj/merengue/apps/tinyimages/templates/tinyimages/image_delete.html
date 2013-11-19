@@ -1,0 +1,12 @@
+{% extends "tinyimages/base_delete.html" %}
+{% load i18n %}
+
+{% block content_object %}
+  <h1>{% trans "Delete image:" %} {{ object.title }}</h1>
+  <p>
+  {% trans "Are you sure you want to delete the following image?" %}
+  </p>
+  <p>
+  <img src="{{ object.image.thumbnail.url }}" alt="{{ object.title }}" />
+  </p>
+{% endblock %}

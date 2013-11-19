@@ -1,0 +1,13 @@
+{% load i18n %}
+
+<form class="star-rating" method="post" action="{% url rating.views.rate_object content_type_id,obj_id %}">
+ <span class="current-votes">{% blocktrans count score_info.num_votes as votes %}{{ votes }} vote{% plural %}{{ votes }} votes{% endblocktrans %}</span>
+  <ol>
+    <li class="current-rating" style="width: {{ score_info.current_rating_width }}px;"><span class="current-score">{{ score_info.current_score|floatformat }}</span>/{{ score_info.num_stars }} {% trans "stars" %}</li>
+    {% if not readonly %}
+    {% for star in score_info.stars %}
+    <li><a href="#" class="star-{{ forloop.counter }}" title="{{ star }}"><input name="vote" {% if not can_vote %}disabled="true" {% endif %}type="submit" value="{{ forloop.counter }}"><span>{% if can_vote %}{{ star }}{% else %}{% trans "Sign in to rate" %}{% endif %}</span></a></li>
+    {% endfor %}
+    {% endif %}
+  </ol>
+</form>

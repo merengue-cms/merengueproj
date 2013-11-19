@@ -1,0 +1,12 @@
+{% extends "tinyimages/base.html" %}
+{% load i18n %}
+
+{% block content %}
+   {% block content_object %}
+   {% endblock %}
+
+  <form action="" method="post">
+    <input type="submit" class="submit" value="Yes, I am sure" name="yes" />
+    <input type="submit" class="submit" value="No, return to image list" name="no" />
+  </form>
+{% endblock %}

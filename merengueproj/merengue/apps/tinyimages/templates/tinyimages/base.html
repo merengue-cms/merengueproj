@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ LANGUAGE_CODE }}" lang="{{ LANGUAGE_CODE }}">
+<head>
+{% load i18n %}
+  <title>{% block title %}{% endblock %} - {% trans "TinyImages" %}</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="keywords" content="TinyImages" />
+  <meta name="description" content="TinyImages" />
+  <meta name="robots" content="all" />
+
+  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}tinyimages/css/tinyimages.css" />
+  <script language="javascript" type="text/javascript" src="{{ MEDIA_URL}}cmsutils/js/widgets/tiny_mce/tiny_mce_popup.js"></script>
+  <script language="javascript" type="text/javascript" src="{{ jquery_media_url }}jquery-1.2.6.min.js"></script>
+  <script language="javascript" type="text/javascript" src="{{ MEDIA_URL}}tinyimages/js/tinyimages.js"></script>
+  <!--[if IE]>
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}tinyimages/css/iefixes.css" />
+  <![endif]-->
+
+{% block extrahead %}
+{% endblock %}
+</head>
+
+<body>
+{% block content %}
+{% endblock %}
+</body>
+</html>

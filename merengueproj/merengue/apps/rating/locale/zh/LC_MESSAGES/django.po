@@ -1,0 +1,76 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-04-08 12:49+0200\n"
+"PO-Revision-Date: 2009-04-23 16:37\n"
+"Last-Translator: <msaelices@yaco.es>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Translated-Using: django-rosetta 0.4.RC2\n"
+
+#: admin.py:25
+msgid "Vote"
+msgstr "票数"
+
+#: admin.py:26
+msgid "Votes"
+msgstr "票数"
+
+#: models.py:28
+msgid "Very bad"
+msgstr "非常差"
+
+#: models.py:28
+msgid "Bad"
+msgstr "差"
+
+#: models.py:28
+msgid "OK"
+msgstr "一般"
+
+#: models.py:28
+msgid "Good"
+msgstr "好"
+
+#: models.py:28
+msgid "Very good"
+msgstr "非常好"
+
+#: models.py:183
+msgid "user"
+msgstr ""
+
+#: models.py:187 models.py:192
+msgid "vote"
+msgstr "票数"
+
+#: models.py:193
+msgid "votes"
+msgstr "票数"
+
+#: templates/form.html:4
+#, python-format
+msgid "%(votes)s vote"
+msgid_plural "%(votes)s votes"
+msgstr[0] "%(votes)s 票数"
+msgstr[1] "%(votes)s 票数"
+
+#: templates/form.html:6
+msgid "stars"
+msgstr "星级"
+
+#: templates/form.html:9
+msgid "Sign in to rate"
+msgstr "注册以参加投票"
+
+#: templates/ratingmedia.html:8
+msgid "Thanks for rating "
+msgstr "感谢您的投票"

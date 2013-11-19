@@ -1,0 +1,33 @@
+{% extends "tinyimages/base_list.html" %}
+{% load i18n %}
+
+{% block message %}
+    <p>
+        {% trans "Your files. Select one to be inserted into editor" %}
+    </p>
+{% endblock %}
+
+{% block object_type %}file{% endblock %}
+
+{% block content_object %}
+{% if object.exists_in_fs %}
+    <div class="title">
+        <a href="#" onClick="javascript:returnURL('{{ object.file.url }}','{{ object.title }}', '', ''); return false;">{{ object.title }}</a>
+        <div class="name">{{ object.file.name }}</div>
+    </div>
+    <div class="filesize">
+        {{ object.file.size|filesizeformat }}
+    </div>
+{% else %}
+    <div class="title">
+        {{ object.title }}
+        <div class="name" style="color: red;">{% trans "This file is no longer in the filesystem" %}</div>
+    </div>
+    <div class="filesize"></div>
+{% endif %}
+    <div class="file-actions">
+        {% if user.is_authenticated %}
+        <a href="{% url tinyfile_delete object.id %}">{% trans "Delete file" %}</a>
+        {% endif %}
+    </div>
+{% endblock %}

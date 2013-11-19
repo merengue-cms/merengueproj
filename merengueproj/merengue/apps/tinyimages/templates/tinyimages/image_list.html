@@ -1,0 +1,39 @@
+{% extends "tinyimages/base_list.html" %}
+{% load i18n %}
+
+{% block message %}
+    <p>
+        {% trans "Your images. Select one to be inserted into editor" %}
+    </p>
+{% endblock %}
+
+{% block content_object %}
+{% if object.exists_in_fs %}
+    <div class="title">
+        <a href="#" onClick="javascript:returnURL('{{ object.image.url }}','{{ object.title }}', {{ object.image.width }}, {{ object.image.height }}); return false;">{{ object.title }}</a>
+    </div>
+    <div class="thumbnail">
+        <a href="#" onClick="javascript:returnURL('{{ object.image.url }}','{{ object.title }}', {{ object.image.width }}, {{ object.image.height }}); return false;">
+        <img src="{{ object.image.thumbnail.url }}" alt="{{ object.title }}" />
+        </a>
+    </div>
+    <div class="dimenssions">
+        ({{ object.image.width }}x{{ object.image.height }})
+    </div>
+{% else %}
+    <div class="title">
+        {{ object.title }}
+    </div>
+    <div class="thumbnail" style="color: red;">
+        {% trans "This image is no longer in the filesystem" %}
+    </div>
+    <div class="dimenssions" style="color: red;">
+        {% trans "Broken image" %}
+    </div>
+{% endif %}
+    <div class="image-actions">
+        {% if user.is_authenticated %}
+        <a href="{% url tinyimage_delete object.id %}">{% trans "Delete image" %}</a>
+        {% endif %}
+    </div>
+{% endblock %}
