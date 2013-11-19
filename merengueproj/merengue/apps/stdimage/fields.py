@@ -50,6 +50,9 @@ class ThumbnailField:
     def size(self):
         return self.storage.size(self.name)
 
+    def delete(self):
+        return self.storage.delete(self.name)
+
 
 class StdImageFieldFile(ImageFieldFile):
 
@@ -71,6 +74,10 @@ class StdImageFieldFile(ImageFieldFile):
             self.field._resize_image(self.path, self.field.thumbnail_size, thumbnail_path)
         return thumbnail_field
     thumbnail = property(_get_thumbnail)
+
+    def delete(self, **kwargs):
+        self._get_thumbnail().delete()
+        return super(StdImageFieldFile, self).delete(**kwargs)
 
 
 class StdImageField(ImageField):
