@@ -4,7 +4,6 @@ Changes
 Version 0.9.0
 -------------
 
-
 * Merge custommeta plugin into core plugin and refactor merengue so every portal will be able to use custom meta pages. See #2365.
 * Add the anonymous user of view of the menus. See #2366.
 * Fix adding group to roles when settings the permissions of an object. See #2364.
