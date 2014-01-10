@@ -98,9 +98,9 @@ Go to the `project creation`_ section to continue.
 Development Installation
 ========================
 
-In development installation Merengue will be installed from subversion
+In development installation Merengue will be installed from git
 repository. In this case, your project will be affected by any code updates to
-the Merengue subversion repository (including any new features and fixes that
+the Merengue git repository (including any new features and fixes that
 have been implemented, as well as any new errors or changes that may cause
 compatibility problems with your code).
 
@@ -127,12 +127,12 @@ Test to see if you have the correct Django version:
 Downloading Merengue
 --------------------
 
-Download the Merengue source from a tarball or from the subversion repository:
+Download the Merengue source from a tarball or from the github repository:
 
 .. code-block:: bash
 
-    $ svn checkout https://svn.merengueproject.org/trunk/merengueproj
-    $ cd merengueproj
+    $ git clone git@github.com:merengue-cms/merengueproj.git
+    $ cd merengueproj/merengueproj
 
 Installing Python Dependencies
 ------------------------------
@@ -160,7 +160,7 @@ Execute ``setup.py`` to complete the manual install process:
 .. admonition:: Note
 
     ``develop`` command in ``setup.py`` will create symlinks in your
-    ``site-packages`` directory. Then you can update your Merengue subversion
+    ``site-packages`` directory. Then you can update your Merengue git
     repository and the installed package will be updated too.
 
 
