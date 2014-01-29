@@ -21,7 +21,7 @@
   <ul>
   {% for link in links %}
     <li id="microsite-link-{{ link.slug }}" class="{% if forloop.last %} last{% endif %}">
-        <a class="microsite-link" href="{{ link.get_absolute_url }}" title="{{ link }}"><span>
+        <a class="microsite-link" href="{{ link.get_absolute_url }}" {% if link.target_blank %}target="_blank"{% endif %} title="{{ link }}"><span>
             {% if link.image %}
                 <img src="{{ MEDIA_URL }}{{ link.image }}" alt="{{ link }}" title="{{ link }}"/>
             {% else %}

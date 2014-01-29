@@ -111,6 +111,13 @@ class MicroSiteLink(models.Model):
     external_url = models.CharField(verbose_name=_('url'), max_length=200,
                                     blank=True, null=True,
                                     help_text=_('The absolute urls have to write complety: Protocol, domain, query'))
+
+    target_blank = models.BooleanField(
+        verbose_name=_('open in new window'),
+        blank=True,
+        default=False,
+    )
+
     cached_url = models.CharField(verbose_name=_('url'), max_length=200,
                                   blank=True, null=True, editable=False)
     order = models.IntegerField(_('order'), blank=True, null=True)
