@@ -3,6 +3,7 @@ from django.utils.translation import ugettext_lazy as _, ugettext
 from merengue.block.blocks import Block, BaseBlock
 from merengue.registry import params
 from merengue.registry.items import BlockQuerySetItemProvider
+from merengue.section.models import Document
 
 from plugins.filebrowser.models import Repository
 
@@ -24,6 +25,11 @@ class LatestFilesBlock(BlockQuerySetItemProvider, Block):
             label=_('Name of the repository to show files from it'),
             default='',
         ),
+        params.Bool(
+            name='filtering_document',
+            label=_('If the repository name is equal to document slug, filter for the files of this repository'),
+            default=False,
+        ),
     ]
 
     default_caching_params = {
@@ -41,8 +47,14 @@ class LatestFilesBlock(BlockQuerySetItemProvider, Block):
 
     def queryset(self, request=None, context=None, section=None):
         queryset = self.get_contents(request, context, section)
+        content = context.get('content', None)
+        document = isinstance(content, Document) and content
+
         if section and self.get_config().get('filtering_section', False).get_value():
             queryset = queryset.filter(section=section)
+        if self.get_config().get('filtering_document', False).get_value() and \
+           document and queryset.filter(name=document.slug):
+            queryset = queryset.filter(name=document.slug)
         return queryset
 
     def render(self, request, place, context, *args, **kwargs):
