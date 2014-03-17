@@ -2,5 +2,5 @@
 
 {% block extra-context %}
     {{ block.super }}
-    {% if original %}<span id="section">{{ original.id }}</span>{% endif %}
+    {% if original %}<span id="section">{{ original.id|safe }}</span>{% endif %}
 {% endblock %}
