@@ -9,7 +9,7 @@
 {% block extrabodyclass %}related{% endblock %}
 
 {% block extra-context %}
-  {% if parent_object %}<span id="parent_object">{{ parent_object.id }}</span>{% endif %}
+  {% if parent_object %}<span id="parent_object">{{ parent_object.id|safe }}</span>{% endif %}
 {% endblock %}
 
 {% block content-main-inner %}
