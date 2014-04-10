@@ -40,11 +40,10 @@ def _get_all_blocks_to_display(place=None, content=None, section=None):
         - section related blocks
         - content related blocks
     """
-    blocks = get_blocks_to_display(place, content)
-    section_blocks = []
+    all_blocks = get_blocks_to_display(place, content)
     if section:
         section_blocks = get_blocks_to_display(place, section).exclude_overrided(content)
-    all_blocks = blocks + section_blocks
+        all_blocks = all_blocks | section_blocks
     sorted(all_blocks, key=lambda b: b.order)
     return all_blocks
 
