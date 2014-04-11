@@ -94,11 +94,7 @@ class RegisteredItemQuerySet(QuerySet):
         return self.get(id=item.reg_item.id)
 
     def _by_item_class_func(self, item_class):
-        items = []
-        for item in self.all().order_by('-active'):
-            if item.module == item_class.get_module() and item.class_name == item_class.get_class_name():
-                items.append(item)
-        return items
+        return self.all().filter(module=item_class.get_module(), class_name=item_class.get_class_name()).order_by('-active')
     _by_item_class = memoize(_by_item_class_func, _registry_lookup_cache, 2, offset=1, convert_args_func=_convert_cache_args, update_cache_if_empty=False)
 
     def get_by_item_class(self, item_class):
