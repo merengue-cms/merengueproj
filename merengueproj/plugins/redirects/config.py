@@ -23,6 +23,14 @@ from plugins.redirects.admin import RedirectAdmin
 from django.utils.translation import ugettext as _
 
 
+def get_user_choices():
+    return [(u['username'], u['username']) for u in User.objects.all().values('username')]
+
+
+def get_group_choices():
+    return [(g['name'], g['name']) for g in Group.objects.all().values('name')]
+
+
 class PluginConfig(Plugin):
     """
     Redirect Plugin config instance
@@ -37,10 +45,10 @@ class PluginConfig(Plugin):
                       default=_('Review this redirection')),
         params.List(name="review_users",
                     label=_("Users by default to have redirects reviewed"),
-                    choices=[(u.username, u.username) for u in User.objects.all()]),
+                    choices=get_user_choices),
         params.List(name="review_groups",
                     label=_("User groups by default to have redirects reviewed"),
-                    choices=[(g.name, g.name) for g in Group.objects.all()]),
+                    choices=get_group_choices),
     ]
 
     def get_middlewares(self):
