@@ -23,6 +23,7 @@ from django.utils import simplejson
 from django.utils.importlib import import_module
 from django.utils.translation import get_language_from_request
 
+from merengue.base.models import BaseContent
 from merengue.section.models import BaseSection, Document, \
                                     DocumentSection, BaseLink
 from merengue.base.decorators import login_required
@@ -69,7 +70,10 @@ def section_view(request, section_slug, original_context=None,
 
 def content_section_view(request, section_slug, content_id, content_slug):
     section = get_object_or_404(BaseSection, slug=section_slug)
-    content = section.related_content.get(pk=content_id).get_real_instance()
+    try:
+        content = section.related_content.get(pk=content_id).get_real_instance()
+    except BaseContent.DoesNotExist:
+        raise Http404
     template_name = getattr(content._meta, 'content_view_template')
     return content_view(request, content, template_name=template_name)
 
